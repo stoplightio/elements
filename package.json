@@ -20,7 +20,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "sl-scripts build",
+    "build": "sl-scripts build && copyfiles -u 1 \"./src/styles/*.scss\" ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "commit": "git-cz",
     "lint": "tslint -c tslint.json 'src/**/*.ts?'",
@@ -54,6 +54,7 @@
     "@types/react": "16.x.x",
     "@types/react-dom": "16.x.x",
     "@types/typescript": "^2.0.0",
+    "copyfiles": "^2.1.0",
     "enzyme": "3.x.x",
     "enzyme-adapter-react-16": "1.x.x",
     "enzyme-to-json": "3.x.x",

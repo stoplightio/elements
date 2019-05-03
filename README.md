@@ -1,4 +1,4 @@
-# http-ui
+# HTTP UI
 
 <!-- BADGES -->
 
@@ -25,7 +25,7 @@ yarn add @stoplight/http-ui
 ### Usage
 
 ```ts
-import { HttpOperation, HttpRequest, HttpService } from '@stoplighthttp-ui';
+import { HttpOperation, HttpRequest, HttpService } from '@stoplight/http-ui';
 
 // ...example
 ```
