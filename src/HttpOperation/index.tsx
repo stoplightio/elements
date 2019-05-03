@@ -7,8 +7,6 @@ import { Info } from './Info';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-import '../styles/http-operation.scss';
-
 export interface IHttpOperationProps {
   className?: string;
   value: IHttpOperation;

@@ -50,3 +50,4 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
     </SimpleTabs>
   );
 };
+Schema.displayName = 'HttpOperation.Schema';

@@ -1656,10 +1656,10 @@
   resolved "https://registry.npmjs.org/@stoplight/fast-safe-stringify/-/fast-safe-stringify-2.1.2.tgz#2811eff4989c3d4c5c9a3789f057e25358db0899"
   integrity sha512-ayw3qQ9KNn2K5q6ggrLclh+rdZsSLwYIUz3uAer1NzaCpalJLR4g32G845ylgq7Xy2AunMHnNfD3FC3s0rUcsA==
 
-"@stoplight/json-schema-viewer@^2.0.0-beta.3":
-  version "2.0.0-beta.3"
-  resolved "https://registry.npmjs.org/@stoplight/json-schema-viewer/-/json-schema-viewer-2.0.0-beta.3.tgz#24c3c209945024028a06f25e95051a411e58bbec"
-  integrity sha512-Y+bsj7kWuVHJzpMMzX7Uz3Bs/M/fo5locyu1pddOwcaG8wICeEzAuLF/6aBdLh3obL46OUbifudVMXrUKmGwFQ==
+"@stoplight/json-schema-viewer@^2.0.0-beta.4":
+  version "2.0.0-beta.4"
+  resolved "https://registry.npmjs.org/@stoplight/json-schema-viewer/-/json-schema-viewer-2.0.0-beta.4.tgz#f9e4138ef56fa45c49e1f2d93012c0b47d7598c3"
+  integrity sha512-O7pFWRCQgGCFdQFpfvAu/DrmpTCS9fZpRUC7YblyejdZYF9tLB+IJnGNmUzfXrOq/4BGOjUbgJDCjtJWI5wICQ==
   dependencies:
     "@stoplight/json" "1.9.x"
     "@stoplight/markdown-viewer" "^3.0.0-beta.1"
