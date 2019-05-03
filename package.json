@@ -1,0 +1,103 @@
+{
+  "name": "@stoplight/http-ui",
+  "version": "0.0.0",
+  "description": "UI components for displaying Http Services, Operations, and Requests.",
+  "keywords": [],
+  "sideEffects": false,
+  "homepage": "https://github.com/stoplightio/http-ui",
+  "bugs": "https://github.com/stoplightio/http-ui/issues",
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/http-ui"
+  },
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "files": [
+    "**/*"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "sl-scripts build",
+    "build.docs": "build-storybook -c .storybook -o docs-auto",
+    "commit": "git-cz",
+    "lint": "tslint -c tslint.json 'src/**/*.ts?'",
+    "lint.fix": "yarn lint --fix",
+    "release": "sl-scripts release",
+    "release.docs": "sl-scripts release:docs",
+    "release.dryRun": "sl-scripts release --dry-run --debug",
+    "storybook": "start-storybook -p 9001",
+    "test": "jest",
+    "test.prod": "yarn lint && yarn test --coverage --maxWorkers=2",
+    "test.update": "yarn test --updateSnapshot",
+    "test.watch": "yarn test --watch"
+  },
+  "peerDependencies": {
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "dependencies": {
+    "@stoplight/json-schema-viewer": "^2.0.0-beta.3",
+    "@stoplight/markdown-viewer": "^3.0.0-beta.1",
+    "@stoplight/ui-kit": "^2.0.0-beta.11",
+    "classnames": "^2.2.6"
+  },
+  "devDependencies": {
+    "@stoplight/scripts": "5.1.0",
+    "@stoplight/storybook-config": "^2.0.1",
+    "@types/classnames": "^2.2.7",
+    "@types/enzyme": "3.x.x",
+    "@types/enzyme-adapter-react-16": "1.x.x",
+    "@types/jest": "24.x.x",
+    "@types/react": "16.x.x",
+    "@types/react-dom": "16.x.x",
+    "@types/typescript": "^2.0.0",
+    "enzyme": "3.x.x",
+    "enzyme-adapter-react-16": "1.x.x",
+    "enzyme-to-json": "3.x.x",
+    "jest": "24.x.x",
+    "jest-enzyme": "7.x.x",
+    "mobx": "^5.9.4",
+    "prettier": "1.x.x",
+    "ts-jest": "24.x.x",
+    "tslint": "5.12.x",
+    "tslint-config-prettier": "1.18.x",
+    "tslint-config-stoplight": "1.2.x",
+    "tslint-plugin-prettier": "2.0.x",
+    "tslint-react": "3.6.x",
+    "tslint-react-hooks": "1.1.x",
+    "typescript": "3.3.x"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}$": [
+      "yarn lint.fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "release": {
+    "extends": "@stoplight/scripts/release"
+  }
+}

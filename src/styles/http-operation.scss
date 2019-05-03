@@ -1,0 +1,19 @@
+@import '~@stoplight/tree-list/styles/_tree-list.scss';
+@import '~@stoplight/ui-kit/styles/_ui-kit.scss';
+
+.HttpOperation {
+  .bp3-tab-list {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+    height: 300px;
+    overflow-y: auto;
+    border-radius: 3px;
+  }
+}
+
+.select-all {
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}

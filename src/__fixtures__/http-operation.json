@@ -1,0 +1,343 @@
+{
+  "id": "?http-operation-id?",
+  "iid": "addPet",
+  "description": "Request an `X-Auth-Token` to establish a user session. The system will authenticate your credentials and send back a token. Include the token in subsequent API requests so that the system can authorize the requests.",
+  "method": "post",
+  "path": "/pets",
+  "summary": "Add a new pet to the store",
+  "responses": [
+    {
+      "code": "200",
+      "description": "OK",
+      "headers": [
+        {
+          "description": "Cooooooookies!",
+          "name": "Set-Cookie",
+          "contents": [
+            {
+              "mediaType": "application/xml",
+              "schema": {
+                "type": "string",
+                "description": "Cooooooookies!",
+                "required": true
+              },
+              "examples": [],
+              "encodings": []
+            },
+            {
+              "mediaType": "application/json",
+              "schema": {
+                "type": "string",
+                "description": "Cooooooookies!",
+                "required": true
+              },
+              "examples": [],
+              "encodings": []
+            }
+          ],
+          "style": "simple"
+        }
+      ],
+      "contents": [
+        {
+          "mediaType": "application/xml",
+          "schema": "{\n  \"title\": \"Todo Full\",\n  \"allOf\": [\n    {\n      \"$ref\": \"#/definitions/todo-partial\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"integer\",\n          \"minimum\": 0,\n          \"maximum\": 1000000,\n          \"x-faker\": 10\n        },\n        \"completed_at\": {\n          \"type\": [\n            \"string\",\n            \"null\"\n          ],\n          \"format\": \"date-time\"\n        },\n        \"created_at\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        },\n        \"updated_at\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        },\n        \"user\": {\n          \"$ref\": \"./common.oas2.yml#/definitions/user\"\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"user\"\n      ]\n    }\n  ]\n}",
+          "examples": [
+            {
+              "key": "application/json",
+              "value": "{\n  \"id\": 1,\n  \"name\": \"get food\",\n  \"completed\": false,\n  \"completed_at\": \"1955-04-23T13:22:52.685Z\",\n  \"created_at\": \"1994-11-05T03:26:51.471Z\",\n  \"updated_at\": \"1989-07-29T11:30:06.701Z\"\n}"
+            },
+            {
+              "key": "random",
+              "value": "{\n  \"id\": 1,\n  \"name\": \"get food\",\n  \"completed\": false,\n  \"completed_at\": \"1955-04-23T13:22:52.685Z\",\n  \"created_at\": \"1994-11-05T03:26:51.471Z\",\n  \"updated_at\": \"1989-07-29T11:30:06.701Z\"\n}"
+            }
+          ]
+        },
+        {
+          "mediaType": "application/json",
+          "schema": "{\n  \"title\": \"Todo Full\",\n  \"allOf\": [\n    {\n      \"$ref\": \"#/definitions/todo-partial\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"integer\",\n          \"minimum\": 0,\n          \"maximum\": 1000000,\n          \"x-faker\": 10\n        },\n        \"completed_at\": {\n          \"type\": [\n            \"string\",\n            \"null\"\n          ],\n          \"format\": \"date-time\"\n        },\n        \"created_at\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        },\n        \"updated_at\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        },\n        \"user\": {\n          \"$ref\": \"./common.oas2.yml#/definitions/user\"\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"user\"\n      ]\n    }\n  ]\n}",
+          "examples": [
+            {
+              "key": "application/json",
+              "value": "{\n  \"id\": 1,\n  \"name\": \"get food\",\n  \"completed\": false,\n  \"completed_at\": \"1955-04-23T13:22:52.685Z\",\n  \"created_at\": \"1994-11-05T03:26:51.471Z\",\n  \"updated_at\": \"1989-07-29T11:30:06.701Z\"\n}"
+            },
+            {
+              "key": "random",
+              "value": "{\n  \"id\": 1,\n  \"name\": \"get food\",\n  \"completed\": false,\n  \"completed_at\": \"1955-04-23T13:22:52.685Z\",\n  \"created_at\": \"1994-11-05T03:26:51.471Z\",\n  \"updated_at\": \"1989-07-29T11:30:06.701Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "201",
+      "description": "Created",
+      "headers": [],
+      "contents": [
+        {
+          "mediaType": "application/xml",
+          "examples": []
+        },
+        {
+          "mediaType": "application/json",
+          "examples": []
+        }
+      ]
+    },
+    {
+      "code": "400",
+      "description": "Bad Request",
+      "headers": [],
+      "contents": [
+        {
+          "mediaType": "application/xml",
+          "examples": []
+        },
+        {
+          "mediaType": "application/json",
+          "examples": []
+        }
+      ]
+    },
+    {
+      "code": "401",
+      "description": "Unauthorized",
+      "headers": [],
+      "contents": [
+        {
+          "mediaType": "application/xml",
+          "examples": []
+        },
+        {
+          "mediaType": "application/json",
+          "examples": []
+        }
+      ]
+    },
+    {
+      "code": "403",
+      "description": "Forbidden",
+      "headers": [],
+      "contents": [
+        {
+          "mediaType": "application/xml",
+          "examples": []
+        },
+        {
+          "mediaType": "application/json",
+          "examples": []
+        }
+      ]
+    },
+    {
+      "code": "405",
+      "description": "Invalid input",
+      "headers": [],
+      "contents": [
+        {
+          "mediaType": "application/xml",
+          "examples": []
+        },
+        {
+          "mediaType": "application/json",
+          "examples": []
+        }
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://petstore.swagger.io/v2"
+    },
+    {
+      "url": "http://petstore.swagger.io/v2"
+    }
+  ],
+  "request": {
+    "path": [],
+    "query": [
+      {
+        "description": "Pet object that needs to be added to the store",
+        "name": "project_id",
+        "contents": [
+          {
+            "mediaType": "application/json",
+            "schema": {
+              "type": "number",
+              "name": "project_id",
+              "default": "10"
+            },
+            "examples": [],
+            "encodings": []
+          },
+          {
+            "mediaType": "application/xml",
+            "schema": {
+              "type": "number",
+              "name": "project_id",
+              "default": "10"
+            },
+            "examples": [],
+            "encodings": []
+          }
+        ],
+        "style": "form"
+      },
+      {
+        "description": "Pet object that needs to be added to the store",
+        "name": "node_id",
+        "contents": [
+          {
+            "mediaType": "application/json",
+            "schema": {
+              "type": "integer",
+              "name": "node_id",
+              "maximum": "10",
+              "minimum": "5",
+              "exclusiveMaximum": true
+            },
+            "examples": [],
+            "encodings": []
+          },
+          {
+            "mediaType": "application/xml",
+            "schema": {
+              "type": "integer",
+              "name": "node_id",
+              "maximum": "10",
+              "minimum": "5",
+              "exclusiveMaximum": true
+            },
+            "examples": [],
+            "encodings": []
+          }
+        ],
+        "style": "form"
+      },
+      {
+        "description": "Pet object that needs to be added to the store",
+        "required": true,
+        "name": "id",
+        "contents": [
+          {
+            "mediaType": "application/json",
+            "schema": {
+              "type": "boolean",
+              "name": "id"
+            },
+            "examples": [],
+            "encodings": []
+          },
+          {
+            "mediaType": "application/xml",
+            "schema": {
+              "type": "boolean",
+              "name": "id"
+            },
+            "examples": [],
+            "encodings": []
+          }
+        ],
+        "style": "form"
+      }
+    ],
+    "headers": [
+      {
+        "required": true,
+        "description": "Pet object that needs to be added to the store\n\n",
+        "name": "Authorization",
+        "contents": [
+          {
+            "mediaType": "application/json",
+            "schema": {
+              "in": "header",
+              "type": "string",
+              "name": "Authorization",
+              "description": "Pet object that needs to be added to the store\n\n",
+              "required": true,
+              "enum": ["bearer", "auth", "testing"],
+              "default": "Bearer 123"
+            },
+            "examples": [],
+            "encodings": []
+          },
+          {
+            "mediaType": "application/xml",
+            "schema": {
+              "in": "header",
+              "type": "string",
+              "name": "Authorization",
+              "description": "Pet object that needs to be added to the store\n\n",
+              "required": true,
+              "enum": ["bearer", "auth", "testing"],
+              "default": "Bearer 123"
+            },
+            "examples": [],
+            "encodings": []
+          }
+        ],
+        "style": "simple"
+      }
+    ],
+    "cookie": [],
+    "body": {
+      "description": "Pet object that needs to be added to the store",
+      "required": true,
+      "contents": [
+        {
+          "mediaType": "application/json",
+          "schema": "{\n  \"title\": \"Todo Full\",\n  \"allOf\": [\n    {\n      \"$ref\": \"#/definitions/todo-partial\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"integer\",\n          \"minimum\": 0,\n          \"maximum\": 1000000,\n          \"x-faker\": 10\n        },\n        \"completed_at\": {\n          \"type\": [\n            \"string\",\n            \"null\"\n          ],\n          \"format\": \"date-time\"\n        },\n        \"created_at\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        },\n        \"updated_at\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        },\n        \"user\": {\n          \"$ref\": \"./common.oas2.yml#/definitions/user\"\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"user\"\n      ]\n    }\n  ]\n}",
+          "encodings": [],
+          "examples": [
+            {
+              "key": "application/json",
+              "value": "{\n  \"id\": 1,\n  \"name\": \"get food\",\n  \"completed\": false,\n  \"completed_at\": \"1955-04-23T13:22:52.685Z\",\n  \"created_at\": \"1994-11-05T03:26:51.471Z\",\n  \"updated_at\": \"1989-07-29T11:30:06.701Z\"\n}"
+            },
+            {
+              "key": "application/xml",
+              "value": "{\n  \"id\": 1,\n  \"name\": \"get food\",\n  \"completed\": false,\n  \"completed_at\": \"1955-04-23T13:22:52.685Z\",\n  \"created_at\": \"1994-11-05T03:26:51.471Z\",\n  \"updated_at\": \"1989-07-29T11:30:06.701Z\"\n}"
+            }
+          ]
+        },
+        {
+          "mediaType": "application/xml",
+          "schema": "{\n  \"title\": \"Todo Full\",\n  \"allOf\": [\n    {\n      \"$ref\": \"#/definitions/todo-partial\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"integer\",\n          \"minimum\": 0,\n          \"maximum\": 1000000,\n          \"x-faker\": 10\n        },\n        \"completed_at\": {\n          \"type\": [\n            \"string\",\n            \"null\"\n          ],\n          \"format\": \"date-time\"\n        },\n        \"created_at\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        },\n        \"updated_at\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        },\n        \"user\": {\n          \"$ref\": \"./common.oas2.yml#/definitions/user\"\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"user\"\n      ]\n    }\n  ]\n}",
+          "encodings": [],
+          "examples": [
+            {
+              "key": "application/json",
+              "value": "{\n  \"id\": 1,\n  \"name\": \"get food\",\n  \"completed\": false,\n  \"completed_at\": \"1955-04-23T13:22:52.685Z\",\n  \"created_at\": \"1994-11-05T03:26:51.471Z\",\n  \"updated_at\": \"1989-07-29T11:30:06.701Z\"\n}"
+            },
+            {
+              "key": "application/xml",
+              "value": "{\n  \"id\": 1,\n  \"name\": \"get food\",\n  \"completed\": false,\n  \"completed_at\": \"1955-04-23T13:22:52.685Z\",\n  \"created_at\": \"1994-11-05T03:26:51.471Z\",\n  \"updated_at\": \"1989-07-29T11:30:06.701Z\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "pet"
+    }
+  ],
+  "security": [
+    {
+      "type": "oauth2",
+      "flows": {
+        "implicit": {
+          "scopes": [
+            {
+              "write:pets": "modify pets in your account"
+            },
+            {
+              "read:pets": "read your pets"
+            }
+          ],
+          "authorizationUrl": "https://petstore.swagger.io/oauth/dialog"
+        }
+      }
+    }
+  ]
+}
