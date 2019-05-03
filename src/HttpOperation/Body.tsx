@@ -10,11 +10,17 @@ export interface IBodyProps {
 }
 
 export const Body: React.FunctionComponent<IBodyProps> = ({ body, className }) => {
-  if (!body || !body.contents) return null;
+  if (typeof body !== 'object' || !body.contents) return null;
 
   // TODO (CL): Support multiple bodies?
   const requestBody = body.contents[0];
-  if (!body.description && !requestBody.schema && !requestBody.examples.length) return null;
+
+  // If we have nothing to show then don't render this section
+  if (
+    !body.description &&
+    (!requestBody || (!requestBody.schema && (!requestBody.examples || !requestBody.examples.length)))
+  )
+    return null;
 
   return (
     <div className={className}>

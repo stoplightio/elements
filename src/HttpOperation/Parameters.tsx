@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import * as React from 'react';
 
-import { PropertyTypeColors } from '@stoplight/json-schema-viewer/components/Type';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpParam } from '@stoplight/types';
 
@@ -25,9 +24,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
         </div>
       </div>
 
-      <div className={cn('font-mono w-24', content.schema && PropertyTypeColors[content.schema.type])}>
-        {content.schema && content.schema.type}
-      </div>
+      <div className="w-24">{content.schema && content.schema.type}</div>
 
       {parameter.description && <MarkdownViewer className="ml-12 flex-1" markdown={parameter.description} />}
     </div>

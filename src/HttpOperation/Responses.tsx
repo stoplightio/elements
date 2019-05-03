@@ -51,18 +51,20 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses 
         <div className="text-lg font-semibold">Responses</div>
       </div>
 
-      <Tabs id="Responses-tabs" className="mt-10" vertical>
-        {responses.map(response => (
-          <Tab className="w-full" key={response.code} id={response.code} panel={<Response response={response} />}>
-            <div className="relative flex items-center">
-              <div
-                className={cn('absolute p-1 rounded-full', `bg-${HttpCodeColor[`${response.code}`[0]] || 'gray'}-5`)}
-              />
+      <Tabs id="Responses-tabs" className="mt-6" vertical>
+        {responses
+          .filter(response => response && response.code)
+          .map(response => (
+            <Tab className="w-full" key={response.code} id={response.code} panel={<Response response={response} />}>
+              <div className="relative flex items-center">
+                <div
+                  className={cn('absolute p-1 rounded-full', `bg-${HttpCodeColor[`${response.code}`[0]] || 'gray'}-5`)}
+                />
 
-              <div className="text-center flex-1">{response.code}</div>
-            </div>
-          </Tab>
-        ))}
+                <div className="text-center flex-1">{response.code}</div>
+              </div>
+            </Tab>
+          ))}
       </Tabs>
     </div>
   );

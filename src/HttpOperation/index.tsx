@@ -13,7 +13,7 @@ export interface IHttpOperationProps {
 }
 
 export const HttpOperation: React.FunctionComponent<IHttpOperationProps> = ({ className, value }) => {
-  if (!value) return null;
+  if (typeof value !== 'object') return null;
 
   return (
     <div className={cn('HttpOperation', className)}>

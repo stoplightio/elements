@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import * as React from 'react';
 
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
@@ -17,28 +18,48 @@ export const Info: React.FunctionComponent<IInfoProps> = ({ method, path, summar
   if (!servers || !servers.length) return null;
 
   // TODO (CL): Support multiple servers
-  const host = servers[0].url;
+  const host = servers[0] && servers[0].url;
   return (
     <div>
       <div className="flex items-center">
-        <span className={`bp3-tag bp3-round mr-4 bg-${HttpMethodColors[method] || 'gray'}`}>
-          <span className="bp3-text-overflow-ellipsis bp3-fill flex items-center text-xl p-2">
-            {method.toUpperCase()}
-          </span>
-        </span>
+        <Method className="mr-4" method={method} />
 
-        <div title={summary} className="flex-1 text-2xl text-semibold truncate select-all">
-          {summary}
-        </div>
+        {summary ? (
+          <div title={summary} className="flex-1 text-2xl text-semibold truncate select-all">
+            {summary}
+          </div>
+        ) : (
+          <Path host={host} path={path} />
+        )}
       </div>
 
-      <div className="inline-flex items-center mt-6 bg-darken-2 py-2 px-3 rounded select-all">
-        <div className="text-darken-7 mr-1">{host}</div>
-        <div className="font-semibold">{path}</div>
-      </div>
+      {summary && <Path className="mt-6" host={host} path={path} />}
 
       {description && <MarkdownViewer className="mt-10" markdown={description} />}
     </div>
   );
 };
 Info.displayName = 'HttpOperation.Info';
+
+export const Method: React.FunctionComponent<{ className?: string; method: string }> = ({ className, method }) => {
+  return (
+    <span className={cn(className, `bp3-tag bp3-round bg-${HttpMethodColors[method] || 'gray'}`)}>
+      <span className="bp3-text-overflow-ellipsis bp3-fill flex items-center text-xl p-2">{method.toUpperCase()}</span>
+    </span>
+  );
+};
+
+export const Path: React.FunctionComponent<{ className?: string; host?: string; path: string }> = ({
+  className,
+  host,
+  path,
+}) => {
+  if (!host && !path) return null;
+
+  return (
+    <div className={cn(className, 'inline-flex items-center bg-darken-2 py-2 px-3 rounded select-all')}>
+      {host && <div className="text-darken-7 mr-1">{host}</div>}
+      <div className="font-semibold">{path}</div>
+    </div>
+  );
+};

@@ -8,7 +8,11 @@ export interface IRequestProps {
   request: IHttpOperationRequest;
 }
 
-export const Request: React.FunctionComponent<IRequestProps> = ({ request: { path, headers, query, body } }) => {
+export const Request: React.FunctionComponent<IRequestProps> = ({ request }) => {
+  if (!request || typeof request !== 'object') return null;
+
+  const { path, headers, query, body } = request;
+
   return (
     <div>
       <Parameters className="mt-10" title="Path Parameters" parameters={path} />
