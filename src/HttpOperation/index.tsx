@@ -4,7 +4,6 @@ import ErrorBoundary, { ErrorBoundaryProps, FallbackProps } from 'react-error-bo
 
 import { IHttpOperation } from '@stoplight/types';
 
-import { object } from '@storybook/addon-knobs';
 import { Info } from './Info';
 import { Request } from './Request';
 import { Responses } from './Responses';
@@ -17,7 +16,7 @@ export interface IHttpOperationProps extends ErrorBoundaryProps {
 const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ className, value }) => {
   if (typeof value !== 'object' || value === null) {
     throw new TypeError(
-      `Expected http operation value to be an object but received ${value === null ? 'null' : typeof object}`
+      `Expected http operation value to be an object but received ${value === null ? 'null' : typeof value}`
     );
   }
 

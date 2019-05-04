@@ -14,4 +14,9 @@ storiesOf('HttpOperation', module)
     <div className="p-12">
       <HttpOperation value={{ ...httpOperation, summary: undefined }} />
     </div>
+  ))
+  .add('error boundary', () => (
+    <div className="p-12">
+      <HttpOperation value={null} onError={error => console.log('You can hook into the onError handler too:', error)} />
+    </div>
   ));
