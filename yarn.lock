@@ -1656,19 +1656,20 @@
   resolved "https://registry.npmjs.org/@stoplight/fast-safe-stringify/-/fast-safe-stringify-2.1.2.tgz#2811eff4989c3d4c5c9a3789f057e25358db0899"
   integrity sha512-ayw3qQ9KNn2K5q6ggrLclh+rdZsSLwYIUz3uAer1NzaCpalJLR4g32G845ylgq7Xy2AunMHnNfD3FC3s0rUcsA==
 
-"@stoplight/json-schema-viewer@^2.0.0-beta.4":
-  version "2.0.0-beta.4"
-  resolved "https://registry.npmjs.org/@stoplight/json-schema-viewer/-/json-schema-viewer-2.0.0-beta.4.tgz#f9e4138ef56fa45c49e1f2d93012c0b47d7598c3"
-  integrity sha512-O7pFWRCQgGCFdQFpfvAu/DrmpTCS9fZpRUC7YblyejdZYF9tLB+IJnGNmUzfXrOq/4BGOjUbgJDCjtJWI5wICQ==
+"@stoplight/json-schema-viewer@^2.0.0-beta.6":
+  version "2.0.0-beta.6"
+  resolved "https://registry.npmjs.org/@stoplight/json-schema-viewer/-/json-schema-viewer-2.0.0-beta.6.tgz#9fa038e63352da07d1a7b98a26567fe819587321"
+  integrity sha512-c9l9gMC48tgz924GIyVEDyHoegMg6RlbAx+Cd/tMp+6MD2xuZiBruWXERgcw8MlV2u0f19dZuMTpSJZuQldXKQ==
   dependencies:
     "@stoplight/json" "1.9.x"
-    "@stoplight/markdown-viewer" "^3.0.0-beta.1"
-    "@stoplight/tree-list" "^4.0.0-beta.2"
-    "@stoplight/ui-kit" "2.0.0-beta.11"
+    "@stoplight/markdown-viewer" "^3.0.0-beta.3"
+    "@stoplight/tree-list" "^4.0.0-beta.4"
+    "@stoplight/ui-kit" "2.0.0-beta.12"
     classnames "^2.2.6"
     lodash "^4.17.11"
     mobx-react-lite "^1.3.1"
     pluralize "^7.0.0"
+    react-error-boundary "^1.2.5"
 
 "@stoplight/json@1.5.x":
   version "1.5.1"
@@ -1698,14 +1699,16 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "5.2.6"
 
-"@stoplight/markdown-viewer@^3.0.0-beta.1":
-  version "3.0.0-beta.1"
-  resolved "https://registry.npmjs.org/@stoplight/markdown-viewer/-/markdown-viewer-3.0.0-beta.1.tgz#491ba8266f6066a503735aa8ee7a5c35ef63c4f3"
-  integrity sha512-JVQSXtb2CL7iYpFsooehj24xHv+4/Jb1/3e9/e5j5CCTOwXxUWjAxOhcAESBYeOsgdxmjdbSC+laeBZ/IHffJA==
+"@stoplight/markdown-viewer@^3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.npmjs.org/@stoplight/markdown-viewer/-/markdown-viewer-3.0.0-beta.3.tgz#ca37c5482648e16b26f50a732a1f63568d3caa39"
+  integrity sha512-3fGIreAEpg6IhV1iF0tspOyXfM7PEGXnLdsL/rm+ZCUd4nYuHNyfzBMT5hepdMCPT5swcJfu4Yi3S8Jbf4GW4Q==
   dependencies:
     "@stoplight/json" "1.5.x"
     "@stoplight/markdown" "1.1.x"
+    "@stoplight/ui-kit" "^2.0.0-beta.11"
     classnames "^2.2.6"
+    react-error-boundary "^1.2.5"
     refractor "2.6.x"
     rehype "7.0.x"
 
@@ -1780,14 +1783,15 @@
     ts-loader "5.4.5"
     webpack "4.30.0"
 
-"@stoplight/tree-list@^4.0.0-beta.2":
-  version "4.0.0-beta.2"
-  resolved "https://registry.npmjs.org/@stoplight/tree-list/-/tree-list-4.0.0-beta.2.tgz#63e600fbae57d1f18b6310a4eeccd18ee271a155"
-  integrity sha512-HkG56DuJwyWzveLdjJ4yZQ0QFZAkhZvDaXHnAS0wEUa9E0VwTHPlTy2pmKMKlyQiPkT3dzivYL7YLveTCYPHkg==
+"@stoplight/tree-list@^4.0.0-beta.4":
+  version "4.0.0-beta.4"
+  resolved "https://registry.npmjs.org/@stoplight/tree-list/-/tree-list-4.0.0-beta.4.tgz#16aa7afbc30073d5abddae865bc65cbbd5f89857"
+  integrity sha512-aKjfJOR88DEtozBuQcMAPhb+4qepWSo53JCafJBxE3J20WxpRC1uRdIJyg3kIATEMfiNyxnZnCIiu8mai5sPfA==
   dependencies:
     "@stoplight/lifecycle" "2.x.x"
     classnames "2.x.x"
     mobx-react-lite "1.x.x"
+    react-error-boundary "^1.2.5"
     strict-event-emitter-types "2.x.x"
 
 "@stoplight/types@3.x.x":
@@ -1805,7 +1809,30 @@
   resolved "https://registry.npmjs.org/@stoplight/types/-/types-4.1.0.tgz#23a4a987fe1344339e33ee81c4608340c842ab44"
   integrity sha512-2zcUn/jtD4tqonsBoX4QHNNKXE6llNMaS7V4PkRDFkssIIVPB0gZjLWLeR//dY/aaFriO7kdhNss1UAMTLNvcA==
 
-"@stoplight/ui-kit@2.0.0-beta.11", "@stoplight/ui-kit@^2.0.0-beta.11":
+"@stoplight/ui-kit@2.0.0-beta.12", "@stoplight/ui-kit@^2.0.0-beta.12":
+  version "2.0.0-beta.12"
+  resolved "https://registry.npmjs.org/@stoplight/ui-kit/-/ui-kit-2.0.0-beta.12.tgz#4c540144f9f38a699fc1124fcb72ce17f6fc36cc"
+  integrity sha512-zB2UN3VNvfc/SZ5vxgRdegtjViabpsPBL0DIdQ84F54zWiCMKPpwQ9av0m0jf4SZe2VFcsmT1xwj93Wejg3iXg==
+  dependencies:
+    "@blueprintjs/core" "^3.15.1"
+    "@blueprintjs/datetime" "^3.9.0"
+    "@blueprintjs/icons" "^3.8.0"
+    "@blueprintjs/select" "^3.8.0"
+    "@blueprintjs/table" "^3.5.0"
+    "@stoplight/types" "4.1.x"
+    classnames "^2.2.6"
+    immer "^2.0.0"
+    react-custom-scrollbars "^4.2.1"
+    react-simple-code-editor "0.9.10"
+    react-tabs "^3.0.0"
+    react-virtualized "^9.21.0"
+    react-virtualized-auto-sizer "^1.0.2"
+    react-window "1.8.1"
+    refractor "2.8.0"
+    use-immer "^0.2.2"
+    yup "^0.27.0"
+
+"@stoplight/ui-kit@^2.0.0-beta.11":
   version "2.0.0-beta.11"
   resolved "https://registry.npmjs.org/@stoplight/ui-kit/-/ui-kit-2.0.0-beta.11.tgz#a2cd4c3ec397d980cc5f41255fa88538f0cfacc4"
   integrity sha512-UKuBSQd6m7dBGpw7lyRnagwXF0y1B5TksHujsFLlhR7aTd5kUtyt5SPgtLMG1EA6a1ezXmpH4RH4GvhEaplSlw==
@@ -11528,6 +11555,11 @@ react-draggable@^3.1.1:
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
+
+react-error-boundary@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/react-error-boundary/-/react-error-boundary-1.2.5.tgz#a362cb799d2e58ff8f114f7c4bc25677ce4e4149"
+  integrity sha512-5CPSeLJA2igJNppAgFRwnTL9aK3ojenk65enNzhVyoxYNbHpIJXnChUO7+4vPhkncRA9wvQMXq6Azp2XeXd+iQ==
 
 react-error-overlay@^5.1.4:
   version "5.1.5"
