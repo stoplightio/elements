@@ -1,9 +1,8 @@
-import cn from 'classnames';
 import * as React from 'react';
 
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperationResponse } from '@stoplight/types';
-import { Tab, Tabs } from '@stoplight/ui-kit';
+import { Button, ButtonGroup, Icon } from '@stoplight/ui-kit';
 
 import { Parameters } from './Parameters';
 import { Schema } from './Schema';
@@ -17,23 +16,24 @@ export const HttpCodeColor = {
 };
 
 export interface IResponseProps {
+  className?: string;
   response: IHttpOperationResponse;
 }
 
-export const Response: React.FunctionComponent<IResponseProps> = ({ response }) => {
+export const Response: React.FunctionComponent<IResponseProps> = ({ className, response }) => {
   if (!response || !response.contents || !response.contents.length) return null;
 
   // TODO (CL): Support multiple response contents
   const content = response.contents[0];
 
   return (
-    <>
+    <div className={className}>
       {response.description && <MarkdownViewer markdown={response.description} />}
 
-      <Parameters className="mt-10" title="Headers" parameters={response.headers} />
+      <Parameters className="mt-6" title="Headers" parameters={response.headers} />
 
-      <Schema className="mt-10" value={content.schema} examples={content.examples} />
-    </>
+      <Schema className="mt-6" value={content.schema} examples={content.examples} />
+    </div>
   );
 };
 Response.displayName = 'HttpOperation.Response';
@@ -43,6 +43,7 @@ export interface IResponsesProps {
 }
 
 export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses }) => {
+  const [activeResponse, setActiveResponse] = React.useState(0);
   if (!responses || !responses.length) return null;
 
   return (
@@ -51,21 +52,22 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses 
         <div className="text-lg font-semibold">Responses</div>
       </div>
 
-      <Tabs id="Responses-tabs" className="mt-6" vertical>
-        {responses
-          .filter(response => response && response.code)
-          .map(response => (
-            <Tab className="w-full" key={response.code} id={response.code} panel={<Response response={response} />}>
-              <div className="relative flex items-center">
-                <div
-                  className={cn('absolute p-1 rounded-full', `bg-${HttpCodeColor[`${response.code}`[0]] || 'gray'}-5`)}
-                />
+      <ButtonGroup className="mt-6">
+        {responses.map((response, index) => {
+          if (!response.code) return null;
 
-                <div className="text-center flex-1">{response.code}</div>
-              </div>
-            </Tab>
-          ))}
-      </Tabs>
+          return (
+            <Button
+              active={activeResponse === index}
+              text={response.code}
+              icon={<Icon icon="full-circle" iconSize={10} color={HttpCodeColor[String(response.code)[0]]} />}
+              onClick={() => setActiveResponse(index)}
+            />
+          );
+        })}
+      </ButtonGroup>
+
+      <Response className="mt-6" response={responses[activeResponse]} />
     </div>
   );
 };

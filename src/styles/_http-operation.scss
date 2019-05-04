@@ -1,16 +1,7 @@
 @import '~@stoplight/tree-list/styles/_tree-list.scss';
 @import '~@stoplight/json-schema-viewer/styles/_json-schema-viewer.scss';
 
-.HttpOperation {
-  .bp3-tab-list {
-    text-align: center;
-    background: rgba(0, 0, 0, 0.05);
-    height: 300px;
-    overflow-y: auto;
-    border-radius: 3px;
-  }
-}
-
+// TODO (CL): Move this to ui-kit
 .select-all {
   -webkit-user-select: all;
   -moz-user-select: all;

@@ -39,7 +39,7 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@stoplight/json-schema-viewer": "^2.0.0-beta.6",
+    "@stoplight/json-schema-viewer": "^2.0.0-beta.7",
     "@stoplight/markdown-viewer": "^3.0.0-beta.3",
     "@stoplight/ui-kit": "^2.0.0-beta.12",
     "classnames": "^2.2.6",

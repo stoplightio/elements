@@ -1656,14 +1656,14 @@
   resolved "https://registry.npmjs.org/@stoplight/fast-safe-stringify/-/fast-safe-stringify-2.1.2.tgz#2811eff4989c3d4c5c9a3789f057e25358db0899"
   integrity sha512-ayw3qQ9KNn2K5q6ggrLclh+rdZsSLwYIUz3uAer1NzaCpalJLR4g32G845ylgq7Xy2AunMHnNfD3FC3s0rUcsA==
 
-"@stoplight/json-schema-viewer@^2.0.0-beta.6":
-  version "2.0.0-beta.6"
-  resolved "https://registry.npmjs.org/@stoplight/json-schema-viewer/-/json-schema-viewer-2.0.0-beta.6.tgz#9fa038e63352da07d1a7b98a26567fe819587321"
-  integrity sha512-c9l9gMC48tgz924GIyVEDyHoegMg6RlbAx+Cd/tMp+6MD2xuZiBruWXERgcw8MlV2u0f19dZuMTpSJZuQldXKQ==
+"@stoplight/json-schema-viewer@^2.0.0-beta.7":
+  version "2.0.0-beta.7"
+  resolved "https://registry.npmjs.org/@stoplight/json-schema-viewer/-/json-schema-viewer-2.0.0-beta.7.tgz#68e38afa8232678a6cfb79775dd02c1304f9bcf3"
+  integrity sha512-2hhrRgywZV440nr1wSISzKrBwwot5tXRhN4aYQXvS84i/lLnMEzF6cmrf44T72erSePfR0XNqvWF6ypz3R+1FA==
   dependencies:
     "@stoplight/json" "1.9.x"
     "@stoplight/markdown-viewer" "^3.0.0-beta.3"
-    "@stoplight/tree-list" "^4.0.0-beta.4"
+    "@stoplight/tree-list" "^4.0.0-beta.5"
     "@stoplight/ui-kit" "2.0.0-beta.12"
     classnames "^2.2.6"
     lodash "^4.17.11"
@@ -1783,10 +1783,10 @@
     ts-loader "5.4.5"
     webpack "4.30.0"
 
-"@stoplight/tree-list@^4.0.0-beta.4":
-  version "4.0.0-beta.4"
-  resolved "https://registry.npmjs.org/@stoplight/tree-list/-/tree-list-4.0.0-beta.4.tgz#16aa7afbc30073d5abddae865bc65cbbd5f89857"
-  integrity sha512-aKjfJOR88DEtozBuQcMAPhb+4qepWSo53JCafJBxE3J20WxpRC1uRdIJyg3kIATEMfiNyxnZnCIiu8mai5sPfA==
+"@stoplight/tree-list@^4.0.0-beta.5":
+  version "4.0.0-beta.5"
+  resolved "https://registry.npmjs.org/@stoplight/tree-list/-/tree-list-4.0.0-beta.5.tgz#59f4f739aa4262867f0cfa44398c67b11b51ee25"
+  integrity sha512-uMZA3EOBERuPSk0Jtu9HVcv/sceC3+HTD6onVVPaz09+iZ/5x3DubqT9fZeyajO5ZmUE3zJYqSuClOSq4YKeVg==
   dependencies:
     "@stoplight/lifecycle" "2.x.x"
     classnames "2.x.x"

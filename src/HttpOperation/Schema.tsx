@@ -12,9 +12,14 @@ export interface ISchema {
   examples?: IHttpContent['examples'];
 }
 
+const JSV_MAX_ROWS = 8;
+const JSV_ROW_HEIGHT = 40;
+
 export const Schema: React.FunctionComponent<ISchema> = ({ className, value, examples }) => {
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
   return (
-    <SimpleTabs className={className}>
+    <SimpleTabs className={className} selectedIndex={selectedIndex} onSelect={setSelectedIndex}>
       <SimpleTabList>
         {value && <SimpleTab>Schema</SimpleTab>}
 
@@ -24,7 +29,7 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
 
       {value && (
         <SimpleTabPanel className="p-0">
-          <div style={{ height: 300 }}>
+          <div style={{ height: JSV_MAX_ROWS * JSV_ROW_HEIGHT }}>
             <JsonSchemaViewer schema={typeof value === 'string' ? safeParse(value) : value} />
           </div>
         </SimpleTabPanel>
