@@ -1712,6 +1712,19 @@
     refractor "2.6.x"
     rehype "7.0.x"
 
+"@stoplight/markdown-viewer@^3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.npmjs.org/@stoplight/markdown-viewer/-/markdown-viewer-3.0.0-beta.4.tgz#89d0752d2ba987420bcb8b7bf65a4509653a6f82"
+  integrity sha512-PUH9C5AKk4CXqUYFErUULAfawFRyelD+mS0VyQK7h8pZD2W8KbIXJZnNlhdXACK38WoVGdvC6/kZVoqNa6FQ3A==
+  dependencies:
+    "@stoplight/json" "1.5.x"
+    "@stoplight/markdown" "1.1.x"
+    "@stoplight/ui-kit" "^2.0.0-beta.11"
+    classnames "^2.2.6"
+    react-error-boundary "^1.2.5"
+    refractor "2.6.x"
+    rehype "7.0.x"
+
 "@stoplight/markdown@1.1.x":
   version "1.1.1"
   resolved "https://registry.npmjs.org/@stoplight/markdown/-/markdown-1.1.1.tgz#5247baed44261f1522231dfb73074c51583857f1"
@@ -1809,7 +1822,7 @@
   resolved "https://registry.npmjs.org/@stoplight/types/-/types-4.1.0.tgz#23a4a987fe1344339e33ee81c4608340c842ab44"
   integrity sha512-2zcUn/jtD4tqonsBoX4QHNNKXE6llNMaS7V4PkRDFkssIIVPB0gZjLWLeR//dY/aaFriO7kdhNss1UAMTLNvcA==
 
-"@stoplight/ui-kit@2.0.0-beta.12", "@stoplight/ui-kit@^2.0.0-beta.12":
+"@stoplight/ui-kit@2.0.0-beta.12":
   version "2.0.0-beta.12"
   resolved "https://registry.npmjs.org/@stoplight/ui-kit/-/ui-kit-2.0.0-beta.12.tgz#4c540144f9f38a699fc1124fcb72ce17f6fc36cc"
   integrity sha512-zB2UN3VNvfc/SZ5vxgRdegtjViabpsPBL0DIdQ84F54zWiCMKPpwQ9av0m0jf4SZe2VFcsmT1xwj93Wejg3iXg==
@@ -1836,6 +1849,29 @@
   version "2.0.0-beta.11"
   resolved "https://registry.npmjs.org/@stoplight/ui-kit/-/ui-kit-2.0.0-beta.11.tgz#a2cd4c3ec397d980cc5f41255fa88538f0cfacc4"
   integrity sha512-UKuBSQd6m7dBGpw7lyRnagwXF0y1B5TksHujsFLlhR7aTd5kUtyt5SPgtLMG1EA6a1ezXmpH4RH4GvhEaplSlw==
+  dependencies:
+    "@blueprintjs/core" "^3.15.1"
+    "@blueprintjs/datetime" "^3.9.0"
+    "@blueprintjs/icons" "^3.8.0"
+    "@blueprintjs/select" "^3.8.0"
+    "@blueprintjs/table" "^3.5.0"
+    "@stoplight/types" "4.1.x"
+    classnames "^2.2.6"
+    immer "^2.0.0"
+    react-custom-scrollbars "^4.2.1"
+    react-simple-code-editor "0.9.10"
+    react-tabs "^3.0.0"
+    react-virtualized "^9.21.0"
+    react-virtualized-auto-sizer "^1.0.2"
+    react-window "1.8.1"
+    refractor "2.8.0"
+    use-immer "^0.2.2"
+    yup "^0.27.0"
+
+"@stoplight/ui-kit@^2.0.0-beta.16":
+  version "2.0.0-beta.16"
+  resolved "https://registry.npmjs.org/@stoplight/ui-kit/-/ui-kit-2.0.0-beta.16.tgz#ab58e2d9bbd41a4c733252175b0a9918e173e32f"
+  integrity sha512-dLElpvGX5Ca0ickI76goqNE8kr4ByKTyjz70mjZsa8oC8O3zl7Ku4N/DN/DDB/krqUIhP7lWlBgJW7TbS1n6qA==
   dependencies:
     "@blueprintjs/core" "^3.15.1"
     "@blueprintjs/datetime" "^3.9.0"

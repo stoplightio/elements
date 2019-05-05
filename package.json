@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "@stoplight/json-schema-viewer": "^2.0.0-beta.7",
-    "@stoplight/markdown-viewer": "^3.0.0-beta.3",
-    "@stoplight/ui-kit": "^2.0.0-beta.12",
+    "@stoplight/markdown-viewer": "^3.0.0-beta.4",
+    "@stoplight/ui-kit": "^2.0.0-beta.16",
     "classnames": "^2.2.6",
     "react-error-boundary": "^1.2.5"
   },
