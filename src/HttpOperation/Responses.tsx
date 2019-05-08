@@ -58,6 +58,7 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses 
 
           return (
             <Button
+              key={response.code}
               active={activeResponse === index}
               text={response.code}
               icon={<Icon icon="full-circle" iconSize={10} color={HttpCodeColor[String(response.code)[0]]} />}
