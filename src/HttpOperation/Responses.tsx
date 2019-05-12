@@ -46,6 +46,12 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses 
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!responses || !responses.length) return null;
 
+  const sortedResponses = [...responses].sort((a, b) => {
+    if (a.code === 'default') return -1;
+    if (b.code === 'default') return 1;
+    return Number(a.code) < Number(b.code) ? -1 : 1;
+  });
+
   return (
     <div className="mt-10">
       <div className="flex items-center">
@@ -53,7 +59,7 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses 
       </div>
 
       <ButtonGroup className="mt-6">
-        {responses.map((response, index) => {
+        {sortedResponses.map((response, index) => {
           if (!response.code) return null;
 
           return (
