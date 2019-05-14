@@ -74,7 +74,7 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses 
         })}
       </ButtonGroup>
 
-      <Response className="mt-6" response={responses[activeResponse]} />
+      <Response className="mt-6" response={sortedResponses[activeResponse]} />
     </div>
   );
 };

@@ -24,9 +24,7 @@ export const Body: React.FunctionComponent<IBodyProps> = ({ body, className }) =
 
   return (
     <div className={className}>
-      <div className="flex items-center">
-        <div className="text-lg font-semibold">Body</div>
-      </div>
+      <div className="text-lg font-semibold">Body</div>
 
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}
 
