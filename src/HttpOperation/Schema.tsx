@@ -13,7 +13,7 @@ export interface ISchema {
 }
 
 const JSV_MAX_ROWS = 8;
-const JSV_ROW_HEIGHT = 40;
+const JSV_ROW_HEIGHT = 30;
 
 export const Schema: React.FunctionComponent<ISchema> = ({ className, value, examples }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -30,7 +30,7 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
       {value && (
         <SimpleTabPanel className="p-0">
           <div style={{ height: JSV_MAX_ROWS * JSV_ROW_HEIGHT }}>
-            <JsonSchemaViewer schema={typeof value === 'string' ? safeParse(value) : value} />
+            <JsonSchemaViewer maxRows={8} schema={typeof value === 'string' ? safeParse(value) : value} />
           </div>
         </SimpleTabPanel>
       )}
