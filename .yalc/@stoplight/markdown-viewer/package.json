@@ -1,0 +1,33 @@
+{
+  "name": "@stoplight/markdown-viewer",
+  "version": "0.0.0-edbab1d9",
+  "description": "A react component that renders Stoplight flavored markdown.",
+  "keywords": [],
+  "main": "index.js",
+  "sideEffects": false,
+  "files": [
+    "**/*"
+  ],
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/markdown-viewer"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "peerDependencies": {
+    "@stoplight/ui-kit": "2.x.x",
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "dependencies": {
+    "@stoplight/json": "2.x.x",
+    "@stoplight/markdown": "2.x.x",
+    "classnames": "2.x.x",
+    "react-error-boundary": "1.x.x",
+    "rehype": "7.x.x"
+  },
+  "typings": "index.d.ts"
+}

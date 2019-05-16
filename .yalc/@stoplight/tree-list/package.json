@@ -1,0 +1,35 @@
+{
+  "name": "@stoplight/tree-list",
+  "version": "0.0.1-cf536ab8",
+  "description": "A React component that renders a file tree like interface.",
+  "keywords": [],
+  "sideEffects": false,
+  "files": [
+    "**/*"
+  ],
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/tree-list"
+  },
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "peerDependencies": {
+    "@stoplight/ui-kit": ">=2",
+    "mobx": "5.x.x",
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "dependencies": {
+    "@stoplight/lifecycle": "2.x.x",
+    "classnames": "2.x.x",
+    "mobx-react-lite": "1.x.x",
+    "react-error-boundary": "^1.2.5",
+    "strict-event-emitter-types": "2.x.x"
+  },
+  "main": "index.cjs.js",
+  "module": "index.es.js",
+  "typings": "src/index.d.ts"
+}

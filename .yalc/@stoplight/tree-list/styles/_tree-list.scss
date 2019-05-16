@@ -1,0 +1,127 @@
+@import '~@stoplight/ui-kit/styles/common/theme';
+
+$tree-caret-width: 12px !default;
+$tree-icon-width: 18px !default;
+$tree-icon-spacing: 5px !default;
+
+@mixin flex($align, $justify) {
+  display: flex;
+  @if $align {
+    align-items: $align;
+  }
+  @if $justify {
+    justify-content: $justify;
+  }
+}
+
+.TreeList {
+  width: 100%;
+  background-color: inherit;
+  font-size: get-font-size(base);
+
+  * {
+    &,
+    &::before,
+    &::after {
+      box-sizing: border-box;
+    }
+  }
+
+  > div > div {
+    // overrides react-window's css style
+    will-change: scroll-position !important;
+  }
+}
+
+.TreeListItem {
+  --hover-bg: #{rgba(get-color(gray, 4), 0.3)};
+  --striped-bg: #{rgba(get-color(gray, 4), 0.15)};
+  --active-bg: #{rgba(get-color(gray, 4), 0.4)};
+  --active-fg: #{rgba(get-color(gray, 4), 0.4)};
+  --highlighted-bg: #{rgba(get-color(gray, 4), 0.4)};
+  // --highlighted-fg: #{rgba(get-color(gray, 4), 0.4)};
+  --selected-bg: #{rgba(get-color(gray, 4), 0.4)};
+  --selected-fg: #{rgba(get-color(gray, 4), 0.4)};
+
+  @include flex(center, null);
+
+  &--striped {
+    background-color: var(--striped-bg);
+  }
+
+  .TreeList--interactive & {
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--hover-bg);
+    }
+  }
+
+  &--active {
+    &,
+    &:hover {
+      background-color: var(--active-bg);
+      color: var(--active-fg);
+    }
+  }
+
+  &--selected {
+    &,
+    &:hover {
+      background-color: var(--selected-bg);
+      color: var(--selected-fg);
+    }
+  }
+
+  &__caret {
+    @include flex(center, center);
+
+    margin-left: $tree-icon-spacing / 2;
+    min-width: $tree-caret-width;
+
+    svg:not([fill]) {
+      // note: we didn't add any way to target stroke as we didnt need it at the time.
+      fill: var(--icon-fg, #5c7080);
+    }
+  }
+
+  &__icon {
+    position: relative;
+    width: $tree-icon-width;
+
+    svg:not([fill]) {
+      // note: we didn't add any way to target stroke as we didnt need it at the time.
+      fill: var(--icon-fg, #5c7080) !important;
+    }
+  }
+
+  &__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    margin-right: 5px; // small offset
+  }
+
+  &__icon,
+  &__label {
+    margin-left: $tree-icon-spacing;
+  }
+
+  .#{$ns}-editable-text-editing {
+    &::before {
+      background: var(--edited-bg, rgba(255, 255, 255, 0.2));
+    }
+  }
+
+  &__error {
+    background-color: get-color(red, 5);
+    color: white;
+    position: absolute;
+    margin-left: $tree-caret-width + $tree-icon-spacing + $tree-icon-width;
+    top: 100%;
+    z-index: 3;
+    padding: 3px 5px;
+    width: 100%;
+  }
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"getAnnotations.js","sourceRoot":"","sources":["../../src/utils/getAnnotations.ts"],"names":[],"mappings":";;AACA,qCAAsC;AAGtC,MAAM,WAAW,GAA6B,CAAC,OAAO,EAAE,aAAa,EAAE,SAAS,EAAE,UAAU,CAAC,CAAC;AAE9F,SAAgB,cAAc,CAAC,IAAiB;IAC9C,OAAO,KAAK,CAAC,IAAI,EAAE,WAAW,CAAC,CAAC;AAClC,CAAC;AAFD,wCAEC"}

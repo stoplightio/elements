@@ -1,0 +1,1 @@
+{"version":3,"file":"getCodeLanguage.js","sourceRoot":"","sources":["../../src/utils/getCodeLanguage.ts"],"names":[],"mappings":";;AAAa,QAAA,eAAe,GAAG,CAAC,IAAa,EAAE,EAAE;IAC/C,QAAQ,IAAI,EAAE;QACZ,KAAK,MAAM;YACT,OAAO,MAAM,CAAC;QAChB;YACE,OAAO,IAAI,CAAC;KACf;AACH,CAAC,CAAC"}

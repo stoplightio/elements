@@ -1,0 +1,25 @@
+{
+  "version": "v1",
+  "packages": {
+    "@stoplight/json-schema-viewer": {
+      "signature": "f72dfaaa263d6d47814070fbfbf77527",
+      "file": true,
+      "replaced": "^2.0.0-beta.7"
+    },
+    "@stoplight/markdown-viewer": {
+      "signature": "edbab1d9e87c1428547eb95d1371e045",
+      "file": true,
+      "replaced": "^3.0.0-beta.4"
+    },
+    "@stoplight/ui-kit": {
+      "signature": "4d01db4d3dcc19ca82bd6ccc53e209d9",
+      "file": true,
+      "replaced": "^2.0.0-beta.18"
+    },
+    "@stoplight/tree-list": {
+      "signature": "cf536ab85bfb49d66d46d5c6be33a0c2",
+      "file": true,
+      "replaced": "^3.7.0"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"getMetadata.js","sourceRoot":"","sources":["../../src/utils/getMetadata.ts"],"names":[],"mappings":";;AACA,qCAAsC;AAGtC,MAAM,QAAQ,GAA0B,CAAC,IAAI,EAAE,SAAS,CAAC,CAAC;AAE1D,SAAgB,WAAW,CAAC,IAAiB;IAC3C,OAAO,KAAK,CAAC,IAAI,EAAE,QAAQ,CAAC,CAAC;AAC/B,CAAC;AAFD,kCAEC"}
