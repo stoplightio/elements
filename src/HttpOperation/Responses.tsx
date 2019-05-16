@@ -46,11 +46,7 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses 
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!responses || !responses.length) return null;
 
-  const sortedResponses = [...responses].sort((a, b) => {
-    if (a.code === 'default') return -1;
-    if (b.code === 'default') return 1;
-    return Number(a.code) < Number(b.code) ? -1 : 1;
-  });
+  const sortedResponses = [...responses].sort();
 
   return (
     <div className="mt-10">
