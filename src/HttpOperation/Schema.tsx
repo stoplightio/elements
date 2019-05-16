@@ -1,19 +1,15 @@
-import * as React from 'react';
-
 import { safeParse, safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { IHttpContent, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
+import * as React from 'react';
 
 export interface ISchema {
   className?: string;
   value?: IHttpContent['schema'];
   examples?: IHttpContent['examples'];
 }
-
-const JSV_MAX_ROWS = 8;
-const JSV_ROW_HEIGHT = 30;
 
 export const Schema: React.FunctionComponent<ISchema> = ({ className, value, examples }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -29,9 +25,7 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
 
       {value && (
         <SimpleTabPanel className="p-0">
-          <div style={{ height: JSV_MAX_ROWS * JSV_ROW_HEIGHT }}>
-            <JsonSchemaViewer maxRows={8} schema={typeof value === 'string' ? safeParse(value) : value} />
-          </div>
+          <JsonSchemaViewer maxRows={8} schema={typeof value === 'string' ? safeParse(value) : value} />
         </SimpleTabPanel>
       )}
 
