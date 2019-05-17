@@ -35,9 +35,9 @@
     "test.watch": "yarn test --watch"
   },
   "peerDependencies": {
-    "@stoplight/json-schema-viewer": "2.x.x",
-    "@stoplight/markdown-viewer": "3.x.x",
-    "@stoplight/ui-kit": "2.x.x",
+    "@stoplight/json-schema-viewer": ">=2",
+    "@stoplight/markdown-viewer": ">=3",
+    "@stoplight/ui-kit": ">=2",
     "react": ">=16.8",
     "react-dom": ">=16.8"
   },
@@ -46,12 +46,12 @@
     "react-error-boundary": "^1.2.5"
   },
   "devDependencies": {
-    "@stoplight/json-schema-viewer": "file:.yalc/@stoplight/json-schema-viewer",
-    "@stoplight/markdown-viewer": "file:.yalc/@stoplight/markdown-viewer",
+    "@stoplight/json-schema-viewer": "^2.0.0",
+    "@stoplight/markdown-viewer": "^3.0.0",
     "@stoplight/scripts": "5.1.0",
     "@stoplight/storybook-config": "^2.0.2",
-    "@stoplight/tree-list": "file:.yalc/@stoplight/tree-list",
-    "@stoplight/ui-kit": "file:.yalc/@stoplight/ui-kit",
+    "@stoplight/tree-list": "^4.0.0",
+    "@stoplight/ui-kit": "^2.0.0",
     "@types/classnames": "^2.2.7",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",

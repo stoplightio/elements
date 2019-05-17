@@ -1636,16 +1636,29 @@
   resolved "https://registry.npmjs.org/@stoplight/fast-safe-stringify/-/fast-safe-stringify-2.1.2.tgz#2811eff4989c3d4c5c9a3789f057e25358db0899"
   integrity sha512-ayw3qQ9KNn2K5q6ggrLclh+rdZsSLwYIUz3uAer1NzaCpalJLR4g32G845ylgq7Xy2AunMHnNfD3FC3s0rUcsA==
 
-"@stoplight/json-schema-viewer@file:.yalc/@stoplight/json-schema-viewer":
-  version "0.0.0-f72dfaaa"
+"@stoplight/json-schema-viewer@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@stoplight/json-schema-viewer/-/json-schema-viewer-2.0.0.tgz#98bfae888e5efaa83bd3c096372a1fb27a07d0e6"
+  integrity sha512-IYt1zx0VCPfppEFuzbXcfOSlSf+CooTY8CRBafTfnjMV2W/k4YytQ0m8rvJNGnAe3ucY9kdWc2GNocoO4ER0sw==
   dependencies:
-    "@stoplight/json" "2.0.x"
-    classnames "2.2.x"
-    mobx-react-lite "1.x.x"
-    pluralize "7.0.x"
-    react-error-boundary "1.2.x"
+    "@stoplight/json" "1.9.x"
+    classnames "^2.2.6"
+    json-schema-merge-allof "^0.6.0"
+    mobx-react-lite "^1.3.1"
+    pluralize "^7.0.0"
+    react-error-boundary "^1.2.5"
 
-"@stoplight/json@2.0.x", "@stoplight/json@2.x.x":
+"@stoplight/json@1.9.x":
+  version "1.9.0"
+  resolved "https://registry.npmjs.org/@stoplight/json/-/json-1.9.0.tgz#904887e8aea1eb8657b12b2a7efc259562b765fd"
+  integrity sha512-5DwyrS+B2lGKVeDyNBaq1iTL2ovXaNVgh98r/jwO3z4A2d/xLffmPwnjgUByga+UBUbFMCFXdM3nj134V3Mt+w==
+  dependencies:
+    "@stoplight/fast-safe-stringify" "2.1.2"
+    "@stoplight/types" "4.0.x"
+    jsonc-parser "2.1.0"
+    lodash "4.x.x"
+
+"@stoplight/json@2.x.x":
   version "2.0.1"
   resolved "https://registry.npmjs.org/@stoplight/json/-/json-2.0.1.tgz#d41f13f52901ddfb8a8723b69e7f2e1242572edd"
   integrity sha512-b0Ocx7U+jPJGmb8OIDlGn2NiR9YmPSkbBDLbmcYTq/os3Ll0GTwtYkWT5ozYL+sy5q8dRSlG7fwdEBEH51XHZg==
@@ -1663,8 +1676,10 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "5.2.6"
 
-"@stoplight/markdown-viewer@file:.yalc/@stoplight/markdown-viewer":
-  version "0.0.0-edbab1d9"
+"@stoplight/markdown-viewer@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@stoplight/markdown-viewer/-/markdown-viewer-3.0.0.tgz#dce319ae158950822991870fae6b4746819323c9"
+  integrity sha512-E/jk0kOs3lgFR/hcR16q6Tjl2FtW6EDxEwHOdCl/pVoLuLd38fQCAXx/IA/cN0ly35fSQ2mhv0+4ofqNCWBKyA==
   dependencies:
     "@stoplight/json" "2.x.x"
     "@stoplight/markdown" "2.x.x"
@@ -1746,14 +1761,21 @@
     ts-loader "5.4.5"
     webpack "4.30.0"
 
-"@stoplight/tree-list@file:.yalc/@stoplight/tree-list":
-  version "0.0.1-cf536ab8"
+"@stoplight/tree-list@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@stoplight/tree-list/-/tree-list-4.0.0.tgz#c0f32a8c0d12a823a9dbd568db4117d59eb79289"
+  integrity sha512-CZoMmJYLly56E/2MCufmKarRNeaIyzgtyuhcSnOjhNJi9pmrlsi8EHdJGVvsGjWVRt/KU1CvspFSN+8NiSXMsg==
   dependencies:
     "@stoplight/lifecycle" "2.x.x"
     classnames "2.x.x"
     mobx-react-lite "1.x.x"
     react-error-boundary "^1.2.5"
     strict-event-emitter-types "2.x.x"
+
+"@stoplight/types@4.0.x":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@stoplight/types/-/types-4.0.0.tgz#04669b13f4de54e0446392167087cd6a9a570556"
+  integrity sha512-xh7STKNeE7j4Z6w8vkw+QxSCaxhF5+c2mY7UBqT6BMiom/Ep/EdYmYq3dmvYfXqwbkiTMR6qbYymwqnoJo8Z6w==
 
 "@stoplight/types@4.1.x":
   version "4.1.0"
@@ -1765,8 +1787,10 @@
   resolved "https://registry.npmjs.org/@stoplight/types/-/types-5.0.0.tgz#5d17224f4ba727a1ec7b4e1397f330fab2e2f0de"
   integrity sha512-ttAHp4lBiO+0uILKj0poYNFnjPR49CZObPhbba+M7Ss1UUSgo8PlQXaVKxh4klxU8ldgIqTpM+w9bW7Fth/JrQ==
 
-"@stoplight/ui-kit@file:.yalc/@stoplight/ui-kit":
-  version "0.0.0-4d01db4d"
+"@stoplight/ui-kit@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@stoplight/ui-kit/-/ui-kit-2.0.0.tgz#7c0714ca2509b238ed0bbb7bead2e5c7d8ff8ef2"
+  integrity sha512-riqYporkodtC/q1vr0HQuPgo1uGWGNenPjByM4qEuSqgqdepl+3u2xZlWlJ+SjVnzy/pWP0WWbWPd3jVsY5cMQ==
   dependencies:
     "@blueprintjs/core" "^3.15.1"
     "@blueprintjs/icons" "^3.8.0"
@@ -4232,7 +4256,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@2.2.x, classnames@2.x.x, classnames@^2.2, classnames@^2.2.0, classnames@^2.2.5, classnames@^2.2.6:
+classnames@2.x.x, classnames@^2.2, classnames@^2.2.0, classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.npmjs.org/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -4556,6 +4580,25 @@ compose-function@3.0.3:
   integrity sha1-ntZ18TzFRQHTCVCkhv9qe6OrGF8=
   dependencies:
     arity-n "^1.0.4"
+
+compute-gcd@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/compute-gcd/-/compute-gcd-1.2.0.tgz#fc1ede5b65001e950226502f46543863e4fea10e"
+  integrity sha1-/B7eW2UAHpUCJlAvRlQ4Y+T+oQ4=
+  dependencies:
+    validate.io-array "^1.0.3"
+    validate.io-function "^1.0.2"
+    validate.io-integer-array "^1.0.0"
+
+compute-lcm@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/compute-lcm/-/compute-lcm-1.1.0.tgz#abd96d040b41b0a166f89944b5c8b7c511e21ad5"
+  integrity sha1-q9ltBAtBsKFm+JlEtci3xRHiGtU=
+  dependencies:
+    compute-gcd "^1.2.0"
+    validate.io-array "^1.0.3"
+    validate.io-function "^1.0.2"
+    validate.io-integer-array "^1.0.0"
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -8484,6 +8527,22 @@ json-parse-better-errors@^1.0.0, json-parse-better-errors@^1.0.1, json-parse-bet
   resolved "https://registry.npmjs.org/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
   integrity sha512-mrqyZKfX5EhL7hvqcV6WG1yYjnjeuYDzDhhcAAUrq8Po85NBQBJP+ZDUT75qZQ98IkUoBqdkExkukOU7Ts2wrw==
 
+json-schema-compare@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/json-schema-compare/-/json-schema-compare-0.2.2.tgz#dd601508335a90c7f4cfadb6b2e397225c908e56"
+  integrity sha512-c4WYmDKyJXhs7WWvAWm3uIYnfyWFoIp+JEoX34rctVvEkMYCPGhXtvmFFXiffBbxfZsvQ0RNnV5H7GvDF5HCqQ==
+  dependencies:
+    lodash "^4.17.4"
+
+json-schema-merge-allof@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.npmjs.org/json-schema-merge-allof/-/json-schema-merge-allof-0.6.0.tgz#64d48820fec26b228db837475ce3338936bf59a5"
+  integrity sha512-LEw4VMQVRceOPLuGRWcxW5orTTiR9ZAtqTAe4rQUjNADTeR81bezBVFa0MqIwp0YmHIM1KkhSjZM7o+IQhaPbQ==
+  dependencies:
+    compute-lcm "^1.1.0"
+    json-schema-compare "^0.2.2"
+    lodash "^4.17.4"
+
 json-schema-traverse@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
@@ -9674,6 +9733,11 @@ mobx-react-lite@1.x.x:
   version "1.3.1"
   resolved "https://registry.npmjs.org/mobx-react-lite/-/mobx-react-lite-1.3.1.tgz#32f729b0623ed9f0a17537b5c6239207cd241b64"
   integrity sha512-SHJWP8BVdMkRqTBXBUeD515vdrCF6J6kd8eB+J1VLjwfh57F58WN9Kqb8FoXQrb2xVehE6u24aCo6cU92fJreQ==
+
+mobx-react-lite@^1.3.1:
+  version "1.3.2"
+  resolved "https://registry.npmjs.org/mobx-react-lite/-/mobx-react-lite-1.3.2.tgz#4366048b5d283d12a82053367638b5d79281951f"
+  integrity sha512-D8VZEsxSxMNYDJmw2SgUXVAgpOlVYmp3hBCusoe+LuBDYUqyn2K3RPrMEF0rIzYJAvqpyv7YRrH8I3eBsPPx1A==
 
 mobx@^5.9.4:
   version "5.9.4"
@@ -11000,7 +11064,7 @@ please-upgrade-node@^3.0.2, please-upgrade-node@^3.1.1:
   dependencies:
     semver-compare "^1.0.0"
 
-pluralize@7.0.x:
+pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.npmjs.org/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
   integrity sha512-ARhBOdzS3e41FbkW/XWrTEtukqqLoK5+Z/4UeDaLuSW+39JPeFgs4gCGqsrJHVZX0fUrx//4OF0K1CUGwlIFow==
@@ -11591,7 +11655,7 @@ react-draggable@^3.1.1, react-draggable@^3.3.0:
     classnames "^2.2.5"
     prop-types "^15.6.0"
 
-react-error-boundary@1.2.x, react-error-boundary@1.x.x, react-error-boundary@^1.2.5:
+react-error-boundary@1.x.x, react-error-boundary@^1.2.5:
   version "1.2.5"
   resolved "https://registry.npmjs.org/react-error-boundary/-/react-error-boundary-1.2.5.tgz#a362cb799d2e58ff8f114f7c4bc25677ce4e4149"
   integrity sha512-5CPSeLJA2igJNppAgFRwnTL9aK3ojenk65enNzhVyoxYNbHpIJXnChUO7+4vPhkncRA9wvQMXq6Azp2XeXd+iQ==
@@ -14450,6 +14514,36 @@ validate-npm-package-name@^3.0.0, validate-npm-package-name@~3.0.0:
   integrity sha1-X6kS2B630MdK/BQN5zF/DKffQ34=
   dependencies:
     builtins "^1.0.3"
+
+validate.io-array@^1.0.3:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/validate.io-array/-/validate.io-array-1.0.6.tgz#5b5a2cafd8f8b85abb2f886ba153f2d93a27774d"
+  integrity sha1-W1osr9j4uFq7L4hroVPy2Tond00=
+
+validate.io-function@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/validate.io-function/-/validate.io-function-1.0.2.tgz#343a19802ed3b1968269c780e558e93411c0bad7"
+  integrity sha1-NDoZgC7TsZaCaceA5VjpNBHAutc=
+
+validate.io-integer-array@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/validate.io-integer-array/-/validate.io-integer-array-1.0.0.tgz#2cabde033293a6bcbe063feafe91eaf46b13a089"
+  integrity sha1-LKveAzKTpry+Bj/q/pHq9GsToIk=
+  dependencies:
+    validate.io-array "^1.0.3"
+    validate.io-integer "^1.0.4"
+
+validate.io-integer@^1.0.4:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/validate.io-integer/-/validate.io-integer-1.0.5.tgz#168496480b95be2247ec443f2233de4f89878068"
+  integrity sha1-FoSWSAuVviJH7EQ/IjPeT4mHgGg=
+  dependencies:
+    validate.io-number "^1.0.3"
+
+validate.io-number@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/validate.io-number/-/validate.io-number-1.0.3.tgz#f63ffeda248bf28a67a8d48e0e3b461a1665baf8"
+  integrity sha1-9j/+2iSL8opnqNSODjtGGhZluvg=
 
 value-equal@^0.4.0:
   version "0.4.0"
