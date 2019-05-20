@@ -6,8 +6,8 @@ import { IHttpOperation } from '@stoplight/types';
 
 export const HttpMethodColors: { [method: string]: string } = {
   get: 'success',
-  post: 'info',
-  put: 'gray',
+  post: 'primary',
+  put: 'warning',
   patch: 'warning',
   delete: 'danger',
 };
@@ -43,7 +43,13 @@ Info.displayName = 'HttpOperation.Info';
 
 export const Method: React.FunctionComponent<{ className?: string; method: string }> = ({ className, method }) => {
   return (
-    <span className={cn(className, `bp3-tag bp3-round bg-${HttpMethodColors[method] || 'gray'}`)}>
+    <span
+      className={cn(
+        className,
+        'bp3-tag bp3-round',
+        HttpMethodColors[method] ? `bp3-intent-${HttpMethodColors[method]}` : ''
+      )}
+    >
       <span className="bp3-text-overflow-ellipsis bp3-fill flex items-center text-xl p-2">{method.toUpperCase()}</span>
     </span>
   );
@@ -58,7 +64,7 @@ export const Path: React.FunctionComponent<{ className?: string; host?: string; 
 
   return (
     <div className={cn(className, 'inline-flex items-center bg-darken-2 py-2 px-3 rounded select-all')}>
-      {host && <div className="text-darken-7 mr-1">{host}</div>}
+      {host && <div className="text-darken-7 dark:text-gray-6 mr-1">{host}</div>}
       <div className="font-semibold">{path}</div>
     </div>
   );
