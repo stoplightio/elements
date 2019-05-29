@@ -1,8 +1,7 @@
-import * as React from 'react';
-
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperationResponse } from '@stoplight/types';
 import { Button, ButtonGroup, Icon } from '@stoplight/ui-kit';
+import * as React from 'react';
 
 import { Parameters } from './Parameters';
 import { Schema } from './Schema';

@@ -1761,10 +1761,10 @@
     ts-loader "5.4.5"
     webpack "4.30.0"
 
-"@stoplight/tree-list@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@stoplight/tree-list/-/tree-list-4.0.0.tgz#c0f32a8c0d12a823a9dbd568db4117d59eb79289"
-  integrity sha512-CZoMmJYLly56E/2MCufmKarRNeaIyzgtyuhcSnOjhNJi9pmrlsi8EHdJGVvsGjWVRt/KU1CvspFSN+8NiSXMsg==
+"@stoplight/tree-list@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/@stoplight/tree-list/-/tree-list-4.1.1.tgz#c073262a261ac61278af577170be50e37bd00fc5"
+  integrity sha512-jl+bXXtuZ3R8q11B1cjWRQWFncOzz/bIITtGdqsyICx7qXryuCh2BCZmvwFL25+b1IgaXmvKipZNxlQIyvSGwg==
   dependencies:
     "@stoplight/lifecycle" "2.x.x"
     classnames "2.x.x"
@@ -1787,10 +1787,10 @@
   resolved "https://registry.npmjs.org/@stoplight/types/-/types-5.0.0.tgz#5d17224f4ba727a1ec7b4e1397f330fab2e2f0de"
   integrity sha512-ttAHp4lBiO+0uILKj0poYNFnjPR49CZObPhbba+M7Ss1UUSgo8PlQXaVKxh4klxU8ldgIqTpM+w9bW7Fth/JrQ==
 
-"@stoplight/types@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@stoplight/types/-/types-5.1.1.tgz#9224aec04948ac59197da503c084c3826598be09"
-  integrity sha512-XaGr0GFD4CuDCrdbof2pPYIs+FHSNJfvCFur4ZN31iwoTtlhVg0MBwAbj9dlFviUrMMbIflLFaFgqBUNguyMEA==
+"@stoplight/types@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.npmjs.org/@stoplight/types/-/types-7.1.0.tgz#32c66a517e480d530bf54455af8b94f2c7275429"
+  integrity sha512-V+6ap1S9FP+WeP2D17LZrmmIyRGvVOHPZWDe0yK/yj9U+sYiITX0ix8/3OOSj1PIY+s88fFRlP0CgfIZJLAD3A==
 
 "@stoplight/ui-kit@^2.0.0":
   version "2.0.0"

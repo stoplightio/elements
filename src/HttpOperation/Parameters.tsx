@@ -1,8 +1,7 @@
-import cn from 'classnames';
-import * as React from 'react';
-
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpParam } from '@stoplight/types';
+import cn from 'classnames';
+import * as React from 'react';
 
 export interface IParameterProps {
   parameter: IHttpParam;
@@ -10,9 +9,7 @@ export interface IParameterProps {
 }
 
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, className }) => {
-  if (!parameter || !parameter.contents || !parameter.contents[0]) return null;
-
-  const content = parameter.contents[0];
+  if (!parameter || !parameter.content) return null;
 
   return (
     <div className={cn('flex', className)}>
@@ -24,7 +21,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
         </div>
       </div>
 
-      <div className="w-24">{content.schema && content.schema.type}</div>
+      <div className="w-24">{parameter.content.schema && parameter.content.schema.type}</div>
 
       {parameter.description && <MarkdownViewer className="ml-12 flex-1" markdown={parameter.description} />}
     </div>

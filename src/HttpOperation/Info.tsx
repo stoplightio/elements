@@ -1,8 +1,7 @@
-import cn from 'classnames';
-import * as React from 'react';
-
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperation } from '@stoplight/types';
+import cn from 'classnames';
+import * as React from 'react';
 
 export const HttpMethodColors: { [method: string]: string } = {
   get: 'success',

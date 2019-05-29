@@ -1,6 +1,6 @@
+import { IHttpOperationRequest } from '@stoplight/types';
 import * as React from 'react';
 
-import { IHttpOperationRequest } from '@stoplight/types';
 import { Body } from './Body';
 import { Parameters } from './Parameters';
 

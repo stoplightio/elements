@@ -1,7 +1,7 @@
-import * as React from 'react';
-
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperationRequestBody } from '@stoplight/types';
+import * as React from 'react';
+
 import { Schema } from './Schema';
 
 export interface IBodyProps {

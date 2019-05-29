@@ -1,8 +1,7 @@
+import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 import ErrorBoundary, { ErrorBoundaryProps, FallbackProps } from 'react-error-boundary';
-
-import { IHttpOperation } from '@stoplight/types';
 
 import { Info } from './Info';
 import { Request } from './Request';
