@@ -1787,10 +1787,10 @@
   resolved "https://registry.npmjs.org/@stoplight/types/-/types-5.0.0.tgz#5d17224f4ba727a1ec7b4e1397f330fab2e2f0de"
   integrity sha512-ttAHp4lBiO+0uILKj0poYNFnjPR49CZObPhbba+M7Ss1UUSgo8PlQXaVKxh4klxU8ldgIqTpM+w9bW7Fth/JrQ==
 
-"@stoplight/types@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.npmjs.org/@stoplight/types/-/types-7.1.0.tgz#32c66a517e480d530bf54455af8b94f2c7275429"
-  integrity sha512-V+6ap1S9FP+WeP2D17LZrmmIyRGvVOHPZWDe0yK/yj9U+sYiITX0ix8/3OOSj1PIY+s88fFRlP0CgfIZJLAD3A==
+"@stoplight/types@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-9.0.1.tgz#b580610106d35d2c65e2690f636c880a45f1093a"
+  integrity sha512-PGHpxtcdAfyIjd4+GhefdGlPolaXR+1BXcO855v1Gg1xTwFWwZrM2CALcq5Ev8vl74pEMAYSZ3CvwJVrQM7BWw==
 
 "@stoplight/ui-kit@^2.0.0":
   version "2.0.0"
