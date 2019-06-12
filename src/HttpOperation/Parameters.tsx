@@ -9,7 +9,7 @@ export interface IParameterProps {
 }
 
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, className }) => {
-  if (!parameter || !parameter.content) return null;
+  if (!parameter || !parameter.schema) return null;
 
   return (
     <div className={cn('flex', className)}>
@@ -21,7 +21,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
         </div>
       </div>
 
-      <div className="w-24">{parameter.content.schema && parameter.content.schema.type}</div>
+      <div className="w-24">{parameter.schema && parameter.schema.type}</div>
 
       {parameter.description && <MarkdownViewer className="ml-12 flex-1" markdown={parameter.description} />}
     </div>
@@ -30,7 +30,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 Parameter.displayName = 'HttpOperation.Parameter';
 
 export interface IParametersProps {
-  parameters: IHttpParam[];
+  parameters?: IHttpParam[];
   className?: string;
   title?: string;
 }

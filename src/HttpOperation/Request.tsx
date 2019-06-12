@@ -5,7 +5,7 @@ import { Body } from './Body';
 import { Parameters } from './Parameters';
 
 export interface IRequestProps {
-  request: IHttpOperationRequest;
+  request?: IHttpOperationRequest;
 }
 
 export const Request: React.FunctionComponent<IRequestProps> = ({ request }) => {

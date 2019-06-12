@@ -51,7 +51,7 @@
     "@stoplight/scripts": "5.1.0",
     "@stoplight/storybook-config": "^2.0.2",
     "@stoplight/tree-list": "^4.1.1",
-    "@stoplight/types": "^7.1.0",
+    "@stoplight/types": "^9.0.1",
     "@stoplight/ui-kit": "^2.0.0",
     "@types/classnames": "^2.2.7",
     "@types/enzyme": "3.x.x",
