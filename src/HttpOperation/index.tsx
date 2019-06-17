@@ -15,7 +15,7 @@ export interface IHttpOperationProps extends ErrorBoundaryProps {
 const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ className, value }) => {
   if (typeof value !== 'object' || value === null) {
     throw new TypeError(
-      `Expected http operation value to be an object but received ${value === null ? 'null' : typeof value}`
+      `Expected http operation value to be an object but received ${value === null ? 'null' : typeof value}`,
     );
   }
 

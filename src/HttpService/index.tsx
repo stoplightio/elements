@@ -3,7 +3,7 @@ import { IHttpService } from '@stoplight/types';
 import { HTMLTable } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
-import { withErrorBoundary, ErrorBoundaryProps } from '../withErrorBoundary';
+import { ErrorBoundaryProps, withErrorBoundary } from '../withErrorBoundary';
 
 export interface IHttpServiceProps extends ErrorBoundaryProps {
   className?: string;
