@@ -11,6 +11,7 @@ export const darkMode = () => boolean('dark mode', false);
 export const knobs = (groupId = 'ContentContainer'): IContentContainer => ({
   uri: text('uri', '/Buckinghamshire/Bacon', groupId),
   projectId: number('projectId', 2, { min: 1, max: Infinity, range: false, step: 1 }, groupId),
+  semver: text('semver', '', groupId),
   apiUrl: text('apiUrl', 'http://localhost:4060/graphql', groupId),
   apiToken: text(
     'apiToken',
