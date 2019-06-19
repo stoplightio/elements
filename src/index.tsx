@@ -1,3 +1,3 @@
-export * from './HttpOperation';
-export * from './HttpRequest';
-export * from './HttpService';
+export * from './components/HttpOperation';
+export * from './components/HttpRequest';
+export * from './components/HttpService';

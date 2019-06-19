@@ -6,7 +6,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 const httpOperation: IHttpOperation = require('../__fixtures__/http-operation.json');
-import { HttpOperation } from '../HttpOperation';
+import { HttpOperation } from '../components/HttpOperation';
 
 export const darkMode = () => boolean('dark mode', false);
 
