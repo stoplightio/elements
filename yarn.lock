@@ -1793,9 +1793,9 @@
   integrity sha512-fMVOgl0TSWA9VvsdGyTA26qp2AQ/g4jgSHm3BeFbGIBRGaVKU8JoUNV/tH+a7uxuPIzXzcE1BQa9fENOCKF2BQ==
 
 "@stoplight/ui-kit@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@stoplight/ui-kit/-/ui-kit-2.0.0.tgz#7c0714ca2509b238ed0bbb7bead2e5c7d8ff8ef2"
-  integrity sha512-riqYporkodtC/q1vr0HQuPgo1uGWGNenPjByM4qEuSqgqdepl+3u2xZlWlJ+SjVnzy/pWP0WWbWPd3jVsY5cMQ==
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.4.2.tgz#1721c559a93ef481e070dccef4b58a1ec654ecc1"
+  integrity sha512-XegNXonUFrhO+HHJfPPssAy5JOcaAzPSf4prQqjE9NQbiDSOATx853FI1Z0X0ORf5EviXGmCE99KnTFin1mQgQ==
   dependencies:
     "@blueprintjs/core" "^3.15.1"
     "@blueprintjs/icons" "^3.8.0"

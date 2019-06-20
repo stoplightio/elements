@@ -1,9 +1,9 @@
 import { IHttpRequest } from '@stoplight/types';
+import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
-import { ErrorBoundaryProps, withErrorBoundary } from '../withErrorBoundary';
 
-export interface IHttpRequestProps extends ErrorBoundaryProps {
+export interface IHttpRequestProps extends IErrorBoundary {
   className?: string;
   value: IHttpRequest;
 }
@@ -15,4 +15,4 @@ export const HttpRequestComponent: React.FunctionComponent<IHttpRequestProps> = 
 };
 HttpRequestComponent.displayName = 'HttpRequest.Component';
 
-export const HttpRequest = withErrorBoundary<IHttpRequestProps>(HttpRequestComponent, 'HttpRequest');
+export const HttpRequest = withErrorBoundary<IHttpRequestProps>(HttpRequestComponent, ['value'], 'HttpRequest');

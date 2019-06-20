@@ -1,13 +1,13 @@
 import { IHttpOperation } from '@stoplight/types';
+import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { ErrorBoundaryProps, withErrorBoundary } from '../withErrorBoundary';
 import { Info } from './Info';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-export interface IHttpOperationProps extends ErrorBoundaryProps {
+export interface IHttpOperationProps extends IErrorBoundary {
   className?: string;
   value: IHttpOperation;
 }
@@ -37,4 +37,4 @@ const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ 
 };
 HttpOperationComponent.displayName = 'HttpOperation.Component';
 
-export const HttpOperation = withErrorBoundary<IHttpOperationProps>(HttpOperationComponent, 'HttpOperation');
+export const HttpOperation = withErrorBoundary<IHttpOperationProps>(HttpOperationComponent, ['value'], 'HttpOperation');

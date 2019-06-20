@@ -3,9 +3,9 @@ import { IHttpService } from '@stoplight/types';
 import { HTMLTable } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
-import { ErrorBoundaryProps, withErrorBoundary } from '../withErrorBoundary';
+import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 
-export interface IHttpServiceProps extends ErrorBoundaryProps {
+export interface IHttpServiceProps extends IErrorBoundary {
   className?: string;
   value: IHttpService;
 }
@@ -84,4 +84,4 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
 };
 HttpServiceComponent.displayName = 'HttpService.Component';
 
-export const HttpService = withErrorBoundary<IHttpServiceProps>(HttpServiceComponent, 'HttpService');
+export const HttpService = withErrorBoundary<IHttpServiceProps>(HttpServiceComponent, ['value'], 'HttpService');
