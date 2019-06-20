@@ -1,13 +1,13 @@
 import { IHttpOperation } from '@stoplight/types';
+import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
-import ErrorBoundary, { ErrorBoundaryProps, FallbackProps } from 'react-error-boundary';
 
 import { Info } from './Info';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-export interface IHttpOperationProps extends ErrorBoundaryProps {
+export interface IHttpOperationProps extends IErrorBoundary {
   className?: string;
   value: IHttpOperation;
 }
@@ -15,7 +15,7 @@ export interface IHttpOperationProps extends ErrorBoundaryProps {
 const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ className, value }) => {
   if (typeof value !== 'object' || value === null) {
     throw new TypeError(
-      `Expected http operation value to be an object but received ${value === null ? 'null' : typeof value}`
+      `Expected http operation value to be an object but received ${value === null ? 'null' : typeof value}`,
     );
   }
 
@@ -37,26 +37,4 @@ const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ 
 };
 HttpOperationComponent.displayName = 'HttpOperation.Component';
 
-const HttpOperationFallback: React.FunctionComponent<FallbackProps> = ({ error }) => {
-  return (
-    <div className="p-4">
-      <b>Error</b>
-      {error && `: ${error.message}`}
-    </div>
-  );
-};
-HttpOperationFallback.displayName = 'HttpOperation.Fallback';
-
-export const HttpOperation: React.FunctionComponent<IHttpOperationProps> = ({
-  className,
-  value,
-  onError,
-  FallbackComponent = HttpOperationFallback,
-}) => {
-  return (
-    <ErrorBoundary onError={onError} FallbackComponent={FallbackComponent}>
-      <HttpOperationComponent className={className} value={value} />
-    </ErrorBoundary>
-  );
-};
-HttpOperation.displayName = 'HttpOperation';
+export const HttpOperation = withErrorBoundary<IHttpOperationProps>(HttpOperationComponent, ['value'], 'HttpOperation');

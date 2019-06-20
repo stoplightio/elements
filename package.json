@@ -48,13 +48,13 @@
     "urql": "^1.1.3"
   },
   "devDependencies": {
-    "@stoplight/json-schema-viewer": "^2.0.0",
-    "@stoplight/markdown-viewer": "^3.0.0",
+    "@stoplight/json-schema-viewer": "^2.4.1",
+    "@stoplight/markdown-viewer": "^3.3.1",
     "@stoplight/scripts": "5.1.0",
-    "@stoplight/storybook-config": "^2.0.2",
-    "@stoplight/tree-list": "^4.1.1",
-    "@stoplight/types": "^9.0.1",
-    "@stoplight/ui-kit": "^2.0.0",
+    "@stoplight/storybook-config": "^2.0.4",
+    "@stoplight/tree-list": "^4.3.1",
+    "@stoplight/types": "^9.0.2",
+    "@stoplight/ui-kit": "^2.5.0",
     "@types/classnames": "^2.2.7",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
@@ -71,13 +71,13 @@
     "mobx": "^5.9.4",
     "prettier": "1.x.x",
     "ts-jest": "24.x.x",
-    "tslint": "5.12.x",
+    "tslint": "5.17.0",
     "tslint-config-prettier": "1.18.x",
-    "tslint-config-stoplight": "1.2.x",
+    "tslint-config-stoplight": "1.3.0",
     "tslint-plugin-prettier": "2.0.x",
     "tslint-react": "3.6.x",
     "tslint-react-hooks": "1.1.x",
-    "typescript": "3.3.x"
+    "typescript": "3.5.2"
   },
   "lint-staged": {
     "*.{ts,tsx}$": [

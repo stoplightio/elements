@@ -24,6 +24,6 @@ storiesOf('HttpOperation', module)
   ))
   .add('error boundary', () => (
     <div className={cn('p-12', { 'bp3-dark bg-gray-8': darkMode() })}>
-      <HttpOperation value={null} onError={error => console.log('You can hook into the onError handler too:', error)} />
+      <HttpOperation value={null} />
     </div>
   ));

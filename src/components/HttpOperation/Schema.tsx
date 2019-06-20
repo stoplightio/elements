@@ -41,7 +41,7 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
                   ? (example as INodeExample).value
                   : (example as INodeExternalExample).externalValue,
                 undefined,
-                4
+                4,
               )}
             />
           </SimpleTabPanel>
