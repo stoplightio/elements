@@ -45,13 +45,13 @@
     "classnames": "^2.2.6"
   },
   "devDependencies": {
-    "@stoplight/json-schema-viewer": "^2.0.0",
-    "@stoplight/markdown-viewer": "^3.0.0",
+    "@stoplight/json-schema-viewer": "^2.4.1",
+    "@stoplight/markdown-viewer": "^3.3.1",
     "@stoplight/scripts": "5.1.0",
-    "@stoplight/storybook-config": "^2.0.2",
-    "@stoplight/tree-list": "^4.1.1",
+    "@stoplight/storybook-config": "^2.0.4",
+    "@stoplight/tree-list": "^4.3.1",
     "@stoplight/types": "^9.0.2",
-    "@stoplight/ui-kit": "^2.0.0",
+    "@stoplight/ui-kit": "^2.5.0",
     "@types/classnames": "^2.2.7",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
