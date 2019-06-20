@@ -1,5 +1,5 @@
 import { IHttpOperation } from '@stoplight/types';
-import { object, withKnobs, text } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';

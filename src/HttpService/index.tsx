@@ -1,9 +1,9 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpService } from '@stoplight/types';
 import { HTMLTable } from '@stoplight/ui-kit';
+import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
-import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 
 export interface IHttpServiceProps extends IErrorBoundary {
   className?: string;
