@@ -2,6 +2,8 @@
 
 <!-- BADGES -->
 
+[![npm version](https://badge.fury.io/js/%40stoplight%2Fhttp-ui.svg)](https://badge.fury.io/js/%40stoplight%2Fhttp-ui)
+
 <!-- SUMMARY -->
 
 - Explore the components: [Storybook](https://stoplightio.github.io/http-ui)
