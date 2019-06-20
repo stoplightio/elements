@@ -50,7 +50,7 @@
   "devDependencies": {
     "@stoplight/json-schema-viewer": "^2.4.1",
     "@stoplight/markdown-viewer": "^3.3.1",
-    "@stoplight/scripts": "5.1.0",
+    "@stoplight/scripts": "7.0.0",
     "@stoplight/storybook-config": "^2.0.4",
     "@stoplight/tree-list": "^4.3.1",
     "@stoplight/types": "^9.0.2",
@@ -68,15 +68,15 @@
     "enzyme-to-json": "3.x.x",
     "jest": "24.x.x",
     "jest-enzyme": "7.x.x",
-    "mobx": "^5.9.4",
+    "mobx": "^5.10.1",
     "prettier": "1.x.x",
     "ts-jest": "24.x.x",
     "tslint": "5.17.0",
     "tslint-config-prettier": "1.18.x",
     "tslint-config-stoplight": "1.3.0",
     "tslint-plugin-prettier": "2.0.x",
-    "tslint-react": "3.6.x",
-    "tslint-react-hooks": "1.1.x",
+    "tslint-react": "4.0.x",
+    "tslint-react-hooks": "2.1.x",
     "typescript": "3.5.2"
   },
   "lint-staged": {

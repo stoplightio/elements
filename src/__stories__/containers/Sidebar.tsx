@@ -1,17 +1,16 @@
-import { withKnobs } from '@storybook/addon-knobs';
+import { select, withKnobs } from '@storybook/addon-knobs';
 import { boolean, number, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { ContentContainer, IContentContainer } from '../containers/Content';
+import { ISidebar, Sidebar } from '../../containers/Sidebar';
 
 export const darkMode = () => boolean('dark mode', false);
 
-export const knobs = (groupId = 'ContentContainer'): IContentContainer => ({
-  uri: text('uri', '/Buckinghamshire/Bacon', groupId),
-  projectId: number('projectId', 2, { min: 1, max: Infinity, range: false, step: 1 }, groupId),
-  semver: text('semver', '', groupId),
+export const knobs = (groupId = 'SidebarContainer'): ISidebar => ({
+  org: text('org', 'analytica', groupId),
+  project: text('project', 'fantastic-soft-bike', groupId),
   apiUrl: text('apiUrl', 'http://localhost:4060/graphql', groupId),
   apiToken: text(
     'apiToken',
@@ -20,10 +19,10 @@ export const knobs = (groupId = 'ContentContainer'): IContentContainer => ({
   ),
 });
 
-storiesOf('Content Container', module)
+storiesOf('containers/Sidebar', module)
   .addDecorator(withKnobs)
   .add('default', () => (
     <div className={cn('p-12', { 'bp3-dark bg-gray-8': darkMode() })}>
-      <ContentContainer {...knobs()} />
+      <Sidebar {...knobs()} />
     </div>
   ));
