@@ -11,15 +11,24 @@ export const HttpMethodColors: { [method: string]: string } = {
   delete: 'danger',
 };
 
-export interface IInfoProps extends Pick<IHttpOperation, 'method' | 'path' | 'summary' | 'description' | 'servers'> {}
+export interface IInfoProps extends Pick<IHttpOperation, 'method' | 'path' | 'summary' | 'description' | 'servers'> {
+  className?: string;
+}
 
-export const Info: React.FunctionComponent<IInfoProps> = ({ method, path, summary, description, servers }) => {
+export const Info: React.FunctionComponent<IInfoProps> = ({
+  method,
+  path,
+  summary,
+  description,
+  servers,
+  className,
+}) => {
   if (!servers || !servers.length) return null;
 
   // TODO (CL): Support multiple servers
   const host = servers[0] && servers[0].url;
   return (
-    <div>
+    <div className={className}>
       <div className="flex items-center">
         <Method className="mr-4" method={method} />
 

@@ -1,13 +1,13 @@
-# HTTP UI
+# Hub Components
 
 <!-- BADGES -->
 
-[![npm version](https://badge.fury.io/js/%40stoplight%2Fhttp-ui.svg)](https://badge.fury.io/js/%40stoplight%2Fhttp-ui)
+[![npm version](https://badge.fury.io/js/%40stoplight%2Fhubs.svg)](https://badge.fury.io/js/%40stoplight%2Fhubs)
 
 <!-- SUMMARY -->
 
-- Explore the components: [Storybook](https://stoplightio.github.io/http-ui)
-- View the changelog: [Releases](https://github.com/stoplightio/http-ui/releases)
+- Explore the components: [Storybook](https://stoplightio.github.io/hubs)
+- View the changelog: [Releases](https://github.com/stoplightio/hubs/releases)
 
 ### Features
 
@@ -21,13 +21,13 @@ Supported in modern browsers and node.
 
 ```bash
 # latest stable
-yarn add @stoplight/http-ui
+yarn add @stoplight/hubs
 ```
 
 ### Usage
 
 ```ts
-import { HttpOperation, HttpRequest, HttpService } from '@stoplight/http-ui';
+import { HttpOperation, HttpRequest, HttpService } from '@stoplight/hubs';
 
 // ...example
 ```

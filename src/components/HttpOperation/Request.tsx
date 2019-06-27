@@ -15,13 +15,13 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request }) => 
 
   return (
     <div>
-      <Parameters className="mt-10" title="Path Parameters" parameters={path} />
+      <Parameters className="mb-10" title="Path Parameters" parameters={path} />
 
-      <Parameters className="mt-10" title="Headers" parameters={headers} />
+      <Parameters className="mb-10" title="Headers" parameters={headers} />
 
-      <Parameters className="mt-10" title="Query Parameters" parameters={query} />
+      <Parameters className="mb-10" title="Query Parameters" parameters={query} />
 
-      {body && <Body className="mt-10" body={body} />}
+      {body && <Body className="mb-10" body={body} />}
     </div>
   );
 };
