@@ -18,33 +18,37 @@ export interface IDocs {
 const JSV_MAX_ROWS = 20;
 
 export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) => {
+  let component;
+
   if (type === 'http_operation') {
-    return (
-      <div className={className}>
+    component = (
+      <>
         <Request request={data.request} />
 
         <Responses responses={data.responses} />
-      </div>
+      </>
     );
   }
 
   if (type === 'http_service') {
-    return <HttpService className={className} value={data} />;
+    component = <HttpService value={data} />;
   }
 
   if (type === 'article') {
-    return <MarkdownViewer className={className} markdown={data} />;
+    component = <MarkdownViewer markdown={data} />;
   }
 
   if (type === 'model') {
-    return (
-      <div className={className}>
-        <div className={cn(CLASSNAMES.block, CLASSNAMES.bordered)}>
-          <JsonSchemaViewer schema={data} maxRows={JSV_MAX_ROWS} />
-        </div>
+    component = (
+      <div className={cn(CLASSNAMES.block, CLASSNAMES.bordered)}>
+        <JsonSchemaViewer schema={data} maxRows={JSV_MAX_ROWS} />
       </div>
     );
   }
 
-  return <div className={className}>Node type "{type}" is not supported.</div>;
+  return (
+    <div className={className} style={{ maxWidth: 1000 }}>
+      {component ? component : `Node type "{type}" is not supported.`}
+    </div>
+  );
 };

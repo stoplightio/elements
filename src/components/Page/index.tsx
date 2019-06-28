@@ -58,7 +58,7 @@ export const Page: React.FunctionComponent<IPage> = ({
 
           {tabs.includes('Changelog') && (
             <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-              <Changelog className="m-10" data={[]} />
+              <Changelog className="m-10" changes={[]} />
             </SimpleTabPanel>
           )}
         </SimpleTabs>

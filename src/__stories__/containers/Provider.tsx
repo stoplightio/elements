@@ -15,7 +15,7 @@ export const providerKnobs = (): IProvider => ({
   ),
 });
 
-storiesOf('containers/TableOfContents', module)
+storiesOf('containers/Provider', module)
   .addDecorator(withKnobs)
   .add('default', () => (
     <div className={cn('absolute bottom-0 left-0 px-12 pt-12 right-0 top-0')}>

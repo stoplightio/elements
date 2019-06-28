@@ -1,24 +1,24 @@
 import { Classes } from '@blueprintjs/core';
-import { Dictionary } from '@stoplight/types';
 import { Icon } from '@stoplight/ui-kit';
 import * as React from 'react';
 
 import { TreeNode } from '../components/TableOfContents';
+import { LinkContext } from '../containers/Provider';
 import { ITableOfContentsNode, NodeTypeColors, NodeTypeIcons } from '../utils/node';
 
-export const useComputeTree = (
-  nodes: ITableOfContentsNode[],
-  collapsed: Dictionary<boolean> = {},
-  activeNodeSrn?: string,
-) => {
-  return React.useMemo(() => computeTree(nodes, collapsed, activeNodeSrn), [nodes, collapsed, activeNodeSrn]);
-};
+/**
+ * Memoized hook that computes a tree structure from an array of nodes
+ */
+export function useComputeTree(nodes: ITableOfContentsNode[], activeNodeSrn?: string) {
+  const Link = React.useContext(LinkContext);
 
-export const computeTree = (
-  nodes: ITableOfContentsNode[],
-  collapsed: Dictionary<boolean> = {},
-  activeNodeSrn?: string,
-) => {
+  return React.useMemo(() => computeTree(nodes, activeNodeSrn, Link), [nodes, activeNodeSrn]);
+}
+
+/**
+ * Computes a tree structure from an array of nodes
+ */
+export function computeTree(nodes: ITableOfContentsNode[], activeNodeSrn?: string, Link?: any) {
   const tree: TreeNode[] = [];
   const nodeIdsInTree: Array<string | number> = [];
 
@@ -60,45 +60,48 @@ export const computeTree = (
       }
     }
 
-    const childNodes: TreeNode[] = untaggedGroup.map(n => nodeToTreeNode(n, collapsed, activeNodeSrn));
+    const childNodes: TreeNode[] = untaggedGroup.map(n => createTreeNode(n, activeNodeSrn, undefined, Link));
 
     for (const tag in tagGroups) {
       if (!tagGroups[tag]) continue;
 
       childNodes.push(
-        nodeToTreeNode(
+        createTreeNode(
+          // @ts-ignore: Need to support folder nodes
           {
             id: service.id + '-' + tag,
             name: titleCase(tag),
             type: 'tag',
           } as ITableOfContentsNode,
-          collapsed,
           activeNodeSrn,
 
-          tagGroups[tag].map((n: ITableOfContentsNode) => nodeToTreeNode(n, collapsed, activeNodeSrn)),
+          tagGroups[tag].map((n: ITableOfContentsNode) => createTreeNode(n, activeNodeSrn, undefined, Link)),
+
+          Link,
         ),
       );
     }
 
-    sortTreeNodes(childNodes);
-
-    tree.push(nodeToTreeNode(service, collapsed, activeNodeSrn, childNodes));
+    tree.push(createTreeNode(service, activeNodeSrn, childNodes, Link));
   }
 
   // Group other nodes by their tags or URI
   const groups = {};
   const otherNodes = nodes.filter((n: ITableOfContentsNode) => !nodeIdsInTree.includes(n.id));
   for (const node of otherNodes) {
-    const parts =
-      node.tags && node.tags.length
-        ? (node.tags || []).concat(node.name)
-        : (node.uri.includes('docs') ? node.uri.split('docs')[1] : node.uri).split('/').filter(Boolean);
+    let path = [];
+    if (node.tags && node.tags.length) {
+      path = node.tags.concat(node.name);
+    } else {
+      path = node.uri.split('/').filter(part => part && !['docs', 'reference'].includes(part.toLowerCase()));
+    }
 
     let currentGroup = groups;
-    for (let index = 0; index < parts.length; index++) {
-      const part = parts[index];
+    for (let index = 0; index < path.length; index++) {
+      const part = path[index];
 
-      if (index === parts.length - 1) {
+      // Assume the last part in the array is the node's path
+      if (index === path.length - 1) {
         currentGroup[part] = node.id;
       } else {
         currentGroup[part] = currentGroup[part] || {};
@@ -107,28 +110,26 @@ export const computeTree = (
     }
   }
 
-  tree.push(...traverseGroups(groups, nodes, collapsed, activeNodeSrn));
+  tree.push(...traverseGroups(groups, nodes, activeNodeSrn, Link));
 
-  sortTreeNodes(tree, true);
-
-  return tree;
-};
+  return sortTreeNodes(tree, true);
+}
 
 /**
  * Turn a node into a tree node
  */
-const nodeToTreeNode = (
+function createTreeNode(
   node: ITableOfContentsNode,
-  collapsed: Dictionary<boolean>,
   activeNodeSrn?: string,
   childNodes?: TreeNode[],
-): TreeNode => {
-  const isSelected = activeNodeSrn && node.srn && node.srn === activeNodeSrn ? true : false;
-  const isExpanded = !collapsed[node.id];
+  Link?: any,
+): TreeNode {
+  const isSelected = !!(activeNodeSrn && node.srn && node.srn === activeNodeSrn);
+  const hasChildren = !!(childNodes && childNodes.length);
 
   return {
     id: node.id,
-    label: node.name,
+    label: hasChildren ? <div>{node.name}</div> : <Link href={`/${node.srn}`}>{node.name}</Link>,
     className: 'cursor-pointer',
     icon: (
       <Icon
@@ -139,21 +140,18 @@ const nodeToTreeNode = (
     ),
     nodeData: node,
     isSelected,
-    isExpanded,
-    hasCaret: false,
-    secondaryLabel: !!(childNodes && childNodes.length) ? (
-      <Icon icon={isExpanded ? 'chevron-down' : 'chevron-right'} color="#5c7080" />
-    ) : null,
+    hasCaret: hasChildren,
+    // secondaryLabel: !!(childNodes && childNodes.length) ? (
+    //   <Icon icon={isExpanded ? 'chevron-down' : 'chevron-right'} color="#5c7080" />
+    // ) : null,
     childNodes: childNodes && sortTreeNodes(childNodes),
   };
-};
+}
 
-const traverseGroups = (
-  groups: any,
-  nodes: ITableOfContentsNode[],
-  collapsed: Dictionary<boolean>,
-  activeNodeSrn?: string,
-) => {
+/**
+ * Traverses an object into tree nodes
+ */
+function traverseGroups(groups: object, nodes: ITableOfContentsNode[], activeNodeSrn?: string, Link?: any) {
   const tree: TreeNode[] = [];
 
   for (const key in groups) {
@@ -161,24 +159,28 @@ const traverseGroups = (
 
     if (typeof groups[key] === 'object') {
       tree.push({
-        ...nodeToTreeNode(
+        ...createTreeNode(
+          // @ts-ignore: Need to support folder nodes
           { id: key, name: titleCase(key) } as ITableOfContentsNode,
-          collapsed,
           activeNodeSrn,
-          traverseGroups(groups[key], nodes, collapsed, activeNodeSrn),
+          traverseGroups(groups[key], nodes, activeNodeSrn, Link),
+          Link,
         ),
       });
     } else {
       const node = nodes.find((n: ITableOfContentsNode) => n.id === groups[key]);
       if (!node) continue;
 
-      tree.push(nodeToTreeNode(node, collapsed, activeNodeSrn));
+      tree.push(createTreeNode(node, activeNodeSrn, undefined, Link));
     }
   }
 
   return tree;
-};
+}
 
+/**
+ * Capitalizes first character
+ */
 function titleCase(title: string) {
   return title.slice(0, 1).toUpperCase() + title.slice(1);
 }
@@ -186,10 +188,10 @@ function titleCase(title: string) {
 /**
  * Sorts by name and puts ungroupped nodes at the bottom
  */
-const sortTreeNodes = (nodes: TreeNode[], ungrouppedAtTop: boolean = false) => {
+function sortTreeNodes(nodes: TreeNode[], ungrouppedAtTop: boolean = false) {
   const tree = nodes;
 
-  nodes.sort((a, b) => {
+  tree.sort((a, b) => {
     if (a.childNodes && !b.childNodes) {
       return ungrouppedAtTop ? 1 : -1;
     }
@@ -198,8 +200,8 @@ const sortTreeNodes = (nodes: TreeNode[], ungrouppedAtTop: boolean = false) => {
       return ungrouppedAtTop ? -1 : 1;
     }
 
-    const nameA = typeof a.label === 'string' ? a.label.toUpperCase() : a.label;
-    const nameB = typeof b.label === 'string' ? b.label.toUpperCase() : b.label;
+    const nameA = a.nodeData!.name.toUpperCase();
+    const nameB = b.nodeData!.name.toUpperCase();
 
     if (nameA < nameB) {
       return -1;
@@ -213,4 +215,4 @@ const sortTreeNodes = (nodes: TreeNode[], ungrouppedAtTop: boolean = false) => {
   });
 
   return tree;
-};
+}

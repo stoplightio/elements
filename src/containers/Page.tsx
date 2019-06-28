@@ -18,13 +18,7 @@ export const Page: React.FunctionComponent<IPage> = ({ srn, version: semver, cla
   const containerClassName = cn(className, 'flex flex-col h-full');
 
   if (res.isLoading) {
-    return (
-      <div className={containerClassName}>
-        <div className={cn(Classes.SKELETON, 'h-12 w-1/5')} />
-        <div className={cn(Classes.SKELETON, 'h-12 my-6')} />
-        <div className={cn(Classes.SKELETON, 'flex-1 my-6')} />
-      </div>
-    );
+    return <PageSkeleton className={className} />;
   }
 
   if (res.error) {
@@ -53,5 +47,15 @@ export const Page: React.FunctionComponent<IPage> = ({ srn, version: semver, cla
       data={safeParse(data) || data}
       tabs={['Docs', 'Changelog']}
     />
+  );
+};
+
+export const PageSkeleton: React.FunctionComponent<{ className?: string }> = ({ className }) => {
+  return (
+    <div className={cn(className, 'flex flex-col h-full p-10')}>
+      <div className={cn(Classes.SKELETON, 'h-12 w-1/5')} />
+      <div className={cn(Classes.SKELETON, 'h-12 my-6')} />
+      <div className={cn(Classes.SKELETON, 'flex-1 my-6')} />
+    </div>
   );
 };

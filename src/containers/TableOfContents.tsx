@@ -5,33 +5,21 @@ import * as React from 'react';
 import {
   ITableOfContents as ITableOfContentsComponent,
   TableOfContents as TableOfContentsComponent,
-  TreeNode,
 } from '../components/TableOfContents';
 import { useComputeTree } from '../hooks/useComputeTree';
 import { useProjectToc } from '../hooks/useProjectToc';
 
-export interface ITableOfContents extends Pick<ITableOfContentsComponent, 'onClick' | 'className'> {
+export interface ITableOfContents extends Pick<ITableOfContentsComponent, 'className'> {
   srn: string;
   activeNodeSrn?: string;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
-  srn,
-  activeNodeSrn,
-  onClick,
-  className,
-}) => {
+export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn, activeNodeSrn, className }) => {
   const [res] = useProjectToc(srn);
-  const tree = useComputeTree(res.data ? res.data.contents : [], {}, activeNodeSrn);
+  const tree = useComputeTree(res.data ? res.data.contents : [], activeNodeSrn);
 
   if (res.isLoading) {
-    return (
-      <>
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-      </>
-    );
+    return <TableOfContentsSkeleton />;
   }
 
   if (res.error) {
@@ -43,12 +31,40 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
     return <>Not Found</>;
   }
 
-  return <TableOfContentsComponent className={className} tree={tree} onClick={onClick} />;
+  return <TableOfContentsComponent className={className} tree={tree} />;
 };
 
-const Skeleton = () => {
+export const TableOfContentsSkeleton: React.FunctionComponent<{ className?: string }> = ({ className }) => {
   return (
-    <div>
+    <div className={className}>
+      <SkeletonRow />
+      <SkeletonRow />
+
+      <div className="pl-4">
+        <SkeletonRow />
+
+        <div className="pl-6">
+          <SkeletonRow />
+          <SkeletonRow />
+          <SkeletonRow />
+        </div>
+      </div>
+
+      <SkeletonRow />
+      <SkeletonRow />
+      <SkeletonRow />
+
+      <div className="pl-4">
+        <SkeletonRow />
+
+        <div className="pl-6">
+          <SkeletonRow />
+          <SkeletonRow />
+          <SkeletonRow />
+        </div>
+      </div>
+
+      <SkeletonRow />
       <SkeletonRow />
       <SkeletonRow />
 
@@ -68,7 +84,7 @@ const Skeleton = () => {
 };
 
 const SkeletonRow = () => (
-  <div className="flex items-center mt-2">
+  <div className="flex items-center mt-2 h-8">
     <div className={cn(Classes.SKELETON, 'w-2 h-2 mr-2')} />
     <div className={cn(Classes.SKELETON, 'w-3 h-4 mr-2')} />
     <div className={cn(Classes.SKELETON, 'w-32 h-5')} />

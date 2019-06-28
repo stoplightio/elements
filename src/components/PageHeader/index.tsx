@@ -16,9 +16,9 @@ export interface IPageHeader {
 }
 
 export const PageHeader: React.FunctionComponent<IPageHeader> = ({ type, name, summary, version, data, className }) => {
-  if (type === 'http_operation') {
-    return (
-      <div className={className}>
+  return (
+    <div className={cn(className, 'mt-4')} style={{ maxWidth: 1000 }}>
+      {type === 'http_operation' ? (
         <Info
           method={data.method}
           path={data.path}
@@ -26,15 +26,13 @@ export const PageHeader: React.FunctionComponent<IPageHeader> = ({ type, name, s
           description={data.description}
           servers={data.servers}
         />
-      </div>
-    );
-  }
+      ) : (
+        <>
+          <h2 className={cn(Classes.HEADING)}>{name}</h2>
 
-  return (
-    <div className={className}>
-      <h2 className={cn(Classes.HEADING, 'mt-4')}>{name}</h2>
-
-      <div className={cn(Classes.TEXT_MUTED, 'pb-4')}>{summary}</div>
+          <div className={cn(Classes.TEXT_MUTED, 'pb-4')}>{summary}</div>
+        </>
+      )}
     </div>
   );
 };

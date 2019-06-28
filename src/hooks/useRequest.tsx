@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import * as React from 'react';
-import { Context } from '../containers/Provider';
+import { ApolloContext } from '../containers/Provider';
 
 const cache = new Map();
 
@@ -15,7 +15,7 @@ export type UseRequestState<T> = {
 export type UseRequestResult<T> = [UseRequestState<T>, () => void];
 
 export function useRequest<T>(args: AxiosRequestConfig): UseRequestResult<T> {
-  const client = React.useContext(Context);
+  const client = React.useContext(ApolloContext);
 
   const [state, setState] = React.useState<UseRequestState<T>>({ isLoading: true, data: undefined, error: undefined });
 

@@ -68,17 +68,17 @@ export interface IChange {
 
 export interface IChangelogProps {
   className?: string;
-  data: IChange[];
+  changes: IChange[];
 }
 
-export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className, data }) => {
-  if (!data || !data.length) {
+export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className, changes }) => {
+  if (!changes || !changes.length) {
     return <div className={cn(className, Classes.TEXT_MUTED)}>No changes for this resource.</div>;
   }
 
   return (
     <div className={className}>
-      {data.map((change, i) => (
+      {changes.map((change, i) => (
         <ChangelogItem key={i} change={change} />
       ))}
     </div>

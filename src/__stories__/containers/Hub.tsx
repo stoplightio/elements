@@ -11,15 +11,23 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = (): IHub => ({
-  srn: text('srn', 'sl/stoplightio/personal-space', 'Hub'),
+  srn: text('srn', 'sl/org/project/docs/markdown/basic-syntax.md', 'Hub'),
 });
 
-storiesOf('components/Hub', module)
+storiesOf('containers/Hub', module)
   .addDecorator(withKnobs)
   .add('default', () => (
     <div className={cn('absolute bottom-0 left-0 right-0 top-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-      <Provider {...providerKnobs()}>
-        <Hub {...knobs()} />
-      </Provider>
+      <Wrapper providerProps={{ ...providerKnobs() }} hubProps={{ ...knobs() }} />
     </div>
   ));
+
+const Wrapper = ({ providerProps, hubProps }: any) => {
+  const [srn, setSrn] = React.useState(hubProps.srn);
+
+  return (
+    <Provider {...providerProps} onTreeNodeClick={node => setSrn(node.nodeData!.srn)}>
+      <Hub className="h-full" srn={srn} />
+    </Provider>
+  );
+};

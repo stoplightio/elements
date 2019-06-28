@@ -1,69 +1,36 @@
-import { Classes, Spinner } from '@blueprintjs/core';
+import cn from 'classnames';
 import * as React from 'react';
 
-import { TableOfContents, TreeNode } from '../components/TableOfContents';
+import { TableOfContents } from '../components/TableOfContents';
 import { useComputeTree } from '../hooks/useComputeTree';
 import { useProjectToc } from '../hooks/useProjectToc';
-import { Page } from './Page';
+import { Page, PageSkeleton } from './Page';
+import { TableOfContentsSkeleton } from './TableOfContents';
 
 export interface IHub {
   srn: string;
+  className?: string;
 }
 
-export const Hub: React.FunctionComponent<IHub> = ({ srn }) => {
-  const [activeNodeSrn, setActiveNodeSrn] = React.useState();
+export const Hub: React.FunctionComponent<IHub> = ({ srn, className }) => {
+  const [{ isLoading, data }] = useProjectToc(srn);
+  const tree = useComputeTree(data ? data.contents : [], srn);
 
-  const onClick = React.useCallback(
-    treeNode => {
-      if (treeNode && treeNode.nodeData) {
-        setActiveNodeSrn(treeNode.nodeData.srn);
-      }
-    },
-    [setActiveNodeSrn],
-  );
-
-  const [res] = useProjectToc(srn);
-  const tree = useComputeTree(res.data ? res.data.contents : [], {}, activeNodeSrn);
-
-  React.useEffect(() => {
-    if (activeNodeSrn) return;
-
-    // Set the first node as active
-    const node = getFirstNode(tree);
-    if (node && node.nodeData && (node.nodeData as any).srn) {
-      setActiveNodeSrn(node.nodeData.srn);
-    }
-  }, [res]);
-
-  if (res.isLoading) {
-    return (
-      <div className="h-full flex flex-col">
-        <Spinner />
-      </div>
-    );
-  }
+  const [service, org, project, ...uri] = srn.split('/');
 
   return (
-    <div className="h-full flex flex-col">
-      <h1 className={Classes.HEADING}>{res.data && res.data.project.name}</h1>
-
-      <div className="flex flex-1">
-        <div className="sticky top-0 border-r bg-gray-1" style={{ width: 275 }}>
-          <TableOfContents className="py-4" tree={tree} onClick={onClick} />
-        </div>
-
-        {activeNodeSrn ? <Page className="flex-1" srn={activeNodeSrn} /> : <div className="flex-1" />}
+    <div className={cn(className, 'flex flex-1')}>
+      <div className="border-r dark:border-darken-4" style={{ width: 300 }}>
+        {isLoading ? <TableOfContentsSkeleton className="pt-10" /> : <TableOfContents className="pt-10" tree={tree} />}
       </div>
+
+      {uri.length ? (
+        <Page className="flex-1 pt-10" srn={srn} />
+      ) : isLoading ? (
+        <PageSkeleton className="flex-1" />
+      ) : (
+        <div className="flex-1" />
+      )}
     </div>
   );
-};
-
-const getFirstNode = (contents: TreeNode[]): TreeNode => {
-  const node = contents[0];
-
-  if (node && node.childNodes) {
-    return getFirstNode(node.childNodes);
-  }
-
-  return node;
 };
