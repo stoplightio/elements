@@ -14,10 +14,8 @@ export const HttpMethodColors: { [method: string]: string } = {
 export interface IInfoProps extends Pick<IHttpOperation, 'method' | 'path' | 'summary' | 'description' | 'servers'> {}
 
 export const Info: React.FunctionComponent<IInfoProps> = ({ method, path, summary, description, servers }) => {
-  if (!servers || !servers.length) return null;
-
   // TODO (CL): Support multiple servers
-  const host = servers[0] && servers[0].url;
+  const host = (servers && servers.length && servers[0] && servers[0].url) || null;
   return (
     <div>
       <div className="flex items-center">
@@ -28,11 +26,11 @@ export const Info: React.FunctionComponent<IInfoProps> = ({ method, path, summar
             {summary}
           </div>
         ) : (
-          <Path host={host} path={path} />
+          <>{host && <Path host={host} path={path} />}</>
         )}
       </div>
 
-      {summary && <Path className="mt-6" host={host} path={path} />}
+      {summary && host && <Path className="mt-6" host={host} path={path} />}
 
       {description && <MarkdownViewer className="mt-10" markdown={description} />}
     </div>
