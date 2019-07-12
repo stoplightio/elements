@@ -1,6 +1,7 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
+import { get } from 'lodash';
 import * as React from 'react';
 
 export const HttpMethodColors: { [method: string]: string } = {
@@ -15,7 +16,7 @@ export interface IInfoProps extends Pick<IHttpOperation, 'method' | 'path' | 'su
 
 export const Info: React.FunctionComponent<IInfoProps> = ({ method, path, summary, description, servers }) => {
   // TODO (CL): Support multiple servers
-  const host = (servers && servers.length && servers[0] && servers[0].url) || null;
+  const host = get(servers, '[0].url', null);
   return (
     <div>
       <div className="flex items-center">
@@ -26,7 +27,7 @@ export const Info: React.FunctionComponent<IInfoProps> = ({ method, path, summar
             {summary}
           </div>
         ) : (
-          <>{host && <Path host={host} path={path} />}</>
+          host && <Path host={host} path={path} />
         )}
       </div>
 
