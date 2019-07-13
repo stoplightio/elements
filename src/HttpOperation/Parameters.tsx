@@ -14,7 +14,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   return (
     <div className={cn('flex', className)}>
       <div className="w-40">
-        <div>{parameter.name}</div>
+        <div className="break-words pr-1">{parameter.name}</div>
 
         <div className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
           {parameter.required ? 'Required' : 'Optional'}
