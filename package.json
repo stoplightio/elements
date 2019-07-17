@@ -42,7 +42,8 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "classnames": "^2.2.6"
+    "classnames": "^2.2.6",
+    "lodash": "^4.17.14"
   },
   "devDependencies": {
     "@stoplight/json-schema-viewer": "^2.4.1",
