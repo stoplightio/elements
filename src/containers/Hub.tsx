@@ -35,10 +35,8 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className }) => {
 
       {pageSrn ? (
         <Page className="flex-1 bg-white dark:bg-transparent border dark:border-darken-4" srn={pageSrn} />
-      ) : isLoading ? (
-        <PageSkeleton className="flex-1" />
       ) : (
-        <div className="flex-1" />
+        <PageSkeleton className="flex-1" />
       )}
     </div>
   );

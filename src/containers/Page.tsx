@@ -17,17 +17,9 @@ export const Page: React.FunctionComponent<IPage> = ({ srn, version: semver, cla
   const [res] = useNodeInfo(srn, semver);
   const containerClassName = cn(className, 'flex flex-col h-full');
 
-  if (res.isLoading) {
-    return <PageSkeleton className={className} />;
-  }
-
-  if (res.error) {
+  if (res.isLoading || res.error) {
     console.error(res.error);
-    return (
-      <div className={containerClassName}>
-        Error loading resource. Check the developer console for more information.
-      </div>
-    );
+    return <PageSkeleton className={className} />;
   }
 
   if (!res.data) {
