@@ -1,11 +1,10 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES, MarkdownViewer } from '@stoplight/markdown-viewer';
+import { NodeType } from '@stoplight/types';
+import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
-
-import { NodeType } from '../../utils/node';
-import { Request } from '../HttpOperation/Request';
-import { Responses } from '../HttpOperation/Responses';
+import { HttpOperation } from '../HttpOperation';
 import { HttpService } from '../HttpService';
 
 export interface IDocs {
@@ -21,13 +20,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
   let component;
 
   if (type === 'http_operation') {
-    component = (
-      <>
-        <Request request={data.request} />
-
-        <Responses responses={data.responses} />
-      </>
-    );
+    component = <HttpOperation value={data} />;
   }
 
   if (type === 'http_service') {
@@ -40,15 +33,15 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
 
   if (type === 'model') {
     component = (
-      <div className={cn(CLASSNAMES.block, CLASSNAMES.bordered)}>
+      <div className={cn(CLASSNAMES.bordered)}>
         <JsonSchemaViewer schema={data} maxRows={JSV_MAX_ROWS} />
       </div>
     );
   }
 
   return (
-    <div className={className} style={{ maxWidth: 1000 }}>
-      {component ? component : `Node type "{type}" is not supported.`}
-    </div>
+    <ScrollContainer>
+      <div className={cn('Docs', className)}>{component ? component : `Node type "{type}" is not supported.`}</div>
+    </ScrollContainer>
   );
 };

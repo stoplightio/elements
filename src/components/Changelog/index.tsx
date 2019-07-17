@@ -77,7 +77,7 @@ export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className,
   }
 
   return (
-    <div className={className}>
+    <div className={cn('Changelog', className)}>
       {changes.map((change, i) => (
         <ChangelogItem key={i} change={change} />
       ))}
@@ -91,7 +91,7 @@ export interface IChangelogItemProps {
 
 export const ChangelogItem: React.FunctionComponent<IChangelogItemProps> = ({ change }) => {
   return (
-    <div className="p-2 border-b border-gray-2 dark:border-lighten-3">
+    <div className={cn('ChangelogItem', 'p-2 border-b border-gray-2 dark:border-lighten-3')}>
       <div className="flex text-sm">
         <div className="flex-1 mr-3">{change.message}</div>
         <div className="lowercase font-semibold">{change.semver}</div>

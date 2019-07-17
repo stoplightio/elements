@@ -3,6 +3,7 @@ import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { IHttpContent, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
+import cn from 'classnames';
 import * as React from 'react';
 
 export interface ISchema {
@@ -15,7 +16,11 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   return (
-    <SimpleTabs className={className} selectedIndex={selectedIndex} onSelect={setSelectedIndex}>
+    <SimpleTabs
+      className={cn('HttpOperation__Schema', className)}
+      selectedIndex={selectedIndex}
+      onSelect={setSelectedIndex}
+    >
       <SimpleTabList>
         {value && <SimpleTab>Schema</SimpleTab>}
 

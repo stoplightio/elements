@@ -1,5 +1,5 @@
 import { ITreeListIcon } from '@stoplight/tree-list';
-import { Dictionary } from '@stoplight/types';
+import { Dictionary, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 
 export interface IGraphNode {
@@ -20,21 +20,16 @@ export interface ITableOfContentsNode {
   uri: string;
   srn: string;
   version: string;
-  versionId: number;
-  parentId?: number;
   tags?: string[];
 }
-
-export type NodeType = 'http_operation' | 'http_service' | 'article' | 'model' | 'image' | 'tag';
-export type NodeSpec = 'json_schema' | 'markdown' | 'oas2_operation' | 'oas3_operation' | 'oas2' | 'oas3';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',
   http_service: '#e056fd',
   article: '#399da6',
   model: '#ef932b',
-  image: '#e17055',
-  tag: '',
+  http_server: '',
+  unknown: '',
 };
 
 export const NodeTypePrettyName: Dictionary<string, NodeType> = {
@@ -42,8 +37,8 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   http_service: 'API',
   article: 'Article',
   model: 'Model',
-  image: 'Image',
-  tag: 'tag',
+  http_server: 'Server',
+  unknown: '',
 };
 
 export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
@@ -51,9 +46,11 @@ export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
   http_service: 'cloud',
   article: 'manual',
   model: 'cube',
-  image: 'media',
-  tag: 'tag',
+  http_server: 'database',
+  unknown: 'help',
 };
+
+export type NodeSpec = 'json_schema' | 'markdown' | 'oas2_operation' | 'oas3_operation' | 'oas2' | 'oas3';
 
 export const NodeSpecIcons: Dictionary<ITreeListIcon, NodeSpec> = {
   json_schema: {

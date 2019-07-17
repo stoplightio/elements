@@ -1,17 +1,14 @@
 import { Classes } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
-
-import {
-  ITableOfContents as ITableOfContentsComponent,
-  TableOfContents as TableOfContentsComponent,
-} from '../components/TableOfContents';
+import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
 import { useComputeTree } from '../hooks/useComputeTree';
 import { useProjectToc } from '../hooks/useProjectToc';
 
-export interface ITableOfContents extends Pick<ITableOfContentsComponent, 'className'> {
+export interface ITableOfContents {
   srn: string;
   activeNodeSrn?: string;
+  className?: string;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn, activeNodeSrn, className }) => {
@@ -19,7 +16,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn
   const tree = useComputeTree(res.data ? res.data.contents : [], activeNodeSrn);
 
   if (res.isLoading) {
-    return <TableOfContentsSkeleton />;
+    return <TableOfContentsSkeleton className={className} />;
   }
 
   if (res.error) {
@@ -36,7 +33,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn
 
 export const TableOfContentsSkeleton: React.FunctionComponent<{ className?: string }> = ({ className }) => {
   return (
-    <div className={className}>
+    <div className={cn('TableOfContentsSkeleton', className)}>
       <SkeletonRow />
       <SkeletonRow />
 

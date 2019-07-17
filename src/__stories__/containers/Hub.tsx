@@ -17,7 +17,11 @@ export const knobs = (): IHub => ({
 storiesOf('containers/Hub', module)
   .addDecorator(withKnobs)
   .add('default', () => (
-    <div className={cn('absolute bottom-0 left-0 right-0 top-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+    <div
+      className={cn('bg-gray-1 dark:bg-gray-8 absolute bottom-0 left-0 right-0 top-0', {
+        'bp3-dark': darkMode(),
+      })}
+    >
       <Wrapper providerProps={{ ...providerKnobs() }} hubProps={{ ...knobs() }} />
     </div>
   ));

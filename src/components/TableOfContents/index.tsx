@@ -1,8 +1,8 @@
 import { Dictionary } from '@stoplight/types';
 import { ITreeNode, Tree } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
+import cn from 'classnames';
 import * as React from 'react';
-
 import { TreeNodeClickContext } from '../../containers/Provider';
 import { ITableOfContentsNode } from '../../utils/node';
 
@@ -41,15 +41,17 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ tre
   const onNodeExpand = React.useCallback(node => setCollapsed({ ...collapsed, [node.id]: false }), [collapsed]);
 
   return (
-    <ScrollContainer>
-      <Tree
-        className={className}
-        contents={contents}
-        onNodeClick={onNodeClick}
-        onNodeCollapse={onNodeCollapse}
-        onNodeExpand={onNodeExpand}
-      />
-    </ScrollContainer>
+    <div className="TableOfContents">
+      <ScrollContainer>
+        <Tree
+          className={cn('TableOfContents-Tree', className)}
+          contents={contents}
+          onNodeClick={onNodeClick}
+          onNodeCollapse={onNodeCollapse}
+          onNodeExpand={onNodeExpand}
+        />
+      </ScrollContainer>
+    </div>
   );
 };
 

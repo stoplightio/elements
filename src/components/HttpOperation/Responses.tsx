@@ -1,8 +1,8 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperationResponse } from '@stoplight/types';
 import { Button, ButtonGroup, Icon } from '@stoplight/ui-kit';
+import cn from 'classnames';
 import * as React from 'react';
-
 import { Parameters } from './Parameters';
 import { Schema } from './Schema';
 
@@ -19,36 +19,19 @@ export interface IResponseProps {
   response: IHttpOperationResponse;
 }
 
-export const Response: React.FunctionComponent<IResponseProps> = ({ className, response }) => {
-  if (!response || !response.contents || !response.contents.length) return null;
-
-  // TODO (CL): Support multiple response contents
-  const content = response.contents[0];
-
-  return (
-    <div className={className}>
-      {response.description && <MarkdownViewer markdown={response.description} />}
-
-      <Parameters className="mt-6" title="Headers" parameters={response.headers} />
-
-      <Schema className="mt-6" value={content.schema} examples={content.examples} />
-    </div>
-  );
-};
-Response.displayName = 'HttpOperation.Response';
-
 export interface IResponsesProps {
   responses: IHttpOperationResponse[];
+  className?: string;
 }
 
-export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses }) => {
+export const Responses: React.FunctionComponent<IResponsesProps> = ({ className, responses }) => {
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!responses || !responses.length) return null;
 
   const sortedResponses = [...responses].sort();
 
   return (
-    <div className="mt-10">
+    <div className={cn('HttpOperation__Responses', className)}>
       <div className="flex items-center">
         <div className="text-lg font-semibold">Responses</div>
       </div>
@@ -74,3 +57,21 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ responses 
   );
 };
 Responses.displayName = 'HttpOperation.Responses';
+
+export const Response: React.FunctionComponent<IResponseProps> = ({ className, response }) => {
+  if (!response || !response.contents || !response.contents.length) return null;
+
+  // TODO (CL): Support multiple response contents
+  const content = response.contents[0];
+
+  return (
+    <div className={cn('HttpOperation__Response', className)}>
+      {response.description && <MarkdownViewer markdown={response.description} />}
+
+      <Parameters className="mt-6" title="Headers" parameters={response.headers} />
+
+      <Schema className="mt-6" value={content.schema} examples={content.examples} />
+    </div>
+  );
+};
+Response.displayName = 'HttpOperation.Response';

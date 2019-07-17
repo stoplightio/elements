@@ -11,7 +11,7 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const tocKnobs = (): ITableOfContents => ({
-  srn: text('srn', 'sl/stoplightio/personal-space', 'TableOfContents'),
+  srn: text('srn', 'sl/acxiom/handcrafted-metal-ball', 'TableOfContents'),
 });
 
 storiesOf('containers/TableOfContents', module)

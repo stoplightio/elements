@@ -1,5 +1,6 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperationRequestBody } from '@stoplight/types';
+import cn from 'classnames';
 import * as React from 'react';
 
 import { Schema } from './Schema';
@@ -23,7 +24,7 @@ export const Body: React.FunctionComponent<IBodyProps> = ({ body, className }) =
     return null;
 
   return (
-    <div className={className}>
+    <div className={cn('HttpOperation__Body', className)}>
       <div className="text-lg font-semibold">Body</div>
 
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}

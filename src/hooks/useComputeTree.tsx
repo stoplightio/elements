@@ -2,6 +2,7 @@ import { Classes } from '@blueprintjs/core';
 import { Icon } from '@stoplight/ui-kit';
 import * as React from 'react';
 
+import { NodeType } from '@stoplight/types';
 import { TreeNode } from '../components/TableOfContents';
 import { LinkContext } from '../containers/Provider';
 import { ITableOfContentsNode, NodeTypeColors, NodeTypeIcons } from '../utils/node';
@@ -23,15 +24,16 @@ export function computeTree(nodes: ITableOfContentsNode[], activeNodeSrn?: strin
   const nodeIdsInTree: Array<string | number> = [];
 
   /** Group by http service */
-  const httpServiceNodes = nodes.filter((n: ITableOfContentsNode) => n.type === 'http_service');
+  const httpServiceNodes = nodes.filter((n: ITableOfContentsNode) => n.type === NodeType.HttpService);
   for (const service of httpServiceNodes) {
     nodeIdsInTree.push(service.id);
 
     // Find all nodes in the same folder as the http service
     const serviceParentFolderUri = service.uri
       .split('/')
-      .slice(0, -2)
+      .slice(0, -1)
       .join('/');
+
     const children = nodes.filter((node: ITableOfContentsNode) => {
       if (node.uri.includes(serviceParentFolderUri) && node.id !== service.id) {
         nodeIdsInTree.push(node.id);
@@ -110,9 +112,7 @@ export function computeTree(nodes: ITableOfContentsNode[], activeNodeSrn?: strin
     }
   }
 
-  tree.push(...traverseGroups(groups, nodes, activeNodeSrn, Link));
-
-  return sortTreeNodes(tree, true);
+  return [...traverseGroups(groups, nodes, activeNodeSrn, Link), ...tree];
 }
 
 /**

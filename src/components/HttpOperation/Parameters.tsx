@@ -12,7 +12,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   if (!parameter || !parameter.schema) return null;
 
   return (
-    <div className={cn('flex', className)}>
+    <div className={cn('HttpOperation__Parameter flex', className)}>
       <div className="w-40">
         <div>{parameter.name}</div>
 
@@ -39,7 +39,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
   if (!parameters || !parameters.length) return null;
 
   return (
-    <div className={className}>
+    <div className={cn('HttpOperation__Parameters mt-6', className)}>
       {title && <div className="text-lg font-semibold">{title}</div>}
 
       <div className="mt-5">

@@ -28,22 +28,14 @@ export const Info: React.FunctionComponent<IInfoProps> = ({
   // TODO (CL): Support multiple servers
   const host = servers[0] && servers[0].url;
   return (
-    <div className={className}>
+    <div className={cn('HttpOperation__Info', className)}>
       <div className="flex items-center">
         <Method className="mr-4" method={method} />
 
-        {summary ? (
-          <div title={summary} className="flex-1 text-2xl text-semibold truncate select-all">
-            {summary}
-          </div>
-        ) : (
-          <Path host={host} path={path} />
-        )}
+        <Path host={host} path={path} />
       </div>
 
-      {summary && <Path className="mt-6" host={host} path={path} />}
-
-      {description && <MarkdownViewer className="mt-10" markdown={description} />}
+      {description && <MarkdownViewer className="HttpOperation__Description mt-6" markdown={description} />}
     </div>
   );
 };
@@ -53,6 +45,7 @@ export const Method: React.FunctionComponent<{ className?: string; method: strin
   return (
     <span
       className={cn(
+        'HttpOperation__Method',
         className,
         'bp3-tag bp3-round',
         HttpMethodColors[method] ? `bp3-intent-${HttpMethodColors[method]}` : '',
@@ -71,7 +64,13 @@ export const Path: React.FunctionComponent<{ className?: string; host?: string; 
   if (!host && !path) return null;
 
   return (
-    <div className={cn(className, 'inline-flex items-center bg-darken-2 py-2 px-3 rounded select-all')}>
+    <div
+      className={cn(
+        'HttpOperation__Path',
+        className,
+        'inline-flex items-center bg-darken-2 py-2 px-3 rounded select-all',
+      )}
+    >
       {host && <div className="text-darken-7 dark:text-gray-6 mr-1">{host}</div>}
       <div className="font-semibold">{path}</div>
     </div>

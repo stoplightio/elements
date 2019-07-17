@@ -1,38 +1,58 @@
-import { Classes } from '@stoplight/ui-kit';
+import { NodeType } from '@stoplight/types';
+import { Classes, Icon, Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
-
-import { NodeType } from '../../utils/node';
-import { Info } from '../HttpOperation/Info';
 
 export interface IPageHeader {
   type: NodeType;
   name: string;
   data: any;
-  version: string;
+  version?: string;
+  versions?: string[];
 
   summary?: string;
   className?: string;
 }
 
-export const PageHeader: React.FunctionComponent<IPageHeader> = ({ type, name, summary, version, data, className }) => {
-  return (
-    <div className={cn(className, 'mt-4')} style={{ maxWidth: 1000 }}>
-      {type === 'http_operation' ? (
-        <Info
-          method={data.method}
-          path={data.path}
-          summary={data.summary}
-          description={data.description}
-          servers={data.servers}
-        />
-      ) : (
-        <>
-          <h2 className={cn(Classes.HEADING)}>{name}</h2>
+export const PageHeader: React.FunctionComponent<IPageHeader> = ({
+  type,
+  name,
+  summary,
+  version = '0',
+  versions,
+  data,
+  className,
+}) => {
+  const [currentVersion, setCurrentVersion] = React.useState(version);
 
-          <div className={cn(Classes.TEXT_MUTED, 'pb-4')}>{summary}</div>
-        </>
-      )}
+  return (
+    <div className={cn('PageHeader', className, 'mt-4')}>
+      <div className="flex items-center">
+        <h2 className={cn(Classes.HEADING, 'mb-0')}>{name}</h2>
+
+        <div className="ml-4 cursor-pointer">
+          <Tag round intent="primary">
+            <>
+              <select
+                className="cursor-pointer bg-transparent pr-4 z-1"
+                style={{ appearance: 'none', WebkitAppearance: 'none' }}
+                value={currentVersion}
+                onChange={e => {
+                  setCurrentVersion(e.target.value);
+                }}
+              >
+                {(versions || [version]).map(v => (
+                  <option key={v} value={v}>
+                    v{v}
+                  </option>
+                ))}
+              </select>
+
+              <Icon className="absolute -ml-3" icon="caret-down" iconSize={14} />
+            </>
+          </Tag>
+        </div>
+      </div>
     </div>
   );
 };
