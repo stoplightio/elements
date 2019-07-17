@@ -10,7 +10,7 @@ interface IDeserializedSrn {
 export function deserializeSrn(srn: string): IDeserializedSrn {
   const [service, org, project, ...uriParts] = srn.split('/');
 
-  const uri = uriParts.length ? `/${uriParts.join('/')}` : `/`;
+  const uri = uriParts.length ? `/${uriParts.join('/')}` : '';
 
   return {
     service,

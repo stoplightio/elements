@@ -26,7 +26,7 @@ export const PageHeader: React.FunctionComponent<IPageHeader> = ({
   const [currentVersion, setCurrentVersion] = React.useState(version);
 
   return (
-    <div className={cn('PageHeader', className, 'mt-4')}>
+    <div className={cn('PageHeader', className)}>
       <div className="flex items-center">
         <h2 className={cn(Classes.HEADING, 'mb-0')}>{name}</h2>
 
