@@ -24,7 +24,7 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
           <div className="flex items-center">
             {value.servers.map((server, index) => (
               <a className="mr-6 text-center" href={server.url} target="_blank">
-                <Card interactive key={index}>
+                <Card key={index}>
                   <div className="font-semibold">{server.name}</div>
                   <div className="mt-2">{server.description}</div>
                   <div className="mt-2">{server.url}</div>
