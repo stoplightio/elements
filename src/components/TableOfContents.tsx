@@ -30,48 +30,52 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ con
   }, [srn]);
 
   return (
-    <div className={cn('TableOfContents', className)}>
-      <ScrollContainer className="py-16">
-        {contents.map((item, index) => {
-          const isActive = item.srn ? srn === item.srn : false;
+    <div className={cn('TableOfContents bg-gray-1 flex justify-end', className)}>
+      <div className="TableOfContents-inner">
+        <ScrollContainer>
+          <div className="py-12">
+            {contents.map((item, index) => {
+              const isActive = item.srn ? srn === item.srn : false;
 
-          if (item.depth > 0) {
-            // Check if we should show this item
-            const parentIndex = findParentIndex(item.depth, contents.slice(0, index));
-            if (parentIndex > -1 && !expanded[parentIndex]) {
-              return null;
-            }
-          }
-
-          const isParent = contents[index + 1] ? contents[index + 1].depth > item.depth : false;
-          const isExpanded = expanded[index];
-          const isDivider = !isParent && !item.srn;
-
-          return (
-            <TableOfContentsItem
-              key={index}
-              name={item.name}
-              srn={item.srn}
-              depth={item.depth}
-              isActive={isActive}
-              isParent={isParent}
-              isExpanded={isExpanded}
-              isDivider={isDivider}
-              onClick={e => {
-                if (isDivider) {
-                  e.preventDefault();
-                  return;
+              if (item.depth > 0) {
+                // Check if we should show this item
+                const parentIndex = findParentIndex(item.depth, contents.slice(0, index));
+                if (parentIndex > -1 && !expanded[parentIndex]) {
+                  return null;
                 }
+              }
 
-                if (!isParent) return;
+              const isParent = contents[index + 1] ? contents[index + 1].depth > item.depth : false;
+              const isExpanded = expanded[index];
+              const isDivider = !isParent && !item.srn;
 
-                e.preventDefault();
-                setExpanded({ ...expanded, [String(index)]: !isExpanded });
-              }}
-            />
-          );
-        })}
-      </ScrollContainer>
+              return (
+                <TableOfContentsItem
+                  key={index}
+                  name={item.name}
+                  srn={item.srn}
+                  depth={item.depth}
+                  isActive={isActive}
+                  isParent={isParent}
+                  isExpanded={isExpanded}
+                  isDivider={isDivider}
+                  onClick={e => {
+                    if (isDivider) {
+                      e.preventDefault();
+                      return;
+                    }
+
+                    if (!isParent) return;
+
+                    e.preventDefault();
+                    setExpanded({ ...expanded, [String(index)]: !isExpanded });
+                  }}
+                />
+              );
+            })}
+          </div>
+        </ScrollContainer>
+      </div>
     </div>
   );
 };

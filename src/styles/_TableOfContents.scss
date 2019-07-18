@@ -1,5 +1,11 @@
 .TableOfContentsSkeleton,
 .TableOfContents {
+  // TODO (CL): Total hack alert
+  width: calc((100% - 1448px) / 2 + 394px);
+}
+
+.TableOfContentsSkeleton-inner,
+.TableOfContents-inner {
   width: 300px;
 }
 

@@ -33,49 +33,51 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn
 
 export const TableOfContentsSkeleton: React.FunctionComponent<{ className?: string }> = ({ className }) => {
   return (
-    <div className={cn('TableOfContentsSkeleton py-16', className)}>
-      <SkeletonRow />
-      <SkeletonRow />
-
-      <div className="pl-4">
+    <div className={cn('TableOfContentsSkeleton bg-gray-1 flex justify-end py-12', className)}>
+      <div className="TableOfContentsSkeleton-inner">
+        <SkeletonRow />
         <SkeletonRow />
 
-        <div className="pl-6">
+        <div className="pl-4">
           <SkeletonRow />
-          <SkeletonRow />
-          <SkeletonRow />
+
+          <div className="pl-6">
+            <SkeletonRow />
+            <SkeletonRow />
+            <SkeletonRow />
+          </div>
         </div>
-      </div>
 
-      <SkeletonRow />
-      <SkeletonRow />
-      <SkeletonRow />
-
-      <div className="pl-4">
+        <SkeletonRow />
+        <SkeletonRow />
         <SkeletonRow />
 
-        <div className="pl-6">
+        <div className="pl-4">
           <SkeletonRow />
-          <SkeletonRow />
-          <SkeletonRow />
+
+          <div className="pl-6">
+            <SkeletonRow />
+            <SkeletonRow />
+            <SkeletonRow />
+          </div>
         </div>
-      </div>
 
-      <SkeletonRow />
-      <SkeletonRow />
-      <SkeletonRow />
-
-      <div className="pl-4">
+        <SkeletonRow />
+        <SkeletonRow />
         <SkeletonRow />
 
-        <div className="pl-6">
+        <div className="pl-4">
           <SkeletonRow />
-          <SkeletonRow />
-          <SkeletonRow />
-        </div>
-      </div>
 
-      <SkeletonRow />
+          <div className="pl-6">
+            <SkeletonRow />
+            <SkeletonRow />
+            <SkeletonRow />
+          </div>
+        </div>
+
+        <SkeletonRow />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES, MarkdownViewer } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
-import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
 import { HttpOperation } from './HttpOperation';
@@ -35,9 +34,5 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
     return null;
   }
 
-  return (
-    <ScrollContainer>
-      <div className={cn('Docs', className)}>{component}</div>
-    </ScrollContainer>
-  );
+  return <div className={cn('Docs max-w-6xl', className)}>{component}</div>;
 };
