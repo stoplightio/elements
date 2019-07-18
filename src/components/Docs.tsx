@@ -4,8 +4,8 @@ import { NodeType } from '@stoplight/types';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
-import { HttpOperation } from '../HttpOperation';
-import { HttpService } from '../HttpService';
+import { HttpOperation } from './HttpOperation';
+import { HttpService } from './HttpService';
 
 export interface IDocs {
   type: NodeType;
@@ -14,34 +14,30 @@ export interface IDocs {
   className?: string;
 }
 
-const JSV_MAX_ROWS = 20;
-
+const JSV_MAX_ROWS = 50;
 export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) => {
   let component;
 
-  if (type === 'http_operation') {
+  if (type === NodeType.HttpOperation) {
     component = <HttpOperation value={data} />;
-  }
-
-  if (type === 'http_service') {
+  } else if (type === NodeType.HttpService) {
     component = <HttpService value={data} />;
-  }
-
-  if (type === 'article') {
+  } else if (type === NodeType.Article) {
     component = <MarkdownViewer markdown={data} />;
-  }
-
-  if (type === 'model') {
+  } else if (type === NodeType.Model) {
     component = (
       <div className={cn(CLASSNAMES.bordered)}>
         <JsonSchemaViewer schema={data} maxRows={JSV_MAX_ROWS} />
       </div>
     );
+  } else {
+    console.warn(`Node type "${type}" is not supported.`);
+    return null;
   }
 
   return (
     <ScrollContainer>
-      <div className={cn('Docs', className)}>{component ? component : `Node type "{type}" is not supported.`}</div>
+      <div className={cn('Docs', className)}>{component}</div>
     </ScrollContainer>
   );
 };

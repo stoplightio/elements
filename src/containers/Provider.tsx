@@ -1,28 +1,27 @@
 import axios from 'axios';
 import * as React from 'react';
-import { TreeNode } from '../components/TableOfContents';
 
 export interface IProvider {
   host: string;
   token: string;
 
-  onTreeNodeClick?: (node: TreeNode) => void;
-  Link?: React.FunctionComponent<{ href: string }>;
+  Link?: LinkProps;
 }
 
-const DefaultLink: React.FunctionComponent<{ href: string }> = ({ href, children }) => {
-  return <div>{children}</div>;
-};
+export type LinkProps = React.FunctionComponent<{ className: string; srn: string }>;
 
-const defaultTreeNodeClick = (node: TreeNode) => {
-  // noop
+const DefaultLink: LinkProps = ({ className, srn, children }) => {
+  return (
+    <a className={className} href={srn}>
+      {children}
+    </a>
+  );
 };
 
 export const ApolloContext = React.createContext(axios.create());
 export const LinkContext = React.createContext(DefaultLink);
-export const TreeNodeClickContext = React.createContext(defaultTreeNodeClick);
 
-export const Provider: React.FunctionComponent<IProvider> = ({ host, token, Link, onTreeNodeClick, children }) => {
+export const Provider: React.FunctionComponent<IProvider> = ({ host, token, Link, children }) => {
   const client = React.useMemo(
     () =>
       axios.create({
@@ -37,11 +36,7 @@ export const Provider: React.FunctionComponent<IProvider> = ({ host, token, Link
 
   return (
     <ApolloContext.Provider value={client}>
-      <LinkContext.Provider value={Link || DefaultLink}>
-        <TreeNodeClickContext.Provider value={onTreeNodeClick || defaultTreeNodeClick}>
-          {children}
-        </TreeNodeClickContext.Provider>
-      </LinkContext.Provider>
+      <LinkContext.Provider value={Link || DefaultLink}>{children}</LinkContext.Provider>
     </ApolloContext.Provider>
   );
 };

@@ -2,8 +2,8 @@ import { Classes } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
 import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
-import { useComputeTree } from '../hooks/useComputeTree';
-import { useProjectToc } from '../hooks/useProjectToc';
+import { useComputeToc } from '../hooks/useComputeToc';
+import { useProjectNodes } from '../hooks/useProjectNodes';
 
 export interface ITableOfContents {
   srn: string;
@@ -11,9 +11,9 @@ export interface ITableOfContents {
   className?: string;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn, activeNodeSrn, className }) => {
-  const [res] = useProjectToc(srn);
-  const tree = useComputeTree(res.data ? res.data.contents : [], activeNodeSrn);
+export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn, className }) => {
+  const [res] = useProjectNodes(srn);
+  const contents = useComputeToc(res.data ? res.data.items : []);
 
   if (res.isLoading) {
     return <TableOfContentsSkeleton className={className} />;
@@ -28,12 +28,12 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn
     return <>Not Found</>;
   }
 
-  return <TableOfContentsComponent className={className} tree={tree} />;
+  return <TableOfContentsComponent className={className} contents={contents} />;
 };
 
 export const TableOfContentsSkeleton: React.FunctionComponent<{ className?: string }> = ({ className }) => {
   return (
-    <div className={cn('TableOfContentsSkeleton', className)}>
+    <div className={cn('TableOfContentsSkeleton py-16', className)}>
       <SkeletonRow />
       <SkeletonRow />
 

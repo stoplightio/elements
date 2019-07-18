@@ -5,13 +5,14 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { Hub, IHub } from '../../containers/Hub';
-import { Provider } from '../../containers/Provider';
+import { LinkProps, Provider } from '../../containers/Provider';
 import { providerKnobs } from './Provider';
 
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = (): IHub => ({
-  srn: text('srn', 'sl/org/project/docs/markdown/basic-syntax.md', 'Hub'),
+  // srn: text('srn', 'sl/acxiom/handcrafted-metal-ball/docs/markdown/basic-syntax.md', 'Hub'),
+  srn: text('srn', 'sl/acxiom/handcrafted-metal-ball/reference/todos/openapi.json/paths/~1todos/get', 'Hub'),
 });
 
 storiesOf('containers/Hub', module)
@@ -27,11 +28,23 @@ storiesOf('containers/Hub', module)
   ));
 
 const Wrapper = ({ providerProps, hubProps }: any) => {
-  const [srn, setSrn] = React.useState(hubProps.srn);
-
   return (
-    <Provider {...providerProps} onTreeNodeClick={node => setSrn(node.nodeData!.srn)}>
-      <Hub className="h-full" srn={srn} />
+    <Provider {...providerProps} Link={Link}>
+      <Hub className="h-full" srn={hubProps.srn} />
     </Provider>
+  );
+};
+
+const Link: LinkProps = ({ className, srn, children }) => {
+  return (
+    <a
+      className={className}
+      onClick={e => {
+        e.preventDefault();
+        console.log(srn);
+      }}
+    >
+      {children}
+    </a>
   );
 };

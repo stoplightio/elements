@@ -1,6 +1,6 @@
-import { IGraphNode } from '../utils/node';
+import { INodeInfo } from '../types';
 import { useRequest } from './useRequest';
 
 export const useNodeInfo = (srn: string, version?: string) => {
-  return useRequest<IGraphNode>({ url: '/nodes.info', params: { srn, version } });
+  return useRequest<INodeInfo>({ url: '/nodes.info', params: { srn, version } });
 };

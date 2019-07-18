@@ -1,4 +1,73 @@
 .TableOfContentsSkeleton,
 .TableOfContents {
-  width: 350px;
+  width: 300px;
+}
+
+.TableOfContentsItem {
+  color: #5c6975;
+
+  .TableOfContentsItem-name {
+    font-weight: 500;
+    word-break: break-all;
+    line-height: 1.5;
+  }
+
+  .TableOfContentsItem-icon {
+    color: #9daab6;
+  }
+
+  a {
+    padding: 7px 24px 7px 16px;
+
+    &:hover {
+      color: #5c6975;
+      text-decoration: none;
+      background-color: rgb(230, 236, 241);
+    }
+  }
+
+  &--child {
+    color: rgb(157, 170, 182);
+    border-left-color: rgb(230, 236, 241);
+  }
+
+  &--active {
+    a {
+      color: #3884ff;
+      background-color: white;
+      border-color: #e6ecf1;
+
+      &:hover {
+        color: #3884ff;
+        background-color: white;
+        border-color: #e6ecf1;
+      }
+    }
+
+    &--child {
+      border-left: none;
+    }
+  }
+
+  &--divider {
+    margin-top: 24px;
+
+    .TableOfContentsItem-name {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    a {
+      color: #9daab6;
+      cursor: initial;
+
+      &:hover {
+        color: #9daab6;
+        background-color: inherit;
+      }
+    }
+  }
 }

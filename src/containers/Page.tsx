@@ -37,7 +37,6 @@ export const Page: React.FunctionComponent<IPage> = ({ srn, version: semver, cla
       summary={summary}
       version={version}
       data={safeParse(data) || data}
-      tabs={['Docs', 'Changelog']}
     />
   );
 };

@@ -2,9 +2,9 @@ import { NodeType } from '@stoplight/types';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import cn from 'classnames';
 import * as React from 'react';
-import { Changelog } from '../Changelog';
-import { Docs } from '../Docs';
-import { PageHeader } from '../PageHeader';
+import { Changelog } from './Changelog';
+import { Docs } from './Docs';
+import { PageHeader } from './PageHeader';
 
 export interface IPage {
   srn: string;
@@ -14,21 +14,12 @@ export interface IPage {
   version: string;
   data: any;
 
-  tabs?: Array<'Docs' | 'Changelog'>;
   className?: string;
 }
 
-export const Page: React.FunctionComponent<IPage> = ({
-  srn,
-  type,
-  name,
-  summary,
-  version,
-  data,
-  className,
-  tabs = [],
-}) => {
+export const Page: React.FunctionComponent<IPage> = ({ type, name, version, data, className }) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
+  const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);
 
   const nodeTabs = NodeTypeTabs[type];
 
@@ -36,35 +27,35 @@ export const Page: React.FunctionComponent<IPage> = ({
     <div className={cn('Page', className, 'bg-white dark:bg-transparent')}>
       {nodeTabs.length > 0 ? (
         <>
-          <PageHeader className="pt-10 px-10" type={type} name={name} summary={summary} version={version} data={data} />
+          <PageHeader className="pt-16 px-16" name={name} version={version} />
 
           <SimpleTabs
             id="page-tabs"
             className="Page-tabs flex flex-col flex-1 mt-6"
             selectedIndex={selectedTab}
-            onSelect={(i: number) => setSelectedTab(i)}
+            onSelect={onSelect}
           >
-            <SimpleTabList className="mx-10">
-              {tabs.includes('Docs') && <SimpleTab id="docs-tab">Docs</SimpleTab>}
+            <SimpleTabList className="mx-16">
+              {nodeTabs.includes('Docs') && <SimpleTab id="docs-tab">Docs</SimpleTab>}
 
-              {tabs.includes('Changelog') && <SimpleTab id="changelog-tab">Changelog</SimpleTab>}
+              {nodeTabs.includes('Changelog') && <SimpleTab id="changelog-tab">Changelog</SimpleTab>}
             </SimpleTabList>
 
-            {tabs.includes('Docs') && (
+            {nodeTabs.includes('Docs') && (
               <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-                <Docs className="p-10" type={type} data={data} />
+                <Docs className="p-16" type={type} data={data} />
               </SimpleTabPanel>
             )}
 
-            {tabs.includes('Changelog') && (
+            {nodeTabs.includes('Changelog') && (
               <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-                <Changelog className="p-10" changes={[]} />
+                <Changelog className="p-16" changes={[]} />
               </SimpleTabPanel>
             )}
           </SimpleTabs>
         </>
       ) : (
-        <Docs className="p-10" type={type} data={data} />
+        <Docs className="p-16" type={type} data={data} />
       )}
     </div>
   );

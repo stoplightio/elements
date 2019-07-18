@@ -1,11 +1,4 @@
-interface IDeserializedSrn {
-  service: string;
-  org: string;
-  project?: string;
-  uri?: string;
-  file?: string;
-  ext?: string;
-}
+import { IDeserializedSrn } from '../types';
 
 export function deserializeSrn(srn: string): IDeserializedSrn {
   const [service, org, project, ...uriParts] = srn.split('/');
@@ -20,6 +13,6 @@ export function deserializeSrn(srn: string): IDeserializedSrn {
   };
 }
 
-export function serializeSrn({ service, org, project, uri }: IDeserializedSrn) {
+export function serializeSrn({ service, org, project, uri }: Partial<IDeserializedSrn>) {
   return [service, org, project, (uri || '').replace(/^\//, '')].filter(Boolean).join('/');
 }

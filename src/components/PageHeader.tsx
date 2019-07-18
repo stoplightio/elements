@@ -1,28 +1,16 @@
-import { NodeType } from '@stoplight/types';
 import { Classes, Icon, Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
 export interface IPageHeader {
-  type: NodeType;
   name: string;
-  data: any;
+
   version?: string;
   versions?: string[];
-
-  summary?: string;
   className?: string;
 }
 
-export const PageHeader: React.FunctionComponent<IPageHeader> = ({
-  type,
-  name,
-  summary,
-  version = '0',
-  versions,
-  data,
-  className,
-}) => {
+export const PageHeader: React.FunctionComponent<IPageHeader> = ({ name, version = '0', versions, className }) => {
   const [currentVersion, setCurrentVersion] = React.useState(version);
 
   return (
