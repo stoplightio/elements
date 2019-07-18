@@ -1,7 +1,8 @@
+import { IHttpService } from '@stoplight/types';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
-import * as httpService from '../../__fixtures__/http-service.json';
+const httpService: IHttpService = require('../../__fixtures__/http-service.json');
 import { HttpService } from '../../components/HttpService';
 
 storiesOf('components/HttpService', module).add('kitchen sink', () => (

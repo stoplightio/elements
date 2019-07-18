@@ -68,7 +68,7 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, data
 const NodeTypeTabs = {
   [NodeType.HttpOperation]: ['Docs', 'Changelog'],
   [NodeType.Model]: ['Docs', 'Changelog'],
-  [NodeType.HttpService]: [],
+  [NodeType.HttpService]: ['Docs', 'Changelog'],
   [NodeType.Article]: [],
   [NodeType.HttpServer]: [],
 };
