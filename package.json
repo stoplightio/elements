@@ -36,25 +36,23 @@
     "test.watch": "yarn test --watch"
   },
   "peerDependencies": {
-    "@stoplight/json-schema-viewer": ">=2",
-    "@stoplight/markdown-viewer": ">=3",
-    "@stoplight/ui-kit": ">=2",
+    "mobx": ">=5.11",
     "react": ">=16.8",
     "react-dom": ">=16.8"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
-    "react-error-boundary": "^1.2.5"
+    "react-error-boundary": "^1.2.5",
+    "@stoplight/markdown-viewer": "^3.3.1",
+    "@stoplight/json-schema-viewer": "^2.4.1",
+    "@stoplight/tree-list": "^4.4.0",
+    "@stoplight/ui-kit": "^2.5.0"
   },
   "devDependencies": {
-    "@stoplight/json-schema-viewer": "^2.4.1",
-    "@stoplight/markdown-viewer": "^3.3.1",
     "@stoplight/scripts": "7.0.3",
     "@stoplight/storybook-config": "^2.0.4",
-    "@stoplight/tree-list": "^4.4.0",
     "@stoplight/types": "^9.1.2",
-    "@stoplight/ui-kit": "^2.5.0",
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
