@@ -1,13 +1,14 @@
 import { IProjectNode } from '../types';
-import { useRequest } from './useRequest';
+import { IPaginatedResponse, useRequest } from './useRequest';
 
-export interface IProjectNodes {
-  items: IProjectNode[];
-}
+const MAX_PAGE_SIZE = 300; // maximumn number of items the API can return on a single request
 
 export function useProjectNodes(srn: string) {
-  return useRequest<IProjectNodes>({
+  return useRequest<IPaginatedResponse<IProjectNode>>({
     url: '/projects.nodes',
-    params: { srn },
+    params: {
+      srn,
+      first: MAX_PAGE_SIZE, // return the max number of nodes for a single request
+    },
   });
 }

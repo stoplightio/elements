@@ -4,6 +4,17 @@ import { ApolloContext } from '../containers/Provider';
 
 const cache = new Map();
 
+export interface IPaginatedResponse<T> {
+  items: T[];
+  pageInfo: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string;
+    endCursor: string;
+  };
+  totalCount: number;
+}
+
 export type UseRequestState<T> = {
   isLoading: boolean;
   data?: T;
