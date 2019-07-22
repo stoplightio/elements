@@ -31,7 +31,7 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, data
     >
       {nodeTabs.length > 0 ? (
         <>
-          <PageHeader className="py-12 px-20" name={name} version={version} />
+          <PageHeader className="my-12 mx-20" name={name} version={version} />
 
           <SimpleTabs
             id="page-tabs"
@@ -47,19 +47,19 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, data
 
             {nodeTabs.includes('Docs') && (
               <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0 h-full overflow-auto">
-                <Docs className="pt-10 px-20" type={type} data={data} />
+                <Docs className="mt-10 mx-20" type={type} data={data} />
               </SimpleTabPanel>
             )}
 
             {nodeTabs.includes('Changelog') && (
               <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0 h-full overflow-auto">
-                <Changelog className="pt-10 px-20" changes={[]} />
+                <Changelog className="mt-10 mx-20" changes={[]} />
               </SimpleTabPanel>
             )}
           </SimpleTabs>
         </>
       ) : (
-        <Docs className="py-12 px-20" type={type} data={data} />
+        <Docs className="my-12 mx-20" type={type} data={data} />
       )}
     </div>
   );
