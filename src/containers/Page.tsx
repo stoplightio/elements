@@ -14,7 +14,7 @@ export interface IPage {
 }
 
 export const Page: React.FunctionComponent<IPage> = ({ srn, version: semver, className }) => {
-  const [res] = useNodeInfo(srn, semver);
+  const res = useNodeInfo(srn, semver);
   const containerClassName = cn(className, 'flex flex-col h-full');
 
   if (res.isLoading || res.error) {

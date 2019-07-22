@@ -14,7 +14,7 @@ export interface IHub {
 }
 
 export const Hub: React.FunctionComponent<IHub> = ({ srn, className }) => {
-  const [{ isLoading, data }] = useProjectNodes(srn);
+  const { isLoading, data } = useProjectNodes(srn);
   const contents = useComputeToc(data ? data.items : []);
 
   const { uri } = deserializeSrn(srn);

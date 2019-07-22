@@ -12,7 +12,7 @@ export interface ITableOfContents {
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn, className }) => {
-  const [res] = useProjectNodes(srn);
+  const res = useProjectNodes(srn);
   const contents = useComputeToc(res.data ? res.data.items : []);
 
   if (res.isLoading) {

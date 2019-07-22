@@ -12,9 +12,7 @@ export type UseRequestState<T> = {
   };
 };
 
-export type UseRequestResult<T> = [UseRequestState<T>, () => void];
-
-export function useRequest<T>(args: AxiosRequestConfig): UseRequestResult<T> {
+export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
   const client = React.useContext(ApolloContext);
 
   const [state, setState] = React.useState<UseRequestState<T>>({ isLoading: true, data: undefined, error: undefined });
@@ -42,7 +40,7 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestResult<T> {
 
   React.useEffect(() => sendRequest(), [request]);
 
-  return [state, sendRequest];
+  return state;
 }
 
 const createRequest = (request: AxiosRequestConfig) => {

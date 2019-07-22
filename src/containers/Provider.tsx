@@ -3,8 +3,8 @@ import * as React from 'react';
 
 export interface IProvider {
   host: string;
-  token: string;
 
+  token?: string;
   Link?: LinkProps;
 }
 
