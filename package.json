@@ -1,15 +1,15 @@
 {
-  "name": "@stoplight/hubs",
+  "name": "@stoplight/elements",
   "version": "0.0.0",
-  "description": "UI components for building a documentation Hub.",
+  "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": false,
-  "homepage": "https://github.com/stoplightio/hubs",
-  "bugs": "https://github.com/stoplightio/hubs/issues",
+  "homepage": "https://github.com/stoplightio/elements",
+  "bugs": "https://github.com/stoplightio/elements/issues",
   "author": "Stoplight <support@stoplight.io>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stoplightio/hubs"
+    "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
   "main": "src/index.ts",

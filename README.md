@@ -1,19 +1,17 @@
-# Hub Components
+# Elements
 
 <!-- BADGES -->
 
-[![npm version](https://badge.fury.io/js/%40stoplight%2Fhubs.svg)](https://badge.fury.io/js/%40stoplight%2Fhubs)
+[![npm version](https://badge.fury.io/js/%40stoplight%elements.svg)](https://badge.fury.io/js/%40stoplight%elements)
 
 <!-- SUMMARY -->
 
-- Explore the components: [Storybook](https://stoplightio.github.io/hubs)
-- View the changelog: [Releases](https://github.com/stoplightio/hubs/releases)
+- Explore the components: [Storybook](https://stoplightio.github.io/elements)
+- View the changelog: [Releases](https://github.com/stoplightio/elements/releases)
 
 ### Features
 
-- A component for displaying http operations
-- A component for displaying and sending http requests
-- A component for displaying http services
+TBD
 
 ### Installation
 
@@ -21,15 +19,21 @@ Supported in modern browsers and node.
 
 ```bash
 # latest stable
-yarn add @stoplight/hubs
+yarn add @stoplight/elements
 ```
 
 ### Usage
 
-```ts
-import { HttpOperation, HttpRequest, HttpService } from '@stoplight/hubs';
+```tsx
+import { Page, Provider, TableOfContents } from '@stoplight/elements';
 
-// ...example
+<Provider>
+  <div className="flex">
+    <TableOfContents srn="gh/stoplightio/elements" />
+
+    <Page className="flex-1" srn="gh/stoplightio/elements/docs/README.md" />
+  </div>
+</Provider>;
 ```
 
 ### Contributing
