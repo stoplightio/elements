@@ -33,7 +33,7 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className }) => {
       {isLoading ? <TableOfContentsSkeleton /> : <TableOfContents contents={contents} srn={pageSrn} />}
 
       {pageSrn ? (
-        <Page className="flex-1 border-l dark:border-darken-4" srn={pageSrn} />
+        <Page className="flex-1 border-l dark:border-darken-4 overflow-auto" srn={pageSrn} />
       ) : (
         <PageSkeleton className="flex-1" />
       )}

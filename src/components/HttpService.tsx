@@ -37,13 +37,15 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
 
       {value.securitySchemes && <div className="mb-12 text-xl font-semibold select-none">Security Schemes</div>}
 
-      {value.contact && (
+      {value.contact && (value.contact.email || value.contact.url) && (
         <div className="mb-12">
           <div className="text-xl font-semibold select-none">Contact</div>
 
-          <div className="mt-4">
-            <a href={`mailto:${value.contact.email}`}>{value.contact.email}</a>
-          </div>
+          {value.contact.email && (
+            <div className="mt-4">
+              <a href={`mailto:${value.contact.email}`}>{value.contact.email}</a>
+            </div>
+          )}
 
           {value.contact.url && (
             <a className="block mt-4" href={value.contact.url}>

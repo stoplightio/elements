@@ -1,8 +1,9 @@
+import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperation } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
-import { Info } from './Info';
+import { Path } from './Path';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
@@ -18,15 +19,13 @@ const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ 
     );
   }
 
+  const host = value.servers && value.servers[0] && value.servers[0].url;
+
   return (
     <div className={cn('HttpOperation', className)}>
-      <Info
-        method={value.method}
-        path={value.path}
-        summary={value.summary}
-        description={value.description}
-        servers={value.servers}
-      />
+      <Path host={host} path={value.path} />
+
+      {value.description && <MarkdownViewer className="HttpOperation__Description mt-6" markdown={value.description} />}
 
       <Request className="mt-10" request={value.request} />
 

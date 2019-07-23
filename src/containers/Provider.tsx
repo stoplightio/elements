@@ -1,3 +1,4 @@
+import { IComponentMapping } from '@stoplight/markdown-viewer';
 import axios from 'axios';
 import * as React from 'react';
 
@@ -5,23 +6,13 @@ export interface IProvider {
   host: string;
 
   token?: string;
-  Link?: LinkProps;
+  components?: IComponentMapping;
 }
 
-export type LinkProps = React.FunctionComponent<{ className: string; srn: string }>;
-
-const DefaultLink: LinkProps = ({ className, srn, children }) => {
-  return (
-    <a className={className} href={srn}>
-      {children}
-    </a>
-  );
-};
-
 export const ApolloContext = React.createContext(axios.create());
-export const LinkContext = React.createContext(DefaultLink);
+export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
 
-export const Provider: React.FunctionComponent<IProvider> = ({ host, token, Link, children }) => {
+export const Provider: React.FunctionComponent<IProvider> = ({ host, token, components, children }) => {
   const client = React.useMemo(
     () =>
       axios.create({
@@ -36,7 +27,7 @@ export const Provider: React.FunctionComponent<IProvider> = ({ host, token, Link
 
   return (
     <ApolloContext.Provider value={client}>
-      <LinkContext.Provider value={Link || DefaultLink}>{children}</LinkContext.Provider>
+      <ComponentsContext.Provider value={components}>{children}</ComponentsContext.Provider>
     </ApolloContext.Provider>
   );
 };

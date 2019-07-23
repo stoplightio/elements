@@ -11,11 +11,7 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = (): IPage => ({
-  srn: text(
-    'srn',
-    'sl/stoplightio/personal-space/reference/todos/openapi.v1.json/paths/~1todos/post/post-virtual',
-    'Page',
-  ),
+  srn: text('srn', 'sl/stoplight/personal-space/reference/todos/openapi.json/paths/~1todos/post', 'Page'),
 
   version: text('version', '', 'Page'),
 });
@@ -23,9 +19,9 @@ export const knobs = (): IPage => ({
 storiesOf('containers/Page', module)
   .addDecorator(withKnobs)
   .add('default', () => (
-    <div className={cn('pt-12 absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+    <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
       <Provider {...providerKnobs()}>
-        <Page {...knobs()} />
+        <Page {...knobs()} className="py-12" />
       </Provider>
     </div>
   ));

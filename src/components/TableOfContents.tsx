@@ -2,7 +2,7 @@ import { Icon } from '@blueprintjs/core';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
-import { LinkContext } from '../containers/Provider';
+import { ComponentsContext } from '../containers/Provider';
 import { IContentsNode } from '../types';
 
 export interface ITableOfContents {
@@ -100,7 +100,36 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
   isDivider,
   onClick,
 }) => {
-  const Link = React.useContext(LinkContext);
+  const Components = React.useContext(ComponentsContext);
+  const href = !isParent && !isDivider && srn;
+  const className = 'relative flex items-center cursor-pointer border border-transparent border-r-0';
+  const children: any = (
+    <>
+      <span className="TableOfContentsItem-name flex-1">{name}</span>
+
+      {isParent && <Icon className="TableOfContentsItem-icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
+    </>
+  );
+
+  let item;
+  if (href && Components && Components.link) {
+    item = Components.link(
+      {
+        node: { url: href, title: name, className },
+        children,
+        parent: null,
+        path: [],
+        defaultComponents: {},
+      },
+      srn || name,
+    );
+  } else {
+    item = (
+      <a className={className} href={href || ''}>
+        {children}
+      </a>
+    );
+  }
 
   return (
     <div
@@ -115,18 +144,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
       }}
       onClick={onClick}
     >
-      <div className="-ml-px">
-        <Link
-          className="relative flex items-center cursor-pointer border border-transparent border-r-0 "
-          srn={(!isParent && !isDivider && srn) || ''}
-        >
-          <span className="TableOfContentsItem-name flex-1">{name}</span>
-
-          {isParent && (
-            <Icon className="TableOfContentsItem-icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />
-          )}
-        </Link>
-      </div>
+      <div className="-ml-px">{item}</div>
     </div>
   );
 };

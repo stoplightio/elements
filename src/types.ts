@@ -1,4 +1,5 @@
 import { NodeType } from '@stoplight/types';
+export { IComponentMapping } from '@stoplight/markdown-viewer';
 
 export interface IDeserializedSrn {
   service: string;
@@ -14,6 +15,7 @@ export interface INodeInfo {
   uri: string;
   srn: IDeserializedSrn;
   version: string;
+  versions: string[];
   summary: string;
   data: any;
 }

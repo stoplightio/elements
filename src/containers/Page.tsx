@@ -26,7 +26,7 @@ export const Page: React.FunctionComponent<IPage> = ({ srn, version: semver, cla
     return <div className={containerClassName}>Not Found</div>;
   }
 
-  const { type, name, summary, version, data } = res.data;
+  const { type, name, version, versions, data } = res.data;
 
   return (
     <PageComponent
@@ -34,8 +34,8 @@ export const Page: React.FunctionComponent<IPage> = ({ srn, version: semver, cla
       srn={srn}
       type={type}
       name={name}
-      summary={summary}
       version={version}
+      versions={versions}
       data={safeParse(data) || data}
     />
   );
