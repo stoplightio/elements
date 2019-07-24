@@ -30,7 +30,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ con
   }, [srn]);
 
   return (
-    <div className={cn('TableOfContents bg-gray-1 flex justify-end', className)}>
+    <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end', className)}>
       <div className="TableOfContents-inner">
         <ScrollContainer>
           <div className="py-12">
@@ -102,7 +102,10 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
 }) => {
   const Components = React.useContext(ComponentsContext);
   const href = !isParent && !isDivider && srn;
-  const className = 'relative flex items-center cursor-pointer border border-transparent border-r-0';
+  const className = cn('relative flex items-center cursor-pointer border border-transparent border-r-0 ', {
+    'dark:text-white': !isActive,
+  });
+
   const children: any = (
     <>
       <span className="TableOfContentsItem-name flex-1">{name}</span>
@@ -134,10 +137,10 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
   return (
     <div
       className={cn('TableOfContentsItem border-l border-transparent', {
-        'TableOfContentsItem--active': isActive,
+        'TableOfContentsItem--active border-l-0': isActive,
         'TableOfContentsItem--group': isParent,
         'TableOfContentsItem--divider': isDivider,
-        'TableOfContentsItem--child': depth > 0,
+        'TableOfContentsItem--child border-gray-3 dark:border-darken-4': depth > 0,
       })}
       style={{
         marginLeft: depth * 16,

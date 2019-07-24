@@ -26,8 +26,15 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, vers
   const nodeTabs = NodeTypeTabs[type];
 
   return (
-    <div className={cn('Page', className, 'bg-white dark:bg-transparent max-w-5xl')}>
-      <PageHeader className="mt-10 mx-10" type={type} name={name} version={version} versions={versions} data={data} />
+    <div className={cn('Page', className, 'bg-white dark:bg-transparent')}>
+      <PageHeader
+        className="mt-10 mx-10 px-10 max-w-6xl"
+        type={type}
+        name={name}
+        version={version}
+        versions={versions}
+        data={data}
+      />
 
       {nodeTabs && nodeTabs.length > 1 ? (
         <SimpleTabs
@@ -36,7 +43,7 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, vers
           selectedIndex={selectedTab}
           onSelect={onSelect}
         >
-          <SimpleTabList className="mt-6 mx-10">
+          <SimpleTabList className="mt-6 mx-10 px-10">
             {nodeTabs.includes('Docs') && <SimpleTab id="docs-tab">Docs</SimpleTab>}
 
             {nodeTabs.includes('Changelog') && <SimpleTab id="changelog-tab">Changelog</SimpleTab>}
@@ -46,24 +53,24 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, vers
 
           {nodeTabs.includes('Docs') && (
             <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-              <Docs className="my-12 mx-10" type={type} data={data} />
+              <Docs className="my-12 mx-10 px-10 max-w-6xl" type={type} data={data} />
             </SimpleTabPanel>
           )}
 
           {nodeTabs.includes('Changelog') && (
             <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-              <Changelog className="my-12 mx-10" changes={[]} />
+              <Changelog className="my-12 mx-10 px-10 max-w-6xl" changes={[]} />
             </SimpleTabPanel>
           )}
 
           {nodeTabs.includes('Try It') && (
             <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-              <HttpRequest className="my-12 mx-10" value={data} />
+              <HttpRequest className="my-12 mx-10 px-10 max-w-6xl" value={data} />
             </SimpleTabPanel>
           )}
         </SimpleTabs>
       ) : (
-        <Docs className="my-12 mx-10" type={type} data={data} />
+        <Docs className="my-12 mx-10 px-10 max-w-6xl" type={type} data={data} />
       )}
     </div>
   );
