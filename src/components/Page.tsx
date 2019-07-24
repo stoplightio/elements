@@ -27,7 +27,7 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, vers
 
   return (
     <div className={cn('Page', className, 'bg-white dark:bg-transparent max-w-5xl')}>
-      <PageHeader className="mt-12 mx-20" type={type} name={name} version={version} versions={versions} data={data} />
+      <PageHeader className="mt-10 mx-10" type={type} name={name} version={version} versions={versions} data={data} />
 
       {nodeTabs && nodeTabs.length > 1 ? (
         <SimpleTabs
@@ -36,7 +36,7 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, vers
           selectedIndex={selectedTab}
           onSelect={onSelect}
         >
-          <SimpleTabList className="mt-6 mx-20">
+          <SimpleTabList className="mt-6 mx-10">
             {nodeTabs.includes('Docs') && <SimpleTab id="docs-tab">Docs</SimpleTab>}
 
             {nodeTabs.includes('Changelog') && <SimpleTab id="changelog-tab">Changelog</SimpleTab>}
@@ -45,25 +45,25 @@ export const Page: React.FunctionComponent<IPage> = ({ type, name, version, vers
           </SimpleTabList>
 
           {nodeTabs.includes('Docs') && (
-            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0 h-full">
-              <Docs className="my-12 mx-20" type={type} data={data} />
+            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
+              <Docs className="my-12 mx-10" type={type} data={data} />
             </SimpleTabPanel>
           )}
 
           {nodeTabs.includes('Changelog') && (
-            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0 h-full">
-              <Changelog className="my-12 mx-20" changes={[]} />
+            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
+              <Changelog className="my-12 mx-10" changes={[]} />
             </SimpleTabPanel>
           )}
 
           {nodeTabs.includes('Try It') && (
-            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0 h-full">
-              <HttpRequest className="my-12 mx-20" value={data} />
+            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
+              <HttpRequest className="my-12 mx-10" value={data} />
             </SimpleTabPanel>
           )}
         </SimpleTabs>
       ) : (
-        <Docs className="my-12 mx-20" type={type} data={data} />
+        <Docs className="my-12 mx-10" type={type} data={data} />
       )}
     </div>
   );

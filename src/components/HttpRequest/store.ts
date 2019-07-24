@@ -2,12 +2,12 @@ import { safeParse, safeStringify } from '@stoplight/json';
 import { Dictionary, IHttpOperation } from '@stoplight/types';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { action, computed, observable } from 'mobx';
-import * as URI from 'urijs';
-import * as URITemplate from 'urijs/src/URITemplate';
+
 import { ParamType } from './types';
 
-// @ts-ignore
-import * as sampler from 'openapi-sampler';
+const URI = require('urijs');
+const URITemplate = require('urijs/src/URITemplate');
+const sampler = require('openapi-sampler');
 
 export class Request {
   @observable
@@ -83,7 +83,7 @@ export class Request {
       }
     }
 
-    if (value.request.body && value.request.body.contents) {
+    if (value.request.body && value.request.body.contents && value.request.body.contents[0]) {
       if (value.request.body.contents[0].schema) {
         this.body = sampler.sample(value.request.body.contents[0].schema);
       } else if (value.request.body.contents[0].examples) {

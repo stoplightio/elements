@@ -3,7 +3,7 @@ import { safeParse } from '@stoplight/json';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { Page as PageComponent } from '../components/Page';
+import { Page as Component } from '../components/Page';
 import { useNodeInfo } from '../hooks/useNodeInfo';
 
 export interface IPage {
@@ -12,6 +12,8 @@ export interface IPage {
   version?: string;
   className?: string;
 }
+
+export const PageComponent = Component;
 
 export const Page: React.FunctionComponent<IPage> = ({ srn, version: semver, className }) => {
   const res = useNodeInfo(srn, semver);

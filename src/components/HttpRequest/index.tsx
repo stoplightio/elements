@@ -67,14 +67,16 @@ const SendRequest = observer(() => {
             })
             .catch(error => {
               store.isSending = false;
-              store.error = error;
+              if (error.response) {
+                store.response = error.response;
+              }
             });
         }}
       >
         Send
       </Button>
 
-      <div className="flex-1 ml-4 bg-gray-1 border p-3 whitespace-no-wrap overflow-auto">
+      <div className="flex-1 ml-4 bg-darken-2 border dark:border-darken p-3 whitespace-no-wrap overflow-auto">
         <div>{store.url}</div>
       </div>
     </div>
@@ -107,19 +109,16 @@ const Response = observer(() => {
 
       <SimpleTabs id="response">
         <SimpleTabList>
-          <SimpleTab>Raw</SimpleTab>
+          <SimpleTab>Body</SimpleTab>
           <SimpleTab>Headers</SimpleTab>
         </SimpleTabList>
 
         <SimpleTabPanel>
-          <div className="p-4">
-            <CodeViewer
-              className="overflow-auto"
-              language="json"
-              value={safeStringify(response.data, undefined, 4)}
-              showLineNumbers
-            />
-          </div>
+          <CodeViewer
+            className="overflow-auto p-3"
+            language="json"
+            value={safeStringify(response.data, undefined, 4)}
+          />
         </SimpleTabPanel>
 
         <SimpleTabPanel>

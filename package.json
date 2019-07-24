@@ -67,6 +67,7 @@
     "@types/react": "16.x.x",
     "@types/react-dom": "16.x.x",
     "@types/typescript": "^2.0.0",
+    "@types/urijs": "^1.19.3",
     "copyfiles": "^2.1.1",
     "enzyme": "3.x.x",
     "enzyme-adapter-react-16": "1.x.x",

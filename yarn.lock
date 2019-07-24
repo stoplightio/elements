@@ -2515,6 +2515,11 @@
   resolved "https://registry.npmjs.org/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
+"@types/urijs@^1.19.3":
+  version "1.19.3"
+  resolved "https://registry.npmjs.org/@types/urijs/-/urijs-1.19.3.tgz#ed90d38baf3eff1627544ad6ed3bcdeb79ef3533"
+  integrity sha512-L5tP2dEIV+OMVEVRhf8PCFMNMyO5ZBodrXpEqnGczky60lcv8l5Kl9Yi4J1yxhSVfHUe+Pr2nXJfDM+rUYNs3w==
+
 "@types/vfile-message@*":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@types/vfile-message/-/vfile-message-1.0.1.tgz#e1e9895cc6b36c462d4244e64e6d0b6eaf65355a"

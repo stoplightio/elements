@@ -41,7 +41,7 @@ export const PageHeader: React.FunctionComponent<IPageHeader> = ({
 
           <div className="flex-1" />
 
-          <VersionSelect className="ml-2" version={version} versions={versions} />
+          {version && <VersionSelect className="ml-2" version={version} versions={versions} />}
         </div>
 
         <Path className="mt-6" host={host} path={data.path} />
@@ -56,7 +56,7 @@ export const PageHeader: React.FunctionComponent<IPageHeader> = ({
 
         <div className="flex-1" />
 
-        <VersionSelect className="ml-2" version={version} versions={versions} />
+        {version && <VersionSelect className="ml-2" version={version} versions={versions} />}
       </div>
     </div>
   );

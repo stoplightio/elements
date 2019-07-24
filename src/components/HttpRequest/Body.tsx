@@ -7,8 +7,7 @@ import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useStore } from './context';
 
-// @ts-ignore
-import * as sampler from 'openapi-sampler';
+const sampler = require('openapi-sampler');
 
 export interface IBodyProps {
   value: IHttpOperationRequestBody;
@@ -23,7 +22,7 @@ export interface ISchema {
 }
 
 export const Body: React.FunctionComponent<IBodyProps> = ({ className, value }) => {
-  if (!value || !value.contents) return null;
+  if (!value || !value.contents || !value.contents[0]) return null;
 
   return (
     <div className={cn('HttpOperation__Parameters mt-6', className)}>
