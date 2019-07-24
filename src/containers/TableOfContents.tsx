@@ -33,7 +33,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn
 
 export const TableOfContentsSkeleton: React.FunctionComponent<{ className?: string }> = ({ className }) => {
   return (
-    <div className={cn('TableOfContentsSkeleton bg-gray-1 dark:bg-transparent flex justify-end py-12', className)}>
+    <div className={cn('TableOfContentsSkeleton bg-gray-1 dark:bg-transparent flex justify-end py-10', className)}>
       <div className="TableOfContentsSkeleton-inner">
         <SkeletonRow />
         <SkeletonRow />
@@ -84,8 +84,6 @@ export const TableOfContentsSkeleton: React.FunctionComponent<{ className?: stri
 
 const SkeletonRow = () => (
   <div className="flex items-center mt-2 h-10">
-    <div className={cn(Classes.SKELETON, 'p-2 mr-2')} />
-    <div className={cn(Classes.SKELETON, 'p-3 mr-2')} />
     <div className={cn(Classes.SKELETON, 'px-24 py-4')} />
   </div>
 );
