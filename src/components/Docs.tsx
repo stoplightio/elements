@@ -14,10 +14,13 @@ import * as React from 'react';
 import { ComponentsContext } from '../containers/Provider';
 import { useResolver } from '../hooks/useResolver';
 import { HttpOperation } from './HttpOperation';
+import { HttpRequest } from './HttpRequest';
 import { HttpService } from './HttpService';
 
+export type DocsNodeType = NodeType | 'json_schema' | 'http_request';
+
 export interface IDocs {
-  type: NodeType;
+  type: DocsNodeType;
   data: any;
 
   className?: string;
@@ -31,9 +34,11 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
     markdown = data;
   } else if (type === NodeType.Model) {
     const { description, ...schema } = data;
-    markdown = `${description}\n\n` + '```json' + ` ${type}\n` + safeStringify(schema, undefined, 4) + '\n```';
+    markdown = `${description}\n\n` + '```json' + ` ${type}\n` + safeStringify(schema, undefined, 4) + '\n```\n';
+  } else if (type === NodeType.HttpOperation) {
+    markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```\n\n';
   } else {
-    markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```';
+    markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```\n';
   }
 
   return <MarkdownViewer className={className} markdown={markdown} components={components} />;
@@ -41,7 +46,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
 
 const JSV_MAX_ROWS = 50;
 const MarkdownViewerCode: React.FunctionComponent<{
-  type: NodeType | 'json_schema';
+  type: DocsNodeType;
   value: any;
   annotations: ICodeAnnotations;
 }> = ({ type, value, annotations }) => {
@@ -65,6 +70,8 @@ const MarkdownViewerCode: React.FunctionComponent<{
     return <HttpOperation value={resolved} />;
   } else if (type === NodeType.HttpService) {
     return <HttpService value={resolved} />;
+  } else if (type === 'http_request') {
+    return <HttpRequest value={resolved} />;
   }
 
   return null;
@@ -81,7 +88,11 @@ function useComponents() {
         const { node, defaultComponents } = props;
 
         const nodeType = node.annotations && node.annotations.type ? node.annotations.type : node.meta;
-        if (['json_schema', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService].includes(nodeType)) {
+        if (
+          ['http_request', 'json_schema', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService].includes(
+            nodeType,
+          )
+        ) {
           return <MarkdownViewerCode key={key} type={nodeType} value={node.value} annotations={node.annotations} />;
         }
 

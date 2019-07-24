@@ -41,6 +41,7 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
+    "@stoplight/json": "^3.0.1",
     "@stoplight/json-ref-resolver": "^2.0.3",
     "@stoplight/json-schema-viewer": "^2.4.1",
     "@stoplight/markdown-viewer": "^3.3.1",
@@ -50,7 +51,10 @@
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "isomorphic-unfetch": "^3.0.0",
-    "react-error-boundary": "^1.2.5"
+    "mobx-react-lite": "^1.4.1",
+    "openapi-sampler": "^1.0.0-beta.15",
+    "react-error-boundary": "^1.2.5",
+    "urijs": "^1.19.1"
   },
   "devDependencies": {
     "@stoplight/scripts": "7.0.3",

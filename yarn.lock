@@ -1687,6 +1687,16 @@
     jsonc-parser "~2.1.0"
     lodash "^4.10"
 
+"@stoplight/json@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/@stoplight/json/-/json-3.0.1.tgz#e81345a2874486523c215282b252d70259c9c739"
+  integrity sha512-xsqbuXcvv6tepeifrtsRXXVLXzCJurESwUiZQx0SRmRGAk3EEANRrClZMOQf0LCSp2RoJkSd8Ch66tCO+079Xw==
+  dependencies:
+    "@stoplight/types" "^9.1.2"
+    jsonc-parser "~2.1"
+    lodash "^4.17"
+    safe-stable-stringify "^1.1"
+
 "@stoplight/lifecycle@2.x.x":
   version "2.0.1"
   resolved "https://registry.npmjs.org/@stoplight/lifecycle/-/lifecycle-2.0.1.tgz#ac2eb1728f96f97addb13c9f13360bce021d0c72"
@@ -6539,6 +6549,11 @@ for-own@^1.0.0:
   dependencies:
     for-in "^1.0.1"
 
+foreach@^2.0.4:
+  version "2.0.5"
+  resolved "https://registry.npmjs.org/foreach/-/foreach-2.0.5.tgz#0bee005018aeb260d0a3af3ae658dd0136ec1b99"
+  integrity sha1-C+4AUBiusmDQo6865ljdATbsG5k=
+
 forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.npmjs.org/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
@@ -8672,6 +8687,13 @@ json-parse-better-errors@^1.0.0, json-parse-better-errors@^1.0.1, json-parse-bet
   resolved "https://registry.npmjs.org/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
   integrity sha512-mrqyZKfX5EhL7hvqcV6WG1yYjnjeuYDzDhhcAAUrq8Po85NBQBJP+ZDUT75qZQ98IkUoBqdkExkukOU7Ts2wrw==
 
+json-pointer@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.npmjs.org/json-pointer/-/json-pointer-0.6.0.tgz#8e500550a6aac5464a473377da57aa6cc22828d7"
+  integrity sha1-jlAFUKaqxUZKRzN32leqbMIoKNc=
+  dependencies:
+    foreach "^2.0.4"
+
 json-schema-compare@^0.2.2:
   version "0.2.2"
   resolved "https://registry.npmjs.org/json-schema-compare/-/json-schema-compare-0.2.2.tgz#dd601508335a90c7f4cfadb6b2e397225c908e56"
@@ -8726,7 +8748,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-jsonc-parser@2.1.0, jsonc-parser@~2.1.0:
+jsonc-parser@2.1.0, jsonc-parser@~2.1, jsonc-parser@~2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/jsonc-parser/-/jsonc-parser-2.1.0.tgz#eb0d0c7a3c33048524ce3574c57c7278fb2f1bf3"
   integrity sha512-n9GrT8rrr2fhvBbANa1g+xFmgGK5X91KFeDwlKQ3+SJfmH5+tKv/M/kahx/TXOMflfWHKGKqKyfHQaLKTNzJ6w==
@@ -10015,6 +10037,11 @@ mobx-react-lite@^1.3.1:
   resolved "https://registry.npmjs.org/mobx-react-lite/-/mobx-react-lite-1.3.2.tgz#4366048b5d283d12a82053367638b5d79281951f"
   integrity sha512-D8VZEsxSxMNYDJmw2SgUXVAgpOlVYmp3hBCusoe+LuBDYUqyn2K3RPrMEF0rIzYJAvqpyv7YRrH8I3eBsPPx1A==
 
+mobx-react-lite@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.npmjs.org/mobx-react-lite/-/mobx-react-lite-1.4.1.tgz#7307a45901f97f9a07ebed32b654235507644e1a"
+  integrity sha512-XmM+gzNv+GyXZYDLZMIGox3DufIiKULYgJsLhQj0U6Wlf+J5jv/h7limrL0aS1bEUtNilG62g9nwTeQ0KHzLFg==
+
 mobx@^5.11.0:
   version "5.11.0"
   resolved "https://registry.npmjs.org/mobx/-/mobx-5.11.0.tgz#58c64769bc2408ccde35fc2bac4cd5b8ae7b28a6"
@@ -10966,6 +10993,13 @@ onetime@^2.0.0:
   integrity sha1-BnQoIw/WdEOyeUsiu6UotoZ5YtQ=
   dependencies:
     mimic-fn "^1.0.0"
+
+openapi-sampler@^1.0.0-beta.15:
+  version "1.0.0-beta.15"
+  resolved "https://registry.npmjs.org/openapi-sampler/-/openapi-sampler-1.0.0-beta.15.tgz#c087143826962fa07a0c7bda9ce5c36d732f45de"
+  integrity sha512-wUD/vD3iBHKik/sME3uwUu4X3HFA53rDrPcVvLzgEELjHLbnTpSYfm4Jo9qZT1dPfBRowAnrF/VRQfOjL5QRAw==
+  dependencies:
+    json-pointer "^0.6.0"
 
 opener@^1.5.1:
   version "1.5.1"
@@ -13141,6 +13175,11 @@ safe-regex@^1.1.0:
   dependencies:
     ret "~0.1.10"
 
+safe-stable-stringify@^1.1:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/safe-stable-stringify/-/safe-stable-stringify-1.1.0.tgz#f712b600f8f775444ccc66e8f31d250e43fdfe01"
+  integrity sha512-8h+96qSufNQrydRPzbHms38VftQQSRGbqUkaIMWUBWN4/N8sLNALIALa8KmFcQ8P/a9uzMkA+KY04Rj5WQiXPA==
+
 "safer-buffer@>= 2.1.2 < 3", safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
   version "2.1.2"
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
@@ -14933,7 +14972,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-urijs@~1.19.1:
+urijs@^1.19.1, urijs@~1.19.1:
   version "1.19.1"
   resolved "https://registry.npmjs.org/urijs/-/urijs-1.19.1.tgz#5b0ff530c0cbde8386f6342235ba5ca6e995d25a"
   integrity sha512-xVrGVi94ueCJNrBSTjWqjvtgvl3cyOTThp2zaMaFNGp3F542TR6sM3f2o8RqZl+AwteClSVmoCyt0ka4RjQOQg==

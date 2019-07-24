@@ -1,6 +1,6 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpService } from '@stoplight/types';
-import { Card, HTMLTable } from '@stoplight/ui-kit';
+import { Card } from '@stoplight/ui-kit';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';

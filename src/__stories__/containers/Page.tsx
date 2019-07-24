@@ -11,7 +11,7 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = (): IPage => ({
-  srn: text('srn', 'sl/stoplight/personal-space/reference/todos/openapi.json/paths/~1todos/post', 'Page'),
+  srn: text('srn', 'sl/stoplight/personal-space/reference/todos/openapi.json/paths/~1todos/get', 'Page'),
 
   version: text('version', '', 'Page'),
 });
