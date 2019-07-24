@@ -53,11 +53,12 @@ export class Request {
       this._serverUrl = value.servers[0].url;
     }
 
-    if (value.security && value.security.length) {
-      for (const security of value.security) {
-        // this.authParams[security.]
-      }
-    }
+    // TODO (CL): Add security params to their correct params
+    // if (value.security && value.security.length) {
+    //   for (const security of value.security) {
+
+    //   }
+    // }
 
     if (value.request.query) {
       for (const query of value.request.query) {
@@ -104,8 +105,7 @@ export class Request {
   @computed
   public get request(): AxiosRequestConfig {
     return {
-      method: 'get',
-      // method: this._httpOperation ? (this._httpOperation.method as AxiosRequestConfig['method']) : 'GET',
+      method: this._httpOperation ? (this._httpOperation.method as AxiosRequestConfig['method']) : 'GET',
       url: this.url,
       headers: this.headerParams,
       params: this.queryParams,
@@ -140,8 +140,7 @@ export class Request {
 
   @computed
   public get url() {
-    // const urlTemplate = new URITemplate(this._serverUrl + this._path);
-    const urlTemplate = new URITemplate('https://api.thecatapi.com/v1/images/search?breed_id=beng');
+    const urlTemplate = new URITemplate(this._serverUrl + this._path);
     const uri = new URI(String(urlTemplate.expand(this.pathParams)));
     uri.setQuery(this.queryParams);
 
