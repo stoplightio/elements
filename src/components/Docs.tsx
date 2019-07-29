@@ -14,10 +14,9 @@ import * as React from 'react';
 import { ComponentsContext } from '../containers/Provider';
 import { useResolver } from '../hooks/useResolver';
 import { HttpOperation } from './HttpOperation';
-import { HttpRequest } from './HttpRequest';
 import { HttpService } from './HttpService';
 
-export type DocsNodeType = NodeType | 'json_schema' | 'http_request';
+export type DocsNodeType = NodeType | 'json_schema';
 
 export interface IDocs {
   type: DocsNodeType;
@@ -70,8 +69,6 @@ const MarkdownViewerCode: React.FunctionComponent<{
     return <HttpOperation value={resolved} />;
   } else if (type === NodeType.HttpService) {
     return <HttpService value={resolved} />;
-  } else if (type === 'http_request') {
-    return <HttpRequest value={resolved} />;
   }
 
   return null;
@@ -88,11 +85,7 @@ function useComponents() {
         const { node, defaultComponents } = props;
 
         const nodeType = node.annotations && node.annotations.type ? node.annotations.type : node.meta;
-        if (
-          ['http_request', 'json_schema', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService].includes(
-            nodeType,
-          )
-        ) {
+        if (['json_schema', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService].includes(nodeType)) {
           return <MarkdownViewerCode key={key} type={nodeType} value={node.value} annotations={node.annotations} />;
         }
 

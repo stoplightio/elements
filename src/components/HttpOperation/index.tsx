@@ -20,11 +20,13 @@ const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ 
 
   return (
     <div className={cn('HttpOperation', className)}>
-      {value.description && <MarkdownViewer className="HttpOperation__Description mt-6" markdown={value.description} />}
+      {value.description && (
+        <MarkdownViewer className="HttpOperation__Description mb-10" markdown={value.description} />
+      )}
 
-      <Request className="mt-10" request={value.request} />
+      <Request className="mb-10" request={value.request} />
 
-      <Responses className="mt-10" responses={value.responses} />
+      <Responses responses={value.responses} />
     </div>
   );
 };

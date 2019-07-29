@@ -39,14 +39,12 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
   if (!parameters || !parameters.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Parameters mt-6', className)}>
-      {title && <div className="text-lg font-semibold">{title}</div>}
+    <div className={cn('HttpOperation__Parameters', className)}>
+      {title && <div className="text-lg font-semibold mb-5">{title}</div>}
 
-      <div className="mt-5">
-        {parameters.map((parameter, index) => (
-          <Parameter key={index} className="mt-3" parameter={parameter} />
-        ))}
-      </div>
+      {parameters.map((parameter, index) => (
+        <Parameter key={index} className={index > 0 ? 'mt-3' : undefined} parameter={parameter} />
+      ))}
     </div>
   );
 };

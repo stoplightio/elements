@@ -4,83 +4,85 @@ import cn from 'classnames';
 import * as React from 'react';
 import { Changelog } from './Changelog';
 import { Docs } from './Docs';
-import { HttpRequest } from './HttpRequest';
 import { PageHeader } from './PageHeader';
+import { TryIt } from './TryIt';
 
 export interface IPage {
   type: NodeType;
-  srn: string;
   name: string;
-  version: string;
   data: any;
 
+  srn?: string;
+  version?: string;
   versions?: string[];
-  tabs?: boolean | string[];
+
+  padding?: string;
   className?: string;
 }
 
-export const Page: React.FunctionComponent<IPage> = ({ type, name, version, versions, data, className, tabs }) => {
+export const Page: React.FunctionComponent<IPage> = ({
+  type,
+  name,
+  version,
+  versions,
+  data,
+  className,
+  padding = '10',
+}) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);
 
   const nodeTabs = NodeTypeTabs[type];
 
   return (
-    <div className={cn('Page', className, 'bg-white dark:bg-transparent')}>
-      <PageHeader
-        className="mt-10 mx-10 px-10 max-w-6xl"
-        type={type}
-        name={name}
-        version={version}
-        versions={versions}
-        data={data}
-      />
+    <div className={cn('Page', className, 'flex flex-col bg-white dark:bg-transparent', `p-${padding}`)}>
+      <PageHeader type={type} name={name} version={version} versions={versions} data={data} />
 
       {nodeTabs && nodeTabs.length > 1 ? (
         <SimpleTabs
-          id="page-tabs"
-          className="Page-tabs flex flex-col flex-1"
+          id="Page__Tabs"
+          className={cn('Page__Tabs flex flex-col flex-1', `-mx-${padding} -mb-${padding}`)}
           selectedIndex={selectedTab}
           onSelect={onSelect}
         >
-          <SimpleTabList className="mt-6 mx-10 px-10">
-            {nodeTabs.includes('Docs') && <SimpleTab id="docs-tab">Docs</SimpleTab>}
+          <SimpleTabList className={cn('mt-6', `px-${padding}`)}>
+            {nodeTabs.includes('Docs') && <SimpleTab id="Page__Tabs-docs">Docs</SimpleTab>}
 
-            {nodeTabs.includes('Changelog') && <SimpleTab id="changelog-tab">Changelog</SimpleTab>}
+            {nodeTabs.includes('Changelog') && <SimpleTab id="Page__Tabs-changelog">Changelog</SimpleTab>}
 
-            {nodeTabs.includes('Try It') && <SimpleTab id="try-it-tab">Try It</SimpleTab>}
+            {nodeTabs.includes('TryIt') && <SimpleTab id="Page__Tabs-try-it">Try It</SimpleTab>}
           </SimpleTabList>
 
           {nodeTabs.includes('Docs') && (
-            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-              <Docs className="my-12 mx-10 px-10 max-w-6xl" type={type} data={data} />
+            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0 mx-px', `p-${padding}`)}>
+              <Docs type={type} data={data} />
             </SimpleTabPanel>
           )}
 
           {nodeTabs.includes('Changelog') && (
-            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-              <Changelog className="my-12 mx-10 px-10 max-w-6xl" changes={[]} />
+            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0 mx-px', `p-${padding}`)}>
+              <Changelog changes={[]} />
             </SimpleTabPanel>
           )}
 
-          {nodeTabs.includes('Try It') && (
-            <SimpleTabPanel className="flex-1 border-l-0 border-r-0 border-b-0">
-              <HttpRequest className="my-12 mx-10 px-10 max-w-6xl" value={data} />
+          {nodeTabs.includes('TryIt') && (
+            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0 mx-px', `p-${padding}`)}>
+              <TryIt value={data} />
             </SimpleTabPanel>
           )}
         </SimpleTabs>
       ) : (
-        <Docs className="my-12 mx-10 px-10 max-w-6xl" type={type} data={data} />
+        <Docs type={type} data={data} />
       )}
     </div>
   );
 };
 
-// TODO (CL): Add Docs, Changelog, and Try It Out tabs
+// TODO (CL): Allow to configure which tabs are shown
 const NodeTypeTabs = {
   [NodeType.Article]: ['Docs'],
   [NodeType.Model]: ['Docs'],
-  [NodeType.HttpOperation]: ['Docs', 'Try It'],
+  [NodeType.HttpOperation]: ['Docs', 'TryIt'],
   [NodeType.HttpService]: ['Docs'],
   [NodeType.HttpServer]: ['Docs'],
 };

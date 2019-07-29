@@ -66,11 +66,11 @@ export const Response: React.FunctionComponent<IResponseProps> = ({ className, r
 
   return (
     <div className={cn('HttpOperation__Response', className)}>
-      {response.description && <MarkdownViewer markdown={response.description} />}
+      {response.description && <MarkdownViewer className="mb-6" markdown={response.description} />}
 
-      <Parameters className="mt-6" title="Headers" parameters={response.headers} />
+      <Parameters className="mb-6" title="Headers" parameters={response.headers} />
 
-      <Schema className="mt-6" value={content.schema} examples={content.examples} />
+      <Schema value={content.schema} examples={content.examples} />
     </div>
   );
 };

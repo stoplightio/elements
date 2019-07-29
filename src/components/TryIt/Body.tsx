@@ -25,11 +25,10 @@ export const Body: React.FunctionComponent<IBodyProps> = ({ className, value }) 
   if (!value || !value.contents || !value.contents[0]) return null;
 
   return (
-    <div className={cn('HttpOperation__Parameters mt-6', className)}>
-      <div className="text-lg font-semibold">Body</div>
+    <div className={cn('TryIt__Body', className)}>
+      <div className="text-lg font-semibold mb-6">Body</div>
 
       <Schema
-        className="mt-6"
         value={value.contents[0].schema}
         mediaType={value.contents[0].mediaType}
         examples={value.contents[0].examples}
@@ -47,9 +46,24 @@ export const Schema = observer<ISchema>(({ className, value, examples, mediaType
     return null;
   }
 
+  const exampleTabs = [];
+  const examplePanels = [];
+
+  if (examples && examples.length) {
+    for (const example of examples) {
+      exampleTabs.push(<SimpleTab key={example.key}>{example.summary || example.key}</SimpleTab>);
+
+      examplePanels.push(
+        <SimpleTabPanel key={example.key} className="p-0">
+          <CodeEditor language="json" value={store.body || ''} onChange={body => (store.body = body)} padding={10} />
+        </SimpleTabPanel>,
+      );
+    }
+  }
+
   return (
     <SimpleTabs
-      className={cn('HttpOperation__Schema', className)}
+      className={cn('TryIt__Schema', className)}
       selectedIndex={selectedIndex}
       onSelect={(i: number) => {
         setSelectedIndex(i);
@@ -68,8 +82,7 @@ export const Schema = observer<ISchema>(({ className, value, examples, mediaType
       <SimpleTabList>
         {value && <SimpleTab>{mediaType || 'JSON'}</SimpleTab>}
 
-        {examples &&
-          examples.map((example, index) => <SimpleTab key={index}>{example.summary || example.key}</SimpleTab>)}
+        {exampleTabs}
       </SimpleTabList>
 
       {value && (
@@ -78,12 +91,7 @@ export const Schema = observer<ISchema>(({ className, value, examples, mediaType
         </SimpleTabPanel>
       )}
 
-      {examples &&
-        examples.map((example, index) => (
-          <SimpleTabPanel key={index} className="p-0">
-            <CodeEditor language="json" value={store.body || ''} onChange={body => (store.body = body)} padding={10} />
-          </SimpleTabPanel>
-        ))}
+      {examplePanels}
     </SimpleTabs>
   );
 });

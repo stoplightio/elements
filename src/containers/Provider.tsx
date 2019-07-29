@@ -3,8 +3,7 @@ import axios from 'axios';
 import * as React from 'react';
 
 export interface IProvider {
-  host: string;
-
+  host?: string;
   token?: string;
   components?: IComponentMapping;
 }

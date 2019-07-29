@@ -17,13 +17,13 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, class
 
   return (
     <div className={cn('HttpOperation__Request', className)}>
-      <Parameters className="mb-10" title="Path Parameters" parameters={path} />
+      {path && <Parameters className="mb-10" title="Path Parameters" parameters={path} />}
 
-      <Parameters className="mb-10" title="Headers" parameters={headers} />
+      {headers && <Parameters className="mb-10" title="Headers" parameters={headers} />}
 
-      <Parameters className="mb-10" title="Query Parameters" parameters={query} />
+      {query && <Parameters className="mb-10" title="Query Parameters" parameters={query} />}
 
-      {body && <Body className="mb-10" body={body} />}
+      {body && <Body body={body} />}
     </div>
   );
 };
