@@ -1,5 +1,5 @@
 import { contents, nodes } from '../../__fixtures__/project-nodes';
-import { computeToc } from '../../hooks/useComputeToc';
+import { computeToc } from '../useComputeToc';
 
 describe('computeToc', () => {
   it('should return the correct table of contents', () => {
