@@ -1,0 +1,20 @@
+@import '~@stoplight/ui-kit/styles/blueprint/variables';
+
+.Page {
+  &__header {
+    .HttpOperation__Path {
+      height: 30px;
+    }
+  }
+
+  .#{$ns}-dark & {
+    &__tab.selected-tab {
+      background-color: transparent;
+      border-bottom-color: get-color(gray, 7);
+    }
+
+    &__tab-panel {
+      background-color: transparent;
+    }
+  }
+}

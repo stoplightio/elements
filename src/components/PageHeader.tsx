@@ -36,7 +36,7 @@ export const PageHeader: React.FunctionComponent<IPageHeader> = ({
   const host = type === NodeType.HttpOperation && data.servers && data.servers[0] && data.servers[0].url;
 
   return (
-    <div className={cn('PageHeader', className)}>
+    <div className={className}>
       <div className="py-1 flex items-center">
         {type === NodeType.HttpOperation && <Method className="mr-6" method={data && data.method} />}
 

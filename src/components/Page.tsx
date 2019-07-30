@@ -42,10 +42,11 @@ export const Page: React.FunctionComponent<IPage> = ({
     <div
       className={cn('Page', className, 'flex flex-col bg-white dark:bg-transparent', {
         'overflow-hidden': scrollInnerContainer && nodeTabs && nodeTabs.length > 1,
+        'absolute inset-0': scrollInnerContainer,
       })}
     >
       <PageHeader
-        className={cn(`px-${padding} pt-${padding}`)}
+        className={cn(`Page__header px-${padding} pt-${padding}`)}
         type={type}
         name={name}
         srn={srn}
@@ -56,21 +57,33 @@ export const Page: React.FunctionComponent<IPage> = ({
 
       {nodeTabs && nodeTabs.length > 1 ? (
         <SimpleTabs
-          id="Page__Tabs"
-          className={cn('Page__Tabs flex flex-col flex-1')}
+          id="Page__tabs"
+          className={cn('Page__tabs flex flex-col flex-1')}
           selectedIndex={selectedTab}
           onSelect={onSelect}
         >
-          <SimpleTabList className={cn('mt-6', `px-${padding}`)}>
-            {nodeTabs.includes('Docs') && <SimpleTab id="Page__Tabs-docs">Docs</SimpleTab>}
+          <SimpleTabList className={cn('Page__tabs-list mt-6', `px-${padding}`)}>
+            {nodeTabs.includes('Docs') && (
+              <SimpleTab id="docs" className="Page__tab">
+                Docs
+              </SimpleTab>
+            )}
 
-            {nodeTabs.includes('Changelog') && <SimpleTab id="Page__Tabs-changelog">Changelog</SimpleTab>}
+            {nodeTabs.includes('Changelog') && (
+              <SimpleTab id="changelog" className="Page__tab">
+                Changelog
+              </SimpleTab>
+            )}
 
-            {nodeTabs.includes('TryIt') && <SimpleTab id="Page__Tabs-try-it">Try It</SimpleTab>}
+            {nodeTabs.includes('TryIt') && (
+              <SimpleTab id="tryit" className="Page__tab">
+                Try It
+              </SimpleTab>
+            )}
           </SimpleTabList>
 
           {nodeTabs.includes('Docs') && (
-            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0')}>
+            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
                 <Docs className={`p-${padding}`} type={type} data={data} />
               </ScrollContainerWrapper>
@@ -78,7 +91,7 @@ export const Page: React.FunctionComponent<IPage> = ({
           )}
 
           {nodeTabs.includes('Changelog') && (
-            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0')}>
+            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
                 <Changelog className={`p-${padding}`} changes={[]} />
               </ScrollContainerWrapper>
@@ -86,7 +99,7 @@ export const Page: React.FunctionComponent<IPage> = ({
           )}
 
           {nodeTabs.includes('TryIt') && (
-            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0')}>
+            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
                 <TryIt className={`p-${padding}`} value={data} />
               </ScrollContainerWrapper>
