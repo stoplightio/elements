@@ -34,7 +34,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
   } else if (type === NodeType.Model) {
     const { description, ...schema } = data;
     markdown = description ? description + '\n\n' : '';
-    markdown = '```json' + ` ${type}\n` + safeStringify(schema, undefined, 4) + '\n```\n';
+    markdown += '```json' + ` ${type}\n` + safeStringify(schema, undefined, 4) + '\n```\n';
   } else if (type === NodeType.HttpOperation) {
     markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```\n\n';
   } else {
@@ -61,7 +61,7 @@ const MarkdownViewerCode: React.FunctionComponent<{
       <div>
         {title && <BlockHeader icon={icon} iconColor={color} title={title} />}
 
-        <div className={cn(CLASSNAMES.block, CLASSNAMES.bordered)}>
+        <div className={cn(CLASSNAMES.block, CLASSNAMES.bordered, 'dark:border-darken')}>
           <JsonSchemaViewer schema={resolved} maxRows={JSV_MAX_ROWS} />
         </div>
       </div>

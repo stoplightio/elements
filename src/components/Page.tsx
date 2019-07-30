@@ -1,4 +1,5 @@
 import { NodeType } from '@stoplight/types';
+import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import cn from 'classnames';
 import * as React from 'react';
@@ -18,6 +19,7 @@ export interface IPage {
 
   padding?: string;
   className?: string;
+  scrollInnerContainer?: boolean;
 }
 
 export const Page: React.FunctionComponent<IPage> = ({
@@ -29,6 +31,7 @@ export const Page: React.FunctionComponent<IPage> = ({
   data,
   className,
   padding = '10',
+  scrollInnerContainer,
 }) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);
@@ -36,13 +39,25 @@ export const Page: React.FunctionComponent<IPage> = ({
   const nodeTabs = NodeTypeTabs[type];
 
   return (
-    <div className={cn('Page', className, 'flex flex-col bg-white dark:bg-transparent', `p-${padding}`)}>
-      <PageHeader type={type} name={name} srn={srn} version={version} versions={versions} data={data} />
+    <div
+      className={cn('Page', className, 'flex flex-col bg-white dark:bg-transparent', {
+        'overflow-hidden': scrollInnerContainer && nodeTabs && nodeTabs.length > 1,
+      })}
+    >
+      <PageHeader
+        className={cn(`px-${padding} pt-${padding}`)}
+        type={type}
+        name={name}
+        srn={srn}
+        version={version}
+        versions={versions}
+        data={data}
+      />
 
       {nodeTabs && nodeTabs.length > 1 ? (
         <SimpleTabs
           id="Page__Tabs"
-          className={cn('Page__Tabs flex flex-col flex-1', `-mx-${padding} -mb-${padding}`)}
+          className={cn('Page__Tabs flex flex-col flex-1')}
           selectedIndex={selectedTab}
           onSelect={onSelect}
         >
@@ -55,28 +70,47 @@ export const Page: React.FunctionComponent<IPage> = ({
           </SimpleTabList>
 
           {nodeTabs.includes('Docs') && (
-            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0 mx-px', `p-${padding}`)}>
-              <Docs type={type} data={data} />
+            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0')}>
+              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                <Docs className={`p-${padding}`} type={type} data={data} />
+              </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
 
           {nodeTabs.includes('Changelog') && (
-            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0 mx-px', `p-${padding}`)}>
-              <Changelog changes={[]} />
+            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0')}>
+              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                <Changelog className={`p-${padding}`} changes={[]} />
+              </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
 
           {nodeTabs.includes('TryIt') && (
-            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0 mx-px', `p-${padding}`)}>
-              <TryIt value={data} />
+            <SimpleTabPanel className={cn('flex-1 border-l-0 border-r-0 border-b-0')}>
+              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                <TryIt className={`p-${padding}`} value={data} />
+              </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
         </SimpleTabs>
       ) : (
-        <Docs type={type} data={data} />
+        <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+          <Docs className={cn(`p-${padding}`)} type={type} data={data} />
+        </ScrollContainerWrapper>
       )}
     </div>
   );
+};
+
+const ScrollContainerWrapper: React.FunctionComponent<{ scrollInnerContainer?: boolean }> = ({
+  scrollInnerContainer,
+  children,
+}) => {
+  if (!scrollInnerContainer) {
+    return <>{children}</>;
+  }
+
+  return <ScrollContainer>{children}</ScrollContainer>;
 };
 
 // TODO (CL): Allow to configure which tabs are shown

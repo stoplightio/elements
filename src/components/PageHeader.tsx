@@ -37,10 +37,10 @@ export const PageHeader: React.FunctionComponent<IPageHeader> = ({
 
   return (
     <div className={cn('PageHeader', className)}>
-      <div className="flex items-center">
+      <div className="py-1 flex items-center">
         {type === NodeType.HttpOperation && <Method className="mr-6" method={data && data.method} />}
 
-        <h2 className="mb-0 text-2xl">{name}</h2>
+        <h2 className="mb-0 font-medium text-2xl">{name}</h2>
 
         <div className="flex-1" />
 
@@ -63,7 +63,7 @@ export const PageHeader: React.FunctionComponent<IPageHeader> = ({
         )}
       </div>
 
-      {type === NodeType.HttpOperation && <Path className="mt-6" host={host} path={data.path} />}
+      {type === NodeType.HttpOperation && <Path className="mt-6 mb-2" host={host} path={data.path} />}
     </div>
   );
 };
