@@ -1,15 +1,15 @@
 {
-  "name": "@stoplight/http-ui",
+  "name": "@stoplight/elements",
   "version": "0.0.0",
-  "description": "UI components for displaying Http Services, Operations, and Requests.",
+  "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": false,
-  "homepage": "https://github.com/stoplightio/http-ui",
-  "bugs": "https://github.com/stoplightio/http-ui/issues",
+  "homepage": "https://github.com/stoplightio/elements",
+  "bugs": "https://github.com/stoplightio/elements/issues",
   "author": "Stoplight <support@stoplight.io>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stoplightio/http-ui"
+    "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
   "main": "src/index.ts",
@@ -20,7 +20,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "sl-scripts build",
+    "build": "sl-scripts build && yarn build.styles",
+    "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "commit": "git-cz",
     "lint": "tslint -c tslint.json 'src/**/*.ts?'",
@@ -35,46 +36,54 @@
     "test.watch": "yarn test --watch"
   },
   "peerDependencies": {
-    "@stoplight/json-schema-viewer": ">=2",
-    "@stoplight/markdown-viewer": ">=3",
-    "@stoplight/ui-kit": ">=2",
+    "mobx": ">=5.11",
     "react": ">=16.8",
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
-    "lodash": "^4.17.14"
-  },
-  "devDependencies": {
+    "@stoplight/json": "^3.0.1",
+    "@stoplight/json-ref-resolver": "^2.0.3",
     "@stoplight/json-schema-viewer": "^2.4.1",
     "@stoplight/markdown-viewer": "^3.3.1",
-    "@stoplight/scripts": "5.1.0",
-    "@stoplight/storybook-config": "^2.0.4",
-    "@stoplight/tree-list": "^4.3.1",
-    "@stoplight/types": "^9.0.2",
+    "@stoplight/tree-list": "^4.4.0",
     "@stoplight/ui-kit": "^2.5.0",
-    "@types/classnames": "^2.2.7",
+    "@stoplight/yaml": "^2.8.0",
+    "axios": "^0.19.0",
+    "classnames": "^2.2.6",
+    "isomorphic-unfetch": "^3.0.0",
+    "mobx-react-lite": "^1.4.1",
+    "openapi-sampler": "^1.0.0-beta.15",
+    "react-error-boundary": "^1.2.5",
+    "urijs": "^1.19.1"
+  },
+  "devDependencies": {
+    "@stoplight/scripts": "7.0.3",
+    "@stoplight/storybook-config": "^2.0.4",
+    "@stoplight/types": "^9.1.2",
+    "@types/classnames": "^2.2.9",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
     "@types/jest": "24.x.x",
     "@types/react": "16.x.x",
     "@types/react-dom": "16.x.x",
     "@types/typescript": "^2.0.0",
+    "@types/urijs": "^1.19.3",
+    "copyfiles": "^2.1.1",
     "enzyme": "3.x.x",
     "enzyme-adapter-react-16": "1.x.x",
     "enzyme-to-json": "3.x.x",
     "jest": "24.x.x",
     "jest-enzyme": "7.x.x",
-    "mobx": "^5.9.4",
+    "mobx": "^5.11.0",
     "prettier": "1.x.x",
     "ts-jest": "24.x.x",
-    "tslint": "5.17.0",
+    "tslint": "5.18.0",
     "tslint-config-prettier": "1.18.x",
     "tslint-config-stoplight": "1.3.0",
     "tslint-plugin-prettier": "2.0.x",
-    "tslint-react": "3.6.x",
-    "tslint-react-hooks": "1.1.x",
-    "typescript": "3.5.2"
+    "tslint-react": "4.0.x",
+    "tslint-react-hooks": "2.2.x",
+    "typescript": "3.5.3"
   },
   "lint-staged": {
     "*.{ts,tsx}$": [

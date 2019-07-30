@@ -1,69 +1,100 @@
 {
-  "id": "?http-oas3-operation-id?",
-  "iid": "createPets",
-  "description": "I'm a cool description.",
-  "method": "post",
-  "path": "/pets",
-  "summary": "Create a pet",
+  "id": "?http-operation-id?",
+  "iid": "PUT_todos",
+  "method": "put",
+  "path": "/todos/{todoId}",
+  "summary": "Update Todo",
   "responses": [
     {
-      "code": "201",
-      "description": "Null response",
+      "code": "200",
+      "description": "",
       "headers": [],
       "contents": [
         {
           "mediaType": "application/json",
           "schema": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Todo Full",
+            "allOf": [
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Todo Partial",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "completed": {
+                    "type": ["boolean", "null"]
+                  }
+                },
+                "required": ["name", "completed"],
+                "x-tags": ["Todos"]
               },
-              "date": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "large": {
-                "type": "number"
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 1000000
+                  },
+                  "completed_at": {
+                    "type": ["string", "null"],
+                    "format": "date-time"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "user": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "User",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "The user's full name."
+                      },
+                      "age": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 150
+                      }
+                    },
+                    "required": ["name", "age"],
+                    "x-tags": ["Todos"],
+                    "description": "Here lies the user model"
+                  }
+                },
+                "required": ["id", "user"]
               }
-            },
-            "required": [
-              "id",
-              "date"
-            ]
+            ],
+            "x-tags": ["Todos"]
           },
-          "examples": [],
-          "encodings": []
-        },
-        {
-          "mediaType": "application/xml",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "date": {
-                "type": "string",
-                "format": "date-time"
+          "examples": [
+            {
+              "key": "application/json",
+              "value": {
+                "id": 9000,
+                "name": "It's Over 9000!!!",
+                "completed": true,
+                "completed_at": null,
+                "created_at": "2014-08-28T14:14:28.494Z",
+                "updated_at": "2015-08-28T14:14:28.494Z"
               }
-            },
-            "required": [
-              "id",
-              "date"
-            ]
-          },
-          "examples": [],
-          "encodings": []
+            }
+          ]
         }
       ]
     },
     {
-      "code": "default",
-      "description": "unexpected error",
+      "code": "401",
+      "description": "Our shared 401 response.",
       "headers": [],
       "contents": [
         {
@@ -71,97 +102,257 @@
           "schema": {
             "$schema": "http://json-schema.org/draft-04/schema#",
             "title": "Error",
-            "type": "object",
             "description": "A standard error object.",
-            "properties": {
-              "code": {
-                "type": "string"
+            "x-tags": ["Common"],
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["code"]
               },
-              "message": {
-                "type": "string"
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Category",
+                "type": "object",
+                "description": "",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name"],
+                "x-tags": ["Pets"]
               }
-            },
-            "required": [
-              "code"
-            ],
-            "x-tags": [
-              "Common"
             ]
           },
-          "examples": [],
-          "encodings": []
+          "examples": [
+            {
+              "key": "application/json",
+              "value": {
+                "code": "401",
+                "message": "Not Authorized"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "404",
+      "description": "Our shared 404 response.",
+      "headers": [],
+      "contents": [
+        {
+          "mediaType": "application/json",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Error",
+            "description": "A standard error object.",
+            "x-tags": ["Common"],
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["code"]
+              },
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Category",
+                "type": "object",
+                "description": "",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name"],
+                "x-tags": ["Pets"]
+              }
+            ]
+          },
+          "examples": [
+            {
+              "key": "application/json",
+              "value": {
+                "code": "404",
+                "message": "Not Found"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "500",
+      "description": "Our shared 500 response.",
+      "headers": [],
+      "contents": [
+        {
+          "mediaType": "application/json",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Error",
+            "description": "A standard error object.",
+            "x-tags": ["Common"],
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["code"]
+              },
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Category",
+                "type": "object",
+                "description": "",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name"],
+                "x-tags": ["Pets"]
+              }
+            ]
+          },
+          "examples": [
+            {
+              "key": "application/json",
+              "value": {
+                "code": "500",
+                "message": "Server Error"
+              }
+            }
+          ]
         }
       ]
     }
   ],
   "servers": [
     {
-      "url": "http://petstore.swagger.io/v1",
-      "variables": {}
+      "url": "http://todos.stoplight.io"
     }
   ],
   "request": {
     "body": {
-      "contents": []
+      "contents": [
+        {
+          "mediaType": "application/json",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Todo Partial",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "completed": {
+                "type": ["boolean", "null"]
+              }
+            },
+            "required": ["name", "completed"],
+            "x-tags": ["Todos"]
+          },
+          "examples": [
+            {
+              "key": "Incomplete",
+              "value": {
+                "name": "Docs Module",
+                "completed": false
+              }
+            },
+            {
+              "key": "Completed",
+              "value": {
+                "name": "Studio",
+                "completed": true
+              }
+            }
+          ]
+        }
+      ]
     },
+    "query": [
+      {
+        "schema": {
+          "type": "string",
+          "default": "300",
+          "description": "How many todos to limit?"
+        },
+        "name": "limit",
+        "style": "form"
+      },
+      {
+        "schema": {
+          "type": "boolean",
+          "description": "Only return completed"
+        },
+        "name": "completed",
+        "style": "form"
+      },
+      {
+        "schema": {
+          "type": "string",
+          "enum": ["something", "another"]
+        },
+        "name": "type",
+        "style": "form"
+      }
+    ],
     "headers": [
       {
-        "name": "user",
+        "schema": {
+          "type": "string",
+          "description": "Your Stoplight account id"
+        },
+        "name": "account-id",
+        "style": "simple",
+        "required": true
+      }
+    ],
+    "path": [
+      {
         "schema": {
           "type": "string"
         },
-        "examples": []
-      },
-      {
-        "name": "authorization",
-        "description": "Pet object that needs to be added to the store",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "enum": [
-            "bearer",
-            "auth",
-            "testing"
-          ],
-          "default": "Bearer 123"
-        },
-        "examples": []
+        "name": "todoId",
+        "style": "simple",
+        "required": true
       }
-    ],
-    "query": [
-      {
-        "name": "id",
-        "description": "pet id",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "minLength": 2
-        },
-        "examples": []
-      }
-    ],
-    "cookie": [],
-    "path": []
+    ]
   },
   "tags": [
     {
-      "name": "pets"
+      "name": "Todos"
     }
   ],
   "security": [
     {
-      "type": "oauth2",
-      "flows": {
-        "authorizationCode": {
-          "authorizationUrl": "",
-          "tokenUrl": "",
-          "scopes": []
-        }
-      }
-    },
-    {
-      "type": "openIdConnect",
-      "description": ""
+      "type": "apiKey",
+      "name": "apikey",
+      "in": "query",
+      "description": "Use `?apikey=123` to authenticate requests. It's super secure."
     }
   ]
 }

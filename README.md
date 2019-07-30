@@ -1,19 +1,17 @@
-# HTTP UI
+# Elements
 
 <!-- BADGES -->
 
-[![npm version](https://badge.fury.io/js/%40stoplight%2Fhttp-ui.svg)](https://badge.fury.io/js/%40stoplight%2Fhttp-ui)
+[![npm version](https://badge.fury.io/js/%40stoplight%elements.svg)](https://badge.fury.io/js/%40stoplight%elements)
 
 <!-- SUMMARY -->
 
-- Explore the components: [Storybook](https://stoplightio.github.io/http-ui)
-- View the changelog: [Releases](https://github.com/stoplightio/http-ui/releases)
+- Explore the components: [Storybook](https://stoplightio.github.io/elements)
+- View the changelog: [Releases](https://github.com/stoplightio/elements/releases)
 
 ### Features
 
-- A component for displaying http operations
-- A component for displaying and sending http requests
-- A component for displaying http services
+TBD
 
 ### Installation
 
@@ -21,15 +19,21 @@ Supported in modern browsers and node.
 
 ```bash
 # latest stable
-yarn add @stoplight/http-ui
+yarn add @stoplight/elements
 ```
 
 ### Usage
 
-```ts
-import { HttpOperation, HttpRequest, HttpService } from '@stoplight/http-ui';
+```tsx
+import { Page, Provider, TableOfContents } from '@stoplight/elements';
 
-// ...example
+<Provider>
+  <div className="flex">
+    <TableOfContents srn="gh/stoplightio/elements" />
+
+    <Page className="flex-1" srn="gh/stoplightio/elements/docs/README.md" />
+  </div>
+</Provider>;
 ```
 
 ### Contributing
