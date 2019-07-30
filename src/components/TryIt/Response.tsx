@@ -15,12 +15,17 @@ export const Response = observer(() => {
     return null;
   }
 
+  const color = response.status ? getHttpCodeColor(response.status) : '';
+
   return (
     <div className="TryIt__Response">
       {response.status && (
-        <div className={cn('text-xl font-bold mb-6', `text-${getHttpCodeColor(response.status)}`)}>
-          {response.status}
-          {HttpCodeDescriptions[response.status] ? `: ${HttpCodeDescriptions[response.status]}` : ''}
+        <div className={cn('text-xl font-bold mb-6 flex items-center')}>
+          <div className={cn('flex h-8 items-center mr-6 px-3 rounded text-white', `bg-${color} dark:bg-${color}`)}>
+            {response.status}
+          </div>
+
+          <div>{HttpCodeDescriptions[response.status] || ''}</div>
         </div>
       )}
 

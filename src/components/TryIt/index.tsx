@@ -17,7 +17,7 @@ const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, value
   return (
     <StoreProvider value={value}>
       <div className={cn('TryIt', className)}>
-        <Request value={value} />
+        <Request className="mb-10" value={value} />
 
         <Response />
       </div>

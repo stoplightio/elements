@@ -1,5 +1,6 @@
 import { Button, ControlGroup, InputGroup, Tooltip } from '@blueprintjs/core';
 import { IHttpOperation } from '@stoplight/types';
+import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { BasicAuth } from './BasicAuth';
@@ -7,9 +8,12 @@ import { Body } from './Body';
 import { useStore } from './context';
 import { Parameters } from './Parameters';
 
-export const Request: React.FunctionComponent<{ value: IHttpOperation }> = ({ value }) => {
+export const Request: React.FunctionComponent<{ value: IHttpOperation; className?: string }> = ({
+  value,
+  className,
+}) => {
   return (
-    <div className="TryIt__Request">
+    <div className={cn('TryIt__Request', className)}>
       {value.security && value.security.length > 0 && <BasicAuth className="mb-10" security={value.security} />}
 
       {value.request && value.request.path && (
@@ -34,9 +38,13 @@ export const Request: React.FunctionComponent<{ value: IHttpOperation }> = ({ va
 const Send = observer(() => {
   const store = useStore();
 
+  const [url, setUrlState] = React.useState(store.url);
+  const handleChange = React.useCallback(e => setUrlState(e.currentTarget.value), [setUrlState]);
+  const handleBlur = React.useCallback(e => (store.url = e.currentTarget.value), [store]);
   const sendRequest = React.useCallback(() => store.send(), [store]);
   const resetRequest = React.useCallback(() => store.reset(), [store]);
-  const setUrl = React.useCallback(e => (store.url = e.currentTarget.value), [store]);
+
+  React.useEffect(() => setUrlState(store.url), [store.url]);
 
   return (
     <ControlGroup className="TryIt__Send">
@@ -44,7 +52,19 @@ const Send = observer(() => {
         Send
       </Button>
 
-      <InputGroup className="flex-1" value={store.url} onChange={setUrl} />
+      <InputGroup
+        className="flex-1"
+        value={url}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        onKeyUp={e => {
+          if (e.key === 'Enter') {
+            // Handle blur
+            store.url = url;
+            sendRequest();
+          }
+        }}
+      />
 
       <Button icon="eraser" onClick={resetRequest} />
     </ControlGroup>

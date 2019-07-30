@@ -23,6 +23,7 @@ export interface IPage {
 export const Page: React.FunctionComponent<IPage> = ({
   type,
   name,
+  srn,
   version,
   versions,
   data,
@@ -36,7 +37,7 @@ export const Page: React.FunctionComponent<IPage> = ({
 
   return (
     <div className={cn('Page', className, 'flex flex-col bg-white dark:bg-transparent', `p-${padding}`)}>
-      <PageHeader type={type} name={name} version={version} versions={versions} data={data} />
+      <PageHeader type={type} name={name} srn={srn} version={version} versions={versions} data={data} />
 
       {nodeTabs && nodeTabs.length > 1 ? (
         <SimpleTabs

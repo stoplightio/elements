@@ -33,7 +33,8 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
     markdown = data;
   } else if (type === NodeType.Model) {
     const { description, ...schema } = data;
-    markdown = `${description}\n\n` + '```json' + ` ${type}\n` + safeStringify(schema, undefined, 4) + '\n```\n';
+    markdown = description ? description + '\n\n' : '';
+    markdown = '```json' + ` ${type}\n` + safeStringify(schema, undefined, 4) + '\n```\n';
   } else if (type === NodeType.HttpOperation) {
     markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```\n\n';
   } else {

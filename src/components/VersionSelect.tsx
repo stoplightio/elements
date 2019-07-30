@@ -1,4 +1,4 @@
-import { Icon, Tag } from '@stoplight/ui-kit';
+import { Icon } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -14,10 +14,10 @@ export const VersionSelect: React.FunctionComponent<IVersionSelect> = ({ classNa
 
   return (
     <div className={cn('cursor-pointer', className)}>
-      <Tag round intent="primary">
-        <>
+      <span className="bp3-tag bp3-intent-primary bp3-large">
+        <span className="bp3-text-overflow-ellipsis flex items-center">
           <select
-            className="cursor-pointer bg-transparent pr-4 z-1"
+            className="cursor-pointer bg-transparent z-1"
             style={{ appearance: 'none', WebkitAppearance: 'none' }}
             value={currentVersion}
             onChange={onChange}
@@ -29,9 +29,9 @@ export const VersionSelect: React.FunctionComponent<IVersionSelect> = ({ classNa
             ))}
           </select>
 
-          <Icon className="absolute -ml-3" icon="caret-down" iconSize={14} />
-        </>
-      </Tag>
+          <Icon icon="caret-down" iconSize={14} />
+        </span>
+      </span>
     </div>
   );
 };
