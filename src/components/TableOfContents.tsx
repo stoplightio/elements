@@ -31,9 +31,9 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ con
 
   return (
     <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end', className)}>
-      <div className="TableOfContents-inner">
+      <div className="w-full">
         <ScrollContainer>
-          <div className="py-10">
+          <div className="TableOfContents-inner py-10 ml-auto">
             {contents.map((item, index) => {
               const isActive = item.srn ? srn === item.srn : false;
 
