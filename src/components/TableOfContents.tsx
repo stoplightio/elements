@@ -9,9 +9,15 @@ export interface ITableOfContents {
   contents: IContentsNode[];
   srn?: string;
   className?: string;
+  padding?: string;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ contents, srn, className }) => {
+export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
+  contents,
+  srn,
+  className,
+  padding = '10',
+}) => {
   // TODO (CL): Should we store expanded state in local storage?
   const [expanded, setExpanded] = React.useState({});
 
@@ -33,7 +39,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ con
     <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end', className)}>
       <div className="w-full">
         <ScrollContainer>
-          <div className="TableOfContents-inner py-10 ml-auto">
+          <div className={cn('TableOfContents__inner ml-auto', `py-${padding}`)}>
             {contents.map((item, index) => {
               const isActive = item.srn ? srn === item.srn : false;
 
@@ -108,7 +114,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
 
   const children: any = (
     <>
-      <span className="TableOfContentsItem-name flex-1">{name}</span>
+      <span className="TableOfContentsItem-name flex-1 truncate">{name}</span>
 
       {isParent && <Icon className="TableOfContentsItem-icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
     </>

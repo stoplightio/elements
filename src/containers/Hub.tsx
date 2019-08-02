@@ -11,9 +11,10 @@ import { TableOfContentsSkeleton } from './TableOfContents';
 export interface IHub {
   srn: string;
   className?: string;
+  padding?: string;
 }
 
-export const Hub: React.FunctionComponent<IHub> = ({ srn, className }) => {
+export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '10' }) => {
   const { isLoading, data } = useProjectNodes(srn);
   const contents = useComputeToc(data ? data.items : []);
 
@@ -29,13 +30,17 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className }) => {
   }
 
   return (
-    <div className={cn('Hub', className, 'flex flex-1')}>
-      {isLoading ? <TableOfContentsSkeleton /> : <TableOfContents contents={contents} srn={pageSrn} />}
+    <div className={cn('Hub flex', className)}>
+      {isLoading ? (
+        <TableOfContentsSkeleton padding={padding} />
+      ) : (
+        <TableOfContents contents={contents} srn={pageSrn} padding={padding} />
+      )}
 
       {pageSrn ? (
-        <Page className="flex-1 border-l dark:border-darken-4 overflow-auto" srn={pageSrn} />
+        <Page className="flex-1 border-l dark:border-darken-4" srn={pageSrn} padding={padding} scrollInnerContainer />
       ) : (
-        <PageSkeleton className="flex-1" />
+        <PageSkeleton className="flex-1" padding={padding} />
       )}
     </div>
   );
