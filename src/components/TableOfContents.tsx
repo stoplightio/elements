@@ -4,16 +4,25 @@ import cn from 'classnames';
 import * as React from 'react';
 import { ComponentsContext } from '../containers/Provider';
 import { IContentsNode } from '../types';
+import { deserializeSrn, serializeSrn } from '../utils/srns';
 
 export interface ITableOfContents {
   contents: IContentsNode[];
   srn?: string;
   className?: string;
+  padding?: string;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ contents, srn, className }) => {
+export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
+  contents,
+  srn,
+  className,
+  padding = '10',
+}) => {
   // TODO (CL): Should we store expanded state in local storage?
   const [expanded, setExpanded] = React.useState({});
+
+  const deserializedSrn = deserializeSrn(srn || '');
 
   // Whenever the SRN changes, make sure the parent is expanded
   // TODO (CL): Handle deeply nested expanding
@@ -31,11 +40,13 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ con
 
   return (
     <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end', className)}>
-      <div className="TableOfContents-inner">
+      <div className="w-full">
         <ScrollContainer>
-          <div className="py-10">
+          <div className={cn('TableOfContents__inner ml-auto', `py-${padding}`)}>
             {contents.map((item, index) => {
-              const isActive = item.srn ? srn === item.srn : false;
+              const { uri } = deserializeSrn(item.srn || '');
+              const itemSrn = serializeSrn({ ...deserializedSrn, uri });
+              const isActive = itemSrn ? srn === itemSrn : false;
 
               if (item.depth > 0) {
                 // Check if we should show this item
@@ -47,13 +58,13 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ con
 
               const isParent = contents[index + 1] ? contents[index + 1].depth > item.depth : false;
               const isExpanded = expanded[index];
-              const isDivider = !isParent && !item.srn;
+              const isDivider = !isParent && !itemSrn;
 
               return (
                 <TableOfContentsItem
                   key={index}
                   name={item.name}
-                  srn={item.srn}
+                  srn={itemSrn}
                   depth={item.depth}
                   isActive={isActive}
                   isParent={isParent}
@@ -108,7 +119,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
 
   const children: any = (
     <>
-      <span className="TableOfContentsItem-name flex-1">{name}</span>
+      <span className="TableOfContentsItem-name flex-1 truncate">{name}</span>
 
       {isParent && <Icon className="TableOfContentsItem-icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
     </>

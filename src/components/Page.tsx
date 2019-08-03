@@ -38,77 +38,84 @@ export const Page: React.FunctionComponent<IPage> = ({
 
   const nodeTabs = NodeTypeTabs[type];
 
+  const pageHeader = (
+    <PageHeader
+      className={cn(`Page__header max-w-6xl px-${padding} pt-${padding}`)}
+      type={type}
+      name={name}
+      srn={srn}
+      version={version}
+      versions={versions}
+      data={data}
+    />
+  );
+
   return (
     <div
       className={cn('Page', className, 'flex flex-col bg-white dark:bg-transparent', {
         'overflow-hidden': scrollInnerContainer && nodeTabs && nodeTabs.length > 1,
-        'absolute inset-0': scrollInnerContainer,
       })}
     >
-      <PageHeader
-        className={cn(`Page__header px-${padding} pt-${padding}`)}
-        type={type}
-        name={name}
-        srn={srn}
-        version={version}
-        versions={versions}
-        data={data}
-      />
-
       {nodeTabs && nodeTabs.length > 1 ? (
-        <SimpleTabs
-          id="Page__tabs"
-          className={cn('Page__tabs flex flex-col flex-1')}
-          selectedIndex={selectedTab}
-          onSelect={onSelect}
-        >
-          <SimpleTabList className={cn('Page__tabs-list mt-6', `px-${padding}`)}>
+        <>
+          {pageHeader}
+
+          <SimpleTabs
+            id="Page__tabs"
+            className={cn('Page__tabs flex flex-col flex-1')}
+            selectedIndex={selectedTab}
+            onSelect={onSelect}
+          >
+            <SimpleTabList className={cn('Page__tabs-list mt-6', `px-${padding}`)}>
+              {nodeTabs.includes('Docs') && (
+                <SimpleTab id="docs" className="Page__tab">
+                  Docs
+                </SimpleTab>
+              )}
+
+              {nodeTabs.includes('Changelog') && (
+                <SimpleTab id="changelog" className="Page__tab">
+                  Changelog
+                </SimpleTab>
+              )}
+
+              {nodeTabs.includes('TryIt') && (
+                <SimpleTab id="tryit" className="Page__tab">
+                  Try It
+                </SimpleTab>
+              )}
+            </SimpleTabList>
+
             {nodeTabs.includes('Docs') && (
-              <SimpleTab id="docs" className="Page__tab">
-                Docs
-              </SimpleTab>
+              <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
+                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                  <Docs className={`p-${padding} max-w-6xl`} type={type} data={data} />
+                </ScrollContainerWrapper>
+              </SimpleTabPanel>
             )}
 
             {nodeTabs.includes('Changelog') && (
-              <SimpleTab id="changelog" className="Page__tab">
-                Changelog
-              </SimpleTab>
+              <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
+                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                  <Changelog className={`p-${padding} max-w-6xl`} changes={[]} />
+                </ScrollContainerWrapper>
+              </SimpleTabPanel>
             )}
 
             {nodeTabs.includes('TryIt') && (
-              <SimpleTab id="tryit" className="Page__tab">
-                Try It
-              </SimpleTab>
+              <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
+                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                  <TryIt className={`p-${padding} max-w-6xl`} value={data} />
+                </ScrollContainerWrapper>
+              </SimpleTabPanel>
             )}
-          </SimpleTabList>
-
-          {nodeTabs.includes('Docs') && (
-            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
-                <Docs className={`p-${padding}`} type={type} data={data} />
-              </ScrollContainerWrapper>
-            </SimpleTabPanel>
-          )}
-
-          {nodeTabs.includes('Changelog') && (
-            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
-                <Changelog className={`p-${padding}`} changes={[]} />
-              </ScrollContainerWrapper>
-            </SimpleTabPanel>
-          )}
-
-          {nodeTabs.includes('TryIt') && (
-            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
-                <TryIt className={`p-${padding}`} value={data} />
-              </ScrollContainerWrapper>
-            </SimpleTabPanel>
-          )}
-        </SimpleTabs>
+          </SimpleTabs>
+        </>
       ) : (
         <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
-          <Docs className={cn(`p-${padding}`)} type={type} data={data} />
+          {pageHeader}
+
+          <Docs className={cn(`p-${padding} max-w-6xl`)} type={type} data={data} />
         </ScrollContainerWrapper>
       )}
     </div>

@@ -4,11 +4,9 @@
   width: calc((100% - 1448px) / 2 + 394px);
 }
 
-.TableOfContents-inner {
+.TableOfContentsSkeleton__inner,
+.TableOfContents__inner {
   width: 300px;
-}
-.TableOfContentsSkeleton-inner {
-  width: 250px;
 }
 
 .TableOfContentsItem {
@@ -57,7 +55,9 @@
   }
 
   &--divider {
-    margin-top: 24px;
+    &:not(:first-child) {
+      margin-top: 24px;
+    }
 
     .TableOfContentsItem-name {
       font-size: 12px;
