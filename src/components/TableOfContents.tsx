@@ -4,6 +4,7 @@ import cn from 'classnames';
 import * as React from 'react';
 import { ComponentsContext } from '../containers/Provider';
 import { IContentsNode } from '../types';
+import { deserializeSrn, serializeSrn } from '../utils/srns';
 
 export interface ITableOfContents {
   contents: IContentsNode[];
@@ -20,6 +21,8 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
 }) => {
   // TODO (CL): Should we store expanded state in local storage?
   const [expanded, setExpanded] = React.useState({});
+
+  const deserializedSrn = deserializeSrn(srn || '');
 
   // Whenever the SRN changes, make sure the parent is expanded
   // TODO (CL): Handle deeply nested expanding
@@ -41,7 +44,9 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
         <ScrollContainer>
           <div className={cn('TableOfContents__inner ml-auto', `py-${padding}`)}>
             {contents.map((item, index) => {
-              const isActive = item.srn ? srn === item.srn : false;
+              const { uri } = deserializeSrn(item.srn || '');
+              const itemSrn = serializeSrn({ ...deserializedSrn, uri });
+              const isActive = itemSrn ? srn === itemSrn : false;
 
               if (item.depth > 0) {
                 // Check if we should show this item
@@ -53,13 +58,13 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
 
               const isParent = contents[index + 1] ? contents[index + 1].depth > item.depth : false;
               const isExpanded = expanded[index];
-              const isDivider = !isParent && !item.srn;
+              const isDivider = !isParent && !itemSrn;
 
               return (
                 <TableOfContentsItem
                   key={index}
                   name={item.name}
-                  srn={item.srn}
+                  srn={itemSrn}
                   depth={item.depth}
                   isActive={isActive}
                   isParent={isParent}
