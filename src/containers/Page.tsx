@@ -58,7 +58,7 @@ export const PageSkeleton: React.FunctionComponent<{ className?: string; padding
   padding = '10',
 }) => {
   return (
-    <div className={cn('PageSkeleton', className, `p-${padding}`, 'flex flex-col h-full max-w-6xl')}>
+    <div className={cn('PageSkeleton', className, `p-${padding}`, 'flex flex-col h-full')}>
       <div className={cn(Classes.SKELETON, 'h-12 w-1/5')} />
       <div className={cn(Classes.SKELETON, 'h-12 my-6')} />
       <div className={cn(Classes.SKELETON, 'flex-1 my-6')} />

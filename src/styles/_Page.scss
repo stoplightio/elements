@@ -1,6 +1,11 @@
 @import '~@stoplight/ui-kit/styles/blueprint/variables';
 
 .Page {
+  &__header,
+  &__content {
+    max-width: 1000px;
+  }
+
   &__header {
     .HttpOperation__Path {
       height: 30px;

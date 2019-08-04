@@ -40,7 +40,7 @@ export const Page: React.FunctionComponent<IPage> = ({
 
   const pageHeader = (
     <PageHeader
-      className={cn(`Page__header max-w-6xl px-${padding} pt-${padding}`)}
+      className={cn(`Page__header px-${padding} pt-${padding}`)}
       type={type}
       name={name}
       srn={srn}
@@ -89,7 +89,7 @@ export const Page: React.FunctionComponent<IPage> = ({
             {nodeTabs.includes('Docs') && (
               <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
                 <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
-                  <Docs className={`p-${padding} max-w-6xl`} type={type} data={data} />
+                  <Docs className={`Page__content p-${padding}`} type={type} data={data} />
                 </ScrollContainerWrapper>
               </SimpleTabPanel>
             )}
@@ -97,7 +97,7 @@ export const Page: React.FunctionComponent<IPage> = ({
             {nodeTabs.includes('Changelog') && (
               <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
                 <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
-                  <Changelog className={`p-${padding} max-w-6xl`} changes={[]} />
+                  <Changelog className={`Page__content p-${padding}`} changes={[]} />
                 </ScrollContainerWrapper>
               </SimpleTabPanel>
             )}
@@ -105,7 +105,7 @@ export const Page: React.FunctionComponent<IPage> = ({
             {nodeTabs.includes('TryIt') && (
               <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
                 <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
-                  <TryIt className={`p-${padding} max-w-6xl`} value={data} />
+                  <TryIt className={`Page__content p-${padding}`} value={data} />
                 </ScrollContainerWrapper>
               </SimpleTabPanel>
             )}
@@ -115,7 +115,7 @@ export const Page: React.FunctionComponent<IPage> = ({
         <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
           {pageHeader}
 
-          <Docs className={cn(`p-${padding} max-w-6xl`)} type={type} data={data} />
+          <Docs className={cn(`Page__content p-${padding}`)} type={type} data={data} />
         </ScrollContainerWrapper>
       )}
     </div>

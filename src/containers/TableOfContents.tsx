@@ -44,7 +44,7 @@ export const TableOfContentsSkeleton: React.FunctionComponent<{ className?: stri
         `py-${padding}`,
       )}
     >
-      <div className="TableOfContentsSkeleton-inner">
+      <div className="TableOfContentsSkeleton__inner">
         <SkeletonRow />
         <SkeletonRow />
 
