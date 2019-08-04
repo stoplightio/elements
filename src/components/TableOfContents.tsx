@@ -119,9 +119,9 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
 
   const children: any = (
     <>
-      <span className="TableOfContentsItem-name flex-1 truncate">{name}</span>
+      <span className="TableOfContentsItem__name flex-1 truncate">{name}</span>
 
-      {isParent && <Icon className="TableOfContentsItem-icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
+      {isParent && <Icon className="TableOfContentsItem__icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
     </>
   );
 

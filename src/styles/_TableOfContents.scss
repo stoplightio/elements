@@ -1,7 +1,7 @@
 .TableOfContentsSkeleton,
 .TableOfContents {
-  // TODO (CL): Total hack alert
-  width: calc((100% - 1448px) / 2 + 394px);
+  width: calc((100% - 1300px) / 2 + 300px);
+  min-width: 300px;
 }
 
 .TableOfContentsSkeleton__inner,
@@ -12,13 +12,13 @@
 .TableOfContentsItem {
   color: #5c6975;
 
-  .TableOfContentsItem-name {
+  &__name {
     font-weight: 500;
     word-break: break-all;
     line-height: 1.5;
   }
 
-  .TableOfContentsItem-icon {
+  &__icon {
     color: #9daab6;
   }
 
@@ -59,7 +59,7 @@
       margin-top: 24px;
     }
 
-    .TableOfContentsItem-name {
+    .TableOfContentsItem__name {
       font-size: 12px;
       font-weight: 700;
       line-height: 1.2;
