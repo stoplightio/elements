@@ -13,7 +13,7 @@ export interface INodeInfo {
   type: NodeType;
   name: string;
   uri: string;
-  srn: IDeserializedSrn;
+  srn: string;
   version: string;
   versions: string[];
   summary: string;
@@ -24,7 +24,7 @@ export interface IProjectNode {
   id: number;
   type: NodeType;
   name: string;
-  srn: IDeserializedSrn;
+  srn: string;
   version: string;
   versions: string[];
   tags?: string[];

@@ -1,7 +1,7 @@
 import { Dictionary, NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { IContentsNode, IProjectNode } from '../types';
-import { serializeSrn } from '../utils/srns';
+import { deserializeSrn } from '../utils/srns';
 
 /**
  * Memoized hook that computes a tree structure from an array of nodes
@@ -17,10 +17,12 @@ export function computeToc(nodes: IProjectNode[]) {
   const contents: IContentsNode[] = [];
 
   /** Group by docs */
-  const docsNodes = sortNodesBySrn(sortNodesAlphabetically(nodes.filter(node => /^\/docs/.test(node.srn.uri)), 'name'));
+  const docsNodes = sortNodesBySrn(
+    sortNodesAlphabetically(nodes.filter(node => /^\/docs/.test(deserializeSrn(node.srn).uri)), 'name'),
+  );
   const folders: string[] = [];
   for (const node of docsNodes) {
-    const uri = node.srn.uri.replace(/^\/docs\//, '');
+    const uri = deserializeSrn(node.srn).uri.replace(/^\/docs\//, '');
 
     const parts = uri.split('/');
 
@@ -43,22 +45,25 @@ export function computeToc(nodes: IProjectNode[]) {
 
     contents.push({
       name: node.name,
-      srn: serializeSrn(node.srn),
+      srn: node.srn,
       depth: parts.length - 1,
     });
   }
 
   /** Group by reference */
-  const referenceNodes = sortNodesAlphabetically(nodes.filter(node => /^\/reference/.test(node.srn.uri)), 'name');
+  const referenceNodes = sortNodesAlphabetically(
+    nodes.filter(node => /^\/reference/.test(deserializeSrn(node.srn).uri)),
+    'name',
+  );
   const httpServiceNodes = sortNodesAlphabetically(referenceNodes.filter(n => n.type === NodeType.HttpService), 'name');
   for (const httpServiceNode of httpServiceNodes) {
-    const parentUri = httpServiceNode.srn.uri
-      .split('/')
+    const parentUri = deserializeSrn(httpServiceNode.srn)
+      .uri.split('/')
       .slice(0, -1)
       .join('/');
 
     const childNodes = referenceNodes.filter(
-      node => node.srn.uri.includes(parentUri) && node.type !== NodeType.HttpService,
+      node => deserializeSrn(node.srn).uri.includes(parentUri) && node.type !== NodeType.HttpService,
     );
     if (!childNodes.length) continue;
 
@@ -68,7 +73,7 @@ export function computeToc(nodes: IProjectNode[]) {
     });
     contents.push({
       name: 'Overview',
-      srn: serializeSrn(httpServiceNode.srn),
+      srn: httpServiceNode.srn,
       depth: 0,
     });
 
@@ -97,7 +102,7 @@ export function computeToc(nodes: IProjectNode[]) {
       for (const tagChild of tags[tag]) {
         contents.push({
           name: tagChild.name,
-          srn: serializeSrn(tagChild.srn),
+          srn: tagChild.srn,
           depth: 1,
         });
       }
@@ -112,7 +117,7 @@ export function computeToc(nodes: IProjectNode[]) {
       for (const otherChild of other) {
         contents.push({
           name: otherChild.name,
-          srn: serializeSrn(otherChild.srn),
+          srn: otherChild.srn,
           depth: 1,
         });
       }
@@ -129,8 +134,8 @@ function sortNodesBySrn(nodes: IProjectNode[]) {
   const contents = nodes;
 
   contents.sort((a, b) => {
-    const srnA = a.srn.uri.split('/').length;
-    const srnB = b.srn.uri.split('/').length;
+    const srnA = a.srn.split('/').length;
+    const srnB = b.srn.split('/').length;
 
     if (srnA < srnB) {
       return -1;

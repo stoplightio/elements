@@ -44,9 +44,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
         <ScrollContainer>
           <div className={cn('TableOfContents__inner ml-auto', `py-${padding}`)}>
             {contents.map((item, index) => {
-              const { uri } = deserializeSrn(item.srn || '');
-              const itemSrn = serializeSrn({ ...deserializedSrn, uri });
-              const isActive = itemSrn ? srn === itemSrn : false;
+              const isActive = item.srn ? srn === item.srn : false;
 
               if (item.depth > 0) {
                 // Check if we should show this item
@@ -58,13 +56,13 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
 
               const isParent = contents[index + 1] ? contents[index + 1].depth > item.depth : false;
               const isExpanded = expanded[index];
-              const isDivider = !isParent && !itemSrn;
+              const isDivider = !isParent && !item.srn;
 
               return (
                 <TableOfContentsItem
                   key={index}
                   name={item.name}
-                  srn={itemSrn}
+                  srn={item.srn}
                   depth={item.depth}
                   isActive={isActive}
                   isParent={isParent}
