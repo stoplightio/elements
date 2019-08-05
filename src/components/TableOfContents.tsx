@@ -3,26 +3,26 @@ import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
 import { ComponentsContext } from '../containers/Provider';
-import { IContentsNode } from '../types';
-import { deserializeSrn, serializeSrn } from '../utils/srns';
+import { useComputeToc } from '../hooks/useComputeToc';
+import { IContentsNode, IProjectNode } from '../types';
 
 export interface ITableOfContents {
-  contents: IContentsNode[];
+  items: IProjectNode[];
   srn?: string;
   className?: string;
   padding?: string;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
-  contents,
+  items,
   srn,
   className,
   padding = '10',
 }) => {
+  const contents = useComputeToc(items);
+
   // TODO (CL): Should we store expanded state in local storage?
   const [expanded, setExpanded] = React.useState({});
-
-  const deserializedSrn = deserializeSrn(srn || '');
 
   // Whenever the SRN changes, make sure the parent is expanded
   // TODO (CL): Handle deeply nested expanding
