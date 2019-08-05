@@ -1,12 +1,13 @@
 import cn from 'classnames';
 import * as React from 'react';
+import { PageSkeleton } from '../components/PageSkeleton';
 import { TableOfContents } from '../components/TableOfContents';
+import { TableOfContentsSkeleton } from '../components/TableOfContentsSkeleton';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useProjectNodes } from '../hooks/useProjectNodes';
 import { IContentsNode } from '../types';
 import { deserializeSrn } from '../utils/srns';
-import { Page, PageSkeleton } from './Page';
-import { TableOfContentsSkeleton } from './TableOfContents';
+import { Page } from './Page';
 
 export interface IHub {
   srn: string;
@@ -19,6 +20,7 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
   const contents = useComputeToc(data ? data.items : []);
 
   const { uri } = deserializeSrn(srn);
+
   let pageSrn;
   if (uri) {
     pageSrn = srn;
@@ -34,13 +36,13 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContents contents={contents} srn={pageSrn} padding={padding} />
+        <TableOfContents items={data ? data.items : []} srn={pageSrn} padding={padding} />
       )}
 
       {pageSrn ? (
         <Page className="flex-1 border-l dark:border-darken-4" srn={pageSrn} padding={padding} scrollInnerContainer />
       ) : (
-        <PageSkeleton className="flex-1" padding={padding} />
+        <PageSkeleton className="flex-1 border-l dark:border-darken-4" padding={padding} />
       )}
     </div>
   );

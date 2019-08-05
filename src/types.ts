@@ -12,21 +12,19 @@ export interface INodeInfo {
   id: number;
   type: NodeType;
   name: string;
-  uri: string;
   srn: string;
   version: string;
   versions: string[];
-  summary: string;
   data: any;
 }
 
 export interface IProjectNode {
-  id: number;
+  id: number | string;
   type: NodeType;
   name: string;
   srn: string;
-  version: string;
-  versions: string[];
+  version?: string;
+  versions?: string[];
   tags?: string[];
 }
 

@@ -16,10 +16,8 @@ import { useResolver } from '../hooks/useResolver';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
 
-export type DocsNodeType = NodeType | 'json_schema';
-
 export interface IDocs {
-  type: DocsNodeType;
+  type: NodeType | 'json_schema';
   data: any;
 
   className?: string;
@@ -46,7 +44,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
 
 const JSV_MAX_ROWS = 50;
 const MarkdownViewerCode: React.FunctionComponent<{
-  type: DocsNodeType;
+  type: NodeType | 'json_schema';
   value: any;
   annotations: ICodeAnnotations;
 }> = ({ type, value, annotations }) => {

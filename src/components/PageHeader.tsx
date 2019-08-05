@@ -1,6 +1,5 @@
 import { NodeType } from '@stoplight/types';
 import { Button, Icon, Menu, MenuItem, Popover, Position } from '@stoplight/ui-kit';
-import cn from 'classnames';
 import * as React from 'react';
 import { HostContext } from '../containers/Provider';
 import { Method } from './HttpOperation/Method';
