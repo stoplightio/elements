@@ -13,10 +13,11 @@ export interface IHub {
   srn: string;
   className?: string;
   padding?: string;
+  NotFoundComponent?: React.FunctionComponent<{ srn: string; error?: { message: string } }>;
 }
 
-export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '10' }) => {
-  const { isLoading, data } = useProjectNodes(srn);
+export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '10', NotFoundComponent }) => {
+  const { isLoading, data, error } = useProjectNodes(srn);
   const contents = useComputeToc(data ? data.items : []);
 
   const { uri } = deserializeSrn(srn);
@@ -29,6 +30,10 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
     if (node && node.srn) {
       pageSrn = node.srn;
     }
+  }
+
+  if (NotFoundComponent && !isLoading && (!data || !data.items.length)) {
+    return <NotFoundComponent srn={srn} error={error} />;
   }
 
   return (
