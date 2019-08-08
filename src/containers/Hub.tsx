@@ -5,7 +5,7 @@ import { TableOfContents } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContentsSkeleton';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useProjectNodes } from '../hooks/useProjectNodes';
-import { IContentsNode } from '../types';
+import { IContentsNode, IProjectNode } from '../types';
 import { deserializeSrn } from '../utils/srns';
 import { Page } from './Page';
 
@@ -13,7 +13,7 @@ export interface IHub {
   srn: string;
   className?: string;
   padding?: string;
-  NotFoundComponent?: React.FunctionComponent<{ srn: string; error?: { message: string } }>;
+  NotFoundComponent?: React.FunctionComponent<{ srn: string; error?: { message: string }; items: IProjectNode[] }>;
 }
 
 export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '10', NotFoundComponent }) => {
@@ -32,8 +32,10 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
     }
   }
 
-  if (NotFoundComponent && !isLoading && (!data || !data.items.length)) {
-    return <NotFoundComponent srn={srn} error={error} />;
+  // Show not found if we're done loading but have no contents to render
+  if (NotFoundComponent && !isLoading && !contents.length) {
+    // Pass "items" to parent to determine if there are nodes that don't conform to the "/docs" or "/reference" folder convention
+    return <NotFoundComponent srn={srn} error={error} items={data ? data.items : []} />;
   }
 
   return (
@@ -41,7 +43,7 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContents items={data ? data.items : []} srn={pageSrn} padding={padding} />
+        <TableOfContents contents={contents} srn={pageSrn} padding={padding} />
       )}
 
       {pageSrn ? (
