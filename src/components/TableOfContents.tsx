@@ -132,7 +132,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
 
   const className = cn('TableOfContentsItem__inner relative flex items-center border border-transparent border-r-0', {
     'dark-hover:bg-lighten-2 hover:bg-darken-2 cursor-pointer': !isDivider,
-    'text-gray-5': isDivider || (isChild && !isActive),
+    'text-gray-5 dark:text-gray-5': isDivider || (isChild && !isActive),
     'text-primary bg-white border-darken-3 dark:bg-lighten-2 dark:border-lighten-4': isActive,
     'dark:text-white': !isDivider && !isChild && !isActive,
   });
