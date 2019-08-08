@@ -128,8 +128,13 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
 }) => {
   const Components = React.useContext(ComponentsContext);
   const href = !isGroup && !isDivider && srn;
-  const className = cn('relative flex items-center cursor-pointer border border-transparent border-r-0 ', {
-    'dark:text-white': !isActive,
+  const isChild = !isGroup && depth > 0;
+
+  const className = cn('TableOfContentsItem__inner relative flex items-center border border-transparent border-r-0', {
+    'dark-hover:bg-lighten-2 hover:bg-darken-2 cursor-pointer': !isDivider,
+    'text-primary bg-white border-darken-3 dark:bg-lighten-2 dark:border-lighten-4': isActive,
+    'dark:text-white': !isChild && !isActive,
+    'text-gray-5': isChild && !isActive,
   });
 
   const children: any = (
@@ -152,6 +157,8 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
       },
       srn || name,
     );
+  } else if (isDivider) {
+    item = <div className={className}>{children}</div>;
   } else {
     item = (
       <a className={className} href={href || ''}>
@@ -167,7 +174,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
         'TableOfContentsItem--active': isActive,
         'TableOfContentsItem--group': isGroup,
         'TableOfContentsItem--divider': isDivider,
-        'TableOfContentsItem--child border-gray-3 dark:border-darken-4': !isGroup && depth > 0,
+        'TableOfContentsItem--child border-gray-3 dark:border-lighten-3': isChild,
       })}
       style={{
         marginLeft: depth * 16,
