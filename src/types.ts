@@ -28,8 +28,11 @@ export interface IProjectNode {
   tags?: string[];
 }
 
+export type ProjectNodeWithUri = IProjectNode & { uri: string };
+
 export interface IContentsNode {
   name: string;
   depth: number;
   srn?: string;
+  type?: 'divider' | 'group';
 }

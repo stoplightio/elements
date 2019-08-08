@@ -4,8 +4,9 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
+import { TableOfContentsSkeleton } from '../../components/TableOfContentsSkeleton';
 import { Provider } from '../../containers/Provider';
-import { ITableOfContents, TableOfContents, TableOfContentsSkeleton } from '../../containers/TableOfContents';
+import { ITableOfContents, TableOfContents } from '../../containers/TableOfContents';
 import { providerKnobs } from './Provider';
 
 export const darkMode = () => boolean('dark mode', false);

@@ -7,19 +7,35 @@ import { useComputeToc } from '../hooks/useComputeToc';
 import { IContentsNode, IProjectNode } from '../types';
 
 export interface ITableOfContents {
-  items: IProjectNode[];
+  // List of items that will be computed into the tree structure
+  items?: IProjectNode[];
+
+  // Optionally pass in a precomputed list of nodes instead of items. This is useful if you want to customize the ordering of the tree.
+  contents?: IContentsNode[];
+
+  // SRN of the active node
   srn?: string;
-  className?: string;
+
+  // Padding that will be used for (default: 10)
   padding?: string;
+  className?: string;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
-  items,
+  contents: _contents,
+  items = [],
   srn,
   className,
   padding = '10',
 }) => {
-  const contents = useComputeToc(items);
+  const hasContents = _contents && _contents.length;
+
+  // If contents are passed in, we still need to run this memoized function
+  let contents = useComputeToc(hasContents ? [] : items);
+  if (_contents && hasContents) {
+    // The contents prop takes priority over items
+    contents = _contents;
+  }
 
   // TODO (CL): Should we store expanded state in local storage?
   const [expanded, setExpanded] = React.useState({});
@@ -29,6 +45,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   React.useEffect(() => {
     if (!srn) return;
 
+    // Get the index of the currently active item
     const index = contents.findIndex(item => item.srn && item.srn === srn);
     if (index === -1 || !contents[index] || contents[index].depth === 0) return;
 
@@ -54,9 +71,9 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
                 }
               }
 
-              const isParent = contents[index + 1] ? contents[index + 1].depth > item.depth : false;
+              const isGroup = item.type === 'group';
+              const isDivider = item.type === 'divider';
               const isExpanded = expanded[index];
-              const isDivider = !isParent && !item.srn;
 
               return (
                 <TableOfContentsItem
@@ -65,7 +82,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
                   srn={item.srn}
                   depth={item.depth}
                   isActive={isActive}
-                  isParent={isParent}
+                  isGroup={isGroup}
                   isExpanded={isExpanded}
                   isDivider={isDivider}
                   onClick={e => {
@@ -74,7 +91,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
                       return;
                     }
 
-                    if (!isParent) return;
+                    if (!isGroup) return;
 
                     e.preventDefault();
                     setExpanded({ ...expanded, [String(index)]: !isExpanded });
@@ -94,7 +111,7 @@ interface ITableOfContentsItem {
   name: string;
   srn?: string;
   isActive: boolean;
-  isParent: boolean;
+  isGroup: boolean;
   isExpanded: boolean;
   isDivider: boolean;
   onClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
@@ -104,13 +121,13 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
   name,
   srn,
   isActive,
-  isParent,
+  isGroup,
   isExpanded,
   isDivider,
   onClick,
 }) => {
   const Components = React.useContext(ComponentsContext);
-  const href = !isParent && !isDivider && srn;
+  const href = !isGroup && !isDivider && srn;
   const className = cn('relative flex items-center cursor-pointer border border-transparent border-r-0 ', {
     'dark:text-white': !isActive,
   });
@@ -119,7 +136,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
     <>
       <span className="TableOfContentsItem__name flex-1 truncate">{name}</span>
 
-      {isParent && <Icon className="TableOfContentsItem__icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
+      {isGroup && <Icon className="TableOfContentsItem__icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
     </>
   );
 
@@ -145,11 +162,12 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
 
   return (
     <div
-      className={cn('TableOfContentsItem border-l border-transparent', {
-        'TableOfContentsItem--active border-l-0': isActive,
-        'TableOfContentsItem--group': isParent,
+      className={cn('TableOfContentsItem border-transparent', {
+        'border-l': !isActive && !isGroup,
+        'TableOfContentsItem--active': isActive,
+        'TableOfContentsItem--group': isGroup,
         'TableOfContentsItem--divider': isDivider,
-        'TableOfContentsItem--child border-gray-3 dark:border-darken-4': depth > 0,
+        'TableOfContentsItem--child border-gray-3 dark:border-darken-4': !isGroup && depth > 0,
       })}
       style={{
         marginLeft: depth * 16,

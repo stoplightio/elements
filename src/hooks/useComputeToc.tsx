@@ -1,7 +1,10 @@
 import { Dictionary, NodeType } from '@stoplight/types';
+import { compact, sortBy, startCase, words } from 'lodash';
 import * as React from 'react';
-import { IContentsNode, IProjectNode } from '../types';
+import { IContentsNode, IProjectNode, ProjectNodeWithUri } from '../types';
 import { deserializeSrn } from '../utils/srns';
+
+const README_REGEXP = new RegExp('README.md$', 'i'); // Regex to get the README file
 
 /**
  * Memoized hook that computes a tree structure from an array of nodes
@@ -13,63 +16,91 @@ export function useComputeToc(nodes: IProjectNode[]) {
 /**
  * Sorts project nodes into a flat array
  */
-export function computeToc(nodes: IProjectNode[]) {
-  const contents: IContentsNode[] = [];
+export function computeToc(_nodes: IProjectNode[]) {
+  // There is a chance that we pass an empty array
+  if (!_nodes.length) return [];
 
-  /** Group by docs */
-  const docsNodes = sortNodesBySrn(
-    sortNodesAlphabetically(nodes.filter(node => /^\/docs/.test(deserializeSrn(node.srn).uri)), 'name'),
-  );
+  // Add uri to each node since it's used heavily in this function
+  const nodes: ProjectNodeWithUri[] = _nodes.map(n => ({ ...n, uri: deserializeSrn(n.srn).uri }));
+
+  let contents: IContentsNode[] = [];
   const folders: string[] = [];
-  for (const node of docsNodes) {
-    const uri = deserializeSrn(node.srn).uri.replace(/^\/docs\//, '');
+  const rootNodes: IContentsNode[] = []; // These nodes will appear at the top of the tree
 
+  // Grab the root level README and put it at the top of the folder
+  const readmeNode = nodes.find(node => {
+    return README_REGEXP.test(node.uri) && compact(node.uri.split('/')).length === 1;
+  });
+  if (readmeNode) {
+    rootNodes.push({
+      name: readmeNode.name,
+      srn: readmeNode.srn,
+      depth: 0,
+    });
+  }
+
+  /** Docs folder */
+  const docsNodes = sortBy(nodes.filter(node => /^\/docs/.test(node.uri)), 'srn');
+  for (const node of docsNodes) {
+    // Strip off the /docs since we ignore that folder
+    const uri = node.uri.replace(/^\/docs\//, '');
     const parts = uri.split('/');
 
     // Handle adding the parent folders if we haven't already added them
     if (parts.length > 1) {
+      // All the path parts not including the file name
       const pathToItem = parts.slice(0, -1);
       for (const pathIndex in pathToItem) {
         if (!pathToItem[pathIndex]) continue;
 
+        // Create a folder if one doesn't already exist
         const folderName = pathToItem[pathIndex];
         if (!folders.includes(`${folderName}/${pathIndex}`)) {
           folders.push(`${folderName}/${pathIndex}`);
           contents.push({
-            name: titleCase(folderName),
+            name: startCase(words(folderName).join(' ')),
             depth: Number(pathIndex),
+            type: 'group',
           });
         }
       }
-    }
 
-    contents.push({
-      name: node.name,
-      srn: node.srn,
-      depth: parts.length - 1,
-    });
+      contents.push({
+        name: node.name,
+        srn: node.srn,
+        depth: parts.length - 1,
+      });
+    } else {
+      // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
+      rootNodes.push({
+        name: node.name,
+        srn: node.srn,
+        depth: 0,
+      });
+    }
   }
 
-  /** Group by reference */
-  const referenceNodes = sortNodesAlphabetically(
-    nodes.filter(node => /^\/reference/.test(deserializeSrn(node.srn).uri)),
-    'name',
-  );
-  const httpServiceNodes = sortNodesAlphabetically(referenceNodes.filter(n => n.type === NodeType.HttpService), 'name');
+  // Add the root nodes to the top of the tree
+  contents = rootNodes.concat(contents);
+
+  /** Reference folder */
+  const referenceNodes = sortBy(nodes.filter(node => /^\/reference/.test(node.uri)), 'name');
+  const httpServiceNodes = sortBy(referenceNodes.filter(n => n.type === NodeType.HttpService), 'name');
   for (const httpServiceNode of httpServiceNodes) {
-    const parentUri = deserializeSrn(httpServiceNode.srn)
-      .uri.split('/')
+    const parentUri = httpServiceNode.uri
+      .split('/')
       .slice(0, -1)
       .join('/');
 
     const childNodes = referenceNodes.filter(
-      node => deserializeSrn(node.srn).uri.includes(parentUri) && node.type !== NodeType.HttpService,
+      node => node.uri.includes(parentUri) && node.type !== NodeType.HttpService,
     );
     if (!childNodes.length) continue;
 
     contents.push({
       name: httpServiceNode.name,
       depth: 0,
+      type: 'divider',
     });
     contents.push({
       name: 'Overview',
@@ -80,6 +111,7 @@ export function computeToc(nodes: IProjectNode[]) {
     const tags: Dictionary<IProjectNode[], string> = {};
     const other = [];
 
+    /** Group by Tags */
     for (const childNode of childNodes) {
       if (childNode.tags && childNode.tags.length) {
         const tag = childNode.tags[0];
@@ -93,10 +125,12 @@ export function computeToc(nodes: IProjectNode[]) {
       }
     }
 
-    for (const tag of sortNodesAlphabetically(Object.keys(tags))) {
+    /** Add tag groups to the tree */
+    for (const tag of sortBy(Object.keys(tags))) {
       contents.push({
-        name: titleCase(tag),
+        name: startCase(tag),
         depth: 0,
+        type: 'group',
       });
 
       for (const tagChild of tags[tag]) {
@@ -108,10 +142,12 @@ export function computeToc(nodes: IProjectNode[]) {
       }
     }
 
+    /** Group whatever is left into "Other" */
     if (other.length) {
       contents.push({
         name: 'Other',
         depth: 0,
+        type: 'group',
       });
 
       for (const otherChild of other) {
@@ -125,59 +161,4 @@ export function computeToc(nodes: IProjectNode[]) {
   }
 
   return contents;
-}
-
-/**
- * Sorts by node SRN length
- */
-function sortNodesBySrn(nodes: IProjectNode[]) {
-  const contents = nodes;
-
-  contents.sort((a, b) => {
-    const srnA = a.srn.split('/').length;
-    const srnB = b.srn.split('/').length;
-
-    if (srnA < srnB) {
-      return -1;
-    }
-    if (srnA > srnB) {
-      return 1;
-    }
-
-    // srns must be equal
-    return 0;
-  });
-
-  return contents;
-}
-
-/**
- * Sorts alphabetically. Optionally takes a prop to sort by.
- */
-function sortNodesAlphabetically<T = IProjectNode>(nodes: T[], prop?: string) {
-  const contents = nodes;
-
-  contents.sort((a, b) => {
-    const nameA = (prop ? a[prop] : a).toUpperCase();
-    const nameB = (prop ? b[prop] : b).toUpperCase();
-
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-
-    // names must be equal
-    return 0;
-  });
-
-  return contents;
-}
-
-/**
- * Capitalizes first character
- */
-function titleCase(title: string) {
-  return title.slice(0, 1).toUpperCase() + title.slice(1);
 }
