@@ -203,7 +203,7 @@ export class Request {
     try {
       this.response = yield Axios.request(this.request);
     } catch (error) {
-      this.response = error.response;
+      this.error = error;
     }
 
     this.isSending = false;

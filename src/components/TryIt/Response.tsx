@@ -9,26 +9,25 @@ import { getHttpCodeColor, HttpCodeDescriptions } from '../../utils/http';
 import { useStore } from './context';
 
 export const Response = observer(() => {
-  const { response, isSending } = useStore();
+  const { response: serverResponse, error, isSending } = useStore();
+
+  const response = serverResponse || (error && error.response);
 
   if (!response) {
-    return null;
+    if (error) {
+      return (
+        <div className="TryIt__Response">
+          <ResponseHeader status={0} message={error.message} />
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
-
-  const color = response.status ? getHttpCodeColor(response.status) : '';
 
   return (
     <div className="TryIt__Response">
-      {response.status && (
-        <div className={cn('text-xl font-bold mb-6 flex items-center')}>
-          <div className={cn('flex h-8 items-center mr-6 px-3 rounded text-white', `bg-${color} dark:bg-${color}`)}>
-            {response.status}
-          </div>
-
-          <div>{HttpCodeDescriptions[response.status] || ''}</div>
-        </div>
-      )}
-
+      {response.status && <ResponseHeader status={response.status} />}
       <SimpleTabs id="TryIt__Response">
         <SimpleTabList>
           <SimpleTab>Body</SimpleTab>
@@ -76,3 +75,22 @@ export const Response = observer(() => {
     </div>
   );
 });
+
+interface IResponseHeaderProps {
+  status: number;
+  message?: string;
+}
+
+const ResponseHeader: React.FunctionComponent<IResponseHeaderProps> = ({ status, message }) => {
+  const color = status !== undefined ? getHttpCodeColor(status) : '';
+
+  return (
+    <div className={cn('text-xl font-bold mb-6 flex items-center')}>
+      <div className={cn('flex h-8 items-center mr-6 px-3 rounded text-white', `bg-${color} dark:bg-${color}`)}>
+        {status !== 0 ? status : 'ERR'}
+      </div>
+
+      <div>{message || HttpCodeDescriptions[status] || ''}</div>
+    </div>
+  );
+};
