@@ -7,6 +7,7 @@ export const HttpMethodColors: { [method: string]: string } = {
 };
 
 export const HttpCodeColor = {
+  0: 'red',
   1: 'gray',
   2: 'green',
   3: 'yellow',
