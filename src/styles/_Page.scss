@@ -23,3 +23,12 @@
     }
   }
 }
+
+.HttpOperation__Schema {
+  .#{$ns}-simple-tab-panel {
+    .#{$ns}-code-editor {
+      // Don't add margin when inside a tab panel
+      margin: 0;
+    }
+  }
+}

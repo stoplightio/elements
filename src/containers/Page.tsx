@@ -1,7 +1,7 @@
+import { NonIdealState } from '@blueprintjs/core';
 import { safeParse } from '@stoplight/json';
 import cn from 'classnames';
 import * as React from 'react';
-
 import { Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
 import { useNodeInfo } from '../hooks/useNodeInfo';
@@ -22,19 +22,39 @@ export const Page: React.FunctionComponent<IPage> = ({
   scrollInnerContainer,
   padding = '10',
 }) => {
-  const res = useNodeInfo(srn, semver);
+  const { isLoading, error, data } = useNodeInfo(srn, semver);
   const containerClassName = cn(className, 'flex flex-col h-full');
 
-  if (res.isLoading || res.error) {
-    console.error(res.error);
+  if (isLoading) {
     return <PageSkeleton className={className} padding={padding} />;
   }
 
-  if (!res.data) {
-    return <div className={containerClassName}>Not Found</div>;
+  if (error) {
+    console.error('Error getting page data for srn:', srn, error);
+
+    // Only show error message if we don't have any cached data
+    if (!data) {
+      return (
+        <div className={containerClassName}>
+          <NonIdealState
+            icon="error"
+            title="Something went wrong!"
+            description={error ? error.message : String(error)}
+          />
+        </div>
+      );
+    }
   }
 
-  const { type, name, version, versions, data } = res.data;
+  if (!data) {
+    return (
+      <div className={containerClassName}>
+        <NonIdealState icon="help" title="404 Not Found" description="It looks like this page doesn't exist" />
+      </div>
+    );
+  }
+
+  const { type, name, version, versions, data: nodeData } = data;
 
   return (
     <PageComponent
@@ -44,7 +64,7 @@ export const Page: React.FunctionComponent<IPage> = ({
       name={name}
       version={version}
       versions={versions}
-      data={safeParse(data) || data}
+      data={safeParse(nodeData) || nodeData}
       scrollInnerContainer={scrollInnerContainer}
       padding={padding}
     />
