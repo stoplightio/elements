@@ -74,7 +74,6 @@ export class Request {
       method: this._httpOperation ? (this._httpOperation.method as AxiosRequestConfig['method']) : 'GET',
       url: this.url,
       headers: this.headerParams,
-      params: this.queryParams,
       data: safeParse(this.body),
       auth: this.auth,
     };
