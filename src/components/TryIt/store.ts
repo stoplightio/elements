@@ -36,10 +36,10 @@ export class Request {
   private _isSending: Boolean = false;
 
   @observable
-  private _response?: AxiosResponse;
+  private _response: AxiosResponse | null = null;
 
   @observable
-  private _error?: AxiosError;
+  private _error: AxiosError | null = null;
 
   @observable
   private _auth?: { username: string; password: string };
@@ -202,8 +202,10 @@ export class Request {
 
     try {
       this.response = yield Axios.request(this.request);
+      this.error = null;
     } catch (error) {
       this.error = error;
+      this.response = null;
     }
 
     this.isSending = false;
