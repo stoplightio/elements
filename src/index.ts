@@ -13,3 +13,7 @@ export * from './containers/Hub';
 export * from './containers/Page';
 export * from './containers/Provider';
 export * from './containers/TableOfContents';
+
+export * from './hooks/useComputeToc';
+export * from './hooks/useNodeInfo';
+export * from './hooks/useProjectNodes';

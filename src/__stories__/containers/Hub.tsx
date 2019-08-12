@@ -1,18 +1,17 @@
+import { IComponentMapping } from '@stoplight/markdown-viewer';
 import { withKnobs } from '@storybook/addon-knobs';
 import { boolean, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
-
 import { Hub, IHub } from '../../containers/Hub';
-import { LinkProps, Provider } from '../../containers/Provider';
+import { Provider } from '../../containers/Provider';
 import { providerKnobs } from './Provider';
 
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = (): IHub => ({
-  // srn: text('srn', 'sl/acxiom/handcrafted-metal-ball/docs/markdown/basic-syntax.md', 'Hub'),
-  srn: text('srn', 'sl/acxiom/handcrafted-metal-ball/reference/todos/openapi.json/paths/~1todos/get', 'Hub'),
+  srn: text('srn', 'gh/stoplightio/spectral/docs/cli.md', 'Hub'),
 });
 
 storiesOf('containers/Hub', module)
@@ -29,22 +28,36 @@ storiesOf('containers/Hub', module)
 
 const Wrapper = ({ providerProps, hubProps }: any) => {
   return (
-    <Provider {...providerProps} Link={Link}>
+    <Provider {...providerProps} components={components}>
       <Hub className="h-full" srn={hubProps.srn} />
     </Provider>
   );
 };
 
-const Link: LinkProps = ({ className, srn, children }) => {
+const Link: React.FunctionComponent<{
+  className?: string;
+  title?: string;
+  url: string;
+}> = ({ className, url, children }) => {
   return (
     <a
       className={className}
       onClick={e => {
         e.preventDefault();
-        console.log(srn);
+        console.log(url);
       }}
     >
       {children}
     </a>
   );
+};
+
+const components: IComponentMapping = {
+  link: (props, key) => {
+    return (
+      <Link key={key} className={props.node.className} url={props.node.url} title={props.node.title}>
+        {props.children}
+      </Link>
+    );
+  },
 };

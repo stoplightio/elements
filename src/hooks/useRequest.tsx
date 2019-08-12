@@ -1,8 +1,8 @@
+import { safeStringify } from '@stoplight/json';
 import { AxiosRequestConfig } from 'axios';
+import hash from 'object-hash';
 import * as React from 'react';
-import { ApolloContext } from '../containers/Provider';
-
-const cache = new Map();
+import { AxiosContext } from '../containers/Provider';
 
 export interface IPaginatedResponse<T> {
   items: T[];
@@ -23,48 +23,84 @@ export type UseRequestState<T> = {
   };
 };
 
+// Maps a hash of the request to the response data
+const RequestCache = new Map<string, any>();
+
 export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
-  const client = React.useContext(ApolloContext);
+  const axios = React.useContext(AxiosContext);
 
-  const [state, setState] = React.useState<UseRequestState<T>>({ isLoading: true, data: undefined, error: undefined });
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [data, setData] = React.useState<T>();
+  const [error, setError] = React.useState();
 
-  const request = createRequest(args);
+  const { key, request } = createRequest(args);
 
   const sendRequest = React.useCallback(() => {
-    const initialData = cache.get(request);
-
-    if (initialData && initialData !== state.data) {
-      setState({ isLoading: false, data: initialData, error: undefined });
+    // Check if we have this request stored in the cache
+    const cachedData = RequestCache.get(key);
+    if (cachedData) {
+      setError(undefined);
+      setData(cachedData);
+      setIsLoading(false);
+    } else {
+      // No cache entry so set loading
+      setIsLoading(true);
     }
 
-    client
+    axios
       .request<T>(request)
-      .then(({ data }) => {
-        cache.set(request, data);
-        setState({ isLoading: false, error: undefined, data });
+      .then(response => {
+        if (!cachedData || safeStringify(response.data) !== safeStringify(cachedData)) {
+          // Update the cache
+          RequestCache.set(key, response.data);
+          setData(response.data);
+        }
+
+        setError(undefined);
+        setIsLoading(false);
       })
-      .catch(error => {
-        cache.set(request, undefined);
-        setState({ isLoading: false, data: undefined, error });
+      .catch(e => {
+        // TODO (CL): Should we delete the cache entry if there's an error? Might be better to leave it so there's no disruption to viewing the docs
+        if (!cachedData) {
+          RequestCache.delete(key);
+          setData(undefined);
+        }
+
+        setError(e);
+        setIsLoading(false);
       });
-  }, [client, request, setState]);
+  }, [axios, request]);
 
   React.useEffect(() => sendRequest(), [request]);
 
-  return state;
+  return {
+    isLoading,
+    data,
+    error,
+  };
 }
 
-const createRequest = (request: AxiosRequestConfig) => {
-  const prev = React.useRef<any>(undefined);
+interface IRequestCacheEnty {
+  key: string;
+  request: AxiosRequestConfig;
+}
+
+// Creates a request object with a stable reference as long as key doesn't change
+function createRequest(request: AxiosRequestConfig): IRequestCacheEnty {
+  const prev = React.useRef<IRequestCacheEnty | null>(null);
 
   return React.useMemo(() => {
-    const stringifiedRequest = JSON.stringify(request);
+    // Create a hash of the request so we can ensure reference equality
+    const key = hash.MD5(request);
 
-    if (JSON.stringify(prev.current) === stringifiedRequest) {
+    if (prev.current !== null && prev.current.key === key) {
       return prev.current;
     } else {
-      prev.current = request;
-      return request;
+      prev.current = {
+        key,
+        request,
+      };
+      return prev.current;
     }
   }, [request]);
-};
+}

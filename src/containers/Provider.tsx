@@ -10,7 +10,7 @@ export interface IProvider {
 
 const defaultHost = 'http://localhost:4060';
 export const HostContext = React.createContext(defaultHost);
-export const ApolloContext = React.createContext(axios.create());
+export const AxiosContext = React.createContext(axios.create());
 export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
 
 export const Provider: React.FunctionComponent<IProvider> = ({ host, token, components, children }) => {
@@ -28,9 +28,9 @@ export const Provider: React.FunctionComponent<IProvider> = ({ host, token, comp
 
   return (
     <HostContext.Provider value={host || defaultHost}>
-      <ApolloContext.Provider value={client}>
+      <AxiosContext.Provider value={client}>
         <ComponentsContext.Provider value={components}>{children}</ComponentsContext.Provider>
-      </ApolloContext.Provider>
+      </AxiosContext.Provider>
     </HostContext.Provider>
   );
 };

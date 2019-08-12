@@ -4,6 +4,7 @@
   "include": ["src"],
 
   "compilerOptions": {
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "allowSyntheticDefaultImports": true
   }
 }
