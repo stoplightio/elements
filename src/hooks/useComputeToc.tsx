@@ -1,10 +1,10 @@
 import { Dictionary, NodeType } from '@stoplight/types';
-import { compact, sortBy, startCase, words } from 'lodash';
+import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
 import * as React from 'react';
 import { IContentsNode, IProjectNode, ProjectNodeWithUri } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
-const README_REGEXP = new RegExp('README.md$', 'i'); // Regex to get the README file
+const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
 
 /**
  * Memoized hook that computes a tree structure from an array of nodes
