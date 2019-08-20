@@ -1915,6 +1915,20 @@
     unified "~8.3.2"
     unist-util-select "~2.0"
 
+"@stoplight/markdown@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.5.0.tgz#46e1f43ea79e4553a904907102684d20a1c7f233"
+  integrity sha512-vdaoUrK4qZLAIzG9ixOfF+YBGHK6Pbo6fmulNKiB5W8H1PKnYYSaPZmRyrBUX4a+xMsMV5L7Vt5Z0CPE6L98nA==
+  dependencies:
+    js-yaml "^3.13"
+    lodash "^4.17.15"
+    mdast-util-to-string "~1.0"
+    remark-frontmatter "~1.3"
+    remark-parse "~7.0.0"
+    remark-stringify "~7.0.1"
+    unified "~8.3.2"
+    unist-util-select "~2.0"
+
 "@stoplight/scripts@7.0.3":
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/@stoplight/scripts/-/scripts-7.0.3.tgz#024805f3a97c349836a50821b5ddf68d142be27d"
