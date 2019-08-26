@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/combine/npm/react@16.9.0/umd/react.production.min.js,npm/react-dom@16.9.0/umd/react-dom.production.min.js"></script>
+  </head>
+
+  <body>
+    <div class="flex h-full h-screen">
+      <div id="stoplight-toc"></div>
+
+      <div class="flex-1 overflow-auto" id="stoplight-page"></div>
+    </div>
+
+    <script type="text/javascript">
+      (function() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '../../dist/widgets.min.js';
+        script.onload = function() {
+          Stoplight.config.host = 'http://localhost:4060';
+          Stoplight.config.components = {
+            link: ({ node, children }) => {
+              return React.createElement(
+                'a',
+                {
+                  className: node.className,
+                  title: node.title,
+                  href: node.url,
+                  onClick: function(e) {
+                    if (!/^http/.test(node.url)) {
+                      e.preventDefault();
+                      history.pushState(
+                        {},
+                        node.title,
+                        '/examples/html/' + node.url.replace('gh/stoplightio/spectral', ''),
+                      );
+                    }
+                  },
+                },
+                children,
+              );
+            },
+          };
+          Stoplight.widgets.toc.render('stoplight-toc', 'gh/stoplightio/spectral');
+          Stoplight.widgets.page.render('stoplight-page', 'gh/stoplightio/spectral/README.md');
+        };
+
+        var styles = document.createElement('link');
+        styles.rel = 'stylesheet';
+        styles.href = '../../dist/widgets.styles.css';
+
+        var scripts = document.getElementsByTagName('head')[0];
+        scripts.appendChild(script, scripts);
+        scripts.appendChild(styles, scripts);
+      })();
+    </script>
+  </body>
+</html>
