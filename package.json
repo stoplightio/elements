@@ -41,13 +41,13 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@stoplight/json": "^3.0.3",
-    "@stoplight/json-ref-resolver": "^2.1.1",
+    "@stoplight/json": "^3.1.0",
+    "@stoplight/json-ref-resolver": "^2.2.0",
     "@stoplight/json-schema-viewer": "^2.6.0",
-    "@stoplight/markdown-viewer": "^3.5.5",
+    "@stoplight/markdown-viewer": "^3.5.6",
     "@stoplight/tree-list": "^4.8.0",
-    "@stoplight/ui-kit": "^2.9.3",
-    "@stoplight/yaml": "^3.0.1",
+    "@stoplight/ui-kit": "^2.10.0",
+    "@stoplight/yaml": "^3.0.2",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "isomorphic-unfetch": "^3.0.0",
