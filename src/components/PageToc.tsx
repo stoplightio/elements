@@ -7,10 +7,7 @@ export interface IPageTocItem {
   depth: number;
 }
 
-export const PageToc: React.FC<{ items: IPageTocItem[]; className?: string }> = ({
-  items,
-  className,
-}) => {
+export const PageToc: React.FC<{ items: IPageTocItem[]; className?: string }> = ({ items, className }) => {
   return (
     <div>
       <h6 className="ml-3 mb-2">Table of Contents</h6>
