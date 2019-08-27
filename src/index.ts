@@ -11,6 +11,7 @@ export { TableOfContents as TableOfContentsComponent } from './components/TableO
 
 export * from './containers/Hub';
 export * from './containers/Page';
+export * from './containers/PageTOC';
 export * from './containers/Provider';
 export * from './containers/TableOfContents';
 

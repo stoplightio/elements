@@ -130,7 +130,7 @@ const ScrollContainerWrapper: React.FunctionComponent<{ scrollInnerContainer?: b
     return <>{children}</>;
   }
 
-  return <ScrollContainer>{children}</ScrollContainer>;
+  return <ScrollContainer shadows={false}>{children}</ScrollContainer>;
 };
 
 // TODO (CL): Allow to configure which tabs are shown
