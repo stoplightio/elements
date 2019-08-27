@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@stoplight/request-maker": {
+      "signature": "a5c8d3e9145507d35486b95a46cbf23d",
+      "file": true,
+      "replaced": "^2.4.0"
+    }
+  }
+}

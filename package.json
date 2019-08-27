@@ -48,6 +48,8 @@
     "@stoplight/json-schema-viewer": "^2.8.0",
     "@stoplight/markdown": "^2.5.0",
     "@stoplight/markdown-viewer": "^3.7.0",
+    "@stoplight/prism-http": "3.0.0-alpha.9",
+    "@stoplight/request-maker": "file:.yalc/@stoplight/request-maker",
     "@stoplight/tree-list": "^4.8.0",
     "@stoplight/types": "^11.0.0",
     "@stoplight/ui-kit": "^2.10.0",
