@@ -1,1 +1,11 @@
-{}
+{
+  "method": "get",
+  "url": "/test",
+  "baseUrl": "http://localhost:9001",
+  "headers": {
+    "testHeader": "testHeaderValue"
+  },
+  "query": {
+    "testQueryParam": ["testQueryValue"]
+  }
+}

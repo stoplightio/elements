@@ -5,12 +5,13 @@ import { parse } from '@stoplight/yaml';
 import fetch from 'isomorphic-unfetch';
 import * as React from 'react';
 
-export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
+export function useResolver(type: NodeType | 'json_schema' | 'http_request' | 'http', value: string) {
   const [resolved, setResolved] = React.useState();
 
   const parsedValue = React.useMemo(() => {
     if (
       type === 'http_request' ||
+      type === 'http' ||
       type === 'json_schema' ||
       type === NodeType.Model ||
       type === NodeType.HttpOperation ||

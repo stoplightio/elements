@@ -18,6 +18,7 @@ import { ComponentsContext } from '../containers/Provider';
 import { useComputePageToc } from '../hooks/useComputePageToc';
 import { useResolver } from '../hooks/useResolver';
 import { HttpOperation } from './HttpOperation';
+import { HttpRequest } from './HttpRequest';
 import { HttpService } from './HttpService';
 import { PageToc } from './PageToc';
 
@@ -92,7 +93,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
 
 const JSV_MAX_ROWS = 50;
 const MarkdownViewerCode: React.FunctionComponent<{
-  type: NodeType | 'json_schema';
+  type: NodeType | 'json_schema' | 'http';
   value: any;
   annotations: ICodeAnnotations;
 }> = ({ type, value, annotations }) => {
@@ -116,6 +117,8 @@ const MarkdownViewerCode: React.FunctionComponent<{
     return <HttpOperation value={resolved} />;
   } else if (type === NodeType.HttpService) {
     return <HttpService value={resolved} />;
+  } else if (type === 'http') {
+    return <HttpRequest request={resolved} />;
   }
 
   return null;
@@ -132,7 +135,7 @@ function useComponents() {
         const { node, defaultComponents } = props;
 
         const nodeType = node.annotations && node.annotations.type ? node.annotations.type : node.meta;
-        if (['json_schema', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService].includes(nodeType)) {
+        if (['json_schema', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService, 'http'].includes(nodeType)) {
           return <MarkdownViewerCode key={key} type={nodeType} value={node.value} annotations={node.annotations} />;
         }
 
