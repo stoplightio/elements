@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/combine/npm/react@16.9.0/umd/react.production.min.js,npm/react-dom@16.9.0/umd/react-dom.production.min.js"></script>
+    <link rel="stylesheet" href="http://localhost:4050/elements/bundle.v1.css" />
   </head>
 
   <body>
@@ -12,27 +12,27 @@
 
     <script type="text/javascript">
       (function() {
+        var projectSrn = 'gh/stoplightio/spectral';
+
         var script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = '../../dist/widgets.min.js';
+        script.src = 'http://localhost:4050/elements/bundle.v1.js';
         script.onload = function() {
-          Stoplight.config.host = 'http://localhost:4060';
-          Stoplight.config.components = {
+          SL.config.host = 'http://localhost:4060';
+          SL.config.components = {
             link: ({ node, children }) => {
-              return React.createElement(
+              const href = /^http/.test(node.url) ? node.url : node.url.replace(projectSrn, '');
+
+              return SL.createElement(
                 'a',
                 {
                   className: node.className,
                   title: node.title,
-                  href: node.url,
+                  href,
                   onClick: function(e) {
                     if (!/^http/.test(node.url)) {
                       e.preventDefault();
-                      history.pushState(
-                        {},
-                        node.title,
-                        '/examples/html/' + node.url.replace('gh/stoplightio/spectral', ''),
-                      );
+                      history.pushState({}, node.title, href);
                     }
                   },
                 },
@@ -40,17 +40,25 @@
               );
             },
           };
-          Stoplight.widgets.toc.render('stoplight-toc', 'gh/stoplightio/spectral');
-          Stoplight.widgets.page.render('stoplight-page', 'gh/stoplightio/spectral/README.md');
-        };
 
-        var styles = document.createElement('link');
-        styles.rel = 'stylesheet';
-        styles.href = '../../dist/widgets.styles.css';
+          (function(history) {
+            var pushState = history.pushState;
+            history.pushState = function(state, title, url) {
+              // When the URL is changes, re-render the page component with the new SRN
+              SL.elements.page.srn = projectSrn + url;
+              SL.elements.toc.srn = projectSrn + url;
+
+              return pushState.apply(history, arguments);
+            };
+          })(window.history);
+
+          // Render the initial components
+          SL.elements.toc.render('stoplight-toc', projectSrn + '/README.md');
+          SL.elements.page.render('stoplight-page', projectSrn + '/README.md');
+        };
 
         var scripts = document.getElementsByTagName('head')[0];
         scripts.appendChild(script, scripts);
-        scripts.appendChild(styles, scripts);
       })();
     </script>
   </body>

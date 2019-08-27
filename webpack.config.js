@@ -6,16 +6,14 @@ const PackageImporter = require('node-sass-package-importer');
 const inliner = require('sass-inline-svg');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const pkg = require('./package.json');
-
 module.exports = {
   mode: 'production',
   entry: path.resolve(__dirname, 'src', 'widgets.tsx'),
   target: 'web',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'widgets.min.js',
-    library: 'Stoplight',
+    path: path.resolve(__dirname, 'dist', 'elements'),
+    filename: 'bundle.v1.js',
+    library: 'SL',
     libraryTarget: 'var',
   },
   devtool: 'source-map',
@@ -31,7 +29,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'widgets.styles.css',
+              name: 'bundle.v1.css',
             },
           },
           'extract-loader',
@@ -100,17 +98,13 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         styles: {
-          name: 'widgets',
+          name: 'bundle',
           test: /\.(sa|sc|c)ss$/,
           chunks: 'all',
           enforce: true,
         },
       },
     },
-  },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
   },
   performance: {
     hints: false,

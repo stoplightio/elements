@@ -20,13 +20,13 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "sl-scripts build && yarn build.styles",
+    "build": "sl-scripts build && yarn build.styles && yarn build.widgets",
     "build.widgets": "NODE_ENV=production webpack -p --config webpack.config.js",
     "build.widgets.analyze": "RUN_CONTEXT=analyze NODE_ENV=production webpack -p --config webpack.config.js",
     "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "commit": "git-cz",
-    "lint": "tslint -c tslint.json 'src/**/*.ts?'",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx,js,jsx}'",
     "lint.fix": "yarn lint --fix",
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
