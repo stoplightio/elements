@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Angular</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script type="text/javascript">
+      (function() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'http://localhost:4050/elements/bundle.v1.js';
+        script.onload = function() {
+          SL.config.host = 'http://localhost:4060';
+          window.postMessage('SL.ready');
+        };
+
+        var styles = document.createElement('link');
+        styles.rel = 'stylesheet';
+        styles.href = 'http://localhost:4050/elements/bundle.v1.css';
+
+        var scripts = document.getElementsByTagName('head')[0];
+        scripts.appendChild(script, scripts);
+        scripts.appendChild(styles, scripts);
+      })();
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>
