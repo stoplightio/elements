@@ -32,9 +32,9 @@ export const PageToc: React.FC<{ srn: string; version?: string; className?: stri
         .map(heading => ({
           title: findTitles(heading).join(' '),
           id: heading.data && heading.data.id,
-          depth: heading.depth,
+          depth: heading.depth - 1,
         }))
-        .filter(heading => heading.depth > 1 && heading.depth <= 3),
+        .filter(heading => heading.depth > 0 && heading.depth <= 2),
     [tree],
   );
 
