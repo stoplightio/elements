@@ -27,11 +27,14 @@ export const PageToc: React.FC<{ srn: string; version?: string; className?: stri
 
   const headings = React.useMemo(
     () =>
-      tree.children.filter(isHeadingNode).map(heading => ({
-        title: findTitles(heading).join(' '),
-        id: heading.data && heading.data.id,
-        depth: heading.depth,
-      })),
+      tree.children
+        .filter(isHeadingNode)
+        .map(heading => ({
+          title: findTitles(heading).join(' '),
+          id: heading.data && heading.data.id,
+          depth: heading.depth,
+        }))
+        .filter(heading => heading.depth > 1 && heading.depth <= 3),
     [tree],
   );
 
