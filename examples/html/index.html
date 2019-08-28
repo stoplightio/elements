@@ -1,23 +1,21 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="http://localhost:4050/static/elements/bundle.v1.css" />
-  </head>
-
   <body>
-    <div id="stoplight-hub" class="flex h-full h-screen">
-      <div id="stoplight-toc"></div>
+    <div id="stoplight-hub" class="flex h-full h-screen w-full">
+      <div id="stoplight-toc" class="border-r"></div>
       <div id="stoplight-page" class="flex-1 overflow-auto"></div>
     </div>
 
     <script type="text/javascript">
       (function() {
-        var projectSrn = 'gh/stoplightio/spectral';
+        var platformHost = 'http://localhost:4050';
+        var apiHost = 'http://localhost:4060';
+        var projectSrn = 'gh/stoplightio/studio-demo';
 
         var script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'http://localhost:4050/static/elements/bundle.v1.js';
+        script.src = platformHost + '/static/elements/bundle.v1.js';
         script.onload = function() {
-          SL.config.host = 'http://localhost:4060';
+          SL.config.host = apiHost;
 
           SL.config.components = {
             link: ({ node, children }) => {
@@ -57,8 +55,13 @@
           SL.elements.page.render('stoplight-page', projectSrn + '/README.md');
         };
 
+        var styles = document.createElement('link');
+        styles.rel = 'stylesheet';
+        styles.href = platformHost + '/static/elements/bundle.v1.css';
+
         var scripts = document.getElementsByTagName('head')[0];
         scripts.appendChild(script, scripts);
+        scripts.appendChild(styles, scripts);
       })();
     </script>
   </body>

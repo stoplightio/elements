@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, NgZone } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
-const projectSrn = 'gh/stoplightio/spectral';
+const projectSrn = 'gh/stoplightio/studio-demo';
 
 @Component({
   selector: 'app-docs',
