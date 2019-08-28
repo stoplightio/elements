@@ -12,7 +12,6 @@
     "importHelpers": true,
     "target": "es2015",
     "typeRoots": ["node_modules/@types"],
-    "types": ["stoplight.d"],
     "lib": ["es2018", "dom"]
   },
   "angularCompilerOptions": {

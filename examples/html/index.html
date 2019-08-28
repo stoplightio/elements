@@ -1,13 +1,12 @@
 <html>
   <head>
-    <link rel="stylesheet" href="http://localhost:4050/elements/bundle.v1.css" />
+    <link rel="stylesheet" href="http://localhost:4050/static/elements/bundle.v1.css" />
   </head>
 
   <body>
-    <div class="flex h-full h-screen">
+    <div id="stoplight-hub" class="flex h-full h-screen">
       <div id="stoplight-toc"></div>
-
-      <div class="flex-1 overflow-auto" id="stoplight-page"></div>
+      <div id="stoplight-page" class="flex-1 overflow-auto"></div>
     </div>
 
     <script type="text/javascript">
@@ -16,9 +15,10 @@
 
         var script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'http://localhost:4050/elements/bundle.v1.js';
+        script.src = 'http://localhost:4050/static/elements/bundle.v1.js';
         script.onload = function() {
           SL.config.host = 'http://localhost:4060';
+
           SL.config.components = {
             link: ({ node, children }) => {
               const href = /^http/.test(node.url) ? node.url : node.url.replace(projectSrn, '');

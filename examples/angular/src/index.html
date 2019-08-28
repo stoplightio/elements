@@ -9,17 +9,20 @@
 
     <script type="text/javascript">
       (function() {
+        var platformHost = 'http://localhost:4050';
+        var apiHost = 'http://localhost:4060';
+
         var script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'http://localhost:4050/elements/bundle.v1.js';
+        script.src = platformHost + '/static/elements/bundle.v1.js';
         script.onload = function() {
-          SL.config.host = 'http://localhost:4060';
+          SL.config.host = apiHost;
           window.postMessage('SL.ready');
         };
 
         var styles = document.createElement('link');
         styles.rel = 'stylesheet';
-        styles.href = 'http://localhost:4050/elements/bundle.v1.css';
+        styles.href = platformHost + '/static/elements/bundle.v1.css';
 
         var scripts = document.getElementsByTagName('head')[0];
         scripts.appendChild(script, scripts);

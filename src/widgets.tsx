@@ -2,6 +2,8 @@ import './styles/widgets.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { Hub } from './containers/Hub';
 import { Page } from './containers/Page';
 import { IProvider, Provider } from './containers/Provider';
 import { TableOfContents } from './containers/TableOfContents';
@@ -83,6 +85,7 @@ class Widget {
 }
 
 export const elements = {
+  hub: new Widget(Hub),
   page: new Widget(Page),
   toc: new Widget(TableOfContents),
 };

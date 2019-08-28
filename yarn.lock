@@ -1883,6 +1883,16 @@
     lodash "^4.17.15"
     safe-stable-stringify "^1.1"
 
+"@stoplight/json@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.1.1.tgz#531d966a62247bf2ab1e8a06a685fa62e36cf890"
+  integrity sha512-DK2ufmnPvfW9Mv0q4DYtldjicTTcBY+j4kiEUOEmc9hL+mzMDV08+5ix4tmPtheUDZH6OtEqEmGcf8ZKCHFbpg==
+  dependencies:
+    "@stoplight/types" "^11.0.0"
+    jsonc-parser "~2.1.1"
+    lodash "^4.17.15"
+    safe-stable-stringify "^1.1"
+
 "@stoplight/lifecycle@2.x.x":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@stoplight/lifecycle/-/lifecycle-2.0.1.tgz#ac2eb1728f96f97addb13c9f13360bce021d0c72"
@@ -1891,10 +1901,10 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "5.2.6"
 
-"@stoplight/markdown-viewer@^3.5.5":
-  version "3.5.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.5.5.tgz#e4375587e82ec2447c7b141c75d38222f07b54e8"
-  integrity sha512-9/5Dnfkrt8Vu+iu5HyZ4r0aEmVvUk/Odss43ZfV2J6g5RkC9ZXLU/yv9H916hXUERTzdg4mChkjSFMi7pmgAbg==
+"@stoplight/markdown-viewer@^3.5.6":
+  version "3.5.6"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.5.6.tgz#8dfe395c13337ebaa5cd2beafb75f98057404703"
+  integrity sha512-lXHqFW3Cv39opcBjejO0E2uAlS/PQZXxOLhCRF7lQSjNQ4d2gT/8yPVx00yjUDOEn7afDyOWMlNtWcuaGIbcfg==
   dependencies:
     "@stoplight/json" "^3.0"
     "@stoplight/markdown" "^2.4.0"
@@ -2035,10 +2045,10 @@
     use-immer "~0.3.3"
     yup "^0.27.0"
 
-"@stoplight/yaml@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.0.2.tgz#acd567d580b35c7b2b8c9802a448ffcc70698507"
-  integrity sha512-VV4jQIYvRAR7nCnS7m6vPUrOcx0U6+47T/YmH77PdV56d6QJIsnHd7DusfnC5EDYBsW+deGnTjIPcRMlLmPE/g==
+"@stoplight/yaml@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.1.0.tgz#1026dd99512b987f6686e9daa52f67bd36ab4285"
+  integrity sha512-Db+f9AJO95S+bWL4ODdItLNXaBE/ey5nYAB9K/i9IgBZgJ+lyQ1+L0HSduX627uzwZCqgMo0tySWrgVTi2scBQ==
   dependencies:
     "@stoplight/types" "^11.0.0"
     "@types/js-yaml" "3.12.1"
@@ -15482,10 +15492,15 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@*, typescript@3.5.3:
+typescript@*:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+
+typescript@3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.2.tgz#a09e1dc69bc9551cadf17dba10ee42cf55e5d56c"
+  integrity sha512-7KxJovlYhTX5RaRbUdkAXN1KUZ8PwWlTzQdHV6xNqvuFOs7+WBo10TQUqT19Q/Jz2hk5v9TQDIhyLhhJY4p5AA==
 
 ua-parser-js@^0.7.18:
   version "0.7.20"
@@ -16143,10 +16158,10 @@ webpack@^4.29.0:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-webpack@^4.39.2:
-  version "4.39.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.2.tgz#c9aa5c1776d7c309d1b3911764f0288c8c2816aa"
-  integrity sha512-AKgTfz3xPSsEibH00JfZ9sHXGUwIQ6eZ9tLN8+VLzachk1Cw2LVmy+4R7ZiwTa9cZZ15tzySjeMui/UnSCAZhA==
+webpack@^4.39.3:
+  version "4.39.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.3.tgz#a02179d1032156b713b6ec2da7e0df9d037def50"
+  integrity sha512-BXSI9M211JyCVc3JxHWDpze85CvjC842EvpRsVTc/d15YJGlox7GIDd38kJgWrb3ZluyvIjgenbLDMBQPDcxYQ==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
