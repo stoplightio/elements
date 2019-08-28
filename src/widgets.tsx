@@ -39,7 +39,7 @@ class Widget implements IWidget {
     return this._srn;
   }
   public set srn(srn: string) {
-    this._srn = srn;
+    this._srn = decodeURI(srn);
 
     if (this.htmlId) {
       // Whenever the SRN changes, re-render the element
@@ -60,7 +60,7 @@ class Widget implements IWidget {
     this._htmlId = htmlId;
 
     if (srn) {
-      this._srn = srn;
+      this._srn = decodeURI(srn);
     }
 
     const Component = this._component;

@@ -64,12 +64,17 @@ export class DocsComponent implements AfterViewInit {
       },
     };
 
-    // Render the TableOfContents and Page elements
+    // the browser URL looks something like /docs/reference/petstore/openapi.yaml
+    // replace the leading /docs with the project srn to get the final node srn, e.g.
+    // gh/stoplightio/studio-demo/reference/petstore/openapi.yaml
+    const srn = this.router.url.replace(/^\/docs/, projectSrn);
+
+    /** Render the TableOfContents and Page elements for the given srn, into their respective html containers */
 
     // @ts-ignore
-    SL.elements.toc.render('stoplight-toc', this.router.url.replace('/docs', projectSrn));
+    SL.elements.toc.render('stoplight-toc', srn);
 
     // @ts-ignore
-    SL.elements.page.render('stoplight-page', this.router.url.replace('/docs', projectSrn));
+    SL.elements.page.render('stoplight-page', srn);
   }
 }
