@@ -7,4 +7,5 @@ import './components/TryIt';
 
 import './containers/Hub';
 import './containers/Page';
+import './containers/PageToc';
 import './containers/TableOfContents';
