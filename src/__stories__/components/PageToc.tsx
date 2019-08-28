@@ -20,7 +20,7 @@ storiesOf('components/PageToc', module)
     const { items } = knobs();
 
     return (
-      <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+      <div className={cn('absolute inset-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <PageToc className="py-12" items={items} />
       </div>
     );
