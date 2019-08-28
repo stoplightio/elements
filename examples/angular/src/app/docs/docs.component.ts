@@ -5,7 +5,8 @@ const projectSrn = 'gh/stoplightio/studio-demo';
 
 @Component({
   selector: 'app-docs',
-  templateUrl: './docs.component.html'
+  templateUrl: './docs.component.html',
+  styleUrls: ['../app.component.css'],
 })
 export class DocsComponent implements AfterViewInit {
   constructor(private ngZone: NgZone, private router: Router) {
