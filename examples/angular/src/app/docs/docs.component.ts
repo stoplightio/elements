@@ -23,7 +23,7 @@ export class DocsComponent implements AfterViewInit {
     if (typeof SL !== 'undefined') {
       this.initStoplight();
     } else {
-      window.addEventListener('SL.ready', () => this.initStoplight());
+      window.addEventListener('SL.ready', () => this.initStoplight(), { once: true });
     }
   }
 

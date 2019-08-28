@@ -1,18 +1,22 @@
 declare namespace SL {
+  interface IWidget {
+    srn: string;
+    render(htmlId: string, srn: string): void;
+    remove(): void;
+  }
+
+  // React.createElement
   const createElement: any;
-  const config: any;
+
+  const config: {
+    host?: string;
+    token?: string;
+    components?: any;
+  };
+
   const elements: {
-    page: {
-      htmlId: string;
-      srn: string;
-      render(htmlId: string, srn: string): void;
-      remove(): void;
-    };
-    toc: {
-      htmlId: string;
-      srn: string;
-      render(htmlId: string, srn: string): void;
-      remove(): void;
-    };
+    hub: IWidget;
+    page: IWidget;
+    toc: IWidget;
   };
 }

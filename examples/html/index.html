@@ -1,68 +1,69 @@
 <html>
+  <head>
+    <!-- Stoplight Elements -->
+    <link rel="stylesheet" href="http://localhost:4050/static/elements/bundle.v1.css" media="print" onload="this.media='all'">
+    <script async defer src='http://localhost:4050/static/elements/bundle.v1.js' onload="__onElementsLoad()"></script>
+    <script>
+      function __onElementsLoad() {
+        // Let elements know where the Stoplight API is running
+        SL.config.host = "http://localhost:4060";
+
+        // Emit the SL.ready event so that any code that needs SL can start using it
+        window.dispatchEvent(new Event('SL.ready'));
+      }
+    </script>
+    <!-- End Stoplight Elements -->
+  </head>
+
   <body>
     <div id="stoplight-hub" class="flex h-full h-screen w-full">
       <div id="stoplight-toc" class="border-r"></div>
       <div id="stoplight-page" class="flex-1 overflow-auto"></div>
     </div>
 
-    <script type="text/javascript">
-      (function() {
-        var platformHost = 'http://localhost:4050';
-        var apiHost = 'http://localhost:4060';
+    <script>
+      // Script that runs when library is ready - uses elements to render components onto the page
+      window.addEventListener('SL.ready', () => {
+        // The SRN to the project that we want to load
         var projectSrn = 'gh/stoplightio/studio-demo';
 
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = platformHost + '/static/elements/bundle.v1.js';
-        script.onload = function() {
-          SL.config.host = apiHost;
+        SL.config.components = {
+          link: ({ node, children }) => {
+            const href = /^http/.test(node.url) ? node.url : node.url.replace(projectSrn, '');
 
-          SL.config.components = {
-            link: ({ node, children }) => {
-              const href = /^http/.test(node.url) ? node.url : node.url.replace(projectSrn, '');
-
-              return SL.createElement(
-                'a',
-                {
-                  className: node.className,
-                  title: node.title,
-                  href,
-                  onClick: function(e) {
-                    if (!/^http/.test(node.url)) {
-                      e.preventDefault();
-                      history.pushState({}, node.title, href);
-                    }
-                  },
+            return SL.createElement(
+              'a',
+              {
+                className: node.className,
+                title: node.title,
+                href,
+                onClick: function(e) {
+                  if (!/^http/.test(node.url)) {
+                    e.preventDefault();
+                    history.pushState({}, node.title, href);
+                  }
                 },
-                children,
-              );
-            },
-          };
-
-          (function(history) {
-            var pushState = history.pushState;
-            history.pushState = function(state, title, url) {
-              // When the URL is changes, re-render the page component with the new SRN
-              SL.elements.page.srn = projectSrn + url;
-              SL.elements.toc.srn = projectSrn + url;
-
-              return pushState.apply(history, arguments);
-            };
-          })(window.history);
-
-          // Render the initial components
-          SL.elements.toc.render('stoplight-toc', projectSrn + '/README.md');
-          SL.elements.page.render('stoplight-page', projectSrn + '/README.md');
+              },
+              children,
+            );
+          },
         };
 
-        var styles = document.createElement('link');
-        styles.rel = 'stylesheet';
-        styles.href = platformHost + '/static/elements/bundle.v1.css';
+        (function(history) {
+          var pushState = history.pushState;
+          history.pushState = function(state, title, url) {
+            // When the URL is changes, re-render the page component with the new SRN
+            SL.elements.page.srn = projectSrn + url;
+            SL.elements.toc.srn = projectSrn + url;
 
-        var scripts = document.getElementsByTagName('head')[0];
-        scripts.appendChild(script, scripts);
-        scripts.appendChild(styles, scripts);
-      })();
+            return pushState.apply(history, arguments);
+          };
+        })(window.history);
+
+        // Render the initial components
+        SL.elements.toc.render('stoplight-toc', projectSrn + '/README.md');
+        SL.elements.page.render('stoplight-page', projectSrn + '/README.md');
+      }, { once: true });
     </script>
   </body>
 </html>

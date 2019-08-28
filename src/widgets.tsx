@@ -16,7 +16,13 @@ export const config: IProvider = {
   components: {},
 };
 
-class Widget {
+export interface IWidget {
+  srn: string;
+  render(htmlId: string, srn: string): void;
+  remove(): void;
+}
+
+class Widget implements IWidget {
   private _htmlId: string = '';
   private _srn: string = '';
   private _component: React.FunctionComponent<{ srn: string }>;
@@ -27,9 +33,6 @@ class Widget {
 
   public get htmlId() {
     return this._htmlId;
-  }
-  public set htmlId(htmlId: string) {
-    this._htmlId = htmlId;
   }
 
   public get srn() {
