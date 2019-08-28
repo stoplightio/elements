@@ -39,7 +39,7 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
   }
 
   return (
-    <div className={cn('Hub flex', className)}>
+    <div className={cn('Hub flex w-full', className)}>
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
