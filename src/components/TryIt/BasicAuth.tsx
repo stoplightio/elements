@@ -1,6 +1,7 @@
 import { InputGroup } from '@blueprintjs/core';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
+import flatten from 'lodash/flatten';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useStore } from './context';
@@ -11,7 +12,7 @@ export const BasicAuth = observer<{ security: IHttpOperation['security']; classN
 
     if (!security || !security.length) return null;
 
-    const basicAuth = security.find(s => s.type === 'http' && s.scheme === 'basic');
+    const basicAuth = flatten(security).find(s => s.type === 'http' && s.scheme === 'basic');
     if (!basicAuth) return null;
 
     return (
