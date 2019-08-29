@@ -23,7 +23,7 @@ storiesOf('containers/PageToc', module)
     <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
       <Provider {...providerKnobs()}>
         <div className="flex h-full overflow-hidden">
-          <Page {...pick(knobs(), ['srn', 'version'])} className="py-12 w-3/4" scrollInnerContainer />
+          <Page {...pick(knobs(), ['srn', 'version'])} className="py-12 w-3/4" scrollInnerContainer toc={false} />
           <PageToc {...knobs()} />
         </div>
       </Provider>

@@ -13,6 +13,8 @@ export const darkMode = () => boolean('dark mode', false);
 export const pageKnobs = (): IPage => ({
   srn: text('srn', 'sl/stoplight/personal-space/reference/todos/openapi.json/paths/~1todos/get', 'Page'),
   version: text('version', '', 'Page'),
+  toc: boolean('toc', true, 'Page'),
+  scrollInnerContainer: boolean('scrollInnerContainer', true, 'Page'),
 });
 
 storiesOf('containers/Page', module)
