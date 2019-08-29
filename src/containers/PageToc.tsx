@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { useNodeInfo } from '..';
 import { PageToc as PageTocComponent } from '../components/PageToc';
 import { PageTocSkeleton } from '../components/PageTocSkeleton';
-import { usePageToc } from '../hooks/usePageToc';
+import { computePageToc } from '../utils/toc';
 
 export interface IPageToc {
   srn: string;
@@ -11,15 +12,11 @@ export interface IPageToc {
 }
 
 export const PageToc: React.FC<IPageToc> = ({ srn, version, className }) => {
-  const { isLoading, headings } = usePageToc(srn, version);
+  const { isLoading, data } = useNodeInfo(srn, version);
 
-  if (!isLoading && !headings.length) {
-    return null;
-  }
-
-  if (isLoading || !headings.length) {
+  if (isLoading || !data) {
     return <PageTocSkeleton className={className} />;
   }
 
-  return <PageTocComponent items={headings} className={className} />;
+  return <PageTocComponent headings={computePageToc(data.data)} className={className} />;
 };

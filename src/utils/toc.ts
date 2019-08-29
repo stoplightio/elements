@@ -1,31 +1,27 @@
 import { IHeading, ITextNode, Reader } from '@stoplight/markdown';
 import { Parent } from 'unist';
-import { IPageTocItem } from '../components/PageToc';
-import { useNodeInfo } from './useNodeInfo';
+import { IPageTocHeading } from '../components/PageToc';
 
 const unified = require('unified');
 const remarkSlug = require('remark-slug');
 const selectAll = require('unist-util-select').selectAll;
 
-export function usePageToc(srn: string, version?: string) {
-  const { isLoading, data } = useNodeInfo(srn, version);
+export function computePageToc(data: string) {
   const reader = new Reader();
 
   const tree = reader.toSpec(
     unified()
       .use([remarkSlug])
-      .runSync(reader.fromLang(data ? data.data : '')),
+      .runSync(reader.fromLang(data)),
   );
 
-  const headings = selectAll(':root > [type=heading]', tree)
+  return selectAll(':root > [type=heading]', tree)
     .map((heading: IHeading) => ({
       title: findTitle(heading),
       id: heading.data && (heading.data.id as (string | undefined)),
       depth: heading.depth - 1,
     }))
-    .filter((item: IPageTocItem) => item.depth >= 1 && item.depth <= 2);
-
-  return { isLoading, headings };
+    .filter((item: IPageTocHeading) => item.depth >= 1 && item.depth <= 2);
 }
 
 const findTitle = (parent: Parent) => {
