@@ -10,6 +10,7 @@ const selectAll = require('unist-util-select').selectAll;
 export function usePageToc(srn: string, version?: string) {
   const { isLoading, data } = useNodeInfo(srn, version);
   const reader = new Reader();
+
   const tree = reader.toSpec(
     unified()
       .use([remarkSlug])

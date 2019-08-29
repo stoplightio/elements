@@ -88,7 +88,7 @@ export const Page: React.FunctionComponent<IPage> = ({
 
             {nodeTabs.includes('Docs') && (
               <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                   <Docs className={`Page__content p-${padding}`} type={type} data={data} />
                 </ScrollContainerWrapper>
               </SimpleTabPanel>
@@ -96,7 +96,7 @@ export const Page: React.FunctionComponent<IPage> = ({
 
             {nodeTabs.includes('Changelog') && (
               <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                   <Changelog className={`Page__content p-${padding}`} changes={[]} />
                 </ScrollContainerWrapper>
               </SimpleTabPanel>
@@ -104,7 +104,7 @@ export const Page: React.FunctionComponent<IPage> = ({
 
             {nodeTabs.includes('TryIt') && (
               <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer}>
+                <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                   <TryIt className={`Page__content p-${padding}`} value={data} />
                 </ScrollContainerWrapper>
               </SimpleTabPanel>
@@ -122,15 +122,16 @@ export const Page: React.FunctionComponent<IPage> = ({
   );
 };
 
-const ScrollContainerWrapper: React.FunctionComponent<{ scrollInnerContainer?: boolean }> = ({
+const ScrollContainerWrapper: React.FunctionComponent<{ scrollInnerContainer?: boolean; shadows?: boolean }> = ({
   scrollInnerContainer,
   children,
+  shadows = false,
 }) => {
   if (!scrollInnerContainer) {
     return <>{children}</>;
   }
 
-  return <ScrollContainer shadows={false}>{children}</ScrollContainer>;
+  return <ScrollContainer shadows={shadows}>{children}</ScrollContainer>;
 };
 
 // TODO (CL): Allow to configure which tabs are shown

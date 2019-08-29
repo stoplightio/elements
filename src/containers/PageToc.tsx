@@ -13,6 +13,10 @@ export interface IPageToc {
 export const PageToc: React.FC<IPageToc> = ({ srn, version, className }) => {
   const { isLoading, headings } = usePageToc(srn, version);
 
+  if (!isLoading && !headings.length) {
+    return null;
+  }
+
   if (isLoading || !headings.length) {
     return <PageTocSkeleton className={className} />;
   }
