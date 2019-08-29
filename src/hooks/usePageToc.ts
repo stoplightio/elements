@@ -1,14 +1,14 @@
-import { IHeading, ITextNode } from '@stoplight/markdown/ast-types/mdast';
-import { Reader } from '@stoplight/markdown/reader';
-import { Node, Parent } from 'unist';
+import { IHeading, ITextNode, Reader } from '@stoplight/markdown';
+import { Parent } from 'unist';
+import { IPageTocItem } from '../components/PageToc';
 import { useNodeInfo } from './useNodeInfo';
 
 const unified = require('unified');
 const remarkSlug = require('remark-slug');
+const selectAll = require('unist-util-select').selectAll;
 
 export function usePageToc(srn: string, version?: string) {
   const { isLoading, data } = useNodeInfo(srn, version);
-
   const reader = new Reader();
   const tree = reader.toSpec(
     unified()
@@ -16,40 +16,17 @@ export function usePageToc(srn: string, version?: string) {
       .runSync(reader.fromLang(data ? data.data : '')),
   );
 
-  const headings = tree.children
-    .filter(isHeading)
-    .map(heading => ({
-      title: findTitles(heading).join(' '),
-      id: heading.data && heading.data.id,
+  const headings = selectAll(':root > [type=heading]', tree)
+    .map((heading: IHeading) => ({
+      title: findTitle(heading),
+      id: heading.data && (heading.data.id as (string | undefined)),
       depth: heading.depth - 1,
     }))
-    .filter(heading => heading.depth > 0 && heading.depth <= 2);
+    .filter((item: IPageTocItem) => item.depth >= 1 && item.depth <= 2);
 
   return { isLoading, headings };
 }
 
-const findTitles = (parent: Parent): string[] => {
-  return parent.children.reduce((titles: string[], node) => {
-    if (isParent(node)) {
-      return titles.concat(findTitles(node));
-    }
-
-    if (isTextNode(node)) {
-      titles.push(node.value as string);
-    }
-
-    return titles;
-  }, []);
+const findTitle = (parent: Parent) => {
+  return (selectAll('[type=text]', parent) as ITextNode[]).map(textNode => textNode.value as string).join(' ');
 };
-
-function isParent(node: Node): node is Parent {
-  return !!(node as Parent).children;
-}
-
-function isTextNode(node: Node): node is ITextNode {
-  return node.type === 'text';
-}
-
-function isHeading(node: Node): node is IHeading {
-  return node.type === 'heading';
-}
