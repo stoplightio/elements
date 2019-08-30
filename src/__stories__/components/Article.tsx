@@ -1,22 +1,33 @@
-import { IHttpService, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import { withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-const httpService: IHttpService = require('../../__fixtures__/http-service.json');
+const article: string = require('../../__fixtures__/article.md');
 import { Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);
 export const showToc = () => boolean('table of contents?', false);
 
-storiesOf('components/HttpService', module)
+storiesOf('components/Article', module)
   .addDecorator(withKnobs)
-  .add('Petstore', () => {
+  .add('spectral reference', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Page data={httpService} name={httpService.name} version={httpService.version} type={NodeType.HttpService} />
+        <Page
+          data={article}
+          type={NodeType.Article}
+          toc={
+            showToc()
+              ? {
+                  className: 'mt-24 mr-12',
+                }
+              : undefined
+          }
+          padding="24"
+        />
       </div>
     );
   });
