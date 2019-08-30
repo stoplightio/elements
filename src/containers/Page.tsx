@@ -2,10 +2,10 @@ import { NonIdealState } from '@blueprintjs/core';
 import { safeParse } from '@stoplight/json';
 import cn from 'classnames';
 import * as React from 'react';
+import { IDocsToc } from '..';
 import { Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
 import { useNodeInfo } from '../hooks/useNodeInfo';
-import { IDocsToc } from '..';
 
 export interface IPage {
   srn: string;
