@@ -17,7 +17,7 @@ export interface IPageToc {
 
 export const PageToc = ({ headings, className, style, title = 'This Page' }: IPageToc) => {
   return (
-    <div className={cn(className)} style={style}>
+    <div className={cn('sticky top-0', className)} style={style}>
       <div className="border-l border-gray-2 dark:border-lighten-4">
         {title && (
           <div

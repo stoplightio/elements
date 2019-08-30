@@ -28,7 +28,7 @@ export interface IDocs {
   toc?: IDocsToc;
 }
 
-interface IDocsToc {
+export interface IDocsToc {
   className?: string;
 }
 
@@ -65,7 +65,7 @@ const DocsWithToc = ({ markdownElem, tree, toc }: { markdownElem: React.ReactNod
   return (
     <div className="flex">
       {markdownElem}
-      <PageToc headings={headings} className={toc.className || 'p-4 mt-6'} />
+      <PageToc headings={headings} className={toc.className || 'p-4 pt-10 h-0'} />
     </div>
   );
 };

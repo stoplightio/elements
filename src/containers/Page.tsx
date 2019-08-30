@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
 import { useNodeInfo } from '../hooks/useNodeInfo';
+import { IDocsToc } from '..';
 
 export interface IPage {
   srn: string;
@@ -13,6 +14,8 @@ export interface IPage {
   version?: string;
   className?: string;
   padding?: string;
+
+  docsToc?: IDocsToc;
 }
 
 export const Page: React.FunctionComponent<IPage> = ({
@@ -21,6 +24,7 @@ export const Page: React.FunctionComponent<IPage> = ({
   className,
   scrollInnerContainer,
   padding = '12',
+  docsToc,
 }) => {
   const { isLoading, error, data } = useNodeInfo(srn, semver);
   const containerClassName = cn(className, 'flex flex-col h-full');
@@ -67,6 +71,7 @@ export const Page: React.FunctionComponent<IPage> = ({
       data={safeParse(nodeData) || nodeData}
       scrollInnerContainer={scrollInnerContainer}
       padding={padding}
+      toc={docsToc}
     />
   );
 };
