@@ -50,8 +50,6 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
 
   const tree = useMarkdownTree(markdown);
 
-  console.log(JSON.stringify(tree, null, 4));
-
   const markdownElem = <MarkdownViewer className={className} markdown={tree} components={components} />;
 
   if (!toc) return markdownElem;
