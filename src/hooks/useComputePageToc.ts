@@ -1,20 +1,16 @@
-import { IHeading, ITextNode, Reader } from '@stoplight/markdown';
+import { IHeading, IRoot, ITextNode } from '@stoplight/markdown';
+import * as React from 'react';
 import { Parent } from 'unist';
+
 import { IPageTocHeading } from '../components/PageToc';
 
-const unified = require('unified');
-const remarkSlug = require('remark-slug');
 const selectAll = require('unist-util-select').selectAll;
 
-export function computePageToc(data: string) {
-  const reader = new Reader();
+export function useComputePageToc(tree: IRoot) {
+  return React.useMemo(() => computePageToc(tree), [tree]);
+}
 
-  const tree = reader.toSpec(
-    unified()
-      .use([remarkSlug])
-      .runSync(reader.fromLang(data)),
-  );
-
+export function computePageToc(tree: IRoot) {
   return selectAll(':root > [type=heading]', tree)
     .map((heading: IHeading) => ({
       title: findTitle(heading),

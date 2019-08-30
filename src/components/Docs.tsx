@@ -7,23 +7,32 @@ import {
   ICodeAnnotations,
   IComponentMappingProps,
   MarkdownViewer,
+  useMarkdownTree,
 } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
+
+import { IRoot } from '@stoplight/markdown';
 import { ComponentsContext } from '../containers/Provider';
+import { useComputePageToc } from '../hooks/useComputePageToc';
 import { useResolver } from '../hooks/useResolver';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
+import { PageToc } from './PageToc';
 
 export interface IDocs {
   type: NodeType | 'json_schema';
   data: any;
+  className?: string;
+  toc?: IDocsToc;
+}
 
+interface IDocsToc {
   className?: string;
 }
 
-export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) => {
+export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, toc }) => {
   const components = useComponents();
 
   let markdown = 'No content';
@@ -39,7 +48,28 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
     markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```\n';
   }
 
-  return <MarkdownViewer className={className} markdown={markdown} components={components} />;
+  const tree = useMarkdownTree(markdown);
+
+  console.log(JSON.stringify(tree, null, 4));
+
+  const markdownElem = <MarkdownViewer className={className} markdown={tree} components={components} />;
+
+  if (!toc) return markdownElem;
+
+  return <DocsWithToc markdownElem={markdownElem} tree={tree} toc={toc} />;
+};
+
+const DocsWithToc = ({ markdownElem, tree, toc }: { markdownElem: React.ReactNode; tree: IRoot; toc: IDocsToc }) => {
+  const headings = useComputePageToc(tree);
+
+  if (!headings || !headings.length) return <>{markdownElem}</>;
+
+  return (
+    <div className="flex">
+      {markdownElem}
+      <PageToc headings={headings} className={toc.className || 'p-4 mt-6'} />
+    </div>
+  );
 };
 
 const JSV_MAX_ROWS = 50;

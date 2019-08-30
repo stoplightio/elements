@@ -1864,33 +1864,19 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "5.2.6"
 
-"@stoplight/markdown-viewer@^3.5.6":
-  version "3.5.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.5.6.tgz#8dfe395c13337ebaa5cd2beafb75f98057404703"
-  integrity sha512-lXHqFW3Cv39opcBjejO0E2uAlS/PQZXxOLhCRF7lQSjNQ4d2gT/8yPVx00yjUDOEn7afDyOWMlNtWcuaGIbcfg==
+"@stoplight/markdown-viewer@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.6.0.tgz#033c3ea2bc1222ff2845dd6e2c6a4d96f8b5242e"
+  integrity sha512-dY9bBqB4nIfjSIioq2YFAd3oIXD3i7SIkiAbN5oMeIRXSZW8qREft1KW+8FLU7zkE650F4Nf0HA2vtKrRdE0wQ==
   dependencies:
     "@stoplight/json" "^3.0"
-    "@stoplight/markdown" "^2.4.0"
+    "@stoplight/markdown" "^2.4.1"
     "@stoplight/types" "^10.0.1"
     classnames "^2"
     react-error-boundary "^1"
     remark-inline-links "^3.1.3"
     remark-slug "^5.1.2"
     unified "^8.3.2"
-
-"@stoplight/markdown@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.4.0.tgz#8e965b2d841f48ad7ca356f3ce3fa2ca73658ffe"
-  integrity sha512-b4FliTtoHeHCgtIxqjGt+ONZrcRE41g3/MO7w58aejmNiKLKKq5yXkxo1ds25pdyoK+0XKwvy4ZVmNewmHVy4g==
-  dependencies:
-    js-yaml "^3.13"
-    lodash "^4.17.15"
-    mdast-util-to-string "~1.0"
-    remark-frontmatter "~1.3"
-    remark-parse "~7.0.0"
-    remark-stringify "~7.0.1"
-    unified "~8.3.2"
-    unist-util-select "~2.0"
 
 "@stoplight/markdown@^2.4.1":
   version "2.4.1"
@@ -12184,7 +12170,7 @@ react-docgen@^3.0.0:
     node-dir "^0.1.10"
     recast "^0.16.0"
 
-react-dom@^16.8.1:
+react-dom@^16.8.1, react-dom@^16.9.0:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.9.0.tgz#5e65527a5e26f22ae3701131bcccaee9fb0d3962"
   integrity sha512-YFT2rxO9hM70ewk9jq0y6sQk8cL02xm4+IzYBz75CQGlClQQ1Bxq0nhHF6OtSbit+AIahujJgb/CPRibFkMNJQ==
@@ -12397,7 +12383,7 @@ react-window@~1.8.5:
     "@babel/runtime" "^7.0.0"
     memoize-one ">=3.1.1 <6"
 
-react@^16.8.1:
+react@^16.8.1, react@^16.9.0:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"
   integrity sha512-+7LQnFBwkiw+BobzOF6N//BdoNw0ouwmSJTEm9cglOOmsg/TMiFHZLe2sEoN5M7LgJTj9oHH0gxklfnQe66S1w==

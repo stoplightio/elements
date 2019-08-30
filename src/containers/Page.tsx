@@ -4,9 +4,7 @@ import cn from 'classnames';
 import * as React from 'react';
 import { Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
-import { PageToc } from '../components/PageToc';
 import { useNodeInfo } from '../hooks/useNodeInfo';
-import { computePageToc } from '../utils/toc';
 
 export interface IPage {
   srn: string;
@@ -15,7 +13,6 @@ export interface IPage {
   version?: string;
   className?: string;
   padding?: string;
-  toc?: boolean;
 }
 
 export const Page: React.FunctionComponent<IPage> = ({
@@ -23,11 +20,10 @@ export const Page: React.FunctionComponent<IPage> = ({
   version: semver,
   className,
   scrollInnerContainer,
-  padding = '10',
-  toc = true,
+  padding = '12',
 }) => {
   const { isLoading, error, data } = useNodeInfo(srn, semver);
-  const containerClassName = cn(className, 'flex h-full');
+  const containerClassName = cn(className, 'flex flex-col h-full');
 
   if (isLoading) {
     return <PageSkeleton className={className} padding={padding} />;
@@ -59,22 +55,18 @@ export const Page: React.FunctionComponent<IPage> = ({
   }
 
   const { type, name, version, versions, data: nodeData } = data;
-  const headings = computePageToc(nodeData);
 
   return (
-    <div className={containerClassName}>
-      <PageComponent
-        className="flex flex-1 flex-col h-full"
-        srn={srn}
-        type={type}
-        name={name}
-        version={version}
-        versions={versions}
-        data={safeParse(nodeData) || nodeData}
-        scrollInnerContainer={scrollInnerContainer}
-        padding={padding}
-      />
-      {toc && !!headings.length && <PageToc headings={headings} />}
-    </div>
+    <PageComponent
+      className={containerClassName}
+      srn={srn}
+      type={type}
+      name={name}
+      version={version}
+      versions={versions}
+      data={safeParse(nodeData) || nodeData}
+      scrollInnerContainer={scrollInnerContainer}
+      padding={padding}
+    />
   );
 };
