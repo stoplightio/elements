@@ -4,11 +4,9 @@ import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
   BlockHeader,
   CLASSNAMES,
-  getReader,
   ICodeAnnotations,
   IComponentMappingProps,
   MarkdownViewer,
-  useMarkdownTree,
 } from '@stoplight/markdown-viewer';
 import { Builder } from '@stoplight/markdown/builder';
 import { NodeType } from '@stoplight/types';
@@ -42,7 +40,7 @@ export interface IDocsContent {
 export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, toc, content = {} }) => {
   const components = useComponents();
 
-  const markdown = new Builder(getReader());
+  const markdown = new Builder();
 
   if (type === NodeType.Article) {
     markdown.addMarkdown(data);
@@ -52,9 +50,23 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
       markdown.addMarkdown(`${description}\n\n`);
     }
 
-    markdown.addJsonCodeNode(type, `\n${safeStringify(data, undefined, 4)}\n`);
+    markdown.addChild({
+      type: 'code',
+      lang: 'json',
+      meta: 'model',
+      value: safeStringify(schema, undefined, 4),
+    });
+
+    markdown.addMarkdown('\n');
   } else {
-    markdown.addJsonCodeNode(type, `\n${safeStringify(data, undefined, 4)}\n`);
+    markdown.addChild({
+      type: 'code',
+      lang: 'json',
+      meta: type,
+      value: safeStringify(data, undefined, 4),
+    });
+
+    markdown.addMarkdown('\n');
 
     if (type === NodeType.HttpOperation) {
       markdown.addMarkdown('\n');
