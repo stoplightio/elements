@@ -15,7 +15,8 @@ export interface IPage extends IErrorBoundary {
   data: any;
 
   name?: string;
-  toc?: IDocs['toc'];
+  docsToc?: IDocs['toc'];
+  docs?: Pick<IDocs, 'className'>;
   srn?: string;
   version?: string;
   versions?: string[];
@@ -36,7 +37,8 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   className,
   padding = '12',
   shadows,
-  toc,
+  docsToc,
+  docs,
   scrollInnerContainer,
 }) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -91,7 +93,13 @@ const ElementPage: React.FunctionComponent<IPage> = ({
           {nodeTabs.includes('Docs') && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
-                <Docs className={`Page__content p-${padding}`} type={type} data={data} toc={toc} />
+                <Docs
+                  className={docs && docs.className}
+                  content={{ className: `Page__content p-${padding}` }}
+                  type={type}
+                  data={data}
+                  toc={docsToc}
+                />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
@@ -119,7 +127,13 @@ const ElementPage: React.FunctionComponent<IPage> = ({
       <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows={shadows}>
         {pageHeader}
 
-        <Docs className={cn(`Page__content p-${padding}`)} type={type} data={data} toc={toc} />
+        <Docs
+          className={docs && docs.className}
+          content={{ className: `Page__content p-${padding}` }}
+          type={type}
+          data={data}
+          toc={docsToc}
+        />
       </ScrollContainerWrapper>
     );
   }

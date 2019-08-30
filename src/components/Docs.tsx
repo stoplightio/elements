@@ -26,13 +26,18 @@ export interface IDocs {
   data: any;
   className?: string;
   toc?: IDocsToc;
+  content?: IDocsContent;
 }
 
 export interface IDocsToc {
   className?: string;
 }
 
-export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, toc }) => {
+export interface IDocsContent {
+  className?: string;
+}
+
+export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, toc, content = {} }) => {
   const components = useComponents();
 
   let markdown = 'No content';
@@ -49,23 +54,13 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
   }
 
   const tree = useMarkdownTree(markdown);
-
-  const markdownElem = <MarkdownViewer className={className} markdown={tree} components={components} />;
-
-  if (!toc) return markdownElem;
-
-  return <DocsWithToc markdownElem={markdownElem} tree={tree} toc={toc} />;
-};
-
-const DocsWithToc = ({ markdownElem, tree, toc }: { markdownElem: React.ReactNode; tree: IRoot; toc: IDocsToc }) => {
   const headings = useComputePageToc(tree);
-
-  if (!headings || !headings.length) return <>{markdownElem}</>;
+  const shouldDisplayToc = toc && headings && headings.length;
 
   return (
-    <div className="flex">
-      {markdownElem}
-      <PageToc headings={headings} className={toc.className || 'p-4 pt-10 h-0'} />
+    <div className={cn(className, 'flex')}>
+      <MarkdownViewer className={content.className} markdown={tree} components={components} />
+      {shouldDisplayToc && <PageToc headings={headings} className={toc!.className || 'p-4 pt-10 h-0'} />}
     </div>
   );
 };
