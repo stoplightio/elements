@@ -13,7 +13,6 @@ import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { IRoot } from '@stoplight/markdown';
 import { ComponentsContext } from '../containers/Provider';
 import { useComputePageToc } from '../hooks/useComputePageToc';
 import { useResolver } from '../hooks/useResolver';
@@ -31,6 +30,7 @@ export interface IDocs {
 
 export interface IDocsToc {
   className?: string;
+  disabled?: boolean;
 }
 
 export interface IDocsContent {
@@ -55,7 +55,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
 
   const tree = useMarkdownTree(markdown);
   const headings = useComputePageToc(tree);
-  const shouldDisplayToc = toc && headings && headings.length;
+  const shouldDisplayToc = !(toc && toc.disabled) && headings && headings.length;
 
   return (
     <div className={cn(className, 'flex')}>

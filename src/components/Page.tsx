@@ -15,8 +15,7 @@ export interface IPage extends IErrorBoundary {
   data: any;
 
   name?: string;
-  docsToc?: IDocs['toc'];
-  docs?: Pick<IDocs, 'className'>;
+  docs?: Pick<IDocs, 'className' | 'toc' | 'content'>;
   srn?: string;
   version?: string;
   versions?: string[];
@@ -37,7 +36,6 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   className,
   padding = '12',
   shadows,
-  docsToc,
   docs,
   scrollInnerContainer,
 }) => {
@@ -95,10 +93,14 @@ const ElementPage: React.FunctionComponent<IPage> = ({
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                 <Docs
                   className={docs && docs.className}
-                  content={{ className: `Page__content p-${padding}` }}
+                  content={
+                    docs
+                      ? { ...docs.content, className: `Page__content p-${padding}` }
+                      : { className: `Page__content p-${padding}` }
+                  }
                   type={type}
                   data={data}
-                  toc={docsToc}
+                  toc={docs && docs.toc}
                 />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
@@ -132,7 +134,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
           content={{ className: `Page__content p-${padding}` }}
           type={type}
           data={data}
-          toc={docsToc}
+          toc={docs && docs.toc}
         />
       </ScrollContainerWrapper>
     );
