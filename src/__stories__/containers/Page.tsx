@@ -13,7 +13,16 @@ export const darkMode = () => boolean('dark mode', false);
 export const pageKnobs = (): IPage => ({
   srn: text('srn', 'sl/stoplight/personal-space/reference/todos/openapi.json/paths/~1todos/get', 'Page'),
   version: text('version', '', 'Page'),
-  toc: boolean('toc', true, 'Page'),
+  docs: {
+    className: text('className', '', 'Page.Docs'),
+    toc: {
+      disabled: boolean('toc.disabled', false, 'Page.Docs.Toc'),
+      className: text('toc.className', '', 'Page.Docs.Toc'),
+    },
+    content: {
+      className: text('content.className', '', 'Page.Docs.Content'),
+    },
+  },
   scrollInnerContainer: boolean('scrollInnerContainer', true, 'Page'),
 });
 
