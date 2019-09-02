@@ -56,7 +56,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   }, [srn]);
 
   return (
-    <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end', className)}>
+    <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end h-full', className)}>
       <div className="w-full">
         <ScrollContainer>
           <div className={cn('TableOfContents__inner ml-auto', `py-${padding}`)}>

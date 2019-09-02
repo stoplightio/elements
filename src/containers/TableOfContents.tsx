@@ -26,5 +26,5 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn
     return <>Not Found</>;
   }
 
-  return <TableOfContentsComponent className={className} items={data.items} padding={padding} />;
+  return <TableOfContentsComponent className={className} items={data.items} padding={padding} srn={srn} />;
 };
