@@ -1887,13 +1887,13 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "5.2.6"
 
-"@stoplight/markdown-viewer@^3.5.6":
-  version "3.5.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.5.6.tgz#8dfe395c13337ebaa5cd2beafb75f98057404703"
-  integrity sha512-lXHqFW3Cv39opcBjejO0E2uAlS/PQZXxOLhCRF7lQSjNQ4d2gT/8yPVx00yjUDOEn7afDyOWMlNtWcuaGIbcfg==
+"@stoplight/markdown-viewer@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.6.0.tgz#033c3ea2bc1222ff2845dd6e2c6a4d96f8b5242e"
+  integrity sha512-dY9bBqB4nIfjSIioq2YFAd3oIXD3i7SIkiAbN5oMeIRXSZW8qREft1KW+8FLU7zkE650F4Nf0HA2vtKrRdE0wQ==
   dependencies:
     "@stoplight/json" "^3.0"
-    "@stoplight/markdown" "^2.4.0"
+    "@stoplight/markdown" "^2.4.1"
     "@stoplight/types" "^10.0.1"
     classnames "^2"
     react-error-boundary "^1"
@@ -1901,10 +1901,10 @@
     remark-slug "^5.1.2"
     unified "^8.3.2"
 
-"@stoplight/markdown@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.4.0.tgz#8e965b2d841f48ad7ca356f3ce3fa2ca73658ffe"
-  integrity sha512-b4FliTtoHeHCgtIxqjGt+ONZrcRE41g3/MO7w58aejmNiKLKKq5yXkxo1ds25pdyoK+0XKwvy4ZVmNewmHVy4g==
+"@stoplight/markdown@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.4.1.tgz#4c9d03bbd41470333bc802c4e02afca354c6799b"
+  integrity sha512-7BTOaz5XU5HMGmK8cONxI9AIK1EoeIvANwvG4ZXYnBDj5LZhPQGJGdk/h5OTyggUrl4FtbEk0H/xLSzNjFhrhQ==
   dependencies:
     js-yaml "^3.13"
     lodash "^4.17.15"
@@ -15613,7 +15613,7 @@ unist-util-remove@^1.0.0:
   dependencies:
     unist-util-is "^3.0.0"
 
-unist-util-select@~2.0:
+unist-util-select@^2.0.2, unist-util-select@~2.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/unist-util-select/-/unist-util-select-2.0.2.tgz#cb2774b599695172e7b60a8b5f50793e418f7ea6"
   integrity sha512-Yv5Z5ShMxv7Z9Dw175tKvOiRVXV4FrMHG778DSD9Z0jALgb3wAx9DoeInr3200QlYp71rYUXzzJdCb76xKdrCw==

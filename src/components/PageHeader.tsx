@@ -1,12 +1,14 @@
 import { NodeType } from '@stoplight/types';
 import { Button, Icon, Menu, MenuItem, Popover, Position } from '@stoplight/ui-kit';
+import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import * as React from 'react';
+
 import { HostContext } from '../containers/Provider';
 import { Method } from './HttpOperation/Method';
 import { Path } from './HttpOperation/Path';
 import { VersionSelect } from './VersionSelect';
 
-export interface IPageHeader {
+export interface IPageHeader extends IErrorBoundary {
   type: NodeType;
   name: string;
   data: any;
@@ -17,7 +19,7 @@ export interface IPageHeader {
   className?: string;
 }
 
-export const PageHeader: React.FunctionComponent<IPageHeader> = ({
+export const ElementPageHeader: React.FunctionComponent<IPageHeader> = ({
   type,
   name,
   srn,
@@ -66,3 +68,5 @@ export const PageHeader: React.FunctionComponent<IPageHeader> = ({
     </div>
   );
 };
+
+export const PageHeader = withErrorBoundary<IPageHeader>(ElementPageHeader, ['data'], 'ElementPageHeader');

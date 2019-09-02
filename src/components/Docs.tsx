@@ -7,23 +7,37 @@ import {
   ICodeAnnotations,
   IComponentMappingProps,
   MarkdownViewer,
+  useMarkdownTree,
 } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { ComponentsContext } from '../containers/Provider';
+import { useComputePageToc } from '../hooks/useComputePageToc';
 import { useResolver } from '../hooks/useResolver';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
+import { PageToc } from './PageToc';
 
 export interface IDocs {
   type: NodeType | 'json_schema';
   data: any;
+  className?: string;
+  toc?: IDocsToc;
+  content?: IDocsContent;
+}
 
+export interface IDocsToc {
+  className?: string;
+  disabled?: boolean;
+}
+
+export interface IDocsContent {
   className?: string;
 }
 
-export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) => {
+export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, toc, content = {} }) => {
   const components = useComponents();
 
   let markdown = 'No content';
@@ -39,7 +53,16 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className }) 
     markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```\n';
   }
 
-  return <MarkdownViewer className={className} markdown={markdown} components={components} />;
+  const tree = useMarkdownTree(markdown);
+  const headings = useComputePageToc(tree);
+  const shouldDisplayToc = !(toc && toc.disabled) && headings && headings.length;
+
+  return (
+    <div className={cn(className, 'flex')}>
+      <MarkdownViewer className={content.className} markdown={tree} components={components} />
+      {shouldDisplayToc && <PageToc headings={headings} className={toc!.className || 'p-4 pt-10 h-0'} />}
+    </div>
+  );
 };
 
 const JSV_MAX_ROWS = 50;

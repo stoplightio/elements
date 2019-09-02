@@ -2,6 +2,7 @@ import { NonIdealState } from '@blueprintjs/core';
 import { safeParse } from '@stoplight/json';
 import cn from 'classnames';
 import * as React from 'react';
+import { IDocs } from '../components/Docs';
 import { Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
 import { useNodeInfo } from '../hooks/useNodeInfo';
@@ -13,6 +14,8 @@ export interface IPage {
   version?: string;
   className?: string;
   padding?: string;
+
+  docs?: Pick<IDocs, 'className' | 'toc' | 'content'>;
 }
 
 export const Page: React.FunctionComponent<IPage> = ({
@@ -20,7 +23,8 @@ export const Page: React.FunctionComponent<IPage> = ({
   version: semver,
   className,
   scrollInnerContainer,
-  padding = '10',
+  padding = '12',
+  docs,
 }) => {
   const { isLoading, error, data } = useNodeInfo(srn, semver);
   const containerClassName = cn(className, 'flex flex-col h-full');
@@ -67,6 +71,7 @@ export const Page: React.FunctionComponent<IPage> = ({
       data={safeParse(nodeData) || nodeData}
       scrollInnerContainer={scrollInnerContainer}
       padding={padding}
+      docs={docs}
     />
   );
 };
