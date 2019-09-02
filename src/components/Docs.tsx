@@ -7,6 +7,7 @@ import {
   ICodeAnnotations,
   IComponentMappingProps,
   MarkdownViewer,
+  processMarkdownTree,
 } from '@stoplight/markdown-viewer';
 import { Builder } from '@stoplight/markdown/builder';
 import { NodeType } from '@stoplight/types';
@@ -73,12 +74,13 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
     }
   }
 
-  const headings = useComputePageToc(markdown.root);
+  const tree = processMarkdownTree(markdown.root);
+  const headings = useComputePageToc(tree);
   const shouldDisplayToc = !(toc && toc.disabled) && headings && headings.length;
 
   return (
     <div className={cn(className, 'flex')}>
-      <MarkdownViewer className={content.className} markdown={markdown.root} components={components} />
+      <MarkdownViewer className={content.className} markdown={tree} components={components} />
       {shouldDisplayToc && <PageToc headings={headings} className={(toc && toc.className) || 'p-4 pt-10 h-0'} />}
     </div>
   );
