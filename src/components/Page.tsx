@@ -95,8 +95,8 @@ const ElementPage: React.FunctionComponent<IPage> = ({
                   className={docs && docs.className}
                   content={
                     docs
-                      ? { ...docs.content, className: `Page__content p-${padding}` }
-                      : { className: `Page__content p-${padding}` }
+                      ? { ...docs.content, className: `Page__content p-${padding} w-full` }
+                      : { className: `Page__content p-${padding} w-full` }
                   }
                   type={type}
                   data={data}
@@ -131,7 +131,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
 
         <Docs
           className={docs && docs.className}
-          content={{ className: `Page__content p-${padding}` }}
+          content={{ className: `Page__content p-${padding} w-full` }}
           type={type}
           data={data}
           toc={docs && docs.toc}
