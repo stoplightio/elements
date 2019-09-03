@@ -60,7 +60,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
   return (
     <div className={cn(className, 'flex')}>
       <MarkdownViewer className={content.className} markdown={tree} components={components} />
-      {shouldDisplayToc && <PageToc headings={headings} className={toc!.className || 'p-4 pt-10 h-0'} />}
+      {shouldDisplayToc && <PageToc headings={headings} className={(toc && toc.className) || 'p-4 pt-10 h-0'} />}
     </div>
   );
 };
