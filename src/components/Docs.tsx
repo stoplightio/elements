@@ -78,6 +78,10 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
   const headings = useComputePageToc(tree);
   const shouldDisplayToc = !(toc && toc.disabled) && headings && headings.length;
 
+  if (markdown.root.children.length === 0) {
+    markdown.addMarkdown('No content');
+  }
+
   return (
     <div className={cn(className, 'flex')}>
       <MarkdownViewer className={content.className} markdown={tree} components={components} />
