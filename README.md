@@ -1,8 +1,10 @@
-# Elements
+# @stoplight/elements
+[![npm version](https://badge.fury.io/js/%40stoplight%2Felements.svg)](https://badge.fury.io/js/%40stoplight%2Felements) [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplightio.github.io/elements)
+
+UI components for composing beautiful developer documentation
 
 <!-- BADGES -->
 
-[![npm version](https://badge.fury.io/js/%40stoplight%elements.svg)](https://badge.fury.io/js/%40stoplight%elements)
 
 ### Installation
 
