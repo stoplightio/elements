@@ -7,8 +7,9 @@ import {
   ICodeAnnotations,
   IComponentMappingProps,
   MarkdownViewer,
-  useMarkdownTree,
+  processMarkdownTree,
 } from '@stoplight/markdown-viewer';
+import { Builder } from '@stoplight/markdown/builder';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
@@ -40,27 +41,51 @@ export interface IDocsContent {
 export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, toc, content = {} }) => {
   const components = useComponents();
 
-  let markdown = 'No content';
+  const markdown = new Builder();
+
   if (type === NodeType.Article) {
-    markdown = data;
+    markdown.addMarkdown(data);
   } else if (type === NodeType.Model) {
     const { description, ...schema } = data;
-    markdown = description ? description + '\n\n' : '';
-    markdown += '```json' + ` ${type}\n` + safeStringify(schema, undefined, 4) + '\n```\n';
-  } else if (type === NodeType.HttpOperation) {
-    markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```\n\n';
+    if (description) {
+      markdown.addMarkdown(`${description}\n\n`);
+    }
+
+    markdown.addChild({
+      type: 'code',
+      lang: 'json',
+      meta: 'model',
+      value: safeStringify(schema, undefined, 4),
+    });
+
+    markdown.addMarkdown('\n');
   } else {
-    markdown = '```json' + ` ${type}\n` + safeStringify(data, undefined, 4) + '\n```\n';
+    markdown.addChild({
+      type: 'code',
+      lang: 'json',
+      meta: type,
+      value: safeStringify(data, undefined, 4),
+    });
+
+    markdown.addMarkdown('\n');
+
+    if (type === NodeType.HttpOperation) {
+      markdown.addMarkdown('\n');
+    }
   }
 
-  const tree = useMarkdownTree(markdown);
+  const tree = processMarkdownTree(markdown.root);
   const headings = useComputePageToc(tree);
-  const shouldDisplayToc = !(toc && toc.disabled) && headings && headings.length;
+  const shouldDisplayToc = !(toc && toc.disabled) && headings && headings.length > 0;
+
+  if (markdown.root.children.length === 0) {
+    markdown.addMarkdown('No content');
+  }
 
   return (
-    <div className={cn(className, 'flex')}>
+    <div className={cn(className, 'flex w-full')}>
       <MarkdownViewer className={content.className} markdown={tree} components={components} />
-      {shouldDisplayToc && <PageToc headings={headings} className={(toc && toc.className) || 'p-4 pt-10 h-0'} />}
+      {shouldDisplayToc ? <PageToc headings={headings} className={(toc && toc.className) || 'p-4 pt-10 h-0'} /> : null}
     </div>
   );
 };

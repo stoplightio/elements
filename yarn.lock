@@ -1837,19 +1837,19 @@
     urijs "~1.19.1"
     vscode-uri "^2.0.3"
 
-"@stoplight/json-schema-viewer@^2.7.1":
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.7.1.tgz#9de8b5d18ecb2e3f5f006551dbdb88ef53b9967e"
-  integrity sha512-EC6IM/ZchYLVHB1zI0Hr/56HppemWUpDcmQNiz73pmi1RtyH+YlwgB8zQgOLV+FPzw4EYqvqLXWwdxyJGQdZQA==
+"@stoplight/json-schema-viewer@^2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.8.0.tgz#31adf72b5b698020163f1ec7cff3b582c152a276"
+  integrity sha512-RJKTNwIt9b3ERn1kXnx6H9X4VflRdIX+5LMotw3UdX9wWksK5btMIJlqg/PnDG2wadW0OlTva8n+ZuElhsrn5Q==
   dependencies:
-    "@stoplight/json" "3.0.3"
+    "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
     json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@3.0.3", "@stoplight/json@^3.0":
+"@stoplight/json@^3.0":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.0.3.tgz#8ea6614e6704940ce154276574578d4d9d7adf34"
   integrity sha512-OiPBzSxsDnc32pQ20+68lTHqGhIhNP/LCrOI6cM2Y/PEDW1KwjhWcF3rjJtIgpObuQeMhCKk3djxHZaB/MzNDA==
@@ -1887,10 +1887,10 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "5.2.6"
 
-"@stoplight/markdown-viewer@^3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.6.0.tgz#033c3ea2bc1222ff2845dd6e2c6a4d96f8b5242e"
-  integrity sha512-dY9bBqB4nIfjSIioq2YFAd3oIXD3i7SIkiAbN5oMeIRXSZW8qREft1KW+8FLU7zkE650F4Nf0HA2vtKrRdE0wQ==
+"@stoplight/markdown-viewer@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.7.0.tgz#63d157d58e5a22b9e31b17a0f38c6d7772b8c361"
+  integrity sha512-qsOpzegYHx6yTKCqWuODHvIhtWNdUHCC/etmUxzqyFjVITyy6mUdRMmF5u/OgyQixztE6Cj3NMchRqSZNovsnA==
   dependencies:
     "@stoplight/json" "^3.0"
     "@stoplight/markdown" "^2.4.1"
@@ -1905,6 +1905,20 @@
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.4.1.tgz#4c9d03bbd41470333bc802c4e02afca354c6799b"
   integrity sha512-7BTOaz5XU5HMGmK8cONxI9AIK1EoeIvANwvG4ZXYnBDj5LZhPQGJGdk/h5OTyggUrl4FtbEk0H/xLSzNjFhrhQ==
+  dependencies:
+    js-yaml "^3.13"
+    lodash "^4.17.15"
+    mdast-util-to-string "~1.0"
+    remark-frontmatter "~1.3"
+    remark-parse "~7.0.0"
+    remark-stringify "~7.0.1"
+    unified "~8.3.2"
+    unist-util-select "~2.0"
+
+"@stoplight/markdown@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.5.0.tgz#46e1f43ea79e4553a904907102684d20a1c7f233"
+  integrity sha512-vdaoUrK4qZLAIzG9ixOfF+YBGHK6Pbo6fmulNKiB5W8H1PKnYYSaPZmRyrBUX4a+xMsMV5L7Vt5Z0CPE6L98nA==
   dependencies:
     js-yaml "^3.13"
     lodash "^4.17.15"
