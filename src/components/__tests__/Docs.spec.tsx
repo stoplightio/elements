@@ -6,6 +6,10 @@ import 'jest-enzyme';
 import * as React from 'react';
 import { Docs } from '../Docs';
 
+jest.mock('@rehooks/component-size', () => ({
+  default: () => ({ width: 1200 }),
+}));
+
 jest.mock('@stoplight/json-schema-viewer', () => ({
   JsonSchemaViewer: () => <div />,
 }));
