@@ -1,4 +1,7 @@
+import 'resize-observer-polyfill';
+
 import { IconName } from '@blueprintjs/core';
+import useComponentSize from '@rehooks/component-size';
 import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
@@ -12,8 +15,8 @@ import {
 import { Builder } from '@stoplight/markdown/builder';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
+import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
-
 import { ComponentsContext } from '../containers/Provider';
 import { useComputePageToc } from '../hooks/useComputePageToc';
 import { useResolver } from '../hooks/useResolver';
@@ -23,30 +26,20 @@ import { PageToc } from './PageToc';
 
 export interface IDocs {
   type: NodeType | 'json_schema';
-  data: any;
+  data: unknown;
   className?: string;
-  toc?: IDocsToc;
-  content?: IDocsContent;
+  padding?: string;
 }
 
-export interface IDocsToc {
-  className?: string;
-  disabled?: boolean;
-}
-
-export interface IDocsContent {
-  className?: string;
-}
-
-export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, toc, content = {} }) => {
+export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) => {
   const components = useComponents();
 
   const markdown = new Builder();
 
   if (type === NodeType.Article) {
-    markdown.addMarkdown(data);
+    markdown.addMarkdown((data || '') as string);
   } else if (type === NodeType.Model) {
-    const { description, ...schema } = data;
+    const { description, ...schema } = (data || {}) as JSONSchema4;
     if (description) {
       markdown.addMarkdown(`${description}\n\n`);
     }
@@ -76,16 +69,19 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, className, to
 
   const tree = processMarkdownTree(markdown.root);
   const headings = useComputePageToc(tree);
-  const shouldDisplayToc = !(toc && toc.disabled) && headings && headings.length > 0;
+  const pageDocsRef = React.useRef<HTMLDivElement | null>(null);
+  const { width } = useComponentSize(pageDocsRef);
+  const showToc = width >= 1000;
 
   if (markdown.root.children.length === 0) {
     markdown.addMarkdown('No content');
   }
 
   return (
-    <div className={cn(className, 'flex w-full')}>
-      <MarkdownViewer className={content.className} markdown={tree} components={components} />
-      {shouldDisplayToc ? <PageToc headings={headings} className={(toc && toc.className) || 'p-4 pt-10 h-0'} /> : null}
+    <div className="Page__content flex w-full" ref={pageDocsRef}>
+      <MarkdownViewer className={`flex-1 p-${padding}`} markdown={tree} components={components} />
+
+      {showToc && <PageToc className={`Page__toc h-0 px-4 pt-${padding}`} headings={headings} />}
     </div>
   );
 };

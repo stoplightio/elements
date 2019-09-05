@@ -2,15 +2,19 @@ import { IHeading, IRoot, ITextNode } from '@stoplight/markdown';
 import * as React from 'react';
 import { Parent } from 'unist';
 
-import { IPageTocHeading } from '../components/PageToc';
-
 const selectAll = require('unist-util-select').selectAll;
+
+export interface IPageTocHeading {
+  title: string;
+  depth: number;
+  id?: string;
+}
 
 export function useComputePageToc(tree: IRoot) {
   return React.useMemo(() => computePageToc(tree), [tree]);
 }
 
-export function computePageToc(tree: IRoot) {
+export function computePageToc(tree: IRoot): IPageTocHeading[] {
   return selectAll(':root > [type=heading]', tree)
     .map((heading: IHeading) => ({
       title: findTitle(heading),
