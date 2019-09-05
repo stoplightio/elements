@@ -4,7 +4,7 @@ $PageContent: 1000px;
 $PageToc: 200px;
 
 .Page {
-  &__content {
+  &__docs {
     max-width: calc(#{$PageContent} + #{$PageToc});
   }
 
@@ -20,7 +20,7 @@ $PageToc: 200px;
     width: $PageToc;
   }
 
-  .MarkdownViewer {
+  .__content {
     max-width: $PageContent;
   }
 
