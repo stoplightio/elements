@@ -11,7 +11,7 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = (): IHub => ({
-  srn: text('srn', 'gh/stoplightio/spectral/docs/cli.md', 'Hub'),
+  srn: text('srn', 'gh/stoplightio/studio/docs/Documentation/stoplight-flavored-markdown.md', 'Hub'),
 });
 
 storiesOf('containers/Hub', module)

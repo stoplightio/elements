@@ -1,10 +1,10 @@
-import { IHttpOperation, NodeType } from '@stoplight/types';
 import { object, withKnobs } from '@storybook/addon-knobs';
-import { boolean, text } from '@storybook/addon-knobs/react';
+import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
-import { IPageTocHeading, PageToc } from '../../components/PageToc';
+import { PageToc } from '../../components/PageToc';
+import { IPageTocHeading } from '../../hooks/useComputePageToc';
 
 const itemsFixture: IPageTocHeading[] = require('../../__fixtures__/page-toc.json');
 
