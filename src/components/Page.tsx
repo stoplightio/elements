@@ -6,7 +6,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { Changelog } from './Changelog';
-import { Docs, IDocs } from './Docs';
+import { Docs } from './Docs';
 import { PageHeader } from './PageHeader';
 import { TryIt } from './TryIt';
 
@@ -15,7 +15,6 @@ export interface IPage extends IErrorBoundary {
   data: any;
 
   name?: string;
-  docs?: Pick<IDocs, 'className' | 'toc' | 'content'>;
   srn?: string;
   version?: string;
   versions?: string[];
@@ -36,7 +35,6 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   className,
   padding = '12',
   shadows,
-  docs,
   scrollInnerContainer,
 }) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -91,17 +89,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
           {nodeTabs.includes('Docs') && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
-                <Docs
-                  className={docs && docs.className}
-                  content={
-                    docs
-                      ? { ...docs.content, className: `Page__content p-${padding} w-full` }
-                      : { className: `Page__content p-${padding} w-full` }
-                  }
-                  type={type}
-                  data={data}
-                  toc={docs && docs.toc}
-                />
+                <Docs padding={padding} type={type} data={data} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
@@ -129,13 +117,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
       <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows={shadows}>
         {pageHeader}
 
-        <Docs
-          className={docs && docs.className}
-          content={{ className: `Page__content p-${padding} w-full` }}
-          type={type}
-          data={data}
-          toc={docs && docs.toc}
-        />
+        <Docs padding={padding} type={type} data={data} />
       </ScrollContainerWrapper>
     );
   }

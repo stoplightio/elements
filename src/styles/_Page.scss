@@ -1,15 +1,27 @@
 @import '~@stoplight/ui-kit/styles/blueprint/variables';
 
+$PageContent: 1000px;
+$PageToc: 200px;
+
 .Page {
-  &__header,
-  &__content {
-    max-width: 1000px;
+  &__docs {
+    max-width: calc(#{$PageContent} + #{$PageToc});
   }
 
   &__header {
+    max-width: $PageContent;
+
     .HttpOperation__Path {
       height: 30px;
     }
+  }
+
+  &__toc {
+    width: $PageToc;
+  }
+
+  .__content {
+    max-width: $PageContent;
   }
 
   .#{$ns}-dark & {
