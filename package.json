@@ -46,7 +46,7 @@
     "@rehooks/component-size": "^1.0.3",
     "@stoplight/json": "^3.1.1",
     "@stoplight/json-ref-resolver": "^2.2.0",
-    "@stoplight/json-schema-viewer": "^2.8.0",
+    "@stoplight/json-schema-viewer": "^2.9.0",
     "@stoplight/markdown": "^2.5.0",
     "@stoplight/markdown-viewer": "^3.7.0",
     "@stoplight/tree-list": "^4.8.0",
