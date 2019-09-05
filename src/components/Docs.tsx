@@ -27,17 +27,19 @@ import { PageToc } from './PageToc';
 export interface IDocs {
   type: NodeType | 'json_schema';
   data: unknown;
-  className?: string;
   padding?: string;
 }
 
 export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) => {
   const components = useComponents();
+  const pageDocsRef = React.useRef<HTMLDivElement | null>(null);
+  const { width } = useComponentSize(pageDocsRef);
+  const showToc = width >= 1000;
 
   const markdown = new Builder();
 
   if (type === NodeType.Article) {
-    markdown.addMarkdown((data || '') as string);
+    markdown.addMarkdown(String(data || ''));
   } else if (type === NodeType.Model) {
     const { description, ...schema } = (data || {}) as JSONSchema4;
     if (description) {
@@ -69,9 +71,6 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) =>
 
   const tree = processMarkdownTree(markdown.root);
   const headings = useComputePageToc(tree);
-  const pageDocsRef = React.useRef<HTMLDivElement | null>(null);
-  const { width } = useComponentSize(pageDocsRef);
-  const showToc = width >= 1000;
 
   if (markdown.root.children.length === 0) {
     markdown.addMarkdown('No content');
