@@ -23,7 +23,7 @@ import { HttpService } from './HttpService';
 import { PageToc } from './PageToc';
 
 export interface IDocs {
-  type: NodeType | 'json_schema';
+  type: NodeType | 'json_schema' | 'http';
   data: any;
   className?: string;
   toc?: IDocsToc;
@@ -135,7 +135,7 @@ function useComponents() {
         const { node, defaultComponents } = props;
 
         const nodeType = node.annotations && node.annotations.type ? node.annotations.type : node.meta;
-        if (['json_schema', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService, 'http'].includes(nodeType)) {
+        if (['json_schema', 'http', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService].includes(nodeType)) {
           return <MarkdownViewerCode key={key} type={nodeType} value={node.value} annotations={node.annotations} />;
         }
 
