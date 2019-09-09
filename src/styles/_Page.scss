@@ -1,4 +1,5 @@
 @import '~@stoplight/ui-kit/styles/blueprint/variables';
+@import '~@stoplight/ui-kit/styles/components/Code/_base';
 
 .Page {
   &__header,
@@ -29,6 +30,21 @@
     .#{$ns}-code-editor {
       // Don't add margin when inside a tab panel
       margin: 0;
+    }
+  }
+}
+
+.HttpRequest__RequestEditor,
+.HttpRequest__ResponseViewer {
+  .#{$ns}-code-editor {
+    @extend .#{$ns}-code-editor;
+    margin: 0;
+    padding: 0;
+  }
+  .#{$ns}-dark & {
+    .#{$ns}-code-editor {
+      @extend .#{$ns}-code-editor;
+      background-color: initial;
     }
   }
 }

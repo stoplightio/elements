@@ -9,8 +9,8 @@ const httpRequest: IHttpRequest = require('../../__fixtures__/http-request.json'
 import { Page } from '../../components/Page';
 
 export const knobs = () => ({
-  request: object('httpRequest', httpRequest, 'Page'),
   darkMode: boolean('dark mode', false),
+  request: object('httpRequest', httpRequest),
 });
 
 storiesOf('components/HttpRequest', module)
