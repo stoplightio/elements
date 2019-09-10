@@ -1,11 +1,10 @@
 {
   "method": "get",
-  "url": "/test",
-  "baseUrl": "http://localhost:9001",
-  "headers": {
-    "testHeader": "testHeaderValue"
-  },
+  "url": "/gifs/search",
+  "baseUrl": "http://api.giphy.com/v1",
+  "headers": {},
   "query": {
-    "testQueryParam": ["testQueryValue"]
+    "api_key": ["dc6zaTOxFJmzC"],
+    "limit": ["1"]
   }
 }
