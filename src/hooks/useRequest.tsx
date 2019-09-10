@@ -1,4 +1,6 @@
 import { safeStringify } from '@stoplight/json';
+import { RequestMaker } from '@stoplight/request-maker';
+import { IHttpOperation } from '@stoplight/types';
 import { AxiosRequestConfig } from 'axios';
 import hash from 'object-hash';
 import * as React from 'react';
@@ -22,6 +24,21 @@ export type UseRequestState<T> = {
     message: string;
   };
 };
+
+// Maps a hash of the operation to the request maker object
+const RequestMakers = new Map<string, RequestMaker>();
+
+export function useRequestMaker(operation: IHttpOperation): RequestMaker {
+  const key = getOperationKey(operation);
+
+  let requestMaker = RequestMakers.get(key);
+  if (!requestMaker) {
+    requestMaker = new RequestMaker({ operation });
+    RequestMakers.set(key, requestMaker);
+  }
+
+  return requestMaker;
+}
 
 // Maps a hash of the request to the response data
 const RequestCache = new Map<string, any>();
@@ -103,4 +120,20 @@ function createRequest(request: AxiosRequestConfig): IRequestCacheEnty {
       return prev.current;
     }
   }, [request]);
+}
+
+function getOperationKey(operation: IHttpOperation): string {
+  const prev = React.useRef<string | null>(null);
+
+  return React.useMemo(() => {
+    // Create a hash of the operation so we can ensure reference equality
+    const key = hash.MD5(operation);
+
+    if (prev.current === key) {
+      return prev.current;
+    } else {
+      prev.current = key;
+      return prev.current;
+    }
+  }, [operation]);
 }
