@@ -1843,38 +1843,18 @@
     vscode-uri "^2.0.3"
 
 "@stoplight/json-schema-viewer@^2.9.2":
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.9.2.tgz#de641c7e14c731824102b09fa763e68bd668dd36"
-  integrity sha512-ubCYQbAKpVFcP72z/v2f3SBuqtwJpyi+1U4ui7mC3nuASZcWcu1NeYl2GpWeukNQLj6dHkRp7GFTdGAiNGueTA==
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.10.0.tgz#2ef74bf992adc29401aac4764fec19c57f53b41a"
+  integrity sha512-/JvP3qcmhgFC1g225lmCfP9ZJ8usk4q9kfUkgYjApV9KgEXMezFrPZ+BZkgBeTGCMd/ySGSdxNdh6npfRAZNhg==
   dependencies:
     "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
-    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
+    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.0":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.0.3.tgz#8ea6614e6704940ce154276574578d4d9d7adf34"
-  integrity sha512-OiPBzSxsDnc32pQ20+68lTHqGhIhNP/LCrOI6cM2Y/PEDW1KwjhWcF3rjJtIgpObuQeMhCKk3djxHZaB/MzNDA==
-  dependencies:
-    "@stoplight/types" "^10.0.1"
-    jsonc-parser "~2.1"
-    lodash "^4.17.15"
-    safe-stable-stringify "^1.1"
-
-"@stoplight/json@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.1.0.tgz#a03bd8d065a62eb00cd42cf003df431f23d7a5dd"
-  integrity sha512-8Fev+RW+UJNYtcpDgvQPH6MuHEf5cr95KnAyMBNNXlVIeRAIJqYK3r5FWZv4/KFH08ozQy4QpMM9MdsR8J3cZQ==
-  dependencies:
-    "@stoplight/types" "^11.0.0"
-    jsonc-parser "~2.1.1"
-    lodash "^4.17.15"
-    safe-stable-stringify "^1.1"
-
-"@stoplight/json@^3.1.1":
+"@stoplight/json@^3.0", "@stoplight/json@^3.1.0", "@stoplight/json@^3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.1.1.tgz#531d966a62247bf2ab1e8a06a685fa62e36cf890"
   integrity sha512-DK2ufmnPvfW9Mv0q4DYtldjicTTcBY+j4kiEUOEmc9hL+mzMDV08+5ix4tmPtheUDZH6OtEqEmGcf8ZKCHFbpg==
@@ -9248,10 +9228,10 @@ json-schema-compare@^0.2.2:
   dependencies:
     lodash "^4.17.4"
 
-"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
+"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
   uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
-  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
@@ -9290,11 +9270,6 @@ json5@^1.0.1:
   integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
   dependencies:
     minimist "^1.2.0"
-
-jsonc-parser@~2.1:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/jsonc-parser/-/jsonc-parser-2.1.0.tgz#eb0d0c7a3c33048524ce3574c57c7278fb2f1bf3"
-  integrity sha512-n9GrT8rrr2fhvBbANa1g+xFmgGK5X91KFeDwlKQ3+SJfmH5+tKv/M/kahx/TXOMflfWHKGKqKyfHQaLKTNzJ6w==
 
 jsonc-parser@~2.1.1:
   version "2.1.1"
