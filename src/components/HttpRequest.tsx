@@ -4,6 +4,7 @@ import {
   RequestEditor,
   RequestMaker,
   RequestMakerProvider,
+  ResponseStatus,
   ResponseViewer,
   SendButton,
 } from '@stoplight/request-maker';
@@ -22,15 +23,17 @@ export const HttpRequest: React.FunctionComponent<IHttpRequestProps> = ({ reques
   return (
     <RequestMakerProvider value={store}>
       <div className={className}>
-        <ControlGroup className="mb-3">
+        <ControlGroup>
           <SendButton className="HttpRequest__SendButton w-40" intent="primary" icon="play" />
           <MethodSelector className="HttpRequest__MethodSelector" />
           <ActionBar className="HttpRequest__ActionBar flex-auto" />
         </ControlGroup>
 
-        <RequestEditor className="HttpRequest__RequestEditor mb-3" />
+        <RequestEditor className="HttpRequest__RequestEditor mt-6" />
 
-        <ResponseViewer className="HttpRequest__ResponseViewer" />
+        <ResponseStatus className="HttpRequest__ResponseStatus mt-6" />
+
+        <ResponseViewer className="HttpRequest__ResponseViewer mt-6" />
       </div>
     </RequestMakerProvider>
   );
