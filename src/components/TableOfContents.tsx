@@ -124,9 +124,11 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
     return (
       <Drawer isOpen={openDrawer} onClose={() => onCloseDrawer()} position="left" size="330px">
         <div className="flex flex-1 flex-col bg-gray-1 dark:bg-transparent">
-          <Button className="flex justify-start ml-10" icon={'arrow-left'} minimal onClick={() => onCloseDrawer()}>
-            {title ? title : 'Stoplight'}
-          </Button>
+          <div className="border-b dark:border-lighten-4 pt-10 pb-4">
+            <Button className="flex justify-start ml-10" icon={'arrow-left'} minimal onClick={() => onCloseDrawer()}>
+              {title ? title : 'Stoplight'}
+            </Button>
+          </div>
           <div className="h-full flex justify-end">{comp}</div>
         </div>
       </Drawer>
