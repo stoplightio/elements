@@ -38,6 +38,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   padding = '10',
   title,
   openDrawer = false,
+  // tslint:disable-next-line: no-empty
   onCloseDrawer = () => {},
 }) => {
   const hasContents = _contents && _contents.length;
