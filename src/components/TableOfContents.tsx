@@ -1,9 +1,11 @@
 import { Icon } from '@blueprintjs/core';
+import { Button, Drawer } from '@blueprintjs/core';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
 import { ComponentsContext } from '../containers/Provider';
 import { useComputeToc } from '../hooks/useComputeToc';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { IContentsNode, IProjectNode } from '../types';
 
 export interface ITableOfContents {
@@ -19,6 +21,13 @@ export interface ITableOfContents {
   // Padding that will be used for (default: 10)
   padding?: string;
   className?: string;
+
+  // Title of project
+  title?: string;
+
+  // Controls for the drawer functionality on mobile
+  openDrawer?: boolean;
+  onCloseDrawer?: () => void;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
@@ -27,6 +36,9 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   srn,
   className,
   padding = '10',
+  title,
+  openDrawer = false,
+  onCloseDrawer = () => {},
 }) => {
   const hasContents = _contents && _contents.length;
 
@@ -55,7 +67,10 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
     }
   }, [srn]);
 
-  return (
+  // Controls mobile functionality
+  const isMobile = useIsMobile();
+
+  const comp = (
     <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end h-full', className)}>
       <div className="w-full">
         <ScrollContainer>
@@ -104,6 +119,21 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
       </div>
     </div>
   );
+
+  if (isMobile) {
+    return (
+      <Drawer isOpen={openDrawer} onClose={() => onCloseDrawer()} position="left" size="330px">
+        <div className="flex flex-1 flex-col bg-gray-1 dark:bg-transparent">
+          <Button className="flex justify-start ml-10" icon={'arrow-left'} minimal onClick={() => onCloseDrawer()}>
+            {title ? title : 'Stoplight'}
+          </Button>
+          <div className="h-full flex justify-end">{comp}</div>
+        </div>
+      </Drawer>
+    );
+  }
+
+  return comp;
 };
 
 interface ITableOfContentsItem {
