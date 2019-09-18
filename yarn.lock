@@ -1960,8 +1960,10 @@
     caseless "^0.12.0"
     tslib "^1.9.0"
 
-"@stoplight/request-maker@file:.yalc/@stoplight/request-maker":
-  version "0.0.0-03c2afac"
+"@stoplight/request-maker@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.9.0.tgz#280f1ee517d8e1726e3e2aa386edb05c868cba9a"
+  integrity sha512-c/ktjyh5SJSOhBeDGbeaVBY6uhA+bOc4/U/xfTm5loF/qLwofHILXhpJwZDCr402bcA0jqm21COOqvNAiVHYSw==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/tree-list" "^4.3.1"
