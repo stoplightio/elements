@@ -8,44 +8,41 @@ export interface IPageToc {
   headings: IPageTocHeading[];
   title?: string;
   className?: string;
+  enableMobile?: boolean | number;
 }
 
-export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page' }) => {
+export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page', enableMobile = true }) => {
   if (!headings || !headings.length) return null;
 
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(enableMobile);
 
   if (isMobile) {
     return (
       <div className={cn('sticky top-0', className)}>
-        <div className="border-l border-gray-2 dark:border-lighten-4">
-          <Popover
-            target={
+        <Popover
+          target={
+            <div className="pt-6 mx-auto text-gray-5 dark:text-gray-6 flex" style={{ paddingLeft: 18 }}>
+              <Icon icon="properties" iconSize={14} className="mr-2" />
+            </div>
+          }
+          content={
+            <div>
               <div
                 className="pt-1 pb-3 text-gray-5 dark:text-gray-6 font-medium text-sm flex items-center"
                 style={{ paddingLeft: 18 }}
               >
                 <Icon icon="properties" iconSize={10} className="mr-2" />
+                {title}
               </div>
-            }
-            content={
               <div>
-                <div
-                  className="pt-1 pb-3 text-gray-5 dark:text-gray-6 font-medium text-sm flex items-center"
-                  style={{ paddingLeft: 18 }}
-                >
-                  <Icon icon="properties" iconSize={10} className="mr-2" />
-                  {title}
-                </div>
-                <div>
-                  {headings.map((heading, i) => (
-                    <TocItem key={i} depth={heading.depth} title={heading.title} id={heading.id} />
-                  ))}
-                </div>
+                {headings.map((heading, i) => (
+                  <TocItem key={i} depth={heading.depth} title={heading.title} id={heading.id} />
+                ))}
               </div>
-            }
-          />
-        </div>
+            </div>
+          }
+          position={'bottom'}
+        />
       </div>
     );
   }

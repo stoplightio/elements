@@ -1,10 +1,16 @@
 import * as React from 'react';
 
-export const useIsMobile = () => {
-  const [isMobile, setIsMobile] = React.useState(checkMobile());
+export const useIsMobile = (enableMobile: boolean | number) => {
+  const [isMobile, setIsMobile] = React.useState(checkMobile(enableMobile));
+
+  if (enableMobile === true) {
+    enableMobile = 768;
+  } else if (enableMobile === false) {
+    return false;
+  }
 
   const updateLayout = React.useCallback(() => {
-    setIsMobile(checkMobile());
+    setIsMobile(checkMobile(enableMobile));
   }, []);
 
   React.useEffect(() => {
@@ -17,4 +23,5 @@ export const useIsMobile = () => {
   return isMobile;
 };
 
-export const checkMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
+export const checkMobile = (enableMobile: boolean | number) =>
+  typeof window !== 'undefined' && window.innerWidth < enableMobile;
