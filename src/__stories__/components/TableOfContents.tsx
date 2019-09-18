@@ -75,6 +75,7 @@ const MobileStory = () => {
         title={'Mobile Support'}
         openDrawer={isOpen}
         onCloseDrawer={() => setIsOpen(false)}
+        enableDrawer={1000}
       />
     </div>
   );

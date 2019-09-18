@@ -28,6 +28,9 @@ export interface ITableOfContents {
   // Controls for the drawer functionality on mobile
   openDrawer?: boolean;
   onCloseDrawer?: () => void;
+
+  // Mobile breakpoint, default (true) is 786px, false disables Drawer
+  enableDrawer?: boolean | number;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
@@ -40,6 +43,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   openDrawer = false,
   // tslint:disable-next-line: no-empty
   onCloseDrawer = () => {},
+  enableDrawer = true,
 }) => {
   const hasContents = _contents && _contents.length;
 
@@ -68,8 +72,8 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
     }
   }, [srn]);
 
-  // Controls mobile functionality
-  const isMobile = useIsMobile();
+  let isMobile;
+  enableDrawer ? (isMobile = useIsMobile(enableDrawer)) : (isMobile = false);
 
   const comp = (
     <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end h-full', className)}>
