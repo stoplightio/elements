@@ -1,7 +1,8 @@
-import { Icon } from '@stoplight/ui-kit';
+import { Icon, Popover } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import React from 'react';
 import { IPageTocHeading } from '../hooks/useComputePageToc';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export interface IPageToc {
   headings: IPageTocHeading[];
@@ -11,6 +12,35 @@ export interface IPageToc {
 
 export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page' }) => {
   if (!headings || !headings.length) return null;
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <div className={cn('sticky top-0', className)}>
+        <div className="border-l border-gray-2 dark:border-lighten-4">
+          <Popover
+            target={
+              <div
+                className="pt-1 pb-3 text-gray-5 dark:text-gray-6 font-medium text-sm flex items-center"
+                style={{ paddingLeft: 18 }}
+              >
+                <Icon icon="properties" iconSize={10} className="mr-2" />
+                {title}
+              </div>
+            }
+            content={
+              <div>
+                {headings.map((heading, i) => (
+                  <TocItem key={i} depth={heading.depth} title={heading.title} id={heading.id} />
+                ))}
+              </div>
+            }
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={cn('sticky top-0', className)}>
@@ -24,7 +54,6 @@ export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On T
             {title}
           </div>
         )}
-
         {headings.map((heading, i) => (
           <TocItem key={i} depth={heading.depth} title={heading.title} id={heading.id} />
         ))}
