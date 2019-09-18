@@ -26,14 +26,22 @@ export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On T
                 style={{ paddingLeft: 18 }}
               >
                 <Icon icon="properties" iconSize={10} className="mr-2" />
-                {title}
               </div>
             }
             content={
               <div>
-                {headings.map((heading, i) => (
-                  <TocItem key={i} depth={heading.depth} title={heading.title} id={heading.id} />
-                ))}
+                <div
+                  className="pt-1 pb-3 text-gray-5 dark:text-gray-6 font-medium text-sm flex items-center"
+                  style={{ paddingLeft: 18 }}
+                >
+                  <Icon icon="properties" iconSize={10} className="mr-2" />
+                  {title}
+                </div>
+                <div>
+                  {headings.map((heading, i) => (
+                    <TocItem key={i} depth={heading.depth} title={heading.title} id={heading.id} />
+                  ))}
+                </div>
               </div>
             }
           />
