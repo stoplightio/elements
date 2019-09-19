@@ -72,8 +72,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
     }
   }, [srn]);
 
-  let isMobile;
-  enableDrawer ? (isMobile = useIsMobile(enableDrawer)) : (isMobile = false);
+  const isMobile = useIsMobile(enableDrawer);
 
   const comp = (
     <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end h-full', className)}>
@@ -131,7 +130,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
         <div className="flex flex-1 flex-col bg-gray-1 dark:bg-transparent">
           <div className="border-b dark:border-lighten-4 h-20 py-6 px-2 bg-white">
             <Button className="flex justify-start text-lg" icon={'arrow-left'} minimal onClick={() => onCloseDrawer()}>
-              {title ? title : 'Stoplight'}
+              {title}
             </Button>
           </div>
           <div className="h-full flex justify-end">{comp}</div>

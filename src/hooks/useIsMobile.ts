@@ -3,12 +3,6 @@ import * as React from 'react';
 export const useIsMobile = (enableDrawer: boolean | number) => {
   const [isMobile, setIsMobile] = React.useState(checkMobile(enableDrawer));
 
-  if (enableDrawer === true) {
-    enableDrawer = 768;
-  } else if (enableDrawer === false) {
-    return false;
-  }
-
   const updateLayout = React.useCallback(() => {
     setIsMobile(checkMobile(enableDrawer));
   }, []);
@@ -23,5 +17,12 @@ export const useIsMobile = (enableDrawer: boolean | number) => {
   return isMobile;
 };
 
-export const checkMobile = (enableDrawer: boolean | number) =>
-  typeof window !== 'undefined' && window.innerWidth < enableDrawer;
+export const checkMobile = (enableDrawer: boolean | number) => {
+  if (enableDrawer === true) {
+    enableDrawer = 768;
+  } else if (enableDrawer === false) {
+    return false;
+  }
+
+  return typeof window !== 'undefined' && window.innerWidth < enableDrawer;
+};
