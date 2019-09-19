@@ -73,8 +73,8 @@ const MobileStory = () => {
         items={studio.nodes}
         srn="gh/stoplightio/studio"
         title={'Mobile Support'}
-        openDrawer={isOpen}
-        onCloseDrawer={() => setIsOpen(false)}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
         enableDrawer={1000}
       />
     </div>

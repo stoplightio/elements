@@ -16,19 +16,30 @@ export const config: IProvider = {
   components: {},
 };
 
-export interface IWidget {
+interface ITableOfContentsOptions {
+  isOpen?: boolean;
+  onClose?: () => void;
+  enableDrawer?: boolean | number;
+}
+
+export interface IWidget<T = unknown> {
   srn: string;
-  render(htmlId: string, srn: string): void;
+  render(htmlId: string, srn: string, options: T): void;
   remove(): void;
 }
 
-class Widget implements IWidget {
+class Widget<T = unknown> implements IWidget<T> {
   private _htmlId: string = '';
   private _srn: string = '';
   private _component: React.FunctionComponent<{ srn: string }>;
+  private _options!: T;
 
-  constructor(Component: React.FunctionComponent<{ srn: string }>) {
+  constructor(Component: React.FunctionComponent<{ srn: string }>, getOptions?: (self: Widget<T>) => T) {
     this._component = Component;
+
+    if (getOptions) {
+      this._options = getOptions(this);
+    }
   }
 
   public get htmlId() {
@@ -38,6 +49,7 @@ class Widget implements IWidget {
   public get srn() {
     return this._srn;
   }
+
   public set srn(srn: string) {
     this._srn = decodeURI(srn);
 
@@ -47,7 +59,16 @@ class Widget implements IWidget {
     }
   }
 
-  public render(htmlId: string, srn?: string) {
+  public get options() {
+    return this._options;
+  }
+
+  public set options(options: T) {
+    this._options = { ...this._options, ...options };
+    this.render(this.htmlId, this.srn, this._options);
+  }
+
+  public render(htmlId: string, srn?: string, options?: T) {
     if (typeof document === 'undefined') {
       throw new Error(`${name} widget can only be rendered on the client.`);
     }
@@ -63,11 +84,17 @@ class Widget implements IWidget {
       this._srn = decodeURI(srn);
     }
 
+    if (options) {
+      this._options = { ...this._options, ...options };
+    }
+
+    console.log(options, this._options, this.options);
+
     const Component = this._component;
 
     ReactDOM.render(
       <Provider host={config.host} token={config.token} components={config.components}>
-        <Component srn={this.srn} />
+        <Component srn={this.srn} {...this.options} />
       </Provider>,
       elem,
     );
@@ -90,5 +117,9 @@ class Widget implements IWidget {
 export const elements = {
   hub: new Widget(Hub),
   page: new Widget(Page),
-  toc: new Widget(TableOfContents),
+  toc: new Widget<ITableOfContentsOptions>(TableOfContents, (self: Widget<ITableOfContentsOptions>) => ({
+    isOpen: false,
+    enableDrawer: true,
+    onClose: () => (self.options = { isOpen: false }),
+  })),
 };

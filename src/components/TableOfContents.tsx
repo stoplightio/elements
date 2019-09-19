@@ -7,6 +7,7 @@ import { ComponentsContext } from '../containers/Provider';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { IContentsNode, IProjectNode } from '../types';
+import { deserializeSrn } from '../utils/srns';
 
 export interface ITableOfContents {
   // List of items that will be computed into the tree structure
@@ -26,8 +27,8 @@ export interface ITableOfContents {
   title?: string;
 
   // Controls for the drawer functionality on mobile
-  openDrawer?: boolean;
-  onCloseDrawer?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 
   // Mobile breakpoint, default (true) is 786px, false disables Drawer
   enableDrawer?: boolean | number;
@@ -40,9 +41,9 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   className,
   padding = '10',
   title,
-  openDrawer = false,
+  isOpen = false,
   // tslint:disable-next-line: no-empty
-  onCloseDrawer = () => {},
+  onClose = () => {},
   enableDrawer = true,
 }) => {
   const hasContents = _contents && _contents.length;
@@ -125,12 +126,13 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   );
 
   if (isMobile) {
+    const { org, project } = deserializeSrn(srn || '');
     return (
-      <Drawer isOpen={openDrawer} onClose={() => onCloseDrawer()} position="left" size="330px">
+      <Drawer isOpen={isOpen} onClose={() => onClose()} position="left" size="330px">
         <div className="flex flex-1 flex-col bg-gray-1 dark:bg-transparent">
           <div className="border-b dark:border-lighten-4 h-20 py-6 px-2 bg-white">
-            <Button className="flex justify-start text-lg" icon={'arrow-left'} minimal onClick={() => onCloseDrawer()}>
-              {title}
+            <Button className="flex justify-start text-lg" icon={'arrow-left'} minimal onClick={() => onClose()}>
+              {title || `${org} / ${project}`}
             </Button>
           </div>
           <div className="h-full flex justify-end">{comp}</div>
