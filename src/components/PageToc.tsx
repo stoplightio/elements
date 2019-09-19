@@ -10,8 +10,9 @@ export interface IPageToc {
 }
 
 export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page' }) => {
-  if (!headings || !headings.length) return null;
   const [currentHash, setCurrentHash] = React.useState(typeof window !== undefined && window.location.hash);
+
+  if (!headings || !headings.length) return null;
 
   return (
     <div className={cn('sticky top-0', className)}>
