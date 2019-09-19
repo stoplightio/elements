@@ -10,6 +10,16 @@ export interface IPageToc {
 }
 
 export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page' }) => {
+  const [currentHash, setCurrentHash] = React.useState(typeof window !== undefined && window.location.hash);
+
+  React.useEffect(() => {
+    const hashChange = () => setCurrentHash(typeof window !== undefined && window.location.hash);
+
+    window.addEventListener('hashchange', hashChange, false);
+
+    return () => window.removeEventListener('hashchange', hashChange);
+  }, []);
+
   if (!headings || !headings.length) return null;
 
   return (
@@ -26,18 +36,27 @@ export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On T
         )}
 
         {headings.map((heading, i) => (
-          <TocItem key={i} depth={heading.depth} title={heading.title} id={heading.id} />
+          <TocItem
+            key={i}
+            depth={heading.depth}
+            title={heading.title}
+            id={heading.id}
+            isSelected={currentHash === `#${heading.id}`}
+          />
         ))}
       </div>
     </div>
   );
 };
 
-const TocItem: React.FC<IPageTocHeading> = ({ depth, title, id }) => {
+const TocItem: React.FC<IPageTocHeading> = ({ depth, title, id, isSelected }) => {
   return (
     <a
       href={`#${id}`}
-      className="truncate block py-2 pr-8 font-medium font-medium text-gray-6 dark:text-gray-5 hover:text-blue-6 hover:no-underline text-sm"
+      className={cn(
+        'truncate block py-2 pr-8 font-medium font-medium hover:text-blue-6 hover:no-underline text-sm',
+        isSelected ? 'text-blue-6 dark:text-blue-2' : 'text-gray-6 dark:text-gray-5',
+      )}
       style={{ paddingLeft: `${3 + depth * 15}px` }}
     >
       {title}
