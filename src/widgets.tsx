@@ -16,7 +16,7 @@ export const config: IProvider = {
   components: {},
 };
 
-interface ITableOfContentsOptions {
+export interface ITableOfContentsOptions {
   isOpen?: boolean;
   onClose?: () => void;
   enableDrawer?: boolean | number;
@@ -34,11 +34,11 @@ class Widget<T = unknown> implements IWidget<T> {
   private _component: React.FunctionComponent<{ srn: string }>;
   private _options!: T;
 
-  constructor(Component: React.FunctionComponent<{ srn: string }>, getOptions?: (self: Widget<T>) => T) {
+  constructor(Component: React.FunctionComponent<{ srn: string }>, options?: T) {
     this._component = Component;
 
-    if (getOptions) {
-      this._options = getOptions(this);
+    if (options) {
+      this._options = options;
     }
   }
 
@@ -49,7 +49,6 @@ class Widget<T = unknown> implements IWidget<T> {
   public get srn() {
     return this._srn;
   }
-
   public set srn(srn: string) {
     this._srn = decodeURI(srn);
 
@@ -62,10 +61,13 @@ class Widget<T = unknown> implements IWidget<T> {
   public get options() {
     return this._options;
   }
-
   public set options(options: T) {
     this._options = { ...this._options, ...options };
-    this.render(this.htmlId, this.srn, this._options);
+
+    if (this.htmlId) {
+      // Whenever the options change, re-render the element
+      this.render(this.htmlId);
+    }
   }
 
   public render(htmlId: string, srn?: string, options?: T) {
@@ -81,14 +83,14 @@ class Widget<T = unknown> implements IWidget<T> {
     this._htmlId = htmlId;
 
     if (srn) {
+      // Warning: don't set this.srn here or you will get into an infinite rendering loop
       this._srn = decodeURI(srn);
     }
 
     if (options) {
+      // Warning: don't set this.options here or you will get into an infinite rendering loop
       this._options = { ...this._options, ...options };
     }
-
-    console.log(options, this._options, this.options);
 
     const Component = this._component;
 
@@ -117,9 +119,13 @@ class Widget<T = unknown> implements IWidget<T> {
 export const elements = {
   hub: new Widget(Hub),
   page: new Widget(Page),
-  toc: new Widget<ITableOfContentsOptions>(TableOfContents, (self: Widget<ITableOfContentsOptions>) => ({
+  toc: new Widget<ITableOfContentsOptions>(TableOfContents, {
     isOpen: false,
     enableDrawer: true,
-    onClose: () => (self.options = { isOpen: false }),
-  })),
+  }),
+};
+elements.toc.options = {
+  onClose: () => {
+    elements.toc.options = { isOpen: false };
+  },
 };
