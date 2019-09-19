@@ -80,7 +80,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) =>
     <div className="Page__docs flex w-full" ref={pageDocsRef}>
       <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
 
-      <PageToc className={`Page__toc h-0 px-4 pt-${padding}`} headings={headings} minimal={!showPageToc} />
+      <PageToc className="Page__toc" padding={padding} headings={headings} minimal={!showPageToc} />
     </div>
   );
 };
