@@ -1,6 +1,7 @@
 import 'resize-observer-polyfill';
 
 import { IconName } from '@blueprintjs/core';
+import useComponentSize from '@rehooks/component-size';
 import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
@@ -27,12 +28,13 @@ export interface IDocs {
   type: NodeType | 'json_schema';
   data: unknown;
   padding?: string;
-  enableMobile?: boolean | number;
 }
 
-export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding, enableMobile }) => {
+export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) => {
   const components = useComponents();
   const pageDocsRef = React.useRef<HTMLDivElement | null>(null);
+  const { width } = useComponentSize(pageDocsRef);
+  const showPageToc = width >= 1000;
 
   const markdown = new Builder();
 
@@ -78,7 +80,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding, enab
     <div className="Page__docs flex w-full" ref={pageDocsRef}>
       <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
 
-      <PageToc className={`Page__toc h-0 px-4 pt-${padding}`} headings={headings} enableMobile={enableMobile} />
+      <PageToc className={`Page__toc h-0 px-4 pt-${padding}`} headings={headings} minimal={!showPageToc} />
     </div>
   );
 };

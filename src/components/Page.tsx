@@ -23,7 +23,6 @@ export interface IPage extends IErrorBoundary {
   className?: string;
   shadows?: boolean;
   scrollInnerContainer?: boolean;
-  enableMobile?: boolean | number;
 }
 
 const ElementPage: React.FunctionComponent<IPage> = ({
@@ -37,7 +36,6 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   padding = '12',
   shadows,
   scrollInnerContainer,
-  enableMobile,
 }) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);
@@ -119,7 +117,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
       <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows={shadows}>
         {pageHeader}
 
-        <Docs padding={padding} type={type} data={data} enableMobile={enableMobile} />
+        <Docs padding={padding} type={type} data={data} />
       </ScrollContainerWrapper>
     );
   }

@@ -2,21 +2,18 @@ import { Icon, Popover } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import React from 'react';
 import { IPageTocHeading } from '../hooks/useComputePageToc';
-import { useIsMobile } from '../hooks/useIsMobile';
 
 export interface IPageToc {
   headings: IPageTocHeading[];
   title?: string;
   className?: string;
-  enableMobile?: boolean | number;
+  minimal?: boolean;
 }
 
-export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page', enableMobile = true }) => {
+export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page', minimal }) => {
   if (!headings || !headings.length) return null;
 
-  const isMobile = useIsMobile(enableMobile);
-
-  if (isMobile) {
+  if (minimal) {
     return (
       <div className={cn('sticky top-0', className)}>
         <Popover
