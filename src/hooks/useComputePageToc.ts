@@ -7,7 +7,8 @@ const selectAll = require('unist-util-select').selectAll;
 export interface IPageTocHeading {
   title: string;
   depth: number;
-  id?: string;
+  id: string;
+  isSelected?: boolean;
 }
 
 export function useComputePageToc(tree: IRoot) {

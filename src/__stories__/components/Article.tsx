@@ -16,7 +16,7 @@ storiesOf('components/Article', module)
   .add('spectral reference', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Page data={article} type={NodeType.Article} padding="24" enableMobile={1200} />
+        <Page data={article} type={NodeType.Article} padding="24" />
       </div>
     );
   });
