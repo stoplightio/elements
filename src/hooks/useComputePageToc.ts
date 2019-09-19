@@ -8,6 +8,8 @@ export interface IPageTocHeading {
   title: string;
   depth: number;
   id?: string;
+  currentHash?: string | false;
+  onClick?: () => void;
 }
 
 export function useComputePageToc(tree: IRoot) {
