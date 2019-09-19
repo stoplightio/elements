@@ -24,7 +24,8 @@ export interface ITableOfContentsOptions {
 
 export interface IWidget<T = unknown> {
   srn: string;
-  render(htmlId: string, srn: string, options: T): void;
+  options: T;
+  render(htmlId: string, srn?: string, options?: T): void;
   remove(): void;
 }
 
