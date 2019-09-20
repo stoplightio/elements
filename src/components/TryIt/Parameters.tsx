@@ -18,13 +18,20 @@ export const Parameters: React.FunctionComponent<IParameters> = ({ type, paramet
 
   return (
     <div className={cn('TryIt__Parameters', className)}>
-      {title && <div className="text-lg font-semibold">{title}</div>}
+      <table className="bp3-html-table">
+        <thead>
+          <tr>
+            <th>{title && <span className="text-lg font-semibold">{title}</span>}</th>
+          </tr>
+        </thead>
 
-      <div className="mt-5">
-        {parameters.map((parameter, index) => (
-          <Parameter key={index} className="mt-3" type={type} parameter={parameter} />
-        ))}
-      </div>
+        <tbody>
+          {parameters.map((parameter, index) => (
+            <Parameter key={index} type={type} parameter={parameter} />
+          ))}
+          {/* </tr> */}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -57,42 +64,35 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
   }
 
   return (
-    <div className={cn('TryIt__Parameter', className)}>
-      <table className="bp3-html-table-condensed">
-        <tbody>
-          <tr>
-            <td style={{ minWidth: '8rem' }}>{parameter.name}</td>
-            <td className="pl-10">
-              {options && options.length > 0 ? (
-                <HTMLSelect
-                  style={{ minWidth: '16rem' }}
-                  placeholder={placeholder}
-                  value={value || ''}
-                  options={options}
-                  onChange={(e: any) => {
-                    store.setParam(type, parameter.name, e.currentTarget.value);
-                  }}
-                />
-              ) : (
-                <InputGroup
-                  style={{ minWidth: '16rem' }}
-                  placeholder={placeholder}
-                  value={value || ''}
-                  onChange={(e: any) => {
-                    store.setParam(type, parameter.name, e.currentTarget.value);
-                  }}
-                />
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
-              {parameter.required ? 'Required' : 'Optional'}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <tr className={cn('TryIt__Parameter', className)}>
+      <td className="break-all" style={{ minWidth: '12rem', maxWidth: '80%' }}>
+        <span className="flex">{parameter.name}</span>
+        <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
+          {parameter.required ? 'Required' : 'Optional'}
+        </span>
+      </td>
+      <td className="pl-10" style={{ minWidth: '32rem' }}>
+        {options && options.length > 0 ? (
+          <HTMLSelect
+            style={{ minWidth: '16rem' }}
+            placeholder={placeholder}
+            value={value || ''}
+            options={options}
+            onChange={(e: any) => {
+              store.setParam(type, parameter.name, e.currentTarget.value);
+            }}
+          />
+        ) : (
+          <InputGroup
+            placeholder={placeholder}
+            value={value || ''}
+            onChange={(e: any) => {
+              store.setParam(type, parameter.name, e.currentTarget.value);
+            }}
+          />
+        )}
+      </td>
+    </tr>
   );
 });
 Parameter.displayName = 'TryIt.Parameter';
