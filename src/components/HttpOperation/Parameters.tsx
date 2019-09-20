@@ -13,17 +13,22 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   return (
     <div className={cn('HttpOperation__Parameter flex', className)}>
-      <div className="w-40">
-        <div>{parameter.name}</div>
-
-        <div className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
-          {parameter.required ? 'Required' : 'Optional'}
-        </div>
-      </div>
-
-      <div className="w-24">{parameter.schema && parameter.schema.type}</div>
-
-      {parameter.description && <MarkdownViewer className="ml-12 flex-1" markdown={parameter.description} />}
+      <table className="bp3-html-table-condensed">
+        <tbody>
+          <tr>
+            <td style={{ minWidth: '8rem' }}>{parameter.name}</td>
+            <td>{parameter.schema && parameter.schema.type}</td>
+          </tr>
+          <tr>
+            <td className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
+              {parameter.required ? 'Required' : 'Optional'}
+            </td>
+            <td>
+              {parameter.description && <MarkdownViewer className="ml-12 flex-1" markdown={parameter.description} />}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
