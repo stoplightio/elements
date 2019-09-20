@@ -57,35 +57,41 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
   }
 
   return (
-    <div className={cn('TryIt__Parameter flex', className)}>
-      <div className="w-40">
-        <div>{parameter.name}</div>
-
-        <div className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
-          {parameter.required ? 'Required' : 'Optional'}
-        </div>
-      </div>
-
-      {options && options.length > 0 ? (
-        <HTMLSelect
-          className="flex-1"
-          placeholder={placeholder}
-          value={value || ''}
-          options={options}
-          onChange={(e: any) => {
-            store.setParam(type, parameter.name, e.currentTarget.value);
-          }}
-        />
-      ) : (
-        <InputGroup
-          className="flex-1"
-          placeholder={placeholder}
-          value={value || ''}
-          onChange={(e: any) => {
-            store.setParam(type, parameter.name, e.currentTarget.value);
-          }}
-        />
-      )}
+    <div className={cn('TryIt__Parameter', className)}>
+      <table className="bp3-html-table-condensed">
+        <tbody>
+          <tr>
+            <td style={{ minWidth: '8rem' }}>{parameter.name}</td>
+            <td className="pl-10">
+              {options && options.length > 0 ? (
+                <HTMLSelect
+                  style={{ minWidth: '16rem' }}
+                  placeholder={placeholder}
+                  value={value || ''}
+                  options={options}
+                  onChange={(e: any) => {
+                    store.setParam(type, parameter.name, e.currentTarget.value);
+                  }}
+                />
+              ) : (
+                <InputGroup
+                  style={{ minWidth: '16rem' }}
+                  placeholder={placeholder}
+                  value={value || ''}
+                  onChange={(e: any) => {
+                    store.setParam(type, parameter.name, e.currentTarget.value);
+                  }}
+                />
+              )}
+            </td>
+          </tr>
+          <tr>
+            <td className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
+              {parameter.required ? 'Required' : 'Optional'}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 });

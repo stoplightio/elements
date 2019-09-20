@@ -17,7 +17,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
         <tbody>
           <tr>
             <td style={{ minWidth: '8rem' }}>{parameter.name}</td>
-            <td>{parameter.schema && parameter.schema.type}</td>
+            <td className="pl-10">{parameter.schema && parameter.schema.type}</td>
           </tr>
           <tr>
             <td className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
