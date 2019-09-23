@@ -9,11 +9,10 @@ const article: string = require('../../__fixtures__/article.md');
 import { Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);
-export const showToc = () => boolean('table of contents?', false);
 
 storiesOf('components/Article', module)
   .addDecorator(withKnobs)
-  .add('spectral reference', () => {
+  .add('kitchen sink', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page data={article} type={NodeType.Article} padding="24" />

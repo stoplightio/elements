@@ -48,6 +48,11 @@ $PageToc: 200px;
 
 .HttpRequest__RequestEditor,
 .HttpRequest__ResponseViewer {
+  .#{$ns}-simple-tab-panel {
+    max-height: 300px;
+    overflow: auto;
+  }
+
   .#{$ns}-code-editor {
     @extend .#{$ns}-code-editor;
     margin: 0;

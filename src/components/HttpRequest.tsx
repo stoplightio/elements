@@ -10,6 +10,7 @@ import {
 } from '@stoplight/request-maker';
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 import { ControlGroup } from '@stoplight/ui-kit';
+import cn from 'classnames';
 import * as React from 'react';
 
 export interface IHttpRequestProps {
@@ -18,23 +19,26 @@ export interface IHttpRequestProps {
   className?: string;
 }
 
-export const HttpRequest: React.FunctionComponent<IHttpRequestProps> = ({ request, operation, className }) => {
-  const store = new RequestMaker({ request, operation });
-  return (
-    <RequestMakerProvider value={store}>
-      <div className={className}>
-        <ControlGroup>
-          <SendButton className="HttpRequest__SendButton w-40" intent="primary" icon="play" />
-          <MethodSelector className="HttpRequest__MethodSelector" />
-          <ActionBar className="HttpRequest__ActionBar flex-auto" />
-        </ControlGroup>
+export const HttpRequest: React.FunctionComponent<IHttpRequestProps> = React.memo(
+  ({ request, operation, className }) => {
+    const store = new RequestMaker({ request, operation });
 
-        <RequestEditor className="HttpRequest__RequestEditor mt-6" />
+    return (
+      <RequestMakerProvider value={store}>
+        <div className={cn('HttpRequest', className)}>
+          <ControlGroup>
+            <SendButton className="HttpRequest__SendButton w-40" intent="primary" icon="play" />
+            <MethodSelector className="HttpRequest__MethodSelector" />
+            <ActionBar className="HttpRequest__ActionBar flex-auto" />
+          </ControlGroup>
 
-        <ResponseStatus className="HttpRequest__ResponseStatus mt-6" />
+          <RequestEditor className="HttpRequest__RequestEditor mt-6" />
 
-        <ResponseViewer className="HttpRequest__ResponseViewer mt-6" />
-      </div>
-    </RequestMakerProvider>
-  );
-};
+          <ResponseStatus className="HttpRequest__ResponseStatus mt-6" />
+
+          <ResponseViewer className="HttpRequest__ResponseViewer mt-6" />
+        </div>
+      </RequestMakerProvider>
+    );
+  },
+);

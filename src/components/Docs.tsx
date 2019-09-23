@@ -113,7 +113,7 @@ const MarkdownViewerCode: React.FunctionComponent<{
   } else if (type === NodeType.HttpService) {
     return <HttpService value={resolved} />;
   } else if (type === 'http') {
-    return <HttpRequest request={resolved} />;
+    return <HttpRequest className="my-10" request={resolved} />;
   }
 
   return null;

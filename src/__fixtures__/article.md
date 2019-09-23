@@ -169,18 +169,17 @@ be the http object to be rendered.
 
 <!-- type: http -->
 
-```http
+```json
 {
-    "request": {
-        "method": "get",
-        "url": "https://next-api.stoplight.io/projects/45",
-        "headers": {
-            "content-type": "application/json"
-        },
-        "query": {
-            "page": 2
-        }
-    }
+  "method": "get",
+  "url": "/gifs/search",
+  "baseUrl": "http://api.giphy.com/v1",
+  "headers": {},
+  "query": {
+    "api_key": ["dc6zaTOxFJmzC"],
+    "limit": ["1"],
+    "q": ["cats"]
+  }
 }
 ```
 
