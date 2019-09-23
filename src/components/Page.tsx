@@ -141,7 +141,6 @@ const ScrollContainerWrapper: React.FunctionComponent<{
   srn?: string;
 }> = ({ scrollInnerContainer, children, shadows = false, srn }) => {
   const [scrollbarInstance, setScrollbarInstance] = React.useState();
-  console.log(scrollbarInstance);
 
   React.useEffect(() => {
     if (scrollbarInstance) {
