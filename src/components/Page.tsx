@@ -24,7 +24,9 @@ export interface IPage extends IErrorBoundary {
   className?: string;
   shadows?: boolean;
   scrollInnerContainer?: boolean;
-  tabs: any;
+  tabs?: {
+    [type in NodeType]: string[];
+  };
 }
 
 const ElementPage: React.FunctionComponent<IPage> = ({
