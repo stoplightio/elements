@@ -74,7 +74,7 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
       <td className="pl-10" style={{ minWidth: '32rem' }}>
         {options && options.length > 0 ? (
           <HTMLSelect
-            style={{ minWidth: '16rem' }}
+            style={{ minWidth: '32rem' }}
             placeholder={placeholder}
             value={value || ''}
             options={options}
