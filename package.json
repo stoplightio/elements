@@ -45,10 +45,11 @@
   "dependencies": {
     "@rehooks/component-size": "^1.0.3",
     "@stoplight/json": "^3.1.1",
-    "@stoplight/json-ref-resolver": "^2.2.0",
+    "@stoplight/json-ref-resolver": "file:.yalc/@stoplight/json-ref-resolver",
     "@stoplight/json-schema-viewer": "^2.9.2",
     "@stoplight/markdown": "^2.5.1",
     "@stoplight/markdown-viewer": "^3.7.0",
+    "@stoplight/path": "^1.2.1",
     "@stoplight/tree-list": "^4.8.0",
     "@stoplight/types": "^11.1.0",
     "@stoplight/ui-kit": "^2.11.0",

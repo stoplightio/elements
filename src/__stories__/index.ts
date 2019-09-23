@@ -1,4 +1,5 @@
 import './components/Article';
+import './components/Dependencies';
 import './components/HttpOperation';
 import './components/HttpService';
 import './components/PageToc';

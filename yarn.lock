@@ -1828,10 +1828,8 @@
     lodash "^4.17.4"
     read-pkg-up "^6.0.0"
 
-"@stoplight/json-ref-resolver@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-2.2.0.tgz#f12fed6ca618d9cd6031f5d0405a3ae5ffd54fad"
-  integrity sha512-42z5MNkLKF7Ynq2rM8YSd6SoJvEX5k0ugQujpB8Co7K5m3vhq1LK+/faFhuMfuFy6As9BxVUnDbGchYERXK17Q==
+"@stoplight/json-ref-resolver@file:.yalc/@stoplight/json-ref-resolver":
+  version "0.0.0-ab0b8f8c"
   dependencies:
     "@stoplight/json" "^3.1.0"
     "@stoplight/types" "^11.0.0"
@@ -1839,6 +1837,7 @@
     fast-memoize "^2.5.1"
     immer "^3.2.0"
     lodash "^4.17.15"
+    treeify "^1.1.0"
     urijs "~1.19.1"
     vscode-uri "^2.0.3"
 
@@ -1849,7 +1848,7 @@
   dependencies:
     "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
-    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
+    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -1899,6 +1898,11 @@
     remark-stringify "~7.0.1"
     unified "~8.3.2"
     unist-util-select "~2.0"
+
+"@stoplight/path@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.2.1.tgz#f39f408377a0d1a9c33a04ce08eb3a1691c457d6"
+  integrity sha512-W/wBpTw6ThKZGPcb1ztKz6ULnMVnLE/ygzqIjnqnmKcpNrKkSuBLtL7+oQYZSkteZfJAryloAt3plU3sTiekcQ==
 
 "@stoplight/scripts@7.0.3":
   version "7.0.3"
@@ -9220,10 +9224,9 @@ json-schema-compare@^0.2.2:
   dependencies:
     lodash "^4.17.4"
 
-"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
+"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
   version "0.6.0"
-  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
-  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"

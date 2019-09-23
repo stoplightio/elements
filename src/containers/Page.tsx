@@ -2,7 +2,7 @@ import { NonIdealState } from '@blueprintjs/core';
 import { safeParse } from '@stoplight/json';
 import cn from 'classnames';
 import * as React from 'react';
-import { IDocs } from '../components/Docs';
+
 import { Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
 import { useNodeInfo } from '../hooks/useNodeInfo';

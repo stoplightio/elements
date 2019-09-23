@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string"
+    },
+    "bar": {
+      "$ref": "#/definitions/bar"
+    }
+  },
+  "definitions": {
+    "bar": {
+      "type": "object",
+      "properties": {
+        "bean": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

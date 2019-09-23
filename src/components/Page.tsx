@@ -73,6 +73,10 @@ const ElementPage: React.FunctionComponent<IPage> = ({
               </SimpleTab>
             )}
 
+            {
+              // TODO: This is where I should add a dependencies tab
+            }
+
             {nodeTabs.includes('Changelog') && (
               <SimpleTab id="changelog" className="Page__tab">
                 Changelog
@@ -150,7 +154,7 @@ const ScrollContainerWrapper: React.FunctionComponent<{ scrollInnerContainer?: b
 // TODO (CL): Allow to configure which tabs are shown
 const NodeTypeTabs = {
   [NodeType.Article]: ['Docs'],
-  [NodeType.Model]: ['Docs'],
+  [NodeType.Model]: ['Docs', 'Dependencies'],
   [NodeType.HttpOperation]: ['Docs', 'TryIt'],
   [NodeType.HttpService]: ['Docs'],
   [NodeType.HttpServer]: ['Docs'],
