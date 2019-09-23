@@ -24,6 +24,7 @@ export interface IPage extends IErrorBoundary {
   className?: string;
   shadows?: boolean;
   scrollInnerContainer?: boolean;
+  tabs: any;
 }
 
 const ElementPage: React.FunctionComponent<IPage> = ({
@@ -37,11 +38,18 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   padding = '12',
   shadows,
   scrollInnerContainer,
+  tabs = {
+    [NodeType.Article]: ['Docs'],
+    [NodeType.Model]: ['Docs', 'Dependencies'],
+    [NodeType.HttpOperation]: ['Docs', 'TryIt'],
+    [NodeType.HttpService]: ['Docs'],
+    [NodeType.HttpServer]: ['Docs'],
+  },
 }) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);
 
-  const nodeTabs = NodeTypeTabs[type];
+  const nodeTabs = tabs[type];
 
   const pageHeader = name && (
     <PageHeader
@@ -160,13 +168,4 @@ const ScrollContainerWrapper: React.FunctionComponent<{ scrollInnerContainer?: b
   }
 
   return <ScrollContainer shadows={shadows}>{children}</ScrollContainer>;
-};
-
-// TODO (CL): Allow to configure which tabs are shown
-const NodeTypeTabs = {
-  [NodeType.Article]: ['Docs'],
-  [NodeType.Model]: ['Docs', 'Dependencies'],
-  [NodeType.HttpOperation]: ['Docs', 'TryIt'],
-  [NodeType.HttpService]: ['Docs'],
-  [NodeType.HttpServer]: ['Docs'],
 };
