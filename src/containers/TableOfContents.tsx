@@ -8,9 +8,19 @@ export interface ITableOfContents {
   activeNodeSrn?: string;
   className?: string;
   padding?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
+  enableDrawer?: boolean | number;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn, className, padding = '10' }) => {
+export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
+  srn,
+  className,
+  padding = '10',
+  isOpen,
+  onClose,
+  enableDrawer,
+}) => {
   const { isLoading, error, data } = useProjectNodes(srn);
 
   if (isLoading) {
@@ -26,5 +36,15 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ srn
     return <>Not Found</>;
   }
 
-  return <TableOfContentsComponent className={className} items={data.items} padding={padding} srn={srn} />;
+  return (
+    <TableOfContentsComponent
+      className={className}
+      items={data.items}
+      padding={padding}
+      srn={srn}
+      isOpen={isOpen}
+      onClose={onClose}
+      enableDrawer={enableDrawer}
+    />
+  );
 };

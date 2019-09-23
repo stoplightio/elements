@@ -1660,6 +1660,11 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
+"@rehooks/component-size@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@rehooks/component-size/-/component-size-1.0.3.tgz#823eabeb42084893d46d43e3a9d1d0e34252b3cb"
+  integrity sha512-pnYld+8SSF2vXwdLOqBGUyOrv/SjzwLjIUcs/4c1JJgR0q4E9eBtBfuZMD6zUD51fvSehSsbnlQMzotSmPTXPg==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -1846,10 +1851,10 @@
     jsonpath "https://github.com/stoplightio/jsonpath.git#f1c0e9e634da2d45671b7639fa0a99afc807da17"
     randexp "^0.5.3"
 
-"@stoplight/json-schema-viewer@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.8.0.tgz#31adf72b5b698020163f1ec7cff3b582c152a276"
-  integrity sha512-RJKTNwIt9b3ERn1kXnx6H9X4VflRdIX+5LMotw3UdX9wWksK5btMIJlqg/PnDG2wadW0OlTva8n+ZuElhsrn5Q==
+"@stoplight/json-schema-viewer@^2.9.2":
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.10.0.tgz#2ef74bf992adc29401aac4764fec19c57f53b41a"
+  integrity sha512-/JvP3qcmhgFC1g225lmCfP9ZJ8usk4q9kfUkgYjApV9KgEXMezFrPZ+BZkgBeTGCMd/ySGSdxNdh6npfRAZNhg==
   dependencies:
     "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
@@ -1924,10 +1929,10 @@
     unified "~8.3.2"
     unist-util-select "~2.0"
 
-"@stoplight/markdown@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.5.0.tgz#46e1f43ea79e4553a904907102684d20a1c7f233"
-  integrity sha512-vdaoUrK4qZLAIzG9ixOfF+YBGHK6Pbo6fmulNKiB5W8H1PKnYYSaPZmRyrBUX4a+xMsMV5L7Vt5Z0CPE6L98nA==
+"@stoplight/markdown@^2.5.1":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.5.2.tgz#bb3e299deb61b977ff41b7b0e37905862a9e4960"
+  integrity sha512-yA+fglDuxHkpMqc3IsKbmjFT8MbHVQd0YlLssGMM7ATvykSWROecofDwONVL5E7gRHC7OmzNYMEqubfmxxX+MA==
   dependencies:
     js-yaml "^3.13"
     lodash "^4.17.15"
@@ -2069,10 +2074,17 @@
   dependencies:
     "@types/json-schema" "^7.0.3"
 
-"@stoplight/ui-kit@^2.10.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.10.0.tgz#fb19fae334349572e4dbe4f10bd2148d10bd0fbd"
-  integrity sha512-oseBKd+f7CMy2ItlIfa2sHaqoQbCt3Df6/CHsdY8yaVlpzsvDM7NY/tkQJLVe/hANZWFL+C253DSZpZlLKVpmw==
+"@stoplight/types@^11.1.0":
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.1.0.tgz#b29ecd8c8ad27bb564c7820c99f93c27f1d11bf1"
+  integrity sha512-z4VqnYIDTcj9R0f8AIDitBWkiAKKJ4W/Z5GJz/3fnBZBa/TD9Oak0xHbicXFXUvqTVCv/7D32PjPYiUX6W/EfQ==
+  dependencies:
+    "@types/json-schema" "^7.0.3"
+
+"@stoplight/ui-kit@^2.11.0":
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.12.0.tgz#c2597b48e70791ead8bea091908414baa0d5d571"
+  integrity sha512-HAfDPsX4izFwu1ZeZ1zngoUerRa9l2auEwbmpVCJ1OZzKdhxjBfXTtVRQxLQLiwftUBXCXP7IBEo3oSy2Hr5DQ==
   dependencies:
     "@blueprintjs/core" "^3.18.0"
     "@blueprintjs/icons" "^3.10.0"
@@ -2081,6 +2093,7 @@
     classnames "^2.2.6"
     immer "^3.2"
     prismjs "^1.17.1"
+    react-input-autosize "^2.2.1"
     react-scrollbars-custom "~4.0.16"
     react-simple-code-editor "~0.9.14"
     react-tabs "^3.0.0"
@@ -2671,15 +2684,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.3.tgz#bdfd69d61e464dcc81b25159c270d75a73c1a636"
   integrity sha512-Il2DtDVRGDcqjDtE+rF8iqg1CArehSK84HZJCT7AMITlyXRBpuPhqGLDQMowraqqu1coEaimg4ZOqggt6L6L+A==
 
-"@types/lodash@^4.14.136":
+"@types/lodash@^4.14.136", "@types/lodash@^4.14.138":
   version "4.14.138"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.138.tgz#34f52640d7358230308344e579c15b378d91989e"
   integrity sha512-A4uJgHz4hakwNBdHNPdxOTkYmXNgmUAKLbXZ7PKGslgeV0Mb8P3BlbYfPovExek1qnod4pDfRbxuzcVs3dlFLg==
-
-"@types/lodash@^4.14.137":
-  version "4.14.137"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.137.tgz#8a4804937dc6462274ffcc088df8f14fc1b368e2"
-  integrity sha512-g4rNK5SRKloO+sUGbuO7aPtwbwzMgjK+bm9BBhLD7jGUiGR7zhwYEhSln/ihgYQBeIJ5j7xjyaYzrWTcu3UotQ==
 
 "@types/minimatch@*":
   version "3.0.3"
@@ -5985,6 +5993,11 @@ diff@^3.2.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
   integrity sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==
+
+diff@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.1.tgz#0c667cb467ebbb5cea7f14f135cc2dba7780a8ff"
+  integrity sha512-s2+XdvhPCOF01LRQBC8hf4vhbVmI2CGS5aZnxLJlT5FtdhPCDFq80q++zK2KlrVorVDdL5BOGZ/VfLrVtYNF+Q==
 
 diffie-hellman@^5.0.0:
   version "5.0.3"
@@ -9429,9 +9442,9 @@ json-schema-compare@^0.2.2:
   dependencies:
     lodash "^4.17.4"
 
-"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
+"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
@@ -15670,16 +15683,16 @@ tslint@5.11.x:
     tslib "^1.8.0"
     tsutils "^2.27.2"
 
-tslint@5.19.0:
-  version "5.19.0"
-  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.19.0.tgz#a2cbd4a7699386da823f6b499b8394d6c47bb968"
-  integrity sha512-1LwwtBxfRJZnUvoS9c0uj8XQtAnyhWr9KlNvDIdB+oXyT+VpsOAaEhEgKi1HrZ8rq0ki/AAnbGSv4KM6/AfVZw==
+tslint@5.20.0:
+  version "5.20.0"
+  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.20.0.tgz#fac93bfa79568a5a24e7be9cdde5e02b02d00ec1"
+  integrity sha512-2vqIvkMHbnx8acMogAERQ/IuINOq6DFqgF8/VDvhEkBqQh/x6SP0Y+OHnKth9/ZcHQSroOZwUQSN18v8KKF0/g==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     builtin-modules "^1.1.1"
     chalk "^2.3.0"
     commander "^2.12.1"
-    diff "^3.2.0"
+    diff "^4.0.1"
     glob "^7.1.1"
     js-yaml "^3.13.1"
     minimatch "^3.0.4"
@@ -16314,10 +16327,10 @@ webpack-bundle-analyzer@^3.4.1:
     opener "^1.5.1"
     ws "^6.0.0"
 
-webpack-cli@^3.3.7:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.3.7.tgz#77c8580dd8e92f69d635e0238eaf9d9c15759a91"
-  integrity sha512-OhTUCttAsr+IZSMVwGROGRHvT+QAs8H6/mHIl4SvhAwYywjiylYjpwybGx7WQ9Hkb45FhjtsymkwiRRbGJ1SZQ==
+webpack-cli@^3.3.8:
+  version "3.3.9"
+  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.3.9.tgz#79c27e71f94b7fe324d594ab64a8e396b9daa91a"
+  integrity sha512-xwnSxWl8nZtBl/AFJCOn9pG7s5CYUYdZxmmukv+fAHLcBIHM36dImfpQg3WfShZXeArkWlf6QRw24Klcsv8a5A==
   dependencies:
     chalk "2.4.2"
     cross-spawn "6.0.5"

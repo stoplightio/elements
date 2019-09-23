@@ -14,8 +14,6 @@ export interface IPage {
   version?: string;
   className?: string;
   padding?: string;
-
-  docs?: Pick<IDocs, 'className' | 'toc' | 'content'>;
 }
 
 export const Page: React.FunctionComponent<IPage> = ({
@@ -24,7 +22,6 @@ export const Page: React.FunctionComponent<IPage> = ({
   className,
   scrollInnerContainer,
   padding = '12',
-  docs,
 }) => {
   const { isLoading, error, data } = useNodeInfo(srn, semver);
   const containerClassName = cn(className, 'flex flex-col h-full');
@@ -71,7 +68,6 @@ export const Page: React.FunctionComponent<IPage> = ({
       data={safeParse(nodeData) || nodeData}
       scrollInnerContainer={scrollInnerContainer}
       padding={padding}
-      docs={docs}
     />
   );
 };

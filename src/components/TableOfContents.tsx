@@ -1,10 +1,13 @@
 import { Icon } from '@blueprintjs/core';
+import { Button, Drawer } from '@blueprintjs/core';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
 import { ComponentsContext } from '../containers/Provider';
 import { useComputeToc } from '../hooks/useComputeToc';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { IContentsNode, IProjectNode } from '../types';
+import { deserializeSrn } from '../utils/srns';
 
 export interface ITableOfContents {
   // List of items that will be computed into the tree structure
@@ -19,6 +22,16 @@ export interface ITableOfContents {
   // Padding that will be used for (default: 10)
   padding?: string;
   className?: string;
+
+  // Title of project
+  title?: string;
+
+  // Controls for the drawer functionality on mobile
+  isOpen?: boolean;
+  onClose?: () => void;
+
+  // Mobile breakpoint, default (true) is 786px, false disables Drawer
+  enableDrawer?: boolean | number;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
@@ -27,6 +40,11 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   srn,
   className,
   padding = '10',
+  title,
+  isOpen = false,
+  // tslint:disable-next-line: no-empty
+  onClose = () => {},
+  enableDrawer = true,
 }) => {
   const hasContents = _contents && _contents.length;
 
@@ -55,7 +73,9 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
     }
   }, [srn]);
 
-  return (
+  const isMobile = useIsMobile(enableDrawer);
+
+  const comp = (
     <div className={cn('TableOfContents bg-gray-1 dark:bg-transparent flex justify-end h-full', className)}>
       <div className="w-full">
         <ScrollContainer>
@@ -104,6 +124,24 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
       </div>
     </div>
   );
+
+  if (isMobile) {
+    const { org, project } = deserializeSrn(srn || '');
+    return (
+      <Drawer isOpen={isOpen} onClose={() => onClose()} position="left" size="330px">
+        <div className="flex flex-1 flex-col bg-gray-1 dark:bg-transparent">
+          <div className="border-b dark:border-lighten-4 h-20 py-6 px-2 bg-white">
+            <Button className="flex justify-start text-lg" icon={'arrow-left'} minimal onClick={() => onClose()}>
+              {title || `${org} / ${project}`}
+            </Button>
+          </div>
+          <div className="h-full flex justify-end">{comp}</div>
+        </div>
+      </Drawer>
+    );
+  }
+
+  return comp;
 };
 
 interface ITableOfContentsItem {
