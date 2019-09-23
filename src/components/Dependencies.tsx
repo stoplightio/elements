@@ -12,7 +12,8 @@ export const Dependencies: React.FunctionComponent<{ srn?: string; schema?: JSON
   store.on(TreeListEvents.NodeClick, (e, n) => {
     store.toggleExpand(n, !store.isNodeExpanded(n));
   });
-  return <TreeList store={store} />;
+
+  return <TreeList store={store} style={{ height: 500 }} />;
 };
 
 interface IDependency {

@@ -6,6 +6,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { Changelog } from './Changelog';
+import { Dependencies } from './Dependencies';
 import { Docs } from './Docs';
 import { PageHeader } from './PageHeader';
 import { TryIt } from './TryIt';
@@ -73,9 +74,11 @@ const ElementPage: React.FunctionComponent<IPage> = ({
               </SimpleTab>
             )}
 
-            {
-              // TODO: This is where I should add a dependencies tab
-            }
+            {nodeTabs.includes('Dependencies') && (
+              <SimpleTab id="dependencies" className="Page__tab">
+                Dependencies
+              </SimpleTab>
+            )}
 
             {nodeTabs.includes('Changelog') && (
               <SimpleTab id="changelog" className="Page__tab">
@@ -94,6 +97,14 @@ const ElementPage: React.FunctionComponent<IPage> = ({
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                 <Docs padding={padding} type={type} data={data} />
+              </ScrollContainerWrapper>
+            </SimpleTabPanel>
+          )}
+
+          {nodeTabs.includes('Dependencies') && (
+            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
+              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
+                <Dependencies schema={data} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}

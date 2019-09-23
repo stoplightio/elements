@@ -1,3 +1,4 @@
+import { NodeType } from '@stoplight/types';
 import { withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
@@ -7,6 +8,7 @@ import * as React from 'react';
 
 const schema: JSONSchema4 = require('../../__fixtures__/schemas/local-refs.json');
 import { Dependencies } from '../../components/Dependencies';
+import { Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);
 
@@ -16,6 +18,13 @@ storiesOf('components/Dependencies', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Dependencies schema={schema} srn="gh/stoplightio/bear/__fixtures__/schemas/local-refs.json" />
+      </div>
+    );
+  })
+  .add('As a Page', () => {
+    return (
+      <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+        <Page data={schema} name="Local Refs" version="1.0" type={NodeType.Model} />
       </div>
     );
   });
