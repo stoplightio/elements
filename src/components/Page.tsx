@@ -88,7 +88,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
 
           {nodeTabs.includes('Docs') && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
+              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
                 <Docs padding={padding} type={type} data={data} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
@@ -96,7 +96,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
 
           {nodeTabs.includes('Changelog') && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
+              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
                 <Changelog className={`Page__content p-${padding}`} changes={[]} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
@@ -104,7 +104,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
 
           {nodeTabs.includes('TryIt') && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
+              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
                 <TryIt className={`Page__content p-${padding}`} value={data} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
@@ -114,7 +114,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
     );
   } else {
     contentElem = (
-      <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows={shadows}>
+      <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows={shadows} srn={srn}>
         {pageHeader}
 
         <Docs padding={padding} type={type} data={data} />
@@ -135,16 +135,28 @@ const ElementPage: React.FunctionComponent<IPage> = ({
 
 export const Page = withErrorBoundary<IPage>(ElementPage, ['data'], 'ElementPage');
 
-const ScrollContainerWrapper: React.FunctionComponent<{ scrollInnerContainer?: boolean; shadows?: boolean }> = ({
-  scrollInnerContainer,
-  children,
-  shadows = false,
-}) => {
+const ScrollContainerWrapper: React.FunctionComponent<{
+  scrollInnerContainer?: boolean;
+  shadows?: boolean;
+  srn?: string;
+}> = ({ scrollInnerContainer, children, shadows = false, srn }) => {
+  const [scrollbarInstance, setScrollbarInstance] = React.useState();
+
+  React.useEffect(() => {
+    if (scrollbarInstance) {
+      scrollbarInstance.scrollToTop();
+    }
+  }, [scrollbarInstance, srn]);
+
   if (!scrollInnerContainer) {
     return <>{children}</>;
   }
 
-  return <ScrollContainer shadows={shadows}>{children}</ScrollContainer>;
+  return (
+    <ScrollContainer ref={ref => setScrollbarInstance(ref)} shadows={shadows}>
+      {children}
+    </ScrollContainer>
+  );
 };
 
 // TODO (CL): Allow to configure which tabs are shown
