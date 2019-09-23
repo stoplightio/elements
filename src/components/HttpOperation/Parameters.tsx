@@ -1,3 +1,4 @@
+import { HTMLTable } from '@blueprintjs/core';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpParam } from '@stoplight/types';
 import cn from 'classnames';
@@ -13,18 +14,16 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   return (
     <tr className={cn('HttpOperation__Parameter', className)}>
-      <td style={{ minWidth: '12rem' }}>
-        <span className="flex break-all font-normal" style={{ maxWidth: '80%' }}>
-          {parameter.name}
-        </span>
+      <td style={{ width: '45%' }}>
+        <span className="flex break-all font-normal">{parameter.name}</span>
         <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
           {parameter.required ? 'Required' : 'Optional'}
         </span>
       </td>
-      <td className="font-normal" style={{ width: '15%' }}>
+      <td className="font-normal" style={{ width: '25%' }}>
         {parameter.schema && parameter.schema.type}
       </td>
-      <td className="font-normal" style={{ minWidth: '20%' }}>
+      <td className="font-normal" style={{ width: '30%' }}>
         {parameter.description && <MarkdownViewer markdown={parameter.description} />}
       </td>
     </tr>
@@ -43,7 +42,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
 
   return (
     <div className={cn('HttpOperation__Parameters', className)}>
-      <table className="bp3-html-table">
+      <HTMLTable className="w-full">
         <thead>
           <tr>
             <th>{title && <div className="text-lg font-semibold">{title}</div>}</th>
@@ -54,7 +53,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
             <Parameter key={index} parameter={parameter} />
           ))}
         </tbody>
-      </table>
+      </HTMLTable>
     </div>
   );
 };

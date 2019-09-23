@@ -1,4 +1,4 @@
-import { HTMLSelect, InputGroup } from '@blueprintjs/core';
+import { HTMLSelect, HTMLTable, InputGroup } from '@blueprintjs/core';
 import { IHttpParam } from '@stoplight/types';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -18,7 +18,7 @@ export const Parameters: React.FunctionComponent<IParameters> = ({ type, paramet
 
   return (
     <div className={cn('TryIt__Parameters', className)}>
-      <table className="bp3-html-table">
+      <HTMLTable className="w-full">
         <thead>
           <tr>
             <th>{title && <span className="text-lg font-semibold">{title}</span>}</th>
@@ -29,9 +29,8 @@ export const Parameters: React.FunctionComponent<IParameters> = ({ type, paramet
           {parameters.map((parameter, index) => (
             <Parameter key={index} type={type} parameter={parameter} />
           ))}
-          {/* </tr> */}
         </tbody>
-      </table>
+      </HTMLTable>
     </div>
   );
 };
@@ -71,10 +70,10 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
           {parameter.required ? 'Required' : 'Optional'}
         </span>
       </td>
-      <td className="pl-10" style={{ minWidth: '32rem' }}>
+      <td className="pl-10 w-1/2">
         {options && options.length > 0 ? (
           <HTMLSelect
-            style={{ minWidth: '32rem' }}
+            className="w-full"
             placeholder={placeholder}
             value={value || ''}
             options={options}
@@ -84,6 +83,7 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
           />
         ) : (
           <InputGroup
+            className="w-full"
             placeholder={placeholder}
             value={value || ''}
             onChange={(e: any) => {
