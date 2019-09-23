@@ -1,4 +1,4 @@
-import { TreeList, TreeListEvents, TreeStore } from '@stoplight/tree-list';
+import { RowRenderer, TreeList, TreeListEvents, TreeListRow, TreeStore } from '@stoplight/tree-list';
 import { NodeType } from '@stoplight/types';
 import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
@@ -13,7 +13,16 @@ export const Dependencies: React.FunctionComponent<{ srn?: string; schema?: JSON
     store.toggleExpand(n, !store.isNodeExpanded(n));
   });
 
-  return <TreeList store={store} style={{ height: 500 }} />;
+  const rowRenderer = React.useCallback<RowRenderer>((node: IDependency, state) => {
+    return (
+      <div className="flex items-center pr-2 w-full">
+        <TreeListRow node={node} {...state} />
+        <span className="ml-auto">extra content</span>
+      </div>
+    );
+  }, []);
+
+  return <TreeList store={store} rowRenderer={rowRenderer} style={{ height: 500 }} />;
 };
 
 interface IDependency {

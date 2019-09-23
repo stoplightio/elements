@@ -29,6 +29,13 @@ export interface IPage extends IErrorBoundary {
   };
 }
 
+export enum IPageTabType {
+  Docs = 'Docs',
+  Dependencies = 'Dependencies',
+  TryIt = 'TryIt',
+  Changelog = 'Changelog',
+}
+
 const ElementPage: React.FunctionComponent<IPage> = ({
   type,
   name,
@@ -41,11 +48,11 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   shadows,
   scrollInnerContainer,
   tabs = {
-    [NodeType.Article]: ['Docs'],
-    [NodeType.Model]: ['Docs', 'Dependencies'],
-    [NodeType.HttpOperation]: ['Docs', 'TryIt'],
-    [NodeType.HttpService]: ['Docs'],
-    [NodeType.HttpServer]: ['Docs'],
+    [NodeType.Article]: [IPageTabType.Docs],
+    [NodeType.Model]: [IPageTabType.Docs, IPageTabType.Dependencies],
+    [NodeType.HttpOperation]: [IPageTabType.Docs, IPageTabType.TryIt],
+    [NodeType.HttpService]: [IPageTabType.Docs],
+    [NodeType.HttpServer]: [IPageTabType.Docs],
   },
 }) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -78,32 +85,32 @@ const ElementPage: React.FunctionComponent<IPage> = ({
           onSelect={onSelect}
         >
           <SimpleTabList className={cn('Page__tabs-list mt-6', `px-${padding}`)}>
-            {nodeTabs.includes('Docs') && (
+            {nodeTabs.includes(IPageTabType.Docs) && (
               <SimpleTab id="docs" className="Page__tab">
                 Docs
               </SimpleTab>
             )}
 
-            {nodeTabs.includes('Dependencies') && (
+            {nodeTabs.includes(IPageTabType.Dependencies) && (
               <SimpleTab id="dependencies" className="Page__tab">
                 Dependencies
               </SimpleTab>
             )}
 
-            {nodeTabs.includes('Changelog') && (
+            {nodeTabs.includes(IPageTabType.Changelog) && (
               <SimpleTab id="changelog" className="Page__tab">
                 Changelog
               </SimpleTab>
             )}
 
-            {nodeTabs.includes('TryIt') && (
+            {nodeTabs.includes(IPageTabType.TryIt) && (
               <SimpleTab id="tryit" className="Page__tab">
                 Try It
               </SimpleTab>
             )}
           </SimpleTabList>
 
-          {nodeTabs.includes('Docs') && (
+          {nodeTabs.includes(IPageTabType.Docs) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                 <Docs padding={padding} type={type} data={data} />
@@ -111,7 +118,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
             </SimpleTabPanel>
           )}
 
-          {nodeTabs.includes('Dependencies') && (
+          {nodeTabs.includes(IPageTabType.Dependencies) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                 <Dependencies schema={data} />
@@ -119,7 +126,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
             </SimpleTabPanel>
           )}
 
-          {nodeTabs.includes('Changelog') && (
+          {nodeTabs.includes(IPageTabType.Changelog) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                 <Changelog className={`Page__content p-${padding}`} changes={[]} />
@@ -127,7 +134,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
             </SimpleTabPanel>
           )}
 
-          {nodeTabs.includes('TryIt') && (
+          {nodeTabs.includes(IPageTabType.TryIt) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
                 <TryIt className={`Page__content p-${padding}`} value={data} />
