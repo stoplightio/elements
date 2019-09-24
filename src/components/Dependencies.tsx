@@ -3,10 +3,16 @@ import { NodeType } from '@stoplight/types';
 import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
 
+import { useComponents } from '../hooks/useComponents';
 import { httpResolver, useResolver } from '../hooks/useResolver';
 
-export const Dependencies: React.FunctionComponent<{ srn?: string; schema?: JSONSchema4 }> = ({ srn, schema }) => {
+export const Dependencies: React.FunctionComponent<{ srn?: string; schema?: JSONSchema4; className?: string }> = ({
+  srn,
+  schema,
+  className,
+}) => {
   useResolver(NodeType.Model, schema || {});
+  const components = useComponents();
 
   const store = new TreeStore({ nodes: buildDependencies() });
   store.on(TreeListEvents.NodeClick, (e, n) => {
@@ -17,12 +23,30 @@ export const Dependencies: React.FunctionComponent<{ srn?: string; schema?: JSON
     return (
       <div className="flex items-center pr-2 w-full">
         <TreeListRow node={node} {...state} />
-        <span className="ml-auto">extra content</span>
+
+        <span className="ml-auto">
+          {components.link
+            ? components.link(
+                {
+                  node: {
+                    url: node.name,
+                    title: node.name,
+                  },
+                  children: ['Go To Ref'],
+                },
+                'link',
+              )
+            : null}
+        </span>
       </div>
     );
   }, []);
 
-  return <TreeList store={store} rowRenderer={rowRenderer} style={{ height: 500 }} />;
+  return (
+    <div className={className}>
+      <TreeList maxRows={25} store={store} rowRenderer={rowRenderer} />
+    </div>
+  );
 };
 
 interface IDependency {

@@ -1,6 +1,12 @@
 import { IconName } from '@blueprintjs/core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { BlockHeader, CLASSNAMES, ICodeAnnotations, IComponentMappingProps } from '@stoplight/markdown-viewer';
+import {
+  BlockHeader,
+  CLASSNAMES,
+  ICodeAnnotations,
+  IComponentMapping,
+  IComponentMappingProps,
+} from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import React from 'react';
@@ -41,7 +47,7 @@ const MarkdownViewerCode: React.FunctionComponent<{
   return null;
 };
 
-export function useComponents() {
+export function useComponents(): IComponentMapping {
   const Components = React.useContext(ComponentsContext);
 
   return React.useMemo(() => {
