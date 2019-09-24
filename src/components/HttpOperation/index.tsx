@@ -24,7 +24,7 @@ const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ 
         <MarkdownViewer className="HttpOperation__Description mb-10" markdown={value.description} />
       )}
 
-      <Request className="mb-10" request={value.request} />
+      <Request request={value.request} />
 
       <Responses responses={value.responses} />
     </div>

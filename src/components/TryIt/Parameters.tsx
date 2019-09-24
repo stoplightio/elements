@@ -1,4 +1,4 @@
-import { HTMLSelect, InputGroup } from '@blueprintjs/core';
+import { HTMLSelect, HTMLTable, InputGroup } from '@blueprintjs/core';
 import { IHttpParam } from '@stoplight/types';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -18,13 +18,19 @@ export const Parameters: React.FunctionComponent<IParameters> = ({ type, paramet
 
   return (
     <div className={cn('TryIt__Parameters', className)}>
-      {title && <div className="text-lg font-semibold">{title}</div>}
+      <HTMLTable className="w-full">
+        <thead>
+          <tr>
+            <th>{title && <span className="text-lg font-semibold">{title}</span>}</th>
+          </tr>
+        </thead>
 
-      <div className="mt-5">
-        {parameters.map((parameter, index) => (
-          <Parameter key={index} className="mt-3" type={type} parameter={parameter} />
-        ))}
-      </div>
+        <tbody>
+          {parameters.map((parameter, index) => (
+            <Parameter key={index} type={type} parameter={parameter} />
+          ))}
+        </tbody>
+      </HTMLTable>
     </div>
   );
 };
@@ -57,36 +63,37 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
   }
 
   return (
-    <div className={cn('TryIt__Parameter flex', className)}>
-      <div className="w-40">
-        <div>{parameter.name}</div>
-
-        <div className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
+    <tr className={cn('TryIt__Parameter', className)}>
+      <td className="break-all" style={{ minWidth: '12rem', maxWidth: '80%', boxShadow: 'none' }}>
+        <span className="flex">{parameter.name}</span>
+        <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
           {parameter.required ? 'Required' : 'Optional'}
-        </div>
-      </div>
+        </span>
+      </td>
 
-      {options && options.length > 0 ? (
-        <HTMLSelect
-          className="flex-1"
-          placeholder={placeholder}
-          value={value || ''}
-          options={options}
-          onChange={(e: any) => {
-            store.setParam(type, parameter.name, e.currentTarget.value);
-          }}
-        />
-      ) : (
-        <InputGroup
-          className="flex-1"
-          placeholder={placeholder}
-          value={value || ''}
-          onChange={(e: any) => {
-            store.setParam(type, parameter.name, e.currentTarget.value);
-          }}
-        />
-      )}
-    </div>
+      <td className="pl-10 w-1/2" style={{ boxShadow: 'none' }}>
+        {options && options.length > 0 ? (
+          <HTMLSelect
+            className="w-full"
+            placeholder={placeholder}
+            value={value || ''}
+            options={options}
+            onChange={(e: any) => {
+              store.setParam(type, parameter.name, e.currentTarget.value);
+            }}
+          />
+        ) : (
+          <InputGroup
+            className="w-full"
+            placeholder={placeholder}
+            value={value || ''}
+            onChange={(e: any) => {
+              store.setParam(type, parameter.name, e.currentTarget.value);
+            }}
+          />
+        )}
+      </td>
+    </tr>
   );
 });
 Parameter.displayName = 'TryIt.Parameter';
