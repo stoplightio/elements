@@ -1,9 +1,7 @@
 /// <reference types="urijs" />
-import { RefGraph } from './refGraph';
 import * as Types from './types';
 export declare class Resolver {
     readonly uriCache: Types.ICache;
-    readonly graph: RefGraph<string>;
     protected dereferenceInline: boolean;
     protected dereferenceRemote: boolean;
     protected ctx: any;

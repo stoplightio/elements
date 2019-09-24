@@ -1,25 +1,40 @@
+import { RefGraph } from '@stoplight/json-ref-resolver/refGraph';
 import { RowRenderer, TreeList, TreeListEvents, TreeListRow, TreeStore } from '@stoplight/tree-list';
 import { NodeType } from '@stoplight/types';
 import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
+import URI from 'urijs';
 
+import { deserializeSrn } from '@stoplight/path';
 import { useComponents } from '../hooks/useComponents';
-import { httpResolver, useResolver } from '../hooks/useResolver';
+import { useResolver } from '../hooks/useResolver';
 
 export const Dependencies: React.FunctionComponent<{ srn?: string; schema?: JSONSchema4; className?: string }> = ({
   srn,
   schema,
   className,
 }) => {
-  useResolver(NodeType.Model, schema || {});
+  const result = useResolver(NodeType.Model, schema || {});
   const components = useComponents();
 
-  const store = new TreeStore({ nodes: buildDependencies() });
+  // TODO: Figure out how to get the root srn into the graph.
+  const store = new TreeStore({ nodes: buildDependencies(result.graph, { node: srn }) });
   store.on(TreeListEvents.NodeClick, (e, n) => {
     store.toggleExpand(n, !store.isNodeExpanded(n));
   });
 
   const rowRenderer = React.useCallback<RowRenderer>((node: IDependency, state) => {
+    const nodeSrn = (new URI(node.name).query(true) as { srn?: string }).srn;
+
+    let url = node.name;
+    let title = node.name;
+    if (nodeSrn) {
+      url = nodeSrn;
+
+      const { file } = deserializeSrn(nodeSrn);
+      if (file) title = file;
+    }
+
     return (
       <div className="flex items-center pr-2 w-full">
         <TreeListRow node={node} {...state} />
@@ -28,9 +43,12 @@ export const Dependencies: React.FunctionComponent<{ srn?: string; schema?: JSON
           {components.link
             ? components.link(
                 {
+                  parent: null,
+                  defaultComponents: components,
+                  path: [],
                   node: {
-                    url: node.name,
-                    title: node.name,
+                    url,
+                    title,
                   },
                   children: ['Go To Ref'],
                 },
@@ -56,8 +74,19 @@ interface IDependency {
   canHaveChildren?: boolean;
 }
 
-const buildDependencies = (deps: IDependency[] = [], node: string = 'root', level: number = 0) => {
-  const children = httpResolver.graph.nodeChildren(node);
+const buildDependencies = (
+  graph: RefGraph<string>,
+  {
+    deps = [],
+    node = 'root',
+    level = 0,
+  }: {
+    deps?: IDependency[];
+    node?: string;
+    level?: number;
+  } = {},
+) => {
+  const children = (graph && graph.nodeChildren(node)) || [];
 
   if (deps.length === 0) {
     const root: IDependency = {
@@ -73,14 +102,19 @@ const buildDependencies = (deps: IDependency[] = [], node: string = 'root', leve
   if (!children || !children.length) return [];
 
   for (const child of children) {
+    const nodeSrn = (new URI(child.id).query(true) as { srn?: string }).srn;
     const dep: IDependency = {
       id: `${deps.length + 1}`,
       level: level + 1,
-      name: child.id,
+      name: nodeSrn || child.id,
     };
 
     deps.push(dep);
-    const childDeps = buildDependencies(deps, dep.id, level + 1);
+    const childDeps = buildDependencies(graph, {
+      deps,
+      node: dep.id,
+      level: level + 1,
+    });
     if (childDeps.length) dep.canHaveChildren = true;
   }
 

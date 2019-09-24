@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/json-ref-resolver",
-  "version": "0.0.0-ab0b8f8c",
+  "version": "0.0.0-ccfdfdaf",
   "description": "Recursively resolve JSON pointers and remote authorities.",
   "keywords": [
     "json-parser",

@@ -110,6 +110,7 @@ class ResolveRunner {
             if (this.uriStack.includes(uriCacheKey)) {
                 lookupResult.resolved = {
                     result: val,
+                    graph: this.graph,
                     refMap: {},
                     errors: [],
                     runner: this,
@@ -216,6 +217,7 @@ class ResolveRunner {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const resolved = {
                 result: this.source,
+                graph: this.graph,
                 refMap: {},
                 errors: [],
                 runner: this,

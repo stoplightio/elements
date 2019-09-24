@@ -22,7 +22,7 @@ const MarkdownViewerCode: React.FunctionComponent<{
   value: any;
   annotations: ICodeAnnotations;
 }> = ({ type, value, annotations }) => {
-  const resolved = useResolver(type, value);
+  const { result: resolved } = useResolver(type, value);
 
   if (type === NodeType.Model || type === 'json_schema') {
     const title = annotations && annotations.title;

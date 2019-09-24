@@ -1,6 +1,7 @@
 /// <reference types="urijs" />
 import { Segment } from '@stoplight/types';
 import { DepGraph } from 'dependency-graph';
+import { RefGraph } from './refGraph';
 export interface IResolverOpts {
     uriCache?: ICache;
     resolvers?: {
@@ -25,6 +26,7 @@ export interface IResolveResult {
     refMap: {
         [source: string]: string;
     };
+    graph: RefGraph<string>;
     errors: IResolveError[];
     runner: IResolveRunner;
 }

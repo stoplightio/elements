@@ -31,14 +31,14 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
         dereferenceRemote: true,
       })
       .then(res => {
-        setResolved(res.result);
+        setResolved(res);
       })
       .catch(e => {
         console.error('Error resolving object', e);
       });
   }, [value]);
 
-  return resolved || parsedValue;
+  return resolved || { result: parsedValue };
 }
 
 /**

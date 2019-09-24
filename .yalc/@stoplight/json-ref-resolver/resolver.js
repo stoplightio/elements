@@ -15,10 +15,10 @@ class Resolver {
         this.parseResolveResult = opts.parseResolveResult;
         this.transformDereferenceResult = opts.transformDereferenceResult;
         this.ctx = opts.ctx;
-        this.graph = new refGraph_1.RefGraph({ circular: true });
     }
     resolve(source, opts = {}) {
-        const runner = new runner_1.ResolveRunner(source, this.graph, Object.assign({ uriCache: this.uriCache, resolvers: this.resolvers, getRef: this.getRef, transformRef: this.transformRef, dereferenceInline: this.dereferenceInline, dereferenceRemote: this.dereferenceRemote, parseResolveResult: this.parseResolveResult, transformDereferenceResult: this.transformDereferenceResult }, opts, { ctx: Object.assign({}, this.ctx || {}, opts.ctx || {}) }));
+        const graph = new refGraph_1.RefGraph({ circular: true });
+        const runner = new runner_1.ResolveRunner(source, graph, Object.assign({ uriCache: this.uriCache, resolvers: this.resolvers, getRef: this.getRef, transformRef: this.transformRef, dereferenceInline: this.dereferenceInline, dereferenceRemote: this.dereferenceRemote, parseResolveResult: this.parseResolveResult, transformDereferenceResult: this.transformDereferenceResult }, opts, { ctx: Object.assign({}, this.ctx || {}, opts.ctx || {}) }));
         return runner.resolve(opts);
     }
 }

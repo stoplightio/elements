@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
 
+import { deserializeSrn } from '@stoplight/path';
 import { Dependencies } from '../../components/Dependencies';
 import { Page } from '../../containers/Page';
 import { Provider } from '../../containers/Provider';
@@ -50,8 +51,9 @@ const Component = () => {
 
                   console.log(node.url);
 
-                  // process the node URL and turn it into an SRN
-                  // then call setSrn
+                  // TODO(TP): url is already an srn, what should we do when a user clicks go to ref and it isn't an SRN?
+                  const { shortcode, orgSlug, projectSlug, uri } = deserializeSrn(node.url);
+                  if (shortcode && orgSlug && projectSlug && uri) setSrn(node.url);
                 }}
               >
                 {children}
