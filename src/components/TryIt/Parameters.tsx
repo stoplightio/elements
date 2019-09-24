@@ -64,13 +64,14 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
 
   return (
     <tr className={cn('TryIt__Parameter', className)}>
-      <td className="break-all" style={{ minWidth: '12rem', maxWidth: '80%' }}>
+      <td className="break-all" style={{ minWidth: '12rem', maxWidth: '80%', boxShadow: 'none' }}>
         <span className="flex">{parameter.name}</span>
         <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
           {parameter.required ? 'Required' : 'Optional'}
         </span>
       </td>
-      <td className="pl-10 w-1/2">
+
+      <td className="pl-10 w-1/2" style={{ boxShadow: 'none' }}>
         {options && options.length > 0 ? (
           <HTMLSelect
             className="w-full"
