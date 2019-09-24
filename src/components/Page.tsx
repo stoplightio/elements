@@ -16,8 +16,6 @@ export interface IPage extends IErrorBoundary {
 
   name?: string;
   srn?: string;
-  version?: string;
-  versions?: string[];
 
   padding?: string;
   className?: string;
@@ -29,8 +27,6 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   type,
   name,
   srn,
-  version,
-  versions,
   data,
   className,
   padding = '12',
@@ -43,15 +39,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   const nodeTabs = NodeTypeTabs[type];
 
   const pageHeader = name && (
-    <PageHeader
-      className={cn(`Page__header px-${padding} pt-${padding}`)}
-      type={type}
-      name={name}
-      srn={srn}
-      version={version}
-      versions={versions}
-      data={data}
-    />
+    <PageHeader className={cn(`Page__header px-${padding}`)} type={type} name={name} data={data} />
   );
 
   let contentElem;
