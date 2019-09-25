@@ -23,7 +23,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, class
 
       {query && <Parameters className="mb-10" title="Query Parameters" parameters={query} />}
 
-      {body && <Body body={body} />}
+      {body && <Body className="mb-10" body={body} />}
     </div>
   );
 };
