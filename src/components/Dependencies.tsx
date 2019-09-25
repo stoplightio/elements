@@ -9,12 +9,12 @@ import { deserializeSrn } from '@stoplight/path';
 import { useComponents } from '../hooks/useComponents';
 import { useResolver } from '../hooks/useResolver';
 
-export const Dependencies: React.FunctionComponent<{ srn?: string; schema?: JSONSchema4; className?: string }> = ({
+export const Dependencies: React.FunctionComponent<{ srn?: string; data?: any; className?: string }> = ({
   srn,
-  schema,
+  data,
   className,
 }) => {
-  const result = useResolver(NodeType.Model, schema || {});
+  const result = useResolver(NodeType.Model, data || {});
   const components = useComponents();
 
   // TODO: Figure out how to get the root srn into the graph.

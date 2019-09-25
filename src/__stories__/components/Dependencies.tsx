@@ -20,7 +20,7 @@ storiesOf('components/Dependencies', module)
   .add('Dependencies', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Dependencies schema={schema} srn="gh/stoplightio/bear/__fixtures__/schemas/local-refs.json" />
+        <Dependencies data={schema} srn="gh/stoplightio/bear/__fixtures__/schemas/local-refs.json" />
       </div>
     );
   })
