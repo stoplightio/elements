@@ -6,9 +6,11 @@ import * as React from 'react';
 import URI from 'urijs';
 
 import { deserializeSrn } from '@stoplight/path';
+import { HostContext } from '../containers/Provider';
 import { useComponents } from '../hooks/useComponents';
 import { useResolver } from '../hooks/useResolver';
 
+// TODO: Make srn required after merging in sarahs shit.
 export const Dependencies: React.FunctionComponent<{ srn?: string; data?: any; className?: string }> = ({
   srn,
   data,
@@ -18,26 +20,27 @@ export const Dependencies: React.FunctionComponent<{ srn?: string; data?: any; c
   const components = useComponents();
 
   // TODO: Figure out how to get the root srn into the graph.
-  const store = new TreeStore({ nodes: buildDependencies(result.graph, { node: srn }) });
+  const store = new TreeStore({ nodes: buildDependencies(result.graph) });
   store.on(TreeListEvents.NodeClick, (e, n) => {
-    store.toggleExpand(n, !store.isNodeExpanded(n));
+    if (n.name === 'Outbound') store.toggleExpand(n, !store.isNodeExpanded(n));
   });
 
   const rowRenderer = React.useCallback<RowRenderer>((node: IDependency, state) => {
-    const nodeSrn = (new URI(node.name).query(true) as { srn?: string }).srn;
-
-    let url = node.name;
+    const url = node.name;
     let title = node.name;
-    if (nodeSrn) {
-      url = nodeSrn;
-
-      const { file } = deserializeSrn(nodeSrn);
-      if (file) title = file;
+    if (title === 'root') {
+      title = 'Outbound';
     }
 
     return (
       <div className="flex items-center pr-2 w-full">
-        <TreeListRow node={node} {...state} />
+        <TreeListRow
+          node={{
+            ...node,
+            name: title,
+          }}
+          {...state}
+        />
 
         <span className="ml-auto">
           {components.link

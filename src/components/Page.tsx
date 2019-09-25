@@ -109,7 +109,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
           {nodeTabs.includes(IPageTabType.Dependencies) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows>
-                <Dependencies className={`Page__content p-${padding}`} data={data} />
+                <Dependencies className={`Page__content p-${padding}`} data={data} srn={srn} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
