@@ -39,7 +39,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   const nodeTabs = NodeTypeTabs[type];
 
   const pageHeader = name && (
-    <PageHeader className={cn(`Page__header px-${padding}`)} type={type} name={name} data={data} />
+    <PageHeader className={cn(`Page__header px-${padding} pt-${padding}`)} type={type} name={name} data={data} />
   );
 
   let contentElem;
