@@ -21,7 +21,9 @@ storiesOf('components/PageToc', module)
 
     return (
       <div className={cn('absolute inset-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <PageToc className="py-12" headings={headings} />
+        <div className="flex justify-center items-center">
+          <PageToc className="p-16" headings={headings} />
+        </div>
       </div>
     );
   });

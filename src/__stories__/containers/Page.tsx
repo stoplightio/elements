@@ -12,7 +12,6 @@ export const darkMode = () => boolean('dark mode', false);
 
 export const pageKnobs = (): IPage => ({
   srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md', 'Page'),
-  version: text('version', '', 'Page'),
   scrollInnerContainer: boolean('scrollInnerContainer', true, 'Page'),
 });
 
