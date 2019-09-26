@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-const article: string = require('../../__fixtures__/article.md');
+const article: string = require('../../__fixtures__/articles/kitchen-sink.md');
 import { Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);

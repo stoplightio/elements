@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-const httpService: IHttpService = require('../../__fixtures__/http-service.json');
+const httpService: IHttpService = require('../../__fixtures__/services/petstore.json');
 import { Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);

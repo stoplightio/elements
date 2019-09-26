@@ -36,6 +36,14 @@ $PageToc: 200px;
   }
 }
 
+.Page__docs {
+  .MV_tab_container {
+    .#{$ns}-code-editor {
+      margin: 0;
+    }
+  }
+}
+
 .HttpOperation__Schema {
   .#{$ns}-simple-tab-panel {
     .#{$ns}-code-editor {

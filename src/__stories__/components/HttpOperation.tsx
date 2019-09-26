@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-const httpOperation: IHttpOperation = require('../../__fixtures__/http-operation.json');
+const httpOperation: IHttpOperation = require('../../__fixtures__/operations/put-todos.json');
 import { Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);
