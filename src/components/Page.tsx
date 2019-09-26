@@ -63,7 +63,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
         <SimpleTabs
           id="Page__tabs"
           className={cn('Page__tabs flex flex-col flex-1')}
-          selectedIndex={selectedTab}
+          selectedIndex={selectedTab >= nodeTabs.length ? nodeTabs.length - 1 : selectedTab}
           onSelect={onSelect}
         >
           <SimpleTabList className={cn('Page__tabs-list mt-6', `px-${padding}`)}>
@@ -73,15 +73,15 @@ const ElementPage: React.FunctionComponent<IPage> = ({
               </SimpleTab>
             )}
 
-            {nodeTabs.includes(NodeTab.Changelog) && (
-              <SimpleTab id="changelog" className="Page__tab">
-                Changelog
-              </SimpleTab>
-            )}
-
             {nodeTabs.includes(NodeTab.TryIt) && (
               <SimpleTab id="tryit" className="Page__tab">
                 Try It
+              </SimpleTab>
+            )}
+
+            {nodeTabs.includes(NodeTab.Changelog) && (
+              <SimpleTab id="changelog" className="Page__tab">
+                Changelog
               </SimpleTab>
             )}
           </SimpleTabList>
@@ -94,18 +94,18 @@ const ElementPage: React.FunctionComponent<IPage> = ({
             </SimpleTabPanel>
           )}
 
-          {nodeTabs.includes(NodeTab.Changelog) && (
-            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
-              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
-                <Changelog className={`Page__content p-${padding}`} changes={changes} />
-              </ScrollContainerWrapper>
-            </SimpleTabPanel>
-          )}
-
           {nodeTabs.includes(NodeTab.TryIt) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
                 <TryIt className={`Page__content p-${padding}`} value={data} />
+              </ScrollContainerWrapper>
+            </SimpleTabPanel>
+          )}
+
+          {nodeTabs.includes(NodeTab.Changelog) && (
+            <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
+              <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
+                <Changelog className={`Page__content p-${padding}`} changes={changes} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
