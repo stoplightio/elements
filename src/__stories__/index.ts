@@ -1,9 +1,9 @@
-import './components/Article';
-import './components/Dependencies';
-import './components/HttpOperation';
-import './components/HttpService';
-import './components/PageToc';
+import './components/Page';
 import './components/TableOfContents';
+
+import './components/Changelog';
+import './components/Dependencies';
+import './components/PageToc';
 import './components/TryIt';
 
 import './containers/Hub';

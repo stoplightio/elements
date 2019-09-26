@@ -1,74 +1,18 @@
 import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
+import groupBy from 'lodash/groupBy';
+import orderBy from 'lodash/orderBy';
 import * as React from 'react';
 
-export enum ChangeCode {
-  required = 'required',
-  response = 'response',
-  node = 'node',
-  name = 'name',
-  operation = 'operation',
-  text = 'text',
-  parameter = 'parameter',
-  optional = 'optional',
-  type = 'type',
-  server = 'server',
-  content = 'content',
-  additional = 'additional',
-  unknown = 'unknown',
-}
-
-export enum JsonOp {
-  add = 'add',
-  remove = 'remove',
-  replace = 'replace',
-  move = 'move',
-  copy = 'copy',
-  test = 'test',
-  text = 'text',
-}
-
-export enum ChangeContext {
-  property = 'property',
-  description = 'description',
-  header = 'header',
-  path = 'path',
-  query = 'query',
-  cookie = 'cookie',
-  requestBody = 'requestBody',
-  security = 'security',
-  '2xx' = '2xx',
-  code = 'code',
-  deprecated = 'deprecated',
-  name = 'name',
-  added = 'added',
-  first = 'first',
-  last = 'last',
-  json_schema = 'json_schema',
-  unknown = 'unknown',
-}
-
-export enum Semver {
-  MAJOR = 'MAJOR',
-  MINOR = 'MINOR',
-  PATCH = 'PATCH',
-  UNKNOWN = 'UNKNOWN',
-}
-
 export interface IChange {
-  id: number;
-  semver: Semver;
-  code: ChangeCode;
-  operation: JsonOp;
-  message: string;
-  path: string;
-  level: number;
   createdAt: string;
+  semver: string;
+  message: string;
 }
 
 export interface IChangelogProps {
   className?: string;
-  changes: IChange[];
+  changes?: IChange[];
 }
 
 export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className, changes }) => {
@@ -76,26 +20,30 @@ export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className,
     return <div className={cn(className, Classes.TEXT_MUTED)}>No changes for this resource.</div>;
   }
 
+  const sortedChanges = orderBy(changes, ['createdAt'], ['desc']);
+
+  const groups = groupBy(sortedChanges, change => {
+    return new Date(Number(change.createdAt)).toDateString();
+  });
+
   return (
     <div className={cn('Changelog', className)}>
-      {changes.map((change, i) => (
-        <ChangelogItem key={i} change={change} />
-      ))}
-    </div>
-  );
-};
+      {Object.keys(groups).map((date, index) => {
+        return (
+          <div key={date} className={cn({ 'mt-6': index > 0 })}>
+            <div className="Changelog__date p-2 font-medium">{date}</div>
 
-export interface IChangelogItemProps {
-  change: IChange;
-}
-
-export const ChangelogItem: React.FunctionComponent<IChangelogItemProps> = ({ change }) => {
-  return (
-    <div className={cn('ChangelogItem', 'p-2 border-b border-gray-2 dark:border-lighten-3')}>
-      <div className="flex text-sm">
-        <div className="flex-1 mr-3">{change.message}</div>
-        <div className="lowercase font-semibold">{change.semver}</div>
-      </div>
+            {groups[date].map((change, i) => (
+              <div key={i} className={cn('Changelog__item', 'p-2 border-b border-gray-2 dark:border-lighten-3')}>
+                <div className="flex text-sm">
+                  <div className="Changelog__message flex-1 mr-3">{change.message}</div>
+                  <div className="Changelog__semver lowercase font-semibold">{change.semver}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 };
