@@ -1,9 +1,9 @@
 import { NonIdealState } from '@blueprintjs/core';
 import { safeParse } from '@stoplight/json';
+import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-
-import { Page as PageComponent } from '../components/Page';
+import { NodeTab, Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
 import { useNodeInfo } from '../hooks/useNodeInfo';
 
@@ -13,6 +13,9 @@ export interface IPage {
   scrollInnerContainer?: boolean;
   className?: string;
   padding?: string;
+  tabs?: {
+    [type in NodeType]?: NodeTab[];
+  };
 }
 
 export const Page: React.FunctionComponent<IPage> = ({ srn, className, scrollInnerContainer, padding = '12' }) => {
