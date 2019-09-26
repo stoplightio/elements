@@ -2,7 +2,7 @@ import { IHttpOperation } from '@stoplight/types';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
-const httpOperation: IHttpOperation = require('../../__fixtures__/http-operation.json');
+const httpOperation: IHttpOperation = require('../../__fixtures__/operations/put-todos.json');
 import { TryIt } from '../../components/TryIt';
 import { TryIt as NewTryIt } from '../../components/TryItComponent';
 

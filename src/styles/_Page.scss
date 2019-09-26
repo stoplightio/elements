@@ -37,9 +37,9 @@ $PageToc: 200px;
   }
 }
 
-.HttpOperation__Schema {
+.Page__docs {
   .#{$ns}-simple-tab-panel {
-    .#{$ns}-code-editor {
+    .#{$ns}-code-editor:only-child {
       // Don't add margin when inside a tab panel
       margin: 0;
     }

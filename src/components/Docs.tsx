@@ -2,7 +2,6 @@ import 'resize-observer-polyfill';
 
 import { IconName } from '@blueprintjs/core';
 import useComponentSize from '@rehooks/component-size';
-import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
   BlockHeader,
@@ -10,16 +9,14 @@ import {
   ICodeAnnotations,
   IComponentMappingProps,
   MarkdownViewer,
-  processMarkdownTree,
 } from '@stoplight/markdown-viewer';
-import { Builder } from '@stoplight/markdown/builder';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
-import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
 import { ComponentsContext } from '../containers/Provider';
 import { useComputePageToc } from '../hooks/useComputePageToc';
 import { useResolver } from '../hooks/useResolver';
+import { buildNodeMarkdownTree } from '../utils/node';
 import { HttpOperation } from './HttpOperation';
 import { HttpRequest } from './HttpRequest';
 import { HttpService } from './HttpService';
@@ -37,45 +34,9 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) =>
   const { width } = useComponentSize(pageDocsRef);
   const showPageToc = width >= 1000;
 
-  const markdown = new Builder();
+  const tree = buildNodeMarkdownTree(type, data);
 
-  if (type === NodeType.Article) {
-    markdown.addMarkdown(String(data || ''));
-  } else if (type === NodeType.Model) {
-    const { description, ...schema } = (data || {}) as JSONSchema4;
-    if (description) {
-      markdown.addMarkdown(`${description}\n\n`);
-    }
-
-    markdown.addChild({
-      type: 'code',
-      lang: 'json',
-      meta: 'model',
-      value: safeStringify(schema, undefined, 4),
-    });
-
-    markdown.addMarkdown('\n');
-  } else {
-    markdown.addChild({
-      type: 'code',
-      lang: 'json',
-      meta: type,
-      value: safeStringify(data, undefined, 4),
-    });
-
-    markdown.addMarkdown('\n');
-
-    if (type === NodeType.HttpOperation) {
-      markdown.addMarkdown('\n');
-    }
-  }
-
-  const tree = processMarkdownTree(markdown.root);
   const headings = useComputePageToc(tree);
-
-  if (markdown.root.children.length === 0) {
-    markdown.addMarkdown('No content');
-  }
 
   return (
     <div className="Page__docs flex w-full" ref={pageDocsRef}>
@@ -91,19 +52,24 @@ const MarkdownViewerCode: React.FunctionComponent<{
   type: NodeType | 'json_schema' | 'http';
   value: any;
   annotations: ICodeAnnotations;
-}> = ({ type, value, annotations }) => {
+  parent: IComponentMappingProps<any>['parent'];
+}> = ({ type, value, annotations, parent }) => {
   const resolved = useResolver(type, value);
 
   if (type === NodeType.Model || type === 'json_schema') {
     const title = annotations && annotations.title;
     const icon: IconName = 'cube';
     const color = '#ef932b';
-
     return (
       <div>
         {title && <BlockHeader icon={icon} iconColor={color} title={title} />}
 
-        <div className={cn(CLASSNAMES.block, CLASSNAMES.bordered, 'dark:border-darken')}>
+        <div
+          className={cn('dark:border-darken', {
+            [CLASSNAMES.bordered]: !parent || parent.type !== 'tab',
+            [CLASSNAMES.block]: !parent || parent.type !== 'tab',
+          })}
+        >
           <JsonSchemaViewer schema={resolved} maxRows={JSV_MAX_ROWS} />
         </div>
       </div>
@@ -127,11 +93,20 @@ function useComponents() {
       ...Components,
 
       code: (props: IComponentMappingProps<any>, key: React.Key) => {
-        const { node, defaultComponents } = props;
+        const { node, defaultComponents, parent } = props;
 
         const nodeType = node.annotations && node.annotations.type ? node.annotations.type : node.meta;
+
         if (['json_schema', 'http', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService].includes(nodeType)) {
-          return <MarkdownViewerCode key={key} type={nodeType} value={node.value} annotations={node.annotations} />;
+          return (
+            <MarkdownViewerCode
+              key={key}
+              type={nodeType}
+              value={node.value}
+              annotations={node.annotations}
+              parent={parent}
+            />
+          );
         }
 
         return Components && Components.code ? Components.code(props, key) : defaultComponents.code(props, key);

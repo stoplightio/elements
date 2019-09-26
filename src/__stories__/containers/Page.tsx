@@ -4,15 +4,14 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { IPage, Page } from '../..';
-import { Provider } from '../..';
+import { IPage, Page } from '../../containers/Page';
+import { Provider } from '../../containers/Provider';
 import { providerKnobs } from './Provider';
 
 export const darkMode = () => boolean('dark mode', false);
 
 export const pageKnobs = (): IPage => ({
-  srn: text('srn', 'gh/stoplightio/studio/docs/Documentation/stoplight-flavored-markdown.md', 'Page'),
-  version: text('version', '', 'Page'),
+  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md', 'Page'),
   scrollInnerContainer: boolean('scrollInnerContainer', true, 'Page'),
 });
 

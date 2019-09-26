@@ -11,7 +11,7 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = (): IHub => ({
-  srn: text('srn', 'gh/stoplightio/studio/docs/Documentation/stoplight-flavored-markdown.md', 'Hub'),
+  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md', 'Hub'),
 });
 
 storiesOf('containers/Hub', module)
@@ -27,9 +27,13 @@ storiesOf('containers/Hub', module)
   ));
 
 const Wrapper = ({ providerProps, hubProps }: any) => {
+  const [srn, setSrn] = React.useState(hubProps.srn);
+  // @ts-ignore
+  window.setSrn = setSrn;
+
   return (
     <Provider {...providerProps} components={components}>
-      <Hub className="h-full" srn={hubProps.srn} />
+      <Hub className="h-full" srn={srn} />
     </Provider>
   );
 };
@@ -45,6 +49,8 @@ const Link: React.FunctionComponent<{
       onClick={e => {
         e.preventDefault();
         console.log(url);
+        // @ts-ignore
+        window.setSrn(url);
       }}
     >
       {children}

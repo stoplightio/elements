@@ -12,7 +12,7 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const tocKnobs = (): ITableOfContents => ({
-  srn: text('srn', 'gh/stoplightio/studio/docs/Documentation/stoplight-flavored-markdown.md', 'TableOfContents'),
+  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md', 'TableOfContents'),
 });
 
 storiesOf('containers/TableOfContents', module)
