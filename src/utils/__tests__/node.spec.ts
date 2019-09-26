@@ -57,5 +57,3 @@ describe('buildNodeMarkdownTree', () => {
     });
   });
 });
-
-// other two models, operation, service
