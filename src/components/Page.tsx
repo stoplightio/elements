@@ -1,11 +1,11 @@
-import { NodeType } from '@stoplight/types';
+import { Dictionary, NodeType } from '@stoplight/types';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { Changelog } from './Changelog';
+import { Changelog, IChange } from './Changelog';
 import { Docs } from './Docs';
 import { PageHeader } from './PageHeader';
 import { TryIt } from './TryIt';
@@ -16,6 +16,10 @@ export interface IPage extends IErrorBoundary {
 
   name?: string;
   srn?: string;
+  changes?: IChange[];
+  tabs?: {
+    [type in NodeType]?: NodeTab[];
+  };
 
   padding?: string;
   className?: string;
@@ -25,18 +29,26 @@ export interface IPage extends IErrorBoundary {
 
 const ElementPage: React.FunctionComponent<IPage> = ({
   type,
-  name,
-  srn,
   data,
-  className,
+
+  srn,
+  name,
+  changes,
+  tabs,
+
   padding = '12',
+  className,
   shadows,
   scrollInnerContainer,
 }) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);
 
-  const nodeTabs = NodeTypeTabs[type];
+  const nodeTabs =
+    {
+      ...NodeTabs,
+      ...tabs,
+    }[type] || [];
 
   const pageHeader = name && (
     <PageHeader className={cn(`Page__header px-${padding} pt-${padding}`)} type={type} name={name} data={data} />
@@ -51,30 +63,30 @@ const ElementPage: React.FunctionComponent<IPage> = ({
         <SimpleTabs
           id="Page__tabs"
           className={cn('Page__tabs flex flex-col flex-1')}
-          selectedIndex={selectedTab}
+          selectedIndex={selectedTab >= nodeTabs.length ? nodeTabs.length - 1 : selectedTab}
           onSelect={onSelect}
         >
           <SimpleTabList className={cn('Page__tabs-list mt-6', `px-${padding}`)}>
-            {nodeTabs.includes('Docs') && (
+            {nodeTabs.includes(NodeTab.Docs) && (
               <SimpleTab id="docs" className="Page__tab">
                 Docs
               </SimpleTab>
             )}
 
-            {nodeTabs.includes('Changelog') && (
-              <SimpleTab id="changelog" className="Page__tab">
-                Changelog
-              </SimpleTab>
-            )}
-
-            {nodeTabs.includes('TryIt') && (
+            {nodeTabs.includes(NodeTab.TryIt) && (
               <SimpleTab id="tryit" className="Page__tab">
                 Try It
               </SimpleTab>
             )}
+
+            {nodeTabs.includes(NodeTab.Changelog) && (
+              <SimpleTab id="changelog" className="Page__tab">
+                Changelog
+              </SimpleTab>
+            )}
           </SimpleTabList>
 
-          {nodeTabs.includes('Docs') && (
+          {nodeTabs.includes(NodeTab.Docs) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
                 <Docs padding={padding} type={type} data={data} />
@@ -82,18 +94,18 @@ const ElementPage: React.FunctionComponent<IPage> = ({
             </SimpleTabPanel>
           )}
 
-          {nodeTabs.includes('Changelog') && (
+          {nodeTabs.includes(NodeTab.TryIt) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
-                <Changelog className={`Page__content p-${padding}`} changes={[]} />
+                <TryIt className={`Page__content p-${padding}`} value={data} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
 
-          {nodeTabs.includes('TryIt') && (
+          {nodeTabs.includes(NodeTab.Changelog) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
-                <TryIt className={`Page__content p-${padding}`} value={data} />
+                <Changelog className={`Page__content p-${padding}`} changes={changes} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
@@ -147,11 +159,17 @@ const ScrollContainerWrapper: React.FunctionComponent<{
   );
 };
 
-// TODO (CL): Allow to configure which tabs are shown
-const NodeTypeTabs = {
-  [NodeType.Article]: ['Docs'],
-  [NodeType.Model]: ['Docs'],
-  [NodeType.HttpOperation]: ['Docs', 'TryIt'],
-  [NodeType.HttpService]: ['Docs'],
-  [NodeType.HttpServer]: ['Docs'],
+export enum NodeTab {
+  Docs = 'Docs',
+  TryIt = 'TryIt',
+  Changelog = 'Changelog',
+}
+
+export const NodeTabs: Dictionary<NodeTab[], NodeType> = {
+  [NodeType.Article]: [NodeTab.Docs],
+  [NodeType.Model]: [NodeTab.Docs],
+  [NodeType.HttpOperation]: [NodeTab.Docs, NodeTab.TryIt],
+  [NodeType.HttpService]: [NodeTab.Docs],
+  [NodeType.HttpServer]: [NodeTab.Docs],
+  [NodeType.Unknown]: [],
 };

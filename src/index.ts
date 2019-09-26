@@ -6,8 +6,8 @@ export * from './components/HttpOperation';
 export * from './components/PageSkeleton';
 export * from './components/TableOfContentsSkeleton';
 
-export { Page as PageComponent } from './components/Page';
-export { TableOfContents as TableOfContentsComponent } from './components/TableOfContents';
+export { Page as PageComponent, NodeTab, NodeTabs, IPage } from './components/Page';
+export { TableOfContents as TableOfContentsComponent, ITableOfContents } from './components/TableOfContents';
 
 export * from './containers/Hub';
 export * from './containers/Page';
