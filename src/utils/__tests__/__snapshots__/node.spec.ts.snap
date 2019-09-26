@@ -1,0 +1,1290 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`buildNodeMarkdownTree Article works with the basic article 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "position": Position {
+        "end": Object {
+          "column": 4,
+          "line": 3,
+          "offset": 42,
+        },
+        "indent": Array [
+          1,
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "yaml",
+      "value": "title: Stoplight Flavored Markdown",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 36,
+              "line": 5,
+              "offset": 79,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 3,
+              "line": 5,
+              "offset": 46,
+            },
+          },
+          "type": "text",
+          "value": "Stoplight Flavored Markdown (smd)",
+        },
+      ],
+      "data": Object {
+        "hProperties": Object {
+          "id": "stoplight-flavored-markdown-smd",
+        },
+        "id": "stoplight-flavored-markdown-smd",
+      },
+      "depth": 1,
+      "position": Position {
+        "end": Object {
+          "column": 36,
+          "line": 5,
+          "offset": 79,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 5,
+          "offset": 44,
+        },
+      },
+      "type": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 17,
+              "line": 7,
+              "offset": 97,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 5,
+              "line": 7,
+              "offset": 85,
+            },
+          },
+          "type": "text",
+          "value": "The Two Laws",
+        },
+      ],
+      "data": Object {
+        "hProperties": Object {
+          "id": "the-two-laws",
+        },
+        "id": "the-two-laws",
+      },
+      "depth": 3,
+      "position": Position {
+        "end": Object {
+          "column": 17,
+          "line": 7,
+          "offset": 97,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 7,
+          "offset": 81,
+        },
+      },
+      "type": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "checked": null,
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "position": Position {
+                    "end": Object {
+                      "column": 96,
+                      "line": 9,
+                      "offset": 194,
+                    },
+                    "indent": Array [],
+                    "start": Object {
+                      "column": 4,
+                      "line": 9,
+                      "offset": 102,
+                    },
+                  },
+                  "type": "text",
+                  "value": "smd is human readable. A human with a simple text editor can easily read and comprehend smd.",
+                },
+              ],
+              "position": Position {
+                "end": Object {
+                  "column": 96,
+                  "line": 9,
+                  "offset": 194,
+                },
+                "indent": Array [],
+                "start": Object {
+                  "column": 4,
+                  "line": 9,
+                  "offset": 102,
+                },
+              },
+              "type": "paragraph",
+            },
+          ],
+          "position": Position {
+            "end": Object {
+              "column": 96,
+              "line": 9,
+              "offset": 194,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 9,
+              "offset": 99,
+            },
+          },
+          "spread": false,
+          "type": "listItem",
+        },
+        Object {
+          "checked": null,
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "position": Position {
+                    "end": Object {
+                      "column": 57,
+                      "line": 10,
+                      "offset": 251,
+                    },
+                    "indent": Array [],
+                    "start": Object {
+                      "column": 4,
+                      "line": 10,
+                      "offset": 198,
+                    },
+                  },
+                  "type": "text",
+                  "value": "smd degrades gracefully. An smd document rendered on ",
+                },
+                Object {
+                  "position": Position {
+                    "end": Object {
+                      "column": 69,
+                      "line": 10,
+                      "offset": 263,
+                    },
+                    "indent": Array [],
+                    "start": Object {
+                      "column": 57,
+                      "line": 10,
+                      "offset": 251,
+                    },
+                  },
+                  "type": "inlineCode",
+                  "value": "github.com",
+                },
+                Object {
+                  "position": Position {
+                    "end": Object {
+                      "column": 99,
+                      "line": 10,
+                      "offset": 293,
+                    },
+                    "indent": Array [],
+                    "start": Object {
+                      "column": 69,
+                      "line": 10,
+                      "offset": 263,
+                    },
+                  },
+                  "type": "text",
+                  "value": " should be readable and clean.",
+                },
+              ],
+              "position": Position {
+                "end": Object {
+                  "column": 99,
+                  "line": 10,
+                  "offset": 293,
+                },
+                "indent": Array [],
+                "start": Object {
+                  "column": 4,
+                  "line": 10,
+                  "offset": 198,
+                },
+              },
+              "type": "paragraph",
+            },
+          ],
+          "position": Position {
+            "end": Object {
+              "column": 99,
+              "line": 10,
+              "offset": 293,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 10,
+              "offset": 195,
+            },
+          },
+          "spread": false,
+          "type": "listItem",
+        },
+      ],
+      "ordered": true,
+      "position": Position {
+        "end": Object {
+          "column": 99,
+          "line": 10,
+          "offset": 293,
+        },
+        "indent": Array [
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 9,
+          "offset": 99,
+        },
+      },
+      "spread": false,
+      "start": 1,
+      "type": "list",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`buildNodeMarkdownTree Model renders no tabs with no examples 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 25,
+              "line": 1,
+              "offset": 24,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "text",
+          "value": "A standard error object.",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 25,
+          "line": 1,
+          "offset": 24,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+    Object {
+      "lang": "json",
+      "meta": "model",
+      "type": "code",
+      "value": "{
+    \\"title\\": \\"Error\\",
+    \\"type\\": \\"object\\",
+    \\"properties\\": {
+        \\"code\\": {
+            \\"type\\": \\"string\\"
+        },
+        \\"message\\": {
+            \\"type\\": \\"string\\"
+        }
+    },
+    \\"required\\": [
+        \\"code\\"
+    ],
+    \\"x-tags\\": [
+        \\"Common\\"
+    ]
+}",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`buildNodeMarkdownTree Model renders no tabs with one example 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 25,
+              "line": 1,
+              "offset": 24,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "text",
+          "value": "A standard error object.",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 25,
+          "line": 1,
+          "offset": 24,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "annotations": Object {
+            "title": "Schema",
+          },
+          "children": Array [
+            Object {
+              "lang": "json",
+              "meta": "model",
+              "type": "code",
+              "value": "{
+    \\"title\\": \\"Error\\",
+    \\"type\\": \\"object\\",
+    \\"properties\\": {
+        \\"code\\": {
+            \\"type\\": \\"string\\"
+        },
+        \\"message\\": {
+            \\"type\\": \\"string\\"
+        }
+    },
+    \\"required\\": [
+        \\"code\\"
+    ],
+    \\"x-tags\\": [
+        \\"Common\\"
+    ],
+    \\"x-examples\\": {
+        \\"Example 1\\": {
+            \\"value\\": {
+                \\"code\\": \\"error\\",
+                \\"message\\": \\"Something bad happened!\\"
+            }
+        }
+    }
+}",
+            },
+          ],
+          "type": "tab",
+        },
+        Object {
+          "annotations": Object {
+            "title": "Example 1",
+          },
+          "children": Array [
+            Object {
+              "lang": "json",
+              "type": "code",
+              "value": "{
+    \\"value\\": {
+        \\"code\\": \\"error\\",
+        \\"message\\": \\"Something bad happened!\\"
+    }
+}",
+            },
+          ],
+          "type": "tab",
+        },
+      ],
+      "type": "tabContainer",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`buildNodeMarkdownTree Model renders no tabs with three examples 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 25,
+              "line": 1,
+              "offset": 24,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "text",
+          "value": "A standard error object.",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 25,
+          "line": 1,
+          "offset": 24,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "annotations": Object {
+            "title": "Schema",
+          },
+          "children": Array [
+            Object {
+              "lang": "json",
+              "meta": "model",
+              "type": "code",
+              "value": "{
+    \\"title\\": \\"Error\\",
+    \\"type\\": \\"object\\",
+    \\"properties\\": {
+        \\"code\\": {
+            \\"type\\": \\"string\\"
+        },
+        \\"message\\": {
+            \\"type\\": \\"string\\"
+        }
+    },
+    \\"required\\": [
+        \\"code\\"
+    ],
+    \\"x-tags\\": [
+        \\"Common\\"
+    ],
+    \\"x-examples\\": {
+        \\"Example 1\\": {
+            \\"value\\": {
+                \\"code\\": \\"error\\",
+                \\"message\\": \\"Something bad happened!\\"
+            }
+        },
+        \\"Example 2\\": {
+            \\"value\\": {
+                \\"code\\": \\"error\\",
+                \\"message\\": \\"Something else happened!\\"
+            }
+        },
+        \\"Example 3\\": {
+            \\"value\\": {
+                \\"code\\": \\"error\\",
+                \\"message\\": \\"Another bad thing happened!\\"
+            }
+        }
+    }
+}",
+            },
+          ],
+          "type": "tab",
+        },
+        Object {
+          "annotations": Object {
+            "title": "Example 1",
+          },
+          "children": Array [
+            Object {
+              "lang": "json",
+              "type": "code",
+              "value": "{
+    \\"value\\": {
+        \\"code\\": \\"error\\",
+        \\"message\\": \\"Something bad happened!\\"
+    }
+}",
+            },
+          ],
+          "type": "tab",
+        },
+        Object {
+          "annotations": Object {
+            "title": "Example 2",
+          },
+          "children": Array [
+            Object {
+              "lang": "json",
+              "type": "code",
+              "value": "{
+    \\"value\\": {
+        \\"code\\": \\"error\\",
+        \\"message\\": \\"Something else happened!\\"
+    }
+}",
+            },
+          ],
+          "type": "tab",
+        },
+        Object {
+          "annotations": Object {
+            "title": "Example 3",
+          },
+          "children": Array [
+            Object {
+              "lang": "json",
+              "type": "code",
+              "value": "{
+    \\"value\\": {
+        \\"code\\": \\"error\\",
+        \\"message\\": \\"Another bad thing happened!\\"
+    }
+}",
+            },
+          ],
+          "type": "tab",
+        },
+      ],
+      "type": "tabContainer",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`buildNodeMarkdownTree Operations works with Http Operations 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "json",
+      "meta": "model",
+      "type": "code",
+      "value": "{
+    \\"id\\": \\"?http-operation-id?\\",
+    \\"iid\\": \\"PUT_todos\\",
+    \\"method\\": \\"put\\",
+    \\"path\\": \\"/todos/{todoId}\\",
+    \\"summary\\": \\"Update Todo\\",
+    \\"responses\\": [
+        {
+            \\"code\\": \\"200\\",
+            \\"description\\": \\"\\",
+            \\"headers\\": [],
+            \\"contents\\": [
+                {
+                    \\"mediaType\\": \\"application/json\\",
+                    \\"schema\\": {
+                        \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                        \\"title\\": \\"Todo Full\\",
+                        \\"allOf\\": [
+                            {
+                                \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                                \\"title\\": \\"Todo Partial\\",
+                                \\"type\\": \\"object\\",
+                                \\"properties\\": {
+                                    \\"name\\": {
+                                        \\"type\\": \\"string\\"
+                                    },
+                                    \\"completed\\": {
+                                        \\"type\\": [
+                                            \\"boolean\\",
+                                            \\"null\\"
+                                        ]
+                                    }
+                                },
+                                \\"required\\": [
+                                    \\"name\\",
+                                    \\"completed\\"
+                                ],
+                                \\"x-tags\\": [
+                                    \\"Todos\\"
+                                ]
+                            },
+                            {
+                                \\"type\\": \\"object\\",
+                                \\"properties\\": {
+                                    \\"id\\": {
+                                        \\"type\\": \\"integer\\",
+                                        \\"minimum\\": 0,
+                                        \\"maximum\\": 1000000
+                                    },
+                                    \\"completed_at\\": {
+                                        \\"type\\": [
+                                            \\"string\\",
+                                            \\"null\\"
+                                        ],
+                                        \\"format\\": \\"date-time\\"
+                                    },
+                                    \\"created_at\\": {
+                                        \\"type\\": \\"string\\",
+                                        \\"format\\": \\"date-time\\"
+                                    },
+                                    \\"updated_at\\": {
+                                        \\"type\\": \\"string\\",
+                                        \\"format\\": \\"date-time\\"
+                                    },
+                                    \\"user\\": {
+                                        \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                                        \\"title\\": \\"User\\",
+                                        \\"type\\": \\"object\\",
+                                        \\"properties\\": {
+                                            \\"name\\": {
+                                                \\"type\\": \\"string\\",
+                                                \\"description\\": \\"The user's full name.\\"
+                                            },
+                                            \\"age\\": {
+                                                \\"type\\": \\"number\\",
+                                                \\"minimum\\": 0,
+                                                \\"maximum\\": 150
+                                            }
+                                        },
+                                        \\"required\\": [
+                                            \\"name\\",
+                                            \\"age\\"
+                                        ],
+                                        \\"x-tags\\": [
+                                            \\"Todos\\"
+                                        ],
+                                        \\"description\\": \\"Here lies the user model\\"
+                                    }
+                                },
+                                \\"required\\": [
+                                    \\"id\\",
+                                    \\"user\\"
+                                ]
+                            }
+                        ],
+                        \\"x-tags\\": [
+                            \\"Todos\\"
+                        ]
+                    },
+                    \\"examples\\": [
+                        {
+                            \\"key\\": \\"application/json\\",
+                            \\"value\\": {
+                                \\"id\\": 9000,
+                                \\"name\\": \\"It's Over 9000!!!\\",
+                                \\"completed\\": true,
+                                \\"completed_at\\": null,
+                                \\"created_at\\": \\"2014-08-28T14:14:28.494Z\\",
+                                \\"updated_at\\": \\"2015-08-28T14:14:28.494Z\\"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            \\"code\\": \\"401\\",
+            \\"description\\": \\"Our shared 401 response.\\",
+            \\"headers\\": [],
+            \\"contents\\": [
+                {
+                    \\"mediaType\\": \\"application/json\\",
+                    \\"schema\\": {
+                        \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                        \\"title\\": \\"Error\\",
+                        \\"description\\": \\"A standard error object.\\",
+                        \\"x-tags\\": [
+                            \\"Common\\"
+                        ],
+                        \\"anyOf\\": [
+                            {
+                                \\"type\\": \\"object\\",
+                                \\"properties\\": {
+                                    \\"code\\": {
+                                        \\"type\\": \\"string\\"
+                                    },
+                                    \\"message\\": {
+                                        \\"type\\": \\"string\\"
+                                    }
+                                },
+                                \\"required\\": [
+                                    \\"code\\"
+                                ]
+                            },
+                            {
+                                \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                                \\"title\\": \\"Category\\",
+                                \\"type\\": \\"object\\",
+                                \\"description\\": \\"\\",
+                                \\"properties\\": {
+                                    \\"name\\": {
+                                        \\"type\\": \\"string\\"
+                                    }
+                                },
+                                \\"required\\": [
+                                    \\"name\\"
+                                ],
+                                \\"x-tags\\": [
+                                    \\"Pets\\"
+                                ]
+                            }
+                        ]
+                    },
+                    \\"examples\\": [
+                        {
+                            \\"key\\": \\"application/json\\",
+                            \\"value\\": {
+                                \\"code\\": \\"401\\",
+                                \\"message\\": \\"Not Authorized\\"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            \\"code\\": \\"404\\",
+            \\"description\\": \\"Our shared 404 response.\\",
+            \\"headers\\": [],
+            \\"contents\\": [
+                {
+                    \\"mediaType\\": \\"application/json\\",
+                    \\"schema\\": {
+                        \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                        \\"title\\": \\"Error\\",
+                        \\"description\\": \\"A standard error object.\\",
+                        \\"x-tags\\": [
+                            \\"Common\\"
+                        ],
+                        \\"anyOf\\": [
+                            {
+                                \\"type\\": \\"object\\",
+                                \\"properties\\": {
+                                    \\"code\\": {
+                                        \\"type\\": \\"string\\"
+                                    },
+                                    \\"message\\": {
+                                        \\"type\\": \\"string\\"
+                                    }
+                                },
+                                \\"required\\": [
+                                    \\"code\\"
+                                ]
+                            },
+                            {
+                                \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                                \\"title\\": \\"Category\\",
+                                \\"type\\": \\"object\\",
+                                \\"description\\": \\"\\",
+                                \\"properties\\": {
+                                    \\"name\\": {
+                                        \\"type\\": \\"string\\"
+                                    }
+                                },
+                                \\"required\\": [
+                                    \\"name\\"
+                                ],
+                                \\"x-tags\\": [
+                                    \\"Pets\\"
+                                ]
+                            }
+                        ]
+                    },
+                    \\"examples\\": [
+                        {
+                            \\"key\\": \\"application/json\\",
+                            \\"value\\": {
+                                \\"code\\": \\"404\\",
+                                \\"message\\": \\"Not Found\\"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            \\"code\\": \\"500\\",
+            \\"description\\": \\"Our shared 500 response.\\",
+            \\"headers\\": [],
+            \\"contents\\": [
+                {
+                    \\"mediaType\\": \\"application/json\\",
+                    \\"schema\\": {
+                        \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                        \\"title\\": \\"Error\\",
+                        \\"description\\": \\"A standard error object.\\",
+                        \\"x-tags\\": [
+                            \\"Common\\"
+                        ],
+                        \\"anyOf\\": [
+                            {
+                                \\"type\\": \\"object\\",
+                                \\"properties\\": {
+                                    \\"code\\": {
+                                        \\"type\\": \\"string\\"
+                                    },
+                                    \\"message\\": {
+                                        \\"type\\": \\"string\\"
+                                    }
+                                },
+                                \\"required\\": [
+                                    \\"code\\"
+                                ]
+                            },
+                            {
+                                \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                                \\"title\\": \\"Category\\",
+                                \\"type\\": \\"object\\",
+                                \\"description\\": \\"\\",
+                                \\"properties\\": {
+                                    \\"name\\": {
+                                        \\"type\\": \\"string\\"
+                                    }
+                                },
+                                \\"required\\": [
+                                    \\"name\\"
+                                ],
+                                \\"x-tags\\": [
+                                    \\"Pets\\"
+                                ]
+                            }
+                        ]
+                    },
+                    \\"examples\\": [
+                        {
+                            \\"key\\": \\"application/json\\",
+                            \\"value\\": {
+                                \\"code\\": \\"500\\",
+                                \\"message\\": \\"Server Error\\"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    \\"servers\\": [
+        {
+            \\"url\\": \\"http://todos.stoplight.io\\"
+        }
+    ],
+    \\"request\\": {
+        \\"body\\": {
+            \\"contents\\": [
+                {
+                    \\"mediaType\\": \\"application/json\\",
+                    \\"schema\\": {
+                        \\"$schema\\": \\"http://json-schema.org/draft-04/schema#\\",
+                        \\"title\\": \\"Todo Partial\\",
+                        \\"type\\": \\"object\\",
+                        \\"properties\\": {
+                            \\"name\\": {
+                                \\"type\\": \\"string\\"
+                            },
+                            \\"completed\\": {
+                                \\"type\\": [
+                                    \\"boolean\\",
+                                    \\"null\\"
+                                ]
+                            }
+                        },
+                        \\"required\\": [
+                            \\"name\\",
+                            \\"completed\\"
+                        ],
+                        \\"x-tags\\": [
+                            \\"Todos\\"
+                        ]
+                    },
+                    \\"examples\\": [
+                        {
+                            \\"key\\": \\"Incomplete\\",
+                            \\"value\\": {
+                                \\"name\\": \\"Docs Module\\",
+                                \\"completed\\": false
+                            }
+                        },
+                        {
+                            \\"key\\": \\"Completed\\",
+                            \\"value\\": {
+                                \\"name\\": \\"Studio\\",
+                                \\"completed\\": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        \\"query\\": [
+            {
+                \\"schema\\": {
+                    \\"type\\": \\"string\\",
+                    \\"default\\": \\"300\\",
+                    \\"description\\": \\"How many todos to limit?\\"
+                },
+                \\"name\\": \\"limit\\",
+                \\"style\\": \\"form\\"
+            },
+            {
+                \\"schema\\": {
+                    \\"type\\": \\"boolean\\",
+                    \\"description\\": \\"Only return completed\\"
+                },
+                \\"name\\": \\"completed\\",
+                \\"style\\": \\"form\\"
+            },
+            {
+                \\"schema\\": {
+                    \\"type\\": \\"string\\",
+                    \\"enum\\": [
+                        \\"something\\",
+                        \\"another\\"
+                    ]
+                },
+                \\"name\\": \\"type\\",
+                \\"style\\": \\"form\\"
+            }
+        ],
+        \\"headers\\": [
+            {
+                \\"schema\\": {
+                    \\"type\\": \\"string\\",
+                    \\"description\\": \\"Your Stoplight account id\\"
+                },
+                \\"name\\": \\"account-id\\",
+                \\"style\\": \\"simple\\",
+                \\"required\\": true
+            }
+        ],
+        \\"path\\": [
+            {
+                \\"schema\\": {
+                    \\"type\\": \\"string\\"
+                },
+                \\"name\\": \\"todoId\\",
+                \\"style\\": \\"simple\\",
+                \\"required\\": true
+            }
+        ]
+    },
+    \\"tags\\": [
+        {
+            \\"name\\": \\"Todos\\"
+        }
+    ],
+    \\"security\\": [
+        {
+            \\"type\\": \\"apiKey\\",
+            \\"name\\": \\"apikey\\",
+            \\"in\\": \\"query\\",
+            \\"description\\": \\"Use \`?apikey=123\` to authenticate requests. It's super secure.\\"
+        }
+    ]
+}",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`buildNodeMarkdownTree Services works with HTTP Services 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 82,
+              "line": 1,
+              "offset": 81,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "text",
+          "value": "This is a sample server Petstore server.  You can find out more about Swagger at ",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "position": Position {
+                "end": Object {
+                  "column": 100,
+                  "line": 1,
+                  "offset": 99,
+                },
+                "indent": Array [],
+                "start": Object {
+                  "column": 83,
+                  "line": 1,
+                  "offset": 82,
+                },
+              },
+              "type": "text",
+              "value": "http://swagger.io",
+            },
+          ],
+          "position": Position {
+            "end": Object {
+              "column": 120,
+              "line": 1,
+              "offset": 119,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 82,
+              "line": 1,
+              "offset": 81,
+            },
+          },
+          "title": null,
+          "type": "link",
+          "url": "http://swagger.io",
+        },
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 127,
+              "line": 1,
+              "offset": 126,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 120,
+              "line": 1,
+              "offset": 119,
+            },
+          },
+          "type": "text",
+          "value": " or on ",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "position": Position {
+                "end": Object {
+                  "column": 154,
+                  "line": 1,
+                  "offset": 153,
+                },
+                "indent": Array [],
+                "start": Object {
+                  "column": 128,
+                  "line": 1,
+                  "offset": 127,
+                },
+              },
+              "type": "text",
+              "value": "irc.freenode.net, #swagger",
+            },
+          ],
+          "position": Position {
+            "end": Object {
+              "column": 179,
+              "line": 1,
+              "offset": 178,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 127,
+              "line": 1,
+              "offset": 126,
+            },
+          },
+          "title": null,
+          "type": "link",
+          "url": "http://swagger.io/irc/",
+        },
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 223,
+              "line": 1,
+              "offset": 222,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 179,
+              "line": 1,
+              "offset": 178,
+            },
+          },
+          "type": "text",
+          "value": ".  For this sample, you can use the api key ",
+        },
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 236,
+              "line": 1,
+              "offset": 235,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 223,
+              "line": 1,
+              "offset": 222,
+            },
+          },
+          "type": "inlineCode",
+          "value": "special-key",
+        },
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 272,
+              "line": 1,
+              "offset": 271,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 236,
+              "line": 1,
+              "offset": 235,
+            },
+          },
+          "type": "text",
+          "value": " to test the authorization filters. ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 272,
+          "line": 1,
+          "offset": 271,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+    Object {
+      "lang": "json",
+      "meta": "model",
+      "type": "code",
+      "value": "{
+    \\"name\\": \\"Petstore (OpenAPI v3)\\",
+    \\"termsOfService\\": \\"https://terms-of-service.com\\",
+    \\"contact\\": {
+        \\"name\\": \\"Support\\",
+        \\"url\\": \\"https://stoplight.io\\",
+        \\"email\\": \\"support@stoplight.io\\"
+    },
+    \\"license\\": {
+        \\"name\\": \\"Apache 2.0\\",
+        \\"url\\": \\"https://www.apache.org/licenses/LICENSE-2.0.txt\\"
+    },
+    \\"version\\": \\"1.0.0\\",
+    \\"servers\\": [
+        {
+            \\"url\\": \\"https://api.stoplight.io\\",
+            \\"name\\": \\"Production API\\"
+        },
+        {
+            \\"url\\": \\"https://api.staging.stoplight.io\\",
+            \\"name\\": \\"Staging API\\"
+        },
+        {
+            \\"url\\": \\"https://api.int.stoplight.io\\",
+            \\"name\\": \\"Integration API\\"
+        },
+        {
+            \\"url\\": \\"https://localhost:4060\\",
+            \\"name\\": \\"Development API\\"
+        }
+    ],
+    \\"security\\": [],
+    \\"securitySchemes\\": {
+        \\"oauth_scheme\\": {
+            \\"type\\": \\"oauth2\\",
+            \\"flows\\": {
+                \\"implicit\\": {
+                    \\"authorizationUrl\\": \\"https://implicit.authorization-url.com\\",
+                    \\"refreshUrl\\": \\"https://implicit.refresh-url.com\\",
+                    \\"scopes\\": [
+                        \\"scope:implicit\\"
+                    ]
+                },
+                \\"password\\": {
+                    \\"tokenUrl\\": \\"https://password.token-url.com\\",
+                    \\"refreshUrl\\": \\"https://password.refresh-url.com\\",
+                    \\"scopes\\": [
+                        \\"scope:password\\"
+                    ]
+                },
+                \\"clientCredentials\\": {
+                    \\"tokenUrl\\": \\"https://clientCredentials.token-url.com\\",
+                    \\"refreshUrl\\": \\"https://clientCredentials.refresh-url.com\\",
+                    \\"scopes\\": [
+                        \\"scope:clientCredentials\\"
+                    ]
+                }
+            },
+            \\"authorizationCode\\": {
+                \\"authorizationUrl\\": \\"https://authorizationCode.authorization-url.com\\",
+                \\"tokenUrl\\": \\"https://authorizationCode.token-url.com\\",
+                \\"refreshUrl\\": \\"https://authorizationCode.refresh-url.com\\",
+                \\"scopes\\": [
+                    \\"scope:authorizationCode\\"
+                ]
+            }
+        }
+    }
+}",
+    },
+  ],
+  "type": "root",
+}
+`;

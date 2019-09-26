@@ -1,0 +1,23 @@
+{
+  "title": "Error",
+  "type": "object",
+  "description": "A standard error object.",
+  "properties": {
+    "code": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": ["code"],
+  "x-tags": ["Common"],
+  "x-examples": {
+    "Example 1": {
+      "value": {
+        "code": "error",
+        "message": "Something bad happened!"
+      }
+    }
+  }
+}
