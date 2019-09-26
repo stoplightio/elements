@@ -28,13 +28,6 @@ export interface IPage extends IErrorBoundary {
   scrollInnerContainer?: boolean;
 }
 
-export enum IPageTabType {
-  Docs = 'Docs',
-  Dependencies = 'Dependencies',
-  TryIt = 'TryIt',
-  Changelog = 'Changelog',
-}
-
 const ElementPage: React.FunctionComponent<IPage> = ({
   type,
   data,
@@ -49,6 +42,9 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   shadows,
   scrollInnerContainer,
 }) => {
+  const [selectedTab, setSelectedTab] = React.useState(0);
+  const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);
+
   const nodeTabs =
     {
       ...NodeTabs,
@@ -65,7 +61,12 @@ const ElementPage: React.FunctionComponent<IPage> = ({
       <>
         {pageHeader}
 
-        <SimpleTabs id="Page__tabs" className={cn('Page__tabs flex flex-col flex-1')}>
+        <SimpleTabs
+          id="Page__tabs"
+          className={cn('Page__tabs flex flex-col flex-1')}
+          selectedIndex={selectedTab >= nodeTabs.length ? nodeTabs.length - 1 : selectedTab}
+          onSelect={onSelect}
+        >
           <SimpleTabList className={cn('Page__tabs-list mt-6', `px-${padding}`)}>
             {nodeTabs.includes(NodeTab.Docs) && (
               <SimpleTab id="docs" className="Page__tab">

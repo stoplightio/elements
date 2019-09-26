@@ -4,8 +4,8 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { IPage, Page } from '../..';
-import { Provider } from '../..';
+import { IPage, Page } from '../../containers/Page';
+import { Provider } from '../../containers/Provider';
 import { providerKnobs } from './Provider';
 
 export const darkMode = () => boolean('dark mode', false);
