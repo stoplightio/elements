@@ -8,9 +8,9 @@ import { NodeTab, Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);
 
-const article: string = require('../../__fixtures__/article.md');
-const httpOperation = require('../../__fixtures__/http-operation.json');
-const modelWithThreeExamples: string = require('../../__fixtures__/models/model-with-three-examples.json');
+const article = require('../../__fixtures__/articles/kitchen-sink.md');
+const httpOperation = require('../../__fixtures__/operations/put-todos.json');
+const modelWithThreeExamples = require('../../__fixtures__/models/model-with-three-examples.json');
 const httpService = require('../../__fixtures__/services/petstore.json');
 
 const knobs = () => ({
