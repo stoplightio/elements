@@ -1,6 +1,7 @@
 import { safeParse } from '@stoplight/json';
 import {
   ActionBar,
+  BasicAuth,
   BodyEditor,
   Parameters,
   RequestMakerProvider,
@@ -10,7 +11,7 @@ import {
 } from '@stoplight/request-maker';
 import { IHttpContent, IHttpOperation, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { ControlGroup } from '@stoplight/ui-kit';
-import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
+import { SimpleTab, SimpleTabList, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import { get } from 'lodash';
@@ -25,8 +26,42 @@ export interface ITryItProps extends IErrorBoundary {
 }
 
 const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, operation }) => {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
   if (!operation) return null;
+  const store = useRequestMaker(operation);
+
+  return (
+    <RequestMakerProvider value={store}>
+      <div className={cn('TryIt', className)}>
+        <BasicAuth className="TryIt__BasicAuth mb-10" />
+
+        <Parameters className="TryIt__Parameters mb-10" title="Path Parameters" type="path" fixedName />
+
+        <Parameters className="TryIt__Parameters mb-10" title="Headers" type="header" fixedName />
+
+        <Parameters className="TryIt__Parameters mb-10" title="Query Parameters" type="query" fixedName />
+
+        <Body operation={operation} />
+
+        <ControlGroup className="TryIt__Send">
+          <SendButton className="TryIt__SendButton w-40" intent="primary" icon="play" />
+          <ActionBar className="TryIt__ActionBar flex-auto" />
+        </ControlGroup>
+
+        <ResponseStatus className="mt-10" />
+        <ResponseViewer className="mt-6" />
+      </div>
+    </RequestMakerProvider>
+  );
+};
+TryItComponent.displayName = 'TryIt.Component';
+
+interface IBodyProps {
+  operation: IHttpOperation;
+  className?: string;
+}
+
+const Body: React.FunctionComponent<IBodyProps> = ({ operation }) => {
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const store = useRequestMaker(operation);
 
   let schema: IHttpContent['schema'] = get(operation, 'request.body.contents[0].schema');
@@ -47,52 +82,34 @@ const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, opera
   }
 
   return (
-    <RequestMakerProvider value={store}>
-      <div className={cn('TryIt', className)}>
-        <Parameters className="TryIt__Parameters mb-10" title="Path Parameters" type="path" fixedName />
+    <>
+      <div className="text-lg font-semibold mb-6">Body</div>
+      <SimpleTabs
+        id="TryIt-request-tabs"
+        className="TryIt__RequestTabs mb-10"
+        selectedIndex={selectedIndex}
+        onSelect={(i: number) => {
+          setSelectedIndex(i);
 
-        <Parameters className="TryIt__Parameters mb-10" title="Headers" type="header" fixedName />
+          if (i === 0) {
+            store.request.body = sampler.sample(schema);
+          } else if (examples) {
+            const example = examples[i - 1];
 
-        <Parameters className="TryIt__Parameters mb-10" title="Query Parameters" type="query" fixedName />
-
-        <div className="text-lg font-semibold mb-6">Body</div>
-
-        <SimpleTabs
-          id="TryIt-request-tabs"
-          className="TryIt__RequestTabs mb-10"
-          selectedIndex={selectedIndex}
-          onSelect={(i: number) => {
-            setSelectedIndex(i);
-
-            if (i === 0) {
-              store.request.body = sampler.sample(schema);
-            } else if (examples) {
-              const example = examples[i - 1];
-
-              store.request.body = (example as INodeExample).value
-                ? (example as INodeExample).value
-                : (example as INodeExternalExample).externalValue;
-            }
-          }}
-        >
-          <SimpleTabList>
-            <SimpleTab>{mediaType || 'JSON'}</SimpleTab>
-            {exampleTabs}
-          </SimpleTabList>
-          <BodyEditor className="border" />
-        </SimpleTabs>
-
-        <ControlGroup className="TryIt__Send">
-          <SendButton className="TryIt__SendButton w-40" intent="primary" icon="play" />
-          <ActionBar className="TryIt__ActionBar flex-auto" />
-        </ControlGroup>
-
-        <ResponseStatus className="mt-10" />
-        <ResponseViewer className="mt-6" />
-      </div>
-    </RequestMakerProvider>
+            store.request.body = (example as INodeExample).value
+              ? (example as INodeExample).value
+              : (example as INodeExternalExample).externalValue;
+          }
+        }}
+      >
+        <SimpleTabList>
+          <SimpleTab>{mediaType || 'JSON'}</SimpleTab>
+          {exampleTabs}
+        </SimpleTabList>
+        <BodyEditor className="border dark:border-gray-9" />
+      </SimpleTabs>
+    </>
   );
 };
-TryItComponent.displayName = 'TryIt.Component';
 
 export const TryIt = withErrorBoundary<ITryItProps>(TryItComponent, ['operation'], 'TryIt');
