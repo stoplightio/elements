@@ -1,4 +1,5 @@
 import { safeStringify } from '@stoplight/json';
+import { IRoot } from '@stoplight/markdown';
 import { processMarkdownTree } from '@stoplight/markdown-viewer';
 import { Builder } from '@stoplight/markdown/builder';
 import { Dictionary, NodeType } from '@stoplight/types';
@@ -32,7 +33,7 @@ export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
   unknown: 'help',
 };
 
-export const buildNodeMarkdownTree = (type: string, data: any) => {
+export function buildNodeMarkdownTree(type: string, data: any): IRoot {
   const markdown = new Builder();
 
   if (type === NodeType.Article) {
@@ -111,4 +112,4 @@ export const buildNodeMarkdownTree = (type: string, data: any) => {
   }
 
   return processMarkdownTree(markdown.root);
-};
+}
