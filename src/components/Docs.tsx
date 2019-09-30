@@ -34,7 +34,6 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) =>
   const showPageToc = width >= 1000;
 
   const tree = buildNodeMarkdownTree(type, data);
-
   const headings = useComputePageToc(tree);
 
   return (

@@ -1,24 +1,13 @@
-import { safeParse } from '@stoplight/json';
 import { Resolver } from '@stoplight/json-ref-resolver';
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
 import fetch from 'isomorphic-unfetch';
 import * as React from 'react';
+import { useParsedData } from './useParsedData';
 
 export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
-  const [resolved, setResolved] = React.useState();
-
-  const parsedValue = React.useMemo(() => {
-    if (
-      type === 'http_request' ||
-      type === 'json_schema' ||
-      type === NodeType.Model ||
-      type === NodeType.HttpOperation ||
-      type === NodeType.HttpService
-    ) {
-      return safeParse(value);
-    }
-  }, [value]);
+  const parsedValue = useParsedData(type, value);
+  const [resolved, setResolved] = React.useState(parsedValue);
 
   React.useEffect(() => {
     // Only resolve if we've succeeded in parsing the string
@@ -31,10 +20,14 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
         dereferenceRemote: true,
       })
       .then(res => {
-        setResolved(res.result);
+        if (res.errors.length) {
+          console.error('Error resolving', type, res.errors);
+        } else if (res.result) {
+          setResolved(res.result);
+        }
       })
       .catch(e => {
-        console.error('Error resolving object', e);
+        console.error('Error resolving', type, e);
       });
   }, [value]);
 
@@ -47,7 +40,13 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
 
 const httpReader = {
   async resolve(ref: any) {
-    return (await fetch(String(ref))).text();
+    const res = await fetch(String(ref));
+
+    if (res.status >= 400) {
+      throw new Error(await res.text());
+    }
+
+    return res.text();
   },
 };
 
