@@ -10,7 +10,9 @@ export function useParsedData(type: string, data: any) {
       try {
         // Parse YAML to object
         parsedData = parse(data);
-      } catch (error) {}
+      } catch (error) {
+        // noop
+      }
     }
 
     return parsedData;
