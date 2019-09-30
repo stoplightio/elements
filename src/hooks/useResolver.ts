@@ -24,6 +24,19 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
     // Only resolve if we've succeeded in parsing the string
     if (typeof parsedValue !== 'object') return;
 
+    const httpResolver = new Resolver({
+      resolvers: {
+        https: httpReader,
+        http: httpReader,
+      },
+
+      async parseResolveResult(opts) {
+        opts.result = parse(opts.result);
+
+        return opts;
+      },
+    });
+
     // if we have a parsed value (e.g. json schema or http operation), resolve it
     httpResolver
       .resolve(parsedValue, {
@@ -50,18 +63,5 @@ const httpReader = {
     return (await fetch(String(ref))).text();
   },
 };
-
-export const httpResolver = new Resolver({
-  resolvers: {
-    https: httpReader,
-    http: httpReader,
-  },
-
-  async parseResolveResult(opts) {
-    opts.result = parse(opts.result);
-
-    return opts;
-  },
-});
 
 /** END resolver */

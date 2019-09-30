@@ -245,6 +245,7 @@ class ResolveRunner {
             if (crawler.resolvers.length) {
                 uriResults = yield Promise.all(crawler.resolvers);
             }
+            console.log(uriResults);
             if (uriResults.length) {
                 for (const r of uriResults) {
                     let resolvedTargetPath = r.targetPath;
@@ -268,6 +269,9 @@ class ResolveRunner {
                             }
                             else {
                                 lodash_1.set(draft, resolvedTargetPath, r.resolved.result);
+                                if (this.graph.hasNode(String(r.uri))) {
+                                    this.graph.setNodeData(String(r.uri), r.resolved.result);
+                                }
                             }
                         }
                     });
@@ -300,6 +304,10 @@ class ResolveRunner {
                                     resolved.refMap[json_1.pathToPointer(dependantPath)] = json_1.pathToPointer(pointerPath);
                                     if (val !== void 0) {
                                         lodash_1.set(draft, dependantPath, val);
+                                        console.log(json_1.pathToPointer(pointerPath), immer_1.original(val));
+                                        if (this.graph.hasNode(json_1.pathToPointer(pointerPath))) {
+                                            this.graph.setNodeData(json_1.pathToPointer(pointerPath), immer_1.original(val));
+                                        }
                                     }
                                     else {
                                         resolved.errors.push({

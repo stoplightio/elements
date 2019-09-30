@@ -12,11 +12,11 @@ import { PageHeader } from './PageHeader';
 import { TryIt } from './TryIt';
 
 export interface IPage extends IErrorBoundary {
+  srn: string;
   type: NodeType;
   data: any;
 
   name?: string;
-  srn?: string;
   changes?: IChange[];
   tabs?: {
     [type in NodeType]?: NodeTab[];

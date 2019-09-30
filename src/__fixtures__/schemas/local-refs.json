@@ -1,18 +1,24 @@
 {
   "type": "object",
   "properties": {
-    "foo": {
+    "id": {
       "type": "string"
     },
-    "bar": {
-      "$ref": "#/definitions/bar"
+    "name": {
+      "$ref": "#/definitions/name"
+    },
+    "todo": {
+      "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json"
     }
   },
   "definitions": {
-    "bar": {
+    "name": {
       "type": "object",
       "properties": {
-        "bean": {
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
           "type": "string"
         }
       }
