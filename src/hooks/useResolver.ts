@@ -53,7 +53,13 @@ export const httpResolver = new Resolver({
   },
 
   async parseResolveResult(opts) {
-    opts.result = parse(opts.result);
+    if (typeof opts.result === 'string') {
+      try {
+        opts.result = parse(opts.result);
+      } catch (e) {
+        // noop, probably not json/yaml
+      }
+    }
 
     return opts;
   },
