@@ -1,6 +1,6 @@
 import 'resize-observer-polyfill';
 
-import { IconName } from '@blueprintjs/core';
+import { IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import useComponentSize from '@rehooks/component-size';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
@@ -52,7 +52,7 @@ const MarkdownViewerCode: React.FunctionComponent<{
   annotations: ICodeAnnotations;
   parent: IComponentMappingProps<any>['parent'];
 }> = ({ type, value, annotations, parent }) => {
-  const resolved = useResolver(type, value);
+  const { result, errors } = useResolver(type, value);
 
   if (type === NodeType.Model || type === 'json_schema') {
     const title = annotations && annotations.title;
@@ -62,20 +62,57 @@ const MarkdownViewerCode: React.FunctionComponent<{
       <div>
         {title && <BlockHeader icon={icon} iconColor={color} title={title} />}
 
+        {errors.length > 0 && (
+          <div className="w-full flex justify-end">
+            <Popover
+              interactionKind={PopoverInteractionKind.HOVER}
+              target={
+                <Tag intent={Intent.DANGER}>
+                  {errors.length} Error{errors.length > 1 && 's'}
+                </Tag>
+              }
+              content={
+                <div
+                  className={cn('p-6 max-w-md break-all', {
+                    'list-none': errors.length === 1,
+                  })}
+                >
+                  {errors.map((error, index) => {
+                    return (
+                      <li key={index} className={index > 1 ? 'mt-3' : ''}>
+                        {error && error.uri ? (
+                          <>
+                            Fail to resolve{' '}
+                            <a href={String(error.uri)} target="_blank">
+                              {String(error.uri)}
+                            </a>
+                          </>
+                        ) : (
+                          error.message
+                        )}
+                      </li>
+                    );
+                  })}
+                </div>
+              }
+            />
+          </div>
+        )}
+
         <div
           className={cn('dark:border-darken', {
             [CLASSNAMES.bordered]: !parent || parent.type !== 'tab',
             [CLASSNAMES.block]: !parent || parent.type !== 'tab',
           })}
         >
-          <JsonSchemaViewer schema={resolved} maxRows={JSV_MAX_ROWS} />
+          <JsonSchemaViewer schema={result} maxRows={JSV_MAX_ROWS} />
         </div>
       </div>
     );
   } else if (type === NodeType.HttpOperation) {
-    return <HttpOperation value={resolved} />;
+    return <HttpOperation value={result} />;
   } else if (type === NodeType.HttpService) {
-    return <HttpService value={resolved} />;
+    return <HttpService value={result} />;
   }
 
   return null;

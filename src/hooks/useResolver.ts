@@ -1,4 +1,5 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
+import { IResolveResult } from '@stoplight/json-ref-resolver/types';
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
 import fetch from 'isomorphic-unfetch';
@@ -7,7 +8,13 @@ import { useParsedData } from './useParsedData';
 
 export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
   const parsedValue = useParsedData(type, value);
-  const [resolved, setResolved] = React.useState(parsedValue);
+  const [resolved, setResolved] = React.useState<{
+    result: IResolveResult['result'];
+    errors: IResolveResult['errors'];
+  }>({
+    result: parsedValue,
+    errors: [],
+  });
 
   React.useEffect(() => {
     // Only resolve if we've succeeded in parsing the string
@@ -20,7 +27,10 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
         dereferenceRemote: true,
       })
       .then(res => {
-        setResolved(res.result);
+        setResolved({
+          result: res.result,
+          errors: res.errors,
+        });
       })
       .catch(e => {
         console.error('Error resolving', type, e);
@@ -39,7 +49,7 @@ const httpReader = {
     const res = await fetch(String(ref));
 
     if (res.status >= 400) {
-      throw new Error(await res.text());
+      throw new Error(res.statusText);
     }
 
     return res.text();
