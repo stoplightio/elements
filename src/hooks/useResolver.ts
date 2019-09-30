@@ -20,11 +20,7 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
         dereferenceRemote: true,
       })
       .then(res => {
-        if (res.errors.length) {
-          console.error('Error resolving', type, res.errors);
-        } else if (res.result) {
-          setResolved(res.result);
-        }
+        setResolved(res.result);
       })
       .catch(e => {
         console.error('Error resolving', type, e);
