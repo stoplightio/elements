@@ -1,24 +1,20 @@
-import { safeParse } from '@stoplight/json';
 import { Resolver } from '@stoplight/json-ref-resolver';
+import { IResolveResult } from '@stoplight/json-ref-resolver/types';
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
 import fetch from 'isomorphic-unfetch';
 import * as React from 'react';
+import { useParsedData } from './useParsedData';
 
 export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
-  const [resolved, setResolved] = React.useState();
-
-  const parsedValue = React.useMemo(() => {
-    if (
-      type === 'http_request' ||
-      type === 'json_schema' ||
-      type === NodeType.Model ||
-      type === NodeType.HttpOperation ||
-      type === NodeType.HttpService
-    ) {
-      return safeParse(value);
-    }
-  }, [value]);
+  const parsedValue = useParsedData(type, value);
+  const [resolved, setResolved] = React.useState<{
+    result: IResolveResult['result'];
+    errors: IResolveResult['errors'];
+  }>({
+    result: parsedValue,
+    errors: [],
+  });
 
   React.useEffect(() => {
     // Only resolve if we've succeeded in parsing the string
@@ -31,10 +27,13 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
         dereferenceRemote: true,
       })
       .then(res => {
-        setResolved(res.result);
+        setResolved({
+          result: res.result,
+          errors: res.errors,
+        });
       })
       .catch(e => {
-        console.error('Error resolving object', e);
+        console.error('Error resolving', type, e);
       });
   }, [value]);
 
@@ -47,7 +46,13 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
 
 const httpReader = {
   async resolve(ref: any) {
-    return (await fetch(String(ref))).text();
+    const res = await fetch(String(ref));
+
+    if (res.status >= 400) {
+      throw new Error(res.statusText);
+    }
+
+    return res.text();
   },
 };
 
@@ -58,7 +63,13 @@ export const httpResolver = new Resolver({
   },
 
   async parseResolveResult(opts) {
-    opts.result = parse(opts.result);
+    if (typeof opts.result === 'string') {
+      try {
+        opts.result = parse(opts.result);
+      } catch (e) {
+        // noop, probably not json/yaml
+      }
+    }
 
     return opts;
   },
