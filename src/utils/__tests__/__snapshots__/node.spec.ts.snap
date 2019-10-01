@@ -1021,6 +1021,13 @@ Object {
             \\"name\\": \\"apikey\\",
             \\"in\\": \\"query\\",
             \\"description\\": \\"Use \`?apikey=123\` to authenticate requests. It's super secure.\\"
+        },
+        {
+            \\"type\\": \\"http\\",
+            \\"scheme\\": \\"basic\\",
+            \\"name\\": \\"basic\\",
+            \\"in\\": \\"query\\",
+            \\"description\\": \\"Basic Auth\\"
         }
     ]
 }",
