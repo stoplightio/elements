@@ -1900,10 +1900,10 @@
     unified "~8.3.2"
     unist-util-select "~2.0"
 
-"@stoplight/request-maker@2.11.3":
-  version "2.11.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.11.3.tgz#5de6b7e13ed2cadfa7d63479a6c2226833bf447c"
-  integrity sha512-riYekQx4bOtlMJmAQ39cvJ0fcGW8I19WjWOyMU2gKPRcE66AIPrKh+vgG9ZCjLnaPLSyRRdoAnGO2oe7dGgPFQ==
+"@stoplight/request-maker@2.11.4":
+  version "2.11.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.11.4.tgz#0458c9d759acadfb131f0fbd1ac350acf6f01240"
+  integrity sha512-iPvLBXRHt4MRugAnuddyqnxu4Kg1N8Kh4/k1phV1r3tDb5IIVushcRlIhJB3/Ow7n2r9BCSUVmmiXwGqJdC0Dg==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/tree-list" "^4.8.0"
