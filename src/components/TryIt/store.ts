@@ -187,10 +187,15 @@ export class Request {
       this._httpOperation.request.body.contents[0]
     ) {
       if (this._httpOperation.request.body.contents[0].schema) {
-        this.body = sampler.sample(this._httpOperation.request.body.contents[0].schema);
-      } else if (this._httpOperation.request.body.contents[0].examples) {
-        const example = this._httpOperation.request.body.contents[0].examples;
+        try {
+          this.body = sampler.sample(this._httpOperation.request.body.contents[0].schema);
+        } catch (e) {
+          console.warn('Could not generate request body example from schema', e);
+        }
+      }
 
+      if (!this.body && this._httpOperation.request.body.contents[0].examples) {
+        const example = this._httpOperation.request.body.contents[0].examples;
         this.body = (example as any).value ? (example as any).value : (example as any).externalValue;
       }
     }
