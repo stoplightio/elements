@@ -5,6 +5,7 @@ import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBo
 import cn from 'classnames';
 import * as React from 'react';
 
+import { useParsedData } from '../hooks/useParsedData';
 import { Changelog, IChange } from './Changelog';
 import { Docs } from './Docs';
 import { PageHeader } from './PageHeader';
@@ -44,6 +45,8 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   const [selectedTab, setSelectedTab] = React.useState(0);
   const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);
 
+  const parsedData = useParsedData(type, data);
+
   const nodeTabs =
     {
       ...NodeTabs,
@@ -51,7 +54,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
     }[type] || [];
 
   const pageHeader = name && (
-    <PageHeader className={cn(`Page__header px-${padding} pt-${padding}`)} type={type} name={name} data={data} />
+    <PageHeader className={cn(`Page__header px-${padding} pt-${padding}`)} type={type} name={name} data={parsedData} />
   );
 
   let contentElem;
@@ -89,7 +92,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
           {nodeTabs.includes(NodeTab.Docs) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
-                <Docs padding={padding} type={type} data={data} />
+                <Docs padding={padding} type={type} data={parsedData} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
@@ -97,7 +100,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
           {nodeTabs.includes(NodeTab.TryIt) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
-                <TryIt className={`Page__content p-${padding}`} operation={data} />
+                <TryIt className={`Page__content p-${padding}`} operation={parsedData} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
@@ -117,7 +120,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
       <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows={shadows} srn={srn}>
         {pageHeader}
 
-        <Docs padding={padding} type={type} data={data} />
+        <Docs padding={padding} type={type} data={parsedData} />
       </ScrollContainerWrapper>
     );
   }
