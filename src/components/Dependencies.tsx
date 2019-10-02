@@ -1,55 +1,28 @@
-import { Button } from '@blueprintjs/core';
-import { IResolveResult } from '@stoplight/json-ref-resolver/types';
+import { Classes, Icon } from '@blueprintjs/core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { NodeType } from '@stoplight/types';
-import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
+import cn from 'classnames';
+import capitalize from 'lodash/capitalize';
 import * as React from 'react';
 // @ts-ignore
 import { Graph } from 'react-d3-graph';
+
+import { HostContext } from '../containers/Provider';
+import { useComponents } from '../hooks/useComponents';
 import { useResolver } from '../hooks/useResolver';
 
-const useGraphData = (graph: any, focusedNodeId: string | null) => {
-  return React.useMemo(() => {
-    const graphData: any = {
-      nodes: [],
-      links: [],
-    };
-
-    if (graph) {
-      graphData.nodes.push(
-        ...Object.keys(graph.nodes).map(id => {
-          const encodedId = encodeURI(id);
-
-          return {
-            id: encodedId,
-            color: focusedNodeId === encodedId ? '#66b1e7' : '#d3d3d3',
-          };
-        }),
-      );
-
-      for (const source in graph.outgoingEdges) {
-        if (!graph.outgoingEdges[source] || !graph.outgoingEdges[source].length) continue;
-
-        graphData.links.push(
-          ...graph.outgoingEdges[source].map((target: string) => ({
-            source: encodeURI(source),
-            target: encodeURI(target),
-          })),
-        );
-      }
-    }
-
-    return graphData;
-  }, [graph, focusedNodeId]);
-};
-
 export const Dependencies: React.FC<{ srn: string; data: any; className?: string }> = ({ srn, data, className }) => {
-  const { graph } = useResolver(NodeType.Model, data || {});
+  const components = useComponents();
+  const host = React.useContext(HostContext);
+  const { graph, result } = useResolver(NodeType.Model, data || {});
   const [focusedNodeId, setFocusedNodeId] = React.useState<string | null>('root');
   const [focusedNodeSchema, setFocusedNodeSchema] = React.useState<object | null>();
   const graphData = useGraphData(graph, focusedNodeId);
 
   if (!graph || !graphData.nodes.length) return null;
+
+  const decodedNodeId = decodeURI(focusedNodeId || '');
+  const nodeTitle = getTitle(decodedNodeId, focusedNodeSchema);
 
   return (
     <>
@@ -60,9 +33,14 @@ export const Dependencies: React.FC<{ srn: string; data: any; className?: string
           if (nodeId === focusedNodeId) {
             setFocusedNodeId(null);
             setFocusedNodeSchema(null);
-          } else if (graph.hasNode(decodeURI(nodeId))) {
+          } else {
             setFocusedNodeId(nodeId);
-            setFocusedNodeSchema(graph.getNodeData(decodeURI(nodeId)));
+
+            if (nodeId === 'root') {
+              setFocusedNodeSchema(result);
+            } else if (graph.hasNode(decodeURI(nodeId))) {
+              setFocusedNodeSchema(graph.getNodeData(decodeURI(nodeId)));
+            }
           }
         }}
         config={{
@@ -84,71 +62,122 @@ export const Dependencies: React.FC<{ srn: string; data: any; className?: string
             highlightStrokeColor: '#94c4e6',
             highlightFontWeight: 'bold',
 
-            // renderLabel: false,
-            size: 200,
-
-            // viewGenerator(node: any) {
-            //   const decodedId = decodeURI(node.id);
-            //   let title = decodedId;
-
-            //   const nodeData = graph.getNodeData(decodedId);
-            //   if (nodeData) {
-            //     if (nodeData.title) {
-            //       title = nodeData.title;
-            //     } else if (/^#/.test(node.id)) {
-            //       title = node.id;
-            //     } else {
-            //       const splitPath = decodedId.split('/');
-            //       title = splitPath[splitPath.length - 1];
-            //     }
-            //   }
-
-            //   return (
-            //     <div className="bg-gray-3 border flex items-center justify-center">
-            //       <div className="text-xs">{title}</div>
-            //     </div>
-            //   );
-            // },
-
             labelProperty(node: { id: string }) {
               const decodedId = decodeURI(node.id);
-              let title = decodedId;
 
+              let nodeData;
               if (graph.hasNode(decodedId)) {
-                const nodeData = graph.getNodeData(decodedId);
-                if (nodeData) {
-                  if (nodeData.title) {
-                    title = nodeData.title;
-                  } else if (/^#/.test(node.id)) {
-                    title = node.id;
-                  } else {
-                    const splitPath = decodedId.split('/');
-                    title = splitPath[splitPath.length - 1];
-                  }
-                }
+                nodeData = graph.getNodeData(decodedId);
               }
 
-              return title;
+              return getTitle(decodedId, nodeData);
             },
           },
         }}
       />
 
       {focusedNodeSchema && typeof focusedNodeSchema === 'object' && (
-        <SimpleTabs className="bp3-elevation-2 fixed bottom-0 right-0 p-0 m-10" style={{ width: 500 }}>
-          <SimpleTabList className="flex items-center">
-            <SimpleTab>Schema</SimpleTab>
+        <div
+          className="fixed bottom-0 right-0 border dark:border-darken-3 bg-white dark:bg-gray-7 m-10"
+          style={{ width: 500 }}
+        >
+          <div className="flex items-center p-2" style={{ height: 30 }}>
+            <Icon icon="cube" color="#ef932b" iconSize={14} />
+
+            <div className={cn(Classes.TEXT_MUTED, 'px-2')} style={{ fontSize: 12 }}>
+              {nodeTitle}
+            </div>
 
             <div className="flex-1"></div>
 
-            <Button>Go to ref</Button>
-          </SimpleTabList>
+            {components.link ? (
+              components.link(
+                {
+                  node: {
+                    title: nodeTitle,
+                    url: decodedNodeId.replace(host, ''),
+                  },
+                  // @ts-ignore
+                  children: 'Go To Ref',
+                },
+                focusedNodeId,
+              )
+            ) : (
+              <a className={cn('text-sm', Classes.TEXT_MUTED)} href={decodedNodeId} target="_blank">
+                Go To Ref
+              </a>
+            )}
 
-          <SimpleTabPanel>
-            <JsonSchemaViewer className="p-4" schema={focusedNodeSchema} maxRows={10} />
-          </SimpleTabPanel>
-        </SimpleTabs>
+            <Icon
+              className="ml-2 text-gray-5 cursor-pointer"
+              icon="small-cross"
+              onClick={() => {
+                setFocusedNodeId(null);
+                setFocusedNodeSchema(null);
+              }}
+            />
+          </div>
+
+          <JsonSchemaViewer className="border-t" schema={focusedNodeSchema} maxRows={10} />
+        </div>
       )}
     </>
   );
 };
+
+function getTitle(id: string, data?: any) {
+  let title = id;
+
+  if (data) {
+    if (data.title) {
+      title = data.title;
+    } else {
+      const splitPath = id.split('/');
+      title = capitalize(splitPath[splitPath.length - 1]);
+    }
+  }
+
+  return title;
+}
+
+function useGraphData(graph: any, focusedNodeId: string | null) {
+  return React.useMemo(() => {
+    const graphData: any = {
+      nodes: [],
+      links: [],
+    };
+
+    if (graph) {
+      graphData.nodes.push(
+        ...Object.keys(graph.nodes).map(id => {
+          const encodedId = encodeURI(id);
+
+          let color = '#d3d3d3';
+          if (id === 'root') {
+            color = '#ef932b';
+          } else if (focusedNodeId === encodedId) {
+            color = '#66b1e7';
+          }
+
+          return {
+            id: encodedId,
+            color,
+          };
+        }),
+      );
+
+      for (const source in graph.outgoingEdges) {
+        if (!graph.outgoingEdges[source] || !graph.outgoingEdges[source].length) continue;
+
+        graphData.links.push(
+          ...graph.outgoingEdges[source].map((target: string) => ({
+            source: encodeURI(source),
+            target: encodeURI(target),
+          })),
+        );
+      }
+    }
+
+    return graphData;
+  }, [graph, focusedNodeId]);
+}

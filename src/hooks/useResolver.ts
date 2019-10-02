@@ -3,6 +3,7 @@ import { IResolveResult, IResolverOpts } from '@stoplight/json-ref-resolver/type
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
 import fetch from 'isomorphic-unfetch';
+import uniqBy from 'lodash/uniqBy';
 import * as React from 'react';
 import { useParsedData } from './useParsedData';
 
@@ -33,7 +34,7 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
       .then(res => {
         setResolved({
           result: res.result,
-          errors: res.errors,
+          errors: uniqBy(res.errors, 'message'), // remove any duplicate messages
           graph: res.graph,
         });
       })
