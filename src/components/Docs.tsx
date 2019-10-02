@@ -1,15 +1,24 @@
 import 'resize-observer-polyfill';
 
+import { IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import useComponentSize from '@rehooks/component-size';
-import { safeStringify } from '@stoplight/json';
-import { MarkdownViewer, processMarkdownTree } from '@stoplight/markdown-viewer';
-import { Builder } from '@stoplight/markdown/builder';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import {
+  BlockHeader,
+  CLASSNAMES,
+  ICodeAnnotations,
+  IComponentMappingProps,
+  MarkdownViewer,
+} from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
-import { JSONSchema4 } from 'json-schema';
+import cn from 'classnames';
 import * as React from 'react';
-
-import { useComponents } from '../hooks/useComponents';
+import { ComponentsContext } from '../containers/Provider';
 import { useComputePageToc } from '../hooks/useComputePageToc';
+import { useResolver } from '../hooks/useResolver';
+import { buildNodeMarkdownTree } from '../utils/node';
+import { HttpOperation } from './HttpOperation';
+import { HttpService } from './HttpService';
 import { PageToc } from './PageToc';
 
 export interface IDocs {
@@ -24,45 +33,8 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) =>
   const { width } = useComponentSize(pageDocsRef);
   const showPageToc = width >= 1000;
 
-  const markdown = new Builder();
-
-  if (type === NodeType.Article) {
-    markdown.addMarkdown(String(data || ''));
-  } else if (type === NodeType.Model) {
-    const { description, ...schema } = (data || {}) as JSONSchema4;
-    if (description) {
-      markdown.addMarkdown(`${description}\n\n`);
-    }
-
-    markdown.addChild({
-      type: 'code',
-      lang: 'json',
-      meta: 'model',
-      value: safeStringify(schema, undefined, 4),
-    });
-
-    markdown.addMarkdown('\n');
-  } else {
-    markdown.addChild({
-      type: 'code',
-      lang: 'json',
-      meta: type,
-      value: safeStringify(data, undefined, 4),
-    });
-
-    markdown.addMarkdown('\n');
-
-    if (type === NodeType.HttpOperation) {
-      markdown.addMarkdown('\n');
-    }
-  }
-
-  const tree = processMarkdownTree(markdown.root);
+  const tree = buildNodeMarkdownTree(type, data);
   const headings = useComputePageToc(tree);
-
-  if (markdown.root.children.length === 0) {
-    markdown.addMarkdown('No content');
-  }
 
   return (
     <div className="Page__docs flex w-full" ref={pageDocsRef}>
@@ -72,3 +44,105 @@ export const Docs: React.FunctionComponent<IDocs> = ({ type, data, padding }) =>
     </div>
   );
 };
+
+const JSV_MAX_ROWS = 50;
+const MarkdownViewerCode: React.FunctionComponent<{
+  type: NodeType | 'json_schema';
+  value: any;
+  annotations: ICodeAnnotations;
+  parent: IComponentMappingProps<any>['parent'];
+}> = ({ type, value, annotations, parent }) => {
+  const { result, errors } = useResolver(type, value);
+
+  if (type === NodeType.Model || type === 'json_schema') {
+    const title = annotations && annotations.title;
+    const icon: IconName = 'cube';
+    const color = '#ef932b';
+    return (
+      <div>
+        {title && <BlockHeader icon={icon} iconColor={color} title={title} />}
+
+        {errors.length > 0 && (
+          <div className="w-full flex justify-end">
+            <Popover
+              interactionKind={PopoverInteractionKind.HOVER}
+              target={
+                <Tag intent={Intent.DANGER}>
+                  {errors.length} Error{errors.length > 1 && 's'}
+                </Tag>
+              }
+              content={
+                <div
+                  className={cn('p-6 max-w-md break-all', {
+                    'list-none': errors.length === 1,
+                  })}
+                >
+                  {errors.map((error, index) => {
+                    return (
+                      <li key={index} className={index > 1 ? 'mt-3' : ''}>
+                        {error && error.uri ? (
+                          <>
+                            Fail to resolve{' '}
+                            <a href={String(error.uri)} target="_blank">
+                              {String(error.uri)}
+                            </a>
+                          </>
+                        ) : (
+                          error.message
+                        )}
+                      </li>
+                    );
+                  })}
+                </div>
+              }
+            />
+          </div>
+        )}
+
+        <div
+          className={cn('dark:border-darken', {
+            [CLASSNAMES.bordered]: !parent || parent.type !== 'tab',
+            [CLASSNAMES.block]: !parent || parent.type !== 'tab',
+          })}
+        >
+          <JsonSchemaViewer schema={result} maxRows={JSV_MAX_ROWS} />
+        </div>
+      </div>
+    );
+  } else if (type === NodeType.HttpOperation) {
+    return <HttpOperation value={result} />;
+  } else if (type === NodeType.HttpService) {
+    return <HttpService value={result} />;
+  }
+
+  return null;
+};
+
+function useComponents() {
+  const Components = React.useContext(ComponentsContext);
+
+  return React.useMemo(() => {
+    return {
+      ...Components,
+
+      code: (props: IComponentMappingProps<any>, key: React.Key) => {
+        const { node, defaultComponents, parent } = props;
+
+        const nodeType = node.annotations && node.annotations.type ? node.annotations.type : node.meta;
+        if (['json_schema', NodeType.Model, NodeType.HttpOperation, NodeType.HttpService].includes(nodeType)) {
+          return (
+            <MarkdownViewerCode
+              key={key}
+              type={nodeType}
+              value={node.value}
+              annotations={node.annotations}
+              parent={parent}
+            />
+          );
+        }
+
+        return Components && Components.code ? Components.code(props, key) : defaultComponents.code(props, key);
+      },
+    };
+  }, [Components]);
+}

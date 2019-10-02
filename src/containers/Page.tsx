@@ -1,29 +1,30 @@
 import { NonIdealState } from '@blueprintjs/core';
 import { safeParse } from '@stoplight/json';
-import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-import { NodeTab, Page as PageComponent } from '../components/Page';
+import { IPage, Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
 import { useNodeInfo } from '../hooks/useNodeInfo';
 
-export interface IPage {
+export interface IPageContainer {
   srn: string;
 
-  scrollInnerContainer?: boolean;
-  className?: string;
+  tabs?: IPage['tabs'];
+  actions?: IPage['actions'];
   padding?: string;
-  tabs?: {
-    [type in NodeType]?: NodeTab[];
-  };
+  className?: string;
+  shadows?: boolean;
+  scrollInnerContainer?: boolean;
 }
 
-export const Page: React.FunctionComponent<IPage> = ({
+export const Page: React.FunctionComponent<IPageContainer> = ({
   srn,
-  className,
-  scrollInnerContainer,
-  padding = '12',
   tabs,
+  actions,
+  padding = '12',
+  className,
+  shadows,
+  scrollInnerContainer,
 }) => {
   const { isLoading, error, data } = useNodeInfo(srn);
   const containerClassName = cn(className, 'flex flex-col h-full');
@@ -61,14 +62,16 @@ export const Page: React.FunctionComponent<IPage> = ({
 
   return (
     <PageComponent
-      className={containerClassName}
       srn={srn}
       type={type}
       name={name}
       data={safeParse(nodeData) || nodeData}
-      scrollInnerContainer={scrollInnerContainer}
-      padding={padding}
       tabs={tabs}
+      actions={actions}
+      padding={padding}
+      className={containerClassName}
+      shadows={shadows}
+      scrollInnerContainer={scrollInnerContainer}
     />
   );
 };

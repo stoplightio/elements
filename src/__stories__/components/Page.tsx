@@ -1,3 +1,4 @@
+import { Button } from '@blueprintjs/core';
 import { NodeType } from '@stoplight/types';
 import { array, select, text, withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
@@ -8,10 +9,10 @@ import { NodeTab, Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);
 
-const article: string = require('../../__fixtures__/article.md');
-const httpOperation = require('../../__fixtures__/http-operation.json');
-const model = require('../../__fixtures__/models/basic.json');
-const httpService = require('../../__fixtures__/http-service.json');
+const article = require('../../__fixtures__/articles/kitchen-sink.md');
+const httpOperation = require('../../__fixtures__/operations/put-todos.json');
+const modelWithThreeExamples = require('../../__fixtures__/models/model-with-three-examples.json');
+const httpService = require('../../__fixtures__/services/petstore.json');
 
 const knobs = () => ({
   name: text('name', 'Name'),
@@ -33,13 +34,13 @@ storiesOf('components/Page', module)
       </div>
     );
   })
-  .add('Model', () => {
+  .add('Model With Examples', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
           name="Error"
           type={NodeType.Model}
-          data={model}
+          data={modelWithThreeExamples}
           tabs={{
             [NodeType.Model]: [NodeTab.Docs, NodeTab.Changelog],
           }}
@@ -129,10 +130,16 @@ storiesOf('components/Page', module)
       </div>
     );
   })
-  .add('Http Service', () => {
+  .add('Http Service with actions', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Page name="Petstore API" data={httpService} type={NodeType.HttpService} padding="16" />
+        <Page
+          name="Petstore API"
+          data={httpService}
+          type={NodeType.HttpService}
+          padding="16"
+          actions={({ name }) => <Button intent="primary" icon="export" text={`Export ${name}`} />}
+        />
       </div>
     );
   })

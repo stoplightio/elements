@@ -26,7 +26,7 @@ export interface IResolveResult {
     refMap: {
         [source: string]: string;
     };
-    graph: RefGraph<string>;
+    graph: RefGraph<any>;
     errors: IResolveError[];
     runner: IResolveRunner;
 }
@@ -112,7 +112,7 @@ export interface IResolveRunner {
     uriCache: ICache;
     depth: number;
     baseUri: uri.URI;
-    graph: DepGraph<string>;
+    graph: DepGraph<any>;
     root: string;
     atMaxUriDepth: () => boolean;
     resolve: (opts?: IResolveOpts) => Promise<IResolveResult>;
