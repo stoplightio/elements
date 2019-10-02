@@ -1,6 +1,7 @@
 import { Dictionary, NodeType } from '@stoplight/types';
 import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
 import * as React from 'react';
+import { IconsContext } from '../containers/Provider';
 import { IContentsNode, IProjectNode, ProjectNodeWithUri } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
@@ -22,6 +23,7 @@ export function computeToc(_nodes: IProjectNode[]) {
 
   // Add uri to each node since it's used heavily in this function
   const nodes: ProjectNodeWithUri[] = _nodes.map(n => ({ ...n, uri: deserializeSrn(n.srn).uri }));
+  const icons = React.useContext(IconsContext);
 
   let contents: IContentsNode[] = [];
   const folders: string[] = [];
@@ -36,6 +38,7 @@ export function computeToc(_nodes: IProjectNode[]) {
       name: readmeNode.name,
       srn: readmeNode.srn,
       depth: 0,
+      icon: icons[readmeNode.type],
     });
   }
 
@@ -69,6 +72,7 @@ export function computeToc(_nodes: IProjectNode[]) {
         name: node.name,
         srn: node.srn,
         depth: parts.length - 1,
+        icon: icons[node.type],
       });
     } else {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
@@ -76,6 +80,7 @@ export function computeToc(_nodes: IProjectNode[]) {
         name: node.name,
         srn: node.srn,
         depth: 0,
+        icon: icons[node.type],
       });
     }
   }

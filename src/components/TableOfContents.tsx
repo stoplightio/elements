@@ -1,5 +1,4 @@
-import { Icon } from '@blueprintjs/core';
-import { Button, Drawer } from '@blueprintjs/core';
+import { Button, Drawer, Icon, IconName } from '@blueprintjs/core';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
@@ -32,6 +31,7 @@ export interface ITableOfContents {
 
   // Mobile breakpoint, default (true) is 786px, false disables Drawer
   enableDrawer?: boolean | number;
+  icon?: IconName;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
@@ -45,6 +45,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   // tslint:disable-next-line: no-empty
   onClose = () => {},
   enableDrawer = true,
+  icon,
 }) => {
   const hasContents = _contents && _contents.length;
 
@@ -116,6 +117,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
                     e.preventDefault();
                     setExpanded({ ...expanded, [String(index)]: !isExpanded });
                   }}
+                  icon={icon}
                 />
               );
             })}
@@ -128,14 +130,14 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   if (isMobile) {
     const { org, project } = deserializeSrn(srn || '');
     return (
-      <Drawer isOpen={isOpen} onClose={() => onClose()} position="left" size="330px">
+      <Drawer isOpen={isOpen} onClose={() => onClose()} position="left" size="360px">
         <div className="flex flex-1 flex-col bg-gray-1 dark:bg-transparent">
           <div className="border-b dark:border-lighten-4 h-20 py-6 px-2 bg-white">
             <Button className="flex justify-start text-lg" icon={'arrow-left'} minimal onClick={() => onClose()}>
               {title || `${org} / ${project}`}
             </Button>
           </div>
-          <div className="h-full flex justify-end">{comp}</div>
+          <div className="h-full flex justify-end px-10">{comp}</div>
         </div>
       </Drawer>
     );
@@ -153,6 +155,7 @@ interface ITableOfContentsItem {
   isExpanded: boolean;
   isDivider: boolean;
   onClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
+  icon?: IconName;
 }
 const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
   depth,
@@ -163,6 +166,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
   isExpanded,
   isDivider,
   onClick,
+  icon,
 }) => {
   const Components = React.useContext(ComponentsContext);
   const href = !isGroup && !isDivider && srn;
@@ -219,7 +223,10 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
       }}
       onClick={onClick}
     >
-      <div className="-ml-px">{item}</div>
+      <div className="-ml-px flex items-center">
+        <Icon className="pl-6" iconSize={12} icon={icon} />
+        {item}
+      </div>
     </div>
   );
 };

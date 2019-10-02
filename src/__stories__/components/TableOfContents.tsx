@@ -18,17 +18,17 @@ const styles = {
 storiesOf('components/TableOfContents', module)
   .add('studio', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={studio.nodes} srn="gh/stoplightio/studio" />
+      <TableOfContents className="h-full" items={studio.nodes} srn="gh/stoplightio/studio" icon={'download'} />
     </div>
   ))
   .add('studio-template', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={studioTemplate.nodes} srn="gh/stoplightio/studio" />
+      <TableOfContents className="h-full" items={studioTemplate.nodes} srn="gh/stoplightio/studio" icon={'download'} />
     </div>
   ))
   .add('nested', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={nested.nodes} srn="gh/stoplightio/studio" />
+      <TableOfContents className="h-full" items={nested.nodes} srn="gh/stoplightio/studio" icon={'download'} />
     </div>
   ))
   .add('mobile', () => {
@@ -48,6 +48,7 @@ const MobileStory = () => {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         enableDrawer={1000}
+        icon={'download'}
       />
     </div>
   );

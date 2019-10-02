@@ -1,4 +1,5 @@
 import { NodeType } from '@stoplight/types';
+import { IconName } from '@stoplight/ui-kit';
 export { IComponentMapping } from '@stoplight/markdown-viewer';
 
 export interface IDeserializedSrn {
@@ -35,4 +36,5 @@ export interface IContentsNode {
   depth: number;
   srn?: string;
   type?: 'divider' | 'group';
+  icon?: IconName;
 }
