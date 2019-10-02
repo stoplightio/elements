@@ -5,6 +5,7 @@ import { parse } from '@stoplight/yaml';
 import fetch from 'isomorphic-unfetch';
 import uniqBy from 'lodash/uniqBy';
 import * as React from 'react';
+import { cancelablePromise } from '../utils/cancelablePromise';
 import { useParsedData } from './useParsedData';
 
 export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
@@ -25,12 +26,15 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
 
     const httpResolver = new Resolver(resolverOpts);
 
-    // if we have a parsed value (e.g. json schema or http operation), resolve it
-    httpResolver
-      .resolve(parsedValue, {
+    const { promise, cancel } = cancelablePromise(
+      // if we have a parsed value (e.g. json schema or http operation), resolve it
+      httpResolver.resolve(parsedValue, {
         dereferenceInline: true,
         dereferenceRemote: true,
-      })
+      }),
+    );
+
+    promise
       .then(res => {
         setResolved({
           result: res.result,
@@ -41,6 +45,11 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
       .catch(e => {
         console.error('Error resolving', type, e);
       });
+
+    return () => {
+      // Prevent state update if we're unmounting
+      cancel();
+    };
   }, [value]);
 
   return resolved || parsedValue;

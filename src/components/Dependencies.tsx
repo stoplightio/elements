@@ -11,7 +11,14 @@ import { HostContext } from '../containers/Provider';
 import { useComponents } from '../hooks/useComponents';
 import { useResolver } from '../hooks/useResolver';
 
-export const Dependencies: React.FC<{ srn: string; data: any; className?: string }> = ({ srn, data, className }) => {
+export interface IDependencies {
+  srn: string;
+  data: any;
+  name?: string;
+  className?: string;
+}
+
+export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, data }) => {
   const components = useComponents();
   const host = React.useContext(HostContext);
   const { graph, result } = useResolver(NodeType.Model, data || {});
@@ -19,52 +26,77 @@ export const Dependencies: React.FC<{ srn: string; data: any; className?: string
   const [focusedNodeSchema, setFocusedNodeSchema] = React.useState<object | null>();
   const graphData = useGraphData(graph, focusedNodeId);
 
+  const onClickNode = React.useCallback(
+    (nodeId: string) => {
+      if (!graph) return;
+
+      if (nodeId === focusedNodeId) {
+        setFocusedNodeId(null);
+        setFocusedNodeSchema(null);
+      } else {
+        setFocusedNodeId(nodeId);
+
+        if (nodeId === 'root') {
+          setFocusedNodeSchema(result);
+        } else if (graph.hasNode(decodeURI(nodeId))) {
+          setFocusedNodeSchema(graph.getNodeData(decodeURI(nodeId)));
+        }
+      }
+    },
+    [graph, focusedNodeId, setFocusedNodeId, setFocusedNodeSchema],
+  );
+
   if (!graph || !graphData.nodes.length) return null;
 
   const decodedNodeId = decodeURI(focusedNodeId || '');
-  const nodeTitle = getTitle(decodedNodeId, focusedNodeSchema);
+
+  let nodeTitle = '';
+  if (focusedNodeId === 'root') {
+    nodeTitle = name || getTitle(srn, result);
+  } else if (decodedNodeId) {
+    nodeTitle = getTitle(decodedNodeId, focusedNodeSchema);
+  }
 
   return (
-    <>
+    <div className={cn(className, 'Page__dependencies relative flex')}>
       <Graph
-        id="test"
+        id={srn.replace(/[^a-zA-Z]+/g, '-')}
         data={graphData}
-        onClickNode={(nodeId: string) => {
-          if (nodeId === focusedNodeId) {
-            setFocusedNodeId(null);
-            setFocusedNodeSchema(null);
-          } else {
-            setFocusedNodeId(nodeId);
-
-            if (nodeId === 'root') {
-              setFocusedNodeSchema(result);
-            } else if (graph.hasNode(decodeURI(nodeId))) {
-              setFocusedNodeSchema(graph.getNodeData(decodeURI(nodeId)));
-            }
-          }
-        }}
+        onClickNode={onClickNode}
         config={{
+          // For more information on the config: https://goodguydaniel.com/react-d3-graph/docs/index.html#config-global
           directed: true,
           nodeHighlightBehavior: true,
           linkHighlightBehavior: true,
 
           height: 500,
-          width: 1000,
+          width: focusedNodeSchema ? 500 : 1000,
+
+          minZoom: 1.5,
+          maxZoom: 1.5,
+          focusZoom: 1.5,
+
+          d3: {
+            gravity: -100,
+          },
 
           link: {
             highlightColor: '#94c4e6',
           },
 
           node: {
-            symbolType: 'square',
+            symbolType: 'circle',
 
             highlightColor: '#94c4e6',
             highlightStrokeColor: '#94c4e6',
             highlightFontWeight: 'bold',
 
             labelProperty(node: { id: string }) {
-              const decodedId = decodeURI(node.id);
+              if (node.id === 'root') {
+                return name || getTitle(srn, result);
+              }
 
+              const decodedId = decodeURI(node.id);
               let nodeData;
               if (graph.hasNode(decodedId)) {
                 nodeData = graph.getNodeData(decodedId);
@@ -78,7 +110,7 @@ export const Dependencies: React.FC<{ srn: string; data: any; className?: string
 
       {focusedNodeSchema && typeof focusedNodeSchema === 'object' && (
         <div
-          className="fixed bottom-0 right-0 border dark:border-darken-3 bg-white dark:bg-gray-7 m-10"
+          className="absolute top-0 right-0 border dark:border-darken-3 bg-white dark:bg-gray-7"
           style={{ width: 500 }}
         >
           <div className="flex items-center p-2" style={{ height: 30 }}>
@@ -118,10 +150,10 @@ export const Dependencies: React.FC<{ srn: string; data: any; className?: string
             />
           </div>
 
-          <JsonSchemaViewer className="border-t" schema={focusedNodeSchema} maxRows={10} />
+          <JsonSchemaViewer className="border-t" schema={focusedNodeSchema} maxRows={20} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
