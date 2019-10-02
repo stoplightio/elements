@@ -19,6 +19,7 @@ export interface ISchema {
   value?: IHttpContent['schema'];
   mediaType?: string;
   examples?: IHttpContent['examples'];
+  placeholder?: string;
 }
 
 export const Body: React.FunctionComponent<IBodyProps> = ({ className, value }) => {
@@ -32,12 +33,13 @@ export const Body: React.FunctionComponent<IBodyProps> = ({ className, value }) 
         value={value.contents[0].schema}
         mediaType={value.contents[0].mediaType}
         examples={value.contents[0].examples}
+        placeholder="request body..."
       />
     </div>
   );
 };
 
-export const Schema = observer<ISchema>(({ className, value, examples, mediaType }) => {
+export const Schema = observer<ISchema>(({ className, value, examples, mediaType, placeholder }) => {
   const store = useStore();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -55,7 +57,13 @@ export const Schema = observer<ISchema>(({ className, value, examples, mediaType
 
       examplePanels.push(
         <SimpleTabPanel key={example.key} className="p-0">
-          <CodeEditor language="json" value={store.body || ''} onChange={body => (store.body = body)} padding={10} />
+          <CodeEditor
+            language="json"
+            value={store.body || ''}
+            onChange={body => (store.body = body)}
+            padding={10}
+            placeholder={placeholder}
+          />
         </SimpleTabPanel>,
       );
     }
