@@ -75,38 +75,45 @@ export const contents: IContentsNode[] = [
     name: 'Getting Started',
     srn: 'sl/org/project/docs/getting-started.md',
     depth: 0,
+    icon: 'arrow-right',
   },
   {
     name: 'Welcome',
     srn: 'sl/org/project/docs/welcome.md',
     depth: 0,
+    icon: 'arrow-right',
   },
 
   {
     name: 'Guides',
     depth: 0,
     type: 'group',
+    icon: 'folder-close',
   },
   {
     name: 'Authentication',
     srn: 'sl/org/project/docs/guides/authentication.md',
     depth: 1,
+    icon: 'arrow-right',
   },
 
   {
     name: 'Tutorials',
     depth: 0,
     type: 'group',
+    icon: 'folder-close',
   },
   {
     name: 'Billing',
     srn: 'sl/org/project/docs/tutorials/billing.md',
     depth: 1,
+    icon: 'arrow-right',
   },
   {
     name: 'Signup',
     srn: 'sl/org/project/docs/tutorials/signup.md',
     depth: 1,
+    icon: 'arrow-right',
   },
 
   /** Group by http service */
@@ -119,6 +126,7 @@ export const contents: IContentsNode[] = [
     name: 'Overview',
     srn: 'sl/org/project/reference/todos/openapi.v1.yml',
     depth: 0,
+    icon: 'arrow-right',
   },
 
   /** Group by tag */
@@ -126,16 +134,19 @@ export const contents: IContentsNode[] = [
     name: 'Users',
     depth: 0,
     type: 'group',
+    icon: 'folder-close',
   },
   {
     name: 'Get User',
     srn: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1users/get',
     depth: 1,
+    icon: 'arrow-right',
   },
   {
     name: 'User',
     srn: 'sl/org/project/reference/todos/models/user',
     depth: 1,
+    icon: 'arrow-right',
   },
 
   /** Group un-tagged */
@@ -143,15 +154,18 @@ export const contents: IContentsNode[] = [
     name: 'Other',
     depth: 0,
     type: 'group',
+    icon: 'folder-close',
   },
   {
     name: 'Get Todo',
     srn: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1todos/get',
     depth: 1,
+    icon: 'arrow-right',
   },
   {
     name: 'Todo',
     srn: 'sl/org/project/reference/todos/models/todos',
     depth: 1,
+    icon: 'arrow-right',
   },
 ];

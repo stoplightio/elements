@@ -224,7 +224,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
       onClick={onClick}
     >
       <div className="-ml-px flex items-center">
-        <Icon className="pl-6" iconSize={12} icon={icon} />
+        {icon && <Icon className="pl-6" iconSize={12} icon={icon} />}
         {item}
       </div>
     </div>
