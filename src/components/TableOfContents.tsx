@@ -117,7 +117,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
                     e.preventDefault();
                     setExpanded({ ...expanded, [String(index)]: !isExpanded });
                   }}
-                  icon={icon}
+                  icon={item.icon}
                 />
               );
             })}

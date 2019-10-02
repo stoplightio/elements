@@ -18,17 +18,22 @@ const styles = {
 storiesOf('components/TableOfContents', module)
   .add('studio', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={studio.nodes} srn="gh/stoplightio/studio" icon={'download'} />
+      <TableOfContents className="h-full" items={studio.nodes} srn="gh/stoplightio/studio" />
     </div>
   ))
   .add('studio-template', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={studioTemplate.nodes} srn="gh/stoplightio/studio" icon={'download'} />
+      <TableOfContents className="h-full" items={studioTemplate.nodes} srn="gh/stoplightio/studio" />
     </div>
   ))
   .add('nested', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={nested.nodes} srn="gh/stoplightio/studio" icon={'download'} />
+      <TableOfContents className="h-full" items={nested.nodes} srn="gh/stoplightio/studio" />
+    </div>
+  ))
+  .add('icon support', () => (
+    <div style={styles}>
+      <TableOfContents className="h-full" contents={studio.contents} srn="gh/stoplightio/studio" />
     </div>
   ))
   .add('mobile', () => {
