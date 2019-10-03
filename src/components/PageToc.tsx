@@ -2,6 +2,7 @@ import { Icon, Popover } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import React from 'react';
 import { IPageTocHeading } from '../hooks/useComputePageToc';
+import { useLocationHash } from '../hooks/useLocationHash';
 
 export interface IPageToc {
   headings: IPageTocHeading[];
@@ -12,15 +13,7 @@ export interface IPageToc {
 }
 
 export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page', minimal, padding }) => {
-  const [currentHash, setCurrentHash] = React.useState(typeof window !== undefined && window.location.hash);
-
-  React.useEffect(() => {
-    const hashChange = () => setCurrentHash(typeof window !== undefined && window.location.hash);
-
-    window.addEventListener('hashchange', hashChange, false);
-
-    return () => window.removeEventListener('hashchange', hashChange);
-  }, []);
+  const locationHash = useLocationHash();
 
   if (!headings || !headings.length) return null;
 
@@ -42,7 +35,7 @@ export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On T
           id={heading.id}
           depth={heading.depth}
           title={heading.title}
-          isSelected={currentHash === `#${heading.id}`}
+          isSelected={locationHash === `#${heading.id}`}
         />
       ))}
     </>

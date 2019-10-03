@@ -1,5 +1,4 @@
 import { NonIdealState } from '@blueprintjs/core';
-import { safeParse } from '@stoplight/json';
 import cn from 'classnames';
 import * as React from 'react';
 import { IPage, Page as PageComponent } from '../components/Page';
@@ -8,8 +7,8 @@ import { useNodeInfo } from '../hooks/useNodeInfo';
 
 export interface IPageContainer {
   srn: string;
+  tabs: IPage['tabs'];
 
-  tabs?: IPage['tabs'];
   actions?: IPage['actions'];
   padding?: string;
   className?: string;
@@ -17,13 +16,14 @@ export interface IPageContainer {
   scrollInnerContainer?: boolean;
 }
 
-export const Page: React.FunctionComponent<IPageContainer> = ({
+export const Page: React.FC<IPageContainer> = ({
   srn,
   tabs,
+
   actions,
   padding = '12',
-  className,
   shadows,
+  className,
   scrollInnerContainer,
 }) => {
   const { isLoading, error, data } = useNodeInfo(srn);
@@ -58,19 +58,14 @@ export const Page: React.FunctionComponent<IPageContainer> = ({
     );
   }
 
-  const { type, name, data: nodeData } = data;
-
   return (
     <PageComponent
-      srn={srn}
-      type={type}
-      name={name}
-      data={safeParse(nodeData) || nodeData}
+      node={data}
       tabs={tabs}
       actions={actions}
       padding={padding}
-      className={containerClassName}
       shadows={shadows}
+      className={containerClassName}
       scrollInnerContainer={scrollInnerContainer}
     />
   );

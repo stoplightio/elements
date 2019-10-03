@@ -3,19 +3,14 @@ import cn from 'classnames';
 import groupBy from 'lodash/groupBy';
 import orderBy from 'lodash/orderBy';
 import * as React from 'react';
-
-export interface IChange {
-  createdAt: string;
-  semver: string;
-  message: string;
-}
+import { IChange } from '../types';
 
 export interface IChangelogProps {
   className?: string;
   changes?: IChange[];
 }
 
-export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className, changes }) => {
+export const Changelog = React.memo<IChangelogProps>(({ className, changes }) => {
   if (!changes || !changes.length) {
     return <div className={cn(className, Classes.TEXT_MUTED)}>No changes for this resource.</div>;
   }
@@ -46,4 +41,4 @@ export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className,
       })}
     </div>
   );
-};
+});

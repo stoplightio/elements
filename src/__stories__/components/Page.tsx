@@ -5,7 +5,7 @@ import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
-import { NodeTab, Page } from '../../components/Page';
+import { Page } from '../../components/Page';
 
 export const darkMode = () => boolean('dark mode', false);
 

@@ -8,14 +8,15 @@ export interface IDeserializedSrn {
   uri: string;
 }
 
-export interface INodeInfo {
-  id: number;
-  type: NodeType;
-  name: string;
-  srn: string;
-  version: string;
-  versions: string[];
+export interface IChange {
+  createdAt: string;
+  semver: string;
+  message: string;
+}
+
+export interface INodeInfo extends IProjectNode {
   data: any;
+  changes?: IChange[];
 }
 
 export interface IProjectNode {
@@ -23,6 +24,7 @@ export interface IProjectNode {
   type: NodeType;
   name: string;
   srn: string;
+
   version?: string;
   versions?: string[];
   tags?: string[];

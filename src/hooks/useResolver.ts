@@ -8,6 +8,7 @@ import { useParsedData } from './useParsedData';
 
 export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
   const parsedValue = useParsedData(type, value);
+
   const [resolved, setResolved] = React.useState<{
     result: IResolveResult['result'];
     errors: IResolveResult['errors'];
@@ -37,7 +38,7 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
       });
   }, [value]);
 
-  return resolved || parsedValue;
+  return resolved;
 }
 
 /**

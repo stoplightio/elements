@@ -10,7 +10,7 @@ export interface IHttpServiceProps extends IErrorBoundary {
   value: IHttpService;
 }
 
-export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
+export const HttpServiceComponent: React.FC<IHttpServiceProps> = ({ className, value }) => {
   if (!value) return null;
 
   return (
@@ -35,7 +35,7 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
         </div>
       ) : null}
 
-      {value.securitySchemes && <div className="mb-12 text-xl font-semibold select-none">Security Schemes</div>}
+      {/* {value.securitySchemes && <div className="mb-12 text-xl font-semibold select-none">Security Schemes</div>} */}
 
       {value.contact && (value.contact.email || value.contact.url) && (
         <div className="mb-12">
