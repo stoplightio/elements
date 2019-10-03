@@ -112,6 +112,7 @@ export const contents: IContentsNode[] = [
     srn: 'gh/stoplightio/studio/README.md',
     depth: 0,
     icon: 'arrow-right',
+    type: 'item',
   },
 
   {
@@ -119,6 +120,7 @@ export const contents: IContentsNode[] = [
     srn: 'gh/stoplightio/studio/docs/ui-overview.md',
     depth: 0,
     icon: 'arrow-right',
+    type: 'item',
   },
 
   {
@@ -132,30 +134,35 @@ export const contents: IContentsNode[] = [
     srn: 'gh/stoplightio/studio/docs/designing-apis/10-getting-started.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Project Structure (Design & Modeling)',
     srn: 'gh/stoplightio/studio/docs/designing-apis/directory-structure.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Working with Models',
     srn: 'gh/stoplightio/studio/docs/designing-apis/http-endpoints.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Using References',
     srn: 'gh/stoplightio/studio/docs/designing-apis/using-references.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Validation and Linting',
     srn: 'gh/stoplightio/studio/docs/designing-apis/validation-style-guide.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
 
   {
@@ -169,24 +176,28 @@ export const contents: IContentsNode[] = [
     srn: 'gh/stoplightio/studio/docs/workflow/customize-interface.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Working with an Existing Project',
     srn: 'gh/stoplightio/studio/docs/workflow/working-with-existing-project.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Working with Files',
     srn: 'gh/stoplightio/studio/docs/workflow/working-with-files.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Working with Git',
     srn: 'gh/stoplightio/studio/docs/workflow/working-with-git.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
 
   {
@@ -200,35 +211,41 @@ export const contents: IContentsNode[] = [
     srn: 'gh/stoplightio/studio/docs/writing-tech-docs/10-getting-started.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Directory Structure (Documentation)',
     srn: 'gh/stoplightio/studio/docs/writing-tech-docs/directory-structure.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Linking Between Articles',
     srn: 'gh/stoplightio/studio/docs/writing-tech-docs/linking-between-articles.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Publishing in Studio',
     srn: 'gh/stoplightio/studio/docs/writing-tech-docs/publishing.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Using Markdown in Documentation',
     srn: 'gh/stoplightio/studio/docs/writing-tech-docs/stoplight-flavored-markdown.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Using Images',
     srn: 'gh/stoplightio/studio/docs/writing-tech-docs/using-images.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
 ];

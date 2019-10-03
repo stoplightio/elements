@@ -76,12 +76,14 @@ export const contents: IContentsNode[] = [
     srn: 'sl/org/project/docs/getting-started.md',
     depth: 0,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Welcome',
     srn: 'sl/org/project/docs/welcome.md',
     depth: 0,
     icon: 'arrow-right',
+    type: 'item',
   },
 
   {
@@ -95,6 +97,7 @@ export const contents: IContentsNode[] = [
     srn: 'sl/org/project/docs/guides/authentication.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
 
   {
@@ -108,12 +111,14 @@ export const contents: IContentsNode[] = [
     srn: 'sl/org/project/docs/tutorials/billing.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     name: 'Signup',
     srn: 'sl/org/project/docs/tutorials/signup.md',
     depth: 1,
     icon: 'arrow-right',
+    type: 'item',
   },
 
   /** Group by http service */

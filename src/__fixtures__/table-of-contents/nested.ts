@@ -54,12 +54,14 @@ export const contents: IContentsNode[] = [
     name: 'One level Deep - 1',
     srn: 'gh/stoplightio/studio/docs/one-level-deep/file-1.md',
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     depth: 1,
     name: 'One level Deep - 2',
     srn: 'gh/stoplightio/studio/docs/one-level-deep/file-2.md',
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     depth: 1,
@@ -72,12 +74,14 @@ export const contents: IContentsNode[] = [
     name: 'Two levels Deep - 1',
     srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-1.md',
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     depth: 2,
     name: 'Two levels Deep - 2',
     srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-2.md',
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     depth: 2,
@@ -96,11 +100,13 @@ export const contents: IContentsNode[] = [
     name: 'Four levels Deep - 1',
     srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-1.md',
     icon: 'arrow-right',
+    type: 'item',
   },
   {
     depth: 4,
     name: 'Four levels Deep - 2',
     srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-2.md',
     icon: 'arrow-right',
+    type: 'item',
   },
 ];

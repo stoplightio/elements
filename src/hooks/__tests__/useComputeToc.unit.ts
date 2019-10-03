@@ -11,7 +11,9 @@ describe('computeToc', () => {
       const file = require(`${fixturesPath}/${filePath}`);
 
       it('should return the correct table of contents', () => {
-        expect(computeToc(file.nodes)).toEqual(file.contents);
+        expect(
+          computeToc(file.nodes, { group: 'folder-close', divider: 'chevron-right', item: 'arrow-right' }),
+        ).toEqual(file.contents);
       });
     });
   });

@@ -31,7 +31,6 @@ export interface ITableOfContents {
 
   // Mobile breakpoint, default (true) is 786px, false disables Drawer
   enableDrawer?: boolean | number;
-  icon?: IconName;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
@@ -45,7 +44,6 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   // tslint:disable-next-line: no-empty
   onClose = () => {},
   enableDrawer = true,
-  icon,
 }) => {
   const hasContents = _contents && _contents.length;
 

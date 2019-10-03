@@ -31,6 +31,11 @@ storiesOf('components/TableOfContents', module)
       <TableOfContents className="h-full" items={nested.nodes} srn="gh/stoplightio/studio" />
     </div>
   ))
+  .add('icon support', () => (
+    <div style={styles}>
+      <TableOfContents className="h-full" contents={studio.contents} srn="gh/stoplightio/studio" />
+    </div>
+  ))
   .add('mobile', () => {
     return <MobileStory />;
   });

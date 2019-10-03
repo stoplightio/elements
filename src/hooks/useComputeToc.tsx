@@ -19,7 +19,10 @@ export function useComputeToc(nodes: IProjectNode[]) {
 /**
  * Sorts project nodes into a flat array
  */
-export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?: IconName }) {
+export type IconMapType = NodeType | 'group' | 'divider' | 'item';
+export type NodeIconMapping = { [type in IconMapType]?: IconName };
+
+export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
   // There is a chance that we pass an empty array
   if (!_nodes.length) return [];
 
@@ -39,7 +42,8 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
       name: readmeNode.name,
       srn: readmeNode.srn,
       depth: 0,
-      icon: icons ? icons[readmeNode.type] : 'arrow-right',
+      type: 'item',
+      icon: icons[readmeNode.type] || icons.item,
     });
   }
 
@@ -65,7 +69,7 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
             name: startCase(words(folderName).join(' ')),
             depth: Number(pathIndex),
             type: 'group',
-            icon: 'folder-close',
+            icon: icons.group || icons.item,
           });
         }
       }
@@ -74,7 +78,8 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
         name: node.name,
         srn: node.srn,
         depth: parts.length - 1,
-        icon: icons ? icons[node.type] : 'arrow-right',
+        type: 'item',
+        icon: icons[node.type] || icons.item,
       });
     } else {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
@@ -82,7 +87,8 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
         name: node.name,
         srn: node.srn,
         depth: 0,
-        icon: icons ? icons[node.type] : 'arrow-right',
+        type: 'item',
+        icon: icons[node.type] || icons.item,
       });
     }
   }
@@ -113,7 +119,7 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
       name: 'Overview',
       srn: httpServiceNode.srn,
       depth: 0,
-      icon: icons ? icons[httpServiceNode.type] : 'arrow-right',
+      icon: icons[httpServiceNode.type] || icons.item,
     });
 
     const tags: Dictionary<IProjectNode[], string> = {};
@@ -139,7 +145,7 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
         name: startCase(tag),
         depth: 0,
         type: 'group',
-        icon: 'folder-close',
+        icon: icons.group || icons.item,
       });
 
       for (const tagChild of tags[tag]) {
@@ -147,7 +153,7 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
           name: tagChild.name,
           srn: tagChild.srn,
           depth: 1,
-          icon: icons ? icons[tagChild.type] : 'arrow-right',
+          icon: icons[tagChild.type] || icons.item,
         });
       }
     }
@@ -158,7 +164,7 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
         name: 'Other',
         depth: 0,
         type: 'group',
-        icon: 'folder-close',
+        icon: icons.group || icons.item,
       });
 
       for (const otherChild of other) {
@@ -166,7 +172,7 @@ export function computeToc(_nodes: IProjectNode[], icons?: { [type in NodeType]?
           name: otherChild.name,
           srn: otherChild.srn,
           depth: 1,
-          icon: icons ? icons[otherChild.type] : 'arrow-right',
+          icon: icons[otherChild.type] || icons.item,
         });
       }
     }
