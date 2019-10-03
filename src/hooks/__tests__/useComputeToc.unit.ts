@@ -1,3 +1,4 @@
+import { NodeType } from '@stoplight/types';
 import * as fs from 'fs';
 import * as path from 'path';
 import { computeToc } from '../useComputeToc';
@@ -12,7 +13,29 @@ describe('computeToc', () => {
 
       it('should return the correct table of contents', () => {
         expect(
-          computeToc(file.nodes, { group: 'folder-close', divider: 'chevron-right', item: 'arrow-right' }),
+          computeToc(file.nodes, {
+            group: 'folder-close',
+            divider: 'chevron-right',
+            item: 'cube',
+            article: 'cube',
+            model: 'box',
+            http_operation: 'download',
+            http_service: 'badge',
+            http_server: 'cloud',
+          }),
+        ).toEqual(file.contents);
+      });
+
+      it('should return the correct icons based on node type', () => {
+        expect(
+          computeToc(file.nodes, {
+            group: 'folder-close',
+            article: 'cube',
+            model: 'box',
+            http_operation: 'download',
+            http_service: 'badge',
+            http_server: 'cloud',
+          }),
         ).toEqual(file.contents);
       });
     });

@@ -135,7 +135,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
               {title || `${org} / ${project}`}
             </Button>
           </div>
-          <div className="h-full flex justify-end px-10">{comp}</div>
+          <div className="h-full flex justify-end px-12">{comp}</div>
         </div>
       </Drawer>
     );
@@ -177,13 +177,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
     'dark:text-white': !isDivider && !isChild && !isActive,
   });
 
-  const children: any = (
-    <>
-      <span className="TableOfContentsItem__name flex-1 truncate">{name}</span>
-
-      {isGroup && <Icon className="TableOfContentsItem__icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
-    </>
-  );
+  const children: any = <div className="TableOfContentsItem__name flex-1 truncate">{name}</div>;
 
   let item;
   if (href && Components && Components.link) {
@@ -201,7 +195,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
     item = <div className={className}>{children}</div>;
   } else {
     item = (
-      <a className={className} href={href || ''}>
+      <a className={cn(className, 'flex-1')} href={href || ''}>
         {children}
       </a>
     );
@@ -224,6 +218,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
       <div className="-ml-px flex items-center">
         {icon && <Icon className="pl-6" iconSize={12} icon={icon} />}
         {item}
+        {isGroup && <Icon className="TableOfContentsItem__icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import axios from 'axios';
 import * as React from 'react';
-import { NodeIconMapping } from '../hooks/useComputeToc';
+import { NodeIconMapping } from '../types';
 
 export interface IProvider {
   host?: string;

@@ -96,7 +96,7 @@ class Widget<T = unknown> implements IWidget<T> {
     const Component = this._component;
 
     ReactDOM.render(
-      <Provider host={config.host} token={config.token} components={config.components}>
+      <Provider host={config.host} token={config.token} components={config.components} icons={config.icons}>
         <Component srn={this.srn} {...this.options} />
       </Provider>,
       elem,

@@ -4,6 +4,7 @@ import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
 import * as React from 'react';
 import { IconsContext } from '../containers/Provider';
 import { IContentsNode, IProjectNode, ProjectNodeWithUri } from '../types';
+import { NodeIconMapping } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
 const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
@@ -19,8 +20,6 @@ export function useComputeToc(nodes: IProjectNode[]) {
 /**
  * Sorts project nodes into a flat array
  */
-export type IconMapType = NodeType | 'group' | 'divider' | 'item';
-export type NodeIconMapping = { [type in IconMapType]?: IconName };
 
 export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
   // There is a chance that we pass an empty array
