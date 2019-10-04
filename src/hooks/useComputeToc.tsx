@@ -113,12 +113,14 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
       name: httpServiceNode.name,
       depth: 0,
       type: 'divider',
+      icon: icons[httpServiceNode.type] || icons.item,
     });
     contents.push({
       name: 'Overview',
       srn: httpServiceNode.srn,
       depth: 0,
       icon: icons[httpServiceNode.type] || icons.item,
+      type: 'item',
     });
 
     const tags: Dictionary<IProjectNode[], string> = {};
@@ -153,6 +155,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
           srn: tagChild.srn,
           depth: 1,
           icon: icons[tagChild.type] || icons.item,
+          type: 'item',
         });
       }
     }
@@ -172,6 +175,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
           srn: otherChild.srn,
           depth: 1,
           icon: icons[otherChild.type] || icons.item,
+          type: 'item',
         });
       }
     }

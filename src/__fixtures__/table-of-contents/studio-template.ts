@@ -75,6 +75,119 @@ export const contents: IContentsNode[] = [
     name: 'Getting Started',
     srn: 'sl/org/project/docs/getting-started.md',
     depth: 0,
+    icon: 'document',
+    type: 'item',
+  },
+  {
+    name: 'Welcome',
+    srn: 'sl/org/project/docs/welcome.md',
+    depth: 0,
+    icon: 'document',
+    type: 'item',
+  },
+
+  {
+    name: 'Guides',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'Authentication',
+    srn: 'sl/org/project/docs/guides/authentication.md',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+  },
+
+  {
+    name: 'Tutorials',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'Billing',
+    srn: 'sl/org/project/docs/tutorials/billing.md',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+  },
+  {
+    name: 'Signup',
+    srn: 'sl/org/project/docs/tutorials/signup.md',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+  },
+
+  /** Group by http service */
+  {
+    name: 'Todos API',
+    depth: 0,
+    type: 'divider',
+    icon: 'document',
+  },
+  {
+    name: 'Overview',
+    srn: 'sl/org/project/reference/todos/openapi.v1.yml',
+    depth: 0,
+    icon: 'document',
+    type: 'item',
+  },
+
+  /** Group by tag */
+  {
+    name: 'Users',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'Get User',
+    srn: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1users/get',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+  },
+  {
+    name: 'User',
+    srn: 'sl/org/project/reference/todos/models/user',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+  },
+
+  /** Group un-tagged */
+  {
+    name: 'Other',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'Get Todo',
+    srn: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1todos/get',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+  },
+  {
+    name: 'Todo',
+    srn: 'sl/org/project/reference/todos/models/todos',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+  },
+];
+
+export const nodeTypeIcons: IContentsNode[] = [
+  /** Group by docs */
+  /** Sort by path length & alphabetical */
+  {
+    name: 'Getting Started',
+    srn: 'sl/org/project/docs/getting-started.md',
+    depth: 0,
     icon: 'cube',
     type: 'item',
   },
@@ -90,7 +203,7 @@ export const contents: IContentsNode[] = [
     name: 'Guides',
     depth: 0,
     type: 'group',
-    icon: 'folder-close',
+    icon: undefined,
   },
   {
     name: 'Authentication',
@@ -104,7 +217,7 @@ export const contents: IContentsNode[] = [
     name: 'Tutorials',
     depth: 0,
     type: 'group',
-    icon: 'folder-close',
+    icon: undefined,
   },
   {
     name: 'Billing',
@@ -126,12 +239,14 @@ export const contents: IContentsNode[] = [
     name: 'Todos API',
     depth: 0,
     type: 'divider',
+    icon: 'badge',
   },
   {
     name: 'Overview',
     srn: 'sl/org/project/reference/todos/openapi.v1.yml',
     depth: 0,
     icon: 'badge',
+    type: 'item',
   },
 
   /** Group by tag */
@@ -139,19 +254,21 @@ export const contents: IContentsNode[] = [
     name: 'Users',
     depth: 0,
     type: 'group',
-    icon: 'folder-close',
+    icon: undefined,
   },
   {
     name: 'Get User',
     srn: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1users/get',
     depth: 1,
     icon: 'download',
+    type: 'item',
   },
   {
     name: 'User',
     srn: 'sl/org/project/reference/todos/models/user',
     depth: 1,
     icon: 'box',
+    type: 'item',
   },
 
   /** Group un-tagged */
@@ -159,18 +276,20 @@ export const contents: IContentsNode[] = [
     name: 'Other',
     depth: 0,
     type: 'group',
-    icon: 'folder-close',
+    icon: undefined,
   },
   {
     name: 'Get Todo',
     srn: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1todos/get',
     depth: 1,
     icon: 'download',
+    type: 'item',
   },
   {
     name: 'Todo',
     srn: 'sl/org/project/reference/todos/models/todos',
     depth: 1,
     icon: 'box',
+    type: 'item',
   },
 ];
