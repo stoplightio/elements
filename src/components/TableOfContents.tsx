@@ -128,14 +128,14 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   if (isMobile) {
     const { org, project } = deserializeSrn(srn || '');
     return (
-      <Drawer isOpen={isOpen} onClose={() => onClose()} position="left" size="360px">
+      <Drawer isOpen={isOpen} onClose={() => onClose()} position="left" size="330px">
         <div className="flex flex-1 flex-col bg-gray-1 dark:bg-transparent">
           <div className="border-b dark:border-lighten-4 h-20 py-6 px-2 bg-white">
             <Button className="flex justify-start text-lg" icon={'arrow-left'} minimal onClick={() => onClose()}>
               {title || `${org} / ${project}`}
             </Button>
           </div>
-          <div className="h-full flex justify-end px-12">{comp}</div>
+          <div className="h-full flex justify-end">{comp}</div>
         </div>
       </Drawer>
     );
