@@ -177,7 +177,13 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
     'dark:text-white': !isDivider && !isChild && !isActive,
   });
 
-  const children: any = <div className="TableOfContentsItem__name flex-1 truncate">{name}</div>;
+  const children: any = (
+    <>
+      {icon && <Icon iconSize={12} icon={icon} />}
+      <div className="TableOfContentsItem__name flex-1 truncate px-2">{name}</div>
+      {isGroup && <Icon className="TableOfContentsItem__icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
+    </>
+  );
 
   let item;
   if (href && Components && Components.link) {
@@ -215,11 +221,7 @@ const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
       }}
       onClick={onClick}
     >
-      <div className="-ml-px flex items-center">
-        {icon && <Icon className="pl-6" iconSize={12} icon={icon} />}
-        {item}
-        {isGroup && <Icon className="TableOfContentsItem__icon" icon={isExpanded ? 'chevron-down' : 'chevron-right'} />}
-      </div>
+      {item}
     </div>
   );
 };

@@ -1,17 +1,30 @@
 import { IComponentMapping } from '@stoplight/markdown-viewer';
-import { withKnobs } from '@storybook/addon-knobs';
+import { object, withKnobs } from '@storybook/addon-knobs';
 import { boolean, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 import { Hub, IHub } from '../../containers/Hub';
-import { Provider } from '../../containers/Provider';
-import { providerKnobs } from './Provider';
+import { IProvider, Provider } from '../../containers/Provider';
 
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = (): IHub => ({
   srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md', 'Hub'),
+});
+
+export const providerKnobs = (): IProvider => ({
+  host: text('apiUrl', 'https://stoplight.io/api', 'Provider'),
+  token: text('apiToken', '', 'Provider'),
+  icons: object('Icons', {
+    http_operation: 'locate',
+    http_service: 'cloud',
+    article: 'manual',
+    model: 'cube',
+    image: 'media',
+    group: 'folder-new',
+    item: 'document',
+  }),
 });
 
 storiesOf('containers/Hub', module)

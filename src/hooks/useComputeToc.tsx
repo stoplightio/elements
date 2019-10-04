@@ -68,7 +68,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
             name: startCase(words(folderName).join(' ')),
             depth: Number(pathIndex),
             type: 'group',
-            icon: icons.group || icons.item,
+            icon: icons.group,
           });
         }
       }
@@ -113,7 +113,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
       name: httpServiceNode.name,
       depth: 0,
       type: 'divider',
-      icon: icons[httpServiceNode.type] || icons.item,
+      icon: icons[httpServiceNode.type] || icons.divider,
     });
     contents.push({
       name: 'Overview',
@@ -146,7 +146,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
         name: startCase(tag),
         depth: 0,
         type: 'group',
-        icon: icons.group || icons.item,
+        icon: icons.group,
       });
 
       for (const tagChild of tags[tag]) {
@@ -166,7 +166,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
         name: 'Other',
         depth: 0,
         type: 'group',
-        icon: icons.group || icons.item,
+        icon: icons.group,
       });
 
       for (const otherChild of other) {

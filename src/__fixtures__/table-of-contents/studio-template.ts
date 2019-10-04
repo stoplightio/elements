@@ -126,7 +126,7 @@ export const contents: IContentsNode[] = [
     name: 'Todos API',
     depth: 0,
     type: 'divider',
-    icon: 'document',
+    icon: 'chevron-right',
   },
   {
     name: 'Overview',
