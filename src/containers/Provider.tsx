@@ -12,6 +12,7 @@ const defaultHost = 'http://localhost:4060';
 export const HostContext = React.createContext(defaultHost);
 export const AxiosContext = React.createContext(axios.create());
 export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
+export const ActiveSrnContext = React.createContext('');
 
 export const Provider: React.FunctionComponent<IProvider> = ({ host, token, components, children }) => {
   const client = React.useMemo(

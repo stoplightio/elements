@@ -15,6 +15,7 @@ const modelWithThreeExamples = require('../../__fixtures__/models/model-with-thr
 const httpService = require('../../__fixtures__/services/petstore.json');
 
 const knobs = () => ({
+  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
   name: text('name', 'Name'),
   type: select(
     'type',
@@ -30,7 +31,12 @@ storiesOf('components/Page', module)
   .add('Article', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Page data={article} type={NodeType.Article} padding="16" />
+        <Page
+          srn="gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md"
+          data={article}
+          type={NodeType.Article}
+          padding="16"
+        />
       </div>
     );
   })
@@ -38,6 +44,7 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          srn="gh/stoplightio/studio-demo/reference/common/models/error.v1.yaml"
           name="Error"
           type={NodeType.Model}
           data={modelWithThreeExamples}
@@ -80,6 +87,7 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          srn="gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put"
           name={httpOperation.summary || httpOperation.path}
           data={httpOperation}
           type={NodeType.HttpOperation}
@@ -92,6 +100,7 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          srn="gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put"
           name={httpOperation.summary || httpOperation.path}
           data={httpOperation}
           type={NodeType.HttpOperation}
@@ -134,6 +143,7 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          srn="gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put"
           name="Petstore API"
           data={httpService}
           type={NodeType.HttpService}
