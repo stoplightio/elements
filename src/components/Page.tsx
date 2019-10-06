@@ -14,8 +14,8 @@ import { TryIt } from './TryIt';
 export interface IPage extends IErrorBoundary {
   type: NodeType;
   data: any;
-  srn: string;
 
+  srn?: string;
   name?: string;
   changes?: IChange[];
   tabs?: {

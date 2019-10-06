@@ -11,9 +11,10 @@ import { buildNodeMarkdownTree } from '../utils/node';
 import { PageToc } from './PageToc';
 
 export interface IDocs {
-  srn: string;
   type: NodeType | 'json_schema';
   data: unknown;
+
+  srn?: string;
   padding?: string;
 }
 
@@ -28,7 +29,7 @@ export const Docs: React.FunctionComponent<IDocs> = ({ srn, type, data, padding 
 
   return (
     <div className="Page__docs flex w-full" ref={pageDocsRef}>
-      <ActiveSrnContext.Provider value={srn}>
+      <ActiveSrnContext.Provider value={srn || ''}>
         <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
       </ActiveSrnContext.Provider>
 
