@@ -1,9 +1,10 @@
 import { IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
-import { IResolveError } from '@stoplight/json-ref-resolver/types';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { BlockHeader } from '@stoplight/markdown-viewer';
+import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
+import { useResolver } from '../hooks/useResolver';
 
 const JSV_MAX_ROWS = 50;
 const icon: IconName = 'cube';
@@ -13,10 +14,11 @@ export interface IModelProps {
   schema: any;
   className?: string;
   title?: string;
-  errors?: IResolveError[];
 }
 
-export const Model = ({ schema, className, title, errors }: IModelProps) => {
+export const Model = ({ schema, className, title }: IModelProps) => {
+  const { result, errors } = useResolver(NodeType.Model, schema);
+
   return (
     <div className="Model">
       {title && <BlockHeader icon={icon} iconColor={color} title={title} />}
@@ -59,7 +61,7 @@ export const Model = ({ schema, className, title, errors }: IModelProps) => {
       )}
 
       <div className={className}>
-        <JsonSchemaViewer schema={schema} maxRows={JSV_MAX_ROWS} />
+        <JsonSchemaViewer schema={result} maxRows={JSV_MAX_ROWS} />
       </div>
     </div>
   );

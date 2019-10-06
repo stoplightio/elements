@@ -15,13 +15,13 @@ import { useParsedData } from './useParsedData';
  *
  * Any component using this hook MUST be wrapped in both the HostContext and ActiveSrnContext providers
  */
-export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
+export function useResolver<T = any>(type: NodeType | 'json_schema', value: string) {
   const host = React.useContext(HostContext);
   const srn = React.useContext(ActiveSrnContext);
   const parsedValue = useParsedData(type, value);
 
   const [resolved, setResolved] = React.useState<{
-    result: IResolveResult['result'];
+    result: T;
     errors: IResolveResult['errors'];
   }>({
     result: parsedValue,
