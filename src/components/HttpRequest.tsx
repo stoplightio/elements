@@ -36,7 +36,7 @@ export const HttpRequest: React.FunctionComponent<IHttpRequestProps> = React.mem
 
           <ResponseStatus className="HttpRequest__ResponseStatus mt-6" />
 
-          <ResponseViewer className="HttpRequest__ResponseViewer mt-6" />
+          <ResponseViewer className="HttpRequest__ResponseViewer mt-6 h-64" />
         </div>
       </RequestMakerProvider>
     );

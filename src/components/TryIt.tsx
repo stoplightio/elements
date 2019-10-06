@@ -48,7 +48,7 @@ const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, opera
         </ControlGroup>
 
         <ResponseStatus className="mt-10" />
-        <ResponseViewer className="mt-6" />
+        <ResponseViewer className="mt-6 h-64" />
       </div>
     </RequestMakerProvider>
   );
