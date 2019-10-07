@@ -1,4 +1,3 @@
-import { IconName } from '@blueprintjs/core';
 import { Dictionary, NodeType } from '@stoplight/types';
 import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
 import * as React from 'react';
