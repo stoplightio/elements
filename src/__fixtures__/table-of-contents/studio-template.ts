@@ -245,7 +245,7 @@ export const nodeTypeIcons: IContentsNode[] = [
     name: 'Overview',
     srn: 'sl/org/project/reference/todos/openapi.v1.yml',
     depth: 0,
-    icon: 'badge',
+    icon: undefined,
     type: 'item',
   },
 
