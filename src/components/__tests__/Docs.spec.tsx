@@ -5,6 +5,7 @@ import { shallow } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
 import { Docs } from '../Docs';
+import { Model } from '../Model';
 
 jest.mock('@rehooks/component-size', () => ({
   default: () => ({ width: 1200 }),
@@ -48,7 +49,7 @@ describe('Docs component', () => {
         .dive()
         .dive()
         .dive()
-        .find('MarkdownViewerCode')
+        .find(Model)
         .shallow()
         .find(JsonSchemaViewer);
 
