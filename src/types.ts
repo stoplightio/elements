@@ -35,7 +35,7 @@ export interface IContentsNode {
   name: string;
   depth: number;
   srn?: string;
-  type?: NodeType | 'divider' | 'group' | 'item';
+  type?: 'divider' | 'group' | 'item';
   icon?: IconName;
 }
 

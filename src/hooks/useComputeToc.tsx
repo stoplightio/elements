@@ -118,7 +118,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
       name: 'Overview',
       srn: httpServiceNode.srn,
       depth: 0,
-      icon: icons[httpServiceNode.type] || icons.item,
+      icon: icons.item,
       type: 'item',
     });
 
