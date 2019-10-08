@@ -34,7 +34,8 @@ export type ProjectNodeWithUri = IProjectNode & { uri: string };
 export interface IContentsNode {
   name: string;
   depth: number;
-  srn?: string;
+  isActive?: boolean;
+  href?: string;
   type?: 'divider' | 'group' | 'item';
   icon?: IconName;
 }

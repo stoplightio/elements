@@ -27,6 +27,7 @@
 .cache-loader
 .cache
 .rpt2_cache
+.yalc
 
 # logs
 *.log*

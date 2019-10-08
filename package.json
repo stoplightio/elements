@@ -51,7 +51,7 @@
     "@stoplight/markdown-viewer": "^3.7.0",
     "@stoplight/tree-list": "^4.8.0",
     "@stoplight/types": "^11.1.0",
-    "@stoplight/ui-kit": "^2.11.0",
+    "@stoplight/ui-kit": "file:.yalc/@stoplight/ui-kit",
     "@stoplight/yaml": "^3.1.0",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",

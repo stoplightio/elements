@@ -11,16 +11,16 @@ const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex
 /**
  * Memoized hook that computes a tree structure from an array of nodes
  */
-export function useComputeToc(nodes: IProjectNode[]) {
+export function useComputeToc(nodes: IProjectNode[], srn?: string) {
   const icons = React.useContext(IconsContext);
-  return React.useMemo(() => computeToc(nodes, icons), [nodes, icons]);
+  return React.useMemo(() => computeToc(nodes, icons, srn), [nodes, icons, srn]);
 }
 
 /**
  * Sorts project nodes into a flat array
  */
 
-export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
+export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?: string) {
   // There is a chance that we pass an empty array
   if (!_nodes.length) return [];
 
@@ -38,7 +38,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
   if (readmeNode) {
     rootNodes.push({
       name: readmeNode.name,
-      srn: readmeNode.srn,
+      isActive: srn === readmeNode.srn,
       depth: 0,
       type: 'item',
       icon: icons[readmeNode.type] || icons.item,
@@ -74,7 +74,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
 
       contents.push({
         name: node.name,
-        srn: node.srn,
+        isActive: srn === node.srn,
         depth: parts.length - 1,
         type: 'item',
         icon: icons[node.type] || icons.item,
@@ -83,7 +83,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
       rootNodes.push({
         name: node.name,
-        srn: node.srn,
+        isActive: srn === node.srn,
         depth: 0,
         type: 'item',
         icon: icons[node.type] || icons.item,
@@ -116,7 +116,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
     });
     contents.push({
       name: 'Overview',
-      srn: httpServiceNode.srn,
+      isActive: srn === httpServiceNode.srn,
       depth: 0,
       icon: icons.item,
       type: 'item',
@@ -151,7 +151,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
       for (const tagChild of tags[tag]) {
         contents.push({
           name: tagChild.name,
-          srn: tagChild.srn,
+          isActive: srn === tagChild.srn,
           depth: 1,
           icon: icons[tagChild.type] || icons.item,
           type: 'item',
@@ -171,7 +171,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping) {
       for (const otherChild of other) {
         contents.push({
           name: otherChild.name,
-          srn: otherChild.srn,
+          isActive: srn === otherChild.srn,
           depth: 1,
           icon: icons[otherChild.type] || icons.item,
           type: 'item',

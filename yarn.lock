@@ -1849,7 +1849,7 @@
   dependencies:
     "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
-    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
+    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -1990,15 +1990,15 @@
   dependencies:
     "@types/json-schema" "^7.0.3"
 
-"@stoplight/ui-kit@^2.11.0":
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.12.0.tgz#c2597b48e70791ead8bea091908414baa0d5d571"
-  integrity sha512-HAfDPsX4izFwu1ZeZ1zngoUerRa9l2auEwbmpVCJ1OZzKdhxjBfXTtVRQxLQLiwftUBXCXP7IBEo3oSy2Hr5DQ==
+"@stoplight/ui-kit@file:.yalc/@stoplight/ui-kit":
+  version "0.0.0-43d538d2"
   dependencies:
     "@blueprintjs/core" "^3.18.0"
     "@blueprintjs/icons" "^3.10.0"
     "@blueprintjs/select" "^3.10.0"
+    "@stoplight/markdown-viewer" "^3.7.0"
     "@stoplight/types" "^10.0.1"
+    axios "^0.19.0"
     classnames "^2.2.6"
     immer "^3.2"
     prismjs "^1.17.1"
@@ -9222,7 +9222,6 @@ json-schema-compare@^0.2.2:
 
 "json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
   resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
