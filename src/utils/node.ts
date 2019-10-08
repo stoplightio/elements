@@ -5,6 +5,7 @@ import { Builder } from '@stoplight/markdown/builder';
 import { Dictionary, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 import { JSONSchema4 } from 'json-schema';
+import capitalize from 'lodash/capitalize';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',
@@ -112,4 +113,19 @@ export function buildNodeMarkdownTree(type: string, data: any): IRoot {
   }
 
   return processMarkdownTree(markdown.root);
+}
+
+export function getNodeTitle(srn: string, data?: any) {
+  let title = '';
+
+  if (data) {
+    if (data.title) {
+      title = data.title;
+    } else {
+      const splitPath = srn.split('/');
+      title = capitalize(splitPath[splitPath.length - 1]);
+    }
+  }
+
+  return title;
 }

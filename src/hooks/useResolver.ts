@@ -11,13 +11,10 @@ import { useParsedData } from './useParsedData';
 export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
   const parsedValue = useParsedData(type, value);
 
-  const [resolved, setResolved] = React.useState<{
-    result: IResolveResult['result'];
-    errors: IResolveResult['errors'];
-    graph?: IResolveResult['graph'];
-  }>({
+  const [resolved, setResolved] = React.useState<Partial<IResolveResult>>({
     result: parsedValue,
     errors: [],
+    refMap: {},
   });
 
   React.useEffect(() => {
@@ -40,6 +37,8 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
           result: res.result,
           errors: uniqBy(res.errors, 'message'), // remove any duplicate messages
           graph: res.graph,
+          refMap: res.refMap,
+          runner: res.runner,
         });
       })
       .catch(e => {
