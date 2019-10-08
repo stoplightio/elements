@@ -1,3 +1,4 @@
+import { Button } from '@blueprintjs/core';
 import { NodeType } from '@stoplight/types';
 import { array, select, text, withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
@@ -129,10 +130,16 @@ storiesOf('components/Page', module)
       </div>
     );
   })
-  .add('Http Service', () => {
+  .add('Http Service with actions', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Page name="Petstore API" data={httpService} type={NodeType.HttpService} padding="16" />
+        <Page
+          name="Petstore API"
+          data={httpService}
+          type={NodeType.HttpService}
+          padding="16"
+          actions={({ name }) => <Button intent="primary" icon="export" text={`Export ${name}`} />}
+        />
       </div>
     );
   })

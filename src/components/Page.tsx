@@ -8,7 +8,7 @@ import * as React from 'react';
 import { useParsedData } from '../hooks/useParsedData';
 import { Changelog, IChange } from './Changelog';
 import { Docs } from './Docs';
-import { PageHeader } from './PageHeader';
+import { IPageHeader, PageHeader } from './PageHeader';
 import { TryIt } from './TryIt';
 
 export interface IPage extends IErrorBoundary {
@@ -21,6 +21,7 @@ export interface IPage extends IErrorBoundary {
   tabs?: {
     [type in NodeType]?: NodeTab[];
   };
+  actions?: IPageHeader['actions'];
 
   padding?: string;
   className?: string;
@@ -36,6 +37,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
   name,
   changes,
   tabs,
+  actions,
 
   padding = '12',
   className,
@@ -54,7 +56,14 @@ const ElementPage: React.FunctionComponent<IPage> = ({
     }[type] || [];
 
   const pageHeader = name && (
-    <PageHeader className={cn(`Page__header px-${padding} pt-${padding}`)} type={type} name={name} data={parsedData} />
+    <PageHeader
+      className={cn(`Page__header px-${padding} pt-${padding}`)}
+      type={type}
+      name={name}
+      srn={srn}
+      data={parsedData}
+      actions={actions}
+    />
   );
 
   let contentElem;
