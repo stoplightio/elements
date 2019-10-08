@@ -1828,10 +1828,8 @@
     lodash "^4.17.4"
     read-pkg-up "^6.0.0"
 
-"@stoplight/json-ref-resolver@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-2.3.0.tgz#a43e44e4afe4e3b4cf6d3dd201fcce628460f444"
-  integrity sha512-V5Lgf4jWAAsKC6Ru7ji80mfwZ9DnRbVeUDFKT12MGucXm7hGuv3s81NuxPS/RhgU5eShoEoLCzaMl+FSDd+wUg==
+"@stoplight/json-ref-resolver@file:.yalc/@stoplight/json-ref-resolver":
+  version "0.0.0-736734b7"
   dependencies:
     "@stoplight/json" "^3.1.0"
     "@stoplight/types" "^11.0.0"

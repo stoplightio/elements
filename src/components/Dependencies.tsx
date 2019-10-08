@@ -2,7 +2,8 @@ import { Classes, Icon } from '@blueprintjs/core';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-// @ts-ignore
+
+// @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import Graph from 'react-graph-vis';
 
 import { HostContext } from '../containers/Provider';
@@ -22,16 +23,9 @@ export interface IDependencies {
 export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, data }) => {
   const components = useComponents();
   const host = React.useContext(HostContext);
+  const [activeNode, setActiveNode] = React.useState<{ id: string; title: string; data: any } | undefined>();
   const { graph, result } = useResolver(NodeType.Model, data || {});
-
   const rootTitle = name || getNodeTitle(srn, result);
-  const rootNode = { id: 'root', label: rootTitle, color: '#ef932b', shape: 'box' };
-
-  const [activeNode, setActiveNode] = React.useState<{ id: string; title: string; data: any } | undefined>({
-    id: 'root',
-    title: rootTitle,
-    data: result,
-  });
 
   const onClickNode = React.useCallback(
     e => {
@@ -47,7 +41,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
 
         let nodeData;
         if (!isRoot && graph.hasNode(decodedNodeId)) {
-          nodeData = graph.getNodeData(decodedNodeId);
+          nodeData = graph.getNodeData(decodedNodeId).data;
         }
 
         setActiveNode({
@@ -57,11 +51,15 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
         });
       }
     },
-    [graph, activeNode],
+    [graph, activeNode, rootTitle],
   );
 
   // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(graph, rootNode, activeNode && activeNode.id);
+  const visGraph = useComputeVisGraph(
+    graph,
+    { id: 'root', label: rootTitle, color: '#ef932b', shape: 'box' },
+    activeNode && activeNode.id,
+  );
 
   if (!graph || !visGraph.nodes.length) return null;
 
@@ -79,6 +77,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
       {activeNode && typeof activeNode.data === 'object' && (
         <Model
           className="border dark:border-darken-3 bg-white dark:bg-gray-7 w-128"
+          title={activeNode.title}
           schema={activeNode.data}
           actions={
             <>

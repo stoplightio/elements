@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+import last from 'lodash/last';
 import * as React from 'react';
 import { getNodeTitle } from '../utils/node';
 
@@ -39,7 +41,7 @@ function computeVisGraph(graph: any, rootNode: IVisGraphNode, activeNodeId?: str
 
     visGraph.nodes.push({
       id: encodedId,
-      label: getNodeTitle(encodedId, graph.nodes[id]),
+      label: getNodeTitle(encodedId, get(graph.nodes[id], 'data')),
       shape: 'box',
       color: activeNodeId === encodedId ? '#66b1e7' : '#d3d3d3',
     });
@@ -52,10 +54,18 @@ function computeVisGraph(graph: any, rootNode: IVisGraphNode, activeNodeId?: str
     const from = encodeURI(source);
 
     visGraph.edges.push(
-      ...graph.outgoingEdges[source].map((target: string) => ({
-        from,
-        to: encodeURI(target),
-      })),
+      ...graph.outgoingEdges[source].map((target: string) => {
+        const refKey = last(get(graph.nodes[target], ['propertyPaths', source, 0]));
+
+        return {
+          from,
+          to: encodeURI(target),
+          label: typeof refKey === 'string' ? refKey : 'reference',
+          font: {
+            align: 'top',
+          },
+        };
+      }),
     );
   }
 
