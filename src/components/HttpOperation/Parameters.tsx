@@ -44,19 +44,18 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   return (
     <tr className={cn('HttpOperation__Parameter', className)}>
-      <td style={{ width: '45%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
+      <td style={{ width: '30%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
         <span className="flex break-all font-normal">{parameter.name}</span>
         <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
           {parameter.required ? 'Required' : 'Optional'}
         </span>
       </td>
 
-      <td className="font-normal" style={{ width: '25%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
-        {parameter.schema && parameter.schema.type}
-      </td>
-
-      <td className="font-normal" style={{ width: '30%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
-        {parameter.description && <MarkdownViewer markdown={parameter.description} />}
+      <td className="font-normal" style={{ width: '70%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
+        <div className="flex">
+          {parameter.schema && parameter.schema.type}
+          {parameter.description && <MarkdownViewer className="flex-1 ml-2" markdown={parameter.description} />}
+        </div>
       </td>
     </tr>
   );

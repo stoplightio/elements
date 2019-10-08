@@ -21,7 +21,9 @@ export const Parameters: React.FunctionComponent<IParameters> = ({ type, paramet
       <HTMLTable className="w-full">
         <thead>
           <tr>
-            <th>{title && <span className="text-lg font-semibold">{title}</span>}</th>
+            <th style={{ paddingLeft: 0, paddingRight: 0 }}>
+              {title && <span className="text-lg font-semibold">{title}</span>}
+            </th>
           </tr>
         </thead>
 
@@ -64,14 +66,14 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
 
   return (
     <tr className={cn('TryIt__Parameter', className)}>
-      <td className="break-all" style={{ minWidth: '12rem', maxWidth: '80%', boxShadow: 'none' }}>
+      <td className="break-all" style={{ width: '30%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
         <span className="flex">{parameter.name}</span>
         <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
           {parameter.required ? 'Required' : 'Optional'}
         </span>
       </td>
 
-      <td className="pl-10 w-1/2" style={{ boxShadow: 'none' }}>
+      <td className="pl-10" style={{ width: '70%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
         {options && options.length > 0 ? (
           <HTMLSelect
             className="w-full"
