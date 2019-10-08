@@ -18,7 +18,9 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
       <HTMLTable className="w-full">
         <thead>
           <tr>
-            <th>{title && <div className="text-lg font-semibold">{title}</div>}</th>
+            <th style={{ paddingLeft: 0, paddingRight: 0 }}>
+              {title && <div className="text-lg font-semibold">{title}</div>}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -42,18 +44,18 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   return (
     <tr className={cn('HttpOperation__Parameter', className)}>
-      <td style={{ width: '45%', boxShadow: 'none' }}>
+      <td style={{ width: '45%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
         <span className="flex break-all font-normal">{parameter.name}</span>
         <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
           {parameter.required ? 'Required' : 'Optional'}
         </span>
       </td>
 
-      <td className="font-normal" style={{ width: '25%', boxShadow: 'none' }}>
+      <td className="font-normal" style={{ width: '25%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
         {parameter.schema && parameter.schema.type}
       </td>
 
-      <td className="font-normal" style={{ width: '30%', boxShadow: 'none' }}>
+      <td className="font-normal" style={{ width: '30%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
         {parameter.description && <MarkdownViewer markdown={parameter.description} />}
       </td>
     </tr>
