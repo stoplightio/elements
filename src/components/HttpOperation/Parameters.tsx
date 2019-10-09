@@ -1,7 +1,7 @@
-import { HTMLTable } from '@blueprintjs/core';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpParam } from '@stoplight/types';
 import cn from 'classnames';
+import get from 'lodash/get';
 import * as React from 'react';
 
 export interface IParametersProps {
@@ -15,20 +15,11 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
 
   return (
     <div className={cn('HttpOperation__Parameters', className)}>
-      <HTMLTable className="w-full">
-        <thead>
-          <tr>
-            <th style={{ paddingLeft: 0, paddingRight: 0 }}>
-              {title && <div className="text-lg font-semibold">{title}</div>}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {parameters.map((parameter, index) => (
-            <Parameter key={index} parameter={parameter} />
-          ))}
-        </tbody>
-      </HTMLTable>
+      {title && <div className="text-lg font-semibold pb-3">{title}</div>}
+
+      {parameters.map((parameter, index) => (
+        <Parameter key={index} parameter={parameter} />
+      ))}
     </div>
   );
 };
@@ -42,22 +33,24 @@ export interface IParameterProps {
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, className }) => {
   if (!parameter || !parameter.schema) return null;
 
-  return (
-    <tr className={cn('HttpOperation__Parameter', className)}>
-      <td style={{ width: '30%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
-        <span className="flex break-all font-normal">{parameter.name}</span>
-        <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
-          {parameter.required ? 'Required' : 'Optional'}
-        </span>
-      </td>
+  // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
+  const description = get(parameter, 'description') || get(parameter, 'schema.description');
 
-      <td className="font-normal" style={{ width: '70%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
-        <div className="flex">
-          {parameter.schema && parameter.schema.type}
-          {parameter.description && <MarkdownViewer className="flex-1 ml-2" markdown={parameter.description} />}
+  const type = get(parameter, 'schema.type');
+
+  return (
+    <div className={cn('HttpOperation__Parameter flex py-3', className)}>
+      <div className="w-1/3 leading-relaxed">
+        <div className="flex break-all">{parameter.name}</div>
+        <div className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase`}>
+          {parameter.required ? 'Required' : 'Optional'}
         </div>
-      </td>
-    </tr>
+      </div>
+
+      <div className="w-1/5 mx-10 leading-relaxed">{type}</div>
+
+      {description && <MarkdownViewer className="flex-1" markdown={description} />}
+    </div>
   );
 };
 Parameter.displayName = 'HttpOperation.Parameter';

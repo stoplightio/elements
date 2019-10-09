@@ -1,4 +1,4 @@
-import { HTMLSelect, HTMLTable, InputGroup } from '@blueprintjs/core';
+import { HTMLSelect, InputGroup } from '@blueprintjs/core';
 import { IHttpParam } from '@stoplight/types';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -18,21 +18,11 @@ export const Parameters: React.FunctionComponent<IParameters> = ({ type, paramet
 
   return (
     <div className={cn('TryIt__Parameters', className)}>
-      <HTMLTable className="w-full">
-        <thead>
-          <tr>
-            <th style={{ paddingLeft: 0, paddingRight: 0 }}>
-              {title && <span className="text-lg font-semibold">{title}</span>}
-            </th>
-          </tr>
-        </thead>
+      {title && <div className="text-lg font-semibold pb-3">{title}</div>}
 
-        <tbody>
-          {parameters.map((parameter, index) => (
-            <Parameter key={index} type={type} parameter={parameter} />
-          ))}
-        </tbody>
-      </HTMLTable>
+      {parameters.map((parameter, index) => (
+        <Parameter key={index} type={type} parameter={parameter} />
+      ))}
     </div>
   );
 };
@@ -65,15 +55,15 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
   }
 
   return (
-    <tr className={cn('TryIt__Parameter', className)}>
-      <td className="break-all" style={{ width: '30%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
-        <span className="flex">{parameter.name}</span>
-        <span className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
+    <div className={cn('TryIt__Parameter flex items-center py-3', className)}>
+      <div className="w-1/3 leading-relaxed">
+        <div className="flex break-all">{parameter.name}</div>
+        <div className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase `}>
           {parameter.required ? 'Required' : 'Optional'}
-        </span>
-      </td>
+        </div>
+      </div>
 
-      <td className="pl-10" style={{ width: '70%', boxShadow: 'none', paddingLeft: 0, paddingRight: 0 }}>
+      <div className="flex-1 pl-10">
         {options && options.length > 0 ? (
           <HTMLSelect
             className="w-full"
@@ -94,8 +84,8 @@ const Parameter = observer<IParameter>(({ type, parameter, className }) => {
             }}
           />
         )}
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 });
 Parameter.displayName = 'TryIt.Parameter';
