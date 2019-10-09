@@ -10,6 +10,21 @@ export const darkMode = () => boolean('dark mode', false);
 
 storiesOf('components/Dependencies', module)
   .addDecorator(withKnobs)
+  .add('MediaEntry', () => {
+    return (
+      <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+        <Page
+          type={NodeType.Model}
+          srn="gh/stoplightio/elements/__fixtures__/schemas/media-entry.json"
+          name="MediaEntry"
+          data={require('../../__fixtures__/schemas/media-entry.json')}
+          tabs={{
+            [NodeType.Model]: [NodeTab.Docs, NodeTab.Dependencies],
+          }}
+        />
+      </div>
+    );
+  })
   .add('Basic', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>

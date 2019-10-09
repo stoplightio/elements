@@ -1,3 +1,4 @@
+import { pointerToPath } from '@stoplight/json';
 import get from 'lodash/get';
 import last from 'lodash/last';
 import * as React from 'react';
@@ -55,12 +56,14 @@ function computeVisGraph(graph: any, rootNode: IVisGraphNode, activeNodeId?: str
 
     visGraph.edges.push(
       ...graph.outgoingEdges[source].map((target: string) => {
-        const refKey = last(get(graph.nodes[target], ['propertyPaths', source, 0]));
+        const pointer = get(graph.nodes[target], ['propertyPaths', source, 0]);
+
+        const refKey = pointer ? String(last(pointerToPath(pointer))) : '';
 
         return {
           from,
           to: encodeURI(target),
-          label: typeof refKey === 'string' ? refKey : 'reference',
+          label: isNaN(parseInt(refKey)) ? refKey : 'reference',
           font: {
             align: 'top',
           },

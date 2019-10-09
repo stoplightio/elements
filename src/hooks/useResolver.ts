@@ -1,5 +1,5 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
-import { IResolveResult, IResolverOpts } from '@stoplight/json-ref-resolver/types';
+import { IResolveError, IResolveResult, IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
 import fetch from 'isomorphic-unfetch';
@@ -11,10 +11,13 @@ import { useParsedData } from './useParsedData';
 export function useResolver(type: NodeType | 'json_schema' | 'http_request', value: string) {
   const parsedValue = useParsedData(type, value);
 
-  const [resolved, setResolved] = React.useState<Partial<IResolveResult>>({
+  const [resolved, setResolved] = React.useState<{
+    result: any;
+    errors: IResolveError[];
+    graph?: IResolveResult['graph'];
+  }>({
     result: parsedValue,
     errors: [],
-    refMap: {},
   });
 
   React.useEffect(() => {
@@ -37,8 +40,6 @@ export function useResolver(type: NodeType | 'json_schema' | 'http_request', val
           result: res.result,
           errors: uniqBy(res.errors, 'message'), // remove any duplicate messages
           graph: res.graph,
-          refMap: res.refMap,
-          runner: res.runner,
         });
       })
       .catch(e => {

@@ -118,13 +118,11 @@ export function buildNodeMarkdownTree(type: string, data: any): IRoot {
 export function getNodeTitle(srn: string, data?: any) {
   let title = '';
 
-  if (data) {
-    if (data.title) {
-      title = data.title;
-    } else {
-      const splitPath = srn.split('/');
-      title = capitalize(splitPath[splitPath.length - 1]);
-    }
+  if (data && data.title) {
+    title = data.title;
+  } else {
+    const splitPath = srn.split('/');
+    title = capitalize(splitPath[splitPath.length - 1]);
   }
 
   return title;

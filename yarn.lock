@@ -1829,7 +1829,7 @@
     read-pkg-up "^6.0.0"
 
 "@stoplight/json-ref-resolver@file:.yalc/@stoplight/json-ref-resolver":
-  version "0.0.0-736734b7"
+  version "0.0.0-37769970"
   dependencies:
     "@stoplight/json" "^3.1.0"
     "@stoplight/types" "^11.0.0"
