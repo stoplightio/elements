@@ -28,12 +28,12 @@ export type UseRequestState<T> = {
 // Maps a hash of the operation to the request maker object
 const RequestMakers = new Map<string, RequestMaker>();
 
-export function useRequestMaker(operation: IHttpOperation): RequestMaker {
+export function useRequestMaker(operation: IHttpOperation, validate: boolean = false): RequestMaker {
   const key = getOperationKey(operation);
 
   let requestMaker = RequestMakers.get(key);
   if (!requestMaker) {
-    requestMaker = new RequestMaker({ operation });
+    requestMaker = new RequestMaker({ operation, validate });
     RequestMakers.set(key, requestMaker);
   }
 
