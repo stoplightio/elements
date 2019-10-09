@@ -297,9 +297,9 @@
       {
         "schema": {
           "type": "string",
-          "default": "300",
-          "description": "How many todos to limit?"
+          "default": "300"
         },
+        "description": "How many todos to limit?",
         "name": "limit",
         "style": "form"
       },
