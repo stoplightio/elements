@@ -23,11 +23,12 @@ const sampler = require('openapi-sampler');
 export interface ITryItProps extends IErrorBoundary {
   className?: string;
   operation: IHttpOperation;
+  validate?: boolean;
 }
 
-const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, operation }) => {
+const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, operation, validate }) => {
   if (!operation) return null;
-  const store = useRequestMaker(operation);
+  const store = useRequestMaker(operation, validate);
 
   return (
     <RequestMakerProvider value={store}>
