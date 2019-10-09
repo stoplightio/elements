@@ -6,7 +6,7 @@ import { parse } from '@stoplight/yaml';
 import axios from 'axios';
 import * as React from 'react';
 import * as URI from 'urijs';
-import { ActiveSrnContext, HostContext } from '../containers/Provider';
+import { ActiveSrnContext, HostContext, ResolverContext } from '../containers/Provider';
 import { cancelablePromise } from '../utils/cancelablePromise';
 import { useParsedData } from './useParsedData';
 
@@ -18,6 +18,7 @@ import { useParsedData } from './useParsedData';
 export function useResolver<T = any>(type: NodeType | 'json_schema', value: string) {
   const host = React.useContext(HostContext);
   const srn = React.useContext(ActiveSrnContext);
+  const resolver = React.useContext(ResolverContext) || createResolver(host, srn);
   const parsedValue = useParsedData(type, value);
 
   const [resolved, setResolved] = React.useState<{
@@ -32,7 +33,7 @@ export function useResolver<T = any>(type: NodeType | 'json_schema', value: stri
     // Only resolve if we've succeeded in parsing the string
     if (typeof parsedValue !== 'object') return;
 
-    const { promise, cancel } = cancelablePromise(createResolver(host, srn).resolve(parsedValue, resolveOptions));
+    const { promise, cancel } = cancelablePromise(resolver.resolve(parsedValue, resolveOptions));
 
     promise
       .then(res => {
