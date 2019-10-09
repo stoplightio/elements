@@ -1905,10 +1905,10 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.2.1.tgz#f39f408377a0d1a9c33a04ce08eb3a1691c457d6"
   integrity sha512-W/wBpTw6ThKZGPcb1ztKz6ULnMVnLE/ygzqIjnqnmKcpNrKkSuBLtL7+oQYZSkteZfJAryloAt3plU3sTiekcQ==
 
-"@stoplight/request-maker@^2.14.0":
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.14.0.tgz#070e9723af7735c028fb92fa6ce00fcc228bdce6"
-  integrity sha512-Q+vOXmEZk3hFX9ogxgyuu5+s3GN43ix6MpcI1aFQ37R1EZmwYlecgREV28AfqWJpoih94q9X2OiOlsIEJIOzig==
+"@stoplight/request-maker@^2.14.2":
+  version "2.14.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.14.2.tgz#716646a34b63938c05c89f12c763bc4475bfcd14"
+  integrity sha512-K5KFMKA7FzjdCtYjxnaAnSTc2htSbGc7Tm0XBRnoxWnRSLeYcCNuFOA5nmK2J//lE2Z4g/S+VcB/+SCIdI82CA==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/tree-list" "^4.8.0"
