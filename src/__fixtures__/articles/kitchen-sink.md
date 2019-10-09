@@ -152,13 +152,7 @@ be the json schema object to be rendered.
 
 ```json
 {
-  "title": "User",
-  "type": "object",
-  "properties": {
-    "name": {
-      "type": "string"
-    }
-  }
+  "$ref": "../../reference/common/models/error.v1.yaml"
 }
 ```
 
@@ -166,6 +160,8 @@ be the json schema object to be rendered.
 
 A smd http try it out block is a smd code block with the `http` language tag. The contents of the code fence should
 be the http object to be rendered.
+
+### Raw Http Request
 
 <!-- type: http -->
 
@@ -182,6 +178,64 @@ be the http object to be rendered.
   }
 }
 ```
+
+````md
+<!-- type: http -->
+
+```json
+{
+  "method": "get",
+  "url": "/gifs/search",
+  "baseUrl": "http://api.giphy.com/v1",
+  "headers": {},
+  "query": {
+    "api_key": ["dc6zaTOxFJmzC"],
+    "limit": ["1"],
+    "q": ["cats"]
+  }
+}
+```
+````
+
+### Request from Http Operation
+
+<!-- type: http -->
+
+```json
+{
+  "$ref": "../../reference/todos/openapi.v1.json/paths/~1todos/get"
+}
+```
+
+````md
+<!-- type: http -->
+
+```json
+{
+  "$ref": "../../reference/todos/openapi.v1.json/paths/~1todos/get"
+}
+```
+````
+
+### From a remote Http Operation
+
+<!-- type: http -->
+
+```json
+{
+  "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/giphy/giphy.yaml/paths/~1gifs~1search/get"
+}
+```
+
+````md
+<!-- type: http -->
+
+```json
+{
+  "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/giphy/giphy.yaml/paths/~1gifs~1search/get"
+}
+```
+````
 
 ## Raw HTML
 

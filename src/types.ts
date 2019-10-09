@@ -36,3 +36,5 @@ export interface IContentsNode {
   srn?: string;
   type?: 'divider' | 'group';
 }
+
+export type DocsNodeType = NodeType | 'json_schema' | 'http';

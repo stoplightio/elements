@@ -8,37 +8,47 @@ import {
   ResponseViewer,
   SendButton,
 } from '@stoplight/request-maker';
-import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 import { ControlGroup } from '@stoplight/ui-kit';
 import cn from 'classnames';
+import get from 'lodash/get';
 import * as React from 'react';
+import { useResolver } from '../hooks/useResolver';
 
 export interface IHttpRequestProps {
-  operation?: IHttpOperation;
-  request?: IHttpRequest;
+  value: string;
   className?: string;
 }
 
-export const HttpRequest: React.FunctionComponent<IHttpRequestProps> = React.memo(
-  ({ request, operation, className }) => {
-    const store = new RequestMaker({ request, operation });
+export const HttpRequest: React.FunctionComponent<IHttpRequestProps> = React.memo(({ value, className }) => {
+  const { result } = useResolver('http', value);
 
-    return (
-      <RequestMakerProvider value={store}>
-        <div className={cn('HttpRequest', className)}>
-          <ControlGroup>
-            <SendButton className="HttpRequest__SendButton w-40" intent="primary" icon="play" />
-            <MethodSelector className="HttpRequest__MethodSelector" />
-            <ActionBar className="HttpRequest__ActionBar flex-auto" />
-          </ControlGroup>
+  let request;
+  let operation;
 
-          <RequestEditor className="HttpRequest__RequestEditor mt-6" />
+  // TODO (CL): Need a better way to handle this
+  if (get(result, 'id') === '?http-operation-id?') {
+    operation = result;
+  } else {
+    request = result;
+  }
 
-          <ResponseStatus className="HttpRequest__ResponseStatus mt-6" />
+  const store = new RequestMaker({ request, operation });
 
-          <ResponseViewer className="HttpRequest__ResponseViewer mt-6 h-64" />
-        </div>
-      </RequestMakerProvider>
-    );
-  },
-);
+  return (
+    <RequestMakerProvider value={store}>
+      <div className={cn('HttpRequest', className)}>
+        <ControlGroup>
+          <SendButton className="HttpRequest__SendButton w-40" intent="primary" icon="play" />
+          <MethodSelector className="HttpRequest__MethodSelector" />
+          <ActionBar className="HttpRequest__ActionBar flex-auto" />
+        </ControlGroup>
+
+        <RequestEditor className="HttpRequest__RequestEditor mt-6" />
+
+        <ResponseStatus className="HttpRequest__ResponseStatus mt-6" />
+
+        <ResponseViewer className="HttpRequest__ResponseViewer mt-6 h-128" />
+      </div>
+    </RequestMakerProvider>
+  );
+});
