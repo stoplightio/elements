@@ -5,7 +5,7 @@ import { Builder } from '@stoplight/markdown/builder';
 import { Dictionary, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 import { JSONSchema4 } from 'json-schema';
-import capitalize from 'lodash/capitalize';
+import upperFirst from 'lodash/upperFirst';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',
@@ -122,7 +122,7 @@ export function getNodeTitle(srn: string, data?: any) {
     title = data.title;
   } else {
     const splitPath = srn.split('/');
-    title = capitalize(splitPath[splitPath.length - 1]);
+    title = upperFirst(splitPath[splitPath.length - 1]);
   }
 
   return title;

@@ -12,9 +12,10 @@ export interface IModelProps {
   className?: string;
   title?: string;
   actions?: React.ReactElement;
+  maxRows?: number;
 }
 
-export const Model = ({ schema, className, title, actions }: IModelProps) => {
+export const Model = ({ schema, className, title, actions, maxRows }: IModelProps) => {
   return (
     <div className={className}>
       <div className="flex items-center p-2" style={{ height: 30 }}>
@@ -33,7 +34,7 @@ export const Model = ({ schema, className, title, actions }: IModelProps) => {
         {actions}
       </div>
 
-      <JsonSchemaViewer className="border-t" schema={schema} maxRows={JSV_MAX_ROWS} />
+      <JsonSchemaViewer className="border-t" schema={schema} maxRows={maxRows || JSV_MAX_ROWS} />
     </div>
   );
 };

@@ -8,7 +8,6 @@ export interface IVisGraphNode {
   id: string;
   label: string;
   color: string;
-  shape: string;
 }
 
 export interface IVisGraphEdge {
@@ -43,8 +42,7 @@ function computeVisGraph(graph: any, rootNode: IVisGraphNode, activeNodeId?: str
     visGraph.nodes.push({
       id: encodedId,
       label: getNodeTitle(encodedId, get(graph.nodes[id], 'data')),
-      shape: 'box',
-      color: activeNodeId === encodedId ? '#66b1e7' : '#d3d3d3',
+      color: activeNodeId === encodedId ? '#66b1e7' : '#f5f8fa',
     });
   }
 
@@ -64,9 +62,6 @@ function computeVisGraph(graph: any, rootNode: IVisGraphNode, activeNodeId?: str
           from,
           to: encodeURI(target),
           label: isNaN(parseInt(refKey)) ? refKey : 'reference',
-          font: {
-            align: 'top',
-          },
         };
       }),
     );

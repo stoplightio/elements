@@ -18,12 +18,17 @@ export interface IDependencies {
   data: any;
   name?: string;
   className?: string;
+  padding?: string;
 }
 
-export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, data }) => {
-  const components = useComponents();
-  const host = React.useContext(HostContext);
-  const [activeNode, setActiveNode] = React.useState<{ id: string; title: string; data: any } | undefined>();
+interface IActiveNode {
+  id: string;
+  title: string;
+  data: any;
+}
+
+export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, data, padding }) => {
+  const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
   const { graph, result } = useResolver(NodeType.Model, data || {});
   const rootTitle = name || getNodeTitle(srn, result);
 
@@ -32,8 +37,9 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
       if (!graph) return;
 
       const nodeId = e.nodes[0];
+      if (!nodeId) return;
 
-      if (!nodeId || (activeNode && activeNode.id === nodeId)) {
+      if (activeNode && activeNode.id === nodeId) {
         setActiveNode(undefined);
       } else {
         const decodedNodeId = decodeURI(nodeId);
@@ -57,14 +63,14 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
   // Compute the VIS graph from the resolver graph
   const visGraph = useComputeVisGraph(
     graph,
-    { id: 'root', label: rootTitle, color: '#ef932b', shape: 'box' },
+    { id: 'root', label: rootTitle, color: '#ef932b' },
     activeNode && activeNode.id,
   );
 
   if (!graph || !visGraph.nodes.length) return null;
 
   return (
-    <div className={cn(className, 'Page__dependencies relative')}>
+    <div className={cn(className, 'Page__dependencies relative h-full')}>
       <Graph
         id={srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}
@@ -75,49 +81,73 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
       />
 
       {activeNode && typeof activeNode.data === 'object' && (
-        <Model
-          className="border dark:border-darken-3 bg-white dark:bg-gray-7 w-128"
-          title={activeNode.title}
-          schema={activeNode.data}
-          actions={
-            <>
-              {components.link ? (
-                components.link(
-                  {
-                    node: {
-                      title: activeNode.title,
-                      url: activeNode.id.replace(host, ''),
-                    },
-                    // @ts-ignore
-                    children: 'Go To Ref',
-                  },
-                  activeNode.id,
-                )
-              ) : (
-                <a className={cn('text-sm', Classes.TEXT_MUTED)} href={activeNode.id} target="_blank">
-                  Go To Ref
-                </a>
-              )}
+        <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
+          <Model
+            className="border dark:border-darken-3 bg-white dark:bg-gray-7"
+            title={activeNode.title}
+            schema={activeNode.data}
+            maxRows={10}
+            actions={
+              <>
+                {activeNode.id !== 'root' && <GoToRef {...activeNode} />}
 
-              <Icon
-                className="ml-2 text-gray-5 cursor-pointer"
-                icon="small-cross"
-                onClick={() => setActiveNode(undefined)}
-              />
-            </>
-          }
-        />
+                <Icon
+                  className="ml-2 text-gray-5 cursor-pointer"
+                  icon="small-cross"
+                  onClick={() => setActiveNode(undefined)}
+                />
+              </>
+            }
+          />
+        </div>
       )}
     </div>
   );
 };
 
 const graphOptions = {
-  layout: {
-    hierarchical: true,
+  physics: {
+    stabilization: false,
+    barnesHut: {
+      springLength: 150,
+      avoidOverlap: 1,
+    },
   },
   edges: {
-    color: '#000000',
+    color: '#738694',
+    width: 3,
+    font: {
+      align: 'top',
+      color: 'rgba(115, 134, 148, 0.6)',
+    },
   },
-  height: '500px',
+  nodes: {
+    shape: 'box',
+  },
 };
+
+function GoToRef({ title, id }: IActiveNode) {
+  const host = React.useContext(HostContext);
+  const components = useComponents();
+
+  if (components.link) {
+    return components.link(
+      {
+        node: {
+          title,
+          url: id.replace(`${host}/nodes.raw?srn=`, ''),
+        },
+        // @ts-ignore (CL): need to update the typing in MarkdownViewer to be ReactElement instead of ReactNode
+        children: 'Go To Ref',
+      },
+      id,
+    );
+  }
+
+  // TODO (CL): Replace relative/local refs with their export URL
+  return (
+    <a className={cn('text-sm', Classes.TEXT_MUTED)} href={id} target="_blank">
+      Go To Ref
+    </a>
+  );
+}
