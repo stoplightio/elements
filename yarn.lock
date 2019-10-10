@@ -1829,9 +1829,9 @@
     read-pkg-up "^6.0.0"
 
 "@stoplight/json-ref-resolver@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-2.2.0.tgz#f12fed6ca618d9cd6031f5d0405a3ae5ffd54fad"
-  integrity sha512-42z5MNkLKF7Ynq2rM8YSd6SoJvEX5k0ugQujpB8Co7K5m3vhq1LK+/faFhuMfuFy6As9BxVUnDbGchYERXK17Q==
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-2.3.1.tgz#de38b170da2ad7a0f0380c85c62895fe8a79310c"
+  integrity sha512-f5E0bmB7bd0dRD1pZiRSfDxtEkyrI1H7GYiFTKnQzOD0q1Tkavkcu57bWyr46JItX7D4jLLPB1MeHvSHvmh8rw==
   dependencies:
     "@stoplight/json" "^3.1.0"
     "@stoplight/types" "^11.0.0"
@@ -1839,6 +1839,7 @@
     fast-memoize "^2.5.1"
     immer "^3.2.0"
     lodash "^4.17.15"
+    tslib "^1.10.0"
     urijs "~1.19.1"
     vscode-uri "^2.0.3"
 
@@ -15301,7 +15302,7 @@ tslib@1.9.3, tslib@~1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
-tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
+tslib@^1.10.0, tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
