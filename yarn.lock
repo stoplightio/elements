@@ -1971,9 +1971,9 @@
     webpack "4.30.0"
 
 "@stoplight/tree-list@^4.8.0":
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.8.0.tgz#6117f1e7ea17a5d0c1ac73b160bc792792215b74"
-  integrity sha512-F2hGIi1tklAr+xmUhxkMj7E/Vf1+bofOQyDzNcTsUJb20eWCdZT59wL4HSKTL4+7MJG2tQK34W2hbxCnMRzViw==
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.8.1.tgz#131fedd16c4aa87b5a50d8457f8a77f0604a8a1d"
+  integrity sha512-Y4o8XIOQA90XxRy/asNkDnNZkEANtu9A4sElN8xjYTyg73MvYo7TCg2BaCZJLJHaU1bF3qMBO9WdiYkJt9TwMA==
   dependencies:
     "@stoplight/lifecycle" "2.x.x"
     classnames "2.x.x"
