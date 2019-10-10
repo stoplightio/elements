@@ -13,10 +13,10 @@ import { IPageHeader, PageHeader } from './PageHeader';
 import { TryIt } from './TryIt';
 
 export interface IPage extends IErrorBoundary {
-  srn: string;
   type: NodeType;
   data: any;
 
+  srn?: string;
   name?: string;
   changes?: IChange[];
   tabs?: {
@@ -108,7 +108,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
           {nodeTabs.includes(NodeTab.Docs) && (
             <SimpleTabPanel className={cn('Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0')}>
               <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows srn={srn}>
-                <Docs padding={padding} type={type} data={parsedData} />
+                <Docs srn={srn} type={type} data={parsedData} padding={padding} />
               </ScrollContainerWrapper>
             </SimpleTabPanel>
           )}
@@ -142,7 +142,7 @@ const ElementPage: React.FunctionComponent<IPage> = ({
       <ScrollContainerWrapper scrollInnerContainer={scrollInnerContainer} shadows={shadows} srn={srn}>
         {pageHeader}
 
-        <Docs padding={padding} type={type} data={parsedData} />
+        <Docs srn={srn} type={type} data={parsedData} padding={padding} />
       </ScrollContainerWrapper>
     );
   }

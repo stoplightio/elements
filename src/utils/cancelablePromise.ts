@@ -1,17 +1,19 @@
 /**
- * Give me a promise and I'll let you cancel it
+ * Give me a promise and I'll let you cancel it!
+ *
+ * This is useful to prevent setting React state from a resolved promise when a component unmounts.
  */
 export function cancelablePromise<T = unknown>(promise: Promise<T>) {
-  let hasCancelled = false;
+  let hasCanceled = false;
 
   return {
     promise: promise.then(v => {
-      if (hasCancelled) {
-        throw { isCancelled: true };
+      if (hasCanceled) {
+        throw { isCanceled: true };
       }
 
       return v;
     }),
-    cancel: () => (hasCancelled = true),
+    cancel: () => (hasCanceled = true),
   };
 }
