@@ -24,6 +24,7 @@ export function useResolver<T = any>(type: NodeType | 'json_schema', value: stri
   const [resolved, setResolved] = React.useState<{
     result: T;
     errors: IResolveResult['errors'];
+    graph?: IResolveResult['graph'];
   }>({
     result: parsedValue,
     errors: [],
@@ -40,6 +41,7 @@ export function useResolver<T = any>(type: NodeType | 'json_schema', value: stri
         setResolved({
           result: res.result,
           errors: res.errors,
+          graph: res.graph,
         });
       })
       .catch(e => {
