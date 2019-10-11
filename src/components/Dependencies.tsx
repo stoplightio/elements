@@ -62,7 +62,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
 
   // Compute the VIS graph from the resolver graph
   const visGraph = useComputeVisGraph(
-    { id: 'root', label: rootTitle, color: '#ef932b' },
+    { id: 'root', label: rootTitle, color: '#ef932b', font: { color: '#ffffff' } },
     graph,
     activeNode && activeNode.id,
   );
@@ -124,12 +124,14 @@ const graphOptions = {
     font: {
       align: 'top',
       color: 'rgba(115, 134, 148, 0.6)',
+      strokeWidth: 0,
     },
 
     arrowStrikethrough: false,
   },
   nodes: {
     shape: 'box',
+    labelHighlightBold: false,
   },
 };
 

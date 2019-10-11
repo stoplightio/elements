@@ -41,6 +41,9 @@ export interface IVisGraphNode {
   id: string;
   label: string;
   color?: string;
+  font?: {
+    color?: string;
+  };
 }
 
 export interface IVisGraphEdge {

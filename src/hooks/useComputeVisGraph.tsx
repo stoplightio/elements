@@ -28,6 +28,9 @@ export function computeVisGraph(rootNode: IVisGraphNode, graph?: IResolveResult[
         id: encodedId,
         label: getNodeTitle(encodedId, node.data),
         color: activeNodeId === encodedId ? '#66b1e7' : '#f5f8fa',
+        font: {
+          color: activeNodeId === encodedId ? '#ffffff' : '#10161a',
+        },
       });
     }
 
