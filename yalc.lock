@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@stoplight/json-ref-resolver": {
-      "signature": "a45b5f1f5a8f3e29e931835462460a31",
+      "signature": "e2b0d8080d2bf9a30c00d84eba03f390",
       "file": true,
       "replaced": "^2.3.0"
     }

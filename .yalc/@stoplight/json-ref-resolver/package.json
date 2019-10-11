@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/json-ref-resolver",
-  "version": "0.0.0-a45b5f1f",
+  "version": "0.0.0-e2b0d808",
   "description": "Recursively resolve JSON pointers and remote authorities.",
   "keywords": [
     "json-parser",
@@ -30,11 +30,11 @@
     "node": ">=8.3.0"
   },
   "dependencies": {
-    "@stoplight/json": "^3.1.0",
-    "@stoplight/types": "^11.0.0",
+    "@stoplight/json": "^3.1.2",
+    "@stoplight/types": "^11.1.1",
     "dependency-graph": "~0.8.0",
     "fast-memoize": "^2.5.1",
-    "immer": "^3.2.0",
+    "immer": "^4.0.1",
     "lodash": "^4.17.15",
     "tslib": "^1.10.0",
     "urijs": "~1.19.1",

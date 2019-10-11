@@ -103,7 +103,7 @@ class ResolveCrawler {
                     }
                     const targetRef = `${this._runner.baseUri.toString()}${targetPointer}`;
                     if (!this._runner.graph.hasNode(targetRef))
-                        this._runner.graph.addNode(targetRef);
+                        this._runner.graph.addNode(targetRef, { refMap: {} });
                     if (this._runner.root !== targetRef)
                         this._runner.graph.addDependency(this._runner.root, targetRef);
                     this.pointerGraph.addDependency(parentPointer, targetPointer);
@@ -117,7 +117,7 @@ class ResolveCrawler {
             else {
                 const remoteRef = ref.toString();
                 if (!this._runner.graph.hasNode(remoteRef))
-                    this._runner.graph.addNode(remoteRef);
+                    this._runner.graph.addNode(remoteRef, { refMap: {} });
                 if (this._runner.root !== remoteRef)
                     this._runner.graph.addDependency(this._runner.root, remoteRef);
                 if (this._runner.dereferenceRemote && !this._runner.atMaxUriDepth()) {

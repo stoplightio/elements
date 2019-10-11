@@ -36,3 +36,23 @@ export interface IContentsNode {
   srn?: string;
   type?: 'divider' | 'group';
 }
+
+export interface IVisGraphNode {
+  id: string;
+  label: string;
+  color?: string;
+}
+
+export interface IVisGraphEdge {
+  to: string;
+  from: string;
+  label?: string;
+  font?: {
+    align: string;
+  };
+}
+
+export interface IVisGraph {
+  nodes: IVisGraphNode[];
+  edges: IVisGraphEdge[];
+}

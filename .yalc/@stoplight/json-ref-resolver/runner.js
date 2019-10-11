@@ -184,7 +184,7 @@ class ResolveRunner {
         this.root = (opts.root && opts.root.toString()) || this.baseUri.toString() || 'root';
         this.graph = graph;
         if (!this.graph.hasNode(this.root)) {
-            this.graph.addNode(this.root);
+            this.graph.addNode(this.root, { refMap: {} });
         }
         if (this.baseUri && this.depth === 0) {
             this.uriCache.set(this.computeUriCacheKey(this.baseUri), this);
@@ -251,6 +251,7 @@ class ResolveRunner {
                     if (!resolvedTargetPath.length)
                         resolvedTargetPath = targetPath || [];
                     resolved.refMap[String(this.baseUri.clone().fragment(json_1.pathToPointer(resolvedTargetPath)))] = String(r.uri);
+                    this._setGraphNodeEdge(String(this.root), json_1.pathToPointer(resolvedTargetPath), String(r.uri));
                     if (r.error) {
                         resolved.errors.push(r.error);
                     }
@@ -268,7 +269,7 @@ class ResolveRunner {
                             }
                             else {
                                 lodash_1.set(draft, resolvedTargetPath, r.resolved.result);
-                                this._setGraphNodeData(String(r.uri), resolvedTargetPath, r.resolved.result);
+                                this._setGraphNodeData(String(r.uri), r.resolved.result);
                             }
                         }
                     });
@@ -299,9 +300,10 @@ class ResolveRunner {
                                     if (isCircular)
                                         continue;
                                     resolved.refMap[json_1.pathToPointer(dependantPath)] = json_1.pathToPointer(pointerPath);
+                                    this._setGraphNodeEdge(this.root, json_1.pathToPointer(dependantPath), json_1.pathToPointer(pointerPath));
                                     if (val !== void 0) {
                                         lodash_1.set(draft, dependantPath, val);
-                                        this._setGraphNodeData(json_1.pathToPointer(pointerPath), dependantPath, immer_1.original(val));
+                                        this._setGraphNodeData(json_1.pathToPointer(pointerPath), immer_1.original(val));
                                     }
                                     else {
                                         resolved.errors.push({
@@ -386,20 +388,20 @@ class ResolveRunner {
         }
         return false;
     }
-    _setGraphNodeData(nodeId, propertyPath, data) {
+    _setGraphNodeData(nodeId, data) {
         if (!this.graph.hasNode(nodeId))
             return;
-        const graphNodeData = this.graph.getNodeData(nodeId);
-        let propertyPaths = {};
-        propertyPaths[this.root] = [];
-        if (typeof graphNodeData === 'object') {
-            propertyPaths = Object.assign(Object.assign({}, propertyPaths), graphNodeData.propertyPaths);
-        }
-        propertyPaths[this.root].push(json_1.pathToPointer(propertyPath));
-        this.graph.setNodeData(nodeId, {
-            propertyPaths,
-            data,
-        });
+        const graphNodeData = this.graph.getNodeData(nodeId) || {};
+        graphNodeData.data = data;
+        this.graph.setNodeData(nodeId, graphNodeData);
+    }
+    _setGraphNodeEdge(nodeId, fromPointer, toNodeId) {
+        if (!this.graph.hasNode(nodeId))
+            return;
+        const graphNodeData = this.graph.getNodeData(nodeId) || {};
+        graphNodeData.refMap = graphNodeData.refMap || {};
+        graphNodeData.refMap[fromPointer] = toNodeId;
+        this.graph.setNodeData(nodeId, graphNodeData);
     }
 }
 exports.ResolveRunner = ResolveRunner;

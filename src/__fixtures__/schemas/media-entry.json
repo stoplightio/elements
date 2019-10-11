@@ -5,10 +5,10 @@
       "type": "string"
     },
     "caption": {
-      "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/CaptionData"
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/CaptionData"
     },
     "comments": {
-      "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/CommentsCollection"
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/CommentsCollection"
     },
     "created_time": {
       "description": "Media creation UNIX timestamp",
@@ -23,17 +23,17 @@
       "type": "string"
     },
     "images": {
-      "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/ImagesData"
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/ImagesData"
     },
     "likes": {
-      "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/LikesCollection"
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/LikesCollection"
     },
     "link": {
       "description": "Fixed URL of this media entry",
       "type": "string"
     },
     "location": {
-      "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/LocationInfo"
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/LocationInfo"
     },
     "tags": {
       "description": "List of tags assigned to this media",
@@ -48,7 +48,7 @@
       "type": "string"
     },
     "user": {
-      "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/UserShortInfo"
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/UserShortInfo"
     },
     "user_has_liked": {
       "description": "Indicates whether authenticated user has liked this media or not",
@@ -57,12 +57,12 @@
     "users_in_photo": {
       "description": "Users located on this media entry",
       "items": {
-        "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/UserInPhoto"
+        "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/UserInPhoto"
       },
       "type": "array"
     },
     "videos": {
-      "$ref": "http://localhost:4060/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/VideosData"
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/VideosData"
     }
   },
   "type": "object"

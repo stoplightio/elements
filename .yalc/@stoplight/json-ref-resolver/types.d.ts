@@ -104,8 +104,8 @@ export interface IRefHandlerOpts {
     parentPointer: string;
 }
 export interface IGraphNodeData {
-    propertyPaths: Dictionary<string[]>;
-    data: any;
+    refMap: Dictionary<string>;
+    data?: any;
 }
 export interface IResolveRunner {
     id: number;

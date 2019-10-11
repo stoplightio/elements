@@ -5,8 +5,6 @@ import { computePageToc } from '../useComputePageToc';
 describe('toc', () => {
   describe('useComputePageToc()', () => {
     it('returns proper page headings', () => {
-      // const tree = processMarkdown(fixture);
-
       expect(computePageToc(fixtureTree)).toEqual([
         {
           depth: 1,

@@ -29,9 +29,9 @@ storiesOf('components/Dependencies', module)
         <Page
           className="h-full"
           type={NodeType.Model}
-          srn="gh/stoplightio/elements/__fixtures__/schemas/local-refs.json"
+          srn="gh/stoplightio/elements/__fixtures__/schemas/simple.json"
           name="Example Model"
-          data={require('../../__fixtures__/schemas/local-refs.json')}
+          data={require('../../__fixtures__/schemas/simple.json')}
           tabs={{
             [NodeType.Model]: [NodeTab.Docs, NodeTab.Dependencies],
           }}

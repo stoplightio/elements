@@ -37,4 +37,5 @@ export declare class ResolveRunner implements Types.IResolveRunner {
     private computeUriCacheKey;
     private isFile;
     private _setGraphNodeData;
+    private _setGraphNodeEdge;
 }

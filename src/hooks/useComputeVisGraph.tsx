@@ -1,30 +1,15 @@
 import { pointerToPath } from '@stoplight/json';
-import get from 'lodash/get';
-import last from 'lodash/last';
+import { IResolveResult } from '@stoplight/json-ref-resolver/types';
+import { last } from 'lodash';
 import * as React from 'react';
+import { IVisGraph, IVisGraphNode } from '../types';
 import { getNodeTitle } from '../utils/node';
 
-export interface IVisGraphNode {
-  id: string;
-  label: string;
-  color: string;
+export function useComputeVisGraph(rootNode: IVisGraphNode, graph?: IResolveResult['graph'], activeNodeId?: string) {
+  return React.useMemo(() => computeVisGraph(rootNode, graph, activeNodeId), [graph, activeNodeId]);
 }
 
-export interface IVisGraphEdge {
-  to: string;
-  from: string;
-}
-
-export interface IVisGraph {
-  nodes: IVisGraphNode[];
-  edges: IVisGraphEdge[];
-}
-
-export function useComputeVisGraph(graph: any, rootNode: IVisGraphNode, activeNodeId?: string) {
-  return React.useMemo(() => computeVisGraph(graph, rootNode, activeNodeId), [graph, activeNodeId]);
-}
-
-function computeVisGraph(graph: any, rootNode: IVisGraphNode, activeNodeId?: string) {
+export function computeVisGraph(rootNode: IVisGraphNode, graph?: IResolveResult['graph'], activeNodeId?: string) {
   const visGraph: IVisGraph = {
     nodes: [rootNode],
     edges: [],
@@ -33,38 +18,54 @@ function computeVisGraph(graph: any, rootNode: IVisGraphNode, activeNodeId?: str
   if (!graph) return visGraph;
 
   // Loop over graph nodes and add them to the visgraph
-  for (const id in graph.nodes) {
-    // Ignore root node since it's already been added to the visGraph
-    if (id === 'root' || !graph.nodes.hasOwnProperty(id)) continue;
-
+  for (const id of graph.overallOrder()) {
     const encodedId = encodeURI(id);
+    const node = graph.getNodeData(id);
 
-    visGraph.nodes.push({
-      id: encodedId,
-      label: getNodeTitle(encodedId, get(graph.nodes[id], 'data')),
-      color: activeNodeId === encodedId ? '#66b1e7' : '#f5f8fa',
-    });
-  }
+    // Ignore root node since it's already been added to the visGraph
+    if (id !== 'root') {
+      visGraph.nodes.push({
+        id: encodedId,
+        label: getNodeTitle(encodedId, node.data),
+        color: activeNodeId === encodedId ? '#66b1e7' : '#f5f8fa',
+      });
+    }
 
-  // Loop over outgoing edges and create a visGraph edge for each target
-  for (const source in graph.outgoingEdges) {
-    if (!graph.outgoingEdges[source] || !graph.outgoingEdges[source].length) continue;
+    const edgeMap = {};
 
-    const from = encodeURI(source);
+    // Loop over the ref map to combine multiple edges into one
+    for (const propertyPath in node.refMap) {
+      if (!node.refMap.hasOwnProperty(propertyPath)) continue;
 
-    visGraph.edges.push(
-      ...graph.outgoingEdges[source].map((target: string) => {
-        const pointer = get(graph.nodes[target], ['propertyPaths', source, 0]);
+      // ignore numbered properties as they're probably inside a combiner
+      const propertyKey = String(last(pointerToPath(propertyPath)));
+      if (!isNaN(parseInt(propertyKey))) continue;
 
-        const refKey = pointer ? String(last(pointerToPath(pointer))) : '';
+      const encodedRef = encodeURI(node.refMap[propertyPath]);
 
-        return {
-          from,
-          to: encodeURI(target),
-          label: isNaN(parseInt(refKey)) ? refKey : 'reference',
-        };
-      }),
-    );
+      if (edgeMap.hasOwnProperty(encodedRef)) {
+        // Don't add this property key if it already exists
+        if (!edgeMap[encodedRef].includes(propertyKey)) {
+          edgeMap[encodedRef].push(propertyKey);
+        }
+      } else {
+        edgeMap[encodedRef] = [propertyKey];
+      }
+    }
+
+    // Loop over edges and add them to the graph
+    for (const targetId in edgeMap) {
+      if (!edgeMap.hasOwnProperty(targetId)) continue;
+
+      visGraph.edges.push({
+        from: encodedId,
+        to: targetId,
+        label: edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : 'reference',
+        font: {
+          align: edgeMap[targetId].length > 1 ? 'horizontal' : 'top',
+        },
+      });
+    }
   }
 
   return visGraph;
