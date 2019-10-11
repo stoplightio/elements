@@ -1,28 +1,31 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
-import { IHttpService } from '@stoplight/types';
+import { IHttpService, NodeType } from '@stoplight/types';
 import { Card } from '@stoplight/ui-kit';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
+import { useResolver } from '../hooks/useResolver';
 
 export interface IHttpServiceProps extends IErrorBoundary {
   className?: string;
-  value: IHttpService;
+  value: any;
 }
 
 export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
-  if (!value) return null;
+  const { result } = useResolver<IHttpService>(NodeType.HttpService, value);
+
+  if (!result) return null;
 
   return (
     <div className={cn('HttpService', className)}>
-      {value.description && <MarkdownViewer className="mb-12" markdown={value.description} />}
+      {result.description && <MarkdownViewer className="mb-12" markdown={result.description} />}
 
-      {value.servers && value.servers.length > 0 ? (
+      {result.servers && result.servers.length > 0 ? (
         <div className="mb-12">
           <div className="text-xl font-semibold select-none mb-6">Servers</div>
 
           <div className="flex items-center">
-            {value.servers.map((server, index) => (
+            {result.servers.map((server, index) => (
               <a key={index} className="mr-6 text-center" href={server.url} target="_blank">
                 <Card>
                   <div className="font-semibold">{server.name}</div>
@@ -35,35 +38,35 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
         </div>
       ) : null}
 
-      {value.securitySchemes && <div className="mb-12 text-xl font-semibold select-none">Security Schemes</div>}
+      {result.securitySchemes && <div className="mb-12 text-xl font-semibold select-none">Security Schemes</div>}
 
-      {value.contact && (value.contact.email || value.contact.url) && (
+      {result.contact && (result.contact.email || result.contact.url) && (
         <div className="mb-12">
           <div className="text-xl font-semibold select-none">Contact</div>
 
-          {value.contact.email && (
+          {result.contact.email && (
             <div className="mt-4">
-              <a href={`mailto:${value.contact.email}`}>{value.contact.email}</a>
+              <a href={`mailto:${result.contact.email}`}>{result.contact.email}</a>
             </div>
           )}
 
-          {value.contact.url && (
-            <a className="block mt-4" href={value.contact.url}>
+          {result.contact.url && (
+            <a className="block mt-4" href={result.contact.url}>
               {' '}
-              {value.contact.url}
+              {result.contact.url}
             </a>
           )}
         </div>
       )}
 
-      {value.license && (
+      {result.license && (
         <div>
           <div className="text-xl font-semibold select-none mb-4">License</div>
 
-          {value.license.url ? (
-            <a href={value.license.url}>{value.license.name || value.license.url}</a>
+          {result.license.url ? (
+            <a href={result.license.url}>{result.license.name || result.license.url}</a>
           ) : (
-            <span>{value.license.name}</span>
+            <span>{result.license.name}</span>
           )}
         </div>
       )}

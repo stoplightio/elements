@@ -1,3 +1,4 @@
+import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
@@ -5,6 +6,12 @@ import { shallow } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
 import { Docs } from '../Docs';
+import { HttpOperation } from '../HttpOperation';
+import { HttpService } from '../HttpService';
+import { Model } from '../Model';
+
+const httpOperation = require('../../__fixtures__/operations/put-todos.json');
+const httpService = require('../../__fixtures__/services/petstore.json');
 
 jest.mock('@rehooks/component-size', () => ({
   default: () => ({ width: 1200 }),
@@ -48,7 +55,7 @@ describe('Docs component', () => {
         .dive()
         .dive()
         .dive()
-        .find('MarkdownViewerCode')
+        .find(Model)
         .shallow()
         .find(JsonSchemaViewer);
 
@@ -60,6 +67,32 @@ describe('Docs component', () => {
           },
         },
       });
+    });
+  });
+
+  describe('given http_operation type', () => {
+    it('renders HttpOperation with given operation', () => {
+      const wrapper = shallow(<Docs type={NodeType.HttpOperation} data={httpOperation} />)
+        .find(MarkdownViewer)
+        .dive()
+        .dive()
+        .dive()
+        .find(HttpOperation);
+
+      expect(wrapper).toHaveProp('value', safeStringify(httpOperation, undefined, 4));
+    });
+  });
+
+  describe('given http_service type', () => {
+    it('renders HttpService with given operation', () => {
+      const wrapper = shallow(<Docs type={NodeType.HttpService} data={httpService} />)
+        .find(MarkdownViewer)
+        .dive()
+        .dive()
+        .dive()
+        .find(HttpService);
+
+      expect(wrapper).toHaveProp('value', safeStringify(httpService, undefined, 4));
     });
   });
 });

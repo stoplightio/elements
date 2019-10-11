@@ -6,9 +6,6 @@ import { IContentsNode, IProjectNode } from '../types';
 export interface ITableOfContents {
   items: IProjectNode[];
 
-  // Precomputed list of nodes instead of items. This is useful if you want to customize the ordering of the tree.
-  contents?: IContentsNode[];
-
   // SRN of the active node
   srn?: string;
 
@@ -29,5 +26,6 @@ export interface ITableOfContents {
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ items, srn, ...props }) => {
   const contents = useComputeToc(items, srn);
+
   return <UIKitTableOfContents contents={contents} {...props} />;
 };

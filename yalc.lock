@@ -2,9 +2,9 @@
   "version": "v1",
   "packages": {
     "@stoplight/ui-kit": {
-      "signature": "43d538d20884bda88c681e31f21a4bfb",
+      "signature": "821dbc10fb7eebcf6155e75351fb3e44",
       "file": true,
-      "replaced": "^2.11.0"
+      "replaced": ".yalc/@stoplight/ui-kit"
     }
   }
 }

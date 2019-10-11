@@ -1,32 +1,35 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
-import { IHttpOperation } from '@stoplight/types';
+import { IHttpOperation, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
+import { useResolver } from '../../hooks/useResolver';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
 export interface IHttpOperationProps extends IErrorBoundary {
   className?: string;
-  value: IHttpOperation;
+  value: any;
 }
 
 const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ className, value }) => {
-  if (typeof value !== 'object' || value === null) {
+  const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
+
+  if (typeof result !== 'object' || result === null) {
     throw new TypeError(
-      `Expected http operation value to be an object but received ${value === null ? 'null' : typeof value}`,
+      `Expected http operation value to be an object but received ${result === null ? 'null' : typeof result}`,
     );
   }
 
   return (
     <div className={cn('HttpOperation', className)}>
-      {value.description && (
-        <MarkdownViewer className="HttpOperation__Description mb-10" markdown={value.description} />
+      {result.description && (
+        <MarkdownViewer className="HttpOperation__Description mb-10" markdown={result.description} />
       )}
 
-      <Request request={value.request} />
+      <Request request={result.request} />
 
-      <Responses responses={value.responses} />
+      <Responses responses={result.responses} />
     </div>
   );
 };
