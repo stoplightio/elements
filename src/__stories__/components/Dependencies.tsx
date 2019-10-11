@@ -23,7 +23,7 @@ storiesOf('components/Dependencies', module)
       </div>
     );
   })
-  .add('Todos Example', () => {
+  .add('Simple Example', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
@@ -35,6 +35,18 @@ storiesOf('components/Dependencies', module)
           tabs={{
             [NodeType.Model]: [NodeTab.Docs, NodeTab.Dependencies],
           }}
+        />
+      </div>
+    );
+  })
+  .add('Circular Example', () => {
+    return (
+      <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+        <Dependencies
+          srn="gh/stoplightio/elements/__fixtures__/schemas/circular.json"
+          name="Example Model"
+          data={require('../../__fixtures__/schemas/circular.ts').default}
+          padding="12"
         />
       </div>
     );

@@ -1,5 +1,1084 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`computeVisGraph it works with a circular example 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "properties",
+      "to": "#/definitions/UninterpretedOption",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/ApplicationProcessRule",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/Zone",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "descriptorForType",
+      "to": "#/definitions/Descriptor",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABServiceOptions%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "unknownFields",
+      "to": "#/definitions/UnknownFieldSet",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "aggregateValueBytes,
+identifierValueBytes,
+stringValue,
+cidBytes,
+sidBytes,
+value,
+namePartBytes,
+nameBytes,
+valueBytes,
+goPackageBytes,
+javaOuterClassnameBytes,
+javaPackageBytes,
+experimentalMapKeyBytes,
+correlationIdBytes,
+responseTypeBytes",
+      "to": "#/definitions/ByteString",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABUninterpretedOption%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABMethodOptions%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/ServiceMeta",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/Command",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "idPath,
+idCommand",
+      "to": "#/definitions/IdCommand",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "defaultInstanceForType",
+      "to": "#/definitions/Message",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/Option",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/OptionOrBuilder",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "bounds",
+      "to": "#/definitions/BoundingBox",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "locus,
+bottomRight,
+topLeft",
+      "to": "#/definitions/Point",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "health,
+heartBeat",
+      "to": "#/definitions/DeviceEventResult",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "sensorTag,
+items",
+      "to": "#/definitions/SensorTag",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "taggedAsset",
+      "to": "#/definitions/TaggedAsset",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "action,
+items",
+      "to": "#/definitions/ActionMeta",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "state",
+      "to": "#/definitions/State",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABEnumOptions%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "config",
+      "to": "#/definitions/Tasks",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "type",
+      "to": "#/definitions/DataType",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "address",
+      "to": "#/definitions/PostalAddress",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABEnumValueOptions%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "message",
+      "to": "#/definitions/ClfMessage",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "topic",
+      "to": "#/definitions/NotificationTopic",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/CharacteristicMeta",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABMessageOptions%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/InputType",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/MetricsValue",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABProperty%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/PropertyMeta",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "receiverSummaryDetail",
+      "to": "#/definitions/ReceiverSummaryDetail",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "exec,
+setup,
+teardown,
+items",
+      "to": "#/definitions/Ioctl",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "execOrBuilder,
+setupOrBuilder,
+teardownOrBuilder",
+      "to": "#/definitions/IoctlOrBuilder",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/PeripheralTypeMeta",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "mqttConfig",
+      "to": "#/definitions/MQTTConfigBean",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABMessageLite%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "items,
+asset",
+      "to": "#/definitions/Asset",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABFileOptions%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "position",
+      "to": "#/definitions/GeoPoint",
+    },
+    Object {
+      "font": Object {
+        "align": "horizontal",
+      },
+      "from": "root",
+      "label": "items,
+device",
+      "to": "#/definitions/UserDevice",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABFieldOptions%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/StreamResultValue",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/ResultValue",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/Property",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/PropertyOrBuilder",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABMqttResponse%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/CommandOrBuilder",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABTasks%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/AssetResultValue",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "receiver",
+      "to": "#/definitions/Receiver",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABNamePart%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/StatsValue",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABOption%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "area",
+      "to": "#/definitions/Area",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "building",
+      "to": "#/definitions/Building",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/EventData",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "defaultInstanceForType",
+      "to": "#/definitions/MessageLite",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "parserForType",
+      "to": "#/definitions/Parser%C2%ABMessage%C2%BB",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/DeviceTypeMeta",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/EventDataResult",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/DevicePropertyMeta",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "ruleset",
+      "to": "#/definitions/ProcessRuleSet",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/ProcessRuleStage",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/Space",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/Capability",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/ProcessRule",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "items",
+      "to": "#/definitions/DescriptorMeta",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "id": "root",
+      "label": "Circular Schema",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/UninterpretedOption",
+      "label": "UninterpretedOption",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ApplicationProcessRule",
+      "label": "ApplicationProcessRule",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Partner",
+      "label": "Partner",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Zone",
+      "label": "Zone",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Descriptor",
+      "label": "Descriptor",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABServiceOptions%C2%BB",
+      "label": "Parser%C2%ABServiceOptions%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/UninterpretedOptionOrBuilder",
+      "label": "UninterpretedOptionOrBuilder",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/UnknownFieldSet",
+      "label": "UnknownFieldSet",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ByteString",
+      "label": "ByteString",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/NamePart",
+      "label": "NamePart",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/NamePartOrBuilder",
+      "label": "NamePartOrBuilder",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABUninterpretedOption%C2%BB",
+      "label": "Parser%C2%ABUninterpretedOption%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABMethodOptions%C2%BB",
+      "label": "Parser%C2%ABMethodOptions%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ServiceMeta",
+      "label": "ServiceMeta",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Command",
+      "label": "Command",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/IdCommand",
+      "label": "IdCommand",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Message",
+      "label": "Message",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Option",
+      "label": "Option",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/OptionOrBuilder",
+      "label": "OptionOrBuilder",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/BoundingBox",
+      "label": "BoundingBox",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Point",
+      "label": "Point",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/DeviceEventResult",
+      "label": "DeviceEventResult",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/SensorTag",
+      "label": "SensorTag",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/TaggedAsset",
+      "label": "TaggedAsset",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ActionMeta",
+      "label": "ActionMeta",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/State",
+      "label": "State",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABEnumOptions%C2%BB",
+      "label": "Parser%C2%ABEnumOptions%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Tasks",
+      "label": "Tasks",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/DataType",
+      "label": "DataType",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser",
+      "label": "Parser",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/PostalAddress",
+      "label": "PostalAddress",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABEnumValueOptions%C2%BB",
+      "label": "Parser%C2%ABEnumValueOptions%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ClfMessage",
+      "label": "ClfMessage",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/NotificationTopic",
+      "label": "NotificationTopic",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/CharacteristicMeta",
+      "label": "CharacteristicMeta",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABMessageOptions%C2%BB",
+      "label": "Parser%C2%ABMessageOptions%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/InputType",
+      "label": "InputType",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/MetricsValue",
+      "label": "MetricsValue",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Customer",
+      "label": "Customer",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABProperty%C2%BB",
+      "label": "Parser%C2%ABProperty%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/FileDescriptor",
+      "label": "FileDescriptor",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/EnumValueOptions",
+      "label": "EnumValueOptions",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/EnumDescriptor",
+      "label": "EnumDescriptor",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/PropertyMeta",
+      "label": "PropertyMeta",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ReceiverSummaryDetail",
+      "label": "ReceiverSummaryDetail",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Ioctl",
+      "label": "Ioctl",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/IoctlOrBuilder",
+      "label": "IoctlOrBuilder",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/PeripheralTypeMeta",
+      "label": "PeripheralTypeMeta",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/MQTTConfigBean",
+      "label": "MQTTConfigBean",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABMessageLite%C2%BB",
+      "label": "Parser%C2%ABMessageLite%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Asset",
+      "label": "Asset",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABFileOptions%C2%BB",
+      "label": "Parser%C2%ABFileOptions%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/GeoPoint",
+      "label": "GeoPoint",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/UserDevice",
+      "label": "UserDevice",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABFieldOptions%C2%BB",
+      "label": "Parser%C2%ABFieldOptions%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/StreamResultValue",
+      "label": "StreamResultValue",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ResultValue",
+      "label": "ResultValue",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/MethodDescriptor",
+      "label": "MethodDescriptor",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ServiceOptions",
+      "label": "ServiceOptions",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Property",
+      "label": "Property",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/PropertyOrBuilder",
+      "label": "PropertyOrBuilder",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABMqttResponse%C2%BB",
+      "label": "Parser%C2%ABMqttResponse%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/CommandOrBuilder",
+      "label": "CommandOrBuilder",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABTasks%C2%BB",
+      "label": "Parser%C2%ABTasks%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/AssetResultValue",
+      "label": "AssetResultValue",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/EnumOptions",
+      "label": "EnumOptions",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/EnumValueDescriptor",
+      "label": "EnumValueDescriptor",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Receiver",
+      "label": "Receiver",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABNamePart%C2%BB",
+      "label": "Parser%C2%ABNamePart%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/StatsValue",
+      "label": "StatsValue",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/FieldDescriptor",
+      "label": "FieldDescriptor",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/MessageOptions",
+      "label": "MessageOptions",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABOption%C2%BB",
+      "label": "Parser%C2%ABOption%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Area",
+      "label": "Area",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Building",
+      "label": "Building",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/EventData",
+      "label": "EventData",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/MessageLite",
+      "label": "MessageLite",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Parser%C2%ABMessage%C2%BB",
+      "label": "Parser%C2%ABMessage%C2%BB",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/DeviceTypeMeta",
+      "label": "DeviceTypeMeta",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/EventDataResult",
+      "label": "EventDataResult",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/DevicePropertyMeta",
+      "label": "DevicePropertyMeta",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/FieldOptions",
+      "label": "FieldOptions",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ProcessRuleSet",
+      "label": "ProcessRuleSet",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ProcessRuleStage",
+      "label": "ProcessRuleStage",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Space",
+      "label": "Space",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/Capability",
+      "label": "Capability",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/MethodOptions",
+      "label": "MethodOptions",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ServiceDescriptor",
+      "label": "ServiceDescriptor",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/FileOptions",
+      "label": "FileOptions",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/ProcessRule",
+      "label": "ProcessRule",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "id": "#/definitions/DescriptorMeta",
+      "label": "DescriptorMeta",
+    },
+  ],
+}
+`;
+
 exports[`computeVisGraph it works with a simple example 1`] = `
 Object {
   "edges": Array [

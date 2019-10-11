@@ -89,7 +89,11 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
             maxRows={10}
             actions={
               <>
-                {activeNode.id !== 'root' && <GoToRef {...activeNode} />}
+                {activeNode.id !== 'root' && (
+                  <div className="ml-2">
+                    <GoToRef {...activeNode} />
+                  </div>
+                )}
 
                 <Icon
                   className="ml-2 text-gray-5 cursor-pointer"
@@ -111,7 +115,7 @@ const graphOptions = {
     stabilization: false,
     barnesHut: {
       springLength: 150,
-      avoidOverlap: 1,
+      avoidOverlap: 0.5,
     },
   },
   edges: {

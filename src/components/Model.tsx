@@ -92,7 +92,7 @@ function Errors({ errors }: { errors: IResolveError[] }) {
           {errors.map((error, index) => {
             return (
               <li key={index} className={index > 1 ? 'mt-3' : ''}>
-                {error && error.uri ? (
+                {error && error.uri && String(error.uri) ? (
                   <>
                     Failed to resolve{' '}
                     <a href={String(error.uri)} target="_blank">
