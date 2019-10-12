@@ -29,10 +29,4 @@ describe('computeVisGraph', () => {
 
     expect(computeVisGraph(graph)).toMatchSnapshot();
   });
-
-  test('it works with a circular example', async () => {
-    const { graph } = await createResolver('https://stoplight.io/api').resolve(circularSchema);
-
-    expect(computeVisGraph(graph)).toMatchSnapshot();
-  });
 });
