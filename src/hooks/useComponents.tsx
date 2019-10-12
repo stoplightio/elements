@@ -30,6 +30,7 @@ export function useComponents() {
               })}
               title={annotations && annotations.title}
               schema={value}
+              maxRows={nodeType === 'json_schema' ? 15 : undefined}
             />
           );
         } else if (nodeType === NodeType.HttpOperation) {

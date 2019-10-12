@@ -6,7 +6,6 @@ import cn from 'classnames';
 import * as React from 'react';
 import { useResolver } from '../hooks/useResolver';
 
-const JSV_MAX_ROWS = 50;
 const icon: IconName = 'cube';
 const color = '#ef932b';
 
@@ -18,7 +17,7 @@ export interface IModelProps {
   actions?: React.ReactElement;
 }
 
-export function Model({ schema, className, title, maxRows = JSV_MAX_ROWS, actions }: IModelProps) {
+export function Model({ schema, className, title, maxRows, actions }: IModelProps) {
   const { result, errors } = useResolver(NodeType.Model, schema);
 
   return (
