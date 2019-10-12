@@ -27,89 +27,7 @@ interface IActiveNode {
   data: any;
 }
 
-export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, data, padding }) => {
-  const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
-  const { graph, result } = useResolver(NodeType.Model, data || {});
-  const rootTitle = name || getNodeTitle(srn, result);
-
-  const onClickNode = React.useCallback(
-    e => {
-      if (!graph) return;
-
-      const nodeId = e.nodes[0];
-      if (!nodeId) return;
-
-      if (activeNode && activeNode.id === nodeId) {
-        setActiveNode(undefined);
-      } else {
-        const decodedNodeId = decodeURI(nodeId);
-        const isRoot = nodeId === 'root';
-
-        let nodeData;
-        if (!isRoot && graph.hasNode(decodedNodeId)) {
-          nodeData = graph.getNodeData(decodedNodeId).data;
-        }
-
-        setActiveNode({
-          id: decodedNodeId,
-          title: isRoot ? rootTitle : getNodeTitle(decodedNodeId, nodeData),
-          data: isRoot ? result : nodeData,
-        });
-      }
-    },
-    [graph, activeNode, rootTitle],
-  );
-
-  // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(
-    { id: 'root', label: rootTitle, color: '#ef932b', font: { color: '#ffffff' } },
-    graph,
-    activeNode && activeNode.id,
-  );
-
-  if (!graph || !visGraph.nodes.length) return null;
-
-  return (
-    <div className={cn(className, 'Page__dependencies relative h-full')}>
-      <Graph
-        id={srn.replace(/[^a-zA-Z]+/g, '-')}
-        graph={visGraph}
-        events={{
-          click: onClickNode,
-        }}
-        options={graphOptions}
-      />
-
-      {activeNode && typeof activeNode.data === 'object' && (
-        <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
-          <Model
-            className="border dark:border-darken-3 bg-white dark:bg-gray-7"
-            title={activeNode.title}
-            schema={activeNode.data}
-            maxRows={10}
-            actions={
-              <>
-                {activeNode.id !== 'root' && (
-                  <div className="ml-2">
-                    <GoToRef {...activeNode} />
-                  </div>
-                )}
-
-                <Icon
-                  className="ml-2 text-gray-5 cursor-pointer"
-                  icon="small-cross"
-                  onClick={() => setActiveNode(undefined)}
-                />
-              </>
-            }
-          />
-        </div>
-      )}
-    </div>
-  );
-};
-
-const graphOptions = {
+const visGraphOptions = {
   autoResize: true,
   physics: {
     stabilization: false,
@@ -133,6 +51,83 @@ const graphOptions = {
     shape: 'box',
     labelHighlightBold: false,
   },
+};
+
+export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, data, padding }) => {
+  const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
+  const { graph } = useResolver(NodeType.Model, data || {});
+
+  const onClickNode = React.useCallback(
+    e => {
+      if (!graph) return;
+
+      const nodeId = e.nodes[0];
+      if (!nodeId) return;
+
+      if (activeNode && activeNode.id === nodeId) {
+        setActiveNode(undefined);
+      } else {
+        const decodedNodeId = decodeURI(nodeId);
+        const isRoot = nodeId === 'root';
+
+        let nodeData;
+        if (graph.hasNode(decodedNodeId)) {
+          nodeData = graph.getNodeData(decodedNodeId).data;
+        }
+
+        setActiveNode({
+          id: decodedNodeId,
+          title: isRoot && name ? name : getNodeTitle(decodedNodeId, nodeData),
+          data: nodeData,
+        });
+      }
+    },
+    [graph, name, activeNode],
+  );
+
+  // Compute the VIS graph from the resolver graph
+  const visGraph = useComputeVisGraph(graph, name, activeNode && activeNode.id);
+
+  if (!graph || !visGraph.nodes.length) return null;
+
+  return (
+    <div className={cn(className, 'Page__dependencies relative h-full')}>
+      <Graph
+        id={srn.replace(/[^a-zA-Z]+/g, '-')}
+        graph={visGraph}
+        events={{
+          click: onClickNode,
+        }}
+        options={visGraphOptions}
+      />
+
+      {activeNode && typeof activeNode.data === 'object' && (
+        <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
+          <Model
+            className="border dark:border-darken-3 bg-white dark:bg-gray-7"
+            title={activeNode.title}
+            schema={activeNode.data}
+            maxRows={10}
+            actions={
+              <>
+                {activeNode.id !== 'root' && (
+                  <div className="ml-2">
+                    <GoToRef {...activeNode} />
+                  </div>
+                )}
+
+                <Icon
+                  className="ml-2 cursor-pointer text-gray-5 hover:text-gray-6"
+                  icon="small-cross"
+                  onClick={() => setActiveNode(undefined)}
+                />
+              </>
+            }
+          />
+        </div>
+      )}
+    </div>
+  );
 };
 
 function GoToRef({ title, id }: IActiveNode) {
