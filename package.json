@@ -40,13 +40,13 @@
   },
   "peerDependencies": {
     "mobx": ">=5",
-    "react": ">=16.9",
-    "react-dom": ">=16.9"
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
   },
   "dependencies": {
     "@rehooks/component-size": "^1.0.3",
     "@stoplight/json": "^3.1.2",
-    "@stoplight/json-ref-resolver": "file:.yalc/@stoplight/json-ref-resolver",
+    "@stoplight/json-ref-resolver": "^3.0.0",
     "@stoplight/json-schema-viewer": "^2.10.1",
     "@stoplight/markdown": "^2.5.2",
     "@stoplight/markdown-viewer": "^3.7.0",
