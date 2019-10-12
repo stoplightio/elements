@@ -27,12 +27,12 @@ describe('computeVisGraph', () => {
   test('it works with a simple example', async () => {
     const { graph } = await createResolver('https://stoplight.io/api').resolve(simpleSchema);
 
-    expect(computeVisGraph({ id: 'root', label: 'Simple Schema' }, graph)).toMatchSnapshot();
+    expect(computeVisGraph(graph)).toMatchSnapshot();
   });
 
   test('it works with a circular example', async () => {
     const { graph } = await createResolver('https://stoplight.io/api').resolve(circularSchema);
 
-    expect(computeVisGraph({ id: 'root', label: 'Circular Schema' }, graph)).toMatchSnapshot();
+    expect(computeVisGraph(graph)).toMatchSnapshot();
   });
 });

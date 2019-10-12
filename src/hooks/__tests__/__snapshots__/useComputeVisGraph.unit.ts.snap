@@ -617,463 +617,740 @@ device",
   ],
   "nodes": Array [
     Object {
-      "id": "root",
-      "label": "Circular Schema",
-    },
-    Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/UninterpretedOption",
       "label": "UninterpretedOption",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ApplicationProcessRule",
       "label": "ApplicationProcessRule",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Partner",
       "label": "Partner",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Zone",
       "label": "Zone",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Descriptor",
       "label": "Descriptor",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABServiceOptions%C2%BB",
       "label": "Parser%C2%ABServiceOptions%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/UninterpretedOptionOrBuilder",
       "label": "UninterpretedOptionOrBuilder",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/UnknownFieldSet",
       "label": "UnknownFieldSet",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ByteString",
       "label": "ByteString",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/NamePart",
       "label": "NamePart",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/NamePartOrBuilder",
       "label": "NamePartOrBuilder",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABUninterpretedOption%C2%BB",
       "label": "Parser%C2%ABUninterpretedOption%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABMethodOptions%C2%BB",
       "label": "Parser%C2%ABMethodOptions%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ServiceMeta",
       "label": "ServiceMeta",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Command",
       "label": "Command",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/IdCommand",
       "label": "IdCommand",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Message",
       "label": "Message",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Option",
       "label": "Option",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/OptionOrBuilder",
       "label": "OptionOrBuilder",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/BoundingBox",
       "label": "BoundingBox",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Point",
       "label": "Point",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/DeviceEventResult",
       "label": "DeviceEventResult",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/SensorTag",
       "label": "SensorTag",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/TaggedAsset",
       "label": "TaggedAsset",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ActionMeta",
       "label": "ActionMeta",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/State",
       "label": "State",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABEnumOptions%C2%BB",
       "label": "Parser%C2%ABEnumOptions%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Tasks",
       "label": "Tasks",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/DataType",
       "label": "DataType",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser",
       "label": "Parser",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/PostalAddress",
       "label": "PostalAddress",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABEnumValueOptions%C2%BB",
       "label": "Parser%C2%ABEnumValueOptions%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ClfMessage",
       "label": "ClfMessage",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/NotificationTopic",
       "label": "NotificationTopic",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/CharacteristicMeta",
       "label": "CharacteristicMeta",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABMessageOptions%C2%BB",
       "label": "Parser%C2%ABMessageOptions%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/InputType",
       "label": "InputType",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/MetricsValue",
       "label": "MetricsValue",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Customer",
       "label": "Customer",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABProperty%C2%BB",
       "label": "Parser%C2%ABProperty%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/FileDescriptor",
       "label": "FileDescriptor",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/EnumValueOptions",
       "label": "EnumValueOptions",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/EnumDescriptor",
       "label": "EnumDescriptor",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/PropertyMeta",
       "label": "PropertyMeta",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ReceiverSummaryDetail",
       "label": "ReceiverSummaryDetail",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Ioctl",
       "label": "Ioctl",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/IoctlOrBuilder",
       "label": "IoctlOrBuilder",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/PeripheralTypeMeta",
       "label": "PeripheralTypeMeta",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/MQTTConfigBean",
       "label": "MQTTConfigBean",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABMessageLite%C2%BB",
       "label": "Parser%C2%ABMessageLite%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Asset",
       "label": "Asset",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABFileOptions%C2%BB",
       "label": "Parser%C2%ABFileOptions%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/GeoPoint",
       "label": "GeoPoint",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/UserDevice",
       "label": "UserDevice",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABFieldOptions%C2%BB",
       "label": "Parser%C2%ABFieldOptions%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/StreamResultValue",
       "label": "StreamResultValue",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ResultValue",
       "label": "ResultValue",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/MethodDescriptor",
       "label": "MethodDescriptor",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ServiceOptions",
       "label": "ServiceOptions",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Property",
       "label": "Property",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/PropertyOrBuilder",
       "label": "PropertyOrBuilder",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABMqttResponse%C2%BB",
       "label": "Parser%C2%ABMqttResponse%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/CommandOrBuilder",
       "label": "CommandOrBuilder",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABTasks%C2%BB",
       "label": "Parser%C2%ABTasks%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/AssetResultValue",
       "label": "AssetResultValue",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/EnumOptions",
       "label": "EnumOptions",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/EnumValueDescriptor",
       "label": "EnumValueDescriptor",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Receiver",
       "label": "Receiver",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABNamePart%C2%BB",
       "label": "Parser%C2%ABNamePart%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/StatsValue",
       "label": "StatsValue",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/FieldDescriptor",
       "label": "FieldDescriptor",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/MessageOptions",
       "label": "MessageOptions",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABOption%C2%BB",
       "label": "Parser%C2%ABOption%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Area",
       "label": "Area",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Building",
       "label": "Building",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/EventData",
       "label": "EventData",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/MessageLite",
       "label": "MessageLite",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Parser%C2%ABMessage%C2%BB",
       "label": "Parser%C2%ABMessage%C2%BB",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/DeviceTypeMeta",
       "label": "DeviceTypeMeta",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/EventDataResult",
       "label": "EventDataResult",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/DevicePropertyMeta",
       "label": "DevicePropertyMeta",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/FieldOptions",
       "label": "FieldOptions",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ProcessRuleSet",
       "label": "ProcessRuleSet",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ProcessRuleStage",
       "label": "ProcessRuleStage",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Space",
       "label": "Space",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/Capability",
       "label": "Capability",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/MethodOptions",
       "label": "MethodOptions",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ServiceDescriptor",
       "label": "ServiceDescriptor",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/FileOptions",
       "label": "FileOptions",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/ProcessRule",
       "label": "ProcessRule",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/DescriptorMeta",
       "label": "DescriptorMeta",
+    },
+    Object {
+      "color": "#ef932b",
+      "font": Object {
+        "color": "#ffffff",
+      },
+      "id": "root",
+      "label": "Root",
     },
   ],
 }
@@ -1082,6 +1359,14 @@ device",
 exports[`computeVisGraph it works with a simple example 1`] = `
 Object {
   "edges": Array [
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
+      "label": "reference",
+      "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
+    },
     Object {
       "font": Object {
         "align": "top",
@@ -1109,28 +1394,44 @@ Object {
   ],
   "nodes": Array [
     Object {
-      "id": "root",
-      "label": "Simple Schema",
-    },
-    Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "#/definitions/name",
       "label": "Name",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
       "label": "Todo Partial",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json",
       "label": "User",
     },
     Object {
       "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
       "id": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
       "label": "Todo Full",
+    },
+    Object {
+      "color": "#ef932b",
+      "font": Object {
+        "color": "#ffffff",
+      },
+      "id": "root",
+      "label": "Root",
     },
   ],
 }
