@@ -1,5 +1,6 @@
 import { NodeType } from '@stoplight/types';
-import { IContentsNode, IProjectNode } from '../../types';
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
+import { IProjectNode } from '../../types';
 
 export const nodes: IProjectNode[] = [
   {
@@ -52,16 +53,18 @@ export const contents: IContentsNode[] = [
   {
     depth: 1,
     name: 'One level Deep - 1',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/file-1.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/file-1.md',
     icon: 'document',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 1,
     name: 'One level Deep - 2',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/file-2.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/file-2.md',
     icon: 'document',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 1,
@@ -72,16 +75,18 @@ export const contents: IContentsNode[] = [
   {
     depth: 2,
     name: 'Two levels Deep - 1',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-1.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-1.md',
     icon: 'document',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 2,
     name: 'Two levels Deep - 2',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-2.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-2.md',
     icon: 'document',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 2,
@@ -98,16 +103,18 @@ export const contents: IContentsNode[] = [
   {
     depth: 4,
     name: 'Four levels Deep - 1',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-1.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-1.md',
     icon: 'document',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 4,
     name: 'Four levels Deep - 2',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-2.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-2.md',
     icon: 'document',
     type: 'item',
+    isActive: false,
   },
 ];
 
@@ -120,16 +127,18 @@ export const nodeTypeIcons: IContentsNode[] = [
   {
     depth: 1,
     name: 'One level Deep - 1',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/file-1.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/file-1.md',
     icon: 'cube',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 1,
     name: 'One level Deep - 2',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/file-2.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/file-2.md',
     icon: 'cube',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 1,
@@ -139,16 +148,18 @@ export const nodeTypeIcons: IContentsNode[] = [
   {
     depth: 2,
     name: 'Two levels Deep - 1',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-1.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-1.md',
     icon: 'cube',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 2,
     name: 'Two levels Deep - 2',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-2.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/file-2.md',
     icon: 'cube',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 2,
@@ -163,15 +174,17 @@ export const nodeTypeIcons: IContentsNode[] = [
   {
     depth: 4,
     name: 'Four levels Deep - 1',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-1.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-1.md',
     icon: 'cube',
     type: 'item',
+    isActive: false,
   },
   {
     depth: 4,
     name: 'Four levels Deep - 2',
-    srn: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-2.md',
+    href: 'gh/stoplightio/studio/docs/one-level-deep/two-levels-deep/three-levels-deep/four-levels-deep/file-2.md',
     icon: 'cube',
     type: 'item',
+    isActive: false,
   },
 ];

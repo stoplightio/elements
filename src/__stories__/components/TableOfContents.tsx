@@ -24,7 +24,7 @@ storiesOf('components/TableOfContents', module)
     return (
       <div style={styles}>
         <Provider {...providerKnobs()}>
-          <TableOfContents className="h-full" items={studio.nodes} srn="gh/stoplightio/studio" />
+          <TableOfContents className="h-full" items={studio.nodes} srn="/gh/stoplightio/studio" />
         </Provider>
       </div>
     );

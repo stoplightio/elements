@@ -1,8 +1,9 @@
 import { Dictionary, NodeType } from '@stoplight/types';
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
 import * as React from 'react';
 import { IconsContext } from '../containers/Provider';
-import { IContentsNode, IProjectNode, ProjectNodeWithUri } from '../types';
+import { IProjectNode, ProjectNodeWithUri } from '../types';
 import { NodeIconMapping } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
@@ -42,6 +43,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
       depth: 0,
       type: 'item',
       icon: icons[readmeNode.type] || icons.item,
+      href: readmeNode.srn,
     });
   }
 
@@ -78,6 +80,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
         depth: parts.length - 1,
         type: 'item',
         icon: icons[node.type] || icons.item,
+        href: node.srn,
       });
     } else {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
@@ -87,6 +90,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
         depth: 0,
         type: 'item',
         icon: icons[node.type] || icons.item,
+        href: node.srn,
       });
     }
   }
@@ -120,6 +124,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
       depth: 0,
       icon: icons.item,
       type: 'item',
+      href: httpServiceNode.srn,
     });
 
     const tags: Dictionary<IProjectNode[], string> = {};
@@ -155,6 +160,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
           depth: 1,
           icon: icons[tagChild.type] || icons.item,
           type: 'item',
+          href: tagChild.srn,
         });
       }
     }
@@ -175,6 +181,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
           depth: 1,
           icon: icons[otherChild.type] || icons.item,
           type: 'item',
+          href: otherChild.srn,
         });
       }
     }

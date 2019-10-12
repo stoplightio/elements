@@ -1,3 +1,4 @@
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import cn from 'classnames';
 import * as React from 'react';
 import { PageSkeleton } from '../components/PageSkeleton';
@@ -5,7 +6,7 @@ import { TableOfContents } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContentsSkeleton';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useProjectNodes } from '../hooks/useProjectNodes';
-import { IContentsNode, IProjectNode } from '../types';
+import { IProjectNode } from '../types';
 import { deserializeSrn } from '../utils/srns';
 import { Page } from './Page';
 
@@ -27,8 +28,8 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
     pageSrn = srn;
   } else {
     const node = findFirstNode(contents);
-    if (node && node.srn) {
-      pageSrn = node.srn;
+    if (node && node.href) {
+      pageSrn = node.href;
     }
   }
 
@@ -43,7 +44,7 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContents contents={contents} srn={pageSrn} padding={padding} />
+        <TableOfContents items={data ? data.items : []} padding={padding} />
       )}
 
       {pageSrn ? (
@@ -56,5 +57,5 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
 };
 
 function findFirstNode(nodes: IContentsNode[]): IContentsNode {
-  return nodes.find(node => !!node.srn) || nodes[0];
+  return nodes.find(node => !!node.href) || nodes[0];
 }
