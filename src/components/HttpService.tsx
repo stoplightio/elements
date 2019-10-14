@@ -13,7 +13,6 @@ export interface IHttpServiceProps extends IErrorBoundary {
 
 export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
   const { result } = useResolver<IHttpService>(NodeType.HttpService, value);
-
   if (!result) return null;
 
   return (

@@ -11,13 +11,14 @@ const icon: IconName = 'cube';
 const color = '#ef932b';
 
 export interface IModelProps {
-  schema: any;
+  value: any;
+
   className?: string;
   title?: string;
 }
 
-export const Model = ({ schema, className, title }: IModelProps) => {
-  const { result, errors } = useResolver(NodeType.Model, schema);
+export const Model = ({ value, className, title }: IModelProps) => {
+  const { result, errors } = useResolver(NodeType.Model, value);
 
   return (
     <div className="Model">

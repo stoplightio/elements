@@ -12,6 +12,7 @@ export interface IPageTab {
 export interface IPageTabs {
   node: INodeInfo;
   tabs: IPageTab[];
+
   padding?: string;
   scrollInnerContainer?: boolean;
 }

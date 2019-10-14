@@ -1,6 +1,6 @@
 import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import React from 'react';
+import * as React from 'react';
 
 export const PageTocSkeleton: React.FC<{ className?: string }> = ({ className }) => {
   return (

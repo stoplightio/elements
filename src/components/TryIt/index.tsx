@@ -8,6 +8,7 @@ import { Response } from './Response';
 
 export interface ITryItProps extends IErrorBoundary {
   value: IHttpOperation;
+
   padding?: string;
   className?: string;
 }

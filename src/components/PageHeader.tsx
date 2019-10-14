@@ -1,6 +1,6 @@
 import { NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
-import get from 'lodash/get';
+import { get } from 'lodash';
 import * as React from 'react';
 
 import { INodeInfo } from '../types';

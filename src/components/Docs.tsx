@@ -1,6 +1,5 @@
 import 'resize-observer-polyfill';
 
-import useComponentSize from '@rehooks/component-size';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { ActiveSrnContext } from '../containers/Provider';
@@ -9,6 +8,8 @@ import { useComputePageToc } from '../hooks/useComputePageToc';
 import { INodeInfo } from '../types';
 import { buildNodeMarkdownTree } from '../utils/node';
 import { PageToc } from './PageToc';
+
+const useComponentSize = require('@rehooks/component-size');
 
 export interface IDocs {
   node: INodeInfo;

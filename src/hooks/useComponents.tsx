@@ -29,7 +29,7 @@ export function useComponents() {
                 [CLASSNAMES.block]: !parent || parent.type !== 'tab',
               })}
               title={annotations && annotations.title}
-              schema={value}
+              value={value}
             />
           );
         } else if (nodeType === NodeType.HttpOperation) {
