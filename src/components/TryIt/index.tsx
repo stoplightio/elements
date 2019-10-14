@@ -13,7 +13,7 @@ export interface ITryItProps extends IErrorBoundary {
   className?: string;
 }
 
-const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, padding, value }) => {
+const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, padding = '12', value }) => {
   if (!value) return null;
 
   return (
