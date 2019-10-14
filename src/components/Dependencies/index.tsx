@@ -1,22 +1,21 @@
 import { Classes, Icon } from '@blueprintjs/core';
-import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 const Graph = require('react-graph-vis').default;
 
-import { HostContext } from '../containers/Provider';
-import { useComponents } from '../hooks/useComponents';
-import { useComputeVisGraph } from '../hooks/useComputeVisGraph';
-import { useResolver } from '../hooks/useResolver';
-import { getNodeTitle } from '../utils/node';
-import { Model } from './Model';
+import { HostContext } from '../../containers/Provider';
+import { useComponents } from '../../hooks/useComponents';
+import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
+import { useResolver } from '../../hooks/useResolver';
+import { INodeInfo } from '../../types';
+import { getNodeTitle } from '../../utils/node';
+import { Model } from '../Model';
 
 export interface IDependencies {
-  srn: string;
-  data: any;
-  name?: string;
+  node: INodeInfo;
+
   className?: string;
   padding?: string;
 }
@@ -53,9 +52,9 @@ const visGraphOptions = {
   },
 };
 
-export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, data, padding }) => {
+export const Dependencies: React.FC<IDependencies> = ({ className, node, padding }) => {
+  const { graph } = useResolver(node.type, node.data || {});
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
-  const { graph } = useResolver(NodeType.Model, data || {});
 
   const onClickNode = React.useCallback(
     e => {
@@ -77,23 +76,23 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
 
         setActiveNode({
           id: decodedNodeId,
-          title: isRoot && name ? name : getNodeTitle(decodedNodeId, nodeData),
+          title: isRoot && node.name ? node.name : getNodeTitle(decodedNodeId, nodeData),
           data: nodeData,
         });
       }
     },
-    [graph, name, activeNode],
+    [graph, node.name, activeNode],
   );
 
   // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(graph, name, activeNode && activeNode.id);
+  const visGraph = useComputeVisGraph(graph, node.name, activeNode && activeNode.id);
 
   if (!graph || !visGraph.nodes.length) return null;
 
   return (
     <div className={cn(className, 'Page__dependencies relative h-full')}>
       <Graph
-        id={srn.replace(/[^a-zA-Z]+/g, '-')}
+        id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}
         events={{
           click: onClickNode,
@@ -106,7 +105,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, name, srn, da
           <Model
             className="border dark:border-darken-3 bg-white dark:bg-gray-7"
             title={activeNode.title}
-            schema={activeNode.data}
+            value={activeNode.data}
             maxRows={10}
             actions={
               <>

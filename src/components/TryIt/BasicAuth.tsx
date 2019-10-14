@@ -1,7 +1,7 @@
 import { InputGroup } from '@blueprintjs/core';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
-import flatten from 'lodash/flatten';
+import { flatten } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useStore } from './context';

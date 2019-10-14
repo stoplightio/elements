@@ -4,21 +4,22 @@ import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-import { useResolver } from '../hooks/useResolver';
+import { useResolver } from '../../hooks/useResolver';
 
 const icon: IconName = 'cube';
 const color = '#ef932b';
 
 export interface IModelProps {
-  schema: any;
+  value: any;
+
   className?: string;
   title?: string;
   maxRows?: number;
   actions?: React.ReactElement;
 }
 
-export function Model({ schema, className, title, maxRows, actions }: IModelProps) {
-  const { result, errors } = useResolver(NodeType.Model, schema);
+export function Model({ value, className, title, maxRows = 100, actions }: IModelProps) {
+  const { result, errors } = useResolver(NodeType.Model, value);
 
   return (
     <div className="Model">

@@ -53,5 +53,5 @@ export function useResolver<T = any>(type: NodeType | 'json_schema', value: stri
     };
   }, [value, srn]);
 
-  return resolved || parsedValue;
+  return resolved;
 }

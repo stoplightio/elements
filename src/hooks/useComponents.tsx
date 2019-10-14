@@ -29,8 +29,8 @@ export function useComponents() {
                 [CLASSNAMES.block]: !parent || parent.type !== 'tab',
               })}
               title={annotations && annotations.title}
-              schema={value}
               maxRows={nodeType === 'json_schema' ? 15 : undefined}
+              value={value}
             />
           );
         } else if (nodeType === NodeType.HttpOperation) {

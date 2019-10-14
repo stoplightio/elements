@@ -4,7 +4,7 @@ import * as React from 'react';
 
 export const TableOfContentsSkeleton: React.FunctionComponent<{ className?: string; padding?: string }> = ({
   className,
-  padding = '10',
+  padding = '12',
 }) => {
   return (
     <div

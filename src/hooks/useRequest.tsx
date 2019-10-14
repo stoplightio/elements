@@ -1,6 +1,6 @@
 import { safeStringify } from '@stoplight/json';
 import { AxiosRequestConfig } from 'axios';
-import hash from 'object-hash';
+import * as hash from 'object-hash';
 import * as React from 'react';
 import { AxiosContext } from '../containers/Provider';
 

@@ -1,7 +1,7 @@
 import { NodeType } from '@stoplight/types';
 import * as fs from 'fs';
 import * as path from 'path';
-import { buildNodeMarkdownTree } from '../node';
+import { buildNodeMarkdownTree } from '../buildNodeMarkdownTree';
 
 const basicArticle = fs.readFileSync(path.join(__dirname, '../../__fixtures__/articles/basic.md'));
 const modelWithNoExamples = JSON.parse(

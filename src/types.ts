@@ -8,21 +8,23 @@ export interface IDeserializedSrn {
   uri: string;
 }
 
-export interface INodeInfo {
-  id: number;
-  type: NodeType;
-  name: string;
-  srn: string;
-  version: string;
-  versions: string[];
+export interface IChange {
+  createdAt: string;
+  semver: string;
+  message: string;
+}
+
+export interface INodeInfo extends IProjectNode {
   data: any;
+  changes?: IChange[];
 }
 
 export interface IProjectNode {
-  id: number | string;
   type: NodeType;
-  name: string;
   srn: string;
+  name: string;
+
+  id?: number | string;
   version?: string;
   versions?: string[];
   tags?: string[];
@@ -58,4 +60,10 @@ export interface IVisGraphEdge {
 export interface IVisGraph {
   nodes: IVisGraphNode[];
   edges: IVisGraphEdge[];
+}
+
+export interface IPageHeading {
+  id: string;
+  title: string;
+  depth: number;
 }

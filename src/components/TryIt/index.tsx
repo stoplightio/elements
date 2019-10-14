@@ -7,19 +7,21 @@ import { Request } from './Request';
 import { Response } from './Response';
 
 export interface ITryItProps extends IErrorBoundary {
-  className?: string;
   value: IHttpOperation;
+
+  padding?: string;
+  className?: string;
 }
 
-const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, value }) => {
+const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, padding = '12', value }) => {
   if (!value) return null;
 
   return (
     <StoreProvider value={value}>
-      <div className={cn('TryIt', className)}>
-        <Request className="mb-10" value={value} />
+      <div className={cn('TryIt', className, padding && `p-${padding}`)}>
+        <Request value={value} />
 
-        <Response />
+        <Response className="mt-10" />
       </div>
     </StoreProvider>
   );

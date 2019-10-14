@@ -1,11 +1,11 @@
 @import '~@stoplight/ui-kit/styles/blueprint/variables';
 
 $PageContent: 1000px;
-$PageToc: 200px;
+$PageHeadings: 200px;
 
 .Page {
   &__docs {
-    max-width: calc(#{$PageContent} + #{$PageToc});
+    max-width: calc(#{$PageContent} + #{$PageHeadings});
   }
 
   &__header {
@@ -16,8 +16,8 @@ $PageToc: 200px;
     }
   }
 
-  &__toc {
-    width: $PageToc;
+  &__headings {
+    width: $PageHeadings;
   }
 
   &__content {

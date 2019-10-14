@@ -45,7 +45,7 @@
         'SL.ready',
         () => {
           // The SRN to the project that we want to load
-          var projectSrn = 'gh/stoplightio/studio';
+          var projectSrn = 'gh/stoplightio/studio-demo';
 
           SL.config.components = {
             link: ({ node, children }) => {
@@ -81,8 +81,8 @@
           })(window.history);
 
           // Render the initial components
-          SL.elements.toc.render('stoplight-toc', projectSrn + '/README.md');
-          SL.elements.page.render('stoplight-page', projectSrn + '/README.md');
+          SL.elements.toc.render('stoplight-toc', projectSrn + '/docs/introduction.md');
+          SL.elements.page.render('stoplight-page', projectSrn + '/docs/introduction.md');
         },
         { once: true },
       );

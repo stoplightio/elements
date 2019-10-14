@@ -1,22 +1,23 @@
 import cn from 'classnames';
 import * as React from 'react';
-import { PageSkeleton } from '../components/PageSkeleton';
+import { PageSkeleton } from '../components/Page/Skeleton';
 import { TableOfContents } from '../components/TableOfContents';
-import { TableOfContentsSkeleton } from '../components/TableOfContentsSkeleton';
+import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useProjectNodes } from '../hooks/useProjectNodes';
 import { IContentsNode, IProjectNode } from '../types';
 import { deserializeSrn } from '../utils/srns';
-import { Page } from './Page';
+import { IPageContainer, Page } from './Page';
 
 export interface IHub {
   srn: string;
+  tabs: IPageContainer['tabs'];
   className?: string;
   padding?: string;
-  NotFoundComponent?: React.FunctionComponent<{ srn: string; error?: { message: string }; items: IProjectNode[] }>;
+  NotFoundComponent?: React.FC<{ srn: string; error?: { message: string }; items: IProjectNode[] }>;
 }
 
-export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '10', NotFoundComponent }) => {
+export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotFoundComponent }) => {
   const { isLoading, data, error } = useProjectNodes(srn);
   const contents = useComputeToc(data ? data.items : []);
 
@@ -47,7 +48,13 @@ export const Hub: React.FunctionComponent<IHub> = ({ srn, className, padding = '
       )}
 
       {pageSrn ? (
-        <Page className="flex-1 border-l dark:border-darken-4" srn={pageSrn} padding={padding} scrollInnerContainer />
+        <Page
+          className="flex-1 border-l dark:border-darken-4"
+          srn={pageSrn}
+          tabs={tabs}
+          padding={padding}
+          scrollInnerContainer
+        />
       ) : (
         <PageSkeleton className="flex-1 border-l dark:border-darken-4" padding={padding} />
       )}
