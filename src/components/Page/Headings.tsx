@@ -1,26 +1,25 @@
 import { Icon, Popover } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import React from 'react';
-import { IPageTocHeading } from '../hooks/useComputePageToc';
+import * as React from 'react';
+import { useLocationHash } from '../../hooks/useLocationHash';
+import { IPageHeading } from '../../types';
 
-export interface IPageToc {
-  headings: IPageTocHeading[];
+export interface IPageHeadings {
+  headings: IPageHeading[];
   title?: string;
   className?: string;
   minimal?: boolean;
   padding?: string;
 }
 
-export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On This Page', minimal, padding }) => {
-  const [currentHash, setCurrentHash] = React.useState(typeof window !== undefined && window.location.hash);
-
-  React.useEffect(() => {
-    const hashChange = () => setCurrentHash(typeof window !== undefined && window.location.hash);
-
-    window.addEventListener('hashchange', hashChange, false);
-
-    return () => window.removeEventListener('hashchange', hashChange);
-  }, []);
+export const PageHeadings: React.FC<IPageHeadings> = ({
+  headings,
+  className,
+  title = 'On This Page',
+  minimal,
+  padding,
+}) => {
+  const locationHash = useLocationHash();
 
   if (!headings || !headings.length) return null;
 
@@ -37,13 +36,7 @@ export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On T
       )}
 
       {headings.map((heading, i) => (
-        <TocItem
-          key={i}
-          id={heading.id}
-          depth={heading.depth}
-          title={heading.title}
-          isSelected={currentHash === `#${heading.id}`}
-        />
+        <PageHeading key={i} item={heading} isSelected={locationHash === `#${heading.id}`} />
       ))}
     </>
   );
@@ -77,17 +70,17 @@ export const PageToc: React.FC<IPageToc> = ({ headings, className, title = 'On T
   );
 };
 
-const TocItem: React.FC<IPageTocHeading> = ({ depth, title, id, isSelected }) => {
+const PageHeading: React.FC<{ item: IPageHeading; isSelected: boolean }> = ({ item, isSelected }) => {
   return (
     <a
-      href={`#${id}`}
+      href={`#${item.id}`}
       className={cn(
         'truncate block py-2 pr-8 font-medium font-medium hover:text-blue-6 hover:no-underline text-sm',
         isSelected ? 'text-blue-6 dark:text-blue-2' : 'text-gray-6 dark:text-gray-5',
       )}
-      style={{ paddingLeft: `${3 + depth * 15}px` }}
+      style={{ paddingLeft: `${3 + item.depth * 15}px` }}
     >
-      {title}
+      {item.title}
     </a>
   );
 };

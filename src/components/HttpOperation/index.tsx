@@ -8,8 +8,9 @@ import { Request } from './Request';
 import { Responses } from './Responses';
 
 export interface IHttpOperationProps extends IErrorBoundary {
-  className?: string;
   value: any;
+
+  className?: string;
 }
 
 const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ className, value }) => {

@@ -1,12 +1,15 @@
 import './styles/widgets.scss';
 
+import { NodeType } from '@stoplight/types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { Docs } from './components/Docs';
+import { TryIt } from './components/TryIt';
 import { Hub } from './containers/Hub';
-import { Page } from './containers/Page';
+import { IPageContainer, Page } from './containers/Page';
 import { IProvider, Provider } from './containers/Provider';
 import { TableOfContents } from './containers/TableOfContents';
+import { INodeInfo } from './types';
 
 export const createElement = React.createElement;
 
@@ -32,10 +35,10 @@ export interface IWidget<T = unknown> {
 class Widget<T = unknown> implements IWidget<T> {
   private _htmlId: string = '';
   private _srn: string = '';
-  private _component: React.FunctionComponent<{ srn: string }>;
+  private _component: React.FunctionComponent<T & { srn: string }>;
   private _options!: T;
 
-  constructor(Component: React.FunctionComponent<{ srn: string }>, options?: T) {
+  constructor(Component: React.FunctionComponent<T & { srn: string }>, options?: T) {
     this._component = Component;
 
     if (options) {
@@ -117,9 +120,33 @@ class Widget<T = unknown> implements IWidget<T> {
   }
 }
 
+function renderTabs({ node }: { node: INodeInfo }) {
+  const tabs = [
+    {
+      title: 'Docs',
+      content: <Docs node={node} />,
+    },
+  ];
+
+  if (node.type === NodeType.HttpOperation) {
+    tabs.push({
+      title: 'Try It',
+      content: <TryIt value={node.data} />,
+    });
+  }
+
+  return tabs;
+}
+
 export const elements = {
-  hub: new Widget(Hub),
-  page: new Widget(Page),
+  hub: new Widget<{ tabs: IPageContainer['tabs'] }>(Hub, {
+    tabs: renderTabs,
+  }),
+
+  page: new Widget<{ tabs: IPageContainer['tabs'] }>(Page, {
+    tabs: renderTabs,
+  }),
+
   toc: new Widget<ITableOfContentsOptions>(TableOfContents, {
     isOpen: false,
     enableDrawer: true,

@@ -4,7 +4,7 @@ import * as React from 'react';
 
 export const PageSkeleton: React.FunctionComponent<{ className?: string; padding?: string }> = ({
   className,
-  padding = '10',
+  padding = '12',
 }) => {
   return (
     <div className={cn('PageSkeleton', className, `p-${padding}`, 'flex flex-col h-full')}>

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
-import { TableOfContentsSkeleton } from '../components/TableOfContentsSkeleton';
+import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
 import { useProjectNodes } from '../hooks/useProjectNodes';
 
 export interface ITableOfContents {
   srn: string;
+
   activeNodeSrn?: string;
   className?: string;
   padding?: string;
@@ -15,8 +16,9 @@ export interface ITableOfContents {
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   srn,
+
   className,
-  padding = '10',
+  padding = '12',
   isOpen,
   onClose,
   enableDrawer,

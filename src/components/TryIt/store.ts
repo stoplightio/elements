@@ -201,6 +201,7 @@ export class Request {
     }
   }
 
+  // @ts-ignore
   public send = flow(function*(this: Request) {
     this.isSending = true;
 

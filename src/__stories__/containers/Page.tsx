@@ -4,23 +4,28 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { IPage, Page } from '../../containers/Page';
+import { Docs } from '../../components/Docs';
+import { Page } from '../../containers/Page';
 import { Provider } from '../../containers/Provider';
 import { providerKnobs } from './Provider';
 
 export const darkMode = () => boolean('dark mode', false);
 
-export const pageKnobs = (): IPage => ({
-  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md', 'Page'),
-  scrollInnerContainer: boolean('scrollInnerContainer', true, 'Page'),
+export const pageKnobs = () => ({
+  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
+  scrollInnerContainer: boolean('scrollInnerContainer', true),
 });
 
 storiesOf('containers/Page', module)
   .addDecorator(withKnobs)
-  .add('default', () => (
+  .add('Playground', () => (
     <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
       <Provider {...providerKnobs()}>
-        <Page {...pageKnobs()} className="py-12" />
+        <Page
+          {...pageKnobs()}
+          padding="16"
+          tabs={({ node }) => [{ title: 'Docs', content: <Docs node={node} padding="16" /> }]}
+        />
       </Provider>
     </div>
   ));

@@ -13,9 +13,7 @@ import { Model } from '../Model';
 const httpOperation = require('../../__fixtures__/operations/put-todos.json');
 const httpService = require('../../__fixtures__/services/petstore.json');
 
-jest.mock('@rehooks/component-size', () => ({
-  default: () => ({ width: 1200 }),
-}));
+jest.mock('@rehooks/component-size', () => () => ({ width: 1200 }));
 
 jest.mock('@stoplight/json-schema-viewer', () => ({
   JsonSchemaViewer: () => <div />,
@@ -30,7 +28,7 @@ describe('Docs component', () => {
         properties: {},
       };
 
-      const wrapper = shallow(<Docs type={NodeType.Model} data={schema} />)
+      const wrapper = shallow(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />)
         .find(MarkdownViewer)
         .dive()
         .dive()
@@ -50,7 +48,7 @@ describe('Docs component', () => {
         },
       };
 
-      const wrapper = shallow(<Docs type={NodeType.Model} data={schema} />)
+      const wrapper = shallow(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />)
         .find(MarkdownViewer)
         .dive()
         .dive()
@@ -72,7 +70,7 @@ describe('Docs component', () => {
 
   describe('given http_operation type', () => {
     it('renders HttpOperation with given operation', () => {
-      const wrapper = shallow(<Docs type={NodeType.HttpOperation} data={httpOperation} />)
+      const wrapper = shallow(<Docs node={{ type: NodeType.HttpOperation, data: httpOperation, srn: '', name: '' }} />)
         .find(MarkdownViewer)
         .dive()
         .dive()
@@ -85,7 +83,7 @@ describe('Docs component', () => {
 
   describe('given http_service type', () => {
     it('renders HttpService with given operation', () => {
-      const wrapper = shallow(<Docs type={NodeType.HttpService} data={httpService} />)
+      const wrapper = shallow(<Docs node={{ type: NodeType.HttpService, data: httpService, srn: '', name: '' }} />)
         .find(MarkdownViewer)
         .dive()
         .dive()

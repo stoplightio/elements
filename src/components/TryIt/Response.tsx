@@ -8,7 +8,7 @@ import * as React from 'react';
 import { getHttpCodeColor, HttpCodeDescriptions } from '../../utils/http';
 import { useStore } from './context';
 
-export const Response = observer(() => {
+export const Response = observer<{ className?: string }>(({ className }) => {
   const { response: serverResponse, error, isSending } = useStore();
 
   const response = serverResponse || (error && error.response);
@@ -16,7 +16,7 @@ export const Response = observer(() => {
   if (!response) {
     if (error) {
       return (
-        <div className="TryIt__Response">
+        <div className={cn('TryIt__Response', className)}>
           <ResponseHeader status={0} message={error.message} />
           <div className="bg-darken-2 text-darken-7 dark:text-gray-6 py-2 px-3 rounded">
             The API did not return a response. Is it running and accessible? If you are sending this request from a web
@@ -38,7 +38,7 @@ export const Response = observer(() => {
   }
 
   return (
-    <div className="TryIt__Response">
+    <div className={cn('TryIt__Response', className)}>
       {response.status && <ResponseHeader status={response.status} />}
       <SimpleTabs id="TryIt__Response">
         <SimpleTabList>
