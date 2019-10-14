@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import * as React from 'react';
-import { PageSkeleton } from '../components/PageSkeleton';
+import { PageSkeleton } from '../components/Page/Skeleton';
 import { TableOfContents } from '../components/TableOfContents';
-import { TableOfContentsSkeleton } from '../components/TableOfContentsSkeleton';
+import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useProjectNodes } from '../hooks/useProjectNodes';
 import { IContentsNode, IProjectNode } from '../types';

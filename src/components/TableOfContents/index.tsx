@@ -3,11 +3,11 @@ import { Button, Drawer } from '@blueprintjs/core';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
-import { ComponentsContext } from '../containers/Provider';
-import { useComputeToc } from '../hooks/useComputeToc';
-import { useIsMobile } from '../hooks/useIsMobile';
-import { IContentsNode, IProjectNode } from '../types';
-import { deserializeSrn } from '../utils/srns';
+import { ComponentsContext } from '../../containers/Provider';
+import { useComputeToc } from '../../hooks/useComputeToc';
+import { useIsMobile } from '../../hooks/useIsMobile';
+import { IContentsNode, IProjectNode } from '../../types';
+import { deserializeSrn } from '../../utils/srns';
 
 export interface ITableOfContentsComponent {
   // List of items that will be computed into the tree structure

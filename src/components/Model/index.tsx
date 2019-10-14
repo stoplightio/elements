@@ -4,7 +4,7 @@ import { BlockHeader } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-import { useResolver } from '../hooks/useResolver';
+import { useResolver } from '../../hooks/useResolver';
 
 const JSV_MAX_ROWS = 50;
 const icon: IconName = 'cube';

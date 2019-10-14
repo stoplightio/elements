@@ -2,7 +2,7 @@ import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { groupBy, orderBy } from 'lodash';
 import * as React from 'react';
-import { IChange } from '../types';
+import { IChange } from '../../types';
 
 export interface IChangelogProps {
   padding?: string;

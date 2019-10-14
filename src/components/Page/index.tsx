@@ -1,13 +1,12 @@
+import { NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
-
-import { NodeType } from '@stoplight/types';
-import { useParsedData } from '../hooks/useParsedData';
-import { INodeInfo } from '../types';
-import { IPageHeader, PageHeader } from './PageHeader';
-import { IPageTab, PageTabs } from './PageTabs';
-import { ScrollContainerWrapper } from './ScrollContainerWrapper';
+import { useParsedData } from '../../hooks/useParsedData';
+import { INodeInfo } from '../../types';
+import { PageContainer } from './Container';
+import { IPageHeader, PageHeader } from './Header';
+import { IPageTab, PageTabs } from './Tabs';
 
 export interface IPage extends IErrorBoundary {
   node: INodeInfo;
@@ -48,13 +47,13 @@ const PageComponent: React.FC<IPage> = ({
           <PageTabs node={node} tabs={pageTabs} padding={padding} scrollInnerContainer={scrollInnerContainer} />
         </>
       ) : (
-        <ScrollContainerWrapper id={parsedNode.srn} scrollInnerContainer={scrollInnerContainer} shadows={shadows}>
+        <PageContainer id={parsedNode.srn} scrollInnerContainer={scrollInnerContainer} shadows={shadows}>
           {parsedNode.type !== NodeType.Article && (
             <PageHeader className={`Page__header px-${padding} pt-${padding}`} node={parsedNode} actions={actions} />
           )}
 
           {pageTabs[0].content}
-        </ScrollContainerWrapper>
+        </PageContainer>
       )}
     </div>
   );

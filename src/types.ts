@@ -38,3 +38,9 @@ export interface IContentsNode {
   srn?: string;
   type?: 'divider' | 'group';
 }
+
+export interface IPageHeading {
+  id: string;
+  title: string;
+  depth: number;
+}

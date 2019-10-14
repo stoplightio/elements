@@ -4,14 +4,14 @@ import { Card } from '@stoplight/ui-kit';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
-import { useResolver } from '../hooks/useResolver';
+import { useResolver } from '../../hooks/useResolver';
 
 export interface IHttpServiceProps extends IErrorBoundary {
   className?: string;
   value: any;
 }
 
-export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
+const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
   const { result } = useResolver<IHttpService>(NodeType.HttpService, value);
   if (!result) return null;
 
@@ -36,8 +36,6 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
           </div>
         </div>
       ) : null}
-
-      {/* {result.securitySchemes && <div className="mb-12 text-xl font-semibold select-none">Security Schemes</div>} */}
 
       {result.contact && (result.contact.email || result.contact.url) && (
         <div className="mb-12">

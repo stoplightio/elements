@@ -1,7 +1,7 @@
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import * as React from 'react';
 
-export const ScrollContainerWrapper: React.FC<{
+export const PageContainer: React.FC<{
   id: string;
   scrollInnerContainer?: boolean;
   shadows?: boolean;

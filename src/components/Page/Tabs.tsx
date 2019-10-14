@@ -1,8 +1,8 @@
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import cn from 'classnames';
 import * as React from 'react';
-import { INodeInfo } from '../types';
-import { ScrollContainerWrapper } from './ScrollContainerWrapper';
+import { INodeInfo } from '../../types';
+import { PageContainer } from './Container';
 
 export interface IPageTab {
   title: string;
@@ -39,9 +39,9 @@ export const PageTabs: React.FC<IPageTabs> = ({ node, tabs, padding, scrollInner
 
       {tabs.map((tab, index) => (
         <SimpleTabPanel key={index} className="Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0">
-          <ScrollContainerWrapper id={node.srn} scrollInnerContainer={scrollInnerContainer} shadows>
+          <PageContainer id={node.srn} scrollInnerContainer={scrollInnerContainer} shadows>
             {tab.content}
-          </ScrollContainerWrapper>
+          </PageContainer>
         </SimpleTabPanel>
       ))}
     </SimpleTabs>

@@ -52,7 +52,7 @@ storiesOf('components/Page', module)
       </div>
     );
   })
-  .add('Model With Examples', () => {
+  .add('Model', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
@@ -113,28 +113,6 @@ storiesOf('components/Page', module)
             name: httpOperation.summary || httpOperation.path,
             data: httpOperation,
             type: NodeType.HttpOperation,
-          }}
-          tabs={({ node }) => [
-            { title: 'Docs', content: <Docs node={node} padding="16" /> },
-            {
-              title: 'Try It',
-              content: <TryIt value={node.data} padding="16" />,
-            },
-          ]}
-          padding="16"
-        />
-      </div>
-    );
-  })
-  .add('Http Operation with changelog', () => {
-    return (
-      <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Page
-          node={{
-            srn: 'gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
-            name: httpOperation.summary || httpOperation.path,
-            type: NodeType.HttpOperation,
-            data: httpOperation,
             changes: [
               {
                 createdAt: '1569423416682',
@@ -164,9 +142,10 @@ storiesOf('components/Page', module)
             ],
           }}
           tabs={({ node }) => [
+            { title: 'Docs', content: <Docs node={node} padding="16" /> },
             {
-              title: 'Docs',
-              content: <Docs node={node} padding="16" />,
+              title: 'Try It',
+              content: <TryIt value={node.data} padding="16" />,
             },
             {
               title: 'Changelog',
@@ -178,7 +157,7 @@ storiesOf('components/Page', module)
       </div>
     );
   })
-  .add('Http Service with actions', () => {
+  .add('Http Service', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
@@ -195,7 +174,7 @@ storiesOf('components/Page', module)
       </div>
     );
   })
-  .add('Kitchen Sink', () => {
+  .add('Playground', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
