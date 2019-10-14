@@ -30,7 +30,7 @@ describe('Docs component', () => {
         properties: {},
       };
 
-      const wrapper = shallow(<Docs type={NodeType.Model} data={schema} />)
+      const wrapper = shallow(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />)
         .find(MarkdownViewer)
         .dive()
         .dive()
@@ -50,7 +50,7 @@ describe('Docs component', () => {
         },
       };
 
-      const wrapper = shallow(<Docs type={NodeType.Model} data={schema} />)
+      const wrapper = shallow(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />)
         .find(MarkdownViewer)
         .dive()
         .dive()
@@ -72,7 +72,7 @@ describe('Docs component', () => {
 
   describe('given http_operation type', () => {
     it('renders HttpOperation with given operation', () => {
-      const wrapper = shallow(<Docs type={NodeType.HttpOperation} data={httpOperation} />)
+      const wrapper = shallow(<Docs node={{ type: NodeType.HttpOperation, data: httpOperation, srn: '', name: '' }} />)
         .find(MarkdownViewer)
         .dive()
         .dive()
@@ -85,7 +85,7 @@ describe('Docs component', () => {
 
   describe('given http_service type', () => {
     it('renders HttpService with given operation', () => {
-      const wrapper = shallow(<Docs type={NodeType.HttpService} data={httpService} />)
+      const wrapper = shallow(<Docs node={{ type: NodeType.HttpService, data: httpService, srn: '', name: '' }} />)
         .find(MarkdownViewer)
         .dive()
         .dive()
