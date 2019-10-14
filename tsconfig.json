@@ -7,6 +7,7 @@
 
   "compilerOptions": {
     "noUnusedLocals": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext"
   }
 }

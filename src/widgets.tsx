@@ -1,7 +1,7 @@
 import './styles/widgets.scss';
 
 import { NodeType } from '@stoplight/types';
-import * as React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Docs } from './components/Docs';
 import { TryIt } from './components/TryIt';
