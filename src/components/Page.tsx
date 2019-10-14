@@ -20,7 +20,7 @@ export interface IPage extends IErrorBoundary {
   scrollInnerContainer?: boolean;
 }
 
-const Component: React.FC<IPage> = ({
+const PageComponent: React.FC<IPage> = ({
   node,
   tabs,
 
@@ -60,4 +60,4 @@ const Component: React.FC<IPage> = ({
   );
 };
 
-export const PageComponent = withErrorBoundary<IPage>(Component, ['node'], 'PageComponent');
+export const Page = withErrorBoundary<IPage>(PageComponent, ['node'], 'Page');

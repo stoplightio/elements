@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import * as React from 'react';
 import { PageSkeleton } from '../components/PageSkeleton';
-import { TableOfContentsComponent } from '../components/TableOfContents';
+import { TableOfContents } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContentsSkeleton';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useProjectNodes } from '../hooks/useProjectNodes';
@@ -44,7 +44,7 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContentsComponent contents={contents} srn={pageSrn} padding={padding} />
+        <TableOfContents contents={contents} srn={pageSrn} padding={padding} />
       )}
 
       {pageSrn ? (

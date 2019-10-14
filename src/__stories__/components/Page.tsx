@@ -7,7 +7,7 @@ import cn from 'classnames';
 import * as React from 'react';
 import { Changelog } from '../../components/Changelog';
 import { Docs } from '../../components/Docs';
-import { PageComponent } from '../../components/Page';
+import { Page } from '../../components/Page';
 import { TryIt } from '../../components/TryIt';
 
 export const darkMode = () => boolean('dark mode', false);
@@ -34,7 +34,7 @@ storiesOf('components/Page', module)
   .add('Article', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <PageComponent
+        <Page
           node={{
             name: 'Stoplight Flavored Markdown',
             type: NodeType.Article,
@@ -55,7 +55,7 @@ storiesOf('components/Page', module)
   .add('Model With Examples', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <PageComponent
+        <Page
           node={{
             srn: 'gh/stoplightio/studio-demo/reference/common/models/error.v1.yaml',
             name: 'Error',
@@ -107,7 +107,7 @@ storiesOf('components/Page', module)
   .add('Http Operation', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <PageComponent
+        <Page
           node={{
             srn: 'gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
             name: httpOperation.summary || httpOperation.path,
@@ -129,7 +129,7 @@ storiesOf('components/Page', module)
   .add('Http Operation with changelog', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <PageComponent
+        <Page
           node={{
             srn: 'gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
             name: httpOperation.summary || httpOperation.path,
@@ -181,7 +181,7 @@ storiesOf('components/Page', module)
   .add('Http Service with actions', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <PageComponent
+        <Page
           node={{
             srn: 'gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
             name: 'Petstore API',
@@ -198,7 +198,7 @@ storiesOf('components/Page', module)
   .add('Kitchen Sink', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <PageComponent
+        <Page
           node={knobs()}
           padding="16"
           tabs={({ node }) => [

@@ -34,7 +34,7 @@ export interface ITableOfContentsComponent {
   enableDrawer?: boolean | number;
 }
 
-export const TableOfContentsComponent: React.FunctionComponent<ITableOfContentsComponent> = ({
+export const TableOfContents: React.FC<ITableOfContentsComponent> = ({
   contents: _contents,
   items = [],
   srn,
@@ -154,7 +154,7 @@ interface ITableOfContentsItem {
   isDivider: boolean;
   onClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
 }
-const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
+const TableOfContentsItem: React.FC<ITableOfContentsItem> = ({
   depth,
   name,
   srn,

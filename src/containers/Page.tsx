@@ -1,7 +1,7 @@
 import { NonIdealState } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
-import { IPage, PageComponent } from '../components/Page';
+import { IPage, Page as PageComponent } from '../components/Page';
 import { PageSkeleton } from '../components/PageSkeleton';
 import { useNodeInfo } from '../hooks/useNodeInfo';
 
