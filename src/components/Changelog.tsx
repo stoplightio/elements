@@ -6,13 +6,16 @@ import * as React from 'react';
 import { IChange } from '../types';
 
 export interface IChangelogProps {
+  padding?: string;
   className?: string;
   changes?: IChange[];
 }
 
-export const Changelog = React.memo<IChangelogProps>(({ className, changes }) => {
+export const Changelog = React.memo<IChangelogProps>(({ className, padding, changes }) => {
   if (!changes || !changes.length) {
-    return <div className={cn(className, Classes.TEXT_MUTED)}>No changes for this resource.</div>;
+    return (
+      <div className={cn(className, Classes.TEXT_MUTED, padding && `p-${padding}`)}>No changes for this resource.</div>
+    );
   }
 
   const sortedChanges = orderBy(changes, ['createdAt'], ['desc']);
@@ -22,7 +25,7 @@ export const Changelog = React.memo<IChangelogProps>(({ className, changes }) =>
   });
 
   return (
-    <div className={cn('Changelog', className)}>
+    <div className={cn('Changelog', className, padding && `p-${padding}`)}>
       {Object.keys(groups).map((date, index) => {
         return (
           <div key={date} className={cn({ 'mt-6': index > 0 })}>

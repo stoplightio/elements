@@ -5,7 +5,7 @@ import { Button } from '@blueprintjs/core';
 import * as nested from '../../__fixtures__/table-of-contents/nested';
 import * as studio from '../../__fixtures__/table-of-contents/studio';
 import * as studioTemplate from '../../__fixtures__/table-of-contents/studio-template';
-import { TableOfContents } from '../../components/TableOfContents';
+import { TableOfContentsComponent } from '../../components/TableOfContents';
 
 const styles = {
   height: '100vh',
@@ -18,17 +18,17 @@ const styles = {
 storiesOf('components/TableOfContents', module)
   .add('studio', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={studio.nodes} srn="gh/stoplightio/studio" />
+      <TableOfContentsComponent className="h-full" items={studio.nodes} srn="gh/stoplightio/studio" />
     </div>
   ))
   .add('studio-template', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={studioTemplate.nodes} srn="gh/stoplightio/studio" />
+      <TableOfContentsComponent className="h-full" items={studioTemplate.nodes} srn="gh/stoplightio/studio" />
     </div>
   ))
   .add('nested', () => (
     <div style={styles}>
-      <TableOfContents className="h-full" items={nested.nodes} srn="gh/stoplightio/studio" />
+      <TableOfContentsComponent className="h-full" items={nested.nodes} srn="gh/stoplightio/studio" />
     </div>
   ))
   .add('mobile', () => {
@@ -40,7 +40,7 @@ const MobileStory = () => {
   return (
     <div style={styles}>
       <Button onClick={() => setIsOpen(true)}>Open Drawer</Button>
-      <TableOfContents
+      <TableOfContentsComponent
         className="h-full"
         items={studio.nodes}
         srn="gh/stoplightio/studio"

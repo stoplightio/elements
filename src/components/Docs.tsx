@@ -1,9 +1,9 @@
-import 'resize-observer-polyfill'; // (CL): Keep resize-observer-polyfill at the top of the file
+import 'resize-observer-polyfill';
 
 import useComponentSize from '@rehooks/component-size';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
-import cn from 'classnames';
 import * as React from 'react';
+import { ActiveSrnContext } from '../containers/Provider';
 import { useComponents } from '../hooks/useComponents';
 import { useComputePageToc } from '../hooks/useComputePageToc';
 import { INodeInfo } from '../types';
@@ -12,26 +12,24 @@ import { PageToc } from './PageToc';
 
 export interface IDocs {
   node: INodeInfo;
-  className?: string;
+
   padding?: string;
 }
 
-export const Docs: React.FC<IDocs> = ({ className, node, padding }) => {
+export const Docs = ({ node, padding = '12' }: IDocs) => {
+  const components = useComponents();
   const pageDocsRef = React.useRef<HTMLDivElement | null>(null);
   const { width } = useComponentSize(pageDocsRef);
   const showPageToc = width >= 1000;
 
-  const components = useComponents();
-
-  // Build markdown tree for the node
   const tree = buildNodeMarkdownTree(node.type, node.data);
-
-  // Grab headings from markdown tree
   const headings = useComputePageToc(tree);
 
   return (
-    <div className={cn('Page__docs', className, 'flex w-full')} ref={pageDocsRef}>
-      <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
+    <div className="Page__docs flex w-full" ref={pageDocsRef}>
+      <ActiveSrnContext.Provider value={node.srn || ''}>
+        <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
+      </ActiveSrnContext.Provider>
 
       <PageToc className="Page__toc" padding={padding} headings={headings} minimal={!showPageToc} />
     </div>

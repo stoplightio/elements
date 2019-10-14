@@ -1849,15 +1849,15 @@
   dependencies:
     "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
-    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
+    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
 "@stoplight/json@^3.0", "@stoplight/json@^3.1.0", "@stoplight/json@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.1.1.tgz#531d966a62247bf2ab1e8a06a685fa62e36cf890"
-  integrity sha512-DK2ufmnPvfW9Mv0q4DYtldjicTTcBY+j4kiEUOEmc9hL+mzMDV08+5ix4tmPtheUDZH6OtEqEmGcf8ZKCHFbpg==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.1.2.tgz#ae89d1974f0b6f8bc5778f792aeed4664c95ec62"
+  integrity sha512-7zt0zCN94m90X1sL7FrD7jXhPtkIup07MyG/00sELVrCvzb2wgNaiE+x2N7WSbk3Z0wS08e8B6kow81GQY+Isw==
   dependencies:
     "@stoplight/types" "^11.0.0"
     jsonc-parser "~2.1.1"
@@ -1899,6 +1899,11 @@
     remark-stringify "~7.0.1"
     unified "~8.3.2"
     unist-util-select "~2.0"
+
+"@stoplight/path@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.2.1.tgz#f39f408377a0d1a9c33a04ce08eb3a1691c457d6"
+  integrity sha512-W/wBpTw6ThKZGPcb1ztKz6ULnMVnLE/ygzqIjnqnmKcpNrKkSuBLtL7+oQYZSkteZfJAryloAt3plU3sTiekcQ==
 
 "@stoplight/scripts@7.0.3":
   version "7.0.3"
@@ -2018,9 +2023,9 @@
   integrity sha512-PdY8p2Ufgtorf4d2DbKMfknILMa8KwuyyMMR/2lgK1mLaU8F5PKWYc+h9hIzC+ar0bh7m9h2rINo32m7ADfVyA==
 
 "@stoplight/yaml@^3.1.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.3.0.tgz#975f24ad01700a0d83676e2b35e5f2f53ffa1abe"
-  integrity sha512-Nd9/Fp5Q+HIsHBLa/jmE866mRR0FPjwaGRvG+0vqTSKGvqzq2HHgAQ2bKacD2mLm4BNZ4kYMDOlrodrhoRSgzA==
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.3.2.tgz#001049ed4a8733fca43cc60efe6bcd046abef210"
+  integrity sha512-KfrEsl3bA8mtoIklVvS4Hg8OrOYYtqi+K0IsQ7lJbZLVaUA4wMwDGwz85a6YWeo1OuVe8tumM6OynrFIjFutNA==
   dependencies:
     "@stoplight/types" "^11.1.1"
     "@stoplight/yaml-ast-parser" "0.0.44"
@@ -8649,14 +8654,6 @@ isomorphic-fetch@^2.1.1:
     node-fetch "^1.0.1"
     whatwg-fetch ">=0.10.0"
 
-isomorphic-unfetch@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/isomorphic-unfetch/-/isomorphic-unfetch-3.0.0.tgz#de6d80abde487b17de2c400a7ef9e5ecc2efb362"
-  integrity sha512-V0tmJSYfkKokZ5mgl0cmfQMTb7MLHsBMngTkbLY0eXvKqiVRRoZP04Ly+KhKrJfKtzC9E6Pp15Jo+bwh7Vi2XQ==
-  dependencies:
-    node-fetch "^2.2.0"
-    unfetch "^4.0.0"
-
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -9220,10 +9217,9 @@ json-schema-compare@^0.2.2:
   dependencies:
     lodash "^4.17.4"
 
-"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
+"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
   version "0.6.0"
-  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
-  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
@@ -15491,11 +15487,6 @@ umask@^1.1.0, umask@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/umask/-/umask-1.1.0.tgz#f29cebf01df517912bb58ff9c4e50fde8e33320d"
   integrity sha1-8pzr8B31F5ErtY/5xOUP3o4zMg0=
-
-unfetch@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/unfetch/-/unfetch-4.1.0.tgz#6ec2dd0de887e58a4dee83a050ded80ffc4137db"
-  integrity sha512-crP/n3eAPUJxZXM9T80/yv0YhkTEx2K1D3h7D1AJM6fzsWZrxdyRuLN0JH/dkZh1LNH8LxCnBzoPFCPbb2iGpg==
 
 unherit@^1.0.4:
   version "1.1.2"

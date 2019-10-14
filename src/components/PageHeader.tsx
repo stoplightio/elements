@@ -15,9 +15,7 @@ export interface IPageHeader extends IErrorBoundary {
 }
 
 const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, className, actions }) => {
-  if (node.type === NodeType.Article) {
-    return null;
-  }
+  if (!node.name) return null;
 
   const isHttpOperation = node.type === NodeType.HttpOperation;
 
@@ -28,7 +26,7 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
       <div className="flex items-center">
         {isHttpOperation && <Method className="mr-5" method={get(node, 'data.method')} />}
 
-        <h2 className="font-medium text-2xl flex-1">{name}</h2>
+        <h2 className="font-medium text-2xl flex-1">{node.name}</h2>
 
         {actions && actions({ node })}
       </div>

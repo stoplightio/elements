@@ -9,7 +9,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 import { IContentsNode, IProjectNode } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
-export interface ITableOfContents {
+export interface ITableOfContentsComponent {
   // List of items that will be computed into the tree structure
   items?: IProjectNode[];
 
@@ -34,12 +34,12 @@ export interface ITableOfContents {
   enableDrawer?: boolean | number;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
+export const TableOfContentsComponent: React.FunctionComponent<ITableOfContentsComponent> = ({
   contents: _contents,
   items = [],
   srn,
   className,
-  padding = '10',
+  padding = '12',
   title,
   isOpen = false,
   // tslint:disable-next-line: no-empty

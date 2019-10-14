@@ -152,13 +152,7 @@ be the json schema object to be rendered.
 
 ```json
 {
-  "title": "User",
-  "type": "object",
-  "properties": {
-    "name": {
-      "type": "string"
-    }
-  }
+  "$ref": "../../reference/common/models/error.v1.yaml"
 }
 ```
 

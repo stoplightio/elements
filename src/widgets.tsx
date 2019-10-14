@@ -1,13 +1,15 @@
 import './styles/widgets.scss';
 
+import { NodeType } from '@stoplight/types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { Docs } from './components/Docs';
+import { TryIt } from './components/TryIt';
 import { Hub } from './containers/Hub';
 import { IPageContainer, Page } from './containers/Page';
 import { IProvider, Provider } from './containers/Provider';
 import { TableOfContents } from './containers/TableOfContents';
+import { INodeInfo } from './types';
 
 export const createElement = React.createElement;
 
@@ -118,16 +120,31 @@ class Widget<T = unknown> implements IWidget<T> {
   }
 }
 
+function renderTabs({ node }: { node: INodeInfo }) {
+  const tabs = [
+    {
+      title: 'Docs',
+      content: <Docs node={node} />,
+    },
+  ];
+
+  if (node.type === NodeType.HttpOperation) {
+    tabs.push({
+      title: 'Try It',
+      content: <TryIt value={node.data} />,
+    });
+  }
+
+  return tabs;
+}
+
 export const elements = {
-  hub: new Widget(Hub),
+  hub: new Widget<{ tabs: IPageContainer['tabs'] }>(Hub, {
+    tabs: renderTabs,
+  }),
 
   page: new Widget<{ tabs: IPageContainer['tabs'] }>(Page, {
-    tabs: ({ node }) => [
-      {
-        title: 'Docs',
-        content: <Docs node={node} />,
-      },
-    ],
+    tabs: renderTabs,
   }),
 
   toc: new Widget<ITableOfContentsOptions>(TableOfContents, {

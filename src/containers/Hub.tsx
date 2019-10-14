@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import * as React from 'react';
 import { PageSkeleton } from '../components/PageSkeleton';
-import { TableOfContents } from '../components/TableOfContents';
+import { TableOfContentsComponent } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContentsSkeleton';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useProjectNodes } from '../hooks/useProjectNodes';
@@ -17,7 +17,7 @@ export interface IHub {
   NotFoundComponent?: React.FC<{ srn: string; error?: { message: string }; items: IProjectNode[] }>;
 }
 
-export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '10', NotFoundComponent }) => {
+export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotFoundComponent }) => {
   const { isLoading, data, error } = useProjectNodes(srn);
   const contents = useComputeToc(data ? data.items : []);
 
@@ -44,7 +44,7 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '10', NotF
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContents contents={contents} srn={pageSrn} padding={padding} />
+        <TableOfContentsComponent contents={contents} srn={pageSrn} padding={padding} />
       )}
 
       {pageSrn ? (

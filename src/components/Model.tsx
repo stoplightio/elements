@@ -1,25 +1,29 @@
 import { IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
-import { IResolveError } from '@stoplight/json-ref-resolver/types';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { BlockHeader } from '@stoplight/markdown-viewer';
+import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
+import { useResolver } from '../hooks/useResolver';
 
 const JSV_MAX_ROWS = 50;
-export const Model: React.FC<{ schema: any; title?: string; errors: IResolveError[]; className?: string }> = ({
-  schema,
-  title,
-  errors,
-  className,
-}) => {
-  const icon: IconName = 'cube';
-  const color = '#ef932b';
+const icon: IconName = 'cube';
+const color = '#ef932b';
+
+export interface IModelProps {
+  schema: any;
+  className?: string;
+  title?: string;
+}
+
+export const Model = ({ schema, className, title }: IModelProps) => {
+  const { result, errors } = useResolver(NodeType.Model, schema);
 
   return (
     <div className="Model">
       {title && <BlockHeader icon={icon} iconColor={color} title={title} />}
 
-      {errors.length > 0 && (
+      {errors && errors.length > 0 && (
         <div className="w-full flex justify-end">
           <Popover
             interactionKind={PopoverInteractionKind.HOVER}
@@ -39,7 +43,7 @@ export const Model: React.FC<{ schema: any; title?: string; errors: IResolveErro
                     <li key={index} className={index > 1 ? 'mt-3' : ''}>
                       {error && error.uri ? (
                         <>
-                          Fail to resolve{' '}
+                          Failed to resolve{' '}
                           <a href={String(error.uri)} target="_blank">
                             {String(error.uri)}
                           </a>
@@ -57,7 +61,7 @@ export const Model: React.FC<{ schema: any; title?: string; errors: IResolveErro
       )}
 
       <div className={className}>
-        <JsonSchemaViewer schema={schema} maxRows={JSV_MAX_ROWS} />
+        <JsonSchemaViewer schema={result} maxRows={JSV_MAX_ROWS} />
       </div>
     </div>
   );

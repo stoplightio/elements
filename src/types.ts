@@ -20,11 +20,11 @@ export interface INodeInfo extends IProjectNode {
 }
 
 export interface IProjectNode {
-  id: number | string;
   type: NodeType;
-  name: string;
   srn: string;
+  name: string;
 
+  id?: number | string;
   version?: string;
   versions?: string[];
   tags?: string[];
