@@ -1,4 +1,4 @@
-import { Button, ControlGroup, InputGroup, Tooltip } from '@blueprintjs/core';
+import { Button, ControlGroup, InputGroup } from '@blueprintjs/core';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';

@@ -1,6 +1,6 @@
 import { safeStringify } from '@stoplight/json';
 import { AxiosRequestConfig } from 'axios';
-import * as hash from 'object-hash';
+import { MD5 } from 'object-hash';
 import * as React from 'react';
 import { AxiosContext } from '../containers/Provider';
 
@@ -91,7 +91,7 @@ function createRequest(request: AxiosRequestConfig): IRequestCacheEnty {
 
   return React.useMemo(() => {
     // Create a hash of the request so we can ensure reference equality
-    const key = hash.MD5(request);
+    const key = MD5(request);
 
     if (prev.current !== null && prev.current.key === key) {
       return prev.current;

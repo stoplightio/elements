@@ -6,8 +6,6 @@
   "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
 
   "compilerOptions": {
-    "noUnusedLocals": false,
-    "allowSyntheticDefaultImports": true,
-    "module": "esnext"
+    "noUnusedLocals": false
   }
 }
