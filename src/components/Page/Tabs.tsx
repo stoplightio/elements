@@ -7,6 +7,8 @@ import { PageContainer } from './Container';
 export interface IPageTab {
   title: string;
   content: React.ReactElement | null;
+
+  scrollInnerContainer?: boolean;
 }
 
 export interface IPageTabs {
@@ -39,7 +41,13 @@ export const PageTabs: React.FC<IPageTabs> = ({ node, tabs, padding, scrollInner
 
       {tabs.map((tab, index) => (
         <SimpleTabPanel key={index} className="Page__tab-panel flex-1 border-l-0 border-r-0 border-b-0">
-          <PageContainer id={node.srn} scrollInnerContainer={scrollInnerContainer} shadows>
+          <PageContainer
+            id={node.srn}
+            scrollInnerContainer={
+              typeof tab.scrollInnerContainer === 'undefined' ? scrollInnerContainer : tab.scrollInnerContainer
+            }
+            shadows
+          >
             {tab.content}
           </PageContainer>
         </SimpleTabPanel>

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
-const Graph = require('react-graph-vis').default;
+import { default as Graph } from 'react-graph-vis';
 
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
