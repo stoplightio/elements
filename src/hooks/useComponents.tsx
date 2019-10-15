@@ -1,4 +1,4 @@
-import { CLASSNAMES, IComponentMappingProps } from '@stoplight/markdown-viewer';
+import { CLASSNAMES, IComponentMapping, IComponentMappingProps } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
@@ -10,7 +10,7 @@ import { ComponentsContext } from '../containers/Provider';
 export function useComponents() {
   const Components = React.useContext(ComponentsContext);
 
-  return React.useMemo(() => {
+  return React.useMemo<IComponentMapping>(() => {
     return {
       ...Components,
 
@@ -29,6 +29,7 @@ export function useComponents() {
                 [CLASSNAMES.block]: !parent || parent.type !== 'tab',
               })}
               title={annotations && annotations.title}
+              maxRows={nodeType === 'json_schema' ? 15 : undefined}
               value={value}
             />
           );

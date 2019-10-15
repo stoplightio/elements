@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`computeVisGraph it works with a simple example 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
+      "label": "reference",
+      "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
+      "label": "user",
+      "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "todo",
+      "to": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
+    },
+    Object {
+      "font": Object {
+        "align": "top",
+      },
+      "from": "root",
+      "label": "name",
+      "to": "#/definitions/name",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
+      "id": "#/definitions/name",
+      "label": "Name",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
+      "id": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
+      "label": "Todo Partial",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
+      "id": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json",
+      "label": "User",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
+      "id": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
+      "label": "Todo Full",
+    },
+    Object {
+      "color": "#ef932b",
+      "font": Object {
+        "color": "#ffffff",
+      },
+      "id": "root",
+      "label": "Root",
+    },
+  ],
+}
+`;

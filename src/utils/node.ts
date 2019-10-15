@@ -1,5 +1,6 @@
 import { Dictionary, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
+import { last, split, upperFirst } from 'lodash';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',
@@ -27,3 +28,15 @@ export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
   http_server: 'database',
   unknown: 'help',
 };
+
+export function getNodeTitle(srn: string, data?: any) {
+  let title = '';
+
+  if (data && data.title) {
+    title = data.title;
+  } else {
+    title = upperFirst(last(split(srn, '/')));
+  }
+
+  return title;
+}

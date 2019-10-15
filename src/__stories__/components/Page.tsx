@@ -6,6 +6,7 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 import { Changelog } from '../../components/Changelog';
+import { Dependencies } from '../../components/Dependencies';
 import { Docs } from '../../components/Docs';
 import { Page } from '../../components/Page';
 import { TryIt } from '../../components/TryIt';
@@ -35,6 +36,7 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          className="h-full"
           node={{
             name: 'Stoplight Flavored Markdown',
             type: NodeType.Article,
@@ -56,6 +58,7 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          className="h-full"
           node={{
             srn: 'gh/stoplightio/studio-demo/reference/common/models/error.v1.yaml',
             name: 'Error',
@@ -95,6 +98,10 @@ storiesOf('components/Page', module)
               content: <Docs node={node} padding="16" />,
             },
             {
+              title: 'Dependencies',
+              content: <Dependencies node={node} padding="16" />,
+            },
+            {
               title: 'Changelog',
               content: <Changelog changes={node.changes} padding="16" />,
             },
@@ -108,6 +115,7 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          className="h-full"
           node={{
             srn: 'gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
             name: httpOperation.summary || httpOperation.path,
@@ -161,6 +169,7 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          className="h-full"
           node={{
             srn: 'gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
             name: 'Petstore API',
@@ -178,18 +187,36 @@ storiesOf('components/Page', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
+          className="h-full"
           node={knobs()}
           padding="16"
-          tabs={({ node }) => [
-            {
-              title: 'Docs',
-              content: <Docs node={node} padding="16" />,
-            },
-            {
+          tabs={({ node }) => {
+            const tabs = [
+              {
+                title: 'Docs',
+                content: <Docs node={node} padding="16" />,
+              },
+            ];
+
+            if (node.type === NodeType.HttpOperation) {
+              tabs.push({
+                title: 'Try It',
+                content: <TryIt value={node.data} padding="16" />,
+              });
+            } else if (node.type === NodeType.Model) {
+              tabs.push({
+                title: 'Dependencies',
+                content: <Dependencies node={node} padding="16" />,
+              });
+            }
+
+            tabs.push({
               title: 'Changelog',
               content: <Changelog changes={node.changes} padding="16" />,
-            },
-          ]}
+            });
+
+            return tabs;
+          }}
         />
       </div>
     );

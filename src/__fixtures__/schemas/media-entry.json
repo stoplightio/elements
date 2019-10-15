@@ -1,0 +1,69 @@
+{
+  "properties": {
+    "attribution": {
+      "description": "??? Unknown ???",
+      "type": "string"
+    },
+    "caption": {
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/CaptionData"
+    },
+    "comments": {
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/CommentsCollection"
+    },
+    "created_time": {
+      "description": "Media creation UNIX timestamp",
+      "type": "string"
+    },
+    "filter": {
+      "description": "Filter of this media entry",
+      "type": "string"
+    },
+    "id": {
+      "description": "ID of a media entry",
+      "type": "string"
+    },
+    "images": {
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/ImagesData"
+    },
+    "likes": {
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/LikesCollection"
+    },
+    "link": {
+      "description": "Fixed URL of this media entry",
+      "type": "string"
+    },
+    "location": {
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/LocationInfo"
+    },
+    "tags": {
+      "description": "List of tags assigned to this media",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "type": {
+      "description": "Type of this media entry",
+      "enum": ["image", "video"],
+      "type": "string"
+    },
+    "user": {
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/UserShortInfo"
+    },
+    "user_has_liked": {
+      "description": "Indicates whether authenticated user has liked this media or not",
+      "type": "boolean"
+    },
+    "users_in_photo": {
+      "description": "Users located on this media entry",
+      "items": {
+        "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/UserInPhoto"
+      },
+      "type": "array"
+    },
+    "videos": {
+      "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/VideosData"
+    }
+  },
+  "type": "object"
+}

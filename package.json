@@ -20,7 +20,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "sl-scripts build && yarn build.styles && yarn build.widgets",
+    "build": "yarn build.components && yarn build.styles && yarn build.widgets",
+    "build.components": "sl-scripts build",
     "build.widgets": "NODE_ENV=production webpack -p --config webpack.config.js",
     "build.widgets.analyze": "RUN_CONTEXT=analyze NODE_ENV=production webpack -p --config webpack.config.js",
     "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
@@ -45,7 +46,7 @@
   "dependencies": {
     "@rehooks/component-size": "^1.0.3",
     "@stoplight/json": "^3.1.2",
-    "@stoplight/json-ref-resolver": "^2.2.0",
+    "@stoplight/json-ref-resolver": "^3.0.1",
     "@stoplight/json-schema-viewer": "^2.10.1",
     "@stoplight/markdown": "^2.5.2",
     "@stoplight/markdown-viewer": "^3.7.0",
@@ -61,6 +62,7 @@
     "object-hash": "^2.0.0",
     "openapi-sampler": "^1.0.0-beta.15",
     "react-error-boundary": "^1.2.5",
+    "react-graph-vis": "^1.0.5",
     "resize-observer-polyfill": "^1.5.1",
     "unist-util-select": "^2.0.2",
     "urijs": "^1.19.1"
@@ -96,6 +98,7 @@
     "jest": "24.x.x",
     "jest-enzyme": "7.x.x",
     "mobx": "^5.13.0",
+    "nock": "^11.4.0",
     "node-sass": "^4.12.0",
     "node-sass-package-importer": "^5.3.2",
     "optimize-css-assets-webpack-plugin": "^5.0.3",

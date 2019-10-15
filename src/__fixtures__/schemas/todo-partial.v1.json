@@ -1,0 +1,14 @@
+{
+  "title": "Todo Partial",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "completed": {
+      "type": ["boolean", "null"]
+    }
+  },
+  "required": ["name", "completed"],
+  "x-tags": ["Todos"]
+}
