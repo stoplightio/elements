@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { TableOfContentsSkeleton } from '../../components/TableOfContentsSkeleton';
+import { TableOfContentsSkeleton } from '../../components/TableOfContents/Skeleton';
 import { Provider } from '../../containers/Provider';
 import { ITableOfContents, TableOfContents } from '../../containers/TableOfContents';
 import { providerKnobs } from './Provider';
@@ -12,12 +12,12 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const tocKnobs = (): ITableOfContents => ({
-  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md', 'TableOfContents'),
+  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
 });
 
 storiesOf('containers/TableOfContents', module)
   .addDecorator(withKnobs)
-  .add('default', () => (
+  .add('Playground', () => (
     <div
       className={cn('px-12 pt-12 absolute bottom-0 left-0 right-0 top-0', { 'bp3-dark bg-gray-8': darkMode() })}
       style={{ width: 400 }}
@@ -27,7 +27,7 @@ storiesOf('containers/TableOfContents', module)
       </Provider>
     </div>
   ))
-  .add('skeleton', () => (
+  .add('Skeleton', () => (
     <div className={cn('px-12 pt-12 absolute bottom-0 left-0 right-0 top-0', { 'bp3-dark bg-gray-8': darkMode() })}>
       <div className="flex">
         <div style={{ width: 400 }}>

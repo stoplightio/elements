@@ -5,8 +5,8 @@ import * as React from 'react';
 const httpOperation: IHttpOperation = require('../../__fixtures__/operations/put-todos.json');
 import { TryIt } from '../../components/TryIt';
 
-storiesOf('components/TryIt', module).add('TryIt', () => (
+storiesOf('components/TryIt', module).add('Http Operation', () => (
   <div className="p-12">
-    <TryIt operation={httpOperation} />
+    <TryIt value={httpOperation} padding="16" />
   </div>
 ));

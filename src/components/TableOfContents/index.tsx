@@ -3,13 +3,13 @@ import { Button, Drawer } from '@blueprintjs/core';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
-import { ComponentsContext } from '../containers/Provider';
-import { useComputeToc } from '../hooks/useComputeToc';
-import { useIsMobile } from '../hooks/useIsMobile';
-import { IContentsNode, IProjectNode } from '../types';
-import { deserializeSrn } from '../utils/srns';
+import { ComponentsContext } from '../../containers/Provider';
+import { useComputeToc } from '../../hooks/useComputeToc';
+import { useIsMobile } from '../../hooks/useIsMobile';
+import { IContentsNode, IProjectNode } from '../../types';
+import { deserializeSrn } from '../../utils/srns';
 
-export interface ITableOfContents {
+export interface ITableOfContentsComponent {
   // List of items that will be computed into the tree structure
   items?: IProjectNode[];
 
@@ -34,12 +34,12 @@ export interface ITableOfContents {
   enableDrawer?: boolean | number;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
+export const TableOfContents: React.FC<ITableOfContentsComponent> = ({
   contents: _contents,
   items = [],
   srn,
   className,
-  padding = '10',
+  padding = '12',
   title,
   isOpen = false,
   // tslint:disable-next-line: no-empty
@@ -154,7 +154,7 @@ interface ITableOfContentsItem {
   isDivider: boolean;
   onClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
 }
-const TableOfContentsItem: React.FunctionComponent<ITableOfContentsItem> = ({
+const TableOfContentsItem: React.FC<ITableOfContentsItem> = ({
   depth,
   name,
   srn,

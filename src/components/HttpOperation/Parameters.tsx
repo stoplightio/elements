@@ -1,7 +1,7 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpParam } from '@stoplight/types';
 import cn from 'classnames';
-import get from 'lodash/get';
+import { get } from 'lodash';
 import * as React from 'react';
 
 export interface IParametersProps {

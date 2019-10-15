@@ -4,16 +4,15 @@ import { Card } from '@stoplight/ui-kit';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
-import { useResolver } from '../hooks/useResolver';
+import { useResolver } from '../../hooks/useResolver';
 
 export interface IHttpServiceProps extends IErrorBoundary {
   className?: string;
   value: any;
 }
 
-export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
+const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
   const { result } = useResolver<IHttpService>(NodeType.HttpService, value);
-
   if (!result) return null;
 
   return (
@@ -21,12 +20,12 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
       {result.description && <MarkdownViewer className="mb-12" markdown={result.description} />}
 
       {result.servers && result.servers.length > 0 ? (
-        <div className="mb-12">
+        <div className="mb-6">
           <div className="text-xl font-semibold select-none mb-6">Servers</div>
 
-          <div className="flex items-center">
+          <div className="flex items-center flex-wrap">
             {result.servers.map((server, index) => (
-              <a key={index} className="mr-6 text-center" href={server.url} target="_blank">
+              <a key={index} className="mr-6 mb-6 text-center" href={server.url} target="_blank">
                 <Card>
                   <div className="font-semibold">{server.name}</div>
                   <div className="mt-2">{server.description}</div>
@@ -37,8 +36,6 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
           </div>
         </div>
       ) : null}
-
-      {result.securitySchemes && <div className="mb-12 text-xl font-semibold select-none">Security Schemes</div>}
 
       {result.contact && (result.contact.email || result.contact.url) && (
         <div className="mb-12">
@@ -51,10 +48,9 @@ export const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = 
           )}
 
           {result.contact.url && (
-            <a className="block mt-4" href={result.contact.url}>
-              {' '}
-              {result.contact.url}
-            </a>
+            <div className="mt-4">
+              <a href={result.contact.url}> {result.contact.url}</a>
+            </div>
           )}
         </div>
       )}

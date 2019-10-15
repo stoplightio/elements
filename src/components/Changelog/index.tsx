@@ -1,23 +1,20 @@
 import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import groupBy from 'lodash/groupBy';
-import orderBy from 'lodash/orderBy';
+import { groupBy, orderBy } from 'lodash';
 import * as React from 'react';
-
-export interface IChange {
-  createdAt: string;
-  semver: string;
-  message: string;
-}
+import { IChange } from '../../types';
 
 export interface IChangelogProps {
+  padding?: string;
   className?: string;
   changes?: IChange[];
 }
 
-export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className, changes }) => {
+export const Changelog = React.memo<IChangelogProps>(({ className, padding, changes }) => {
   if (!changes || !changes.length) {
-    return <div className={cn(className, Classes.TEXT_MUTED)}>No changes for this resource.</div>;
+    return (
+      <div className={cn(className, Classes.TEXT_MUTED, padding && `p-${padding}`)}>No changes for this resource.</div>
+    );
   }
 
   const sortedChanges = orderBy(changes, ['createdAt'], ['desc']);
@@ -27,7 +24,7 @@ export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className,
   });
 
   return (
-    <div className={cn('Changelog', className)}>
+    <div className={cn('Changelog', className, padding && `p-${padding}`)}>
       {Object.keys(groups).map((date, index) => {
         return (
           <div key={date} className={cn({ 'mt-6': index > 0 })}>
@@ -46,4 +43,4 @@ export const Changelog: React.FunctionComponent<IChangelogProps> = ({ className,
       })}
     </div>
   );
-};
+});

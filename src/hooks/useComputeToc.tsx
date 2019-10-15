@@ -114,7 +114,7 @@ export function computeToc(_nodes: IProjectNode[]) {
     /** Group by Tags */
     for (const childNode of childNodes) {
       if (childNode.tags && childNode.tags.length) {
-        const tag = childNode.tags[0];
+        const tag = childNode.tags[0].toLowerCase();
         if (!tags[tag]) {
           tags[tag] = [];
         }

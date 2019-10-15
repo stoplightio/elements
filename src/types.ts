@@ -8,21 +8,23 @@ export interface IDeserializedSrn {
   uri: string;
 }
 
-export interface INodeInfo {
-  id: number;
-  type: NodeType;
-  name: string;
-  srn: string;
-  version: string;
-  versions: string[];
+export interface IChange {
+  createdAt: string;
+  semver: string;
+  message: string;
+}
+
+export interface INodeInfo extends IProjectNode {
   data: any;
+  changes?: IChange[];
 }
 
 export interface IProjectNode {
-  id: number | string;
   type: NodeType;
-  name: string;
   srn: string;
+  name: string;
+
+  id?: number | string;
   version?: string;
   versions?: string[];
   tags?: string[];
@@ -38,3 +40,43 @@ export interface IContentsNode {
 }
 
 export type DocsNodeType = NodeType | 'json_schema' | 'http';
+
+export interface IVisGraphNode {
+  id: string;
+  label: string;
+  color?: string;
+  font?: {
+    color?: string;
+  };
+}
+
+export interface IVisGraphEdge {
+  to: string;
+  from: string;
+  label?: string;
+  font?: {
+    align: string;
+  };
+}
+
+export interface IVisGraph {
+  nodes: IVisGraphNode[];
+  edges: IVisGraphEdge[];
+}
+
+export interface IPageHeading {
+  id: string;
+  title: string;
+  depth: number;
+}
+
+export interface IPaginatedResponse<T> {
+  items: T[];
+  pageInfo: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string;
+    endCursor: string;
+  };
+  totalCount: number;
+}

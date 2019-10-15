@@ -1,13 +1,11 @@
 import { IRoot } from '@stoplight/markdown';
 
-import { computePageToc } from '../useComputePageToc';
+import { computeMarkdownHeadings } from '../useComputeMarkdownHeadings';
 
 describe('toc', () => {
-  describe('useComputePageToc()', () => {
+  describe('useComputeMarkdownHeadings()', () => {
     it('returns proper page headings', () => {
-      // const tree = processMarkdown(fixture);
-
-      expect(computePageToc(fixtureTree)).toEqual([
+      expect(computeMarkdownHeadings(fixtureTree)).toEqual([
         {
           depth: 1,
           id: 'h2',

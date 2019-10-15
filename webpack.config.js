@@ -1,5 +1,4 @@
 const path = require('path');
-const { CheckerPlugin } = require('awesome-typescript-loader');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const PackageImporter = require('node-sass-package-importer');
@@ -67,16 +66,22 @@ module.exports = {
       {
         test: /\.js$/,
         use: ['babel-loader', 'source-map-loader'],
-        exclude: /node_modules/,
+        exclude: /node_modules|dist/,
       },
       {
         test: /\.tsx?$/,
-        use: ['babel-loader', 'awesome-typescript-loader'],
+        loader: require.resolve('ts-loader'),
+        options: {
+          transpileOnly: true,
+          onlyCompileBundledFiles: true,
+          compilerOptions: {
+            module: 'esnext',
+          },
+        },
       },
     ],
   },
   plugins: [
-    new CheckerPlugin(),
     new BundleAnalyzerPlugin({ analyzerMode: process.env.RUN_CONTEXT === 'analyze' ? 'server' : 'disabled' }),
   ],
   optimization: {
