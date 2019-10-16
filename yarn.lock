@@ -2155,13 +2155,14 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.0.tgz#da2282352a4eb23c09d5106b9d1650d30a9ca2ad"
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
-"@stoplight/request-maker@^2.14.2":
-  version "2.14.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.14.2.tgz#716646a34b63938c05c89f12c763bc4475bfcd14"
-  integrity sha512-K5KFMKA7FzjdCtYjxnaAnSTc2htSbGc7Tm0XBRnoxWnRSLeYcCNuFOA5nmK2J//lE2Z4g/S+VcB/+SCIdI82CA==
+"@stoplight/request-maker@^2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.16.0.tgz#5206c7ef053c562820bc7d0d793eac8b81ff6772"
+  integrity sha512-sELtiMKOO8qagQtPebeB1bkC8IfFMZ0e6xOxJsKpEYyNknF+wMjVoA+mUl5zsyStHhDvJHxxN3BQWXNp5boMSQ==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/tree-list" "^4.8.0"
+    "@stoplight/yaml" "^3.3.2"
     axios "^0.19.0"
     classnames "^2.2.6"
     lodash "^4.17.15"
