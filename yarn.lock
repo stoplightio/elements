@@ -2155,12 +2155,13 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.0.tgz#da2282352a4eb23c09d5106b9d1650d30a9ca2ad"
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
-"@stoplight/request-maker@^2.16.0":
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.16.0.tgz#5206c7ef053c562820bc7d0d793eac8b81ff6772"
-  integrity sha512-sELtiMKOO8qagQtPebeB1bkC8IfFMZ0e6xOxJsKpEYyNknF+wMjVoA+mUl5zsyStHhDvJHxxN3BQWXNp5boMSQ==
+"@stoplight/request-maker@^2.16.1":
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.16.1.tgz#066ea38802a737278d0ecf44e74d65a2cbad7198"
+  integrity sha512-PEu98iCCsQICDUC7sOLJ06R3jWIcZ1kr46cwV4NyrA/3ilMQMujRu1xNrNGrZ1hjGEnJRa8JT8lLwWMcvrfgmQ==
   dependencies:
     "@stoplight/json" "^3.1.1"
+    "@stoplight/path" "^1.3.0"
     "@stoplight/tree-list" "^4.8.0"
     "@stoplight/yaml" "^3.3.2"
     axios "^0.19.0"
