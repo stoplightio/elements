@@ -10,7 +10,7 @@ const httpRequest: IHttpRequest = require('../../__fixtures__/http-request.json'
 
 export const knobs = () => ({
   darkMode: boolean('dark mode', false),
-  request: object('httpRequest', httpRequest),
+  request: object('request', httpRequest),
 });
 
 storiesOf('components/HttpRequest', module)
@@ -20,7 +20,7 @@ storiesOf('components/HttpRequest', module)
 
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode })}>
-        <HttpRequest className="p-12" value={httpRequest} />
+        <HttpRequest className="p-12" value={request} />
       </div>
     );
   });
