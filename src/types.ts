@@ -39,6 +39,8 @@ export interface IContentsNode {
   type?: 'divider' | 'group';
 }
 
+export type DocsNodeType = NodeType | 'json_schema' | 'http';
+
 export interface IVisGraphNode {
   id: string;
   label: string;
@@ -66,4 +68,15 @@ export interface IPageHeading {
   id: string;
   title: string;
   depth: number;
+}
+
+export interface IPaginatedResponse<T> {
+  items: T[];
+  pageInfo: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string;
+    endCursor: string;
+  };
+  totalCount: number;
 }

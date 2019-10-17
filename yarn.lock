@@ -2155,6 +2155,23 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.0.tgz#da2282352a4eb23c09d5106b9d1650d30a9ca2ad"
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
+"@stoplight/request-maker@^2.16.1":
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.16.1.tgz#066ea38802a737278d0ecf44e74d65a2cbad7198"
+  integrity sha512-PEu98iCCsQICDUC7sOLJ06R3jWIcZ1kr46cwV4NyrA/3ilMQMujRu1xNrNGrZ1hjGEnJRa8JT8lLwWMcvrfgmQ==
+  dependencies:
+    "@stoplight/json" "^3.1.1"
+    "@stoplight/path" "^1.3.0"
+    "@stoplight/tree-list" "^4.8.0"
+    "@stoplight/yaml" "^3.3.2"
+    axios "^0.19.0"
+    classnames "^2.2.6"
+    lodash "^4.17.15"
+    mobx-react-lite "^1.4.1"
+    openapi-sampler "^1.0.0-beta.15"
+    prettier "^1.18.2"
+    urijs "^1.19.1"
+
 "@stoplight/scripts@5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@stoplight/scripts/-/scripts-5.1.0.tgz#9baf6b1379c4a5dced715384c015bdd32833bcc4"
@@ -2217,7 +2234,7 @@
     ts-loader "5.4.5"
     webpack "4.30.0"
 
-"@stoplight/tree-list@^4.8.1":
+"@stoplight/tree-list@^4.8.0", "@stoplight/tree-list@^4.8.1":
   version "4.8.1"
   resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.8.1.tgz#131fedd16c4aa87b5a50d8457f8a77f0604a8a1d"
   integrity sha512-Y4o8XIOQA90XxRy/asNkDnNZkEANtu9A4sElN8xjYTyg73MvYo7TCg2BaCZJLJHaU1bF3qMBO9WdiYkJt9TwMA==
@@ -11023,9 +11040,9 @@ mobx-react-lite@^1.4.2:
   integrity sha512-ej+g9mh+5SYS66UbWrGvtUExEcxlxSfT49URzHK7AmHAeA81KL4dAtOkZh7ZC8szYR1iNPvQ5vmELXlPk0B/gw==
 
 mobx@^5.13.0:
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.13.0.tgz#0fd68f10aa5ff2d146a4ed9e145b53337cfbca59"
-  integrity sha512-eSAntMSMNj0PFL705rgv+aB/z1RjNqDnFEpBe18yQVreXTWiVgIrmBUXzjnJfuba+eo4eAk6zi+/gXQkSUea8A==
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.13.1.tgz#729a3ae3604aaa9751f7f7551dbf7aead86593c7"
+  integrity sha512-v29wXJeOw3GpnfDxDAecHdnoBZzTrKju6UZoQxcUDiNHyyo3dBWCkDOiTsmRLf7+VXDfbmnUh9P+XGqXWVOW7Q==
 
 modify-values@^1.0.0:
   version "1.0.1"
@@ -13166,7 +13183,7 @@ prettier@1.14.x:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
   integrity sha512-qZDVnCrnpsRJJq5nSsiHCE3BYMED2OtsI+cmzIzF1QIfqm5ALf8tEJcO27zV1gKNKRPdhjO0dNWnrzssDQ1tFg==
 
-prettier@1.x.x:
+prettier@1.x.x, prettier@^1.18.2:
   version "1.18.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
   integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==

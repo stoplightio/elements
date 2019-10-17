@@ -1,5 +1,6 @@
 import './components/Changelog';
 import './components/Dependencies';
+import './components/HttpRequest';
 import './components/Page';
 import './components/PageHeadings';
 import './components/TableOfContents';

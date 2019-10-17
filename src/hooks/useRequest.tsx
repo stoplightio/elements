@@ -4,17 +4,6 @@ import { MD5 } from 'object-hash';
 import * as React from 'react';
 import { AxiosContext } from '../containers/Provider';
 
-export interface IPaginatedResponse<T> {
-  items: T[];
-  pageInfo: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    startCursor: string;
-    endCursor: string;
-  };
-  totalCount: number;
-}
-
 export type UseRequestState<T> = {
   isLoading: boolean;
   data?: T;

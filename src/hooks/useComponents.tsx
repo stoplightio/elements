@@ -3,6 +3,7 @@ import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 import { HttpOperation } from '../components/HttpOperation';
+import { HttpRequest } from '../components/HttpRequest';
 import { HttpService } from '../components/HttpService';
 import { Model } from '../components/Model';
 import { ComponentsContext } from '../containers/Provider';
@@ -37,6 +38,8 @@ export function useComponents() {
           return <HttpOperation key={key} value={value} />;
         } else if (nodeType === NodeType.HttpService) {
           return <HttpService key={key} value={value} />;
+          // } else if (nodeType === 'http') {
+          //   return <HttpRequest key={key} className="my-10" value={value} />;
         }
 
         return Components && Components.code ? Components.code(props, key) : defaultComponents.code(props, key);

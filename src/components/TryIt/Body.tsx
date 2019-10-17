@@ -1,106 +1,70 @@
-import { safeParse } from '@stoplight/json';
-import { IHttpContent, IHttpOperationRequestBody, INodeExample, INodeExternalExample } from '@stoplight/types';
-import { CodeEditor } from '@stoplight/ui-kit';
+import { BodyEditor, RequestMaker } from '@stoplight/request-maker';
+import { IHttpOperation, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
-import cn from 'classnames';
+import { get } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { useStore } from './context';
 
 const sampler = require('openapi-sampler');
 
 export interface IBodyProps {
-  value: IHttpOperationRequestBody;
+  store: RequestMaker;
+  operation: IHttpOperation;
   className?: string;
 }
 
-export interface ISchema {
-  className?: string;
-  value?: IHttpContent['schema'];
-  mediaType?: string;
-  examples?: IHttpContent['examples'];
-  placeholder?: string;
-}
-
-export const Body: React.FunctionComponent<IBodyProps> = ({ className, value }) => {
-  if (!value || !value.contents || !value.contents[0]) return null;
-
-  return (
-    <div className={cn('TryIt__Body', className)}>
-      <div className="text-lg font-semibold mb-6">Body</div>
-
-      <Schema
-        value={value.contents[0].schema}
-        mediaType={value.contents[0].mediaType}
-        examples={value.contents[0].examples}
-        placeholder="request body..."
-      />
-    </div>
-  );
-};
-
-export const Schema = observer<ISchema>(({ className, value, examples, mediaType, placeholder }) => {
-  const store = useStore();
+export const Body = observer<IBodyProps>(({ store, operation }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const schema = typeof value === 'string' ? safeParse(value) : value;
-  if ((!schema || !Object.keys(schema).length) && (!examples || !examples.length)) {
+  const { examples, mediaType, schema } = get(operation, 'request.body.contents[0]', {});
+
+  if ((typeof schema !== 'object' || !Object.keys(schema).length) && (!examples || !examples.length)) {
     return null;
   }
 
   const exampleTabs = [];
-  const examplePanels = [];
-
   if (examples && examples.length) {
     for (const example of examples) {
       exampleTabs.push(<SimpleTab key={example.key}>{example.summary || example.key}</SimpleTab>);
-
-      examplePanels.push(
-        <SimpleTabPanel key={example.key} className="p-0">
-          <CodeEditor
-            language="json"
-            value={store.body || ''}
-            onChange={body => (store.body = body)}
-            padding={10}
-            placeholder={placeholder}
-          />
-        </SimpleTabPanel>,
-      );
     }
   }
 
   return (
-    <SimpleTabs
-      className={cn('TryIt__Schema', className)}
-      selectedIndex={selectedIndex}
-      onSelect={(i: number) => {
-        setSelectedIndex(i);
+    <>
+      <div className="text-lg font-semibold mb-6">Body</div>
+      <SimpleTabs
+        id="TryIt-request-tabs"
+        className="TryIt__RequestTabs mb-10"
+        selectedIndex={selectedIndex}
+        onSelect={(i: number) => {
+          setSelectedIndex(i);
 
-        if (i === 0) {
-          store.body = sampler.sample(schema);
-        } else if (examples) {
-          const example = examples[i - 1];
+          if (i === 0) {
+            store.request.body = sampler.sample(schema);
+          } else if (examples) {
+            const example = examples[i - 1];
+            store.request.body = (example as INodeExample).value
+              ? (example as INodeExample).value
+              : (example as INodeExternalExample).externalValue;
+          }
+        }}
+      >
+        <SimpleTabList>
+          <SimpleTab>{mediaType || 'JSON'}</SimpleTab>
 
-          store.body = (example as INodeExample).value
-            ? (example as INodeExample).value
-            : (example as INodeExternalExample).externalValue;
-        }
-      }}
-    >
-      <SimpleTabList>
-        {value && <SimpleTab>{mediaType || 'JSON'}</SimpleTab>}
+          {exampleTabs}
+        </SimpleTabList>
 
-        {exampleTabs}
-      </SimpleTabList>
-
-      {value && (
-        <SimpleTabPanel className="p-0">
-          <CodeEditor language="json" value={store.body || ''} onChange={body => (store.body = body)} padding={10} />
+        <SimpleTabPanel>
+          <BodyEditor />
         </SimpleTabPanel>
-      )}
 
-      {examplePanels}
-    </SimpleTabs>
+        {exampleTabs.map((tab, index) => (
+          <SimpleTabPanel key={index}>
+            <BodyEditor />
+          </SimpleTabPanel>
+        ))}
+      </SimpleTabs>
+    </>
   );
 });
-Schema.displayName = 'HttpOperation.Schema';
