@@ -87,7 +87,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   // Compute the VIS graph from the resolver graph
   const visGraph = useComputeVisGraph(graph, node.name, activeNode && activeNode.id);
 
-  if (!graph || !visGraph.nodes.length) return null;
+  if (!graph || (visGraph && !visGraph.nodes.length)) return null;
 
   return (
     <div className={cn(className, 'Page__dependencies relative h-full')}>
