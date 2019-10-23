@@ -87,53 +87,51 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   // Compute the VIS graph from the resolver graph
   const visGraph = useComputeVisGraph(graph, node.name, activeNode && activeNode.id);
 
-  if (!graph || (visGraph && !visGraph.nodes.length)) return null;
+  if (!graph || (visGraph && !visGraph.nodes.length)) {
+    return (
+      <div className={cn(className, 'Page__dependencies relative h-full')}>
+        <div>This {NodeTypePrettyName[node.type]} does not have any outbound depdendencies.</div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {!graph || (visGraph && !visGraph.nodes.length) ? (
-        <div className={cn(className, 'Page__dependencies relative h-full')}>
-          <div>This {NodeTypePrettyName[node.type]} does not have any outbound depdendencies.</div>
-        </div>
-      ) : (
-        <div className={cn(className, 'Page__dependencies relative h-full')}>
-          <Graph
-            id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
-            graph={visGraph}
-            events={{
-              click: onClickNode,
-            }}
-            options={visGraphOptions}
+    <div className={cn(className, 'Page__dependencies relative h-full')}>
+      <Graph
+        id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
+        graph={visGraph}
+        events={{
+          click: onClickNode,
+        }}
+        options={visGraphOptions}
+      />
+
+      {activeNode && typeof activeNode.data === 'object' && (
+        <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
+          <Model
+            className="border dark:border-darken-3 bg-white dark:bg-gray-7"
+            title={activeNode.title}
+            value={activeNode.data}
+            maxRows={10}
+            actions={
+              <>
+                {activeNode.id !== 'root' && (
+                  <div className="ml-2">
+                    <GoToRef {...activeNode} />
+                  </div>
+                )}
+
+                <Icon
+                  className="ml-2 cursor-pointer text-gray-5 hover:text-gray-6"
+                  icon="small-cross"
+                  onClick={() => setActiveNode(undefined)}
+                />
+              </>
+            }
           />
-
-          {activeNode && typeof activeNode.data === 'object' && (
-            <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
-              <Model
-                className="border dark:border-darken-3 bg-white dark:bg-gray-7"
-                title={activeNode.title}
-                value={activeNode.data}
-                maxRows={10}
-                actions={
-                  <>
-                    {activeNode.id !== 'root' && (
-                      <div className="ml-2">
-                        <GoToRef {...activeNode} />
-                      </div>
-                    )}
-
-                    <Icon
-                      className="ml-2 cursor-pointer text-gray-5 hover:text-gray-6"
-                      icon="small-cross"
-                      onClick={() => setActiveNode(undefined)}
-                    />
-                  </>
-                }
-              />
-            </div>
-          )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

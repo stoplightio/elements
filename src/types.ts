@@ -55,7 +55,6 @@ export interface IVisGraphEdge {
   from: string;
   label?: string;
   color?: string;
-  title?: string;
   font?: {
     align: string;
   };

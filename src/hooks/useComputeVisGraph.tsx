@@ -92,7 +92,6 @@ function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], ac
     edges.push({
       from: nodeId,
       to: targetId,
-      title: edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : undefined,
       label,
       color,
       font: {
