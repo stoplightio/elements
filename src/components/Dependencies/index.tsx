@@ -10,7 +10,7 @@ import { useComponents } from '../../hooks/useComponents';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
 import { useResolver } from '../../hooks/useResolver';
 import { INodeInfo } from '../../types';
-import { getNodeTitle } from '../../utils/node';
+import { getNodeTitle, NodeTypePrettyName } from '../../utils/node';
 import { Model } from '../Model';
 
 export interface IDependencies {
@@ -90,42 +90,50 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   if (!graph || (visGraph && !visGraph.nodes.length)) return null;
 
   return (
-    <div className={cn(className, 'Page__dependencies relative h-full')}>
-      <Graph
-        id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
-        graph={visGraph}
-        events={{
-          click: onClickNode,
-        }}
-        options={visGraphOptions}
-      />
-
-      {activeNode && typeof activeNode.data === 'object' && (
-        <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
-          <Model
-            className="border dark:border-darken-3 bg-white dark:bg-gray-7"
-            title={activeNode.title}
-            value={activeNode.data}
-            maxRows={10}
-            actions={
-              <>
-                {activeNode.id !== 'root' && (
-                  <div className="ml-2">
-                    <GoToRef {...activeNode} />
-                  </div>
-                )}
-
-                <Icon
-                  className="ml-2 cursor-pointer text-gray-5 hover:text-gray-6"
-                  icon="small-cross"
-                  onClick={() => setActiveNode(undefined)}
-                />
-              </>
-            }
+    <>
+      {!graph || (visGraph && !visGraph.nodes.length) ? (
+        <div className={cn(className, 'Page__dependencies relative h-full')}>
+          <div>This {NodeTypePrettyName[node.type]} does not have any outbound depdendencies.</div>
+        </div>
+      ) : (
+        <div className={cn(className, 'Page__dependencies relative h-full')}>
+          <Graph
+            id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
+            graph={visGraph}
+            events={{
+              click: onClickNode,
+            }}
+            options={visGraphOptions}
           />
+
+          {activeNode && typeof activeNode.data === 'object' && (
+            <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
+              <Model
+                className="border dark:border-darken-3 bg-white dark:bg-gray-7"
+                title={activeNode.title}
+                value={activeNode.data}
+                maxRows={10}
+                actions={
+                  <>
+                    {activeNode.id !== 'root' && (
+                      <div className="ml-2">
+                        <GoToRef {...activeNode} />
+                      </div>
+                    )}
+
+                    <Icon
+                      className="ml-2 cursor-pointer text-gray-5 hover:text-gray-6"
+                      icon="small-cross"
+                      onClick={() => setActiveNode(undefined)}
+                    />
+                  </>
+                }
+              />
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 
