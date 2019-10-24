@@ -31,8 +31,8 @@ const visGraphOptions = {
   autoResize: true,
   physics: {
     stabilization: {
-      iterations: 500,
-      updateInterval: 30,
+      iterations: 100,
+      updateInterval: 10,
     },
     timestep: 0.3,
     barnesHut: {
@@ -63,7 +63,8 @@ const visGraphOptions = {
 export const Dependencies: React.FC<IDependencies> = ({ className, node, padding }) => {
   const { graph } = useResolver(node.type, node.data || {});
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
-  const [isStable, setIsStable] = React.useState();
+  const [isStable, setIsStable] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const onClickNode = React.useCallback(
     e => {
@@ -93,13 +94,6 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
     [graph, node.name, activeNode],
   );
 
-  const onStabilization = React.useCallback(() => {
-    setIsStable({
-      iterations: 0,
-      total: 0,
-    });
-  }, [isStable]);
-
   // Compute the VIS graph from the resolver graph
   const visGraph = useComputeVisGraph(graph, node.name, activeNode && activeNode.id);
 
@@ -107,13 +101,18 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
 
   return (
     <div className={cn(className, 'Page__dependencies relative h-full')}>
-      {!isStable && <ProgressBar />}
+      {isLoading && <ProgressBar value={isStable} className={''} />}
       <Graph
         id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}
         events={{
           click: onClickNode,
-          stabilizationProgress: onStabilization,
+          stabilizationProgress: (data: any) => {
+            if (data.iterations - isStable < 10 || data.iterations === 100) {
+              setIsLoading(false);
+            }
+            setIsStable(data.iterations);
+          },
         }}
         options={visGraphOptions}
       />
