@@ -5,6 +5,7 @@ import * as React from 'react';
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import { default as Graph } from 'react-graph-vis';
 
+import { ProgressBar } from '@stoplight/ui-kit';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
@@ -29,10 +30,17 @@ interface IActiveNode {
 const visGraphOptions = {
   autoResize: true,
   physics: {
-    stabilization: false,
+    stabilization: {
+      iterations: 500,
+      updateInterval: 30,
+    },
+    timestep: 0.3,
     barnesHut: {
+      gravitationalConstant: -50000,
+      centralGravity: 0.1,
       springLength: 150,
-      avoidOverlap: 0.5,
+      damping: 0.2,
+      avoidOverlap: 0,
     },
   },
   edges: {
@@ -55,6 +63,7 @@ const visGraphOptions = {
 export const Dependencies: React.FC<IDependencies> = ({ className, node, padding }) => {
   const { graph } = useResolver(node.type, node.data || {});
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
+  const [isStable, setIsStable] = React.useState();
 
   const onClickNode = React.useCallback(
     e => {
@@ -84,6 +93,13 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
     [graph, node.name, activeNode],
   );
 
+  const onStabilization = React.useCallback(() => {
+    setIsStable({
+      iterations: 0,
+      total: 0,
+    });
+  }, [isStable]);
+
   // Compute the VIS graph from the resolver graph
   const visGraph = useComputeVisGraph(graph, node.name, activeNode && activeNode.id);
 
@@ -91,11 +107,13 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
 
   return (
     <div className={cn(className, 'Page__dependencies relative h-full')}>
+      {!isStable && <ProgressBar />}
       <Graph
         id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}
         events={{
           click: onClickNode,
+          stabilizationProgress: onStabilization,
         }}
         options={visGraphOptions}
       />
