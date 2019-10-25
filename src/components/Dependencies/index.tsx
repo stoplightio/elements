@@ -31,13 +31,13 @@ const visGraphOptions = {
   autoResize: true,
   physics: {
     stabilization: {
-      iterations: 100,
-      updateInterval: 10,
+      iterations: 10000,
+      updateInterval: 50,
     },
     timestep: 0.1,
     adaptiveTimestep: true,
     barnesHut: {
-      gravitationalConstant: -10000,
+      gravitationalConstant: -5000,
       centralGravity: 0.3,
       springLength: 150,
       springConstant: 0.001,
@@ -103,17 +103,21 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
 
   return (
     <div className={cn(className, 'Page__dependencies relative h-full')}>
-      {isLoading && <ProgressBar value={isStable} />}
+      {isLoading && (
+        <div className="absolute inset-0 bg-lighten-9 flex items-center justify-center z-20">
+          <ProgressBar value={isStable} />
+        </div>
+      )}
       <Graph
         id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}
         events={{
           click: onClickNode,
           stabilizationProgress: (data: any) => {
-            if (data.iterations - isStable < 10 || data.iterations === 100) {
-              setIsLoading(false);
-            }
             setIsStable(data.iterations);
+          },
+          stabilized: (data: any) => {
+            setIsLoading(false);
           },
         }}
         options={visGraphOptions}
