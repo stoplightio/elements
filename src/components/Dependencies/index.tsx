@@ -34,11 +34,13 @@ const visGraphOptions = {
       iterations: 100,
       updateInterval: 10,
     },
-    timestep: 0.3,
+    timestep: 0.1,
+    adaptiveTimestep: true,
     barnesHut: {
-      gravitationalConstant: -50000,
-      centralGravity: 0.1,
+      gravitationalConstant: -10000,
+      centralGravity: 0.3,
       springLength: 150,
+      springConstant: 0.001,
       damping: 0.2,
       avoidOverlap: 0,
     },
@@ -101,7 +103,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
 
   return (
     <div className={cn(className, 'Page__dependencies relative h-full')}>
-      {isLoading && <ProgressBar value={isStable} className={''} />}
+      {isLoading && <ProgressBar value={isStable} />}
       <Graph
         id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}
