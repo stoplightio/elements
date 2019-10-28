@@ -10,6 +10,7 @@ Object {
       },
       "from": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
       "label": "",
+      "title": "reference",
       "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
     },
     Object {
@@ -19,6 +20,7 @@ Object {
       },
       "from": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
       "label": "",
+      "title": "user",
       "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json",
     },
     Object {
@@ -28,6 +30,7 @@ Object {
       },
       "from": "root",
       "label": "",
+      "title": "todo",
       "to": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
     },
     Object {
@@ -37,6 +40,7 @@ Object {
       },
       "from": "root",
       "label": "",
+      "title": "name",
       "to": "#/definitions/name",
     },
   ],
