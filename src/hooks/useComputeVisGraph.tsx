@@ -93,6 +93,7 @@ function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], ac
       from: nodeId,
       to: targetId,
       label,
+      title: edgeMap[targetId] && edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : 'reference',
       color,
       font: {
         align: 'top',
