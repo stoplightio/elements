@@ -39,7 +39,15 @@ export function useComponents() {
         } else if (nodeType === NodeType.HttpService) {
           return <HttpService key={key} value={value} />;
         } else if (nodeType === 'http') {
-          return <HttpRequest key={key} className="my-10" value={value} />;
+          return (
+            <HttpRequest
+              key={key}
+              className={cn('my-10', {
+                [CLASSNAMES.block]: !parent || parent.type !== 'tab',
+              })}
+              value={value}
+            />
+          );
         }
 
         return Components && Components.code ? Components.code(props, key) : defaultComponents.code(props, key);
