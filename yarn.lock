@@ -2156,9 +2156,9 @@
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
 "@stoplight/request-maker@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.0.1.tgz#0154b5cb068c9d719df68bf8eeb4c48aa2e10781"
-  integrity sha512-2UfyyyXmXt8SBp1GWUwm+ZyK+LGhs14YtKpti/cOmlz9xjHBgpJ8wY/0sXr3fYYT1CckdrUm1GK6gZAqUfKMzw==
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.0.2.tgz#9d79cf1e8fd114c67468bd64a11dcfcf04f6cb6d"
+  integrity sha512-uS2CkzMxD+/5wHoHthwhO0JWEZibTFLex3NXAiM25SLhYGGIexHO/U/iQbk+UxyJ6eXuq0TJIfQ+sf6aHgKugQ==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/path" "^1.3.0"
@@ -11029,12 +11029,7 @@ mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdir
   dependencies:
     minimist "0.0.8"
 
-mobx-react-lite@1.x.x, mobx-react-lite@^1.4.1:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-1.4.2.tgz#19c26454b73315d991d9d64e5439b56e07330c34"
-  integrity sha512-ej+g9mh+5SYS66UbWrGvtUExEcxlxSfT49URzHK7AmHAeA81KL4dAtOkZh7ZC8szYR1iNPvQ5vmELXlPk0B/gw==
-
-mobx-react-lite@^1.5.0:
+mobx-react-lite@1.x.x, mobx-react-lite@^1.4.1, mobx-react-lite@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-1.5.0.tgz#a5867fa1114b19056cf8159e8d64766596ae85a0"
   integrity sha512-Ss8RLKKGn+QhKbfCHvQ4+RPEVKR8AnPW1wNyWzZAS3wYw7UP4FX6GdRn64sdOhrP646o/JtXbLuDuc4RH3Bqyg==
@@ -16620,12 +16615,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-urijs@^1.19.1, urijs@~1.19.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.1.tgz#5b0ff530c0cbde8386f6342235ba5ca6e995d25a"
-  integrity sha512-xVrGVi94ueCJNrBSTjWqjvtgvl3cyOTThp2zaMaFNGp3F542TR6sM3f2o8RqZl+AwteClSVmoCyt0ka4RjQOQg==
-
-urijs@^1.19.2:
+urijs@^1.19.1, urijs@^1.19.2, urijs@~1.19.1:
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.2.tgz#f9be09f00c4c5134b7cb3cf475c1dd394526265a"
   integrity sha512-s/UIq9ap4JPZ7H1EB5ULo/aOUbWqfDi7FKzMC2Nz+0Si8GiT1rIEaprt8hy3Vy2Ex2aJPpOQv4P4DuOZ+K1c6w==
