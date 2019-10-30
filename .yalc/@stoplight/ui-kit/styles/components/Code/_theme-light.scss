@@ -1,0 +1,17 @@
+@mixin lightCodeTheme {
+  --code-bg: transparent;
+  --code-fg: #393A34;
+  --code-selection-bg: #C1DEF1;
+  --code-primary: #36acaa;
+  --code-secondary: #e45649;
+  --code-keyword: #a626a4;
+  --code-value: #50a14f;
+  --code-punc: #a626a4;
+  --code-function: #4078f2;
+  --code-selector: #00009f;
+  --code-comment: #008000;
+  --code-rule: #e45649;
+  --code-tag: #9a050f;
+  --code-important: #e45649;
+  --code-boolean: #986801;
+}

@@ -1,0 +1,97 @@
+@import '../common/theme';
+
+/*
+ * THIS FILE IS A REMAPPING OF THE BLUEPRINT VARIABLES TO OUR STOPLIGHT ONES
+ * THIS FILE SHOULD NOT NEED TO UPDATED DIRECTLY
+ */
+
+/*
+ * VARS
+ * These should be kept in sync with the appropriate variables in the tailwind.config.js file!
+ */
+
+/*
+ * FONT SIZES
+ */
+$pt-font-family-monospace: get-font-family(mono);
+$pt-border-radius: get-border-radius(default);
+$pt-font-size: get-font-size(base);
+$pt-font-size-large: get-font-size(lg);
+$pt-font-size-small: get-font-size(sm);
+
+/*
+ * COLORS
+ * @import "@blueprintjs/core/lib/scss/variables";
+ */
+
+// leave whites/blacks/greys
+$black: #10161a;
+$white: #ffffff;
+
+$dark-gray1: get-color(darkgray, 1);
+$dark-gray2: get-color(darkgray, 2);
+$dark-gray3: get-color(darkgray, 3);
+$dark-gray4: get-color(darkgray, 4);
+$dark-gray5: get-color(darkgray, 5);
+
+$gray1: get-color(gray, 7);
+$gray2: get-color(gray, 6);
+$gray3: get-color(gray, 6);
+$gray4: get-color(gray, 5);
+$gray5: get-color(gray, 4);
+
+$light-gray1: get-color(lightgray, 1);
+$light-gray2: get-color(lightgray, 2);
+$light-gray3: get-color(lightgray, 3);
+$light-gray4: get-color(lightgray, 4);
+$light-gray5: get-color(lightgray, 5);
+
+$blue1: get-color(blue, 8);
+$blue2: get-color(blue, 7);
+$blue3: get-color(blue, 6);
+$blue4: get-color(blue, 5);
+$blue5: get-color(blue, 4);
+
+$green1: get-color(green, 8);
+$green2: get-color(green, 7);
+$green3: get-color(green, 6);
+$green4: get-color(green, 5);
+$green5: get-color(green, 4);
+
+$orange1: get-color(orange, 8);
+$orange2: get-color(orange, 7);
+$orange3: get-color(orange, 6);
+$orange4: get-color(orange, 5);
+$orange5: get-color(orange, 4);
+
+$red1: get-color(red, 8);
+$red2: get-color(red, 7);
+$red3: get-color(red, 6);
+$red4: get-color(red, 5);
+$red5: get-color(red, 4);
+
+$indigo1: get-color(purple, 8);
+$indigo2: get-color(purple, 7);
+$indigo3: get-color(purple, 6);
+$indigo4: get-color(purple, 5);
+$indigo5: get-color(purple, 4);
+
+/*
+ * COMPUTED VARS
+ */
+
+$pt-text-color: $dark-gray1;
+$pt-text-color-muted: $gray1;
+$pt-text-color-disabled: get-color(disabled);
+$pt-heading-color: $pt-text-color;
+$pt-link-color: $blue2;
+$pt-dark-text-color: $light-gray5;
+$pt-dark-text-color-muted: $gray5;
+$pt-dark-text-color-disabled: rgba($pt-dark-text-color-muted, 0.5);
+$pt-dark-heading-color: $pt-dark-text-color;
+$pt-dark-link-color: $blue5;
+$pt-text-selection-color: rgba($blue4, 0.6);
+
+$pt-transition-ease: cubic-bezier(0.4, 1, 0.75, 0.9);
+$pt-transition-ease-bounce: cubic-bezier(0.54, 1.12, 0.38, 1.11);
+$pt-transition-duration: 75ms;

@@ -1,0 +1,144 @@
+@import 'theme-light';
+@import 'theme-dark';
+
+.#{$ns}-code-editor {
+  @include lightCodeTheme;
+
+  font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  counter-reset: line;
+  line-height: 1.5;
+  hyphens: none;
+  direction: ltr;
+
+  ::selection {
+    background: var(--code-selection-bg);
+  }
+
+  &.isInline {
+    margin: 0 2px;
+    border-radius: 2px;
+  }
+
+  .namespace {
+    opacity: 0.7;
+  }
+
+  .line-number {
+    padding-left: 40px;
+    position: relative;
+    width: calc(100% - 40px);
+    display: block;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      user-select: none;
+      opacity: 0.4;
+      min-width: 35px;
+      position: absolute;
+      left: 5px;
+      counter-increment: line;
+      content: counter(line);
+    }
+  }
+
+  .token {
+    &.important,
+    &.bold {
+      font-weight: bold;
+    }
+
+    &.italic {
+      font-style: italic;
+    }
+
+    &.entity {
+      cursor: help;
+    }
+  }
+
+  // Colors
+
+  .token {
+    &.punctuation,
+    &.hexcode {
+      color: var(--code-punctuation);
+    }
+
+    &.function,
+    &.operator {
+      color: var(--code-function);
+    }
+
+    &.atrule,
+    &.keyword {
+      color: var(--code-keyword);
+
+      > .token.property,
+      > .token.property + .token.punctuation,
+      > .token.property + .token.punctuation + .token.number + .token.unit,
+      > .token.number,
+      > .token.unit {
+        color: var(--code-keyword);
+      }
+    }
+
+    &.attr-value,
+    &.string {
+      color: var(--code-value);
+    }
+
+    &.unit,
+    &.symbol,
+    &.url,
+    &.property-line {
+      color: var(--code-primary);
+    }
+
+    &.tag
+    &.deleted {
+      color: var(--code-tag);
+    }
+
+    &.comment,
+    &.prolog,
+    &.doctype,
+    &.cdata {
+      color: var(--code-comment);
+    }
+
+    &.property,
+    &.attr-name,
+    &.char,
+    &.builtin,
+    &.inserted,
+    &.entity {
+      color: var(--code-secondary);
+    }
+
+    &.number,
+    &.selector {
+      color: var(--code-selector);
+    }
+
+    &.rule,
+    &.regex,
+    &.variable {
+      color: var(--code-rule);
+    }
+
+    &.important {
+      color: var(--code-important);
+    }
+
+    &.boolean {
+      color: var(--code-boolean);
+    }
+  }
+
+  .#{$ns}-dark & {
+    @include darkCodeTheme;
+  }
+}

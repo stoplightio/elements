@@ -1,0 +1,12 @@
+.Dropdown {
+  &__popover {
+    .#{$ns}-popover-content {
+      padding: 0;
+    }
+  }
+
+  &__select {
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+}
