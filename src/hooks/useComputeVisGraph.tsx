@@ -19,6 +19,8 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
 
   // Loop over graph nodes and add them to the visgraph
   for (const id of graph.overallOrder()) {
+    if (!graph.dependantsOf(id).length && !graph.dependenciesOf(id).length) continue;
+
     const isRootNode = id === 'root';
     const encodedId = encodeURI(id);
     const node = graph.getNodeData(id);
@@ -40,13 +42,13 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
     });
 
     // Add node edges
-    visGraph.edges = visGraph.edges.concat(getEdgesFromRefMap(encodedId, node.refMap));
+    visGraph.edges = visGraph.edges.concat(getEdgesFromRefMap(encodedId, node.refMap, activeNodeId));
   }
 
   return visGraph;
 }
 
-function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap']) {
+function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], activeNodeId?: string) {
   const edges: IVisGraphEdge[] = [];
   const edgeMap = {};
 
@@ -74,12 +76,27 @@ function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap']) {
   for (const targetId in edgeMap) {
     if (!edgeMap.hasOwnProperty(targetId)) continue;
 
+    let color = '#738694';
+    let label = '';
+    if (activeNodeId === nodeId || activeNodeId === targetId) {
+      color = '#66b1e7';
+      if (edgeMap[targetId].length > 1) {
+        label = `${edgeMap[targetId][0]} + ${edgeMap[targetId].length - 1}`;
+      } else if (edgeMap[targetId].length) {
+        label = edgeMap[targetId][0];
+      } else {
+        label = 'reference';
+      }
+    }
+
     edges.push({
       from: nodeId,
       to: targetId,
-      label: edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : 'reference',
+      label,
+      title: edgeMap[targetId] && edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : 'reference',
+      color,
       font: {
-        align: edgeMap[targetId].length > 1 ? 'horizontal' : 'top',
+        align: 'top',
       },
     });
   }
