@@ -46,13 +46,13 @@ $PageHeadings: 200px;
   }
 }
 
-.HttpRequest__RequestEditor,
-.HttpRequest__ResponseViewer {
+.RequestMaker__RequestEditor,
+.RequestMaker__ResponseViewer {
   .#{$ns}-code-editor {
     @extend .#{$ns}-code-editor;
     margin: 0;
-    padding: 0;
   }
+
   .#{$ns}-dark & {
     .#{$ns}-code-editor {
       @extend .#{$ns}-code-editor;
