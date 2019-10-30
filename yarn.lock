@@ -2155,10 +2155,10 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.0.tgz#da2282352a4eb23c09d5106b9d1650d30a9ca2ad"
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
-"@stoplight/request-maker@^2.16.1":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-2.16.2.tgz#cf2f844e28dfdd34c5012ffc9540fa63d32bbee4"
-  integrity sha512-Ler127iAfsGiyv7bbLAZLtsEOCrEgsaD3s5eONn5oulBUSS3beICXdt1cHEutRLwa/GkqwIMdwsiEVT+Dp1n+A==
+"@stoplight/request-maker@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.0.0.tgz#1d4a01a272ee69ffc6609161bd9a6abf244ff84b"
+  integrity sha512-dUdjVjlGLSL1Cc7iyuR2OS9Npks54hEIGQNo3OWghZdUX0tGQLFWTUt4GOpt8ehwUtVCJ3KTjZvRhLU8fMH17Q==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/path" "^1.3.0"
