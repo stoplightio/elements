@@ -60,6 +60,7 @@ const MobileStory = () => {
   return (
     <div style={styles}>
       <Button onClick={() => setIsOpen(true)}>Open Drawer</Button>
+
       <TableOfContents
         className="h-full"
         items={studio.nodes}

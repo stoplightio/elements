@@ -9,21 +9,23 @@ export interface IDeserializedSrn {
   uri: string;
 }
 
-export interface INodeInfo {
-  id: number;
-  type: NodeType;
-  name: string;
-  srn: string;
-  version: string;
-  versions: string[];
+export interface IChange {
+  createdAt: string;
+  semver: string;
+  message: string;
+}
+
+export interface INodeInfo extends IProjectNode {
   data: any;
+  changes?: IChange[];
 }
 
 export interface IProjectNode {
-  id: number | string;
   type: NodeType;
-  name: string;
   srn: string;
+  name: string;
+
+  id?: number | string;
   version?: string;
   versions?: string[];
   tags?: string[];
@@ -33,3 +35,47 @@ export type ProjectNodeWithUri = IProjectNode & { uri: string };
 
 export type IconMapType = NodeType | 'group' | 'divider' | 'item';
 export type NodeIconMapping = { [type in IconMapType]?: IconName };
+
+export type DocsNodeType = NodeType | 'json_schema' | 'http';
+
+export interface IVisGraphNode {
+  id: string;
+  label: string;
+  color?: string;
+  font?: {
+    color?: string;
+  };
+}
+
+export interface IVisGraphEdge {
+  to: string;
+  from: string;
+  title: string;
+  label?: string;
+  color?: string;
+  font?: {
+    align: string;
+  };
+}
+
+export interface IVisGraph {
+  nodes: IVisGraphNode[];
+  edges: IVisGraphEdge[];
+}
+
+export interface IPageHeading {
+  id: string;
+  title: string;
+  depth: number;
+}
+
+export interface IPaginatedResponse<T> {
+  items: T[];
+  pageInfo: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string;
+    endCursor: string;
+  };
+  totalCount: number;
+}

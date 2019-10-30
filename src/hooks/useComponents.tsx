@@ -3,6 +3,7 @@ import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 import { HttpOperation } from '../components/HttpOperation';
+import { HttpRequest } from '../components/HttpRequest';
 import { HttpService } from '../components/HttpService';
 import { Model } from '../components/Model';
 import { ComponentsContext } from '../containers/Provider';
@@ -29,13 +30,24 @@ export function useComponents() {
                 [CLASSNAMES.block]: !parent || parent.type !== 'tab',
               })}
               title={annotations && annotations.title}
-              schema={value}
+              maxRows={nodeType === 'json_schema' ? 15 : undefined}
+              value={value}
             />
           );
         } else if (nodeType === NodeType.HttpOperation) {
           return <HttpOperation key={key} value={value} />;
         } else if (nodeType === NodeType.HttpService) {
           return <HttpService key={key} value={value} />;
+        } else if (nodeType === 'http') {
+          return (
+            <HttpRequest
+              key={key}
+              className={cn('my-10', {
+                [CLASSNAMES.block]: !parent || parent.type !== 'tab',
+              })}
+              value={value}
+            />
+          );
         }
 
         return Components && Components.code ? Components.code(props, key) : defaultComponents.code(props, key);

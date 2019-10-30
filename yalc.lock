@@ -4,7 +4,7 @@
     "@stoplight/ui-kit": {
       "signature": "6f9faeb3c164f5456496d66461cff96b",
       "file": true,
-      "replaced": ".yalc/@stoplight/ui-kit"
+      "replaced": "^2.12.0"
     }
   }
 }

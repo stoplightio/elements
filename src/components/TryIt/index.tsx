@@ -1,28 +1,23 @@
-import { IHttpOperation } from '@stoplight/types';
+import { TryIt as RMTryIt } from '@stoplight/request-maker';
+import { IHttpOperation, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
-import { StoreProvider } from './context';
-import { Request } from './Request';
-import { Response } from './Response';
+import { useRequestMaker } from '../../hooks/useRequestMaker';
+import { useResolver } from '../../hooks/useResolver';
 
 export interface ITryItProps extends IErrorBoundary {
+  value: any;
+
+  padding?: string;
   className?: string;
-  value: IHttpOperation;
 }
 
-const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, value }) => {
-  if (!value) return null;
+const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, value, padding = '12' }) => {
+  const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
+  const store = useRequestMaker(result, true);
 
-  return (
-    <StoreProvider value={value}>
-      <div className={cn('TryIt', className)}>
-        <Request className="mb-10" value={value} />
-
-        <Response />
-      </div>
-    </StoreProvider>
-  );
+  return <RMTryIt className={cn(className, padding && `p-${padding}`)} store={store} editable={false} />;
 };
 TryItComponent.displayName = 'TryIt.Component';
 
