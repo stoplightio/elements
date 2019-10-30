@@ -1,54 +1,20 @@
-import {
-  ActionBar,
-  MethodSelector,
-  RequestEditor,
-  RequestMaker,
-  RequestMakerProvider,
-  ResponseStatus,
-  ResponseViewer,
-  SendButton,
-} from '@stoplight/request-maker';
-import { ControlGroup } from '@stoplight/ui-kit';
-import cn from 'classnames';
-import { get } from 'lodash';
+import { RequestMaker } from '@stoplight/request-maker';
+import { IHttpRequest } from '@stoplight/types';
+import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import * as React from 'react';
+import { useRequestMaker } from '../../hooks/useRequestMaker';
 import { useResolver } from '../../hooks/useResolver';
 
-export interface IHttpRequestProps {
+export interface IHttpRequestProps extends IErrorBoundary {
   value: string;
   className?: string;
 }
 
-export const HttpRequest = React.memo<IHttpRequestProps>(({ value, className }) => {
-  const { result } = useResolver('http', value);
+const HttpRequestComponent = React.memo<IHttpRequestProps>(({ value, className }) => {
+  const { result } = useResolver<IHttpRequest>('http', value);
+  const store = useRequestMaker(result);
 
-  let request;
-  let operation;
-
-  // TODO (CL): Need a better way to handle this
-  if (get(result, 'id') === '?http-operation-id?') {
-    operation = result;
-  } else {
-    request = result;
-  }
-
-  const store = new RequestMaker({ request, operation });
-
-  return (
-    <RequestMakerProvider value={store}>
-      <div className={cn('HttpRequest', className)}>
-        <ControlGroup>
-          <SendButton className="HttpRequest__SendButton w-40" intent="primary" icon="play" />
-          <MethodSelector className="HttpRequest__MethodSelector" />
-          <ActionBar className="HttpRequest__ActionBar flex-auto" />
-        </ControlGroup>
-
-        <RequestEditor className="HttpRequest__RequestEditor mt-6" />
-
-        <ResponseStatus className="HttpRequest__ResponseStatus mt-6" />
-
-        <ResponseViewer className="HttpRequest__ResponseViewer mt-6" />
-      </div>
-    </RequestMakerProvider>
-  );
+  return <RequestMaker className={className} store={store} />;
 });
+
+export const HttpRequest = withErrorBoundary<IHttpRequestProps>(HttpRequestComponent, ['value'], 'TryIt');

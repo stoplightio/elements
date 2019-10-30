@@ -1,6 +1,6 @@
-import { IProjectNode } from '../types';
+import { IPaginatedResponse, IProjectNode } from '../types';
 import { deserializeSrn, serializeSrn } from '../utils/srns';
-import { IPaginatedResponse, useRequest } from './useRequest';
+import { useRequest } from './useRequest';
 
 const MAX_PAGE_SIZE = 300; // maximumn number of items the API can return on a single request
 

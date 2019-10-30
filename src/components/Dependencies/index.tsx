@@ -11,8 +11,10 @@ import { useComponents } from '../../hooks/useComponents';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
 import { useResolver } from '../../hooks/useResolver';
 import { INodeInfo } from '../../types';
-import { getNodeTitle } from '../../utils/node';
+import { getNodeTitle, NodeTypePrettyName } from '../../utils/node';
 import { Model } from '../Model';
+
+import 'vis-network/dist/vis-network.css';
 
 export interface IDependencies {
   node: INodeInfo;
@@ -97,9 +99,17 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   );
 
   // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(graph, node.name, activeNode && activeNode.id);
+  const visGraph = useComputeVisGraph(graph, node.name, activeNode ? activeNode.id : 'root');
 
-  if (!graph || !visGraph.nodes.length) return null;
+  if (!graph) return null;
+
+  if (visGraph && !visGraph.nodes.length) {
+    return (
+      <div className={cn(className, 'Page__dependencies relative h-full', padding ? `p-${padding}` : '')}>
+        This {NodeTypePrettyName[node.type]} does not have any outbound depdendencies.
+      </div>
+    );
+  }
 
   return (
     <div className={cn(className, 'Page__dependencies relative h-full')}>
