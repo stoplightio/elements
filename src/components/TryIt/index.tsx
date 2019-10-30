@@ -11,20 +11,13 @@ export interface ITryItProps extends IErrorBoundary {
 
   padding?: string;
   className?: string;
-  validate?: boolean;
 }
 
-const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, value, validate, padding = '12' }) => {
+const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, value, padding = '12' }) => {
   const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
-  const store = useRequestMaker(result, validate);
+  const store = useRequestMaker(result, true);
 
-  if (!store) return null;
-
-  return (
-    <div className={cn('TryIt', className, padding && `p-${padding}`)}>
-      <RMTryIt store={store} editable={false} />
-    </div>
-  );
+  return <RMTryIt className={cn(className, padding && `p-${padding}`)} store={store} editable={false} />;
 };
 TryItComponent.displayName = 'TryIt.Component';
 
