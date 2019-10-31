@@ -17,6 +17,8 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
 
   if (!graph) return visGraph;
 
+  const nodes = [];
+
   // Loop over graph nodes and add them to the visgraph
   for (const id of graph.overallOrder()) {
     if (!graph.dependantsOf(id).length && !graph.dependenciesOf(id).length) continue;
@@ -32,7 +34,7 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
       color = '#66b1e7';
     }
 
-    visGraph.nodes.push({
+    nodes.push({
       id: encodedId,
       label: isRootNode && rootName ? rootName : getNodeTitle(encodedId, node.data),
       color,
@@ -43,6 +45,14 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
 
     // Add node edges
     visGraph.edges = visGraph.edges.concat(getEdgesFromRefMap(encodedId, node.refMap, activeNodeId));
+  }
+
+  // Only add nodes to the graph that have at least one inbound or outbound edge
+  for (const node of nodes) {
+    const hasEdge = visGraph.edges.find(edge => edge.to === node.id || edge.from === node.id);
+    if (hasEdge) {
+      visGraph.nodes.push(node);
+    }
   }
 
   return visGraph;
