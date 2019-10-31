@@ -14,8 +14,6 @@ import { INodeInfo } from '../../types';
 import { getNodeTitle, NodeTypePrettyName } from '../../utils/node';
 import { Model } from '../Model';
 
-import 'vis-network/dist/vis-network.css';
-
 export interface IDependencies {
   node: INodeInfo;
 
