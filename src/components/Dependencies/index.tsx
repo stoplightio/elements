@@ -115,7 +115,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
     <div className={cn(className, 'Page__dependencies relative h-full')}>
       {isLoading && (
         <div className="absolute inset-0 bg-lighten-9 flex items-center justify-center z-20">
-          <ProgressBar value={isStable} />
+          <ProgressBar className="w-1/2" value={isStable} />
         </div>
       )}
       <Graph
