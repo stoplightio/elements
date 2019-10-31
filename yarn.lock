@@ -2104,7 +2104,7 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.0", "@stoplight/json@^3.1.1", "@stoplight/json@^3.1.2":
+"@stoplight/json@^3.0", "@stoplight/json@^3.1.1", "@stoplight/json@^3.1.2", "@stoplight/json@^3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.2.0.tgz#752f4b7d4aac05a11da6444a6dffc040095291ae"
   integrity sha512-LYWv+VxEyIwxrztAUEm78bZaQGItKDUXLeF7ksMoew2gMMIv/YLrw/J/UlsH0DFWhHiAwTL2N9vkry+n37j1fw==
@@ -2155,10 +2155,10 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.0.tgz#da2282352a4eb23c09d5106b9d1650d30a9ca2ad"
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
-"@stoplight/request-maker@^3.0.2":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.0.5.tgz#33c00219131125ec544abcd9473e2e330a1067e1"
-  integrity sha512-HNB8R6bLgwxTSDl44W6to3jvNYK2QHT4PrsGaWDMy2AdgmOzL5rpT0T8gUClBUTXFZJtdJXQcMswGqlGClxOdQ==
+"@stoplight/request-maker@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.0.6.tgz#ee3b3dd5f9dbd5ade6478a46647d591bc39ba3d5"
+  integrity sha512-syPIGHkR94FpeQU8eHzz4ySku0Rko3mjJ0FEVzHlRoxuNfWg2VUhZ7ACD01BxivqM3c9tj1cRUwvbidIIwSZMw==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/path" "^1.3.0"
@@ -2258,10 +2258,10 @@
   dependencies:
     "@types/json-schema" "^7.0.3"
 
-"@stoplight/ui-kit@^2.12.0":
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.12.0.tgz#c2597b48e70791ead8bea091908414baa0d5d571"
-  integrity sha512-HAfDPsX4izFwu1ZeZ1zngoUerRa9l2auEwbmpVCJ1OZzKdhxjBfXTtVRQxLQLiwftUBXCXP7IBEo3oSy2Hr5DQ==
+"@stoplight/ui-kit@^2.13.0":
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.13.0.tgz#ebfcd895a50f3abe025af9febf420ecad399b5b3"
+  integrity sha512-eEZr91ATui7gnHoXQQab0Tw+FlJ4RlYO1TTpUPeglKq46P6p6RSL4I1UqEwSEExRoAhOwDV5Qr1vxOvNS4/XxQ==
   dependencies:
     "@blueprintjs/core" "^3.18.0"
     "@blueprintjs/icons" "^3.10.0"
