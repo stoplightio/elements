@@ -1,7 +1,8 @@
+$TableOfContentsWidth: 300px;
+
 .TableOfContentsSkeleton,
 .TableOfContents {
-  width: calc((100% - 1400px) / 2 + 300px);
-  min-width: 300px;
+  min-width: $TableOfContentsWidth + 20;
 }
 
 .TableOfContentsSkeleton__inner,
