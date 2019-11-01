@@ -34,7 +34,7 @@ storiesOf('components/Page', module)
   .addDecorator(withKnobs)
   .add('Article', () => {
     return (
-      <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+      <div className={cn({ 'bp3-dark bg-gray-8': darkMode() })}>
         <Page
           className="h-full"
           node={{
