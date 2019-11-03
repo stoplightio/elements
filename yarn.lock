@@ -2234,9 +2234,9 @@
     webpack "4.30.0"
 
 "@stoplight/tree-list@^4.8.0", "@stoplight/tree-list@^4.8.2":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.8.2.tgz#de54642b7664176d702cd799350e7b52ea2ae5d0"
-  integrity sha512-9kaSFW8SYH5w+bIYEat+tgjODakJCXfYanEmaIZRJCtgDQCMO0DmyG3+wsaqHns/9W5Dxr7EvVi3l5cnuEc+Qw==
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.8.3.tgz#04d235be22295d2579b4142f900dd6ccd9191a9e"
+  integrity sha512-2yOdzy7epNjdBCmYWMObUeP+ZEob4UdMdoKVogH84GBC8fK2La5ZrvwXfOXXah+jsCKkuFnSCbj6G7Nv0ZyN4g==
   dependencies:
     "@stoplight/lifecycle" "2.x.x"
     classnames "2.x.x"
