@@ -38,6 +38,8 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   const type = get(parameter, 'schema.type');
 
+  const example = get(parameter, 'example') || get(parameter, 'schema.example');
+
   return (
     <div className={cn('HttpOperation__Parameter flex py-3', className)}>
       <div className="w-1/3 leading-relaxed">
@@ -47,9 +49,10 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
         </div>
       </div>
 
-      <div className="w-1/5 mx-10 leading-relaxed">{type}</div>
+      <div className="w-1/6 mx-10 leading-relaxed">{type}</div>
 
       {description && <MarkdownViewer className="flex-1" markdown={description} />}
+      {example && <div className="flex w-1/6 whitespace-normal items-center justify-start text-sm">{example}</div>}
     </div>
   );
 };
