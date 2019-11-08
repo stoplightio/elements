@@ -1,7 +1,7 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpParam } from '@stoplight/types';
 import cn from 'classnames';
-import { get } from 'lodash';
+import { get, sortBy } from 'lodash';
 import * as React from 'react';
 
 export interface IParametersProps {
@@ -17,7 +17,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
     <div className={cn('HttpOperation__Parameters', className)}>
       {title && <div className="text-lg font-semibold pb-3">{title}</div>}
 
-      {parameters.map((parameter, index) => (
+      {sortBy(parameters, 'required').map((parameter, index) => (
         <Parameter key={index} parameter={parameter} />
       ))}
     </div>
