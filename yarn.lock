@@ -2122,7 +2122,7 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "5.2.6"
 
-"@stoplight/markdown-viewer@^3.7.0":
+"@stoplight/markdown-viewer@^3", "@stoplight/markdown-viewer@^3.7.0":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.7.0.tgz#63d157d58e5a22b9e31b17a0f38c6d7772b8c361"
   integrity sha512-qsOpzegYHx6yTKCqWuODHvIhtWNdUHCC/etmUxzqyFjVITyy6mUdRMmF5u/OgyQixztE6Cj3NMchRqSZNovsnA==
@@ -2156,11 +2156,12 @@
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
 "@stoplight/request-maker@^3.0.9":
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.0.9.tgz#3814816218985300c3b9a6a64d2c73a9916a343b"
-  integrity sha512-ow0eVNxH0tMRapNl1U+gO9hMD21xpgTopf8iKxXgoAcA//Crv8uYeuM5gQ5s0tqCpQxz7TuYc3eEu0WfAY6mWg==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.1.0.tgz#2290d358ab6747f4287b21dadeb522c311de4328"
+  integrity sha512-SvX8id+70utOiORxBI0cCWrWKnlXYWNxx/vlN1iH+cuobpXg1bz9DLLv6+DXujsi6ZJM6/u595rSnUpSt+WyvQ==
   dependencies:
     "@stoplight/json" "^3.1.1"
+    "@stoplight/markdown-viewer" "^3"
     "@stoplight/path" "^1.3.0"
     "@stoplight/tree-list" "^4.8.0"
     axios "^0.19.0"
@@ -2234,9 +2235,9 @@
     webpack "4.30.0"
 
 "@stoplight/tree-list@^4.8.0", "@stoplight/tree-list@^4.8.2":
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.9.0.tgz#9255507c77335b5287fcbc1ad26bd5558c226c40"
-  integrity sha512-ahZO15ep/WqZ5kdb/t/Esuf+uNXEIK+B57OLDGx5gwK6HvuqbxeB/6TJ9cJ6I3De857h+XjQHjqgRUEIUilC0A==
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.10.0.tgz#0fec73e1348e4afe28965c2ce9a7aa8d498afab5"
+  integrity sha512-WULw6jsU0EG2DDqD5uofqnV7BGN2XcI/XL1iCF1mw65kkf3C3uSgu9T8OoOYgmZoLQQDCcaqym331v6PKHHC1g==
   dependencies:
     "@stoplight/lifecycle" "2.x.x"
     classnames "2.x.x"
@@ -2252,9 +2253,9 @@
     "@types/json-schema" "^7.0.3"
 
 "@stoplight/types@^11.1.1":
-  version "11.1.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.1.1.tgz#a92d1833adb580a72439f42ba73de8f560fd68b4"
-  integrity sha512-IU8U9y/uO548z15DX/Jl053u9VQG8gCwNtypuD4RtskUA7pvHZl4+zzGK3klgIcO6Ql3Jk4/fcrFaN9vjmdEWg==
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.2.0.tgz#1f9c9c6dcf481f21e68a01cfa6e81b1ea41d4faa"
+  integrity sha512-c4zMAaf+NusHxcfruYDnzBwX3VJ8h1E6KYW/11QqmtsmE+ua3tKYL3PNbrzWh7nz/Vmv0U8zoYMw42F1XxylaA==
   dependencies:
     "@types/json-schema" "^7.0.3"
 
