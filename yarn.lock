@@ -2104,7 +2104,7 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.0", "@stoplight/json@^3.1.1", "@stoplight/json@^3.1.2", "@stoplight/json@^3.2.0":
+"@stoplight/json@^3.0", "@stoplight/json@^3.1.1", "@stoplight/json@^3.1.2", "@stoplight/json@^3.2.0", "@stoplight/json@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.2.1.tgz#cbc8080f4a55744beb89668d058e48ba52da141b"
   integrity sha512-RnXApQlP6GEUHIK8JRianStXTc4dHARpNP8VVGL/BbctTTlA3BO+Z1eILu35JdqvMG5sw6Og3TkQyQ85w6sSoA==
@@ -2156,21 +2156,22 @@
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
 "@stoplight/request-maker@^3.0.9":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.1.1.tgz#9bf5ec2c09db8660bb9e3f6a413246242a3d1644"
-  integrity sha512-zDYokkJU7vO0aCMK3PVQ3Ew9Xg9oW1noF4enCbajrVPCze4qwIDmvAfhPm27ICJdCr68FralbHQZd12QHewLvg==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.2.0.tgz#f9a63a695bca1fab489d50c99474121f87cbadd3"
+  integrity sha512-MA918VJBDx7yU+F2e8NLhsqaT+D7TBKGv04Y/Q3UYdRBgcAVI80hmA0chX1jPKxVanLx6EaGjzv8MKV5LZcu9g==
   dependencies:
-    "@stoplight/json" "^3.1.1"
+    "@stoplight/json" "^3.2.1"
     "@stoplight/markdown-viewer" "^3"
     "@stoplight/path" "^1.3.0"
-    "@stoplight/tree-list" "^4.8.0"
+    "@stoplight/tree-list" "^4.10.0"
     axios "^0.19.0"
     classnames "^2.2.6"
+    copy-to-clipboard "^3.2.0"
     lodash "^4.17.15"
-    mobx-react-lite "^1.4.1"
+    mobx-react-lite "^1.5.0"
     openapi-sampler "^1.0.0-beta.15"
     prettier "^1.18.2"
-    urijs "^1.19.1"
+    urijs "^1.19.2"
 
 "@stoplight/scripts@5.1.0":
   version "5.1.0"
@@ -2234,7 +2235,7 @@
     ts-loader "5.4.5"
     webpack "4.30.0"
 
-"@stoplight/tree-list@^4.8.0", "@stoplight/tree-list@^4.8.2":
+"@stoplight/tree-list@^4.10.0", "@stoplight/tree-list@^4.8.2":
   version "4.10.0"
   resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.10.0.tgz#0fec73e1348e4afe28965c2ce9a7aa8d498afab5"
   integrity sha512-WULw6jsU0EG2DDqD5uofqnV7BGN2XcI/XL1iCF1mw65kkf3C3uSgu9T8OoOYgmZoLQQDCcaqym331v6PKHHC1g==
@@ -5530,7 +5531,7 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
-copy-to-clipboard@^3.0.8:
+copy-to-clipboard@^3.0.8, copy-to-clipboard@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.2.0.tgz#d2724a3ccbfed89706fac8a894872c979ac74467"
   integrity sha512-eOZERzvCmxS8HWzugj4Uxl8OJxa7T2k1Gi0X5qavwydHIfuSHq2dTD09LOg/XyGq4Zpb5IsR/2OJ5lbOegz78w==
@@ -16615,7 +16616,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-urijs@^1.19.1, urijs@^1.19.2, urijs@~1.19.1:
+urijs@^1.19.2, urijs@~1.19.1:
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.2.tgz#f9be09f00c4c5134b7cb3cf475c1dd394526265a"
   integrity sha512-s/UIq9ap4JPZ7H1EB5ULo/aOUbWqfDi7FKzMC2Nz+0Si8GiT1rIEaprt8hy3Vy2Ex2aJPpOQv4P4DuOZ+K1c6w==
