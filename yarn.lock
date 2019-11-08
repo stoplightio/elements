@@ -2156,9 +2156,9 @@
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
 "@stoplight/request-maker@^3.0.9":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.1.0.tgz#2290d358ab6747f4287b21dadeb522c311de4328"
-  integrity sha512-SvX8id+70utOiORxBI0cCWrWKnlXYWNxx/vlN1iH+cuobpXg1bz9DLLv6+DXujsi6ZJM6/u595rSnUpSt+WyvQ==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.1.1.tgz#9bf5ec2c09db8660bb9e3f6a413246242a3d1644"
+  integrity sha512-zDYokkJU7vO0aCMK3PVQ3Ew9Xg9oW1noF4enCbajrVPCze4qwIDmvAfhPm27ICJdCr68FralbHQZd12QHewLvg==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/markdown-viewer" "^3"
