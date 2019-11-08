@@ -8,7 +8,7 @@ import { Parameters } from './Parameters';
 
 export interface IRequestProps {
   request?: IHttpOperationRequest;
-  security?: HttpSecurityScheme[];
+  security?: HttpSecurityScheme[][];
   className?: string;
 }
 
@@ -48,7 +48,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, secur
 };
 Request.displayName = 'HttpOperation.Request';
 
-const getSecurityData = (httpSecuritySchemes: HttpSecurityScheme[]) => {
+const getSecurityData = (httpSecuritySchemes: HttpSecurityScheme[][]) => {
   const queryParams: IHttpQueryParam[] = [];
   const headerParams: IHttpHeaderParam[] = [];
 
