@@ -301,14 +301,12 @@
         },
         "description": "How many todos to limit?",
         "name": "limit",
-        "style": "form",
-        "example": "another-example-remove-this"
+        "style": "form"
       },
       {
         "schema": {
           "type": "boolean",
-          "description": "Only return completed",
-          "example": "lol-an-example-remove-this"
+          "description": "Only return completed"
         },
         "name": "completed",
         "style": "form"
