@@ -10,10 +10,9 @@ export interface IRequestProps {
   request?: IHttpOperationRequest;
   security?: HttpSecurityScheme[][];
   className?: string;
-  value?: any;
 }
 
-export const Request: React.FunctionComponent<IRequestProps> = ({ request, security, className, value }) => {
+export const Request: React.FunctionComponent<IRequestProps> = ({ request, security, className }) => {
   if (!request || typeof request !== 'object') return null;
 
   const { path, headers, query, body } = request;
@@ -25,14 +24,13 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, secur
 
   return (
     <div className={cn('HttpOperation__Request', className)}>
-      {path && <Parameters className="mb-10" title="Path Parameters" parameters={path} value={value} />}
+      {path && <Parameters className="mb-10" title="Path Parameters" parameters={path} />}
 
       {headers && (
         <Parameters
           className="mb-10"
           title="Headers"
           parameters={securityData ? headers.concat(securityData.headerParams) : headers}
-          value={value}
         />
       )}
 
@@ -41,7 +39,6 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, secur
           className="mb-10"
           title="Query Parameters"
           parameters={securityData ? query.concat(securityData.queryParams) : query}
-          value={value}
         />
       )}
 
