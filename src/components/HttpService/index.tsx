@@ -45,11 +45,11 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
 
           {result.contact.email && result.contact.url && (
             <div className="mt-4">
-              <Icon icon="envelope" className="mr-1" />
+              <Icon icon="link" className="mr-1" />
               <a className="mr-4" href={`mailto:${result.contact.email}`}>
                 Email
               </a>
-              <Icon icon="envelope" className="mr-1" />
+              <Icon icon="link" className="mr-1" />
               <a href={result.contact.url}>URL</a>
             </div>
           )}
