@@ -1,3 +1,4 @@
+import { Icon } from '@blueprintjs/core';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpService, NodeType } from '@stoplight/types';
 import { Card } from '@stoplight/ui-kit';
@@ -40,16 +41,16 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
       {result.contact && (result.contact.email || result.contact.url) && (
         <div className="mb-12">
           <div className="text-xl font-semibold select-none">Contact</div>
+          <div className="mt-1">{result.contact.name}</div>
 
-          {result.contact.email && (
+          {result.contact.email && result.contact.url && (
             <div className="mt-4">
-              <a href={`mailto:${result.contact.email}`}>{result.contact.email}</a>
-            </div>
-          )}
-
-          {result.contact.url && (
-            <div className="mt-4">
-              <a href={result.contact.url}> {result.contact.url}</a>
+              <Icon icon="envelope" className="mr-1" />
+              <a className="mr-4" href={`mailto:${result.contact.email}`}>
+                Email
+              </a>
+              <Icon icon="envelope" className="mr-1" />
+              <a href={result.contact.url}>URL</a>
             </div>
           )}
         </div>
