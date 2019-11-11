@@ -51,7 +51,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   // Elements for popover
   const descriptionElement = (
-    <div className="mr-2" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+    <div className="max-w-2xl mr-2" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
       {description}
     </div>
   );
@@ -60,6 +60,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
     <div className={cn('HttpOperation__Parameter flex h-10 px-2 items-center text-sm leading-relaxed', className)}>
       {parameter.name.length > 50 ? (
         <Popover
+          className="flex items-center"
           boundary="window"
           interactionKind="hover"
           content={
