@@ -66,6 +66,8 @@ export const Response: React.FunctionComponent<IResponseProps> = ({ className, r
 
   return (
     <div className={cn('HttpOperation__Response', className)}>
+      {response.contents &&
+        response.contents.map(item => <div className="pb-3 text-sm">{`Produces ${item.mediaType}`}</div>)}
       {response.description && <MarkdownViewer className="mb-6" markdown={response.description} />}
 
       <Parameters className="mb-6" title="Headers" parameters={response.headers} />

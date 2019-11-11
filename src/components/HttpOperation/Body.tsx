@@ -26,6 +26,7 @@ export const Body: React.FunctionComponent<IBodyProps> = ({ body, className }) =
   return (
     <div className={cn('HttpOperation__Body', className)}>
       <div className="text-lg font-semibold">Body</div>
+      {requestBody.mediaType && <div className="pt-3 text-sm">{`Consumes ${requestBody.mediaType}`}</div>}
 
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}
 
