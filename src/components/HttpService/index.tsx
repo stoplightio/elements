@@ -1,6 +1,6 @@
+import { Icon } from '@blueprintjs/core';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpService, NodeType } from '@stoplight/types';
-import { Card } from '@stoplight/ui-kit';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
@@ -20,38 +20,59 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
       {result.description && <MarkdownViewer className="mb-12" markdown={result.description} />}
 
       {result.servers && result.servers.length > 0 ? (
-        <div className="mb-6">
-          <div className="text-xl font-semibold select-none mb-6">Servers</div>
+        <div className="mb-12">
+          <div className="text-xl font-semibold select-none mb-4">Servers</div>
 
-          <div className="flex items-center flex-wrap">
-            {result.servers.map((server, index) => (
-              <a key={index} className="mr-6 mb-6 text-center" href={server.url} target="_blank">
-                <Card>
-                  <div className="font-semibold">{server.name}</div>
-                  <div className="mt-2">{server.description}</div>
-                  <div className="mt-2">{server.url}</div>
-                </Card>
+          {result.servers.map((server, index) => (
+            <div className="mt-4 flex-1 flex items-center" key={index}>
+              {server.name && <div>{server.name} - </div>}
+              {server.description && <div>{server.description} - </div>}
+
+              <a href={server.url} target="_blank" rel="noopener noreferrer">
+                {server.url}
               </a>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       ) : null}
 
       {result.contact && (result.contact.email || result.contact.url) && (
         <div className="mb-12">
-          <div className="text-xl font-semibold select-none">Contact</div>
+          <div className="text-xl font-semibold select-none mb-4">Contact</div>
 
-          {result.contact.email && (
-            <div className="mt-4">
-              <a href={`mailto:${result.contact.email}`}>{result.contact.email}</a>
+          {result.contact.name && <div>{result.contact.name}</div>}
+
+          {result.contact.email && result.contact.url && (
+            <div className="mt-2 flex items-center">
+              {result.contact.email && (
+                <a
+                  className="mr-4 flex items-center"
+                  href={`mailto:${result.contact.email}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon icon="envelope" className="mr-2" iconSize={12} />
+                  Email
+                </a>
+              )}
+
+              {result.contact.url && (
+                <a className="flex items-center" href={result.contact.url} target="_blank" rel="noopener noreferrer">
+                  <Icon icon="link" className="mr-2" iconSize={12} /> URL
+                </a>
+              )}
             </div>
           )}
+        </div>
+      )}
 
-          {result.contact.url && (
-            <div className="mt-4">
-              <a href={result.contact.url}> {result.contact.url}</a>
-            </div>
-          )}
+      {result.termsOfService && (
+        <div className="mb-12">
+          <div className="text-xl font-semibold select-none mb-4">Terms of Service</div>
+
+          <a href={result.termsOfService} target="_blank" rel="noopener noreferrer">
+            {result.termsOfService}
+          </a>
         </div>
       )}
 
@@ -60,7 +81,9 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
           <div className="text-xl font-semibold select-none mb-4">License</div>
 
           {result.license.url ? (
-            <a href={result.license.url}>{result.license.name || result.license.url}</a>
+            <a href={result.license.url} target="_blank" rel="noopener noreferrer">
+              {result.license.name || result.license.url}
+            </a>
           ) : (
             <span>{result.license.name}</span>
           )}
