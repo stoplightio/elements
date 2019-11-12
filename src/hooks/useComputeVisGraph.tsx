@@ -2,28 +2,29 @@ import { pointerToPath } from '@stoplight/json';
 import { IGraphNodeData, IResolveResult } from '@stoplight/json-ref-resolver/types';
 import { last } from 'lodash';
 import * as React from 'react';
+import * as URI from 'urijs';
 import { IVisGraph, IVisGraphEdge } from '../types';
 import { getNodeTitle } from '../utils/node';
 
 export function useComputeVisGraph(
+  rootNodeSrn: string,
   graph?: IResolveResult['graph'],
   rootName?: string,
   activeNodeId?: string,
-  rootUri?: string,
 ) {
-  return React.useMemo(() => computeVisGraph(graph, rootName, activeNodeId, rootUri), [
+  return React.useMemo(() => computeVisGraph(rootNodeSrn, graph, rootName, activeNodeId), [
     graph,
     rootName,
     activeNodeId,
-    rootUri,
+    rootNodeSrn,
   ]);
 }
 
 export function computeVisGraph(
+  rootNodeSrn: string,
   graph?: IResolveResult['graph'],
   rootName?: string,
   activeNodeId?: string,
-  rootUri?: string,
 ) {
   const visGraph: IVisGraph = {
     nodes: [],
@@ -38,7 +39,9 @@ export function computeVisGraph(
   for (const id of graph.overallOrder()) {
     if (!graph.dependantsOf(id).length && !graph.dependenciesOf(id).length) continue;
 
-    const isRootNode = id === 'root' || id === rootUri;
+    const isRootNodeUri = isRootNodeSrn(id, rootNodeSrn);
+
+    const isRootNode = id === 'root' || isRootNodeUri;
     const encodedId = encodeURI(id);
     const node = graph.getNodeData(id);
 
@@ -49,17 +52,19 @@ export function computeVisGraph(
       color = '#66b1e7';
     }
 
-    nodes.push({
-      id: encodedId,
-      label: isRootNode && rootName ? rootName : getNodeTitle(encodedId, node.data),
-      color,
-      font: {
-        color: isRootNode || activeNodeId === encodedId ? '#ffffff' : '#10161a',
-      },
-    });
+    if (!isRootNodeUri) {
+      nodes.push({
+        id: encodedId,
+        label: isRootNode && rootName ? rootName : getNodeTitle(encodedId, node.data),
+        color,
+        font: {
+          color: isRootNode || activeNodeId === encodedId ? '#ffffff' : '#10161a',
+        },
+      });
+    }
 
     // Add node edges
-    visGraph.edges = visGraph.edges.concat(getEdgesFromRefMap(encodedId, node.refMap, activeNodeId));
+    visGraph.edges = visGraph.edges.concat(getEdgesFromRefMap(rootNodeSrn, encodedId, node.refMap, activeNodeId));
   }
 
   // Only add nodes to the graph that have at least one inbound or outbound edge
@@ -73,7 +78,12 @@ export function computeVisGraph(
   return visGraph;
 }
 
-function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], activeNodeId?: string) {
+function getEdgesFromRefMap(
+  rootNodeSrn: string,
+  nodeId: string,
+  refMap: IGraphNodeData['refMap'],
+  activeNodeId?: string,
+) {
   const edges: IVisGraphEdge[] = [];
   const edgeMap = {};
 
@@ -115,8 +125,8 @@ function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], ac
     }
 
     edges.push({
-      from: nodeId,
-      to: targetId,
+      from: isRootNodeSrn(nodeId, rootNodeSrn) ? 'root' : nodeId,
+      to: isRootNodeSrn(targetId, rootNodeSrn) ? 'root' : targetId,
       label,
       title: edgeMap[targetId] && edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : 'reference',
       color,
@@ -127,4 +137,13 @@ function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], ac
   }
 
   return edges;
+}
+
+function isRootNodeSrn(id: string, rootNodeSrn: string) {
+  try {
+    const parsedQuery: { srn?: string } = URI.parseQuery(URI.parse(id).query || '');
+    return parsedQuery.srn === rootNodeSrn;
+  } catch {
+    return false;
+  }
 }
