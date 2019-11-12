@@ -12,6 +12,7 @@ import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
 import { useResolver } from '../../hooks/useResolver';
 import { INodeInfo } from '../../types';
 import { getNodeTitle, NodeTypePrettyName } from '../../utils/node';
+import { deserializeSrn } from '../../utils/srns';
 import { Model } from '../Model';
 
 export interface IDependencies {
@@ -67,6 +68,11 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
   const [isStable, setIsStable] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
+  const rootUri = deserializeSrn(node.srn).uri;
+
+  console.log('i am a node', node);
+  console.log('i am a rootUri', rootUri);
+  console.log('i am a graph', graph);
 
   const onClickNode = React.useCallback(
     e => {
@@ -79,7 +85,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
         setActiveNode(undefined);
       } else {
         const decodedNodeId = decodeURI(nodeId);
-        const isRoot = nodeId === 'root';
+        const isRoot = nodeId === 'root' || nodeId === rootUri;
 
         let nodeData;
         if (graph.hasNode(decodedNodeId)) {
@@ -97,7 +103,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   );
 
   // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(graph, node.name, activeNode ? activeNode.id : 'root');
+  const visGraph = useComputeVisGraph(graph, node.name, activeNode ? activeNode.id : 'root', rootUri);
 
   if (!graph) return null;
 

@@ -5,11 +5,26 @@ import * as React from 'react';
 import { IVisGraph, IVisGraphEdge } from '../types';
 import { getNodeTitle } from '../utils/node';
 
-export function useComputeVisGraph(graph?: IResolveResult['graph'], rootName?: string, activeNodeId?: string) {
-  return React.useMemo(() => computeVisGraph(graph, rootName, activeNodeId), [graph, rootName, activeNodeId]);
+export function useComputeVisGraph(
+  graph?: IResolveResult['graph'],
+  rootName?: string,
+  activeNodeId?: string,
+  rootUri?: string,
+) {
+  return React.useMemo(() => computeVisGraph(graph, rootName, activeNodeId, rootUri), [
+    graph,
+    rootName,
+    activeNodeId,
+    rootUri,
+  ]);
 }
 
-export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: string, activeNodeId?: string) {
+export function computeVisGraph(
+  graph?: IResolveResult['graph'],
+  rootName?: string,
+  activeNodeId?: string,
+  rootUri?: string,
+) {
   const visGraph: IVisGraph = {
     nodes: [],
     edges: [],
@@ -23,7 +38,7 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
   for (const id of graph.overallOrder()) {
     if (!graph.dependantsOf(id).length && !graph.dependenciesOf(id).length) continue;
 
-    const isRootNode = id === 'root';
+    const isRootNode = id === 'root' || id === rootUri;
     const encodedId = encodeURI(id);
     const node = graph.getNodeData(id);
 
