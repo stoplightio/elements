@@ -1,5 +1,4 @@
 const nock = require('nock');
-const circularSchema = require('../../__fixtures__/schemas/circular').default;
 const simpleSchema = require('../../__fixtures__/schemas/simple.json');
 const todoFullSchema = require('../../__fixtures__/schemas/todo-full.v1.json');
 const todoPartialSchema = require('../../__fixtures__/schemas/todo-partial.v1.json');
@@ -27,6 +26,6 @@ describe('computeVisGraph', () => {
   test('it works with a simple example', async () => {
     const { graph } = await createResolver('https://stoplight.io/api').resolve(simpleSchema);
 
-    expect(computeVisGraph(graph)).toMatchSnapshot();
+    expect(computeVisGraph('', graph)).toMatchSnapshot();
   });
 });
