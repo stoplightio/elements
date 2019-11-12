@@ -1,7 +1,8 @@
-import { MarkdownViewer } from '@stoplight/markdown-viewer';
+import { PropertyTypeColors, Validations } from '@stoplight/json-schema-viewer';
 import { IHttpParam } from '@stoplight/types';
+import { Tooltip } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { get, sortBy } from 'lodash';
+import { get, omit, sortBy, truncate } from 'lodash';
 import * as React from 'react';
 
 export interface IParametersProps {
@@ -15,11 +16,19 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
 
   return (
     <div className={cn('HttpOperation__Parameters', className)}>
-      {title && <div className="text-lg font-semibold pb-3">{title}</div>}
+      {title && <div className="text-lg font-semibold">{title}</div>}
 
-      {sortBy(parameters, 'required').map((parameter, index) => (
-        <Parameter key={index} parameter={parameter} />
-      ))}
+      <div className="TreeList TreeList--interactive rounded border dark:border-darken mt-6">
+        {sortBy(parameters, 'required').map((parameter, index) => (
+          <Parameter
+            key={index}
+            parameter={parameter}
+            className={cn('TreeListItem', {
+              'TreeListItem--striped': index % 2 !== 0,
+            })}
+          />
+        ))}
+      </div>
     </div>
   );
 };
@@ -31,25 +40,37 @@ export interface IParameterProps {
 }
 
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, className }) => {
-  if (!parameter || !parameter.schema) return null;
+  if (!parameter) return null;
 
   // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
   const description = get(parameter, 'description') || get(parameter, 'schema.description');
 
   const type = get(parameter, 'schema.type');
 
+  const validations = {
+    ...omit(parameter, ['name', 'required', 'description', 'schema', 'style']),
+    ...omit(get(parameter, 'schema'), ['description', 'type']),
+  };
+
   return (
-    <div className={cn('HttpOperation__Parameter flex py-3', className)}>
-      <div className="w-1/3 leading-relaxed">
-        <div className="flex break-all">{parameter.name}</div>
-        <div className={`font-semibold text-${parameter.required ? 'red' : 'gray'}-6 text-xs uppercase`}>
-          {parameter.required ? 'Required' : 'Optional'}
-        </div>
+    <div
+      className={cn('HttpOperation__Parameter h-10 px-2 flex items-center text-sm cursor-pointer truncate', className)}
+    >
+      <Tooltip className="flex truncate mr-2" targetClassName="truncate" content={parameter.name}>
+        <div className="truncate">{parameter.name}</div>
+      </Tooltip>
+
+      <div className={cn(PropertyTypeColors[type], 'mr-2')}>{`${type}`}</div>
+
+      <div className="flex-1 truncate">
+        {description && (
+          <Tooltip className="flex truncate mr-2" targetClassName="truncate" content={description}>
+            <div className="text-darken-7 dark:text-lighten-7 truncate">{truncate(description, { length: 150 })}</div>
+          </Tooltip>
+        )}
       </div>
 
-      <div className="w-1/5 mx-10 leading-relaxed">{type}</div>
-
-      {description && <MarkdownViewer className="flex-1" markdown={description} />}
+      <Validations required={Boolean(parameter.required)} validations={validations} />
     </div>
   );
 };

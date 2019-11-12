@@ -1,0 +1,9 @@
+@import '~@stoplight/ui-kit/styles/blueprint/variables';
+
+.HttpOperation__Parameters {
+  .TreeList {
+    .#{$ns}-dark & {
+      background-color: get-color(darkgray, 4);
+    }
+  }
+}
