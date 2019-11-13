@@ -66,6 +66,13 @@ export const nodes: IProjectNode[] = [
     srn: 'sl/org/project/reference/todos/models/todos',
     tags: [],
   },
+  {
+    id: 10,
+    type: NodeType.Model,
+    name: 'Example',
+    srn: 'sl/org/project/models/example',
+    tags: [],
+  },
 ];
 
 export const contents: IContentsNode[] = [
@@ -132,11 +139,6 @@ export const contents: IContentsNode[] = [
     srn: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1users/get',
     depth: 1,
   },
-  {
-    name: 'User',
-    srn: 'sl/org/project/reference/todos/models/user',
-    depth: 1,
-  },
 
   /** Group un-tagged */
   {
@@ -149,9 +151,26 @@ export const contents: IContentsNode[] = [
     srn: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1todos/get',
     depth: 1,
   },
+
+  /** Models */
+  {
+    name: 'Models',
+    depth: 0,
+    type: 'divider',
+  },
+  {
+    name: 'Example',
+    srn: 'sl/org/project/models/example',
+    depth: 0,
+  },
   {
     name: 'Todo',
     srn: 'sl/org/project/reference/todos/models/todos',
-    depth: 1,
+    depth: 0,
+  },
+  {
+    name: 'User',
+    srn: 'sl/org/project/reference/todos/models/user',
+    depth: 0,
   },
 ];
