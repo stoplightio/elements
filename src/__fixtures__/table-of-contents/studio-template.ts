@@ -73,6 +73,26 @@ export const nodes: IProjectNode[] = [
     srn: 'sl/org/project/models/example',
     tags: [],
   },
+  {
+    id: 11,
+    type: NodeType.HttpService,
+    name: 'Another API',
+    srn: 'sl/org/project/openapi.v1.yml',
+  },
+  {
+    id: 12,
+    type: NodeType.HttpOperation,
+    name: 'List Things',
+    srn: 'sl/org/project/openapi.v1.yml/paths/~1things/get',
+    tags: ['things'],
+  },
+  {
+    id: 13,
+    type: NodeType.Model,
+    name: 'Thing',
+    srn: 'sl/org/project/openapi.v1.yml/definitions/thing',
+    tags: ['things'],
+  },
 ];
 
 export const contents: IContentsNode[] = [
@@ -113,6 +133,35 @@ export const contents: IContentsNode[] = [
   {
     name: 'Signup',
     srn: 'sl/org/project/docs/tutorials/signup.md',
+    depth: 1,
+  },
+
+  /** Group by http service */
+  {
+    name: 'Another API',
+    depth: 0,
+    type: 'divider',
+  },
+  {
+    name: 'Overview',
+    srn: 'sl/org/project/openapi.v1.yml',
+    depth: 0,
+  },
+
+  /** Group by tag */
+  {
+    name: 'Things',
+    depth: 0,
+    type: 'group',
+  },
+  {
+    name: 'List Things',
+    srn: 'sl/org/project/openapi.v1.yml/paths/~1things/get',
+    depth: 1,
+  },
+  {
+    name: 'Thing',
+    srn: 'sl/org/project/openapi.v1.yml/definitions/thing',
     depth: 1,
   },
 
