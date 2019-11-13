@@ -64,7 +64,9 @@ export function computeVisGraph(
     }
 
     // Add node edges
-    visGraph.edges = visGraph.edges.concat(getEdgesFromRefMap(rootNodeSrn, encodedId, node.refMap, activeNodeId));
+    visGraph.edges = visGraph.edges.concat(
+      getEdgesFromRefMap(rootNodeSrn, isRootNode, encodedId, node.refMap, activeNodeId),
+    );
   }
 
   // Only add nodes to the graph that have at least one inbound or outbound edge
@@ -80,6 +82,7 @@ export function computeVisGraph(
 
 function getEdgesFromRefMap(
   rootNodeSrn: string,
+  isRootNode: boolean,
   nodeId: string,
   refMap: IGraphNodeData['refMap'],
   activeNodeId?: string,
@@ -125,7 +128,7 @@ function getEdgesFromRefMap(
     }
 
     edges.push({
-      from: isRootNodeSrn(nodeId, rootNodeSrn) ? 'root' : nodeId,
+      from: isRootNode ? 'root' : nodeId,
       to: isRootNodeSrn(targetId, rootNodeSrn) ? 'root' : targetId,
       label,
       title: edgeMap[targetId] && edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : 'reference',
