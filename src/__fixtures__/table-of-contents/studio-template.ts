@@ -1,4 +1,5 @@
 import { NodeType } from '@stoplight/types';
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import { IProjectNode } from '../../types';
 
 export const nodes: IProjectNode[] = [
@@ -92,5 +93,361 @@ export const nodes: IProjectNode[] = [
     name: 'Thing',
     srn: 'sl/org/project/openapi.v1.yml/definitions/thing',
     tags: ['things'],
+  },
+];
+
+export const contents: IContentsNode[] = [
+  /** Group by docs */
+  /** Sort by path length & alphabetical */
+  {
+    name: 'Getting Started',
+    href: 'sl/org/project/docs/getting-started.md',
+    depth: 0,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+  {
+    name: 'Welcome',
+    href: 'sl/org/project/docs/welcome.md',
+    depth: 0,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+
+  {
+    name: 'Guides',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'Authentication',
+    href: 'sl/org/project/docs/guides/authentication.md',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+
+  {
+    name: 'Tutorials',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'Billing',
+    href: 'sl/org/project/docs/tutorials/billing.md',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+  {
+    name: 'Signup',
+    href: 'sl/org/project/docs/tutorials/signup.md',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+
+  /** Group by http service */
+  {
+    name: 'Another API',
+    depth: 0,
+    type: 'divider',
+    icon: 'chevron-right',
+  },
+  {
+    name: 'Overview',
+    href: 'sl/org/project/openapi.v1.yml',
+    icon: 'document',
+    isActive: false,
+    type: 'item',
+    depth: 0,
+  },
+
+  /** Group by tag */
+  {
+    name: 'Things',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'List Things',
+    href: 'sl/org/project/openapi.v1.yml/paths/~1things/get',
+    icon: 'document',
+    isActive: false,
+    type: 'item',
+    depth: 1,
+  },
+  {
+    name: 'Thing',
+    href: 'sl/org/project/openapi.v1.yml/definitions/thing',
+    icon: 'document',
+    isActive: false,
+    type: 'item',
+    depth: 1,
+  },
+
+  /** Group by http service */
+  {
+    name: 'Todos API',
+    depth: 0,
+    type: 'divider',
+    icon: 'chevron-right',
+  },
+  {
+    name: 'Overview',
+    href: 'sl/org/project/reference/todos/openapi.v1.yml',
+    depth: 0,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+
+  /** Group by tag */
+  {
+    name: 'Users',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'Get User',
+    href: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1users/get',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+
+  /** Group un-tagged */
+  {
+    name: 'Other',
+    depth: 0,
+    type: 'group',
+    icon: 'folder-close',
+  },
+  {
+    name: 'Get Todo',
+    href: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1todos/get',
+    depth: 1,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+
+  /** Models */
+  {
+    name: 'Models',
+    depth: 0,
+    type: 'divider',
+  },
+  {
+    name: 'Example',
+    href: 'sl/org/project/models/example',
+    depth: 0,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+  {
+    name: 'Todo',
+    href: 'sl/org/project/reference/todos/models/todos',
+    depth: 0,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+  {
+    name: 'User',
+    href: 'sl/org/project/reference/todos/models/user',
+    depth: 0,
+    icon: 'document',
+    type: 'item',
+    isActive: false,
+  },
+];
+
+export const nodeTypeIcons: IContentsNode[] = [
+  /** Group by docs */
+  /** Sort by path length & alphabetical */
+  {
+    name: 'Getting Started',
+    href: 'sl/org/project/docs/getting-started.md',
+    depth: 0,
+    icon: 'cube',
+    type: 'item',
+    isActive: false,
+  },
+  {
+    name: 'Welcome',
+    href: 'sl/org/project/docs/welcome.md',
+    depth: 0,
+    icon: 'cube',
+    type: 'item',
+    isActive: false,
+  },
+
+  {
+    name: 'Guides',
+    depth: 0,
+    type: 'group',
+    icon: undefined,
+  },
+  {
+    name: 'Authentication',
+    href: 'sl/org/project/docs/guides/authentication.md',
+    depth: 1,
+    icon: 'cube',
+    type: 'item',
+    isActive: false,
+  },
+
+  {
+    name: 'Tutorials',
+    depth: 0,
+    type: 'group',
+    icon: undefined,
+  },
+  {
+    name: 'Billing',
+    href: 'sl/org/project/docs/tutorials/billing.md',
+    depth: 1,
+    icon: 'cube',
+    type: 'item',
+    isActive: false,
+  },
+  {
+    name: 'Signup',
+    href: 'sl/org/project/docs/tutorials/signup.md',
+    depth: 1,
+    icon: 'cube',
+    type: 'item',
+    isActive: false,
+  },
+
+  /** Group by http service */
+  {
+    name: 'Another API',
+    depth: 0,
+    type: 'divider',
+    icon: 'badge',
+  },
+  {
+    name: 'Overview',
+    href: 'sl/org/project/openapi.v1.yml',
+    icon: undefined,
+    isActive: false,
+    type: 'item',
+    depth: 0,
+  },
+
+  /** Group by tag */
+  {
+    name: 'Things',
+    depth: 0,
+    type: 'group',
+    icon: undefined,
+  },
+  {
+    name: 'List Things',
+    href: 'sl/org/project/openapi.v1.yml/paths/~1things/get',
+    icon: 'download',
+    isActive: false,
+    type: 'item',
+    depth: 1,
+  },
+  {
+    name: 'Thing',
+    href: 'sl/org/project/openapi.v1.yml/definitions/thing',
+    icon: 'box',
+    isActive: false,
+    type: 'item',
+    depth: 1,
+  },
+
+  /** Group by http service */
+  {
+    name: 'Todos API',
+    depth: 0,
+    type: 'divider',
+    icon: 'badge',
+  },
+  {
+    name: 'Overview',
+    href: 'sl/org/project/reference/todos/openapi.v1.yml',
+    depth: 0,
+    icon: undefined,
+    type: 'item',
+    isActive: false,
+  },
+
+  /** Group by tag */
+  {
+    name: 'Users',
+    depth: 0,
+    type: 'group',
+    icon: undefined,
+  },
+  {
+    name: 'Get User',
+    href: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1users/get',
+    depth: 1,
+    icon: 'download',
+    type: 'item',
+    isActive: false,
+  },
+
+  /** Group un-tagged */
+  {
+    name: 'Other',
+    depth: 0,
+    type: 'group',
+    icon: undefined,
+  },
+  {
+    name: 'Get Todo',
+    href: 'sl/org/project/reference/todos/openapi.v1.yml/paths/~1todos/get',
+    depth: 1,
+    icon: 'download',
+    type: 'item',
+    isActive: false,
+  },
+
+  /** Models */
+  {
+    name: 'Models',
+    depth: 0,
+    type: 'divider',
+  },
+  {
+    name: 'Example',
+    href: 'sl/org/project/models/example',
+    depth: 0,
+    icon: 'box',
+    type: 'item',
+    isActive: false,
+  },
+  {
+    name: 'Todo',
+    href: 'sl/org/project/reference/todos/models/todos',
+    depth: 0,
+    icon: 'box',
+    type: 'item',
+    isActive: false,
+  },
+  {
+    name: 'User',
+    href: 'sl/org/project/reference/todos/models/user',
+    depth: 0,
+    icon: 'box',
+    type: 'item',
+    isActive: false,
   },
 ];

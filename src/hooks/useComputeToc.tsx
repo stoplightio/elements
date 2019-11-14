@@ -182,16 +182,19 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
   }
 
   /** Models folder */
-  const modelContents = [];
+  const modelContents: IContentsNode[] = [];
   const modelNodes = sortBy(nodes.filter(n => n.type === NodeType.Model), 'name');
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
-    if (contents.find(n => n.srn === modelNode.srn)) continue;
+    if (contents.find(n => n.href === modelNode.srn)) continue;
 
     modelContents.push({
       name: modelNode.name,
-      srn: modelNode.srn,
+      href: modelNode.srn,
       depth: 0,
+      type: 'item',
+      icon: icons[modelNode.type] || icons.item,
+      isActive: srn === modelNode.srn,
     });
   }
 
