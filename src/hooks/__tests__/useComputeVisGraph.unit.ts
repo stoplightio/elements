@@ -60,6 +60,7 @@ describe('computeVisGraph', () => {
       dependenciesOf: (name: string) => [name],
       getNodeData: (id: string) => nodeData[id],
       size: () => 3,
+      // tslint:disable: no-empty
       addNode: () => {},
       removeNode: () => {},
       hasNode: (node: string) => {
