@@ -1,6 +1,6 @@
 import { pointerToPath } from '@stoplight/json';
 import { IGraphNodeData, IResolveResult } from '@stoplight/json-ref-resolver/types';
-import { last } from 'lodash';
+import { isEqual, last, pick, uniqWith } from 'lodash';
 import * as React from 'react';
 import * as URI from 'urijs';
 import { IVisGraph, IVisGraphEdge } from '../types';
@@ -139,7 +139,9 @@ function getEdgesFromRefMap(
     });
   }
 
-  return edges;
+  return uniqWith(edges, (edgeA, edgeB) => {
+    return isEqual(pick(edgeA, ['to', 'from']), pick(edgeB, ['to', 'from']));
+  });
 }
 
 function isRootNodeSrn(id: string, rootNodeSrn: string) {
