@@ -48,7 +48,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
   }
 
   /** Docs folder */
-  const docsNodes = sortBy(nodes.filter(node => /^\/docs/.test(node.uri)), 'srn');
+  const docsNodes = sortBy(nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article), 'srn');
   for (const node of docsNodes) {
     // Strip off the /docs since we ignore that folder
     const uri = node.uri.replace(/^\/docs\//, '');
@@ -99,17 +99,11 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
   contents = rootNodes.concat(contents);
 
   /** Reference folder */
-  const referenceNodes = sortBy(nodes.filter(node => /^\/reference/.test(node.uri)), 'name');
-  const httpServiceNodes = sortBy(referenceNodes.filter(n => n.type === NodeType.HttpService), 'name');
+  const httpServiceNodes = sortBy(nodes.filter(n => n.type === NodeType.HttpService), 'name');
   for (const httpServiceNode of httpServiceNodes) {
-    const parentUri = httpServiceNode.uri
-      .split('/')
-      .slice(0, -1)
-      .join('/');
+    const parentUriRegexp = new RegExp(`^${escapeRegExp(httpServiceNode.uri)}\/`, 'i');
 
-    const childNodes = referenceNodes.filter(
-      node => node.uri.includes(parentUri) && node.type !== NodeType.HttpService,
-    );
+    const childNodes = nodes.filter(node => parentUriRegexp.test(node.uri) && node.type !== NodeType.HttpService);
     if (!childNodes.length) continue;
 
     contents.push({
@@ -185,6 +179,30 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping, srn?:
         });
       }
     }
+  }
+
+  /** Models folder */
+  const modelContents = [];
+  const modelNodes = sortBy(nodes.filter(n => n.type === NodeType.Model), 'name');
+  for (const modelNode of modelNodes) {
+    // Only add models that aren't already in the tree
+    if (contents.find(n => n.srn === modelNode.srn)) continue;
+
+    modelContents.push({
+      name: modelNode.name,
+      srn: modelNode.srn,
+      depth: 0,
+    });
+  }
+
+  if (modelContents.length) {
+    contents.push({
+      name: 'Models',
+      depth: 0,
+      type: 'divider',
+    });
+
+    contents = contents.concat(modelContents);
   }
 
   return contents;

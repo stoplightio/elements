@@ -2093,24 +2093,24 @@
     urijs "~1.19.1"
 
 "@stoplight/json-schema-viewer@^2.10.2":
-  version "2.10.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.10.2.tgz#1575245225943fc9254d6d87bce4bf52d76e593b"
-  integrity sha512-TTWR/eCPTsMgobSQ80XWF5frntI+iF28V2Ge7TRf3PNV7/zD4OqSFvh2m9HL6YVhuTWL/jdAMzoTv01+jQMJ5Q==
+  version "2.10.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.10.3.tgz#bbb045f1b2f36fd700a33f17c839092a6222db34"
+  integrity sha512-wKDcxiGFGy5y2/PdmGRUMMYA/WsLwXSZigUCAkJjNeK9oXBr7RJN9o8sYfAVP1oRQSlPyspU+3cNpEXM8GtsRw==
   dependencies:
     "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
-    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
+    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.0", "@stoplight/json@^3.1.1", "@stoplight/json@^3.1.2", "@stoplight/json@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.2.0.tgz#752f4b7d4aac05a11da6444a6dffc040095291ae"
-  integrity sha512-LYWv+VxEyIwxrztAUEm78bZaQGItKDUXLeF7ksMoew2gMMIv/YLrw/J/UlsH0DFWhHiAwTL2N9vkry+n37j1fw==
+"@stoplight/json@^3.0", "@stoplight/json@^3.1.1", "@stoplight/json@^3.1.2", "@stoplight/json@^3.2.0", "@stoplight/json@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.2.1.tgz#cbc8080f4a55744beb89668d058e48ba52da141b"
+  integrity sha512-RnXApQlP6GEUHIK8JRianStXTc4dHARpNP8VVGL/BbctTTlA3BO+Z1eILu35JdqvMG5sw6Og3TkQyQ85w6sSoA==
   dependencies:
-    "@stoplight/types" "^11.0.0"
-    jsonc-parser "~2.1.1"
+    "@stoplight/types" "^11.1.1"
+    jsonc-parser "~2.2.0"
     lodash "^4.17.15"
     safe-stable-stringify "^1.1"
 
@@ -2122,7 +2122,7 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "5.2.6"
 
-"@stoplight/markdown-viewer@^3.7.0":
+"@stoplight/markdown-viewer@^3", "@stoplight/markdown-viewer@^3.7.0":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-3.7.0.tgz#63d157d58e5a22b9e31b17a0f38c6d7772b8c361"
   integrity sha512-qsOpzegYHx6yTKCqWuODHvIhtWNdUHCC/etmUxzqyFjVITyy6mUdRMmF5u/OgyQixztE6Cj3NMchRqSZNovsnA==
@@ -2155,21 +2155,23 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.0.tgz#da2282352a4eb23c09d5106b9d1650d30a9ca2ad"
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
-"@stoplight/request-maker@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.0.5.tgz#33c00219131125ec544abcd9473e2e330a1067e1"
-  integrity sha512-HNB8R6bLgwxTSDl44W6to3jvNYK2QHT4PrsGaWDMy2AdgmOzL5rpT0T8gUClBUTXFZJtdJXQcMswGqlGClxOdQ==
+"@stoplight/request-maker@^3.0.9":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.2.0.tgz#f9a63a695bca1fab489d50c99474121f87cbadd3"
+  integrity sha512-MA918VJBDx7yU+F2e8NLhsqaT+D7TBKGv04Y/Q3UYdRBgcAVI80hmA0chX1jPKxVanLx6EaGjzv8MKV5LZcu9g==
   dependencies:
-    "@stoplight/json" "^3.1.1"
+    "@stoplight/json" "^3.2.1"
+    "@stoplight/markdown-viewer" "^3"
     "@stoplight/path" "^1.3.0"
-    "@stoplight/tree-list" "^4.8.0"
+    "@stoplight/tree-list" "^4.10.0"
     axios "^0.19.0"
     classnames "^2.2.6"
+    copy-to-clipboard "^3.2.0"
     lodash "^4.17.15"
-    mobx-react-lite "^1.4.1"
+    mobx-react-lite "^1.5.0"
     openapi-sampler "^1.0.0-beta.15"
     prettier "^1.18.2"
-    urijs "^1.19.1"
+    urijs "^1.19.2"
 
 "@stoplight/scripts@5.1.0":
   version "5.1.0"
@@ -2233,10 +2235,10 @@
     ts-loader "5.4.5"
     webpack "4.30.0"
 
-"@stoplight/tree-list@^4.8.0", "@stoplight/tree-list@^4.8.2":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.8.2.tgz#de54642b7664176d702cd799350e7b52ea2ae5d0"
-  integrity sha512-9kaSFW8SYH5w+bIYEat+tgjODakJCXfYanEmaIZRJCtgDQCMO0DmyG3+wsaqHns/9W5Dxr7EvVi3l5cnuEc+Qw==
+"@stoplight/tree-list@^4.10.0", "@stoplight/tree-list@^4.8.2":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-4.10.0.tgz#0fec73e1348e4afe28965c2ce9a7aa8d498afab5"
+  integrity sha512-WULw6jsU0EG2DDqD5uofqnV7BGN2XcI/XL1iCF1mw65kkf3C3uSgu9T8OoOYgmZoLQQDCcaqym331v6PKHHC1g==
   dependencies:
     "@stoplight/lifecycle" "2.x.x"
     classnames "2.x.x"
@@ -2251,10 +2253,10 @@
   dependencies:
     "@types/json-schema" "^7.0.3"
 
-"@stoplight/types@^11.0.0", "@stoplight/types@^11.1.1":
-  version "11.1.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.1.1.tgz#a92d1833adb580a72439f42ba73de8f560fd68b4"
-  integrity sha512-IU8U9y/uO548z15DX/Jl053u9VQG8gCwNtypuD4RtskUA7pvHZl4+zzGK3klgIcO6Ql3Jk4/fcrFaN9vjmdEWg==
+"@stoplight/types@^11.1.1":
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.2.0.tgz#1f9c9c6dcf481f21e68a01cfa6e81b1ea41d4faa"
+  integrity sha512-c4zMAaf+NusHxcfruYDnzBwX3VJ8h1E6KYW/11QqmtsmE+ua3tKYL3PNbrzWh7nz/Vmv0U8zoYMw42F1XxylaA==
   dependencies:
     "@types/json-schema" "^7.0.3"
 
@@ -5529,7 +5531,7 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
-copy-to-clipboard@^3.0.8:
+copy-to-clipboard@^3.0.8, copy-to-clipboard@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.2.0.tgz#d2724a3ccbfed89706fac8a894872c979ac74467"
   integrity sha512-eOZERzvCmxS8HWzugj4Uxl8OJxa7T2k1Gi0X5qavwydHIfuSHq2dTD09LOg/XyGq4Zpb5IsR/2OJ5lbOegz78w==
@@ -9648,9 +9650,10 @@ json-schema-compare@^0.2.2:
   dependencies:
     lodash "^4.17.4"
 
-"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
+"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
+  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
@@ -9690,10 +9693,10 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-jsonc-parser@~2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/jsonc-parser/-/jsonc-parser-2.1.1.tgz#83dc3d7a6e7186346b889b1280eefa04446c6d3e"
-  integrity sha512-VC0CjnWJylKB1iov4u76/W/5Ef0ydDkjtYWxoZ9t3HdWlSnZQwZL5MgFikaB/EtQ4RmMEw3tmQzuYnZA2/Ja1g==
+jsonc-parser@~2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jsonc-parser/-/jsonc-parser-2.2.0.tgz#f206f87f9d49d644b7502052c04e82dd6392e9ef"
+  integrity sha512-4fLQxW1j/5fWj6p78vAlAafoCKtuBm6ghv+Ij5W2DrDx0qE+ZdEl2c6Ko1mgJNF5ftX1iEWQQ4Ap7+3GlhjkOA==
 
 jsonfile@^2.1.0:
   version "2.4.0"
@@ -11028,12 +11031,7 @@ mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdir
   dependencies:
     minimist "0.0.8"
 
-mobx-react-lite@1.x.x, mobx-react-lite@^1.4.1:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-1.4.2.tgz#19c26454b73315d991d9d64e5439b56e07330c34"
-  integrity sha512-ej+g9mh+5SYS66UbWrGvtUExEcxlxSfT49URzHK7AmHAeA81KL4dAtOkZh7ZC8szYR1iNPvQ5vmELXlPk0B/gw==
-
-mobx-react-lite@^1.5.0:
+mobx-react-lite@1.x.x, mobx-react-lite@^1.4.1, mobx-react-lite@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-1.5.0.tgz#a5867fa1114b19056cf8159e8d64766596ae85a0"
   integrity sha512-Ss8RLKKGn+QhKbfCHvQ4+RPEVKR8AnPW1wNyWzZAS3wYw7UP4FX6GdRn64sdOhrP646o/JtXbLuDuc4RH3Bqyg==
@@ -16619,12 +16617,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-urijs@^1.19.1, urijs@~1.19.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.1.tgz#5b0ff530c0cbde8386f6342235ba5ca6e995d25a"
-  integrity sha512-xVrGVi94ueCJNrBSTjWqjvtgvl3cyOTThp2zaMaFNGp3F542TR6sM3f2o8RqZl+AwteClSVmoCyt0ka4RjQOQg==
-
-urijs@^1.19.2:
+urijs@^1.19.2, urijs@~1.19.1:
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.2.tgz#f9be09f00c4c5134b7cb3cf475c1dd394526265a"
   integrity sha512-s/UIq9ap4JPZ7H1EB5ULo/aOUbWqfDi7FKzMC2Nz+0Si8GiT1rIEaprt8hy3Vy2Ex2aJPpOQv4P4DuOZ+K1c6w==

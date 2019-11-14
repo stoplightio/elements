@@ -5,6 +5,7 @@ import * as React from 'react';
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import { default as Graph } from 'react-graph-vis';
 
+import { ProgressBar } from '@stoplight/ui-kit';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
@@ -12,8 +13,6 @@ import { useResolver } from '../../hooks/useResolver';
 import { INodeInfo } from '../../types';
 import { getNodeTitle, NodeTypePrettyName } from '../../utils/node';
 import { Model } from '../Model';
-
-import 'vis-network/dist/vis-network.css';
 
 export interface IDependencies {
   node: INodeInfo;
@@ -31,10 +30,19 @@ interface IActiveNode {
 const visGraphOptions = {
   autoResize: true,
   physics: {
-    stabilization: false,
+    stabilization: {
+      iterations: 10000,
+      updateInterval: 50,
+    },
+    timestep: 0.1,
+    adaptiveTimestep: true,
     barnesHut: {
+      gravitationalConstant: -5000,
+      centralGravity: 0.3,
       springLength: 150,
-      avoidOverlap: 0.5,
+      springConstant: 0.001,
+      damping: 0.2,
+      avoidOverlap: 0,
     },
   },
   edges: {
@@ -57,6 +65,8 @@ const visGraphOptions = {
 export const Dependencies: React.FC<IDependencies> = ({ className, node, padding }) => {
   const { graph } = useResolver(node.type, node.data || {});
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
+  const [isStable, setIsStable] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const onClickNode = React.useCallback(
     e => {
@@ -101,11 +111,22 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
 
   return (
     <div className={cn(className, 'Page__dependencies relative h-full')}>
+      {isLoading && (
+        <div className="absolute inset-0 bg-lighten-9 flex items-center justify-center z-20">
+          <ProgressBar className="w-1/2" value={isStable} />
+        </div>
+      )}
       <Graph
         id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}
         events={{
           click: onClickNode,
+          stabilizationProgress: (data: any) => {
+            setIsStable(data.iterations);
+          },
+          stabilized: (data: any) => {
+            setIsLoading(false);
+          },
         }}
         options={visGraphOptions}
       />
