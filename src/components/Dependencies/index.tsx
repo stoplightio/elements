@@ -98,7 +98,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   );
 
   // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(get(node, 'data.srn'), graph, node.name, activeNode ? activeNode.id : 'root');
+  const visGraph = useComputeVisGraph(get(node, 'srn'), graph, node.name, activeNode ? activeNode.id : 'root');
 
   if (!graph) return null;
 

@@ -143,6 +143,7 @@ function getEdgesFromRefMap(
 }
 
 function isRootNodeSrn(id: string, rootNodeSrn: string) {
+  if (!rootNodeSrn) return false;
   try {
     const parsedQuery: { srn?: string } = URI.parseQuery(URI.parse(id).query || '');
     return parsedQuery.srn === rootNodeSrn;

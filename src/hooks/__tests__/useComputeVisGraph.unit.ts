@@ -33,25 +33,29 @@ describe('computeVisGraph', () => {
       root: {
         data: {},
         refMap: {
-          'property/path': 'some/other/node',
+          '#/property/path': 'http://stoplight.io/nodes.raw?srn=some/other/node',
         },
       },
-      'some/other/node': {
+      'http://stoplight.io/nodes.raw?srn=some/other/node': {
         data: {},
         refMap: {
-          'property/path': 'root/node/srn',
+          '#/property/path': 'http://stoplight.io/nodes.raw?srn=root/node/srn',
         },
       },
-      'root/node/srn': {
+      'http://stoplight.io/nodes.raw?srn=root/node/srn': {
         data: {},
         refMap: {
-          'property/path': 'some/other/node',
+          '#/property/path': 'http://stoplight.io/nodes.raw?srn=some/other/node',
         },
       },
     };
 
     const graph = {
-      overallOrder: () => ['root', 'some/other/node', 'root/node/srn'],
+      overallOrder: () => [
+        'root',
+        'http://stoplight.io/nodes.raw?srn=some/other/node',
+        'http://stoplight.io/nodes.raw?srn=root/node/srn',
+      ],
       dependantsOf: (name: string) => [name],
       dependenciesOf: (name: string) => [name],
       getNodeData: (id: string) => nodeData[id],
@@ -70,13 +74,57 @@ describe('computeVisGraph', () => {
 
     const visGraph = {
       nodes: [
-        // whatever we expect the resulting nodes to be
+        {
+          id: 'root',
+          label: 'Root',
+          color: '#ef932b',
+          font: {
+            color: '#ffffff',
+          },
+        },
+        {
+          id: 'http://stoplight.io/nodes.raw?srn=some/other/node',
+          label: 'Node',
+          color: '#f5f8fa',
+          font: {
+            color: '#10161a',
+          },
+        },
       ],
       edges: [
-        // whatever we expect the resulting edges to be
+        {
+          from: 'root',
+          to: 'http://stoplight.io/nodes.raw?srn=some/other/node',
+          label: '',
+          title: 'path',
+          color: '#738694',
+          font: {
+            align: 'top',
+          },
+        },
+        {
+          from: 'http://stoplight.io/nodes.raw?srn=some/other/node',
+          to: 'root',
+          label: '',
+          title: 'path',
+          color: '#738694',
+          font: {
+            align: 'top',
+          },
+        },
+        {
+          from: 'root',
+          to: 'http://stoplight.io/nodes.raw?srn=some/other/node',
+          label: '',
+          title: 'path',
+          color: '#738694',
+          font: {
+            align: 'top',
+          },
+        },
       ],
     };
 
-    expect(computeVisGraph('#/root/node/srn', graph)).toEqual(visGraph);
+    expect(computeVisGraph('root/node/srn', graph)).toEqual(visGraph);
   });
 });
