@@ -63,15 +63,15 @@ export function computeVisGraph(
       });
     }
 
-    // Filter out any duplicate edges
-    visGraph.edges = uniqWith(visGraph.edges, (edgeA, edgeB) => {
-      return edgeA.to === edgeB.to && edgeA.from === edgeB.from;
-    });
-
     // Add node edges
     visGraph.edges = visGraph.edges.concat(
       getEdgesFromRefMap(rootNodeSrn, isRootNode, encodedId, node.refMap, activeNodeId),
     );
+
+    // Filter out any duplicate edges
+    visGraph.edges = uniqWith(visGraph.edges, (edgeA, edgeB) => {
+      return edgeA.to === edgeB.to && edgeA.from === edgeB.from;
+    });
   }
 
   // Only add nodes to the graph that have at least one inbound or outbound edge
