@@ -113,16 +113,6 @@ describe('computeVisGraph', () => {
             align: 'top',
           },
         },
-        {
-          from: 'root',
-          to: 'http://stoplight.io/nodes.raw?srn=some/other/node',
-          label: '',
-          title: 'path',
-          color: '#738694',
-          font: {
-            align: 'top',
-          },
-        },
       ],
     };
 
