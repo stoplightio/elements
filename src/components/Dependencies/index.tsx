@@ -6,6 +6,7 @@ import * as React from 'react';
 import { default as Graph } from 'react-graph-vis';
 
 import { ProgressBar } from '@stoplight/ui-kit';
+import { get } from 'lodash';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
@@ -97,7 +98,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   );
 
   // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(graph, node.name, activeNode ? activeNode.id : 'root');
+  const visGraph = useComputeVisGraph(get(node, 'srn'), graph, node.name, activeNode ? activeNode.id : 'root');
 
   if (!graph) return null;
 
