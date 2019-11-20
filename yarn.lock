@@ -2093,9 +2093,9 @@
     urijs "~1.19.1"
 
 "@stoplight/json-schema-viewer@^2.10.2":
-  version "2.10.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.10.3.tgz#bbb045f1b2f36fd700a33f17c839092a6222db34"
-  integrity sha512-wKDcxiGFGy5y2/PdmGRUMMYA/WsLwXSZigUCAkJjNeK9oXBr7RJN9o8sYfAVP1oRQSlPyspU+3cNpEXM8GtsRw==
+  version "2.10.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.10.4.tgz#c8bac7ff2e4b5df55486cd4a7f624083087d2449"
+  integrity sha512-o6n4ZKDu9tzDt6gGDUdNVwqWINm6W+ld57YPPzAqUgbBPkQgzlBs+GLXdC9fNWHbIwOs07jpNGtYwol6LC3CAg==
   dependencies:
     "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
