@@ -5,7 +5,6 @@ import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
-import CircularModel from '../../__fixtures__/schemas/circular';
 import { Changelog } from '../../components/Changelog';
 import { Dependencies } from '../../components/Dependencies';
 import { Docs } from '../../components/Docs';
@@ -16,7 +15,7 @@ export const darkMode = () => boolean('dark mode', false);
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md');
 const httpOperation = require('../../__fixtures__/operations/put-todos.json');
-const modelWithThreeExamples = require('../../__fixtures__/models/model-with-three-examples.json');
+const model = require('../../__fixtures__/schemas/media-entry.json');
 const httpService = require('../../__fixtures__/services/petstore.json');
 
 const knobs = () => ({
@@ -64,7 +63,7 @@ storiesOf('components/Page', module)
             srn: 'gh/stoplightio/studio-demo/reference/common/models/error.v1.yaml',
             name: 'Error',
             type: NodeType.Model,
-            data: CircularModel,
+            data: model,
             changes: [
               {
                 createdAt: '1569423416682',

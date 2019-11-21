@@ -5,7 +5,7 @@ import * as React from 'react';
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import { default as Graph } from 'react-graph-vis';
 
-import { Button, ProgressBar } from '@stoplight/ui-kit';
+import { Button, ProgressBar, Tooltip } from '@stoplight/ui-kit';
 import { get } from 'lodash';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
@@ -112,50 +112,48 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   }
 
   return (
-    <div className={cn(className, 'Page__dependencies relative h-full')}>
+    <div
+      className={cn(className, 'Page__dependencies', {
+        'fixed inset-0 bg-white dark:bg-gray-7 z-50': isFullScreen,
+        'relative h-full': !isFullScreen,
+      })}
+    >
       {isLoading && (
         <div className="absolute inset-0 bg-lighten-9 flex items-center justify-center z-20">
           <ProgressBar className="w-1/2" value={isStable} />
         </div>
       )}
 
-      <div
-        className={cn(className, {
-          'fixed inset-0 bg-white dark:bg-gray-7 z-50': isFullScreen,
-          'Page_dependencies relative h-full': !isFullScreen,
+      <Tooltip
+        content={isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
+        className={cn('absolute top-0 right-0 mx-8', {
+          '-mt-10': !isFullScreen,
+          'mt-8 z-10': isFullScreen,
         })}
       >
-        <div className="flex justify-end">
-          <div
-            className={cn(className, 'Page__dependencies', {
-              'justify-content flex-end': isFullScreen,
-              'justify-content flex-end -mt-8': !isFullScreen,
-            })}
-          >
-            <Button
-              minimal={true}
-              small={true}
-              active={true}
-              icon={isFullScreen ? 'minimize' : 'maximize'}
-              onClick={() => setIsFullScreen(!isFullScreen)}
-            />
-          </div>
-        </div>
-        <Graph
-          id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
-          graph={visGraph}
-          events={{
-            click: onClickNode,
-            stabilizationProgress: (data: any) => {
-              setIsStable(data.iterations);
-            },
-            stabilized: (data: any) => {
-              setIsLoading(false);
-            },
-          }}
-          options={visGraphOptions}
+        <Button
+          minimal
+          small
+          active
+          icon={<Icon icon={isFullScreen ? 'minimize' : 'fullscreen'} iconSize={10} />}
+          onClick={() => setIsFullScreen(!isFullScreen)}
         />
-      </div>
+      </Tooltip>
+
+      <Graph
+        id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
+        graph={visGraph}
+        events={{
+          click: onClickNode,
+          stabilizationProgress: (data: any) => {
+            setIsStable(data.iterations);
+          },
+          stabilized: (data: any) => {
+            setIsLoading(false);
+          },
+        }}
+        options={visGraphOptions}
+      />
 
       {activeNode && typeof activeNode.data === 'object' && (
         <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
