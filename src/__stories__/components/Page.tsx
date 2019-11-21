@@ -5,6 +5,7 @@ import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
+import CircularModel from '../../__fixtures__/schemas/circular';
 import { Changelog } from '../../components/Changelog';
 import { Dependencies } from '../../components/Dependencies';
 import { Docs } from '../../components/Docs';
@@ -63,7 +64,7 @@ storiesOf('components/Page', module)
             srn: 'gh/stoplightio/studio-demo/reference/common/models/error.v1.yaml',
             name: 'Error',
             type: NodeType.Model,
-            data: modelWithThreeExamples,
+            data: CircularModel,
             changes: [
               {
                 createdAt: '1569423416682',

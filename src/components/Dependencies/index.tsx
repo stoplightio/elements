@@ -5,7 +5,7 @@ import * as React from 'react';
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import { default as Graph } from 'react-graph-vis';
 
-import { ProgressBar } from '@stoplight/ui-kit';
+import { Button, ProgressBar } from '@stoplight/ui-kit';
 import { get } from 'lodash';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
@@ -68,6 +68,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
   const [isStable, setIsStable] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [isFullScreen, setIsFullScreen] = React.useState(false);
 
   const onClickNode = React.useCallback(
     e => {
@@ -117,20 +118,44 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
           <ProgressBar className="w-1/2" value={isStable} />
         </div>
       )}
-      <Graph
-        id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
-        graph={visGraph}
-        events={{
-          click: onClickNode,
-          stabilizationProgress: (data: any) => {
-            setIsStable(data.iterations);
-          },
-          stabilized: (data: any) => {
-            setIsLoading(false);
-          },
-        }}
-        options={visGraphOptions}
-      />
+
+      <div
+        className={cn(className, {
+          'fixed inset-0 bg-white dark:bg-gray-7 z-50': isFullScreen,
+          'Page_dependencies relative h-full': !isFullScreen,
+        })}
+      >
+        <div className="flex justify-end">
+          <div
+            className={cn(className, 'Page__dependencies', {
+              'justify-content flex-end': isFullScreen,
+              'justify-content flex-end -mt-8': !isFullScreen,
+            })}
+          >
+            <Button
+              minimal={true}
+              small={true}
+              active={true}
+              icon={isFullScreen ? 'minimize' : 'maximize'}
+              onClick={() => setIsFullScreen(!isFullScreen)}
+            />
+          </div>
+        </div>
+        <Graph
+          id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
+          graph={visGraph}
+          events={{
+            click: onClickNode,
+            stabilizationProgress: (data: any) => {
+              setIsStable(data.iterations);
+            },
+            stabilized: (data: any) => {
+              setIsLoading(false);
+            },
+          }}
+          options={visGraphOptions}
+        />
+      </div>
 
       {activeNode && typeof activeNode.data === 'object' && (
         <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
