@@ -2253,24 +2253,17 @@
   dependencies:
     "@types/json-schema" "^7.0.3"
 
-"@stoplight/types@^11":
+"@stoplight/types@^11", "@stoplight/types@^11.1.1":
   version "11.3.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.3.0.tgz#23d40cbf2c3c85e5612038b5cf0c003f82809318"
   integrity sha512-m6N4Bv2O2bYJOXdIwtpLtfQY/3zHUgRuHx2D8ERydX8WE40nKoLqh4wN6nvRcSeGwxjhi0Q0KUAZIe9UsYj6fQ==
   dependencies:
     "@types/json-schema" "^7.0.3"
 
-"@stoplight/types@^11.1.1":
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.2.0.tgz#1f9c9c6dcf481f21e68a01cfa6e81b1ea41d4faa"
-  integrity sha512-c4zMAaf+NusHxcfruYDnzBwX3VJ8h1E6KYW/11QqmtsmE+ua3tKYL3PNbrzWh7nz/Vmv0U8zoYMw42F1XxylaA==
-  dependencies:
-    "@types/json-schema" "^7.0.3"
-
 "@stoplight/ui-kit@^2.14.0":
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.14.0.tgz#109a34cba3eb5bdad176053746e6afeb6c8ff4f1"
-  integrity sha512-GNpPzmxp9zC0zrdU25HdmpmxPJwfDysqelth8gK6J18+4PhGe48lfLJi2mKfU23ibGUpDZeukeLQ9H82XLD/kg==
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.14.1.tgz#d8007f6e8b4a4aa6211062aec49ccfa3b6268e1f"
+  integrity sha512-rVVe5sixJq3x9gaTsUodEg+EYhTSGCoKGk3sj+JdnXOsaF8LmexaDk4H4abhcEmJvk9mnCK00W7DLzqkIuOF2A==
   dependencies:
     "@blueprintjs/core" "^3.18.0"
     "@blueprintjs/icons" "^3.10.0"
