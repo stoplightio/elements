@@ -26,21 +26,17 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, secur
     <div className={cn('HttpOperation__Request', className)}>
       {path && <Parameters className="mb-10" title="Path Parameters" parameters={path} />}
 
-      {headers && (
-        <Parameters
-          className="mb-10"
-          title="Headers"
-          parameters={securityData ? headers.concat(securityData.headerParams) : headers}
-        />
-      )}
+      <Parameters
+        className="mb-10"
+        title="Headers"
+        parameters={securityData ? securityData.headerParams.concat(headers || []) : headers}
+      />
 
-      {query && (
-        <Parameters
-          className="mb-10"
-          title="Query Parameters"
-          parameters={securityData ? query.concat(securityData.queryParams) : query}
-        />
-      )}
+      <Parameters
+        className="mb-10"
+        title="Query Parameters"
+        parameters={securityData ? securityData.queryParams.concat(query || []) : query}
+      />
 
       {body && <Body className="mb-10" body={body} />}
     </div>
