@@ -40,7 +40,10 @@ export function computeToc(_nodes: IProjectNode[]) {
   }
 
   /** Docs folder */
-  const docsNodes = sortBy(nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article), 'srn');
+  const docsNodes = sortBy(
+    nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article),
+    'srn',
+  );
   for (const node of docsNodes) {
     // Strip off the /docs since we ignore that folder
     const uri = node.uri.replace(/^\/docs\//, '');
@@ -84,7 +87,10 @@ export function computeToc(_nodes: IProjectNode[]) {
   contents = rootNodes.concat(contents);
 
   /** Reference folder */
-  const httpServiceNodes = sortBy(nodes.filter(n => n.type === NodeType.HttpService), 'name');
+  const httpServiceNodes = sortBy(
+    nodes.filter(n => n.type === NodeType.HttpService),
+    'name',
+  );
   for (const httpServiceNode of httpServiceNodes) {
     const parentUriRegexp = new RegExp(`^${escapeRegExp(httpServiceNode.uri)}\/`, 'i');
 
@@ -156,7 +162,10 @@ export function computeToc(_nodes: IProjectNode[]) {
 
   /** Models folder */
   const modelContents = [];
-  const modelNodes = sortBy(nodes.filter(n => n.type === NodeType.Model), 'name');
+  const modelNodes = sortBy(
+    nodes.filter(n => n.type === NodeType.Model),
+    'name',
+  );
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
     if (contents.find(n => n.srn === modelNode.srn)) continue;

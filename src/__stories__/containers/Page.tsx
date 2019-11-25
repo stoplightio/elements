@@ -13,6 +13,7 @@ export const darkMode = () => boolean('dark mode', false);
 
 export const pageKnobs = () => ({
   srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
+  group: text('group', undefined),
   scrollInnerContainer: boolean('scrollInnerContainer', true),
 });
 
