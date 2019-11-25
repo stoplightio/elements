@@ -12,13 +12,15 @@ import { IPageContainer, Page } from './Page';
 export interface IHub {
   srn: string;
   tabs: IPageContainer['tabs'];
+
+  group?: string;
   className?: string;
   padding?: string;
   NotFoundComponent?: React.FC<{ srn: string; error?: { message: string }; items: IProjectNode[] }>;
 }
 
-export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotFoundComponent }) => {
-  const { isLoading, data, error } = useProjectNodes(srn);
+export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotFoundComponent, group }) => {
+  const { isLoading, data, error } = useProjectNodes(srn, { group });
   const contents = useComputeToc(data ? data.items : []);
 
   const { uri } = deserializeSrn(srn);
@@ -51,6 +53,7 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
         <Page
           className="flex-1 border-l dark:border-darken-4"
           srn={pageSrn}
+          group={group}
           tabs={tabs}
           padding={padding}
           scrollInnerContainer

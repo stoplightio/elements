@@ -9,6 +9,8 @@ export interface IPageContainer {
   srn: string;
   tabs: IPage['tabs'];
 
+  group?: string;
+  version?: string;
   actions?: IPage['actions'];
   padding?: string;
   className?: string;
@@ -20,13 +22,15 @@ export const Page: React.FC<IPageContainer> = ({
   srn,
   tabs,
 
+  group,
+  version,
   actions,
   padding = '12',
   shadows,
   className,
   scrollInnerContainer,
 }) => {
-  const { isLoading, error, data } = useNodeInfo(srn);
+  const { isLoading, error, data } = useNodeInfo(srn, { group, version });
   const containerClassName = cn(className, 'flex flex-col h-full');
 
   if (isLoading) {
