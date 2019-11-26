@@ -5,7 +5,8 @@ import * as React from 'react';
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import { default as Graph } from 'react-graph-vis';
 
-import { ProgressBar } from '@stoplight/ui-kit';
+import { Button, ProgressBar, Tooltip } from '@stoplight/ui-kit';
+import { get } from 'lodash';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
@@ -67,6 +68,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
   const [isStable, setIsStable] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [isFullScreen, setIsFullScreen] = React.useState(false);
 
   const onClickNode = React.useCallback(
     e => {
@@ -97,7 +99,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   );
 
   // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(graph, node.name, activeNode ? activeNode.id : 'root');
+  const visGraph = useComputeVisGraph(get(node, 'srn'), graph, node.name, activeNode ? activeNode.id : 'root');
 
   if (!graph) return null;
 
@@ -110,12 +112,34 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   }
 
   return (
-    <div className={cn(className, 'Page__dependencies relative h-full')}>
+    <div
+      className={cn(className, 'Page__dependencies', {
+        'fixed inset-0 bg-white dark:bg-gray-7 z-50': isFullScreen,
+        'relative h-full': !isFullScreen,
+      })}
+    >
       {isLoading && (
         <div className="absolute inset-0 bg-lighten-9 flex items-center justify-center z-20">
           <ProgressBar className="w-1/2" value={isStable} />
         </div>
       )}
+
+      <Tooltip
+        content={isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
+        className={cn('absolute top-0 right-0 mx-8', {
+          '-mt-10': !isFullScreen,
+          'mt-8 z-10': isFullScreen,
+        })}
+      >
+        <Button
+          minimal
+          small
+          active
+          icon={<Icon icon={isFullScreen ? 'minimize' : 'fullscreen'} iconSize={10} />}
+          onClick={() => setIsFullScreen(!isFullScreen)}
+        />
+      </Tooltip>
+
       <Graph
         id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}

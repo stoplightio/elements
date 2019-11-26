@@ -2,7 +2,7 @@ import { PropertyTypeColors, Validations } from '@stoplight/json-schema-viewer';
 import { IHttpParam } from '@stoplight/types';
 import { Tooltip } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { get, omit, sortBy, truncate } from 'lodash';
+import { get, isEmpty, omit, omitBy, sortBy, truncate } from 'lodash';
 import * as React from 'react';
 
 export interface IParametersProps {
@@ -47,10 +47,14 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   const type = get(parameter, 'schema.type');
 
-  const validations = {
-    ...omit(parameter, ['name', 'required', 'description', 'schema', 'style']),
-    ...omit(get(parameter, 'schema'), ['description', 'type']),
-  };
+  const validations = omitBy(
+    {
+      ...omit(parameter, ['name', 'required', 'description', 'schema', 'style']),
+      ...omit(get(parameter, 'schema'), ['description', 'type']),
+    },
+    // Remove empty arrays and objects
+    value => typeof value === 'object' && isEmpty(value),
+  );
 
   return (
     <div

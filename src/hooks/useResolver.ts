@@ -1,5 +1,4 @@
 import { IResolveError, IResolveResult } from '@stoplight/json-ref-resolver/types';
-import { NodeType } from '@stoplight/types';
 import { uniqBy } from 'lodash';
 import * as React from 'react';
 import { ActiveSrnContext, HostContext, ResolverContext } from '../containers/Provider';

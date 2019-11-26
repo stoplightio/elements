@@ -15,6 +15,7 @@ export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = () => ({
   srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
+  group: text('group', undefined),
 });
 
 storiesOf('containers/Hub', module)
@@ -38,7 +39,7 @@ const Wrapper = ({ providerProps, hubProps }: any) => {
     <Provider {...providerProps} components={components}>
       <Hub
         className="h-full"
-        srn={srn}
+        {...hubProps}
         padding="16"
         tabs={({ node }) => {
           const tabs = [{ title: 'Docs', content: <Docs node={node} padding="16" /> }];

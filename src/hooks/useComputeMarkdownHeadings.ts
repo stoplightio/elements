@@ -13,7 +13,7 @@ export function computeMarkdownHeadings(tree: IRoot): IPageHeading[] {
   return selectAll(':root > [type=heading]', tree)
     .map((heading: IHeading) => ({
       title: findTitle(heading),
-      id: heading.data && (heading.data.id as (string | undefined)),
+      id: heading.data && (heading.data.id as string | undefined),
       depth: heading.depth - 1,
     }))
     .filter((item: IPageHeading) => item.depth >= 1 && item.depth <= 2);

@@ -1,4 +1,4 @@
-import { TryIt as RMTryIt } from '@stoplight/request-maker';
+import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '@stoplight/request-maker';
 import { IHttpOperation, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
@@ -17,7 +17,17 @@ const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, value
   const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
   const store = useRequestMaker(result, true);
 
-  return <RMTryIt className={cn(className, padding && `p-${padding}`)} store={store} editable={false} />;
+  return (
+    <div className={cn('Page__content TryIt', `p-${padding}`, className)}>
+      <RequestMakerProvider value={store}>
+        <RequestEndpoint className="rounded" />
+
+        <RequestEditor className="mt-10 border-t rounded" />
+
+        <ResponseViewer className="mt-10 border-t rounded" />
+      </RequestMakerProvider>
+    </div>
+  );
 };
 TryItComponent.displayName = 'TryIt.Component';
 

@@ -20,6 +20,7 @@ export const config: IProvider = {
 };
 
 export interface ITableOfContentsOptions {
+  group?: string;
   isOpen?: boolean;
   onClose?: () => void;
   enableDrawer?: boolean | number;
@@ -139,11 +140,11 @@ function renderTabs({ node }: { node: INodeInfo }) {
 }
 
 export const elements = {
-  hub: new Widget<{ tabs: IPageContainer['tabs'] }>(Hub, {
+  hub: new Widget<{ tabs: IPageContainer['tabs']; group?: string }>(Hub, {
     tabs: renderTabs,
   }),
 
-  page: new Widget<{ tabs: IPageContainer['tabs'] }>(Page, {
+  page: new Widget<{ tabs: IPageContainer['tabs']; group?: string }>(Page, {
     tabs: renderTabs,
   }),
 
