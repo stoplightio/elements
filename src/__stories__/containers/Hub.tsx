@@ -1,4 +1,3 @@
-import { IComponentMapping } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import { withKnobs } from '@storybook/addon-knobs';
 import { boolean, text } from '@storybook/addon-knobs/react';
@@ -32,14 +31,32 @@ storiesOf('containers/Hub', module)
 
 const Wrapper = ({ providerProps, hubProps }: any) => {
   const [srn, setSrn] = React.useState(hubProps.srn);
-  // @ts-ignore
-  window.setSrn = setSrn;
 
   return (
-    <Provider {...providerProps} components={components}>
+    <Provider
+      {...providerProps}
+      components={{
+        link: (props, key) => {
+          return (
+            <a
+              key={key}
+              title={props.node.title}
+              className={props.node.className}
+              onClick={e => {
+                e.preventDefault();
+                setSrn(props.node.url);
+              }}
+            >
+              {props.children}
+            </a>
+          );
+        },
+      }}
+    >
       <Hub
-        className="h-full"
         {...hubProps}
+        className="h-full"
+        srn={srn}
         padding="16"
         tabs={({ node }) => {
           const tabs = [{ title: 'Docs', content: <Docs node={node} padding="16" /> }];
@@ -53,34 +70,4 @@ const Wrapper = ({ providerProps, hubProps }: any) => {
       />
     </Provider>
   );
-};
-
-const Link: React.FunctionComponent<{
-  className?: string;
-  title?: string;
-  url: string;
-}> = ({ className, url, children }) => {
-  return (
-    <a
-      className={className}
-      onClick={e => {
-        e.preventDefault();
-        console.log(url);
-        // @ts-ignore
-        window.setSrn(url);
-      }}
-    >
-      {children}
-    </a>
-  );
-};
-
-const components: IComponentMapping = {
-  link: (props, key) => {
-    return (
-      <Link key={key} className={props.node.className} url={props.node.url} title={props.node.title}>
-        {props.children}
-      </Link>
-    );
-  },
 };

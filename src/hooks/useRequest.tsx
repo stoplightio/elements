@@ -1,5 +1,6 @@
 import { safeStringify } from '@stoplight/json';
 import { AxiosRequestConfig } from 'axios';
+import { get } from 'lodash';
 import { MD5 } from 'object-hash';
 import * as React from 'react';
 import { AxiosContext } from '../containers/Provider';
@@ -24,43 +25,63 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
 
   const { key, request } = createRequest(args);
 
-  const sendRequest = React.useCallback(() => {
-    // Check if we have this request stored in the cache
-    const cachedData = RequestCache.get(key);
-    if (cachedData) {
-      setError(undefined);
-      setData(cachedData);
-      setIsLoading(false);
-    } else {
-      // No cache entry so set loading
-      setIsLoading(true);
-    }
-
-    axios
-      .request<T>(request)
-      .then(response => {
-        if (!cachedData || safeStringify(response.data) !== safeStringify(cachedData)) {
-          // Update the cache
-          RequestCache.set(key, response.data);
-          setData(response.data);
-        }
-
+  const sendRequest = React.useCallback(
+    req => {
+      // Check if we have this request stored in the cache
+      const cachedData = RequestCache.get(key);
+      if (cachedData) {
         setError(undefined);
+        setData(cachedData);
         setIsLoading(false);
-      })
-      .catch(e => {
-        // TODO (CL): Should we delete the cache entry if there's an error? Might be better to leave it so there's no disruption to viewing the docs
-        if (!cachedData) {
-          RequestCache.delete(key);
-          setData(undefined);
-        }
+      } else {
+        // No cache entry so set loading
+        setIsLoading(true);
+      }
 
-        setError(e);
-        setIsLoading(false);
-      });
-  }, [axios, request]);
+      axios
+        .request<T>(req)
+        .then(response => {
+          const responseData = response.data;
 
-  React.useEffect(() => sendRequest(), [request]);
+          if (!cachedData || safeStringify(responseData) !== safeStringify(cachedData)) {
+            if ((responseData as any).items && cachedData && cachedData.items) {
+              (responseData as any).items.push(...cachedData.items);
+            }
+
+            // Update the cache
+            RequestCache.set(key, responseData);
+            setData(responseData);
+          }
+
+          // Handle getting the next page
+          if (get(responseData, 'pageInfo.endCursor')) {
+            sendRequest({
+              ...req,
+              params: {
+                ...req.params,
+                after: get(responseData, 'pageInfo.endCursor'),
+              },
+            });
+          }
+
+          setError(undefined);
+          setIsLoading(false);
+        })
+        .catch(e => {
+          // TODO (CL): Should we delete the cache entry if there's an error? Might be better to leave it so there's no disruption to viewing the docs
+          if (!cachedData) {
+            RequestCache.delete(key);
+            setData(undefined);
+          }
+
+          setError(e);
+          setIsLoading(false);
+        });
+    },
+    [axios],
+  );
+
+  React.useEffect(() => sendRequest(request), [request]);
 
   return {
     isLoading,
