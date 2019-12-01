@@ -32,6 +32,10 @@ storiesOf('containers/Hub', module)
 const Wrapper = ({ providerProps, hubProps }: any) => {
   const [srn, setSrn] = React.useState(hubProps.srn);
 
+  React.useEffect(() => {
+    setSrn(hubProps.srn);
+  }, [hubProps.srn]);
+
   return (
     <Provider
       {...providerProps}
@@ -54,9 +58,9 @@ const Wrapper = ({ providerProps, hubProps }: any) => {
       }}
     >
       <Hub
-        {...hubProps}
-        className="h-full"
         srn={srn}
+        group={hubProps.group}
+        className="h-full"
         padding="16"
         tabs={({ node }) => {
           const tabs = [{ title: 'Docs', content: <Docs node={node} padding="16" /> }];

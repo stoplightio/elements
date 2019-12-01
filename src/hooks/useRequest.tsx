@@ -27,6 +27,8 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
 
   const sendRequest = React.useCallback(
     req => {
+      let isMounted = true;
+
       // Check if we have this request stored in the cache
       const cachedData = RequestCache.get(key);
       if (cachedData) {
@@ -41,6 +43,8 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
       axios
         .request<T>(req)
         .then(response => {
+          if (!isMounted) return;
+
           const responseData = response.data;
 
           if (!cachedData || safeStringify(responseData) !== safeStringify(cachedData)) {
@@ -68,6 +72,7 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
           setIsLoading(false);
         })
         .catch(e => {
+          if (!isMounted) return;
           // TODO (CL): Should we delete the cache entry if there's an error? Might be better to leave it so there's no disruption to viewing the docs
           if (!cachedData) {
             RequestCache.delete(key);
@@ -77,8 +82,12 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
           setError(e);
           setIsLoading(false);
         });
+
+      return () => {
+        isMounted = false;
+      };
     },
-    [axios],
+    [axios, key],
   );
 
   React.useEffect(() => sendRequest(request), [request]);
