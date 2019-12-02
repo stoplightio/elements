@@ -98,6 +98,10 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
     [graph, node.name, activeNode],
   );
 
+  React.useEffect(() => {
+    setActiveNode(undefined);
+  }, [node]);
+
   // Compute the VIS graph from the resolver graph
   const visGraph = useComputeVisGraph(get(node, 'srn'), graph, node.name, activeNode ? activeNode.id : 'root');
 
