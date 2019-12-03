@@ -1,4 +1,6 @@
 import { NodeType } from '@stoplight/types';
+import { IconName } from '@stoplight/ui-kit';
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 export { IComponentMapping } from '@stoplight/markdown-viewer';
 
 export interface IDeserializedSrn {
@@ -14,30 +16,38 @@ export interface IChange {
   message: string;
 }
 
-export interface INodeInfo extends IProjectNode {
+export interface INodeInfo {
   data: any;
-  changes?: IChange[];
-}
-
-export interface IProjectNode {
   type: NodeType;
   srn: string;
   name: string;
 
+  changes?: IChange[];
   id?: number | string;
   version?: string;
   versions?: string[];
   tags?: string[];
 }
 
+export interface IProjectNode {
+  type: NodeType;
+  srn: string;
+  name: string;
+  id: number | string;
+
+  version?: string;
+  versions?: string[];
+  tags?: string[];
+}
+
+export interface IContentsNodeWithId extends IContentsNode {
+  id: number | string;
+}
+
 export type ProjectNodeWithUri = IProjectNode & { uri: string };
 
-export interface IContentsNode {
-  name: string;
-  depth: number;
-  srn?: string;
-  type?: 'divider' | 'group';
-}
+export type IconMapType = NodeType | 'group' | 'divider' | 'item';
+export type NodeIconMapping = { [type in IconMapType]?: IconName };
 
 export type DocsNodeType = NodeType | 'json_schema' | 'http';
 

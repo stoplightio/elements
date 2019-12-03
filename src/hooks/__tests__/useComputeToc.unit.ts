@@ -11,7 +11,25 @@ describe('computeToc', () => {
       const file = require(`${fixturesPath}/${filePath}`);
 
       it('should return the correct table of contents', () => {
-        expect(computeToc(file.nodes)).toEqual(file.contents);
+        expect(
+          computeToc(file.nodes, {
+            group: 'folder-close',
+            divider: 'chevron-right',
+            item: 'document',
+          }),
+        ).toMatchSnapshot();
+      });
+
+      it('should return the correct icons based on node type', () => {
+        expect(
+          computeToc(file.nodes, {
+            article: 'cube',
+            model: 'box',
+            http_operation: 'download',
+            http_service: 'badge',
+            http_server: 'cloud',
+          }),
+        ).toMatchSnapshot();
       });
     });
   });

@@ -21,7 +21,7 @@ export function useProjectNodes(srn: string, opts: { group?: string } = {}) {
   return {
     data: {
       ...data,
-      items: data ? uniqBy(data.items, 'id') : [],
+      items: data ? uniqBy(data.items, 'srn') : [],
     },
     isLoading,
     error,

@@ -1,5 +1,5 @@
 import { NodeType } from '@stoplight/types';
-import { withKnobs } from '@storybook/addon-knobs';
+import { object, withKnobs } from '@storybook/addon-knobs';
 import { boolean, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
@@ -46,6 +46,7 @@ const Wrapper = ({ providerProps, hubProps }: any) => {
               key={key}
               title={props.node.title}
               className={props.node.className}
+              href={props.node.url}
               onClick={e => {
                 e.preventDefault();
                 setSrn(props.node.url);

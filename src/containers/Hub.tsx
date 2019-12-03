@@ -1,3 +1,4 @@
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import cn from 'classnames';
 import * as React from 'react';
 import { PageSkeleton } from '../components/Page/Skeleton';
@@ -5,7 +6,7 @@ import { TableOfContents } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
 import { useComputeToc } from '../hooks/useComputeToc';
 import { useProjectNodes } from '../hooks/useProjectNodes';
-import { IContentsNode, IProjectNode } from '../types';
+import { IProjectNode } from '../types';
 import { deserializeSrn } from '../utils/srns';
 import { IPageContainer, Page } from './Page';
 
@@ -30,8 +31,8 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
     pageSrn = srn;
   } else {
     const node = findFirstNode(contents);
-    if (node && node.srn) {
-      pageSrn = node.srn;
+    if (node && node.href) {
+      pageSrn = node.href;
     }
   }
 
@@ -46,7 +47,7 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContents contents={contents} srn={pageSrn} padding={padding} />
+        <TableOfContents srn={pageSrn} contents={contents} padding={padding} />
       )}
 
       {pageSrn ? (
@@ -66,5 +67,5 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
 };
 
 function findFirstNode(nodes: IContentsNode[]): IContentsNode {
-  return nodes.find(node => !!node.srn) || nodes[0];
+  return nodes.find(node => !!node.href) || nodes[0];
 }

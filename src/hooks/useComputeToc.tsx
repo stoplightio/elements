@@ -1,7 +1,10 @@
 import { Dictionary, NodeType } from '@stoplight/types';
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
 import * as React from 'react';
-import { IContentsNode, IProjectNode, ProjectNodeWithUri } from '../types';
+import { IconsContext } from '../containers/Provider';
+import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
+import { NodeIconMapping } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
 const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
@@ -10,22 +13,24 @@ const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex
  * Memoized hook that computes a tree structure from an array of nodes
  */
 export function useComputeToc(nodes: IProjectNode[]) {
-  return React.useMemo(() => computeToc(nodes), [nodes]);
+  const icons = React.useContext(IconsContext);
+  return React.useMemo(() => computeToc(nodes, icons), [nodes]);
 }
 
 /**
  * Sorts project nodes into a flat array
  */
-export function computeToc(_nodes: IProjectNode[]) {
+
+export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): IContentsNodeWithId[] {
   // There is a chance that we pass an empty array
   if (!_nodes.length) return [];
 
   // Add uri to each node since it's used heavily in this function
   const nodes: ProjectNodeWithUri[] = _nodes.map(n => ({ ...n, uri: deserializeSrn(n.srn).uri }));
 
-  let contents: IContentsNode[] = [];
+  let contents: IContentsNodeWithId[] = [];
   const folders: string[] = [];
-  const rootNodes: IContentsNode[] = []; // These nodes will appear at the top of the tree
+  const rootNodes: IContentsNodeWithId[] = []; // These nodes will appear at the top of the tree
 
   // Grab the root level README and put it at the top of the folder
   const readmeNode = nodes.find(node => {
@@ -33,9 +38,12 @@ export function computeToc(_nodes: IProjectNode[]) {
   });
   if (readmeNode) {
     rootNodes.push({
+      id: readmeNode.id,
       name: readmeNode.name,
-      srn: readmeNode.srn,
       depth: 0,
+      type: 'item',
+      icon: icons[readmeNode.type] || icons.item,
+      href: readmeNode.srn,
     });
   }
 
@@ -44,7 +52,10 @@ export function computeToc(_nodes: IProjectNode[]) {
     nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article),
     'srn',
   );
-  for (const node of docsNodes) {
+  for (const nodeIndex in docsNodes) {
+    if (!docsNodes[nodeIndex]) continue;
+    const node = docsNodes[nodeIndex];
+
     // Strip off the /docs since we ignore that folder
     const uri = node.uri.replace(/^\/docs\//, '');
     const parts = uri.split('/');
@@ -61,24 +72,32 @@ export function computeToc(_nodes: IProjectNode[]) {
         if (!folders.includes(`${folderName}/${pathIndex}`)) {
           folders.push(`${folderName}/${pathIndex}`);
           contents.push({
+            id: `${nodeIndex}-${pathIndex}`,
             name: startCase(words(folderName).join(' ')),
             depth: Number(pathIndex),
             type: 'group',
+            icon: icons.group,
           });
         }
       }
 
       contents.push({
+        id: node.id,
         name: node.name,
-        srn: node.srn,
         depth: parts.length - 1,
+        type: 'item',
+        icon: icons[node.type] || icons.item,
+        href: node.srn,
       });
     } else {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
       rootNodes.push({
+        id: node.id,
         name: node.name,
-        srn: node.srn,
         depth: 0,
+        type: 'item',
+        icon: icons[node.type] || icons.item,
+        href: node.srn,
       });
     }
   }
@@ -98,14 +117,19 @@ export function computeToc(_nodes: IProjectNode[]) {
     if (!childNodes.length) continue;
 
     contents.push({
+      id: httpServiceNode.id,
       name: httpServiceNode.name,
       depth: 0,
       type: 'divider',
+      icon: icons[httpServiceNode.type] || icons.divider,
     });
     contents.push({
+      id: `${httpServiceNode.id}-overview`,
       name: 'Overview',
-      srn: httpServiceNode.srn,
       depth: 0,
+      icon: icons.item,
+      type: 'item',
+      href: httpServiceNode.srn,
     });
 
     const tags: Dictionary<IProjectNode[], string> = {};
@@ -126,18 +150,27 @@ export function computeToc(_nodes: IProjectNode[]) {
     }
 
     /** Add tag groups to the tree */
-    for (const tag of sortBy(Object.keys(tags))) {
+    const sortedTags = sortBy(Object.keys(tags));
+    for (const tagIndex in sortedTags) {
+      if (!sortedTags[tagIndex]) continue;
+      const tag = sortedTags[tagIndex];
+
       contents.push({
+        id: `${httpServiceNode.id}-${tag}-${tagIndex}`,
         name: startCase(tag),
         depth: 0,
         type: 'group',
+        icon: icons.group,
       });
 
       for (const tagChild of tags[tag]) {
         contents.push({
+          id: tagChild.id,
           name: tagChild.name,
-          srn: tagChild.srn,
           depth: 1,
+          icon: icons[tagChild.type] || icons.item,
+          type: 'item',
+          href: tagChild.srn,
         });
       }
     }
@@ -145,40 +178,49 @@ export function computeToc(_nodes: IProjectNode[]) {
     /** Group whatever is left into "Other" */
     if (other.length) {
       contents.push({
+        id: `${httpServiceNode.id}-other`,
         name: 'Other',
         depth: 0,
         type: 'group',
+        icon: icons.group,
       });
 
       for (const otherChild of other) {
         contents.push({
+          id: otherChild.id,
           name: otherChild.name,
-          srn: otherChild.srn,
           depth: 1,
+          icon: icons[otherChild.type] || icons.item,
+          type: 'item',
+          href: otherChild.srn,
         });
       }
     }
   }
 
   /** Models folder */
-  const modelContents = [];
+  const modelContents: IContentsNodeWithId[] = [];
   const modelNodes = sortBy(
     nodes.filter(n => n.type === NodeType.Model),
     'name',
   );
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
-    if (contents.find(n => n.srn === modelNode.srn)) continue;
+    if (contents.find(n => n.href === modelNode.srn)) continue;
 
     modelContents.push({
+      id: modelNode.id,
       name: modelNode.name,
-      srn: modelNode.srn,
+      href: modelNode.srn,
       depth: 0,
+      type: 'item',
+      icon: icons[modelNode.type] || icons.item,
     });
   }
 
   if (modelContents.length) {
     contents.push({
+      id: 'models',
       name: 'Models',
       depth: 0,
       type: 'divider',
