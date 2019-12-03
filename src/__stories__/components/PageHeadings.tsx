@@ -8,6 +8,7 @@ import { computeMarkdownHeadings } from '../../hooks/useComputeMarkdownHeadings'
 import { buildNodeMarkdownTree } from '../../utils/buildNodeMarkdownTree';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md');
+const longPageHeading = require('../../__fixtures__/articles/long-page-heading.md');
 
 export const darkMode = () => boolean('dark mode', false);
 
@@ -15,10 +16,28 @@ export const knobs = () => ({
   markdown: text('markdown', article),
 });
 
+export const pageHeadingKnobs = () => ({
+  markdown: text('markdown', longPageHeading),
+});
+
 storiesOf('components/PageHeadings', module)
   .addDecorator(withKnobs)
   .add('Kitchen Sink', () => {
     const { markdown } = knobs();
+
+    return (
+      <div className={cn('absolute inset-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+        <div className="flex justify-center items-center">
+          <PageHeadings
+            className="p-16"
+            headings={computeMarkdownHeadings(buildNodeMarkdownTree('article', markdown))}
+          />
+        </div>
+      </div>
+    );
+  })
+  .add('Long Page Headings', () => {
+    const { markdown } = pageHeadingKnobs();
 
     return (
       <div className={cn('absolute inset-0', { 'bp3-dark bg-gray-8': darkMode() })}>
