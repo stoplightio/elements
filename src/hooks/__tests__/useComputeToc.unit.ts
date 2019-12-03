@@ -17,7 +17,7 @@ describe('computeToc', () => {
             divider: 'chevron-right',
             item: 'document',
           }),
-        ).toEqual(file.contents);
+        ).toMatchSnapshot();
       });
 
       it('should return the correct icons based on node type', () => {
@@ -29,7 +29,7 @@ describe('computeToc', () => {
             http_service: 'badge',
             http_server: 'cloud',
           }),
-        ).toEqual(file.nodeTypeIcons);
+        ).toMatchSnapshot();
       });
     });
   });

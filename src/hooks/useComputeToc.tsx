@@ -156,7 +156,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       const tag = sortedTags[tagIndex];
 
       contents.push({
-        id: `${tag}-${tagIndex}`,
+        id: `${httpServiceNode.id}-${tag}-${tagIndex}`,
         name: startCase(tag),
         depth: 0,
         type: 'group',
@@ -178,7 +178,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     /** Group whatever is left into "Other" */
     if (other.length) {
       contents.push({
-        id: 'other',
+        id: `${httpServiceNode.id}-other`,
         name: 'Other',
         depth: 0,
         type: 'group',
