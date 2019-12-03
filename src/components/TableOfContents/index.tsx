@@ -1,11 +1,13 @@
 import { TableOfContents as UIKitTableOfContents } from '@stoplight/ui-kit/TableOfContents';
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import * as React from 'react';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeToc } from '../../hooks/useComputeToc';
 import { IProjectNode } from '../../types';
 
 export interface ITableOfContents {
-  items: IProjectNode[];
+  items?: IProjectNode[];
+  contents?: IContentsNode[];
 
   // SRN of the active node
   srn?: string;
@@ -25,30 +27,48 @@ export interface ITableOfContents {
   enableDrawer?: boolean | number;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ items, srn, ...props }) => {
-  const contents = useComputeToc(items, srn);
+export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
+  contents: _contents,
+  items = [],
+  srn,
+  ...props
+}) => {
+  const hasContents = _contents && _contents.length;
+
+  // If contents are passed in, we still need to run this memoized function
+  let contents = useComputeToc(hasContents ? [] : items);
+  if (_contents && hasContents) {
+    // @ts-ignore: The contents prop takes priority over items
+    contents = _contents;
+  }
+
   const components = useComponents();
 
-  return (
-    <UIKitTableOfContents
-      contents={contents}
-      {...props}
-      rowRenderer={(item, DefaultRow) => {
-        if (components.link) {
-          return components.link(
-            {
-              node: {
-                title: item.name,
-                url: item.href,
-              },
-              // @ts-ignore (CL): need to update the typing in MarkdownViewer to be ReactElement instead of ReactNode
-              children: <DefaultRow item={item} />,
+  const rowRenderer = React.useCallback(
+    (_item, DefaultRow) => {
+      const item = {
+        ..._item,
+        isActive: _item.href ? _item.href === srn : false,
+      };
+
+      if (components.link && item.href) {
+        return components.link(
+          {
+            node: {
+              title: item.name,
+              url: item.href,
+              className: 'reset',
             },
-            item.name,
-          );
-        }
-        return <DefaultRow item={item} />;
-      }}
-    />
+            // @ts-ignore (CL): need to update the typing in MarkdownViewer to be ReactElement instead of ReactNode
+            children: <DefaultRow key={item.href} item={item} />,
+          },
+          item.href,
+        );
+      }
+      return <DefaultRow key={item.href || item.id} item={item} />;
+    },
+    [srn],
   );
+
+  return <UIKitTableOfContents {...props} contents={contents} rowRenderer={rowRenderer} />;
 };

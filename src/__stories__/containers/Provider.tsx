@@ -6,10 +6,14 @@ import { IProvider } from '../../containers/Provider';
 export const providerKnobs = (): IProvider => ({
   host: text('host', 'https://stoplight.io/api', 'Provider'),
   token: text('token', '', 'Provider'),
-  icons: object('icons', { group: 'folder-close', item: 'document' }),
+  icons: object('icons', {}),
   components: object('components', {
-    link: ({ node, children }) => {
-      return <a href={node.url}>{children}</a>;
+    link: ({ node, children }, key) => {
+      return (
+        <a key={key} href={node.url}>
+          {children}
+        </a>
+      );
     },
   }),
 });

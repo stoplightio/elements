@@ -7,27 +7,14 @@ import * as React from 'react';
 import { Docs } from '../../components/Docs';
 import { TryIt } from '../../components/TryIt';
 import { Hub } from '../../containers/Hub';
-import { IProvider, Provider } from '../../containers/Provider';
+import { Provider } from '../../containers/Provider';
+import { providerKnobs } from './Provider';
 
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = () => ({
   srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
   group: text('group', undefined),
-});
-
-export const providerKnobs = (): IProvider => ({
-  host: text('apiUrl', 'https://stoplight.io/api', 'Provider'),
-  token: text('apiToken', '', 'Provider'),
-  icons: object('Icons', {
-    http_operation: 'locate',
-    http_service: 'cloud',
-    article: 'manual',
-    model: 'cube',
-    image: 'media',
-    group: 'folder-new',
-    item: 'document',
-  }),
 });
 
 storiesOf('containers/Hub', module)
@@ -59,6 +46,7 @@ const Wrapper = ({ providerProps, hubProps }: any) => {
               key={key}
               title={props.node.title}
               className={props.node.className}
+              href={props.node.url}
               onClick={e => {
                 e.preventDefault();
                 setSrn(props.node.url);

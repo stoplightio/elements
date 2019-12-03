@@ -47,7 +47,7 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContents srn={pageSrn} items={data ? data.items : []} padding={padding} />
+        <TableOfContents srn={pageSrn} contents={contents} padding={padding} />
       )}
 
       {pageSrn ? (

@@ -1,5 +1,6 @@
 import { NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
+import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 export { IComponentMapping } from '@stoplight/markdown-viewer';
 
 export interface IDeserializedSrn {
@@ -24,11 +25,15 @@ export interface IProjectNode {
   type: NodeType;
   srn: string;
   name: string;
+  id: number | string;
 
-  id?: number | string;
   version?: string;
   versions?: string[];
   tags?: string[];
+}
+
+export interface IContentsNodeWithId extends IContentsNode {
+  id: number | string;
 }
 
 export type ProjectNodeWithUri = IProjectNode & { uri: string };
