@@ -27,7 +27,7 @@ export const PageHeadings: React.FC<IPageHeadings> = ({
     <>
       {title && (
         <div
-          className="py-2 text-gray-5 dark:text-gray-6 font-medium text-sm flex items-center border-l border-gray-2 dark:border-lighten-4"
+          className="py-2 text-gray-5 dark:text-gray-6 font-medium text-sm flex items-center"
           style={{ paddingLeft: 18 }}
         >
           <Icon icon="properties" iconSize={10} className="mr-2" />
@@ -64,8 +64,8 @@ export const PageHeadings: React.FC<IPageHeadings> = ({
   }
 
   return (
-    <div className={cn(`sticky top-0 pt-${padding} h-0 px-4`, className)}>
-      <div className="overflow-auto h-screen">{component}</div>
+    <div className={cn(`sticky top-0 pt-${padding} h-full px-4 overflow-auto`, className)}>
+      <div className="border-l border-gray-2 dark:border-lighten-4">{component}</div>
     </div>
   );
 };
@@ -75,7 +75,7 @@ const PageHeading: React.FC<{ item: IPageHeading; isSelected: boolean }> = ({ it
     <a
       href={`#${item.id}`}
       className={cn(
-        'truncate block py-2 pr-8 font-medium font-medium hover:text-blue-6 hover:no-underline text-sm border-l border-gray-2 dark:border-lighten-4',
+        'truncate block py-2 pr-8 font-medium font-medium hover:text-blue-6 hover:no-underline text-sm',
         isSelected ? 'text-blue-6 dark:text-blue-2' : 'text-gray-6 dark:text-gray-5',
       )}
       style={{ paddingLeft: `${3 + item.depth * 15}px` }}
