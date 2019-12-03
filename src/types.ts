@@ -16,9 +16,17 @@ export interface IChange {
   message: string;
 }
 
-export interface INodeInfo extends IProjectNode {
+export interface INodeInfo {
   data: any;
+  type: NodeType;
+  srn: string;
+  name: string;
+
   changes?: IChange[];
+  id?: number | string;
+  version?: string;
+  versions?: string[];
+  tags?: string[];
 }
 
 export interface IProjectNode {
