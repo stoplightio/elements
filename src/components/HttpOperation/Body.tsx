@@ -1,6 +1,7 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import cn from 'classnames';
+import { get } from 'lodash';
 import * as React from 'react';
 
 import { Schema } from './Schema';
@@ -14,14 +15,12 @@ export const Body: React.FunctionComponent<IBodyProps> = ({ body, className }) =
   if (typeof body !== 'object' || !body.contents) return null;
 
   // TODO (CL): Support multiple bodies?
-  const requestBody = body.contents[0];
+  const requestBody = get(body, 'contents[0]');
+  const schema = get(requestBody, 'schema');
+  const examples = get(requestBody, 'examples');
 
   // If we have nothing to show then don't render this section
-  if (
-    !body.description &&
-    (!requestBody || (!requestBody.schema && (!requestBody.examples || !requestBody.examples.length)))
-  )
-    return null;
+  if (!requestBody || (!body.description && !schema && !examples)) return null;
 
   return (
     <div className={cn('HttpOperation__Body', className)}>
@@ -29,7 +28,7 @@ export const Body: React.FunctionComponent<IBodyProps> = ({ body, className }) =
 
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}
 
-      <Schema className="mt-6" value={requestBody.schema} examples={requestBody.examples} />
+      <Schema className="mt-6" value={schema} examples={examples} />
     </div>
   );
 };

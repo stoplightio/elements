@@ -2,6 +2,7 @@ import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperationResponse } from '@stoplight/types';
 import { Button, ButtonGroup, Icon } from '@stoplight/ui-kit';
 import cn from 'classnames';
+import { get } from 'lodash';
 import * as React from 'react';
 import { Parameters } from './Parameters';
 import { Schema } from './Schema';
@@ -59,10 +60,8 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ className,
 Responses.displayName = 'HttpOperation.Responses';
 
 export const Response: React.FunctionComponent<IResponseProps> = ({ className, response }) => {
-  if (!response || !response.contents || !response.contents.length) return null;
-
-  // TODO (CL): Support multiple response contents
-  const content = response.contents[0];
+  const content = get(response, 'contents[0]');
+  if (content) return null;
 
   return (
     <div className={cn('HttpOperation__Response', className)}>
@@ -70,7 +69,7 @@ export const Response: React.FunctionComponent<IResponseProps> = ({ className, r
 
       <Parameters className="mb-6" title="Headers" parameters={response.headers} />
 
-      <Schema value={content.schema} examples={content.examples} />
+      <Schema value={get(content, 'schema')} examples={get(content, 'examples')} />
     </div>
   );
 };

@@ -15,7 +15,7 @@ export const darkMode = () => boolean('dark mode', false);
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md');
 const httpOperation = require('../../__fixtures__/operations/put-todos.json');
-const modelWithThreeExamples = require('../../__fixtures__/models/model-with-three-examples.json');
+const model = require('../../__fixtures__/schemas/media-entry.json');
 const httpService = require('../../__fixtures__/services/petstore.json');
 
 const knobs = () => ({
@@ -63,7 +63,7 @@ storiesOf('components/Page', module)
             srn: 'gh/stoplightio/studio-demo/reference/common/models/error.v1.yaml',
             name: 'Error',
             type: NodeType.Model,
-            data: modelWithThreeExamples,
+            data: model,
             changes: [
               {
                 createdAt: '1569423416682',

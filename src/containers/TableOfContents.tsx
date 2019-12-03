@@ -6,6 +6,7 @@ import { useProjectNodes } from '../hooks/useProjectNodes';
 export interface ITableOfContents {
   srn: string;
 
+  group?: string;
   activeNodeSrn?: string;
   className?: string;
   padding?: string;
@@ -17,13 +18,14 @@ export interface ITableOfContents {
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   srn,
 
+  group,
   className,
   padding = '12',
   isOpen,
   onClose,
   enableDrawer,
 }) => {
-  const { isLoading, error, data } = useProjectNodes(srn);
+  const { isLoading, error, data } = useProjectNodes(srn, { group });
 
   if (isLoading) {
     return <TableOfContentsSkeleton className={className} padding={padding} />;

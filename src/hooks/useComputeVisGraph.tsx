@@ -1,15 +1,31 @@
 import { pointerToPath } from '@stoplight/json';
 import { IGraphNodeData, IResolveResult } from '@stoplight/json-ref-resolver/types';
-import { last } from 'lodash';
+import { last, uniqWith } from 'lodash';
 import * as React from 'react';
+import * as URI from 'urijs';
 import { IVisGraph, IVisGraphEdge } from '../types';
 import { getNodeTitle } from '../utils/node';
 
-export function useComputeVisGraph(graph?: IResolveResult['graph'], rootName?: string, activeNodeId?: string) {
-  return React.useMemo(() => computeVisGraph(graph, rootName, activeNodeId), [graph, rootName, activeNodeId]);
+export function useComputeVisGraph(
+  rootNodeSrn: string,
+  graph?: IResolveResult['graph'],
+  rootName?: string,
+  activeNodeId?: string,
+) {
+  return React.useMemo(() => computeVisGraph(rootNodeSrn, graph, rootName, activeNodeId), [
+    graph,
+    rootName,
+    activeNodeId,
+    rootNodeSrn,
+  ]);
 }
 
-export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: string, activeNodeId?: string) {
+export function computeVisGraph(
+  rootNodeSrn: string,
+  graph?: IResolveResult['graph'],
+  rootName?: string,
+  activeNodeId?: string,
+) {
   const visGraph: IVisGraph = {
     nodes: [],
     edges: [],
@@ -23,7 +39,9 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
   for (const id of graph.overallOrder()) {
     if (!graph.dependantsOf(id).length && !graph.dependenciesOf(id).length) continue;
 
-    const isRootNode = id === 'root';
+    const isRootNodeUri = isRootNodeSrn(id, rootNodeSrn);
+
+    const isRootNode = id === 'root' || isRootNodeUri;
     const encodedId = encodeURI(id);
     const node = graph.getNodeData(id);
 
@@ -34,17 +52,21 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
       color = '#66b1e7';
     }
 
-    nodes.push({
-      id: encodedId,
-      label: isRootNode && rootName ? rootName : getNodeTitle(encodedId, node.data),
-      color,
-      font: {
-        color: isRootNode || activeNodeId === encodedId ? '#ffffff' : '#10161a',
-      },
-    });
+    if (!isRootNodeUri) {
+      nodes.push({
+        id: encodedId,
+        label: isRootNode && rootName ? rootName : getNodeTitle(encodedId, node.data),
+        color,
+        font: {
+          color: isRootNode || activeNodeId === encodedId ? '#ffffff' : '#10161a',
+        },
+      });
+    }
 
     // Add node edges
-    visGraph.edges = visGraph.edges.concat(getEdgesFromRefMap(encodedId, node.refMap, activeNodeId));
+    visGraph.edges = visGraph.edges.concat(
+      getEdgesFromRefMap(rootNodeSrn, isRootNode, encodedId, node.refMap, activeNodeId),
+    );
   }
 
   // Only add nodes to the graph that have at least one inbound or outbound edge
@@ -55,10 +77,21 @@ export function computeVisGraph(graph?: IResolveResult['graph'], rootName?: stri
     }
   }
 
+  // Filter out any duplicate edges
+  visGraph.edges = uniqWith(visGraph.edges, (edgeA, edgeB) => {
+    return edgeA.to === edgeB.to && edgeA.from === edgeB.from;
+  });
+
   return visGraph;
 }
 
-function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], activeNodeId?: string) {
+function getEdgesFromRefMap(
+  rootNodeSrn: string,
+  isRootNode: boolean,
+  nodeId: string,
+  refMap: IGraphNodeData['refMap'],
+  activeNodeId?: string,
+) {
   const edges: IVisGraphEdge[] = [];
   const edgeMap = {};
 
@@ -100,8 +133,8 @@ function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], ac
     }
 
     edges.push({
-      from: nodeId,
-      to: targetId,
+      from: isRootNode ? 'root' : nodeId,
+      to: isRootNodeSrn(targetId, rootNodeSrn) ? 'root' : targetId,
       label,
       title: edgeMap[targetId] && edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : 'reference',
       color,
@@ -112,4 +145,14 @@ function getEdgesFromRefMap(nodeId: string, refMap: IGraphNodeData['refMap'], ac
   }
 
   return edges;
+}
+
+function isRootNodeSrn(id: string, rootNodeSrn: string) {
+  if (!rootNodeSrn) return false;
+  try {
+    const parsedQuery: { srn?: string } = URI.parseQuery(URI.parse(id).query || '');
+    return parsedQuery.srn === rootNodeSrn;
+  } catch {
+    return false;
+  }
 }

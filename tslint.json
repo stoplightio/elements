@@ -1,6 +1,7 @@
 {
   "extends": ["tslint-config-stoplight", "tslint-react-hooks"],
   "rules": {
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "no-floating-promises": false
   }
 }
