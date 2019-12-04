@@ -1,5 +1,4 @@
 import { Dictionary, NodeType } from '@stoplight/types';
-import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
 import * as React from 'react';
 import { IconsContext } from '../containers/Provider';
@@ -208,14 +207,34 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     // Only add models that aren't already in the tree
     if (contents.find(n => n.href === modelNode.srn)) continue;
 
-    modelContents.push({
-      id: modelNode.id,
-      name: modelNode.name,
-      href: modelNode.srn,
-      depth: 0,
-      type: 'item',
-      icon: icons[modelNode.type] || icons.item,
-    });
+    if (modelNode.versions) {
+      modelNode.versions.forEach(version => {
+        modelContents.push({
+          id: modelNode.id,
+          name: modelNode.name,
+          depth: 0,
+          type: 'item',
+          icon: icons[modelNode.type] || icons.item,
+          href: `${modelNode.srn}/${version}`,
+          meta: version,
+        });
+      });
+    } else {
+      const node: IContentsNodeWithId = {
+        id: modelNode.id,
+        name: modelNode.name,
+        href: modelNode.srn,
+        depth: 0,
+        type: 'item',
+        icon: icons[modelNode.type] || icons.item,
+      };
+
+      if (modelNode.version) {
+        node.meta = modelNode.version;
+      }
+
+      modelContents.push(node);
+    }
   }
 
   if (modelContents.length) {

@@ -51,6 +51,7 @@ export const nodes: IProjectNode[] = [
     name: 'User',
     srn: 'sl/org/project/reference/todos/models/user',
     tags: ['users'],
+    version: 'v1.0',
   },
   {
     id: 8,
@@ -65,6 +66,7 @@ export const nodes: IProjectNode[] = [
     name: 'Todo',
     srn: 'sl/org/project/reference/todos/models/todos',
     tags: [],
+    versions: ['v1.0', 'v2.0'],
   },
   {
     id: 10,
@@ -72,6 +74,7 @@ export const nodes: IProjectNode[] = [
     name: 'Example',
     srn: 'sl/org/project/models/example',
     tags: [],
+    version: 'v1.0',
   },
   {
     id: 11,
