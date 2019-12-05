@@ -118,6 +118,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     contents.push({
       id: httpServiceNode.id,
       name: httpServiceNode.name,
+      meta: httpServiceNode.version ? `v${httpServiceNode.version}` : '',
       depth: 0,
       type: 'divider',
       icon: icons[httpServiceNode.type] || icons.divider,
@@ -207,34 +208,20 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     // Only add models that aren't already in the tree
     if (contents.find(n => n.href === modelNode.srn)) continue;
 
-    if (modelNode.versions) {
-      modelNode.versions.forEach(version => {
-        modelContents.push({
-          id: modelNode.id,
-          name: modelNode.name,
-          depth: 0,
-          type: 'item',
-          icon: icons[modelNode.type] || icons.item,
-          href: `${modelNode.srn}/${version}`,
-          meta: version,
-        });
-      });
-    } else {
-      const node: IContentsNodeWithId = {
-        id: modelNode.id,
-        name: modelNode.name,
-        href: modelNode.srn,
-        depth: 0,
-        type: 'item',
-        icon: icons[modelNode.type] || icons.item,
-      };
+    const node: IContentsNodeWithId = {
+      id: modelNode.id,
+      name: modelNode.name,
+      href: modelNode.srn,
+      depth: 0,
+      type: 'item',
+      icon: icons[modelNode.type] || icons.item,
+    };
 
-      if (modelNode.version) {
-        node.meta = modelNode.version;
-      }
-
-      modelContents.push(node);
+    if (modelNode.version) {
+      node.meta = `v${modelNode.version}`;
     }
+
+    modelContents.push(node);
   }
 
   if (modelContents.length) {
