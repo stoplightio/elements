@@ -121,7 +121,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       depth: 0,
       type: 'divider',
       icon: icons[httpServiceNode.type] || icons.divider,
-    }
+    };
 
     if (httpServiceNode.version) {
       dividerNode.meta = `v${httpServiceNode.version}`;
