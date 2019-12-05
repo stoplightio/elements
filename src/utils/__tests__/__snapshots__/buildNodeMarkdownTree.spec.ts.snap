@@ -1028,6 +1028,41 @@ Object {
             \\"name\\": \\"basic\\",
             \\"in\\": \\"query\\",
             \\"description\\": \\"Basic Auth\\"
+        },
+        {
+            \\"type\\": \\"oauth2\\",
+            \\"description\\": \\"oauth2 description\\",
+            \\"flows\\": {
+                \\"implicit\\": {
+                    \\"scopes\\": {
+                        \\"scope1\\": \\"scope 1 details\\"
+                    },
+                    \\"refreshUrl\\": \\"refreshUrl\\",
+                    \\"authorizationUrl\\": \\"authorizationUrl\\"
+                },
+                \\"password\\": {
+                    \\"scopes\\": {
+                        \\"scope2\\": \\"scope 2 details\\"
+                    },
+                    \\"refreshUrl\\": \\"refreshUrl\\",
+                    \\"tokenUrl\\": \\"tokenUrl\\"
+                },
+                \\"clientCredentials\\": {
+                    \\"scopes\\": {
+                        \\"scope3\\": \\"scope 3 details\\"
+                    },
+                    \\"refreshUrl\\": \\"refreshUrl\\",
+                    \\"tokenUrl\\": \\"tokenUrl\\"
+                },
+                \\"authorizationCode\\": {
+                    \\"scopes\\": {
+                        \\"scope4\\": \\"scope 4 details\\"
+                    },
+                    \\"refreshUrl\\": \\"refreshUrl\\",
+                    \\"authorizationUrl\\": \\"authorizationUrl\\",
+                    \\"tokenUrl\\": \\"tokenUrl\\"
+                }
+            }
         }
     ]
 }",
