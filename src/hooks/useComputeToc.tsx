@@ -115,14 +115,19 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     const childNodes = nodes.filter(node => parentUriRegexp.test(node.uri) && node.type !== NodeType.HttpService);
     if (!childNodes.length) continue;
 
-    contents.push({
+    const dividerNode: IContentsNodeWithId = {
       id: httpServiceNode.id,
       name: httpServiceNode.name,
-      meta: httpServiceNode.version ? `v${httpServiceNode.version}` : '',
       depth: 0,
       type: 'divider',
       icon: icons[httpServiceNode.type] || icons.divider,
-    });
+    }
+
+    if (httpServiceNode.version) {
+      dividerNode.meta = `v${httpServiceNode.version}`;
+    }
+
+    contents.push(dividerNode);
     contents.push({
       id: `${httpServiceNode.id}-overview`,
       name: 'Overview',
