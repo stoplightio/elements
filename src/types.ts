@@ -35,7 +35,7 @@ export interface IProjectNode {
   name: string;
   id: number | string;
 
-  version?: string;
+  latestVersion?: string;
   versions?: string[];
   tags?: string[];
 }
