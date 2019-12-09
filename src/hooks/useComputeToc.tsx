@@ -123,8 +123,8 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       icon: icons[httpServiceNode.type] || icons.divider,
     };
 
-    if (httpServiceNode.version) {
-      dividerNode.meta = `v${httpServiceNode.version}`;
+    if (httpServiceNode.latestVersion && httpServiceNode.latestVersion !== '0.0') {
+      dividerNode.meta = `v${httpServiceNode.latestVersion}`;
     }
 
     contents.push(dividerNode);
@@ -222,8 +222,8 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       icon: icons[modelNode.type] || icons.item,
     };
 
-    if (modelNode.version) {
-      node.meta = `v${modelNode.version}`;
+    if (modelNode.latestVersion && modelNode.latestVersion !== '0.0') {
+      node.meta = `v${modelNode.latestVersion}`;
     }
 
     modelContents.push(node);
