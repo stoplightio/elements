@@ -1,6 +1,7 @@
 import { Classes, Icon } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
+import { Network } from 'vis';
 
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import { default as Graph } from 'react-graph-vis';
@@ -69,6 +70,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   const [isStable, setIsStable] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isFullScreen, setIsFullScreen] = React.useState(false);
+  const visNetwork = React.useRef<Network>();
 
   const onClickNode = React.useCallback(
     e => {
@@ -140,7 +142,13 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
           small
           active
           icon={<Icon icon={isFullScreen ? 'minimize' : 'fullscreen'} iconSize={10} />}
-          onClick={() => setIsFullScreen(!isFullScreen)}
+          onClick={() => {
+            setIsFullScreen(!isFullScreen);
+
+            if (visNetwork.current) {
+              visNetwork.current.fit();
+            }
+          }}
         />
       </Tooltip>
 
@@ -155,6 +163,9 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
           stabilized: (data: any) => {
             setIsLoading(false);
           },
+        }}
+        getNetwork={(network: Network) => {
+          visNetwork.current = network;
         }}
         options={visGraphOptions}
       />

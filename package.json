@@ -86,6 +86,7 @@
     "@types/react-dom": "16.x.x",
     "@types/typescript": "^2.0.0",
     "@types/urijs": "^1.19.4",
+    "@types/vis": "^4.21.19",
     "autoprefixer": "^9.7.2",
     "babel-loader": "^8.0.6",
     "copyfiles": "^2.1.1",
