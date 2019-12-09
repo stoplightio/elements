@@ -1,5 +1,5 @@
 import { Dictionary, NodeType } from '@stoplight/types';
-import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
+import { compact, escapeRegExp, sortBy, startCase } from 'lodash';
 import * as React from 'react';
 import { IconsContext } from '../containers/Provider';
 import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
@@ -70,9 +70,10 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
         const folderName = pathToItem[pathIndex];
         if (!folders.includes(`${folderName}/${pathIndex}`)) {
           folders.push(`${folderName}/${pathIndex}`);
+          const name = folderName.split('-').map(item => startCase(item.slice(0, 1)) + item.slice(1));
           contents.push({
             id: `${nodeIndex}-${pathIndex}`,
-            name: startCase(words(folderName).join(' ')),
+            name: name.join(' '),
             depth: Number(pathIndex),
             type: 'group',
             icon: icons.group,
