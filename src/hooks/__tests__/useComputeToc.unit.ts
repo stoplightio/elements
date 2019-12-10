@@ -73,4 +73,46 @@ describe('computeToc functionality', () => {
       ]),
     );
   });
+
+  it('should alphabetically sort tagged models', () => {
+    expect(
+      computeToc(
+        [
+          {
+            id: 11,
+            type: NodeType.HttpService,
+            name: 'Another API',
+            srn: 'sl/org/project/openapi.v1.yml',
+            latestVersion: '1.0',
+          },
+          {
+            id: 12,
+            type: NodeType.HttpOperation,
+            name: 'List Things',
+            srn: 'sl/org/project/openapi.v1.yml/paths/~1things/get',
+            tags: ['things'],
+          },
+          {
+            id: 13,
+            type: NodeType.Model,
+            name: 'Thing',
+            srn: 'sl/org/project/openapi.v1.yml/definitions/thing',
+            tags: ['things'],
+          },
+          {
+            id: 13,
+            type: NodeType.Model,
+            name: 'Another Thing',
+            srn: 'sl/org/project/openapi.v1.yml/definitions/another-thing',
+            tags: ['things'],
+          },
+        ],
+        {
+          group: 'folder-close',
+          divider: 'chevron-right',
+          item: 'document',
+        },
+      ),
+    ).toMatchSnapshot();
+  });
 });

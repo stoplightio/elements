@@ -171,7 +171,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
         icon: icons.group,
       });
 
-      for (const tagChild of tags[tag]) {
+      for (const tagChild of sortBy(tags[tag], 'name')) {
         contents.push({
           id: tagChild.id,
           name: tagChild.name,
