@@ -1,3 +1,4 @@
+import { NodeType } from '@stoplight/types';
 import * as fs from 'fs';
 import * as path from 'path';
 import { computeToc } from '../useComputeToc';
@@ -32,5 +33,44 @@ describe('computeToc', () => {
         ).toMatchSnapshot();
       });
     });
+  });
+});
+
+describe('computeToc functionality', () => {
+  it('should split directory names on dashes', () => {
+    expect(
+      computeToc(
+        [
+          {
+            id: '1',
+            type: NodeType.Article,
+            name: 'APIs',
+            srn: 'gh/org/project/docs/APIs/test.md',
+          },
+          {
+            id: '2',
+            type: NodeType.Article,
+            name: 'Test2',
+            srn: 'gh/org/project/docs/split-folder/test.md',
+          },
+        ],
+        {
+          group: 'folder-close',
+          divider: 'chevron-right',
+          item: 'document',
+        },
+      ),
+    ).toEqual(
+      expect.arrayContaining([
+        {
+          depth: 1,
+          icon: 'document',
+          id: '1',
+          name: 'APIs',
+          type: 'item',
+          href: 'gh/org/project/docs/APIs/test.md',
+        },
+      ]),
+    );
   });
 });
