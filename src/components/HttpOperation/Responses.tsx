@@ -60,8 +60,7 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ className,
 Responses.displayName = 'HttpOperation.Responses';
 
 export const Response: React.FunctionComponent<IResponseProps> = ({ className, response }) => {
-  const content = get(response, 'contents[0]');
-  if (content) return null;
+  if (!response || typeof response !== 'object') return null;
 
   return (
     <div className={cn('HttpOperation__Response', className)}>
@@ -69,7 +68,7 @@ export const Response: React.FunctionComponent<IResponseProps> = ({ className, r
 
       <Parameters className="mb-6" title="Headers" parameters={response.headers} />
 
-      <Schema value={get(content, 'schema')} examples={get(content, 'examples')} />
+      <Schema value={get(response, 'contents[0].schema')} examples={get(response, 'contents[0].examples')} />
     </div>
   );
 };
