@@ -36,7 +36,47 @@ describe('computeToc', () => {
   });
 });
 
-describe('alphabetized computeToc', () => {
+describe('computeToc functionality', () => {
+  it('should split directory names on dashes', () => {
+    expect(
+      computeToc(
+        [
+          {
+            id: '1',
+            type: NodeType.Article,
+            name: 'APIs',
+            srn: 'gh/org/project/docs/APIs/test.md',
+          },
+          {
+            id: '2',
+            type: NodeType.Article,
+            name: 'Test2',
+            srn: 'gh/org/project/docs/split-folder/test.md',
+          },
+        ],
+        {
+          group: 'folder-close',
+          divider: 'chevron-right',
+          item: 'document',
+        },
+      ),
+    ).toEqual(
+      expect.arrayContaining([
+        { id: '0-0', name: 'APIs', depth: 0, type: 'group', icon: 'folder-close' },
+        { id: '1', name: 'APIs', depth: 1, type: 'item', icon: 'document', href: 'gh/org/project/docs/APIs/test.md' },
+        { id: '1-0', name: 'Split Folder', depth: 0, type: 'group', icon: 'folder-close' },
+        {
+          id: '2',
+          name: 'Test2',
+          depth: 1,
+          type: 'item',
+          icon: 'document',
+          href: 'gh/org/project/docs/split-folder/test.md',
+        },
+      ]),
+    );
+  });
+
   it('should alphabetically sort tagged models', () => {
     expect(
       computeToc(

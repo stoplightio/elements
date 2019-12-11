@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`alphabetized computeToc should alphabetically sort tagged models 1`] = `
+exports[`computeToc functionality should alphabetically sort tagged models 1`] = `
 Array [
   Object {
     "depth": 0,
