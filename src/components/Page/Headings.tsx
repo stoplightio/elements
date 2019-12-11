@@ -64,7 +64,7 @@ export const PageHeadings: React.FC<IPageHeadings> = ({
   }
 
   return (
-    <div className={cn(`sticky top-0 pt-${padding} h-full px-4 overflow-auto`, className)}>
+    <div className={cn(`sticky top-0 pt-${padding} h-screen px-4 overflow-auto`, className)}>
       <div className="border-l border-gray-2 dark:border-lighten-4">{component}</div>
     </div>
   );
