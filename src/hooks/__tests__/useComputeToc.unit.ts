@@ -34,9 +34,7 @@ describe('computeToc', () => {
       });
     });
   });
-});
 
-describe('computeToc functionality', () => {
   it('should split directory names on dashes', () => {
     expect(
       computeToc(
@@ -78,44 +76,110 @@ describe('computeToc functionality', () => {
   });
 
   it('should alphabetically sort tagged models', () => {
-    expect(
-      computeToc(
-        [
-          {
-            id: 11,
-            type: NodeType.HttpService,
-            name: 'Another API',
-            srn: 'sl/org/project/openapi.v1.yml',
-            latestVersion: '1.0',
-          },
-          {
-            id: 12,
-            type: NodeType.HttpOperation,
-            name: 'List Things',
-            srn: 'sl/org/project/openapi.v1.yml/paths/~1things/get',
-            tags: ['things'],
-          },
-          {
-            id: 13,
-            type: NodeType.Model,
-            name: 'Thing',
-            srn: 'sl/org/project/openapi.v1.yml/definitions/thing',
-            tags: ['things'],
-          },
-          {
-            id: 13,
-            type: NodeType.Model,
-            name: 'Another Thing',
-            srn: 'sl/org/project/openapi.v1.yml/definitions/another-thing',
-            tags: ['things'],
-          },
-        ],
+    const value = computeToc(
+      [
         {
-          group: 'folder-close',
-          divider: 'chevron-right',
-          item: 'document',
+          id: 11,
+          type: NodeType.HttpService,
+          name: 'Another API',
+          srn: 'sl/org/project/openapi.v1.yml',
+          latestVersion: '1.0',
         },
-      ),
-    ).toMatchSnapshot();
+        {
+          id: 12,
+          type: NodeType.HttpOperation,
+          name: 'List Things',
+          srn: 'sl/org/project/openapi.v1.yml/paths/~1things/get',
+          tags: ['things'],
+        },
+        {
+          id: 13,
+          type: NodeType.Model,
+          name: 'Thing',
+          srn: 'sl/org/project/openapi.v1.yml/definitions/thing',
+          tags: ['things'],
+        },
+        {
+          id: 14,
+          type: NodeType.Model,
+          name: 'Another Thing',
+          srn: 'sl/org/project/openapi.v1.yml/definitions/another-thing',
+          tags: ['things'],
+        },
+        {
+          id: 15,
+          type: NodeType.Model,
+          name: 'Something',
+          srn: 'sl/org/project/openapi.v1.yml/definitions/something',
+        },
+        {
+          id: 16,
+          type: NodeType.Model,
+          name: 'Another Something',
+          srn: 'sl/org/project/openapi.v1.yml/definitions/another-something',
+        },
+      ],
+      {
+        group: 'folder-close',
+        divider: 'chevron-right',
+        item: 'document',
+      },
+    );
+
+    expect(value).toEqual(
+      expect.arrayContaining([
+        { id: 11, name: 'Another API', depth: 0, type: 'divider', icon: 'chevron-right', meta: 'v1.0' },
+        {
+          id: '11-overview',
+          name: 'Overview',
+          depth: 0,
+          icon: 'document',
+          type: 'item',
+          href: 'sl/org/project/openapi.v1.yml',
+        },
+        { id: '11-things-0', name: 'Things', depth: 0, type: 'group', icon: 'folder-close' },
+        {
+          id: 14,
+          name: 'Another Thing',
+          depth: 1,
+          icon: 'document',
+          type: 'item',
+          href: 'sl/org/project/openapi.v1.yml/definitions/another-thing',
+        },
+        {
+          id: 12,
+          name: 'List Things',
+          depth: 1,
+          icon: 'document',
+          type: 'item',
+          href: 'sl/org/project/openapi.v1.yml/paths/~1things/get',
+        },
+        {
+          id: 13,
+          name: 'Thing',
+          depth: 1,
+          icon: 'document',
+          type: 'item',
+          href: 'sl/org/project/openapi.v1.yml/definitions/thing',
+        },
+        { id: '11-other', name: 'Other', depth: 0, type: 'group', icon: 'folder-close' },
+        {
+          id: 16,
+          name: 'Another Something',
+          depth: 1,
+          icon: 'document',
+          type: 'item',
+          href: 'sl/org/project/openapi.v1.yml/definitions/another-something',
+        },
+        {
+          id: 15,
+          name: 'Something',
+          depth: 1,
+          icon: 'document',
+          type: 'item',
+          href: 'sl/org/project/openapi.v1.yml/definitions/something',
+        },
+      ]),
+    );
   });
 });

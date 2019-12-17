@@ -193,7 +193,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
         icon: icons.group,
       });
 
-      for (const otherChild of other) {
+      for (const otherChild of sortBy(other, 'name')) {
         contents.push({
           id: otherChild.id,
           name: otherChild.name,

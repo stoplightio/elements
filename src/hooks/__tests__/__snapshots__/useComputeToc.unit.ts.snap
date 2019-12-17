@@ -1,57 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`computeToc functionality should alphabetically sort tagged models 1`] = `
-Array [
-  Object {
-    "depth": 0,
-    "icon": "chevron-right",
-    "id": 11,
-    "meta": "v1.0",
-    "name": "Another API",
-    "type": "divider",
-  },
-  Object {
-    "depth": 0,
-    "href": "sl/org/project/openapi.v1.yml",
-    "icon": "document",
-    "id": "11-overview",
-    "name": "Overview",
-    "type": "item",
-  },
-  Object {
-    "depth": 0,
-    "icon": "folder-close",
-    "id": "11-things-0",
-    "name": "Things",
-    "type": "group",
-  },
-  Object {
-    "depth": 1,
-    "href": "sl/org/project/openapi.v1.yml/definitions/another-thing",
-    "icon": "document",
-    "id": 13,
-    "name": "Another Thing",
-    "type": "item",
-  },
-  Object {
-    "depth": 1,
-    "href": "sl/org/project/openapi.v1.yml/paths/~1things/get",
-    "icon": "document",
-    "id": 12,
-    "name": "List Things",
-    "type": "item",
-  },
-  Object {
-    "depth": 1,
-    "href": "sl/org/project/openapi.v1.yml/definitions/thing",
-    "icon": "document",
-    "id": 13,
-    "name": "Thing",
-    "type": "item",
-  },
-]
-`;
-
 exports[`computeToc nested.ts should return the correct icons based on node type 1`] = `
 Array [
   Object {
