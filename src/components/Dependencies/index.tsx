@@ -43,7 +43,10 @@ const visGraphOptions: Options = {
   },
   edges: {
     smooth: true,
-    color: '#738694',
+    color: {
+      color: '#cfd9e0',
+      opacity: 0.8,
+    },
     width: 3,
     font: {
       align: 'top',

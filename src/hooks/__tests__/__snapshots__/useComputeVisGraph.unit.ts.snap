@@ -4,7 +4,10 @@ exports[`computeVisGraph it works with a simple example 1`] = `
 Object {
   "edges": Array [
     Object {
-      "color": "#738694",
+      "color": Object {
+        "color": "#cfd9e0",
+        "opacity": 0.8,
+      },
       "font": Object {
         "align": "top",
       },
@@ -14,7 +17,10 @@ Object {
       "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
     },
     Object {
-      "color": "#738694",
+      "color": Object {
+        "color": "#cfd9e0",
+        "opacity": 0.8,
+      },
       "font": Object {
         "align": "top",
       },
@@ -24,7 +30,10 @@ Object {
       "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json",
     },
     Object {
-      "color": "#738694",
+      "color": Object {
+        "color": "#cfd9e0",
+        "opacity": 0.8,
+      },
       "font": Object {
         "align": "top",
       },
@@ -34,7 +43,10 @@ Object {
       "to": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
     },
     Object {
-      "color": "#738694",
+      "color": Object {
+        "color": "#cfd9e0",
+        "opacity": 0.8,
+      },
       "font": Object {
         "align": "top",
       },

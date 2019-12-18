@@ -123,10 +123,10 @@ function buildVisGraphFromRefMap(
   for (const targetId in edgeMap) {
     if (!edgeMap.hasOwnProperty(targetId)) continue;
 
-    let color = '#738694';
+    let color = { color: '#cfd9e0', opacity: 0.8 };
     let label = '';
     if (activeNodeId === nodeId || activeNodeId === targetId) {
-      color = '#66b1e7';
+      color = { color: '#66b1e7', opacity: 1 };
       if (edgeMap[targetId].length > 1) {
         label = `${edgeMap[targetId][0]} + ${edgeMap[targetId].length - 1}`;
       } else if (edgeMap[targetId].length) {

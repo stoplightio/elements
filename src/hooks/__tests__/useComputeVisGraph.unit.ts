@@ -60,20 +60,20 @@ describe('computeVisGraph', () => {
     expect(computeVisGraph({ srn: 'root/node/srn' } as INodeInfo, graph, 'root')).toEqual({
       nodes: [
         {
+          id: 'root',
+          level: 0,
+          color: '#ef932b',
+          font: {
+            color: '#ffffff',
+          },
+        },
+        {
           id: 'http://stoplight.io/nodes.raw?srn=some/other/node',
           level: 1,
           label: 'Node',
           color: '#f5f8fa',
           font: {
             color: '#10161a',
-          },
-        },
-        {
-          id: 'root',
-          level: 0,
-          color: '#ef932b',
-          font: {
-            color: '#ffffff',
           },
         },
       ],
@@ -83,7 +83,10 @@ describe('computeVisGraph', () => {
           to: 'root',
           label: '',
           title: 'path',
-          color: '#738694',
+          color: {
+            color: '#cfd9e0',
+            opacity: 0.8,
+          },
           font: {
             align: 'top',
           },
@@ -93,7 +96,10 @@ describe('computeVisGraph', () => {
           to: 'http://stoplight.io/nodes.raw?srn=some/other/node',
           label: '',
           title: 'path',
-          color: '#738694',
+          color: {
+            color: '#cfd9e0',
+            opacity: 0.8,
+          },
           font: {
             align: 'top',
           },
