@@ -1,6 +1,6 @@
 import { pointerToPath } from '@stoplight/json';
 import { IResolveResult } from '@stoplight/json-ref-resolver/types';
-import { last, uniqBy, uniqWith } from 'lodash';
+import { last, sortBy, uniqBy, uniqWith } from 'lodash';
 import * as React from 'react';
 import * as URI from 'urijs';
 import { Edge, Node } from 'vis';
@@ -45,8 +45,8 @@ export function computeVisGraph(
     },
   });
 
-  // Filter out any duplicate nodes
-  visGraph.nodes = uniqBy(visGraph.nodes, 'id');
+  // Filter out any duplicate nodes, keeping the lowest level
+  visGraph.nodes = uniqBy(sortBy(visGraph.nodes, 'level'), 'id');
 
   // Filter out any duplicate edges
   visGraph.edges = uniqWith(visGraph.edges, (edgeA, edgeB) => {
@@ -64,13 +64,19 @@ function buildVisGraphFromRefMap(
   activeNodeId?: string,
   maxDepth: number = 100,
 ) {
-  const node = graph.getNodeData(decodeURI(nodeId));
-  const isRootNode = isRootNodeSrn(nodeId, rootNodeSrn);
-
   const visGraph: IVisGraph = {
     nodes: [],
     edges: [],
   };
+
+  let node;
+  try {
+    node = graph.getNodeData(encodeURI(decodeURI(nodeId)));
+  } catch (error) {
+    return visGraph;
+  }
+
+  const isRootNode = isRootNodeSrn(nodeId, rootNodeSrn);
 
   if (level === maxDepth) return visGraph;
 
