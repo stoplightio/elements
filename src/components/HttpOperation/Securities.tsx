@@ -54,6 +54,9 @@ export const Security: React.FunctionComponent<ISecurityProps> = ({ security, cl
     <div
       className={cn('HttpOperation__Parameter h-10 px-2 flex items-center text-sm cursor-pointer truncate', className)}
     >
+      <div className="mr-2">{`${security.key}`}</div>
+      <div className="text-red-7 dark:text-red-6 mr-2">{`${security.type}`}</div>
+
       {security.type === 'apiKey' && (
         <div className="flex">
           <Tooltip className="flex truncate mr-2" targetClassName="truncate" content={security.name}>
@@ -62,8 +65,6 @@ export const Security: React.FunctionComponent<ISecurityProps> = ({ security, cl
           <div className="text-green-7 dark:text-green-5 mr-2">{security.in}</div>
         </div>
       )}
-
-      <div className="text-red-7 dark:text-red-6 mr-2">{`${security.type}`}</div>
 
       {security.type === 'http' && <div className="mr-2 text-orange-5">{security.scheme}</div>}
 
