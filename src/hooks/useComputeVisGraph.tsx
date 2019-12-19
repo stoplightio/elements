@@ -46,7 +46,7 @@ export function computeVisGraph(
   });
 
   // Filter out any duplicate nodes, keeping the lowest level
-  visGraph.nodes = uniqBy(sortBy(visGraph.nodes, 'level'), 'id');
+  visGraph.nodes = uniqBy(sortBy(visGraph.nodes, ['level', 'label']), 'id');
 
   // Filter out any duplicate edges
   visGraph.edges = uniqWith(visGraph.edges, (edgeA, edgeB) => {

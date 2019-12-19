@@ -155,7 +155,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
       />
 
       {activeNode && typeof activeNode.data === 'object' && (
-        <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
+        <div className={cn('absolute bottom-0 left-0 right-0 max-w-4xl', `px-${padding} pb-${padding}`)}>
           <Model
             className="bg-white border dark:border-darken-3 dark:bg-gray-7"
             title={activeNode.title}
