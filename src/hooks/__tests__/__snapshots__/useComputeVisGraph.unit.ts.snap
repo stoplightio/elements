@@ -71,8 +71,8 @@ Object {
       "font": Object {
         "color": "#10161a",
       },
-      "id": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
-      "label": "Todo Full",
+      "id": "#/definitions/name",
+      "label": "Name",
       "level": 1,
     },
     Object {
@@ -80,8 +80,8 @@ Object {
       "font": Object {
         "color": "#10161a",
       },
-      "id": "#/definitions/name",
-      "label": "Name",
+      "id": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
+      "label": "Todo Full",
       "level": 1,
     },
     Object {
