@@ -44,7 +44,7 @@ export const Security: React.FunctionComponent<ISecurityProps> = ({ security, cl
 
   const validations = omitBy(
     {
-      ...omit(security, ['name', 'required', 'description', 'type', 'in', 'flows']),
+      ...omit(security, ['name', 'required', 'description', 'key', 'type', 'in', 'flows']),
     },
     // Remove empty arrays and objects
     value => typeof value === 'object' && isEmpty(value),
