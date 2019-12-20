@@ -4,8 +4,10 @@ const todoFullSchema = require('../../__fixtures__/schemas/todo-full.v1.json');
 const todoPartialSchema = require('../../__fixtures__/schemas/todo-partial.v1.json');
 const userSchema = require('../../__fixtures__/schemas/user.v1.json');
 
+import { IResolveResult } from '@stoplight/json-ref-resolver/types';
+import { INodeInfo } from '../../types';
 import { createResolver } from '../../utils/createResolver';
-import { computeVisGraph, useComputeVisGraph } from '../useComputeVisGraph';
+import { computeVisGraph } from '../useComputeVisGraph';
 
 beforeEach(() => {
   nock('https://stoplight.io/api')
@@ -26,8 +28,9 @@ describe('computeVisGraph', () => {
   test('it works with a simple example', async () => {
     const { graph } = await createResolver('https://stoplight.io/api').resolve(simpleSchema);
 
-    expect(computeVisGraph('', graph)).toMatchSnapshot();
+    expect(computeVisGraph({ srn: '' } as INodeInfo, graph, '')).toMatchSnapshot();
   });
+
   test('it handles circular references to the root node', async () => {
     const nodeData = {
       root: {
@@ -51,33 +54,14 @@ describe('computeVisGraph', () => {
     };
 
     const graph = {
-      overallOrder: () => [
-        'root',
-        'http://stoplight.io/nodes.raw?srn=some/other/node',
-        'http://stoplight.io/nodes.raw?srn=root/node/srn',
-      ],
-      dependantsOf: (name: string) => [name],
-      dependenciesOf: (name: string) => [name],
       getNodeData: (id: string) => nodeData[id],
-      size: () => 3,
-      // tslint:disable: no-empty
-      addNode: () => {},
-      removeNode: () => {},
-      hasNode: (node: string) => {
-        return node ? true : false;
-      },
-      setNodeData: () => {},
-      setNodeDependency: () => {},
-      addDependency: () => {},
-      removeDependency: () => {},
-      clone: () => graph,
-    };
+    } as IResolveResult['graph'];
 
-    const visGraph = {
+    expect(computeVisGraph({ srn: 'root/node/srn' } as INodeInfo, graph, 'root')).toEqual({
       nodes: [
         {
           id: 'root',
-          label: 'Root',
+          level: 0,
           color: '#ef932b',
           font: {
             color: '#ffffff',
@@ -85,6 +69,7 @@ describe('computeVisGraph', () => {
         },
         {
           id: 'http://stoplight.io/nodes.raw?srn=some/other/node',
+          level: 1,
           label: 'Node',
           color: '#f5f8fa',
           font: {
@@ -94,28 +79,32 @@ describe('computeVisGraph', () => {
       ],
       edges: [
         {
-          from: 'root',
-          to: 'http://stoplight.io/nodes.raw?srn=some/other/node',
+          from: 'http://stoplight.io/nodes.raw?srn=some/other/node',
+          to: 'root',
           label: '',
           title: 'path',
-          color: '#738694',
+          color: {
+            color: '#cfd9e0',
+            opacity: 0.8,
+          },
           font: {
             align: 'top',
           },
         },
         {
-          from: 'http://stoplight.io/nodes.raw?srn=some/other/node',
-          to: 'root',
+          from: 'root',
+          to: 'http://stoplight.io/nodes.raw?srn=some/other/node',
           label: '',
           title: 'path',
-          color: '#738694',
+          color: {
+            color: '#cfd9e0',
+            opacity: 0.8,
+          },
           font: {
             align: 'top',
           },
         },
       ],
-    };
-
-    expect(computeVisGraph('root/node/srn', graph)).toEqual(visGraph);
+    });
   });
 });

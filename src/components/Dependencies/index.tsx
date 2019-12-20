@@ -1,13 +1,12 @@
 import { Classes, Icon } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
-import { Network } from 'vis';
+import { Network, Options } from 'vis';
 
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import { default as Graph } from 'react-graph-vis';
 
-import { Button, ProgressBar, Tooltip } from '@stoplight/ui-kit';
-import { get } from 'lodash';
+import { Button, Tooltip } from '@stoplight/ui-kit';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
@@ -29,26 +28,25 @@ interface IActiveNode {
   data: any;
 }
 
-const visGraphOptions = {
+const visGraphOptions: Options = {
   autoResize: true,
-  physics: {
-    stabilization: {
-      iterations: 10000,
-      updateInterval: 50,
-    },
-    timestep: 0.1,
-    adaptiveTimestep: true,
-    barnesHut: {
-      gravitationalConstant: -5000,
-      centralGravity: 0.3,
-      springLength: 150,
-      springConstant: 0.001,
-      damping: 0.2,
-      avoidOverlap: 0,
+  layout: {
+    hierarchical: {
+      enabled: true,
+      levelSeparation: 300,
+      direction: 'LR',
+      sortMethod: 'directed',
     },
   },
+  physics: {
+    enabled: false,
+  },
   edges: {
-    color: '#738694',
+    smooth: true,
+    color: {
+      color: '#cfd9e0',
+      opacity: 0.8,
+    },
     width: 3,
     font: {
       align: 'top',
@@ -67,8 +65,6 @@ const visGraphOptions = {
 export const Dependencies: React.FC<IDependencies> = ({ className, node, padding }) => {
   const { graph } = useResolver(node.type, node.data || {});
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
-  const [isStable, setIsStable] = React.useState(0);
-  const [isLoading, setIsLoading] = React.useState(true);
   const [isFullScreen, setIsFullScreen] = React.useState(false);
   const visNetwork = React.useRef<Network>();
 
@@ -105,11 +101,11 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
   }, [node]);
 
   // Compute the VIS graph from the resolver graph
-  const visGraph = useComputeVisGraph(get(node, 'srn'), graph, node.name, activeNode ? activeNode.id : 'root');
+  const visGraph = useComputeVisGraph(node, graph, activeNode && activeNode.id);
 
   if (!graph) return null;
 
-  if (visGraph && !visGraph.nodes.length) {
+  if (!visGraph || !visGraph.nodes.length) {
     return (
       <div className={cn(className, 'Page__dependencies relative h-full', padding ? `p-${padding}` : '')}>
         This {NodeTypePrettyName[node.type]} does not have any outbound depdendencies.
@@ -124,12 +120,6 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
         'relative h-full': !isFullScreen,
       })}
     >
-      {isLoading && (
-        <div className="absolute inset-0 bg-lighten-9 flex items-center justify-center z-20">
-          <ProgressBar className="w-1/2" value={isStable} />
-        </div>
-      )}
-
       <Tooltip
         content={isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
         className={cn('absolute top-0 right-0 mx-8', {
@@ -157,12 +147,6 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
         graph={visGraph}
         events={{
           click: onClickNode,
-          stabilizationProgress: (data: any) => {
-            setIsStable(data.iterations);
-          },
-          stabilized: (data: any) => {
-            setIsLoading(false);
-          },
         }}
         getNetwork={(network: Network) => {
           visNetwork.current = network;
@@ -171,9 +155,9 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
       />
 
       {activeNode && typeof activeNode.data === 'object' && (
-        <div className={cn('absolute bottom-0 left-0 right-0', `px-${padding} pb-${padding}`)}>
+        <div className={cn('absolute bottom-0 left-0 right-0 max-w-4xl', `px-${padding} pb-${padding}`)}>
           <Model
-            className="border dark:border-darken-3 bg-white dark:bg-gray-7"
+            className="bg-white border dark:border-darken-3 dark:bg-gray-7"
             title={activeNode.title}
             value={activeNode.data}
             maxRows={10}
