@@ -4,6 +4,7 @@ import { IHttpContent, INodeExample, INodeExternalExample } from '@stoplight/typ
 import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import cn from 'classnames';
+import { map, size } from 'lodash';
 import * as React from 'react';
 
 export interface ISchema {
@@ -17,7 +18,7 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const schema = typeof value === 'string' ? safeParse(value) : value;
-  if ((!schema || !Object.keys(schema).length) && (!examples || !examples.length)) {
+  if (!schema && !size(examples)) {
     return null;
   }
 
@@ -28,35 +29,35 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
       onSelect={setSelectedIndex}
     >
       <SimpleTabList>
-        {value && <SimpleTab>Schema</SimpleTab>}
+        {schema && <SimpleTab>Schema</SimpleTab>}
 
-        {examples &&
-          examples.map((example, index) => <SimpleTab key={index}>{example.summary || example.key}</SimpleTab>)}
+        {map(examples, (example, index) => (
+          <SimpleTab key={index}>{example.summary || example.key}</SimpleTab>
+        ))}
       </SimpleTabList>
 
-      {value && (
+      {schema && (
         <SimpleTabPanel className="p-0">
           <JsonSchemaViewer maxRows={JSV_MAX_ROWS} schema={schema} />
         </SimpleTabPanel>
       )}
 
-      {examples &&
-        examples.map((example, index) => (
-          <SimpleTabPanel key={index} className="p-0">
-            <CodeViewer
-              showLineNumbers
-              className="py-4 overflow-auto max-h-400px"
-              language="json"
-              value={safeStringify(
-                (example as INodeExample).value
-                  ? (example as INodeExample).value
-                  : (example as INodeExternalExample).externalValue,
-                undefined,
-                4,
-              )}
-            />
-          </SimpleTabPanel>
-        ))}
+      {map(examples, (example, index) => (
+        <SimpleTabPanel key={index} className="p-0">
+          <CodeViewer
+            showLineNumbers
+            className="py-4 overflow-auto max-h-400px"
+            language="json"
+            value={safeStringify(
+              (example as INodeExample).value
+                ? (example as INodeExample).value
+                : (example as INodeExternalExample).externalValue,
+              undefined,
+              4,
+            )}
+          />
+        </SimpleTabPanel>
+      ))}
     </SimpleTabs>
   );
 };

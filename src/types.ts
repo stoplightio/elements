@@ -35,7 +35,7 @@ export interface IProjectNode {
   name: string;
   id: number | string;
 
-  version?: string;
+  latestVersion?: string;
   versions?: string[];
   tags?: string[];
 }
@@ -50,31 +50,6 @@ export type IconMapType = NodeType | 'group' | 'divider' | 'item';
 export type NodeIconMapping = { [type in IconMapType]?: IconName };
 
 export type DocsNodeType = NodeType | 'json_schema' | 'http';
-
-export interface IVisGraphNode {
-  id: string;
-  label: string;
-  color?: string;
-  font?: {
-    color?: string;
-  };
-}
-
-export interface IVisGraphEdge {
-  to: string;
-  from: string;
-  title: string;
-  label?: string;
-  color?: string;
-  font?: {
-    align: string;
-  };
-}
-
-export interface IVisGraph {
-  nodes: IVisGraphNode[];
-  edges: IVisGraphEdge[];
-}
 
 export interface IPageHeading {
   id: string;

@@ -1,6 +1,5 @@
 import { Dictionary, NodeType } from '@stoplight/types';
-import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
-import { compact, escapeRegExp, sortBy, startCase, words } from 'lodash';
+import { compact, escapeRegExp, sortBy, startCase, upperFirst } from 'lodash';
 import * as React from 'react';
 import { IconsContext } from '../containers/Provider';
 import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
@@ -73,7 +72,10 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
           folders.push(`${folderName}/${pathIndex}`);
           contents.push({
             id: `${nodeIndex}-${pathIndex}`,
-            name: startCase(words(folderName).join(' ')),
+            name: folderName
+              .split('-')
+              .map(item => upperFirst(item))
+              .join(' '),
             depth: Number(pathIndex),
             type: 'group',
             icon: icons.group,
@@ -116,13 +118,19 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     const childNodes = nodes.filter(node => parentUriRegexp.test(node.uri) && node.type !== NodeType.HttpService);
     if (!childNodes.length) continue;
 
-    contents.push({
+    const dividerNode: IContentsNodeWithId = {
       id: httpServiceNode.id,
       name: httpServiceNode.name,
       depth: 0,
       type: 'divider',
       icon: icons[httpServiceNode.type] || icons.divider,
-    });
+    };
+
+    if (httpServiceNode.latestVersion && httpServiceNode.latestVersion !== '0.0') {
+      dividerNode.meta = `v${httpServiceNode.latestVersion}`;
+    }
+
+    contents.push(dividerNode);
     contents.push({
       id: `${httpServiceNode.id}-overview`,
       name: 'Overview',
@@ -163,7 +171,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
         icon: icons.group,
       });
 
-      for (const tagChild of tags[tag]) {
+      for (const tagChild of sortBy(tags[tag], 'name')) {
         contents.push({
           id: tagChild.id,
           name: tagChild.name,
@@ -185,7 +193,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
         icon: icons.group,
       });
 
-      for (const otherChild of other) {
+      for (const otherChild of sortBy(other, 'name')) {
         contents.push({
           id: otherChild.id,
           name: otherChild.name,
@@ -208,14 +216,20 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     // Only add models that aren't already in the tree
     if (contents.find(n => n.href === modelNode.srn)) continue;
 
-    modelContents.push({
+    const node: IContentsNodeWithId = {
       id: modelNode.id,
       name: modelNode.name,
       href: modelNode.srn,
       depth: 0,
       type: 'item',
       icon: icons[modelNode.type] || icons.item,
-    });
+    };
+
+    if (modelNode.latestVersion && modelNode.latestVersion !== '0.0') {
+      node.meta = `v${modelNode.latestVersion}`;
+    }
+
+    modelContents.push(node);
   }
 
   if (modelContents.length) {
