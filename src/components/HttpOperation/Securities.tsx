@@ -1,6 +1,6 @@
 import { Validations } from '@stoplight/json-schema-viewer';
 import { HttpSecurityScheme } from '@stoplight/types';
-import { Tooltip } from '@stoplight/ui-kit';
+import { Popover, Tooltip } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { isEmpty, omit, omitBy, truncate } from 'lodash';
 import * as React from 'react';
@@ -44,7 +44,7 @@ export const Security: React.FunctionComponent<ISecurityProps> = ({ security, cl
 
   const validations = omitBy(
     {
-      ...omit(security, ['name', 'required', 'description', 'key', 'type', 'in', 'flows']),
+      ...omit(security, ['name', 'required', 'description', 'key', 'type', 'in', 'flows', 'scheme']),
     },
     // Remove empty arrays and objects
     value => typeof value === 'object' && isEmpty(value),
@@ -57,35 +57,49 @@ export const Security: React.FunctionComponent<ISecurityProps> = ({ security, cl
       <div className="mr-2">{`${security.key}`}</div>
       <div className="text-red-7 dark:text-red-6 mr-2">{`${security.type}`}</div>
 
-      {security.type === 'apiKey' && (
-        <div className="flex">
-          <Tooltip className="flex truncate mr-2" targetClassName="truncate" content={security.name}>
-            <div className="truncate">{security.name}</div>
-          </Tooltip>
-          <div className="text-green-7 dark:text-green-5 mr-2">{security.in}</div>
-        </div>
+      {'name' in security && (
+        <Tooltip className="flex truncate mr-2" targetClassName="truncate" content={security.name}>
+          <div className="truncate">{security.name}</div>
+        </Tooltip>
       )}
 
-      {security.type === 'http' && <div className="mr-2 text-orange-5">{security.scheme}</div>}
+      {'in' in security && <div className="text-green-7 dark:text-green-5 mr-2">{security.in}</div>}
+      {'scheme' in security && <div className="mr-2 text-orange-5">{security.scheme}</div>}
 
       {security.type === 'oauth2' &&
         Object.keys(security.flows).map((flow, index) => {
           const item = security.flows[flow];
           return (
-            <Tooltip
+            <Popover
               className="flex truncate mr-2"
               targetClassName="truncate"
               key={index}
+              interactionKind={'hover'}
               content={
-                <div>
-                  {Object.keys(item).map((f, i) => (
-                    <div className="py-1">{`${f}: ${JSON.stringify(item[f])}`}</div>
-                  ))}
+                <div className="p-3">
+                  <div className="font-bold text-sm pb-2">{flow}</div>
+                  {Object.keys(item).map((f, i) => {
+                    if (f !== 'scopes') {
+                      return <div className="py-1" key={i}>{`${f}: ${item[f]}`}</div>;
+                    } else {
+                      return null;
+                    }
+                  })}
+                  {'scopes' in item && <div className="font-bold text-sm pt-4 pb-2">Scopes</div>}
+                  {Object.keys(item).map((f, i) => {
+                    if (f === 'scopes') {
+                      return Object.keys(item[f]).map(scopes => (
+                        <div className="py-1" key={i}>{`${scopes}: ${item[f][scopes]}`}</div>
+                      ));
+                    } else {
+                      return null;
+                    }
+                  })}
                 </div>
               }
             >
               <div className="text-blue-6 dark:text-blue-4">{flow}</div>
-            </Tooltip>
+            </Popover>
           );
         })}
 
