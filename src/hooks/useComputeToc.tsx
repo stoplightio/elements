@@ -208,17 +208,34 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** Models folder */
   const modelContents: IContentsNodeWithId[] = [];
+
+  const lowerCaseNodes = nodes.map(n => {
+    const node = {
+      ...n,
+      name: n.name.toLowerCase(),
+    };
+    return node;
+  });
+
   const modelNodes = sortBy(
-    nodes.filter(n => n.type === NodeType.Model),
+    lowerCaseNodes.filter(n => n.type === NodeType.Model),
     'name',
   );
+
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
     if (contents.find(n => n.href === modelNode.srn)) continue;
 
+    let nodeName = '';
+    nodes.find(n => {
+      if (modelNode.srn === n.srn) {
+        nodeName = n.name;
+      }
+    });
+
     const node: IContentsNodeWithId = {
       id: modelNode.id,
-      name: modelNode.name,
+      name: nodeName,
       href: modelNode.srn,
       depth: 0,
       type: 'item',
