@@ -1017,12 +1017,14 @@ Object {
     ],
     \\"security\\": [
         {
+            \\"key\\": \\"apikeyKey\\",
             \\"type\\": \\"apiKey\\",
             \\"name\\": \\"apikey\\",
             \\"in\\": \\"query\\",
             \\"description\\": \\"Use \`?apikey=123\` to authenticate requests. It's super secure.\\"
         },
         {
+            \\"key\\": \\"basicKey\\",
             \\"type\\": \\"http\\",
             \\"scheme\\": \\"basic\\",
             \\"name\\": \\"basic\\",
@@ -1030,6 +1032,7 @@ Object {
             \\"description\\": \\"Basic Auth\\"
         },
         {
+            \\"key\\": \\"oauth2Key\\",
             \\"type\\": \\"oauth2\\",
             \\"description\\": \\"oauth2 description\\",
             \\"flows\\": {
