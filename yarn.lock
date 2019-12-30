@@ -2092,14 +2092,14 @@
     tslib "^1.10.0"
     urijs "~1.19.1"
 
-"@stoplight/json-schema-viewer@^2.10.4":
-  version "2.10.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.10.4.tgz#c8bac7ff2e4b5df55486cd4a7f624083087d2449"
-  integrity sha512-o6n4ZKDu9tzDt6gGDUdNVwqWINm6W+ld57YPPzAqUgbBPkQgzlBs+GLXdC9fNWHbIwOs07jpNGtYwol6LC3CAg==
+"@stoplight/json-schema-viewer@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.11.0.tgz#ae6939f0e50214cd97c1b6a218a66ebdf225423d"
+  integrity sha512-v1qJ7VhuOE7KX4J9d+8OzXSR70H9cx2RPJZadtN76/9mgjESp5yHcT/eIV3kmNtoxyK+/X+Fs606TTynBh7ekw==
   dependencies:
     "@stoplight/json" "^3.1.1"
     classnames "^2.2.6"
-    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
+    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -9709,9 +9709,10 @@ json-schema-compare@^0.2.2:
   dependencies:
     lodash "^4.17.4"
 
-"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
+"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
+  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
