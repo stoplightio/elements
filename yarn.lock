@@ -1909,11 +1909,6 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@rehooks/component-size@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@rehooks/component-size/-/component-size-1.0.3.tgz#823eabeb42084893d46d43e3a9d1d0e34252b3cb"
-  integrity sha512-pnYld+8SSF2vXwdLOqBGUyOrv/SjzwLjIUcs/4c1JJgR0q4E9eBtBfuZMD6zUD51fvSehSsbnlQMzotSmPTXPg==
-
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -2101,7 +2096,7 @@
     "@stoplight/json" "^3.1.1"
     "@stoplight/react-error-boundary" "^1.0.0"
     classnames "^2.2.6"
-    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
+    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -2264,14 +2259,7 @@
   dependencies:
     "@types/json-schema" "^7.0.3"
 
-"@stoplight/types@^11", "@stoplight/types@^11.1.1":
-  version "11.4.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.4.0.tgz#a2bedbbec37700d3c5a8c7d36c763a61d7a8bce7"
-  integrity sha512-kMh1Sv7bA8BdbUaRXsRyi2K8Y5PzPOUWNSjB4qKOi0P6+dLczjlKggEIw9Xzuu1tCgBFdEvNwjnYDey0iqgeZQ==
-  dependencies:
-    "@types/json-schema" "^7.0.3"
-
-"@stoplight/types@^11.1.0":
+"@stoplight/types@^11", "@stoplight/types@^11.1.0", "@stoplight/types@^11.1.1":
   version "11.4.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.4.0.tgz#a2bedbbec37700d3c5a8c7d36c763a61d7a8bce7"
   integrity sha512-kMh1Sv7bA8BdbUaRXsRyi2K8Y5PzPOUWNSjB4qKOi0P6+dLczjlKggEIw9Xzuu1tCgBFdEvNwjnYDey0iqgeZQ==
@@ -9743,7 +9731,6 @@ json-schema-compare@^0.2.2:
 
 "json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
   resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
