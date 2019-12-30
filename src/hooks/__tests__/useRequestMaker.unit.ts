@@ -32,13 +32,11 @@ describe('useRequestMaker()', () => {
   test('it should return request maker store given an http request value', () => {
     const request = {
       method: 'get',
-      baseUrl: 'http://todos.stoplight.io',
-      url: '/todos',
+      url: 'http://todos.stoplight.io/todos',
       headers: {
         'content-type': 'application/json',
       },
-      query: {},
-    } as IHttpRequest;
+    };
 
     const store = useRequestMaker(request);
 
@@ -51,11 +49,8 @@ describe('useRequestMaker()', () => {
 
     expect(store).toBeInstanceOf(RequestMakerStore);
     expect(store.request.request).toEqual({
-      baseUrl: '',
-      url: '',
+      url: '/',
       method: 'get',
-      headers: {},
-      query: {},
     });
   });
 
@@ -64,11 +59,8 @@ describe('useRequestMaker()', () => {
 
     expect(store).toBeInstanceOf(RequestMakerStore);
     expect(store.request.request).toEqual({
-      baseUrl: '',
-      url: '',
+      url: '/',
       method: 'get',
-      headers: {},
-      query: {},
     });
   });
 
@@ -93,7 +85,7 @@ describe('useRequestMaker()', () => {
     } as IHttpOperation;
 
     const store1 = useRequestMaker(operation, true);
-    store1.request.serverUrl = 'http://todos.stoplight.io';
+    store1.request.baseUrl = 'http://todos.stoplight.io';
     const store2 = useRequestMaker(operation, true);
 
     expect(store1).toEqual(store2);
@@ -107,11 +99,10 @@ describe('useRequestMaker()', () => {
       headers: {
         'content-type': 'application/json',
       },
-      query: {},
-    } as IHttpRequest;
+    };
 
     const store1 = useRequestMaker(request, true);
-    store1.request.serverUrl = 'http://example.com';
+    store1.request.baseUrl = 'http://example.com';
     const store2 = useRequestMaker(request, true);
 
     expect(store1).toEqual(store2);
