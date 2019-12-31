@@ -1212,36 +1212,37 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@blueprintjs/core@^3.18.0":
-  version "3.18.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.18.0.tgz#8835ead10460e6535076465865d2ad7600ae1a07"
-  integrity sha512-dr3A6uhpAAWmf5muY6PFQp5EgEzinRLZa/TGQMA05q1P2xrOn/LYlsqJWJBUJ3j9tmh1RP8VPeu1HmosQb3J7w==
+"@blueprintjs/core@^3.20.0", "@blueprintjs/core@^3.22.3":
+  version "3.22.3"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.22.3.tgz#57dc2c072a17db0e52cc5679d8bbc016082b27e7"
+  integrity sha512-IaxkvJyF+4VCvAjMvyHtJ4qUiQNwgPu4zIxLRo1cBsu30gHjYzwe+xDdssBR7yRnXARguM6bkI523w+yJOerCA==
   dependencies:
-    "@blueprintjs/icons" "^3.10.0"
+    "@blueprintjs/icons" "^3.12.0"
     "@types/dom4" "^2.0.1"
     classnames "^2.2"
     dom4 "^2.1.5"
     normalize.css "^8.0.1"
     popper.js "^1.15.0"
-    react-popper "^1.3.3"
+    react-lifecycles-compat "^3.0.4"
+    react-popper "^1.3.7"
     react-transition-group "^2.9.0"
     resize-observer-polyfill "^1.5.1"
     tslib "~1.9.0"
 
-"@blueprintjs/icons@^3.10.0":
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.10.0.tgz#45cdb3ca62110e74bcf9e741237a6b4e2cf2c3a4"
-  integrity sha512-lyAUpkr3qEStPcJpMnxRKuVAPvaRNSce1ySPbkE58zPmD4WBya2gNrWex41xoqRYM0GsiBSwH9CnpY8t6fZKUA==
+"@blueprintjs/icons@^3.12.0", "@blueprintjs/icons@^3.13.0":
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.13.0.tgz#bff93a9ea5ced03afd2b3a65ddf4bb90bda485e4"
+  integrity sha512-fvXGsAJ66SSjeHv3OeXjLEdKdPJ3wVztjhJQCAd51uebhj3FJ16EDDvO7BqBw5FyVkLkU11KAxSoCFZt7TC9GA==
   dependencies:
     classnames "^2.2"
     tslib "~1.9.0"
 
-"@blueprintjs/select@^3.10.0":
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-3.10.0.tgz#e5711a25416e62d236afb8a3062af45b3b4206ef"
-  integrity sha512-Akm/L5tndrOUuf05od9IJ0WSQgHdbJ4/i2RRoLLH5ZiI8s1OZiCbKJYDSCbCOTviCdZSuL0qkJsBcYhOI/Czeg==
+"@blueprintjs/select@^3.11.2":
+  version "3.11.2"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-3.11.2.tgz#3324db0de44a9f386b957aac1ba3ec774b3eb1e7"
+  integrity sha512-fU0Km6QI/ayWhzYeu9N1gTj0+L0XUO4KB3u2LfJXgj648UGY8F4HX2ETdJ+XPdtsu6TesrIL7ghMQhtLcvafBg==
   dependencies:
-    "@blueprintjs/core" "^3.18.0"
+    "@blueprintjs/core" "^3.20.0"
     classnames "^2.2"
     tslib "~1.9.0"
 
@@ -2076,10 +2077,10 @@
     lodash "^4.17.4"
     read-pkg-up "^6.0.0"
 
-"@stoplight/json-ref-resolver@^3.0.3":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-3.0.5.tgz#8af54af808f3c763c3aab31a1db4d1c5a96bae40"
-  integrity sha512-uSG+5jO+Hj4YjoZ/FF6QUatS1LCyaqfh5YjZU/ysjLT5yopqFExlskgZcdpCL+TufYonzFWH2k8H61LeToah8Q==
+"@stoplight/json-ref-resolver@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-3.0.6.tgz#ed39221c24ac7e39b5c4306fc6b262f729cc0f6b"
+  integrity sha512-EOuPiEeZb59AFhdF1fh1OBlGoJnQN/7djn5Rmmn57/AqY0n8A2UBRxbDPNwZKcrigX4qTkXlxqlHzXiG2GEByg==
   dependencies:
     "@stoplight/json" "^3.1.2"
     "@stoplight/path" "^1.3.0"
@@ -2092,14 +2093,15 @@
     tslib "^1.10.0"
     urijs "~1.19.1"
 
-"@stoplight/json-schema-viewer@^2.10.4":
-  version "2.10.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.10.4.tgz#c8bac7ff2e4b5df55486cd4a7f624083087d2449"
-  integrity sha512-o6n4ZKDu9tzDt6gGDUdNVwqWINm6W+ld57YPPzAqUgbBPkQgzlBs+GLXdC9fNWHbIwOs07jpNGtYwol6LC3CAg==
+"@stoplight/json-schema-viewer@^2.11.1":
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.11.1.tgz#5a8ff2d0204195877ead29e72149e2e6c610da2c"
+  integrity sha512-eVyMDlRZX2fysPkAySw08nyZnujKcbROla+2O0Vga23jUqHTfyYhxMwgbqbpcu4SdQIVU74g56BYQ9YJ0Q7tow==
   dependencies:
     "@stoplight/json" "^3.1.1"
+    "@stoplight/react-error-boundary" "^1.0.0"
     classnames "^2.2.6"
-    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
+    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -2155,15 +2157,23 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.0.tgz#da2282352a4eb23c09d5106b9d1650d30a9ca2ad"
   integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
 
-"@stoplight/request-maker@^3.3.4":
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.3.4.tgz#1fdd9b2bd6f84f254df8abf3d3deda1ab4ec5373"
-  integrity sha512-sJWW4aX8EqIvkn4NE20q2+k0nQ6r0az1+FYbOKyOLCZUVNJny/Ktx9QXb4R33EF5EUo6Bb31evK3Qmd9/W/dEQ==
+"@stoplight/react-error-boundary@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/react-error-boundary/-/react-error-boundary-1.0.0.tgz#758dbee1ae3afa8f2cc42f6fc82aefc9d4efaa67"
+  integrity sha512-UH5ZyNqzQp8w/fm8cpq0tmsc63xtMBFmfp7g6ZYW4+/Bhnm/T1RhRpG/5d7/3ZkMLiJ7avsoslbHJ2JU6geEDQ==
+  dependencies:
+    "@stoplight/types" "^11.1.0"
+
+"@stoplight/request-maker@^3.3.6":
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.3.6.tgz#ba3008172d636d128b4877344f5f280533175763"
+  integrity sha512-gL202WE8F7wW3kFoE/6C/1mY6BS/gMdmEqXeAdQrJ7Oz5d6jWM55803TPXSEfwlz5iOyLMoJSqCxygTBuuiKnw==
   dependencies:
     "@stoplight/json" "^3.2.1"
     "@stoplight/markdown-viewer" "^3"
     "@stoplight/path" "^1.3.0"
     "@stoplight/tree-list" "^4.10.0"
+    "@stoplight/yaml" "^3.5.0"
     axios "^0.19.0"
     classnames "^2.2.6"
     copy-to-clipboard "^3.2.0"
@@ -2255,40 +2265,43 @@
     "@types/json-schema" "^7.0.3"
 
 "@stoplight/types@^11", "@stoplight/types@^11.1.1":
-  version "11.3.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.3.0.tgz#23d40cbf2c3c85e5612038b5cf0c003f82809318"
-  integrity sha512-m6N4Bv2O2bYJOXdIwtpLtfQY/3zHUgRuHx2D8ERydX8WE40nKoLqh4wN6nvRcSeGwxjhi0Q0KUAZIe9UsYj6fQ==
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.4.0.tgz#a2bedbbec37700d3c5a8c7d36c763a61d7a8bce7"
+  integrity sha512-kMh1Sv7bA8BdbUaRXsRyi2K8Y5PzPOUWNSjB4qKOi0P6+dLczjlKggEIw9Xzuu1tCgBFdEvNwjnYDey0iqgeZQ==
   dependencies:
     "@types/json-schema" "^7.0.3"
 
-"@stoplight/ui-kit@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.15.0.tgz#4703642a933e5ba957c7193c86662edf9b5a231b"
-  integrity sha512-PHEbcA+J4Y11tVNzDNTtpQwI+zP1YWeocHOFcxpJ0S/TnoBUv3TSWrCw/hf5qiULbCRqx7X2z/3xhjbEIynP7Q==
+"@stoplight/types@^11.1.0":
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.4.0.tgz#a2bedbbec37700d3c5a8c7d36c763a61d7a8bce7"
+  integrity sha512-kMh1Sv7bA8BdbUaRXsRyi2K8Y5PzPOUWNSjB4qKOi0P6+dLczjlKggEIw9Xzuu1tCgBFdEvNwjnYDey0iqgeZQ==
   dependencies:
-    "@blueprintjs/core" "^3.18.0"
-    "@blueprintjs/icons" "^3.10.0"
-    "@blueprintjs/select" "^3.10.0"
-    "@stoplight/types" "^10.0.1"
+    "@types/json-schema" "^7.0.3"
+
+"@stoplight/ui-kit@^2.15.1":
+  version "2.15.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-2.15.1.tgz#1d3fe887d7800d93e82c87a86030ee58fc34f658"
+  integrity sha512-0dYT6/JWickQw2dhrn05BY8FNFo97eC5lFfpbtTuTdQbT1uhBSqJ7dkDc3N1uYPK7hZNuzWQ3mgJxuuyguW3ww==
+  dependencies:
+    "@blueprintjs/core" "^3.22.3"
+    "@blueprintjs/icons" "^3.13.0"
+    "@blueprintjs/select" "^3.11.2"
     classnames "^2.2.6"
-    immer "^3.2"
     prismjs "^1.17.1"
-    react-input-autosize "^2.2.1"
-    react-scrollbars-custom "~4.0.16"
-    react-simple-code-editor "~0.9.14"
-    react-tabs "^3.0.0"
+    react-input-autosize "^2.2.2"
+    react-scrollbars-custom "~4.0.21"
+    react-simple-code-editor "~0.10.0"
+    react-tabs "^3.1.0"
     react-virtualized-auto-sizer "^1.0.2"
     react-window "~1.8.5"
-    refractor "^2.10.0"
-    use-immer "~0.3.3"
-    yup "^0.27.0"
+    yup "^0.28.0"
 
 "@stoplight/yaml-ast-parser@0.0.44":
   version "0.0.44"
   resolved "https://registry.yarnpkg.com/@stoplight/yaml-ast-parser/-/yaml-ast-parser-0.0.44.tgz#ed3c962564283e9983f7895a6effc3994286df5e"
   integrity sha512-PdY8p2Ufgtorf4d2DbKMfknILMa8KwuyyMMR/2lgK1mLaU8F5PKWYc+h9hIzC+ar0bh7m9h2rINo32m7ADfVyA==
 
-"@stoplight/yaml@^3.3.2":
+"@stoplight/yaml@^3.3.2", "@stoplight/yaml@^3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.5.0.tgz#ed5462c6b0b82ad492c42740bb816d343f4ed0ab"
   integrity sha512-q4HlH4+U5GGL+LHImbz7w29q3M0fMF5c6jE/PbSth5MNBvUNXAX8rxyWWt017LadH8VIoDgnam/0dO/or5SCvQ==
@@ -5661,6 +5674,14 @@ create-react-context@^0.2.1:
     fbjs "^0.8.0"
     gud "^1.0.0"
 
+create-react-context@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.3.0.tgz#546dede9dc422def0d3fc2fe03afe0bc0f4f7d8c"
+  integrity sha512-dNldIoSuNSvlTJ7slIKC/ZFGKexBMBrrcc+TTe1NdmROnaASuLPvqpwj9v4XS4uXZ8+YPu0sNmShX2rXI5LNsw==
+  dependencies:
+    gud "^1.0.0"
+    warning "^4.0.3"
+
 cross-spawn@6.0.5, cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -6104,6 +6125,18 @@ deep-equal-ident@^1.1.1:
   integrity sha1-BvS4nlNxDNbOpKd4HHqVZkLejck=
   dependencies:
     lodash.isequal "^3.0"
+
+deep-equal@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.1.1.tgz#b5c98c942ceffaf7cb051e24e1434a25a2e6076a"
+  integrity sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==
+  dependencies:
+    is-arguments "^1.0.4"
+    is-date-object "^1.0.1"
+    is-regex "^1.0.4"
+    object-is "^1.0.1"
+    object-keys "^1.1.1"
+    regexp.prototype.flags "^1.2.0"
 
 deep-extend@^0.6.0:
   version "0.6.0"
@@ -8397,11 +8430,6 @@ immer@^1.12.0:
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.12.1.tgz#40c6e5b292c00560836c2993bda3a24379d466f5"
   integrity sha512-3fmKM6ovaqDt0CdC9daXpNi5x/YCYS3i4cwLdTVkhJdk5jrDXoPs7lCm3IqM3yhfSnz4tjjxbRG2CziQ7m8ztg==
 
-immer@^3.2:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-3.2.0.tgz#53686471e9dd2b070e0fb5500c6fdecd3a99375f"
-  integrity sha512-+a2R8z9eELHst6aht++nzVzJ8LJ+Hsg49qttfg9Kc/vmoxEdPXw5/rV6+4DYWGgnq+B36KbLr4OTaGtS9mDjtg==
-
 immer@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/immer/-/immer-4.0.1.tgz#9108c1ece7fdd7efb91d21e5eb4bac26f7c3a8ba"
@@ -8688,6 +8716,11 @@ is-alphanumerical@^1.0.0:
   dependencies:
     is-alphabetical "^1.0.0"
     is-decimal "^1.0.0"
+
+is-arguments@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/is-arguments/-/is-arguments-1.0.4.tgz#3faf966c7cba0ff437fb31f6250082fcf0448cf3"
+  integrity sha512-xPh0Rmt8NE65sNzvyUmWgI1tz3mKq74lGA0mL8LYZcoIzKOzDh6HmrYm3d18k60nHerC8A9Km8kYu87zfSFnLA==
 
 is-arrayish@^0.2.1:
   version "0.2.1"
@@ -9708,9 +9741,10 @@ json-schema-compare@^0.2.2:
   dependencies:
     lodash "^4.17.4"
 
-"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
+"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
+  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
@@ -12097,7 +12131,7 @@ object-is@^1.0.1:
   resolved "https://registry.yarnpkg.com/object-is/-/object-is-1.0.1.tgz#0aa60ec9989a0b3ed795cf4d06f62cf1ad6539b6"
   integrity sha1-CqYOyZiaCz7Xlc9NBvYs8a1lObY=
 
-object-keys@^1.0.11, object-keys@^1.0.12:
+object-keys@^1.0.11, object-keys@^1.0.12, object-keys@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
   integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
@@ -13736,10 +13770,18 @@ react-dom@^16.8.1:
     prop-types "^15.6.2"
     scheduler "^0.15.0"
 
-react-draggable@^3.1.1, react-draggable@^3.3.0:
+react-draggable@^3.1.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-3.3.1.tgz#661b191d2b5be554e774ea68a5b7484568447b8b"
   integrity sha512-JeKyuO5f1jnVwMHdNkFpmaQoYn/6CyIiCDGSKbTgRisEtekjeUCeKmlNaNTLlpKOEu0SaKcBA1HlypSqWN/8Tw==
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+
+react-draggable@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-3.3.2.tgz#966ef1d90f2387af3c2d8bd3516f601ea42ca359"
+  integrity sha512-oaz8a6enjbPtx5qb0oDWxtDNuybOylvto1QLydsXgKmwT7e3GXC2eMVDwEMIUYJIFqVG72XpOv673UuuAq6LhA==
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
@@ -13796,10 +13838,10 @@ react-hotkeys@2.0.0-pre4:
   dependencies:
     prop-types "^15.6.1"
 
-react-input-autosize@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.1.tgz#ec428fa15b1592994fb5f9aa15bb1eb6baf420f8"
-  integrity sha512-3+K4CD13iE4lQQ2WlF8PuV5htfmTRLH6MDnfndHM6LuBRszuXnuyIfE7nhSKt8AzRBZ50bu0sAhkNMeS5pxQQA==
+react-input-autosize@^2.2.1, react-input-autosize@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.2.tgz#fcaa7020568ec206bc04be36f4eb68e647c4d8c2"
+  integrity sha512-jQJgYCA3S0j+cuOwzuCd1OjmBmnZLdqQdiLKRYrsMMzbjUrVDS5RvJUDwJqA7sKuksDuzFtm6hZGKFu7Mjk5aw==
   dependencies:
     prop-types "^15.5.8"
 
@@ -13852,6 +13894,19 @@ react-popper@^1.3.3:
     typed-styles "^0.0.7"
     warning "^4.0.2"
 
+react-popper@^1.3.7:
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-1.3.7.tgz#f6a3471362ef1f0d10a4963673789de1baca2324"
+  integrity sha512-nmqYTx7QVjCm3WUZLeuOomna138R1luC4EqkW3hxJUrAe+3eNz3oFCLYdnPwILfn0mX1Ew2c3wctrjlUMYYUww==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    create-react-context "^0.3.0"
+    deep-equal "^1.1.1"
+    popper.js "^1.14.4"
+    prop-types "^15.6.1"
+    typed-styles "^0.0.7"
+    warning "^4.0.2"
+
 react-resize-detector@^3.2.1:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/react-resize-detector/-/react-resize-detector-3.4.0.tgz#2ccd399958a0efe9b7c52c5db5a13d87e47cd585"
@@ -13862,13 +13917,13 @@ react-resize-detector@^3.2.1:
     prop-types "^15.6.2"
     resize-observer-polyfill "^1.5.1"
 
-react-scrollbars-custom@~4.0.16:
-  version "4.0.16"
-  resolved "https://registry.yarnpkg.com/react-scrollbars-custom/-/react-scrollbars-custom-4.0.16.tgz#6f00be36591d64c07ae5be365efe8188406dd894"
-  integrity sha512-QNNYuRqGo6voqtxxmTq5qnPz0GrmtparGuo/UfmRVnkDbEPL3ExO9Y5w0TTOA1AgKZdc6keYhKfkN6daDX9J3Q==
+react-scrollbars-custom@~4.0.21:
+  version "4.0.21"
+  resolved "https://registry.yarnpkg.com/react-scrollbars-custom/-/react-scrollbars-custom-4.0.21.tgz#daab3104b9707033a5be29fdc5b7408dee41a5ad"
+  integrity sha512-EwIVXBYsZG91Wm90a8ajSjpclXMu3XehcSGz+QbnLDQbmc+Rj/Uj+gP9bgbhyvQTKlhfjoka77VEWu9/DxOwBg==
   dependencies:
     cnbuilder "^1.1.7"
-    react-draggable "^3.3.0"
+    react-draggable "^3.3.2"
     zoom-level "^1.2.4"
 
 react-select@^2.3.0:
@@ -13884,10 +13939,10 @@ react-select@^2.3.0:
     react-input-autosize "^2.2.1"
     react-transition-group "^2.2.1"
 
-react-simple-code-editor@~0.9.14:
-  version "0.9.14"
-  resolved "https://registry.yarnpkg.com/react-simple-code-editor/-/react-simple-code-editor-0.9.14.tgz#5b8fdc36a975cbf02fdafa2597398d8e212afebc"
-  integrity sha512-doNaIIt4w7QIiB6ysWHMtYL4M3xOGPvZJH8vGq3W/hGk43pn25RDA27IS8GkbfhA1eLX72CWDhuC7KmDKax13g==
+react-simple-code-editor@~0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/react-simple-code-editor/-/react-simple-code-editor-0.10.0.tgz#73e7ac550a928069715482aeb33ccba36efe2373"
+  integrity sha512-bL5W5mAxSW6+cLwqqVWY47Silqgy2DKDTR4hDBrLrUqC5BXc29YVx17l2IZk5v36VcDEq1Bszu2oHm1qBwKqBA==
 
 react-syntax-highlighter@^8.0.1:
   version "8.1.0"
@@ -13900,10 +13955,10 @@ react-syntax-highlighter@^8.0.1:
     prismjs "^1.8.4"
     refractor "^2.4.1"
 
-react-tabs@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-3.0.0.tgz#60311a17c755eb6aa9b3310123e67db421605127"
-  integrity sha512-z90cDIb+5V7MzjXFHq1VLxYiMH7dDQWan7mXSw6BWQtw+9pYAnq/fEDvsPaXNyevYitvLetdW87C61uu27JVMA==
+react-tabs@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-3.1.0.tgz#ecc50f034c1d6da2606fab9293055bbc861b382e"
+  integrity sha512-9RKc77HCPsjQDVPyZEw37g3JPtg26oSQ9o4mtaVXjJuLedDX5+TQcE+MRNKR+4aO3GMAY4YslCePGG1//MQ3Jg==
   dependencies:
     classnames "^2.2.0"
     prop-types "^15.5.0"
@@ -14238,7 +14293,7 @@ reflect.ownkeys@^0.2.0:
   resolved "https://registry.yarnpkg.com/reflect.ownkeys/-/reflect.ownkeys-0.2.0.tgz#749aceec7f3fdf8b63f927a04809e90c5c0b3460"
   integrity sha1-dJrO7H8/34tj+SegSAnpDFwLNGA=
 
-refractor@^2.10.0, refractor@^2.4.1:
+refractor@^2.4.1:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/refractor/-/refractor-2.10.0.tgz#4cc7efc0028a87924a9b31d82d129dec831a287b"
   integrity sha512-maW2ClIkm9IYruuFYGTqKzj+m31heq92wlheW4h7bOstP+gf8bocmMec+j7ljLcaB1CAID85LMB3moye31jH1g==
@@ -16766,11 +16821,6 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-immer@~0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/use-immer/-/use-immer-0.3.3.tgz#870479127f6050a62c321cf2cb6182e154a1786a"
-  integrity sha512-BYRzcmbdY3wEBz0BZ1NHL15TzAAYmWJq/qj53xhmtgQ2w1/lNI3dxW6j33H0bR1Ycc4NYal0pwPj+107sgC4DQ==
-
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
@@ -17542,10 +17592,10 @@ yup@^0.26.10:
     synchronous-promise "^2.0.5"
     toposort "^2.0.2"
 
-yup@^0.27.0:
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/yup/-/yup-0.27.0.tgz#f8cb198c8e7dd2124beddc2457571329096b06e7"
-  integrity sha512-v1yFnE4+u9za42gG/b/081E7uNW9mUj3qtkmelLbW5YPROZzSH/KUUyJu9Wt8vxFJcT9otL/eZopS0YK1L5yPQ==
+yup@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/yup/-/yup-0.28.0.tgz#fdc04d1a495465c83d3757a80c47616884baeddc"
+  integrity sha512-9ZmsB/PT6/m+oUKF8rT9lWhMMGfx5s/aNCCf8pMu/GEQA0Ro2tLOc+aX12GjfL67Vif5a3c7eZVuxGFqFScnJQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     fn-name "~2.0.1"
