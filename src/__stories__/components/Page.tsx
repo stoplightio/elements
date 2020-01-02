@@ -148,6 +148,7 @@ storiesOf('components/Page', module)
                 semver: 'major',
               },
             ],
+            versions: ['2.0', '1.0'],
           }}
           tabs={({ node }) => [
             { title: 'Docs', content: <Docs node={node} padding="16" /> },
