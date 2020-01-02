@@ -2,7 +2,7 @@ export * from './useComponents';
 export * from './useComputeMarkdownHeadings';
 export * from './useComputeToc';
 export * from './useComputeVisGraph';
-export * from './useIsMobile';
+export * from './useComponentSize';
 export * from './useLocationHash';
 export * from './useNodeInfo';
 export * from './useParsedData';
