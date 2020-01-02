@@ -46,14 +46,30 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     });
   }
 
+  let nodeName = '';
+  const lowerCaseNodes = nodes.map(n => {
+    const node = {
+      ...n,
+      name: n.name.toLowerCase(),
+    };
+    return node;
+  });
+
   /** Docs folder */
   const docsNodes = sortBy(
-    nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article),
+    lowerCaseNodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article),
     'srn',
   );
+
   for (const nodeIndex in docsNodes) {
     if (!docsNodes[nodeIndex]) continue;
     const node = docsNodes[nodeIndex];
+
+    nodes.find(n => {
+      if (node.srn === n.srn) {
+        nodeName = n.name;
+      }
+    });
 
     // Strip off the /docs since we ignore that folder
     const uri = node.uri.replace(/^\/docs\//, '');
@@ -85,7 +101,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
       contents.push({
         id: node.id,
-        name: node.name,
+        name: nodeName,
         depth: parts.length - 1,
         type: 'item',
         icon: icons[node.type] || icons.item,
@@ -95,7 +111,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
       rootNodes.push({
         id: node.id,
-        name: node.name,
+        name: nodeName,
         depth: 0,
         type: 'item',
         icon: icons[node.type] || icons.item,
@@ -109,18 +125,24 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** Reference folder */
   const httpServiceNodes = sortBy(
-    nodes.filter(n => n.type === NodeType.HttpService),
+    lowerCaseNodes.filter(n => n.type === NodeType.HttpService),
     'name',
   );
   for (const httpServiceNode of httpServiceNodes) {
     const parentUriRegexp = new RegExp(`^${escapeRegExp(httpServiceNode.uri)}\/`, 'i');
+
+    nodes.find(n => {
+      if (httpServiceNode.srn === n.srn) {
+        nodeName = n.name;
+      }
+    });
 
     const childNodes = nodes.filter(node => parentUriRegexp.test(node.uri) && node.type !== NodeType.HttpService);
     if (!childNodes.length) continue;
 
     const dividerNode: IContentsNodeWithId = {
       id: httpServiceNode.id,
-      name: httpServiceNode.name,
+      name: nodeName,
       depth: 0,
       type: 'divider',
       icon: icons[httpServiceNode.type] || icons.divider,
@@ -209,14 +231,6 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
   /** Models folder */
   const modelContents: IContentsNodeWithId[] = [];
 
-  const lowerCaseNodes = nodes.map(n => {
-    const node = {
-      ...n,
-      name: n.name.toLowerCase(),
-    };
-    return node;
-  });
-
   const modelNodes = sortBy(
     lowerCaseNodes.filter(n => n.type === NodeType.Model),
     'name',
@@ -226,7 +240,6 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     // Only add models that aren't already in the tree
     if (contents.find(n => n.href === modelNode.srn)) continue;
 
-    let nodeName = '';
     nodes.find(n => {
       if (modelNode.srn === n.srn) {
         nodeName = n.name;
