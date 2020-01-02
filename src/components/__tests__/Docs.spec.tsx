@@ -13,7 +13,9 @@ import { Model } from '../Model';
 const httpOperation = require('../../__fixtures__/operations/put-todos.json');
 const httpService = require('../../__fixtures__/services/petstore.json');
 
-jest.mock('@rehooks/component-size', () => () => ({ width: 1200 }));
+jest.mock('../../hooks/useComponentSize', () => ({
+  useComponentSize: () => ({ width: 1200 }),
+}));
 
 jest.mock('@stoplight/json-schema-viewer', () => ({
   JsonSchemaViewer: () => <div />,
