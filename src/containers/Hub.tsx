@@ -26,33 +26,20 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
 
   const { uri } = deserializeSrn(srn);
 
-  // option 1: get rid of trailing slash up front
-  if (uri.endsWith('/')) {
-    srn = uri.slice(0, -1);
-  }
   let pageSrn;
-  if (uri) {
+
+  if (uri && uri !== '/') {
+    const node = findFirstNode(contents);
     pageSrn = srn;
+    if (node && node.href) {
+      pageSrn = node.href;
+    }
+  } else {
     const node = findFirstNode(contents);
     if (node && node.href) {
       pageSrn = node.href;
     }
   }
-
-  // option 2: account for slash in conditional statement
-
-  // if (uri || uri.endsWith('/')) {
-  //   const node = findFirstNode(contents);
-  //   pageSrn = srn;
-  //   if (node && node.href) {
-  //     pageSrn = node.href;
-  //   }
-  // } else {
-  //   const node = findFirstNode(contents);
-  //   if (node && node.href) {
-  //     pageSrn = node.href;
-  //   }
-  // }
 
   // Show not found if we're done loading but have no contents to render
   if (NotFoundComponent && !isLoading && !contents.length) {
