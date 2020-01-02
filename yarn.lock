@@ -1909,11 +1909,6 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@rehooks/component-size@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@rehooks/component-size/-/component-size-1.0.3.tgz#823eabeb42084893d46d43e3a9d1d0e34252b3cb"
-  integrity sha512-pnYld+8SSF2vXwdLOqBGUyOrv/SjzwLjIUcs/4c1JJgR0q4E9eBtBfuZMD6zUD51fvSehSsbnlQMzotSmPTXPg==
-
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -2101,7 +2096,7 @@
     "@stoplight/json" "^3.1.1"
     "@stoplight/react-error-boundary" "^1.0.0"
     classnames "^2.2.6"
-    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
+    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -2137,7 +2132,7 @@
     remark-slug "^5.1.2"
     unified "^8.4.2"
 
-"@stoplight/markdown@^2.5.2", "@stoplight/markdown@^2.5.3":
+"@stoplight/markdown@^2.5.3":
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.5.3.tgz#25211b236a1c7a0d61acbe638a840b3c334bbb4a"
   integrity sha512-FX/Btq+DrGTITziVA8M5bCkaYLeWF8muqkSxJ28kSrWjFQMboDAi+NOQ6BOq1AjiPy/KtGVEIwHw6XMq6juRGA==
@@ -5273,6 +5268,11 @@ commander@^2.12.1, commander@^2.14.1, commander@^2.18.0, commander@^2.19.0, comm
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
   integrity sha512-7j2y+40w61zy6YC2iRNpUe/NwhNyoXrYpHMrSunaMG64nRnaf96zO/KMQR4OyN/UnE5KLyEBnKHd4aG3rskjpQ==
 
+commander@~2.20.3:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
+
 commitizen@3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/commitizen/-/commitizen-3.0.7.tgz#d87b742a5b1a72e06e183fa33e0e5136d296037a"
@@ -7959,21 +7959,10 @@ gzip-size@^5.0.0:
     duplexer "^0.1.1"
     pify "^4.0.1"
 
-handlebars@*, handlebars@^4.0.6:
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.4.3.tgz#180bae52c1d0e9ec0c15d7e82a4362d662762f6e"
-  integrity sha512-B0W4A2U1ww3q7VVthTKfh+epHx+q4mCt6iK+zEAzbMBpWQAwxCeKxEGpj/1oQTpzPXDNSOG7hmG14TsISH50yw==
-  dependencies:
-    neo-async "^2.6.0"
-    optimist "^0.6.1"
-    source-map "^0.6.1"
-  optionalDependencies:
-    uglify-js "^3.1.4"
-
-handlebars@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.2.tgz#b6b37c1ced0306b221e094fc7aca3ec23b131b67"
-  integrity sha512-nvfrjqvt9xQ8Z/w0ijewdD/vvWDTOweBUm96NTr66Wfvo1mJenBLwcYmPs3TIBP5ruzYGD7Hx/DaM9RmhroGPw==
+handlebars@*, handlebars@^4.0.6, handlebars@^4.1.2:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.3.tgz#5cf75bd8714f7605713511a56be7c349becb0482"
+  integrity sha512-3yPecJoJHK/4c6aZhSvxOyG4vJKDshV36VHp0iVCDVh7o9w2vwi3NSnL2MMPj3YdduqaBcu7cGbggJQM0br9xA==
   dependencies:
     neo-async "^2.6.0"
     optimist "^0.6.1"
@@ -9726,10 +9715,9 @@ json-schema-compare@^0.2.2:
   dependencies:
     lodash "^4.17.4"
 
-"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
+"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
   version "0.6.0"
-  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
-  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
@@ -10763,15 +10751,10 @@ mdast-util-definitions@^1.1.1:
   dependencies:
     unist-util-visit "^1.0.0"
 
-mdast-util-to-string@^1.0:
+mdast-util-to-string@^1.0, mdast-util-to-string@^1.0.0:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/mdast-util-to-string/-/mdast-util-to-string-1.0.7.tgz#62d8e9c6b2113070d8b497c7dc35bf12796f06ee"
   integrity sha512-P+gdtssCoHOX+eJUrrC30Sixqao86ZPlVjR5NEAoy0U79Pfxb1Y0Gntei0+GrnQD4T04X9xA8tcugp90cSmNow==
-
-mdast-util-to-string@^1.0.0:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/mdast-util-to-string/-/mdast-util-to-string-1.0.6.tgz#7d85421021343b33de1552fc71cb8e5b4ae7536d"
-  integrity sha512-868pp48gUPmZIhfKrLbaDneuzGiw3OTDjHc5M1kAepR2CWBJ+HpEsm252K4aXdiP5coVZaJPOqGtVU6Po8xnXg==
 
 mdn-data@2.0.4:
   version "2.0.4"
@@ -16532,7 +16515,15 @@ ua-parser-js@^0.7.18:
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.20.tgz#7527178b82f6a62a0f243d1f94fd30e3e3c21098"
   integrity sha512-8OaIKfzL5cpx8eCMAhhvTlft8GYF8b2eQr6JkCyVdrgjcytyOmPCXrqXFcUnhonRpLlh5yxEZVohm6mzaowUOw==
 
-uglify-js@^3.1.4, uglify-js@^3.5.1:
+uglify-js@^3.1.4:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.7.2.tgz#cb1a601e67536e9ed094a92dd1e333459643d3f9"
+  integrity sha512-uhRwZcANNWVLrxLfNFEdltoPNhECUR3lc+UdJoG9CBpMcSnKyWA94tc3eAujB1GcMY5Uwq8ZMp4qWpxWYDQmaA==
+  dependencies:
+    commander "~2.20.3"
+    source-map "~0.6.1"
+
+uglify-js@^3.5.1:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.6.0.tgz#704681345c53a8b2079fb6cec294b05ead242ff5"
   integrity sha512-W+jrUHJr3DXKhrsS7NUVxn3zqMOFn0hL/Ei6v0anCIMoKC93TjcflTagwIHLW7SfMFfiQuktQyFVCFHGUE0+yg==
