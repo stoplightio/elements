@@ -50,7 +50,7 @@
     "@stoplight/markdown": "^2.5.3",
     "@stoplight/markdown-viewer": "^3.7.0",
     "@stoplight/path": "^1.3.0",
-    "@stoplight/request-maker": "^3.3.6",
+    "@stoplight/request-maker": "^3.3.7",
     "@stoplight/tree-list": "^4.10.0",
     "@stoplight/types": "^11",
     "@stoplight/ui-kit": "^2.15.1",
