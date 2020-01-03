@@ -21,7 +21,7 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
   if (!securities || !securities.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Parameters', className)}>
+    <div className={cn('HttpSecuritySchemes', className)}>
       {title && <div className="text-lg font-semibold">{title}</div>}
 
       <div className="mt-6 border rounded TreeList dark:border-darken">
