@@ -2158,10 +2158,10 @@
   dependencies:
     "@stoplight/types" "^11.1.0"
 
-"@stoplight/request-maker@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.3.6.tgz#ba3008172d636d128b4877344f5f280533175763"
-  integrity sha512-gL202WE8F7wW3kFoE/6C/1mY6BS/gMdmEqXeAdQrJ7Oz5d6jWM55803TPXSEfwlz5iOyLMoJSqCxygTBuuiKnw==
+"@stoplight/request-maker@^3.3.8":
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.3.8.tgz#e7a48b59f1abd4b6cfd5e13fdea2ddda67f3214b"
+  integrity sha512-ya1ZcnPxO09a5icgyE4H71F+hnrd2W2SmwKWqlyfaFugEyJyj75ExOHrQO3qTmZGGgBtp6wDJZVAos0BuYI+QA==
   dependencies:
     "@stoplight/json" "^3.2.1"
     "@stoplight/markdown-viewer" "^3"
