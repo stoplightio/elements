@@ -12,6 +12,13 @@ jest.mock('../../../hooks/useResolver', () => ({
   useResolver: (type: any, result: any) => ({ result }),
 }));
 
+jest.mock('@stoplight/json-schema-viewer', () => ({
+  __esModule: true,
+  PropertyTypeColors: {},
+  Validations: () => <div />,
+  JsonSchemaViewer: () => <div />,
+}));
+
 describe('HttpOperation', () => {
   let wrapper: ReactWrapper;
 

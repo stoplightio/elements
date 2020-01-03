@@ -1,5 +1,4 @@
 import { Icon } from '@blueprintjs/core';
-import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpService, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
@@ -7,6 +6,7 @@ import { isEmpty } from 'lodash';
 import * as React from 'react';
 import { useResolver } from '../../hooks/useResolver';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
+import { MarkdownViewer } from '../MarkdownViewer';
 
 export interface IHttpServiceProps extends IErrorBoundary {
   className?: string;

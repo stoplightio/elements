@@ -168,58 +168,75 @@ exports[`HttpService should match snapshot 1`] = `
 
 "
       >
-        <ErrorBoundary
-          FallbackComponent={[Function]}
-        >
-          <MarkdownViewer.Component
-            className="mb-10"
-            markdown="This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
+        <MarkdownViewer
+          className="mb-10"
+          components={
+            Object {
+              "code": [Function],
+            }
+          }
+          markdown="This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
 
 "
+        >
+          <ErrorBoundary
+            FallbackComponent={[Function]}
           >
-            <div
-              className="MarkdownViewer mb-10"
+            <MarkdownViewer.Component
+              className="mb-10"
+              components={
+                Object {
+                  "code": [Function],
+                }
+              }
+              markdown="This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
+
+"
             >
-              <p
-                key="0"
+              <div
+                className="MarkdownViewer mb-10"
               >
-                This is a sample server Petstore server.  You can find out more about Swagger at 
-                <a
-                  href="http://swagger.io"
-                  key="1"
-                  title={null}
+                <p
+                  key="0"
                 >
-                  http://swagger.io
-                </a>
-                 or on 
-                <a
-                  href="http://swagger.io/irc/"
-                  key="3"
-                  title={null}
-                >
-                  irc.freenode.net, #swagger
-                </a>
-                .  For this sample, you can use the api key 
-                <CodeViewer
-                  className="inline-block line-none"
-                  inline={true}
-                  key="5"
-                  value="special-key"
-                >
-                  <code
-                    className="bp3-code-editor inline-block line-none isInline"
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "special-key",
+                  This is a sample server Petstore server.  You can find out more about Swagger at 
+                  <a
+                    href="http://swagger.io"
+                    key="1"
+                    title={null}
+                  >
+                    http://swagger.io
+                  </a>
+                   or on 
+                  <a
+                    href="http://swagger.io/irc/"
+                    key="3"
+                    title={null}
+                  >
+                    irc.freenode.net, #swagger
+                  </a>
+                  .  For this sample, you can use the api key 
+                  <CodeViewer
+                    className="inline-block line-none"
+                    inline={true}
+                    key="5"
+                    value="special-key"
+                  >
+                    <code
+                      className="bp3-code-editor inline-block line-none isInline"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "special-key",
+                        }
                       }
-                    }
-                  />
-                </CodeViewer>
-                 to test the authorization filters. 
-              </p>
-            </div>
-          </MarkdownViewer.Component>
-        </ErrorBoundary>
+                    />
+                  </CodeViewer>
+                   to test the authorization filters. 
+                </p>
+              </div>
+            </MarkdownViewer.Component>
+          </ErrorBoundary>
+        </MarkdownViewer>
       </MarkdownViewer>
       <div
         className="mb-10"
