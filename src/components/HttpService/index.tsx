@@ -3,8 +3,10 @@ import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpService, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
+import { isEmpty } from 'lodash';
 import * as React from 'react';
 import { useResolver } from '../../hooks/useResolver';
+import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 
 export interface IHttpServiceProps extends IErrorBoundary {
   className?: string;
@@ -13,18 +15,18 @@ export interface IHttpServiceProps extends IErrorBoundary {
 
 const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
   const { result } = useResolver<IHttpService>(NodeType.HttpService, value);
-  if (!result) return null;
+  if (isEmpty(result)) return null;
 
   return (
     <div className={cn('HttpService', className)}>
-      {result.description && <MarkdownViewer className="mb-12" markdown={result.description} />}
+      {result.description && <MarkdownViewer className="mb-10" markdown={result.description} />}
 
       {result.servers && result.servers.length > 0 ? (
-        <div className="mb-12">
-          <div className="text-xl font-semibold select-none mb-4">Servers</div>
+        <div className="mb-10">
+          <div className="mb-4 text-lg font-semibold select-none">Servers</div>
 
           {result.servers.map((server, index) => (
-            <div className="mt-4 flex-1 flex items-center" key={index}>
+            <div className="flex items-center flex-1 mt-4" key={index}>
               {server.name && <div>{server.name} - </div>}
               {server.description && <div>{server.description} - </div>}
 
@@ -36,17 +38,25 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
         </div>
       ) : null}
 
+      {result.security && (
+        <HttpSecuritySchemes className="mb-10" title="Global Securities" securities={result.security} />
+      )}
+
+      {result.securitySchemes && (
+        <HttpSecuritySchemes className="mb-10" title="Security Schemes" securities={result.securitySchemes} />
+      )}
+
       {result.contact && (result.contact.email || result.contact.url) && (
-        <div className="mb-12">
-          <div className="text-xl font-semibold select-none mb-4">Contact</div>
+        <div className="mb-10">
+          <div className="mb-4 text-lg font-semibold select-none">Contact</div>
 
           {result.contact.name && <div>{result.contact.name}</div>}
 
           {result.contact.email && result.contact.url && (
-            <div className="mt-2 flex items-center">
+            <div className="flex items-center mt-2">
               {result.contact.email && (
                 <a
-                  className="mr-4 flex items-center"
+                  className="flex items-center mr-4"
                   href={`mailto:${result.contact.email}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -67,8 +77,8 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
       )}
 
       {result.termsOfService && (
-        <div className="mb-12">
-          <div className="text-xl font-semibold select-none mb-4">Terms of Service</div>
+        <div className="mb-10">
+          <div className="mb-4 text-lg font-semibold select-none">Terms of Service</div>
 
           <a href={result.termsOfService} target="_blank" rel="noopener noreferrer">
             {result.termsOfService}
@@ -76,9 +86,9 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
         </div>
       )}
 
-      {result.license && (
+      {result.license && (result.license.url || result.license.name) && (
         <div>
-          <div className="text-xl font-semibold select-none mb-4">License</div>
+          <div className="mb-4 text-lg font-semibold select-none">License</div>
 
           {result.license.url ? (
             <a href={result.license.url} target="_blank" rel="noopener noreferrer">
