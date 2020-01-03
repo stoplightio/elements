@@ -1,6 +1,6 @@
 import { NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
-import { get } from 'lodash';
+import { first, get } from 'lodash';
 import * as React from 'react';
 
 import { deserializeSrn, serializeSrn } from '@stoplight/path';
@@ -29,7 +29,9 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
   const path = isHttpOperation && get(node, 'data.path');
 
   let versionSelector;
-  // let versionTag;
+  let versionTag;
+  const { versions } = node;
+  const latestVersion = get(first(versions), 'version');
 
   if (node.versions && node.versions.length > 1) {
     versionSelector = (
@@ -58,28 +60,29 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
       </span>
     );
 
-    //   versionTag = node.latestVersion ? (
-    //     <Tag round intent="success" className="ml-2">
-    //       Latest
-    //     </Tag>
-    //   ) : (
-    //     <Tag round intent="warning" className="ml-2">
-    //       Not Latest
-    //     </Tag>
-    //   );
-    // } else {
-    //   versionTag = (
-    //     <Tag round className="ml-2">
-    //       Not Versioned
-    //     </Tag>
-    //   );
+    versionTag =
+      node.version === latestVersion ? (
+        <Tag round intent="success" className="ml-2">
+          Latest
+        </Tag>
+      ) : (
+        <Tag round intent="warning" className="ml-2">
+          Not Latest
+        </Tag>
+      );
+  } else {
+    versionTag = (
+      <Tag round className="ml-2">
+        Not Versioned
+      </Tag>
+    );
   }
 
   return (
     <div className={className}>
       <div className="flex p-3">
         {versionSelector}
-        {/* {versionTag} */}
+        {versionTag}
       </div>
       <div className="flex items-center">
         {method && <Method className="mr-5" method={method} />}
