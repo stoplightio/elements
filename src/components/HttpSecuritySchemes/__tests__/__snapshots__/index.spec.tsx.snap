@@ -1,0 +1,921 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HttpSecuritySchemes should match snapshot 1`] = `
+<HttpOperation.Securities
+  securities={
+    Array [
+      Object {
+        "description": "Use \`?apikey=123\` to authenticate requests. It's super secure.",
+        "in": "query",
+        "key": "api_key",
+        "name": "API Key",
+        "type": "apiKey",
+      },
+      Object {
+        "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+        "key": "basicKey",
+        "scheme": "basic",
+        "type": "http",
+      },
+      Object {
+        "bearerFormat": "Authorization",
+        "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+        "key": "bearerKey",
+        "scheme": "bearer",
+        "type": "http",
+      },
+      Object {
+        "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+        "key": "openIdConnectKey",
+        "openIdConnectUrl": "http://openIdConnect.com",
+        "type": "openIdConnect",
+      },
+      Object {
+        "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+        "flows": Object {
+          "authorizationCode": Object {
+            "authorizationUrl": "http://authorizationUrl.com",
+            "refreshUrl": "http://refreshUrl.com",
+            "scopes": Object {
+              "read:pets": "read your pets",
+              "write:pets": "modify pets in your account",
+            },
+            "tokenUrl": "http://tokenUrl.com",
+          },
+          "clientCredentials": Object {
+            "refreshUrl": "http://refreshUrl.com",
+            "scopes": Object {
+              "read:pets": "read your pets",
+              "write:pets": "modify pets in your account",
+            },
+            "tokenUrl": "http://tokenUrl.com",
+          },
+          "implicit": Object {
+            "authorizationUrl": "http://authorizationUrl.com",
+            "refreshUrl": "http://refreshUrl.com",
+            "scopes": Object {
+              "read:pets": "read your pets",
+              "write:pets": "modify pets in your account",
+            },
+          },
+          "password": Object {
+            "refreshUrl": "http://refreshUrl.com",
+            "scopes": Object {
+              "read:pets": "read your pets",
+              "write:pets": "modify pets in your account",
+            },
+            "tokenUrl": "http://tokenUrl.com",
+          },
+        },
+        "key": "oauth2Key",
+        "type": "oauth2",
+      },
+    ]
+  }
+>
+  <div
+    className="HttpOperation__Parameters"
+  >
+    <div
+      className="mt-6 border rounded TreeList dark:border-darken"
+    >
+      <HttpOperation.Security
+        className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        security={
+          Object {
+            "description": "Use \`?apikey=123\` to authenticate requests. It's super secure.",
+            "in": "query",
+            "key": "api_key",
+            "name": "API Key",
+            "type": "apiKey",
+          }
+        }
+      >
+        <div
+          className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+          style={
+            Object {
+              "alignItems": "start",
+            }
+          }
+        >
+          <div
+            className="mr-4"
+          >
+            <div>
+              api_key
+            </div>
+            <div
+              className="text-sm text-green-7 dark:text-green-6"
+            >
+              apiKey
+            </div>
+          </div>
+          <div
+            className="flex-1"
+          >
+            <div
+              className="flex-1 text-darken-7 dark:text-lighten-7"
+            >
+              Use \`?apikey=123\` to authenticate requests. It's super secure.
+            </div>
+            <div
+              className="mt-2 bp3-tag bp3-minimal"
+            >
+              Query
+               parameter name: 
+              API Key
+            </div>
+          </div>
+        </div>
+      </HttpOperation.Security>
+      <HttpOperation.Security
+        className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+        security={
+          Object {
+            "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+            "key": "basicKey",
+            "scheme": "basic",
+            "type": "http",
+          }
+        }
+      >
+        <div
+          className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+          style={
+            Object {
+              "alignItems": "start",
+            }
+          }
+        >
+          <div
+            className="mr-4"
+          >
+            <div>
+              basicKey
+            </div>
+            <div
+              className="text-sm text-orange-7 dark:text-orange-6"
+            >
+              http
+            </div>
+          </div>
+          <div
+            className="flex-1"
+          >
+            <div
+              className="flex-1 text-darken-7 dark:text-lighten-7"
+            >
+              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+            </div>
+          </div>
+        </div>
+      </HttpOperation.Security>
+      <HttpOperation.Security
+        className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        security={
+          Object {
+            "bearerFormat": "Authorization",
+            "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+            "key": "bearerKey",
+            "scheme": "bearer",
+            "type": "http",
+          }
+        }
+      >
+        <div
+          className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+          style={
+            Object {
+              "alignItems": "start",
+            }
+          }
+        >
+          <div
+            className="mr-4"
+          >
+            <div>
+              bearerKey
+            </div>
+            <div
+              className="text-sm text-orange-7 dark:text-orange-6"
+            >
+              http
+            </div>
+          </div>
+          <div
+            className="flex-1"
+          >
+            <div
+              className="flex-1 text-darken-7 dark:text-lighten-7"
+            >
+              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+            </div>
+            <div
+              className="mt-2 bp3-tag bp3-minimal"
+            >
+              Bearer Format: 
+              Authorization
+            </div>
+          </div>
+        </div>
+      </HttpOperation.Security>
+      <HttpOperation.Security
+        className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+        security={
+          Object {
+            "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+            "key": "openIdConnectKey",
+            "openIdConnectUrl": "http://openIdConnect.com",
+            "type": "openIdConnect",
+          }
+        }
+      >
+        <div
+          className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+          style={
+            Object {
+              "alignItems": "start",
+            }
+          }
+        >
+          <div
+            className="mr-4"
+          >
+            <div>
+              openIdConnectKey
+            </div>
+            <div
+              className="text-sm text-blue-7 dark:text-blue-6"
+            >
+              openIdConnect
+            </div>
+          </div>
+          <div
+            className="flex-1"
+          >
+            <div
+              className="flex-1 text-darken-7 dark:text-lighten-7"
+            >
+              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+            </div>
+            <div
+              className="mt-2 bp3-tag bp3-minimal"
+            >
+              OpenId Connect URL: 
+              http://openIdConnect.com
+            </div>
+          </div>
+        </div>
+      </HttpOperation.Security>
+      <HttpOperation.Security
+        className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        security={
+          Object {
+            "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+            "flows": Object {
+              "authorizationCode": Object {
+                "authorizationUrl": "http://authorizationUrl.com",
+                "refreshUrl": "http://refreshUrl.com",
+                "scopes": Object {
+                  "read:pets": "read your pets",
+                  "write:pets": "modify pets in your account",
+                },
+                "tokenUrl": "http://tokenUrl.com",
+              },
+              "clientCredentials": Object {
+                "refreshUrl": "http://refreshUrl.com",
+                "scopes": Object {
+                  "read:pets": "read your pets",
+                  "write:pets": "modify pets in your account",
+                },
+                "tokenUrl": "http://tokenUrl.com",
+              },
+              "implicit": Object {
+                "authorizationUrl": "http://authorizationUrl.com",
+                "refreshUrl": "http://refreshUrl.com",
+                "scopes": Object {
+                  "read:pets": "read your pets",
+                  "write:pets": "modify pets in your account",
+                },
+              },
+              "password": Object {
+                "refreshUrl": "http://refreshUrl.com",
+                "scopes": Object {
+                  "read:pets": "read your pets",
+                  "write:pets": "modify pets in your account",
+                },
+                "tokenUrl": "http://tokenUrl.com",
+              },
+            },
+            "key": "oauth2Key",
+            "type": "oauth2",
+          }
+        }
+      >
+        <div
+          className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+          style={
+            Object {
+              "alignItems": "start",
+            }
+          }
+        >
+          <div
+            className="mr-4"
+          >
+            <div>
+              oauth2Key
+            </div>
+            <div
+              className="text-sm text-red-7 dark:text-red-6"
+            >
+              oauth2
+            </div>
+          </div>
+          <div
+            className="flex-1"
+          >
+            <div
+              className="flex-1 text-darken-7 dark:text-lighten-7"
+            >
+              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+            </div>
+            <OAuth2Flow
+              flow="implicit"
+              flowObject={
+                Object {
+                  "authorizationUrl": "http://authorizationUrl.com",
+                  "refreshUrl": "http://refreshUrl.com",
+                  "scopes": Object {
+                    "read:pets": "read your pets",
+                    "write:pets": "modify pets in your account",
+                  },
+                }
+              }
+            >
+              <div
+                className="py-2 mt-2 border-t"
+              >
+                <div
+                  className="py-2 font-semibold"
+                >
+                  Implicit
+                   OAuth Flow
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Authorize URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://authorizationUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://authorizationUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Refresh URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://refreshUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://refreshUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="py-1"
+                >
+                  Scopes
+                </div>
+                <ul
+                  className="list-disc"
+                  style={
+                    Object {
+                      "margin": 0,
+                    }
+                  }
+                >
+                  <li
+                    className="py-1"
+                    key="write:pets"
+                  >
+                    <Blueprint3.Tag
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-minimal"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            write:pets
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                     - 
+                    <span
+                      className="text-darken-7 dark:text-lighten-7"
+                    >
+                      modify pets in your account
+                    </span>
+                  </li>
+                  <li
+                    className="py-1"
+                    key="read:pets"
+                  >
+                    <Blueprint3.Tag
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-minimal"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            read:pets
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                     - 
+                    <span
+                      className="text-darken-7 dark:text-lighten-7"
+                    >
+                      read your pets
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </OAuth2Flow>
+            <OAuth2Flow
+              flow="password"
+              flowObject={
+                Object {
+                  "refreshUrl": "http://refreshUrl.com",
+                  "scopes": Object {
+                    "read:pets": "read your pets",
+                    "write:pets": "modify pets in your account",
+                  },
+                  "tokenUrl": "http://tokenUrl.com",
+                }
+              }
+            >
+              <div
+                className="py-2 mt-2 border-t"
+              >
+                <div
+                  className="py-2 font-semibold"
+                >
+                  Password
+                   OAuth Flow
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Token URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://tokenUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://tokenUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Refresh URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://refreshUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://refreshUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="py-1"
+                >
+                  Scopes
+                </div>
+                <ul
+                  className="list-disc"
+                  style={
+                    Object {
+                      "margin": 0,
+                    }
+                  }
+                >
+                  <li
+                    className="py-1"
+                    key="write:pets"
+                  >
+                    <Blueprint3.Tag
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-minimal"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            write:pets
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                     - 
+                    <span
+                      className="text-darken-7 dark:text-lighten-7"
+                    >
+                      modify pets in your account
+                    </span>
+                  </li>
+                  <li
+                    className="py-1"
+                    key="read:pets"
+                  >
+                    <Blueprint3.Tag
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-minimal"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            read:pets
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                     - 
+                    <span
+                      className="text-darken-7 dark:text-lighten-7"
+                    >
+                      read your pets
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </OAuth2Flow>
+            <OAuth2Flow
+              flow="clientCredentials"
+              flowObject={
+                Object {
+                  "refreshUrl": "http://refreshUrl.com",
+                  "scopes": Object {
+                    "read:pets": "read your pets",
+                    "write:pets": "modify pets in your account",
+                  },
+                  "tokenUrl": "http://tokenUrl.com",
+                }
+              }
+            >
+              <div
+                className="py-2 mt-2 border-t"
+              >
+                <div
+                  className="py-2 font-semibold"
+                >
+                  Client Credentials
+                   OAuth Flow
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Token URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://tokenUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://tokenUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Refresh URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://refreshUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://refreshUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="py-1"
+                >
+                  Scopes
+                </div>
+                <ul
+                  className="list-disc"
+                  style={
+                    Object {
+                      "margin": 0,
+                    }
+                  }
+                >
+                  <li
+                    className="py-1"
+                    key="write:pets"
+                  >
+                    <Blueprint3.Tag
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-minimal"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            write:pets
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                     - 
+                    <span
+                      className="text-darken-7 dark:text-lighten-7"
+                    >
+                      modify pets in your account
+                    </span>
+                  </li>
+                  <li
+                    className="py-1"
+                    key="read:pets"
+                  >
+                    <Blueprint3.Tag
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-minimal"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            read:pets
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                     - 
+                    <span
+                      className="text-darken-7 dark:text-lighten-7"
+                    >
+                      read your pets
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </OAuth2Flow>
+            <OAuth2Flow
+              flow="authorizationCode"
+              flowObject={
+                Object {
+                  "authorizationUrl": "http://authorizationUrl.com",
+                  "refreshUrl": "http://refreshUrl.com",
+                  "scopes": Object {
+                    "read:pets": "read your pets",
+                    "write:pets": "modify pets in your account",
+                  },
+                  "tokenUrl": "http://tokenUrl.com",
+                }
+              }
+            >
+              <div
+                className="py-2 mt-2 border-t"
+              >
+                <div
+                  className="py-2 font-semibold"
+                >
+                  Authorization Code
+                   OAuth Flow
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Authorize URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://authorizationUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://authorizationUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Token URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://tokenUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://tokenUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="flex items-center py-1"
+                >
+                  <div
+                    className="mr-1"
+                  >
+                    Refresh URL -
+                  </div>
+                  <div>
+                    <a
+                      href="http://refreshUrl.com"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      http://refreshUrl.com
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="py-1"
+                >
+                  Scopes
+                </div>
+                <ul
+                  className="list-disc"
+                  style={
+                    Object {
+                      "margin": 0,
+                    }
+                  }
+                >
+                  <li
+                    className="py-1"
+                    key="write:pets"
+                  >
+                    <Blueprint3.Tag
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-minimal"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            write:pets
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                     - 
+                    <span
+                      className="text-darken-7 dark:text-lighten-7"
+                    >
+                      modify pets in your account
+                    </span>
+                  </li>
+                  <li
+                    className="py-1"
+                    key="read:pets"
+                  >
+                    <Blueprint3.Tag
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-minimal"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            read:pets
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                     - 
+                    <span
+                      className="text-darken-7 dark:text-lighten-7"
+                    >
+                      read your pets
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </OAuth2Flow>
+          </div>
+        </div>
+      </HttpOperation.Security>
+    </div>
+  </div>
+</HttpOperation.Securities>
+`;

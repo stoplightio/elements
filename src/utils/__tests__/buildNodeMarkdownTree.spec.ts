@@ -1,6 +1,8 @@
 import { NodeType } from '@stoplight/types';
 import * as fs from 'fs';
 import * as path from 'path';
+import httpOperation from '../../__fixtures__/operations/put-todos';
+import httpService from '../../__fixtures__/services/petstore';
 import { buildNodeMarkdownTree } from '../buildNodeMarkdownTree';
 
 const basicArticle = fs.readFileSync(path.join(__dirname, '../../__fixtures__/articles/basic.md'));
@@ -12,12 +14,6 @@ const modelWithOneExample = JSON.parse(
 );
 const modelWithThreeExamples = JSON.parse(
   fs.readFileSync(path.join(__dirname, '../../__fixtures__/models/model-with-three-examples.json')).toString(),
-);
-const httpOperation = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../../__fixtures__/operations/put-todos.json')).toString(),
-);
-const httpService = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../../__fixtures__/services/petstore.json')).toString(),
 );
 
 describe('buildNodeMarkdownTree', () => {

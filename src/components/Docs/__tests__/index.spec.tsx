@@ -5,15 +5,15 @@ import { NodeType } from '@stoplight/types';
 import { shallow } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
-import { Docs } from '../Docs';
-import { HttpOperation } from '../HttpOperation';
-import { HttpService } from '../HttpService';
-import { Model } from '../Model';
 
-const httpOperation = require('../../__fixtures__/operations/put-todos.json');
-const httpService = require('../../__fixtures__/services/petstore.json');
+import httpOperation from '../../../__fixtures__/operations/put-todos';
+import httpService from '../../../__fixtures__/services/petstore';
+import { HttpOperation } from '../../HttpOperation';
+import { HttpService } from '../../HttpService';
+import { Model } from '../../Model';
+import { Docs } from '../index';
 
-jest.mock('../../hooks/useComponentSize', () => ({
+jest.mock('../../../hooks/useComponentSize', () => ({
   useComponentSize: () => ({ width: 1200 }),
 }));
 

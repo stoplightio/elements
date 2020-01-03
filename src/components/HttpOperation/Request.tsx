@@ -1,11 +1,10 @@
 import { HttpSecurityScheme, IHttpOperationRequest } from '@stoplight/types';
 import cn from 'classnames';
-import * as React from 'react';
-
 import { flatten } from 'lodash';
+import * as React from 'react';
+import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 import { Body } from './Body';
 import { Parameters } from './Parameters';
-import { Securities } from './Securities';
 
 export interface IRequestProps {
   request?: IHttpOperationRequest;
@@ -16,17 +15,16 @@ export interface IRequestProps {
 export const Request: React.FunctionComponent<IRequestProps> = ({ request, security, className }) => {
   if (!request || typeof request !== 'object') return null;
 
-  const { path, headers, query, body } = request;
+  const { path, headers, query, cookie, body } = request;
 
   return (
     <div className={cn('HttpOperation__Request', className)}>
-      {security && <Securities className="mb-10" title="Security Parameters" securities={flatten(security)} />}
+      <HttpSecuritySchemes className="mb-10" title="Security" securities={flatten(security)} />
 
-      {path && <Parameters className="mb-10" title="Path Parameters" parameters={path} />}
-
-      <Parameters className="mb-10" title="Headers" parameters={headers} />
-
+      <Parameters className="mb-10" title="Path Parameters" parameters={path} />
       <Parameters className="mb-10" title="Query Parameters" parameters={query} />
+      <Parameters className="mb-10" title="Cookie Parameters" parameters={cookie} />
+      <Parameters className="mb-10" title="Header Parameters" parameters={headers} />
 
       {body && <Body className="mb-10" body={body} />}
     </div>
