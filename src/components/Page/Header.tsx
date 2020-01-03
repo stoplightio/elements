@@ -80,7 +80,7 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
 
   return (
     <div className={className}>
-      <div className="flex p-3">
+      <div className="flex p-3 -ml-5">
         {versionSelector}
         {versionTag}
       </div>

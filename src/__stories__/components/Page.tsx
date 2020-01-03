@@ -148,16 +148,6 @@ storiesOf('components/Page', module)
                 semver: 'major',
               },
             ],
-            versions: [
-              {
-                version: '2.0',
-                uri: '/reference/todos/openapi.v2.json/paths/~1todos~1{todoId}/put',
-              },
-              {
-                version: '1.0',
-                uri: '/reference/todos/openapi.v2.json/paths/~1todos~1{todoId}/put',
-              },
-            ],
           }}
           tabs={({ node }) => [
             { title: 'Docs', content: <Docs node={node} padding="16" /> },
