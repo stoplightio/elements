@@ -5,17 +5,17 @@ exports[`Changelog should match snapshot 1`] = `
   changes={
     Array [
       Object {
-        "createdAt": "1578030408215",
+        "createdAt": "1000000000000",
         "message": "major message",
         "semver": "major",
       },
       Object {
-        "createdAt": "1578030408215",
+        "createdAt": "1000000000000",
         "message": "minor message",
         "semver": "minor",
       },
       Object {
-        "createdAt": "1478030408215",
+        "createdAt": "0000000000000",
         "message": "patch message",
         "semver": "patch",
       },
@@ -27,12 +27,12 @@ exports[`Changelog should match snapshot 1`] = `
   >
     <div
       className=""
-      key="Thu Jan 02 2020"
+      key="Sat Sep 08 2001"
     >
       <div
         className="Changelog__date p-2 font-medium"
       >
-        Thu Jan 02 2020
+        Sat Sep 08 2001
       </div>
       <div
         className="Changelog__item p-2 border-b border-gray-2 dark:border-lighten-3"
@@ -75,12 +75,12 @@ exports[`Changelog should match snapshot 1`] = `
     </div>
     <div
       className="mt-6"
-      key="Tue Nov 01 2016"
+      key="Wed Dec 31 1969"
     >
       <div
         className="Changelog__date p-2 font-medium"
       >
-        Tue Nov 01 2016
+        Wed Dec 31 1969
       </div>
       <div
         className="Changelog__item p-2 border-b border-gray-2 dark:border-lighten-3"
