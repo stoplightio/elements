@@ -30,7 +30,7 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
             'TreeListItem--striped': index % 2 !== 0,
           });
 
-          return <Security className={securityClassName} security={security} />;
+          return <Security key={index} className={securityClassName} security={security} />;
         })}
       </div>
     </div>
@@ -70,7 +70,7 @@ const Security = ({ security, className }: { security: HttpSecurityScheme; class
         )}
 
         {security.type === 'oauth2' &&
-          map(security.flows, (flowObject, flow) => <OAuth2Flow flow={flow} flowObject={flowObject} />)}
+          map(security.flows, (flowObject, flow) => <OAuth2Flow key={flow} flow={flow} flowObject={flowObject} />)}
       </div>
     </div>
   );

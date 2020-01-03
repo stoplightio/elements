@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Changelog should match snapshot 1`] = `
+<Memo()
+  changes={
+    Array [
+      Object {
+        "createdAt": "1578030408215",
+        "message": "major message",
+        "semver": "major",
+      },
+      Object {
+        "createdAt": "1578030408215",
+        "message": "minor message",
+        "semver": "minor",
+      },
+      Object {
+        "createdAt": "1478030408215",
+        "message": "patch message",
+        "semver": "patch",
+      },
+    ]
+  }
+>
+  <div
+    className="Changelog"
+  >
+    <div
+      className=""
+      key="Thu Jan 02 2020"
+    >
+      <div
+        className="Changelog__date p-2 font-medium"
+      >
+        Thu Jan 02 2020
+      </div>
+      <div
+        className="Changelog__item p-2 border-b border-gray-2 dark:border-lighten-3"
+        key="0"
+      >
+        <div
+          className="flex text-sm"
+        >
+          <div
+            className="Changelog__message flex-1 mr-3"
+          >
+            major message
+          </div>
+          <div
+            className="Changelog__semver lowercase font-semibold"
+          >
+            major
+          </div>
+        </div>
+      </div>
+      <div
+        className="Changelog__item p-2 border-b border-gray-2 dark:border-lighten-3"
+        key="1"
+      >
+        <div
+          className="flex text-sm"
+        >
+          <div
+            className="Changelog__message flex-1 mr-3"
+          >
+            minor message
+          </div>
+          <div
+            className="Changelog__semver lowercase font-semibold"
+          >
+            minor
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="mt-6"
+      key="Tue Nov 01 2016"
+    >
+      <div
+        className="Changelog__date p-2 font-medium"
+      >
+        Tue Nov 01 2016
+      </div>
+      <div
+        className="Changelog__item p-2 border-b border-gray-2 dark:border-lighten-3"
+        key="0"
+      >
+        <div
+          className="flex text-sm"
+        >
+          <div
+            className="Changelog__message flex-1 mr-3"
+          >
+            patch message
+          </div>
+          <div
+            className="Changelog__semver lowercase font-semibold"
+          >
+            patch
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Memo()>
+`;

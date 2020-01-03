@@ -81,6 +81,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
     >
       <HttpOperation.Security
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        key="0"
         security={
           Object {
             "description": "Use \`?apikey=123\` to authenticate requests. It's super secure.",
@@ -131,6 +132,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       </HttpOperation.Security>
       <HttpOperation.Security
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+        key="1"
         security={
           Object {
             "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
@@ -173,6 +175,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       </HttpOperation.Security>
       <HttpOperation.Security
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        key="2"
         security={
           Object {
             "bearerFormat": "Authorization",
@@ -222,6 +225,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       </HttpOperation.Security>
       <HttpOperation.Security
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+        key="3"
         security={
           Object {
             "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
@@ -270,6 +274,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       </HttpOperation.Security>
       <HttpOperation.Security
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        key="4"
         security={
           Object {
             "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
@@ -353,6 +358,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   },
                 }
               }
+              key="implicit"
             >
               <div
                 className="py-2 mt-2 border-t"
@@ -491,6 +497,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   "tokenUrl": "http://tokenUrl.com",
                 }
               }
+              key="password"
             >
               <div
                 className="py-2 mt-2 border-t"
@@ -629,6 +636,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   "tokenUrl": "http://tokenUrl.com",
                 }
               }
+              key="clientCredentials"
             >
               <div
                 className="py-2 mt-2 border-t"
@@ -768,6 +776,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   "tokenUrl": "http://tokenUrl.com",
                 }
               }
+              key="authorizationCode"
             >
               <div
                 className="py-2 mt-2 border-t"

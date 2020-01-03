@@ -3,6 +3,7 @@ import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpService, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
+import { isEmpty } from 'lodash';
 import * as React from 'react';
 import { useResolver } from '../../hooks/useResolver';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
@@ -14,7 +15,7 @@ export interface IHttpServiceProps extends IErrorBoundary {
 
 const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, value }) => {
   const { result } = useResolver<IHttpService>(NodeType.HttpService, value);
-  if (!result) return null;
+  if (isEmpty(result)) return null;
 
   return (
     <div className={cn('HttpService', className)}>
