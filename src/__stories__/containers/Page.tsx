@@ -22,11 +22,21 @@ export const pageKnobs = () => ({
 
 storiesOf('containers/Page', module)
   .addDecorator(withKnobs)
-  .add('Playground', () => (
+  .add('Playground', () => <Foo providerProps={providerKnobs()} pageProps={pageKnobs()} />);
+
+const Foo = ({ providerProps, pageProps }) => {
+  const [srn, setSrn] = React.useState(pageProps.srn);
+
+  React.useEffect(() => {
+    setSrn(pageProps.srn);
+  }, [pageProps.srn]);
+
+  return (
     <div className={cn('absolute inset-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-      <Provider {...providerKnobs()}>
+      <Provider {...providerProps} onChangeSrn={setSrn}>
         <Page
-          {...pageKnobs()}
+          {...pageProps}
+          srn={srn}
           className="h-full"
           padding="16"
           tabs={({ node }) => {
@@ -54,4 +64,5 @@ storiesOf('containers/Page', module)
         />
       </Provider>
     </div>
-  ));
+  );
+};

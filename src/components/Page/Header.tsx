@@ -3,10 +3,11 @@ import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBo
 import { get } from 'lodash';
 import * as React from 'react';
 
+import { deserializeSrn, serializeSrn } from '@stoplight/path';
 import { Classes, Icon, Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
+import { ActiveSrnContext } from '../../containers/Provider';
 import { INodeInfo } from '../../types';
-import { NodeTypeColors, NodeTypePrettyName } from '../../utils/node';
 import { Method } from '../HttpOperation/Method';
 import { Path } from '../HttpOperation/Path';
 
@@ -18,20 +19,18 @@ export interface IPageHeader extends IErrorBoundary {
 }
 
 const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, className, actions }) => {
-  if (!node.name) return null;
+  const [srn, onChangeSrn] = React.useContext(ActiveSrnContext);
 
-  const [currentVersion, setCurrentVersion] = React.useState(node.version);
+  if (!node.name) return null;
 
   const isHttpOperation = node.type === NodeType.HttpOperation;
   const method = isHttpOperation && get(node, 'data.method');
   const host = isHttpOperation && get(node, 'data.servers[0].url');
   const path = isHttpOperation && get(node, 'data.path');
 
-  // const hasVersion = node.latestVersion && node.latestVersion !== '0.0';
   let versionSelector;
   // let versionTag;
 
-  // if (hasVersion) {
   if (node.versions && node.versions.length > 1) {
     versionSelector = (
       <span className={cn('ml-2 relative', Classes.ROUND, Classes.TAG)}>
@@ -40,32 +39,24 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
           style={{ appearance: 'none', WebkitAppearance: 'none' }}
           value={node.version}
           onChange={e => {
-            setCurrentVersion(e.target.value);
-
-            // const version = node.versions.find(v => v.version === e.target.value);
-
-            // if (version) {
-            //   routerStore.setQuery(
-            //     { srn: serializeSrn({ ...deserializeSrn(routerStore.query.srn || ''), uri: version.uri }) },
-            //     { merge: true },
-            //   );
-            // }
+            const version = e.currentTarget.value;
+            const nodeUri = node.versions?.find(v => version === v.version)?.uri;
+            onChangeSrn(serializeSrn({ ...deserializeSrn(srn), uri: nodeUri }));
           }}
         >
-          {node.versions.map(version => (
-            <option key={version} value={version}>
-              v{version}
+          {node.versions.map((version, index) => (
+            <option key={index} value={version.version}>
+              v{version.version}
             </option>
           ))}
         </select>
 
         <span className="flex items-center h-full w-full">
-          <div className="flex-1">v{currentVersion}</div>
+          <div className="flex-1">v{node.version}</div>
           <Icon className="-mr-1" icon="caret-down" iconSize={14} />
         </span>
       </span>
     );
-    // }
 
     //   versionTag = node.latestVersion ? (
     //     <Tag round intent="success" className="ml-2">

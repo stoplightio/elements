@@ -14,7 +14,7 @@ import { useParsedData } from './useParsedData';
  */
 export function useResolver<T = any>(type: DocsNodeType, value: string) {
   const host = React.useContext(HostContext);
-  const srn = React.useContext(ActiveSrnContext);
+  const [srn] = React.useContext(ActiveSrnContext);
   const resolver = React.useContext(ResolverContext) || createResolver(host, srn);
   const parsedValue = useParsedData(type, value);
 

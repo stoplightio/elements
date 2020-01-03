@@ -21,6 +21,7 @@ export function useComponents() {
 }
 
 export const defaultComponents: IComponentMapping = {
+  link: () => <a href="www.github.com">Foo</a>,
   code: (props, key) => {
     const { node, defaultComponents: components, parent } = props;
     const { annotations, value } = node;

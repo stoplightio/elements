@@ -25,8 +25,13 @@ export interface INodeInfo {
   changes?: IChange[];
   id?: number | string;
   version?: string;
-  versions?: string[];
+  versions?: INodeVersion[];
   tags?: string[];
+}
+
+export interface INodeVersion {
+  version: string;
+  uri: string;
 }
 
 export interface IProjectNode {

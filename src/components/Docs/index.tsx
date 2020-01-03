@@ -2,7 +2,6 @@ import 'resize-observer-polyfill';
 
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import * as React from 'react';
-import { ActiveSrnContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeMarkdownHeadings } from '../../hooks/useComputeMarkdownHeadings';
 import { INodeInfo } from '../../types';
@@ -28,9 +27,7 @@ export const Docs = ({ node, padding = '12' }: IDocs) => {
 
   return (
     <div className="Page__docs flex w-full" ref={pageDocsRef}>
-      <ActiveSrnContext.Provider value={node.srn || ''}>
-        <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
-      </ActiveSrnContext.Provider>
+      <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
 
       <PageHeadings className="Page__headings" padding={padding} headings={headings} minimal={!showHeadings} />
     </div>
