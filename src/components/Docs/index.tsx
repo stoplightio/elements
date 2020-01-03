@@ -17,14 +17,13 @@ export const Docs = ({ node, padding = '12' }: IDocs) => {
   const components = useComponents();
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const { width } = useComponentSize(containerRef);
-  const pageDocsRef = React.useRef<HTMLDivElement | null>(null);
   const showHeadings = width >= 1000;
 
   const tree = buildNodeMarkdownTree(node.type, node.data);
   const headings = useComputeMarkdownHeadings(tree);
 
   return (
-    <div className="Page__docs flex w-full" ref={pageDocsRef}>
+    <div className="Page__docs flex w-full" ref={containerRef}>
       <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
 
       <PageHeadings className="Page__headings" padding={padding} headings={headings} minimal={!showHeadings} />
