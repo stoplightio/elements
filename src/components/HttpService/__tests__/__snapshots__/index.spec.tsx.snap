@@ -344,7 +344,7 @@ exports[`HttpService should match snapshot 1`] = `
         title="Security Schemes"
       >
         <div
-          className="HttpOperation__Parameters mb-10"
+          className="HttpSecuritySchemes mb-10"
         >
           <div
             className="text-lg font-semibold"

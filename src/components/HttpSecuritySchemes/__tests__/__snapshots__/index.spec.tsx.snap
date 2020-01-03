@@ -74,7 +74,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
   }
 >
   <div
-    className="HttpOperation__Parameters"
+    className="HttpSecuritySchemes"
   >
     <div
       className="mt-6 border rounded TreeList dark:border-darken"
