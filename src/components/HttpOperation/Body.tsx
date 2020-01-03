@@ -1,9 +1,9 @@
-import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import cn from 'classnames';
 import { get } from 'lodash';
 import * as React from 'react';
 
+import { MarkdownViewer } from '../MarkdownViewer';
 import { Schema } from './Schema';
 
 export interface IBodyProps {

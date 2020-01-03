@@ -18,7 +18,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
     <div className={cn('HttpOperation__Parameters', className)}>
       {title && <div className="text-lg font-semibold">{title}</div>}
 
-      <div className="TreeList TreeList--interactive rounded border dark:border-darken mt-6">
+      <div className="mt-6 border rounded TreeList TreeList--interactive dark:border-darken">
         {sortBy(parameters, 'required').map((parameter, index) => (
           <Parameter
             key={index}
@@ -60,7 +60,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
     <div
       className={cn('HttpOperation__Parameter h-10 px-2 flex items-center text-sm cursor-pointer truncate', className)}
     >
-      <Tooltip className="flex truncate mr-2" targetClassName="truncate" content={parameter.name}>
+      <Tooltip className="flex mr-2 truncate" targetClassName="truncate" content={parameter.name}>
         <div className="truncate">{parameter.name}</div>
       </Tooltip>
 
@@ -68,8 +68,8 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
       <div className="flex-1 truncate">
         {description && (
-          <Tooltip className="flex truncate mr-2" targetClassName="truncate" content={description}>
-            <div className="text-darken-7 dark:text-lighten-7 truncate">{truncate(description, { length: 150 })}</div>
+          <Tooltip className="flex mr-2 truncate" targetClassName="truncate" content={description}>
+            <div className="truncate text-darken-7 dark:text-lighten-7">{truncate(description, { length: 150 })}</div>
           </Tooltip>
         )}
       </div>

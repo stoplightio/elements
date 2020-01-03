@@ -1,9 +1,9 @@
-import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IHttpOperation, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
 import { useResolver } from '../../hooks/useResolver';
+import { MarkdownViewer } from '../MarkdownViewer';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
@@ -25,7 +25,7 @@ const HttpOperationComponent: React.FunctionComponent<IHttpOperationProps> = ({ 
   return (
     <div className={cn('HttpOperation', className)}>
       {result.description && (
-        <MarkdownViewer className="HttpOperation__Description mb-10" markdown={result.description} />
+        <MarkdownViewer className="mb-10 HttpOperation__Description" markdown={result.description} />
       )}
 
       <Request request={result.request} security={result.security} />
