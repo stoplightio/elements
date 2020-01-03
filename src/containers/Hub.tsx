@@ -29,7 +29,6 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
   let pageSrn;
 
   if (uri && uri !== '/') {
-    const node = findFirstNode(contents);
     pageSrn = srn;
     if (node && node.href) {
       pageSrn = node.href;
