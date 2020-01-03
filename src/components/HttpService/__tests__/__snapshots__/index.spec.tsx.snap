@@ -294,12 +294,12 @@ exports[`HttpService should match snapshot 1`] = `
           </a>
         </div>
       </div>
-      <HttpOperation.Securities
+      <HttpSecuritySchemes
         className="mb-10"
         securities={Array []}
         title="Global Securities"
       />
-      <HttpOperation.Securities
+      <HttpSecuritySchemes
         className="mb-10"
         securities={
           Array [
@@ -354,7 +354,7 @@ exports[`HttpService should match snapshot 1`] = `
           <div
             className="mt-6 border rounded TreeList dark:border-darken"
           >
-            <HttpOperation.Security
+            <HttpSecuritySchemes.SecurityScheme
               className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
               key="0"
               security={
@@ -424,7 +424,7 @@ exports[`HttpService should match snapshot 1`] = `
                   >
                     Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
                   </div>
-                  <OAuth2Flow
+                  <HttpSecuritySchemes.OAuth2Flow
                     flow="implicit"
                     flowObject={
                       Object {
@@ -529,8 +529,8 @@ exports[`HttpService should match snapshot 1`] = `
                         </li>
                       </ul>
                     </div>
-                  </OAuth2Flow>
-                  <OAuth2Flow
+                  </HttpSecuritySchemes.OAuth2Flow>
+                  <HttpSecuritySchemes.OAuth2Flow
                     flow="password"
                     flowObject={
                       Object {
@@ -635,8 +635,8 @@ exports[`HttpService should match snapshot 1`] = `
                         </li>
                       </ul>
                     </div>
-                  </OAuth2Flow>
-                  <OAuth2Flow
+                  </HttpSecuritySchemes.OAuth2Flow>
+                  <HttpSecuritySchemes.OAuth2Flow
                     flow="clientCredentials"
                     flowObject={
                       Object {
@@ -741,8 +741,8 @@ exports[`HttpService should match snapshot 1`] = `
                         </li>
                       </ul>
                     </div>
-                  </OAuth2Flow>
-                  <OAuth2Flow
+                  </HttpSecuritySchemes.OAuth2Flow>
+                  <HttpSecuritySchemes.OAuth2Flow
                     flow="authorizationCode"
                     flowObject={
                       Object {
@@ -866,13 +866,13 @@ exports[`HttpService should match snapshot 1`] = `
                         </li>
                       </ul>
                     </div>
-                  </OAuth2Flow>
+                  </HttpSecuritySchemes.OAuth2Flow>
                 </div>
               </div>
-            </HttpOperation.Security>
+            </HttpSecuritySchemes.SecurityScheme>
           </div>
         </div>
-      </HttpOperation.Securities>
+      </HttpSecuritySchemes>
       <div
         className="mb-10"
       >

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HttpSecuritySchemes should match snapshot 1`] = `
-<HttpOperation.Securities
+<HttpSecuritySchemes
   securities={
     Array [
       Object {
@@ -79,7 +79,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
     <div
       className="mt-6 border rounded TreeList dark:border-darken"
     >
-      <HttpOperation.Security
+      <HttpSecuritySchemes.SecurityScheme
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
         key="0"
         security={
@@ -129,8 +129,8 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
         </div>
-      </HttpOperation.Security>
-      <HttpOperation.Security
+      </HttpSecuritySchemes.SecurityScheme>
+      <HttpSecuritySchemes.SecurityScheme
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
         key="1"
         security={
@@ -172,8 +172,8 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
         </div>
-      </HttpOperation.Security>
-      <HttpOperation.Security
+      </HttpSecuritySchemes.SecurityScheme>
+      <HttpSecuritySchemes.SecurityScheme
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
         key="2"
         security={
@@ -222,8 +222,8 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
         </div>
-      </HttpOperation.Security>
-      <HttpOperation.Security
+      </HttpSecuritySchemes.SecurityScheme>
+      <HttpSecuritySchemes.SecurityScheme
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
         key="3"
         security={
@@ -271,8 +271,8 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
         </div>
-      </HttpOperation.Security>
-      <HttpOperation.Security
+      </HttpSecuritySchemes.SecurityScheme>
+      <HttpSecuritySchemes.SecurityScheme
         className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
         key="4"
         security={
@@ -346,7 +346,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
             </div>
-            <OAuth2Flow
+            <HttpSecuritySchemes.OAuth2Flow
               flow="implicit"
               flowObject={
                 Object {
@@ -484,8 +484,8 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   </li>
                 </ul>
               </div>
-            </OAuth2Flow>
-            <OAuth2Flow
+            </HttpSecuritySchemes.OAuth2Flow>
+            <HttpSecuritySchemes.OAuth2Flow
               flow="password"
               flowObject={
                 Object {
@@ -623,8 +623,8 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   </li>
                 </ul>
               </div>
-            </OAuth2Flow>
-            <OAuth2Flow
+            </HttpSecuritySchemes.OAuth2Flow>
+            <HttpSecuritySchemes.OAuth2Flow
               flow="clientCredentials"
               flowObject={
                 Object {
@@ -762,8 +762,8 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   </li>
                 </ul>
               </div>
-            </OAuth2Flow>
-            <OAuth2Flow
+            </HttpSecuritySchemes.OAuth2Flow>
+            <HttpSecuritySchemes.OAuth2Flow
               flow="authorizationCode"
               flowObject={
                 Object {
@@ -920,11 +920,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   </li>
                 </ul>
               </div>
-            </OAuth2Flow>
+            </HttpSecuritySchemes.OAuth2Flow>
           </div>
         </div>
-      </HttpOperation.Security>
+      </HttpSecuritySchemes.SecurityScheme>
     </div>
   </div>
-</HttpOperation.Securities>
+</HttpSecuritySchemes>
 `;

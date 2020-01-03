@@ -30,15 +30,15 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
             'TreeListItem--striped': index % 2 !== 0,
           });
 
-          return <Security key={index} className={securityClassName} security={security} />;
+          return <SecurityScheme key={index} className={securityClassName} security={security} />;
         })}
       </div>
     </div>
   );
 };
-HttpSecuritySchemes.displayName = 'HttpOperation.Securities';
+HttpSecuritySchemes.displayName = 'HttpSecuritySchemes';
 
-const Security = ({ security, className }: { security: HttpSecurityScheme; className?: string }) => {
+const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme; className?: string }) => {
   return (
     <div className={cn(className)} style={{ alignItems: 'start' }}>
       <div className="mr-4">
@@ -75,7 +75,7 @@ const Security = ({ security, className }: { security: HttpSecurityScheme; class
     </div>
   );
 };
-Security.displayName = 'HttpOperation.Security';
+SecurityScheme.displayName = 'HttpSecuritySchemes.SecurityScheme';
 
 const OAuth2Flow = ({
   flow,
@@ -141,3 +141,4 @@ const OAuth2Flow = ({
     </div>
   );
 };
+OAuth2Flow.displayName = 'HttpSecuritySchemes.OAuth2Flow';
