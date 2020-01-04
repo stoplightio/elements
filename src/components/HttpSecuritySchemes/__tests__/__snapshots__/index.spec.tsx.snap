@@ -120,13 +120,30 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               Use \`?apikey=123\` to authenticate requests. It's super secure.
             </div>
-            <div
-              className="mt-2 bp3-tag bp3-minimal"
+            <Blueprint3.Tag
+              className="mt-2 mr-2"
+              minimal={true}
             >
-              Query
-               parameter name: 
-              API Key
-            </div>
+              <span
+                className="bp3-tag bp3-minimal mt-2 mr-2"
+              >
+                <Blueprint3.Icon />
+                <Blueprint3.Text
+                  className="bp3-fill"
+                  ellipsize={true}
+                  tagName="span"
+                >
+                  <span
+                    className="bp3-text-overflow-ellipsis bp3-fill"
+                  >
+                    Query
+                     parameter name: 
+                    API Key
+                  </span>
+                </Blueprint3.Text>
+                <Blueprint3.Icon />
+              </span>
+            </Blueprint3.Tag>
           </div>
         </div>
       </HttpSecuritySchemes.SecurityScheme>
@@ -170,6 +187,29 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
             </div>
+            <Blueprint3.Tag
+              className="mt-2 mr-2"
+              minimal={true}
+            >
+              <span
+                className="bp3-tag bp3-minimal mt-2 mr-2"
+              >
+                <Blueprint3.Icon />
+                <Blueprint3.Text
+                  className="bp3-fill"
+                  ellipsize={true}
+                  tagName="span"
+                >
+                  <span
+                    className="bp3-text-overflow-ellipsis bp3-fill"
+                  >
+                    Scheme: 
+                    basic
+                  </span>
+                </Blueprint3.Text>
+                <Blueprint3.Icon />
+              </span>
+            </Blueprint3.Tag>
           </div>
         </div>
       </HttpSecuritySchemes.SecurityScheme>
@@ -214,12 +254,52 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
             </div>
-            <div
-              className="mt-2 bp3-tag bp3-minimal"
+            <Blueprint3.Tag
+              className="mt-2 mr-2"
+              minimal={true}
             >
-              Bearer Format: 
-              Authorization
-            </div>
+              <span
+                className="bp3-tag bp3-minimal mt-2 mr-2"
+              >
+                <Blueprint3.Icon />
+                <Blueprint3.Text
+                  className="bp3-fill"
+                  ellipsize={true}
+                  tagName="span"
+                >
+                  <span
+                    className="bp3-text-overflow-ellipsis bp3-fill"
+                  >
+                    Scheme: 
+                    bearer
+                  </span>
+                </Blueprint3.Text>
+                <Blueprint3.Icon />
+              </span>
+            </Blueprint3.Tag>
+            <Blueprint3.Tag
+              className="mt-2 mr-2"
+              minimal={true}
+            >
+              <span
+                className="bp3-tag bp3-minimal mt-2 mr-2"
+              >
+                <Blueprint3.Icon />
+                <Blueprint3.Text
+                  className="bp3-fill"
+                  ellipsize={true}
+                  tagName="span"
+                >
+                  <span
+                    className="bp3-text-overflow-ellipsis bp3-fill"
+                  >
+                    Bearer Format: 
+                    Authorization
+                  </span>
+                </Blueprint3.Text>
+                <Blueprint3.Icon />
+              </span>
+            </Blueprint3.Tag>
           </div>
         </div>
       </HttpSecuritySchemes.SecurityScheme>
@@ -263,12 +343,29 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
             </div>
-            <div
-              className="mt-2 bp3-tag bp3-minimal"
+            <Blueprint3.Tag
+              className="mt-2 mr-2"
+              minimal={true}
             >
-              OpenId Connect URL: 
-              http://openIdConnect.com
-            </div>
+              <span
+                className="bp3-tag bp3-minimal mt-2 mr-2"
+              >
+                <Blueprint3.Icon />
+                <Blueprint3.Text
+                  className="bp3-fill"
+                  ellipsize={true}
+                  tagName="span"
+                >
+                  <span
+                    className="bp3-text-overflow-ellipsis bp3-fill"
+                  >
+                    OpenId Connect URL: 
+                    http://openIdConnect.com
+                  </span>
+                </Blueprint3.Text>
+                <Blueprint3.Icon />
+              </span>
+            </Blueprint3.Tag>
           </div>
         </div>
       </HttpSecuritySchemes.SecurityScheme>

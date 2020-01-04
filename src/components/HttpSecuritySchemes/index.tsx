@@ -55,18 +55,28 @@ const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme;
       <div className="flex-1">
         {security.description && <div className="flex-1 text-darken-7 dark:text-lighten-7">{security.description}</div>}
 
+        {'scheme' in security && security.scheme && (
+          <Tag className="mt-2 mr-2" minimal>
+            Scheme: {security.scheme}
+          </Tag>
+        )}
+
         {'bearerFormat' in security && security.bearerFormat && (
-          <div className="mt-2 bp3-tag bp3-minimal">Bearer Format: {security.bearerFormat}</div>
+          <Tag className="mt-2 mr-2" minimal>
+            Bearer Format: {security.bearerFormat}
+          </Tag>
         )}
 
         {'in' in security && security.in && (
-          <div className="mt-2 bp3-tag bp3-minimal">
+          <Tag className="mt-2 mr-2" minimal>
             {startCase(security.in)} parameter name: {security.name}
-          </div>
+          </Tag>
         )}
 
         {'openIdConnectUrl' in security && security.openIdConnectUrl && (
-          <div className="mt-2 bp3-tag bp3-minimal">OpenId Connect URL: {security.openIdConnectUrl}</div>
+          <Tag className="mt-2 mr-2" minimal>
+            OpenId Connect URL: {security.openIdConnectUrl}
+          </Tag>
         )}
 
         {security.type === 'oauth2' &&
