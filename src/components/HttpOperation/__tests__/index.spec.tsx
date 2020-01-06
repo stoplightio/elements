@@ -5,11 +5,18 @@ import { SimpleTab } from '@stoplight/ui-kit/SimpleTabs';
 import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
-import { HttpOperation } from '../HttpOperation';
-import { Parameters } from '../HttpOperation/Parameters';
+import { HttpOperation } from '../index';
+import { Parameters } from '../Parameters';
 
-jest.mock('../../hooks/useResolver', () => ({
+jest.mock('../../../hooks/useResolver', () => ({
   useResolver: (type: any, result: any) => ({ result }),
+}));
+
+jest.mock('@stoplight/json-schema-viewer', () => ({
+  __esModule: true,
+  PropertyTypeColors: {},
+  Validations: () => <div />,
+  JsonSchemaViewer: () => <div />,
 }));
 
 describe('HttpOperation', () => {

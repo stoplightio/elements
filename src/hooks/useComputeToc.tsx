@@ -1,5 +1,5 @@
 import { Dictionary, NodeType } from '@stoplight/types';
-import { compact, escapeRegExp, sortBy, startCase, upperFirst } from 'lodash';
+import { compact, escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
 import * as React from 'react';
 import { IconsContext } from '../containers/Provider';
 import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
@@ -49,8 +49,9 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
   /** Docs folder */
   const docsNodes = sortBy(
     nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article),
-    'srn',
+    node => toLower(node.srn),
   );
+
   for (const nodeIndex in docsNodes) {
     if (!docsNodes[nodeIndex]) continue;
     const node = docsNodes[nodeIndex];
@@ -110,11 +111,11 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
   /** Reference folder */
   const httpServiceNodes = sortBy(
     nodes.filter(n => n.type === NodeType.HttpService),
-    'name',
+    node => toLower(node.name),
   );
+
   for (const httpServiceNode of httpServiceNodes) {
     const parentUriRegexp = new RegExp(`^${escapeRegExp(httpServiceNode.uri)}\/`, 'i');
-
     const childNodes = nodes.filter(node => parentUriRegexp.test(node.uri) && node.type !== NodeType.HttpService);
     if (!childNodes.length) continue;
 
@@ -146,7 +147,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     /** Group by Tags */
     for (const childNode of childNodes) {
       if (childNode.tags && childNode.tags.length) {
-        const tag = childNode.tags[0].toLowerCase();
+        const tag = toLower(childNode.tags[0]);
         if (!tags[tag]) {
           tags[tag] = [];
         }
@@ -158,7 +159,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     }
 
     /** Add tag groups to the tree */
-    const sortedTags = sortBy(Object.keys(tags));
+    const sortedTags = sortBy(Object.keys(tags), t => toLower(t));
     for (const tagIndex in sortedTags) {
       if (!sortedTags[tagIndex]) continue;
       const tag = sortedTags[tagIndex];
@@ -193,7 +194,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
         icon: icons.group,
       });
 
-      for (const otherChild of sortBy(other, 'name')) {
+      for (const otherChild of sortBy(other, n => toLower(n.name))) {
         contents.push({
           id: otherChild.id,
           name: otherChild.name,
@@ -208,10 +209,12 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** Models folder */
   const modelContents: IContentsNodeWithId[] = [];
+
   const modelNodes = sortBy(
     nodes.filter(n => n.type === NodeType.Model),
-    'name',
+    node => toLower(node.name),
   );
+
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
     if (contents.find(n => n.href === modelNode.srn)) continue;

@@ -2,22 +2,29 @@ import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
-import { shallow } from 'enzyme';
+import { parse } from '@stoplight/yaml';
+import { mount } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
-import { Docs } from '../Docs';
-import { HttpOperation } from '../HttpOperation';
-import { HttpService } from '../HttpService';
-import { Model } from '../Model';
 
-const httpOperation = require('../../__fixtures__/operations/put-todos.json');
-const httpService = require('../../__fixtures__/services/petstore.json');
+import httpOperation from '../../../__fixtures__/operations/put-todos';
+import httpService from '../../../__fixtures__/services/petstore';
+import { HttpOperation } from '../../HttpOperation';
+import { HttpService } from '../../HttpService';
+import { Docs } from '../index';
 
-jest.mock('../../hooks/useComponentSize', () => ({
+jest.mock('../../../hooks/useComponentSize', () => ({
   useComponentSize: () => ({ width: 1200 }),
 }));
 
+jest.mock('../../../hooks/useResolver', () => ({
+  useResolver: (type: any, result: any) => ({ result: parse(result) }),
+}));
+
 jest.mock('@stoplight/json-schema-viewer', () => ({
+  __esModule: true,
+  PropertyTypeColors: {},
+  Validations: () => <div />,
   JsonSchemaViewer: () => <div />,
 }));
 
@@ -30,11 +37,9 @@ describe('Docs component', () => {
         properties: {},
       };
 
-      const wrapper = shallow(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />)
-        .find(MarkdownViewer)
-        .dive()
-        .dive()
-        .dive();
+      const wrapper = mount(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />).find(
+        MarkdownViewer,
+      );
 
       expect(wrapper.html()).toContain('<p>I am a description!</p>');
     });
@@ -50,14 +55,9 @@ describe('Docs component', () => {
         },
       };
 
-      const wrapper = shallow(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />)
-        .find(MarkdownViewer)
-        .dive()
-        .dive()
-        .dive()
-        .find(Model)
-        .shallow()
-        .find(JsonSchemaViewer);
+      const wrapper = mount(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />).find(
+        JsonSchemaViewer,
+      );
 
       expect(wrapper).toHaveProp('schema', {
         type: 'object',
@@ -72,12 +72,9 @@ describe('Docs component', () => {
 
   describe('given http_operation type', () => {
     it('renders HttpOperation with given operation', () => {
-      const wrapper = shallow(<Docs node={{ type: NodeType.HttpOperation, data: httpOperation, srn: '', name: '' }} />)
-        .find(MarkdownViewer)
-        .dive()
-        .dive()
-        .dive()
-        .find(HttpOperation);
+      const wrapper = mount(
+        <Docs node={{ type: NodeType.HttpOperation, data: httpOperation, srn: '', name: '' }} />,
+      ).find(HttpOperation);
 
       expect(wrapper).toHaveProp('value', safeStringify(httpOperation, undefined, 4));
     });
@@ -85,12 +82,9 @@ describe('Docs component', () => {
 
   describe('given http_service type', () => {
     it('renders HttpService with given operation', () => {
-      const wrapper = shallow(<Docs node={{ type: NodeType.HttpService, data: httpService, srn: '', name: '' }} />)
-        .find(MarkdownViewer)
-        .dive()
-        .dive()
-        .dive()
-        .find(HttpService);
+      const wrapper = mount(<Docs node={{ type: NodeType.HttpService, data: httpService, srn: '', name: '' }} />).find(
+        HttpService,
+      );
 
       expect(wrapper).toHaveProp('value', safeStringify(httpService, undefined, 4));
     });

@@ -1,0 +1,1010 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HttpService should match snapshot 1`] = `
+<HttpService
+  value={
+    Object {
+      "contact": Object {
+        "email": "support@stoplight.io",
+        "name": "Support",
+        "url": "https://stoplight.io",
+      },
+      "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
+
+",
+      "id": "?http-service?",
+      "license": Object {
+        "name": "Apache 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      },
+      "name": "Petstore (OpenAPI v3)",
+      "security": Array [],
+      "securitySchemes": Array [
+        Object {
+          "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+          "flows": Object {
+            "authorizationCode": Object {
+              "authorizationUrl": "https://authorizationCode.authorization-url.com",
+              "refreshUrl": "https://authorizationCode.refresh-url.com",
+              "scopes": Object {
+                "scope:authorizationCode": "authorizationCode scope description",
+              },
+              "tokenUrl": "https://authorizationCode.token-url.com",
+            },
+            "clientCredentials": Object {
+              "refreshUrl": "https://clientCredentials.refresh-url.com",
+              "scopes": Object {
+                "scope:clientCredentials": "clientCredentials scope description",
+              },
+              "tokenUrl": "https://clientCredentials.token-url.com",
+            },
+            "implicit": Object {
+              "authorizationUrl": "https://implicit.authorization-url.com",
+              "refreshUrl": "https://implicit.refresh-url.com",
+              "scopes": Object {
+                "scope:implicit": "implicit scope description",
+              },
+            },
+            "password": Object {
+              "refreshUrl": "https://password.refresh-url.com",
+              "scopes": Object {
+                "scope:password": "password scope description",
+              },
+              "tokenUrl": "https://password.token-url.com",
+            },
+          },
+          "key": "oauth_scheme",
+          "type": "oauth2",
+        },
+      ],
+      "servers": Array [
+        Object {
+          "name": "Production API",
+          "url": "https://api.stoplight.io",
+        },
+        Object {
+          "name": "Staging API",
+          "url": "https://api.staging.stoplight.io",
+        },
+        Object {
+          "name": "Integration API",
+          "url": "https://api.int.stoplight.io",
+        },
+        Object {
+          "name": "Development API",
+          "url": "https://localhost:4060",
+        },
+      ],
+      "termsOfService": "https://terms-of-service.com",
+      "version": "1.0.0",
+    }
+  }
+>
+  <HttpService.Component
+    value={
+      Object {
+        "contact": Object {
+          "email": "support@stoplight.io",
+          "name": "Support",
+          "url": "https://stoplight.io",
+        },
+        "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
+
+",
+        "id": "?http-service?",
+        "license": Object {
+          "name": "Apache 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        },
+        "name": "Petstore (OpenAPI v3)",
+        "security": Array [],
+        "securitySchemes": Array [
+          Object {
+            "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+            "flows": Object {
+              "authorizationCode": Object {
+                "authorizationUrl": "https://authorizationCode.authorization-url.com",
+                "refreshUrl": "https://authorizationCode.refresh-url.com",
+                "scopes": Object {
+                  "scope:authorizationCode": "authorizationCode scope description",
+                },
+                "tokenUrl": "https://authorizationCode.token-url.com",
+              },
+              "clientCredentials": Object {
+                "refreshUrl": "https://clientCredentials.refresh-url.com",
+                "scopes": Object {
+                  "scope:clientCredentials": "clientCredentials scope description",
+                },
+                "tokenUrl": "https://clientCredentials.token-url.com",
+              },
+              "implicit": Object {
+                "authorizationUrl": "https://implicit.authorization-url.com",
+                "refreshUrl": "https://implicit.refresh-url.com",
+                "scopes": Object {
+                  "scope:implicit": "implicit scope description",
+                },
+              },
+              "password": Object {
+                "refreshUrl": "https://password.refresh-url.com",
+                "scopes": Object {
+                  "scope:password": "password scope description",
+                },
+                "tokenUrl": "https://password.token-url.com",
+              },
+            },
+            "key": "oauth_scheme",
+            "type": "oauth2",
+          },
+        ],
+        "servers": Array [
+          Object {
+            "name": "Production API",
+            "url": "https://api.stoplight.io",
+          },
+          Object {
+            "name": "Staging API",
+            "url": "https://api.staging.stoplight.io",
+          },
+          Object {
+            "name": "Integration API",
+            "url": "https://api.int.stoplight.io",
+          },
+          Object {
+            "name": "Development API",
+            "url": "https://localhost:4060",
+          },
+        ],
+        "termsOfService": "https://terms-of-service.com",
+        "version": "1.0.0",
+      }
+    }
+  >
+    <div
+      className="HttpService"
+    >
+      <MarkdownViewer
+        className="mb-10"
+        markdown="This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
+
+"
+      >
+        <MarkdownViewer
+          className="mb-10"
+          components={
+            Object {
+              "code": [Function],
+            }
+          }
+          markdown="This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
+
+"
+        >
+          <ErrorBoundary
+            FallbackComponent={[Function]}
+          >
+            <MarkdownViewer.Component
+              className="mb-10"
+              components={
+                Object {
+                  "code": [Function],
+                }
+              }
+              markdown="This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
+
+"
+            >
+              <div
+                className="MarkdownViewer mb-10"
+              >
+                <p
+                  key="0"
+                >
+                  This is a sample server Petstore server.  You can find out more about Swagger at 
+                  <a
+                    href="http://swagger.io"
+                    key="1"
+                    title={null}
+                  >
+                    http://swagger.io
+                  </a>
+                   or on 
+                  <a
+                    href="http://swagger.io/irc/"
+                    key="3"
+                    title={null}
+                  >
+                    irc.freenode.net, #swagger
+                  </a>
+                  .  For this sample, you can use the api key 
+                  <CodeViewer
+                    className="inline-block line-none"
+                    inline={true}
+                    key="5"
+                    value="special-key"
+                  >
+                    <code
+                      className="bp3-code-editor inline-block line-none isInline"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "special-key",
+                        }
+                      }
+                    />
+                  </CodeViewer>
+                   to test the authorization filters. 
+                </p>
+              </div>
+            </MarkdownViewer.Component>
+          </ErrorBoundary>
+        </MarkdownViewer>
+      </MarkdownViewer>
+      <div
+        className="mb-10"
+      >
+        <div
+          className="mb-4 text-lg font-semibold select-none"
+        >
+          Servers
+        </div>
+        <div
+          className="flex items-center flex-1 mt-4"
+          key="0"
+        >
+          <div>
+            Production API
+             - 
+          </div>
+          <a
+            href="https://api.stoplight.io"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            https://api.stoplight.io
+          </a>
+        </div>
+        <div
+          className="flex items-center flex-1 mt-4"
+          key="1"
+        >
+          <div>
+            Staging API
+             - 
+          </div>
+          <a
+            href="https://api.staging.stoplight.io"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            https://api.staging.stoplight.io
+          </a>
+        </div>
+        <div
+          className="flex items-center flex-1 mt-4"
+          key="2"
+        >
+          <div>
+            Integration API
+             - 
+          </div>
+          <a
+            href="https://api.int.stoplight.io"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            https://api.int.stoplight.io
+          </a>
+        </div>
+        <div
+          className="flex items-center flex-1 mt-4"
+          key="3"
+        >
+          <div>
+            Development API
+             - 
+          </div>
+          <a
+            href="https://localhost:4060"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            https://localhost:4060
+          </a>
+        </div>
+      </div>
+      <HttpSecuritySchemes
+        className="mb-10"
+        securities={Array []}
+        title="Global Securities"
+      />
+      <HttpSecuritySchemes
+        className="mb-10"
+        securities={
+          Array [
+            Object {
+              "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+              "flows": Object {
+                "authorizationCode": Object {
+                  "authorizationUrl": "https://authorizationCode.authorization-url.com",
+                  "refreshUrl": "https://authorizationCode.refresh-url.com",
+                  "scopes": Object {
+                    "scope:authorizationCode": "authorizationCode scope description",
+                  },
+                  "tokenUrl": "https://authorizationCode.token-url.com",
+                },
+                "clientCredentials": Object {
+                  "refreshUrl": "https://clientCredentials.refresh-url.com",
+                  "scopes": Object {
+                    "scope:clientCredentials": "clientCredentials scope description",
+                  },
+                  "tokenUrl": "https://clientCredentials.token-url.com",
+                },
+                "implicit": Object {
+                  "authorizationUrl": "https://implicit.authorization-url.com",
+                  "refreshUrl": "https://implicit.refresh-url.com",
+                  "scopes": Object {
+                    "scope:implicit": "implicit scope description",
+                  },
+                },
+                "password": Object {
+                  "refreshUrl": "https://password.refresh-url.com",
+                  "scopes": Object {
+                    "scope:password": "password scope description",
+                  },
+                  "tokenUrl": "https://password.token-url.com",
+                },
+              },
+              "key": "oauth_scheme",
+              "type": "oauth2",
+            },
+          ]
+        }
+        title="Security Schemes"
+      >
+        <div
+          className="HttpSecuritySchemes mb-10"
+        >
+          <div
+            className="text-lg font-semibold"
+          >
+            Security Schemes
+          </div>
+          <div
+            className="mt-6 border rounded TreeList dark:border-darken"
+          >
+            <HttpSecuritySchemes.SecurityScheme
+              className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+              key="0"
+              security={
+                Object {
+                  "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                  "flows": Object {
+                    "authorizationCode": Object {
+                      "authorizationUrl": "https://authorizationCode.authorization-url.com",
+                      "refreshUrl": "https://authorizationCode.refresh-url.com",
+                      "scopes": Object {
+                        "scope:authorizationCode": "authorizationCode scope description",
+                      },
+                      "tokenUrl": "https://authorizationCode.token-url.com",
+                    },
+                    "clientCredentials": Object {
+                      "refreshUrl": "https://clientCredentials.refresh-url.com",
+                      "scopes": Object {
+                        "scope:clientCredentials": "clientCredentials scope description",
+                      },
+                      "tokenUrl": "https://clientCredentials.token-url.com",
+                    },
+                    "implicit": Object {
+                      "authorizationUrl": "https://implicit.authorization-url.com",
+                      "refreshUrl": "https://implicit.refresh-url.com",
+                      "scopes": Object {
+                        "scope:implicit": "implicit scope description",
+                      },
+                    },
+                    "password": Object {
+                      "refreshUrl": "https://password.refresh-url.com",
+                      "scopes": Object {
+                        "scope:password": "password scope description",
+                      },
+                      "tokenUrl": "https://password.token-url.com",
+                    },
+                  },
+                  "key": "oauth_scheme",
+                  "type": "oauth2",
+                }
+              }
+            >
+              <div
+                className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+                style={
+                  Object {
+                    "alignItems": "start",
+                  }
+                }
+              >
+                <div
+                  className="mr-4"
+                >
+                  <div>
+                    oauth_scheme
+                  </div>
+                  <div
+                    className="text-sm text-red-7 dark:text-red-6"
+                  >
+                    oauth2
+                  </div>
+                </div>
+                <div
+                  className="flex-1"
+                >
+                  <div
+                    className="flex-1 text-darken-7 dark:text-lighten-7"
+                  >
+                    Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                  </div>
+                  <HttpSecuritySchemes.OAuth2Flow
+                    flow="implicit"
+                    flowObject={
+                      Object {
+                        "authorizationUrl": "https://implicit.authorization-url.com",
+                        "refreshUrl": "https://implicit.refresh-url.com",
+                        "scopes": Object {
+                          "scope:implicit": "implicit scope description",
+                        },
+                      }
+                    }
+                    key="implicit"
+                  >
+                    <div
+                      className="py-2 mt-2 border-t"
+                    >
+                      <div
+                        className="py-2 font-semibold"
+                      >
+                        Implicit
+                         OAuth Flow
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Authorize URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://implicit.authorization-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://implicit.authorization-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Refresh URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://implicit.refresh-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://implicit.refresh-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="py-1"
+                      >
+                        Scopes
+                      </div>
+                      <ul
+                        className="list-disc"
+                        style={
+                          Object {
+                            "margin": 0,
+                          }
+                        }
+                      >
+                        <li
+                          className="py-1"
+                          key="scope:implicit"
+                        >
+                          <Blueprint3.Tag
+                            minimal={true}
+                          >
+                            <span
+                              className="bp3-tag bp3-minimal"
+                            >
+                              <Blueprint3.Icon />
+                              <Blueprint3.Text
+                                className="bp3-fill"
+                                ellipsize={true}
+                                tagName="span"
+                              >
+                                <span
+                                  className="bp3-text-overflow-ellipsis bp3-fill"
+                                >
+                                  scope:implicit
+                                </span>
+                              </Blueprint3.Text>
+                              <Blueprint3.Icon />
+                            </span>
+                          </Blueprint3.Tag>
+                           - 
+                          <span
+                            className="text-darken-7 dark:text-lighten-7"
+                          >
+                            implicit scope description
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </HttpSecuritySchemes.OAuth2Flow>
+                  <HttpSecuritySchemes.OAuth2Flow
+                    flow="password"
+                    flowObject={
+                      Object {
+                        "refreshUrl": "https://password.refresh-url.com",
+                        "scopes": Object {
+                          "scope:password": "password scope description",
+                        },
+                        "tokenUrl": "https://password.token-url.com",
+                      }
+                    }
+                    key="password"
+                  >
+                    <div
+                      className="py-2 mt-2 border-t"
+                    >
+                      <div
+                        className="py-2 font-semibold"
+                      >
+                        Password
+                         OAuth Flow
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Token URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://password.token-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://password.token-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Refresh URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://password.refresh-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://password.refresh-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="py-1"
+                      >
+                        Scopes
+                      </div>
+                      <ul
+                        className="list-disc"
+                        style={
+                          Object {
+                            "margin": 0,
+                          }
+                        }
+                      >
+                        <li
+                          className="py-1"
+                          key="scope:password"
+                        >
+                          <Blueprint3.Tag
+                            minimal={true}
+                          >
+                            <span
+                              className="bp3-tag bp3-minimal"
+                            >
+                              <Blueprint3.Icon />
+                              <Blueprint3.Text
+                                className="bp3-fill"
+                                ellipsize={true}
+                                tagName="span"
+                              >
+                                <span
+                                  className="bp3-text-overflow-ellipsis bp3-fill"
+                                >
+                                  scope:password
+                                </span>
+                              </Blueprint3.Text>
+                              <Blueprint3.Icon />
+                            </span>
+                          </Blueprint3.Tag>
+                           - 
+                          <span
+                            className="text-darken-7 dark:text-lighten-7"
+                          >
+                            password scope description
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </HttpSecuritySchemes.OAuth2Flow>
+                  <HttpSecuritySchemes.OAuth2Flow
+                    flow="clientCredentials"
+                    flowObject={
+                      Object {
+                        "refreshUrl": "https://clientCredentials.refresh-url.com",
+                        "scopes": Object {
+                          "scope:clientCredentials": "clientCredentials scope description",
+                        },
+                        "tokenUrl": "https://clientCredentials.token-url.com",
+                      }
+                    }
+                    key="clientCredentials"
+                  >
+                    <div
+                      className="py-2 mt-2 border-t"
+                    >
+                      <div
+                        className="py-2 font-semibold"
+                      >
+                        Client Credentials
+                         OAuth Flow
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Token URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://clientCredentials.token-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://clientCredentials.token-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Refresh URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://clientCredentials.refresh-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://clientCredentials.refresh-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="py-1"
+                      >
+                        Scopes
+                      </div>
+                      <ul
+                        className="list-disc"
+                        style={
+                          Object {
+                            "margin": 0,
+                          }
+                        }
+                      >
+                        <li
+                          className="py-1"
+                          key="scope:clientCredentials"
+                        >
+                          <Blueprint3.Tag
+                            minimal={true}
+                          >
+                            <span
+                              className="bp3-tag bp3-minimal"
+                            >
+                              <Blueprint3.Icon />
+                              <Blueprint3.Text
+                                className="bp3-fill"
+                                ellipsize={true}
+                                tagName="span"
+                              >
+                                <span
+                                  className="bp3-text-overflow-ellipsis bp3-fill"
+                                >
+                                  scope:clientCredentials
+                                </span>
+                              </Blueprint3.Text>
+                              <Blueprint3.Icon />
+                            </span>
+                          </Blueprint3.Tag>
+                           - 
+                          <span
+                            className="text-darken-7 dark:text-lighten-7"
+                          >
+                            clientCredentials scope description
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </HttpSecuritySchemes.OAuth2Flow>
+                  <HttpSecuritySchemes.OAuth2Flow
+                    flow="authorizationCode"
+                    flowObject={
+                      Object {
+                        "authorizationUrl": "https://authorizationCode.authorization-url.com",
+                        "refreshUrl": "https://authorizationCode.refresh-url.com",
+                        "scopes": Object {
+                          "scope:authorizationCode": "authorizationCode scope description",
+                        },
+                        "tokenUrl": "https://authorizationCode.token-url.com",
+                      }
+                    }
+                    key="authorizationCode"
+                  >
+                    <div
+                      className="py-2 mt-2 border-t"
+                    >
+                      <div
+                        className="py-2 font-semibold"
+                      >
+                        Authorization Code
+                         OAuth Flow
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Authorize URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://authorizationCode.authorization-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://authorizationCode.authorization-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Token URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://authorizationCode.token-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://authorizationCode.token-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="flex items-center py-1"
+                      >
+                        <div
+                          className="mr-1"
+                        >
+                          Refresh URL -
+                        </div>
+                        <div>
+                          <a
+                            href="https://authorizationCode.refresh-url.com"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            https://authorizationCode.refresh-url.com
+                          </a>
+                        </div>
+                      </div>
+                      <div
+                        className="py-1"
+                      >
+                        Scopes
+                      </div>
+                      <ul
+                        className="list-disc"
+                        style={
+                          Object {
+                            "margin": 0,
+                          }
+                        }
+                      >
+                        <li
+                          className="py-1"
+                          key="scope:authorizationCode"
+                        >
+                          <Blueprint3.Tag
+                            minimal={true}
+                          >
+                            <span
+                              className="bp3-tag bp3-minimal"
+                            >
+                              <Blueprint3.Icon />
+                              <Blueprint3.Text
+                                className="bp3-fill"
+                                ellipsize={true}
+                                tagName="span"
+                              >
+                                <span
+                                  className="bp3-text-overflow-ellipsis bp3-fill"
+                                >
+                                  scope:authorizationCode
+                                </span>
+                              </Blueprint3.Text>
+                              <Blueprint3.Icon />
+                            </span>
+                          </Blueprint3.Tag>
+                           - 
+                          <span
+                            className="text-darken-7 dark:text-lighten-7"
+                          >
+                            authorizationCode scope description
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </HttpSecuritySchemes.OAuth2Flow>
+                </div>
+              </div>
+            </HttpSecuritySchemes.SecurityScheme>
+          </div>
+        </div>
+      </HttpSecuritySchemes>
+      <div
+        className="mb-10"
+      >
+        <div
+          className="mb-4 text-lg font-semibold select-none"
+        >
+          Contact
+        </div>
+        <div>
+          Support
+        </div>
+        <div
+          className="flex items-center mt-2"
+        >
+          <a
+            className="flex items-center mr-4"
+            href="mailto:support@stoplight.io"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Blueprint3.Icon
+              className="mr-2"
+              icon="envelope"
+              iconSize={12}
+            >
+              <span
+                className="bp3-icon bp3-icon-envelope mr-2"
+                icon="envelope"
+              >
+                <svg
+                  data-icon="envelope"
+                  height={12}
+                  viewBox="0 0 16 16"
+                  width={12}
+                >
+                  <desc>
+                    envelope
+                  </desc>
+                  <path
+                    d="M0 3.06v9.88L4.94 8 0 3.06zM14.94 2H1.06L8 8.94 14.94 2zm-6.41 8.53c-.14.14-.32.22-.53.22s-.39-.08-.53-.22L6 9.06 1.06 14h13.88L10 9.06l-1.47 1.47zM11.06 8L16 12.94V3.06L11.06 8z"
+                    fillRule="evenodd"
+                    key="0"
+                  />
+                </svg>
+              </span>
+            </Blueprint3.Icon>
+            Email
+          </a>
+          <a
+            className="flex items-center"
+            href="https://stoplight.io"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Blueprint3.Icon
+              className="mr-2"
+              icon="link"
+              iconSize={12}
+            >
+              <span
+                className="bp3-icon bp3-icon-link mr-2"
+                icon="link"
+              >
+                <svg
+                  data-icon="link"
+                  height={12}
+                  viewBox="0 0 16 16"
+                  width={12}
+                >
+                  <desc>
+                    link
+                  </desc>
+                  <path
+                    d="M4.99 11.99c.28 0 .53-.11.71-.29l6-6a1.003 1.003 0 00-1.42-1.42l-6 6a1.003 1.003 0 00.71 1.71zm3.85-2.02L6.4 12.41l-1 1-.01-.01c-.36.36-.85.6-1.4.6-1.1 0-2-.9-2-2 0-.55.24-1.04.6-1.4l-.01-.01 1-1 2.44-2.44c-.33-.1-.67-.16-1.03-.16-1.1 0-2.09.46-2.81 1.19l-.02-.02-1 1 .02.02c-.73.72-1.19 1.71-1.19 2.81 0 2.21 1.79 4 4 4 1.1 0 2.09-.46 2.81-1.19l.02.02 1-1-.02-.02c.73-.72 1.19-1.71 1.19-2.81 0-.35-.06-.69-.15-1.02zm7.15-5.98c0-2.21-1.79-4-4-4-1.1 0-2.09.46-2.81 1.19l-.02-.02-1 1 .02.02c-.72.72-1.19 1.71-1.19 2.81 0 .36.06.69.15 1.02l2.44-2.44 1-1 .01.01c.36-.36.85-.6 1.4-.6 1.1 0 2 .9 2 2 0 .55-.24 1.04-.6 1.4l.01.01-1 1-2.43 2.45c.33.09.67.15 1.02.15 1.1 0 2.09-.46 2.81-1.19l.02.02 1-1-.02-.02a3.92 3.92 0 001.19-2.81z"
+                    fillRule="evenodd"
+                    key="0"
+                  />
+                </svg>
+              </span>
+            </Blueprint3.Icon>
+             URL
+          </a>
+        </div>
+      </div>
+      <div
+        className="mb-10"
+      >
+        <div
+          className="mb-4 text-lg font-semibold select-none"
+        >
+          Terms of Service
+        </div>
+        <a
+          href="https://terms-of-service.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          https://terms-of-service.com
+        </a>
+      </div>
+      <div>
+        <div
+          className="mb-4 text-lg font-semibold select-none"
+        >
+          License
+        </div>
+        <a
+          href="https://www.apache.org/licenses/LICENSE-2.0.txt"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Apache 2.0
+        </a>
+      </div>
+    </div>
+  </HttpService.Component>
+</HttpService>
+`;

@@ -1,10 +1,9 @@
-import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import * as React from 'react';
-import { useComponents } from '../../hooks/useComponents';
 import { useComponentSize } from '../../hooks/useComponentSize';
 import { useComputeMarkdownHeadings } from '../../hooks/useComputeMarkdownHeadings';
 import { INodeInfo } from '../../types';
 import { buildNodeMarkdownTree } from '../../utils/buildNodeMarkdownTree';
+import { MarkdownViewer } from '../MarkdownViewer';
 import { PageHeadings } from '../Page/Headings';
 
 export interface IDocs {
@@ -14,7 +13,6 @@ export interface IDocs {
 }
 
 export const Docs = ({ node, padding = '12' }: IDocs) => {
-  const components = useComponents();
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const { width } = useComponentSize(containerRef);
   const showHeadings = width >= 1000;
@@ -23,8 +21,8 @@ export const Docs = ({ node, padding = '12' }: IDocs) => {
   const headings = useComputeMarkdownHeadings(tree);
 
   return (
-    <div className="Page__docs flex w-full" ref={containerRef}>
-      <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} components={components} />
+    <div className="flex w-full Page__docs" ref={containerRef}>
+      <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} />
 
       <PageHeadings className="Page__headings" padding={padding} headings={headings} minimal={!showHeadings} />
     </div>

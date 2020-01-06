@@ -27,7 +27,8 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
   const { uri } = deserializeSrn(srn);
 
   let pageSrn;
-  if (uri) {
+
+  if (uri && uri !== '/') {
     pageSrn = srn;
   } else {
     const node = findFirstNode(contents);

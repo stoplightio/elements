@@ -1,3 +1,12 @@
+import { Dictionary, HttpSecurityScheme } from '@stoplight/types';
+
+export const HttpSecuritySchemeColors: Dictionary<string, HttpSecurityScheme['type']> = {
+  apiKey: 'green',
+  http: 'orange',
+  oauth2: 'red',
+  openIdConnect: 'blue',
+};
+
 export const HttpMethodColors: { [method: string]: string } = {
   get: 'success',
   post: 'primary',
