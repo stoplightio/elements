@@ -200,7 +200,7 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                         className="flex-1 ml-4"
                       >
                         <div
-                          className="mb-2 mr-2"
+                          className="mb-2"
                         >
                           <Blueprint3.Tag
                             intent="warning"
@@ -226,11 +226,11 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                           </Blueprint3.Tag>
                         </div>
                         <MarkdownViewer
-                          className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                          className="flex-1 text-darken-7 dark:text-lighten-6"
                           markdown="a parameter description"
                         >
                           <MarkdownViewer
-                            className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                            className="flex-1 text-darken-7 dark:text-lighten-6"
                             components={
                               Object {
                                 "code": [Function],
@@ -242,7 +242,7 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                               FallbackComponent={[Function]}
                             >
                               <MarkdownViewer.Component
-                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                className="flex-1 text-darken-7 dark:text-lighten-6"
                                 components={
                                   Object {
                                     "code": [Function],
@@ -251,7 +251,7 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                                 markdown="a parameter description"
                               >
                                 <div
-                                  className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                 >
                                   <p
                                     key="0"
@@ -267,13 +267,13 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                           className="flex flex-wrap text-darken-7 dark:text-lighten-6"
                         >
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="0"
                             name="allowEmptyValue"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -301,13 +301,13 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="1"
                             name="allowReserved"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -335,13 +335,13 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="2"
                             name="explode"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -369,7 +369,7 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="3"
                             name="examples"
                             value={
@@ -381,7 +381,7 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                             }
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -621,7 +621,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                         className="flex-1 ml-4"
                       >
                         <div
-                          className="mb-2 mr-2"
+                          className="mb-2"
                         >
                           <Blueprint3.Tag
                             intent="warning"
@@ -647,11 +647,11 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                           </Blueprint3.Tag>
                         </div>
                         <MarkdownViewer
-                          className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                          className="flex-1 text-darken-7 dark:text-lighten-6"
                           markdown="a parameter description"
                         >
                           <MarkdownViewer
-                            className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                            className="flex-1 text-darken-7 dark:text-lighten-6"
                             components={
                               Object {
                                 "code": [Function],
@@ -663,7 +663,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                               FallbackComponent={[Function]}
                             >
                               <MarkdownViewer.Component
-                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                className="flex-1 text-darken-7 dark:text-lighten-6"
                                 components={
                                   Object {
                                     "code": [Function],
@@ -672,7 +672,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                                 markdown="a parameter description"
                               >
                                 <div
-                                  className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                 >
                                   <p
                                     key="0"
@@ -688,13 +688,13 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                           className="flex flex-wrap text-darken-7 dark:text-lighten-6"
                         >
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="0"
                             name="allowEmptyValue"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -722,13 +722,13 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="1"
                             name="allowReserved"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -756,13 +756,13 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="2"
                             name="explode"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -790,7 +790,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="3"
                             name="examples"
                             value={
@@ -802,7 +802,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                             }
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -1058,7 +1058,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                         className="flex-1 ml-4"
                       >
                         <div
-                          className="mb-2 mr-2"
+                          className="mb-2"
                         >
                           <Blueprint3.Tag
                             intent="warning"
@@ -1084,11 +1084,11 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                           </Blueprint3.Tag>
                         </div>
                         <MarkdownViewer
-                          className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                          className="flex-1 text-darken-7 dark:text-lighten-6"
                           markdown="a parameter description"
                         >
                           <MarkdownViewer
-                            className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                            className="flex-1 text-darken-7 dark:text-lighten-6"
                             components={
                               Object {
                                 "code": [Function],
@@ -1100,7 +1100,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                               FallbackComponent={[Function]}
                             >
                               <MarkdownViewer.Component
-                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                className="flex-1 text-darken-7 dark:text-lighten-6"
                                 components={
                                   Object {
                                     "code": [Function],
@@ -1109,7 +1109,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                                 markdown="a parameter description"
                               >
                                 <div
-                                  className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                 >
                                   <p
                                     key="0"
@@ -1125,13 +1125,13 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                           className="flex flex-wrap text-darken-7 dark:text-lighten-6"
                         >
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="0"
                             name="allowEmptyValue"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -1159,13 +1159,13 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="1"
                             name="allowReserved"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -1193,13 +1193,13 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="2"
                             name="explode"
                             value={true}
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}
@@ -1227,7 +1227,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                             </div>
                           </ParameterValidation>
                           <ParameterValidation
-                            className="mb-2 mr-2"
+                            className="mt-2 mr-2"
                             key="3"
                             name="examples"
                             value={
@@ -1239,7 +1239,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                             }
                           >
                             <div
-                              className="mb-2 mr-2 mb-2 mr-2"
+                              className="mt-2 mr-2"
                             >
                               <Blueprint3.Tag
                                 minimal={true}

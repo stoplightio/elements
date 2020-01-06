@@ -414,7 +414,7 @@ exports[`HttpService should match snapshot 1`] = `
               }
             >
               <div
-                className="TreeListItem HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
+                className="TreeListItem HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
                 style={
                   Object {
                     "alignItems": "start",
@@ -441,11 +441,11 @@ exports[`HttpService should match snapshot 1`] = `
                   className="flex-1 ml-4"
                 >
                   <MarkdownViewer
-                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    className="flex-1 text-darken-7 dark:text-lighten-7"
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                   >
                     <MarkdownViewer
-                      className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                      className="flex-1 text-darken-7 dark:text-lighten-7"
                       components={
                         Object {
                           "code": [Function],
@@ -457,7 +457,7 @@ exports[`HttpService should match snapshot 1`] = `
                         FallbackComponent={[Function]}
                       >
                         <MarkdownViewer.Component
-                          className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                          className="flex-1 text-darken-7 dark:text-lighten-7"
                           components={
                             Object {
                               "code": [Function],
@@ -466,7 +466,7 @@ exports[`HttpService should match snapshot 1`] = `
                           markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                         >
                           <div
-                            className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                            className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                           >
                             <p
                               key="0"

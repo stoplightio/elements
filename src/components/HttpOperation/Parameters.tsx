@@ -67,7 +67,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
         <div className="flex-1 ml-4">
           {parameter.deprecated && (
-            <div className="mb-2 mr-2">
+            <div className="mb-2">
               <Tag intent="warning" minimal>
                 Deprecated
               </Tag>
@@ -75,12 +75,12 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
           )}
 
           {description && (
-            <MarkdownViewer className="flex-1 mb-2 text-darken-7 dark:text-lighten-6" markdown={description} />
+            <MarkdownViewer className="flex-1 text-darken-7 dark:text-lighten-6" markdown={description} />
           )}
 
           <div className="flex flex-wrap text-darken-7 dark:text-lighten-6">
             {keys(validations).map((key, index) => {
-              return <ParameterValidation key={index} className="mb-2 mr-2" name={key} value={validations[key]} />;
+              return <ParameterValidation key={index} className="mt-2 mr-2" name={key} value={validations[key]} />;
             })}
           </div>
         </div>
@@ -113,7 +113,7 @@ const ParameterValidation = ({ className, name, value }: { className?: string; n
   }
 
   return (
-    <div className={cn(className, 'mb-2 mr-2')}>
+    <div className={className}>
       <Tag minimal>
         {name}: {validation}
       </Tag>

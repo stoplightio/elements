@@ -42,7 +42,7 @@ HttpSecuritySchemes.displayName = 'HttpSecuritySchemes';
 const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme; className?: string }) => {
   return (
     <div
-      className={cn(className, 'HttpSecuritySchemes__SecurityScheme p-3 flex items-start')}
+      className={cn(className, 'HttpSecuritySchemes__SecurityScheme p-4 flex items-start')}
       style={{ alignItems: 'start' }}
     >
       <div style={{ minWidth: '60px' }}>
@@ -58,30 +58,30 @@ const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme;
 
       <div className="flex-1 ml-4">
         {security.description && (
-          <MarkdownViewer className="flex-1 mb-2 text-darken-7 dark:text-lighten-7" markdown={security.description} />
+          <MarkdownViewer className="flex-1 text-darken-7 dark:text-lighten-7" markdown={security.description} />
         )}
 
         <div className="flex flex-wrap">
           {'scheme' in security && security.scheme && (
-            <Tag className="mb-2 mr-2" minimal>
+            <Tag className="mt-2 mr-2" minimal>
               Scheme: {security.scheme}
             </Tag>
           )}
 
           {'bearerFormat' in security && security.bearerFormat && (
-            <Tag className="mb-2 mr-2" minimal>
+            <Tag className="mt-2 mr-2" minimal>
               Bearer Format: {security.bearerFormat}
             </Tag>
           )}
 
           {'in' in security && security.in && (
-            <Tag className="mb-2 mr-2" minimal>
+            <Tag className="mt-2 mr-2" minimal>
               {startCase(security.in)} parameter name: {security.name}
             </Tag>
           )}
 
           {'openIdConnectUrl' in security && security.openIdConnectUrl && (
-            <Tag className="mb-2 mr-2" minimal>
+            <Tag className="mt-2 mr-2" minimal>
               OpenId Connect URL: {security.openIdConnectUrl}
             </Tag>
           )}

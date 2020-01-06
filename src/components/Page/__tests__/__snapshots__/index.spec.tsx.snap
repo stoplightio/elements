@@ -5419,7 +5419,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                         }
                                       >
                                         <div
-                                          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
+                                          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
                                           style={
                                             Object {
                                               "alignItems": "start",
@@ -5446,11 +5446,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                             className="flex-1 ml-4"
                                           >
                                             <MarkdownViewer
-                                              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                              className="flex-1 text-darken-7 dark:text-lighten-7"
                                               markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
                                             >
                                               <MarkdownViewer
-                                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                className="flex-1 text-darken-7 dark:text-lighten-7"
                                                 components={
                                                   Object {
                                                     "code": [Function],
@@ -5462,7 +5462,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   FallbackComponent={[Function]}
                                                 >
                                                   <MarkdownViewer.Component
-                                                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                    className="flex-1 text-darken-7 dark:text-lighten-7"
                                                     components={
                                                       Object {
                                                         "code": [Function],
@@ -5471,7 +5471,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                     markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
                                                   >
                                                     <div
-                                                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                                                     >
                                                       <p
                                                         key="0"
@@ -5503,11 +5503,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                               className="flex flex-wrap"
                                             >
                                               <Blueprint3.Tag
-                                                className="mb-2 mr-2"
+                                                className="mt-2 mr-2"
                                                 minimal={true}
                                               >
                                                 <span
-                                                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                                                  className="bp3-tag bp3-minimal mt-2 mr-2"
                                                 >
                                                   <Blueprint3.Icon />
                                                   <Blueprint3.Text
@@ -5543,7 +5543,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                         }
                                       >
                                         <div
-                                          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
+                                          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
                                           style={
                                             Object {
                                               "alignItems": "start",
@@ -5570,11 +5570,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                             className="flex-1 ml-4"
                                           >
                                             <MarkdownViewer
-                                              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                              className="flex-1 text-darken-7 dark:text-lighten-7"
                                               markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                                             >
                                               <MarkdownViewer
-                                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                className="flex-1 text-darken-7 dark:text-lighten-7"
                                                 components={
                                                   Object {
                                                     "code": [Function],
@@ -5586,7 +5586,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   FallbackComponent={[Function]}
                                                 >
                                                   <MarkdownViewer.Component
-                                                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                    className="flex-1 text-darken-7 dark:text-lighten-7"
                                                     components={
                                                       Object {
                                                         "code": [Function],
@@ -5595,7 +5595,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                                                   >
                                                     <div
-                                                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                                                     >
                                                       <p
                                                         key="0"
@@ -5611,11 +5611,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                               className="flex flex-wrap"
                                             >
                                               <Blueprint3.Tag
-                                                className="mb-2 mr-2"
+                                                className="mt-2 mr-2"
                                                 minimal={true}
                                               >
                                                 <span
-                                                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                                                  className="bp3-tag bp3-minimal mt-2 mr-2"
                                                 >
                                                   <Blueprint3.Icon />
                                                   <Blueprint3.Text
@@ -5651,7 +5651,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                         }
                                       >
                                         <div
-                                          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
+                                          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
                                           style={
                                             Object {
                                               "alignItems": "start",
@@ -5678,11 +5678,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                             className="flex-1 ml-4"
                                           >
                                             <MarkdownViewer
-                                              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                              className="flex-1 text-darken-7 dark:text-lighten-7"
                                               markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                                             >
                                               <MarkdownViewer
-                                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                className="flex-1 text-darken-7 dark:text-lighten-7"
                                                 components={
                                                   Object {
                                                     "code": [Function],
@@ -5694,7 +5694,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   FallbackComponent={[Function]}
                                                 >
                                                   <MarkdownViewer.Component
-                                                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                    className="flex-1 text-darken-7 dark:text-lighten-7"
                                                     components={
                                                       Object {
                                                         "code": [Function],
@@ -5703,7 +5703,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                                                   >
                                                     <div
-                                                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                                                     >
                                                       <p
                                                         key="0"
@@ -5719,11 +5719,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                               className="flex flex-wrap"
                                             >
                                               <Blueprint3.Tag
-                                                className="mb-2 mr-2"
+                                                className="mt-2 mr-2"
                                                 minimal={true}
                                               >
                                                 <span
-                                                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                                                  className="bp3-tag bp3-minimal mt-2 mr-2"
                                                 >
                                                   <Blueprint3.Icon />
                                                   <Blueprint3.Text
@@ -5742,11 +5742,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                 </span>
                                               </Blueprint3.Tag>
                                               <Blueprint3.Tag
-                                                className="mb-2 mr-2"
+                                                className="mt-2 mr-2"
                                                 minimal={true}
                                               >
                                                 <span
-                                                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                                                  className="bp3-tag bp3-minimal mt-2 mr-2"
                                                 >
                                                   <Blueprint3.Icon />
                                                   <Blueprint3.Text
@@ -5781,7 +5781,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                         }
                                       >
                                         <div
-                                          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
+                                          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
                                           style={
                                             Object {
                                               "alignItems": "start",
@@ -5808,11 +5808,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                             className="flex-1 ml-4"
                                           >
                                             <MarkdownViewer
-                                              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                              className="flex-1 text-darken-7 dark:text-lighten-7"
                                               markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                                             >
                                               <MarkdownViewer
-                                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                className="flex-1 text-darken-7 dark:text-lighten-7"
                                                 components={
                                                   Object {
                                                     "code": [Function],
@@ -5824,7 +5824,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   FallbackComponent={[Function]}
                                                 >
                                                   <MarkdownViewer.Component
-                                                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                    className="flex-1 text-darken-7 dark:text-lighten-7"
                                                     components={
                                                       Object {
                                                         "code": [Function],
@@ -5833,7 +5833,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                                                   >
                                                     <div
-                                                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                                                     >
                                                       <p
                                                         key="0"
@@ -5849,11 +5849,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                               className="flex flex-wrap"
                                             >
                                               <Blueprint3.Tag
-                                                className="mb-2 mr-2"
+                                                className="mt-2 mr-2"
                                                 minimal={true}
                                               >
                                                 <span
-                                                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                                                  className="bp3-tag bp3-minimal mt-2 mr-2"
                                                 >
                                                   <Blueprint3.Icon />
                                                   <Blueprint3.Text
@@ -5922,7 +5922,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                         }
                                       >
                                         <div
-                                          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
+                                          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
                                           style={
                                             Object {
                                               "alignItems": "start",
@@ -5949,11 +5949,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                             className="flex-1 ml-4"
                                           >
                                             <MarkdownViewer
-                                              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                              className="flex-1 text-darken-7 dark:text-lighten-7"
                                               markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                                             >
                                               <MarkdownViewer
-                                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                className="flex-1 text-darken-7 dark:text-lighten-7"
                                                 components={
                                                   Object {
                                                     "code": [Function],
@@ -5965,7 +5965,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   FallbackComponent={[Function]}
                                                 >
                                                   <MarkdownViewer.Component
-                                                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                    className="flex-1 text-darken-7 dark:text-lighten-7"
                                                     components={
                                                       Object {
                                                         "code": [Function],
@@ -5974,7 +5974,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                                                   >
                                                     <div
-                                                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                                                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                                                     >
                                                       <p
                                                         key="0"
@@ -6767,11 +6767,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                               className="flex-1 ml-4"
                                             >
                                               <MarkdownViewer
-                                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                className="flex-1 text-darken-7 dark:text-lighten-6"
                                                 markdown="Only return completed"
                                               >
                                                 <MarkdownViewer
-                                                  className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                  className="flex-1 text-darken-7 dark:text-lighten-6"
                                                   components={
                                                     Object {
                                                       "code": [Function],
@@ -6783,7 +6783,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                     FallbackComponent={[Function]}
                                                   >
                                                     <MarkdownViewer.Component
-                                                      className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                      className="flex-1 text-darken-7 dark:text-lighten-6"
                                                       components={
                                                         Object {
                                                           "code": [Function],
@@ -6792,7 +6792,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                       markdown="Only return completed"
                                                     >
                                                       <div
-                                                        className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                        className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                                       >
                                                         <p
                                                           key="0"
@@ -6879,7 +6879,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                               className="flex-1 ml-4"
                                             >
                                               <div
-                                                className="mb-2 mr-2"
+                                                className="mb-2"
                                               >
                                                 <Blueprint3.Tag
                                                   intent="warning"
@@ -6905,11 +6905,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                 </Blueprint3.Tag>
                                               </div>
                                               <MarkdownViewer
-                                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                className="flex-1 text-darken-7 dark:text-lighten-6"
                                                 markdown="How many todos to limit?"
                                               >
                                                 <MarkdownViewer
-                                                  className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                  className="flex-1 text-darken-7 dark:text-lighten-6"
                                                   components={
                                                     Object {
                                                       "code": [Function],
@@ -6921,7 +6921,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                     FallbackComponent={[Function]}
                                                   >
                                                     <MarkdownViewer.Component
-                                                      className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                      className="flex-1 text-darken-7 dark:text-lighten-6"
                                                       components={
                                                         Object {
                                                           "code": [Function],
@@ -6930,7 +6930,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                       markdown="How many todos to limit?"
                                                     >
                                                       <div
-                                                        className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                        className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                                       >
                                                         <p
                                                           key="0"
@@ -6946,13 +6946,13 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                 className="flex flex-wrap text-darken-7 dark:text-lighten-6"
                                               >
                                                 <ParameterValidation
-                                                  className="mb-2 mr-2"
+                                                  className="mt-2 mr-2"
                                                   key="0"
                                                   name="default"
                                                   value="300"
                                                 >
                                                   <div
-                                                    className="mb-2 mr-2 mb-2 mr-2"
+                                                    className="mt-2 mr-2"
                                                   >
                                                     <Blueprint3.Tag
                                                       minimal={true}
@@ -6980,7 +6980,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   </div>
                                                 </ParameterValidation>
                                                 <ParameterValidation
-                                                  className="mb-2 mr-2"
+                                                  className="mt-2 mr-2"
                                                   key="1"
                                                   name="enum"
                                                   value={
@@ -6992,7 +6992,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   }
                                                 >
                                                   <div
-                                                    className="mb-2 mr-2 mb-2 mr-2"
+                                                    className="mt-2 mr-2"
                                                   >
                                                     <Blueprint3.Tag
                                                       minimal={true}
@@ -7020,13 +7020,13 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   </div>
                                                 </ParameterValidation>
                                                 <ParameterValidation
-                                                  className="mb-2 mr-2"
+                                                  className="mt-2 mr-2"
                                                   key="2"
                                                   name="exclusiveMinimum"
                                                   value={0}
                                                 >
                                                   <div
-                                                    className="mb-2 mr-2 mb-2 mr-2"
+                                                    className="mt-2 mr-2"
                                                   >
                                                     <Blueprint3.Tag
                                                       minimal={true}
@@ -7054,13 +7054,13 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   </div>
                                                 </ParameterValidation>
                                                 <ParameterValidation
-                                                  className="mb-2 mr-2"
+                                                  className="mt-2 mr-2"
                                                   key="3"
                                                   name="exclusiveMaximum"
                                                   value={10}
                                                 >
                                                   <div
-                                                    className="mb-2 mr-2 mb-2 mr-2"
+                                                    className="mt-2 mr-2"
                                                   >
                                                     <Blueprint3.Tag
                                                       minimal={true}
@@ -7088,13 +7088,13 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   </div>
                                                 </ParameterValidation>
                                                 <ParameterValidation
-                                                  className="mb-2 mr-2"
+                                                  className="mt-2 mr-2"
                                                   key="4"
                                                   name="minimum"
                                                   value={5}
                                                 >
                                                   <div
-                                                    className="mb-2 mr-2 mb-2 mr-2"
+                                                    className="mt-2 mr-2"
                                                   >
                                                     <Blueprint3.Tag
                                                       minimal={true}
@@ -7122,13 +7122,13 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   </div>
                                                 </ParameterValidation>
                                                 <ParameterValidation
-                                                  className="mb-2 mr-2"
+                                                  className="mt-2 mr-2"
                                                   key="5"
                                                   name="maximum"
                                                   value={10}
                                                 >
                                                   <div
-                                                    className="mb-2 mr-2 mb-2 mr-2"
+                                                    className="mt-2 mr-2"
                                                   >
                                                     <Blueprint3.Tag
                                                       minimal={true}
@@ -7156,13 +7156,13 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   </div>
                                                 </ParameterValidation>
                                                 <ParameterValidation
-                                                  className="mb-2 mr-2"
+                                                  className="mt-2 mr-2"
                                                   key="6"
                                                   name="maxItems"
                                                   value={10}
                                                 >
                                                   <div
-                                                    className="mb-2 mr-2 mb-2 mr-2"
+                                                    className="mt-2 mr-2"
                                                   >
                                                     <Blueprint3.Tag
                                                       minimal={true}
@@ -7256,7 +7256,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                 className="flex flex-wrap text-darken-7 dark:text-lighten-6"
                                               >
                                                 <ParameterValidation
-                                                  className="mb-2 mr-2"
+                                                  className="mt-2 mr-2"
                                                   key="0"
                                                   name="enum"
                                                   value={
@@ -7267,7 +7267,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   }
                                                 >
                                                   <div
-                                                    className="mb-2 mr-2 mb-2 mr-2"
+                                                    className="mt-2 mr-2"
                                                   >
                                                     <Blueprint3.Tag
                                                       minimal={true}
@@ -7391,11 +7391,11 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                               className="flex-1 ml-4"
                                             >
                                               <MarkdownViewer
-                                                className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                className="flex-1 text-darken-7 dark:text-lighten-6"
                                                 markdown="Your Stoplight account id"
                                               >
                                                 <MarkdownViewer
-                                                  className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                  className="flex-1 text-darken-7 dark:text-lighten-6"
                                                   components={
                                                     Object {
                                                       "code": [Function],
@@ -7407,7 +7407,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                     FallbackComponent={[Function]}
                                                   >
                                                     <MarkdownViewer.Component
-                                                      className="flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                      className="flex-1 text-darken-7 dark:text-lighten-6"
                                                       components={
                                                         Object {
                                                           "code": [Function],
@@ -7416,7 +7416,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                       markdown="Your Stoplight account id"
                                                     >
                                                       <div
-                                                        className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-6"
+                                                        className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                                       >
                                                         <p
                                                           key="0"
