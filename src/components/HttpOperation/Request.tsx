@@ -19,7 +19,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, secur
 
   return (
     <div className={cn('HttpOperation__Request', className)}>
-      <HttpSecuritySchemes className="mb-10" title="Security" securities={flatten(security)} />
+      <HttpSecuritySchemes className="mb-10" title="Authorization" securities={flatten(security)} />
 
       <Parameters className="mb-10" title="Path Parameters" parameters={path} />
       <Parameters className="mb-10" title="Query Parameters" parameters={query} />
