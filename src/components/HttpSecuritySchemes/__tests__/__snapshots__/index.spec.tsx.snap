@@ -80,7 +80,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       className="mt-6 border rounded TreeList dark:border-darken"
     >
       <HttpSecuritySchemes.SecurityScheme
-        className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        className="TreeListItem"
         key="0"
         security={
           Object {
@@ -93,7 +93,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -101,7 +101,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
           }
         >
           <div
-            className="mr-4"
+            style={
+              Object {
+                "minWidth": "60px",
+              }
+            }
           >
             <div>
               api_key
@@ -113,42 +117,95 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
           <div
-            className="flex-1"
+            className="flex-1 ml-4"
           >
-            <div
-              className="flex-1 text-darken-7 dark:text-lighten-7"
+            <MarkdownViewer
+              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+              markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
             >
-              Use \`?apikey=123\` to authenticate requests. It's super secure.
-            </div>
-            <Blueprint3.Tag
-              className="mt-2 mr-2"
-              minimal={true}
-            >
-              <span
-                className="bp3-tag bp3-minimal mt-2 mr-2"
+              <MarkdownViewer
+                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                components={
+                  Object {
+                    "code": [Function],
+                  }
+                }
+                markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
               >
-                <Blueprint3.Icon />
-                <Blueprint3.Text
-                  className="bp3-fill"
-                  ellipsize={true}
-                  tagName="span"
+                <ErrorBoundary
+                  FallbackComponent={[Function]}
                 >
-                  <span
-                    className="bp3-text-overflow-ellipsis bp3-fill"
+                  <MarkdownViewer.Component
+                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    components={
+                      Object {
+                        "code": [Function],
+                      }
+                    }
+                    markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
                   >
-                    Query
-                     parameter name: 
-                    API Key
-                  </span>
-                </Blueprint3.Text>
-                <Blueprint3.Icon />
-              </span>
-            </Blueprint3.Tag>
+                    <div
+                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    >
+                      <p
+                        key="0"
+                      >
+                        Use 
+                        <CodeViewer
+                          className="inline-block line-none"
+                          inline={true}
+                          key="1"
+                          value="?apikey=123"
+                        >
+                          <code
+                            className="bp3-code-editor inline-block line-none isInline"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "?apikey=123",
+                              }
+                            }
+                          />
+                        </CodeViewer>
+                         to authenticate requests. It's super secure.
+                      </p>
+                    </div>
+                  </MarkdownViewer.Component>
+                </ErrorBoundary>
+              </MarkdownViewer>
+            </MarkdownViewer>
+            <div
+              className="flex flex-wrap"
+            >
+              <Blueprint3.Tag
+                className="mb-2 mr-2"
+                minimal={true}
+              >
+                <span
+                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                >
+                  <Blueprint3.Icon />
+                  <Blueprint3.Text
+                    className="bp3-fill"
+                    ellipsize={true}
+                    tagName="span"
+                  >
+                    <span
+                      className="bp3-text-overflow-ellipsis bp3-fill"
+                    >
+                      Query
+                       parameter name: 
+                      API Key
+                    </span>
+                  </Blueprint3.Text>
+                  <Blueprint3.Icon />
+                </span>
+              </Blueprint3.Tag>
+            </div>
           </div>
         </div>
       </HttpSecuritySchemes.SecurityScheme>
       <HttpSecuritySchemes.SecurityScheme
-        className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+        className="TreeListItem TreeListItem--striped"
         key="1"
         security={
           Object {
@@ -160,7 +217,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -168,7 +225,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
           }
         >
           <div
-            className="mr-4"
+            style={
+              Object {
+                "minWidth": "60px",
+              }
+            }
           >
             <div>
               basicKey
@@ -180,41 +241,78 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
           <div
-            className="flex-1"
+            className="flex-1 ml-4"
           >
-            <div
-              className="flex-1 text-darken-7 dark:text-lighten-7"
+            <MarkdownViewer
+              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+              markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
             >
-              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-            </div>
-            <Blueprint3.Tag
-              className="mt-2 mr-2"
-              minimal={true}
-            >
-              <span
-                className="bp3-tag bp3-minimal mt-2 mr-2"
+              <MarkdownViewer
+                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                components={
+                  Object {
+                    "code": [Function],
+                  }
+                }
+                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
               >
-                <Blueprint3.Icon />
-                <Blueprint3.Text
-                  className="bp3-fill"
-                  ellipsize={true}
-                  tagName="span"
+                <ErrorBoundary
+                  FallbackComponent={[Function]}
                 >
-                  <span
-                    className="bp3-text-overflow-ellipsis bp3-fill"
+                  <MarkdownViewer.Component
+                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    components={
+                      Object {
+                        "code": [Function],
+                      }
+                    }
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                   >
-                    Scheme: 
-                    basic
-                  </span>
-                </Blueprint3.Text>
-                <Blueprint3.Icon />
-              </span>
-            </Blueprint3.Tag>
+                    <div
+                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    >
+                      <p
+                        key="0"
+                      >
+                        Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                      </p>
+                    </div>
+                  </MarkdownViewer.Component>
+                </ErrorBoundary>
+              </MarkdownViewer>
+            </MarkdownViewer>
+            <div
+              className="flex flex-wrap"
+            >
+              <Blueprint3.Tag
+                className="mb-2 mr-2"
+                minimal={true}
+              >
+                <span
+                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                >
+                  <Blueprint3.Icon />
+                  <Blueprint3.Text
+                    className="bp3-fill"
+                    ellipsize={true}
+                    tagName="span"
+                  >
+                    <span
+                      className="bp3-text-overflow-ellipsis bp3-fill"
+                    >
+                      Scheme: 
+                      basic
+                    </span>
+                  </Blueprint3.Text>
+                  <Blueprint3.Icon />
+                </span>
+              </Blueprint3.Tag>
+            </div>
           </div>
         </div>
       </HttpSecuritySchemes.SecurityScheme>
       <HttpSecuritySchemes.SecurityScheme
-        className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        className="TreeListItem"
         key="2"
         security={
           Object {
@@ -227,7 +325,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -235,7 +333,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
           }
         >
           <div
-            className="mr-4"
+            style={
+              Object {
+                "minWidth": "60px",
+              }
+            }
           >
             <div>
               bearerKey
@@ -247,64 +349,101 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
           <div
-            className="flex-1"
+            className="flex-1 ml-4"
           >
+            <MarkdownViewer
+              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+              markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+            >
+              <MarkdownViewer
+                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                components={
+                  Object {
+                    "code": [Function],
+                  }
+                }
+                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+              >
+                <ErrorBoundary
+                  FallbackComponent={[Function]}
+                >
+                  <MarkdownViewer.Component
+                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    components={
+                      Object {
+                        "code": [Function],
+                      }
+                    }
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                  >
+                    <div
+                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    >
+                      <p
+                        key="0"
+                      >
+                        Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                      </p>
+                    </div>
+                  </MarkdownViewer.Component>
+                </ErrorBoundary>
+              </MarkdownViewer>
+            </MarkdownViewer>
             <div
-              className="flex-1 text-darken-7 dark:text-lighten-7"
+              className="flex flex-wrap"
             >
-              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+              <Blueprint3.Tag
+                className="mb-2 mr-2"
+                minimal={true}
+              >
+                <span
+                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                >
+                  <Blueprint3.Icon />
+                  <Blueprint3.Text
+                    className="bp3-fill"
+                    ellipsize={true}
+                    tagName="span"
+                  >
+                    <span
+                      className="bp3-text-overflow-ellipsis bp3-fill"
+                    >
+                      Scheme: 
+                      bearer
+                    </span>
+                  </Blueprint3.Text>
+                  <Blueprint3.Icon />
+                </span>
+              </Blueprint3.Tag>
+              <Blueprint3.Tag
+                className="mb-2 mr-2"
+                minimal={true}
+              >
+                <span
+                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                >
+                  <Blueprint3.Icon />
+                  <Blueprint3.Text
+                    className="bp3-fill"
+                    ellipsize={true}
+                    tagName="span"
+                  >
+                    <span
+                      className="bp3-text-overflow-ellipsis bp3-fill"
+                    >
+                      Bearer Format: 
+                      Authorization
+                    </span>
+                  </Blueprint3.Text>
+                  <Blueprint3.Icon />
+                </span>
+              </Blueprint3.Tag>
             </div>
-            <Blueprint3.Tag
-              className="mt-2 mr-2"
-              minimal={true}
-            >
-              <span
-                className="bp3-tag bp3-minimal mt-2 mr-2"
-              >
-                <Blueprint3.Icon />
-                <Blueprint3.Text
-                  className="bp3-fill"
-                  ellipsize={true}
-                  tagName="span"
-                >
-                  <span
-                    className="bp3-text-overflow-ellipsis bp3-fill"
-                  >
-                    Scheme: 
-                    bearer
-                  </span>
-                </Blueprint3.Text>
-                <Blueprint3.Icon />
-              </span>
-            </Blueprint3.Tag>
-            <Blueprint3.Tag
-              className="mt-2 mr-2"
-              minimal={true}
-            >
-              <span
-                className="bp3-tag bp3-minimal mt-2 mr-2"
-              >
-                <Blueprint3.Icon />
-                <Blueprint3.Text
-                  className="bp3-fill"
-                  ellipsize={true}
-                  tagName="span"
-                >
-                  <span
-                    className="bp3-text-overflow-ellipsis bp3-fill"
-                  >
-                    Bearer Format: 
-                    Authorization
-                  </span>
-                </Blueprint3.Text>
-                <Blueprint3.Icon />
-              </span>
-            </Blueprint3.Tag>
           </div>
         </div>
       </HttpSecuritySchemes.SecurityScheme>
       <HttpSecuritySchemes.SecurityScheme
-        className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+        className="TreeListItem TreeListItem--striped"
         key="3"
         security={
           Object {
@@ -316,7 +455,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="HttpOperation__Parameter p-4 flex items-start TreeListItem TreeListItem--striped"
+          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -324,7 +463,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
           }
         >
           <div
-            className="mr-4"
+            style={
+              Object {
+                "minWidth": "60px",
+              }
+            }
           >
             <div>
               openIdConnectKey
@@ -336,41 +479,78 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
           <div
-            className="flex-1"
+            className="flex-1 ml-4"
           >
-            <div
-              className="flex-1 text-darken-7 dark:text-lighten-7"
+            <MarkdownViewer
+              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+              markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
             >
-              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-            </div>
-            <Blueprint3.Tag
-              className="mt-2 mr-2"
-              minimal={true}
-            >
-              <span
-                className="bp3-tag bp3-minimal mt-2 mr-2"
+              <MarkdownViewer
+                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                components={
+                  Object {
+                    "code": [Function],
+                  }
+                }
+                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
               >
-                <Blueprint3.Icon />
-                <Blueprint3.Text
-                  className="bp3-fill"
-                  ellipsize={true}
-                  tagName="span"
+                <ErrorBoundary
+                  FallbackComponent={[Function]}
                 >
-                  <span
-                    className="bp3-text-overflow-ellipsis bp3-fill"
+                  <MarkdownViewer.Component
+                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    components={
+                      Object {
+                        "code": [Function],
+                      }
+                    }
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                   >
-                    OpenId Connect URL: 
-                    http://openIdConnect.com
-                  </span>
-                </Blueprint3.Text>
-                <Blueprint3.Icon />
-              </span>
-            </Blueprint3.Tag>
+                    <div
+                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    >
+                      <p
+                        key="0"
+                      >
+                        Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                      </p>
+                    </div>
+                  </MarkdownViewer.Component>
+                </ErrorBoundary>
+              </MarkdownViewer>
+            </MarkdownViewer>
+            <div
+              className="flex flex-wrap"
+            >
+              <Blueprint3.Tag
+                className="mb-2 mr-2"
+                minimal={true}
+              >
+                <span
+                  className="bp3-tag bp3-minimal mb-2 mr-2"
+                >
+                  <Blueprint3.Icon />
+                  <Blueprint3.Text
+                    className="bp3-fill"
+                    ellipsize={true}
+                    tagName="span"
+                  >
+                    <span
+                      className="bp3-text-overflow-ellipsis bp3-fill"
+                    >
+                      OpenId Connect URL: 
+                      http://openIdConnect.com
+                    </span>
+                  </Blueprint3.Text>
+                  <Blueprint3.Icon />
+                </span>
+              </Blueprint3.Tag>
+            </div>
           </div>
         </div>
       </HttpSecuritySchemes.SecurityScheme>
       <HttpSecuritySchemes.SecurityScheme
-        className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+        className="TreeListItem"
         key="4"
         security={
           Object {
@@ -416,7 +596,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -424,7 +604,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
           }
         >
           <div
-            className="mr-4"
+            style={
+              Object {
+                "minWidth": "60px",
+              }
+            }
           >
             <div>
               oauth2Key
@@ -436,13 +620,49 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             </div>
           </div>
           <div
-            className="flex-1"
+            className="flex-1 ml-4"
           >
-            <div
-              className="flex-1 text-darken-7 dark:text-lighten-7"
+            <MarkdownViewer
+              className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+              markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
             >
-              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-            </div>
+              <MarkdownViewer
+                className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                components={
+                  Object {
+                    "code": [Function],
+                  }
+                }
+                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+              >
+                <ErrorBoundary
+                  FallbackComponent={[Function]}
+                >
+                  <MarkdownViewer.Component
+                    className="flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    components={
+                      Object {
+                        "code": [Function],
+                      }
+                    }
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                  >
+                    <div
+                      className="MarkdownViewer flex-1 mb-2 text-darken-7 dark:text-lighten-7"
+                    >
+                      <p
+                        key="0"
+                      >
+                        Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                      </p>
+                    </div>
+                  </MarkdownViewer.Component>
+                </ErrorBoundary>
+              </MarkdownViewer>
+            </MarkdownViewer>
+            <div
+              className="flex flex-wrap"
+            />
             <HttpSecuritySchemes.OAuth2Flow
               flow="implicit"
               flowObject={
@@ -458,7 +678,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               key="implicit"
             >
               <div
-                className="py-2 mt-2 border-t"
+                className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow"
               >
                 <div
                   className="py-2 font-semibold"
@@ -597,7 +817,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               key="password"
             >
               <div
-                className="py-2 mt-2 border-t"
+                className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow"
               >
                 <div
                   className="py-2 font-semibold"
@@ -736,7 +956,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               key="clientCredentials"
             >
               <div
-                className="py-2 mt-2 border-t"
+                className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow"
               >
                 <div
                   className="py-2 font-semibold"
@@ -876,7 +1096,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               key="authorizationCode"
             >
               <div
-                className="py-2 mt-2 border-t"
+                className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow"
               >
                 <div
                   className="py-2 font-semibold"
