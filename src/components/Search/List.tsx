@@ -88,6 +88,8 @@ export const NodeList: React.FunctionComponent<{
   );
 };
 
+// QUESTION: Since we are using IProjectNode instead of INodeListItemProps, how will dataContext and summary change?
+
 // export const NodeListItem: React.FunctionComponent<INodeListItemProps> = ({ loading, item }) => {
 export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IProjectNode }> = ({ loading, item }) => {
   // const explorerStore = useStore('explorerStore');
@@ -104,6 +106,7 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
         })}
       >
         {/* <HghlightSearchContext markup={item.data} /> */}
+        {/* QUESTION: Use the below instead?? */}
         <div className="sl-search-highlight whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: item.data }} />
       </Callout>
     );
@@ -112,6 +115,7 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
   const { orgSlug, projectSlug } = deserializeSrn(item.srn);
 
   return (
+    // QUESTION: Do we want to create a Link component similar to what exists in platofrm-internal?
     <Link href={`/docs/project?srn=${item.srn}`} as={`/docs/${item.srn}`}>
       <div
         className="flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
@@ -137,6 +141,7 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
               })}
             >
               {/* <HghlightSearchContext markup={item.name || 'No Name...'} /> */}
+              {/* QUESTION: Use the below instead?? */}
               <div
                 className="sl-search-highlight whitespace-pre-wrap"
                 dangerouslySetInnerHTML={{ __html: item.name || 'No Name...' }}
@@ -164,6 +169,7 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
                 })}
               >
                 {/* <HghlightSearchContext markup={item.summary} /> */}
+                {/* QUESTION: Use the below instead?? */}
                 <div
                   className="sl-search-highlight whitespace-pre-wrap"
                   dangerouslySetInnerHTML={{ __html: item.summary }}
