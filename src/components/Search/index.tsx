@@ -1,6 +1,6 @@
-import { Drawer } from '@stoplight/ui-kit';
 import * as React from 'react';
 import { IProjectNode } from '../../types';
+import { Drawer } from './Drawer';
 import { NodeList } from './List';
 import { SearchBar } from './SearchBar';
 
