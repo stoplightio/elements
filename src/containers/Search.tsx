@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Search as SearchComponent } from '../components/Search';
 import { useSearchQuery } from '../hooks/useSearchQuery';
 
-interface ISearchContainer {
+export interface ISearchContainer {
   // query: string;
   srn: string;
   isOpen: boolean;
