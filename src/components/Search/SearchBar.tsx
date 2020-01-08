@@ -4,9 +4,10 @@ import * as React from 'react';
 interface ISearchBar {
   query?: string;
   onChange: (query: string) => void;
+  onReset?: () => void;
 }
 
-export const SearchBar: React.FunctionComponent<ISearchBar> = ({ query, onChange }) => {
+export const SearchBar: React.FunctionComponent<ISearchBar> = ({ query, onChange, onReset }) => {
   // const explorerStore = useStore('explorerStore');
 
   return (
@@ -19,12 +20,10 @@ export const SearchBar: React.FunctionComponent<ISearchBar> = ({ query, onChange
         placeholder="What are you looking for?"
         value={query}
         onChange={onChange}
-        rightElement={
-          query ? <Button minimal icon="cross" onClick={() => explorerStore.updateSearch('')} /> : undefined
-        }
+        rightElement={query ? <Button minimal icon="cross" onClick={onReset} /> : undefined}
       />
 
-      <Button icon="arrow-right" minimal onClick={() => (explorerStore.searchDrawerOpen = false)} />
+      <Button icon="arrow-right" minimal onClick={onReset} />
     </div>
   );
 };

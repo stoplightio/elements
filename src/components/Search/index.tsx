@@ -30,56 +30,10 @@ export const Search: React.FunctionComponent<ISearchComponent> = ({
   return (
     <Drawer className="Search__drawer" backdropClassName="Search__backdrop" isOpen={isOpen} onClose={onClose}>
       <>
-        <SearchBar query={query} onChange={onChange} />
+        <SearchBar query={query} onChange={onChange} onReset={onReset} />
 
         <NodeList loading={isLoading} error={error} data={nodes} loadMore={loadMore} />
       </>
     </Drawer>
   );
 };
-
-// if (error) {
-//   console.error(error);
-
-//   return (
-//     <NonIdealState
-//       title="An error has occured!"
-//       description="Try refreshing the page. If the error persists, please reach out to us at support@stoplight.io."
-//       icon="error"
-//       action={
-//         <Button
-//           text="Reload the Page"
-//           onClick={() => {
-//             window.location.reload();
-//           }}
-//         />
-//       }
-//     />
-//   );
-// }
-
-// if (!data || !data.length) {
-//   if (!data && loading) {
-//     return <Spinner className="mt-32" />;
-//   } else {
-//     return (
-//       <NonIdealState
-//         title="No Results"
-//         description="Try tweaking your filters or search term."
-//         icon="zoom-out"
-//         action={
-//           explorerStore.isFiltered ? (
-//             <Button
-//               text="Clear Search & Filters"
-//               onClick={() => {
-//                 explorerStore.clearFilters(true);
-//               }}
-//             />
-//           ) : (
-//             undefined
-//           )
-//         }
-//       />
-//     );
-//   }
-// }
