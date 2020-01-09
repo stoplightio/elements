@@ -11,8 +11,7 @@ interface ISearchComponent {
   isOpen: boolean;
   onClose?: () => void;
   onReset?: () => void;
-  loadMore: any; // TODO: Type this
-  isLoading: any; // TODO: Type this
+  isLoading: boolean;
   error?: any; // TODO: Type this
 }
 
@@ -23,7 +22,6 @@ export const Search: React.FunctionComponent<ISearchComponent> = ({
   isOpen,
   onClose,
   onReset,
-  loadMore,
   isLoading,
   error,
 }) => {
@@ -32,7 +30,7 @@ export const Search: React.FunctionComponent<ISearchComponent> = ({
       <>
         <SearchBar query={query} onChange={onChange} onReset={onReset} />
 
-        <NodeList loading={isLoading} error={error} data={nodes} loadMore={loadMore} />
+        <NodeList loading={isLoading} error={error} data={nodes} onReset={onReset} />
       </>
     </Drawer>
   );

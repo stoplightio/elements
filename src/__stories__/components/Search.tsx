@@ -21,7 +21,6 @@ storiesOf('components/Search', module)
             isOpen={true}
             onClose={() => console.log('closing')}
             onReset={() => console.log('resetting')}
-            loadMore={() => console.log('loading more')}
             isLoading={false}
           />
         </Provider>

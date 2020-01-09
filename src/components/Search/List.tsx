@@ -1,21 +1,18 @@
-// import { useStore } from '@stoplight/request-maker';
 import { deserializeSrn } from '@stoplight/path';
 import { Button, Callout, Classes, Icon, NonIdealState, Spinner, Tag } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
-import { useProjectNodes } from '../../hooks';
+import { useComponents } from '../../hooks';
 import { IProjectNode } from '../../types';
 import { NodeTypeColors, NodeTypeIcons, NodeTypePrettyName } from '../../utils/node';
 
 export const NodeList: React.FunctionComponent<{
-  loadMore(): void;
   loading: boolean;
   error?: any;
   data?: IProjectNode[];
-}> = ({ loading, error, data, loadMore }) => {
-  // const explorerStore = useStore('explorerStore');
-
+  onReset?: () => void;
+}> = ({ loading, error, data, onReset }) => {
   if (error) {
     console.error(error);
 
@@ -45,41 +42,14 @@ export const NodeList: React.FunctionComponent<{
           title="No Results"
           description="Try tweaking your filters or search term."
           icon="zoom-out"
-          action={
-            explorerStore.isFiltered ? (
-              <Button
-                text="Clear Search & Filters"
-                onClick={() => {
-                  explorerStore.clearFilters(true);
-                }}
-              />
-            ) : (
-              undefined
-            )
-          }
+          action={<Button text="Clear Search & Filters" onClick={onReset} />}
         />
       );
     }
   }
 
-  // QUESTION: Should these details get passed down?
-  const [didHitBottom, updateDidHitBottom] = React.useState(false);
-  const scrollHandler = React.useCallback(
-    target => {
-      if (target.scrollTop >= target.scrollHeight - target.clientHeight - 250) {
-        if (didHitBottom) {
-          updateDidHitBottom(false);
-        } else {
-          loadMore();
-          updateDidHitBottom(true);
-        }
-      }
-    },
-    [loadMore, didHitBottom, updateDidHitBottom],
-  );
-
   return (
-    <ScrollContainer onScroll={scrollHandler}>
+    <ScrollContainer>
       {data.map((item, i) => (
         <NodeListItem key={i} item={item} loading={!data && loading} />
       ))}
@@ -88,16 +58,11 @@ export const NodeList: React.FunctionComponent<{
   );
 };
 
-// QUESTION: Since we are using IProjectNode instead of INodeListItemProps, how will dataContext and summary change?
-
-// export const NodeListItem: React.FunctionComponent<INodeListItemProps> = ({ loading, item }) => {
 export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IProjectNode }> = ({ loading, item }) => {
-  // const explorerStore = useStore('explorerStore');
-
-  const data = useProjectNodes(item.srn); // ????
+  const components = useComponents();
 
   let dataContext: any = null;
-  if (item.data.match('<em>')) {
+  if (item.data && item.data.match('<em>')) {
     dataContext = (
       <Callout
         style={{ maxHeight: 150 }}
@@ -105,82 +70,92 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
           [Classes.SKELETON]: loading,
         })}
       >
-        {/* <HghlightSearchContext markup={item.data} /> */}
-        {/* QUESTION: Use the below instead?? */}
-        <div className="sl-search-highlight whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: item.data }} />
+        <HghlightSearchContext markup={item.data} />
       </Callout>
     );
   }
 
   const { orgSlug, projectSlug } = deserializeSrn(item.srn);
 
-  return (
-    // QUESTION: Do we want to create a Link component similar to what exists in platofrm-internal?
-    <Link href={`/docs/project?srn=${item.srn}`} as={`/docs/${item.srn}`}>
-      <div
-        className="flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
-        onClick={() => {
-          explorerStore.updateSearch('');
-          explorerStore.searchDrawerOpen = false;
-        }}
-      >
-        <div className="mr-4">
-          <Tag
-            icon={NodeTypeIcons[item.type] && <Icon icon={NodeTypeIcons[item.type]} iconSize={11} />}
-            style={{ backgroundColor: NodeTypeColors[item.type] || undefined }}
-            title={NodeTypePrettyName[item.type] || item.type}
-            className="py-1 dark:text-white"
-          />
-        </div>
+  const children = (
+    <div
+      className="flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
+      // onClick={() => {
+      //   explorerStore.updateSearch('');
+      //   explorerStore.searchDrawerOpen = false;
+      // }}
+    >
+      <div className="mr-4">
+        <Tag
+          icon={NodeTypeIcons[item.type] && <Icon icon={NodeTypeIcons[item.type]} iconSize={11} />}
+          style={{ backgroundColor: NodeTypeColors[item.type] || undefined }}
+          title={NodeTypePrettyName[item.type] || item.type}
+          className="py-1 dark:text-white"
+        />
+      </div>
 
-        <div className="flex-1">
-          <div className="flex items-center">
-            <div
-              className={cn(Classes.HEADING, 'inline-block flex items-center m-0', {
-                [Classes.SKELETON]: loading,
-              })}
-            >
-              {/* <HghlightSearchContext markup={item.name || 'No Name...'} /> */}
-              {/* QUESTION: Use the below instead?? */}
-              <div
-                className="sl-search-highlight whitespace-pre-wrap"
-                dangerouslySetInnerHTML={{ __html: item.name || 'No Name...' }}
-              />
-            </div>
-
-            <div className="flex-1" />
-
-            <div
-              className={cn(Classes.TEXT_MUTED, 'flex text-sm', {
-                [Classes.SKELETON]: loading,
-              })}
-            >
-              <div>{orgSlug}</div> // TODO: Format this
-              <div className="px-1">/</div>
-              <div>{projectSlug}</div> // TODO: Format this
-            </div>
+      <div className="flex-1">
+        <div className="flex items-center">
+          <div
+            className={cn(Classes.HEADING, 'inline-block flex items-center m-0', {
+              [Classes.SKELETON]: loading,
+            })}
+          >
+            <HghlightSearchContext markup={item.name || 'No Name...'} />
           </div>
 
-          {item.summary && (
-            <div className="flex">
-              <div
-                className={cn('flex-1 mt-2', {
-                  [Classes.SKELETON]: loading,
-                })}
-              >
-                {/* <HghlightSearchContext markup={item.summary} /> */}
-                {/* QUESTION: Use the below instead?? */}
-                <div
-                  className="sl-search-highlight whitespace-pre-wrap"
-                  dangerouslySetInnerHTML={{ __html: item.summary }}
-                />
-              </div>
-            </div>
-          )}
+          <div className="flex-1" />
 
-          {dataContext}
+          <div
+            className={cn(Classes.TEXT_MUTED, 'flex text-sm', {
+              [Classes.SKELETON]: loading,
+            })}
+          >
+            {/* // TODO: Format this */}
+            <div>{orgSlug}</div>
+            <div className="px-1">/</div>
+            {/* // TODO: Format this */}
+            <div>{projectSlug}</div>
+          </div>
         </div>
+
+        {item.summary && (
+          <div className="flex">
+            <div
+              className={cn('flex-1 mt-2', {
+                [Classes.SKELETON]: loading,
+              })}
+            >
+              <HghlightSearchContext markup={item.summary} />
+            </div>
+          </div>
+        )}
+
+        {dataContext}
       </div>
-    </Link>
+    </div>
+  );
+
+  return components.link(
+    {
+      node: {
+        url: `/docs/project?srn=${item.srn}`,
+      },
+      // @ts-ignore
+      children,
+    },
+    item.id,
+  );
+};
+
+export const HghlightSearchContext: React.FunctionComponent<{ markup: string; className?: string }> = ({
+  markup,
+  className,
+}) => {
+  return (
+    <div
+      className={cn('sl-search-highlight whitespace-pre-wrap', className)}
+      dangerouslySetInnerHTML={{ __html: markup }}
+    />
   );
 };
