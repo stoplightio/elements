@@ -1,18 +1,18 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
 import { deserializeSrn, dirname, resolve, serializeSrn } from '@stoplight/path';
 import { parse } from '@stoplight/yaml';
-import axios from 'axios';
+import axios, { AxiosAdapter, AxiosInstance } from 'axios';
 import * as URI from 'urijs';
 
-export function createResolver(host: string, srn?: string) {
+export function createResolver(host: string, srn?: string, client?: AxiosInstance) {
   return new Resolver({
     dereferenceInline: true,
     dereferenceRemote: true,
 
     resolvers: {
-      https: httpResolver,
-      http: httpResolver,
-      file: remoteFileResolver(host, srn),
+      https: httpResolver(client),
+      http: httpResolver(client),
+      file: remoteFileResolver(host, srn, client),
     },
 
     async parseResolveResult(opts) {
@@ -35,7 +35,7 @@ export function createResolver(host: string, srn?: string) {
  * @param host Stoplight API host
  * @param srn The active node's SRN
  */
-function remoteFileResolver(host: string, srn?: string) {
+function remoteFileResolver(host: string, srn?: string, client?: AxiosInstance) {
   const { shortcode, orgSlug, projectSlug, uri } = deserializeSrn(srn || '');
 
   return {
@@ -54,14 +54,16 @@ function remoteFileResolver(host: string, srn?: string) {
       });
 
       // Use the http resolver to resolve the node's raw export
-      return httpResolver.resolve(new URI(`${host}/nodes.raw?srn=${refSrn}`));
+      return httpResolver(client).resolve(new URI(`${host}/nodes.raw?srn=${refSrn}`));
     },
   };
 }
 
-const httpResolver = {
-  async resolve(ref: uri.URI) {
-    const res = await axios.get(String(ref));
-    return res.data;
-  },
+const httpResolver = (client: AxiosInstance = axios) => {
+  return {
+    resolve: async (ref: uri.URI) => {
+      const res = await client.get(String(ref));
+      return res.data;
+    },
+  };
 };
