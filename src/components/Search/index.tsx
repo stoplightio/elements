@@ -6,7 +6,7 @@ import { SearchBar } from './SearchBar';
 
 interface ISearchComponent {
   query: string;
-  onChange: (query: string) => void; // QUESTION: Is this correct? It becomes an issue when we try get to SearchBar as FormInput has a different type
+  onChange: (query: string) => void;
   nodes: IProjectNode[];
   isOpen: boolean;
   onClose?: () => void;

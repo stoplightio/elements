@@ -80,6 +80,7 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
   const children = (
     <div
       className="flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
+      // TODO: Figure out this onClick function
       // onClick={() => {
       //   explorerStore.updateSearch('');
       //   explorerStore.searchDrawerOpen = false;

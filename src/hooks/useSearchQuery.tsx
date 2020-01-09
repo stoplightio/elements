@@ -1,8 +1,6 @@
 // import { useSearchDocsQuery } from '@stoplight/graphql';
-import { deserializeSrn } from '@stoplight/path';
+// import { deserializeSrn } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
-
-// return fake data here
 
 export function useSearchQuery(query: string, srn: string, isOpen: boolean, group?: string) {
   // const { shortcode, orgSlug, projectSlug } = deserializeSrn(srn || '');
@@ -28,11 +26,14 @@ export function useSearchQuery(query: string, srn: string, isOpen: boolean, grou
         type: NodeType.Article,
         name: 'Modeling Introduction',
         srn: 'gh/stoplightio/studio/docs/designing-apis/10-getting-started.md',
+        data: 'Here is a bunch of data',
+        summary: 'Summary of some data',
       },
     ],
 
     error: '',
     loading: false,
+    // tslint:disable-next-line: no-empty
     fetchMore: ({}) => {},
   };
 }

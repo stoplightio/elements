@@ -3,13 +3,11 @@ import * as React from 'react';
 
 interface ISearchBar {
   query?: string;
-  onChange: (query: string) => void;
+  onChange: any; // :( TODO: FIX THIS
   onReset?: () => void;
 }
 
 export const SearchBar: React.FunctionComponent<ISearchBar> = ({ query, onChange, onReset }) => {
-  // const explorerStore = useStore('explorerStore');
-
   return (
     <div className="flex items-center h-20 px-3 py-6 border-b dark:border-lighten-4">
       <FormInput

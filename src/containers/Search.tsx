@@ -1,28 +1,18 @@
+// TODO: Fix below
 import { SearchDocsQuery } from '@stoplight/graphql';
-import { get } from 'lodash';
 import * as React from 'react';
 import { Search as SearchComponent } from '../components/Search';
 import { useSearchQuery } from '../hooks/useSearchQuery';
 
 export interface ISearchContainer {
-  // query: string;
   srn: string;
   isOpen: boolean;
   onClose?: () => void;
   onReset?: () => void;
   group?: string;
-  // pinned?: boolean;
 }
 
-export const Search: React.FunctionComponent<ISearchContainer> = ({
-  // query,
-  isOpen,
-  onClose,
-  onReset,
-  srn,
-  group,
-  // pinned,
-}) => {
+export const Search: React.FunctionComponent<ISearchContainer> = ({ isOpen, onClose, onReset, srn, group }) => {
   const [lastData, updateLastData] = React.useState<SearchDocsQuery | undefined>();
   const [query, updateQuery] = React.useState('');
 
