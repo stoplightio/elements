@@ -1,38 +1,25 @@
-// import { useSearchDocsQuery } from '@stoplight/graphql';
-// import { deserializeSrn } from '@stoplight/path';
-import { NodeType } from '@stoplight/types';
+import { filter, uniqBy } from 'lodash';
+import { useRequest } from '.';
+import { IPaginatedResponse, IProjectNode } from '../types';
 
 export function useSearchQuery(query: string, srn: string, isOpen: boolean, group?: string) {
-  // const { shortcode, orgSlug, projectSlug } = deserializeSrn(srn || '');
-
-  // const { data, error, loading, fetchMore } = useSearchDocsQuery({
-  //   fetchPolicy: 'network-only',
-  //   skip: isOpen === false,
-  //   variables: {
-  //     search: query,
-  //     shortcode,
-  //     org: orgSlug,
-  //     project: projectSlug,
-  //     group,
-  //     // pinned,
-  //     first: 30,
-  //   },
-  // });
+  const { isLoading, data, error } = useRequest<IPaginatedResponse<IProjectNode>>({
+    url: '/projects.nodes',
+    params: {
+      search: query,
+      group,
+      srn,
+      first: 30,
+    },
+  });
 
   return {
-    data: [
-      {
-        id: 'ks8cwyvs',
-        type: NodeType.Article,
-        name: 'Modeling Introduction',
-        srn: 'gh/stoplightio/studio/docs/designing-apis/10-getting-started.md',
-        data: 'Here is a bunch of data',
-        summary: 'Summary of some data',
-      },
-    ],
-
-    error: '',
-    loading: false,
+    data: {
+      ...data,
+      items: data ? uniqBy(data.items, 'srn') : [],
+    },
+    loading: isLoading,
+    error,
     // tslint:disable-next-line: no-empty
     fetchMore: ({}) => {},
   };

@@ -1,8 +1,8 @@
-// TODO: Fix below
-import { SearchDocsQuery } from '@stoplight/graphql';
+import { filter, uniqBy } from 'lodash';
 import * as React from 'react';
 import { Search as SearchComponent } from '../components/Search';
 import { useSearchQuery } from '../hooks/useSearchQuery';
+import { IProjectNode } from '../types';
 
 export interface ISearchContainer {
   srn: string;
@@ -12,11 +12,27 @@ export interface ISearchContainer {
   group?: string;
 }
 
-export const Search: React.FunctionComponent<ISearchContainer> = ({ isOpen, onClose, onReset, srn, group }) => {
-  const [lastData, updateLastData] = React.useState<SearchDocsQuery | undefined>();
-  const [query, updateQuery] = React.useState('');
+interface ISearchQueryData {
+  items: IProjectNode[];
+  pageInfo?: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string;
+    endCursor: string;
+  };
+  totalCount?: number;
+}
 
-  const { data, error, loading, fetchMore } = useSearchQuery(query, srn, isOpen, group);
+export const Search: React.FunctionComponent<ISearchContainer> = ({ isOpen, onClose, onReset, srn, group }) => {
+  const [lastData, updateLastData] = React.useState<ISearchQueryData | undefined>();
+  const [query, updateQuery] = React.useState<string>('');
+
+  function handleChange(e: any) {
+    e.persist();
+    updateQuery(e.target.value);
+  }
+
+  const { data, error, loading } = useSearchQuery(query, srn, isOpen, group);
 
   React.useEffect(() => {
     if (!loading) {
@@ -28,8 +44,8 @@ export const Search: React.FunctionComponent<ISearchContainer> = ({ isOpen, onCl
   return (
     <SearchComponent
       query={query}
-      onChange={updateQuery}
-      nodes={data}
+      onChange={handleChange}
+      nodes={data.items}
       isOpen={isOpen}
       onClose={onClose}
       onReset={onReset}
