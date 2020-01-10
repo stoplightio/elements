@@ -4,7 +4,7 @@ import { parse } from '@stoplight/yaml';
 import axios, { AxiosAdapter, AxiosInstance } from 'axios';
 import * as URI from 'urijs';
 
-export function createResolver(host: string, srn?: string, client?: AxiosInstance) {
+export function createResolver(client: AxiosInstance, srn?: string) {
   return new Resolver({
     dereferenceInline: true,
     dereferenceRemote: true,
