@@ -35,7 +35,7 @@ export function createResolver(client: AxiosInstance, srn?: string) {
  * @param host Stoplight API host
  * @param srn The active node's SRN
  */
-function remoteFileResolver(host: string, srn?: string, client?: AxiosInstance) {
+function remoteFileResolver(client: AxiosInstance, srn?: string) {
   const { shortcode, orgSlug, projectSlug, uri } = deserializeSrn(srn || '');
 
   return {
