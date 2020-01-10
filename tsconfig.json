@@ -6,6 +6,7 @@
   "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
 
   "compilerOptions": {
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "esModuleInterop": true
   }
 }
