@@ -13,7 +13,6 @@ import { useParsedData } from './useParsedData';
  * Any component using this hook MUST be wrapped in both the HostContext and ActiveSrnContext providers
  */
 export function useResolver<T = any>(type: DocsNodeType, value: string) {
-  const host = React.useContext(HostContext);
   const srn = React.useContext(ActiveSrnContext);
   const client = React.useContext(AxiosContext);
   const resolver = React.useContext(ResolverContext) || createResolver(client, srn);
