@@ -16,7 +16,7 @@ export function useResolver<T = any>(type: DocsNodeType, value: string) {
   const host = React.useContext(HostContext);
   const srn = React.useContext(ActiveSrnContext);
   const client = React.useContext(AxiosContext);
-  const resolver = React.useContext(ResolverContext) || createResolver(host, srn, client);
+  const resolver = React.useContext(ResolverContext) || createResolver(client, srn);
   const parsedValue = useParsedData(type, value);
 
   const [resolved, setResolved] = React.useState<{
