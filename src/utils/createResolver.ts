@@ -12,7 +12,7 @@ export function createResolver(client: AxiosInstance, srn?: string) {
     resolvers: {
       https: httpResolver(client),
       http: httpResolver(client),
-      file: remoteFileResolver(host, srn, client),
+      file: remoteFileResolver(client, srn),
     },
 
     async parseResolveResult(opts) {
