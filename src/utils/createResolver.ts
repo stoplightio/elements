@@ -54,7 +54,7 @@ function remoteFileResolver(client: AxiosInstance, srn?: string) {
       });
 
       // Use the http resolver to resolve the node's raw export
-      return httpResolver(client).resolve(new URI(`${host}/nodes.raw?srn=${refSrn}`));
+      return httpResolver(client).resolve(`/nodes.raw?srn=${refSrn}`);
     },
   };
 }
