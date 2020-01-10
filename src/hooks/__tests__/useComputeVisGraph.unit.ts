@@ -1,4 +1,5 @@
 const nock = require('nock');
+import axios from 'axios';
 const simpleSchema = require('../../__fixtures__/schemas/simple.json');
 const todoFullSchema = require('../../__fixtures__/schemas/todo-full.v1.json');
 const todoPartialSchema = require('../../__fixtures__/schemas/todo-partial.v1.json');
@@ -26,7 +27,10 @@ afterEach(() => {
 
 describe('computeVisGraph', () => {
   test('it works with a simple example', async () => {
-    const { graph } = await createResolver('https://stoplight.io/api').resolve(simpleSchema);
+    const client = axios.create({
+      baseURL: 'https://stoplight.io/api',
+    });
+    const { graph } = await createResolver(client).resolve(simpleSchema);
 
     expect(computeVisGraph({ srn: '' } as INodeInfo, graph, '')).toMatchSnapshot();
   });

@@ -1,8 +1,8 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
 import { deserializeSrn, dirname, resolve, serializeSrn } from '@stoplight/path';
 import { parse } from '@stoplight/yaml';
-import axios, { AxiosAdapter, AxiosInstance } from 'axios';
-import * as URI from 'urijs';
+import axios, { AxiosInstance } from 'axios';
+import URI from 'urijs';
 
 export function createResolver(client: AxiosInstance, srn?: string) {
   return new Resolver({
@@ -54,7 +54,8 @@ function remoteFileResolver(client: AxiosInstance, srn?: string) {
       });
 
       // Use the http resolver to resolve the node's raw export
-      return httpResolver(client).resolve(`/nodes.raw?srn=${refSrn}`);
+
+      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}`));
     },
   };
 }
