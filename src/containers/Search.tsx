@@ -1,45 +1,25 @@
-import { filter, uniqBy } from 'lodash';
 import * as React from 'react';
 import { Search as SearchComponent } from '../components/Search';
-import { useSearchQuery } from '../hooks/useSearchQuery';
-import { IProjectNode } from '../types';
+import { useProjectNodes } from '../hooks';
 
 export interface ISearchContainer {
   srn: string;
-  isOpen: boolean;
+  isOpen?: boolean;
   onClose?: () => void;
   onReset?: () => void;
   group?: string;
 }
 
-interface ISearchQueryData {
-  items: IProjectNode[];
-  pageInfo?: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    startCursor: string;
-    endCursor: string;
-  };
-  totalCount?: number;
-}
-
-export const Search: React.FunctionComponent<ISearchContainer> = ({ isOpen, onClose, onReset, srn, group }) => {
-  const [lastData, updateLastData] = React.useState<ISearchQueryData | undefined>();
+export const Search: React.FunctionComponent<ISearchContainer> = ({ srn, isOpen, onClose, onReset, group }) => {
   const [query, updateQuery] = React.useState<string>('');
 
-  function handleChange(e: any) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.persist();
     updateQuery(e.target.value);
   }
 
-  const { data, error, loading } = useSearchQuery(query, srn, isOpen, group);
-
-  React.useEffect(() => {
-    if (!loading) {
-      updateLastData(data);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+  const options = { group, query };
+  const { data, error, isLoading } = useProjectNodes(srn, options);
 
   return (
     <SearchComponent
@@ -49,7 +29,7 @@ export const Search: React.FunctionComponent<ISearchContainer> = ({ isOpen, onCl
       isOpen={isOpen}
       onClose={onClose}
       onReset={onReset}
-      isLoading={loading}
+      isLoading={isLoading}
       error={error}
     />
   );

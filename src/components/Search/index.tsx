@@ -1,36 +1,38 @@
+import { Drawer } from '@stoplight/ui-kit';
 import * as React from 'react';
 import { IProjectNode } from '../../types';
-import { Drawer } from './Drawer';
 import { NodeList } from './List';
 import { SearchBar } from './SearchBar';
 
-interface ISearchComponent {
+export interface ISearchComponent {
   query: string;
-  onChange: (query: string) => void;
+  onChange: (query: React.ChangeEvent<HTMLInputElement>) => void;
   nodes: IProjectNode[];
-  isOpen: boolean;
+  isLoading: boolean;
+  isOpen?: boolean;
   onClose?: () => void;
   onReset?: () => void;
-  isLoading: boolean;
-  error?: any; // TODO: Type this
+  error?: {
+    message: string;
+  };
 }
 
 export const Search: React.FunctionComponent<ISearchComponent> = ({
   query,
   onChange,
   nodes,
+  isLoading,
   isOpen,
   onClose,
   onReset,
-  isLoading,
   error,
 }) => {
   return (
     <Drawer className="Search__drawer" backdropClassName="Search__backdrop" isOpen={isOpen} onClose={onClose}>
       <>
-        <SearchBar query={query} onChange={onChange} onReset={onReset} />
+        <SearchBar query={query} onChange={onChange} onReset={onReset} onClose={onClose} />
 
-        <NodeList loading={isLoading} error={error} data={nodes} onReset={onReset} />
+        <NodeList loading={isLoading} error={error} nodes={nodes} onReset={onReset} />
       </>
     </Drawer>
   );

@@ -5,7 +5,7 @@ import { useRequest } from './useRequest';
 
 const MAX_PAGE_SIZE = 300; // maximumn number of items the API can return on a single request
 
-export function useProjectNodes(srn: string, opts: { group?: string } = {}) {
+export function useProjectNodes(srn: string, opts: { group?: string; query?: string } = {}) {
   // Remove node uri from the SRN
   const projectSrn = serializeSrn({ ...deserializeSrn(srn), uri: undefined });
 
@@ -14,6 +14,7 @@ export function useProjectNodes(srn: string, opts: { group?: string } = {}) {
     params: {
       srn: projectSrn,
       group: opts.group,
+      search: opts.query,
       first: MAX_PAGE_SIZE, // return the max number of nodes for a single request
     },
   });

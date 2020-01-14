@@ -1,12 +1,24 @@
+import { action } from '@storybook/addon-actions';
+import { withKnobs } from '@storybook/addon-knobs';
+import { boolean, object, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
-import { withKnobs } from '@storybook/addon-knobs';
-import * as studio from '../../__fixtures__/table-of-contents/studio';
-import { Search } from '../../components/Search/';
-
+import { ISearchComponent, Search } from '../../components/Search/';
 import { Provider } from '../../containers/Provider';
 import { providerKnobs } from '../containers/Provider';
+
+const data = require('../../__fixtures__/table-of-contents/studio');
+
+export const searchKnobs = (): ISearchComponent => ({
+  query: text('query', ''),
+  nodes: object('nodes', data.nodes, 'Nodes'),
+  isLoading: boolean('loadSearch', false),
+  isOpen: boolean('openSearch', true),
+  onChange: action('onChange'),
+  onClose: action('onClose'),
+  onReset: action('onReset'),
+});
 
 storiesOf('components/Search', module)
   .addDecorator(withKnobs)
@@ -14,15 +26,7 @@ storiesOf('components/Search', module)
     return (
       <div>
         <Provider {...providerKnobs()}>
-          <Search
-            query={''}
-            onChange={() => console.log('a change is happening')}
-            nodes={studio.nodes}
-            isOpen={true}
-            onClose={() => console.log('closing')}
-            onReset={() => console.log('resetting')}
-            isLoading={false}
-          />
+          <Search {...searchKnobs()} />
         </Provider>
       </div>
     );

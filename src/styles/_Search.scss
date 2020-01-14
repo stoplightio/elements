@@ -25,3 +25,11 @@
     }
   }
 }
+
+.Search_highlight em {
+  background-color: yellow;
+}
+
+.#{$ns}-dark .Search_highlight em {
+  background-color: rgba(255, 255, 255, 0.2);
+}

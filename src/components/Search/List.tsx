@@ -8,11 +8,13 @@ import { IProjectNode } from '../../types';
 import { NodeTypeColors, NodeTypeIcons, NodeTypePrettyName } from '../../utils/node';
 
 export const NodeList: React.FunctionComponent<{
-  loading: boolean;
-  error?: any;
-  data?: IProjectNode[];
+  loading?: boolean;
+  error?: {
+    message: string;
+  };
+  nodes?: IProjectNode[];
   onReset?: () => void;
-}> = ({ loading, error, data, onReset }) => {
+}> = ({ loading, error, nodes, onReset }) => {
   if (error) {
     console.error(error);
 
@@ -33,8 +35,8 @@ export const NodeList: React.FunctionComponent<{
     );
   }
 
-  if (!data || !data.length) {
-    if (!data && loading) {
+  if (!nodes || !nodes.length) {
+    if (!nodes && loading) {
       return <Spinner className="mt-32" />;
     } else {
       return (
@@ -50,16 +52,21 @@ export const NodeList: React.FunctionComponent<{
 
   return (
     <ScrollContainer>
-      {data.map((item, i) => (
-        <NodeListItem key={i} item={item} loading={!data && loading} />
+      {nodes.map((item, i) => (
+        <NodeListItem key={i} item={item} loading={!nodes && loading} />
       ))}
-      <div className="mt-2 mb-8">{data && loading && <Spinner className="mt-2" />}</div>
+      <div className="mt-2 mb-8">{nodes && loading && <Spinner className="mt-2" />}</div>
     </ScrollContainer>
   );
 };
 
-export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IProjectNode }> = ({ loading, item }) => {
+export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IProjectNode; onReset?: () => void }> = ({
+  loading,
+  item,
+  onReset,
+}) => {
   const components = useComponents();
+  const { orgSlug, projectSlug } = deserializeSrn(item.srn);
 
   let dataContext: any = null;
   if (item.data && item.data.match('<em>')) {
@@ -70,21 +77,15 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
           [Classes.SKELETON]: loading,
         })}
       >
-        <HghlightSearchContext markup={item.data} />
+        <HighlightSearchContext markup={item.data} />
       </Callout>
     );
   }
 
-  const { orgSlug, projectSlug } = deserializeSrn(item.srn);
-
   const children = (
     <div
       className="flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
-      // TODO: Figure out this onClick function
-      // onClick={() => {
-      //   explorerStore.updateSearch('');
-      //   explorerStore.searchDrawerOpen = false;
-      // }}
+      onClick={onReset}
     >
       <div className="mr-4">
         <Tag
@@ -102,7 +103,7 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
               [Classes.SKELETON]: loading,
             })}
           >
-            <HghlightSearchContext markup={item.name || 'No Name...'} />
+            <HighlightSearchContext markup={item.name || 'No Name...'} />
           </div>
 
           <div className="flex-1" />
@@ -112,10 +113,8 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
               [Classes.SKELETON]: loading,
             })}
           >
-            {/* // TODO: Format this */}
             <div>{orgSlug}</div>
             <div className="px-1">/</div>
-            {/* // TODO: Format this */}
             <div>{projectSlug}</div>
           </div>
         </div>
@@ -127,11 +126,10 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
                 [Classes.SKELETON]: loading,
               })}
             >
-              <HghlightSearchContext markup={item.summary} />
+              <HighlightSearchContext markup={item.summary} />
             </div>
           </div>
         )}
-
         {dataContext}
       </div>
     </div>
@@ -140,7 +138,7 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
   return components.link(
     {
       node: {
-        url: `/docs/project?srn=${item.srn}`,
+        url: item.srn,
       },
       // @ts-ignore
       children,
@@ -149,13 +147,13 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
   );
 };
 
-export const HghlightSearchContext: React.FunctionComponent<{ markup: string; className?: string }> = ({
+export const HighlightSearchContext: React.FunctionComponent<{ markup: string; className?: string }> = ({
   markup,
   className,
 }) => {
   return (
     <div
-      className={cn('sl-search-highlight whitespace-pre-wrap', className)}
+      className={cn('Search_highlight whitespace-pre-wrap', className)}
       dangerouslySetInnerHTML={{ __html: markup }}
     />
   );

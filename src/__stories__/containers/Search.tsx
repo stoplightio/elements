@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { boolean, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
@@ -11,10 +12,11 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const searchKnobs = (): ISearchContainer => ({
-  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
+  srn: text('srn', 'gh/stoplightio/studio-demo/'),
   group: text('group', undefined),
-  isOpen: true,
-  onClose: () => console.log('closing time'),
+  isOpen: boolean('openSearch', true),
+  onClose: action('onClose'),
+  onReset: action('onReset'),
 });
 
 storiesOf('containers/Search', module)
