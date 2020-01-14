@@ -11,7 +11,7 @@ export interface ISearchComponent {
   isLoading: boolean;
   isOpen?: boolean;
   onClose?: () => void;
-  onReset?: () => void;
+  onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   error?: {
     message: string;
   };
@@ -32,7 +32,7 @@ export const Search: React.FunctionComponent<ISearchComponent> = ({
       <>
         <SearchBar query={query} onChange={onChange} onReset={onReset} onClose={onClose} />
 
-        <NodeList loading={isLoading} error={error} nodes={nodes} onReset={onReset} />
+        <NodeList loading={isLoading} error={error} nodes={nodes} onReset={onReset} onClose={onClose} />
       </>
     </Drawer>
   );

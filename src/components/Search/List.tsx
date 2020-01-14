@@ -13,8 +13,9 @@ export const NodeList: React.FunctionComponent<{
     message: string;
   };
   nodes?: IProjectNode[];
-  onReset?: () => void;
-}> = ({ loading, error, nodes, onReset }) => {
+  onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClose?: () => void;
+}> = ({ loading, error, nodes, onReset, onClose }) => {
   if (error) {
     console.error(error);
 
@@ -53,18 +54,19 @@ export const NodeList: React.FunctionComponent<{
   return (
     <ScrollContainer>
       {nodes.map((item, i) => (
-        <NodeListItem key={i} item={item} loading={!nodes && loading} />
+        <NodeListItem key={i} item={item} loading={!nodes && loading} onClose={onClose} onReset={onReset} />
       ))}
       <div className="mt-2 mb-8">{nodes && loading && <Spinner className="mt-2" />}</div>
     </ScrollContainer>
   );
 };
 
-export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IProjectNode; onReset?: () => void }> = ({
-  loading,
-  item,
-  onReset,
-}) => {
+export const NodeListItem: React.FunctionComponent<{
+  loading: boolean;
+  item: IProjectNode;
+  onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClose?: () => void;
+}> = ({ loading, item, onReset, onClose }) => {
   const components = useComponents();
   const { orgSlug, projectSlug } = deserializeSrn(item.srn);
 
@@ -85,7 +87,14 @@ export const NodeListItem: React.FunctionComponent<{ loading: boolean; item: IPr
   const children = (
     <div
       className="flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
-      onClick={onReset}
+      onClick={e => {
+        if (onReset) {
+          onReset(e);
+        }
+        if (onClose) {
+          onClose();
+        }
+      }}
     >
       <div className="mr-4">
         <Tag

@@ -6,16 +6,20 @@ export interface ISearchContainer {
   srn: string;
   isOpen?: boolean;
   onClose?: () => void;
-  onReset?: () => void;
   group?: string;
 }
 
-export const Search: React.FunctionComponent<ISearchContainer> = ({ srn, isOpen, onClose, onReset, group }) => {
+export const Search: React.FunctionComponent<ISearchContainer> = ({ srn, isOpen, onClose, group }) => {
   const [query, updateQuery] = React.useState<string>('');
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.persist();
     updateQuery(e.target.value);
+  }
+
+  function handleReset(e: React.MouseEvent<HTMLElement, MouseEvent>) {
+    e.persist();
+    updateQuery('');
   }
 
   const options = { group, query };
@@ -28,7 +32,7 @@ export const Search: React.FunctionComponent<ISearchContainer> = ({ srn, isOpen,
       nodes={data.items}
       isOpen={isOpen}
       onClose={onClose}
-      onReset={onReset}
+      onReset={handleReset}
       isLoading={isLoading}
       error={error}
     />

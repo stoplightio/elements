@@ -4,7 +4,7 @@ import * as React from 'react';
 interface ISearchBar {
   query?: string;
   onChange: (query: React.ChangeEvent<HTMLInputElement>) => void;
-  onReset?: () => void;
+  onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onClose?: () => void;
 }
 
