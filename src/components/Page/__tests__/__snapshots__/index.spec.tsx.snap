@@ -6878,32 +6878,6 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                             <div
                                               className="flex-1 ml-4"
                                             >
-                                              <div
-                                                className="mb-2"
-                                              >
-                                                <Blueprint3.Tag
-                                                  intent="warning"
-                                                  minimal={true}
-                                                >
-                                                  <span
-                                                    className="bp3-tag bp3-intent-warning bp3-minimal"
-                                                  >
-                                                    <Blueprint3.Icon />
-                                                    <Blueprint3.Text
-                                                      className="bp3-fill"
-                                                      ellipsize={true}
-                                                      tagName="span"
-                                                    >
-                                                      <span
-                                                        className="bp3-text-overflow-ellipsis bp3-fill"
-                                                      >
-                                                        Deprecated
-                                                      </span>
-                                                    </Blueprint3.Text>
-                                                    <Blueprint3.Icon />
-                                                  </span>
-                                                </Blueprint3.Tag>
-                                              </div>
                                               <MarkdownViewer
                                                 className="flex-1 text-darken-7 dark:text-lighten-6"
                                                 markdown="How many todos to limit?"
@@ -6945,6 +6919,32 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                               <div
                                                 className="flex flex-wrap text-darken-7 dark:text-lighten-6"
                                               >
+                                                <div
+                                                  className="mt-2 mr-2"
+                                                >
+                                                  <Blueprint3.Tag
+                                                    intent="warning"
+                                                    minimal={true}
+                                                  >
+                                                    <span
+                                                      className="bp3-tag bp3-intent-warning bp3-minimal"
+                                                    >
+                                                      <Blueprint3.Icon />
+                                                      <Blueprint3.Text
+                                                        className="bp3-fill"
+                                                        ellipsize={true}
+                                                        tagName="span"
+                                                      >
+                                                        <span
+                                                          className="bp3-text-overflow-ellipsis bp3-fill"
+                                                        >
+                                                          Deprecated
+                                                        </span>
+                                                      </Blueprint3.Text>
+                                                      <Blueprint3.Icon />
+                                                    </span>
+                                                  </Blueprint3.Tag>
+                                                </div>
                                                 <ParameterValidation
                                                   className="mt-2 mr-2"
                                                   key="0"
