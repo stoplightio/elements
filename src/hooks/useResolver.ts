@@ -1,7 +1,7 @@
 import { IResolveError, IResolveResult } from '@stoplight/json-ref-resolver/types';
 import { uniqBy } from 'lodash';
 import * as React from 'react';
-import { ActiveSrnContext, HostContext, ResolverContext } from '../containers/Provider';
+import { ActiveSrnContext, AxiosContext, HostContext, ResolverContext } from '../containers/Provider';
 import { DocsNodeType } from '../types';
 import { cancelablePromise } from '../utils/cancelablePromise';
 import { createResolver } from '../utils/createResolver';
@@ -13,9 +13,9 @@ import { useParsedData } from './useParsedData';
  * Any component using this hook MUST be wrapped in both the HostContext and ActiveSrnContext providers
  */
 export function useResolver<T = any>(type: DocsNodeType, value: string) {
-  const host = React.useContext(HostContext);
   const srn = React.useContext(ActiveSrnContext);
-  const resolver = React.useContext(ResolverContext) || createResolver(host, srn);
+  const client = React.useContext(AxiosContext);
+  const resolver = React.useContext(ResolverContext) || createResolver(client, srn);
   const parsedValue = useParsedData(type, value);
 
   const [resolved, setResolved] = React.useState<{
