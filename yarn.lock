@@ -2072,10 +2072,10 @@
     lodash "^4.17.4"
     read-pkg-up "^6.0.0"
 
-"@stoplight/json-ref-resolver@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-3.0.6.tgz#ed39221c24ac7e39b5c4306fc6b262f729cc0f6b"
-  integrity sha512-EOuPiEeZb59AFhdF1fh1OBlGoJnQN/7djn5Rmmn57/AqY0n8A2UBRxbDPNwZKcrigX4qTkXlxqlHzXiG2GEByg==
+"@stoplight/json-ref-resolver@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-3.0.7.tgz#e1e7a21647e75e78049147483b5c3863be505489"
+  integrity sha512-0cRLsZIQ+bsFJVfTIfLFXWwNnTacIfUAW19vdbgHEM9AVpI8BX4J5K3nsQVLZ3CONVflY06vszmIpPllrznfJg==
   dependencies:
     "@stoplight/json" "^3.1.2"
     "@stoplight/path" "^1.3.0"

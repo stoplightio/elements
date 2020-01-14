@@ -1,0 +1,1300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HttpOperation Header Parameters should render correct validations 1`] = `
+<HttpOperation
+  value={
+    Object {
+      "request": Object {
+        "headers": Array [
+          Object {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "deprecated": true,
+            "description": "a parameter description",
+            "examples": Array [
+              Object {
+                "value": "example value",
+              },
+            ],
+            "explode": true,
+            "name": "parameter name",
+            "required": true,
+            "schema": Object {
+              "type": "string",
+            },
+            "style": "simple",
+          },
+        ],
+      },
+    }
+  }
+>
+  <HttpOperation.Component
+    value={
+      Object {
+        "request": Object {
+          "headers": Array [
+            Object {
+              "allowEmptyValue": true,
+              "allowReserved": true,
+              "deprecated": true,
+              "description": "a parameter description",
+              "examples": Array [
+                Object {
+                  "value": "example value",
+                },
+              ],
+              "explode": true,
+              "name": "parameter name",
+              "required": true,
+              "schema": Object {
+                "type": "string",
+              },
+              "style": "simple",
+            },
+          ],
+        },
+      }
+    }
+  >
+    <div
+      className="HttpOperation"
+    >
+      <HttpOperation.Request
+        request={
+          Object {
+            "headers": Array [
+              Object {
+                "allowEmptyValue": true,
+                "allowReserved": true,
+                "deprecated": true,
+                "description": "a parameter description",
+                "examples": Array [
+                  Object {
+                    "value": "example value",
+                  },
+                ],
+                "explode": true,
+                "name": "parameter name",
+                "required": true,
+                "schema": Object {
+                  "type": "string",
+                },
+                "style": "simple",
+              },
+            ],
+          }
+        }
+      >
+        <div
+          className="HttpOperation__Request"
+        >
+          <HttpSecuritySchemes
+            className="mb-10"
+            securities={Array []}
+            title="Authorization"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Path Parameters"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Query Parameters"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Cookie Parameters"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            parameters={
+              Array [
+                Object {
+                  "allowEmptyValue": true,
+                  "allowReserved": true,
+                  "deprecated": true,
+                  "description": "a parameter description",
+                  "examples": Array [
+                    Object {
+                      "value": "example value",
+                    },
+                  ],
+                  "explode": true,
+                  "name": "parameter name",
+                  "required": true,
+                  "schema": Object {
+                    "type": "string",
+                  },
+                  "style": "simple",
+                },
+              ]
+            }
+            title="Header Parameters"
+          >
+            <div
+              className="HttpOperation__Parameters mb-10"
+            >
+              <div
+                className="text-lg font-semibold"
+              >
+                Header Parameters
+              </div>
+              <div
+                className="mt-6 border rounded TreeList dark:border-darken"
+              >
+                <HttpOperation.Parameter
+                  className="TreeListItem"
+                  key="0"
+                  parameter={
+                    Object {
+                      "allowEmptyValue": true,
+                      "allowReserved": true,
+                      "deprecated": true,
+                      "description": "a parameter description",
+                      "examples": Array [
+                        Object {
+                          "value": "example value",
+                        },
+                      ],
+                      "explode": true,
+                      "name": "parameter name",
+                      "required": true,
+                      "schema": Object {
+                        "type": "string",
+                      },
+                      "style": "simple",
+                    }
+                  }
+                >
+                  <div
+                    className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+                    style={
+                      Object {
+                        "alignItems": "start",
+                      }
+                    }
+                  >
+                    <div
+                      className="flex flex-1 flex-start"
+                    >
+                      <div
+                        style={
+                          Object {
+                            "minWidth": "60px",
+                          }
+                        }
+                      >
+                        <div
+                          className="mr-2"
+                        >
+                          parameter name
+                        </div>
+                        <div
+                          className="undefined text-sm"
+                        >
+                          string
+                        </div>
+                      </div>
+                      <div
+                        className="flex-1 ml-4"
+                      >
+                        <MarkdownViewer
+                          className="flex-1 text-darken-7 dark:text-lighten-6"
+                          markdown="a parameter description"
+                        >
+                          <MarkdownViewer
+                            className="flex-1 text-darken-7 dark:text-lighten-6"
+                            components={
+                              Object {
+                                "code": [Function],
+                              }
+                            }
+                            markdown="a parameter description"
+                          >
+                            <ErrorBoundary
+                              FallbackComponent={[Function]}
+                            >
+                              <MarkdownViewer.Component
+                                className="flex-1 text-darken-7 dark:text-lighten-6"
+                                components={
+                                  Object {
+                                    "code": [Function],
+                                  }
+                                }
+                                markdown="a parameter description"
+                              >
+                                <div
+                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
+                                >
+                                  <p
+                                    key="0"
+                                  >
+                                    a parameter description
+                                  </p>
+                                </div>
+                              </MarkdownViewer.Component>
+                            </ErrorBoundary>
+                          </MarkdownViewer>
+                        </MarkdownViewer>
+                        <div
+                          className="flex flex-wrap text-darken-7 dark:text-lighten-6"
+                        >
+                          <div
+                            className="mt-2 mr-2"
+                          >
+                            <Blueprint3.Tag
+                              intent="warning"
+                              minimal={true}
+                            >
+                              <span
+                                className="bp3-tag bp3-intent-warning bp3-minimal"
+                              >
+                                <Blueprint3.Icon />
+                                <Blueprint3.Text
+                                  className="bp3-fill"
+                                  ellipsize={true}
+                                  tagName="span"
+                                >
+                                  <span
+                                    className="bp3-text-overflow-ellipsis bp3-fill"
+                                  >
+                                    Deprecated
+                                  </span>
+                                </Blueprint3.Text>
+                                <Blueprint3.Icon />
+                              </span>
+                            </Blueprint3.Tag>
+                          </div>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="0"
+                            name="allowEmptyValue"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      allowEmptyValue
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="1"
+                            name="allowReserved"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      allowReserved
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="2"
+                            name="explode"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      explode
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="3"
+                            name="examples"
+                            value={
+                              Array [
+                                Object {
+                                  "value": "example value",
+                                },
+                              ]
+                            }
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      examples
+                                      : 
+                                      {"value":"example value"}
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="ml-4 text-right"
+                    >
+                      <div
+                        className="font-medium"
+                      >
+                        required
+                      </div>
+                    </div>
+                  </div>
+                </HttpOperation.Parameter>
+              </div>
+            </div>
+          </HttpOperation.Parameters>
+        </div>
+      </HttpOperation.Request>
+      <HttpOperation.Responses />
+    </div>
+  </HttpOperation.Component>
+</HttpOperation>
+`;
+
+exports[`HttpOperation Path Parameters should render correct validations 1`] = `
+<HttpOperation
+  value={
+    Object {
+      "request": Object {
+        "path": Array [
+          Object {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "deprecated": true,
+            "description": "a parameter description",
+            "examples": Array [
+              Object {
+                "value": "example value",
+              },
+            ],
+            "explode": true,
+            "name": "parameter name",
+            "required": true,
+            "schema": Object {
+              "type": "string",
+            },
+            "style": "form",
+          },
+        ],
+      },
+    }
+  }
+>
+  <HttpOperation.Component
+    value={
+      Object {
+        "request": Object {
+          "path": Array [
+            Object {
+              "allowEmptyValue": true,
+              "allowReserved": true,
+              "deprecated": true,
+              "description": "a parameter description",
+              "examples": Array [
+                Object {
+                  "value": "example value",
+                },
+              ],
+              "explode": true,
+              "name": "parameter name",
+              "required": true,
+              "schema": Object {
+                "type": "string",
+              },
+              "style": "form",
+            },
+          ],
+        },
+      }
+    }
+  >
+    <div
+      className="HttpOperation"
+    >
+      <HttpOperation.Request
+        request={
+          Object {
+            "path": Array [
+              Object {
+                "allowEmptyValue": true,
+                "allowReserved": true,
+                "deprecated": true,
+                "description": "a parameter description",
+                "examples": Array [
+                  Object {
+                    "value": "example value",
+                  },
+                ],
+                "explode": true,
+                "name": "parameter name",
+                "required": true,
+                "schema": Object {
+                  "type": "string",
+                },
+                "style": "form",
+              },
+            ],
+          }
+        }
+      >
+        <div
+          className="HttpOperation__Request"
+        >
+          <HttpSecuritySchemes
+            className="mb-10"
+            securities={Array []}
+            title="Authorization"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            parameters={
+              Array [
+                Object {
+                  "allowEmptyValue": true,
+                  "allowReserved": true,
+                  "deprecated": true,
+                  "description": "a parameter description",
+                  "examples": Array [
+                    Object {
+                      "value": "example value",
+                    },
+                  ],
+                  "explode": true,
+                  "name": "parameter name",
+                  "required": true,
+                  "schema": Object {
+                    "type": "string",
+                  },
+                  "style": "form",
+                },
+              ]
+            }
+            title="Path Parameters"
+          >
+            <div
+              className="HttpOperation__Parameters mb-10"
+            >
+              <div
+                className="text-lg font-semibold"
+              >
+                Path Parameters
+              </div>
+              <div
+                className="mt-6 border rounded TreeList dark:border-darken"
+              >
+                <HttpOperation.Parameter
+                  className="TreeListItem"
+                  key="0"
+                  parameter={
+                    Object {
+                      "allowEmptyValue": true,
+                      "allowReserved": true,
+                      "deprecated": true,
+                      "description": "a parameter description",
+                      "examples": Array [
+                        Object {
+                          "value": "example value",
+                        },
+                      ],
+                      "explode": true,
+                      "name": "parameter name",
+                      "required": true,
+                      "schema": Object {
+                        "type": "string",
+                      },
+                      "style": "form",
+                    }
+                  }
+                >
+                  <div
+                    className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+                    style={
+                      Object {
+                        "alignItems": "start",
+                      }
+                    }
+                  >
+                    <div
+                      className="flex flex-1 flex-start"
+                    >
+                      <div
+                        style={
+                          Object {
+                            "minWidth": "60px",
+                          }
+                        }
+                      >
+                        <div
+                          className="mr-2"
+                        >
+                          parameter name
+                        </div>
+                        <div
+                          className="undefined text-sm"
+                        >
+                          string
+                        </div>
+                      </div>
+                      <div
+                        className="flex-1 ml-4"
+                      >
+                        <MarkdownViewer
+                          className="flex-1 text-darken-7 dark:text-lighten-6"
+                          markdown="a parameter description"
+                        >
+                          <MarkdownViewer
+                            className="flex-1 text-darken-7 dark:text-lighten-6"
+                            components={
+                              Object {
+                                "code": [Function],
+                              }
+                            }
+                            markdown="a parameter description"
+                          >
+                            <ErrorBoundary
+                              FallbackComponent={[Function]}
+                            >
+                              <MarkdownViewer.Component
+                                className="flex-1 text-darken-7 dark:text-lighten-6"
+                                components={
+                                  Object {
+                                    "code": [Function],
+                                  }
+                                }
+                                markdown="a parameter description"
+                              >
+                                <div
+                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
+                                >
+                                  <p
+                                    key="0"
+                                  >
+                                    a parameter description
+                                  </p>
+                                </div>
+                              </MarkdownViewer.Component>
+                            </ErrorBoundary>
+                          </MarkdownViewer>
+                        </MarkdownViewer>
+                        <div
+                          className="flex flex-wrap text-darken-7 dark:text-lighten-6"
+                        >
+                          <div
+                            className="mt-2 mr-2"
+                          >
+                            <Blueprint3.Tag
+                              intent="warning"
+                              minimal={true}
+                            >
+                              <span
+                                className="bp3-tag bp3-intent-warning bp3-minimal"
+                              >
+                                <Blueprint3.Icon />
+                                <Blueprint3.Text
+                                  className="bp3-fill"
+                                  ellipsize={true}
+                                  tagName="span"
+                                >
+                                  <span
+                                    className="bp3-text-overflow-ellipsis bp3-fill"
+                                  >
+                                    Deprecated
+                                  </span>
+                                </Blueprint3.Text>
+                                <Blueprint3.Icon />
+                              </span>
+                            </Blueprint3.Tag>
+                          </div>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="0"
+                            name="allowEmptyValue"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      allowEmptyValue
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="1"
+                            name="allowReserved"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      allowReserved
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="2"
+                            name="explode"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      explode
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="3"
+                            name="examples"
+                            value={
+                              Array [
+                                Object {
+                                  "value": "example value",
+                                },
+                              ]
+                            }
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      examples
+                                      : 
+                                      {"value":"example value"}
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="ml-4 text-right"
+                    >
+                      <div
+                        className="font-medium"
+                      >
+                        required
+                      </div>
+                    </div>
+                  </div>
+                </HttpOperation.Parameter>
+              </div>
+            </div>
+          </HttpOperation.Parameters>
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Query Parameters"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Cookie Parameters"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Header Parameters"
+          />
+        </div>
+      </HttpOperation.Request>
+      <HttpOperation.Responses />
+    </div>
+  </HttpOperation.Component>
+</HttpOperation>
+`;
+
+exports[`HttpOperation Query Parameters should render correct validations 1`] = `
+<HttpOperation
+  value={
+    Object {
+      "request": Object {
+        "query": Array [
+          Object {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "deprecated": true,
+            "description": "a parameter description",
+            "examples": Array [
+              Object {
+                "value": "example value",
+              },
+            ],
+            "explode": true,
+            "name": "parameter name",
+            "required": true,
+            "schema": Object {
+              "type": "string",
+            },
+            "style": "form",
+          },
+        ],
+      },
+    }
+  }
+>
+  <HttpOperation.Component
+    value={
+      Object {
+        "request": Object {
+          "query": Array [
+            Object {
+              "allowEmptyValue": true,
+              "allowReserved": true,
+              "deprecated": true,
+              "description": "a parameter description",
+              "examples": Array [
+                Object {
+                  "value": "example value",
+                },
+              ],
+              "explode": true,
+              "name": "parameter name",
+              "required": true,
+              "schema": Object {
+                "type": "string",
+              },
+              "style": "form",
+            },
+          ],
+        },
+      }
+    }
+  >
+    <div
+      className="HttpOperation"
+    >
+      <HttpOperation.Request
+        request={
+          Object {
+            "query": Array [
+              Object {
+                "allowEmptyValue": true,
+                "allowReserved": true,
+                "deprecated": true,
+                "description": "a parameter description",
+                "examples": Array [
+                  Object {
+                    "value": "example value",
+                  },
+                ],
+                "explode": true,
+                "name": "parameter name",
+                "required": true,
+                "schema": Object {
+                  "type": "string",
+                },
+                "style": "form",
+              },
+            ],
+          }
+        }
+      >
+        <div
+          className="HttpOperation__Request"
+        >
+          <HttpSecuritySchemes
+            className="mb-10"
+            securities={Array []}
+            title="Authorization"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Path Parameters"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            parameters={
+              Array [
+                Object {
+                  "allowEmptyValue": true,
+                  "allowReserved": true,
+                  "deprecated": true,
+                  "description": "a parameter description",
+                  "examples": Array [
+                    Object {
+                      "value": "example value",
+                    },
+                  ],
+                  "explode": true,
+                  "name": "parameter name",
+                  "required": true,
+                  "schema": Object {
+                    "type": "string",
+                  },
+                  "style": "form",
+                },
+              ]
+            }
+            title="Query Parameters"
+          >
+            <div
+              className="HttpOperation__Parameters mb-10"
+            >
+              <div
+                className="text-lg font-semibold"
+              >
+                Query Parameters
+              </div>
+              <div
+                className="mt-6 border rounded TreeList dark:border-darken"
+              >
+                <HttpOperation.Parameter
+                  className="TreeListItem"
+                  key="0"
+                  parameter={
+                    Object {
+                      "allowEmptyValue": true,
+                      "allowReserved": true,
+                      "deprecated": true,
+                      "description": "a parameter description",
+                      "examples": Array [
+                        Object {
+                          "value": "example value",
+                        },
+                      ],
+                      "explode": true,
+                      "name": "parameter name",
+                      "required": true,
+                      "schema": Object {
+                        "type": "string",
+                      },
+                      "style": "form",
+                    }
+                  }
+                >
+                  <div
+                    className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+                    style={
+                      Object {
+                        "alignItems": "start",
+                      }
+                    }
+                  >
+                    <div
+                      className="flex flex-1 flex-start"
+                    >
+                      <div
+                        style={
+                          Object {
+                            "minWidth": "60px",
+                          }
+                        }
+                      >
+                        <div
+                          className="mr-2"
+                        >
+                          parameter name
+                        </div>
+                        <div
+                          className="undefined text-sm"
+                        >
+                          string
+                        </div>
+                      </div>
+                      <div
+                        className="flex-1 ml-4"
+                      >
+                        <MarkdownViewer
+                          className="flex-1 text-darken-7 dark:text-lighten-6"
+                          markdown="a parameter description"
+                        >
+                          <MarkdownViewer
+                            className="flex-1 text-darken-7 dark:text-lighten-6"
+                            components={
+                              Object {
+                                "code": [Function],
+                              }
+                            }
+                            markdown="a parameter description"
+                          >
+                            <ErrorBoundary
+                              FallbackComponent={[Function]}
+                            >
+                              <MarkdownViewer.Component
+                                className="flex-1 text-darken-7 dark:text-lighten-6"
+                                components={
+                                  Object {
+                                    "code": [Function],
+                                  }
+                                }
+                                markdown="a parameter description"
+                              >
+                                <div
+                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
+                                >
+                                  <p
+                                    key="0"
+                                  >
+                                    a parameter description
+                                  </p>
+                                </div>
+                              </MarkdownViewer.Component>
+                            </ErrorBoundary>
+                          </MarkdownViewer>
+                        </MarkdownViewer>
+                        <div
+                          className="flex flex-wrap text-darken-7 dark:text-lighten-6"
+                        >
+                          <div
+                            className="mt-2 mr-2"
+                          >
+                            <Blueprint3.Tag
+                              intent="warning"
+                              minimal={true}
+                            >
+                              <span
+                                className="bp3-tag bp3-intent-warning bp3-minimal"
+                              >
+                                <Blueprint3.Icon />
+                                <Blueprint3.Text
+                                  className="bp3-fill"
+                                  ellipsize={true}
+                                  tagName="span"
+                                >
+                                  <span
+                                    className="bp3-text-overflow-ellipsis bp3-fill"
+                                  >
+                                    Deprecated
+                                  </span>
+                                </Blueprint3.Text>
+                                <Blueprint3.Icon />
+                              </span>
+                            </Blueprint3.Tag>
+                          </div>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="0"
+                            name="allowEmptyValue"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      allowEmptyValue
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="1"
+                            name="allowReserved"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      allowReserved
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="2"
+                            name="explode"
+                            value={true}
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      explode
+                                      : 
+                                      true
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                          <ParameterValidation
+                            className="mt-2 mr-2"
+                            key="3"
+                            name="examples"
+                            value={
+                              Array [
+                                Object {
+                                  "value": "example value",
+                                },
+                              ]
+                            }
+                          >
+                            <div
+                              className="mt-2 mr-2"
+                            >
+                              <Blueprint3.Tag
+                                minimal={true}
+                              >
+                                <span
+                                  className="bp3-tag bp3-minimal"
+                                >
+                                  <Blueprint3.Icon />
+                                  <Blueprint3.Text
+                                    className="bp3-fill"
+                                    ellipsize={true}
+                                    tagName="span"
+                                  >
+                                    <span
+                                      className="bp3-text-overflow-ellipsis bp3-fill"
+                                    >
+                                      examples
+                                      : 
+                                      {"value":"example value"}
+                                    </span>
+                                  </Blueprint3.Text>
+                                  <Blueprint3.Icon />
+                                </span>
+                              </Blueprint3.Tag>
+                            </div>
+                          </ParameterValidation>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="ml-4 text-right"
+                    >
+                      <div
+                        className="font-medium"
+                      >
+                        required
+                      </div>
+                    </div>
+                  </div>
+                </HttpOperation.Parameter>
+              </div>
+            </div>
+          </HttpOperation.Parameters>
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Cookie Parameters"
+          />
+          <HttpOperation.Parameters
+            className="mb-10"
+            title="Header Parameters"
+          />
+        </div>
+      </HttpOperation.Request>
+      <HttpOperation.Responses />
+    </div>
+  </HttpOperation.Component>
+</HttpOperation>
+`;

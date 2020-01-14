@@ -13,7 +13,7 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = () => ({
-  srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
+  srn: text('srn', 'gh/stoplightio/sample-specs'),
   group: text('group', undefined),
 });
 

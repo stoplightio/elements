@@ -15,7 +15,6 @@ jest.mock('../../../hooks/useResolver', () => ({
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
   PropertyTypeColors: {},
-  Validations: () => <div />,
   JsonSchemaViewer: () => <div />,
 }));
 
@@ -27,7 +26,7 @@ describe('HttpOperation', () => {
   });
 
   describe('Query Parameters', () => {
-    it('should render validations popover with correct validations', () => {
+    it('should render correct validations', () => {
       wrapper = mount(
         <HttpOperation
           value={{
@@ -56,23 +55,12 @@ describe('HttpOperation', () => {
           }}
         />,
       );
-
-      expect(wrapper.find(Validations)).toHaveProp('validations', {
-        allowEmptyValue: true,
-        allowReserved: true,
-        deprecated: true,
-        explode: true,
-        examples: [
-          {
-            value: 'example value',
-          },
-        ],
-      });
+      expect(wrapper).toMatchSnapshot();
     });
   });
 
   describe('Header Parameters', () => {
-    it('should render validations popover with correct validations', () => {
+    it('should render correct validations', () => {
       wrapper = mount(
         <HttpOperation
           value={{
@@ -101,23 +89,12 @@ describe('HttpOperation', () => {
           }}
         />,
       );
-
-      expect(wrapper.find(Validations)).toHaveProp('validations', {
-        allowEmptyValue: true,
-        allowReserved: true,
-        deprecated: true,
-        explode: true,
-        examples: [
-          {
-            value: 'example value',
-          },
-        ],
-      });
+      expect(wrapper).toMatchSnapshot();
     });
   });
 
   describe('Path Parameters', () => {
-    it('should render validations popover with correct validations', () => {
+    it('should render correct validations', () => {
       wrapper = mount(
         <HttpOperation
           value={{
@@ -146,18 +123,7 @@ describe('HttpOperation', () => {
           }}
         />,
       );
-
-      expect(wrapper.find(Validations)).toHaveProp('validations', {
-        allowEmptyValue: true,
-        allowReserved: true,
-        deprecated: true,
-        explode: true,
-        examples: [
-          {
-            value: 'example value',
-          },
-        ],
-      });
+      expect(wrapper).toMatchSnapshot();
     });
   });
 
