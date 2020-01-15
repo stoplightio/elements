@@ -8,7 +8,7 @@ export interface ISearchComponent {
   query: string;
   onChange: (query: React.ChangeEvent<HTMLInputElement>) => void;
   nodes: IProjectNode[];
-  isLoading: boolean;
+  isLoading?: boolean;
   isOpen?: boolean;
   onClose?: () => void;
   onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
