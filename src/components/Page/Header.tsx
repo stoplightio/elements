@@ -3,13 +3,12 @@ import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBo
 import { first, get } from 'lodash';
 import * as React from 'react';
 
-import { deserializeSrn, serializeSrn } from '@stoplight/path';
-import { Classes, Icon, Tag } from '@stoplight/ui-kit';
-import cn from 'classnames';
-import { ActiveSrnContext } from '../../containers/Provider';
+import { Tag } from '@stoplight/ui-kit';
+import { ActiveSrnContext } from '../..';
 import { INodeInfo } from '../../types';
 import { Method } from '../HttpOperation/Method';
 import { Path } from '../HttpOperation/Path';
+import { VersionSelector } from './VersionSelector';
 
 export interface IPageHeader extends IErrorBoundary {
   node: INodeInfo;
@@ -28,38 +27,11 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
   const host = isHttpOperation && get(node, 'data.servers[0].url');
   const path = isHttpOperation && get(node, 'data.path');
 
-  let versionSelector;
   let versionTag;
   const { versions } = node;
   const latestVersion = get(first(versions), 'version');
 
   if (node.versions && node.versions.length > 1) {
-    versionSelector = (
-      <span className={cn('ml-2 relative', Classes.ROUND, Classes.TAG)}>
-        <select
-          className="absolute inset-0 bg-transparent opacity-0 z-20 w-full cursor-pointer"
-          style={{ appearance: 'none', WebkitAppearance: 'none' }}
-          value={node.version}
-          onChange={e => {
-            const version = e.currentTarget.value;
-            const nodeUri = node.versions?.find(v => version === v.version)?.uri;
-            onChangeSrn(serializeSrn({ ...deserializeSrn(srn), uri: nodeUri }));
-          }}
-        >
-          {node.versions.map((version, index) => (
-            <option key={index} value={version.version}>
-              v{version.version}
-            </option>
-          ))}
-        </select>
-
-        <span className="flex items-center h-full w-full">
-          <div className="flex-1">v{node.version}</div>
-          <Icon className="-mr-1" icon="caret-down" iconSize={14} />
-        </span>
-      </span>
-    );
-
     versionTag =
       node.version === latestVersion ? (
         <Tag round intent="success" className="ml-2">
@@ -81,7 +53,9 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
   return (
     <div className={className}>
       <div className="flex p-3 -ml-5">
-        {versionSelector}
+        {node.versions && node.versions.length > 1 && (
+          <VersionSelector node={node} srn={srn} onChangeSrn={onChangeSrn} />
+        )}
         {versionTag}
       </div>
       <div className="flex items-center">
