@@ -372,7 +372,7 @@ exports[`HttpService should match snapshot 1`] = `
             className="mt-6 border rounded TreeList dark:border-darken"
           >
             <HttpSecuritySchemes.SecurityScheme
-              className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+              className="TreeListItem"
               key="0"
               security={
                 Object {
@@ -414,7 +414,7 @@ exports[`HttpService should match snapshot 1`] = `
               }
             >
               <div
-                className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+                className="TreeListItem HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
                 style={
                   Object {
                     "alignItems": "start",
@@ -422,7 +422,11 @@ exports[`HttpService should match snapshot 1`] = `
                 }
               >
                 <div
-                  className="mr-4"
+                  style={
+                    Object {
+                      "minWidth": "60px",
+                    }
+                  }
                 >
                   <div>
                     oauth_scheme
@@ -434,13 +438,49 @@ exports[`HttpService should match snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  className="flex-1"
+                  className="flex-1 ml-4"
                 >
-                  <div
+                  <MarkdownViewer
                     className="flex-1 text-darken-7 dark:text-lighten-7"
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                   >
-                    Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                  </div>
+                    <MarkdownViewer
+                      className="flex-1 text-darken-7 dark:text-lighten-7"
+                      components={
+                        Object {
+                          "code": [Function],
+                        }
+                      }
+                      markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    >
+                      <ErrorBoundary
+                        FallbackComponent={[Function]}
+                      >
+                        <MarkdownViewer.Component
+                          className="flex-1 text-darken-7 dark:text-lighten-7"
+                          components={
+                            Object {
+                              "code": [Function],
+                            }
+                          }
+                          markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                        >
+                          <div
+                            className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                          >
+                            <p
+                              key="0"
+                            >
+                              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                            </p>
+                          </div>
+                        </MarkdownViewer.Component>
+                      </ErrorBoundary>
+                    </MarkdownViewer>
+                  </MarkdownViewer>
+                  <div
+                    className="flex flex-wrap"
+                  />
                   <HttpSecuritySchemes.OAuth2Flow
                     flow="implicit"
                     flowObject={
@@ -455,7 +495,7 @@ exports[`HttpService should match snapshot 1`] = `
                     key="implicit"
                   >
                     <div
-                      className="py-2 mt-2 border-t"
+                      className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow"
                     >
                       <div
                         className="py-2 font-semibold"
@@ -561,7 +601,7 @@ exports[`HttpService should match snapshot 1`] = `
                     key="password"
                   >
                     <div
-                      className="py-2 mt-2 border-t"
+                      className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow"
                     >
                       <div
                         className="py-2 font-semibold"
@@ -667,7 +707,7 @@ exports[`HttpService should match snapshot 1`] = `
                     key="clientCredentials"
                   >
                     <div
-                      className="py-2 mt-2 border-t"
+                      className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow"
                     >
                       <div
                         className="py-2 font-semibold"
@@ -774,7 +814,7 @@ exports[`HttpService should match snapshot 1`] = `
                     key="authorizationCode"
                   >
                     <div
-                      className="py-2 mt-2 border-t"
+                      className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow"
                     >
                       <div
                         className="py-2 font-semibold"

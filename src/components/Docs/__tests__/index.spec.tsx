@@ -24,7 +24,6 @@ jest.mock('../../../hooks/useResolver', () => ({
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
   PropertyTypeColors: {},
-  Validations: () => <div />,
   JsonSchemaViewer: () => <div />,
 }));
 

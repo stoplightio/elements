@@ -10,6 +10,7 @@ import cn from 'classnames';
 import { entries, flatten, isEmpty, map, startCase } from 'lodash';
 import * as React from 'react';
 import { HttpSecuritySchemeColors } from '../../utils/http';
+import { MarkdownViewer } from '../MarkdownViewer';
 
 export interface ISecuritiesProps {
   securities?: HttpSecurityScheme[];
@@ -26,7 +27,7 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
 
       <div className="mt-6 border rounded TreeList dark:border-darken">
         {flatten(securities).map((security, index) => {
-          const securityClassName = cn('HttpOperation__Parameter p-4 flex items-start TreeListItem', {
+          const securityClassName = cn('TreeListItem', {
             'TreeListItem--striped': index % 2 !== 0,
           });
 
@@ -40,8 +41,11 @@ HttpSecuritySchemes.displayName = 'HttpSecuritySchemes';
 
 const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme; className?: string }) => {
   return (
-    <div className={cn(className)} style={{ alignItems: 'start' }}>
-      <div className="mr-4">
+    <div
+      className={cn(className, 'HttpSecuritySchemes__SecurityScheme p-4 flex items-start')}
+      style={{ alignItems: 'start' }}
+    >
+      <div style={{ minWidth: '60px' }}>
         <div>{security.key}</div>
         <div
           className={`text-sm text-${HttpSecuritySchemeColors[security.type]}-7 dark:text-${
@@ -52,32 +56,36 @@ const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme;
         </div>
       </div>
 
-      <div className="flex-1">
-        {security.description && <div className="flex-1 text-darken-7 dark:text-lighten-7">{security.description}</div>}
-
-        {'scheme' in security && security.scheme && (
-          <Tag className="mt-2 mr-2" minimal>
-            Scheme: {security.scheme}
-          </Tag>
+      <div className="flex-1 ml-4">
+        {security.description && (
+          <MarkdownViewer className="flex-1 text-darken-7 dark:text-lighten-7" markdown={security.description} />
         )}
 
-        {'bearerFormat' in security && security.bearerFormat && (
-          <Tag className="mt-2 mr-2" minimal>
-            Bearer Format: {security.bearerFormat}
-          </Tag>
-        )}
+        <div className="flex flex-wrap">
+          {'scheme' in security && security.scheme && (
+            <Tag className="mt-2 mr-2" minimal>
+              Scheme: {security.scheme}
+            </Tag>
+          )}
 
-        {'in' in security && security.in && (
-          <Tag className="mt-2 mr-2" minimal>
-            {startCase(security.in)} parameter name: {security.name}
-          </Tag>
-        )}
+          {'bearerFormat' in security && security.bearerFormat && (
+            <Tag className="mt-2 mr-2" minimal>
+              Bearer Format: {security.bearerFormat}
+            </Tag>
+          )}
 
-        {'openIdConnectUrl' in security && security.openIdConnectUrl && (
-          <Tag className="mt-2 mr-2" minimal>
-            OpenId Connect URL: {security.openIdConnectUrl}
-          </Tag>
-        )}
+          {'in' in security && security.in && (
+            <Tag className="mt-2 mr-2" minimal>
+              {startCase(security.in)} parameter name: {security.name}
+            </Tag>
+          )}
+
+          {'openIdConnectUrl' in security && security.openIdConnectUrl && (
+            <Tag className="mt-2 mr-2" minimal>
+              OpenId Connect URL: {security.openIdConnectUrl}
+            </Tag>
+          )}
+        </div>
 
         {security.type === 'oauth2' &&
           map(security.flows, (flowObject, flow) => <OAuth2Flow key={flow} flow={flow} flowObject={flowObject} />)}
@@ -98,7 +106,7 @@ const OAuth2Flow = ({
   if (!flowObject) return null;
 
   return (
-    <div className="py-2 mt-2 border-t">
+    <div className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow">
       <div className="py-2 font-semibold">{startCase(flow)} OAuth Flow</div>
 
       {'authorizationUrl' in flowObject && flowObject.authorizationUrl && (
