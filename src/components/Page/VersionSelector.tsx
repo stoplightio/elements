@@ -1,18 +1,17 @@
 import { Classes, Icon } from '@stoplight/ui-kit';
 import * as React from 'react';
 
-import { deserializeSrn, serializeSrn } from '@stoplight/path';
 import cn from 'classnames';
-import { OnChangeSrn } from '../..';
+import { ActiveSrnContext } from '../..';
 import { INodeInfo } from '../../types';
 
 export interface IVersionSelector {
   node: INodeInfo;
-  srn: string;
-  onChangeSrn: OnChangeSrn;
 }
 
-export const VersionSelector: React.FunctionComponent<IVersionSelector> = ({ node, srn, onChangeSrn }) => {
+export const VersionSelector: React.FunctionComponent<IVersionSelector> = ({ node }) => {
+  const [srn, onChangeSrn] = React.useContext(ActiveSrnContext);
+
   if (!node.versions || node.versions.length < 2) return null;
 
   return (
@@ -22,9 +21,12 @@ export const VersionSelector: React.FunctionComponent<IVersionSelector> = ({ nod
         style={{ appearance: 'none', WebkitAppearance: 'none' }}
         value={node.version}
         onChange={e => {
-          const version = e.currentTarget.value;
-          const nodeUri = node.versions?.find(v => version === v.version)?.uri;
-          onChangeSrn(serializeSrn({ ...deserializeSrn(srn), uri: nodeUri }));
+          const version = node.versions?.find(v => v.version === e.target.value);
+
+          if (version) {
+            console.log('srn', srn, 'onChangeSrn', onChangeSrn);
+            onChangeSrn(srn);
+          }
         }}
       >
         {node.versions.map((version, index) => (

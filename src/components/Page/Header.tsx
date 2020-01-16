@@ -4,7 +4,6 @@ import { first, get } from 'lodash';
 import * as React from 'react';
 
 import { Tag } from '@stoplight/ui-kit';
-import { ActiveSrnContext } from '../..';
 import { INodeInfo } from '../../types';
 import { Method } from '../HttpOperation/Method';
 import { Path } from '../HttpOperation/Path';
@@ -18,8 +17,6 @@ export interface IPageHeader extends IErrorBoundary {
 }
 
 const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, className, actions }) => {
-  const [srn, onChangeSrn] = React.useContext(ActiveSrnContext);
-
   if (!node.name) return null;
 
   const isHttpOperation = node.type === NodeType.HttpOperation;
@@ -53,9 +50,7 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
   return (
     <div className={className}>
       <div className="flex p-3 -ml-5">
-        {node.versions && node.versions.length > 1 && (
-          <VersionSelector node={node} srn={srn} onChangeSrn={onChangeSrn} />
-        )}
+        {node.versions && node.versions.length > 1 && <VersionSelector node={node} />}
         {versionTag}
       </div>
       <div className="flex items-center">
