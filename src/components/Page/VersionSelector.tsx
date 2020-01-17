@@ -1,6 +1,7 @@
 import { Classes, Icon } from '@stoplight/ui-kit';
 import * as React from 'react';
 
+import { deserializeSrn, serializeSrn } from '@stoplight/path';
 import cn from 'classnames';
 import { ActiveSrnContext } from '../..';
 import { INodeInfo } from '../../types';
@@ -24,8 +25,7 @@ export const VersionSelector: React.FunctionComponent<IVersionSelector> = ({ nod
           const version = node.versions?.find(v => v.version === e.target.value);
 
           if (version) {
-            console.log('srn', srn, 'onChangeSrn', onChangeSrn);
-            onChangeSrn(srn);
+            onChangeSrn(serializeSrn({ ...deserializeSrn(srn), uri: version.uri }));
           }
         }}
       >

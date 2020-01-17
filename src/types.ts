@@ -27,6 +27,7 @@ export interface INodeInfo {
   version?: string;
   versions?: INodeVersion[];
   tags?: string[];
+  isCommon?: boolean;
 }
 
 export interface INodeVersion {

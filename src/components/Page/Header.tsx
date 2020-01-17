@@ -3,8 +3,9 @@ import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBo
 import { first, get } from 'lodash';
 import * as React from 'react';
 
-import { Tag } from '@stoplight/ui-kit';
+import { Tag, Tooltip } from '@stoplight/ui-kit';
 import { INodeInfo } from '../../types';
+import { NodeTypeColors, NodeTypePrettyName } from '../../utils/node';
 import { Method } from '../HttpOperation/Method';
 import { Path } from '../HttpOperation/Path';
 import { VersionSelector } from './VersionSelector';
@@ -35,10 +36,10 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
           Latest
         </Tag>
       ) : (
-        <Tag round intent="warning" className="ml-2">
-          Not Latest
+          <Tag round intent="warning" className="ml-2">
+            Not Latest
         </Tag>
-      );
+        );
   } else {
     versionTag = (
       <Tag round className="ml-2">
@@ -49,16 +50,31 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
 
   return (
     <div className={className}>
-      <div className="flex p-3 -ml-5">
-        {node.versions && node.versions.length > 1 && <VersionSelector node={node} />}
-        {versionTag}
+      <div className="flex items-center p-3 -ml-5">
+        <div className="flex-1">
+          <Tag round className="dark:text-white" style={{ backgroundColor: NodeTypeColors[node.type] || undefined }}>
+            {NodeTypePrettyName[node.type] || node.type}
+          </Tag>
+          {node.isCommon && (
+            <Tooltip
+              content={`This ${
+                NodeTypePrettyName[node.type]
+                } is part of the design library. Reference this in your designs when possible to reduce duplication and increase consistency.`}
+            >
+              <Tag round className="ml-2">
+                Design Library
+              </Tag>
+            </Tooltip>
+          )}
+          {node.versions && node.versions.length > 1 && <VersionSelector node={node} />}
+          {versionTag}
+        </div>
+        {actions && actions({ node })}
       </div>
-      <div className="flex items-center">
+      <div className="flex pt-3">
         {method && <Method className="mr-5" method={method} />}
 
         <h2 className="font-medium text-2xl flex-1">{node.name}</h2>
-
-        {actions && actions({ node })}
       </div>
 
       {path && <Path className="flex-1 mt-5 mb-1" host={host} path={path} />}
