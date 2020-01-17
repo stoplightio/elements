@@ -36,10 +36,10 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
           Latest
         </Tag>
       ) : (
-          <Tag round intent="warning" className="ml-2">
-            Not Latest
+        <Tag round intent="warning" className="ml-2">
+          Not Latest
         </Tag>
-        );
+      );
   } else {
     versionTag = (
       <Tag round className="ml-2">
@@ -59,7 +59,7 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
             <Tooltip
               content={`This ${
                 NodeTypePrettyName[node.type]
-                } is part of the design library. Reference this in your designs when possible to reduce duplication and increase consistency.`}
+              } is part of the design library. Reference this in your designs when possible to reduce duplication and increase consistency.`}
             >
               <Tag round className="ml-2">
                 Design Library
