@@ -65,7 +65,7 @@ describe('Search', () => {
     wrapper = mount(<NodeList nodes={nodes} />);
 
     expect(wrapper.html()).toContain(
-      '<div class="flex-1 mt-2"><div class="Search_highlight whitespace-pre-wrap">Project Structure summary Node</div></div>',
+      '<div class="flex-1 mt-2"><div class="Search__highlight whitespace-pre-wrap">Project Structure summary Node</div></div>',
     );
   });
 
@@ -76,7 +76,7 @@ describe('Search', () => {
   });
 
   it('should render loading component when loading nodes', () => {
-    wrapper = mount(<NodeList loading={true} />);
+    wrapper = mount(<NodeList isLoading />);
 
     expect(wrapper.html()).toContain('spinner');
   });
