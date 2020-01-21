@@ -63,6 +63,7 @@
     "openapi-sampler": "^1.0.0-beta.15",
     "react-error-boundary": "^1.2.5",
     "react-graph-vis": "^1.0.5",
+    "swr": "^0.1.16",
     "unist-util-select": "^2.0.2",
     "urijs": "^1.19.2"
   },

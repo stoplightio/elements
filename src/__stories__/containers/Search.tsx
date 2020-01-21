@@ -12,11 +12,10 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const searchKnobs = (): ISearchContainer => ({
-  srn: text('srn', 'gh/stoplightio/studio-demo/'),
-  group: text('group', undefined),
-  isOpen: boolean('openSearch', true),
+  srn: text('srn', 'gh/stoplightio/studio-demo'),
+  group: text('group', 'master'),
+  isOpen: boolean('isOpen', true),
   onClose: action('onClose'),
-  onReset: action('onReset'),
 });
 
 storiesOf('containers/Search', module)

@@ -1,12 +1,14 @@
 export * from './useComponents';
+export * from './useComponentSize';
 export * from './useComputeMarkdownHeadings';
 export * from './useComputeToc';
-export * from './useComputeVisGraph';
-export * from './useComponentSize';
+// export * from './useComputeVisGraph';
+export * from './useDebounce';
 export * from './useLocationHash';
 export * from './useNodeInfo';
 export * from './useParsedData';
 export * from './useProjectNodes';
+export * from './useProjectSearch';
 export * from './useRequest';
 export * from './useRequestMaker';
 export * from './useResolver';

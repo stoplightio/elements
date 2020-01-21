@@ -8,28 +8,28 @@
       width: 100% !important; // override blueprint
     }
   }
-}
 
-.Search__backdrop.#{$ns}-overlay-backdrop {
-  background-color: rgba(14, 29, 51, 0.5);
-}
+  &__highlight em {
+    background-color: yellow;
+  }
 
-.Search__input {
-  .#{$ns}-input,
-  input {
-    box-shadow: none;
-    outline: none;
-
-    &:focus {
+  &__input {
+    .#{$ns}-input,
+    input {
       box-shadow: none;
+      outline: none;
+  
+      &:focus {
+        box-shadow: none;
+      }
     }
+  }
+
+  &__backdrop.#{$ns}-overlay-backdrop {
+    background-color: rgba(14, 29, 51, 0.5);
   }
 }
 
-.Search_highlight em {
-  background-color: yellow;
-}
-
-.#{$ns}-dark .Search_highlight em {
+.#{$ns}-dark .Search__highlight em {
   background-color: rgba(255, 255, 255, 0.2);
 }

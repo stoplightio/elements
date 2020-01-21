@@ -30,10 +30,10 @@ export const Page: React.FC<IPageContainer> = ({
   className,
   scrollInnerContainer,
 }) => {
-  const { isLoading, error, data } = useNodeInfo(srn, { group, version });
+  const { isValidating, error, data } = useNodeInfo(srn, { group, version });
   const containerClassName = cn(className, 'flex flex-col h-full');
 
-  if (isLoading) {
+  if (isValidating) {
     return <PageSkeleton className={className} padding={padding} />;
   }
 

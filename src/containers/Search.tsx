@@ -1,39 +1,41 @@
 import * as React from 'react';
 import { Search as SearchComponent } from '../components/Search';
-import { useProjectNodes } from '../hooks';
+import { useDebounce } from '../hooks';
+import { useProjectSearch } from '../hooks/useProjectSearch';
 
 export interface ISearchContainer {
   srn: string;
+  placeholder?: string;
+  limit?: number;
   isOpen?: boolean;
   onClose?: () => void;
   group?: string;
 }
 
-export const Search: React.FunctionComponent<ISearchContainer> = ({ srn, isOpen, onClose, group }) => {
+export const Search: React.FC<ISearchContainer> = ({ placeholder, srn, isOpen, onClose, group, limit }) => {
   const [query, updateQuery] = React.useState<string>('');
+  const debouncedQuery = useDebounce(query, 500);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    e.persist();
+  const { data, isValidating, error } = useProjectSearch(debouncedQuery, srn, { group, limit, skip: !isOpen || !srn });
+
+  const handleChange = React.useCallback(e => {
     updateQuery(e.target.value);
-  }
+  }, []);
 
-  function handleReset(e: React.MouseEvent<HTMLElement, MouseEvent>) {
-    e.persist();
+  const handleReset = React.useCallback(e => {
     updateQuery('');
-  }
-
-  const options = { group, query };
-  const { data, error, isLoading } = useProjectNodes(srn, options);
+  }, []);
 
   return (
     <SearchComponent
+      placeholder={placeholder}
       query={query}
       onChange={handleChange}
-      nodes={data.items}
+      nodes={data?.items}
       isOpen={isOpen}
       onClose={onClose}
       onReset={handleReset}
-      isLoading={isLoading}
+      isLoading={isValidating}
       error={error}
     />
   );

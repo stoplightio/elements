@@ -5,20 +5,20 @@ import { NodeList } from './List';
 import { SearchBar } from './SearchBar';
 
 export interface ISearchComponent {
-  query: string;
-  onChange: (query: React.ChangeEvent<HTMLInputElement>) => void;
-  nodes: IProjectNode[];
+  query?: string;
+  placeholder?: string;
+  nodes?: IProjectNode[];
   isLoading?: boolean;
   isOpen?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClose?: () => void;
   onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  error?: {
-    message: string;
-  };
+  error?: Error;
 }
 
-export const Search: React.FunctionComponent<ISearchComponent> = ({
+export const Search: React.FC<ISearchComponent> = ({
   query,
+  placeholder,
   onChange,
   nodes,
   isLoading,
@@ -29,11 +29,9 @@ export const Search: React.FunctionComponent<ISearchComponent> = ({
 }) => {
   return (
     <Drawer className="Search__drawer" backdropClassName="Search__backdrop" isOpen={isOpen} onClose={onClose}>
-      <>
-        <SearchBar query={query} onChange={onChange} onReset={onReset} onClose={onClose} />
+      <SearchBar placeholder={placeholder} query={query} onChange={onChange} onReset={onReset} onClose={onClose} />
 
-        <NodeList loading={isLoading} error={error} nodes={nodes} onReset={onReset} onClose={onClose} />
-      </>
+      <NodeList isLoading={isLoading} error={error} nodes={nodes} onReset={onReset} onClose={onClose} />
     </Drawer>
   );
 };

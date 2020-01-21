@@ -7,18 +7,14 @@ import { useComponents } from '../../hooks';
 import { IProjectNode } from '../../types';
 import { NodeTypeColors, NodeTypeIcons, NodeTypePrettyName } from '../../utils/node';
 
-export const NodeList: React.FunctionComponent<{
-  loading?: boolean;
-  error?: {
-    message: string;
-  };
+export const NodeList: React.FC<{
   nodes?: IProjectNode[];
+  error?: Error;
+  isLoading?: boolean;
   onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onClose?: () => void;
-}> = ({ loading, error, nodes, onReset, onClose }) => {
+}> = ({ isLoading, error, nodes, onReset, onClose }) => {
   if (error) {
-    console.error(error);
-
     return (
       <NonIdealState
         title="An error has occured!"
@@ -37,7 +33,7 @@ export const NodeList: React.FunctionComponent<{
   }
 
   if (!nodes || !nodes.length) {
-    if (!nodes && loading) {
+    if (!nodes && isLoading) {
       return <Spinner className="mt-32" />;
     } else {
       return (
@@ -52,31 +48,48 @@ export const NodeList: React.FunctionComponent<{
   }
 
   return (
-    <ScrollContainer>
+    <ScrollContainer className="NodeList">
       {nodes.map((item, i) => (
-        <NodeListItem key={i} item={item} loading={!nodes && loading} onClose={onClose} onReset={onReset} />
+        <NodeListItem key={i} item={item} isLoading={isLoading} onClose={onClose} onReset={onReset} />
       ))}
-      <div className="mt-2 mb-8">{nodes && loading && <Spinner className="mt-2" />}</div>
+
+      {isLoading && (
+        <div className="mt-2 mb-8">
+          <Spinner className="mt-2" />
+        </div>
+      )}
     </ScrollContainer>
   );
 };
 
-export const NodeListItem: React.FunctionComponent<{
-  loading: boolean;
+const NodeListItem: React.FC<{
   item: IProjectNode;
+  isLoading?: boolean;
   onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onClose?: () => void;
-}> = ({ loading, item, onReset, onClose }) => {
+}> = ({ isLoading, item, onReset, onClose }) => {
   const components = useComponents();
   const { orgSlug, projectSlug } = deserializeSrn(item.srn);
+  const onClick = React.useCallback(
+    e => {
+      if (onReset) {
+        onReset(e);
+      }
 
-  let dataContext: any = null;
+      if (onClose) {
+        onClose();
+      }
+    },
+    [onClose, onReset],
+  );
+
+  let dataContext = null;
   if (item.data && item.data.match('<em>')) {
     dataContext = (
       <Callout
         style={{ maxHeight: 150 }}
         className={cn('mt-4 -mb-1 -mx-1 overflow-auto', {
-          [Classes.SKELETON]: loading,
+          [Classes.SKELETON]: isLoading,
         })}
       >
         <HighlightSearchContext markup={item.data} />
@@ -84,17 +97,11 @@ export const NodeListItem: React.FunctionComponent<{
     );
   }
 
-  const children = (
+  const children: any = (
     <div
-      className="flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
-      onClick={e => {
-        if (onReset) {
-          onReset(e);
-        }
-        if (onClose) {
-          onClose();
-        }
-      }}
+      key="1"
+      className="NodeList__item flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
+      onClick={onClick}
     >
       <div className="mr-4">
         <Tag
@@ -109,7 +116,7 @@ export const NodeListItem: React.FunctionComponent<{
         <div className="flex items-center">
           <div
             className={cn(Classes.HEADING, 'inline-block flex items-center m-0', {
-              [Classes.SKELETON]: loading,
+              [Classes.SKELETON]: isLoading,
             })}
           >
             <HighlightSearchContext markup={item.name || 'No Name...'} />
@@ -119,7 +126,7 @@ export const NodeListItem: React.FunctionComponent<{
 
           <div
             className={cn(Classes.TEXT_MUTED, 'flex text-sm', {
-              [Classes.SKELETON]: loading,
+              [Classes.SKELETON]: isLoading,
             })}
           >
             <div>{orgSlug}</div>
@@ -132,7 +139,7 @@ export const NodeListItem: React.FunctionComponent<{
           <div className="flex">
             <div
               className={cn('flex-1 mt-2', {
-                [Classes.SKELETON]: loading,
+                [Classes.SKELETON]: isLoading,
               })}
             >
               <HighlightSearchContext markup={item.summary} />
@@ -144,25 +151,29 @@ export const NodeListItem: React.FunctionComponent<{
     </div>
   );
 
-  return components.link(
-    {
-      node: {
-        url: item.srn,
+  if (components.link) {
+    return components.link(
+      {
+        node: {
+          className: 'reset',
+          url: item.srn,
+        },
+        children,
+        defaultComponents: components,
+        parent: {},
+        path: [],
       },
-      // @ts-ignore
-      children,
-    },
-    item.id,
-  );
+      item.id,
+    );
+  }
+
+  return children;
 };
 
-export const HighlightSearchContext: React.FunctionComponent<{ markup: string; className?: string }> = ({
-  markup,
-  className,
-}) => {
+const HighlightSearchContext: React.FC<{ markup: string; className?: string }> = ({ markup, className }) => {
   return (
     <div
-      className={cn('Search_highlight whitespace-pre-wrap', className)}
+      className={cn('Search__highlight whitespace-pre-wrap', className)}
       dangerouslySetInnerHTML={{ __html: markup }}
     />
   );

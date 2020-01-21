@@ -2096,7 +2096,7 @@
     "@stoplight/json" "^3.1.1"
     "@stoplight/react-error-boundary" "^1.0.0"
     classnames "^2.2.6"
-    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
+    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash-es "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -7088,7 +7088,7 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-fast-deep-equal@^2.0.1:
+fast-deep-equal@2.0.1, fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
@@ -9717,7 +9717,6 @@ json-schema-compare@^0.2.2:
 
 "json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
   resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
@@ -15938,6 +15937,13 @@ swap-case@^1.1.0:
   dependencies:
     lower-case "^1.1.1"
     upper-case "^1.1.1"
+
+swr@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.1.16.tgz#e1667f2260ac091fb4c2cc6255ca1b8ff83b0acd"
+  integrity sha512-E+i0pJOCCPRxnwQMFKf3RYr4os+B4swNuwnHo+pBCNxwfuJiN0ZalwP9u4OqjoeMl9eZFgcQYUPHD8KVyTqM1g==
+  dependencies:
+    fast-deep-equal "2.0.1"
 
 symbol-observable@^1.0.4, symbol-observable@^1.1.0:
   version "1.2.0"
