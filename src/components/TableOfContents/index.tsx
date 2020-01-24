@@ -6,7 +6,7 @@ import { useComputeToc } from '../../hooks/useComputeToc';
 import { IProjectNode } from '../../types';
 
 export interface ITableOfContents {
-  items?: IProjectNode[];
+  items: IProjectNode[];
   contents?: IContentsNode[];
 
   // SRN of the active node
@@ -46,9 +46,22 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
 
   const rowRenderer = React.useCallback(
     (_item, DefaultRow) => {
+      let isActive;
+
+      if (_item.versions) {
+        for (const version in _item.versions) {
+          if (!version) continue;
+          _item.href.includes(version) && _item.href === srn ? (isActive = true) : (isActive = false);
+        }
+      } else if (_item.href === srn) {
+        isActive = true;
+      } else {
+        isActive = false;
+      }
+
       const item = {
         ..._item,
-        isActive: _item.href ? _item.href === srn : false,
+        isActive,
       };
 
       if (components.link && item.href) {

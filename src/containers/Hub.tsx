@@ -48,8 +48,8 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContents srn={pageSrn} contents={contents} padding={padding} />
-      )}
+          <TableOfContents items={data.items} srn={pageSrn} contents={contents} padding={padding} />
+        )}
 
       {pageSrn ? (
         <Page
@@ -61,8 +61,8 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
           scrollInnerContainer
         />
       ) : (
-        <PageSkeleton className="flex-1 border-l dark:border-darken-4" padding={padding} />
-      )}
+          <PageSkeleton className="flex-1 border-l dark:border-darken-4" padding={padding} />
+        )}
     </div>
   );
 };
