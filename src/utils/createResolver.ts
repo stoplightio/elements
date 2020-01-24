@@ -1,7 +1,9 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
 import { deserializeSrn, dirname, resolve, serializeSrn } from '@stoplight/path';
 import { parse } from '@stoplight/yaml';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+// @ts-ignore no typings
+import queue from 'neo-async/queue';
 import URI from 'urijs';
 
 export function createResolver(client: AxiosInstance, srn?: string) {
@@ -54,17 +56,28 @@ function remoteFileResolver(client: AxiosInstance, srn?: string) {
       });
 
       // Use the http resolver to resolve the node's raw export
-
-      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}`));
+      return httpResolver(client).resolve(new URI(`/nodes.raw/?srn=${refSrn}`));
     },
   };
 }
 
-const httpResolver = (client: AxiosInstance = axios) => {
-  return {
-    resolve: async (ref: uri.URI) => {
-      const res = await client.get(String(ref));
-      return res.data;
-    },
-  };
-};
+const httpResolver = (client: AxiosInstance = axios) => ({
+  resolve: (ref: uri.URI) => {
+    return new Promise((res, rej) =>
+      q.push({ client, ref: String(ref) }, (err: Error | null, data?: any) => {
+        if (err) rej(err);
+        else res(data);
+      }),
+    );
+  },
+});
+
+const q = queue(
+  ({ client, ref }: { client: AxiosInstance; ref: string }, callback: (error: Error | null, data?: any) => void) => {
+    client
+      .get(ref)
+      .then(res => callback(null, res.data))
+      .catch(err => callback(err));
+  },
+  1,
+);

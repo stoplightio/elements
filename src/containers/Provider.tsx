@@ -12,7 +12,7 @@ export interface IProvider {
   resolver?: Resolver;
 }
 
-const defaultHost = 'http://localhost:4060';
+const defaultHost = 'http://localhost:8080/api';
 export const HostContext = React.createContext(defaultHost);
 export const AxiosContext = React.createContext(axios.create());
 export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
