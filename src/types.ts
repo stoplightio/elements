@@ -1,6 +1,7 @@
 import { NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
+import { Edge, Node } from 'vis';
 export { IComponentMapping } from '@stoplight/markdown-viewer';
 
 export interface IDeserializedSrn {
@@ -23,7 +24,7 @@ export interface INodeInfo {
   name: string;
 
   changes?: IChange[];
-  id?: number | string;
+  id?: number;
   version?: string;
   versions?: string[];
   tags?: string[];
@@ -66,4 +67,28 @@ export interface IPaginatedResponse<T> {
     endCursor: string;
   };
   totalCount: number;
+}
+
+export interface IVisGraph {
+  nodes: Node[];
+  edges: Edge[];
+}
+
+export interface INodeGraph {
+  nodes: IGraphNode[];
+  edges: IGraphEdge[];
+}
+
+export interface IGraphNode {
+  id: number;
+  name: string;
+  uri: string;
+  depth: number;
+}
+
+export interface IGraphEdge {
+  fromId: number;
+  toId: number;
+  fromPath: string;
+  toPath: string;
 }
