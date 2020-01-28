@@ -73,7 +73,7 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "@stoplight/scripts": "5.1.0",
-    "@stoplight/storybook-config": "^2.0.4",
+    "@stoplight/storybook-config": "^2.0.5",
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
