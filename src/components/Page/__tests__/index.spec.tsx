@@ -6,6 +6,7 @@ import * as React from 'react';
 import { Page } from '..';
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import { Docs } from '../../Docs';
+import { VersionSelector } from '../VersionSelector';
 
 jest.mock('../../../hooks/useResolver', () => ({
   useResolver: (type: any, result: any) => ({ result: parse(result) }),
@@ -52,4 +53,41 @@ describe('Page', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  //   describe('Docs Version Selector', () => {
+  //     it('should render proper node version', () => {
+  //       wrapper = mount(
+  //         <VersionSelector
+  //           node={{
+  //             name: 'Node Name',
+  //             data: 'Node Data',
+  //             type: NodeType.HttpService,
+  //             srn: 'sl/org/project/reference/todos/openapi.v1.yml',
+  //             version: '1.0',
+  //             versions: [
+  //               {
+  //                 version: '1.0',
+  //                 uri: 'reference/todos/openapi.v1.yml',
+  //               },
+  //               {
+  //                 version: '2.0',
+  //                 uri: 'reference/todos/openapi.v2.yml',
+  //               },
+  //             ],
+  //           }}
+  //         />,
+  //       );
+
+  //       wrapper
+  //         .find('select')
+  //         .find('option')
+  //         .first()
+  //         .simulate('change', {
+  //           target: { value: '2.0' },
+  //         });
+
+  //       expect(wrapper.find('select')).toHaveProp('value', '2.0');
+  //       // expect(wrapper.find('span').find('div')).toHaveHTML('<div class="flex-1">v2.0</div>');
+  //     });
+  //   });
 });
