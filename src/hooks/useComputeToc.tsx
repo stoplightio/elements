@@ -48,7 +48,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** Docs folder */
   const docsNodes = sortBy(
-    nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article),
+    nodes.filter(node => node.type === NodeType.Article),
     node => toLower(node.srn),
   );
 
@@ -57,8 +57,8 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     const node = docsNodes[nodeIndex];
 
     // Strip off the /docs since we ignore that folder
-    const uri = node.uri.replace(/^\/docs\//, '');
-    const parts = uri.split('/');
+    // const uri = node.uri.replace(/^\/docs\//, '');
+    const parts = node.uri.split('/');
 
     // Handle adding the parent folders if we haven't already added them
     if (parts.length > 1) {
