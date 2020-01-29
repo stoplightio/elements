@@ -6,7 +6,10 @@ module.exports = (baseConfig, env, config) => {
   // Don't ignore yalc'd @stoplight packages
   config.watchOptions = { ignored: ['dist', /node_modules\/(?!@stoplight)/] };
 
-  config.node = { fs: 'empty' };
+  config.node = {
+    ...config.node,
+    fs: 'empty',
+  };
 
   return config;
 };
