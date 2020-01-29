@@ -1,23 +1,24 @@
+import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
-import { INodeGraph, IVisGraph } from '../types';
+import { INodeGraph, INodeInfo, IVisGraph } from '../types';
 
-export function useComputeVisGraph(rootNodeId?: number, activeNodeId?: number, graph?: INodeGraph) {
+export function useComputeVisGraph(rootNode?: INodeInfo, activeNodeId?: number, graph?: INodeGraph) {
   return React.useMemo(() => {
-    if (!graph || !rootNodeId) return;
+    if (!graph || !rootNode) return;
 
-    return computeVisGraph(rootNodeId, graph, activeNodeId);
-  }, [rootNodeId, activeNodeId, graph]);
+    return computeVisGraph(rootNode, graph, activeNodeId);
+  }, [rootNode, activeNodeId, graph]);
 }
 
-export function computeVisGraph(rootNodeId: number, graph: INodeGraph, activeNodeId?: number): IVisGraph {
+export function computeVisGraph(rootNode: INodeInfo, graph: INodeGraph, activeNodeId?: number): IVisGraph {
   const visGraph: IVisGraph = {
     nodes: [
-      // TODO (CL): Should the root node be included in the response from /nodes.graph?
       {
-        id: rootNodeId,
+        id: rootNode.id,
         level: 0,
-        label: 'root',
-        color: activeNodeId === rootNodeId ? '#66b1e7' : '#ef932b',
+        label: rootNode.name,
+        title: rootNode.srn,
+        color: activeNodeId === rootNode.id ? '#66b1e7' : '#ef932b',
         font: {
           color: '#ffffff',
         },
@@ -38,6 +39,7 @@ export function computeVisGraph(rootNodeId: number, graph: INodeGraph, activeNod
       id: node.id,
       level: node.depth,
       label: node.name,
+      title: node.srn,
       color,
       font: {
         color: fontColor,
@@ -47,14 +49,14 @@ export function computeVisGraph(rootNodeId: number, graph: INodeGraph, activeNod
 
   for (const edge of graph.edges) {
     let edgeColor = { color: '#cfd9e0', opacity: 0.8 };
-    if (activeNodeId === edge.fromId || activeNodeId === edge.toId) {
+    if (activeNodeId === edge.fromGroupNodeId || activeNodeId === edge.toGroupNodeId) {
       edgeColor = { color: '#66b1e7', opacity: 1 };
     }
 
     visGraph.edges.push({
-      id: `${edge.fromId}-${edge.toId}-${edge.fromPath}-${edge.toPath}`,
-      from: edge.fromId,
-      to: edge.toId,
+      id: `${edge.fromGroupNodeId}-${edge.toGroupNodeId}-${edge.fromPath}-${edge.toPath}`,
+      from: edge.fromGroupNodeId,
+      to: edge.toGroupNodeId,
       title: edge.fromPath,
       color: edgeColor,
       font: {
@@ -62,6 +64,9 @@ export function computeVisGraph(rootNodeId: number, graph: INodeGraph, activeNod
       },
     });
   }
+
+  visGraph.nodes = sortBy(visGraph.nodes, 'label');
+  visGraph.edges = uniqBy(visGraph.edges, 'id');
 
   return visGraph;
 }

@@ -18,13 +18,13 @@ export interface IChange {
 }
 
 export interface INodeInfo {
+  id: number;
   data: any;
   type: NodeType;
   srn: string;
   name: string;
 
   changes?: IChange[];
-  id?: number;
   version?: string;
   versions?: string[];
   tags?: string[];
@@ -82,13 +82,19 @@ export interface INodeGraph {
 export interface IGraphNode {
   id: number;
   name: string;
+  srn: string;
   uri: string;
   depth: number;
+  type: NodeType;
+  version: number;
+
+  projectName: string;
+  groupSlug: string;
 }
 
 export interface IGraphEdge {
-  fromId: number;
-  toId: number;
+  fromGroupNodeId: number;
   fromPath: string;
+  toGroupNodeId: number;
   toPath: string;
 }
