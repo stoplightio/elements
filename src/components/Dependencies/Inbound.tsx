@@ -44,8 +44,7 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Model]} iconSize={14} />
-              Models{' '}
-              {nodesByType[NodeType.Model]?.length ? <>({NodeTypeIcons[NodeType.Model].length})</> : null}
+              Models {nodesByType[NodeType.Model]?.length ? <>({nodesByType[NodeType.Model].length})</> : null}
             </div>
           }
           panel={<DependencyTable nodes={nodesByType[NodeType.Model]} />}
@@ -59,7 +58,7 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpService]} iconSize={14} />
               APIs{' '}
-              {nodesByType[NodeType.HttpService]?.length ? <>({NodeTypeIcons[NodeType.HttpService].length})</> : null}
+              {nodesByType[NodeType.HttpService]?.length ? <>({nodesByType[NodeType.HttpService].length})</> : null}
             </div>
           }
           panel={<DependencyTable nodes={nodesByType[NodeType.HttpService]} />}
@@ -73,9 +72,7 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpOperation]} iconSize={14} />
               HTTP Operations{' '}
-              {nodesByType[NodeType.HttpOperation]?.length ? (
-                <>({NodeTypeIcons[NodeType.HttpOperation].length})</>
-              ) : null}
+              {nodesByType[NodeType.HttpOperation]?.length ? <>({nodesByType[NodeType.HttpOperation].length})</> : null}
             </div>
           }
           panel={<DependencyTable nodes={nodesByType[NodeType.HttpOperation]} />}
@@ -88,8 +85,7 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Article]} iconSize={14} />
-              Articles{' '}
-              {nodesByType[NodeType.Article]?.length ? <>({NodeTypeIcons[NodeType.Article].length})</> : null}
+              Articles {nodesByType[NodeType.Article]?.length ? <>({nodesByType[NodeType.Article].length})</> : null}
             </div>
           }
           panel={<DependencyTable nodes={nodesByType[NodeType.Article]} />}
