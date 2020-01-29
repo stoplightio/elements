@@ -2031,7 +2031,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
               className="Page__header px-12 pt-12"
             >
               <div
-                className="flex items-center p-3 -ml-5"
+                className="flex items-center pb-2"
               >
                 <div
                   className="flex-1"

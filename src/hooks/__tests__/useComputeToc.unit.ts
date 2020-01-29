@@ -150,7 +150,7 @@ describe('computeToc', () => {
 
     expect(value).toEqual(
       expect.arrayContaining([
-        { id: 11, name: 'Another API', depth: 0, type: 'divider', icon: 'chevron-right', meta: 'v1.0' },
+        { id: '11-divider', name: 'Another API', depth: 0, type: 'divider', icon: 'chevron-right', meta: 'v1.0' },
         {
           id: '11-overview',
           name: 'Overview',
@@ -286,7 +286,7 @@ describe('computeToc', () => {
 
     expect(value).toEqual(
       expect.arrayContaining([
-        { id: 11, name: 'Another API', depth: 0, type: 'divider', icon: 'chevron-right', meta: 'v1.0' },
+        { id: '11-divider', name: 'Another API', depth: 0, type: 'divider', icon: 'chevron-right', meta: 'v1.0' },
         {
           id: '11-overview',
           name: 'Overview',
@@ -439,7 +439,7 @@ describe('computeToc', () => {
 
     expect(value).toEqual(
       expect.arrayContaining([
-        { depth: 0, icon: 'chevron-right', id: 14, meta: 'v1.0', name: 'aa', type: 'divider' },
+        { depth: 0, icon: 'chevron-right', id: '14-divider', meta: 'v1.0', name: 'aa', type: 'divider' },
         {
           depth: 0,
           href: 'sl/org/project/aaopenapi.v1.yml',
@@ -457,7 +457,7 @@ describe('computeToc', () => {
           name: 'Thing',
           type: 'item',
         },
-        { depth: 0, icon: 'chevron-right', id: 15, meta: 'v1.0', name: 'aB', type: 'divider' },
+        { depth: 0, icon: 'chevron-right', id: '15-divider', meta: 'v1.0', name: 'aB', type: 'divider' },
         {
           depth: 0,
           href: 'sl/org/project/abopenapi.v1.yml',
@@ -475,7 +475,7 @@ describe('computeToc', () => {
           name: 'Thing',
           type: 'item',
         },
-        { depth: 0, icon: 'chevron-right', id: 13, meta: 'v1.0', name: 'An API', type: 'divider' },
+        { depth: 0, icon: 'chevron-right', id: '13-divider', meta: 'v1.0', name: 'An API', type: 'divider' },
         {
           depth: 0,
           href: 'sl/org/project/anopenapi.v1.yml',
@@ -493,7 +493,7 @@ describe('computeToc', () => {
           name: 'Thing',
           type: 'item',
         },
-        { depth: 0, icon: 'chevron-right', id: 11, meta: 'v1.0', name: 'Another API', type: 'divider' },
+        { depth: 0, icon: 'chevron-right', id: '11-divider', meta: 'v1.0', name: 'Another API', type: 'divider' },
         {
           depth: 0,
           href: 'sl/org/project/openapi.v1.yml',
@@ -519,7 +519,7 @@ describe('computeToc', () => {
           name: 'Thing',
           type: 'item',
         },
-        { depth: 0, icon: 'chevron-right', id: 16, meta: 'v1.0', name: 'Ba', type: 'divider' },
+        { depth: 0, icon: 'chevron-right', id: '16-divider', meta: 'v1.0', name: 'Ba', type: 'divider' },
         {
           depth: 0,
           href: 'sl/org/project/baopenapi.v1.yml',

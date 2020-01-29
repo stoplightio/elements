@@ -545,7 +545,7 @@ Array [
   Object {
     "depth": 0,
     "icon": "badge",
-    "id": 11,
+    "id": "11-divider",
     "meta": "v1.0",
     "name": "Another API",
     "type": "divider",
@@ -584,7 +584,7 @@ Array [
   Object {
     "depth": 0,
     "icon": "badge",
-    "id": 5,
+    "id": "5-divider",
     "name": "Todos API",
     "type": "divider",
   },
@@ -720,7 +720,7 @@ Array [
   Object {
     "depth": 0,
     "icon": "chevron-right",
-    "id": 11,
+    "id": "11-divider",
     "meta": "v1.0",
     "name": "Another API",
     "type": "divider",
@@ -759,7 +759,7 @@ Array [
   Object {
     "depth": 0,
     "icon": "chevron-right",
-    "id": 5,
+    "id": "5-divider",
     "name": "Todos API",
     "type": "divider",
   },
