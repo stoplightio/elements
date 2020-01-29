@@ -56,8 +56,6 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     if (!docsNodes[nodeIndex]) continue;
     const node = docsNodes[nodeIndex];
 
-    // Strip off the /docs since we ignore that folder
-    // const uri = node.uri.replace(/^\/docs\//, '');
     const parts = node.uri.split('/');
 
     // Handle adding the parent folders if we haven't already added them
