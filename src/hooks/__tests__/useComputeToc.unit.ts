@@ -60,14 +60,13 @@ describe('computeToc', () => {
       ),
     ).toEqual(
       expect.arrayContaining([
-        { id: '0-1', name: 'Docs', depth: 1, type: 'group', icon: 'folder-close' },
-        { id: '0-2', name: 'APIs', depth: 2, type: 'group', icon: 'folder-close' },
-        { id: '1', name: 'APIs', depth: 3, type: 'item', icon: 'document', href: 'gh/org/project/docs/APIs/test.md' },
-        { id: '1-2', name: 'Split Folder', depth: 2, type: 'group', icon: 'folder-close' },
+        { id: '0-0', name: 'APIs', depth: 0, type: 'group', icon: 'folder-close' },
+        { id: '1', name: 'APIs', depth: 1, type: 'item', icon: 'document', href: 'gh/org/project/docs/APIs/test.md' },
+        { id: '1-0', name: 'Split Folder', depth: 0, type: 'group', icon: 'folder-close' },
         {
           id: '2',
           name: 'Test2',
-          depth: 3,
+          depth: 1,
           type: 'item',
           icon: 'document',
           href: 'gh/org/project/docs/split-folder/test.md',
