@@ -120,7 +120,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     if (!childNodes.length) continue;
 
     const dividerNode: IContentsNodeWithId = {
-      id: httpServiceNode.id,
+      id: `${httpServiceNode.id}-divider`,
       name: httpServiceNode.name,
       depth: 0,
       type: 'divider',

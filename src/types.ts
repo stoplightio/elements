@@ -42,7 +42,7 @@ export interface IProjectNode {
   id: number | string;
 
   latestVersion?: string;
-  versions?: string[];
+  versions?: INodeVersion[];
   tags?: string[];
 }
 

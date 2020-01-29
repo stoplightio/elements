@@ -1,3 +1,4 @@
+import { deserializeSrn } from '@stoplight/path';
 import { TableOfContents as UIKitTableOfContents } from '@stoplight/ui-kit/TableOfContents';
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import * as React from 'react';
@@ -42,21 +43,31 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
     contents = _contents;
   }
 
+  const versionsMap = {};
+  for (const item of items) {
+    if (item.versions) {
+      versionsMap[item.id] = item.versions;
+    }
+  }
+
   const components = useComponents();
 
   const rowRenderer = React.useCallback(
     (_item, DefaultRow) => {
       let isActive;
 
-      if (_item.versions) {
-        for (const version in _item.versions) {
-          if (!version) continue;
-          _item.href.includes(version) && _item.href === srn ? (isActive = true) : (isActive = false);
+      // removes '-overview' from service nodes
+      const id = typeof _item.id === 'string' && _item.id.includes('-overview') ? _item.id.slice(0, -9) : _item.id;
+
+      const versions = versionsMap[id];
+      if (versions && versions.length > 1 && srn) {
+        const { uri } = deserializeSrn(srn);
+        for (const version of versions) {
+          isActive = uri === version.uri;
+          if (isActive) break;
         }
-      } else if (_item.href === srn) {
-        isActive = true;
       } else {
-        isActive = false;
+        isActive = _item.href ? _item.href === srn : false;
       }
 
       const item = {

@@ -50,7 +50,7 @@ const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, class
 
   return (
     <div className={className}>
-      <div className="flex items-center p-3 -ml-5">
+      <div className="flex items-center pb-2">
         <div className="flex-1">
           <Tag round className="dark:text-white" style={{ backgroundColor: NodeTypeColors[node.type] || undefined }}>
             {NodeTypePrettyName[node.type] || node.type}
