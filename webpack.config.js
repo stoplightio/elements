@@ -114,4 +114,7 @@ module.exports = {
   performance: {
     hints: false,
   },
+  node: {
+    fs: 'empty'
+  }
 };

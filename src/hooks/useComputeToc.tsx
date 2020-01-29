@@ -48,7 +48,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** Docs folder */
   const docsNodes = sortBy(
-    nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article),
+    nodes.filter(node => node.type === NodeType.Article),
     node => toLower(node.srn),
   );
 
