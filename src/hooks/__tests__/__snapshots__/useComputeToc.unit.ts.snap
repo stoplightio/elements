@@ -166,6 +166,14 @@ exports[`computeToc studio.ts should return the correct icons based on node type
 Array [
   Object {
     "depth": 0,
+    "href": "gh/stoplightio/studio/README.md",
+    "icon": "cube",
+    "id": "readme",
+    "name": "Studio Docs",
+    "type": "item",
+  },
+  Object {
+    "depth": 0,
     "href": "gh/stoplightio/studio/docs/ui-overview.md",
     "icon": "cube",
     "id": "gzv028oc",
@@ -311,14 +319,6 @@ Array [
     "icon": "cube",
     "id": "stz6uwdt",
     "name": "Using Images",
-    "type": "item",
-  },
-  Object {
-    "depth": 1,
-    "href": "gh/stoplightio/studio/README.md",
-    "icon": "cube",
-    "id": "readme",
-    "name": "Studio Docs",
     "type": "item",
   },
 ]
@@ -328,6 +328,14 @@ exports[`computeToc studio.ts should return the correct table of contents 1`] = 
 Array [
   Object {
     "depth": 0,
+    "href": "gh/stoplightio/studio/README.md",
+    "icon": "document",
+    "id": "readme",
+    "name": "Studio Docs",
+    "type": "item",
+  },
+  Object {
+    "depth": 0,
     "href": "gh/stoplightio/studio/docs/ui-overview.md",
     "icon": "document",
     "id": "gzv028oc",
@@ -473,14 +481,6 @@ Array [
     "icon": "document",
     "id": "stz6uwdt",
     "name": "Using Images",
-    "type": "item",
-  },
-  Object {
-    "depth": 1,
-    "href": "gh/stoplightio/studio/README.md",
-    "icon": "document",
-    "id": "readme",
-    "name": "Studio Docs",
     "type": "item",
   },
 ]

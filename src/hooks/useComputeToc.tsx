@@ -1,10 +1,12 @@
 import { Dictionary, NodeType } from '@stoplight/types';
-import { compact, escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
+import { escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
 import * as React from 'react';
 import { IconsContext } from '../containers/Provider';
 import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
 import { NodeIconMapping } from '../types';
 import { deserializeSrn } from '../utils/srns';
+
+const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
 
 /**
  * Memoized hook that computes a tree structure from an array of nodes
@@ -39,8 +41,8 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     if (!docsNodes[nodeIndex]) continue;
     const node = docsNodes[nodeIndex];
 
-    // Strip off the /docs since we ignore that folder
-    const uri = node.uri.replace(/^\/docs\//, '');
+    // Strip off leading slash and the (optionally) docs since we ignore that folder
+    const uri = node.uri.replace(/^\/(?:docs\/)?/, '');
     const parts = uri.split('/');
 
     // Handle adding the parent folders if we haven't already added them
@@ -77,14 +79,20 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       });
     } else {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
-      rootNodes.push({
+      const contentNode: IContentsNodeWithId = {
         id: node.id,
         name: node.name,
         depth: 0,
         type: 'item',
         icon: icons[node.type] || icons.item,
         href: node.srn,
-      });
+      };
+
+      if (README_REGEXP.test(node.uri)) {
+        rootNodes.unshift(contentNode);
+      } else {
+        rootNodes.push(contentNode);
+      }
     }
   }
 
