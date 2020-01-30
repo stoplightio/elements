@@ -8,9 +8,7 @@ import { AxiosContext } from '../containers/Provider';
 export type UseRequestState<T> = {
   isLoading: boolean;
   data?: T;
-  error?: {
-    message: string;
-  };
+  error?: Error;
 };
 
 // Maps a hash of the request to the response data
