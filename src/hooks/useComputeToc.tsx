@@ -6,8 +6,6 @@ import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types'
 import { NodeIconMapping } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
-const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
-
 /**
  * Memoized hook that computes a tree structure from an array of nodes
  */
@@ -31,22 +29,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
   const folders: string[] = [];
   const rootNodes: IContentsNodeWithId[] = []; // These nodes will appear at the top of the tree
 
-  // Grab the root level README and put it at the top of the folder
-  const readmeNode = nodes.find(node => {
-    return README_REGEXP.test(node.uri) && compact(node.uri.split('/')).length === 1;
-  });
-  if (readmeNode) {
-    rootNodes.push({
-      id: readmeNode.id,
-      name: readmeNode.name,
-      depth: 0,
-      type: 'item',
-      icon: icons[readmeNode.type] || icons.item,
-      href: readmeNode.srn,
-    });
-  }
-
-  /** Docs folder */
+  /** All document nodes */
   const docsNodes = sortBy(
     nodes.filter(node => node.type === NodeType.Article),
     node => toLower(node.srn),
