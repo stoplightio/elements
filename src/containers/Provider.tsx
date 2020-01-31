@@ -2,7 +2,6 @@ import { Resolver } from '@stoplight/json-ref-resolver';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { NodeIconMapping } from '../types';
-import { IFetchProps } from '../utils/createFetchClient';
 
 export interface IProvider {
   host?: string;
@@ -14,10 +13,7 @@ export interface IProvider {
 
 const defaultHost = 'http://localhost:4060';
 export const HostContext = React.createContext(defaultHost);
-export const RequestContext = React.createContext<IFetchProps>({
-  host: defaultHost,
-  headers: null,
-});
+export const TokenContext = React.createContext('');
 export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
 export const ActiveSrnContext = React.createContext('');
 export const ResolverContext = React.createContext<Resolver | undefined>(undefined);
@@ -33,25 +29,15 @@ export const Provider: React.FunctionComponent<IProvider> = ({
   resolver,
   children,
 }) => {
-  const requestContext = React.useMemo<IFetchProps>(
-    () => ({
-      host: host || defaultHost,
-      headers: token
-        ? {
-            Authorization: `Bearer ${token}`,
-          }
-        : null,
-    }),
-    [host, token],
-  );
-
   return (
-    <RequestContext.Provider value={requestContext}>
-      <ComponentsContext.Provider value={components}>
-        <ResolverContext.Provider value={resolver}>
-          <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
-        </ResolverContext.Provider>
-      </ComponentsContext.Provider>
-    </RequestContext.Provider>
+    <HostContext.Provider value={host || defaultHost}>
+      <TokenContext.Provider value={token || ''}>
+        <ComponentsContext.Provider value={components}>
+          <ResolverContext.Provider value={resolver}>
+            <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
+          </ResolverContext.Provider>
+        </ComponentsContext.Provider>
+      </TokenContext.Provider>
+    </HostContext.Provider>
   );
 };

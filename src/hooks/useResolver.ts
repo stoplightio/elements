@@ -1,12 +1,13 @@
 import { IResolveError, IResolveResult } from '@stoplight/json-ref-resolver/types';
 import { uniqBy } from 'lodash';
 import * as React from 'react';
-import { ActiveSrnContext, RequestContext, ResolverContext } from '../containers/Provider';
+import { ActiveSrnContext, HostContext, TokenContext } from '../containers/Provider';
 import { DocsNodeType } from '../types';
-import { cancelablePromise } from '../utils/cancelablePromise';
-import { createResolver } from '../utils/createResolver';
-import { useFetchClient } from '../utils/useFetchClient';
 import { useParsedData } from './useParsedData';
+
+import ResolverWorker, { WebWorker } from 'web-worker:../worker.ts';
+
+let worker: WebWorker;
 
 /**
  * Resolves all remote http and relative file $refs for the given value
@@ -15,8 +16,8 @@ import { useParsedData } from './useParsedData';
  */
 export function useResolver<T = any>(type: DocsNodeType, value: string) {
   const srn = React.useContext(ActiveSrnContext);
-  const client = useFetchClient();
-  const resolver = React.useContext(ResolverContext) || createResolver(client, srn);
+  const host = React.useContext(HostContext);
+  const token = React.useContext(TokenContext);
   const parsedValue = useParsedData(type, value);
 
   const [resolved, setResolved] = React.useState<{
@@ -28,31 +29,27 @@ export function useResolver<T = any>(type: DocsNodeType, value: string) {
     errors: [],
   });
 
+  if (!worker) {
+    worker = new ResolverWorker();
+  }
+
+  // TODO (CL): We need to cache the resolve result so that we don't try to keep dereferencing it
   React.useEffect(() => {
     // Only resolve if we've succeeded in parsing the string
-    if (typeof parsedValue !== 'object') return;
+    if (typeof parsedValue !== 'object' || !worker) return;
 
-    const { promise, cancel } = cancelablePromise(resolver.resolve(parsedValue));
+    worker.addEventListener('message', (msg: any) => {
+      if (srn !== msg.data.srn) return;
 
-    promise
-      .then(res => {
-        setResolved({
-          result: res.result,
-          errors: uniqBy(res.errors, 'message'), // remove any duplicate messages
-          graph: res.graph,
-        });
-      })
-      .catch(e => {
-        if (!e.isCanceled) {
-          console.error('Error resolving', type, e);
-        }
+      // @ts-ignore: need to remove graph from the typings
+      setResolved({
+        result: msg.data.result || parsedValue,
+        errors: uniqBy(msg.data.errors, 'message'), // remove any duplicate messages
       });
+    });
 
-    return () => {
-      // If the component unmounts, cancel the promise so we don't try to update the React state
-      cancel();
-    };
-  }, [value, srn]);
+    worker.postMessage({ srn, value: parsedValue, host, token });
+  }, [srn]);
 
   return resolved;
 }

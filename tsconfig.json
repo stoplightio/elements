@@ -1,12 +1,13 @@
 {
   "extends": "@stoplight/scripts/tsconfig.json",
 
-  "include": ["src"],
+  "include": ["."],
 
   "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
 
   "compilerOptions": {
     "noUnusedLocals": false,
-    "esModuleInterop": true
+    "lib": ["dom", "webworker", "es2017"],
+    "target": "es2017"
   }
 }
