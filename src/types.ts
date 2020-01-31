@@ -82,7 +82,7 @@ export interface INodeGraph {
 }
 
 export interface IGraphNode {
-  id: number;
+  groupNodeId: number;
   name: string;
   srn: string;
   uri: string;

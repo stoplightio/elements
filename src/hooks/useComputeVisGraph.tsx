@@ -30,13 +30,13 @@ export function computeVisGraph(rootNode: INodeInfo, graph: INodeGraph, activeNo
   for (const node of graph.nodes) {
     let fontColor = '#10161a';
     let color = '#f5f8fa';
-    if (activeNodeId === node.id) {
+    if (activeNodeId === node.groupNodeId) {
       color = '#66b1e7';
       fontColor = '#ffffff';
     }
 
     visGraph.nodes.push({
-      id: node.id,
+      id: node.groupNodeId,
       level: node.depth,
       label: node.name,
       title: node.srn,

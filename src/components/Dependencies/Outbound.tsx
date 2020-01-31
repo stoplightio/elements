@@ -60,24 +60,24 @@ const visOptions: Options = {
 export const OutboundDependencies = React.forwardRef<Network, IOutboundDependencies>((props, visNetworkRef) => {
   const { className, node, padding, graph } = props;
 
-  const [activeNode, setActiveNode] = React.useState<Pick<IGraphNode, 'id' | 'name' | 'srn'> | undefined>();
-  const visGraph = useComputeVisGraph(node, activeNode?.id, graph);
+  const [activeNode, setActiveNode] = React.useState<Pick<IGraphNode, 'groupNodeId' | 'name' | 'srn'> | undefined>();
+  const visGraph = useComputeVisGraph(node, activeNode?.groupNodeId, graph);
 
   const onClickNode = React.useCallback(
     e => {
       const nodeId = e.nodes[0];
       if (!nodeId) return;
 
-      if (activeNode && activeNode.id === nodeId) {
+      if (activeNode && activeNode.groupNodeId === nodeId) {
         setActiveNode(undefined);
       } else if (node.id === nodeId) {
         setActiveNode({
-          id: node.id,
+          groupNodeId: node.id,
           name: node.name,
           srn: node.srn,
         });
       } else {
-        const n = graph?.nodes?.find((nd: IGraphNode) => nd.id === nodeId);
+        const n = graph?.nodes?.find((nd: IGraphNode) => nd.groupNodeId === nodeId);
         if (!n) return;
 
         setActiveNode(n);
@@ -151,4 +151,3 @@ const ModelContainer = ({ srn, name, actions }: { srn: string; name: string; act
     />
   );
 };
-
