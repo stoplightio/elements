@@ -4,7 +4,7 @@ import { Dictionary, Primitive } from '@stoplight/types';
 import { get } from 'lodash';
 import { MD5 } from 'object-hash';
 import * as React from 'react';
-import { RequestContext } from '..';
+import { HostContext } from '..';
 import { useFetchClient } from '../utils/useFetchClient';
 
 export type UseRequestState<T> = {
@@ -22,11 +22,11 @@ interface IRequestConfig {
 }
 
 export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
-  const requestContext = React.useContext(RequestContext);
+  const host = React.useContext(HostContext);
   const client = useFetchClient();
   const computeUrl = React.useCallback<(args: IRequestConfig) => string>(
     ({ pathname, params }) => {
-      const url = new URL(join(requestContext.host, stripRoot(pathname)));
+      const url = new URL(join(host, stripRoot(pathname)));
       for (const [name, value] of Object.entries(params)) {
         if (value !== undefined) {
           url.searchParams.append(name, String(value));
@@ -35,7 +35,7 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
 
       return url.href;
     },
-    [requestContext.host],
+    [host],
   );
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);

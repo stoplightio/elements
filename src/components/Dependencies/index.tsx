@@ -7,7 +7,7 @@ import { Network, Options } from 'vis';
 import { default as Graph } from 'react-graph-vis';
 
 import { Button, Tooltip } from '@stoplight/ui-kit';
-import { HostContext, RequestContext } from '../../containers/Provider';
+import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
 import { useResolver } from '../../hooks/useResolver';
@@ -184,7 +184,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
 };
 
 function GoToRef({ title, id }: IActiveNode) {
-  const { host } = React.useContext(RequestContext);
+  const host = React.useContext(HostContext);
   const components = useComponents();
 
   if (components.link) {

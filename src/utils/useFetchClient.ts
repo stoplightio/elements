@@ -1,8 +1,20 @@
 import * as React from 'react';
-import { RequestContext } from '..';
+import { HostContext, TokenContext } from '..';
 import { createFetchClient } from './createFetchClient';
 
 export const useFetchClient = () => {
-  const requestConfig = React.useContext(RequestContext);
-  return React.useMemo(() => createFetchClient(requestConfig), [requestConfig.host, requestConfig.headers]);
+  const host = React.useContext(HostContext);
+  const token = React.useContext(TokenContext);
+  return React.useMemo(
+    () =>
+      createFetchClient({
+        host,
+        headers: token
+          ? {
+              Authorization: `Bearer ${token}`,
+            }
+          : null,
+      }),
+    [host, token],
+  );
 };

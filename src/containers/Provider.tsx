@@ -30,8 +30,8 @@ export const Provider: React.FunctionComponent<IProvider> = ({
   children,
 }) => {
   return (
-    <HostContext.Provider value={host || defaultHost}>
-      <TokenContext.Provider value={token || ''}>
+    <HostContext.Provider value={host ?? defaultHost}>
+      <TokenContext.Provider value={token ?? ''}>
         <ComponentsContext.Provider value={components}>
           <ResolverContext.Provider value={resolver}>
             <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>

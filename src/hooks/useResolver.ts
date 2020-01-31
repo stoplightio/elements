@@ -5,7 +5,7 @@ import { ActiveSrnContext, HostContext, TokenContext } from '../containers/Provi
 import { DocsNodeType } from '../types';
 import { useParsedData } from './useParsedData';
 
-import ResolverWorker, { WebWorker } from 'web-worker:../worker.ts';
+import ResolverWorker, { WebWorker } from '../client';
 
 let worker: WebWorker;
 
