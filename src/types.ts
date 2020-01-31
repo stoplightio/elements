@@ -39,6 +39,8 @@ export interface IProjectNode {
   latestVersion?: string;
   versions?: string[];
   tags?: string[];
+  data?: string;
+  summary?: string;
 }
 
 export interface IContentsNodeWithId extends IContentsNode {

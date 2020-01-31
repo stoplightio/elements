@@ -1,5 +1,5 @@
 import { Dictionary, NodeType } from '@stoplight/types';
-import { compact, escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
+import { escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
 import * as React from 'react';
 import { IconsContext } from '../containers/Provider';
 import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
@@ -31,24 +31,9 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
   const folders: string[] = [];
   const rootNodes: IContentsNodeWithId[] = []; // These nodes will appear at the top of the tree
 
-  // Grab the root level README and put it at the top of the folder
-  const readmeNode = nodes.find(node => {
-    return README_REGEXP.test(node.uri) && compact(node.uri.split('/')).length === 1;
-  });
-  if (readmeNode) {
-    rootNodes.push({
-      id: readmeNode.id,
-      name: readmeNode.name,
-      depth: 0,
-      type: 'item',
-      icon: icons[readmeNode.type] || icons.item,
-      href: readmeNode.srn,
-    });
-  }
-
-  /** Docs folder */
+  /** All document nodes */
   const docsNodes = sortBy(
-    nodes.filter(node => /^\/docs/.test(node.uri) && node.type === NodeType.Article),
+    nodes.filter(node => node.type === NodeType.Article),
     node => toLower(node.srn),
   );
 
@@ -56,8 +41,8 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     if (!docsNodes[nodeIndex]) continue;
     const node = docsNodes[nodeIndex];
 
-    // Strip off the /docs since we ignore that folder
-    const uri = node.uri.replace(/^\/docs\//, '');
+    // Strip off leading slash and the (optionally) docs since we ignore that folder
+    const uri = node.uri.replace(/^\/(?:docs\/)?/, '');
     const parts = uri.split('/');
 
     // Handle adding the parent folders if we haven't already added them
@@ -94,14 +79,20 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       });
     } else {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
-      rootNodes.push({
+      const contentNode: IContentsNodeWithId = {
         id: node.id,
         name: node.name,
         depth: 0,
         type: 'item',
         icon: icons[node.type] || icons.item,
         href: node.srn,
-      });
+      };
+
+      if (README_REGEXP.test(node.uri)) {
+        rootNodes.unshift(contentNode);
+      } else {
+        rootNodes.push(contentNode);
+      }
     }
   }
 
