@@ -9,7 +9,7 @@ export function useNodeInfo(srn: string, opts: { group?: string; version?: strin
   const { uri } = deserializeSrn(srn);
   const axios = React.useContext(AxiosContext);
 
-  const queryParams = [`srn=${srn}`];
+  const queryParams = [`srn=${srn}`, 'deref=bundle'];
   if (opts.version) {
     queryParams.push(`version=${opts.version}`);
   }
