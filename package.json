@@ -50,7 +50,7 @@
     "@stoplight/markdown": "^2.5.3",
     "@stoplight/markdown-viewer": "^3.7.2",
     "@stoplight/path": "^1.3.0",
-    "@stoplight/request-maker": "^3.3.9",
+    "@stoplight/request-maker": "^3.4.1",
     "@stoplight/tree-list": "^4.11.1",
     "@stoplight/types": "^11.4.0",
     "@stoplight/ui-kit": "^2.15.1",
@@ -64,6 +64,7 @@
     "openapi-sampler": "^1.0.0-beta.15",
     "react-error-boundary": "^1.2.5",
     "react-graph-vis": "^1.0.5",
+    "swr": "^0.1.16",
     "unist-util-select": "^2.0.2",
     "urijs": "^1.19.2"
   },
