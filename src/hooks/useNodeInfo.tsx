@@ -1,13 +1,12 @@
 import { deserializeSrn } from '@stoplight/path';
-import { AxiosResponse } from 'axios';
 import * as React from 'react';
 import useSWR from 'swr';
-import { AxiosContext } from '../containers/Provider';
 import { INodeInfo } from '../types';
+import { useFetchClient } from '../utils/useFetchClient';
 
 export function useNodeInfo(srn: string, opts: { group?: string; version?: string; skip?: boolean } = {}) {
   const { uri } = deserializeSrn(srn);
-  const axios = React.useContext(AxiosContext);
+  const fetch = useFetchClient();
 
   const queryParams = [`srn=${srn}`];
   if (opts.version) {
@@ -17,9 +16,16 @@ export function useNodeInfo(srn: string, opts: { group?: string; version?: strin
     queryParams.push(`group=${opts.group}`);
   }
 
-  const { data: response, isValidating, error, revalidate } = useSWR<AxiosResponse<INodeInfo>>(
+  const { data, isValidating, error, revalidate } = useSWR<INodeInfo>(
     opts.skip || !uri ? null : [`/nodes.info?${queryParams.join('&')}`],
-    axios.get,
+    (input: RequestInfo, init?: RequestInit) =>
+      fetch(input, init).then(res => {
+        if (!res.ok) {
+          throw new Error(`${res.status} ${res.statusText}`);
+        }
+
+        return res.json();
+      }),
     {
       shouldRetryOnError: false,
       dedupingInterval: 5 * 60 * 1000, // 5 minutes
@@ -27,7 +33,7 @@ export function useNodeInfo(srn: string, opts: { group?: string; version?: strin
   );
 
   return {
-    data: response?.data,
+    data,
     isValidating,
     error,
     revalidate,
