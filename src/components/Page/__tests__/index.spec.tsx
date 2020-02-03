@@ -1,6 +1,6 @@
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
-import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
 import { Page } from '..';
