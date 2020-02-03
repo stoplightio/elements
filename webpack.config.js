@@ -18,6 +18,9 @@ module.exports = {
   devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      'web-worker:./worker.ts': path.join(__dirname, './src/worker.shim.ts'),
+    },
   },
   context: path.resolve(__dirname, 'src'),
   module: {

@@ -13,7 +13,7 @@ module.exports = (baseConfig, env, config) => {
   };
 
   config.output.globalObject = 'this';
-  config.resolve.alias['web-worker:../worker.ts'] = path.join(process.cwd(), './src/__stories__/worker.shim.ts');
+  config.resolve.alias['web-worker:./worker.ts'] = path.join(__dirname, '../src/worker.shim.ts');
 
   return config;
 };
