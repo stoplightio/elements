@@ -1,14 +1,13 @@
 {
   "extends": "@stoplight/scripts/tsconfig.json",
 
-  "include": ["src", "./web-worker-loader.d.ts"],
+  "include": ["src", "./worker-loader.d.ts"],
 
   "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
 
   "compilerOptions": {
     "noUnusedLocals": false,
-    "lib": ["dom", "webworker", "es2017"],
-    "target": "es2018",
-    "module": "es2015"
+    "esModuleInterop": true,
+    "lib": ["dom", "webworker", "es2017"]
   }
 }

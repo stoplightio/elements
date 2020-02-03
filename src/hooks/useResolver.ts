@@ -5,9 +5,9 @@ import { ActiveSrnContext, HostContext, TokenContext } from '../containers/Provi
 import { DocsNodeType } from '../types';
 import { useParsedData } from './useParsedData';
 
-import ResolverWorker, { WebWorker } from '../client';
+import { ResolverWorker } from '../client';
 
-let worker: WebWorker;
+let worker: Worker;
 
 /**
  * Resolves all remote http and relative file $refs for the given value

@@ -1,7 +1,7 @@
 import { Resolver } from '@stoplight/json-ref-resolver/resolver';
 import { deserializeSrn, dirname, resolve, serializeSrn } from '@stoplight/path';
 import { parse } from '@stoplight/yaml/parse';
-import * as URI from 'urijs';
+import URI from 'urijs';
 
 export function createResolver(client: typeof fetch, srn?: string) {
   return new Resolver({

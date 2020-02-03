@@ -1,3 +1,3 @@
-import ResolverWorker, { WebWorker } from 'web-worker:./worker.ts';
+import Worker from 'worker-loader?{"fallback":true,"inline":true}!./worker';
 
-export { ResolverWorker as default, WebWorker };
+export { Worker as ResolverWorker };
