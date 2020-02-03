@@ -1,6 +1,6 @@
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
 import { Page } from '..';
@@ -54,40 +54,43 @@ describe('Page', () => {
     });
   });
 
-  //   describe('Docs Version Selector', () => {
-  //     it('should render proper node version', () => {
-  //       wrapper = mount(
-  //         <VersionSelector
-  //           node={{
-  //             name: 'Node Name',
-  //             data: 'Node Data',
-  //             type: NodeType.HttpService,
-  //             srn: 'sl/org/project/reference/todos/openapi.v1.yml',
-  //             version: '1.0',
-  //             versions: [
-  //               {
-  //                 version: '1.0',
-  //                 uri: 'reference/todos/openapi.v1.yml',
-  //               },
-  //               {
-  //                 version: '2.0',
-  //                 uri: 'reference/todos/openapi.v2.yml',
-  //               },
-  //             ],
-  //           }}
-  //         />,
-  //       );
+  describe('Docs Version Selector', () => {
+    it('should call onChangeSrn when node version is switched', () => {
+      const onChange = jest.fn();
 
-  //       wrapper
-  //         .find('select')
-  //         .find('option')
-  //         .first()
-  //         .simulate('change', {
-  //           target: { value: '2.0' },
-  //         });
+      wrapper = mount(
+        <VersionSelector
+          node={{
+            name: 'Node Name',
+            data: 'Node Data',
+            type: NodeType.HttpService,
+            srn: 'sl/org/project/reference/todos/openapi.v1.yml',
+            version: '1.0',
+            versions: [
+              {
+                version: '1.0',
+                uri: 'reference/todos/openapi.v1.yml',
+              },
+              {
+                version: '2.0',
+                uri: 'reference/todos/openapi.v2.yml',
+              },
+            ],
+          }}
+          srn="sl/org/project/reference/todos/openapi.v1.yml"
+          onChangeSrn={onChange}
+        />,
+      );
 
-  //       expect(wrapper.find('select')).toHaveProp('value', '2.0');
-  //       // expect(wrapper.find('span').find('div')).toHaveHTML('<div class="flex-1">v2.0</div>');
-  //     });
-  //   });
+      wrapper
+        .find('select')
+        .find('option')
+        .first()
+        .simulate('change', {
+          target: { value: '2.0' },
+        });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+    });
+  });
 });

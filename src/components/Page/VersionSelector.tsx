@@ -3,20 +3,20 @@ import * as React from 'react';
 
 import { deserializeSrn, serializeSrn } from '@stoplight/path';
 import cn from 'classnames';
-import { ActiveSrnContext } from '../..';
+import { OnChangeSrn } from '../../containers/Provider';
 import { INodeInfo } from '../../types';
 
 export interface IVersionSelector {
   node: INodeInfo;
+  srn: string;
+  onChangeSrn: OnChangeSrn;
 }
 
-export const VersionSelector: React.FunctionComponent<IVersionSelector> = ({ node }) => {
-  const [srn, onChangeSrn] = React.useContext(ActiveSrnContext);
-
+export const VersionSelector: React.FunctionComponent<IVersionSelector> = ({ node, srn, onChangeSrn }) => {
   if (!node.versions || node.versions.length < 2) return null;
 
   return (
-    <span className={cn('ml-2 relative', Classes.ROUND, Classes.TAG)}>
+    <span className={cn('ml-6 relative h-0', Classes.ROUND, Classes.TAG)}>
       <select
         className="absolute inset-0 bg-transparent opacity-0 z-20 w-full cursor-pointer"
         style={{ appearance: 'none', WebkitAppearance: 'none' }}

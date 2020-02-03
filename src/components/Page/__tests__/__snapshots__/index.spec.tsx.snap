@@ -2035,65 +2035,10 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
               >
                 <div
                   className="flex-1"
-                >
-                  <Blueprint3.Tag
-                    className="dark:text-white"
-                    round={true}
-                    style={
-                      Object {
-                        "backgroundColor": "#6a6acb",
-                      }
-                    }
-                  >
-                    <span
-                      className="bp3-tag bp3-round dark:text-white"
-                      style={
-                        Object {
-                          "backgroundColor": "#6a6acb",
-                        }
-                      }
-                    >
-                      <Blueprint3.Icon />
-                      <Blueprint3.Text
-                        className="bp3-fill"
-                        ellipsize={true}
-                        tagName="span"
-                      >
-                        <span
-                          className="bp3-text-overflow-ellipsis bp3-fill"
-                        >
-                          Endpoint
-                        </span>
-                      </Blueprint3.Text>
-                      <Blueprint3.Icon />
-                    </span>
-                  </Blueprint3.Tag>
-                  <Blueprint3.Tag
-                    className="ml-2"
-                    round={true}
-                  >
-                    <span
-                      className="bp3-tag bp3-round ml-2"
-                    >
-                      <Blueprint3.Icon />
-                      <Blueprint3.Text
-                        className="bp3-fill"
-                        ellipsize={true}
-                        tagName="span"
-                      >
-                        <span
-                          className="bp3-text-overflow-ellipsis bp3-fill"
-                        >
-                          Not Versioned
-                        </span>
-                      </Blueprint3.Text>
-                      <Blueprint3.Icon />
-                    </span>
-                  </Blueprint3.Tag>
-                </div>
+                />
               </div>
               <div
-                className="flex pt-3"
+                className="flex pt-3 items-center"
               >
                 <Component
                   className="mr-5"
@@ -2105,11 +2050,15 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                     put
                   </span>
                 </Component>
-                <h2
-                  className="font-medium text-2xl flex-1"
+                <div
+                  className="flex flex-1 items-center"
                 >
-                  Put Todos
-                </h2>
+                  <h2
+                    className="font-medium text-2xl"
+                  >
+                    Put Todos
+                  </h2>
+                </div>
               </div>
               <Component
                 className="flex-1 mt-5 mb-1"
