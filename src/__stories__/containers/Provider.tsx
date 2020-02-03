@@ -10,7 +10,7 @@ export const providerKnobs = (): IProvider => ({
   components: object('components', {
     link: ({ node, children }, key) => {
       return (
-        <a key={key} href={node.url}>
+        <a key={key} className={node.className} href={node.url}>
           {children}
         </a>
       );

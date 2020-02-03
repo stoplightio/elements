@@ -1,10 +1,11 @@
 import { IResolveError, IResolveResult } from '@stoplight/json-ref-resolver/types';
 import { uniqBy } from 'lodash';
 import * as React from 'react';
-import { ActiveSrnContext, AxiosContext, ResolverContext } from '../containers/Provider';
+import { ActiveSrnContext, ResolverContext } from '../containers/Provider';
 import { DocsNodeType } from '../types';
 import { cancelablePromise } from '../utils/cancelablePromise';
 import { createResolver } from '../utils/createResolver';
+import { useFetchClient } from '../utils/useFetchClient';
 import { useParsedData } from './useParsedData';
 
 /**
@@ -14,7 +15,8 @@ import { useParsedData } from './useParsedData';
  */
 export function useResolver<T = any>(type: DocsNodeType, value: string) {
   const [srn] = React.useContext(ActiveSrnContext);
-  const client = React.useContext(AxiosContext);
+  const client = useFetchClient();
+
   const resolver = React.useContext(ResolverContext) || createResolver(client, srn);
   const parsedValue = useParsedData(type, value);
 

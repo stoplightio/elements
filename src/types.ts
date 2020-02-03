@@ -44,6 +44,8 @@ export interface IProjectNode {
   latestVersion?: string;
   versions?: INodeVersion[];
   tags?: string[];
+  data?: string;
+  summary?: string;
 }
 
 export interface IContentsNodeWithId extends IContentsNode {
