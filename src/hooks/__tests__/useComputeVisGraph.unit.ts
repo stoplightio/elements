@@ -1,5 +1,5 @@
-const nock = require('nock');
-import axios from 'axios';
+import * as fetchMock from 'jest-fetch-mock';
+import { createFetchClient } from '../../utils/createFetchClient';
 const simpleSchema = require('../../__fixtures__/schemas/simple.json');
 const todoFullSchema = require('../../__fixtures__/schemas/todo-full.v1.json');
 const todoPartialSchema = require('../../__fixtures__/schemas/todo-partial.v1.json');
@@ -11,25 +11,33 @@ import { createResolver } from '../../utils/createResolver';
 import { computeVisGraph } from '../useComputeVisGraph';
 
 beforeEach(() => {
-  nock('https://stoplight.io/api')
-    .persist()
-    .get('/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json')
-    .reply(200, todoFullSchema)
-    .get('/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json')
-    .reply(200, todoPartialSchema)
-    .get('/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json')
-    .reply(200, userSchema);
+  (fetchMock as fetchMock.FetchMock).enableMocks();
+  global.fetch.mockResponse(async req => {
+    const url = new URL(req.url);
+    switch (url.href.replace(url.origin, '')) {
+      case '/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json':
+        return JSON.stringify(todoFullSchema);
+      case '/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json':
+        return JSON.stringify(todoPartialSchema);
+      case '/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json':
+        return JSON.stringify(userSchema);
+      default:
+        return '';
+    }
+  });
 });
 
 afterEach(() => {
-  nock.cleanAll();
+  (fetchMock as fetchMock.FetchMock).disableMocks();
 });
 
 describe('computeVisGraph', () => {
   test('it works with a simple example', async () => {
-    const client = axios.create({
-      baseURL: 'https://stoplight.io/api',
+    const client = createFetchClient({
+      host: 'https://stoplight.io/api',
+      headers: null,
     });
+
     const { graph } = await createResolver(client).resolve(simpleSchema);
 
     expect(computeVisGraph({ srn: '' } as INodeInfo, graph, '')).toMatchSnapshot();

@@ -1,10 +1,9 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
 import { deserializeSrn, dirname, resolve, serializeSrn } from '@stoplight/path';
 import { parse } from '@stoplight/yaml';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import URI from 'urijs';
 
-export function createResolver(client: AxiosInstance, srn?: string) {
+export function createResolver(client: typeof fetch, srn?: string) {
   return new Resolver({
     dereferenceInline: true,
     dereferenceRemote: true,
@@ -35,7 +34,7 @@ export function createResolver(client: AxiosInstance, srn?: string) {
  * @param host Stoplight API host
  * @param srn The active node's SRN
  */
-function remoteFileResolver(client: AxiosInstance, srn?: string) {
+function remoteFileResolver(client: typeof fetch, srn?: string) {
   const { shortcode, orgSlug, projectSlug, uri } = deserializeSrn(srn || '');
 
   return {
@@ -54,14 +53,17 @@ function remoteFileResolver(client: AxiosInstance, srn?: string) {
       });
 
       // Use the http resolver to resolve the node's raw export
-      return httpResolver(client).resolve(new URI(`/nodes.raw/?srn=${refSrn}`));
+
+      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}`));
     },
   };
 }
 
-const httpResolver = (client: AxiosInstance = axios) => ({
-  resolve: async (ref: uri.URI) => {
-    const res = await client.get(String(ref));
-    return res.data;
-  },
-});
+const httpResolver = (client: typeof fetch = fetch) => {
+  return {
+    resolve: async (ref: uri.URI) => {
+      const res = await client(String(ref));
+      return await res.text();
+    },
+  };
+};

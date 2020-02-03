@@ -10,7 +10,7 @@ export function useProjectNodes(srn: string, opts: { group?: string } = {}) {
   const projectSrn = serializeSrn({ ...deserializeSrn(srn), uri: undefined });
 
   const { isLoading, data, error } = useRequest<IPaginatedResponse<IProjectNode>>({
-    url: '/projects.nodes',
+    pathname: '/projects.nodes',
     params: {
       srn: projectSrn,
       group: opts.group,
