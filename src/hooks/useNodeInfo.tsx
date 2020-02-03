@@ -1,5 +1,4 @@
 import { deserializeSrn } from '@stoplight/path';
-import * as React from 'react';
 import useSWR from 'swr';
 import { INodeInfo } from '../types';
 import { useFetchClient } from '../utils/useFetchClient';
