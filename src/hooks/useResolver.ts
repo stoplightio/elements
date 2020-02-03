@@ -38,8 +38,8 @@ export function useResolver<T = any>(type: DocsNodeType, value: string) {
     // Only resolve if we've succeeded in parsing the string
     if (typeof parsedValue !== 'object' || !worker) return;
 
-    worker.addEventListener('message', (msg: any) => {
-      if (srn !== msg.data.srn) return;
+    worker.addEventListener('message', msg => {
+      if (!msg.data || srn !== msg.data.srn) return;
 
       // @ts-ignore: need to remove graph from the typings
       setResolved({
