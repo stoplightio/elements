@@ -65,6 +65,7 @@ export const Page: React.FC<IPageContainer> = ({
   return (
     <PageComponent
       node={data}
+      group={group}
       tabs={tabs}
       actions={actions}
       padding={padding}

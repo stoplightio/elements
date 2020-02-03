@@ -17,7 +17,7 @@ export interface IHub {
   group?: string;
   className?: string;
   padding?: string;
-  NotFoundComponent?: React.FC<{ srn: string; error?: { message: string }; items: IProjectNode[] }>;
+  NotFoundComponent?: React.FC<{ srn: string; group?: string; error?: { message: string }; items: IProjectNode[] }>;
 }
 
 export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotFoundComponent, group }) => {
@@ -40,7 +40,7 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
   // Show not found if we're done loading but have no contents to render
   if (NotFoundComponent && !isLoading && !contents.length) {
     // Pass "items" to parent to determine if there are nodes that don't conform to the "/docs" or "/reference" folder convention
-    return <NotFoundComponent srn={srn} error={error} items={data ? data.items : []} />;
+    return <NotFoundComponent srn={srn} error={error} group={group} items={data ? data.items : []} />;
   }
 
   return (
@@ -48,7 +48,7 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
       {isLoading ? (
         <TableOfContentsSkeleton padding={padding} />
       ) : (
-        <TableOfContents srn={pageSrn} contents={contents} padding={padding} />
+        <TableOfContents srn={pageSrn} group={group} contents={contents} padding={padding} />
       )}
 
       {pageSrn ? (

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActiveSrnContext } from '../../containers/Provider';
+import { ActiveGroupContext, ActiveSrnContext } from '../../containers/Provider';
 import { useComponentSize } from '../../hooks';
 import { useComputeMarkdownHeadings } from '../../hooks/useComputeMarkdownHeadings';
 import { INodeInfo } from '../../types';
@@ -10,10 +10,11 @@ import { PageHeadings } from '../Page/Headings';
 export interface IDocs {
   node: INodeInfo;
 
+  group?: string;
   padding?: string;
 }
 
-export const Docs = ({ node, padding = '12' }: IDocs) => {
+export const Docs = ({ node, group, padding = '12' }: IDocs) => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const { width } = useComponentSize(containerRef);
   const showHeadings = width >= 1000;
@@ -23,9 +24,11 @@ export const Docs = ({ node, padding = '12' }: IDocs) => {
 
   return (
     <div className="flex w-full Page__docs" ref={containerRef}>
-      <ActiveSrnContext.Provider value={node.srn || ''}>
-        <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} />
-      </ActiveSrnContext.Provider>
+      <ActiveGroupContext.Provider value={group}>
+        <ActiveSrnContext.Provider value={node.srn || ''}>
+          <MarkdownViewer className={`Page__content flex-1 p-${padding}`} markdown={tree} />
+        </ActiveSrnContext.Provider>
+      </ActiveGroupContext.Provider>
 
       <PageHeadings className="Page__headings" padding={padding} headings={headings} minimal={!showHeadings} />
     </div>

@@ -9,12 +9,13 @@ import { Path } from '../HttpOperation/Path';
 
 export interface IPageHeader extends IErrorBoundary {
   node: INodeInfo;
+  group?: string;
 
   className?: string;
   actions?: (props: { node: INodeInfo }) => React.ReactElement | null;
 }
 
-const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, className, actions }) => {
+const PageHeaderComponent: React.FunctionComponent<IPageHeader> = ({ node, group, className, actions }) => {
   if (!node.name) return null;
 
   const isHttpOperation = node.type === NodeType.HttpOperation;

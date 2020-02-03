@@ -3,7 +3,7 @@ import { deserializeSrn, dirname, resolve, serializeSrn } from '@stoplight/path'
 import { parse } from '@stoplight/yaml';
 import URI from 'urijs';
 
-export function createResolver(client: typeof fetch, srn?: string) {
+export function createResolver(client: typeof fetch, srn?: string, group?: string) {
   return new Resolver({
     dereferenceInline: true,
     dereferenceRemote: true,
@@ -11,7 +11,7 @@ export function createResolver(client: typeof fetch, srn?: string) {
     resolvers: {
       https: httpResolver(client),
       http: httpResolver(client),
-      file: remoteFileResolver(client, srn),
+      file: remoteFileResolver(client, srn, group),
     },
 
     async parseResolveResult(opts) {
@@ -34,7 +34,7 @@ export function createResolver(client: typeof fetch, srn?: string) {
  * @param host Stoplight API host
  * @param srn The active node's SRN
  */
-function remoteFileResolver(client: typeof fetch, srn?: string) {
+function remoteFileResolver(client: typeof fetch, srn?: string, group?: string) {
   const { shortcode, orgSlug, projectSlug, uri } = deserializeSrn(srn || '');
 
   return {
@@ -53,8 +53,9 @@ function remoteFileResolver(client: typeof fetch, srn?: string) {
       });
 
       // Use the http resolver to resolve the node's raw export
-
-      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}`));
+      return httpResolver(client).resolve(
+        new URI(`/nodes.raw/?srn=${refSrn}${group ? `&group=${group}` : ''}&deref=bundle`),
+      );
     },
   };
 }

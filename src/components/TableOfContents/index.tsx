@@ -12,6 +12,9 @@ export interface ITableOfContents {
   // SRN of the active node
   srn?: string;
 
+  // Group of the active node
+  group?: string;
+
   // Padding that will be used for (default: 10)
   padding?: string;
   className?: string;

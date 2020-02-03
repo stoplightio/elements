@@ -10,7 +10,8 @@ import { IPageTab, PageTabs } from './Tabs';
 
 export interface IPage extends IErrorBoundary {
   node: INodeInfo;
-  tabs(props: { node: INodeInfo }): IPageTab[];
+  group?: string;
+  tabs(props: { node: INodeInfo; group?: string }): IPageTab[];
 
   actions?: IPageHeader['actions'];
   padding?: string;
@@ -21,6 +22,7 @@ export interface IPage extends IErrorBoundary {
 
 const PageComponent: React.FC<IPage> = ({
   node,
+  group,
   tabs,
 
   actions,
@@ -32,7 +34,7 @@ const PageComponent: React.FC<IPage> = ({
   // Parse YAML/JSON string to an object
   const parsedData = useParsedData(node.type, node.data);
   const parsedNode = { ...node, data: parsedData };
-  const pageTabs = tabs({ node: parsedNode });
+  const pageTabs = tabs({ node: parsedNode, group });
 
   return (
     <div
@@ -42,14 +44,30 @@ const PageComponent: React.FC<IPage> = ({
     >
       {pageTabs.length > 1 ? (
         <>
-          <PageHeader className={`Page__header px-${padding} pt-${padding}`} node={parsedNode} actions={actions} />
+          <PageHeader
+            className={`Page__header px-${padding} pt-${padding}`}
+            node={parsedNode}
+            group={group}
+            actions={actions}
+          />
 
-          <PageTabs node={node} tabs={pageTabs} padding={padding} scrollInnerContainer={scrollInnerContainer} />
+          <PageTabs
+            node={node}
+            group={group}
+            tabs={pageTabs}
+            padding={padding}
+            scrollInnerContainer={scrollInnerContainer}
+          />
         </>
       ) : (
         <PageContainer id={parsedNode.srn} scrollInnerContainer={scrollInnerContainer} shadows={shadows}>
           {parsedNode.type !== NodeType.Article && (
-            <PageHeader className={`Page__header px-${padding} pt-${padding}`} node={parsedNode} actions={actions} />
+            <PageHeader
+              className={`Page__header px-${padding} pt-${padding}`}
+              node={parsedNode}
+              group={group}
+              actions={actions}
+            />
           )}
 
           {pageTabs[0].content}

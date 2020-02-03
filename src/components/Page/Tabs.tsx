@@ -15,11 +15,12 @@ export interface IPageTabs {
   node: INodeInfo;
   tabs: IPageTab[];
 
+  group?: string;
   padding?: string;
   scrollInnerContainer?: boolean;
 }
 
-export const PageTabs: React.FC<IPageTabs> = ({ node, tabs, padding, scrollInnerContainer }) => {
+export const PageTabs: React.FC<IPageTabs> = ({ node, tabs, group, padding, scrollInnerContainer }) => {
   // Control tab state
   const [selectedTab, setSelectedTab] = React.useState(0);
   const onSelect = React.useCallback((i: number) => setSelectedTab(i), [setSelectedTab]);

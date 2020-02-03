@@ -17,6 +17,7 @@ import { Model } from '../Model';
 
 export interface IDependencies {
   node: INodeInfo;
+  group?: string;
 
   className?: string;
   padding?: string;
@@ -62,7 +63,7 @@ const visGraphOptions: Options = {
   },
 };
 
-export const Dependencies: React.FC<IDependencies> = ({ className, node, padding }) => {
+export const Dependencies: React.FC<IDependencies> = ({ className, node, group, padding }) => {
   const { graph } = useResolver(node.type, node.data || {});
   const [activeNode, setActiveNode] = React.useState<IActiveNode | undefined>();
   const [isFullScreen, setIsFullScreen] = React.useState(false);

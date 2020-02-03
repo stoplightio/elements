@@ -7,6 +7,7 @@ import { IFetchProps } from '../utils/createFetchClient';
 export interface IProvider {
   host?: string;
   token?: string;
+  group?: string;
   components?: IComponentMapping;
   icons?: NodeIconMapping;
   resolver?: Resolver;
@@ -20,6 +21,7 @@ export const RequestContext = React.createContext<IFetchProps>({
 });
 export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
 export const ActiveSrnContext = React.createContext('');
+export const ActiveGroupContext = React.createContext<string | undefined>(undefined);
 export const ResolverContext = React.createContext<Resolver | undefined>(undefined);
 
 const defaultIcons: NodeIconMapping = {};
@@ -28,6 +30,7 @@ export const IconsContext = React.createContext<NodeIconMapping>(defaultIcons);
 export const Provider: React.FunctionComponent<IProvider> = ({
   host,
   token,
+  group,
   components,
   icons,
   resolver,
@@ -46,12 +49,14 @@ export const Provider: React.FunctionComponent<IProvider> = ({
   );
 
   return (
-    <RequestContext.Provider value={requestContext}>
-      <ComponentsContext.Provider value={components}>
-        <ResolverContext.Provider value={resolver}>
-          <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
-        </ResolverContext.Provider>
-      </ComponentsContext.Provider>
-    </RequestContext.Provider>
+    <ActiveGroupContext.Provider value={group}>
+      <RequestContext.Provider value={requestContext}>
+        <ComponentsContext.Provider value={components}>
+          <ResolverContext.Provider value={resolver}>
+            <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
+          </ResolverContext.Provider>
+        </ComponentsContext.Provider>
+      </RequestContext.Provider>
+    </ActiveGroupContext.Provider>
   );
 };

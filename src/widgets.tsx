@@ -28,18 +28,21 @@ export interface ITableOfContentsOptions {
 
 export interface IWidget<T = unknown> {
   srn: string;
+  group?: string;
   options: T;
-  render(htmlId: string, srn?: string, options?: T): void;
+  render(htmlId: string, srn?: string, group?: string, options?: T): void;
   remove(): void;
 }
 
 class Widget<T = unknown> implements IWidget<T> {
   private _htmlId: string = '';
   private _srn: string = '';
-  private _component: React.FunctionComponent<T & { srn: string }>;
+  private _group: string = '';
+
+  private _component: React.FunctionComponent<T & { srn: string; group?: string }>;
   private _options!: T;
 
-  constructor(Component: React.FunctionComponent<T & { srn: string }>, options?: T) {
+  constructor(Component: React.FunctionComponent<T & { srn: string; group?: string }>, options?: T) {
     this._component = Component;
 
     if (options) {
@@ -63,6 +66,18 @@ class Widget<T = unknown> implements IWidget<T> {
     }
   }
 
+  public get group() {
+    return this._group;
+  }
+  public set group(group: string) {
+    this._group = decodeURI(group);
+
+    if (this.htmlId) {
+      // Whenever the Group changes, re-render the element
+      this.render(this.htmlId);
+    }
+  }
+
   public get options() {
     return this._options;
   }
@@ -75,7 +90,7 @@ class Widget<T = unknown> implements IWidget<T> {
     }
   }
 
-  public render(htmlId: string, srn?: string, options?: T) {
+  public render(htmlId: string, srn?: string, group?: string, options?: T) {
     if (typeof document === 'undefined') {
       throw new Error(`${name} widget can only be rendered on the client.`);
     }
@@ -90,6 +105,10 @@ class Widget<T = unknown> implements IWidget<T> {
     if (srn) {
       // Warning: don't set this.srn here or you will get into an infinite rendering loop
       this._srn = decodeURI(srn);
+    }
+
+    if (group) {
+      this._group = group;
     }
 
     if (options) {
