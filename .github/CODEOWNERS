@@ -2,6 +2,6 @@
 #
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence,
-# @lottamus will be requested for
+# @lottamus and @XVincentX will be requested for
 # review when someone opens a pull request.
-*       @lottamus
+*       @lottamus @XVincentX
