@@ -54,7 +54,7 @@ function remoteFileResolver(client: typeof fetch, srn?: string) {
 
       // Use the http resolver to resolve the node's raw export
 
-      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}&deref="bundle"`));
+      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}&deref=bundle`));
     },
   };
 }
