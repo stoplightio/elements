@@ -7,6 +7,7 @@ import { IFetchProps } from '../utils/createFetchClient';
 export interface IProvider {
   host?: string;
   token?: string;
+  projectToken?: string;
   components?: IComponentMapping;
   icons?: NodeIconMapping;
   resolver?: Resolver;
@@ -27,6 +28,7 @@ export const RequestContext = React.createContext<IFetchProps>({
 });
 export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
 export const ActiveSrnContext = React.createContext<ActiveSrnContextValue>(['', defaultOnChangeSrn]);
+export const ProjectTokenContext = React.createContext('');
 export const ResolverContext = React.createContext<Resolver | undefined>(undefined);
 
 const defaultIcons: NodeIconMapping = {};
@@ -35,6 +37,7 @@ export const IconsContext = React.createContext<NodeIconMapping>(defaultIcons);
 export const Provider: React.FunctionComponent<IProvider> = ({
   host,
   token,
+  projectToken,
   components,
   icons,
   resolver,
@@ -47,8 +50,8 @@ export const Provider: React.FunctionComponent<IProvider> = ({
       host: host || defaultHost,
       headers: token
         ? {
-            Authorization: `Bearer ${token}`,
-          }
+          Authorization: `Bearer ${token}`,
+        }
         : null,
     }),
     [host, token],
@@ -57,11 +60,13 @@ export const Provider: React.FunctionComponent<IProvider> = ({
   return (
     <ActiveSrnContext.Provider value={[srn || '', onChangeSrn || defaultOnChangeSrn]}>
       <RequestContext.Provider value={requestContext}>
-        <ComponentsContext.Provider value={components}>
-          <ResolverContext.Provider value={resolver}>
-            <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
-          </ResolverContext.Provider>
-        </ComponentsContext.Provider>
+        <ProjectTokenContext.Provider value={projectToken ?? ''}>
+          <ComponentsContext.Provider value={components}>
+            <ResolverContext.Provider value={resolver}>
+              <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
+            </ResolverContext.Provider>
+          </ComponentsContext.Provider>
+        </ProjectTokenContext.Provider>
       </RequestContext.Provider>
     </ActiveSrnContext.Provider>
   );

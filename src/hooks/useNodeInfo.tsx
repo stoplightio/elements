@@ -1,11 +1,13 @@
 import { deserializeSrn } from '@stoplight/path';
 import useSWR from 'swr';
+import { ProjectTokenContext } from '../containers/Provider';
 import { INodeInfo } from '../types';
 import { useFetchClient } from '../utils/useFetchClient';
 
 export function useNodeInfo(srn: string, opts: { group?: string; version?: string; skip?: boolean } = {}) {
   const { uri } = deserializeSrn(srn);
   const fetch = useFetchClient();
+  const projectToken = React.useContext(ProjectTokenContext);
 
   const queryParams = [`srn=${srn}`];
   if (opts.version) {
@@ -13,6 +15,9 @@ export function useNodeInfo(srn: string, opts: { group?: string; version?: strin
   }
   if (opts.group) {
     queryParams.push(`group=${opts.group}`);
+  }
+  if (projectToken) {
+    queryParams.push(`token=${projectToken}`);
   }
 
   const { data, isValidating, error, revalidate } = useSWR<INodeInfo>(
@@ -27,6 +32,7 @@ export function useNodeInfo(srn: string, opts: { group?: string; version?: strin
       }),
     {
       shouldRetryOnError: false,
+      revalidateOnFocus: false,
       dedupingInterval: 5 * 60 * 1000, // 5 minutes
     },
   );
