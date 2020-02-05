@@ -1,6 +1,7 @@
 import { deserializeSrn, serializeSrn } from '@stoplight/path';
 import * as React from 'react';
 import useSWR from 'swr';
+import { ProjectTokenContext } from '../containers/Provider';
 import { IPaginatedResponse, IProjectNode } from '../types';
 import { useFetchClient } from '../utils/useFetchClient';
 
@@ -11,6 +12,7 @@ export function useProjectSearch(
 ) {
   const projectSrn = serializeSrn({ ...deserializeSrn(srn), uri: undefined });
   const fetch = useFetchClient();
+  const projectToken = React.useContext(ProjectTokenContext);
 
   // Hardcoded limit of 20 since we don't have pagination yet
   const queryParams = [`srn=${projectSrn}`, `first=${opts.limit ?? 30}`];
@@ -19,6 +21,9 @@ export function useProjectSearch(
   }
   if (opts.group) {
     queryParams.push(`group=${opts.group}`);
+  }
+  if (projectToken) {
+    queryParams.push(`token=${projectToken}`);
   }
 
   const { data, isValidating, error, revalidate } = useSWR<IPaginatedResponse<IProjectNode>>(
@@ -33,7 +38,8 @@ export function useProjectSearch(
       }),
     {
       shouldRetryOnError: false,
-      dedupingInterval: 60 * 1000, // 1 minute
+      revalidateOnFocus: false,
+      dedupingInterval: 5 * 60 * 1000, // 5 minutes
     },
   );
 
