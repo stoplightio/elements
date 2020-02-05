@@ -1824,10 +1824,10 @@
   dependencies:
     "@stoplight/types" "^11.1.0"
 
-"@stoplight/request-maker@^3.4.3":
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.4.3.tgz#aa0a647c5d2c8a4040317906f514af86f53eac56"
-  integrity sha512-6zlOc6dRab8ehb7lWsxCp1lmt7/oFrli45NYoal97OUnFN4uU941g4RHDdgr8Se6b3qRZuKiVuui/QnnS+cGEA==
+"@stoplight/request-maker@^3.4.4":
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.4.4.tgz#1957031d91d3f8327d0d371526eb6981917aa755"
+  integrity sha512-f8ABqruvcNX4p/XUo8MA+8WNnVbpY5ptCNeBkDafNVmB0fyUSfRXkL5qJ8hHQeMkT7I5JsxqSMWFUJBeMhruvA==
   dependencies:
     "@stoplight/json" "^3.2.1"
     "@stoplight/markdown-viewer" "^3"
