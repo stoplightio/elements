@@ -1,9 +1,8 @@
 import { HTMLSelect, Icon, Spinner } from '@blueprintjs/core';
+import { Button, Tooltip } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 import { Network } from 'vis';
-
-import { Button, Tooltip } from '@stoplight/ui-kit';
 import { useNodeGraph } from '../../hooks/useNodeGraph';
 import { INodeInfo } from '../../types';
 import { NodeTypePrettyName } from '../../utils/node';

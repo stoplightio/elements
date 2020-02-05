@@ -1,9 +1,11 @@
 import { safeStringify } from '@stoplight/json';
-import { AxiosRequestConfig } from 'axios';
+import { join, stripRoot } from '@stoplight/path';
+import { Dictionary, Primitive } from '@stoplight/types';
 import { get } from 'lodash';
 import { MD5 } from 'object-hash';
 import * as React from 'react';
-import { AxiosContext } from '../containers/Provider';
+import { RequestContext } from '..';
+import { useFetchClient } from '../utils/useFetchClient';
 
 export type UseRequestState<T> = {
   isLoading: boolean;
@@ -14,8 +16,27 @@ export type UseRequestState<T> = {
 // Maps a hash of the request to the response data
 const RequestCache = new Map<string, any>();
 
-export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
-  const axios = React.useContext(AxiosContext);
+interface IRequestConfig {
+  pathname: string;
+  params: Dictionary<Primitive, string>;
+}
+
+export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
+  const requestContext = React.useContext(RequestContext);
+  const client = useFetchClient();
+  const computeUrl = React.useCallback<(args: IRequestConfig) => string>(
+    ({ pathname, params }) => {
+      const url = new URL(join(requestContext.host, stripRoot(pathname)));
+      for (const [name, value] of Object.entries(params)) {
+        if (value !== undefined) {
+          url.searchParams.append(name, String(value));
+        }
+      }
+
+      return url.href;
+    },
+    [requestContext.host],
+  );
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [data, setData] = React.useState<T>();
@@ -38,12 +59,10 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
         setIsLoading(true);
       }
 
-      axios
-        .request<T>(req)
-        .then(response => {
+      client(computeUrl(req))
+        .then(response => response.json())
+        .then(responseData => {
           if (!isMounted) return;
-
-          const responseData = response.data;
 
           if (!cachedData || safeStringify(responseData) !== safeStringify(cachedData)) {
             if ((responseData as any).items && cachedData && cachedData.items) {
@@ -85,7 +104,7 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
         isMounted = false;
       };
     },
-    [axios, key],
+    [client, key],
   );
 
   React.useEffect(() => sendRequest(request), [request]);
@@ -99,11 +118,11 @@ export function useRequest<T>(args: AxiosRequestConfig): UseRequestState<T> {
 
 interface IRequestCacheEnty {
   key: string;
-  request: AxiosRequestConfig;
+  request: object;
 }
 
 // Creates a request object with a stable reference as long as key doesn't change
-function createRequest(request: AxiosRequestConfig): IRequestCacheEnty {
+function createRequest(request: object): IRequestCacheEnty {
   const prev = React.useRef<IRequestCacheEnty | null>(null);
 
   return React.useMemo(() => {
