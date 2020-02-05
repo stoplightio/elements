@@ -1,4 +1,5 @@
 import { deserializeSrn } from '@stoplight/path';
+import React from 'react';
 import useSWR from 'swr';
 import { ProjectTokenContext } from '../containers/Provider';
 import { INodeInfo } from '../types';
