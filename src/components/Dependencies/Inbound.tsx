@@ -1,7 +1,8 @@
+import { decodePointerFragment } from '@stoplight/json';
 import { NodeType } from '@stoplight/types';
 import { Button, Icon, Tab, Tabs, Tooltip } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { findKey, groupBy, sortBy } from 'lodash';
+import { findKey, groupBy, sortBy, toUpper } from 'lodash';
 import * as React from 'react';
 import { IGraphNode, INodeGraph, INodeInfo } from '../../types';
 import { NodeTypeIcons } from '../../utils/node';
@@ -101,6 +102,14 @@ const DependencyTable = ({ nodes = [] }: { nodes?: IGraphNode[] }) => {
   return (
     <div className="w-full overflow-auto">
       {sortBy(nodes, 'uri').map((node, index) => {
+        let subtitle = node.uri;
+        if (node.type === NodeType.HttpOperation) {
+          const parts = node.uri.split('/paths/')[1].split('/');
+          const method = parts.slice(-1)[0];
+          const path = parts.slice(0, parts.length);
+          subtitle = `${toUpper(method)} ${decodePointerFragment(path.join('/'))}`;
+        }
+
         return (
           <div
             key={index}
@@ -112,14 +121,14 @@ const DependencyTable = ({ nodes = [] }: { nodes?: IGraphNode[] }) => {
           >
             <div className="flex items-center">
               <div className="font-medium">{node.name}</div>
-              <div className="px-2 text-sm text-gray-6">v{node.version}</div>
+              {node.version !== '0.0' && <div className="px-2 text-sm text-gray-6">v{node.version}</div>}
               <div className="flex-1"></div>
               <div className="text-sm text-gray-6">{node.projectName}</div>
             </div>
 
             <div className="flex items-center">
-              <div className="flex-1 text-sm truncate text-gray-6" title={node.uri}>
-                {node.uri}
+              <div className="flex-1 text-sm truncate text-gray-6" title={subtitle}>
+                {subtitle}
               </div>
 
               <Tooltip content="Go to Ref">

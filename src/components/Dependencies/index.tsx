@@ -29,7 +29,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
     }
   }, [isFullScreen]);
 
-  if (!nodeGraph || !nodeGraph.nodes.length) {
+  if (!nodeGraph?.nodes?.length) {
     if (isValidating) {
       return (
         <div
@@ -43,12 +43,6 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
         </div>
       );
     }
-
-    return (
-      <div className={cn(className, 'Page__dependencies relative h-full', padding ? `p-${padding}` : '')}>
-        This {NodeTypePrettyName[node.type]} does not have any {graphType} depdendencies.
-      </div>
-    );
   }
 
   return (
@@ -60,7 +54,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
     >
       <div
         className={cn('inline-flex items-center py-8', `px-${padding}`, {
-          'absolute top-0 left-0 z-10': graphType === 'outbound',
+          'absolute top-0 left-0 z-10': nodeGraph?.nodes?.length && graphType === 'outbound',
         })}
       >
         <HTMLSelect
@@ -89,7 +83,11 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
         </div>
       </div>
 
-      {graphType === 'outbound' ? (
+      {!nodeGraph?.nodes?.length ? (
+        <div className={`px-${padding} pb-${padding}`}>
+          This {NodeTypePrettyName[node.type]} does not have any {graphType} depdendencies.
+        </div>
+      ) : graphType === 'outbound' ? (
         <OutboundDependencies
           ref={network => {
             if (network) {
@@ -100,8 +98,8 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
           graph={nodeGraph}
         />
       ) : (
-          <InboundDependencies className="px-16 pb-16" node={node} graph={nodeGraph} />
-        )}
+        <InboundDependencies className={`px-${padding} pb-${padding}`} node={node} graph={nodeGraph} />
+      )}
     </div>
   );
 };

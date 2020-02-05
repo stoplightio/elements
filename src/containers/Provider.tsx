@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { SWRConfig } from 'swr';
 import { NodeIconMapping } from '../types';
-import { IFetchProps } from '../utils/createFetchClient';
+import { createFetchClient, IFetchProps } from '../utils/createFetchClient';
 
 export interface IProvider {
   host?: string;
@@ -43,12 +43,13 @@ export const Provider: React.FunctionComponent<IProvider> = ({
       host: host || defaultHost,
       headers: token
         ? {
-          Authorization: `Bearer ${token}`,
-        }
+            Authorization: `Bearer ${token}`,
+          }
         : null,
     }),
     [host, token],
   );
+  const fetcher = createFetchClient(requestContext);
 
   return (
     <RequestContext.Provider value={requestContext}>
@@ -58,6 +59,9 @@ export const Provider: React.FunctionComponent<IProvider> = ({
           shouldRetryOnError: false,
           revalidateOnFocus: false,
           dedupingInterval: 5 * 60 * 1000, // 5 minutes
+          fetcher: async (input: RequestInfo, init?: RequestInit) => {
+            return await (await fetcher(input, init)).json();
+          },
         }}
       >
         <ProjectTokenContext.Provider value={projectToken ?? ''}>

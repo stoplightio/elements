@@ -88,7 +88,7 @@ export interface IGraphNode {
   uri: string;
   depth: number;
   type: NodeType;
-  version: number;
+  version: string;
 
   projectName: string;
   groupSlug: string;
