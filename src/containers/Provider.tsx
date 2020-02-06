@@ -15,7 +15,7 @@ export interface IProvider {
   resolver?: Resolver;
 }
 
-const defaultHost = 'http://localhost:4060';
+const defaultHost = 'http://localhost:8080/api';
 export const HostContext = React.createContext(defaultHost);
 export const RequestContext = React.createContext<IFetchProps>({
   host: defaultHost,
