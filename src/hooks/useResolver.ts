@@ -28,32 +28,31 @@ export function useResolver<T = any>(type: DocsNodeType, value: string) {
     errors: [],
   });
 
-  // TODO (CL): Remove $ref resolving until we have a better solution
-  // React.useEffect(() => {
-  //   // Only resolve if we've succeeded in parsing the string
-  //   if (typeof parsedValue !== 'object') return;
+  React.useEffect(() => {
+    // Only resolve if we've succeeded in parsing the string
+    if (typeof parsedValue !== 'object') return;
 
-  //   const { promise, cancel } = cancelablePromise(resolver.resolve(parsedValue));
+    const { promise, cancel } = cancelablePromise(resolver.resolve(parsedValue));
 
-  //   promise
-  //     .then(res => {
-  //       setResolved({
-  //         result: res.result,
-  //         errors: uniqBy(res.errors, 'message'), // remove any duplicate messages
-  //         graph: res.graph,
-  //       });
-  //     })
-  //     .catch(e => {
-  //       if (!e.isCanceled) {
-  //         console.error('Error resolving', type, e);
-  //       }
-  //     });
+    promise
+      .then(res => {
+        setResolved({
+          result: res.result,
+          errors: uniqBy(res.errors, 'message'), // remove any duplicate messages
+          graph: res.graph,
+        });
+      })
+      .catch(e => {
+        if (!e.isCanceled) {
+          console.error('Error resolving', type, e);
+        }
+      });
 
-  //   return () => {
-  //     // If the component unmounts, cancel the promise so we don't try to update the React state
-  //     cancel();
-  //   };
-  // }, [value, srn]);
+    return () => {
+      // If the component unmounts, cancel the promise so we don't try to update the React state
+      cancel();
+    };
+  }, [value, srn]);
 
   return resolved;
 }
