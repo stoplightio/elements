@@ -88,14 +88,14 @@ export const OutboundDependencies = React.forwardRef<Network, IOutboundDependenc
 
   React.useEffect(() => {
     setActiveNode(undefined);
-  }, [node]);
+  }, [node?.id]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.type]} does not have any outbound depdendencies.</div>;
   }
 
   return (
-    <div className="w-full h-full">
+    <div className={cn(className, 'w-full h-full')}>
       <Graph
         id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
         graph={visGraph}

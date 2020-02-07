@@ -8,6 +8,7 @@ import { graph as todoFullInboundGraph } from '../../__fixtures__/dependencies/i
 import { graph as todoFullOutboundGraph } from '../../__fixtures__/dependencies/outbound/todo-full';
 import { InboundDependencies } from '../../components/Dependencies/Inbound';
 import { OutboundDependencies } from '../../components/Dependencies/Outbound';
+import { Provider } from '../../containers/Provider';
 
 export const darkMode = () => boolean('dark mode', false);
 
@@ -16,34 +17,38 @@ storiesOf('components/Dependencies', module)
   .add('Inbound', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <InboundDependencies
-          node={{
-            id: 9,
-            type: NodeType.Model,
-            srn: 'gh/stoplightio/studio-demo/reference/models/todo-full.v1.json',
-            name: 'Todo Full',
-            data: require('../../__fixtures__/schemas/todo-full.v1.json'),
-          }}
-          graph={todoFullInboundGraph}
-          padding="12"
-        />
+        <Provider>
+          <InboundDependencies
+            node={{
+              id: 9,
+              type: NodeType.Model,
+              srn: 'gh/stoplightio/studio-demo/reference/models/todo-full.v1.json',
+              name: 'Todo Full',
+              data: require('../../__fixtures__/schemas/todo-full.v1.json'),
+            }}
+            graph={todoFullInboundGraph}
+            padding="12"
+          />
+        </Provider>
       </div>
     );
   })
   .add('Outbound', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <OutboundDependencies
-          node={{
-            id: 9,
-            type: NodeType.Model,
-            srn: 'gh/stoplightio/studio-demo/reference/models/todo-full.v1.json',
-            name: 'Todo Full',
-            data: require('../../__fixtures__/schemas/todo-full.v1.json'),
-          }}
-          graph={todoFullOutboundGraph}
-          padding="12"
-        />
+        <Provider>
+          <OutboundDependencies
+            node={{
+              id: 9,
+              type: NodeType.Model,
+              srn: 'gh/stoplightio/studio-demo/reference/models/todo-full.v1.json',
+              name: 'Todo Full',
+              data: require('../../__fixtures__/schemas/todo-full.v1.json'),
+            }}
+            graph={todoFullOutboundGraph}
+            padding="12"
+          />
+        </Provider>
       </div>
     );
   });
