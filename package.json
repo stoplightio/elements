@@ -44,7 +44,7 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@stoplight/json": "^3.2.1",
+    "@stoplight/json": "^3.5.1",
     "@stoplight/json-ref-resolver": "^3.0.7",
     "@stoplight/json-schema-viewer": "^2.11.3",
     "@stoplight/markdown": "^2.5.3",
