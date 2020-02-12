@@ -1,10 +1,9 @@
 import { Classes, Icon, IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import { IResolveError } from '@stoplight/json-ref-resolver/types';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-import { useResolver } from '../../hooks/useResolver';
+import { parse } from '@stoplight/yaml';
 
 const icon: IconName = 'cube';
 const color = '#ef932b';
@@ -12,20 +11,36 @@ const color = '#ef932b';
 export interface IModelProps {
   value: any;
 
+  errors?: IResolveError[];
   className?: string;
   title?: string;
   maxRows?: number;
   actions?: React.ReactElement;
 }
 
-export function Model({ value, className, title, maxRows = 100, actions }: IModelProps) {
-  const { result, errors } = useResolver(NodeType.Model, value);
+export function Model({ value, className, title, maxRows = 100, actions, errors = [] }: IModelProps) {
+  let schema = value;
+  try {
+    if (typeof schema === 'string') {
+      schema = parse(value);
+    }
+  } catch (e) {
+    errors.push({
+      code: 'PARSE_URI',
+      message: String(e),
+      path: [],
+      pointerStack: [],
+      // @ts-ignore
+      uri: '',
+      uriStack: [],
+    })
+  }
 
   return (
     <div className="Model">
       <ModelHeader title={title} actions={actions} errors={errors} />
 
-      <JsonSchemaViewer className={className} schema={result} maxRows={maxRows} />
+      <JsonSchemaViewer className={className} schema={schema} maxRows={maxRows} />
     </div>
   );
 }
