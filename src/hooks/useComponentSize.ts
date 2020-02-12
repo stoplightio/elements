@@ -10,7 +10,7 @@ export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivEle
 
   React.useLayoutEffect(() => {
     if (!componentRef.current) {
-      return
+      return;
     }
 
     const updateComponentSize = throttle(
