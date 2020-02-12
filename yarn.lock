@@ -1778,10 +1778,10 @@
     unified "^8.4.2"
     unist-util-select "^3.0"
 
-"@stoplight/path@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.0.tgz#da2282352a4eb23c09d5106b9d1650d30a9ca2ad"
-  integrity sha512-t74/MHMgmFVMQhdQ/2Q766GryNTIW8McH8+vB25oeoBhYKTOrJ/wPDt+OCxIWHPUlcSi2fTWa4FKQ8qgmP2jVA==
+"@stoplight/path@^1.3.0", "@stoplight/path@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.1.tgz#1246c983279af20dcfb806d138add9f81cb1efd2"
+  integrity sha512-I6YEfxspGglxt7MbgNbKThHdqh8CJWnDC1x1JUk2rka2D7mCpMSEu5I8IiAp997Dp4YIXDY6Did6gge8OY8KnA==
 
 "@stoplight/prism-core@^3.2.6":
   version "3.2.6"
