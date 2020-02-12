@@ -44,7 +44,6 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@rehooks/component-size": "^1.0.3",
     "@stoplight/json": "^3.5.1",
     "@stoplight/json-ref-resolver": "^3.0.8",
     "@stoplight/json-schema-viewer": "^2.11.4",
@@ -63,7 +62,6 @@
     "openapi-sampler": "^1.0.0-beta.15",
     "react-error-boundary": "^1.2.5",
     "react-graph-vis": "^1.0.5",
-    "resize-observer-polyfill": "^1.5.1",
     "swr": "^0.1.16",
     "unist-util-select": "^3.0.1",
     "urijs": "^1.19.2"

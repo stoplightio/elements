@@ -1,5 +1,34 @@
-import 'resize-observer-polyfill';
+import { throttle } from 'lodash';
+import * as React from 'react';
 
-import useComponentSize from '@rehooks/component-size';
+function getSize(el: HTMLDivElement | null) {
+  return el ? el.getBoundingClientRect() : new DOMRect();
+}
 
-export { useComponentSize };
+export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivElement | null>) {
+  const [componentSize, setComponentSize] = React.useState<DOMRect>(getSize(componentRef.current));
+
+  React.useLayoutEffect(() => {
+    if (!componentRef.current) {
+      return
+    }
+
+    const updateComponentSize = throttle(
+      () => componentRef.current && setComponentSize(getSize(componentRef.current)),
+      1000,
+      {
+        trailing: true,
+      },
+    );
+
+    updateComponentSize();
+
+    window.addEventListener('resize', updateComponentSize);
+    return () => {
+      updateComponentSize.cancel();
+      window.removeEventListener('resize', updateComponentSize);
+    };
+  }, [componentRef.current]);
+
+  return componentSize;
+}
