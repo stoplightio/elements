@@ -1,9 +1,9 @@
 import { Classes, Icon, IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import { IResolveError } from '@stoplight/json-ref-resolver/types';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-import { NodeType } from '@stoplight/types';
 
 import { useParsedData } from '../../hooks/useParsedData';
 
