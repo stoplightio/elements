@@ -96,7 +96,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
           }}
           node={node}
           graph={nodeGraph}
-          padding='6'
+          padding="6"
         />
       ) : (
         <InboundDependencies className={`px-${padding} pb-${padding}`} node={node} graph={nodeGraph} />

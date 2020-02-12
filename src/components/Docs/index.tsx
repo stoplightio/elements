@@ -16,7 +16,7 @@ export interface IDocs {
 
 export const Docs = ({ node, padding = '12' }: IDocs) => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
-  const tree = buildNodeMarkdownTree(node.type, node.data);
+  const tree = buildNodeMarkdownTree(node.type, node.data, node.errors);
 
   return (
     <div className="flex w-full Page__docs" ref={containerRef}>

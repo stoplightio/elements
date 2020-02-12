@@ -67,12 +67,14 @@ storiesOf('components/Page', module)
             name: 'Error',
             type: NodeType.Model,
             data: model,
-            errors: [{
-              message: 'fake error passed in',
-              location: {
-                uri: 'foo.json'
-              }
-            }],
+            errors: [
+              {
+                message: 'fake error passed in',
+                location: {
+                  uri: 'foo.json',
+                },
+              },
+            ],
             changes: [
               {
                 createdAt: '1569423416682',

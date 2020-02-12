@@ -1,4 +1,4 @@
-import { NodeType } from '@stoplight/types';
+import { JsonPath, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import { Edge, Node } from 'vis';
@@ -17,13 +17,19 @@ export interface IChange {
   message: string;
 }
 
-export interface INodeInfo {
-  id: number;
-  data: any;
-  type: NodeType;
-  srn: string;
-  name: string;
+export interface IDiagnostic {
+  location: { uri: string; jsonPath?: JsonPath };
+  message: string;
+}
 
+export interface INodeInfo<D = unknown> {
+  id: number;
+  type: NodeType;
+  name: string;
+  srn: string;
+  data: D;
+
+  errors?: IDiagnostic[];
   changes?: IChange[];
   version?: string;
   versions?: string[];
