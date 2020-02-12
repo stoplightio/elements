@@ -3,11 +3,12 @@ import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 import { has } from 'lodash';
 import { MD5 } from 'object-hash';
 
-// Maps a hash of the operation/requst to the RequestMakerStore
+// Maps a hash of the operation/request to the RequestMakerStore
 const RequestMakers = new Map<string, RequestMakerStore>();
 
 export function useRequestMaker(
   value: Partial<IHttpOperation | IHttpRequest>,
+  mockUrl?: string,
   checkCache?: boolean,
 ): RequestMakerStore {
   let operation: Partial<IHttpOperation> | undefined;
@@ -23,24 +24,26 @@ export function useRequestMaker(
   }
 
   if (checkCache) {
-    return getCachedRequestMaker({ operation, request });
+    return getCachedRequestMaker({ operation, request, mockUrl });
   }
 
-  return new RequestMakerStore({ operation, request });
+  return new RequestMakerStore({ operation, request, mockUrl });
 }
 
 function getCachedRequestMaker({
   operation,
   request,
+  mockUrl,
 }: {
   operation?: Partial<IHttpOperation>;
   request?: Partial<IHttpRequest>;
+  mockUrl?: string;
 }) {
-  const id = MD5({ operation, request });
+  const id = MD5({ operation, request, mockUrl });
 
   let requestMaker = RequestMakers.get(id);
   if (!requestMaker) {
-    requestMaker = new RequestMakerStore({ operation, request });
+    requestMaker = new RequestMakerStore({ operation, request, mockUrl });
     RequestMakers.set(id, requestMaker);
   }
 
