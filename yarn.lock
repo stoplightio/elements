@@ -1720,10 +1720,10 @@
     tslib "^1.10.0"
     urijs "~1.19.1"
 
-"@stoplight/json-schema-viewer@^2.11.3":
-  version "2.11.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.11.3.tgz#44b3004ef86fcd9a7de5d1b46d94ecd8aed03b5d"
-  integrity sha512-fEkyCGq+B2Q1H1Pc3pxxih7Gj0cyy+xCg1Uad2z8/IAn4XIjuuN4SYtcPvU+ffYOngNDOg/hQ8uZM7esIFdqDg==
+"@stoplight/json-schema-viewer@^2.11.4":
+  version "2.11.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-2.11.4.tgz#0a5eff3f0bd3c2bab91250677ed5ce14aea9d2e2"
+  integrity sha512-skMOBHVl4KhGInsEeiunP8OxhFhgwHjCPJ2Oxm9RG2DS6COfZXW579EdFS9bo0mGfwN8eVcshNqTLNwXv3T7pA==
   dependencies:
     "@stoplight/json" "^3.1.1"
     "@stoplight/react-error-boundary" "^1.0.0"
