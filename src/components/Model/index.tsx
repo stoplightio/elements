@@ -3,7 +3,9 @@ import { IResolveError } from '@stoplight/json-ref-resolver/types';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import cn from 'classnames';
 import * as React from 'react';
-import { parse } from '@stoplight/yaml';
+import { NodeType } from '@stoplight/types';
+
+import { useParsedData } from '../../hooks/useParsedData';
 
 const icon: IconName = 'cube';
 const color = '#ef932b';
@@ -19,22 +21,7 @@ export interface IModelProps {
 }
 
 export function Model({ value, className, title, maxRows = 100, actions, errors = [] }: IModelProps) {
-  let schema = value;
-  try {
-    if (typeof schema === 'string') {
-      schema = parse(value);
-    }
-  } catch (e) {
-    errors.push({
-      code: 'PARSE_URI',
-      message: String(e),
-      path: [],
-      pointerStack: [],
-      // @ts-ignore
-      uri: '',
-      uriStack: [],
-    })
-  }
+  const schema = useParsedData(NodeType.Model, value);
 
   return (
     <div className="Model">

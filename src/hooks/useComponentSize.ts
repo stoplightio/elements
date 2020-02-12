@@ -1,5 +1,5 @@
-import 'resize-observer-polyfill'
+import 'resize-observer-polyfill';
 
-import useComponentSize from '@rehooks/component-size'
+import useComponentSize from '@rehooks/component-size';
 
 export { useComponentSize };
