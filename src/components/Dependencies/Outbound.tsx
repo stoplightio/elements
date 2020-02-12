@@ -58,7 +58,7 @@ const visOptions: Options = {
 };
 
 export const OutboundDependencies = React.forwardRef<Network, IOutboundDependencies>((props, visNetworkRef) => {
-  const { className, node, padding, graph } = props;
+  const { className, node, padding = '0', graph } = props;
 
   const [activeNode, setActiveNode] = React.useState<Pick<IGraphNode, 'groupNodeId' | 'name' | 'srn'> | undefined>();
   const visGraph = useComputeVisGraph(node, activeNode?.groupNodeId, graph);
@@ -107,7 +107,7 @@ export const OutboundDependencies = React.forwardRef<Network, IOutboundDependenc
       />
 
       {activeNode && (
-        <div className={cn('absolute bottom-0 left-0 right-0 max-w-4xl', `px-${padding} pb-${padding}`)}>
+        <div className={cn('absolute bottom-0 right-0 max-w-5xl', `px-${padding} pb-${padding}`)}>
           <ModelContainer
             srn={activeNode.srn}
             name={activeNode.name}

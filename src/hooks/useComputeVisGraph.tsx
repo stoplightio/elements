@@ -28,6 +28,9 @@ export function computeVisGraph(rootNode: INodeInfo, graph: INodeGraph, activeNo
   };
 
   for (const node of graph.nodes) {
+    // in case root node is circular and appears again, don't add the root node twice or graph will throw error
+    if (node.groupNodeId === rootNode.id) continue;
+
     let fontColor = '#10161a';
     let color = '#f5f8fa';
     if (activeNodeId === node.groupNodeId) {
