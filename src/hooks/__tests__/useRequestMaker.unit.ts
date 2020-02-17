@@ -84,14 +84,14 @@ describe('useRequestMaker()', () => {
       ],
     } as IHttpOperation;
 
-    const store1 = useRequestMaker(operation, true);
-    store1.request.baseUrl = 'http://todos.stoplight.io';
-    const store2 = useRequestMaker(operation, true);
+    const store1 = useRequestMaker(operation, '', true);
+    store1.request.publicBaseUrl = 'http://todos.stoplight.io';
+    const store2 = useRequestMaker(operation, '', true);
 
     expect(store1).toEqual(store2);
   });
 
-  test('it should return cached request maker store with matching operation', () => {
+  test('it should return cached request maker store with matching request', () => {
     const request = {
       method: 'get',
       baseUrl: 'http://todos.stoplight.io',
@@ -101,9 +101,9 @@ describe('useRequestMaker()', () => {
       },
     };
 
-    const store1 = useRequestMaker(request, true);
-    store1.request.baseUrl = 'http://example.com';
-    const store2 = useRequestMaker(request, true);
+    const store1 = useRequestMaker(request, '', true);
+    store1.request.publicBaseUrl = 'http://example.com';
+    const store2 = useRequestMaker(request, '', true);
 
     expect(store1).toEqual(store2);
   });
