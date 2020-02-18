@@ -138,3 +138,4 @@ SL.elements.page.render('page-container-element-id', 'gh/stoplightio/studio-demo
 7. Commit: `yarn commit`. _NOTE: Commits that don't follow the [conventional](https://github.com/marionebl/commitlint/tree/master/%40commitlint/config-conventional) format will be rejected. `yarn commit` creates this format for you, or you can put it together manually and then do a regular `git commit`._
 8. Push: `git push`.
 9. Open PR targeting the `master` branch.
+
