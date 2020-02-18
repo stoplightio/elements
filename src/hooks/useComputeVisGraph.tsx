@@ -1,167 +1,75 @@
-import { pointerToPath } from '@stoplight/json';
-import { IResolveResult } from '@stoplight/json-ref-resolver/types';
-import { last, sortBy, uniqBy, uniqWith } from 'lodash';
+import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
-import * as URI from 'urijs';
-import { Edge, Node } from 'vis';
-import { INodeInfo } from '../types';
-import { getNodeTitle } from '../utils/node';
+import { INodeGraph, INodeInfo, IVisGraph } from '../types';
 
-export interface IVisGraph {
-  nodes: Node[];
-  edges: Edge[];
-}
-
-export function useComputeVisGraph(
-  rootNode: INodeInfo,
-  graph?: IResolveResult['graph'],
-  activeNodeId: string = 'root',
-  maxDepth: number = 100,
-) {
+export function useComputeVisGraph(rootNode?: INodeInfo, activeNodeId?: number, graph?: INodeGraph) {
   return React.useMemo(() => {
-    if (!graph) return;
+    if (!graph || !rootNode) return;
 
-    return computeVisGraph(rootNode, graph, activeNodeId, maxDepth);
-  }, [graph, rootNode, activeNodeId, maxDepth]);
+    return computeVisGraph(rootNode, graph, activeNodeId);
+  }, [rootNode, activeNodeId, graph]);
 }
 
-export function computeVisGraph(
-  rootNode: INodeInfo,
-  graph: IResolveResult['graph'],
-  activeNodeId: string,
-  maxDepth: number = 100,
-) {
-  if (!graph) return;
-
-  const visGraph = buildVisGraphFromRefMap(rootNode.srn, 'root', graph, 0, activeNodeId, maxDepth);
-
-  visGraph.nodes.push({
-    id: 'root',
-    level: 0,
-    label: rootNode.name,
-    color: '#ef932b',
-    font: {
-      color: '#ffffff',
-    },
-  });
-
-  // Filter out any duplicate nodes, keeping the lowest level
-  visGraph.nodes = uniqBy(sortBy(visGraph.nodes, ['level', 'label']), 'id');
-
-  // Filter out any duplicate edges
-  visGraph.edges = uniqWith(visGraph.edges, (edgeA, edgeB) => {
-    return edgeA.to === edgeB.to && edgeA.from === edgeB.from;
-  });
-
-  return visGraph;
-}
-
-function buildVisGraphFromRefMap(
-  rootNodeSrn: string,
-  nodeId: string,
-  graph: IResolveResult['graph'],
-  level: number = 0,
-  activeNodeId?: string,
-  maxDepth: number = 100,
-) {
+export function computeVisGraph(rootNode: INodeInfo, graph: INodeGraph, activeNodeId?: number): IVisGraph {
   const visGraph: IVisGraph = {
-    nodes: [],
+    nodes: [
+      {
+        id: rootNode.id,
+        level: 0,
+        label: rootNode.name,
+        title: rootNode.srn,
+        color: activeNodeId === rootNode.id ? '#66b1e7' : '#ef932b',
+        font: {
+          color: '#ffffff',
+        },
+      },
+    ],
     edges: [],
   };
 
-  let node;
-  try {
-    node = graph.getNodeData(encodeURI(decodeURI(nodeId)));
-  } catch (error) {
-    return visGraph;
-  }
+  for (const node of graph.nodes) {
+    // in case root node is circular and appears again, don't add the root node twice or graph will throw error
+    if (node.groupNodeId === rootNode.id) continue;
 
-  const isRootNode = isRootNodeSrn(nodeId, rootNodeSrn);
-
-  if (level === maxDepth) return visGraph;
-
-  if (!isRootNode) {
+    let fontColor = '#10161a';
     let color = '#f5f8fa';
-    if (activeNodeId === nodeId) {
+    if (activeNodeId === node.groupNodeId) {
       color = '#66b1e7';
+      fontColor = '#ffffff';
     }
 
     visGraph.nodes.push({
-      id: nodeId,
-      level,
-      label: getNodeTitle(nodeId, node.data),
+      id: node.groupNodeId,
+      level: node.depth,
+      label: node.name,
+      title: node.srn,
       color,
       font: {
-        color: activeNodeId === nodeId ? '#ffffff' : '#10161a',
+        color: fontColor,
       },
     });
   }
 
-  const edgeMap = {};
-
-  // Loop over the ref map to combine duplicate edges
-  for (const propertyPath in node.refMap) {
-    if (!node.refMap.hasOwnProperty(propertyPath)) continue;
-
-    const propertyKey = String(last(pointerToPath(propertyPath)));
-    // numbered properties are probably part of a combiner so just show "reference" instead
-    const propertyName = isNaN(parseInt(propertyKey)) ? propertyKey : 'reference';
-
-    const encodedRef = encodeURI(node.refMap[propertyPath]);
-
-    if (edgeMap.hasOwnProperty(encodedRef)) {
-      // Don't add this property key if it already exists
-      if (!edgeMap[encodedRef].includes(propertyName)) {
-        edgeMap[encodedRef].push(propertyName);
-      }
-    } else {
-      edgeMap[encodedRef] = [propertyName];
+  for (const edge of graph.edges) {
+    let edgeColor = { color: '#cfd9e0', opacity: 0.8 };
+    if (activeNodeId === edge.fromGroupNodeId || activeNodeId === edge.toGroupNodeId) {
+      edgeColor = { color: '#66b1e7', opacity: 1 };
     }
-  }
-
-  // Loop over edges and add them to the graph
-  for (const targetId in edgeMap) {
-    if (!edgeMap.hasOwnProperty(targetId)) continue;
-
-    let color = { color: '#cfd9e0', opacity: 0.8 };
-    let label = '';
-    if (activeNodeId === nodeId || activeNodeId === targetId) {
-      color = { color: '#66b1e7', opacity: 1 };
-      if (edgeMap[targetId].length > 1) {
-        label = `${edgeMap[targetId][0]} + ${edgeMap[targetId].length - 1}`;
-      } else if (edgeMap[targetId].length) {
-        label = edgeMap[targetId][0];
-      } else {
-        label = 'reference';
-      }
-    }
-
-    const result = buildVisGraphFromRefMap(rootNodeSrn, targetId, graph, level + 1, activeNodeId);
-    visGraph.nodes = visGraph.nodes.concat(result.nodes);
-    visGraph.edges = visGraph.edges.concat(result.edges);
 
     visGraph.edges.push({
-      from: isRootNode ? 'root' : nodeId,
-      to: isRootNodeSrn(targetId, rootNodeSrn) ? 'root' : targetId,
-      label,
-      title: edgeMap[targetId] && edgeMap[targetId].length ? edgeMap[targetId].join(',\n') : 'reference',
-      color,
+      id: `${edge.fromGroupNodeId}-${edge.toGroupNodeId}-${edge.fromPath}-${edge.toPath}`,
+      from: edge.fromGroupNodeId,
+      to: edge.toGroupNodeId,
+      title: edge.fromPath,
+      color: edgeColor,
       font: {
         align: 'top',
       },
     });
   }
 
-  return visGraph;
-}
+  visGraph.nodes = sortBy(visGraph.nodes, 'label');
+  visGraph.edges = uniqBy(visGraph.edges, 'id');
 
-function isRootNodeSrn(id: string, rootNodeSrn: string) {
-  if (!rootNodeSrn) return false;
-  if (id === 'root') return true;
-  try {
-    const parsedQuery: { srn?: string } = URI.parseQuery(URI.parse(id).query || '');
-    return parsedQuery.srn === rootNodeSrn;
-  } catch {
-    return false;
-  }
+  return visGraph;
 }

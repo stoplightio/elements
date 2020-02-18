@@ -1,12 +1,20 @@
 import { throttle } from 'lodash';
 import * as React from 'react';
 
-export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivElement | null>) {
-  const [componentSize, setComponentSize] = React.useState<DOMRect>(new DOMRect());
+function getSize(el: HTMLDivElement | null) {
+  return el ? el.getBoundingClientRect() : new DOMRect();
+}
 
-  React.useEffect(() => {
+export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivElement | null>) {
+  const [componentSize, setComponentSize] = React.useState<DOMRect>(getSize(componentRef.current));
+
+  React.useLayoutEffect(() => {
+    if (!componentRef.current) {
+      return;
+    }
+
     const updateComponentSize = throttle(
-      () => componentRef.current && setComponentSize(componentRef.current.getBoundingClientRect()),
+      () => componentRef.current && setComponentSize(getSize(componentRef.current)),
       1000,
       {
         trailing: true,

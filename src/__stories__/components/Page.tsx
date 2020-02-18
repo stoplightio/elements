@@ -15,10 +15,11 @@ import { TryIt } from '../../components/TryIt';
 
 export const darkMode = () => boolean('dark mode', false);
 
-const article = require('../../__fixtures__/articles/kitchen-sink.md');
+const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
 const model = require('../../__fixtures__/schemas/media-entry.json');
 
 const knobs = () => ({
+  id: 1,
   srn: text('srn', 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md'),
   name: text('name', 'Hello World'),
   type: select(
@@ -27,7 +28,7 @@ const knobs = () => ({
     NodeType.Article,
   ),
   data: text('data', '# Hello World\n\n## Heading 2\n\n### Heading 3'),
-  changes: array('changes', []),
+  changes: [],
 });
 
 storiesOf('components/Page', module)
@@ -38,6 +39,7 @@ storiesOf('components/Page', module)
         <Page
           className="h-full"
           node={{
+            id: 1,
             name: 'Stoplight Flavored Markdown',
             type: NodeType.Article,
             srn: 'gh/stoplightio/studio-demo/docs/markdown/stoplight-flavored-markdown.md',
@@ -60,10 +62,19 @@ storiesOf('components/Page', module)
         <Page
           className="h-full"
           node={{
+            id: 1,
             srn: 'gh/stoplightio/studio-demo/reference/common/models/error.v1.yaml',
             name: 'Error',
             type: NodeType.Model,
             data: model,
+            errors: [
+              {
+                message: 'fake error passed in',
+                location: {
+                  uri: 'foo.json',
+                },
+              },
+            ],
             changes: [
               {
                 createdAt: '1569423416682',
@@ -117,6 +128,7 @@ storiesOf('components/Page', module)
         <Page
           className="h-full"
           node={{
+            id: 1,
             srn: 'gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
             name: httpOperation.summary || httpOperation.path,
             data: httpOperation,
@@ -171,6 +183,7 @@ storiesOf('components/Page', module)
         <Page
           className="h-full"
           node={{
+            id: 1,
             srn: 'gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
             name: 'Petstore API',
             data: httpService,

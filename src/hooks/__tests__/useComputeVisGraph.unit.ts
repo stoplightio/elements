@@ -1,122 +1,23 @@
-import * as fetchMock from 'jest-fetch-mock';
-import { createFetchClient } from '../../utils/createFetchClient';
-const simpleSchema = require('../../__fixtures__/schemas/simple.json');
-const todoFullSchema = require('../../__fixtures__/schemas/todo-full.v1.json');
-const todoPartialSchema = require('../../__fixtures__/schemas/todo-partial.v1.json');
-const userSchema = require('../../__fixtures__/schemas/user.v1.json');
-
-import { IResolveResult } from '@stoplight/json-ref-resolver/types';
+import { graph as todoFullInboundGraph } from '../../__fixtures__/dependencies/inbound/todo-full';
+import { graph as todoFullOutboundGraph } from '../../__fixtures__/dependencies/outbound/todo-full';
 import { INodeInfo } from '../../types';
-import { createResolver } from '../../utils/createResolver';
 import { computeVisGraph } from '../useComputeVisGraph';
 
-beforeEach(() => {
-  (fetchMock as fetchMock.FetchMock).enableMocks();
-  global.fetch.mockResponse(async req => {
-    const url = new URL(req.url);
-    switch (url.href.replace(url.origin, '')) {
-      case '/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json':
-        return JSON.stringify(todoFullSchema);
-      case '/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json':
-        return JSON.stringify(todoPartialSchema);
-      case '/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json':
-        return JSON.stringify(userSchema);
-      default:
-        return '';
-    }
-  });
-});
-
-afterEach(() => {
-  (fetchMock as fetchMock.FetchMock).disableMocks();
-});
-
 describe('computeVisGraph', () => {
-  test('it works with a simple example', async () => {
-    const client = createFetchClient({
-      host: 'https://stoplight.io/api',
-      headers: null,
-    });
-
-    const { graph } = await createResolver(client).resolve(simpleSchema);
-
-    expect(computeVisGraph({ srn: '' } as INodeInfo, graph, '')).toMatchSnapshot();
+  it('should match snapshot for todo-full inbound graph', async () => {
+    expect(
+      computeVisGraph(
+        { srn: 'gh/stoplightio/studio-demo/reference/models/todo-full.v1.json', id: 1 } as INodeInfo,
+        todoFullInboundGraph,
+      ),
+    ).toMatchSnapshot();
   });
-
-  test('it handles circular references to the root node', async () => {
-    const nodeData = {
-      root: {
-        data: {},
-        refMap: {
-          '#/property/path': 'http://stoplight.io/nodes.raw?srn=some/other/node',
-        },
-      },
-      'http://stoplight.io/nodes.raw?srn=some/other/node': {
-        data: {},
-        refMap: {
-          '#/property/path': 'http://stoplight.io/nodes.raw?srn=root/node/srn',
-        },
-      },
-      'http://stoplight.io/nodes.raw?srn=root/node/srn': {
-        data: {},
-        refMap: {
-          '#/property/path': 'http://stoplight.io/nodes.raw?srn=some/other/node',
-        },
-      },
-    };
-
-    const graph = {
-      getNodeData: (id: string) => nodeData[id],
-    } as IResolveResult['graph'];
-
-    expect(computeVisGraph({ srn: 'root/node/srn' } as INodeInfo, graph, 'root')).toEqual({
-      nodes: [
-        {
-          id: 'root',
-          level: 0,
-          color: '#ef932b',
-          font: {
-            color: '#ffffff',
-          },
-        },
-        {
-          id: 'http://stoplight.io/nodes.raw?srn=some/other/node',
-          level: 1,
-          label: 'Node',
-          color: '#f5f8fa',
-          font: {
-            color: '#10161a',
-          },
-        },
-      ],
-      edges: [
-        {
-          from: 'http://stoplight.io/nodes.raw?srn=some/other/node',
-          to: 'root',
-          label: '',
-          title: 'path',
-          color: {
-            color: '#cfd9e0',
-            opacity: 0.8,
-          },
-          font: {
-            align: 'top',
-          },
-        },
-        {
-          from: 'root',
-          to: 'http://stoplight.io/nodes.raw?srn=some/other/node',
-          label: '',
-          title: 'path',
-          color: {
-            color: '#cfd9e0',
-            opacity: 0.8,
-          },
-          font: {
-            align: 'top',
-          },
-        },
-      ],
-    });
+  it('should match snapshot for todo-full outbound graph', async () => {
+    expect(
+      computeVisGraph(
+        { srn: 'gh/stoplightio/studio-demo/reference/models/todo-full.v1.json', id: 1 } as INodeInfo,
+        todoFullOutboundGraph,
+      ),
+    ).toMatchSnapshot();
   });
 });

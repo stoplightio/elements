@@ -36,7 +36,7 @@ describe('Docs component', () => {
         properties: {},
       };
 
-      const wrapper = mount(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />).find(
+      const wrapper = mount(<Docs node={{ id: 0, type: NodeType.Model, data: schema, srn: '', name: '' }} />).find(
         MarkdownViewer,
       );
 
@@ -54,7 +54,7 @@ describe('Docs component', () => {
         },
       };
 
-      const wrapper = mount(<Docs node={{ type: NodeType.Model, data: schema, srn: '', name: '' }} />).find(
+      const wrapper = mount(<Docs node={{ id: 0, type: NodeType.Model, data: schema, srn: '', name: '' }} />).find(
         JsonSchemaViewer,
       );
 
@@ -72,7 +72,7 @@ describe('Docs component', () => {
   describe('given http_operation type', () => {
     it('renders HttpOperation with given operation', () => {
       const wrapper = mount(
-        <Docs node={{ type: NodeType.HttpOperation, data: httpOperation, srn: '', name: '' }} />,
+        <Docs node={{ id: 0, type: NodeType.HttpOperation, data: httpOperation, srn: '', name: '' }} />,
       ).find(HttpOperation);
 
       expect(wrapper).toHaveProp('value', safeStringify(httpOperation, undefined, 4));
@@ -81,9 +81,9 @@ describe('Docs component', () => {
 
   describe('given http_service type', () => {
     it('renders HttpService with given operation', () => {
-      const wrapper = mount(<Docs node={{ type: NodeType.HttpService, data: httpService, srn: '', name: '' }} />).find(
-        HttpService,
-      );
+      const wrapper = mount(
+        <Docs node={{ id: 0, type: NodeType.HttpService, data: httpService, srn: '', name: '' }} />,
+      ).find(HttpService);
 
       expect(wrapper).toHaveProp('value', safeStringify(httpService, undefined, 4));
     });
