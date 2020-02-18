@@ -1,11 +1,11 @@
 import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
+import { act } from 'react-dom/test-utils';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
-import { SuggestionBar } from '../SuggestionBar';
-import { act } from 'react-dom/test-utils';
 import { SuggestionFunc } from '../../hooks/useSuggestion';
+import { SuggestionBar } from '../SuggestionBar';
 
 jest.useFakeTimers();
 
@@ -13,7 +13,7 @@ describe('SuggestionBar', () => {
   let wrapper: ReactWrapper;
   let store: RequestMakerStore;
 
-  const render = (suggestions: SuggestionFunc<RequestMakerStore>[]) => {
+  const render = (suggestions: Array<SuggestionFunc<RequestMakerStore>>) => {
     wrapper = mount(
       <RequestMakerProvider value={store}>
         <SuggestionBar suggestions={suggestions} />

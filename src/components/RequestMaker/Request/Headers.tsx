@@ -4,9 +4,9 @@ import cn from 'classnames';
 import { toLower } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { ParamField as HeaderField } from '../../types';
 import { allHeaderFields } from '../../../utils/headers';
 import { highlightText } from '../../../utils/highlightText';
+import { ParamField as HeaderField } from '../../types';
 import { RequestParameters } from './Parameters';
 
 export interface IRequestHeaders {

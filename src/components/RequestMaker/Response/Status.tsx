@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { useStore } from '../../hooks/useStore';
 import { getHttpCodeColor, HttpCodeDescriptions } from '../../../utils/http';
+import { useStore } from '../../hooks/useStore';
 
 interface IResponseStatusProps {
   className?: string;

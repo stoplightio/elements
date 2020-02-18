@@ -1,5 +1,6 @@
 import { RadioGroup } from '@blueprintjs/core';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
+import { ProblemJsonError } from '@stoplight/prism-http';
 import { CodeViewer } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
@@ -7,16 +8,15 @@ import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
+import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
+import { ResponseStore } from '../../stores/response';
 import { ResponseBody } from '../Response/Body';
+import { ErrorViewer } from '../Response/ErrorViewer';
 import { HTMLViewer } from '../Response/HTMLViewer';
 import { ImageViewer } from '../Response/ImageViewer';
 import { JsonViewer } from '../Response/JsonViewer';
-import { RawViewer } from '../Response/RawViewer';
-import { ErrorViewer } from '../Response/ErrorViewer';
-import { ProblemJsonError } from '@stoplight/prism-http';
 import { PrettyViewer } from '../Response/PrettyViewer';
-import { ResponseStore } from '../../stores/response';
-import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
+import { RawViewer } from '../Response/RawViewer';
 
 jest.mock('@stoplight/tree-list', () => ({
   TreeStore: class {

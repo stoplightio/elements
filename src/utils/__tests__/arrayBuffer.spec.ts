@@ -1,4 +1,4 @@
-import { arrayBufferUtf8ToString, arrayBufferToBase64String, stringToArrayBuffer } from '../arrayBuffer';
+import { arrayBufferToBase64String, arrayBufferUtf8ToString, stringToArrayBuffer } from '../arrayBuffer';
 
 // ű at the end has a 2 byte UTF-8 representation, the क़ has a 3-byte.
 const testString = 'Test special chars: űक़';

@@ -1,11 +1,11 @@
-import { RequestMakerStore, RequestMakerProvider } from '../..';
-import 'jest-enzyme';
-import { act } from 'react-dom/test-utils';
-import * as React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
 import { Popover, Switch } from '@stoplight/ui-kit';
-import { Mocking } from '../Request/Mocking';
+import { mount, ReactWrapper } from 'enzyme';
+import 'jest-enzyme';
+import * as React from 'react';
+import { act } from 'react-dom/test-utils';
+import { RequestMakerProvider, RequestMakerStore } from '../..';
 import { operation } from '../__fixtures__/http';
+import { Mocking } from '../Request/Mocking';
 
 describe('RequestSend component', () => {
   let wrapper: ReactWrapper;

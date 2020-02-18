@@ -22,7 +22,9 @@ describe('url', () => {
         },
       ];
 
-      expect(replaceParamsInPath('/{pathName}/{path space}/{special$@^(<|}', params)).toEqual('/paramValue/spaceValue/specialValue');
+      expect(replaceParamsInPath('/{pathName}/{path space}/{special$@^(<|}', params)).toEqual(
+        '/paramValue/spaceValue/specialValue',
+      );
     });
   });
 });

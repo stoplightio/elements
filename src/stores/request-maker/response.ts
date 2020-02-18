@@ -1,11 +1,11 @@
 import { safeParse } from '@stoplight/json';
-import { IHttpRequest, Dictionary } from '@stoplight/types';
 import { IHttpResponse as PrismHttpResponse } from '@stoplight/prism-http/dist/types';
+import { Dictionary, IHttpRequest } from '@stoplight/types';
 import axios, { AxiosError } from 'axios';
 import { computed, observable } from 'mobx';
-import { IHttpNameValue, XHRResponseType } from './types';
+import { arrayBufferToBase64String, arrayBufferUtf8ToString, stringToArrayBuffer } from '../../utils/arrayBuffer';
 import { getResponseType } from '../../utils/getResponseType';
-import { arrayBufferUtf8ToString, arrayBufferToBase64String, stringToArrayBuffer } from '../../utils/arrayBuffer';
+import { IHttpNameValue, XHRResponseType } from './types';
 
 type MockResponse = {
   status: PrismHttpResponse['statusCode'];

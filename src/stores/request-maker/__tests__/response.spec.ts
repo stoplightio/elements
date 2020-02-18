@@ -1,5 +1,5 @@
-import { ResponseStore } from '../response';
 import { stringToArrayBuffer } from '../../utils/arrayBuffer';
+import { ResponseStore } from '../response';
 
 describe('ResponseStore', () => {
   describe('createEmpty', () => {

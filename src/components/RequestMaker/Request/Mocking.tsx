@@ -1,4 +1,4 @@
-import { Popover, Switch, HTMLSelect } from '@stoplight/ui-kit';
+import { HTMLSelect, Popover, Switch } from '@stoplight/ui-kit';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useStore } from '../..';

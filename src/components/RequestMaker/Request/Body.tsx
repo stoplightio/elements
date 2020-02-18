@@ -1,15 +1,15 @@
-import { CodeEditor, FileInput, Radio, RadioGroup, Button } from '@stoplight/ui-kit';
 import { safeParse } from '@stoplight/json';
+import { Button, CodeEditor, FileInput, Radio, RadioGroup } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import * as typeis from 'type-is';
 import * as React from 'react';
+import * as typeis from 'type-is';
 import { useStore } from '../../hooks/useStore';
-import { RequestParameters } from './Parameters';
-import { SuggestionBar } from '../SuggestionBar';
-import { SuggestionFunc, createContentTypeSuggestion } from '../../hooks/useSuggestion';
+import { createContentTypeSuggestion, SuggestionFunc } from '../../hooks/useSuggestion';
 import { RequestMakerStore } from '../../stores';
+import { SuggestionBar } from '../SuggestionBar';
+import { RequestParameters } from './Parameters';
 
 interface IRequestBody {
   className?: string;
@@ -139,7 +139,7 @@ export const RequestBody = observer<IRequestBody>(({ className }) => {
 
 RequestBody.displayName = 'RequestMaker.RequestBody';
 
-const suggestions: SuggestionFunc<RequestMakerStore>[] = [
+const suggestions: Array<SuggestionFunc<RequestMakerStore>> = [
   store => {
     if (store.request.contentType !== 'none' || !store.request.activeContentTypeHeader) {
       return undefined;

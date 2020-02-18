@@ -4,12 +4,12 @@ import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useStore } from '../../hooks/useStore';
+import { ErrorViewer } from './ErrorViewer';
 import { HTMLViewer } from './HTMLViewer';
 import { ImageViewer } from './ImageViewer';
 import { JsonViewer } from './JsonViewer';
-import { RawViewer } from './RawViewer';
 import { PrettyViewer } from './PrettyViewer';
-import { ErrorViewer } from './ErrorViewer';
+import { RawViewer } from './RawViewer';
 
 type ViewCategory = 'raw' | 'pretty' | 'rendered';
 

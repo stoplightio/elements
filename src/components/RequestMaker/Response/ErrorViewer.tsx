@@ -1,7 +1,7 @@
+import { ProblemJsonError } from '@stoplight/prism-http';
+import { CodeViewer, Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
-import { Tag, CodeViewer } from '@stoplight/ui-kit';
-import { ProblemJsonError } from '@stoplight/prism-http';
 import { usePrettifiedResponse } from '../../hooks/usePrettifiedResponse';
 
 export type ErrorViewerProps = {

@@ -1,11 +1,11 @@
-import * as React from 'react';
 import { observer } from 'mobx-react-lite';
+import * as React from 'react';
 import { useStore } from '../hooks/useStore';
 import { SuggestionFunc, useSuggestion } from '../hooks/useSuggestion';
 import { RequestMakerStore } from '../stores';
 
 type SuggestionBarProps = {
-  suggestions: SuggestionFunc<RequestMakerStore>[];
+  suggestions: Array<SuggestionFunc<RequestMakerStore>>;
 };
 
 export const SuggestionBar: React.FC<SuggestionBarProps> = observer<SuggestionBarProps>(({ suggestions }) => {

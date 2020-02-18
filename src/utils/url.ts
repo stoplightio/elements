@@ -1,17 +1,8 @@
 import { Dictionary } from '@stoplight/types';
 import { differenceBy, filter, map, omit } from 'lodash';
 import * as URI from 'urijs';
-import { IParam, PathParam, QueryParam } from '../types';
+import { IParam, PathParam, QueryParam } from '../stores/request-maker/types';
 import { getNameValuePairs } from './params';
-
-export function isValidUrl(url: string) {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 export function addParamsToPath(path: string, params: PathParam[]) {
   let newPath = path;

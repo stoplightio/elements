@@ -7,10 +7,10 @@ import { isEmpty, pick, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
 import * as URI from 'urijs';
-import { Auth, ContentType, HeaderParam, IParam, ParamType, PathParam, QueryParam } from './types';
 import { getContentType } from '../../utils/getContentType';
 import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } from '../../utils/params';
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';
+import { Auth, ContentType, HeaderParam, IParam, ParamType, PathParam, QueryParam } from './types';
 
 const HTTPSnippet = require('httpsnippet');
 
@@ -37,10 +37,10 @@ export class RequestStore {
   public graphqlVariables = DEFAULT_EMPTY_JSON;
 
   @observable
-  private _formDataParams: IParam<string | File>[] = [];
+  private _formDataParams: Array<IParam<string | File>> = [];
 
   @observable
-  private _urlEncodedParams: IParam<string>[] = [];
+  private _urlEncodedParams: Array<IParam<string>> = [];
 
   @observable.shallow
   private _headerParams: HeaderParam[] = [];
@@ -512,7 +512,7 @@ export class RequestStore {
   public get formDataParams() {
     return this._formDataParams || [];
   }
-  public set formDataParams(formDataParams: IParam<string | File>[]) {
+  public set formDataParams(formDataParams: Array<IParam<string | File>>) {
     this._formDataParams = formDataParams;
   }
 
@@ -520,7 +520,7 @@ export class RequestStore {
   public get urlEncodedParams() {
     return this._urlEncodedParams || [];
   }
-  public set urlEncodedParams(urlEncodedParams: IParam<string>[]) {
+  public set urlEncodedParams(urlEncodedParams: Array<IParam<string>>) {
     this._urlEncodedParams = urlEncodedParams;
   }
 
