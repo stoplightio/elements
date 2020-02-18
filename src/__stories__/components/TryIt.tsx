@@ -8,7 +8,7 @@ import { TryIt } from '../../components/TryIt';
 
 const knobs = () => ({
   value: object('operation', operation, 'operation'),
-  mockUrl: text('mock URL', '', 'mock URL'),
+  mockUrl: text('hosted mock server base URL', '', 'hosted mock server base URL'),
 });
 
 storiesOf('components/TryIt', module)

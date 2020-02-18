@@ -84,9 +84,9 @@ describe('useRequestMaker()', () => {
       ],
     } as IHttpOperation;
 
-    const store1 = useRequestMaker(operation, '', true);
+    const store1 = useRequestMaker(operation, undefined, true);
     store1.request.publicBaseUrl = 'http://todos.stoplight.io';
-    const store2 = useRequestMaker(operation, '', true);
+    const store2 = useRequestMaker(operation, undefined, true);
 
     expect(store1).toEqual(store2);
   });
@@ -101,9 +101,9 @@ describe('useRequestMaker()', () => {
       },
     };
 
-    const store1 = useRequestMaker(request, '', true);
+    const store1 = useRequestMaker(request, undefined, true);
     store1.request.publicBaseUrl = 'http://example.com';
-    const store2 = useRequestMaker(request, '', true);
+    const store2 = useRequestMaker(request, undefined, true);
 
     expect(store1).toEqual(store2);
   });
