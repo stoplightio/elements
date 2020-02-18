@@ -56,6 +56,9 @@
     "@stoplight/ui-kit": "^2.15.1",
     "@stoplight/yaml": "^3.3.2",
     "classnames": "^2.2.6",
+    "copy-to-clipboard": "^3.2.0",
+    "fast-text-encoding": "^1.0.0",
+    "httpsnippet": "github:stoplightio/httpsnippet#master",
     "lodash": "^4.17.15",
     "mobx-react-lite": "^1.5.1",
     "object-hash": "^2.0.0",
@@ -63,6 +66,7 @@
     "react-error-boundary": "^1.2.5",
     "react-graph-vis": "^1.0.5",
     "swr": "^0.1.16",
+    "type-is": "^1.6.18",
     "unist-util-select": "^2.0.2",
     "urijs": "^1.19.2"
   },

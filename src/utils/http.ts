@@ -22,13 +22,13 @@ export const HttpCodeColor = {
   3: 'yellow',
   4: 'orange',
   5: 'red',
-};
+} as const;
 
 /**
  * Gets the color associated with a given http code
  * @param code Http code (Ex. 200, 401, 503)
  */
-export function getHttpCodeColor(code: number | string): 'gray' | 'green' | 'yellow' | 'orange' | 'red' {
+export function getHttpCodeColor(code: number | string): typeof HttpCodeColor[keyof typeof HttpCodeColor] {
   return HttpCodeColor[`${code}`[0]] || 'gray';
 }
 
