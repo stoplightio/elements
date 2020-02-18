@@ -1,4 +1,4 @@
-import { ContentType } from '../types';
+import { ContentType } from '../stores/request-maker/types';
 
 export function getContentType(mimeType?: string): ContentType {
   if (!mimeType) return 'none';

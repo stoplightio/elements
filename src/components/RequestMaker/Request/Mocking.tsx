@@ -1,7 +1,7 @@
 import { HTMLSelect, Popover, Switch } from '@stoplight/ui-kit';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { useStore } from '../..';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { flatMap } from '../../../utils/array';
 
 const notSetOption = { value: '', label: 'Not Set' };
@@ -12,7 +12,7 @@ const dynamicOptions = [
 ];
 
 export const Mocking = observer(() => {
-  const store = useStore();
+  const store = useRequestMakerStore();
   const requestStore = useRequestMakerStore('request');
 
   if (!store.operation) return <div>Mocking not available.</div>;

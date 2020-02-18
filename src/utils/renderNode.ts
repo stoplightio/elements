@@ -1,4 +1,4 @@
-import { JsonTreeListNode } from '../types';
+import { JsonTreeListNode } from '../stores/request-maker/types';
 
 export const renderTree = (root: unknown) => renderNode([], root, 0);
 

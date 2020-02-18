@@ -1,6 +1,6 @@
 import { CodeViewer } from '@stoplight/ui-kit';
 import * as React from 'react';
-import { XHRResponseType } from '../../types';
+import { XHRResponseType } from '../../../stores/request-maker/types';
 
 export type RawViewerProps = {
   type: XHRResponseType;

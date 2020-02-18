@@ -1,4 +1,4 @@
-import { ParamField } from '../types';
+import { ParamField } from '../stores/request-maker/types';
 
 // Copied from https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 export const allHeaderFields: ParamField[] = [

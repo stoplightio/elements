@@ -4,14 +4,14 @@ import cn from 'classnames';
 import copy from 'copy-to-clipboard';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { useStore } from '../../hooks/useStore';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 
 export interface ISendButton {
   className?: string;
 }
 
 export const RequestSend = observer<ISendButton>(({ className }) => {
-  const store = useStore();
+  const store = useRequestMakerStore();
 
   const handleClick = React.useCallback(() => {
     if (store.isMockEnabled) {

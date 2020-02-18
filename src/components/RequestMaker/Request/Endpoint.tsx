@@ -5,7 +5,7 @@ import { map, toLower, uniqBy } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { highlightText } from '../../../utils/highlightText';
-import { useStore } from '../../hooks/useStore';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { RequestMethod } from './Method';
 import { RequestSend } from './Send';
 
@@ -30,7 +30,7 @@ const addServerUrlRenderer = (query: string, active: boolean, handleClick: React
 export const RequestEndpoint = observer<{
   className?: string;
 }>(({ className }) => {
-  const store = useStore();
+  const store = useRequestMakerStore();
   const requestStore = useRequestMakerStore('request');
   const [url, setUrl] = React.useState();
 

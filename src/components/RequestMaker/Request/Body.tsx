@@ -5,9 +5,9 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import * as typeis from 'type-is';
-import { useStore } from '../../hooks/useStore';
-import { createContentTypeSuggestion, SuggestionFunc } from '../../hooks/useSuggestion';
-import { RequestMakerStore } from '../../stores';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { createContentTypeSuggestion, SuggestionFunc } from '../../../hooks/useSuggestion';
+import { RequestMakerStore } from '../../../stores/request-maker';
 import { SuggestionBar } from '../SuggestionBar';
 import { RequestParameters } from './Parameters';
 

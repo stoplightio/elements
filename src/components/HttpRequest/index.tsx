@@ -1,4 +1,4 @@
-import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '@stoplight/request-maker';
+import { RequestEditor, RequestEndpoint, ResponseViewer } from '../RequestMaker';
 import { IHttpRequest } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';

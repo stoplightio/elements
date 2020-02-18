@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { map } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { useStore } from '../../hooks/useStore';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 
 export interface IResponseHeaders {
   className?: string;

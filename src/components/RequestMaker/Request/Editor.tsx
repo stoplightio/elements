@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { getEnabledParams } from '../../../utils/params';
-import { useStore } from '../../hooks/useStore';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { TabTitle } from '../TabTitle';
 import { RequestBody } from './Body';
 import { CodeGenerator } from './CodeGenerator';
@@ -32,7 +32,7 @@ const defaultAvailableTabs = Object.values(RequestEditorTab); // by default all 
 export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvailableTabs, className }) => {
   const requestStore = useRequestMakerStore('request');
   const responseStore = useRequestMakerStore('response');
-  const store = useStore();
+  const store = useRequestMakerStore();
 
   const shouldRenderQuery = tabs.includes(RequestEditorTab.QUERY);
   const shouldRenderHeaders = tabs.includes(RequestEditorTab.HEADERS);

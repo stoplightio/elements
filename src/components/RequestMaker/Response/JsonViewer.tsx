@@ -1,5 +1,4 @@
 import { RowRenderer, TreeList, TreeListEvents, TreeStore } from '@stoplight/tree-list';
-import cn from 'classnames';
 import { runInAction } from 'mobx';
 import * as React from 'react';
 import { renderTree } from '../../../utils/renderNode';

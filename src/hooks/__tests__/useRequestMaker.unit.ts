@@ -1,4 +1,4 @@
-import { RequestMakerStore } from '@stoplight/request-maker';
+import { RequestMakerStore } from '../../stores/request-maker';
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 import { useRequestMaker } from '../useRequestMaker';
 

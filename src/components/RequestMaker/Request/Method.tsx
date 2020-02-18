@@ -3,7 +3,7 @@ import { HTMLSelect } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { useStore } from '../../hooks/useStore';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 
 const httpMethods = ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS', 'HEAD', 'PATCH'];
 

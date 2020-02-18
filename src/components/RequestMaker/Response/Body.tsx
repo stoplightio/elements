@@ -3,7 +3,7 @@ import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { useStore } from '../../hooks/useStore';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { ErrorViewer } from './ErrorViewer';
 import { HTMLViewer } from './HTMLViewer';
 import { ImageViewer } from './ImageViewer';

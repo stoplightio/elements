@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import * as React from 'react';
 import { stringifyHTML } from '../../../utils/stringifiers/html';
 

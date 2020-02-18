@@ -6,7 +6,7 @@ import { AxiosRequestConfig } from 'axios';
 import { isEmpty, pick, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
-import * as URI from 'urijs';
+import URI from 'urijs';
 import { getContentType } from '../../utils/getContentType';
 import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } from '../../utils/params';
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';

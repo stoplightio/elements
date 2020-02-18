@@ -2,7 +2,7 @@ import { Button, CodeViewer, Menu, MenuItem, Popover, Position } from '@stopligh
 import cn from 'classnames';
 import copy from 'copy-to-clipboard';
 import * as React from 'react';
-import { useStore } from '../../hooks/useStore';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { languages } from './httpSnippetLanguages';
 
 export interface ICodeGeneratorProps {

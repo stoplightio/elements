@@ -1,6 +1,6 @@
 import { Dictionary } from '@stoplight/types';
 import * as typeis from 'type-is';
-import { XHRResponseType } from '../types';
+import { XHRResponseType } from '../stores/request-maker/types';
 
 export function getResponseType(contentType: string): XHRResponseType {
   for (const [mimeType, resolution] of responseMapEntries) {

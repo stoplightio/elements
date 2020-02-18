@@ -8,7 +8,7 @@ import 'prismjs/components/prism-graphql';
 import 'prismjs/components/prism-json';
 import * as React from 'react';
 import { getHttpCodeColor } from '../../../utils/http';
-import { useStore } from '../../hooks/useStore';
+import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { TabTitle } from '../TabTitle';
 import { ResponseBody } from './Body';
 import { ResponseHeaders } from './Headers';
@@ -30,7 +30,7 @@ const defaultTabs = [ResponseTab.BODY, ResponseTab.HEADERS, ResponseTab.ORIGINAL
 
 export const ResponseViewer = observer<ResponseProps>(({ tabs = defaultTabs, className }) => {
   const [selectedTabId, setSelectedTabId] = React.useState('response-body');
-  const requestMakerStore = useStore();
+  const requestMakerStore = useRequestMakerStore();
   const responseStore = useRequestMakerStore('response');
 
   if (responseStore.statusCode === 0 && !requestMakerStore.isSending && !responseStore.error) {
