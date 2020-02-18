@@ -1962,7 +1962,7 @@
     pino "^5.13.2"
     tslib "^1.10.0"
 
-"@stoplight/prism-http@^3.2.6":
+"@stoplight/prism-http@^3.2.8":
   version "3.2.8"
   resolved "https://registry.yarnpkg.com/@stoplight/prism-http/-/prism-http-3.2.8.tgz#89f81ca67a318ff3baeb78ebb7a767f318b48f32"
   integrity sha512-BhgiuMZoj+c4DRFBytacgTFaZLSAEjbZBopyaFx3AqsKGhUpACXjtm9/c7Y/pB3rgQjCzjtZ1kWlR61PbHiUSg==
@@ -1994,25 +1994,26 @@
   dependencies:
     "@stoplight/types" "^11.1.0"
 
-"@stoplight/request-maker@^3.4.5":
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.4.5.tgz#05455fffff375e18d2fb8e84b30945739db9d627"
-  integrity sha512-UjvhbFZvn5im3qMedE7A697QNIlR+USURHIG2+vaF94tgzKAGM84ZtZUrwXiEJX8K2Ld17VsZo2hAOCMLBfH4w==
+"@stoplight/request-maker@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/request-maker/-/request-maker-3.7.0.tgz#480654f619d526f87c2c38dd31620173a79c9c91"
+  integrity sha512-KMM5u3lXsV1sBlkVKdO4fS36JR9c9+unilbKV5x6tcX4rtIOvex0OS/6Qj7bHdDslxp4AkrgL2UFUcXgfdzvAg==
   dependencies:
     "@stoplight/json" "^3.2.1"
     "@stoplight/markdown-viewer" "^3"
     "@stoplight/path" "^1.3.0"
-    "@stoplight/prism-http" "^3.2.6"
     "@stoplight/tree-list" "^4.11.1"
     "@stoplight/yaml" "^3.5.0"
     axios "^0.19.2"
     classnames "^2.2.6"
     copy-to-clipboard "^3.2.0"
+    fast-text-encoding "^1.0.0"
     httpsnippet "github:stoplightio/httpsnippet#master"
     lodash "^4.17.15"
     mobx-react-lite "^1.5.2"
     openapi-sampler "^1.0.0-beta.15"
     prettier "^1.19.1"
+    type-is "^1.6.18"
     urijs "^1.19.2"
 
 "@stoplight/scripts@5.1.0":
@@ -7049,6 +7050,11 @@ fast-safe-stringify@^2.0.7:
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.7.tgz#124aa885899261f68aedb42a7c080de9da608743"
   integrity sha512-Utm6CdzT+6xsDk2m8S6uL8VHxNwI6Jub+e9NYTcAms28T84pTa25GJQV9j0CY0N1rM8hK4x6grpF2BQf+2qwVA==
 
+fast-text-encoding@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fast-text-encoding/-/fast-text-encoding-1.0.0.tgz#3e5ce8293409cfaa7177a71b9ca84e1b1e6f25ef"
+  integrity sha512-R9bHCvweUxxwkDwhjav5vxpFvdPGlVngtqmx4pIZfSUhM/Q4NiIUHB456BAf+Q1Nwu3HEZYONtu+Rya+af4jiQ==
+
 fastq@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.6.0.tgz#4ec8a38f4ac25f21492673adb7eae9cfef47d1c2"
@@ -7362,9 +7368,9 @@ forwarded@~0.1.2:
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
 fp-ts@^2.1.1:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.4.4.tgz#d1ffe3e62ee4fa789562242d5a3f9b957740b783"
-  integrity sha512-J5wFa/BzT57A+DIvwAYS5LTsbRiXsvF9hsefP3ZfzsHLuWGjtHAheG1WscG1tX3og1PDZyv6mZAUTlpH1MmHhA==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.5.0.tgz#adca3b90452196274f7b074f12f9c02741624c1a"
+  integrity sha512-xkC9ZKl/i2cU+8FAsdyLcTvPRXphp42FcK5WmZpB47VXb4gggC3DHlVDKNLdbC+U8zz6yp1b0bj0mZg0axmZYQ==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
