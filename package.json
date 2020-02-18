@@ -39,7 +39,6 @@
     "test.watch": "yarn test --watch"
   },
   "peerDependencies": {
-    "@stoplight/prism-http": ">=3",
     "mobx": ">=5",
     "react": ">=16.8",
     "react-dom": ">=16.8"

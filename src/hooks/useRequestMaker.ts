@@ -8,8 +8,8 @@ const RequestMakers = new Map<string, RequestMakerStore>();
 
 export function useRequestMaker(
   value: Partial<IHttpOperation | IHttpRequest>,
+  checkCache: boolean = false,
   mockUrl?: string,
-  checkCache?: boolean,
 ): RequestMakerStore {
   let operation: Partial<IHttpOperation> | undefined;
   let request: Partial<IHttpRequest> | undefined;

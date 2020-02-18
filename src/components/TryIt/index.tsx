@@ -15,7 +15,7 @@ export interface ITryItProps extends IErrorBoundary {
 
 const TryItComponent: React.FunctionComponent<ITryItProps> = ({ value, mockUrl, padding = '12', className }) => {
   const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
-  const store = useRequestMaker(result, mockUrl, true);
+  const store = useRequestMaker(result, true, mockUrl);
 
   return (
     <div className={cn('Page__content TryIt', `p-${padding}`, className)}>
