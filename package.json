@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "yarn build.components && yarn build.styles && yarn build.widgets",
-    "build.components": "sl-scripts bundle --sourcemap",
+    "build.components": "sl-scripts build --sourcemap",
     "build.widgets": "NODE_ENV=production webpack -p --config webpack.config.js",
     "build.widgets.analyze": "RUN_CONTEXT=analyze NODE_ENV=production webpack -p --config webpack.config.js",
     "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
