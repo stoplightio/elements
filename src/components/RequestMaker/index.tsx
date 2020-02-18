@@ -31,3 +31,5 @@ export const RequestMaker: React.FC<RequestMakerProps> = props => {
     </RequestMakerProvider>
   );
 };
+
+export { RequestMakerProvider };

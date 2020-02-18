@@ -4,8 +4,8 @@ import cn from 'classnames';
 import { map, toLower, uniqBy } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { highlightText } from '../../../utils/highlightText';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { highlightText } from '../../../utils/highlightText';
 import { RequestMethod } from './Method';
 import { RequestSend } from './Send';
 

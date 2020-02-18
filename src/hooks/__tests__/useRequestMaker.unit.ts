@@ -1,5 +1,5 @@
-import { RequestMakerStore } from '../../stores/request-maker';
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
+import { RequestMakerStore } from '../../stores/request-maker';
 import { useRequestMaker } from '../useRequestMaker';
 
 describe('useRequestMaker()', () => {

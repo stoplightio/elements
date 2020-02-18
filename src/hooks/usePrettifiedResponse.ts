@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { XHRResponseType } from '../stores/request-maker/types';
 import { prettifyHTML } from '../utils/prettifiers/html';
 import { prettifyJSON } from '../utils/prettifiers/json';
 import { prettifyXML } from '../utils/prettifiers/xml';
-import { XHRResponseType } from '../stores/request-maker/types';
 
 const prettify = async (response: unknown, language: XHRResponseType) => {
   switch (language) {

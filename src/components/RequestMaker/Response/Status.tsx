@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { getHttpCodeColor, HttpCodeDescriptions } from '../../../utils/http';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { getHttpCodeColor, HttpCodeDescriptions } from '../../../utils/http';
 
 interface IResponseStatusProps {
   className?: string;
