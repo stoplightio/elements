@@ -6,7 +6,7 @@ import URI from 'urijs';
 export function createResolver(client: typeof fetch, srn?: string) {
   return new Resolver({
     dereferenceInline: true,
-    dereferenceRemote: true,
+    dereferenceRemote: false, // TODO (CL): Don't deref remote $refs, this will be handled by deref=bundle
 
     resolvers: {
       https: httpResolver(client),
@@ -54,7 +54,7 @@ function remoteFileResolver(client: typeof fetch, srn?: string) {
 
       // Use the http resolver to resolve the node's raw export
 
-      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}`));
+      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}&deref=bundle`));
     },
   };
 }

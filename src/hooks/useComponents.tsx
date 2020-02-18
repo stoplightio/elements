@@ -35,7 +35,8 @@ export const defaultComponents: IComponentMapping = {
             [CLASSNAMES.bordered]: !parent || parent.type !== 'tab',
             [CLASSNAMES.block]: !parent || parent.type !== 'tab',
           })}
-          title={annotations && annotations.title}
+          title={annotations?.title}
+          errors={annotations?.errors}
           maxRows={nodeType === 'json_schema' ? 15 : undefined}
           value={value}
         />
