@@ -3,8 +3,8 @@ import { HttpParamStyles } from '@stoplight/types';
 import axios from 'axios';
 import 'jest-enzyme';
 import { RequestMakerStore } from '..';
-import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
+import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
 
 describe('RequestMakerStore', () => {
   let requestMaker: RequestMakerStore;
