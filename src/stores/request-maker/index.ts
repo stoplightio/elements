@@ -191,7 +191,7 @@ export class RequestMakerStore {
 
     let store: ResponseStore;
     try {
-      const response = await this.prism.request(this.request.url, this.request.toPrism());
+      const response = await this.prism.request(this.request.uri, this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse(response);
     } catch (err) {
       store = ResponseStore.fromError(err);
