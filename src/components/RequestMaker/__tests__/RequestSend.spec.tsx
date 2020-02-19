@@ -1,4 +1,5 @@
-jest.mock('copy-to-clipboard', () => ({ default: jest.fn() }));
+const mockCopy = jest.fn();
+jest.mock('copy-to-clipboard', () => mockCopy);
 
 import { Button } from '@blueprintjs/core';
 import { mount, ReactWrapper } from 'enzyme';
@@ -50,7 +51,7 @@ describe('RequestSend component', () => {
       .at(0)
       .simulate('click');
 
-    expect(require('copy-to-clipboard').default).toHaveBeenCalledTimes(1);
+    expect(mockCopy).toHaveBeenCalledTimes(1);
   });
 
   test('clicking reset should reset request and response data', () => {
