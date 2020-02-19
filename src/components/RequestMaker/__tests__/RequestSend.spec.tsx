@@ -1,6 +1,6 @@
 jest.mock('copy-to-clipboard', () => ({ default: jest.fn() }));
 
-import { Button, MenuItem } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';

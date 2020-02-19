@@ -1,5 +1,4 @@
-import { Button, HTMLSelect } from '@stoplight/ui-kit';
-import { Select } from '@stoplight/ui-kit/Select';
+import { HTMLSelect } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';

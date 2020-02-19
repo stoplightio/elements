@@ -1,6 +1,7 @@
 import 'jest-enzyme';
 
 import { mount, ReactWrapper } from 'enzyme';
+import * as React from 'react';
 
 import { FileInput, RadioGroup } from '@blueprintjs/core';
 import { CodeEditor } from '@stoplight/ui-kit';

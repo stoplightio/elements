@@ -3,8 +3,8 @@ import 'jest-enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { SuggestionFunc } from '../../../hooks/useSuggestion';
 import { RequestMakerStore } from '../../../stores/request-maker';
-import { SuggestionFunc } from '../../hooks/useSuggestion';
 import { SuggestionBar } from '../SuggestionBar';
 
 jest.useFakeTimers();

@@ -1,4 +1,3 @@
-import { safeStringify } from '@stoplight/json';
 import { RequestStore } from '../request';
 
 describe('RequestStore', () => {

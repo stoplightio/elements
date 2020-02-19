@@ -3,9 +3,10 @@ import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
-import { RequestMakerProvider, RequestMakerStore } from '../..';
+import { RequestMakerStore } from '../../../stores/request-maker';
 import { operation } from '../__fixtures__/http';
 import { Mocking } from '../Request/Mocking';
+import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 
 describe('RequestSend component', () => {
   let wrapper: ReactWrapper;

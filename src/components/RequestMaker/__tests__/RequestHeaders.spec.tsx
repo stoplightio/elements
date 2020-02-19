@@ -3,7 +3,7 @@ import 'jest-enzyme';
 import * as React from 'react';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
-import { HeaderParam } from '../../types';
+import { HeaderParam } from '../../../stores/request-maker/types';
 import { RequestHeaders } from '../Request/Headers';
 
 describe('Header editor component', () => {

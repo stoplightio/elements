@@ -1,4 +1,4 @@
-import { PathParam } from '../../types';
+import { PathParam } from '../../stores/request-maker/types';
 import { replaceParamsInPath } from '../url';
 
 describe('url', () => {

@@ -1,4 +1,4 @@
-import { stringToArrayBuffer } from '../../utils/arrayBuffer';
+import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
 import { ResponseStore } from '../response';
 
 describe('ResponseStore', () => {
