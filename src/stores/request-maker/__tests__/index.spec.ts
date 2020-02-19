@@ -201,7 +201,7 @@ describe('RequestMakerStore', () => {
 
       expect(requestMaker.response).toMatchObject({
         statusCode: 200,
-        status: 'Success',
+        status: 'Completed',
         headers: {
           responseHeader: 'responseHeaderValue',
         },

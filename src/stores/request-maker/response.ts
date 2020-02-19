@@ -28,7 +28,7 @@ export class ResponseStore {
   public readonly statusCode: number;
 
   @observable
-  public readonly status: 'Success' | 'Error' | 'Canceled' | '';
+  public readonly status: 'Completed' | 'Error' | 'Canceled' | '';
 
   @observable.ref
   public readonly headers: IHttpNameValue;
@@ -46,7 +46,7 @@ export class ResponseStore {
   public originalRequest?: Partial<IHttpRequest>;
 
   private constructor(
-    status: 'Success' | 'Error' | 'Canceled' | '',
+    status: 'Completed' | 'Error' | 'Canceled' | '',
     statusCode: number,
     headers: IHttpNameValue,
     rawbody: ArrayBuffer,
@@ -66,7 +66,13 @@ export class ResponseStore {
   }
 
   public static fromNetworkResponse(response: NetworkResponse) {
-    return new ResponseStore('Success', response.status, response.headers, response.data || new ArrayBuffer(0), false);
+    return new ResponseStore(
+      'Completed',
+      response.status,
+      response.headers,
+      response.data || new ArrayBuffer(0),
+      false,
+    );
   }
 
   public static fromAxiosError(err: AxiosError) {
@@ -87,7 +93,7 @@ export class ResponseStore {
   public static fromMockObjectResponse(responseObject: MockResponse) {
     const stringData = JSON.stringify(responseObject.data);
     const abData = (stringData && stringToArrayBuffer(stringData)) || new Uint8Array();
-    return new ResponseStore('Success', responseObject.status, responseObject.headers || {}, abData, true);
+    return new ResponseStore('Completed', responseObject.status, responseObject.headers || {}, abData, true);
   }
 
   public static fromError(err: Error) {
@@ -96,7 +102,7 @@ export class ResponseStore {
 
   @computed
   public get statusText() {
-    if (this.status === 'Success') {
+    if (this.status === 'Completed') {
       return `${this.statusCode} ${HttpCodeDescriptions[this.statusCode]}`;
     }
     return this.status;
