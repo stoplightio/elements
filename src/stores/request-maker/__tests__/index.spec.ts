@@ -298,7 +298,7 @@ describe('RequestMakerStore', () => {
       requestMaker.setOperationData(emptyResponseOperation);
       requestMaker.request.path = '/dummy';
       await requestMaker.mock();
-      // expect(requestMaker.response.status).toBe('Success'); - Enable after #240 is merged
+      expect(requestMaker.response.status).toBe('Completed');
       expect(requestMaker.response.raw).toEqual(new Uint8Array(0));
     });
   });
