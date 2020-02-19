@@ -56,6 +56,56 @@ describe('RequestStore', () => {
 
       expect(requestStore.url).toBe('https://test.com/v2/asd');
     });
+
+    it('should combine path with enabled query params', () => {
+      Object.assign(requestStore, {
+        method: 'post',
+        publicBaseUrl: 'https://test.com',
+        path: '/test',
+        queryParams: [
+          {
+            name: 'paramName',
+            value: 'paramValue',
+            isEnabled: true,
+          },
+          {
+            name: 'disabledParamName',
+            value: 'disabledParamValue',
+            isEnabled: false,
+          },
+          {
+            schema: {
+              type: 'string',
+              enum: ['one', 'two', 'three'],
+            },
+            name: 'anotherParam',
+            isEnabled: true,
+          },
+          {
+            schema: {
+              type: 'boolean',
+              description: 'True or false?',
+            },
+            name: 'booleanParam',
+          },
+        ],
+      });
+
+      expect(requestStore.url).toBe('https://test.com/test?paramName=paramValue&anotherParam');
+    });
+
+    it('should resolve path params', () => {
+      requestStore.path = '/pet/{petId}';
+      requestStore.pathParams = [
+        {
+          name: 'petId',
+          value: '42',
+          isEnabled: true,
+        },
+      ];
+
+      expect(requestStore.url).toBe('pet/42');
+    });
   });
 
   describe('url - set', () => {
@@ -96,55 +146,22 @@ describe('RequestStore', () => {
     });
   });
 
-  describe('uri', () => {
-    it('should combine path with enabled query params', () => {
-      Object.assign(requestStore, {
-        method: 'post',
-        publicBaseUrl: 'https://test.com',
-        path: '/test',
-        queryParams: [
-          {
-            name: 'paramName',
-            value: 'paramValue',
-            isEnabled: true,
-          },
-          {
-            name: 'disabledParamName',
-            value: 'disabledParamValue',
-            isEnabled: false,
-          },
-          {
-            schema: {
-              type: 'string',
-              enum: ['one', 'two', 'three'],
-            },
-            name: 'anotherParam',
-            isEnabled: true,
-          },
-          {
-            schema: {
-              type: 'boolean',
-              description: 'True or false?',
-            },
-            name: 'booleanParam',
-          },
-        ],
-      });
+  describe('setPathAndQuery', () => {
+    it('should extract query params', () => {
+      requestStore.setPathAndQuery('?paramName=differentParamValue&anotherParam=someValue');
 
-      expect(requestStore.uri).toEqual('/test?paramName=paramValue&anotherParam');
-    });
-
-    it('should resolve path params', () => {
-      requestStore.path = '/pet/{petId}';
-      requestStore.pathParams = [
+      expect(requestStore.queryParams).toEqual([
         {
-          name: 'petId',
-          value: '42',
+          name: 'paramName',
+          value: 'differentParamValue',
           isEnabled: true,
         },
-      ];
-
-      expect(requestStore.uri).toBe('/pet/42');
+        {
+          name: 'anotherParam',
+          value: 'someValue',
+          isEnabled: true,
+        },
+      ]);
     });
 
     it('should set new uri correctly and preserve optional query params', () => {
@@ -181,7 +198,7 @@ describe('RequestStore', () => {
         ],
       });
 
-      requestStore.uri = 'http://uritest/path?testParam=testValue&anotherTestParam=';
+      requestStore.setPathAndQuery('http://uritest/path?testParam=testValue&anotherTestParam=');
       expect(requestStore.path).toEqual('/path');
       expect(requestStore.queryParams).toEqual([
         {
@@ -205,23 +222,6 @@ describe('RequestStore', () => {
             description: 'True or false?',
           },
           name: 'booleanParam',
-        },
-      ]);
-    });
-
-    it('should extract query params on uri change', () => {
-      requestStore.uri = 'http://uritest/path?paramName=differentParamValue&anotherParam=someValue';
-
-      expect(requestStore.queryParams).toEqual([
-        {
-          name: 'paramName',
-          value: 'differentParamValue',
-          isEnabled: true,
-        },
-        {
-          name: 'anotherParam',
-          value: 'someValue',
-          isEnabled: true,
         },
       ]);
     });
@@ -258,7 +258,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      requestStore.uri = 'http://uritest/path?paramName=differentParamValue&anotherParam=someValue';
+      requestStore.setPathAndQuery('http://uritest/path?paramName=differentParamValue&anotherParam=someValue');
 
       expect(requestStore.queryParams).toEqual([
         {
@@ -388,25 +388,6 @@ describe('RequestStore', () => {
       ];
 
       expect(requestStore.path).toEqual('/{pathParam}/{anotherParam}/{with a space}/{hashParam}/{questionMarkParam}');
-    });
-  });
-
-  describe('queryParams', () => {
-    it('should correctly set query params', () => {
-      requestStore.queryParams = [
-        {
-          name: 'queryParam',
-          value: 'value',
-          isEnabled: true,
-        },
-        {
-          name: 'anotherParam',
-          value: 'testValue',
-          isEnabled: false,
-        },
-      ];
-
-      expect(requestStore.uri).toEqual('/?queryParam=value');
     });
   });
 

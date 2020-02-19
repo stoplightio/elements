@@ -67,7 +67,7 @@ export const RequestEndpoint = observer<{
 
   const onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (showServerSuggestor) {
-      requestStore.uri = e.target.value;
+      requestStore.setPathAndQuery(e.target.value);
     } else {
       requestStore.url = e.target.value;
     }

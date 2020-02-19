@@ -371,7 +371,7 @@ export class RequestStore {
    * Combines path with pathParams and enabled query params
    */
   @computed
-  public get uri() {
+  private get uri() {
     const uri = new URI({
       path: replaceParamsInPath(this.path, this.pathParams) || '/',
     });
@@ -386,23 +386,6 @@ export class RequestStore {
     }
 
     return uri.toString();
-  }
-  public set uri(uri) {
-    const { path, query } = URI.parse(uri);
-    this.path = path || '/';
-
-    const newParams = extractQueryParams(query || '', this.queryParams);
-
-    // Add empty query param
-    if (uri.endsWith('?') || uri.endsWith('&')) {
-      newParams.push({
-        name: '',
-        value: '',
-        isEnabled: true,
-      });
-    }
-
-    this.queryParams = newParams;
   }
 
   /**
@@ -439,7 +422,7 @@ export class RequestStore {
     if (origin) this.publicBaseUrl = origin;
 
     const u = parsed.path() + (parsed.query() === '' ? '' : '?' + parsed.query());
-    this.uri = u;
+    this.setPathAndQuery(u);
   }
 
   @computed
@@ -590,6 +573,25 @@ export class RequestStore {
       return true;
     }
   }
+
+  @action
+  public setPathAndQuery = (uri: string) => {
+    const { path, query } = URI.parse(uri);
+    this.path = path || '/';
+
+    const newParams = extractQueryParams(query || '', this.queryParams);
+
+    // Add empty query param
+    if (uri.endsWith('?') || uri.endsWith('&')) {
+      newParams.push({
+        name: '',
+        value: '',
+        isEnabled: true,
+      });
+    }
+
+    this.queryParams = newParams;
+  };
 
   @action
   public setParam<T extends keyof IParam>(type: ParamType, indexOrName: string | number, prop: T, value: IParam[T]) {
