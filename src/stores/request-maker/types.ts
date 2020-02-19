@@ -1,4 +1,4 @@
-import { TreeListNode } from '@stoplight/tree-list';
+import { DeprecatedTreeListNode, TreeListNode } from '@stoplight/tree-list';
 import { IHttpParam, IHttpResponse } from '@stoplight/types';
 
 export type Response = ErrorResponse | IHttpResponse;
@@ -31,6 +31,8 @@ export interface INode {
   value?: unknown;
 }
 
+// todo(jr): use TreeListNode and merge it with JsonTreeListNode
+export type DeprecatedJsonTreeListNode = DeprecatedTreeListNode<INode>;
 export type JsonTreeListNode = TreeListNode<INode>;
 
 export type XHRResponseType = '' | 'json' | 'text' | 'xml' | 'html' | 'md' | 'img';

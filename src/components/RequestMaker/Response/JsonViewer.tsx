@@ -1,5 +1,4 @@
-import { RowRenderer, TreeList, TreeListEvents, TreeStore } from '@stoplight/tree-list';
-import { runInAction } from 'mobx';
+import { RowRenderer, Tree, TreeList, TreeListEvents, TreeState, TreeStore } from '@stoplight/tree-list';
 import * as React from 'react';
 import { renderTree } from '../../../utils/renderNode';
 import { JsonRow } from './JsonRow';
@@ -17,20 +16,19 @@ export const JsonViewer: React.FunctionComponent<JsonViewerProps> = ({
   expandedDepth = 2,
   maxRows = 10,
 }) => {
+  const tree = React.useRef(new Tree());
   const treeStore = React.useRef(
-    new TreeStore({
-      defaultExpandedDepth: expanded ? 2 ** 31 - 3 : expandedDepth,
-      nodes: [],
+    new TreeStore(tree.current, new TreeState(), {
+      defaultExpandedDepth: expanded ? Infinity : expandedDepth,
     }),
   );
 
   React.useEffect(() => {
-    runInAction(() => {
-      treeStore.current.nodes = renderTree(node);
-    });
-  }, [node]);
+    // todo(jr): use tree structure
+    tree.current.setRoot(Tree.toTree(renderTree(node)));
+  }, [tree.current]);
 
-  treeStore.current.on(TreeListEvents.NodeClick, (e, n) => treeStore.current.toggleExpand(n));
+  treeStore.current.events.on(TreeListEvents.NodeClick, (e, n) => treeStore.current.toggleExpand(n));
 
   const rowRenderer = React.useCallback<RowRenderer>(
     (n, rowOptions) => <JsonRow node={n} isExpanded={!!rowOptions.isExpanded} />,
