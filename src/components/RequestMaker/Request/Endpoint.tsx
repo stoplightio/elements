@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { map, toLower, uniqBy } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+import URI from 'urijs';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { highlightText } from '../../../utils/highlightText';
 import { RequestMethod } from './Method';
@@ -59,8 +60,10 @@ export const RequestEndpoint = observer<{
   const showServerSuggestor = requestStore.servers && requestStore.servers.length > 0;
 
   React.useEffect(() => {
-    setUrl(showServerSuggestor ? requestStore.uri : `${requestStore.baseUrl}${requestStore.uri}`);
-  }, [requestStore.uri, requestStore.baseUrl]);
+    const query = new URI(requestStore.url).search();
+    const pathAndQuery = `${requestStore.path}${query}`;
+    setUrl(showServerSuggestor ? pathAndQuery : `${requestStore.baseUrl}${pathAndQuery}`);
+  }, [requestStore.url]);
 
   const onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (showServerSuggestor) {

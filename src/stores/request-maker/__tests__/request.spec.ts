@@ -406,7 +406,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      expect(requestStore.uri).toEqual('?queryParam=value');
+      expect(requestStore.uri).toEqual('/?queryParam=value');
     });
   });
 

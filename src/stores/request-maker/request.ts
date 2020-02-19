@@ -136,9 +136,10 @@ export class RequestStore {
    * Transforms request properties into IHttpRequest
    */
   public toJSON() {
+    const url = new URI(this.url);
     const request: Partial<IHttpRequest> = {
       method: this.method,
-      url: this.url,
+      url: `${url.origin()}${url.path()}`,
     };
 
     if (this.queryParams.length > 0) {
@@ -195,9 +196,11 @@ export class RequestStore {
       }
     }
 
+    const url = new URI(this.url);
+
     return {
       method: this.method as Exclude<HttpMethod, 'trace'>,
-      url: this.url,
+      url: `${url.origin()}${url.path()}`,
       headers: getNameValuePairs(this.headerParams, { enabled: true }),
       params: getNameValuePairs(this.queryParams, { enabled: true }),
       ...(this.hasAuth && { auth: this.auth }),
@@ -280,12 +283,9 @@ export class RequestStore {
       };
     }
 
-    const url = new URI(this.url);
-    url.search(getNameValuePairs(this.queryParams, { enabled: true }));
-
     return {
       method: this.method.toUpperCase(),
-      url: url.toString(),
+      url: this.url,
       // @ts-ignore: Request is expecting a map, but HTTPSnippet is expecting an array
       headers: getEnabledParams(this.headerParams).map(p => pick(p, 'name', 'value')),
       postData,
@@ -368,11 +368,13 @@ export class RequestStore {
   }
 
   /**
-   * Combines path and enabled query params
+   * Combines path with pathParams and enabled query params
    */
   @computed
   public get uri() {
-    const uri = new URI(this.path);
+    const uri = new URI({
+      path: replaceParamsInPath(this.path, this.pathParams) || '/',
+    });
 
     uri.search({});
 
@@ -404,18 +406,25 @@ export class RequestStore {
   }
 
   /**
-   * Combines origin and path.
-   * Replaces enabled path parameters with their values.
+   * Combines baseUrl and URI
+   * This is the effective URL to be called by the user agent.
    */
   @computed
   public get url() {
     try {
       const baseUri = new URI(this.baseUrl);
+      const uri = new URI(this.uri);
 
-      return baseUri
-        .path(URI.joinPaths(baseUri.path(), replaceParamsInPath(this.path, this.pathParams)).path())
-        .search({})
-        .toString();
+      const path = URI.joinPaths(baseUri, uri.path()).path();
+      const final = new URI({
+        protocol: baseUri.protocol(),
+        hostname: baseUri.hostname(),
+        port: baseUri.port(),
+        path: path.startsWith('/') ? path.slice(1) : path,
+        query: uri.query(),
+      });
+
+      return final.toString();
     } catch (e) {
       // malformed uri
       if (e.name === 'URIError') {
