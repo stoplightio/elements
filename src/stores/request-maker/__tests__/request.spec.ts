@@ -134,6 +134,19 @@ describe('RequestStore', () => {
       expect(requestStore.uri).toEqual('/test?paramName=paramValue&anotherParam');
     });
 
+    it('should resolve path params', () => {
+      requestStore.path = '/pet/{petId}';
+      requestStore.pathParams = [
+        {
+          name: 'petId',
+          value: '42',
+          isEnabled: true,
+        },
+      ];
+
+      expect(requestStore.uri).toBe('/pet/42');
+    });
+
     it('should set new uri correctly and preserve optional query params', () => {
       Object.assign(requestStore, {
         method: 'post',
