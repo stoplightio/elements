@@ -1799,14 +1799,14 @@
     tslib "^1.10.0"
     urijs "~1.19.1"
 
-"@stoplight/json-schema-viewer@^3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.2.tgz#da7aa5da580c660ebaa63ddaca194ded7edf5fea"
-  integrity sha512-sEF6LGGSsrRr+vvCVQPQgYC5o/+LYslL2cv5MYmOd5BWUKb02QdABTOivVYNdGrvOZZawrIS0DrFgQEFBPdFbw==
+"@stoplight/json-schema-viewer@^3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.3.tgz#b6f0e8b4ce7911171e26405f2edc5595ae8dc3e4"
+  integrity sha512-iainhbv4DpGdGSx3gJe/01R/UdYMDH2iXS/I634CC2tkpyhb1oSXltLkgFL/wSTmuWfD8KwHyQMhlc88m2I/Nw==
   dependencies:
     "@stoplight/json" "^3.5.1"
     "@stoplight/react-error-boundary" "^1.0.0"
-    "@stoplight/tree-list" "5.0.0-beta.1"
+    "@stoplight/tree-list" "5.0.0-beta.2"
     classnames "^2.2.6"
     json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash "^4.17.15"
@@ -1965,10 +1965,10 @@
     ts-loader "^6.2.1"
     webpack "^4.41.5"
 
-"@stoplight/tree-list@5.0.0-beta.1", "@stoplight/tree-list@^5.0.0-beta.1":
-  version "5.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.0-beta.1.tgz#5ec0b96365af3684d118403ef6fe1f6cc0c754b9"
-  integrity sha512-X2ShK7uugu+Aiunx45txafPUTV+0qxjDX5n9r1y5WcwK8Ds6XMgaM0/FgzTw4I9XWQ310WK77ndsEVNn9axrhQ==
+"@stoplight/tree-list@5.0.0-beta.2", "@stoplight/tree-list@^5.0.0-beta.2":
+  version "5.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.0-beta.2.tgz#b60dbea9df1d3c7e01bdfd8dc05388978128df83"
+  integrity sha512-yZLakRr55gf8Z2ZYuJzh9v7NJGZ8MlsKncAMa8md5HqWKucHhZXJhvlJSHLz9cwnk5dfNXSDUf+Pgv2zBe4YJA==
   dependencies:
     "@stoplight/lifecycle" "^2.2.1"
     "@stoplight/react-error-boundary" "^1.0.0"
@@ -9675,9 +9675,9 @@ json-schema-faker@0.5.0-rc23:
     jsonpath-plus "^1.0.0"
     randexp "^0.5.3"
 
-"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
+"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
