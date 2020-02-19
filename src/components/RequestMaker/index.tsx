@@ -12,15 +12,15 @@ export * from './Response';
 type RequestMakerProps =
   | {
       request: Partial<IHttpRequest>;
-      operation?: Partial<IHttpOperation>;
+      operation?: unknown;
     }
   | {
       operation: Partial<IHttpOperation>;
-      request?: Partial<IHttpRequest>;
+      request?: undefined;
     };
 
 export const RequestMaker: React.FC<RequestMakerProps> = props => {
-  const store = useRequestMaker(props.request || props.operation || {});
+  const store = useRequestMaker(props.request || props.operation);
   return (
     <RequestMakerProvider value={store}>
       <RequestEndpoint />
