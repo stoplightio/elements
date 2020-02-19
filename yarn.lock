@@ -1863,25 +1863,25 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.1.tgz#1246c983279af20dcfb806d138add9f81cb1efd2"
   integrity sha512-I6YEfxspGglxt7MbgNbKThHdqh8CJWnDC1x1JUk2rka2D7mCpMSEu5I8IiAp997Dp4YIXDY6Did6gge8OY8KnA==
 
-"@stoplight/prism-core@^3.2.8":
-  version "3.2.8"
-  resolved "https://registry.yarnpkg.com/@stoplight/prism-core/-/prism-core-3.2.8.tgz#6b34fc4134a4085037dab70520205552f1908848"
-  integrity sha512-Y/HEdcRPG4zc536CuINYMbHtxlTukvvJQlxG7WsmFAD589DjfbG7nXgMZmvn2EWgBVJ43jUYl72fkSupcMnseA==
+"@stoplight/prism-core@^3.2.9":
+  version "3.2.9"
+  resolved "https://registry.yarnpkg.com/@stoplight/prism-core/-/prism-core-3.2.9.tgz#d3c638af0d967c27839fb3d10e27b1109fe9df3a"
+  integrity sha512-Fn+/Ef86IIDKXsislWiLi1WPYSmgbHpIneXQKydZUZ/nZuaM9yiN0YmaOtcym2AX1hLoBueCqQhStrmzILFG8Q==
   dependencies:
     lodash "^4.17.15"
     pino "^5.13.2"
     tslib "^1.10.0"
 
-"@stoplight/prism-http@^3.2.8":
-  version "3.2.8"
-  resolved "https://registry.yarnpkg.com/@stoplight/prism-http/-/prism-http-3.2.8.tgz#89f81ca67a318ff3baeb78ebb7a767f318b48f32"
-  integrity sha512-BhgiuMZoj+c4DRFBytacgTFaZLSAEjbZBopyaFx3AqsKGhUpACXjtm9/c7Y/pB3rgQjCzjtZ1kWlR61PbHiUSg==
+"@stoplight/prism-http@^3.2.9":
+  version "3.2.9"
+  resolved "https://registry.yarnpkg.com/@stoplight/prism-http/-/prism-http-3.2.9.tgz#ef3462ba582d5cc37ebb16bd5547efbbb5ec60cf"
+  integrity sha512-OrpYEIAF8BMUt3tKSu3QBKQhhcZ31mmgzWAvcw8MkAkRO+/FKU4CyLtq38RGKz5mvhO3Z/QvOt10OR5L50P63g==
   dependencies:
     "@stoplight/http-spec" "^2.2.3"
     "@stoplight/json" "^3.1.2"
     "@stoplight/json-ref-readers" "^1.1.1"
     "@stoplight/json-ref-resolver" "^3.0.1"
-    "@stoplight/prism-core" "^3.2.8"
+    "@stoplight/prism-core" "^3.2.9"
     "@stoplight/yaml" "^3.0.2"
     abstract-logging "^2.0.0"
     accepts "^1.3.7"
@@ -9670,9 +9670,9 @@ json-schema-faker@0.5.0-rc23:
     jsonpath-plus "^1.0.0"
     randexp "^0.5.3"
 
-"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
+"json-schema-merge-allof@https://github.com/stoplightio/json-schema-merge-allof":
   version "0.6.0"
-  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
+  resolved "https://github.com/stoplightio/json-schema-merge-allof#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
