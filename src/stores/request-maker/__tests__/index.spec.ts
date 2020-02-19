@@ -4,6 +4,7 @@ import axios from 'axios';
 import 'jest-enzyme';
 import { RequestMakerStore } from '..';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
+import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 
 describe('RequestMakerStore', () => {
   let requestMaker: RequestMakerStore;
@@ -289,6 +290,16 @@ describe('RequestMakerStore', () => {
       requestMaker.request.method = 'get';
       expect(requestMaker.isMockEnabled).toBe(false);
       expect(requestMaker.request.shouldMock).toBe(false);
+    });
+  });
+
+  describe('Integration - empty response operation', () => {
+    it('should be mocked correctly', async () => {
+      requestMaker.setOperationData(emptyResponseOperation);
+      requestMaker.request.path = '/dummy';
+      await requestMaker.mock();
+      // expect(requestMaker.response.status).toBe('Success'); - Enable after #240 is merged
+      expect(requestMaker.response.raw).toEqual(new ArrayBuffer(0));
     });
   });
 });
