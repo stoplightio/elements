@@ -5,6 +5,7 @@ import axios, { AxiosError } from 'axios';
 import { computed, observable } from 'mobx';
 import { arrayBufferToBase64String, arrayBufferUtf8ToString, stringToArrayBuffer } from '../../utils/arrayBuffer';
 import { getResponseType } from '../../utils/getResponseType';
+import { HttpCodeDescriptions } from '../../utils/http';
 import { IHttpNameValue, XHRResponseType } from './types';
 
 type MockResponse = {
@@ -27,7 +28,7 @@ export class ResponseStore {
   public readonly statusCode: number;
 
   @observable
-  public readonly statusText: 'Success' | 'Error' | 'Canceled' | '';
+  public readonly status: 'Completed' | 'Error' | 'Canceled' | '';
 
   @observable.ref
   public readonly headers: IHttpNameValue;
@@ -45,14 +46,14 @@ export class ResponseStore {
   public originalRequest?: Partial<IHttpRequest>;
 
   private constructor(
-    statusText: 'Success' | 'Error' | 'Canceled' | '',
+    status: 'Completed' | 'Error' | 'Canceled' | '',
     statusCode: number,
     headers: IHttpNameValue,
     rawbody: ArrayBuffer,
     isMockedResponse: boolean,
     error?: Error,
   ) {
-    this.statusText = statusText;
+    this.status = status;
     this.statusCode = statusCode;
     this.headers = headers;
     this.raw = rawbody;
@@ -65,7 +66,13 @@ export class ResponseStore {
   }
 
   public static fromNetworkResponse(response: NetworkResponse) {
-    return new ResponseStore('Success', response.status, response.headers, response.data || new ArrayBuffer(0), false);
+    return new ResponseStore(
+      'Completed',
+      response.status,
+      response.headers,
+      response.data || new ArrayBuffer(0),
+      false,
+    );
   }
 
   public static fromAxiosError(err: AxiosError) {
@@ -86,11 +93,19 @@ export class ResponseStore {
   public static fromMockObjectResponse(responseObject: MockResponse) {
     const stringData = JSON.stringify(responseObject.data);
     const abData = (stringData && stringToArrayBuffer(stringData)) || new Uint8Array();
-    return new ResponseStore('Success', responseObject.status, responseObject.headers || {}, abData, true);
+    return new ResponseStore('Completed', responseObject.status, responseObject.headers || {}, abData, true);
   }
 
   public static fromError(err: Error) {
     return new ResponseStore('Error', 0, {}, new ArrayBuffer(0), false, err);
+  }
+
+  @computed
+  public get statusText() {
+    if (this.status === 'Completed') {
+      return `${this.statusCode} ${HttpCodeDescriptions[this.statusCode]}`;
+    }
+    return this.status;
   }
 
   @computed
