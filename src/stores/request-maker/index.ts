@@ -1,6 +1,6 @@
 import axios, { CancelTokenSource } from 'axios';
 import { flatMap, isEqual, merge, pickBy } from 'lodash';
-import { action, computed, configure, flow, observable, reaction } from 'mobx';
+import { action, computed, configure, flow, observable, reaction, runInAction } from 'mobx';
 
 import { IHttpConfig, IHttpOperationConfig } from '@stoplight/prism-http';
 import * as PrismClient from '@stoplight/prism-http/dist/client';
@@ -181,16 +181,17 @@ export class RequestMakerStore {
     }
   };
 
-  public mock = flow(function*(this: RequestMakerStore) {
+  @action
+  public mock = async () => {
     if (!this.operation) return;
 
     this.isSending = true;
 
     const time = Date.now();
 
-    let store;
+    let store: ResponseStore;
     try {
-      const response = yield this.prism.request(this.request.url, this.request.toPrism());
+      const response = await this.prism.request(this.request.url, this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse(response);
     } catch (err) {
       store = ResponseStore.fromError(err);
@@ -199,11 +200,14 @@ export class RequestMakerStore {
     store.responseTime = Date.now() - time;
     store.originalRequest = this.request.toJSON();
 
-    this.response = store;
-    this.isSending = false;
-  }).bind(this);
+    runInAction(() => {
+      this.response = store;
+      this.isSending = false;
+    });
+  };
 
-  public send = flow(function*(this: RequestMakerStore) {
+  @action
+  public send = async () => {
     this.isSending = true;
 
     // If there's already a request in progress, cancel it
@@ -218,7 +222,7 @@ export class RequestMakerStore {
     let store: ResponseStore;
 
     try {
-      const response = yield axios.request({
+      const response = await axios.request({
         ...this.request.toAxios(),
         cancelToken: this.cancelToken.token,
         timeout: this.request.timeout,
@@ -240,10 +244,12 @@ export class RequestMakerStore {
     store.responseTime = Date.now() - time;
     store.originalRequest = this.request.toJSON();
 
-    this.cancelToken = undefined;
-    this.response = store;
-    this.isSending = false;
-  }).bind(this);
+    runInAction(() => {
+      this.cancelToken = undefined;
+      this.response = store;
+      this.isSending = false;
+    });
+  };
 
   @action
   public cancel() {
