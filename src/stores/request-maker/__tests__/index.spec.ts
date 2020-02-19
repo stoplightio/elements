@@ -3,6 +3,7 @@ import { HttpParamStyles } from '@stoplight/types';
 import axios from 'axios';
 import 'jest-enzyme';
 import { RequestMakerStore } from '..';
+import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
 
 describe('RequestMakerStore', () => {
@@ -201,7 +202,7 @@ describe('RequestMakerStore', () => {
 
       expect(requestMaker.response).toMatchObject({
         statusCode: 200,
-        statusText: 'Success',
+        status: 'Completed',
         headers: {
           responseHeader: 'responseHeaderValue',
         },
@@ -236,7 +237,7 @@ describe('RequestMakerStore', () => {
       await requestMaker.send();
 
       expect(requestMaker.response).toMatchObject({
-        statusText: 'Error',
+        status: 'Error',
         statusCode: 0,
         headers: {},
         body: '',
@@ -289,6 +290,16 @@ describe('RequestMakerStore', () => {
       requestMaker.request.method = 'get';
       expect(requestMaker.isMockEnabled).toBe(false);
       expect(requestMaker.request.shouldMock).toBe(false);
+    });
+  });
+
+  describe('Integration - empty response operation', () => {
+    it('should be mocked correctly', async () => {
+      requestMaker.setOperationData(emptyResponseOperation);
+      requestMaker.request.path = '/dummy';
+      await requestMaker.mock();
+      expect(requestMaker.response.status).toBe('Completed');
+      expect(requestMaker.response.raw).toEqual(new Uint8Array(0));
     });
   });
 });

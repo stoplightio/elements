@@ -16,47 +16,66 @@ describe('ResponseStore', () => {
   });
 
   describe('fromNetworkResponse', () => {
-    const bodyText = '{"test": "json"}';
-    const sampleResponse = {
-      status: 201,
-      headers: {
-        'X-Custom-Header': 'CustomValue',
-      },
-      data: stringToArrayBuffer(bodyText),
-    };
+    describe('success', () => {
+      const bodyText = '{"test": "json"}';
+      const sampleResponse = {
+        status: 201,
+        headers: {
+          'X-Custom-Header': 'CustomValue',
+        },
+        data: stringToArrayBuffer(bodyText),
+      };
 
-    let store: ResponseStore;
+      let store: ResponseStore;
 
-    beforeEach(() => {
-      store = ResponseStore.fromNetworkResponse(sampleResponse);
+      beforeEach(() => {
+        store = ResponseStore.fromNetworkResponse(sampleResponse);
+      });
+
+      it('should have correct status code', () => {
+        expect(store.statusCode).toEqual(sampleResponse.status);
+      });
+
+      it('should have custom header', () => {
+        expect(store.headers).toEqual(sampleResponse.headers);
+      });
+
+      it('should have no error', () => {
+        expect(store.error).toBeUndefined();
+      });
+
+      it('should have raw body', () => {
+        expect(store.raw).toEqual(sampleResponse.data);
+      });
+
+      it('should have status text calculated', () => {
+        expect(store.statusText).toBe('201 Created');
+      });
+
+      it('should have body decoded', () => {
+        expect(store.body).toBe(bodyText);
+      });
+
+      it('should have body JSON parsed', () => {
+        expect(store.bodyJson).toEqual({ test: 'json' });
+      });
     });
 
-    it('should have correct status code', () => {
-      expect(store.statusCode).toEqual(sampleResponse.status);
-    });
+    describe('http error code', () => {
+      const sampleResponse = {
+        status: 401,
+        headers: {},
+      };
 
-    it('should have custom header', () => {
-      expect(store.headers).toEqual(sampleResponse.headers);
-    });
+      let store: ResponseStore;
 
-    it('should have no error', () => {
-      expect(store.error).toBeUndefined();
-    });
+      beforeEach(() => {
+        store = ResponseStore.fromNetworkResponse(sampleResponse);
+      });
 
-    it('should have raw body', () => {
-      expect(store.raw).toEqual(sampleResponse.data);
-    });
-
-    it('should have status text calculated', () => {
-      expect(store.statusText).toBe('Success');
-    });
-
-    it('should have body decoded', () => {
-      expect(store.body).toBe(bodyText);
-    });
-
-    it('should have body JSON parsed', () => {
-      expect(store.bodyJson).toEqual({ test: 'json' });
+      it('should have status text calculated', () => {
+        expect(store.statusText).toBe('401 Unauthorized');
+      });
     });
   });
 
@@ -127,8 +146,8 @@ describe('ResponseStore', () => {
       expect(store.error).toBeUndefined();
     });
 
-    it('should have status text success', () => {
-      expect(store.statusText).toBe('Success');
+    it('should have status text calculated', () => {
+      expect(store.statusText).toBe('201 Created');
     });
 
     it('should have body text encoded', () => {

@@ -91,7 +91,7 @@ describe('useRequestMaker()', () => {
     expect(store1).toEqual(store2);
   });
 
-  test('it should return cached request maker store with matching operation', () => {
+  test('it should return cached request maker store with matching request', () => {
     const request = {
       method: 'get',
       baseUrl: 'http://todos.stoplight.io',
