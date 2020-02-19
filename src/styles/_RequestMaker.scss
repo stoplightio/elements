@@ -1,0 +1,90 @@
+@import '~@stoplight/ui-kit/styles/blueprint/variables';
+@import '~@stoplight/markdown-viewer/styles/markdown-viewer';
+
+.RequestMaker__RequestEditor,
+.RequestMaker__ResponseViewer {
+  .#{$ns}-tab-panel {
+    margin-top: 0;
+    overflow: auto;
+  }
+
+  .#{$ns}-tab-list {
+    z-index: 10;
+    bottom: -1px;
+    padding: 0 0.5rem;
+    align-items: center;
+    overflow-x: auto;
+  }
+
+  .#{$ns}-tab {
+    margin: 0 10px;
+  }
+}
+
+.RequestMaker__RequestEndpoint {
+  .RequestMaker__RequestHost input,
+  .RequestMaker__RequestPath input,
+  .RequestMaker__RequestMethod > select {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .RequestMaker__RequestMethod > select {
+    border-top-left-radius: 3px;
+  }
+
+  .RequestMaker__RequestSend button {
+    border-radius: 0;
+    border-top-right-radius: 3px;
+  }
+}
+
+.RequestMaker__RequestParameters,
+.RequestMaker__RequestHeaders {
+  .#{$ns}-input {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.RequestMaker__SuggestionBar {
+  background-color: #fefcbf;
+}
+
+.#{$ns}-dark {
+  .RequestMaker,
+  .RequestMaker__RequestBody,
+  .RequestMaker__RequestEndpoint,
+  .RequestMaker__RequestEditor,
+  .RequestMaker__RequestHeaders,
+  .RequestMaker__RequestParameters,
+  .RequestMaker__ResponseBody,
+  .RequestMaker__ResponseHeaders,
+  .RequestMaker__ResponseViewer {
+    border-color: rgba(16, 22, 26, 0.4);
+
+    * {
+      border-color: rgba(16, 22, 26, 0.4);
+    }
+  }
+
+  .#{$ns}-code-editor {
+    background-color: transparent;
+  }
+
+  .RequestMaker__RequestViewer,
+  .RequestMaker__RequestBody--content,
+  .RequestMaker__ResponseBody--content,
+  .RequestMaker__ResponseHeaders {
+    background-color: rgba(16, 22, 26, 0.3);
+
+    &.RequestMaker__RequestBody--form-data,
+    &.RequestMaker__RequestBody--x-www-form-urlencoded {
+      background-color: transparent;
+    }
+  }
+
+  .RequestMaker__SuggestionBar {
+    background-color: #2c7a7b;
+  }
+}

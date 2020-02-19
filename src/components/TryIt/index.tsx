@@ -1,10 +1,10 @@
-import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '@stoplight/request-maker';
 import { IHttpOperation, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
 import { useRequestMaker } from '../../hooks/useRequestMaker';
 import { useResolver } from '../../hooks/useResolver';
+import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '../RequestMaker';
 
 export interface ITryItProps extends IErrorBoundary {
   value: any;
