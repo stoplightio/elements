@@ -5,6 +5,7 @@ import axios, { AxiosError } from 'axios';
 import { computed, observable } from 'mobx';
 import { arrayBufferToBase64String, arrayBufferUtf8ToString, stringToArrayBuffer } from '../../utils/arrayBuffer';
 import { getResponseType } from '../../utils/getResponseType';
+import { HttpCodeDescriptions } from '../../utils/http';
 import { IHttpNameValue, XHRResponseType } from './types';
 
 type MockResponse = {
@@ -27,7 +28,7 @@ export class ResponseStore {
   public readonly statusCode: number;
 
   @observable
-  public readonly statusText: 'Success' | 'Error' | 'Canceled' | '';
+  public readonly status: 'Success' | 'Error' | 'Canceled' | '';
 
   @observable.ref
   public readonly headers: IHttpNameValue;
@@ -45,14 +46,14 @@ export class ResponseStore {
   public originalRequest?: Partial<IHttpRequest>;
 
   private constructor(
-    statusText: 'Success' | 'Error' | 'Canceled' | '',
+    status: 'Success' | 'Error' | 'Canceled' | '',
     statusCode: number,
     headers: IHttpNameValue,
     rawbody: ArrayBuffer,
     isMockedResponse: boolean,
     error?: Error,
   ) {
-    this.statusText = statusText;
+    this.status = status;
     this.statusCode = statusCode;
     this.headers = headers;
     this.raw = rawbody;
@@ -91,6 +92,14 @@ export class ResponseStore {
 
   public static fromError(err: Error) {
     return new ResponseStore('Error', 0, {}, new ArrayBuffer(0), false, err);
+  }
+
+  @computed
+  public get statusText() {
+    if (this.status === 'Success') {
+      return `${this.statusCode} ${HttpCodeDescriptions[this.statusCode]}`;
+    }
+    return this.status;
   }
 
   @computed

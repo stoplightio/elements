@@ -115,9 +115,7 @@ export const ResponseViewer = observer<ResponseProps>(({ tabs = defaultTabs, cla
 
           <div className="flex mx-3">
             <div className="mr-2">Status:</div>
-            <div className={`text-${color} whitespace-no-wrap`}>
-              {responseStore.statusCode} {responseStore.statusText}
-            </div>
+            <div className={`text-${color} whitespace-no-wrap`}>{responseStore.statusText}</div>
           </div>
 
           <div className="flex mx-3">
