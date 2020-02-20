@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Search as SearchComponent } from '../components/Search';
-import { useDebounce } from '../hooks/useDebounce';
+import { useDebounce } from '../hooks';
 import { useProjectSearch } from '../hooks/useProjectSearch';
 
 export interface ISearchContainer {
