@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { XHRResponseType } from '../stores/request-maker/types';
+import { prettifyJSON } from '../utils/prettifiers/json';
 
 const prettify = (response: unknown, language: XHRResponseType) => {
   switch (language) {
     case 'json':
-      return JSON.stringify(response, null, 2);
+      return prettifyJSON(response);
     default:
       return String(response);
   }
@@ -17,18 +18,16 @@ export const usePrettifiedResponse = (response: unknown, language: XHRResponseTy
     let isMounted = true;
 
     try {
-      const v = prettify(response, language)
+      const v = prettify(response, language);
       if (!isMounted) return;
       setPrettifiedResponse(v);
-    }
-    catch {
+    } catch {
       if (!isMounted) return;
       setPrettifiedResponse(String(response));
-    } finally {
-      return () => {
-        isMounted = false;
-      };
     }
+    return () => {
+      isMounted = false;
+    };
   }, [response, language]);
 
   return prettifiedResponse;
