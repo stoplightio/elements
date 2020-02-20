@@ -438,7 +438,6 @@ export class RequestStore {
 
   @action
   public setQueryParamsFromString = (queryString: string) => {
-
     const newParams = extractQueryParams(queryString, this.queryParams);
 
     // Add empty query param

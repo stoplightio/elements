@@ -67,7 +67,6 @@ export const RequestEndpoint = observer<{
 
   const onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (showServerSuggestor) {
-      
       const { path, query } = URI.parse(e.target.value);
       requestStore.path = path || '/';
       requestStore.setQueryParamsFromString(query || '');

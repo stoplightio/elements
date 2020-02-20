@@ -808,9 +808,9 @@ describe('RequestStore', () => {
 
       expect(requestStore.generateCode('shell', 'curl')).toBe(
         `curl --request POST \\` +
-        `\n  --url 'https://test.com/test?queryName=queryValue' \\` +
-        `\n  --header 'content-type: application/json' \\` +
-        `\n  --data '{"foo":"bar"}'`,
+          `\n  --url 'https://test.com/test?queryName=queryValue' \\` +
+          `\n  --header 'content-type: application/json' \\` +
+          `\n  --data '{"foo":"bar"}'`,
       );
     });
 
@@ -826,7 +826,7 @@ describe('RequestStore', () => {
 
       expect(requestStore.generateCode('markdown')).toBe(
         '```json http\n' +
-        `{
+          `{
   "method": "post",
   "url": "https://test.com/test",
   "query": {
@@ -839,7 +839,7 @@ describe('RequestStore', () => {
     "foo": "bar"
   }
 }` +
-        '\n```',
+          '\n```',
       );
     });
 
