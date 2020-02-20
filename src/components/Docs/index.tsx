@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ActiveSrnContext } from '../../containers/Provider';
-import { useComponentSize } from '../../hooks';
+import { useComponentSize } from '../../hooks/useComponentSize';
 import { useComputeMarkdownHeadings } from '../../hooks/useComputeMarkdownHeadings';
 import { INodeInfo } from '../../types';
 import { buildNodeMarkdownTree } from '../../utils/buildNodeMarkdownTree';
