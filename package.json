@@ -22,8 +22,6 @@
   "scripts": {
     "build": "yarn build.components && yarn build.styles && yarn build.widgets",
     "build.components": "sl-scripts build",
-    "build.widgets": "NODE_ENV=production webpack -p --config webpack.config.js",
-    "build.widgets.analyze": "RUN_CONTEXT=analyze NODE_ENV=production webpack -p --config webpack.config.js",
     "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "commit": "git-cz",
@@ -120,10 +118,7 @@
     "tslint-config-stoplight": "1.4.0",
     "tslint-react": "4.1.x",
     "tslint-react-hooks": "2.2.x",
-    "typescript": "3.7.2",
-    "webpack": "^4.41.2",
-    "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-cli": "^3.3.10"
+    "typescript": "3.7.2"
   },
   "lint-staged": {
     "*.{ts,tsx}$": [
