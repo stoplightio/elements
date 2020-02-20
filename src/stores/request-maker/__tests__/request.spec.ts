@@ -198,8 +198,9 @@ describe('RequestStore', () => {
         ],
       });
 
-      requestStore.setPathAndQuery('http://uritest/path?testParam=testValue&anotherTestParam=');
+      requestStore.setPathAndQuery('/path?testParam=testValue&anotherTestParam=');
       expect(requestStore.path).toEqual('/path');
+      expect(requestStore.baseUrl).toEqual('https://test.com');
       expect(requestStore.queryParams).toEqual([
         {
           name: 'testParam',
