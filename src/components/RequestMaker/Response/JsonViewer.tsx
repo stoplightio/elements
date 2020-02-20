@@ -1,4 +1,13 @@
-import { RowRenderer, Tree, TreeList, TreeListEvents, TreeState, TreeStore, isParentNode, TreeListParentNode } from '@stoplight/tree-list';
+import {
+  isParentNode,
+  RowRenderer,
+  Tree,
+  TreeList,
+  TreeListEvents,
+  TreeListParentNode,
+  TreeState,
+  TreeStore,
+} from '@stoplight/tree-list';
 import * as React from 'react';
 import { renderTree } from '../../../utils/renderNode';
 import { JsonRow } from './JsonRow';

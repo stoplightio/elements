@@ -16,16 +16,6 @@ import { HTMLViewer } from '../Response/HTMLViewer';
 import { ImageViewer } from '../Response/ImageViewer';
 import { JsonViewer } from '../Response/JsonViewer';
 import { PrettyViewer } from '../Response/PrettyViewer';
-import { RawViewer } from '../Response/RawViewer';
-
-jest.mock('@stoplight/tree-list', () => ({
-  TreeStore: class {
-    // tslint:disable-next-line: no-empty
-    public on() {}
-  },
-  TreeList: () => <div></div>,
-  TreeListEvents: {},
-}));
 
 describe('ResponseBody component', () => {
   let wrapper: ReactWrapper;

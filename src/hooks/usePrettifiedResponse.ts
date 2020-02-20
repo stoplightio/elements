@@ -1,23 +1,9 @@
 import * as React from 'react';
 import { XHRResponseType } from '../stores/request-maker/types';
-import { prettifyHTML } from '../utils/prettifiers/html';
 import { prettifyJSON } from '../utils/prettifiers/json';
-import { prettifyXML } from '../utils/prettifiers/xml';
 
 const prettify = async (response: unknown, language: XHRResponseType) => {
   switch (language) {
-    case 'xml':
-      if (typeof response === 'string' || response instanceof XMLDocument) {
-        return prettifyXML(response);
-      }
-
-      return String(response);
-    case 'html':
-      if (typeof response === 'string' || response instanceof HTMLDocument) {
-        return prettifyHTML(response) as Promise<string>;
-      }
-
-      return String(response);
     case 'json':
       return prettifyJSON(response) as string;
     default:
