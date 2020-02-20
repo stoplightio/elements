@@ -20,7 +20,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "yarn build.components && yarn build.styles && yarn build.widgets",
+    "build": "yarn build.components",
+    "postbuild": "yarn build.styles",
     "build.components": "sl-scripts build",
     "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
