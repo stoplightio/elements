@@ -1,4 +1,4 @@
-import { RowRenderer, Tree, TreeList, TreeListEvents, TreeState, TreeStore } from '@stoplight/tree-list';
+import { RowRenderer, Tree, TreeList, TreeListEvents, TreeState, TreeStore, isParentNode, TreeListParentNode } from '@stoplight/tree-list';
 import * as React from 'react';
 import { renderTree } from '../../../utils/renderNode';
 import { JsonRow } from './JsonRow';
@@ -28,7 +28,11 @@ export const JsonViewer: React.FunctionComponent<JsonViewerProps> = ({
     tree.current.setRoot(Tree.toTree(renderTree(node)));
   }, [tree.current]);
 
-  treeStore.current.events.on(TreeListEvents.NodeClick, (e, n) => treeStore.current.toggleExpand(n));
+  treeStore.current.events.on(TreeListEvents.NodeClick, (e, n) => {
+    if (isParentNode(n)) {
+      treeStore.current.toggleExpand(n as TreeListParentNode);
+    }
+  });
 
   const rowRenderer = React.useCallback<RowRenderer>(
     (n, rowOptions) => <JsonRow node={n} isExpanded={!!rowOptions.isExpanded} />,
