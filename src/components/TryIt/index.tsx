@@ -8,14 +8,14 @@ import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } 
 
 export interface ITryItProps extends IErrorBoundary {
   value: any;
-
+  mockUrl?: string;
   padding?: string;
   className?: string;
 }
 
-const TryItComponent: React.FunctionComponent<ITryItProps> = ({ className, value, padding = '12' }) => {
+const TryItComponent: React.FunctionComponent<ITryItProps> = ({ value, mockUrl, padding = '12', className }) => {
   const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
-  const store = useRequestMaker(result, true);
+  const store = useRequestMaker(result, true, mockUrl);
 
   return (
     <div className={cn('Page__content TryIt', `p-${padding}`, className)}>
