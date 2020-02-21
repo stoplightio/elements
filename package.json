@@ -20,10 +20,9 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "yarn build.components && yarn build.styles && yarn build.widgets",
+    "build": "yarn build.components",
+    "postbuild": "yarn build.styles",
     "build.components": "sl-scripts build",
-    "build.widgets": "NODE_ENV=production webpack -p --config webpack.config.js",
-    "build.widgets.analyze": "RUN_CONTEXT=analyze NODE_ENV=production webpack -p --config webpack.config.js",
     "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "commit": "git-cz",
@@ -63,7 +62,6 @@
     "mobx-react-lite": "^1.5.1",
     "object-hash": "^2.0.0",
     "openapi-sampler": "^1.0.0-beta.15",
-    "prettier": "^1.19.1",
     "react-error-boundary": "^1.2.5",
     "react-graph-vis": "^1.0.5",
     "swr": "^0.1.16",
@@ -77,8 +75,8 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
+    "@stoplight/scripts": "8.2.0",
     "@stoplight/prism-http": "^3.2.9",
-    "@stoplight/scripts": "5.1.0",
     "@stoplight/storybook-config": "^2.0.4",
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "3.x.x",
@@ -90,7 +88,6 @@
     "@types/react": "16.x.x",
     "@types/react-dom": "16.x.x",
     "@types/type-is": "^1.6.3",
-    "@types/typescript": "^2.0.0",
     "@types/urijs": "^1.19.4",
     "@types/vis": "^4.21.19",
     "autoprefixer": "^9.7.2",
@@ -121,15 +118,11 @@
     "tslint-config-stoplight": "1.4.0",
     "tslint-react": "4.1.x",
     "tslint-react-hooks": "2.2.x",
-    "typescript": "3.7.2",
-    "webpack": "^4.41.2",
-    "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-cli": "^3.3.10"
+    "typescript": "3.7.5"
   },
   "lint-staged": {
     "*.{ts,tsx}$": [
-      "yarn lint.fix",
-      "git add"
+      "yarn lint.fix"
     ]
   },
   "husky": {

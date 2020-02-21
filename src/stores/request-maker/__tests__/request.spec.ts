@@ -146,9 +146,9 @@ describe('RequestStore', () => {
     });
   });
 
-  describe('setPathAndQuery', () => {
+  describe('setQueryParamsFromString', () => {
     it('should extract query params', () => {
-      requestStore.setPathAndQuery('?paramName=differentParamValue&anotherParam=someValue');
+      requestStore.setQueryParamsFromString('?paramName=differentParamValue&anotherParam=someValue');
 
       expect(requestStore.queryParams).toEqual([
         {
@@ -164,7 +164,7 @@ describe('RequestStore', () => {
       ]);
     });
 
-    it('should set new uri correctly and preserve optional query params', () => {
+    it('should preserve optional query params', () => {
       Object.assign(requestStore, {
         method: 'post',
         publicBaseUrl: 'https://test.com',
@@ -198,9 +198,7 @@ describe('RequestStore', () => {
         ],
       });
 
-      requestStore.setPathAndQuery('/path?testParam=testValue&anotherTestParam=');
-      expect(requestStore.path).toEqual('/path');
-      expect(requestStore.baseUrl).toEqual('https://test.com');
+      requestStore.setQueryParamsFromString('testParam=testValue&anotherTestParam=');
       expect(requestStore.queryParams).toEqual([
         {
           name: 'testParam',
@@ -227,7 +225,7 @@ describe('RequestStore', () => {
       ]);
     });
 
-    it('should preserve query param order on uri change', () => {
+    it('should preserve query param order', () => {
       requestStore.queryParams = [
         {
           name: 'paramName',
@@ -259,7 +257,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      requestStore.setPathAndQuery('http://uritest/path?paramName=differentParamValue&anotherParam=someValue');
+      requestStore.setQueryParamsFromString('?paramName=differentParamValue&anotherParam=someValue');
 
       expect(requestStore.queryParams).toEqual([
         {

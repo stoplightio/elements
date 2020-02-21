@@ -95,7 +95,7 @@ describe('RequestEndpoint component', () => {
       .simulate('change', { target: { value: 'test' } })
       .simulate('keypress', { key: 'Enter' });
 
-    expect(store.request.uri).toEqual('test');
+    expect(store.request.url).toEqual('test');
     expect(sendSpy).toHaveBeenCalledTimes(1);
   });
 

@@ -1,6 +1,7 @@
 import axios, { CancelTokenSource } from 'axios';
 import { flatMap, isEqual, merge, pickBy } from 'lodash';
 import { action, computed, configure, flow, observable, reaction, runInAction } from 'mobx';
+import URI from 'urijs';
 
 import { IHttpConfig, IHttpOperationConfig } from '@stoplight/prism-http';
 import * as PrismClient from '@stoplight/prism-http/dist/client';
