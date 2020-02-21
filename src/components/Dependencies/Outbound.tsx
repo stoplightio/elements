@@ -107,7 +107,7 @@ export const OutboundDependencies = React.forwardRef<Network, IOutboundDependenc
       />
 
       {activeNode && (
-        <div className={cn('absolute bottom-0 right-0 max-w-5xl', `px-${padding} pb-${padding}`)}>
+        <div className={cn('absolute bottom-0 right-0 left-0 pb-16', `px-${padding}`)}>
           <ModelContainer
             srn={activeNode.srn}
             name={activeNode.name}
