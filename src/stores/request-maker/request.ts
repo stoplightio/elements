@@ -399,21 +399,22 @@ export class RequestStore {
       const uri = new URI(this.uri);
 
       const path = URI.joinPaths(baseUri, uri.path()).path();
-      const final = new URI({
+      const finalUrl = new URI({
         protocol: baseUri.protocol(),
         hostname: baseUri.hostname(),
         port: baseUri.port(),
         path: path.startsWith('/') ? path.slice(1) : path,
         query: uri.query(),
-      });
+      }).toString();
 
-      return final.toString();
+      // if the url is relative, prefix it with a / as per spec.
+      return finalUrl.includes('://') ? finalUrl : `/${finalUrl}`;
     } catch (e) {
       // malformed uri
       if (e.name === 'URIError') {
         console.warn('Malformed uri while setting path for url.', e);
       }
-      return '';
+      return '/';
     }
   }
   public set url(url: string) {

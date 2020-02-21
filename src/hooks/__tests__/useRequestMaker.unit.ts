@@ -49,7 +49,7 @@ describe('useRequestMaker()', () => {
 
     expect(store).toBeInstanceOf(RequestMakerStore);
     expect(store.request.request).toEqual({
-      url: '',
+      url: '/',
       method: 'get',
     });
   });
@@ -59,7 +59,7 @@ describe('useRequestMaker()', () => {
 
     expect(store).toBeInstanceOf(RequestMakerStore);
     expect(store.request.request).toEqual({
-      url: '',
+      url: '/',
       method: 'get',
     });
   });

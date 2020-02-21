@@ -57,6 +57,12 @@ describe('RequestStore', () => {
       expect(requestStore.url).toBe('https://test.com/v2/asd');
     });
 
+    it('should begin with a slash if there is no baseUrl specified', () => {
+      requestStore.path = '/pet/2';
+
+      expect(requestStore.url).toBe('/pet/2');
+    });
+
     it('should combine path with enabled query params', () => {
       Object.assign(requestStore, {
         method: 'post',
@@ -104,7 +110,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      expect(requestStore.url).toBe('pet/42');
+      expect(requestStore.url).toBe('/pet/42');
     });
   });
 

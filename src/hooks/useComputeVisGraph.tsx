@@ -2,7 +2,7 @@ import { pointerToPath } from '@stoplight/json';
 import { IResolveResult } from '@stoplight/json-ref-resolver/types';
 import { last, sortBy, uniqBy, uniqWith } from 'lodash';
 import * as React from 'react';
-import  URI from 'urijs';
+import URI from 'urijs';
 import { Edge, Node } from 'vis';
 import { INodeInfo } from '../types';
 import { getNodeTitle } from '../utils/node';
