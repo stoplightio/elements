@@ -162,7 +162,11 @@ export class RequestMakerStore {
           body: request.body,
           queryParams:
             request.query &&
-            flatMap(Object.entries(request.query), ([key, values]) => values.map(v => ({ name: key, value: v }))),
+            flatMap(Object.entries(request.query), ([key, values]) =>
+              Array.isArray(values)
+                ? values.map(v => ({ name: key, value: v, isEnabled: true }))
+                : [{ name: key, value: values, isEnabled: true }],
+            ),
         },
         v => v !== undefined && v !== null,
       ),

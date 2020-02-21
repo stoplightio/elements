@@ -133,9 +133,9 @@ describe('RequestMakerStore', () => {
       });
 
       expect(requestMaker.request.queryParams).toEqual([
-        { name: 'someParam', value: 'a' },
-        { name: 'someParam', value: 'b' },
-        { name: 'someParam', value: 'c' },
+        { name: 'someParam', value: 'a', isEnabled: true },
+        { name: 'someParam', value: 'b', isEnabled: true },
+        { name: 'someParam', value: 'c', isEnabled: true },
       ]);
     });
   });

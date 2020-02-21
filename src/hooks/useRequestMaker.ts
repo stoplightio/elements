@@ -24,14 +24,6 @@ export function useRequestMaker(
       operation = value as IHttpOperation;
     } else {
       request = value as IHttpRequest;
-
-      // Query string values need to be an array of strings.
-      // TODO(TP): https://github.com/stoplightio/types/blob/master/src/http.ts#L35 update type to be string[] | string
-      if (request?.query)
-        for (const name of Object.keys(request.query)) {
-          const v = request.query[name];
-          if (!Array.isArray(v)) request.query[name] = [v];
-        }
     }
   }
 
