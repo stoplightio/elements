@@ -4,7 +4,8 @@
   "baseUrl": "http://api.giphy.com/v1",
   "headers": {},
   "query": {
-    "api_key": "dc6zaTOxFJmzC",
-    "limit": ["1"]
+    "api_key": ["dc6zaTOxFJmzC"],
+    "limit": ["1"],
+    "bear": "cave"
   }
 }

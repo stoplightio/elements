@@ -172,7 +172,7 @@ be the http object to be rendered.
   "baseUrl": "http://api.giphy.com/v1",
   "headers": {},
   "query": {
-    "api_key": "dc6zaTOxFJmzC",
+    "api_key": ["dc6zaTOxFJmzC"],
     "limit": ["1"],
     "q": ["cats"]
   }
