@@ -125,7 +125,7 @@ describe('ResponseBody component', () => {
 
     test('should format code in pretty mode', async () => {
       const raw = `{"message":"NOT AUTHORIZED"}`;
-      const formatted = `{\n  "message": "NOT AUTHORIZED"\n}`;
+      const formatted = JSON.stringify({ message: 'NOT AUTHORIZED' }, null, 2);
 
       store.response = ResponseStore.fromNetworkResponse({
         headers: {

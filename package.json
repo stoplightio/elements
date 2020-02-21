@@ -20,10 +20,9 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "yarn build.components && yarn build.styles && yarn build.widgets",
-    "build.components": "sl-scripts build --sourcemap",
-    "build.widgets": "NODE_ENV=production webpack -p --config webpack.config.js",
-    "build.widgets.analyze": "RUN_CONTEXT=analyze NODE_ENV=production webpack -p --config webpack.config.js",
+    "build": "yarn build.components",
+    "postbuild": "yarn build.styles",
+    "build.components": "sl-scripts build",
     "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "commit": "git-cz",
@@ -56,7 +55,7 @@
     "@stoplight/ui-kit": "^2.15.1",
     "@stoplight/yaml": "^3.5.1",
     "classnames": "^2.2.6",
-    "copy-to-clipboard": "^3.2.0",
+    "copy-to-clipboard": "^3.2.1",
     "fast-text-encoding": "^1.0.0",
     "httpsnippet": "github:stoplightio/httpsnippet#master",
     "lodash": "^4.17.15",
@@ -88,7 +87,6 @@
     "@types/react": "16.x.x",
     "@types/react-dom": "16.x.x",
     "@types/type-is": "^1.6.3",
-    "@types/typescript": "^2.0.0",
     "@types/urijs": "^1.19.5",
     "@types/vis": "^4.21.19",
     "autoprefixer": "^9.7.4",
@@ -119,15 +117,11 @@
     "tslint-config-stoplight": "1.4.0",
     "tslint-react": "4.1.x",
     "tslint-react-hooks": "2.2.x",
-    "typescript": "3.7.5",
-    "webpack": "^4.41.6",
-    "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-cli": "^3.3.11"
+    "typescript": "3.7.5"
   },
   "lint-staged": {
     "*.{ts,tsx}$": [
-      "yarn lint.fix",
-      "git add"
+      "yarn lint.fix"
     ]
   },
   "husky": {

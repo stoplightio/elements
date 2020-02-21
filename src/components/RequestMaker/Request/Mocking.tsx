@@ -2,7 +2,6 @@ import { HTMLSelect, Popover, Switch } from '@stoplight/ui-kit';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
-import { flatMap } from '../../../utils/array';
 
 const notSetOption = { value: '', label: 'Not Set' };
 
@@ -35,7 +34,7 @@ export const Mocking = observer(() => {
     if (!response || !response.contents) {
       return [notSetOption];
     }
-    const options = flatMap(response.contents, c => c.examples || []).map(e => ({ value: e.key, label: e.key }));
+    const options = response.contents.flatMap(c => c.examples || []).map(e => ({ value: e.key, label: e.key }));
     return [notSetOption, ...options];
   }, [operationResponses, currentCode]);
 
