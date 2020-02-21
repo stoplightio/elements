@@ -16,7 +16,6 @@ import { HTMLViewer } from '../Response/HTMLViewer';
 import { ImageViewer } from '../Response/ImageViewer';
 import { JsonViewer } from '../Response/JsonViewer';
 import { PrettyViewer } from '../Response/PrettyViewer';
-import { RawViewer } from '../Response/RawViewer';
 
 jest.mock('@stoplight/tree-list', () => ({
   TreeStore: class {
@@ -135,7 +134,7 @@ describe('ResponseBody component', () => {
 
     test('should format code in pretty mode', async () => {
       const raw = `{"message":"NOT AUTHORIZED"}`;
-      const formatted = `{\n  "message": "NOT AUTHORIZED"\n}`;
+      const formatted = JSON.stringify({ message: 'NOT AUTHORIZED' }, null, 2);
 
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
