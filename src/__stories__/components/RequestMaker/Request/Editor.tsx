@@ -7,6 +7,7 @@ import { operation, request } from '../__fixtures__/http';
 import { RequestMakerProvider } from '../../../../hooks';
 
 const requestEditorKnobs = (): RequestEditorProps => ({
+  //@ts-ignore
   tabs: array('tabs', [RequestEditorTab.BODY, RequestEditorTab.HEADERS]),
 });
 

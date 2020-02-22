@@ -38,6 +38,7 @@ storiesOf('components/RequestMaker/Response/Viewer', module)
 
     return (
       <RequestMakerProvider value={requestMaker}>
+        //@ts-ignore
         <ResponseViewer className="border-t rounded" tabs={tabs} />
       </RequestMakerProvider>
     );
