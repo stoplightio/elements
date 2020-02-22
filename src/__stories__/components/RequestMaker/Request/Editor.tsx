@@ -1,13 +1,13 @@
 import { array, object, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
-import { RequestEditorProps, RequestEditorTab, RequestEditor } from '../../../../components/RequestMaker';
+import { RequestEditor, RequestEditorProps, RequestEditorTab } from '../../../../components/RequestMaker';
+import { RequestMakerProvider } from '../../../../hooks';
 import { RequestMakerStore } from '../../../../stores/request-maker';
 import { operation, request } from '../__fixtures__/http';
-import { RequestMakerProvider } from '../../../../hooks';
 
 const requestEditorKnobs = (): RequestEditorProps => ({
-  //@ts-ignore
+  // @ts-ignore
   tabs: array('tabs', [RequestEditorTab.BODY, RequestEditorTab.HEADERS]),
 });
 

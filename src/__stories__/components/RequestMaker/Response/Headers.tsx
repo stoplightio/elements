@@ -1,9 +1,9 @@
 import { object, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
-import { RequestMakerStore } from '../../../../stores/request-maker';
-import { RequestMakerProvider } from '../../../../hooks';
 import { ResponseHeaders } from '../../../../components/RequestMaker';
+import { RequestMakerProvider } from '../../../../hooks';
+import { RequestMakerStore } from '../../../../stores/request-maker';
 import { response as jsonResponse } from '../__fixtures__/http';
 
 const requestMaker = new RequestMakerStore();

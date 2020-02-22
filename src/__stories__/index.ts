@@ -3,10 +3,10 @@ import './components/Dependencies';
 import './components/HttpRequest';
 import './components/Page';
 import './components/PageHeadings';
+import './components/RequestMaker';
 import './components/Search';
 import './components/TableOfContents';
 import './components/TryIt';
-import './components/RequestMaker';
 
 import './containers/Hub';
 import './containers/Page';

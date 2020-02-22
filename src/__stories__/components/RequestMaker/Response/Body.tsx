@@ -1,12 +1,12 @@
+import { ProblemJsonError } from '@stoplight/prism-http';
+import { UNPROCESSABLE_ENTITY } from '@stoplight/prism-http/dist/mocker/errors';
 import { withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
-import { ProblemJsonError } from '@stoplight/prism-http';
-import { UNPROCESSABLE_ENTITY } from '@stoplight/prism-http/dist/mocker/errors';
+import { ResponseBody } from '../../../../components/RequestMaker';
+import { RequestMakerProvider } from '../../../../hooks';
 import { RequestMakerStore } from '../../../../stores/request-maker';
 import { ResponseStore } from '../../../../stores/request-maker/response';
-import { RequestMakerProvider } from '../../../../hooks';
-import { ResponseBody } from '../../../../components/RequestMaker';
 import { response as jsonResponse } from '../__fixtures__/http';
 
 storiesOf('components/RequestMaker/Response/Body', module)
