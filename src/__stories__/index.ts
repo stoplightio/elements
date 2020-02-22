@@ -6,6 +6,7 @@ import './components/PageHeadings';
 import './components/Search';
 import './components/TableOfContents';
 import './components/TryIt';
+import './components/RequestMaker';
 
 import './containers/Hub';
 import './containers/Page';

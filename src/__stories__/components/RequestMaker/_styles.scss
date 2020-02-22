@@ -1,0 +1,9 @@
+@import "~@stoplight/tree-list/styles/_tree-list.scss";
+@import "~@stoplight/ui-kit/styles/_ui-kit.scss";
+
+@import "../styles/main";
+
+// Links should normally be styled by the parent project
+a {
+  color: #45689c;
+}
