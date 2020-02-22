@@ -6,8 +6,7 @@ import { operation, request } from '../__fixtures__/http';
 import { RequestMakerProvider } from '../../../../hooks';
 import { RequestMethod } from '../../../../components/RequestMaker';
 
-
-storiesOf('Request/Method', module)
+storiesOf('components/RequestMaker/Request/Method', module)
   .addDecorator(withKnobs)
   .add('with operation', () => {
     const store = new RequestMakerStore({

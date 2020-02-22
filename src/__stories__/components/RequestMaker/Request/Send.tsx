@@ -7,7 +7,7 @@ import { RequestMakerProvider } from '../../../../hooks';
 import { RequestSend } from '../../../../components/RequestMaker';
 
 
-storiesOf('Request/Send', module)
+storiesOf('components/RequestMaker/Request/Send', module)
   .addDecorator(withKnobs)
   .add('with operation', () => {
     const store = new RequestMakerStore({

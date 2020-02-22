@@ -10,7 +10,7 @@ const requestEditorKnobs = (): RequestEditorProps => ({
   tabs: array('tabs', [RequestEditorTab.BODY, RequestEditorTab.HEADERS]),
 });
 
-storiesOf('Request/Editor', module)
+storiesOf('components/RequestMaker/Request/Editor', module)
   .addDecorator(withKnobs)
   .add('with operation', () => {
     const store = new RequestMakerStore({

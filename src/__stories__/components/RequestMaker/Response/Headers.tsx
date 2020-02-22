@@ -8,7 +8,7 @@ import { response as jsonResponse } from '../__fixtures__/http';
 
 const requestMaker = new RequestMakerStore();
 
-storiesOf('Response/Headers', module)
+storiesOf('components/RequestMaker/Response/Headers', module)
   .addDecorator(withKnobs)
   .add('with response', () => {
     const response = object('response', {

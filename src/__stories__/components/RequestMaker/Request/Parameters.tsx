@@ -8,7 +8,7 @@ import { RequestParameters } from '../../../../components/RequestMaker';
 
 const getText = () => select('type', ['query', 'path', 'header', 'formData', 'urlEncoded'], 'query');
 
-storiesOf('Request/Parameters', module)
+storiesOf('components/RequestMaker/Request/Parameters', module)
   .addDecorator(withKnobs)
   .add('with operation', () => {
     const store = new RequestMakerStore({

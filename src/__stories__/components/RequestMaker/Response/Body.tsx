@@ -9,7 +9,7 @@ import { RequestMakerProvider } from '../../../../hooks';
 import { ResponseBody } from '../../../../components/RequestMaker';
 import { response as jsonResponse } from '../__fixtures__/http';
 
-storiesOf('Response/Body', module)
+storiesOf('components/RequestMaker/Response/Body', module)
   .addDecorator(withKnobs)
   .add('with response', () => {
     const requestMaker = new RequestMakerStore();

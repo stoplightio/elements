@@ -6,7 +6,7 @@ import { operation, request } from '../__fixtures__/http';
 import { RequestMakerProvider } from '../../../../hooks';
 import { RequestHeaders } from '../../../../components/RequestMaker';
 
-storiesOf('Request/Headers', module)
+storiesOf('components/RequestMaker/Request/Headers', module)
   .addDecorator(withKnobs)
   .add('with operation', () => {
     const store = new RequestMakerStore({

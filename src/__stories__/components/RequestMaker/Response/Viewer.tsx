@@ -8,7 +8,7 @@ import { response as jsonResponse } from '../__fixtures__/http';
 
 const requestMaker = new RequestMakerStore();
 
-storiesOf('Response/Viewer', module)
+storiesOf('components/RequestMaker/Response/Viewer', module)
   .addDecorator(withKnobs)
   .add('with response', () => {
     const tabs = array('tabs', [ResponseTab.BODY, ResponseTab.HEADERS, ResponseTab.ORIGINAL]);
