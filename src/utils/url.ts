@@ -88,7 +88,7 @@ export function replaceParamsInPath(path: string, pathParams: PathParam[]) {
   return uri;
 }
 
-export function extractQueryParams(query: string, queryParams: QueryParam[]) {
+export function extractQueryParams(query: string, queryParams: readonly QueryParam[]) {
   const newParams: QueryParam[] = [];
 
   // Parse query params
@@ -101,13 +101,11 @@ export function extractQueryParams(query: string, queryParams: QueryParam[]) {
   })).filter(q => !q.isEnabled);
 
   // Add the enabled query params
-  for (const key in queryParsed) {
-    if (!Object.hasOwnProperty.call(queryParsed, key)) continue;
-
-    const queryParam = queryParams.find(q => q.name === key);
-    if (queryParam) {
+  for (const key of Object.keys(queryParsed)) {
+    const existingQueryParam = queryParams.find(q => q.name === key);
+    if (existingQueryParam) {
       newParams.push({
-        ...queryParam,
+        ...existingQueryParam,
         value: queryParsed[key],
         isEnabled: true,
       });
@@ -125,6 +123,15 @@ export function extractQueryParams(query: string, queryParams: QueryParam[]) {
     if (!newParams.find(p => p.name === disabledQueryParam.name)) {
       newParams.splice(disabledQueryParam.index, 0, omit(disabledQueryParam, 'index'));
     }
+  }
+
+  // Add empty query param
+  if (query.endsWith('?') || query.endsWith('&')) {
+    newParams.push({
+      name: '',
+      value: '',
+      isEnabled: true,
+    });
   }
 
   return newParams;

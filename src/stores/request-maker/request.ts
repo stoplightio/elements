@@ -439,18 +439,7 @@ export class RequestStore {
 
   @action
   public setQueryParamsFromString = (queryString: string) => {
-    const newParams = extractQueryParams(queryString, this.queryParams);
-
-    // Add empty query param
-    if (queryString.endsWith('?') || queryString.endsWith('&')) {
-      newParams.push({
-        name: '',
-        value: '',
-        isEnabled: true,
-      });
-    }
-
-    this.queryParams = newParams;
+    this.queryParams = extractQueryParams(queryString, this.queryParams);
   };
 
   @computed

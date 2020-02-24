@@ -298,6 +298,19 @@ describe('RequestStore', () => {
         },
       ]);
     });
+
+    it('should add an empty param if queryString ends with &', () => {
+      requestStore.queryParams = [];
+
+      requestStore.setQueryParamsFromString('param1=asd&');
+
+      expect(requestStore.queryParams).toHaveLength(2);
+      expect(requestStore.queryParams[1]).toMatchObject({
+        name: '',
+        value: '',
+        isEnabled: true,
+      });
+    });
   });
 
   describe('path', () => {
@@ -394,7 +407,9 @@ describe('RequestStore', () => {
         },
       ];
 
-      expect(requestStore.templatedPath).toEqual('/{pathParam}/{anotherParam}/{with a space}/{hashParam}/{questionMarkParam}');
+      expect(requestStore.templatedPath).toEqual(
+        '/{pathParam}/{anotherParam}/{with a space}/{hashParam}/{questionMarkParam}',
+      );
     });
   });
 
