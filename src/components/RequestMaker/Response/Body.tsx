@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { SuggestionBar } from '../SuggestionBar';
 import { ErrorViewer } from './ErrorViewer';
 import { HTMLViewer } from './HTMLViewer';
 import { ImageViewer } from './ImageViewer';
@@ -68,6 +69,26 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
   return (
     <div className={cn(className, 'RequestMaker__ResponseBody flex flex-col')}>
       {shouldShowViewSelector && <ViewSelectorRadioGroup selectedView={selectedView} onChange={onChange} />}
+
+      <SuggestionBar
+        suggestions={[
+          store =>
+            store.response.violations.length ? (
+              <div>
+                <b>The returned response has some violations with the provided JSON Schema:</b>
+                <ol>
+                  {store.response.violations.map(v => (
+                    <li>
+                      {v.path} {v.message}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ) : (
+              undefined
+            ),
+        ]}
+      />
 
       <div className="RequestMaker__ResponseBody--content flex-1 border-t">{content}</div>
     </div>
