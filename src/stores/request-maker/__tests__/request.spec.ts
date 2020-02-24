@@ -467,8 +467,8 @@ describe('RequestStore', () => {
         method: 'post',
         body: { some: 'json' },
         headers: {
-          headerName: 'headerValue',
-          'Content-Type': 'application/json',
+          headername: 'headerValue',
+          'content-type': 'application/json',
           authorization: `Basic ${Buffer.from('user:password').toString('base64')}`,
         },
       });
