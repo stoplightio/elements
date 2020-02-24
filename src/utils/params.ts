@@ -27,7 +27,8 @@ export function getNameValuePairs<T = string>(
   const paramObj = {};
 
   for (const param of filteredParams) {
-    paramObj[param.name] = param.value;
+    // Headers are case insensitive, so we're going to normalise them before sending them to Prism
+    paramObj[param.name.toLowerCase()] = param.value;
   }
 
   return paramObj;
