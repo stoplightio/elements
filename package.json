@@ -120,8 +120,8 @@
     "typescript": "3.7.5"
   },
   "lint-staged": {
-    "*.{ts,tsx}$": [
-      "yarn lint.fix"
+    "*.{ts,tsx}": [
+      "tslint -c tslint.json --fix"
     ]
   },
   "husky": {
