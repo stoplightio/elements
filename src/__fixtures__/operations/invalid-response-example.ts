@@ -1,15 +1,27 @@
-import { IHttpOperation } from '@stoplight/types';
+import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 
 export const invalidOperation: IHttpOperation = {
   id: '?http-operation-id?',
   iid: 'GET_dummy',
   method: 'get',
-  path: '/dummy',
-  summary: 'Get dummy empty response',
+  path: '/invalid-response',
+  summary: 'Get dummy invalid response',
   responses: [
     {
-      code: '204',
-      description: 'Invalid example',
+      code: '200',
+      description: 'Invalid body and headers',
+      headers: [
+        {
+          name: 'sl-results',
+          required: true,
+          style: HttpParamStyles.Simple,
+          schema: {
+            type: 'string',
+            pattern: 'X-*$',
+          },
+          examples: [{ key: 'example1', value: 'hello' }],
+        },
+      ],
       contents: [
         {
           mediaType: 'application/json',

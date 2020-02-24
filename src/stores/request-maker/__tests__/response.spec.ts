@@ -126,6 +126,7 @@ describe('ResponseStore', () => {
         'X-Custom-Header': 'CustomValue',
       },
       data: mockResponseData,
+      violations: [],
     };
 
     let store: ResponseStore;
@@ -165,6 +166,7 @@ describe('ResponseStore', () => {
           'X-Custom-Header': 'CustomValue',
         },
         data: undefined,
+        violations: [],
       };
 
       const emptyStore = ResponseStore.fromMockObjectResponse(emptyResponse);
