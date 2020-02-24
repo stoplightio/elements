@@ -1,6 +1,7 @@
 import { object, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
+import { invalidOperation } from '../../../__fixtures__/operations/invalid-response-example';
 import { operation, request } from '../../../__fixtures__/operations/simple';
 import { RequestEditor, RequestEndpoint } from '../../../components/RequestMaker/Request';
 import { ResponseViewer } from '../../../components/RequestMaker/Response';
@@ -13,6 +14,24 @@ storiesOf('components/RequestMaker', module)
     const store = new RequestMakerStore({
       mockUrl: text('mock URL', ''),
       operation: object('operation', operation),
+    });
+
+    return (
+      <div className="RequestMaker my-10">
+        <RequestMakerProvider value={store}>
+          <RequestEndpoint />
+
+          <RequestEditor />
+
+          <ResponseViewer />
+        </RequestMakerProvider>
+      </div>
+    );
+  })
+  .add('operation with invalid response example', () => {
+    const store = new RequestMakerStore({
+      mockUrl: text('mock URL', ''),
+      operation: object('operation', invalidOperation),
     });
 
     return (
