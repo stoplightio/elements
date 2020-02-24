@@ -20,7 +20,7 @@ describe('getOperationData()', () => {
       }),
     ).toEqual({
       method: 'get',
-      path: '',
+      templatedPath: '',
       body: '',
       contentType: 'none',
       publicBaseUrl: '',
@@ -55,7 +55,7 @@ describe('getOperationData()', () => {
       }),
     ).toEqual({
       method: 'get',
-      path: '',
+      templatedPath: '',
       body: '',
       contentType: 'none',
       publicBaseUrl: '',
@@ -78,7 +78,7 @@ describe('getOperationData()', () => {
       }),
     ).toEqual({
       method: 'get',
-      path: '',
+      templatedPath: '',
       body: '',
       contentType: 'none',
       publicBaseUrl: '',

@@ -5,6 +5,7 @@ import 'jest-enzyme';
 import * as React from 'react';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
+import { RequestStore } from '../../../stores/request-maker/request';
 import { operation } from '../__fixtures__/http';
 import { RequestSend } from '../Request';
 import { RequestEndpoint } from '../Request/Endpoint';
@@ -24,10 +25,10 @@ describe('RequestEndpoint component', () => {
   });
 
   test('should show correct url and path', () => {
-    Object.assign(store.request, {
+    Object.assign<RequestStore, Partial<RequestStore>>(store.request, {
       method: 'post',
       publicBaseUrl: 'https://test.com',
-      path: '/test',
+      templatedPath: '/test',
       body: '',
       headerParams: [],
       publicServers: [
@@ -95,7 +96,7 @@ describe('RequestEndpoint component', () => {
       .simulate('change', { target: { value: 'test' } })
       .simulate('keypress', { key: 'Enter' });
 
-    expect(store.request.uri).toEqual('test');
+    expect(store.request.url).toEqual('/test');
     expect(sendSpy).toHaveBeenCalledTimes(1);
   });
 

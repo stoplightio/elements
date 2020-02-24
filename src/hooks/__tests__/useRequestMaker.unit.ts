@@ -41,7 +41,7 @@ describe('useRequestMaker()', () => {
     const store = useRequestMaker(request);
 
     expect(store).toBeInstanceOf(RequestMakerStore);
-    expect(store.request.request).toEqual(request);
+    expect(store.request.toPartialHttpRequest()).toEqual(request);
   });
 
   test('it should return request maker store given an http request with query strings as an array of strings or just a string', () => {
@@ -60,7 +60,7 @@ describe('useRequestMaker()', () => {
     const store = useRequestMaker(request);
 
     expect(store).toBeInstanceOf(RequestMakerStore);
-    expect(store.request.request).toEqual({
+    expect(store.request.toPartialHttpRequest()).toEqual({
       method: 'get',
       url: 'http://todos.stoplight.io/todos',
       headers: {
@@ -77,7 +77,7 @@ describe('useRequestMaker()', () => {
     const store = useRequestMaker('foo' as any);
 
     expect(store).toBeInstanceOf(RequestMakerStore);
-    expect(store.request.request).toEqual({
+    expect(store.request.toPartialHttpRequest()).toEqual({
       url: '/',
       method: 'get',
     });
@@ -87,7 +87,7 @@ describe('useRequestMaker()', () => {
     const store = useRequestMaker(null as any);
 
     expect(store).toBeInstanceOf(RequestMakerStore);
-    expect(store.request.request).toEqual({
+    expect(store.request.toPartialHttpRequest()).toEqual({
       url: '/',
       method: 'get',
     });
