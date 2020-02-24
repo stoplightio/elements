@@ -3,6 +3,7 @@ import './components/Dependencies';
 import './components/HttpRequest';
 import './components/Page';
 import './components/PageHeadings';
+import './components/request-maker';
 import './components/Search';
 import './components/TableOfContents';
 import './components/TryIt';
