@@ -3,7 +3,7 @@ import { IHttpRequest as IPrismHttpRequest } from '@stoplight/prism-http';
 import { HttpMethod, HttpNameValue, IHttpRequest, IServer } from '@stoplight/types';
 import { safeStringify as safeStringifyYaml } from '@stoplight/yaml';
 import { AxiosRequestConfig } from 'axios';
-import { isEmpty, pick, set } from 'lodash';
+import { isEmpty, mapKeys, pick, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
 import URI from 'urijs';
@@ -210,7 +210,9 @@ export class RequestStore {
    */
   public toPrism(): IPrismHttpRequest {
     const request = this.toJSON();
-    const headers: HttpNameValue = getNameValuePairs(this.headerParams, { enabled: true });
+    const headers: HttpNameValue = mapKeys(getNameValuePairs(this.headerParams, { enabled: true }), (_v, k) =>
+      k.toLowerCase(),
+    );
 
     if (this.hasAuth && this.auth) {
       const encodedAuth = Buffer.from(`${this.auth.username}:${this.auth.password}`).toString('base64');

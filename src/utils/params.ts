@@ -19,8 +19,8 @@ export function getEnabledParams<T = string>(params: Array<IParam<T>>) {
 export function getNameValuePairs<T = string>(
   params: Array<IParam<T>>,
   options: {
-    enabled?: boolean;
-  } = {},
+    enabled: boolean;
+  } = { enabled: false },
 ) {
   const filteredParams = options.enabled ? getEnabledParams(params) : params;
 
