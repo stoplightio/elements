@@ -49,7 +49,7 @@ export function getOperationData(operation: Partial<IHttpOperation>): Partial<Re
     publicServers: operation.servers || [],
     publicBaseUrl: get(operation, 'servers[0].url', ''),
     method: (operation.method as HttpMethod) || 'get',
-    templatedPath: operation.path || '',
+    path: operation.path || '',
     body,
     contentType: body ? 'raw' : 'none',
     pathParams: getParamsFromOperation(operation, 'path'),

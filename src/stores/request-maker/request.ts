@@ -19,7 +19,7 @@ const DEFAULT_EMPTY_GQL = 'query {\n  \n}';
 
 export class RequestStore {
   @observable
-  private _templatedPath = '';
+  private _path = '';
 
   @observable
   private _method: HttpMethod = 'get';
@@ -120,6 +120,11 @@ export class RequestStore {
   }
 
   @computed
+  public get request() {
+    return this.toJSON();
+  }
+
+  @computed
   private get isContentTypeJson() {
     return (
       this.activeContentTypeHeader?.value &&
@@ -130,8 +135,19 @@ export class RequestStore {
   /**
    * Transforms request properties into IHttpRequest
    */
-  public toPartialHttpRequest(): Partial<IHttpRequest> {
-    const url = new URI(this.url);
+  public toJSON() {
+    const request: Partial<IHttpRequest> = {
+      method: this.method,
+      url: this.url,
+    };
+
+    if (this.queryParams.length > 0) {
+      request.query = getNameValuePairs(this.queryParams, { enabled: true });
+    }
+
+    if (this.headerParams.length > 0) {
+      request.headers = getNameValuePairs(this.headerParams, { enabled: true });
+    }
 
     let bodyParams;
     if (this.contentType === 'raw') {
@@ -147,13 +163,11 @@ export class RequestStore {
       };
     }
 
-    return {
-      method: this.method,
-      url: `${url.origin()}${url.path()}`,
-      query: this.queryParams.length > 0 ? getNameValuePairs(this.queryParams, { enabled: true }) : undefined,
-      headers: this.headerParams.length > 0 ? getNameValuePairs(this.headerParams, { enabled: true }) : undefined,
-      body: !isEmpty(bodyParams) ? bodyParams : undefined,
-    };
+    if (!isEmpty(bodyParams)) {
+      request.body = bodyParams;
+    }
+
+    return request;
   }
 
   /**
@@ -181,11 +195,9 @@ export class RequestStore {
       }
     }
 
-    const url = new URI(this.url);
-
     return {
       method: this.method as Exclude<HttpMethod, 'trace'>,
-      url: `${url.origin()}${url.path()}`,
+      url: this.url,
       headers: getNameValuePairs(this.headerParams, { enabled: true }),
       params: getNameValuePairs(this.queryParams, { enabled: true }),
       ...(this.hasAuth && { auth: this.auth }),
@@ -197,7 +209,7 @@ export class RequestStore {
    * Transforms request properties to Prism request config
    */
   public toPrism(): IPrismHttpRequest {
-    const request = this.toPartialHttpRequest();
+    const request = this.toJSON();
     const headers: HttpNameValue = getNameValuePairs(this.headerParams, { enabled: true });
 
     if (this.hasAuth && this.auth) {
@@ -214,7 +226,7 @@ export class RequestStore {
     return {
       url: {
         baseUrl: this.baseUrl,
-        path: this.templatedPath,
+        path: this.path,
         query: request.query,
       },
       method: this.method,
@@ -268,9 +280,12 @@ export class RequestStore {
       };
     }
 
+    const url = new URI(this.url);
+    url.search(getNameValuePairs(this.queryParams, { enabled: true }));
+
     return {
       method: this.method.toUpperCase(),
-      url: this.url,
+      url: url.toString(),
       // @ts-ignore: Request is expecting a map, but HTTPSnippet is expecting an array
       headers: getEnabledParams(this.headerParams).map(p => pick(p, 'name', 'value')),
       postData,
@@ -284,10 +299,9 @@ export class RequestStore {
     if (language === 'markdown') {
       let markdown;
       if (library === 'yaml') {
-        markdown =
-          '```yaml http\n' + `${safeStringifyYaml(this.toPartialHttpRequest(), { indent: 2, noRefs: true })}` + '\n```';
+        markdown = '```yaml http\n' + `${safeStringifyYaml(this.toJSON(), { indent: 2, noRefs: true })}` + '\n```';
       } else {
-        markdown = '```json http\n' + `${safeStringify(this.toPartialHttpRequest(), undefined, 2)}` + '\n```';
+        markdown = '```json http\n' + `${safeStringify(this.toJSON(), undefined, 2)}` + '\n```';
       }
 
       return markdown;
@@ -345,22 +359,20 @@ export class RequestStore {
   }
 
   @computed
-  public get templatedPath() {
-    return this._templatedPath || '';
+  public get path() {
+    return this._path || '';
   }
-  public set templatedPath(path: string) {
-    this._templatedPath = path;
-    this._pathParams = getParamsFromPath(this._templatedPath, this._pathParams);
+  public set path(path: string) {
+    this._path = path;
+    this._pathParams = getParamsFromPath(this._path, this._pathParams);
   }
 
   /**
-   * Combines path with pathParams and enabled query params
+   * Combines path and enabled query params
    */
   @computed
-  private get uri() {
-    const uri = new URI({
-      path: replaceParamsInPath(this.templatedPath, this.pathParams) || '/',
-    });
+  public get uri() {
+    const uri = new URI(this.path);
 
     uri.search({});
 
@@ -373,34 +385,43 @@ export class RequestStore {
 
     return uri.toString();
   }
+  public set uri(uri) {
+    const { path, query } = URI.parse(uri);
+    this.path = path || '/';
+
+    const newParams = extractQueryParams(query || '', this.queryParams);
+
+    // Add empty query param
+    if (uri.endsWith('?') || uri.endsWith('&')) {
+      newParams.push({
+        name: '',
+        value: '',
+        isEnabled: true,
+      });
+    }
+
+    this.queryParams = newParams;
+  }
 
   /**
-   * Combines baseUrl and URI
-   * This is the effective URL to be called by the user agent.
+   * Combines origin and path.
+   * Replaces enabled path parameters with their values.
    */
   @computed
   public get url() {
     try {
       const baseUri = new URI(this.baseUrl);
-      const uri = new URI(this.uri);
 
-      const path = URI.joinPaths(baseUri, uri.path()).path();
-      const finalUrl = new URI({
-        protocol: baseUri.protocol(),
-        hostname: baseUri.hostname(),
-        port: baseUri.port(),
-        path: path.startsWith('/') ? path.slice(1) : path,
-        query: uri.query(),
-      });
-
-      // if the url is relative, prefix it with a / as per spec.
-      return finalUrl.protocol() ? finalUrl.toString() : `/${finalUrl.toString()}`;
+      return baseUri
+        .path(URI.joinPaths(baseUri.path(), replaceParamsInPath(this.path, this.pathParams)).path())
+        .search({})
+        .toString();
     } catch (e) {
       // malformed uri
       if (e.name === 'URIError') {
         console.warn('Malformed uri while setting path for url.', e);
       }
-      return '/';
+      return '';
     }
   }
   public set url(url: string) {
@@ -408,8 +429,8 @@ export class RequestStore {
     const origin = parsed.origin();
     if (origin) this.publicBaseUrl = origin;
 
-    this.templatedPath = parsed.path();
-    this.setQueryParamsFromString(parsed.search());
+    const u = parsed.path() + (parsed.query() === '' ? '' : '?' + parsed.query());
+    this.uri = u;
   }
 
   @computed
@@ -423,11 +444,6 @@ export class RequestStore {
     this.queryParams = getParamArray(query);
   }
 
-  @action
-  public setQueryParamsFromString = (queryString: string) => {
-    this.queryParams = extractQueryParams(queryString, this.queryParams);
-  };
-
   @computed
   public get pathParams() {
     return this._pathParams || [];
@@ -438,7 +454,7 @@ export class RequestStore {
       name: p.name && p.name.replace(/[#?]/g, ''),
     }));
     this._pathParams = cleanParams;
-    this._templatedPath = addParamsToPath(this._templatedPath, cleanParams);
+    this._path = addParamsToPath(this._path, cleanParams);
   }
 
   @computed

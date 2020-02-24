@@ -41,14 +41,14 @@ describe('useRequestMaker()', () => {
     const store = useRequestMaker(request);
 
     expect(store).toBeInstanceOf(RequestMakerStore);
-    expect(store.request.toPartialHttpRequest()).toEqual(request);
+    expect(store.request.request).toEqual(request);
   });
 
   test('it should return request maker store given a string value', () => {
     const store = useRequestMaker('foo' as any);
 
     expect(store).toBeInstanceOf(RequestMakerStore);
-    expect(store.request.toPartialHttpRequest()).toEqual({
+    expect(store.request.request).toEqual({
       url: '/',
       method: 'get',
     });
@@ -58,7 +58,7 @@ describe('useRequestMaker()', () => {
     const store = useRequestMaker(null as any);
 
     expect(store).toBeInstanceOf(RequestMakerStore);
-    expect(store.request.toPartialHttpRequest()).toEqual({
+    expect(store.request.request).toEqual({
       url: '/',
       method: 'get',
     });
