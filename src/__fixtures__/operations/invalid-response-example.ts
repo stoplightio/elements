@@ -13,13 +13,14 @@ export const invalidOperation: IHttpOperation = {
       contents: [
         {
           mediaType: 'application/json',
-          examples: [{ key: 'example1', value: { name: 'Clark' } }],
+          examples: [{ key: 'example1', value: {} }],
           schema: {
             type: 'object',
-            required: ['name', 'surname'],
+            required: ['name', 'surname', 'age'],
             properties: {
               name: { type: 'string' },
               surname: { type: 'string' },
+              age: { type: 'number' },
             },
           },
         },
