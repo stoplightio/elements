@@ -1,4 +1,5 @@
 import { safeParse } from '@stoplight/json';
+import { IPrismDiagnostic } from '@stoplight/prism-core';
 import { IHttpResponse as PrismHttpResponse } from '@stoplight/prism-http/dist/types';
 import { Dictionary, IHttpRequest } from '@stoplight/types';
 import axios, { AxiosError } from 'axios';
@@ -122,6 +123,17 @@ export class ResponseStore {
     }
 
     return '';
+  }
+
+  @computed
+  public get violations(): IPrismDiagnostic[] {
+    for (const header in this.headers) {
+      if (this.headers[header] && header.toLowerCase() === 'sl-violations') {
+        return JSON.parse(this.headers[header]);
+      }
+    }
+
+    return [];
   }
 
   @computed
