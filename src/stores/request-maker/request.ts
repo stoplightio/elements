@@ -120,11 +120,6 @@ export class RequestStore {
   }
 
   @computed
-  public get request() {
-    return this.toJSON();
-  }
-
-  @computed
   private get isContentTypeJson() {
     return (
       this.activeContentTypeHeader?.value &&
@@ -135,20 +130,8 @@ export class RequestStore {
   /**
    * Transforms request properties into IHttpRequest
    */
-  public toJSON() {
+  public toPartialHttpRequest(): Partial<IHttpRequest> {
     const url = new URI(this.url);
-    const request: Partial<IHttpRequest> = {
-      method: this.method,
-      url: `${url.origin()}${url.path()}`,
-    };
-
-    if (this.queryParams.length > 0) {
-      request.query = getNameValuePairs(this.queryParams, { enabled: true });
-    }
-
-    if (this.headerParams.length > 0) {
-      request.headers = getNameValuePairs(this.headerParams, { enabled: true });
-    }
 
     let bodyParams;
     if (this.contentType === 'raw') {
@@ -164,11 +147,13 @@ export class RequestStore {
       };
     }
 
-    if (!isEmpty(bodyParams)) {
-      request.body = bodyParams;
-    }
-
-    return request;
+    return {
+      method: this.method,
+      url: `${url.origin()}${url.path()}`,
+      query: this.queryParams.length > 0 ? getNameValuePairs(this.queryParams, { enabled: true }) : undefined,
+      headers: this.headerParams.length > 0 ? getNameValuePairs(this.headerParams, { enabled: true }) : undefined,
+      body: !isEmpty(bodyParams) ? bodyParams : undefined,
+    };
   }
 
   /**
@@ -212,7 +197,7 @@ export class RequestStore {
    * Transforms request properties to Prism request config
    */
   public toPrism(): IPrismHttpRequest {
-    const request = this.toJSON();
+    const request = this.toPartialHttpRequest();
     const headers: HttpNameValue = getNameValuePairs(this.headerParams, { enabled: true });
 
     if (this.hasAuth && this.auth) {
@@ -299,9 +284,10 @@ export class RequestStore {
     if (language === 'markdown') {
       let markdown;
       if (library === 'yaml') {
-        markdown = '```yaml http\n' + `${safeStringifyYaml(this.toJSON(), { indent: 2, noRefs: true })}` + '\n```';
+        markdown =
+          '```yaml http\n' + `${safeStringifyYaml(this.toPartialHttpRequest(), { indent: 2, noRefs: true })}` + '\n```';
       } else {
-        markdown = '```json http\n' + `${safeStringify(this.toJSON(), undefined, 2)}` + '\n```';
+        markdown = '```json http\n' + `${safeStringify(this.toPartialHttpRequest(), undefined, 2)}` + '\n```';
       }
 
       return markdown;

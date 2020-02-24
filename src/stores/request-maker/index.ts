@@ -87,7 +87,7 @@ export class RequestMakerStore {
 
   @computed
   public get hasChanges() {
-    return !isEqual(this._originalRequest, this.request.toJSON());
+    return !isEqual(this._originalRequest, this.request.toPartialHttpRequest());
   }
 
   @computed
@@ -147,7 +147,7 @@ export class RequestMakerStore {
     Object.assign<RequestStore, Partial<RequestStore>>(this.request, getOperationData(operation));
 
     this._originalOperation = operation;
-    this._originalRequest = this.request.toJSON();
+    this._originalRequest = this.request.toPartialHttpRequest();
   };
 
   @action
@@ -169,7 +169,7 @@ export class RequestMakerStore {
       ),
     );
 
-    this._originalRequest = this.request.toJSON();
+    this._originalRequest = this.request.toPartialHttpRequest();
   };
 
   /**
@@ -200,7 +200,7 @@ export class RequestMakerStore {
     }
 
     store.responseTime = Date.now() - time;
-    store.originalRequest = this.request.toJSON();
+    store.originalRequest = this.request.toPartialHttpRequest();
 
     runInAction(() => {
       this.response = store;
@@ -244,7 +244,7 @@ export class RequestMakerStore {
     }
 
     store.responseTime = Date.now() - time;
-    store.originalRequest = this.request.toJSON();
+    store.originalRequest = this.request.toPartialHttpRequest();
 
     runInAction(() => {
       this.cancelToken = undefined;

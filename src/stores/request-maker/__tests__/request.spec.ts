@@ -694,7 +694,7 @@ describe('RequestStore', () => {
       requestStore.query = {};
       requestStore.body = '';
 
-      expect(requestStore.toJSON()).toEqual({
+      expect(requestStore.toPartialHttpRequest()).toEqual({
         url: 'http://mockbin.com/har',
         method: 'get',
       });
@@ -704,7 +704,7 @@ describe('RequestStore', () => {
       requestStore.url = 'http://mockbin.com/har';
       requestStore.publicBaseUrl = 'https://test.com';
 
-      expect(requestStore.toJSON()).toEqual({
+      expect(requestStore.toPartialHttpRequest()).toEqual({
         method: 'get',
         url: 'https://test.com/har',
       });
@@ -717,7 +717,7 @@ describe('RequestStore', () => {
         testQueryParam1: 'testQueryValue1',
       };
 
-      expect(requestStore.toJSON()).toEqual({
+      expect(requestStore.toPartialHttpRequest()).toEqual({
         method: 'get',
         url: 'http://mockbin.com/har',
         query: {
@@ -737,7 +737,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toJSON()).toEqual({
+      expect(requestStore.toPartialHttpRequest()).toEqual({
         method: 'post',
         url: 'http://mockbin.com/har',
         headers: {
@@ -759,7 +759,7 @@ describe('RequestStore', () => {
       requestStore.graphqlQuery = `query(test: $test) { id }`;
       requestStore.graphqlVariables = `{ test: "foo" }`;
 
-      expect(requestStore.toJSON()).toEqual({
+      expect(requestStore.toPartialHttpRequest()).toEqual({
         method: 'post',
         url: 'http://mockbin.com/har',
         headers: {
@@ -782,7 +782,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toJSON()).toEqual({
+      expect(requestStore.toPartialHttpRequest()).toEqual({
         method: 'post',
         url: 'http://mockbin.com/har',
         headers: {
@@ -805,7 +805,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toJSON()).toEqual({
+      expect(requestStore.toPartialHttpRequest()).toEqual({
         method: 'post',
         url: 'http://mockbin.com/har',
         headers: {

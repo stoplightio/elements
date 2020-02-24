@@ -32,7 +32,7 @@ export const RequestSend = observer<ISendButton>(({ className }) => {
           <MenuItem
             text="Copy Request"
             icon="duplicate"
-            onClick={() => copy(safeStringify(store.request.toJSON(), undefined, 2))}
+            onClick={() => copy(safeStringify(store.request.toPartialHttpRequest(), undefined, 2))}
           />
 
           <MenuItem text="Reset" icon="reset" onClick={() => store.reset()} disabled={!store.hasChanges} />
