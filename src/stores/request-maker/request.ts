@@ -391,10 +391,10 @@ export class RequestStore {
         port: baseUri.port(),
         path: path.startsWith('/') ? path.slice(1) : path,
         query: uri.query(),
-      }).toString();
+      });
 
       // if the url is relative, prefix it with a / as per spec.
-      return finalUrl.includes('://') ? finalUrl : `/${finalUrl}`;
+      return finalUrl.protocol() ? finalUrl.toString() : `/${finalUrl.toString()}`;
     } catch (e) {
       // malformed uri
       if (e.name === 'URIError') {
