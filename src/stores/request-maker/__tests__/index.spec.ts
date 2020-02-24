@@ -97,7 +97,7 @@ describe('RequestMakerStore', () => {
 
       expect(requestMaker.request.method).toEqual('post');
       expect(requestMaker.request.baseUrl).toEqual('https://todos.stoplight.io');
-      expect(requestMaker.request.templatedPath).toEqual('/todos');
+      expect(requestMaker.request.path).toEqual('/todos');
       expect(requestMaker.request.queryParams).toEqual([
         {
           name: 'apikey',
@@ -296,7 +296,7 @@ describe('RequestMakerStore', () => {
   describe('Integration - empty response operation', () => {
     it('should be mocked correctly', async () => {
       requestMaker.setOperationData(emptyResponseOperation);
-      requestMaker.request.templatedPath = '/dummy';
+      requestMaker.request.path = '/dummy';
       await requestMaker.mock();
       expect(requestMaker.response.status).toBe('Completed');
       expect(requestMaker.response.raw).toEqual(new Uint8Array(0));
