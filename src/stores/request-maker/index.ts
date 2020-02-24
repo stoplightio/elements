@@ -161,9 +161,7 @@ export class RequestMakerStore {
           publicBaseUrl: request.baseUrl,
           headers: request.headers,
           body: request.body,
-          queryParams:
-            request.query &&
-            flatMap(Object.entries(request.query), ([key, values]) => values.map(v => ({ name: key, value: v }))),
+          query: request.query,
         },
         v => v !== undefined && v !== null,
       ),

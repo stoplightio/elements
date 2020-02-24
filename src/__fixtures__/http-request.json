@@ -5,6 +5,7 @@
   "headers": {},
   "query": {
     "api_key": ["dc6zaTOxFJmzC"],
-    "limit": ["1"]
+    "limit": ["1"],
+    "bear": "cave"
   }
 }

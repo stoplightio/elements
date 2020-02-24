@@ -44,6 +44,35 @@ describe('useRequestMaker()', () => {
     expect(store.request.toPartialHttpRequest()).toEqual(request);
   });
 
+  test('it should return request maker store given an http request with query strings as an array of strings or just a string', () => {
+    const request = {
+      method: 'get',
+      url: 'http://todos.stoplight.io/todos',
+      headers: {
+        'content-type': 'application/json',
+      },
+      query: {
+        foo: 'bar',
+        bear: ['cave'],
+      },
+    };
+
+    const store = useRequestMaker(request);
+
+    expect(store).toBeInstanceOf(RequestMakerStore);
+    expect(store.request.request).toEqual({
+      method: 'get',
+      url: 'http://todos.stoplight.io/todos',
+      headers: {
+        'content-type': 'application/json',
+      },
+      query: {
+        foo: 'bar',
+        bear: 'cave',
+      },
+    });
+  });
+
   test('it should return request maker store given a string value', () => {
     const store = useRequestMaker('foo' as any);
 

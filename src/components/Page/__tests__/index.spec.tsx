@@ -33,6 +33,7 @@ describe('Page', () => {
       wrapper = mount(
         <Page
           node={{
+            id: 1,
             name: 'Put Todos',
             srn: 'sl/org/project',
             type: NodeType.HttpOperation,

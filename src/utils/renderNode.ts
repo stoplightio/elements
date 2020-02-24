@@ -1,4 +1,4 @@
-import { JsonTreeListNode } from '../stores/request-maker/types';
+import { DeprecatedJsonTreeListNode } from '../stores/request-maker/types';
 
 export const renderTree = (root: unknown) => renderNode([], root, 0);
 
@@ -12,10 +12,10 @@ const getType = (node: unknown) => {
   }
 };
 
-const renderNode = (treeList: JsonTreeListNode[], node: unknown, level = 0, name = '') => {
+const renderNode = (treeList: DeprecatedJsonTreeListNode[], node: unknown, level = 0, name = '') => {
   const type = getType(node);
 
-  const baseNode: JsonTreeListNode = {
+  const baseNode: DeprecatedJsonTreeListNode = {
     id: Math.random().toString(36),
     level,
     name,

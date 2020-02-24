@@ -1,8 +1,10 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
+
+import { SWRConfig } from 'swr';
 import { NodeIconMapping } from '../types';
-import { IFetchProps } from '../utils/createFetchClient';
+import { createFetchClient, IFetchProps } from '../utils/createFetchClient';
 
 export interface IProvider {
   host?: string;
@@ -13,7 +15,7 @@ export interface IProvider {
   resolver?: Resolver;
 }
 
-const defaultHost = 'http://localhost:4060';
+const defaultHost = 'http://localhost:8080/api';
 export const HostContext = React.createContext(defaultHost);
 export const RequestContext = React.createContext<IFetchProps>({
   host: defaultHost,
@@ -47,16 +49,29 @@ export const Provider: React.FunctionComponent<IProvider> = ({
     }),
     [host, token],
   );
+  const fetcher = createFetchClient(requestContext);
 
   return (
     <RequestContext.Provider value={requestContext}>
-      <ProjectTokenContext.Provider value={projectToken ?? ''}>
-        <ComponentsContext.Provider value={components}>
-          <ResolverContext.Provider value={resolver}>
-            <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
-          </ResolverContext.Provider>
-        </ComponentsContext.Provider>
-      </ProjectTokenContext.Provider>
+      <SWRConfig
+        value={{
+          refreshInterval: 0,
+          shouldRetryOnError: false,
+          revalidateOnFocus: false,
+          dedupingInterval: 5 * 60 * 1000, // 5 minutes
+          fetcher: async (input: RequestInfo, init?: RequestInit) => {
+            return await (await fetcher(input, init)).json();
+          },
+        }}
+      >
+        <ProjectTokenContext.Provider value={projectToken ?? ''}>
+          <ComponentsContext.Provider value={components}>
+            <ResolverContext.Provider value={resolver}>
+              <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
+            </ResolverContext.Provider>
+          </ComponentsContext.Provider>
+        </ProjectTokenContext.Provider>
+      </SWRConfig>
     </RequestContext.Provider>
   );
 };
