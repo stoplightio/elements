@@ -1,7 +1,6 @@
 import axios, { CancelTokenSource } from 'axios';
 import { flatMap, isEqual, merge, pickBy } from 'lodash';
 import { action, computed, configure, flow, observable, reaction, runInAction } from 'mobx';
-import URI from 'urijs';
 
 import { IHttpConfig, IHttpOperationConfig } from '@stoplight/prism-http';
 import * as PrismClient from '@stoplight/prism-http/dist/client';
@@ -87,7 +86,7 @@ export class RequestMakerStore {
 
   @computed
   public get hasChanges() {
-    return !isEqual(this._originalRequest, this.request.toPartialHttpRequest());
+    return !isEqual(this._originalRequest, this.request.toJSON());
   }
 
   @computed
@@ -147,7 +146,7 @@ export class RequestMakerStore {
     Object.assign<RequestStore, Partial<RequestStore>>(this.request, getOperationData(operation));
 
     this._originalOperation = operation;
-    this._originalRequest = this.request.toPartialHttpRequest();
+    this._originalRequest = this.request.toJSON();
   };
 
   @action
@@ -169,7 +168,7 @@ export class RequestMakerStore {
       ),
     );
 
-    this._originalRequest = this.request.toPartialHttpRequest();
+    this._originalRequest = this.request.toJSON();
   };
 
   /**
@@ -192,15 +191,14 @@ export class RequestMakerStore {
 
     let store: ResponseStore;
     try {
-      const url = new URI(this.request.url);
-      const response = await this.prism.request(`${url.path()}${url.query()}`, this.request.toPrism());
+      const response = await this.prism.request(this.request.uri, this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse(response);
     } catch (err) {
       store = ResponseStore.fromError(err);
     }
 
     store.responseTime = Date.now() - time;
-    store.originalRequest = this.request.toPartialHttpRequest();
+    store.originalRequest = this.request.toJSON();
 
     runInAction(() => {
       this.response = store;
@@ -244,7 +242,7 @@ export class RequestMakerStore {
     }
 
     store.responseTime = Date.now() - time;
-    store.originalRequest = this.request.toPartialHttpRequest();
+    store.originalRequest = this.request.toJSON();
 
     runInAction(() => {
       this.cancelToken = undefined;

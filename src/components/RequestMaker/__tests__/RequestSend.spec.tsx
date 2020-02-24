@@ -62,7 +62,7 @@ describe('RequestSend component', () => {
         method: 'post',
       });
     });
-    const originalRequest = store.request.toPartialHttpRequest();
+    const originalRequest = store.request.toJSON();
 
     act(() => {
       store.request.method = 'get';
@@ -78,6 +78,6 @@ describe('RequestSend component', () => {
       .at(0)
       .simulate('click');
 
-    expect(store.request.toPartialHttpRequest()).toEqual(originalRequest);
+    expect(store.request.toJSON()).toEqual(originalRequest);
   });
 });

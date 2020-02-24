@@ -17,102 +17,44 @@ describe('RequestStore', () => {
     it('should set the request store path value to empty', () => {
       requestStore.publicBaseUrl = 'https://test.com/path';
 
-      expect(requestStore.templatedPath).toEqual('');
+      expect(requestStore.path).toEqual('');
     });
 
     it('should keep the base path in the baseUrl property', () => {
-      requestStore.templatedPath = '/param';
+      requestStore.path = '/param';
       requestStore.publicBaseUrl = 'https://test.com/path';
 
-      expect(requestStore.templatedPath).toEqual('/param');
+      expect(requestStore.path).toEqual('/param');
     });
 
     it('should not duplicate the path value if it already exists on the request store path', () => {
-      requestStore.templatedPath = '/v1/path';
+      requestStore.path = '/v1/path';
       requestStore.publicBaseUrl = 'https://test.com/v1';
 
-      expect(requestStore.templatedPath).toEqual('/v1/path');
+      expect(requestStore.path).toEqual('/v1/path');
     });
 
     it('should ignore duplicate trailing slashes', () => {
-      requestStore.templatedPath = '/';
+      requestStore.path = '/';
       requestStore.publicBaseUrl = 'https://test.com//';
 
-      expect(requestStore.templatedPath).toEqual('/');
+      expect(requestStore.path).toEqual('/');
     });
   });
 
   describe('url - get', () => {
     it('should respect base URL and path', () => {
       requestStore.publicBaseUrl = 'https://test.com';
-      requestStore.templatedPath = '/asd';
+      requestStore.path = '/asd';
 
       expect(requestStore.url).toBe('https://test.com/asd');
     });
 
     it('should respect folder in baseUrl', () => {
       requestStore.publicBaseUrl = 'https://test.com/v2/';
-      requestStore.templatedPath = '/asd';
+      requestStore.path = '/asd';
 
       expect(requestStore.url).toBe('https://test.com/v2/asd');
-    });
-
-    it('should begin with a slash if there is no baseUrl specified', () => {
-      requestStore.templatedPath = '/pet/2';
-
-      expect(requestStore.url).toBe('/pet/2');
-    });
-
-    it('should combine path with enabled query params', () => {
-      Object.assign<RequestStore, Partial<RequestStore>>(requestStore, {
-        method: 'post',
-        publicBaseUrl: 'https://test.com',
-        templatedPath: '/test',
-        queryParams: [
-          {
-            name: 'paramName',
-            value: 'paramValue',
-            isEnabled: true,
-          },
-          {
-            name: 'disabledParamName',
-            value: 'disabledParamValue',
-            isEnabled: false,
-          },
-          {
-            schema: {
-              type: 'string',
-              enum: ['one', 'two', 'three'],
-            },
-            value: undefined,
-            name: 'anotherParam',
-            isEnabled: true,
-          },
-          {
-            value: undefined,
-            schema: {
-              type: 'boolean',
-              description: 'True or false?',
-            },
-            name: 'booleanParam',
-          },
-        ],
-      });
-
-      expect(requestStore.url).toBe('https://test.com/test?paramName=paramValue&anotherParam');
-    });
-
-    it('should resolve path params', () => {
-      requestStore.templatedPath = '/pet/{petId}';
-      requestStore.pathParams = [
-        {
-          name: 'petId',
-          value: '42',
-          isEnabled: true,
-        },
-      ];
-
-      expect(requestStore.url).toBe('/pet/42');
     });
   });
 
@@ -126,7 +68,7 @@ describe('RequestStore', () => {
     it('should set the request store path value', () => {
       requestStore.url = 'https://test.com/path';
 
-      expect(requestStore.templatedPath).toEqual('/path');
+      expect(requestStore.path).toEqual('/path');
     });
 
     it('should set the request store query parameters', () => {
@@ -154,25 +96,8 @@ describe('RequestStore', () => {
     });
   });
 
-  describe('setQueryParamsFromString', () => {
-    it('should extract query params', () => {
-      requestStore.setQueryParamsFromString('?paramName=differentParamValue&anotherParam=someValue');
-
-      expect(requestStore.queryParams).toEqual([
-        {
-          name: 'paramName',
-          value: 'differentParamValue',
-          isEnabled: true,
-        },
-        {
-          name: 'anotherParam',
-          value: 'someValue',
-          isEnabled: true,
-        },
-      ]);
-    });
-
-    it('should preserve optional query params', () => {
+  describe('uri', () => {
+    it('should combine path with enabled query params', () => {
       Object.assign(requestStore, {
         method: 'post',
         publicBaseUrl: 'https://test.com',
@@ -206,7 +131,45 @@ describe('RequestStore', () => {
         ],
       });
 
-      requestStore.setQueryParamsFromString('testParam=testValue&anotherTestParam=');
+      expect(requestStore.uri).toEqual('/test?paramName=paramValue&anotherParam');
+    });
+
+    it('should set new uri correctly and preserve optional query params', () => {
+      Object.assign(requestStore, {
+        method: 'post',
+        publicBaseUrl: 'https://test.com',
+        path: '/test',
+        queryParams: [
+          {
+            name: 'paramName',
+            value: 'paramValue',
+            isEnabled: true,
+          },
+          {
+            name: 'disabledParamName',
+            value: 'disabledParamValue',
+            isEnabled: false,
+          },
+          {
+            schema: {
+              type: 'string',
+              enum: ['one', 'two', 'three'],
+            },
+            name: 'anotherParam',
+            isEnabled: true,
+          },
+          {
+            schema: {
+              type: 'boolean',
+              description: 'True or false?',
+            },
+            name: 'booleanParam',
+          },
+        ],
+      });
+
+      requestStore.uri = 'http://uritest/path?testParam=testValue&anotherTestParam=';
+      expect(requestStore.path).toEqual('/path');
       expect(requestStore.queryParams).toEqual([
         {
           name: 'testParam',
@@ -233,7 +196,24 @@ describe('RequestStore', () => {
       ]);
     });
 
-    it('should preserve query param order', () => {
+    it('should extract query params on uri change', () => {
+      requestStore.uri = 'http://uritest/path?paramName=differentParamValue&anotherParam=someValue';
+
+      expect(requestStore.queryParams).toEqual([
+        {
+          name: 'paramName',
+          value: 'differentParamValue',
+          isEnabled: true,
+        },
+        {
+          name: 'anotherParam',
+          value: 'someValue',
+          isEnabled: true,
+        },
+      ]);
+    });
+
+    it('should preserve query param order on uri change', () => {
       requestStore.queryParams = [
         {
           name: 'paramName',
@@ -265,7 +245,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      requestStore.setQueryParamsFromString('?paramName=differentParamValue&anotherParam=someValue');
+      requestStore.uri = 'http://uritest/path?paramName=differentParamValue&anotherParam=someValue';
 
       expect(requestStore.queryParams).toEqual([
         {
@@ -298,24 +278,11 @@ describe('RequestStore', () => {
         },
       ]);
     });
-
-    it('should add an empty param if queryString ends with &', () => {
-      requestStore.queryParams = [];
-
-      requestStore.setQueryParamsFromString('param1=asd&');
-
-      expect(requestStore.queryParams).toHaveLength(2);
-      expect(requestStore.queryParams[1]).toMatchObject({
-        name: '',
-        value: '',
-        isEnabled: true,
-      });
-    });
   });
 
   describe('path', () => {
     it('should extract path params from path', () => {
-      requestStore.templatedPath = '/{pathParam}/{anotherParam}/{space param}';
+      requestStore.path = '/{pathParam}/{anotherParam}/{space param}';
 
       expect(requestStore.pathParams).toEqual([
         {
@@ -355,7 +322,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      requestStore.templatedPath = '/test/{pathPar}/{anotherPar}';
+      requestStore.path = '/test/{pathPar}/{anotherPar}';
 
       expect(requestStore.pathParams).toEqual([
         {
@@ -407,9 +374,26 @@ describe('RequestStore', () => {
         },
       ];
 
-      expect(requestStore.templatedPath).toEqual(
-        '/{pathParam}/{anotherParam}/{with a space}/{hashParam}/{questionMarkParam}',
-      );
+      expect(requestStore.path).toEqual('/{pathParam}/{anotherParam}/{with a space}/{hashParam}/{questionMarkParam}');
+    });
+  });
+
+  describe('queryParams', () => {
+    it('should correctly set query params', () => {
+      requestStore.queryParams = [
+        {
+          name: 'queryParam',
+          value: 'value',
+          isEnabled: true,
+        },
+        {
+          name: 'anotherParam',
+          value: 'testValue',
+          isEnabled: false,
+        },
+      ];
+
+      expect(requestStore.uri).toEqual('?queryParam=value');
     });
   });
 
@@ -694,7 +678,7 @@ describe('RequestStore', () => {
       requestStore.query = {};
       requestStore.body = '';
 
-      expect(requestStore.toPartialHttpRequest()).toEqual({
+      expect(requestStore.toJSON()).toEqual({
         url: 'http://mockbin.com/har',
         method: 'get',
       });
@@ -704,7 +688,7 @@ describe('RequestStore', () => {
       requestStore.url = 'http://mockbin.com/har';
       requestStore.publicBaseUrl = 'https://test.com';
 
-      expect(requestStore.toPartialHttpRequest()).toEqual({
+      expect(requestStore.toJSON()).toEqual({
         method: 'get',
         url: 'https://test.com/har',
       });
@@ -717,7 +701,7 @@ describe('RequestStore', () => {
         testQueryParam1: 'testQueryValue1',
       };
 
-      expect(requestStore.toPartialHttpRequest()).toEqual({
+      expect(requestStore.toJSON()).toEqual({
         method: 'get',
         url: 'http://mockbin.com/har',
         query: {
@@ -737,7 +721,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toPartialHttpRequest()).toEqual({
+      expect(requestStore.toJSON()).toEqual({
         method: 'post',
         url: 'http://mockbin.com/har',
         headers: {
@@ -759,7 +743,7 @@ describe('RequestStore', () => {
       requestStore.graphqlQuery = `query(test: $test) { id }`;
       requestStore.graphqlVariables = `{ test: "foo" }`;
 
-      expect(requestStore.toPartialHttpRequest()).toEqual({
+      expect(requestStore.toJSON()).toEqual({
         method: 'post',
         url: 'http://mockbin.com/har',
         headers: {
@@ -782,7 +766,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toPartialHttpRequest()).toEqual({
+      expect(requestStore.toJSON()).toEqual({
         method: 'post',
         url: 'http://mockbin.com/har',
         headers: {
@@ -805,7 +789,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toPartialHttpRequest()).toEqual({
+      expect(requestStore.toJSON()).toEqual({
         method: 'post',
         url: 'http://mockbin.com/har',
         headers: {

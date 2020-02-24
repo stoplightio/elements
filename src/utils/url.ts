@@ -1,6 +1,6 @@
 import { Dictionary } from '@stoplight/types';
 import { differenceBy, filter, map, omit } from 'lodash';
-import URI from 'urijs';
+import * as URI from 'urijs';
 import { IParam, PathParam, QueryParam } from '../stores/request-maker/types';
 import { getNameValuePairs } from './params';
 
@@ -88,7 +88,7 @@ export function replaceParamsInPath(path: string, pathParams: PathParam[]) {
   return uri;
 }
 
-export function extractQueryParams(query: string, queryParams: readonly QueryParam[]) {
+export function extractQueryParams(query: string, queryParams: QueryParam[]) {
   const newParams: QueryParam[] = [];
 
   // Parse query params
@@ -101,11 +101,13 @@ export function extractQueryParams(query: string, queryParams: readonly QueryPar
   })).filter(q => !q.isEnabled);
 
   // Add the enabled query params
-  for (const key of Object.keys(queryParsed)) {
-    const existingQueryParam = queryParams.find(q => q.name === key);
-    if (existingQueryParam) {
+  for (const key in queryParsed) {
+    if (!Object.hasOwnProperty.call(queryParsed, key)) continue;
+
+    const queryParam = queryParams.find(q => q.name === key);
+    if (queryParam) {
       newParams.push({
-        ...existingQueryParam,
+        ...queryParam,
         value: queryParsed[key],
         isEnabled: true,
       });
@@ -123,15 +125,6 @@ export function extractQueryParams(query: string, queryParams: readonly QueryPar
     if (!newParams.find(p => p.name === disabledQueryParam.name)) {
       newParams.splice(disabledQueryParam.index, 0, omit(disabledQueryParam, 'index'));
     }
-  }
-
-  // Add empty query param
-  if (query.endsWith('?') || query.endsWith('&')) {
-    newParams.push({
-      name: '',
-      value: '',
-      isEnabled: true,
-    });
   }
 
   return newParams;
