@@ -15,7 +15,7 @@ import { RawViewer } from './RawViewer';
 type ViewCategory = 'raw' | 'pretty' | 'rendered';
 
 export const ResponseBody = observer<{ className?: string }>(({ className }) => {
-  const { body, error, responseType, bodyJson } = useRequestMakerStore('response');
+  const { body, error, responseType, bodyJson, violations } = useRequestMakerStore('response');
   const [selectedView, setSelectedView] = React.useState<ViewCategory>(responseType === 'img' ? 'rendered' : 'pretty');
 
   React.useEffect(() => {
@@ -63,6 +63,7 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
   }
 
   const onChange = React.useCallback(e => setSelectedView(e.currentTarget.value), []);
+  const bodyViolations = violations.filter(v => v.path && v.path[0] === 'body');
 
   const shouldShowViewSelector = !error;
 
@@ -72,12 +73,14 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
 
       <SuggestionBar
         suggestions={[
-          store =>
-            store.response.violations.length ? (
+          () =>
+            bodyViolations.length ? (
               <div>
-                <b>The returned response has some violations with the provided JSON Schema:</b>
+                <b>
+                  The returned response has some violations with the JSON Schema associated with the current operation
+                </b>
                 <ol>
-                  {store.response.violations.map(v => (
+                  {bodyViolations.map(v => (
                     <li>
                       {v.path} {v.message}
                     </li>

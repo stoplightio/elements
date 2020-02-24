@@ -4,6 +4,7 @@ import { map } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { SuggestionBar } from '../SuggestionBar';
 
 export interface IResponseHeaders {
   className?: string;
@@ -18,30 +19,56 @@ export const ResponseHeaders = observer<IResponseHeaders>(({ className }) => {
     return <div className="text-center p-10 text-gray-6">No response headers</div>;
   }
 
+  const headerViolations = responseStore.violations.filter(v => v.path && v.path[0] === 'headers');
+
   return (
-    <HTMLTable
-      className={cn('RequestMaker__ResponseHeaders container', className)}
-      striped={true}
-      condensed={true}
-      interactive={true}
-    >
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        {map(headers, ([key, value]) => (
-          <tr key={`${key}-row`} className="RequestMaker__ResponseHeader">
-            <td className="font-bold">{key}</td>
-            <td>
-              <span>{value}</span>
-            </td>
+    <>
+      <SuggestionBar
+        suggestions={[
+          () =>
+            headerViolations.length ? (
+              <div>
+                <b>
+                  The returned response has some violations with the JSON Schema associated with the current operation
+                </b>
+                <ol>
+                  {headerViolations.map(v => (
+                    <li>
+                      {v.path} {v.message}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ) : (
+              undefined
+            ),
+        ]}
+      />
+
+      <HTMLTable
+        className={cn('RequestMaker__ResponseHeaders container', className)}
+        striped={true}
+        condensed={true}
+        interactive={true}
+      >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
           </tr>
-        ))}
-      </tbody>
-    </HTMLTable>
+        </thead>
+        <tbody>
+          {map(headers, ([key, value]) => (
+            <tr key={`${key}-row`} className="RequestMaker__ResponseHeader">
+              <td className="font-bold">{key}</td>
+              <td>
+                <span>{value}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </HTMLTable>
+    </>
   );
 });
 ResponseHeaders.displayName = 'RequestMaker.ResponseHeaders';
