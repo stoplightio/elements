@@ -60,7 +60,7 @@ describe('useRequestMaker()', () => {
     const store = useRequestMaker(request);
 
     expect(store).toBeInstanceOf(RequestMakerStore);
-    expect(store.request.request).toEqual({
+    expect(store.request.toPartialHttpRequest()).toEqual({
       method: 'get',
       url: 'http://todos.stoplight.io/todos',
       headers: {
