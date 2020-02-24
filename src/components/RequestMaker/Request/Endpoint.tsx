@@ -60,6 +60,7 @@ export const RequestEndpoint = observer<{
   const showServerSuggestor = requestStore.servers && requestStore.servers.length > 0;
 
   React.useEffect(() => {
+    // can't use URI.joinPaths because templatedPath might not be a valid URI (parameters)
     const query = new URI(requestStore.url).search();
     const pathAndQuery = `${requestStore.templatedPath}${query}`;
     setUrl(showServerSuggestor ? pathAndQuery : `${requestStore.baseUrl}${pathAndQuery}`);
