@@ -19,7 +19,7 @@ const DEFAULT_EMPTY_GQL = 'query {\n  \n}';
 
 export class RequestStore {
   @observable
-  private _path = '';
+  private _templatedPath = '';
 
   @observable
   private _method: HttpMethod = 'get';
@@ -229,7 +229,7 @@ export class RequestStore {
     return {
       url: {
         baseUrl: this.baseUrl,
-        path: this.path,
+        path: this.templatedPath,
         query: request.query,
       },
       method: this.method,
@@ -359,12 +359,12 @@ export class RequestStore {
   }
 
   @computed
-  public get path() {
-    return this._path || '';
+  public get templatedPath() {
+    return this._templatedPath || '';
   }
-  public set path(path: string) {
-    this._path = path;
-    this._pathParams = getParamsFromPath(this._path, this._pathParams);
+  public set templatedPath(path: string) {
+    this._templatedPath = path;
+    this._pathParams = getParamsFromPath(this._templatedPath, this._pathParams);
   }
 
   /**
@@ -373,7 +373,7 @@ export class RequestStore {
   @computed
   private get uri() {
     const uri = new URI({
-      path: replaceParamsInPath(this.path, this.pathParams) || '/',
+      path: replaceParamsInPath(this.templatedPath, this.pathParams) || '/',
     });
 
     uri.search({});
@@ -422,7 +422,7 @@ export class RequestStore {
     const origin = parsed.origin();
     if (origin) this.publicBaseUrl = origin;
 
-    this.path = parsed.path();
+    this.templatedPath = parsed.path();
     this.setQueryParamsFromString(parsed.search());
   }
 
@@ -463,7 +463,7 @@ export class RequestStore {
       name: p.name && p.name.replace(/[#?]/g, ''),
     }));
     this._pathParams = cleanParams;
-    this._path = addParamsToPath(this._path, cleanParams);
+    this._templatedPath = addParamsToPath(this._templatedPath, cleanParams);
   }
 
   @computed

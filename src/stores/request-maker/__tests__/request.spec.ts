@@ -17,57 +17,57 @@ describe('RequestStore', () => {
     it('should set the request store path value to empty', () => {
       requestStore.publicBaseUrl = 'https://test.com/path';
 
-      expect(requestStore.path).toEqual('');
+      expect(requestStore.templatedPath).toEqual('');
     });
 
     it('should keep the base path in the baseUrl property', () => {
-      requestStore.path = '/param';
+      requestStore.templatedPath = '/param';
       requestStore.publicBaseUrl = 'https://test.com/path';
 
-      expect(requestStore.path).toEqual('/param');
+      expect(requestStore.templatedPath).toEqual('/param');
     });
 
     it('should not duplicate the path value if it already exists on the request store path', () => {
-      requestStore.path = '/v1/path';
+      requestStore.templatedPath = '/v1/path';
       requestStore.publicBaseUrl = 'https://test.com/v1';
 
-      expect(requestStore.path).toEqual('/v1/path');
+      expect(requestStore.templatedPath).toEqual('/v1/path');
     });
 
     it('should ignore duplicate trailing slashes', () => {
-      requestStore.path = '/';
+      requestStore.templatedPath = '/';
       requestStore.publicBaseUrl = 'https://test.com//';
 
-      expect(requestStore.path).toEqual('/');
+      expect(requestStore.templatedPath).toEqual('/');
     });
   });
 
   describe('url - get', () => {
     it('should respect base URL and path', () => {
       requestStore.publicBaseUrl = 'https://test.com';
-      requestStore.path = '/asd';
+      requestStore.templatedPath = '/asd';
 
       expect(requestStore.url).toBe('https://test.com/asd');
     });
 
     it('should respect folder in baseUrl', () => {
       requestStore.publicBaseUrl = 'https://test.com/v2/';
-      requestStore.path = '/asd';
+      requestStore.templatedPath = '/asd';
 
       expect(requestStore.url).toBe('https://test.com/v2/asd');
     });
 
     it('should begin with a slash if there is no baseUrl specified', () => {
-      requestStore.path = '/pet/2';
+      requestStore.templatedPath = '/pet/2';
 
       expect(requestStore.url).toBe('/pet/2');
     });
 
     it('should combine path with enabled query params', () => {
-      Object.assign(requestStore, {
+      Object.assign<RequestStore, Partial<RequestStore>>(requestStore, {
         method: 'post',
         publicBaseUrl: 'https://test.com',
-        path: '/test',
+        templatedPath: '/test',
         queryParams: [
           {
             name: 'paramName',
@@ -84,10 +84,12 @@ describe('RequestStore', () => {
               type: 'string',
               enum: ['one', 'two', 'three'],
             },
+            value: undefined,
             name: 'anotherParam',
             isEnabled: true,
           },
           {
+            value: undefined,
             schema: {
               type: 'boolean',
               description: 'True or false?',
@@ -101,7 +103,7 @@ describe('RequestStore', () => {
     });
 
     it('should resolve path params', () => {
-      requestStore.path = '/pet/{petId}';
+      requestStore.templatedPath = '/pet/{petId}';
       requestStore.pathParams = [
         {
           name: 'petId',
@@ -124,7 +126,7 @@ describe('RequestStore', () => {
     it('should set the request store path value', () => {
       requestStore.url = 'https://test.com/path';
 
-      expect(requestStore.path).toEqual('/path');
+      expect(requestStore.templatedPath).toEqual('/path');
     });
 
     it('should set the request store query parameters', () => {
@@ -300,7 +302,7 @@ describe('RequestStore', () => {
 
   describe('path', () => {
     it('should extract path params from path', () => {
-      requestStore.path = '/{pathParam}/{anotherParam}/{space param}';
+      requestStore.templatedPath = '/{pathParam}/{anotherParam}/{space param}';
 
       expect(requestStore.pathParams).toEqual([
         {
@@ -340,7 +342,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      requestStore.path = '/test/{pathPar}/{anotherPar}';
+      requestStore.templatedPath = '/test/{pathPar}/{anotherPar}';
 
       expect(requestStore.pathParams).toEqual([
         {
@@ -392,7 +394,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      expect(requestStore.path).toEqual('/{pathParam}/{anotherParam}/{with a space}/{hashParam}/{questionMarkParam}');
+      expect(requestStore.templatedPath).toEqual('/{pathParam}/{anotherParam}/{with a space}/{hashParam}/{questionMarkParam}');
     });
   });
 

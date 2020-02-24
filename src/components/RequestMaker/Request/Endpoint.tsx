@@ -61,14 +61,14 @@ export const RequestEndpoint = observer<{
 
   React.useEffect(() => {
     const query = new URI(requestStore.url).search();
-    const pathAndQuery = `${requestStore.path}${query}`;
+    const pathAndQuery = `${requestStore.templatedPath}${query}`;
     setUrl(showServerSuggestor ? pathAndQuery : `${requestStore.baseUrl}${pathAndQuery}`);
   }, [requestStore.url]);
 
   const onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (showServerSuggestor) {
       const { path, query } = URI.parse(e.target.value);
-      requestStore.path = path || '/';
+      requestStore.templatedPath = path || '/';
       requestStore.setQueryParamsFromString(query || '');
     } else {
       requestStore.url = e.target.value;
