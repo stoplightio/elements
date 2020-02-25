@@ -1,11 +1,11 @@
 import { Classes, Icon, IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
-import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
 import { useParsedData } from '../../hooks/useParsedData';
 import { IDiagnostic } from '../../types';
+import { SchemaViewer } from '../SchemaViewer/SchemaViewer';
 
 const icon: IconName = 'cube';
 const color = '#ef932b';
@@ -27,7 +27,7 @@ export function Model({ value, className, title, maxRows = 100, actions, errors 
     <div className="Model">
       <ModelHeader title={title} actions={actions} errors={errors} />
 
-      <JsonSchemaViewer className={className} schema={schema} maxRows={maxRows} />
+      <SchemaViewer className={className} schema={schema} maxRows={maxRows} />
     </div>
   );
 }

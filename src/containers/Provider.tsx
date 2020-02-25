@@ -7,6 +7,7 @@ import { NodeIconMapping } from '../types';
 import { createFetchClient, IFetchProps } from '../utils/createFetchClient';
 
 export interface IProvider {
+  document?: unknown;
   host?: string;
   token?: string;
   projectToken?: string;
@@ -25,11 +26,13 @@ export const ComponentsContext = React.createContext<IComponentMapping | undefin
 export const ActiveSrnContext = React.createContext('');
 export const ProjectTokenContext = React.createContext('');
 export const ResolverContext = React.createContext<Resolver | undefined>(undefined);
+export const DocumentContext = React.createContext<unknown>(undefined);
 
 const defaultIcons: NodeIconMapping = {};
 export const IconsContext = React.createContext<NodeIconMapping>(defaultIcons);
 
 export const Provider: React.FunctionComponent<IProvider> = ({
+  document,
   host,
   token,
   projectToken,
@@ -52,26 +55,28 @@ export const Provider: React.FunctionComponent<IProvider> = ({
   const fetcher = createFetchClient(requestContext);
 
   return (
-    <RequestContext.Provider value={requestContext}>
-      <SWRConfig
-        value={{
-          refreshInterval: 0,
-          shouldRetryOnError: false,
-          revalidateOnFocus: false,
-          dedupingInterval: 5 * 60 * 1000, // 5 minutes
-          fetcher: async (input: RequestInfo, init?: RequestInit) => {
-            return await (await fetcher(input, init)).json();
-          },
-        }}
-      >
-        <ProjectTokenContext.Provider value={projectToken ?? ''}>
-          <ComponentsContext.Provider value={components}>
-            <ResolverContext.Provider value={resolver}>
-              <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
-            </ResolverContext.Provider>
-          </ComponentsContext.Provider>
-        </ProjectTokenContext.Provider>
-      </SWRConfig>
-    </RequestContext.Provider>
+    <DocumentContext.Provider value={document}>
+      <RequestContext.Provider value={requestContext}>
+        <SWRConfig
+          value={{
+            refreshInterval: 0,
+            shouldRetryOnError: false,
+            revalidateOnFocus: false,
+            dedupingInterval: 5 * 60 * 1000, // 5 minutes
+            fetcher: async (input: RequestInfo, init?: RequestInit) => {
+              return await (await fetcher(input, init)).json();
+            },
+          }}
+        >
+          <ProjectTokenContext.Provider value={projectToken ?? ''}>
+            <ComponentsContext.Provider value={components}>
+              <ResolverContext.Provider value={resolver}>
+                <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
+              </ResolverContext.Provider>
+            </ComponentsContext.Provider>
+          </ProjectTokenContext.Provider>
+        </SWRConfig>
+      </RequestContext.Provider>
+    </DocumentContext.Provider>
   );
 };
