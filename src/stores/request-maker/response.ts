@@ -73,13 +73,24 @@ export class ResponseStore {
   }
 
   public static fromNetworkResponse(response: NetworkResponse) {
+    let violations: IPrismDiagnostic[] = [];
+    const violationsHeader = response.headers['sl-violations'];
+
+    if (violationsHeader) {
+      try {
+        violations = JSON.parse(response.headers['sl-violations']);
+      } catch {
+        violations = [];
+      }
+    }
+
     return new ResponseStore(
       'Completed',
       response.status,
       response.headers,
       response.data || new ArrayBuffer(0),
       false,
-      [],
+      violations,
     );
   }
 
