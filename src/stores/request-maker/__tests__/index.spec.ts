@@ -1,4 +1,5 @@
 import { safeStringify } from '@stoplight/json';
+import { IHttpConfig } from '@stoplight/prism-http';
 import { HttpParamStyles } from '@stoplight/types';
 import axios from 'axios';
 import 'jest-enzyme';
@@ -278,14 +279,83 @@ describe('RequestMakerStore', () => {
   });
 
   describe('prismConfiguration', () => {
+    const defaultPrismConfig = {
+      mock: { dynamic: false },
+      checkSecurity: true,
+      validateRequest: true,
+      validateResponse: true,
+      errors: false,
+    };
+
     it('has the same defaults as prism itself', () => {
-      expect(requestMaker.prismConfig).toEqual({
-        mock: { dynamic: false },
-        checkSecurity: true,
-        validateRequest: true,
-        validateResponse: true,
-        errors: false,
+      expect(requestMaker.prismConfig).toEqual(defaultPrismConfig);
+    });
+
+    // test cases: headerValue-expectedConfig
+    const cases: Array<[string, IHttpConfig]> = [
+      ['', defaultPrismConfig],
+      ['some-unrelated=stuff', defaultPrismConfig],
+      [
+        'unrelated-code=201, dynamic=true',
+        {
+          ...defaultPrismConfig,
+          mock: {
+            dynamic: true,
+          },
+        },
+      ],
+      [
+        'dynamic="true"',
+        {
+          ...defaultPrismConfig,
+          mock: {
+            dynamic: true,
+          },
+        },
+      ],
+      [
+        'code=201, example=named_example, dynamic=true',
+        {
+          ...defaultPrismConfig,
+          mock: {
+            code: '201',
+            exampleKey: 'named_example',
+            dynamic: true,
+          },
+        },
+      ],
+      [
+        'dynamic="true",validateRequest=false,validateResponse=false,code="201", checkSecurity=false',
+        {
+          ...defaultPrismConfig,
+          validateRequest: false,
+          validateResponse: false,
+          mock: {
+            dynamic: true,
+            code: '201',
+          },
+          checkSecurity: false,
+        },
+      ],
+    ];
+
+    it.each(cases)('should parse Prefer header %p', (headerValue, expectedConfig) => {
+      requestMaker.request.headerParams.push({
+        name: 'Prefer',
+        value: headerValue,
+        isEnabled: true,
       });
+
+      expect(requestMaker.prismConfig).toEqual(expectedConfig);
+    });
+
+    it('should ignore disabled Prefer header', () => {
+      requestMaker.request.headerParams.push({
+        name: 'Prefer',
+        value: 'dynamic="true"',
+      });
+
+      expect(requestMaker.prismConfig).toEqual(defaultPrismConfig);
     });
   });
 
