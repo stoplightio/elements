@@ -1,20 +1,25 @@
 import axios, { CancelTokenSource } from 'axios';
-import { flatMap, isEqual, merge, pickBy } from 'lodash';
+import { flatMap, isEqual, kebabCase, mapKeys, merge, pickBy, without, mapValues } from 'lodash';
 import { action, computed, configure, flow, observable, reaction, runInAction } from 'mobx';
 
 import { IHttpConfig, IHttpOperationConfig } from '@stoplight/prism-http';
 import * as PrismClient from '@stoplight/prism-http/dist/client';
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
+import parsePreferHeader from 'parse-prefer-header';
 
 import { getOperationData } from '../../utils/getOperationData';
+import { formatMultiValueHeader } from '../../utils/headers';
 import { isAxiosError } from '../../utils/isAxiosError';
 import { RequestStore } from './request';
 import { ResponseStore } from './response';
 
 configure({ enforceActions: 'observed' });
 
-const defaultPrismConfig: IHttpConfig = {
-  mock: { dynamic: false },
+const defaultMockingConfig: Partial<IHttpOperationConfig> & { dynamic: boolean } = {
+  dynamic: false,
+};
+const defaultPrismConfig = {
+  mock: defaultMockingConfig,
   checkSecurity: true,
   validateRequest: true,
   validateResponse: true,
@@ -34,9 +39,6 @@ export class RequestMakerStore {
 
   @observable
   public isSending = false;
-
-  @observable
-  private _prismConfig = defaultPrismConfig;
 
   @observable.ref
   public request = new RequestStore();
@@ -114,8 +116,36 @@ export class RequestMakerStore {
   }
 
   @computed
+  private get activePreferHeaders() {
+    return this.request.headerParams.filter(h => h.isEnabled && h.name.toLowerCase() === 'prefer');
+  }
+
+  @computed
   public get prismConfig(): Readonly<IHttpConfig> {
-    return this._prismConfig;
+    const enabledHeaders = this.activePreferHeaders
+      .map(h => h.value || '')
+      .filter(v => v)
+      .map(parsePreferHeader);
+
+    const mergedPreferences = Object.assign({}, ...enabledHeaders);
+
+    return {
+      mock: {
+        dynamic: parseOptionalBoolean(mergedPreferences.dynamic) ?? defaultPrismConfig.mock.dynamic,
+        code: mergedPreferences.code,
+        exampleKey: mergedPreferences.example,
+      },
+      checkSecurity: parseOptionalBoolean(mergedPreferences.checkSecurity) ?? defaultPrismConfig.checkSecurity,
+      validateRequest: parseOptionalBoolean(mergedPreferences.validateRequest) ?? defaultPrismConfig.validateRequest,
+      validateResponse: parseOptionalBoolean(mergedPreferences.validateResponse) ?? defaultPrismConfig.validateResponse,
+      errors: parseOptionalBoolean(mergedPreferences.errors) ?? defaultPrismConfig.errors,
+    };
+
+    function parseOptionalBoolean(input: string | undefined): boolean | undefined {
+      if (input === 'true') return true;
+      if (input === 'false') return false;
+      return undefined;
+    }
   }
 
   /**
@@ -169,12 +199,84 @@ export class RequestMakerStore {
   };
 
   /**
+   * Sets a key-value pair in the active Prefer header inside `request` store.
+   * If no Prefer header exists yet, or all of them are disabled, creates a new one.
+   */
+  private setPreferHeaderOption = (key: string, value: string) => {
+    // current behavior is that we always consolidate all enabled headers into one. This is not defined in the specs, can change if needed.
+    const activePreferHeaders = [...this.activePreferHeaders];
+    if (activePreferHeaders.length === 0) {
+      // shortcut, just create a new header and done
+      this.request.headerParams.push({
+        name: 'Prefer',
+        value: formatMultiValueHeader([key, value]),
+        isEnabled: true,
+      });
+      return;
+    }
+
+    const enabledHeaders = activePreferHeaders
+      .map(h => h.value || '')
+      .filter(v => v)
+      .map(parsePreferHeader);
+
+    // update the given key
+    const mergedPreferences = mapValues(
+      mapKeys(Object.assign({}, ...enabledHeaders), (_, k) => kebabCase(k)),
+      v => (v === true ? '' : v),
+    );
+    mergedPreferences[key] = value;
+
+    // write the result into the last active prefer header
+    const lastActivePreferHeader = activePreferHeaders[activePreferHeaders.length - 1];
+    lastActivePreferHeader.value = formatMultiValueHeader(...Object.entries(mergedPreferences));
+
+    // remove the rest of the active headers as we have consolidated everything into the above
+    this.request.headerParams = without(this.request.headerParams, ...activePreferHeaders.slice(0, -1));
+  };
+
+  /**
+   * Removes a key and the corresponding value in the active Prefer header.
+   * If the key was not found, this function is a noop.
+   * If the header ended up empty after the operation, it will be removed.
+   */
+  private removePreferHeaderOption = (key: string) => {
+    // current behavior is that we always consolidate all enabled headers into one. This is not defined in the specs, can change if needed.
+    const activePreferHeaders = [...this.activePreferHeaders];
+    if (activePreferHeaders.length === 0) return;
+
+    const enabledHeaders = this.activePreferHeaders
+      .map(h => h.value || '')
+      .filter(v => v)
+      .map(parsePreferHeader);
+
+    const mergedPreferences = mapValues(
+      mapKeys(Object.assign({}, ...enabledHeaders), (_, k) => kebabCase(k)),
+      v => (v === true ? '' : v),
+    );
+
+    // write the rest of the values into the last active prefer header
+    const lastActivePreferHeader = activePreferHeaders[activePreferHeaders.length - 1];
+    lastActivePreferHeader.value = formatMultiValueHeader(
+      ...Object.entries(mergedPreferences).filter(entry => entry[0] !== key),
+    );
+    // remove the rest of the active headers as we have consolidated everything into the above
+    this.request.headerParams = without(this.request.headerParams, ...activePreferHeaders.slice(0, -1));
+  };
+
+  /**
    * Changes a given parameter in `prismConfig.mock` as an action.
    */
   @action
-  public setPrismMockingOption = <T extends keyof IHttpOperationConfig>(key: T, value: IHttpOperationConfig[T]) => {
-    if (this.prismConfig.mock) {
-      this.prismConfig.mock[key] = value;
+  public setPrismMockingOption = <T extends keyof IHttpOperationConfig>(
+    key: T,
+    value: Required<IHttpOperationConfig>[T],
+  ) => {
+    if (defaultPrismConfig.mock[key] === value) {
+      this.removePreferHeaderOption(key);
+    } else {
+      const mappedKey = key === 'exampleKey' ? 'example' : key;
+      this.setPreferHeaderOption(kebabCase(mappedKey), value.toString());
     }
   };
 
@@ -184,7 +286,11 @@ export class RequestMakerStore {
    */
   @action
   public setPrismConfigurationOption = <T extends keyof Omit<IHttpConfig, 'mock'>>(key: T, value: IHttpConfig[T]) => {
-    this._prismConfig = { ...this.prismConfig, [key]: value };
+    if (defaultPrismConfig[key] === value) {
+      this.removePreferHeaderOption(key);
+    } else {
+      this.setPreferHeaderOption(kebabCase(key), value.toString());
+    }
   };
 
   @action
