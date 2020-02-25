@@ -4,7 +4,7 @@ import { map } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
-import { SuggestionBar } from '../SuggestionBar';
+import { ViolationsDisplay } from './ViolationsDisplay';
 
 export interface IResponseHeaders {
   className?: string;
@@ -23,28 +23,7 @@ export const ResponseHeaders = observer<IResponseHeaders>(({ className }) => {
 
   return (
     <>
-      <SuggestionBar
-        suggestions={[
-          () =>
-            headerViolations.length ? (
-              <div>
-                <b>
-                  The returned response has some violations with the JSON Schema associated with the current operation
-                </b>
-                <ol>
-                  {headerViolations.map(v => (
-                    <li>
-                      {v.path} {v.message}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            ) : (
-              undefined
-            ),
-        ]}
-      />
-
+      <ViolationsDisplay violations={headerViolations} />
       <HTMLTable
         className={cn('RequestMaker__ResponseHeaders container', className)}
         striped={true}

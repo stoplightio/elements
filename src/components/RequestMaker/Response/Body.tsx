@@ -11,6 +11,7 @@ import { ImageViewer } from './ImageViewer';
 import { JsonViewer } from './JsonViewer';
 import { PrettyViewer } from './PrettyViewer';
 import { RawViewer } from './RawViewer';
+import { ViolationsDisplay } from './ViolationsDisplay';
 
 type ViewCategory = 'raw' | 'pretty' | 'rendered';
 
@@ -70,29 +71,7 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
   return (
     <div className={cn(className, 'RequestMaker__ResponseBody flex flex-col')}>
       {shouldShowViewSelector && <ViewSelectorRadioGroup selectedView={selectedView} onChange={onChange} />}
-
-      <SuggestionBar
-        suggestions={[
-          () =>
-            bodyViolations.length ? (
-              <div>
-                <b>
-                  The returned response has some violations with the JSON Schema associated with the current operation
-                </b>
-                <ol>
-                  {bodyViolations.map(v => (
-                    <li>
-                      {v.path} {v.message}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            ) : (
-              undefined
-            ),
-        ]}
-      />
-
+      <ViolationsDisplay violations={bodyViolations} />
       <div className="RequestMaker__ResponseBody--content flex-1 border-t">{content}</div>
     </div>
   );
