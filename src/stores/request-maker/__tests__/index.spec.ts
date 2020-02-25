@@ -5,6 +5,7 @@ import 'jest-enzyme';
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
+import { without } from 'lodash';
 
 describe('RequestMakerStore', () => {
   let requestMaker: RequestMakerStore;
@@ -273,6 +274,35 @@ describe('RequestMakerStore', () => {
       expect(requestMaker.isMockEnabled).toBe(false);
       requestMaker.request.shouldMock = true;
       expect(requestMaker.isMockEnabled).toBe(true);
+    });
+  });
+
+  describe('prismConfiguration', () => {
+    it('has the same defaults as prism itself', () => {
+      expect(requestMaker.prismConfig).toEqual({
+        mock: { dynamic: false },
+        checkSecurity: true,
+        validateRequest: true,
+        validateResponse: true,
+        errors: false,
+      });
+    });
+  });
+
+  describe('changePrismConfigurationOption', () => {
+    const cases = ['checkSecurity', 'validateRequest', 'validateResponse', 'errors'] as const;
+
+    it.each(cases)('should correctly toggle %p', key => {
+      const originalConfiguration = requestMaker.prismConfig;
+      const originalValue = requestMaker.prismConfig[key];
+
+      requestMaker.changePrismConfigurationOption(key, !originalValue);
+
+      expect(requestMaker.prismConfig).not.toBe(originalConfiguration);
+      expect(requestMaker.prismConfig[key]).toEqual(!originalValue);
+      for (const otherKey of without(cases, key)) {
+        expect(requestMaker.prismConfig[otherKey]).toBe(originalConfiguration[otherKey]);
+      }
     });
   });
 
