@@ -289,14 +289,14 @@ describe('RequestMakerStore', () => {
     });
   });
 
-  describe('changePrismConfigurationOption', () => {
+  describe('setPrismConfigurationOption', () => {
     const cases = ['checkSecurity', 'validateRequest', 'validateResponse', 'errors'] as const;
 
     it.each(cases)('should correctly toggle %p', key => {
       const originalConfiguration = requestMaker.prismConfig;
       const originalValue = requestMaker.prismConfig[key];
 
-      requestMaker.changePrismConfigurationOption(key, !originalValue);
+      requestMaker.setPrismConfigurationOption(key, !originalValue);
 
       expect(requestMaker.prismConfig).not.toBe(originalConfiguration);
       expect(requestMaker.prismConfig[key]).toEqual(!originalValue);

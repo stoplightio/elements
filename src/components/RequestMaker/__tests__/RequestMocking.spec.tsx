@@ -117,8 +117,8 @@ describe('RequestSend component', () => {
     });
 
     it('should remove the code from prism config when set to Not Set', () => {
-      store.changePrismMockingOption('code', '200');
-      store.changePrismMockingOption('dynamic', false);
+      store.setPrismMockingOption('code', '200');
+      store.setPrismMockingOption('dynamic', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -140,8 +140,8 @@ describe('RequestSend component', () => {
 
   describe('Example selector', () => {
     it('should change prismConfig when selecting an example', () => {
-      store.changePrismMockingOption('code', '200');
-      store.changePrismMockingOption('dynamic', false);
+      store.setPrismMockingOption('code', '200');
+      store.setPrismMockingOption('dynamic', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -161,9 +161,9 @@ describe('RequestSend component', () => {
     });
 
     it('should remove the example from prismConfig when set to Not Set', () => {
-      store.changePrismMockingOption('code', '200');
-      store.changePrismMockingOption('dynamic', false);
-      store.changePrismMockingOption('exampleKey', 'first-example');
+      store.setPrismMockingOption('code', '200');
+      store.setPrismMockingOption('dynamic', false);
+      store.setPrismMockingOption('exampleKey', 'first-example');
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -183,9 +183,9 @@ describe('RequestSend component', () => {
     });
 
     it('should remove the the example from prismConfig if the code is changed', () => {
-      store.changePrismMockingOption('code', '200');
-      store.changePrismMockingOption('dynamic', false);
-      store.changePrismMockingOption('exampleKey', 'first-example');
+      store.setPrismMockingOption('code', '200');
+      store.setPrismMockingOption('dynamic', false);
+      store.setPrismMockingOption('exampleKey', 'first-example');
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -223,7 +223,7 @@ describe('RequestSend component', () => {
     });
 
     it('should show dynamic when prismConfig.mock.dynamic === true', () => {
-      store.changePrismMockingOption('dynamic', true);
+      store.setPrismMockingOption('dynamic', true);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -239,7 +239,7 @@ describe('RequestSend component', () => {
 
   describe('Validate Request switch', () => {
     it('should set validateRequest in the prismConfig', () => {
-      store.changePrismConfigurationOption('validateRequest', false);
+      store.setPrismConfigurationOption('validateRequest', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -279,7 +279,7 @@ describe('RequestSend component', () => {
 
   describe('Validate Response switch', () => {
     it('should set validateResponse in the prismConfig', () => {
-      store.changePrismConfigurationOption('validateResponse', false);
+      store.setPrismConfigurationOption('validateResponse', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -337,7 +337,7 @@ describe('RequestSend component', () => {
     });
 
     it('should change checkSecurity to true on click when off', () => {
-      store.changePrismConfigurationOption('checkSecurity', false);
+      store.setPrismConfigurationOption('checkSecurity', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
