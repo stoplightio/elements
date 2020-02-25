@@ -41,7 +41,7 @@ export const Mocking = observer(() => {
   // if the current example is not available anymore, remove it from the URL
   React.useEffect(() => {
     if (currentExample && !exampleOptions.find(o => o.value === currentExample)) {
-      store.changeMockingParameter('exampleKey', undefined);
+      store.changePrismMockingOption('exampleKey', undefined);
     }
   }, [exampleOptions, currentExample]);
 
@@ -87,7 +87,7 @@ export const Mocking = observer(() => {
           className="code-selector"
           disabled={!store.isMockEnabled}
           options={codeOptions}
-          onChange={event => store.changeMockingParameter('code', event.currentTarget.value || undefined)}
+          onChange={event => store.changePrismMockingOption('code', event.currentTarget.value || undefined)}
           value={currentCode}
         />
       </ConfigurationRow>
@@ -105,7 +105,7 @@ export const Mocking = observer(() => {
           className="example-selector"
           disabled={!store.isMockEnabled}
           options={exampleOptions}
-          onChange={event => store.changeMockingParameter('exampleKey', event.currentTarget.value || undefined)}
+          onChange={event => store.changePrismMockingOption('exampleKey', event.currentTarget.value || undefined)}
           value={currentExample}
         />
       </ConfigurationRow>
@@ -132,7 +132,7 @@ export const Mocking = observer(() => {
           disabled={!store.isMockEnabled}
           options={dynamicOptions}
           onChange={event => {
-            store.changeMockingParameter('dynamic', event.currentTarget.value === 'dynamic');
+            store.changePrismMockingOption('dynamic', event.currentTarget.value === 'dynamic');
           }}
           value={currentDynamicSetting}
         />

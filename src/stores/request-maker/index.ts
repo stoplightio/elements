@@ -175,10 +175,18 @@ export class RequestMakerStore {
    * Changes a given parameter in `prismConfig.mock` as an action.
    */
   @action
-  public changeMockingParameter = <T extends keyof IHttpOperationConfig>(key: T, value: IHttpOperationConfig[T]) => {
+  public changePrismMockingOption = <T extends keyof IHttpOperationConfig>(key: T, value: IHttpOperationConfig[T]) => {
     if (this.prismConfig.mock) {
       this.prismConfig.mock[key] = value;
     }
+  };
+
+  @action
+  public changePrismConfigurationOption = <T extends keyof Omit<IHttpConfig, 'mock'>>(
+    key: T,
+    value: IHttpConfig[T],
+  ) => {
+    this.prismConfig = { ...this.prismConfig, [key]: value };
   };
 
   @action

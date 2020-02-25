@@ -117,8 +117,8 @@ describe('RequestSend component', () => {
     });
 
     it('should remove the code from prism config when set to Not Set', () => {
-      store.changeMockingParameter('code', '200');
-      store.changeMockingParameter('dynamic', false);
+      store.changePrismMockingOption('code', '200');
+      store.changePrismMockingOption('dynamic', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -140,8 +140,8 @@ describe('RequestSend component', () => {
 
   describe('Example selector', () => {
     it('should change prismConfig when selecting an example', () => {
-      store.changeMockingParameter('code', '200');
-      store.changeMockingParameter('dynamic', false);
+      store.changePrismMockingOption('code', '200');
+      store.changePrismMockingOption('dynamic', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -161,9 +161,9 @@ describe('RequestSend component', () => {
     });
 
     it('should remove the example from prismConfig when set to Not Set', () => {
-      store.changeMockingParameter('code', '200');
-      store.changeMockingParameter('dynamic', false);
-      store.changeMockingParameter('exampleKey', 'first-example');
+      store.changePrismMockingOption('code', '200');
+      store.changePrismMockingOption('dynamic', false);
+      store.changePrismMockingOption('exampleKey', 'first-example');
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -183,9 +183,9 @@ describe('RequestSend component', () => {
     });
 
     it('should remove the the example from prismConfig if the code is changed', () => {
-      store.changeMockingParameter('code', '200');
-      store.changeMockingParameter('dynamic', false);
-      store.changeMockingParameter('exampleKey', 'first-example');
+      store.changePrismMockingOption('code', '200');
+      store.changePrismMockingOption('dynamic', false);
+      store.changePrismMockingOption('exampleKey', 'first-example');
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -223,7 +223,7 @@ describe('RequestSend component', () => {
     });
 
     it('should show dynamic when prismConfig.mock.dynamic === true', () => {
-      store.changeMockingParameter('dynamic', true);
+      store.changePrismMockingOption('dynamic', true);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
