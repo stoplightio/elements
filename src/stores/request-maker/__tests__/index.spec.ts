@@ -3,10 +3,11 @@ import { IHttpConfig } from '@stoplight/prism-http';
 import { HttpParamStyles } from '@stoplight/types';
 import axios from 'axios';
 import 'jest-enzyme';
+import { without } from 'lodash';
+import parsePreferHeader from 'parse-prefer-header';
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
-import { without } from 'lodash';
 
 describe('RequestMakerStore', () => {
   let requestMaker: RequestMakerStore;
@@ -325,7 +326,7 @@ describe('RequestMakerStore', () => {
         },
       ],
       [
-        'dynamic="true",validateRequest=false,validateResponse=false,code="201", checkSecurity=false',
+        'dynamic="true",validate-request=false,validate-response=false,code="201", check-security=false',
         {
           ...defaultPrismConfig,
           validateRequest: false,
@@ -357,6 +358,31 @@ describe('RequestMakerStore', () => {
 
       expect(requestMaker.prismConfig).toEqual(defaultPrismConfig);
     });
+
+    it('should parse a combination of Prefer headers', () => {
+      requestMaker.request.headerParams = [
+        {
+          name: 'Prefer',
+          value: 'validate-request=false',
+          isEnabled: true,
+        },
+        {
+          name: 'Prefer',
+          value: 'check-security=false',
+        },
+        {
+          name: 'Prefer',
+          value: 'validate-response=false',
+          isEnabled: true,
+        },
+      ];
+
+      expect(requestMaker.prismConfig).toEqual({
+        ...defaultPrismConfig,
+        validateRequest: false,
+        validateResponse: false,
+      });
+    });
   });
 
   describe('setPrismConfigurationOption', () => {
@@ -373,6 +399,90 @@ describe('RequestMakerStore', () => {
       for (const otherKey of without(cases, key)) {
         expect(requestMaker.prismConfig[otherKey]).toBe(originalConfiguration[otherKey]);
       }
+    });
+
+    it('should add a Prefer header if there are none', () => {
+      requestMaker.setPrismConfigurationOption('validateRequest', false);
+
+      const header = requestMaker.request.headerParams.find(h => h.name === 'Prefer');
+      expect(header?.isEnabled).toBe(true);
+      const parsed = parsePreferHeader(header?.value || '');
+      expect(parsed.validateRequest).toBe('false');
+    });
+
+    it('should add a Prefer header if all of them are disabled', () => {
+      requestMaker.request.headerParams.push({
+        name: 'Prefer',
+        value: 'some-value',
+        isEnabled: false,
+      });
+      requestMaker.setPrismConfigurationOption('validateRequest', false);
+
+      expect(requestMaker.request.headerParams).toHaveLength(2);
+      const header = requestMaker.request.headerParams[1];
+      expect(header.name).toBe('Prefer');
+      expect(header.isEnabled).toBe(true);
+    });
+
+    it('should change active Prefer header', () => {
+      requestMaker.request.headerParams.push({
+        name: 'Prefer',
+        value: 'validate-request=true',
+        isEnabled: true,
+      });
+      requestMaker.setPrismConfigurationOption('validateRequest', false);
+
+      expect(requestMaker.request.headerParams).toHaveLength(1);
+      const header = requestMaker.request.headerParams[0];
+      expect(header.name).toBe('Prefer');
+      expect(header.isEnabled).toBe(true);
+      expect(header.value).toBe('validate-request=false');
+    });
+
+    it('should keep unrelated values untouched when changing active Prefer header', () => {
+      requestMaker.request.headerParams.push({
+        name: 'Prefer',
+        value: 'validate-request=false, unrelated-value',
+        isEnabled: true,
+      });
+      requestMaker.setPrismConfigurationOption('validateResponse', false);
+
+      expect(requestMaker.request.headerParams).toHaveLength(1);
+      const header = requestMaker.request.headerParams[0];
+      expect(header.name).toBe('Prefer');
+      expect(header.isEnabled).toBe(true);
+      expect(parsePreferHeader(header.value || '')).toEqual({
+        validateRequest: 'false',
+        unrelatedValue: true,
+        validateResponse: 'false',
+      });
+    });
+
+    it('should remove prefer header when setting value to default', () => {
+      requestMaker.request.headerParams.push({
+        name: 'Prefer',
+        value: 'validate-request=false',
+        isEnabled: true,
+      });
+      requestMaker.setPrismConfigurationOption('validateRequest', true);
+
+      expect(requestMaker.request.headerParams).toHaveLength(0);
+    });
+
+    it('should remove prism option from prefer header when setting value to default', () => {
+      requestMaker.request.headerParams.push({
+        name: 'Prefer',
+        value: 'validate-request=false, unrelated-value',
+        isEnabled: true,
+      });
+      requestMaker.setPrismConfigurationOption('validateRequest', true);
+
+      expect(requestMaker.request.headerParams).toHaveLength(1);
+      expect(requestMaker.request.headerParams[0]).toMatchObject({
+        name: 'Prefer',
+        value: 'unrelated-value',
+        isEnabled: true
+      });
     });
   });
 
