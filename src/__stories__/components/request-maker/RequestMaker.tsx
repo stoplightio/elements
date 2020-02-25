@@ -1,4 +1,4 @@
-import { object, text, withKnobs } from '@storybook/addon-knobs';
+import { object, select, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 import { invalidOperation } from '../../../__fixtures__/operations/invalid-response-example';
@@ -13,25 +13,8 @@ storiesOf('components/RequestMaker', module)
   .add('with operation', () => {
     const store = new RequestMakerStore({
       mockUrl: text('mock URL', ''),
-      operation: object('operation', operation),
-    });
-
-    return (
-      <div className="RequestMaker my-10">
-        <RequestMakerProvider value={store}>
-          <RequestEndpoint />
-
-          <RequestEditor />
-
-          <ResponseViewer />
-        </RequestMakerProvider>
-      </div>
-    );
-  })
-  .add('operation with invalid response example', () => {
-    const store = new RequestMakerStore({
-      mockUrl: text('mock URL', ''),
-      operation: object('operation', invalidOperation),
+      // @ts-ignore — Unfortunately the types are doomed.
+      operation: select('operation', { operation, invalidOperation }, operation),
     });
 
     return (
