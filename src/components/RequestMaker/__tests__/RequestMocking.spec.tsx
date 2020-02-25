@@ -239,7 +239,7 @@ describe('RequestSend component', () => {
 
   describe('Validate Request switch', () => {
     it('should set validateRequest in the prismConfig', () => {
-      store.prismConfig = { ...store.prismConfig, validateRequest: false };
+      store.changePrismConfigurationOption('validateRequest', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -279,7 +279,7 @@ describe('RequestSend component', () => {
 
   describe('Validate Response switch', () => {
     it('should set validateResponse in the prismConfig', () => {
-      store.prismConfig = { ...store.prismConfig, validateResponse: false };
+      store.changePrismConfigurationOption('validateResponse', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>
@@ -337,7 +337,7 @@ describe('RequestSend component', () => {
     });
 
     it('should change checkSecurity to true on click when off', () => {
-      store.prismConfig = { ...store.prismConfig, checkSecurity: false };
+      store.changePrismConfigurationOption('checkSecurity', false);
 
       wrapper = mount(
         <RequestMakerProvider value={store}>

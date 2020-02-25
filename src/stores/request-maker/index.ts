@@ -117,9 +117,6 @@ export class RequestMakerStore {
   public get prismConfig(): Readonly<IHttpConfig> {
     return this._prismConfig;
   }
-  public set prismConfig(prismConfig) {
-    this._prismConfig = { ...defaultPrismConfig, ...prismConfig };
-  }
 
   /**
    * True if the selected HTTP verb is the same as in the originally supplied `operation`.
@@ -186,7 +183,7 @@ export class RequestMakerStore {
     key: T,
     value: IHttpConfig[T],
   ) => {
-    this.prismConfig = { ...this.prismConfig, [key]: value };
+    this._prismConfig = { ...this.prismConfig, [key]: value };
   };
 
   @action

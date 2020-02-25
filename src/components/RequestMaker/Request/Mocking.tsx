@@ -149,7 +149,7 @@ export const Mocking = observer(() => {
           innerLabelChecked="On"
           checked={store.prismConfig.validateRequest}
           onChange={() => {
-            store.prismConfig = { ...store.prismConfig, validateRequest: !store.prismConfig.validateRequest };
+            store.changePrismConfigurationOption('validateRequest', !store.prismConfig.validateRequest);
           }}
           disabled={!store.isMockEnabled}
         />
@@ -166,7 +166,7 @@ export const Mocking = observer(() => {
           innerLabelChecked="On"
           checked={store.prismConfig.validateResponse}
           onChange={() => {
-            store.prismConfig = { ...store.prismConfig, validateResponse: !store.prismConfig.validateResponse };
+            store.changePrismConfigurationOption('validateResponse', !store.prismConfig.validateResponse);
           }}
           disabled={!store.isMockEnabled}
         />
@@ -180,7 +180,7 @@ export const Mocking = observer(() => {
           innerLabelChecked="On"
           checked={store.prismConfig.checkSecurity}
           onChange={() => {
-            store.prismConfig = { ...store.prismConfig, checkSecurity: !store.prismConfig.checkSecurity };
+            store.changePrismConfigurationOption('checkSecurity', !store.prismConfig.checkSecurity);
           }}
           disabled={!store.isMockEnabled}
         />
