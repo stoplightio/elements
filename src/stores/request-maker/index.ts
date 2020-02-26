@@ -123,10 +123,7 @@ export class RequestMakerStore {
 
   @computed
   public get prismConfig(): Readonly<IHttpConfig> {
-    const enabledHeaders = this.activePreferHeaders
-      .map(h => h.value || '')
-      .filter(v => v)
-      .map(parsePreferHeader);
+    const enabledHeaders = this.activePreferHeaders.map(h => h.value || '').map(parsePreferHeader);
 
     const mergedPreferences = Object.assign({}, ...enabledHeaders);
 
