@@ -1,10 +1,9 @@
-import axios, { CancelTokenSource } from 'axios';
-import { flatMap, isEqual, kebabCase, mapKeys, merge, pickBy, without, mapValues } from 'lodash';
-import { action, computed, configure, flow, observable, reaction, runInAction } from 'mobx';
-
 import { IHttpConfig, IHttpOperationConfig } from '@stoplight/prism-http';
 import * as PrismClient from '@stoplight/prism-http/dist/client';
-import { IHttpOperation, IHttpRequest } from '@stoplight/types';
+import { IHttpOperation, IHttpRequest, Dictionary } from '@stoplight/types';
+import axios, { CancelTokenSource } from 'axios';
+import { flatMap, isEqual, kebabCase, mapKeys, mapValues, merge, pickBy, without } from 'lodash';
+import { action, computed, configure, observable, reaction, runInAction } from 'mobx';
 import parsePreferHeader from 'parse-prefer-header';
 
 import { getOperationData } from '../../utils/getOperationData';
@@ -14,10 +13,6 @@ import { RequestStore } from './request';
 import { ResponseStore } from './response';
 
 configure({ enforceActions: 'observed' });
-
-const defaultMockingConfig: Partial<IHttpOperationConfig> & { dynamic: boolean } = {
-  dynamic: false,
-};
 
 const defaultPrismConfig = {
   mock: {
@@ -221,16 +216,8 @@ export class RequestMakerStore {
       return;
     }
 
-    const enabledHeaders = activePreferHeaders
-      .map(h => h.value || '')
-      .filter(v => v)
-      .map(parsePreferHeader);
-
+    const mergedPreferences = parsePreferHeaders(activePreferHeaders);
     // update the given key
-    const mergedPreferences = mapValues(
-      mapKeys(Object.assign({}, ...enabledHeaders), (_, k) => kebabCase(k)),
-      v => (v === true ? '' : v),
-    );
     mergedPreferences[key] = value;
 
     // write the result into the last active prefer header
@@ -251,15 +238,7 @@ export class RequestMakerStore {
     const activePreferHeaders = [...this.activePreferHeaders];
     if (activePreferHeaders.length === 0) return;
 
-    const enabledHeaders = this.activePreferHeaders
-      .map(h => h.value || '')
-      .filter(v => v)
-      .map(parsePreferHeader);
-
-    const mergedPreferences = mapValues(
-      mapKeys(Object.assign({}, ...enabledHeaders), (_, k) => kebabCase(k)),
-      v => (v === true ? '' : v),
-    );
+    const mergedPreferences = parsePreferHeaders(activePreferHeaders);
 
     // write the rest of the values into the last active prefer header
     const lastActivePreferHeader = activePreferHeaders[activePreferHeaders.length - 1];
@@ -395,4 +374,16 @@ export class RequestMakerStore {
       this.setRequestData(this._originalRequest);
     }
   }
+}
+
+function parsePreferHeaders(activePreferHeaders: RequestStore['headerParams']): Dictionary<string> {
+  const enabledHeaders = activePreferHeaders
+    .map(h => h.value || '')
+    .filter(v => v)
+    .map(parsePreferHeader);
+
+  return mapValues(
+    mapKeys(Object.assign({}, ...enabledHeaders), (_, k) => kebabCase(k)),
+    v => (v === true ? '' : v),
+  );
 }
