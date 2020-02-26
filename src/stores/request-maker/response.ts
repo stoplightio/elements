@@ -42,7 +42,7 @@ export class ResponseStore {
   public readonly isMockedResponse: boolean;
 
   @observable
-  public readonly violations: IPrismDiagnostic[];
+  public readonly violations: readonly IPrismDiagnostic[];
 
   @observable
   public responseTime: number = 0;
@@ -56,7 +56,7 @@ export class ResponseStore {
     headers: IHttpNameValue,
     rawbody: ArrayBuffer,
     isMockedResponse: boolean,
-    violations: IPrismDiagnostic[],
+    violations: readonly IPrismDiagnostic[],
     error?: Error,
   ) {
     this.status = status;
@@ -73,15 +73,11 @@ export class ResponseStore {
   }
 
   public static fromNetworkResponse(response: NetworkResponse) {
-    let violations: IPrismDiagnostic[] = [];
+    let violations = [];
     const violationsHeader = response.headers['sl-violations'];
 
     if (violationsHeader) {
-      try {
-        violations = JSON.parse(response.headers['sl-violations']);
-      } catch {
-        violations = [];
-      }
+      violations = safeParse(response.headers['sl-violations']) || [];
     }
 
     return new ResponseStore(
