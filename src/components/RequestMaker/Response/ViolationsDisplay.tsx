@@ -7,13 +7,13 @@ export const ViolationsDisplay = ({ violations }: { violations: IPrismDiagnostic
       {violations.length ? (
         <div>
           <b>The returned response has some violations with the JSON Schema associated with the current operation</b>
-          <ol>
+          <ul>
             {violations.map(v => (
               <li key={v.message}>
                 {v.path} {v.message}
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       ) : (
         undefined
