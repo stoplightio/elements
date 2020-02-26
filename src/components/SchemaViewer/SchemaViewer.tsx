@@ -1,17 +1,9 @@
-import { JsonSchemaViewer, SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
-import { get, isObject } from 'lodash';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import * as React from 'react';
-import { DocumentContext } from '../..';
+import { InlineRefResolverContext } from '../../containers/Provider';
 
 export const SchemaViewer: typeof JsonSchemaViewer = props => {
-  const document = React.useContext(DocumentContext);
-
-  const resolveRef = React.useCallback<SchemaTreeRefDereferenceFn>(
-    (refPath, schema) => {
-      return get(isObject(document) ? document : schema, refPath);
-    },
-    [document],
-  );
+  const resolveRef = React.useContext(InlineRefResolverContext);
 
   return <JsonSchemaViewer {...props} resolveRef={resolveRef} />;
 };

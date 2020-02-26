@@ -7735,7 +7735,6 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   >
                                                     <JsonSchemaViewer
                                                       maxRows={20}
-                                                      resolveRef={[Function]}
                                                       schema={
                                                         Object {
                                                           "$schema": "http://json-schema.org/draft-04/schema#",
@@ -8846,7 +8845,6 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   >
                                                     <JsonSchemaViewer
                                                       maxRows={20}
-                                                      resolveRef={[Function]}
                                                       schema={
                                                         Object {
                                                           "$schema": "http://json-schema.org/draft-04/schema#",

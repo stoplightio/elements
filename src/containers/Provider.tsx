@@ -1,4 +1,5 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
+import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 
@@ -7,13 +8,13 @@ import { NodeIconMapping } from '../types';
 import { createFetchClient, IFetchProps } from '../utils/createFetchClient';
 
 export interface IProvider {
-  document?: unknown;
   host?: string;
   token?: string;
   projectToken?: string;
   components?: IComponentMapping;
   icons?: NodeIconMapping;
   resolver?: Resolver;
+  inlineRefResolver?: SchemaTreeRefDereferenceFn;
 }
 
 const defaultHost = 'http://localhost:8080/api';
@@ -26,19 +27,19 @@ export const ComponentsContext = React.createContext<IComponentMapping | undefin
 export const ActiveSrnContext = React.createContext('');
 export const ProjectTokenContext = React.createContext('');
 export const ResolverContext = React.createContext<Resolver | undefined>(undefined);
-export const DocumentContext = React.createContext<unknown>(undefined);
+export const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(undefined);
 
 const defaultIcons: NodeIconMapping = {};
 export const IconsContext = React.createContext<NodeIconMapping>(defaultIcons);
 
 export const Provider: React.FunctionComponent<IProvider> = ({
-  document,
   host,
   token,
   projectToken,
   components,
   icons,
   resolver,
+  inlineRefResolver,
   children,
 }) => {
   const requestContext = React.useMemo<IFetchProps>(
@@ -55,7 +56,7 @@ export const Provider: React.FunctionComponent<IProvider> = ({
   const fetcher = createFetchClient(requestContext);
 
   return (
-    <DocumentContext.Provider value={document}>
+    <InlineRefResolverContext.Provider value={inlineRefResolver}>
       <RequestContext.Provider value={requestContext}>
         <SWRConfig
           value={{
@@ -77,6 +78,6 @@ export const Provider: React.FunctionComponent<IProvider> = ({
           </ProjectTokenContext.Provider>
         </SWRConfig>
       </RequestContext.Provider>
-    </DocumentContext.Provider>
+    </InlineRefResolverContext.Provider>
   );
 };
