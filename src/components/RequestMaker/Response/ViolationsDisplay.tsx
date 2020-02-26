@@ -3,7 +3,7 @@ import * as React from 'react';
 
 export const ViolationsDisplay = ({ violations }: { violations: IPrismDiagnostic[] }) => {
   return (
-    <div className="RequestMaker__SuggestionBar p-2 pl-4 pr-4">
+    <section className="RequestMaker__SuggestionBar p-2 pl-4 pr-4">
       {violations.length ? (
         <div>
           <strong>
@@ -20,7 +20,7 @@ export const ViolationsDisplay = ({ violations }: { violations: IPrismDiagnostic
       ) : (
         undefined
       )}
-    </div>
+    </section>
   );
 };
 
