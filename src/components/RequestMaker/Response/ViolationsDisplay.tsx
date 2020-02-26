@@ -6,7 +6,9 @@ export const ViolationsDisplay = ({ violations }: { violations: IPrismDiagnostic
     <div className="RequestMaker__SuggestionBar p-2 pl-4 pr-4">
       {violations.length ? (
         <div>
-          <b>The returned response has some violations with the JSON Schema associated with the current operation</b>
+          <strong>
+            The returned response has some violations with the JSON Schema associated with the current operation
+          </strong>
           <ul>
             {violations.map(v => (
               <li key={v.message}>
