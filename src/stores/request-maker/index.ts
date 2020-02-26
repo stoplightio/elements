@@ -260,8 +260,14 @@ export class RequestMakerStore {
     lastActivePreferHeader.value = formatMultiValueHeader(
       ...Object.entries(mergedPreferences).filter(entry => entry[0] !== key),
     );
-    // remove the rest of the active headers as we have consolidated everything into the above
-    this.request.headerParams = without(this.request.headerParams, ...activePreferHeaders.slice(0, -1));
+
+    if (lastActivePreferHeader.value) {
+      // remove the rest of the active headers as we have consolidated everything into the above
+      this.request.headerParams = without(this.request.headerParams, ...activePreferHeaders.slice(0, -1));
+    } else {
+      // there are no preferences left, let's remove all the Prefer headers
+      this.request.headerParams = without(this.request.headerParams, ...activePreferHeaders);
+    }
   };
 
   /**
@@ -272,11 +278,12 @@ export class RequestMakerStore {
     key: T,
     value: Required<IHttpOperationConfig>[T],
   ) => {
+    const preferenceKey = key === 'exampleKey' ? 'example' : kebabCase(key);
+
     if (defaultPrismConfig.mock[key] === value) {
-      this.removePreferHeaderOption(key);
+      this.removePreferHeaderOption(preferenceKey);
     } else {
-      const mappedKey = key === 'exampleKey' ? 'example' : key;
-      this.setPreferHeaderOption(kebabCase(mappedKey), value.toString());
+      this.setPreferHeaderOption(preferenceKey, value.toString());
     }
   };
 
@@ -286,10 +293,11 @@ export class RequestMakerStore {
    */
   @action
   public setPrismConfigurationOption = <T extends keyof Omit<IHttpConfig, 'mock'>>(key: T, value: IHttpConfig[T]) => {
+    const preferenceKey = kebabCase(key);
     if (defaultPrismConfig[key] === value) {
-      this.removePreferHeaderOption(key);
+      this.removePreferHeaderOption(preferenceKey);
     } else {
-      this.setPreferHeaderOption(kebabCase(key), value.toString());
+      this.setPreferHeaderOption(preferenceKey, value.toString());
     }
   };
 
