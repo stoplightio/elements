@@ -1,3 +1,4 @@
+import { IPrismDiagnostic } from '@stoplight/prism-core';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
 import { ResponseStore } from '../response';
 
@@ -75,6 +76,30 @@ describe('ResponseStore', () => {
 
       it('should have status text calculated', () => {
         expect(store.statusText).toBe('401 Unauthorized');
+      });
+    });
+
+    describe('violations', () => {
+      const violation: IPrismDiagnostic = {
+        message: 'Hello',
+        severity: 0,
+      };
+
+      const sampleResponse = {
+        status: 401,
+        headers: {
+          'sl-violations': JSON.stringify([violation]),
+        },
+      };
+
+      let store: ResponseStore;
+
+      beforeEach(() => {
+        store = ResponseStore.fromNetworkResponse(sampleResponse);
+      });
+
+      it('should have the violation property filled', () => {
+        expect(store.violations).toHaveLength(1);
       });
     });
   });
