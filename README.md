@@ -54,7 +54,7 @@ import { TryIt } from '@stoplight/elements/components/TryIt';
 ### Contributing
 
 1. Clone repo.
-2. Create / checkout `feature/{name}`, `chore/{name}`, or `fix/{name}` branch.
+2. Create / checkout `feat/{name}`, `chore/{name}`, or `fix/{name}` branch.
 3. Install deps: `yarn`.
 4. Make your changes.
 5. Run tests: `yarn test.prod`.
