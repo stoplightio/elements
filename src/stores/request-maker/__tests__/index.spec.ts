@@ -481,7 +481,7 @@ describe('RequestMakerStore', () => {
       expect(requestMaker.request.headerParams[0]).toMatchObject({
         name: 'Prefer',
         value: 'unrelated-value',
-        isEnabled: true
+        isEnabled: true,
       });
     });
   });

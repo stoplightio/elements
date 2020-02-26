@@ -16,7 +16,7 @@ describe('formatMultiValueHeader', () => {
 
   it('should join multiple values', () => {
     expect(formatMultiValueHeader(['key', 'complex,value'], 'valueless', ['simple', 'value'])).toBe(
-      'key="complex,value", valueless, simple=value'
+      'key="complex,value", valueless, simple=value',
     );
   });
 });

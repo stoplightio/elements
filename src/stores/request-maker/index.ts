@@ -1,6 +1,6 @@
 import { IHttpConfig, IHttpOperationConfig } from '@stoplight/prism-http';
 import * as PrismClient from '@stoplight/prism-http/dist/client';
-import { IHttpOperation, IHttpRequest, Dictionary } from '@stoplight/types';
+import { Dictionary, IHttpOperation, IHttpRequest } from '@stoplight/types';
 import axios, { CancelTokenSource } from 'axios';
 import { flatMap, isEqual, kebabCase, mapKeys, mapValues, merge, pickBy, without } from 'lodash';
 import { action, computed, configure, observable, reaction, runInAction } from 'mobx';
