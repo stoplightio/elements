@@ -38,7 +38,7 @@ export const ResponseHeaders = observer<IResponseHeaders>(({ className }) => {
         </thead>
         <tbody>
           {map(headers, ([key, value]) => (
-            <tr key={`${key}-row`} className="RequestMaker__ResponseHeader">
+            <tr key={key} className="RequestMaker__ResponseHeader">
               <td className="font-bold">{key}</td>
               <td>
                 <span>{value}</span>
