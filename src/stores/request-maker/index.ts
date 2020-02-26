@@ -18,13 +18,19 @@ configure({ enforceActions: 'observed' });
 const defaultMockingConfig: Partial<IHttpOperationConfig> & { dynamic: boolean } = {
   dynamic: false,
 };
+
 const defaultPrismConfig = {
-  mock: defaultMockingConfig,
+  mock: {
+    dynamic: false,
+    code: undefined,
+    exampleKey: undefined,
+    mediaTypes: undefined,
+  },
   checkSecurity: true,
   validateRequest: true,
   validateResponse: true,
   errors: false,
-};
+} as const;
 
 export interface IRequestMakerStoreOptions {
   request?: Partial<IHttpRequest>;
@@ -274,13 +280,10 @@ export class RequestMakerStore {
    * Changes a given parameter in `prismConfig.mock` as an action.
    */
   @action
-  public setPrismMockingOption = <T extends keyof IHttpOperationConfig>(
-    key: T,
-    value: Required<IHttpOperationConfig>[T],
-  ) => {
+  public setPrismMockingOption = <T extends keyof IHttpOperationConfig>(key: T, value: IHttpOperationConfig[T]) => {
     const preferenceKey = key === 'exampleKey' ? 'example' : kebabCase(key);
 
-    if (defaultPrismConfig.mock[key] === value) {
+    if (value === undefined || defaultPrismConfig.mock[key] === value) {
       this.removePreferHeaderOption(preferenceKey);
     } else {
       this.setPreferHeaderOption(preferenceKey, value.toString());
