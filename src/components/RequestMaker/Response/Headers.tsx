@@ -1,5 +1,6 @@
 import { HTMLTable } from '@stoplight/ui-kit';
 import cn from 'classnames';
+import { isNonEmpty } from 'fp-ts/lib/Array';
 import { map } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
@@ -23,7 +24,7 @@ export const ResponseHeaders = observer<IResponseHeaders>(({ className }) => {
 
   return (
     <>
-      <ViolationsDisplay violations={headerViolations} />
+      {isNonEmpty(headerViolations) && <ViolationsDisplay violations={headerViolations} />}
       <HTMLTable
         className={cn('RequestMaker__ResponseHeaders container', className)}
         striped={true}

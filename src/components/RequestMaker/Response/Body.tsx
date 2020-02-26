@@ -1,6 +1,7 @@
 import { Radio, RadioGroup } from '@blueprintjs/core';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import cn from 'classnames';
+import { isNonEmpty } from 'fp-ts/lib/Array';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
@@ -70,7 +71,7 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
   return (
     <div className={cn(className, 'RequestMaker__ResponseBody flex flex-col')}>
       {shouldShowViewSelector && <ViewSelectorRadioGroup selectedView={selectedView} onChange={onChange} />}
-      <ViolationsDisplay violations={bodyViolations} />
+      {isNonEmpty(bodyViolations) && <ViolationsDisplay violations={bodyViolations} />}
       <div className="RequestMaker__ResponseBody--content flex-1 border-t">{content}</div>
     </div>
   );
