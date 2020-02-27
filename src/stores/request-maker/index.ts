@@ -132,8 +132,10 @@ export class RequestMakerStore {
         exampleKey: mergedPreferences.example,
       },
       checkSecurity: parseOptionalBoolean(mergedPreferences['check-security']) ?? defaultPrismConfig.checkSecurity,
-      validateRequest: parseOptionalBoolean(mergedPreferences['validate-request']) ?? defaultPrismConfig.validateRequest,
-      validateResponse: parseOptionalBoolean(mergedPreferences['validate-response']) ?? defaultPrismConfig.validateResponse,
+      validateRequest:
+        parseOptionalBoolean(mergedPreferences['validate-request']) ?? defaultPrismConfig.validateRequest,
+      validateResponse:
+        parseOptionalBoolean(mergedPreferences['validate-response']) ?? defaultPrismConfig.validateResponse,
       errors: parseOptionalBoolean(mergedPreferences.errors) ?? defaultPrismConfig.errors,
     };
 

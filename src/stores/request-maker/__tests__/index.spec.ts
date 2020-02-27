@@ -341,20 +341,24 @@ describe('RequestMakerStore', () => {
     ];
 
     it.each(cases)('should parse Prefer header %p', (headerValue, expectedConfig) => {
-      requestMaker.request.headerParams.push({
-        name: 'Prefer',
-        value: headerValue,
-        isEnabled: true,
-      });
+      requestMaker.request.headerParams = [
+        {
+          name: 'Prefer',
+          value: headerValue,
+          isEnabled: true,
+        },
+      ];
 
       expect(requestMaker.prismConfig).toEqual(expectedConfig);
     });
 
     it('should ignore disabled Prefer header', () => {
-      requestMaker.request.headerParams.push({
-        name: 'Prefer',
-        value: 'dynamic="true"',
-      });
+      requestMaker.request.headerParams = [
+        {
+          name: 'Prefer',
+          value: 'dynamic="true"',
+        },
+      ];
 
       expect(requestMaker.prismConfig).toEqual(defaultPrismConfig);
     });
@@ -397,11 +401,13 @@ describe('RequestMakerStore', () => {
       expect(requestMaker.prismConfig).not.toBe(originalConfiguration);
       expect(requestMaker.prismConfig[key]).toEqual(!originalValue);
       for (const otherKey of without(cases, key)) {
-        expect(requestMaker.prismConfig[otherKey]).toBe(originalConfiguration[otherKey]);
+        expect(requestMaker.prismConfig[otherKey]).toEqual(originalConfiguration[otherKey]);
       }
     });
 
     it('should add a Prefer header if there are none', () => {
+      requestMaker.request.headerParams = [];
+
       requestMaker.setPrismConfigurationOption('validateRequest', false);
 
       const header = requestMaker.request.headerParams.find(h => h.name === 'Prefer');
@@ -411,11 +417,13 @@ describe('RequestMakerStore', () => {
     });
 
     it('should add a Prefer header if all of them are disabled', () => {
-      requestMaker.request.headerParams.push({
-        name: 'Prefer',
-        value: 'some-value',
-        isEnabled: false,
-      });
+      requestMaker.request.headerParams = [
+        {
+          name: 'Prefer',
+          value: 'some-value',
+          isEnabled: false,
+        },
+      ];
       requestMaker.setPrismConfigurationOption('validateRequest', false);
 
       expect(requestMaker.request.headerParams).toHaveLength(2);
@@ -425,11 +433,13 @@ describe('RequestMakerStore', () => {
     });
 
     it('should change active Prefer header', () => {
-      requestMaker.request.headerParams.push({
-        name: 'Prefer',
-        value: 'validate-request=true',
-        isEnabled: true,
-      });
+      requestMaker.request.headerParams = [
+        {
+          name: 'Prefer',
+          value: 'validate-request=true',
+          isEnabled: true,
+        },
+      ];
       requestMaker.setPrismConfigurationOption('validateRequest', false);
 
       expect(requestMaker.request.headerParams).toHaveLength(1);
@@ -440,11 +450,13 @@ describe('RequestMakerStore', () => {
     });
 
     it('should keep unrelated values untouched when changing active Prefer header', () => {
-      requestMaker.request.headerParams.push({
-        name: 'Prefer',
-        value: 'validate-request=false, unrelated-value',
-        isEnabled: true,
-      });
+      requestMaker.request.headerParams = [
+        {
+          name: 'Prefer',
+          value: 'validate-request=false, unrelated-value',
+          isEnabled: true,
+        },
+      ];
       requestMaker.setPrismConfigurationOption('validateResponse', false);
 
       expect(requestMaker.request.headerParams).toHaveLength(1);
@@ -459,22 +471,26 @@ describe('RequestMakerStore', () => {
     });
 
     it('should remove prefer header when setting value to default', () => {
-      requestMaker.request.headerParams.push({
-        name: 'Prefer',
-        value: 'validate-request=false',
-        isEnabled: true,
-      });
+      requestMaker.request.headerParams = [
+        {
+          name: 'Prefer',
+          value: 'validate-request=false',
+          isEnabled: true,
+        },
+      ];
       requestMaker.setPrismConfigurationOption('validateRequest', true);
 
       expect(requestMaker.request.headerParams).toHaveLength(0);
     });
 
     it('should remove prism option from prefer header when setting value to default', () => {
-      requestMaker.request.headerParams.push({
-        name: 'Prefer',
-        value: 'validate-request=false, unrelated-value',
-        isEnabled: true,
-      });
+      requestMaker.request.headerParams = [
+        {
+          name: 'Prefer',
+          value: 'validate-request=false, unrelated-value',
+          isEnabled: true,
+        },
+      ];
       requestMaker.setPrismConfigurationOption('validateRequest', true);
 
       expect(requestMaker.request.headerParams).toHaveLength(1);
