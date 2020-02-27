@@ -21,6 +21,7 @@ storiesOf('components/RequestMaker/Response/Body', module)
         'x-stuff': 'test',
       },
       status: 200,
+      violations: [],
     });
     requestMaker.response.responseTime = 121;
 

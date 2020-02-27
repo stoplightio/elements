@@ -17,3 +17,4 @@ import './Request/Send';
 import './Response/Body';
 import './Response/Headers';
 import './Response/Viewer';
+import './Response/ViolationsDisplay';

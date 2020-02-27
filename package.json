@@ -38,10 +38,10 @@
     "test.watch": "yarn test --watch"
   },
   "peerDependencies": {
+    "@stoplight/prism-http": ">=3.2.9",
     "mobx": ">=5",
     "react": ">=16.8",
-    "react-dom": ">=16.8",
-    "@stoplight/prism-http": ">=3.2.9"
+    "react-dom": ">=16.8"
   },
   "dependencies": {
     "@stoplight/json": "^3.2.1",
@@ -57,6 +57,7 @@
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.2.0",
     "fast-text-encoding": "^1.0.0",
+    "fp-ts": "^2.1.1",
     "httpsnippet": "github:stoplightio/httpsnippet#master",
     "lodash": "^4.17.15",
     "mobx-react-lite": "^1.5.1",
@@ -75,8 +76,8 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
-    "@stoplight/scripts": "8.2.0",
     "@stoplight/prism-http": "^3.2.9",
+    "@stoplight/scripts": "8.2.0",
     "@stoplight/storybook-config": "^2.0.4",
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "3.x.x",

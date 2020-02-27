@@ -1,4 +1,5 @@
 import { safeParse } from '@stoplight/json';
+import { IPrismDiagnostic, IPrismOutput } from '@stoplight/prism-core';
 import { IHttpResponse as PrismHttpResponse } from '@stoplight/prism-http/dist/types';
 import { Dictionary, IHttpRequest } from '@stoplight/types';
 import axios, { AxiosError } from 'axios';
@@ -11,6 +12,7 @@ import { IHttpNameValue, XHRResponseType } from './types';
 type MockResponse = {
   status: PrismHttpResponse['statusCode'];
   headers: PrismHttpResponse['headers'];
+  violations: IPrismOutput<unknown>['validations']['output'];
   data: unknown;
 };
 
@@ -40,6 +42,9 @@ export class ResponseStore {
   public readonly isMockedResponse: boolean;
 
   @observable
+  public readonly violations: readonly IPrismDiagnostic[];
+
+  @observable
   public responseTime: number = 0;
 
   @observable
@@ -51,6 +56,7 @@ export class ResponseStore {
     headers: IHttpNameValue,
     rawbody: ArrayBuffer,
     isMockedResponse: boolean,
+    violations: readonly IPrismDiagnostic[],
     error?: Error,
   ) {
     this.status = status;
@@ -59,25 +65,34 @@ export class ResponseStore {
     this.raw = rawbody;
     this.isMockedResponse = isMockedResponse;
     this.error = error;
+    this.violations = violations;
   }
 
   public static createEmpty() {
-    return new ResponseStore('', 0, {}, new ArrayBuffer(0), false);
+    return new ResponseStore('', 0, {}, new ArrayBuffer(0), false, []);
   }
 
   public static fromNetworkResponse(response: NetworkResponse) {
+    let violations = [];
+    const violationsHeader = response.headers['sl-violations'];
+
+    if (violationsHeader) {
+      violations = safeParse(response.headers['sl-violations']) || [];
+    }
+
     return new ResponseStore(
       'Completed',
       response.status,
       response.headers,
       response.data || new ArrayBuffer(0),
       false,
+      violations,
     );
   }
 
   public static fromAxiosError(err: AxiosError) {
     if (axios.isCancel(err)) {
-      return new ResponseStore('Canceled', 0, {}, new ArrayBuffer(0), false, undefined);
+      return new ResponseStore('Canceled', 0, {}, new ArrayBuffer(0), false, [], undefined);
     } else if (err.response) {
       return this.fromNetworkResponse(err.response);
     } else {
@@ -86,18 +101,25 @@ export class ResponseStore {
           err.message ? `${err.message}\n\n` : ''
         }The API did not return a response. Is it running and accessible?\n\nIf you are sending this request from a web browser, does the API support CORS?`,
       );
-      return new ResponseStore('Error', 0, {}, new ArrayBuffer(0), false, error);
+      return new ResponseStore('Error', 0, {}, new ArrayBuffer(0), false, [], error);
     }
   }
 
   public static fromMockObjectResponse(responseObject: MockResponse) {
     const stringData = JSON.stringify(responseObject.data);
     const abData = (stringData && stringToArrayBuffer(stringData)) || new Uint8Array();
-    return new ResponseStore('Completed', responseObject.status, responseObject.headers || {}, abData, true);
+    return new ResponseStore(
+      'Completed',
+      responseObject.status,
+      responseObject.headers || {},
+      abData,
+      true,
+      responseObject.violations,
+    );
   }
 
   public static fromError(err: Error) {
-    return new ResponseStore('Error', 0, {}, new ArrayBuffer(0), false, err);
+    return new ResponseStore('Error', 0, {}, new ArrayBuffer(0), false, [], err);
   }
 
   @computed

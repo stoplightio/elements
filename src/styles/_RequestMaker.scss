@@ -47,8 +47,13 @@
   }
 }
 
-.RequestMaker__SuggestionBar {
+.RequestMaker__SuggestionBar,
+.RequestMaker__ViolationsDisplay {
   background-color: #fefcbf;
+}
+
+.RequestMaker__ViolationsDisplay .bp3-tree-node-label{
+  min-height: 19px;
 }
 
 .#{$ns}-dark {
@@ -84,7 +89,8 @@
     }
   }
 
-  .RequestMaker__SuggestionBar {
+  .RequestMaker__SuggestionBar,
+  .RequestMaker__ViolationsDisplay {
     background-color: #2c7a7b;
   }
 }
