@@ -4,7 +4,6 @@ import { HttpParamStyles } from '@stoplight/types';
 import axios from 'axios';
 import 'jest-enzyme';
 import { without } from 'lodash';
-import { toJS } from 'mobx';
 import parsePreferHeader from 'parse-prefer-header';
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
@@ -531,7 +530,7 @@ describe('RequestMakerStore', () => {
       store.setOperationData(emptyResponseOperation);
       store.request.templatedPath = '/dummy';
       await store.mock();
-      console.log(toJS(store.response));
+
       expect(store.response.status).toBe('Completed');
       expect(store.response.raw).toEqual(new Uint8Array(0));
     });
