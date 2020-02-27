@@ -44,6 +44,10 @@ import { TryIt } from '@stoplight/elements/components/TryIt';
           tabs.push({ title: 'Try It', content: <TryIt value={node.data} /> });
         }
 
+        tabs.push({ title: 'Dependencies', content: <Dependencies node={node}> });
+
+        tabs.push({ title: 'Changelog', content: <Changelog changes={node.changes}> });
+
         return tabs;
       }}
     />
