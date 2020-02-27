@@ -3,7 +3,7 @@ import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { useParsedData } from '../../hooks/useParsedData';
+import { useResolver } from '../../hooks/useResolver';
 import { IDiagnostic } from '../../types';
 import { SchemaViewer } from '../SchemaViewer/SchemaViewer';
 
@@ -21,13 +21,13 @@ export interface IModelProps {
 }
 
 export function Model({ value, className, title, maxRows = 50, actions, errors = [] }: IModelProps) {
-  const schema = useParsedData(NodeType.Model, value);
+  const { result } = useResolver(NodeType.Model, value);
 
   return (
     <div className="Model">
       <ModelHeader title={title} actions={actions} errors={errors} />
 
-      <SchemaViewer className={className} schema={schema} maxRows={maxRows} />
+      <SchemaViewer className={className} schema={result} maxRows={maxRows} />
     </div>
   );
 }

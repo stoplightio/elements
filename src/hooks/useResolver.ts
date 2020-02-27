@@ -1,7 +1,7 @@
-import { IResolveError, IResolveResult } from '@stoplight/json-ref-resolver/types';
+import { IResolveError, IResolveResult, IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { uniqBy } from 'lodash';
 import * as React from 'react';
-import { ActiveSrnContext, RequestContext, ResolverContext } from '../containers/Provider';
+import { ActiveSrnContext, ResolverContext, ResolverOptionsContext } from '../containers/Provider';
 import { DocsNodeType } from '../types';
 import { cancelablePromise } from '../utils/cancelablePromise';
 import { createResolver } from '../utils/createResolver';
@@ -14,9 +14,10 @@ import { useParsedData } from './useParsedData';
  * Any component using this hook MUST be wrapped in both the HostContext and ActiveSrnContext providers
  */
 export function useResolver<T = any>(type: DocsNodeType, value: string) {
-  const srn = React.useContext(ActiveSrnContext);
   const client = useFetchClient();
-  const resolver = React.useContext(ResolverContext) || createResolver(client, srn);
+  const srn = React.useContext(ActiveSrnContext);
+  const resolverOpts = React.useContext(ResolverOptionsContext);
+  const resolver = React.useContext(ResolverContext) || createResolver(client, srn, resolverOpts);
   const parsedValue = useParsedData(type, value);
 
   const [resolved, setResolved] = React.useState<{
@@ -30,7 +31,7 @@ export function useResolver<T = any>(type: DocsNodeType, value: string) {
 
   React.useEffect(() => {
     // Only resolve if we've succeeded in parsing the string
-    if (typeof parsedValue !== 'object') return;
+    if (typeof parsedValue !== 'object' || !resolverOpts) return;
 
     const { promise, cancel } = cancelablePromise(resolver.resolve(parsedValue));
 
