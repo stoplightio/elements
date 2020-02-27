@@ -62,7 +62,7 @@ describe('ResponseHeaders component', () => {
       render();
 
       expect(wrapper.find(ViolationsDisplay)).toExist();
-      expect(wrapper.find(ViolationsDisplay).find('li')).toHaveLength(1);
+      expect(wrapper.find(ViolationsDisplay).prop('violations')).toHaveLength(1);
     });
   });
 });
