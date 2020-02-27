@@ -411,8 +411,9 @@ describe('RequestMakerStore', () => {
       store.setPrismConfigurationOption('validateRequest', false);
 
       const header = store.request.headerParams.find(h => h.name === 'Prefer');
+      expect(header).toBeDefined();
       expect(header?.isEnabled).toBe(true);
-      const parsed = parsePreferHeader(header?.value || '');
+      const parsed = parsePreferHeader(header?.value);
       expect(parsed.validateRequest).toBe('false');
     });
 
@@ -424,6 +425,7 @@ describe('RequestMakerStore', () => {
           isEnabled: false,
         },
       ];
+
       store.setPrismConfigurationOption('validateRequest', false);
 
       expect(store.request.headerParams).toHaveLength(2);
@@ -432,7 +434,7 @@ describe('RequestMakerStore', () => {
       expect(header.isEnabled).toBe(true);
     });
 
-    it('should change active Prefer header', () => {
+    it('should modify the value of the active Prefer header', () => {
       store.request.headerParams = [
         {
           name: 'Prefer',
@@ -440,6 +442,7 @@ describe('RequestMakerStore', () => {
           isEnabled: true,
         },
       ];
+
       store.setPrismConfigurationOption('validateRequest', false);
 
       expect(store.request.headerParams).toHaveLength(1);
@@ -457,13 +460,14 @@ describe('RequestMakerStore', () => {
           isEnabled: true,
         },
       ];
+
       store.setPrismConfigurationOption('validateResponse', false);
 
       expect(store.request.headerParams).toHaveLength(1);
       const header = store.request.headerParams[0];
       expect(header.name).toBe('Prefer');
       expect(header.isEnabled).toBe(true);
-      expect(parsePreferHeader(header.value || '')).toEqual({
+      expect(parsePreferHeader(header.value)).toEqual({
         validateRequest: 'false',
         unrelatedValue: true,
         validateResponse: 'false',
@@ -478,6 +482,7 @@ describe('RequestMakerStore', () => {
           isEnabled: true,
         },
       ];
+
       store.setPrismConfigurationOption('validateRequest', true);
 
       expect(store.request.headerParams).toHaveLength(0);
@@ -491,6 +496,7 @@ describe('RequestMakerStore', () => {
           isEnabled: true,
         },
       ];
+
       store.setPrismConfigurationOption('validateRequest', true);
 
       expect(store.request.headerParams).toHaveLength(1);

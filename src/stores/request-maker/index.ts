@@ -14,18 +14,13 @@ import { ResponseStore } from './response';
 
 configure({ enforceActions: 'observed' });
 
-const defaultPrismConfig = {
-  mock: {
-    dynamic: false,
-    code: undefined,
-    exampleKey: undefined,
-    mediaTypes: undefined,
-  },
+const defaultPrismConfig: IHttpConfig & { mock: IHttpOperationConfig } = {
+  mock: { dynamic: false },
   checkSecurity: true,
   validateRequest: true,
   validateResponse: true,
   errors: false,
-} as const;
+};
 
 export interface IRequestMakerStoreOptions {
   request?: Partial<IHttpRequest>;
@@ -374,10 +369,7 @@ export class RequestMakerStore {
 }
 
 function parsePreferHeaders(activePreferHeaders: RequestStore['headerParams']): Dictionary<string> {
-  const enabledHeaders = activePreferHeaders
-    .map(h => h.value || '')
-    .filter(v => v)
-    .map(parsePreferHeader);
+  const enabledHeaders = activePreferHeaders.map(h => h.value).map(parsePreferHeader);
 
   const mergedPreferences = enabledHeaders.reduce((acc, current) => ({ ...acc, ...current }), {});
 
