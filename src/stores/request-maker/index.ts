@@ -123,9 +123,7 @@ export class RequestMakerStore {
 
   @computed
   public get prismConfig(): Readonly<IHttpConfig> {
-    const enabledHeaders = this.activePreferHeaders.map(h => h.value || '').map(parsePreferHeader);
-
-    const mergedPreferences = Object.assign({}, ...enabledHeaders);
+    const mergedPreferences = parsePreferHeaders(this.activePreferHeaders);
 
     return {
       mock: {
@@ -133,9 +131,9 @@ export class RequestMakerStore {
         code: mergedPreferences.code,
         exampleKey: mergedPreferences.example,
       },
-      checkSecurity: parseOptionalBoolean(mergedPreferences.checkSecurity) ?? defaultPrismConfig.checkSecurity,
-      validateRequest: parseOptionalBoolean(mergedPreferences.validateRequest) ?? defaultPrismConfig.validateRequest,
-      validateResponse: parseOptionalBoolean(mergedPreferences.validateResponse) ?? defaultPrismConfig.validateResponse,
+      checkSecurity: parseOptionalBoolean(mergedPreferences['check-security']) ?? defaultPrismConfig.checkSecurity,
+      validateRequest: parseOptionalBoolean(mergedPreferences['validate-request']) ?? defaultPrismConfig.validateRequest,
+      validateResponse: parseOptionalBoolean(mergedPreferences['validate-response']) ?? defaultPrismConfig.validateResponse,
       errors: parseOptionalBoolean(mergedPreferences.errors) ?? defaultPrismConfig.errors,
     };
 
@@ -379,8 +377,10 @@ function parsePreferHeaders(activePreferHeaders: RequestStore['headerParams']): 
     .filter(v => v)
     .map(parsePreferHeader);
 
+  const mergedPreferences = enabledHeaders.reduce((acc, current) => ({ ...acc, ...current }), {});
+
   return mapValues(
-    mapKeys(Object.assign({}, ...enabledHeaders), (_, k) => kebabCase(k)),
+    mapKeys(mergedPreferences, (_, k) => kebabCase(k)),
     v => (v === true ? '' : v),
   );
 }
