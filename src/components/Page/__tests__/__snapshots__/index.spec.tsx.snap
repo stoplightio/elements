@@ -7705,7 +7705,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   id="react-tabs-1"
                                                   role="tabpanel"
                                                 >
-                                                  <JsonSchemaViewer
+                                                  <Component
                                                     maxRows={20}
                                                     schema={
                                                       Object {
@@ -7733,8 +7733,37 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                       }
                                                     }
                                                   >
-                                                    <div />
-                                                  </JsonSchemaViewer>
+                                                    <JsonSchemaViewer
+                                                      maxRows={20}
+                                                      schema={
+                                                        Object {
+                                                          "$schema": "http://json-schema.org/draft-04/schema#",
+                                                          "properties": Object {
+                                                            "completed": Object {
+                                                              "type": Array [
+                                                                "boolean",
+                                                                "null",
+                                                              ],
+                                                            },
+                                                            "name": Object {
+                                                              "type": "string",
+                                                            },
+                                                          },
+                                                          "required": Array [
+                                                            "name",
+                                                            "completed",
+                                                          ],
+                                                          "title": "Todo Partial",
+                                                          "type": "object",
+                                                          "x-tags": Array [
+                                                            "Todos",
+                                                          ],
+                                                        }
+                                                      }
+                                                    >
+                                                      <div />
+                                                    </JsonSchemaViewer>
+                                                  </Component>
                                                 </div>
                                               </TabPanel>
                                             </SimpleTabPanel>
@@ -8724,7 +8753,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                   id="react-tabs-7"
                                                   role="tabpanel"
                                                 >
-                                                  <JsonSchemaViewer
+                                                  <Component
                                                     maxRows={20}
                                                     schema={
                                                       Object {
@@ -8814,8 +8843,99 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                       }
                                                     }
                                                   >
-                                                    <div />
-                                                  </JsonSchemaViewer>
+                                                    <JsonSchemaViewer
+                                                      maxRows={20}
+                                                      schema={
+                                                        Object {
+                                                          "$schema": "http://json-schema.org/draft-04/schema#",
+                                                          "allOf": Array [
+                                                            Object {
+                                                              "$schema": "http://json-schema.org/draft-04/schema#",
+                                                              "properties": Object {
+                                                                "completed": Object {
+                                                                  "type": Array [
+                                                                    "boolean",
+                                                                    "null",
+                                                                  ],
+                                                                },
+                                                                "name": Object {
+                                                                  "type": "string",
+                                                                },
+                                                              },
+                                                              "required": Array [
+                                                                "name",
+                                                                "completed",
+                                                              ],
+                                                              "title": "Todo Partial",
+                                                              "type": "object",
+                                                              "x-tags": Array [
+                                                                "Todos",
+                                                              ],
+                                                            },
+                                                            Object {
+                                                              "properties": Object {
+                                                                "completed_at": Object {
+                                                                  "format": "date-time",
+                                                                  "type": Array [
+                                                                    "string",
+                                                                    "null",
+                                                                  ],
+                                                                },
+                                                                "created_at": Object {
+                                                                  "format": "date-time",
+                                                                  "type": "string",
+                                                                },
+                                                                "id": Object {
+                                                                  "maximum": 1000000,
+                                                                  "minimum": 0,
+                                                                  "type": "integer",
+                                                                },
+                                                                "updated_at": Object {
+                                                                  "format": "date-time",
+                                                                  "type": "string",
+                                                                },
+                                                                "user": Object {
+                                                                  "$schema": "http://json-schema.org/draft-04/schema#",
+                                                                  "description": "Here lies the user model",
+                                                                  "properties": Object {
+                                                                    "age": Object {
+                                                                      "maximum": 150,
+                                                                      "minimum": 0,
+                                                                      "type": "number",
+                                                                    },
+                                                                    "name": Object {
+                                                                      "description": "The user's full name.",
+                                                                      "type": "string",
+                                                                    },
+                                                                  },
+                                                                  "required": Array [
+                                                                    "name",
+                                                                    "age",
+                                                                  ],
+                                                                  "title": "User",
+                                                                  "type": "object",
+                                                                  "x-tags": Array [
+                                                                    "Todos",
+                                                                  ],
+                                                                },
+                                                              },
+                                                              "required": Array [
+                                                                "id",
+                                                                "user",
+                                                              ],
+                                                              "type": "object",
+                                                            },
+                                                          ],
+                                                          "title": "Todo Full",
+                                                          "x-tags": Array [
+                                                            "Todos",
+                                                          ],
+                                                        }
+                                                      }
+                                                    >
+                                                      <div />
+                                                    </JsonSchemaViewer>
+                                                  </Component>
                                                 </div>
                                               </TabPanel>
                                             </SimpleTabPanel>
