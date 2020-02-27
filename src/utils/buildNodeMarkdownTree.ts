@@ -1,11 +1,13 @@
 import { safeStringify } from '@stoplight/json';
 import { IRoot } from '@stoplight/markdown';
 import { processMarkdownTree } from '@stoplight/markdown-viewer';
+import { Node } from '@stoplight/markdown/ast-types/unist';
 import { Builder } from '@stoplight/markdown/builder';
 import { NodeType } from '@stoplight/types';
 import { JSONSchema4 } from 'json-schema';
+import { IDiagnostic } from '../types';
 
-export function buildNodeMarkdownTree(type: string, data: any): IRoot {
+export function buildNodeMarkdownTree(type: NodeType, data: unknown, errors?: IDiagnostic[]): IRoot {
   const markdown = new Builder();
 
   if (type === NodeType.Article) {
@@ -38,12 +40,16 @@ export function buildNodeMarkdownTree(type: string, data: any): IRoot {
       }
     }
 
-    const schemaBlock = {
+    const schemaBlock: Node = {
       type: 'code',
       lang: 'json',
       meta: 'model',
       value: safeStringify(schema, undefined, 4),
     };
+
+    if (errors?.length) {
+      schemaBlock.annotations = { errors };
+    }
 
     if (exampleTabs.length) {
       markdown.addChild({
@@ -65,12 +71,18 @@ export function buildNodeMarkdownTree(type: string, data: any): IRoot {
 
     markdown.addMarkdown('\n');
   } else {
-    markdown.addChild({
+    const codeBlock: Node = {
       type: 'code',
       lang: 'json',
       meta: type,
       value: safeStringify(data, undefined, 4),
-    });
+    };
+
+    if (errors?.length) {
+      codeBlock.annotations = { errors };
+    }
+
+    markdown.addChild(codeBlock);
 
     markdown.addMarkdown('\n');
 

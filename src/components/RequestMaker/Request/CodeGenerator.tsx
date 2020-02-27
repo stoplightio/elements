@@ -1,6 +1,7 @@
 import { Button, CodeViewer, Menu, MenuItem, Popover, Position } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import copy from 'copy-to-clipboard';
+import { autorun } from 'mobx';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { languages } from './httpSnippetLanguages';
@@ -24,8 +25,10 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
   const [generatedCode, setGeneratedCode] = React.useState();
 
   React.useEffect(() => {
-    setGeneratedCode(requestStore.generateCode(currentLanguage.codechoice, currentLanguage.librarychoice));
-  }, [requestStore.request]);
+    return autorun(() => {
+      setGeneratedCode(requestStore.generateCode(currentLanguage.codechoice, currentLanguage.librarychoice));
+    });
+  }, [currentLanguage.codechoice, currentLanguage.librarychoice, requestStore]);
 
   const hasError = typeof generatedCode === 'object' && generatedCode.error;
 

@@ -15,9 +15,9 @@ import { providerKnobs } from './Provider';
 export const darkMode = () => boolean('dark mode', false);
 
 export const pageKnobs = () => ({
-  srn: text('srn', 'gh/stoplightio/sample-specs/reference/instagram/instagram.yaml/definitions/MediaEntry'),
+  srn: text('srn', 'gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json'),
   group: text('group', undefined),
-  scrollInnerContainer: boolean('scrollInnerContainer', true),
+  scrollInnerContainer: boolean('scrollInnerContainer', false),
 });
 
 storiesOf('containers/Page', module)
@@ -27,7 +27,6 @@ storiesOf('containers/Page', module)
       <Provider {...providerKnobs()}>
         <Page
           {...pageKnobs()}
-          className="h-full"
           padding="16"
           tabs={({ node }) => {
             const tabs = [{ title: 'Docs', content: <Docs node={node} padding="16" /> }];
@@ -40,7 +39,7 @@ storiesOf('containers/Page', module)
             } else if (node.type === NodeType.Model) {
               tabs.push({
                 title: 'Dependencies',
-                content: <Dependencies className="h-screen" node={node} padding="16" />,
+                content: <Dependencies node={node} padding="16" />,
               });
             }
 

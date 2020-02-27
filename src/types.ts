@@ -1,6 +1,7 @@
-import { NodeType } from '@stoplight/types';
+import { JsonPath, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
+import { Edge, Node } from 'vis';
 export { IComponentMapping } from '@stoplight/markdown-viewer';
 
 export interface IDeserializedSrn {
@@ -16,14 +17,20 @@ export interface IChange {
   message: string;
 }
 
-export interface INodeInfo {
-  data: any;
-  type: NodeType;
-  srn: string;
-  name: string;
+export interface IDiagnostic {
+  location: { uri: string; jsonPath?: JsonPath };
+  message: string;
+}
 
+export interface INodeInfo<D = unknown> {
+  id: number;
+  type: NodeType;
+  name: string;
+  srn: string;
+  data: D;
+
+  errors?: IDiagnostic[];
   changes?: IChange[];
-  id?: number | string;
   version?: string;
   versions?: string[];
   tags?: string[];
@@ -68,4 +75,34 @@ export interface IPaginatedResponse<T> {
     endCursor: string;
   };
   totalCount: number;
+}
+
+export interface IVisGraph {
+  nodes: Node[];
+  edges: Edge[];
+}
+
+export interface INodeGraph {
+  nodes: IGraphNode[];
+  edges: IGraphEdge[];
+}
+
+export interface IGraphNode {
+  groupNodeId: number;
+  name: string;
+  srn: string;
+  uri: string;
+  depth: number;
+  type: NodeType | string;
+  version: string;
+
+  projectName: string;
+  groupSlug: string;
+}
+
+export interface IGraphEdge {
+  fromGroupNodeId: number;
+  fromPath: string;
+  toGroupNodeId: number;
+  toPath: string;
 }

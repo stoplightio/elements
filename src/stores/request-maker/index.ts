@@ -2,10 +2,10 @@ import { IHttpConfig, IHttpOperationConfig } from '@stoplight/prism-http';
 import * as PrismClient from '@stoplight/prism-http/dist/client';
 import { Dictionary, IHttpOperation, IHttpRequest } from '@stoplight/types';
 import axios, { CancelTokenSource } from 'axios';
-import { flatMap, isEqual, kebabCase, mapKeys, mapValues, merge, pickBy, without } from 'lodash';
+import { isEqual, kebabCase, mapKeys, mapValues, merge, pickBy, without } from 'lodash';
 import { action, computed, configure, observable, reaction, runInAction } from 'mobx';
 import parsePreferHeader from 'parse-prefer-header';
-
+import URI from 'urijs';
 import { getOperationData } from '../../utils/getOperationData';
 import { formatMultiValueHeader } from '../../utils/headers';
 import { isAxiosError } from '../../utils/isAxiosError';
@@ -84,7 +84,7 @@ export class RequestMakerStore {
 
   @computed
   public get hasChanges() {
-    return !isEqual(this._originalRequest, this.request.toJSON());
+    return !isEqual(this._originalRequest, this.request.toPartialHttpRequest());
   }
 
   @computed
@@ -166,7 +166,7 @@ export class RequestMakerStore {
     Object.assign<RequestStore, Partial<RequestStore>>(this.request, getOperationData(operation));
 
     this._originalOperation = operation;
-    this._originalRequest = this.request.toJSON();
+    this._originalRequest = this.request.toPartialHttpRequest();
   };
 
   @action
@@ -180,15 +180,13 @@ export class RequestMakerStore {
           publicBaseUrl: request.baseUrl,
           headers: request.headers,
           body: request.body,
-          queryParams:
-            request.query &&
-            flatMap(Object.entries(request.query), ([key, values]) => values.map(v => ({ name: key, value: v }))),
+          query: request.query,
         },
         v => v !== undefined && v !== null,
       ),
     );
 
-    this._originalRequest = this.request.toJSON();
+    this._originalRequest = this.request.toPartialHttpRequest();
   };
 
   /**
@@ -285,14 +283,15 @@ export class RequestMakerStore {
 
     let store: ResponseStore;
     try {
-      const response = await this.prism.request(this.request.uri, this.request.toPrism());
+      const url = new URI(this.request.url);
+      const response = await this.prism.request(`${url.path()}${url.query()}`, this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse({ ...response, violations: response.violations.output });
     } catch (err) {
       store = ResponseStore.fromError(err);
     }
 
     store.responseTime = Date.now() - time;
-    store.originalRequest = this.request.toJSON();
+    store.originalRequest = this.request.toPartialHttpRequest();
 
     runInAction(() => {
       this.response = store;
@@ -336,7 +335,7 @@ export class RequestMakerStore {
     }
 
     store.responseTime = Date.now() - time;
-    store.originalRequest = this.request.toJSON();
+    store.originalRequest = this.request.toPartialHttpRequest();
 
     runInAction(() => {
       this.cancelToken = undefined;

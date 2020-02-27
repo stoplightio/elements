@@ -17,7 +17,7 @@ describe('RequestSend component', () => {
       operation,
     });
     store.request.method = 'post';
-    store.request.path = 'operationResource';
+    store.request.templatedPath = 'operationResource';
     store.request.shouldMock = true;
   });
 

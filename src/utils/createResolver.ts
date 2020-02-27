@@ -1,12 +1,13 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
+import { IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { deserializeSrn, dirname, resolve, serializeSrn } from '@stoplight/path';
 import { parse } from '@stoplight/yaml';
 import URI from 'urijs';
 
-export function createResolver(client: typeof fetch, srn?: string) {
+export function createResolver(client: typeof fetch, srn: string, resolverOpts?: IResolverOpts) {
   return new Resolver({
-    dereferenceInline: true,
-    dereferenceRemote: true,
+    dereferenceInline: false,
+    dereferenceRemote: false,
 
     resolvers: {
       https: httpResolver(client),
@@ -25,6 +26,8 @@ export function createResolver(client: typeof fetch, srn?: string) {
 
       return opts;
     },
+
+    ...resolverOpts,
   });
 }
 
@@ -54,7 +57,7 @@ function remoteFileResolver(client: typeof fetch, srn?: string) {
 
       // Use the http resolver to resolve the node's raw export
 
-      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}`));
+      return httpResolver(client).resolve(new URI(`/nodes.raw?srn=${refSrn}&deref=bundle`));
     },
   };
 }

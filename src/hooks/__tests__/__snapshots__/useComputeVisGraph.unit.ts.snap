@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`computeVisGraph it works with a simple example 1`] = `
+exports[`computeVisGraph should match snapshot for todo-full inbound graph 1`] = `
 Object {
   "edges": Array [
     Object {
@@ -11,10 +11,10 @@ Object {
       "font": Object {
         "align": "top",
       },
-      "from": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
-      "label": "",
-      "title": "reference",
-      "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
+      "from": 17,
+      "id": "17-9-#/responses/200/schema-#/",
+      "title": "#/responses/200/schema",
+      "to": 9,
     },
     Object {
       "color": Object {
@@ -24,10 +24,10 @@ Object {
       "font": Object {
         "align": "top",
       },
-      "from": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
-      "label": "",
-      "title": "user",
-      "to": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json",
+      "from": 18,
+      "id": "18-9-#/responses/200/schema-#/",
+      "title": "#/responses/200/schema",
+      "to": 9,
     },
     Object {
       "color": Object {
@@ -37,10 +37,10 @@ Object {
       "font": Object {
         "align": "top",
       },
-      "from": "root",
-      "label": "",
-      "title": "todo",
-      "to": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
+      "from": 20,
+      "id": "20-9-#/responses/201/schema-#/",
+      "title": "#/responses/201/schema",
+      "to": 9,
     },
     Object {
       "color": Object {
@@ -50,10 +50,10 @@ Object {
       "font": Object {
         "align": "top",
       },
-      "from": "root",
-      "label": "",
-      "title": "name",
-      "to": "#/definitions/name",
+      "from": 21,
+      "id": "21-9-#/responses/200/schema/items-#/",
+      "title": "#/responses/200/schema/items",
+      "to": 9,
     },
   ],
   "nodes": Array [
@@ -62,45 +62,115 @@ Object {
       "font": Object {
         "color": "#10161a",
       },
-      "id": "root",
-      "label": "Root",
+      "id": 20,
+      "label": "Create Todo",
+      "level": 1,
+      "title": "gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos/post",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
+      "id": 17,
+      "label": "Get Todo",
+      "level": 1,
+      "title": "gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/get",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
+      "id": 21,
+      "label": "List Todos",
+      "level": 1,
+      "title": "gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos/get",
+    },
+    Object {
+      "color": "#f5f8fa",
+      "font": Object {
+        "color": "#10161a",
+      },
+      "id": 18,
+      "label": "Update Todo",
+      "level": 1,
+      "title": "gh/stoplightio/studio-demo/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put",
+    },
+    Object {
+      "color": "#ef932b",
+      "font": Object {
+        "color": "#ffffff",
+      },
+      "id": 1,
+      "label": undefined,
       "level": 0,
+      "title": "gh/stoplightio/studio-demo/reference/models/todo-full.v1.json",
     },
+  ],
+}
+`;
+
+exports[`computeVisGraph should match snapshot for todo-full outbound graph 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "color": Object {
+        "color": "#cfd9e0",
+        "opacity": 0.8,
+      },
+      "font": Object {
+        "align": "top",
+      },
+      "from": 9,
+      "id": "9-10-#/allOf/0-#/",
+      "title": "#/allOf/0",
+      "to": 10,
+    },
+    Object {
+      "color": Object {
+        "color": "#cfd9e0",
+        "opacity": 0.8,
+      },
+      "font": Object {
+        "align": "top",
+      },
+      "from": 9,
+      "id": "9-11-#/allOf/1/properties/user-#/",
+      "title": "#/allOf/1/properties/user",
+      "to": 11,
+    },
+  ],
+  "nodes": Array [
     Object {
       "color": "#f5f8fa",
       "font": Object {
         "color": "#10161a",
       },
-      "id": "#/definitions/name",
-      "label": "Name",
-      "level": 1,
-    },
-    Object {
-      "color": "#f5f8fa",
-      "font": Object {
-        "color": "#10161a",
-      },
-      "id": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.v1.json",
-      "label": "Todo Full",
-      "level": 1,
-    },
-    Object {
-      "color": "#f5f8fa",
-      "font": Object {
-        "color": "#10161a",
-      },
-      "id": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
+      "id": 10,
       "label": "Todo Partial",
-      "level": 2,
+      "level": 1,
+      "title": "gh/stoplightio/studio-demo/reference/todos/models/todo-partial.v1.json",
     },
     Object {
       "color": "#f5f8fa",
       "font": Object {
         "color": "#10161a",
       },
-      "id": "http://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/user.v1.json",
+      "id": 11,
       "label": "User",
-      "level": 2,
+      "level": 1,
+      "title": "gh/stoplightio/studio-demo/reference/todos/models/user.v1.json",
+    },
+    Object {
+      "color": "#ef932b",
+      "font": Object {
+        "color": "#ffffff",
+      },
+      "id": 1,
+      "label": undefined,
+      "level": 0,
+      "title": "gh/stoplightio/studio-demo/reference/models/todo-full.v1.json",
     },
   ],
 }

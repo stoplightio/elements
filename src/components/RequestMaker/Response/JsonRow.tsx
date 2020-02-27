@@ -1,3 +1,4 @@
+import { isParentNode, Tree } from '@stoplight/tree-list';
 import { Dictionary } from '@stoplight/types';
 import { Icon } from '@stoplight/ui-kit';
 import cn from 'classnames';
@@ -22,10 +23,10 @@ export const JsonRow: React.FunctionComponent<IRowProps> = ({ node, isExpanded }
       <div
         className="flex items-center text-sm relative"
         style={{
-          marginLeft: ICON_DIMENSION * (node.level + 1), // offset for spacing
+          marginLeft: ICON_DIMENSION * (Tree.getLevel(node) + 1), // offset for spacing
         }}
       >
-        {node.canHaveChildren && (
+        {isParentNode(node) && (
           <div
             className="absolute flex justify-center cursor-pointer p-1 rounded hover:bg-darken-3"
             style={{
@@ -43,8 +44,8 @@ export const JsonRow: React.FunctionComponent<IRowProps> = ({ node, isExpanded }
         )}
 
         <div className="flex-1 flex truncate">
-          {name && <div className="mr-2">{name + (node.canHaveChildren ? '' : ':')}</div>}
-          {node.canHaveChildren ? (
+          {name && <div className="mr-2">{name + (isParentNode(node) ? '' : ':')}</div>}
+          {isParentNode(node) ? (
             <>
               <span className={cn(PropertyTypeColors[type!], 'truncate')}>{type}</span>
               <div className="ml-2 text-darken-7 dark:text-lighten-7">{`{${value}}`}</div>

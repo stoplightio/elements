@@ -1,4 +1,4 @@
-import { JsonSchemaViewer, Validations } from '@stoplight/json-schema-viewer';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { CodeViewer } from '@stoplight/ui-kit';
 import { SimpleTab } from '@stoplight/ui-kit/SimpleTabs';

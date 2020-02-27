@@ -1,10 +1,11 @@
 import { Classes, Icon, IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
-import { IResolveError } from '@stoplight/json-ref-resolver/types';
-import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { useResolver } from '../../hooks/useResolver';
+import { IDiagnostic } from '../../types';
+import { SchemaViewer } from '../SchemaViewer/SchemaViewer';
 
 const icon: IconName = 'cube';
 const color = '#ef932b';
@@ -12,20 +13,21 @@ const color = '#ef932b';
 export interface IModelProps {
   value: any;
 
+  errors?: IDiagnostic[];
   className?: string;
   title?: string;
   maxRows?: number;
   actions?: React.ReactElement;
 }
 
-export function Model({ value, className, title, maxRows = 100, actions }: IModelProps) {
-  const { result, errors } = useResolver(NodeType.Model, value);
+export function Model({ value, className, title, maxRows = 50, actions, errors = [] }: IModelProps) {
+  const { result } = useResolver(NodeType.Model, value);
 
   return (
     <div className="Model">
       <ModelHeader title={title} actions={actions} errors={errors} />
 
-      <JsonSchemaViewer className={className} schema={result} maxRows={maxRows} />
+      <SchemaViewer className={className} schema={result} maxRows={maxRows} />
     </div>
   );
 }
@@ -37,7 +39,7 @@ function ModelHeader({
 }: {
   title?: string;
   actions?: React.ReactElement;
-  errors: IResolveError[];
+  errors: IDiagnostic[];
 }) {
   const hasErrors = errors && errors.length;
   if (!title && !actions && !hasErrors) {
@@ -70,7 +72,7 @@ function ModelHeader({
   );
 }
 
-function Errors({ errors }: { errors: IResolveError[] }) {
+function Errors({ errors }: { errors: IDiagnostic[] }) {
   if (!errors || !errors.length) {
     return null;
   }
@@ -92,16 +94,7 @@ function Errors({ errors }: { errors: IResolveError[] }) {
           {errors.map((error, index) => {
             return (
               <li key={index} className={index > 1 ? 'mt-3' : ''}>
-                {error && error.uri && String(error.uri) ? (
-                  <>
-                    Failed to resolve{' '}
-                    <a href={String(error.uri)} target="_blank">
-                      {String(error.uri)}
-                    </a>
-                  </>
-                ) : (
-                  error.message
-                )}
+                {error.message}
               </li>
             );
           })}
