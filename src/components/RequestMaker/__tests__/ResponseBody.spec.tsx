@@ -1,5 +1,6 @@
 import { RadioGroup } from '@blueprintjs/core';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
+import { IPrismDiagnostic } from '@stoplight/prism-core';
 import { ProblemJsonError } from '@stoplight/prism-http';
 import { CodeViewer } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
@@ -16,6 +17,7 @@ import { HTMLViewer } from '../Response/HTMLViewer';
 import { ImageViewer } from '../Response/ImageViewer';
 import { JsonViewer } from '../Response/JsonViewer';
 import { PrettyViewer } from '../Response/PrettyViewer';
+import { ViolationsDisplay } from '../Response/ViolationsDisplay';
 
 describe('ResponseBody component', () => {
   let wrapper: ReactWrapper;
@@ -258,6 +260,37 @@ describe('ResponseBody component', () => {
       wrapper.update();
 
       expect(wrapper.text()).toContain('xml not supported');
+    });
+  });
+
+  describe('violations', () => {
+    const violations: IPrismDiagnostic[] = [
+      {
+        path: ['body'],
+        message: 'Some error',
+        severity: 0,
+      },
+      {
+        path: ['header'],
+        message: 'Some error',
+        severity: 0,
+      },
+    ];
+
+    test('should only render body violations', () => {
+      store.response = ResponseStore.fromNetworkResponse({
+        headers: {
+          'Content-Type': 'application/json',
+          'sl-violations': JSON.stringify(violations),
+        },
+        status: 200,
+        data: new ArrayBuffer(0),
+      });
+
+      render();
+
+      expect(wrapper.find(ViolationsDisplay)).toExist();
+      expect(wrapper.find(ViolationsDisplay).prop('violations')).toHaveLength(1);
     });
   });
 });

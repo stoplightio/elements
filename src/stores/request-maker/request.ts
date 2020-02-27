@@ -42,16 +42,16 @@ export class RequestStore {
   @observable
   private _urlEncodedParams: Array<IParam<string>> = [];
 
-  @observable.shallow
+  @observable
   private _headerParams: HeaderParam[] = [];
 
-  @observable.shallow
+  @observable
   private _queryParams: QueryParam[] = [];
 
-  @observable.shallow
+  @observable
   private _pathParams: PathParam[] = [];
 
-  @observable.shallow
+  @observable
   private _publicServers: IServer[] = [];
 
   /**

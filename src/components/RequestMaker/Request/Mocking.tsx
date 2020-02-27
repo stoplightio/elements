@@ -41,7 +41,7 @@ export const Mocking = observer(() => {
   // if the current example is not available anymore, remove it from the URL
   React.useEffect(() => {
     if (currentExample && !exampleOptions.find(o => o.value === currentExample)) {
-      store.changeMockingParameter('exampleKey', undefined);
+      store.setPrismMockingOption('exampleKey', undefined);
     }
   }, [exampleOptions, currentExample]);
 
@@ -87,7 +87,7 @@ export const Mocking = observer(() => {
           className="code-selector"
           disabled={!store.isMockEnabled}
           options={codeOptions}
-          onChange={event => store.changeMockingParameter('code', event.currentTarget.value || undefined)}
+          onChange={event => store.setPrismMockingOption('code', event.currentTarget.value || undefined)}
           value={currentCode}
         />
       </ConfigurationRow>
@@ -105,7 +105,7 @@ export const Mocking = observer(() => {
           className="example-selector"
           disabled={!store.isMockEnabled}
           options={exampleOptions}
-          onChange={event => store.changeMockingParameter('exampleKey', event.currentTarget.value || undefined)}
+          onChange={event => store.setPrismMockingOption('exampleKey', event.currentTarget.value || undefined)}
           value={currentExample}
         />
       </ConfigurationRow>
@@ -132,7 +132,7 @@ export const Mocking = observer(() => {
           disabled={!store.isMockEnabled}
           options={dynamicOptions}
           onChange={event => {
-            store.changeMockingParameter('dynamic', event.currentTarget.value === 'dynamic');
+            store.setPrismMockingOption('dynamic', event.currentTarget.value === 'dynamic');
           }}
           value={currentDynamicSetting}
         />
@@ -149,7 +149,7 @@ export const Mocking = observer(() => {
           innerLabelChecked="On"
           checked={store.prismConfig.validateRequest}
           onChange={() => {
-            store.prismConfig = { ...store.prismConfig, validateRequest: !store.prismConfig.validateRequest };
+            store.setPrismConfigurationOption('validateRequest', !store.prismConfig.validateRequest);
           }}
           disabled={!store.isMockEnabled}
         />
@@ -166,7 +166,7 @@ export const Mocking = observer(() => {
           innerLabelChecked="On"
           checked={store.prismConfig.validateResponse}
           onChange={() => {
-            store.prismConfig = { ...store.prismConfig, validateResponse: !store.prismConfig.validateResponse };
+            store.setPrismConfigurationOption('validateResponse', !store.prismConfig.validateResponse);
           }}
           disabled={!store.isMockEnabled}
         />
@@ -180,7 +180,7 @@ export const Mocking = observer(() => {
           innerLabelChecked="On"
           checked={store.prismConfig.checkSecurity}
           onChange={() => {
-            store.prismConfig = { ...store.prismConfig, checkSecurity: !store.prismConfig.checkSecurity };
+            store.setPrismConfigurationOption('checkSecurity', !store.prismConfig.checkSecurity);
           }}
           disabled={!store.isMockEnabled}
         />
