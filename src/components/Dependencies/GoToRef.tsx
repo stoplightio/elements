@@ -19,8 +19,8 @@ export const GoToRef: React.FC<{ className?: string; title: string; srn: string;
   if (components.link) {
     return components.link(
       {
-        className,
         node: {
+          className,
           title,
           url: srn,
           srn,
