@@ -5,7 +5,7 @@ import axios, { CancelTokenSource } from 'axios';
 import { isEqual, kebabCase, mapKeys, mapValues, merge, pickBy, without } from 'lodash';
 import { action, computed, configure, observable, reaction, runInAction } from 'mobx';
 import parsePreferHeader from 'parse-prefer-header';
-
+import URI from 'urijs';
 import { getOperationData } from '../../utils/getOperationData';
 import { formatMultiValueHeader } from '../../utils/headers';
 import { isAxiosError } from '../../utils/isAxiosError';

@@ -90,7 +90,6 @@
     "@types/react": "16.9.23",
     "@types/react-dom": "16.x.x",
     "@types/type-is": "^1.6.3",
-    "@types/typescript": "^2.0.0",
     "@types/urijs": "^1.19.5",
     "@types/vis": "^4.21.19",
     "autoprefixer": "^9.7.4",
@@ -121,7 +120,7 @@
     "tslint-config-stoplight": "1.4.0",
     "tslint-react": "4.1.x",
     "tslint-react-hooks": "2.2.x",
-    "typescript": "3.8.2"
+    "typescript": "3.7.x"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
