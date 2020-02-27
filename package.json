@@ -87,7 +87,6 @@
     "@types/lodash": "^4.14.149",
     "@types/object-hash": "^1.3.1",
     "@types/parse-prefer-header": "^1.0.1",
-    "@types/prettier": "^1.19.0",
     "@types/react": "16.x.x",
     "@types/react-dom": "16.x.x",
     "@types/type-is": "^1.6.3",
