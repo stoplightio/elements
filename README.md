@@ -48,7 +48,7 @@ import { TryIt } from '@stoplight/elements/components/TryIt';
       }}
     />
   </div>
-</Provider>;
+</Provider>
 ```
 
 ### Contributing
