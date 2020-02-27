@@ -152,7 +152,7 @@ be the json schema object to be rendered.
 
 ```json
 {
-  "$ref": "../../reference/common/models/error.v1.yaml"
+  "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/studio-demo/reference/todos/models/todo-full.json"
 }
 ```
 

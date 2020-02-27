@@ -3,6 +3,7 @@ import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 
+import { IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { SWRConfig } from 'swr';
 import { NodeIconMapping } from '../types';
 import { createFetchClient, IFetchProps } from '../utils/createFetchClient';
@@ -27,6 +28,7 @@ export const ComponentsContext = React.createContext<IComponentMapping | undefin
 export const ActiveSrnContext = React.createContext('');
 export const ProjectTokenContext = React.createContext('');
 export const ResolverContext = React.createContext<Resolver | undefined>(undefined);
+export const ResolverOptionsContext = React.createContext<IResolverOpts | undefined>(undefined);
 export const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(undefined);
 
 const defaultIcons: NodeIconMapping = {};
