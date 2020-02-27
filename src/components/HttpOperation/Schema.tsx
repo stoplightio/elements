@@ -1,11 +1,11 @@
 import { safeParse, safeStringify } from '@stoplight/json';
-import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { IHttpContent, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import cn from 'classnames';
 import { map, size } from 'lodash';
 import * as React from 'react';
+import { SchemaViewer } from '../SchemaViewer/SchemaViewer';
 
 export interface ISchema {
   className?: string;
@@ -38,7 +38,7 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
 
       {schema && (
         <SimpleTabPanel className="p-0">
-          <JsonSchemaViewer maxRows={JSV_MAX_ROWS} schema={schema} />
+          <SchemaViewer maxRows={JSV_MAX_ROWS} schema={schema} />
         </SimpleTabPanel>
       )}
 

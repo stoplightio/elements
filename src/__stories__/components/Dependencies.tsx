@@ -1,5 +1,5 @@
 import { NodeType } from '@stoplight/types';
-import { withKnobs } from '@storybook/addon-knobs';
+import { object, withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
@@ -22,11 +22,11 @@ storiesOf('components/Dependencies', module)
             node={{
               id: 9,
               type: NodeType.Model,
-              srn: 'gh/stoplightio/studio-demo/reference/models/todo-full.v1.json',
-              name: 'Todo Full',
-              data: require('../../__fixtures__/schemas/todo-full.v1.json'),
+              srn: 'gh/stoplightio/sample-models/Contact/Contact.v1.yaml',
+              name: 'Contact',
+              data: require('../../__fixtures__/schemas/contact.json'),
             }}
-            graph={todoFullInboundGraph}
+            graph={object('graph', todoFullInboundGraph)}
             padding="12"
           />
         </Provider>
@@ -45,7 +45,7 @@ storiesOf('components/Dependencies', module)
               name: 'Todo Full',
               data: require('../../__fixtures__/schemas/todo-full.v1.json'),
             }}
-            graph={todoFullOutboundGraph}
+            graph={object('graph', todoFullOutboundGraph)}
             padding="12"
           />
         </Provider>

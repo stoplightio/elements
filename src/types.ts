@@ -93,7 +93,7 @@ export interface IGraphNode {
   srn: string;
   uri: string;
   depth: number;
-  type: NodeType;
+  type: NodeType | string;
   version: string;
 
   projectName: string;
