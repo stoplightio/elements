@@ -4,7 +4,13 @@ import * as React from 'react';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 
-export const GoToRef: React.FC<{ title: string; srn: string; group?: string }> = ({ title, srn, children, group }) => {
+export const GoToRef: React.FC<{ className?: string; title: string; srn: string; group?: string }> = ({
+  className,
+  title,
+  srn,
+  children,
+  group,
+}) => {
   const host = React.useContext(HostContext);
   const components = useComponents();
 
@@ -13,6 +19,7 @@ export const GoToRef: React.FC<{ title: string; srn: string; group?: string }> =
   if (components.link) {
     return components.link(
       {
+        className,
         node: {
           title,
           url: srn,
@@ -27,7 +34,7 @@ export const GoToRef: React.FC<{ title: string; srn: string; group?: string }> =
   }
   return (
     <a
-      className={cn('text-sm', Classes.TEXT_MUTED)}
+      className={cn('text-sm', className, Classes.TEXT_MUTED)}
       href={`${host}/nodes.raw?srn=${srn}${group ? `&group=${group}` : ''}`}
       target="_blank"
       rel="noopener noreferrer"

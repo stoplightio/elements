@@ -1,6 +1,7 @@
 import { decodePointerFragment } from '@stoplight/json';
 import { NodeType } from '@stoplight/types';
 import { Button, Icon, Tab, Tabs, Tooltip } from '@stoplight/ui-kit';
+import { FixedSizeList } from '@stoplight/ui-kit/ScrollList';
 import cn from 'classnames';
 import { findKey, groupBy, sortBy, toUpper } from 'lodash';
 import * as React from 'react';
@@ -31,7 +32,7 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
   );
 
   return (
-    <div className={cn(className)}>
+    <div className={cn(className, 'InboundDependencies')}>
       <Tabs
         className="p-6 border rounded dark:border-darken-3"
         id="InboundDependencies"
@@ -48,7 +49,9 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
               Models {nodesByType[NodeType.Model]?.length ? <>({nodesByType[NodeType.Model].length})</> : null}
             </div>
           }
-          panel={<DependencyTable nodes={nodesByType[NodeType.Model]} />}
+          panel={
+            <DependencyTable className={`InboundDependencies__DependencyTable`} nodes={nodesByType[NodeType.Model]} />
+          }
           panelClassName="w-full overflow-auto"
           disabled={!nodesByType[NodeType.Model]?.length}
         />
@@ -62,7 +65,12 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
               {nodesByType[NodeType.HttpService]?.length ? <>({nodesByType[NodeType.HttpService].length})</> : null}
             </div>
           }
-          panel={<DependencyTable nodes={nodesByType[NodeType.HttpService]} />}
+          panel={
+            <DependencyTable
+              className={`InboundDependencies__DependencyTable`}
+              nodes={nodesByType[NodeType.HttpService]}
+            />
+          }
           panelClassName="w-full overflow-auto"
           disabled={!nodesByType[NodeType.HttpService]?.length}
         />
@@ -76,7 +84,12 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
               {nodesByType[NodeType.HttpOperation]?.length ? <>({nodesByType[NodeType.HttpOperation].length})</> : null}
             </div>
           }
-          panel={<DependencyTable nodes={nodesByType[NodeType.HttpOperation]} />}
+          panel={
+            <DependencyTable
+              className={`InboundDependencies__DependencyTable`}
+              nodes={nodesByType[NodeType.HttpOperation]}
+            />
+          }
           panelClassName="w-full overflow-auto"
           disabled={!nodesByType[NodeType.HttpOperation]?.length}
         />
@@ -89,7 +102,9 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
               Articles {nodesByType[NodeType.Article]?.length ? <>({nodesByType[NodeType.Article].length})</> : null}
             </div>
           }
-          panel={<DependencyTable nodes={nodesByType[NodeType.Article]} />}
+          panel={
+            <DependencyTable className={`InboundDependencies__DependencyTable`} nodes={nodesByType[NodeType.Article]} />
+          }
           panelClassName="w-full overflow-auto"
           disabled={!nodesByType[NodeType.Article]?.length}
         />
@@ -98,48 +113,61 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
   );
 };
 
-const DependencyTable = ({ nodes = [] }: { nodes?: IGraphNode[] }) => {
+const DependencyTable = ({ className, nodes = [] }: { nodes?: IGraphNode[]; className?: string }) => {
+  const listProps = {
+    itemData: { nodes: sortBy(nodes, 'uri') },
+    itemSize: 60,
+    maxRows: 10,
+    itemCount: nodes.length,
+    height: '100%',
+    width: '100%',
+  };
+
   return (
-    <div className="w-full overflow-auto">
-      {sortBy(nodes, 'uri').map((node, index) => {
-        let subtitle = node.uri;
-        if (node.type === NodeType.HttpOperation) {
-          const parts = node.uri.split('/paths/')[1].split('/');
-          const method = parts.slice(-1)[0];
-          const path = parts.slice(0, parts.length);
-          subtitle = `${toUpper(method)} ${decodePointerFragment(path.join('/'))}`;
-        }
+    <div className={cn('h-full', className)}>
+      <FixedSizeList {...listProps}>
+        {({ style, index, data }: { index: number; data: { nodes: IGraphNode[] }; style: React.CSSProperties }) => {
+          const node = data.nodes[index];
 
-        return (
-          <div
-            key={index}
-            className={cn('py-4', {
-              'pt-2': index === 0,
-              'pb-2': index === nodes.length - 1,
-              'border-t dark:border-darken-3': index > 0,
-            })}
-          >
-            <div className="flex items-center">
-              <div className="font-medium">{node.name}</div>
-              {node.version !== '0.0' && <div className="px-2 text-sm text-gray-6">v{node.version}</div>}
-              <div className="flex-1"></div>
-              <div className="text-sm text-gray-6">{node.projectName}</div>
+          let subtitle = node.uri;
+          if (node.type === NodeType.HttpOperation) {
+            const parts = node.uri.split('/paths/')[1].split('/');
+            const method = parts.slice(-1)[0];
+            const path = parts.slice(0, parts.length);
+            subtitle = `${toUpper(method)} ${decodePointerFragment(path.join('/'))}`;
+          }
+
+          return (
+            <div key={index} style={style}>
+              <GoToRef className="reset" srn={node.srn} group={node.groupSlug} title={node.name}>
+                <div
+                  className={cn('h-full flex flex-col justify-center px-4 hover:bg-gray-2 dark-hover:bg-lighten-3 ', {
+                    'border-t dark:border-darken-3': index > 0,
+                    'bg-gray-1 dark:bg-lighten-2': index % 2,
+                  })}
+                >
+                  <div className="flex items-center">
+                    <div className="font-medium">{node.name}</div>
+                    {node.version !== '0.0' && <div className="px-2 text-sm text-gray-6">v{node.version}</div>}
+                    <div className="flex-1"></div>
+                    <div className="text-sm text-gray-6 opacity-75">{node.projectName}</div>
+                  </div>
+
+                  <div className="flex items-center opacity-75">
+                    <div className="flex-1 text-sm truncate text-gray-6" title={subtitle}>
+                      {subtitle}
+                    </div>
+
+                    <Tooltip content="Go to Ref">
+                      <Button icon={<Icon icon="share" iconSize={12} />} small minimal />
+                    </Tooltip>
+                  </div>
+                </div>
+              </GoToRef>
             </div>
-
-            <div className="flex items-center">
-              <div className="flex-1 text-sm truncate text-gray-6" title={subtitle}>
-                {subtitle}
-              </div>
-
-              <Tooltip content="Go to Ref">
-                <GoToRef srn={node.srn} group={node.groupSlug} title={node.name}>
-                  <Button icon={<Icon icon="share" iconSize={12} />} small minimal />
-                </GoToRef>
-              </Tooltip>
-            </div>
-          </div>
-        );
-      })}
+          );
+        }}
+      </FixedSizeList>
     </div>
   );
 };
