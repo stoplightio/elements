@@ -284,7 +284,7 @@ export class RequestMakerStore {
     let store: ResponseStore;
     try {
       const url = new URI(this.request.url);
-      const response = await this.prism.request(`${url.path()}${url.query()}`, this.request.toPrism());
+      const response = await this.prism.request(url.resource(), this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse({ ...response, violations: response.violations.output });
     } catch (err) {
       store = ResponseStore.fromError(err);
