@@ -31,7 +31,16 @@ export function useResolver<T = any>(type: DocsNodeType, value: string) {
 
   React.useEffect(() => {
     // Only resolve if we've succeeded in parsing the string
-    if (typeof parsedValue !== 'object' || !resolverOpts) return;
+    if (typeof parsedValue !== 'object') return;
+
+    if (!resolverOpts) {
+      // we assume the value is already resolved, so we just set it as result
+      setResolved({
+        result: parsedValue,
+        errors: [],
+      });
+      return;
+    }
 
     const { promise, cancel } = cancelablePromise(resolver.resolve(parsedValue));
 
