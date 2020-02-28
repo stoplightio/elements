@@ -49,8 +49,8 @@ export const Provider: React.FunctionComponent<IProvider> = ({
       host: host || defaultHost,
       headers: token
         ? {
-          Authorization: `Bearer ${token}`,
-        }
+            Authorization: `Bearer ${token}`,
+          }
         : null,
     }),
     [host, token],
