@@ -181,7 +181,7 @@ export const allHeaderFields: ParamField[] = [
   {
     name: 'Prefer',
     description:
-      'Used to request that certain behaviors be employed by a server while processing a request. Used by prism to control the behavior of the mock server / proxy.',
+      'Used to request that certain behaviours be employed by a server while processing a request. Used by Prism to control some of the behaviour of the mock server.',
     example: 'Prefer: code=200',
   },
   {
