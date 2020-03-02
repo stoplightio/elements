@@ -179,6 +179,12 @@ export const allHeaderFields: ParamField[] = [
     example: 'Pragma: no-cache',
   },
   {
+    name: 'Prefer',
+    description:
+      'Used to request that certain behaviours be employed by a server while processing a request. Used by Prism to control some of the behaviour of the mock server.',
+    example: 'Prefer: code=200',
+  },
+  {
     name: 'Proxy-Authorization',
     description: 'Authorization credentials for connecting to a proxy.',
     example: 'Proxy-Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==',
