@@ -52,8 +52,13 @@
   background-color: #fefcbf;
 }
 
-.RequestMaker__ViolationsDisplay .bp3-tree-node-label{
+.RequestMaker__ViolationsDisplay .#{$ns}-tree-node-label{
   min-height: 19px;
+  display: unset;
+
+  span {
+    display: inline-block;
+  }
 }
 
 .#{$ns}-dark {

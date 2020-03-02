@@ -12,52 +12,39 @@ type ViolationsDisplayProps = {
 };
 
 export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations, defaultOpen = false }) => {
-  const [isOpen, setOpen] = useState(defaultOpen);
-
-  const errorCount = violations.filter(v => v.severity === 0).length;
-  const warningCount = violations.length - errorCount;
-
-  return (
-    <section className="RequestMaker__ViolationsDisplay p-3 px-4">
-      <Button rightIcon={isOpen ? 'caret-up' : 'caret-down'} onClick={() => setOpen(!isOpen)} minimal>
-        <strong className="mb-1">
-          {errorCount > 0 && (
-            <span className="pr-3">
-              <Icon icon="error" className="mr-1" />
-              <span>{errorCount}</span>
-            </span>
-          )}
-          {warningCount > 0 && (
-            <span className="pr-3">
-              <Icon icon="warning-sign" className="mr-1" />
-              <span>{warningCount}</span>
-            </span>
-          )}
-          The returned response does not match the JSON Schema associated with the current operation.
-        </strong>
-      </Button>
-      <Collapse isOpen={isOpen} transitionDuration={0}>
-        <ViolationsTree violations={violations} />
-      </Collapse>
-    </section>
-  );
-};
-
-ViolationsDisplay.displayName = 'RequestMaker.ViolationsDisplay';
-
-type ViolationsTreeProps = {
-  violations: readonly IPrismDiagnostic[];
-} & Omit<React.ComponentPropsWithoutRef<typeof Tree>, 'contents'>;
-
-const ViolationsTree: React.FC<ViolationsTreeProps> = ({ violations, ...rest }) => {
   const [tree, setTree] = useState<ITreeNode[]>([]);
   useEffect(() => {
-    setTree(buildTreeStructure(violations));
+    const headerElement = (
+      <strong className="mb-1">
+        <span className="inline mr-3">
+          The returned response does not match the JSON Schema associated with the current operation.
+        </span>
+        {errorCount > 0 && (
+          <span className="pr-3 inline">
+            <Icon icon="error" className="mr-2" />
+            <span>{errorCount}</span>
+          </span>
+        )}
+        {warningCount > 0 && (
+          <span className="pr-3 inline">
+            <Icon icon="warning-sign" className="mr-1" />
+            <span>{warningCount}</span>
+          </span>
+        )}
+      </strong>
+    );
+
+    setTree([
+      {
+        id: 'root',
+        isExpanded: true,
+        label: headerElement,
+        childNodes: buildTreeStructure(violations),
+      },
+    ]);
   }, [violations]);
 
-  const refresh = () => {
-    setTree([...tree]);
-  };
+  const refresh = () => setTree([...tree]);
 
   const handleNodeCollapse = (nodeData: ITreeNode) => {
     nodeData.isExpanded = false;
@@ -74,16 +61,22 @@ const ViolationsTree: React.FC<ViolationsTreeProps> = ({ violations, ...rest }) 
     refresh();
   };
 
+  const errorCount = violations.filter(v => v.severity === 0).length;
+  const warningCount = violations.length - errorCount;
+
   return (
-    <Tree
-      contents={tree}
-      {...rest}
-      onNodeCollapse={handleNodeCollapse}
-      onNodeExpand={handleNodeExpand}
-      onNodeClick={handleNodeClick}
-    />
+    <section className="RequestMaker__ViolationsDisplay p-3 px-4">
+      <Tree
+        contents={tree}
+        onNodeCollapse={handleNodeCollapse}
+        onNodeExpand={handleNodeExpand}
+        onNodeClick={handleNodeClick}
+      />
+    </section>
   );
 };
+
+ViolationsDisplay.displayName = 'RequestMaker.ViolationsDisplay';
 
 const buildTreeStructure = (
   violationsFlat: readonly IPrismDiagnostic[],
