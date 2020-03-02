@@ -21,24 +21,16 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
       suggestRenderer={({ name, params, index, inFocus, setInFocus, handlerPropChange, onBlur }) => (
         <HeaderSuggest
           inputProps={{
-            placeholder: 'Add header name',
+            placeholder: 'Specify header name',
             autoFocus: inFocus.index === index && inFocus.prop === 'name',
             onBlur,
             className: 'shadow-none',
           }}
-          noResults={<MenuItem disabled={true} text="No results." />}
+          noResults={<span>Unknown header <em>{name}</em></span>}
           inputValueRenderer={(headerField: HeaderField) => headerField.name}
           itemRenderer={renderHeaderField}
           items={allHeaderFields}
           itemPredicate={filterHeaderField}
-          createNewItemFromQuery={(query: string) => {
-            return {
-              name: query,
-              description: '',
-              example: '',
-            };
-          }}
-          createNewItemRenderer={renderCreateHeaderFieldOption}
           openOnKeyDown={true}
           query={name}
           popoverProps={{
