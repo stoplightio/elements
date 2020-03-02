@@ -52,14 +52,21 @@
   background-color: #fefcbf;
 }
 
-.RequestMaker__ViolationsDisplay .#{$ns}-tree-node-label{
-  min-height: 19px;
-  display: unset;
+.RequestMaker__ViolationsDisplay .#{$ns}-tree-node-content{
+  height: auto;
+  min-height: 30px;
 
-  span {
-    display: inline-block;
+  .#{$ns}-tree-node-label{
+    min-height: 19px;
+    display: unset;
+    white-space: normal;
+
+    span {
+      display: inline-block;
+    }
   }
 }
+
 
 .#{$ns}-dark {
   .RequestMaker,
