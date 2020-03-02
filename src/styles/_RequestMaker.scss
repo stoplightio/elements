@@ -63,6 +63,10 @@
 
     span {
       display: inline-block;
+
+      &.inline{
+        display: inline;
+      }
     }
   }
 }

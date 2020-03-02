@@ -20,13 +20,13 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
           The returned response does not match the JSON Schema associated with the current operation.
         </span>
         {errorCount > 0 && (
-          <span className="pr-3 inline">
+          <span className="pr-3">
             <Icon icon="error" className="mr-2" />
             <span>{errorCount}</span>
           </span>
         )}
         {warningCount > 0 && (
-          <span className="pr-3 inline">
+          <span className="pr-3">
             <Icon icon="warning-sign" className="mr-1" />
             <span>{warningCount}</span>
           </span>
