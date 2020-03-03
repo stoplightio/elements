@@ -8,10 +8,9 @@ import * as React from 'react';
 
 type ViolationsDisplayProps = {
   violations: NonEmptyArray<IPrismDiagnostic>;
-  defaultOpen?: boolean;
 };
 
-export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations, defaultOpen = false }) => {
+export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations }) => {
   const [tree, setTree] = useState<ITreeNode[]>([]);
   useEffect(() => {
     const headerElement = (
@@ -37,7 +36,7 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
     setTree([
       {
         id: 'root',
-        isExpanded: true,
+        isExpanded: false,
         label: headerElement,
         childNodes: buildTreeStructure(violations),
       },
