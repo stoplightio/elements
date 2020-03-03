@@ -1,6 +1,6 @@
 import { safeParse, safeStringify } from '@stoplight/json';
 import { IHttpRequest as IPrismHttpRequest } from '@stoplight/prism-http';
-import { HttpMethod, HttpNameValue, IHttpRequest, IServer } from '@stoplight/types';
+import { Dictionary, HttpMethod, HttpNameValue, IHttpRequest, INodeVariable, IServer } from '@stoplight/types';
 import { safeStringify as safeStringifyYaml } from '@stoplight/yaml';
 import { AxiosRequestConfig } from 'axios';
 import { isEmpty, mapKeys, pick, set } from 'lodash';
@@ -16,6 +16,11 @@ const HTTPSnippet = require('httpsnippet');
 
 const DEFAULT_EMPTY_JSON = '{\n  \n}';
 const DEFAULT_EMPTY_GQL = 'query {\n  \n}';
+
+export type IVariable = {
+  url: string;
+  variables?: Dictionary<INodeVariable, string>;
+};
 
 export class RequestStore {
   @observable
@@ -54,6 +59,9 @@ export class RequestStore {
   @observable
   private _publicServers: IServer[] = [];
 
+  @observable
+  private _serverVariables: IVariable[] = [];
+
   /**
    * List of real implementation servers.
    */
@@ -76,6 +84,9 @@ export class RequestStore {
 
   @observable
   private _publicBaseUrl = '';
+
+  @observable
+  private _serverUrl = '';
 
   /**
    * The base URL used when not mocking.
@@ -355,6 +366,20 @@ export class RequestStore {
     this._pathParams = getParamsFromPath(this._templatedPath, this._pathParams);
   }
 
+  @computed
+  public get serverUrl() {
+    return this._serverUrl;
+  }
+
+  public set serverUrl(url: string) {
+    this._serverUrl = url;
+  }
+
+  @computed
+  public get serverVariables() {
+    return this._serverVariables;
+  }
+
   /**
    * Combines path with pathParams and enabled query params
    */
@@ -383,7 +408,7 @@ export class RequestStore {
   @computed
   public get url() {
     try {
-      const baseUri = new URI(this.baseUrl);
+      const baseUri = new URI(this._serverUrl || this.baseUrl);
       const uri = new URI(this.uri);
 
       const path = URI.joinPaths(baseUri, uri.path()).path();
@@ -608,5 +633,37 @@ export class RequestStore {
       paramsCopy.splice(indexOrName, 1);
       this[`${type}Params`] = paramsCopy;
     }
+  }
+
+  @action
+  public updateServerVariables(url: string, varName: string, value: string) {
+    const servers = this._publicServers.map(server => ({ url: server.url, variables: server.variables }));
+
+    const updatedVars: IVariable[] = servers.map(s => {
+      if (s.url === url && s.variables) {
+        for (const v in s.variables) {
+          if (v && v === varName) {
+            s.variables[v].default = value;
+          }
+        }
+      }
+      return s;
+    });
+    this._serverVariables = updatedVars;
+  }
+
+  @action
+  public updateServers(varName: string, value: string) {
+    const updatedServers: IServer[] = this.servers.map(server => {
+      if (server.variables) {
+        for (const serv in server.variables) {
+          if (serv === varName) {
+            server.variables[serv].default = value;
+          }
+        }
+      }
+      return server;
+    });
+    this.publicServers = updatedServers;
   }
 }

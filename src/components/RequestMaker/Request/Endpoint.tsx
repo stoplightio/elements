@@ -1,7 +1,7 @@
 import { InputGroup, MenuItem } from '@stoplight/ui-kit';
 import { ItemRenderer, Suggest } from '@stoplight/ui-kit/Select';
 import cn from 'classnames';
-import { map, toLower, uniqBy } from 'lodash';
+import { map, replace, toLower, uniqBy } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import URI from 'urijs';
@@ -39,20 +39,33 @@ export const RequestEndpoint = observer<{
   const [baseUrlTransientValue, setBaseUrlTransientValue] = React.useState();
 
   const onServerSuggest = (serverUrl: string) => {
-    if (requestStore.servers && !requestStore.servers.find(s => s.url === serverUrl)) {
+    let updatedUrl = serverUrl;
+    if (requestStore.servers && !requestStore.servers.find(s => s.url === updatedUrl)) {
       requestStore.publicServers = uniqBy(
         [
           ...requestStore.publicServers,
           {
-            url: serverUrl,
+            url: updatedUrl,
           },
         ],
         'url',
       );
     }
 
+    // TODO: support enums, this ignores them for now
+    const server = requestStore.servers.find(s => s.url === updatedUrl);
+    if (server && server.variables) {
+      for (const name in server.variables) {
+        if (!name) continue;
+        const variable = server.variables[name];
+        const tempUrl = updatedUrl;
+        updatedUrl = replace(tempUrl, `{${name}}`, variable.default);
+      }
+    }
+
     setBaseUrlTransientValue('');
     if (!requestStore.shouldMock) {
+      requestStore.serverUrl = updatedUrl;
       requestStore.publicBaseUrl = serverUrl;
     }
   };

@@ -40,7 +40,8 @@
 }
 
 .RequestMaker__RequestParameters,
-.RequestMaker__RequestHeaders {
+  .RequestMaker__RequestHeaders,
+  .RequestMaker__RequestServers {
   .#{$ns}-input {
     border-radius: 0;
     box-shadow: none;
@@ -63,6 +64,7 @@
   .RequestMaker__RequestEditor,
   .RequestMaker__RequestHeaders,
   .RequestMaker__RequestParameters,
+  .RequestMaker__RequestServers,
   .RequestMaker__ResponseBody,
   .RequestMaker__ResponseHeaders,
   .RequestMaker__ResponseViewer {

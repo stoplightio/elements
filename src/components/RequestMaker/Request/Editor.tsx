@@ -1,5 +1,6 @@
 import { Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
+import { find } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
@@ -10,6 +11,7 @@ import { CodeGenerator } from './CodeGenerator';
 import { RequestHeaders } from './Headers';
 import { Mocking } from './Mocking';
 import { RequestParameters } from './Parameters';
+import { RequestServers } from './Servers';
 
 const panelClassName = 'bg-white dark:bg-transparent border-t';
 
@@ -128,6 +130,19 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
             title={<TabTitle title="Mocking" />}
             panelClassName={panelClassName}
             panel={<Mocking />}
+          />
+        )}
+
+        {store.operation && (
+          <Tab
+            id="request-servers"
+            title={<TabTitle title="Servers" />}
+            panelClassName={panelClassName}
+            panel={
+              <RequestServers
+                server={find(requestStore.servers, server => server.url === requestStore.publicBaseUrl)}
+              />
+            }
           />
         )}
 
