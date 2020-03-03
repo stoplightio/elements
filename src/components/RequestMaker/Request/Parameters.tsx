@@ -8,7 +8,7 @@ import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { IParam, ParamField, ParamType } from '../../../stores/request-maker/types';
 
 type InFocus = {
-  prop: string;
+  prop: 'name' | 'value';
   index: number;
 };
 
@@ -18,10 +18,10 @@ interface ISuggestRendererOptions {
   name: string;
   params: IParam[];
   index: number;
-  inFocus: InFocus;
   setInFocus: (val: InFocus) => void;
   handlerPropChange: PropChangeHandler;
   onBlur?: React.ChangeEventHandler<HTMLInputElement>;
+  inputRef?: (input: HTMLInputElement | null) => void;
 }
 export interface IRequestParameters {
   type: ParamType;
@@ -30,7 +30,17 @@ export interface IRequestParameters {
 }
 
 export const RequestParameters = observer<IRequestParameters>(({ type, className, suggestRenderer }) => {
-  const [inFocus, setInFocus] = React.useState({ prop: 'name', index: -1 });
+  const nameInputRefs = React.useRef<Array<HTMLInputElement | null>>([]);
+  const valueInputRefs = React.useRef<Array<HTMLInputElement | null>>([]);
+
+  const setInFocus = (input: InFocus) => {
+    const collection = input.prop === 'name' ? nameInputRefs : valueInputRefs;
+    const ref = collection.current[input.index];
+    if (ref) {
+      ref.focus();
+    }
+  };
+
   const requestStore = useRequestMakerStore('request');
   const parameters: IParam[] = requestStore[`${type}Params`];
 
@@ -51,6 +61,7 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
   const handleAddParam = React.useCallback(
     ({ key = '', value = '', enabled = true }) => {
       requestStore.addParam(type, key, value, enabled);
+      setInFocus({ prop: 'name', index: requestStore[`${type}Params`].length - 1 });
     },
     [requestStore, type],
   );
@@ -86,14 +97,15 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
                   name: param.name,
                   params: parameters,
                   index,
-                  inFocus,
                   setInFocus,
                   handlerPropChange,
                   onBlur: () => checkParam(param, index),
+                  inputRef: input => (nameInputRefs.current[index] = input),
                 })
               ) : (
                 <InputGroup
-                  autoFocus={inFocus.index === index && inFocus.prop === 'name'}
+                  autoFocus={true}
+                  inputRef={input => (nameInputRefs.current[index] = input)}
                   className="w-full h-full"
                   type="text"
                   onChange={(event: any) => handlerPropChange('name', index, event.currentTarget.value)}
@@ -106,7 +118,7 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
 
             <div className="flex-1 border-r">
               <InputGroup
-                autoFocus={inFocus.index === index && inFocus.prop === 'value'}
+                inputRef={input => (valueInputRefs.current[index] = input)}
                 className="w-full h-full"
                 type="text"
                 onChange={(event: any) => handlerPropChange('value', index, event.currentTarget.value)}
@@ -141,10 +153,6 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
             type="text"
             onFocus={event => {
               handleAddParam({ key: event.currentTarget.value });
-              setInFocus({
-                prop: 'name',
-                index: requestStore[`${type}Params`].length - 1,
-              });
             }}
             onChange={() => null}
             placeholder="Key"
@@ -158,10 +166,6 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
             type="text"
             onFocus={event => {
               handleAddParam({ value: event.currentTarget.value });
-              setInFocus({
-                prop: 'value',
-                index: requestStore[`${type}Params`].length - 1,
-              });
             }}
             onChange={() => null}
             placeholder="Value"

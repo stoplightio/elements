@@ -18,15 +18,20 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
     <RequestParameters
       type="header"
       className={cn('RequestMaker__RequestHeaders', className)}
-      suggestRenderer={({ name, params, index, inFocus, setInFocus, handlerPropChange, onBlur }) => (
+      suggestRenderer={({ name, params, index, setInFocus, handlerPropChange, onBlur, inputRef }) => (
         <HeaderSuggest
           inputProps={{
+            autoFocus: true,
             placeholder: 'Specify header name',
-            autoFocus: inFocus.index === index && inFocus.prop === 'name',
             onBlur,
             className: 'shadow-none',
+            inputRef,
           }}
-          noResults={<span>Unknown header <em>{name}</em></span>}
+          noResults={
+            <span>
+              Unknown header <em>{name}</em>
+            </span>
+          }
           inputValueRenderer={(headerField: HeaderField) => headerField.name}
           itemRenderer={renderHeaderField}
           items={allHeaderFields}
@@ -50,10 +55,6 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
           }}
           onQueryChange={query => {
             handlerPropChange('name', index, query);
-            setInFocus({
-              prop: 'value',
-              index,
-            });
           }}
         />
       )}
