@@ -53,9 +53,25 @@
   background-color: #fefcbf;
 }
 
-.RequestMaker__ViolationsDisplay .bp3-tree-node-label{
-  min-height: 19px;
+.RequestMaker__ViolationsDisplay .#{$ns}-tree-node-content{
+  height: auto;
+  min-height: 30px;
+
+  .#{$ns}-tree-node-label{
+    min-height: 19px;
+    display: unset;
+    white-space: normal;
+
+    span {
+      display: inline-block;
+
+      &.inline{
+        display: inline;
+      }
+    }
+  }
 }
+
 
 .#{$ns}-dark {
   .RequestMaker,

@@ -13,7 +13,7 @@ export interface IHttpRequestProps extends IErrorBoundary {
 
 const HttpRequestComponent = React.memo<IHttpRequestProps>(({ value, className }) => {
   const { result } = useResolver<IHttpRequest>('http', value);
-  const store = useRequestMaker(result);
+  const store = useRequestMaker(result, true);
 
   return (
     <div className={cn('RequestMaker', className)}>

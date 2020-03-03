@@ -50,10 +50,14 @@ $PageHeadings: 200px;
   .RequestMaker__RequestEditor,
   .RequestMaker__ResponseViewer {
     .#{$ns}-code-editor {
-      @extend .#{$ns}-code-editor;
       margin: 1.25rem;
       padding: 0;
       background: transparent !important;
+      @include lightCodeTheme;
+
+      .#{$ns}-dark & {
+        @include darkCodeTheme;
+      }
     }
   }
 
@@ -62,16 +66,5 @@ $PageHeadings: 200px;
   .RequestMaker__RequestViewer,
   .RequestMaker__RawViewer {
     display: flex;
-  }
-}
-
-.#{$ns}-dark {
-  .MarkdownViewer {
-    .RequestMaker__RequestEditor,
-    .RequestMaker__ResponseViewer {
-      .#{$ns}-code-editor {
-        @extend .#{$ns}-code-editor;
-      }
-    }
   }
 }
