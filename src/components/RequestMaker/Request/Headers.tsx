@@ -14,6 +14,8 @@ export interface IRequestHeaders {
 }
 
 export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
+  const [activeItem, setActiveItem] = React.useState<HeaderField | null | undefined>(null);
+
   return (
     <RequestParameters
       type="header"
@@ -26,12 +28,24 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
             onBlur,
             className: 'shadow-none',
             inputRef,
+            onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
+              if (e.key === 'Tab' && activeItem) {
+                e.preventDefault();
+                handlerPropChange('name', index, activeItem.name);
+                setInFocus({
+                  prop: 'value',
+                  index,
+                });
+              }
+            },
           }}
           noResults={
             <span>
               Unknown header <em>{name}</em>
             </span>
           }
+          activeItem={activeItem}
+          onActiveItemChange={setActiveItem}
           inputValueRenderer={(headerField: HeaderField) => headerField.name}
           itemRenderer={renderHeaderField}
           items={allHeaderFields}
