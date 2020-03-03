@@ -8,10 +8,10 @@ import * as React from 'react';
 
 type ViolationsDisplayProps = {
   violations: NonEmptyArray<IPrismDiagnostic>;
-  defaultOpen?: boolean;
+  defaultOpen: boolean;
 };
 
-export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations, defaultOpen = true }) => {
+export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations, defaultOpen = false }) => {
   const [isOpen, setOpen] = useState(defaultOpen);
 
   const treeData = useMemo(() => buildViolationsTree(violations), [violations]);

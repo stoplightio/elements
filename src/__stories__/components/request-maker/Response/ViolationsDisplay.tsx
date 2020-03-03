@@ -32,5 +32,5 @@ storiesOf('components/RequestMaker/Response/ViolationsDisplay', module)
       { path: ['body'], code: 'some-warning', message: 'some warning', severity: 1 },
     ];
 
-    return (isNonEmpty(violations) && <ViolationsDisplay violations={violations} />) || <></>;
+    return (isNonEmpty(violations) && <ViolationsDisplay violations={violations} defaultOpen={false} />) || <></>;
   });

@@ -71,7 +71,7 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
   return (
     <div className={cn(className, 'RequestMaker__ResponseBody flex flex-col')}>
       {shouldShowViewSelector && <ViewSelectorRadioGroup selectedView={selectedView} onChange={onChange} />}
-      {isNonEmpty(bodyViolations) && <ViolationsDisplay violations={bodyViolations} />}
+      {isNonEmpty(bodyViolations) && <ViolationsDisplay violations={bodyViolations} defaultOpen={false} />}
       <div className="RequestMaker__ResponseBody--content flex-1 border-t">{content}</div>
     </div>
   );

@@ -24,7 +24,7 @@ export const ResponseHeaders = observer<IResponseHeaders>(({ className }) => {
 
   return (
     <>
-      {isNonEmpty(headerViolations) && <ViolationsDisplay violations={headerViolations} />}
+      {isNonEmpty(headerViolations) && <ViolationsDisplay violations={headerViolations} defaultOpen={false} />}
       <HTMLTable
         className={cn('RequestMaker__ResponseHeaders container', className)}
         striped={true}
