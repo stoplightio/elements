@@ -1,3 +1,4 @@
+import { IServer } from '@stoplight/types';
 import { InputGroup, MenuItem } from '@stoplight/ui-kit';
 import { ItemRenderer, Suggest } from '@stoplight/ui-kit/Select';
 import cn from 'classnames';
@@ -28,6 +29,25 @@ const addServerUrlRenderer = (query: string, active: boolean, handleClick: React
   );
 };
 
+// TODO: support enums, this ignores them for now
+export const getExpandedServerUrl = (servers: IServer[], url: string) => {
+  let updatedUrl = url;
+  const server = servers.find(s => s.url === updatedUrl);
+  if (server && server.variables) {
+    for (const name in server.variables) {
+      if (!server.variables[name]) continue;
+
+      const variable = server.variables[name];
+      const tempUrl = updatedUrl;
+      updatedUrl = replace(tempUrl, `{${name}}`, variable.default);
+    }
+
+    const formattedUrl = new URI(updatedUrl);
+    updatedUrl = formattedUrl.toString();
+  }
+  return updatedUrl;
+};
+
 export const RequestEndpoint = observer<{
   className?: string;
 }>(({ className }) => {
@@ -52,20 +72,11 @@ export const RequestEndpoint = observer<{
       );
     }
 
-    // TODO: support enums, this ignores them for now
-    const server = requestStore.servers.find(s => s.url === updatedUrl);
-    if (server && server.variables) {
-      for (const name in server.variables) {
-        if (!name) continue;
-        const variable = server.variables[name];
-        const tempUrl = updatedUrl;
-        updatedUrl = replace(tempUrl, `{${name}}`, variable.default);
-      }
-    }
+    updatedUrl = getExpandedServerUrl(requestStore.servers, updatedUrl);
 
     setBaseUrlTransientValue('');
     if (!requestStore.shouldMock) {
-      requestStore.serverUrl = updatedUrl;
+      requestStore.expandedServerUrl = updatedUrl;
       requestStore.publicBaseUrl = serverUrl;
     }
   };

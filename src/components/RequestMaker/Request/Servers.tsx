@@ -1,16 +1,16 @@
-import { IServer } from '@stoplight/types';
+import { Dictionary, INodeVariable } from '@stoplight/types';
 import { InputGroup } from '@stoplight/ui-kit';
-import { find } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks';
 import { IVariable } from '../../../stores/request-maker/request';
 
-export interface IRequestServer {
-  server?: IServer;
+interface IRequestServerVariables {
+  serverVariables: Dictionary<INodeVariable, string>;
+  baseUrl: string;
 }
 
-export const RequestServers = observer<IRequestServer>(({ server }) => {
+export const RequestServerVariables = observer<IRequestServerVariables>(({ serverVariables, baseUrl }) => {
   const requestStore = useRequestMakerStore('request');
 
   const handleVariableChange = React.useCallback(
@@ -21,15 +21,16 @@ export const RequestServers = observer<IRequestServer>(({ server }) => {
     [requestStore],
   );
 
-  if (!server || !server.variables) return <div className="p-3 flex items-center justify-center">No Variables</div>;
+  if (!serverVariables) return <div className="p-3 flex items-center justify-center">No Variables</div>;
 
-  const values = Object.values(server.variables);
+  const values = Object.values(serverVariables);
 
   const findVariable = (servers: IVariable[], url: string, value: string) => {
-    const serv = find(servers, s => s.url === url);
+    const serv = servers.find(s => s.url === url);
     if (serv && serv.variables) {
       for (const v in serv.variables) {
-        if (!v) continue;
+        if (!serv.variables[v]) continue;
+
         if (serv.variables[v].default === value) {
           return serv.variables[v].default;
         }
@@ -41,28 +42,19 @@ export const RequestServers = observer<IRequestServer>(({ server }) => {
 
   return (
     <div>
-      {Object.keys(server.variables).map((v, i) => (
-        <div key={i}>
+      {Object.keys(serverVariables).map((v, i) => (
+        <div key={v}>
           <div className="border-b RequestMaker__RequestServers">
             <div className="flex items-center justify-center">
+              <InputGroup className="h-full border-r" type="text" placeholder={v} value={v} readOnly />
               <InputGroup
-                // autoFocus={inFocus.index === index && inFocus.prop === 'name'}
-                // onBlur={() => checkParam(param, index)}
-                className="h-full border-r"
-                type="text"
-                placeholder={v}
-                value={v}
-                onChange={() => void 0}
-                readOnly
-              />
-              <InputGroup
-                // autoFocus={inFocus.index === index && inFocus.prop === 'name'}
-                // onBlur={() => checkParam(param, index)}
                 className="flex-1 w-full h-full"
                 type="text"
                 placeholder={values[i].description || 'description'}
-                value={findVariable(requestStore.serverVariables, server.url, values[i].default) || values[i].default}
-                onChange={(event: any) => handleVariableChange(server.url, v, event.currentTarget.value)}
+                value={findVariable(requestStore.serverVariables, baseUrl, values[i].default) || values[i].default}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  handleVariableChange(baseUrl, v, event.currentTarget.value)
+                }
               />
             </div>
           </div>

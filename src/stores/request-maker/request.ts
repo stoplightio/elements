@@ -7,6 +7,7 @@ import { isEmpty, mapKeys, pick, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
 import URI from 'urijs';
+import { getExpandedServerUrl } from '../../components/RequestMaker/Request/Endpoint';
 import { getContentType } from '../../utils/getContentType';
 import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } from '../../utils/params';
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';
@@ -86,7 +87,7 @@ export class RequestStore {
   private _publicBaseUrl = '';
 
   @observable
-  private _serverUrl = '';
+  private _expandedServerUrl = '';
 
   /**
    * The base URL used when not mocking.
@@ -367,17 +368,21 @@ export class RequestStore {
   }
 
   @computed
-  public get serverUrl() {
-    return this._serverUrl;
+  public get expandedServerUrl() {
+    return this._expandedServerUrl;
   }
 
-  public set serverUrl(url: string) {
-    this._serverUrl = url;
+  public set expandedServerUrl(url: string) {
+    this._expandedServerUrl = url;
   }
 
   @computed
   public get serverVariables() {
     return this._serverVariables;
+  }
+
+  public set serverVariables(variables: IVariable[]) {
+    this._serverVariables = variables;
   }
 
   /**
@@ -408,7 +413,7 @@ export class RequestStore {
   @computed
   public get url() {
     try {
-      const baseUri = new URI(this._serverUrl || this.baseUrl);
+      const baseUri = new URI(this._expandedServerUrl || this.baseUrl);
       const uri = new URI(this.uri);
 
       const path = URI.joinPaths(baseUri, uri.path()).path();
@@ -649,6 +654,8 @@ export class RequestStore {
       }
       return s;
     });
+
+    this._expandedServerUrl = getExpandedServerUrl(servers, url);
     this._serverVariables = updatedVars;
   }
 

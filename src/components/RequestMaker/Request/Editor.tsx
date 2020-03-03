@@ -1,6 +1,5 @@
 import { Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { find } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
@@ -11,7 +10,7 @@ import { CodeGenerator } from './CodeGenerator';
 import { RequestHeaders } from './Headers';
 import { Mocking } from './Mocking';
 import { RequestParameters } from './Parameters';
-import { RequestServers } from './Servers';
+import { RequestServerVariables } from './Servers';
 
 const panelClassName = 'bg-white dark:bg-transparent border-t';
 
@@ -22,6 +21,7 @@ export enum RequestEditorTab {
   PATH = 'path',
   CODE = 'code',
   MOCKING = 'mocking',
+  SERVERS = 'servers',
 }
 
 export type RequestEditorProps = {
@@ -42,6 +42,7 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
   const shouldRenderPath = tabs.includes(RequestEditorTab.PATH);
   const shouldRenderCodeGen = tabs.includes(RequestEditorTab.CODE);
   const shouldRenderMocking = tabs.includes(RequestEditorTab.MOCKING) && store.operation;
+  const shouldRenderServerVariables = tabs.includes(RequestEditorTab.SERVERS) && store.operation;
 
   let defaultTab = RequestEditorTab.QUERY;
   if (shouldRenderQuery) {
@@ -56,9 +57,12 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
     defaultTab = RequestEditorTab.CODE;
   } else if (shouldRenderMocking) {
     defaultTab = RequestEditorTab.MOCKING;
+  } else if (shouldRenderServerVariables) {
+    defaultTab = RequestEditorTab.SERVERS;
   }
 
   const [selectedTabId, setSelectedTabId] = React.useState(`request-${defaultTab}`);
+  const server = requestStore.servers.find(s => s.url === requestStore.publicBaseUrl);
 
   return (
     <div
@@ -133,16 +137,12 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
           />
         )}
 
-        {store.operation && (
+        {shouldRenderServerVariables && server && server.variables && (
           <Tab
             id="request-servers"
-            title={<TabTitle title="Servers" />}
+            title={<TabTitle title="Server Variables" />}
             panelClassName={panelClassName}
-            panel={
-              <RequestServers
-                server={find(requestStore.servers, server => server.url === requestStore.publicBaseUrl)}
-              />
-            }
+            panel={<RequestServerVariables serverVariables={server.variables} baseUrl={requestStore.publicBaseUrl} />}
           />
         )}
 
