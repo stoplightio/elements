@@ -13,12 +13,12 @@ export type ParamField = {
   example: string;
 };
 
-export interface IParam<T = string | undefined> extends Pick<IHttpParam, Exclude<keyof IHttpParam, 'style'>> {
+export type IParam<T = string | undefined> = Omit<IHttpParam, 'style'> & {
   name: string;
   value: T;
   type?: string;
-  isEnabled?: boolean;
-}
+  isEnabled: boolean;
+};
 
 export type HeaderParam = IParam;
 export type QueryParam = IParam;
