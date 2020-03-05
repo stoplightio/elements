@@ -64,7 +64,7 @@ export const RequestEndpoint = observer<{
     const query = new URI(requestStore.url).search();
     const pathAndQuery = `${requestStore.templatedPath}${query}`;
     setUrl(showServerSuggestor ? pathAndQuery : `${requestStore.baseUrl}${pathAndQuery}`);
-  }, [requestStore.url]);
+  }, [requestStore.url, requestStore.templatedPath, requestStore.baseUrl, showServerSuggestor]);
 
   const onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (showServerSuggestor) {
