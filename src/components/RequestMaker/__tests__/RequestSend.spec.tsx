@@ -80,4 +80,21 @@ describe('RequestSend component', () => {
 
     expect(store.request.toPartialHttpRequest()).toEqual(originalRequest);
   });
+
+  test('should react to changing store', () => {
+    const oldSend = jest.spyOn(store, 'send');
+    const newStore = new RequestMakerStore();
+    const newSend = jest.spyOn(newStore, 'send');
+    wrapper.setProps({
+      value: newStore,
+    });
+
+    wrapper
+      .find(Button)
+      .at(0)
+      .simulate('click');
+
+    expect(oldSend).not.toHaveBeenCalled();
+    expect(newSend).toHaveBeenCalledTimes(1);
+  });
 });
