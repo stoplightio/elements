@@ -1844,10 +1844,10 @@
     remark-slug "^5.1.2"
     unified "^8.4.2"
 
-"@stoplight/markdown@^2.5.3":
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.5.3.tgz#25211b236a1c7a0d61acbe638a840b3c334bbb4a"
-  integrity sha512-FX/Btq+DrGTITziVA8M5bCkaYLeWF8muqkSxJ28kSrWjFQMboDAi+NOQ6BOq1AjiPy/KtGVEIwHw6XMq6juRGA==
+"@stoplight/markdown@^2.5.3", "@stoplight/markdown@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.6.0.tgz#2b1756702a860184c7eca14900761cc5bee68da6"
+  integrity sha512-llMeF1VN8ymrCXpt56F/eJjwpmRUmJOAiet67lYzjgWW+zi7QlFUG7//zFsYVlhytCzhEq0wRjAvUdvup2fkNw==
   dependencies:
     js-yaml "^3.13"
     lodash "^4.17.15"
