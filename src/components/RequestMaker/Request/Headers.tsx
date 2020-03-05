@@ -20,7 +20,18 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
       className={cn('RequestMaker__RequestHeaders', className)}
       suggestRenderer={({ name, params, index, inFocus, setInFocus, handlerPropChange, onBlur }) => (
         <HeaderSuggest
-          {...headerSuggestProps({ inFocus, index, onBlur })}
+          inputProps={{
+            placeholder: 'Specify header name',
+            autoFocus: inFocus.index === index && inFocus.prop === 'name',
+            onBlur,
+            className: 'shadow-none',
+          }}
+          noResults={<span>Unknown header <em>{name}</em></span>}
+          inputValueRenderer={(headerField: HeaderField) => headerField.name}
+          itemRenderer={renderHeaderField}
+          items={allHeaderFields}
+          itemPredicate={filterHeaderField}
+          openOnKeyDown={true}
           query={name}
           popoverProps={{
             targetClassName: 'w-full',
@@ -51,37 +62,6 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
 });
 
 const HeaderSuggest = Suggest.ofType<HeaderField>();
-
-const headerSuggestProps = ({
-  inFocus,
-  index,
-  onBlur,
-}: {
-  inFocus: { index: number; prop: string };
-  index: number;
-  onBlur: any;
-}) => ({
-  inputProps: {
-    placeholder: 'Add header name',
-    autoFocus: inFocus.index === index && inFocus.prop === 'name',
-    onBlur,
-    className: 'shadow-none',
-  },
-  noResults: <MenuItem disabled={true} text="No results." />,
-  inputValueRenderer: (headerField: HeaderField) => headerField.name,
-  itemRenderer: renderHeaderField,
-  items: allHeaderFields,
-  itemPredicate: filterHeaderField,
-  createNewItemFromQuery: (query: string) => {
-    return {
-      name: query,
-      description: '',
-      example: '',
-    };
-  },
-  createNewItemRenderer: renderCreateHeaderFieldOption,
-  openOnKeyDown: true,
-});
 
 const renderCreateHeaderFieldOption = (
   query: string,
