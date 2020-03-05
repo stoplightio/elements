@@ -13,12 +13,12 @@ export interface ISendButton {
 export const RequestSend = observer<ISendButton>(({ className }) => {
   const store = useRequestMakerStore();
 
-  const handleClick = React.useCallback(() => {
+  const handleClick = () => {
     if (store.isMockEnabled) {
       return store.mock();
     }
     return store.send();
-  }, [store.isMockEnabled]);
+  };
 
   return (
     <ButtonGroup className={cn('RequestMaker__RequestSend', className)} large>
