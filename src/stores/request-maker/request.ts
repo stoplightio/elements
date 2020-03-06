@@ -7,10 +7,12 @@ import { isEmpty, mapKeys, pick, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
 import URI from 'urijs';
-import { getExpandedServerUrl } from '../../components/RequestMaker/Request/Endpoint';
+import URITemplate from 'urijs/src/URITemplate';
+import { getExpandedUrl } from '../../components/RequestMaker/Request/Endpoint';
 import { getContentType } from '../../utils/getContentType';
 import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } from '../../utils/params';
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';
+import { cleanVariableValue, extractVariables, replaceVariables } from '../../utils/variables';
 import { Auth, ContentType, HeaderParam, IParam, ParamType, PathParam, QueryParam } from './types';
 
 const HTTPSnippet = require('httpsnippet');
@@ -63,6 +65,9 @@ export class RequestStore {
   @observable
   private _serverVariables: IVariable[] = [];
 
+  @observable
+  private _variables = {};
+
   /**
    * List of real implementation servers.
    */
@@ -87,7 +92,7 @@ export class RequestStore {
   private _publicBaseUrl = '';
 
   @observable
-  private _expandedServerUrl = '';
+  private _expandedUrl = '';
 
   /**
    * The base URL used when not mocking.
@@ -144,6 +149,13 @@ export class RequestStore {
    */
   public toPartialHttpRequest(): Partial<IHttpRequest> {
     const url = new URI(this.url);
+    const uriTemplate = new URITemplate(this.baseUrl).parse();
+
+    // this is wrong probably???
+    const requestUrl =
+      uriTemplate.parts?.length && uriTemplate.parts?.length > 1
+        ? `${this.baseUrl}${this.templatedPath}`
+        : `${url.origin()}${url.path()}`;
 
     let bodyParams;
     if (this.contentType === 'raw') {
@@ -161,7 +173,7 @@ export class RequestStore {
 
     return {
       method: this.method,
-      url: `${url.origin()}${url.path()}`,
+      url: requestUrl,
       query: this.queryParams.length > 0 ? getNameValuePairs(this.queryParams, { enabled: true }) : undefined,
       headers: this.headerParams.length > 0 ? getNameValuePairs(this.headerParams, { enabled: true }) : undefined,
       body: !isEmpty(bodyParams) ? bodyParams : undefined,
@@ -368,12 +380,12 @@ export class RequestStore {
   }
 
   @computed
-  public get expandedServerUrl() {
-    return this._expandedServerUrl;
+  public get expandedUrl() {
+    return this._expandedUrl;
   }
 
-  public set expandedServerUrl(url: string) {
-    this._expandedServerUrl = url;
+  public set expandedUrl(url: string) {
+    this._expandedUrl = url;
   }
 
   @computed
@@ -383,6 +395,24 @@ export class RequestStore {
 
   public set serverVariables(variables: IVariable[]) {
     this._serverVariables = variables;
+  }
+
+  @computed
+  public get variables() {
+    return this._variables;
+  }
+
+  public set variables(variables: any) {
+    this._variables = variables;
+  }
+
+  @computed
+  public get requestVariables() {
+    return extractVariables(this.toPartialHttpRequest());
+  }
+
+  public toPartialHttpRequestWithReplacedVariables() {
+    return replaceVariables(this.toPartialHttpRequest(), this._variables);
   }
 
   /**
@@ -413,7 +443,7 @@ export class RequestStore {
   @computed
   public get url() {
     try {
-      const baseUri = new URI(this._expandedServerUrl || this.baseUrl);
+      const baseUri = new URI(this.baseUrl);
       const uri = new URI(this.uri);
 
       const path = URI.joinPaths(baseUri, uri.path()).path();
@@ -643,7 +673,6 @@ export class RequestStore {
   @action
   public updateServerVariables(url: string, varName: string, value: string) {
     const servers = this._publicServers.map(server => ({ url: server.url, variables: server.variables }));
-
     const updatedVars: IVariable[] = servers.map(s => {
       if (s.url === url && s.variables) {
         for (const v in s.variables) {
@@ -655,7 +684,7 @@ export class RequestStore {
       return s;
     });
 
-    this._expandedServerUrl = getExpandedServerUrl(servers, url);
+    this._expandedUrl = getExpandedUrl(servers, url);
     this._serverVariables = updatedVars;
   }
 
@@ -673,4 +702,23 @@ export class RequestStore {
     });
     this.publicServers = updatedServers;
   }
+
+  @action
+  public setVariable(key: string, value: string | number) {
+    this._variables[key].default = value;
+  }
+
+  // @action
+  // public formatVariables(variables: any) {
+  //   const modifiedVars = {};
+
+  //   variables.map((v: any) => {
+  //     if (!Object.keys(this._serverVariables).includes(v)) {
+  //       modifiedVars[v] = { default: '' };
+  //     }
+  //   });
+  //   this._variables = modifiedVars;
+
+  //   return modifiedVars;
+  // }
 }

@@ -2,7 +2,7 @@ import { IServer } from '@stoplight/types';
 import { InputGroup, MenuItem } from '@stoplight/ui-kit';
 import { ItemRenderer, Suggest } from '@stoplight/ui-kit/Select';
 import cn from 'classnames';
-import { map, replace, toLower, uniqBy } from 'lodash';
+import { map, toLower, uniqBy } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import URI from 'urijs';
@@ -29,8 +29,8 @@ const addServerUrlRenderer = (query: string, active: boolean, handleClick: React
   );
 };
 
-// TODO: support enums, this ignores them for now
-export const getExpandedServerUrl = (servers: IServer[], url: string) => {
+// TODO: support server variable enums, this ignores them for now
+export const getExpandedUrl = (servers: IServer[], url: string) => {
   let updatedUrl = url;
   const server = servers.find(s => s.url === updatedUrl);
   if (server && server.variables) {
@@ -38,12 +38,9 @@ export const getExpandedServerUrl = (servers: IServer[], url: string) => {
       if (!server.variables[name]) continue;
 
       const variable = server.variables[name];
-      const tempUrl = updatedUrl;
-      updatedUrl = replace(tempUrl, `{${name}}`, variable.default);
+      updatedUrl = updatedUrl.replace(`{${name}}`, variable.default);
     }
-
-    const formattedUrl = new URI(updatedUrl);
-    updatedUrl = formattedUrl.toString();
+    return new URI(updatedUrl).toString();
   }
   return updatedUrl;
 };
@@ -59,24 +56,23 @@ export const RequestEndpoint = observer<{
   const [baseUrlTransientValue, setBaseUrlTransientValue] = React.useState();
 
   const onServerSuggest = (serverUrl: string) => {
-    let updatedUrl = serverUrl;
-    if (requestStore.servers && !requestStore.servers.find(s => s.url === updatedUrl)) {
+    if (requestStore.servers && !requestStore.servers.find(s => s.url === serverUrl)) {
       requestStore.publicServers = uniqBy(
         [
           ...requestStore.publicServers,
           {
-            url: updatedUrl,
+            url: serverUrl,
           },
         ],
         'url',
       );
     }
 
-    updatedUrl = getExpandedServerUrl(requestStore.servers, updatedUrl);
+    const updatedUrl = getExpandedUrl(requestStore.servers, serverUrl);
 
     setBaseUrlTransientValue('');
     if (!requestStore.shouldMock) {
-      requestStore.expandedServerUrl = updatedUrl;
+      requestStore.expandedUrl = updatedUrl;
       requestStore.publicBaseUrl = serverUrl;
     }
   };
