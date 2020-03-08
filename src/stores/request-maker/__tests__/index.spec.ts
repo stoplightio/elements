@@ -556,8 +556,8 @@ describe('RequestMakerStore', () => {
     });
 
     describe('base url with base path', () => {
-      const baseUrl = 'https://httpbin.org/v2/operation';
-      const url = '/operation';
+      const baseUrl = 'https://httpbin.org/v2';
+      const url = 'https://httpbin.org/v2/operation';
 
       const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
 
@@ -565,8 +565,8 @@ describe('RequestMakerStore', () => {
     });
 
     describe('base url with long base path', () => {
-      const baseUrl = 'https://httpbin.org/p/mocks/10/40/operation';
-      const url = '/operation';
+      const baseUrl = 'https://httpbin.org/p/mocks/10/40';
+      const url = 'https://httpbin.org/p/mocks/10/40/operation';
 
       const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
 
