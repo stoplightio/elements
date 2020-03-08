@@ -18,9 +18,10 @@ export enum RequestEditorTab {
   HEADERS = 'headers',
   BODY = 'body',
   QUERY = 'query',
+  PATH = 'path',
   CODE = 'code',
   MOCKING = 'mocking',
-  VARIABLES = 'variables',
+  SERVERS = 'servers',
 }
 
 export type RequestEditorProps = {
@@ -35,14 +36,13 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
   const responseStore = useRequestMakerStore('response');
   const store = useRequestMakerStore();
 
-  const server = requestStore.servers.find(s => s.url === requestStore.baseUrl);
-
   const shouldRenderQuery = tabs.includes(RequestEditorTab.QUERY);
   const shouldRenderHeaders = tabs.includes(RequestEditorTab.HEADERS);
   const shouldRenderBody = tabs.includes(RequestEditorTab.BODY);
+  const shouldRenderPath = tabs.includes(RequestEditorTab.PATH);
   const shouldRenderCodeGen = tabs.includes(RequestEditorTab.CODE);
   const shouldRenderMocking = tabs.includes(RequestEditorTab.MOCKING) && store.operation;
-  const shouldRenderVariables = tabs.includes(RequestEditorTab.VARIABLES) && store.operation && server?.variables;
+  const shouldRenderServerVariables = tabs.includes(RequestEditorTab.SERVERS) && store.operation;
 
   let defaultTab = RequestEditorTab.QUERY;
   if (shouldRenderQuery) {
@@ -51,15 +51,18 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
     defaultTab = RequestEditorTab.HEADERS;
   } else if (shouldRenderBody) {
     defaultTab = RequestEditorTab.BODY;
+  } else if (shouldRenderPath) {
+    defaultTab = RequestEditorTab.PATH;
   } else if (shouldRenderCodeGen) {
     defaultTab = RequestEditorTab.CODE;
   } else if (shouldRenderMocking) {
     defaultTab = RequestEditorTab.MOCKING;
-  } else if (shouldRenderVariables) {
-    defaultTab = RequestEditorTab.VARIABLES;
+  } else if (shouldRenderServerVariables) {
+    defaultTab = RequestEditorTab.SERVERS;
   }
 
   const [selectedTabId, setSelectedTabId] = React.useState(`request-${defaultTab}`);
+  const server = requestStore.servers.find(s => s.url === requestStore.publicBaseUrl);
 
   return (
     <div
@@ -107,6 +110,15 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
           />
         )}
 
+        {shouldRenderPath && (
+          <Tab
+            id="request-path"
+            title={<TabTitle title="Path" count={getEnabledParams(requestStore.pathParams).length} />}
+            panelClassName={panelClassName}
+            panel={<RequestParameters type="path" />}
+          />
+        )}
+
         {shouldRenderCodeGen && (
           <Tab
             id="code-editor"
@@ -125,12 +137,12 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
           />
         )}
 
-        {shouldRenderVariables && server?.variables && (
+        {shouldRenderServerVariables && server && server.variables && (
           <Tab
-            id="request-variables"
-            title={<TabTitle title="Variables" />}
+            id="request-servers"
+            title={<TabTitle title="Server Variables" />}
             panelClassName={panelClassName}
-            panel={<RequestServerVariables serverVariables={server.variables} baseUrl={requestStore.baseUrl} />}
+            panel={<RequestServerVariables serverVariables={server.variables} baseUrl={requestStore.publicBaseUrl} />}
           />
         )}
 
