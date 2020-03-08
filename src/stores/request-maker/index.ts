@@ -283,7 +283,7 @@ export class RequestMakerStore {
 
     let store: ResponseStore;
     try {
-      const url = getPrismUrl(this.request.url, this.request.baseUrl);
+      const url = extractPrismPathFromRequestUrl(this.request.url, this.request.baseUrl);
 
       const response = await this.prism.request(url, this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse({ ...response, violations: response.violations.output });
@@ -379,7 +379,7 @@ function parsePreferHeaders(activePreferHeaders: RequestStore['headerParams']): 
   );
 }
 
-export function getPrismUrl(requestUrl: string, baseUrl: string): string {
+export function extractPrismPathFromRequestUrl(requestUrl: string, baseUrl: string): string {
   const requestUri = new URI(requestUrl);
   const baseUri = new URI(baseUrl);
 

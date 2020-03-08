@@ -8,7 +8,7 @@ import parsePreferHeader from 'parse-prefer-header';
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
-import { getPrismUrl } from '../index';
+import { extractPrismPathFromRequestUrl } from '../index';
 
 describe('RequestMakerStore', () => {
   let store: RequestMakerStore;
@@ -542,7 +542,7 @@ describe('RequestMakerStore', () => {
       const baseUrl = 'https://httpbin.org/';
       const url = 'https://httpbin.org/operation';
 
-      const prismUrl = getPrismUrl(url, baseUrl);
+      const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
 
       it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
     });
@@ -551,7 +551,7 @@ describe('RequestMakerStore', () => {
       const baseUrl = 'https://httpbin.org/v2/operation';
       const url = '/operation';
 
-      const prismUrl = getPrismUrl(url, baseUrl);
+      const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
 
       it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
     });
@@ -560,7 +560,7 @@ describe('RequestMakerStore', () => {
       const baseUrl = 'https://httpbin.org/p/mocks/10/40/operation';
       const url = '/operation';
 
-      const prismUrl = getPrismUrl(url, baseUrl);
+      const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
 
       it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
     });
