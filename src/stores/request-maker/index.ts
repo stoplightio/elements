@@ -382,7 +382,7 @@ export function extractPrismPathFromRequestUrl(requestUrl: string, baseUrl: stri
   const requestUri = new URI(requestUrl);
   const baseUri = new URI(baseUrl);
 
-  const baseUriResource = baseUri.resource();
+  const baseUriResource = baseUri.path();
 
   return requestUri.resource().replace(baseUriResource, baseUriResource.endsWith('/') ? '/' : '');
 }
