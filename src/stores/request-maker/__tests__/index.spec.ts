@@ -8,6 +8,7 @@ import parsePreferHeader from 'parse-prefer-header';
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
+import { getPrismUrl } from '../index';
 
 describe('RequestMakerStore', () => {
   let store: RequestMakerStore;
@@ -533,6 +534,35 @@ describe('RequestMakerStore', () => {
 
       expect(store.response.status).toBe('Completed');
       expect(store.response.raw).toEqual(new Uint8Array(0));
+    });
+  });
+
+  describe('getPrismUrl', () => {
+    describe('base url with no path', () => {
+      const baseUrl = 'https://httpbin.org/';
+      const url = 'https://httpbin.org/operation';
+
+      const prismUrl = getPrismUrl(url, baseUrl);
+
+      it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
+    });
+
+    describe('base url with base path', () => {
+      const baseUrl = 'https://httpbin.org/v2/operation';
+      const url = '/operation';
+
+      const prismUrl = getPrismUrl(url, baseUrl);
+
+      it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
+    });
+
+    describe('base url with long base path', () => {
+      const baseUrl = 'https://httpbin.org/p/mocks/10/40/operation';
+      const url = '/operation';
+
+      const prismUrl = getPrismUrl(url, baseUrl);
+
+      it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
     });
   });
 });
