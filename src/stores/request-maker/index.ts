@@ -283,8 +283,11 @@ export class RequestMakerStore {
 
     let store: ResponseStore;
     try {
-      const url = new URI(this.request.url);
-      const response = await this.prism.request(url.resource(), this.request.toPrism());
+      const requestUrl = new URI(this.request.url);
+      const baseUrl = new URI(this.request.baseUrl);
+      const url = requestUrl.resource().replace(baseUrl.resource(), '/');
+
+      const response = await this.prism.request(url, this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse({ ...response, violations: response.violations.output });
     } catch (err) {
       store = ResponseStore.fromError(err);

@@ -7185,7 +7185,7 @@ fork-ts-checker-webpack-plugin@1.5.0:
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
 
-form-data@^3:
+form-data@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
   integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
@@ -8099,13 +8099,13 @@ https-proxy-agent@^5.0.0:
 
 "httpsnippet@github:stoplightio/httpsnippet#master":
   version "1.19.1"
-  resolved "https://codeload.github.com/stoplightio/httpsnippet/tar.gz/629566cbf80bc61e86c6784adf3014e997600824"
+  resolved "https://codeload.github.com/stoplightio/httpsnippet/tar.gz/43eb97f4e7fc9e6b5f9b4ace3be5c02c74348998"
   dependencies:
     chalk "^1.1.1"
     commander "^2.9.0"
     debug "^2.2.0"
     event-stream "3.3.4"
-    form-data "^3"
+    form-data "3.0.0"
     fs-readfile-promise "^2.0.1"
     fs-writefile-promise "^1.0.3"
     har-validator "^5.0.0"

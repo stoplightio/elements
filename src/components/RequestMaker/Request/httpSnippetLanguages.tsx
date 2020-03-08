@@ -111,6 +111,10 @@ export const languages: IHttpSnippetLanguage[] = [
     name: 'C#',
     mode: 'csharp',
     codechoice: 'csharp',
+    libraries: [
+      { name: 'HttpClient', librarychoice: 'httpclient' },
+      { name: 'RestSharp', librarychoice: 'restsharp' },
+    ],
   },
   {
     name: 'Obj-C',
