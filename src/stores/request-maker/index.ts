@@ -284,7 +284,6 @@ export class RequestMakerStore {
     let store: ResponseStore;
     try {
       const url = extractPrismPathFromRequestUrl(this.request.url, this.request.baseUrl);
-
       const response = await this.prism.request(url, this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse({ ...response, violations: response.violations.output });
     } catch (err) {
@@ -383,5 +382,7 @@ export function extractPrismPathFromRequestUrl(requestUrl: string, baseUrl: stri
   const requestUri = new URI(requestUrl);
   const baseUri = new URI(baseUrl);
 
-  return requestUri.resource().replace(baseUri.resource(), '/');
+  const baseUriResource = baseUri.resource();
+
+  return requestUri.resource().replace(baseUriResource, baseUriResource.endsWith('/') ? '/' : '');
 }

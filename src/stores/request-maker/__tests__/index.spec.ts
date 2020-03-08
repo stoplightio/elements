@@ -531,15 +531,23 @@ describe('RequestMakerStore', () => {
       store.setOperationData(emptyResponseOperation);
       store.request.templatedPath = '/dummy';
       await store.mock();
-
       expect(store.response.status).toBe('Completed');
       expect(store.response.raw).toEqual(new Uint8Array(0));
     });
   });
 
-  describe('getPrismUrl', () => {
+  describe('extractPrismPathFromRequestUrl', () => {
     describe('base url with no path', () => {
       const baseUrl = 'https://httpbin.org/';
+      const url = 'https://httpbin.org/operation';
+
+      const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
+
+      it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
+    });
+
+    describe('base url not ending with / and with no path', () => {
+      const baseUrl = 'https://httpbin.org';
       const url = 'https://httpbin.org/operation';
 
       const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
