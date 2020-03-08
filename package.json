@@ -58,7 +58,7 @@
     "copy-to-clipboard": "^3.2.1",
     "fast-text-encoding": "^1.0.0",
     "fp-ts": "^2.5.2",
-    "httpsnippet": "github:stoplightio/httpsnippet#master",
+    "httpsnippet": "github:stoplightio/httpsnippet#031d5d9545f8d261841679baa0353b82c9068ecc",
     "lodash": "^4.17.15",
     "mobx-react-lite": "^1.5.2",
     "object-hash": "^2.0.3",

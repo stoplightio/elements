@@ -1808,7 +1808,7 @@
     "@stoplight/react-error-boundary" "^1.0.0"
     "@stoplight/tree-list" "5.0.0-beta.2"
     classnames "^2.2.6"
-    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
+    json-schema-merge-allof "https://github.com/stoplightio/json-schema-merge-allof"
     lodash "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -7185,7 +7185,7 @@ fork-ts-checker-webpack-plugin@1.5.0:
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
 
-form-data@3.0.0:
+form-data@^3:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
   integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
@@ -8097,15 +8097,15 @@ https-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-"httpsnippet@github:stoplightio/httpsnippet#master":
+"httpsnippet@github:stoplightio/httpsnippet#031d5d9545f8d261841679baa0353b82c9068ecc":
   version "1.19.1"
-  resolved "https://codeload.github.com/stoplightio/httpsnippet/tar.gz/43eb97f4e7fc9e6b5f9b4ace3be5c02c74348998"
+  resolved "https://codeload.github.com/stoplightio/httpsnippet/tar.gz/031d5d9545f8d261841679baa0353b82c9068ecc"
   dependencies:
     chalk "^1.1.1"
     commander "^2.9.0"
     debug "^2.2.0"
     event-stream "3.3.4"
-    form-data "3.0.0"
+    form-data "^3"
     fs-readfile-promise "^2.0.1"
     fs-writefile-promise "^1.0.3"
     har-validator "^5.0.0"
@@ -9646,7 +9646,6 @@ json-schema-faker@0.5.0-rc23:
 
 "json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
   version "0.6.0"
-  uid d5e714101a1106d1804c4e6c1a4f1c8083855d90
   resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#d5e714101a1106d1804c4e6c1a4f1c8083855d90"
   dependencies:
     compute-lcm "^1.1.0"
