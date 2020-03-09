@@ -378,6 +378,9 @@ function parsePreferHeaders(activePreferHeaders: RequestStore['headerParams']): 
   );
 }
 
+/** This function extracts the real URL from the full request URL (https://httpbin.org/v1/operation) and the
+ * base URL given by the Server part of the HTTP Operation (https://httpbin.org/v1)
+ */
 export function extractPrismPathFromRequestUrl(requestUrl: string, baseUrl: string): string {
   const requestUri = new URI(requestUrl);
   const baseUri = new URI(baseUrl);
