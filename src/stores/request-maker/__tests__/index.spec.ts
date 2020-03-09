@@ -536,40 +536,19 @@ describe('RequestMakerStore', () => {
     });
   });
 
-  describe('extractPrismPathFromRequestUrl', () => {
-    describe('base url with no path', () => {
-      const baseUrl = 'https://httpbin.org/';
-      const url = 'https://httpbin.org/operation';
-
+  describe.each([
+    ['base url with no path', 'https://httpbin.org/', 'https://httpbin.org/operation'],
+    ['base url not ending with / and with no path', 'https://httpbin.org', 'https://httpbin.org/operation'],
+    ['base url not ending with / with base path', 'https://httpbin.org/v2', 'https://httpbin.org/v2/operation'],
+    ['base url with base path', 'https://httpbin.org/v2/', 'https://httpbin.org/v2/operation'],
+    [
+      'base url with multiple path base path',
+      'https://httpbin.org/p/mocks/10/40',
+      'https://httpbin.org/p/mocks/10/40/operation',
+    ],
+  ])('extractPrismPathFromRequestUrl', (desc, baseUrl, url) => {
+    describe(desc, () => {
       const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
-
-      it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
-    });
-
-    describe('base url not ending with / and with no path', () => {
-      const baseUrl = 'https://httpbin.org';
-      const url = 'https://httpbin.org/operation';
-
-      const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
-
-      it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
-    });
-
-    describe('base url with base path', () => {
-      const baseUrl = 'https://httpbin.org/v2';
-      const url = 'https://httpbin.org/v2/operation';
-
-      const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
-
-      it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
-    });
-
-    describe('base url with long base path', () => {
-      const baseUrl = 'https://httpbin.org/p/mocks/10/40';
-      const url = 'https://httpbin.org/p/mocks/10/40/operation';
-
-      const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
-
       it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
     });
   });
