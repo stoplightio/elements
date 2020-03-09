@@ -2,7 +2,6 @@ export * from './useComponents';
 export * from './useComponentSize';
 export * from './useComputeMarkdownHeadings';
 export * from './useComputeToc';
-// export * from './useComputeVisGraph';
 export * from './useDebounce';
 export * from './useLocationHash';
 export * from './useNodeInfo';

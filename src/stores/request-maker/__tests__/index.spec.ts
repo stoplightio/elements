@@ -8,6 +8,7 @@ import parsePreferHeader from 'parse-prefer-header';
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
+import { extractPrismPathFromRequestUrl } from '../index';
 
 describe('RequestMakerStore', () => {
   let store: RequestMakerStore;
@@ -530,9 +531,25 @@ describe('RequestMakerStore', () => {
       store.setOperationData(emptyResponseOperation);
       store.request.templatedPath = '/dummy';
       await store.mock();
-
       expect(store.response.status).toBe('Completed');
       expect(store.response.raw).toEqual(new Uint8Array(0));
+    });
+  });
+
+  describe.each([
+    ['base url with no path', 'https://httpbin.org/', 'https://httpbin.org/operation'],
+    ['base url not ending with / and with no path', 'https://httpbin.org', 'https://httpbin.org/operation'],
+    ['base url not ending with / with base path', 'https://httpbin.org/v2', 'https://httpbin.org/v2/operation'],
+    ['base url with base path', 'https://httpbin.org/v2/', 'https://httpbin.org/v2/operation'],
+    [
+      'base url with multiple path base path',
+      'https://httpbin.org/p/mocks/10/40',
+      'https://httpbin.org/p/mocks/10/40/operation',
+    ],
+  ])('extractPrismPathFromRequestUrl', (desc, baseUrl, url) => {
+    describe(desc, () => {
+      const prismUrl = extractPrismPathFromRequestUrl(url, baseUrl);
+      it('should keep the url as it is', () => expect(prismUrl).toBe('/operation'));
     });
   });
 });
