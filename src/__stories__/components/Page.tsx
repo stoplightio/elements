@@ -1,6 +1,6 @@
 import { Button } from '@blueprintjs/core';
 import { NodeType } from '@stoplight/types';
-import { array, select, text, withKnobs } from '@storybook/addon-knobs';
+import { select, text, withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';

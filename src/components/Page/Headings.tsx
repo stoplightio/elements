@@ -24,7 +24,7 @@ export const PageHeadings: React.FC<IPageHeadings> = ({
   if (!headings || !headings.length) return null;
 
   const component = (
-    <>
+    <div style={{ maxHeight: '80vh', overflow: 'scroll' }}>
       {title && (
         <div
           className="py-2 text-gray-5 dark:text-gray-6 font-medium text-sm flex items-center"
@@ -38,7 +38,7 @@ export const PageHeadings: React.FC<IPageHeadings> = ({
       {headings.map((heading, i) => (
         <PageHeading key={i} item={heading} isSelected={locationHash === `#${heading.id}`} />
       ))}
-    </>
+    </div>
   );
 
   if (minimal) {
@@ -58,6 +58,7 @@ export const PageHeadings: React.FC<IPageHeadings> = ({
           }
           content={<div className={cn('p-2', className)}>{component}</div>}
           position="bottom-right"
+          boundary="scrollParent"
         />
       </div>
     );

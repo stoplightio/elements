@@ -1,3 +1,4 @@
+import { NodeType } from '@stoplight/types';
 import { text, withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
@@ -13,11 +14,11 @@ const longPageHeading = require('../../__fixtures__/articles/long-page-heading.m
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = () => ({
-  markdown: text('markdown', article),
+  markdown: text('markdown', article.default),
 });
 
 export const pageHeadingKnobs = () => ({
-  markdown: text('markdown', longPageHeading),
+  markdown: text('markdown', longPageHeading.default),
 });
 
 storiesOf('components/PageHeadings', module)
@@ -30,7 +31,7 @@ storiesOf('components/PageHeadings', module)
         <div className="flex justify-center items-center">
           <PageHeadings
             className="p-16"
-            headings={computeMarkdownHeadings(buildNodeMarkdownTree('article', markdown))}
+            headings={computeMarkdownHeadings(buildNodeMarkdownTree(NodeType.Article, markdown))}
           />
         </div>
       </div>
@@ -44,7 +45,7 @@ storiesOf('components/PageHeadings', module)
         <div className="flex justify-center items-center">
           <PageHeadings
             className="p-16"
-            headings={computeMarkdownHeadings(buildNodeMarkdownTree('article', markdown))}
+            headings={computeMarkdownHeadings(buildNodeMarkdownTree(NodeType.Article, markdown))}
           />
         </div>
       </div>
