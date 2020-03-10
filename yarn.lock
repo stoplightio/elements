@@ -1844,19 +1844,19 @@
     remark-slug "^5.1.2"
     unified "^8.4.2"
 
-"@stoplight/markdown@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.7.0.tgz#3b0c3f1847b78cfc25f9c48797d0377855032ede"
-  integrity sha512-THP2500xsvniPuKhcnL9nZhXk+YnO5MG2jEKXZdVuFAR+MI0fhMozYqGqqQGNiiWnFGKncigi5aM4yDYIf+naA==
+"@stoplight/markdown@^2.7.0", "@stoplight/markdown@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.7.1.tgz#0306283f8e2d920bff76548243bb09fb055b1918"
+  integrity sha512-x1om/OLB3V4D/Ms7tyNK3ZnSfscUI88Ha2tUnciKTKDFDBP8FWhbcWcieomZTKsq+9z7Bp83lCt73ahWWdQm1g==
   dependencies:
     js-yaml "^3.13"
     lodash "^4.17.15"
-    mdast-util-to-string "^1.0"
+    mdast-util-to-string "^1.0.8"
     remark-frontmatter "^1.3"
     remark-parse "^7.0.2"
     remark-stringify "^7.0.4"
     unified "^8.4.2"
-    unist-util-select "^3.0"
+    unist-util-select "^3.0.1"
 
 "@stoplight/path@^1.3.0", "@stoplight/path@^1.3.1":
   version "1.3.1"
@@ -10657,10 +10657,10 @@ mdast-util-definitions@^1.1.1:
   dependencies:
     unist-util-visit "^1.0.0"
 
-mdast-util-to-string@^1.0, mdast-util-to-string@^1.0.0:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/mdast-util-to-string/-/mdast-util-to-string-1.0.7.tgz#62d8e9c6b2113070d8b497c7dc35bf12796f06ee"
-  integrity sha512-P+gdtssCoHOX+eJUrrC30Sixqao86ZPlVjR5NEAoy0U79Pfxb1Y0Gntei0+GrnQD4T04X9xA8tcugp90cSmNow==
+mdast-util-to-string@^1.0.0, mdast-util-to-string@^1.0.8:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mdast-util-to-string/-/mdast-util-to-string-1.1.0.tgz#27055500103f51637bd07d01da01eb1967a43527"
+  integrity sha512-jVU0Nr2B9X3MU4tSK7JP1CMkSvOj7X5l/GboG1tKRw52lLF1x2Ju92Ms9tNetCcbfX3hzlM73zYo2NKkWSfF/A==
 
 mdn-data@2.0.4:
   version "2.0.4"
@@ -16455,7 +16455,7 @@ unist-util-remove@^1.0.0:
   dependencies:
     unist-util-is "^3.0.0"
 
-unist-util-select@^3.0, unist-util-select@^3.0.1:
+unist-util-select@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/unist-util-select/-/unist-util-select-3.0.1.tgz#787fc452db9ba77f0ade0e7dc53c3d9d4acc79c7"
   integrity sha512-VQpTuqZVJlRbosQdnLdTPIIqwZeU70YZ5aMBOqtFNGeeCdYn6ORZt/9RiaVlbl06ocuf58SVMoFa7a13CSGPMA==
