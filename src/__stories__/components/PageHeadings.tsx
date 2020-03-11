@@ -8,17 +8,17 @@ import { PageHeadings } from '../../components/Page/Headings';
 import { computeMarkdownHeadings } from '../../hooks/useComputeMarkdownHeadings';
 import { buildNodeMarkdownTree } from '../../utils/buildNodeMarkdownTree';
 
-const article = require('../../__fixtures__/articles/kitchen-sink.md');
-const longPageHeading = require('../../__fixtures__/articles/long-page-heading.md');
+const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
+const longPageHeading = require('../../__fixtures__/articles/long-page-heading.md').default;
 
 export const darkMode = () => boolean('dark mode', false);
 
 export const knobs = () => ({
-  markdown: text('markdown', article.default),
+  markdown: text('markdown', article),
 });
 
 export const pageHeadingKnobs = () => ({
-  markdown: text('markdown', longPageHeading.default),
+  markdown: text('markdown', longPageHeading),
 });
 
 storiesOf('components/PageHeadings', module)
