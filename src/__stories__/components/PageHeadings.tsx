@@ -1,3 +1,4 @@
+import { NodeType } from '@stoplight/types';
 import { text, withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
@@ -7,8 +8,8 @@ import { PageHeadings } from '../../components/Page/Headings';
 import { computeMarkdownHeadings } from '../../hooks/useComputeMarkdownHeadings';
 import { buildNodeMarkdownTree } from '../../utils/buildNodeMarkdownTree';
 
-const article = require('../../__fixtures__/articles/kitchen-sink.md');
-const longPageHeading = require('../../__fixtures__/articles/long-page-heading.md');
+const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
+const longPageHeading = require('../../__fixtures__/articles/long-page-heading.md').default;
 
 export const darkMode = () => boolean('dark mode', false);
 
@@ -30,7 +31,7 @@ storiesOf('components/PageHeadings', module)
         <div className="flex justify-center items-center">
           <PageHeadings
             className="p-16"
-            headings={computeMarkdownHeadings(buildNodeMarkdownTree('article', markdown))}
+            headings={computeMarkdownHeadings(buildNodeMarkdownTree(NodeType.Article, markdown))}
           />
         </div>
       </div>
@@ -44,7 +45,7 @@ storiesOf('components/PageHeadings', module)
         <div className="flex justify-center items-center">
           <PageHeadings
             className="p-16"
-            headings={computeMarkdownHeadings(buildNodeMarkdownTree('article', markdown))}
+            headings={computeMarkdownHeadings(buildNodeMarkdownTree(NodeType.Article, markdown))}
           />
         </div>
       </div>
