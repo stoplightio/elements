@@ -1967,10 +1967,21 @@
     ts-loader "^6.2.1"
     webpack "^4.41.5"
 
-"@stoplight/tree-list@5.0.0-beta.2", "@stoplight/tree-list@^5.0.0-beta.2":
+"@stoplight/tree-list@5.0.0-beta.2":
   version "5.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.0-beta.2.tgz#b60dbea9df1d3c7e01bdfd8dc05388978128df83"
   integrity sha512-yZLakRr55gf8Z2ZYuJzh9v7NJGZ8MlsKncAMa8md5HqWKucHhZXJhvlJSHLz9cwnk5dfNXSDUf+Pgv2zBe4YJA==
+  dependencies:
+    "@stoplight/lifecycle" "^2.2.1"
+    "@stoplight/react-error-boundary" "^1.0.0"
+    classnames "^2.2.6"
+    mobx-react-lite "^1.5.2"
+    strict-event-emitter-types "^2.0.0"
+
+"@stoplight/tree-list@^5.0.0-beta.4":
+  version "5.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.0-beta.4.tgz#f80b066a2af11b5b2643f1f5752da5e5c2f8bf2c"
+  integrity sha512-0HxzmR31v2VC3ogYRvZd9YWn/LC8RA399l2OSerptMMjF8d3dHtbONeo1oYIf59Xkrtxas7zsit+sw67LOE+cQ==
   dependencies:
     "@stoplight/lifecycle" "^2.2.1"
     "@stoplight/react-error-boundary" "^1.0.0"
