@@ -53,7 +53,7 @@
     "@stoplight/tree-list": "^5.0.0-beta.2",
     "@stoplight/types": "^11.4.0",
     "@stoplight/ui-kit": "^2.15.1",
-    "@stoplight/yaml": "^3.5.2",
+    "@stoplight/yaml": "^3.6.0",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.2.1",
     "fast-text-encoding": "^1.0.0",
