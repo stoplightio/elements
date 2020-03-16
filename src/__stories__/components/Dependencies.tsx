@@ -38,7 +38,6 @@ const branchNode: IBranchNode = {
     name: 'Swagger Petstore',
     type: NodeType.HttpService,
     data: {},
-    tagNames: [],
   },
 };
 

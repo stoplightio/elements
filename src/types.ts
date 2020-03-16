@@ -137,7 +137,6 @@ export interface IBranchNode {
     id: number;
     name: string;
     type: string;
-    tagNames: string[];
     data: unknown;
   };
 
