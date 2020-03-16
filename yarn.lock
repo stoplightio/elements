@@ -2772,13 +2772,6 @@
   resolved "https://registry.yarnpkg.com/@types/urijs/-/urijs-1.19.5.tgz#f2083392f5859be59cbba0b1d463b922c8aef842"
   integrity sha512-LAyzQkr9rZDoHrv8xRcHStLo8Z4PbP3ZHMqw8WRr1T7Jn4O1z13Qkv+ed9e12pBXWaaqsBj1l4ADU/FlA/jn3w==
 
-"@types/vis@^4.21.19":
-  version "4.21.19"
-  resolved "https://registry.yarnpkg.com/@types/vis/-/vis-4.21.19.tgz#e1ad964deed4d1a5499312410e2ce19693378a78"
-  integrity sha512-SzD6R7pg3TcpzIj+F++ez83WuWhOZ+D05LCbjCaVR41NbMpS6xAdc8lActRK3Cwd9cv5LmoCeN5SAsvXIeAseg==
-  dependencies:
-    moment ">=2.13.0"
-
 "@types/webpack-env@^1.15.0":
   version "1.15.1"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.15.1.tgz#c8e84705e08eed430b5e15b39c65b0944e4d1422"
@@ -11081,7 +11074,7 @@ modify-values@^1.0.0:
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
 
-moment@>=2.13.0, moment@^2.18.1:
+moment@^2.18.1:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
@@ -16820,7 +16813,7 @@ vfile@^4.0.0:
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
 
-vis-data@^6.5.0:
+vis-data@^6.2.1:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/vis-data/-/vis-data-6.5.0.tgz#169ab48d3e44bc1d1a3a6a234191dfc4cef890f9"
   integrity sha512-9hw/JEI5/NXpK37z2fv0NkSH71cqeR6Tx+QX5rsVXkF/P1tQ9mXMYCkztVQS8Ha6gZDsiolgZzsLf+Blki0ycw==
@@ -16830,10 +16823,10 @@ vis-network@^7.4.0:
   resolved "https://registry.yarnpkg.com/vis-network/-/vis-network-7.4.0.tgz#312298d7cd26d3146a2800317de5d6daae0b1f8c"
   integrity sha512-4vJH4D8HTLGPePX4h+CcWUnrgZhfiI2VrkHETnPXegKZZE06O4UJrydxooJuo0gh/hakDNo/2FtOZls/ewi+5A==
 
-vis-util@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/vis-util/-/vis-util-4.0.0.tgz#a9900cffb0bbcef3ce88d5834f82b03808101e10"
-  integrity sha512-HLInh9yhJe3AH8I9tgWna304jYABa47Y9kO4M0QKtgSLnVgz7xK0952HFCeGMBJWMXr9XXWporoz/XqND15ukQ==
+vis-util@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/vis-util/-/vis-util-3.0.0.tgz#9b0da1e86e9beb5fbea17f5af3a49263c48d7c87"
+  integrity sha512-1B66y7E1Trc+SBjR8zhEULa4NzmPLitZoYoyw685Xi9CYn5UyJrNIB9TI/MAnwN+UioSQ4ogDQYOtO501CjREg==
 
 vm-browserify@^1.0.1:
   version "1.1.2"

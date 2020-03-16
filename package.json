@@ -91,7 +91,6 @@
     "@types/react-dom": "16.x.x",
     "@types/type-is": "^1.6.3",
     "@types/urijs": "^1.19.5",
-    "@types/vis": "^4.21.19",
     "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
     "copyfiles": "^2.2.0",
@@ -122,8 +121,8 @@
     "tslint-react-hooks": "2.2.x",
     "typescript": "3.7.x",
     "vis-network": "^7.4.0",
-    "vis-data": "^6.5.0",
-    "vis-util": "^4.0.0"
+    "vis-data": "^6.2.1",
+    "vis-util": "^3.0.0"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

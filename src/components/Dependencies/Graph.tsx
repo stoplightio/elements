@@ -1,22 +1,24 @@
 import { differenceWith, isEqual } from 'lodash';
-import React from 'react';
-import { Edge, NetworkEvents, Node } from 'vis';
+import * as React from 'react';
 import * as vis from 'vis-network/standalone';
-import { DataSetEdges, DataSetNodes, Network } from 'vis-network/standalone';
+import { DataSetEdges, DataSetNodes, Edge, Network, NetworkEvents, Node, Options } from 'vis-network/standalone';
 import { IVisGraph } from '../../types';
+
+// @ts-ignore: Need to add typings
+const DataSet = vis.DataSet;
 
 export interface IGraph {
   id: string | number;
   graph: IVisGraph;
   events?: {
-    [key in vis.NetworkEvents]?: any;
+    [key in NetworkEvents]?: any;
   };
   getNetwork?: (network?: Network) => void;
   getNodes?: (nodes: DataSetNodes) => void;
   getEdges?: (edges: DataSetEdges) => void;
 }
 
-const visOptions: vis.Options = {
+const visOptions: Options = {
   autoResize: true,
   layout: {
     hierarchical: {
@@ -62,8 +64,8 @@ const visOptions: vis.Options = {
 // TODO (CL): Convert to function component
 export class Graph extends React.Component<IGraph> {
   public readonly container = React.createRef<HTMLElement>();
-  public readonly nodes = new vis.DataSet();
-  public readonly edges = new vis.DataSet();
+  public readonly nodes: DataSetNodes = new DataSet();
+  public readonly edges: DataSetEdges = new DataSet();
   public Network?: Network;
 
   constructor(props: IGraph) {
@@ -155,7 +157,7 @@ export class Graph extends React.Component<IGraph> {
 
   public updateGraph() {
     if (this.container.current) {
-      this.Network = new vis.Network(
+      this.Network = new Network(
         this.container.current,
         Object.assign({}, this.props.graph, {
           edges: this.edges,

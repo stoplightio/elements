@@ -1,7 +1,7 @@
 import { JsonPath, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
-import { Edge, Node } from 'vis';
+import { Edge, Node } from 'vis-network/standalone';
 export { IComponentMapping } from '@stoplight/markdown-viewer';
 
 export interface IDeserializedSrn {

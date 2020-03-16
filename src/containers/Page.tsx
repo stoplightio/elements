@@ -30,7 +30,7 @@ export const Page: React.FC<IPageContainer> = ({
   className,
   scrollInnerContainer,
 }) => {
-  const { isValidating, error, data } = useNodeInfo(srn, { group, version });
+  const { isValidating, error, data } = useNodeInfo(srn, { branch: group, version });
   const containerClassName = cn(className, 'flex flex-col h-full');
 
   if (isValidating) {
