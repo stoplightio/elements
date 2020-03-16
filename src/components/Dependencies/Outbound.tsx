@@ -1,120 +1,111 @@
 import { Icon } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
-import { Network, Options } from 'vis';
+import { DataSetNodes, Network } from 'vis-network/standalone';
 
-// @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
-import { default as Graph } from 'react-graph-vis';
-
-import { NodeType } from '@stoplight/types';
-import { useParsedData } from '../../hooks';
+import { Model } from '../../containers/Model';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
-import { useNodeRaw } from '../../hooks/useNodesRaw';
-import { IGraphNode, INodeGraph, INodeInfo } from '../../types';
+import { IBranchNode, INodeEdge } from '../../types';
 import { NodeTypePrettyName } from '../../utils/node';
-import { IModelProps, Model } from '../Model';
 import { GoToRef } from './GoToRef';
+import { Graph } from './Graph';
 
 export interface IOutboundDependencies {
-  node: INodeInfo;
-  graph: INodeGraph;
+  node: IBranchNode;
+  edges: INodeEdge[];
 
+  getNetwork?: (network?: Network) => void;
   className?: string;
   padding?: string;
 }
 
-const visOptions: Options = {
-  autoResize: true,
-  layout: {
-    hierarchical: {
-      enabled: true,
-      levelSeparation: 300,
-      direction: 'LR',
-      sortMethod: 'directed',
-    },
-  },
-  physics: {
-    enabled: false,
-  },
-  edges: {
-    smooth: true,
-    color: {
-      color: '#cfd9e0',
-      opacity: 0.8,
-    },
-    width: 3,
-    font: {
-      align: 'top',
-      color: 'rgba(115, 134, 148, 0.6)',
-      strokeWidth: 0,
-    },
+export const OutboundDependencies = ({ className, node, padding = '0', edges, getNetwork }: IOutboundDependencies) => {
+  const visGraph = useComputeVisGraph(node, edges);
+  const visNodes = React.useRef<DataSetNodes>();
+  const visNetwork = React.useRef<Network>();
 
-    arrowStrikethrough: false,
-  },
-  nodes: {
-    shape: 'box',
-    labelHighlightBold: false,
-  },
-};
-
-export const OutboundDependencies = React.forwardRef<Network, IOutboundDependencies>((props, visNetworkRef) => {
-  const { className, node, padding = '0', graph } = props;
-
-  const [activeNode, setActiveNode] = React.useState<Pick<IGraphNode, 'groupNodeId' | 'name' | 'srn'> | undefined>();
-  const visGraph = useComputeVisGraph(node, activeNode?.groupNodeId, graph);
+  const [activeNode, setActiveNode] = React.useState<INodeEdge | undefined>();
 
   const onClickNode = React.useCallback(
-    e => {
+    (e: any) => {
       const nodeId = e.nodes[0];
       if (!nodeId) return;
 
-      if (activeNode && activeNode.groupNodeId === nodeId) {
-        setActiveNode(undefined);
-      } else if (node.id === nodeId) {
-        setActiveNode({
-          groupNodeId: node.id,
-          name: node.name,
-          srn: node.srn,
+      if (activeNode) {
+        // Reset the previous active node
+        visNodes.current?.updateOnly({
+          id: activeNode.toBranchNodeId,
+          icon: {
+            color: activeNode.toBranchNodeId === node.id ? '#ef932b' : '#cfd9e0',
+          },
         });
-      } else {
-        const n = graph?.nodes?.find((nd: IGraphNode) => nd.groupNodeId === nodeId);
-        if (!n) return;
+      }
 
-        setActiveNode(n);
+      if (activeNode?.toBranchNodeId === nodeId) {
+        // Unselect nodes and edges
+        visNetwork.current?.unselectAll();
+        setActiveNode(undefined);
+      } else {
+        // Update the active node's color
+        visNodes.current?.updateOnly({
+          id: nodeId,
+          icon: {
+            color: '#66b1e7',
+          },
+        });
+        setActiveNode(edges.find(edge => edge.toBranchNodeId === nodeId));
       }
     },
-    [graph, activeNode],
+    [activeNode],
   );
 
   React.useEffect(() => {
+    visNetwork.current?.unselectAll();
     setActiveNode(undefined);
   }, [node?.id]);
 
   if (!visGraph || !visGraph.nodes.length) {
-    return <div>This {NodeTypePrettyName[node.type]} does not have any outbound depdendencies.</div>;
+    return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
   }
 
   return (
     <div className={cn(className, 'w-full h-full')}>
       <Graph
-        id={node.srn.replace(/[^a-zA-Z]+/g, '-')}
+        id={node.id}
         graph={visGraph}
         events={{
           click: onClickNode,
         }}
-        getNetwork={visNetworkRef}
-        options={visOptions}
+        getNetwork={network => {
+          visNetwork.current = network;
+
+          if (getNetwork) {
+            getNetwork(network);
+          }
+        }}
+        getNodes={n => {
+          visNodes.current = n;
+        }}
       />
 
       {activeNode && (
         <div className={cn('absolute bottom-0 right-0 left-0 pb-16', `px-${padding}`)}>
-          <ModelContainer
-            srn={activeNode.srn}
-            name={activeNode.name}
+          <Model
+            name={activeNode.toBranchNodeName}
+            workspace={node.branch.project.workspace.slug}
+            project={node.branch.project.slug}
+            uri={activeNode.toBranchNodeUri}
+            branch={node.branch.slug}
             actions={
               <>
                 <div className="ml-2">
-                  <GoToRef title={name} srn={activeNode.srn} />
+                  <GoToRef
+                    title={activeNode.toBranchNodeName}
+                    workspace={node.branch.project.workspace.slug}
+                    project={node.branch.project.slug}
+                    uri={activeNode.toBranchNodeUri}
+                    branch={node.branch.slug}
+                  />
                 </div>
 
                 <Icon
@@ -128,26 +119,5 @@ export const OutboundDependencies = React.forwardRef<Network, IOutboundDependenc
         </div>
       )}
     </div>
-  );
-});
-
-// This is basically a Model container. Not sure if we want to extract this out right now or not.
-const ModelContainer = ({ srn, name, actions }: { srn: string; name: string; actions: IModelProps['actions'] }) => {
-  const { data, isValidating } = useNodeRaw(srn, { deref: 'bundle' });
-  const value = useParsedData(NodeType.Model, data);
-
-  if (!value || isValidating) {
-    // Could probably show a loading spinner here instead of returning null
-    return null;
-  }
-
-  return (
-    <Model
-      className="bg-white border dark:border-darken-3 dark:bg-gray-7"
-      title={name}
-      value={value}
-      maxRows={10}
-      actions={actions}
-    />
   );
 };

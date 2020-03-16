@@ -1,78 +1,67 @@
-import { sortBy, uniqBy } from 'lodash';
+import { sortBy } from 'lodash';
 import * as React from 'react';
-import URI from 'urijs';
-import { Edge, Node } from 'vis';
-import { INodeGraph, INodeInfo, IVisGraph } from '../types';
-import { getNodeTitle } from '../utils/node';
+import { IBranchNode, INodeEdge, IVisGraph } from '../types';
+import { NodeTypeIconsUnicode } from '../utils/node';
 
-export function useComputeVisGraph(rootNode?: INodeInfo, activeNodeId?: number, graph?: INodeGraph) {
-  return React.useMemo(() => {
-    if (!graph || !rootNode) return;
-
-    return computeVisGraph(rootNode, graph, activeNodeId);
-  }, [rootNode, activeNodeId, graph]);
+export function useComputeVisGraph(rootNode: IBranchNode, edges: INodeEdge[]) {
+  return React.useMemo(() => computeVisGraph(rootNode, edges), [rootNode, edges]);
 }
 
-export function computeVisGraph(rootNode: INodeInfo, graph: INodeGraph, activeNodeId?: number): IVisGraph {
+export function computeVisGraph(rootNode: IBranchNode, edges: INodeEdge[]): IVisGraph {
   const visGraph: IVisGraph = {
     nodes: [
       {
-        id: rootNode.id,
         level: 0,
-        label: rootNode.name,
-        title: rootNode.srn,
-        color: activeNodeId === rootNode.id ? '#66b1e7' : '#ef932b',
-        font: {
-          color: '#ffffff',
+        id: rootNode.id,
+        title: rootNode.node.uri,
+        label: rootNode.snapshot.name,
+        icon: {
+          code: NodeTypeIconsUnicode[rootNode.snapshot.type],
+          color: '#ef932b',
         },
       },
     ],
     edges: [],
   };
 
-  for (const node of graph.nodes) {
-    // in case root node is circular and appears again, don't add the root node twice or graph will throw error
-    if (node.groupNodeId === rootNode.id) continue;
+  const nodesInGraph = [rootNode.id];
 
-    let fontColor = '#10161a';
-    let color = '#f5f8fa';
-    if (activeNodeId === node.groupNodeId) {
-      color = '#66b1e7';
-      fontColor = '#ffffff';
+  for (const edge of edges) {
+    if (!nodesInGraph.includes(edge.fromBranchNodeId)) {
+      nodesInGraph.push(edge.fromBranchNodeId);
+      visGraph.nodes.push({
+        level: edge.depth,
+        id: edge.fromBranchNodeId,
+        label: edge.fromBranchNodeName,
+        title: edge.fromBranchNodeUri,
+        icon: {
+          code: NodeTypeIconsUnicode[edge.fromBranchNodeType],
+        },
+      });
     }
 
-    visGraph.nodes.push({
-      id: node.groupNodeId,
-      level: node.depth,
-      label: node.name,
-      title: node.srn,
-      color,
-      font: {
-        color: fontColor,
-      },
-    });
-  }
-
-  for (const edge of graph.edges) {
-    let edgeColor = { color: '#cfd9e0', opacity: 0.8 };
-    if (activeNodeId === edge.fromGroupNodeId || activeNodeId === edge.toGroupNodeId) {
-      edgeColor = { color: '#66b1e7', opacity: 1 };
+    if (!nodesInGraph.includes(edge.toBranchNodeId)) {
+      nodesInGraph.push(edge.toBranchNodeId);
+      visGraph.nodes.push({
+        level: edge.depth,
+        id: edge.toBranchNodeId,
+        label: edge.toBranchNodeName,
+        title: edge.toBranchNodeUri,
+        icon: {
+          code: NodeTypeIconsUnicode[edge.toBranchNodeType],
+        },
+      });
     }
 
     visGraph.edges.push({
-      id: `${edge.fromGroupNodeId}-${edge.toGroupNodeId}-${edge.fromPath}-${edge.toPath}`,
-      from: edge.fromGroupNodeId,
-      to: edge.toGroupNodeId,
-      title: edge.fromPath,
-      color: edgeColor,
-      font: {
-        align: 'top',
-      },
+      id: edge.id,
+      from: edge.fromBranchNodeId,
+      to: edge.toBranchNodeId,
+      title: edge.fromBranchNodePath,
     });
   }
 
   visGraph.nodes = sortBy(visGraph.nodes, 'label');
-  visGraph.edges = uniqBy(visGraph.edges, 'id');
 
   return visGraph;
 }

@@ -5,21 +5,21 @@ import { FixedSizeList } from '@stoplight/ui-kit/ScrollList';
 import cn from 'classnames';
 import { findKey, groupBy, sortBy, toUpper } from 'lodash';
 import * as React from 'react';
-import { IGraphNode, INodeGraph, INodeInfo } from '../../types';
+import { IBranchNode, INodeEdge } from '../../types';
 import { NodeTypeIcons } from '../../utils/node';
 import { GoToRef } from './GoToRef';
 
 export interface IOutboundDependencies {
-  node: INodeInfo;
-  graph: INodeGraph;
+  node: IBranchNode;
+  edges: INodeEdge[];
 
   className?: string;
   padding?: string;
 }
 
-export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, graph, className, padding }) => {
-  const nodesByType = groupBy(graph.nodes, 'type');
-  const firstTab = findKey(nodesByType, nodes => nodes?.length);
+export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, edges, className, padding }) => {
+  const edgesByNodeType = groupBy(edges, 'fromBranchNodeType');
+  const firstTab = edges.length ? findKey(edgesByNodeType, nodes => nodes?.length) : undefined;
   const [selectedTabId, setSelectedTabId] = React.useState();
 
   const onChangeTab = React.useCallback(
@@ -46,14 +46,18 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Model]} iconSize={14} />
-              Models {nodesByType[NodeType.Model]?.length ? <>({nodesByType[NodeType.Model].length})</> : null}
+              Models {edgesByNodeType[NodeType.Model]?.length ? <>({edgesByNodeType[NodeType.Model].length})</> : null}
             </div>
           }
           panel={
-            <DependencyTable className={`InboundDependencies__DependencyTable`} nodes={nodesByType[NodeType.Model]} />
+            <DependencyTable
+              className={`InboundDependencies__DependencyTable`}
+              node={node}
+              edges={edgesByNodeType[NodeType.Model]}
+            />
           }
           panelClassName="w-full overflow-auto"
-          disabled={!nodesByType[NodeType.Model]?.length}
+          disabled={!edgesByNodeType[NodeType.Model]?.length}
         />
 
         <Tab
@@ -62,17 +66,20 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpService]} iconSize={14} />
               APIs{' '}
-              {nodesByType[NodeType.HttpService]?.length ? <>({nodesByType[NodeType.HttpService].length})</> : null}
+              {edgesByNodeType[NodeType.HttpService]?.length ? (
+                <>({edgesByNodeType[NodeType.HttpService].length})</>
+              ) : null}
             </div>
           }
           panel={
             <DependencyTable
               className={`InboundDependencies__DependencyTable`}
-              nodes={nodesByType[NodeType.HttpService]}
+              node={node}
+              edges={edgesByNodeType[NodeType.HttpService]}
             />
           }
           panelClassName="w-full overflow-auto"
-          disabled={!nodesByType[NodeType.HttpService]?.length}
+          disabled={!edgesByNodeType[NodeType.HttpService]?.length}
         />
 
         <Tab
@@ -81,17 +88,20 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpOperation]} iconSize={14} />
               HTTP Operations{' '}
-              {nodesByType[NodeType.HttpOperation]?.length ? <>({nodesByType[NodeType.HttpOperation].length})</> : null}
+              {edgesByNodeType[NodeType.HttpOperation]?.length ? (
+                <>({edgesByNodeType[NodeType.HttpOperation].length})</>
+              ) : null}
             </div>
           }
           panel={
             <DependencyTable
               className={`InboundDependencies__DependencyTable`}
-              nodes={nodesByType[NodeType.HttpOperation]}
+              node={node}
+              edges={edgesByNodeType[NodeType.HttpOperation]}
             />
           }
           panelClassName="w-full overflow-auto"
-          disabled={!nodesByType[NodeType.HttpOperation]?.length}
+          disabled={!edgesByNodeType[NodeType.HttpOperation]?.length}
         />
 
         <Tab
@@ -99,26 +109,40 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, gra
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Article]} iconSize={14} />
-              Articles {nodesByType[NodeType.Article]?.length ? <>({nodesByType[NodeType.Article].length})</> : null}
+              Articles{' '}
+              {edgesByNodeType[NodeType.Article]?.length ? <>({edgesByNodeType[NodeType.Article].length})</> : null}
             </div>
           }
           panel={
-            <DependencyTable className={`InboundDependencies__DependencyTable`} nodes={nodesByType[NodeType.Article]} />
+            <DependencyTable
+              className={`InboundDependencies__DependencyTable`}
+              node={node}
+              edges={edgesByNodeType[NodeType.Article]}
+            />
           }
           panelClassName="w-full overflow-auto"
-          disabled={!nodesByType[NodeType.Article]?.length}
+          disabled={!edgesByNodeType[NodeType.Article]?.length}
         />
       </Tabs>
     </div>
   );
 };
 
-const DependencyTable = ({ className, nodes = [] }: { nodes?: IGraphNode[]; className?: string }) => {
+const DependencyTable = ({
+  className,
+  node,
+  edges = [],
+}: {
+  node: IBranchNode;
+  edges?: INodeEdge[];
+  className?: string;
+}) => {
+  // TODO (CL): Handle no edges
   const listProps = {
-    itemData: { nodes: sortBy(nodes, 'uri') },
+    itemData: { edges: sortBy(edges, 'uri') },
     itemSize: 60,
     maxRows: 10,
-    itemCount: nodes.length,
+    itemCount: edges.length,
     height: '100%',
     width: '100%',
   };
@@ -126,12 +150,12 @@ const DependencyTable = ({ className, nodes = [] }: { nodes?: IGraphNode[]; clas
   return (
     <div className={cn('h-full', className)}>
       <FixedSizeList {...listProps}>
-        {({ style, index, data }: { index: number; data: { nodes: IGraphNode[] }; style: React.CSSProperties }) => {
-          const node = data.nodes[index];
+        {({ style, index, data }: { index: number; data: { edges: INodeEdge[] }; style: React.CSSProperties }) => {
+          const edge = data.edges[index];
 
-          let subtitle = node.uri;
-          if (node.type === NodeType.HttpOperation) {
-            const parts = node.uri.split('/paths/')[1].split('/');
+          let subtitle = edge.fromBranchNodeUri;
+          if (edge.fromBranchNodeType === NodeType.HttpOperation) {
+            const parts = edge.fromBranchNodeUri.split('/paths/')[1].split('/');
             const method = parts.slice(-1)[0];
             const path = parts.slice(0, parts.length);
             subtitle = `${toUpper(method)} ${decodePointerFragment(path.join('/'))}`;
@@ -139,7 +163,14 @@ const DependencyTable = ({ className, nodes = [] }: { nodes?: IGraphNode[]; clas
 
           return (
             <div key={index} style={style}>
-              <GoToRef className="reset" srn={node.srn} group={node.groupSlug} title={node.name}>
+              <GoToRef
+                className="reset"
+                title={edge.fromBranchNodeName}
+                workspace={node.branch.project.workspace.slug}
+                project={node.branch.project.slug}
+                uri={edge.toBranchNodeUri}
+                branch={node.branch.slug}
+              >
                 <div
                   className={cn('h-full flex flex-col justify-center px-4 hover:bg-gray-2 dark-hover:bg-lighten-3 ', {
                     'border-t dark:border-darken-3': index > 0,
@@ -147,10 +178,10 @@ const DependencyTable = ({ className, nodes = [] }: { nodes?: IGraphNode[]; clas
                   })}
                 >
                   <div className="flex items-center">
-                    <div className="font-medium">{node.name}</div>
-                    {node.version !== '0.0' && <div className="px-2 text-sm text-gray-6">v{node.version}</div>}
+                    <div className="font-medium">{edge.fromBranchNodeName}</div>
+                    {/* {node.version !== '0.0' && <div className="px-2 text-sm text-gray-6">v{node.version}</div>} */}
                     <div className="flex-1"></div>
-                    <div className="text-sm text-gray-6 opacity-75">{node.projectName}</div>
+                    <div className="text-sm text-gray-6 opacity-75">{node.branch.project.slug}</div>
                   </div>
 
                   <div className="flex items-center opacity-75">

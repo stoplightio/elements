@@ -106,3 +106,53 @@ export interface IGraphEdge {
   toGroupNodeId: number;
   toPath: string;
 }
+
+export interface INodeEdge {
+  id: number;
+  depth: number;
+  type: string;
+
+  fromBranchNodeId: number;
+  fromBranchNodeName: string;
+  fromBranchNodeType: string;
+  fromBranchNodeUri: string;
+  fromBranchNodePath: string;
+
+  toBranchNodeId: number;
+  toBranchNodeName: string;
+  toBranchNodeType: string;
+  toBranchNodeUri: string;
+  toBranchNodePath: string;
+}
+
+export interface IBranchNode {
+  id: number;
+
+  node: {
+    id: number;
+    uri: string;
+  };
+
+  snapshot: {
+    id: number;
+    name: string;
+    type: string;
+    tagNames: string[];
+    data: unknown;
+  };
+
+  branch: {
+    id: number;
+    slug: string;
+
+    project: {
+      id: number;
+      slug: string;
+
+      workspace: {
+        id: number;
+        slug: string;
+      };
+    };
+  };
+}

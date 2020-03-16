@@ -5,7 +5,10 @@ import { ProjectTokenContext } from '../containers/Provider';
 import { INodeInfo } from '../types';
 import { useFetchClient } from '../utils/useFetchClient';
 
-export function useNodeInfo(srn: string, opts: { group?: string; version?: string; skip?: boolean } = {}) {
+export function useNodeInfo(
+  srn: string,
+  opts: { workspace?: string; project?: string; branch?: string; version?: string; skip?: boolean } = {},
+) {
   const { uri } = deserializeSrn(srn);
   const fetch = useFetchClient();
   const projectToken = React.useContext(ProjectTokenContext);
@@ -14,8 +17,8 @@ export function useNodeInfo(srn: string, opts: { group?: string; version?: strin
   if (opts.version) {
     queryParams.push(`version=${opts.version}`);
   }
-  if (opts.group) {
-    queryParams.push(`group=${opts.group}`);
+  if (opts.branch) {
+    queryParams.push(`branch=${opts.branch}`);
   }
   if (projectToken) {
     queryParams.push(`token=${projectToken}`);

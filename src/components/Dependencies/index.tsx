@@ -2,7 +2,7 @@ import { HTMLSelect, Icon, Spinner } from '@blueprintjs/core';
 import { Button, Tooltip } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
-import { Network } from 'vis';
+import { Network } from 'vis-network/standalone';
 import { useNodeGraph } from '../../hooks/useNodeGraph';
 import { INodeInfo } from '../../types';
 import { NodeTypePrettyName } from '../../utils/node';
@@ -83,13 +83,13 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
         </div>
       </div>
 
-      {!nodeGraph?.nodes?.length ? (
+      {/* {!nodeGraph?.nodes?.length ? (
         <div className={`px-${padding} pb-${padding}`}>
-          This {NodeTypePrettyName[node.type]} does not have any {graphType} depdendencies.
+          This {NodeTypePrettyName[node.type]} does not have any {graphType} dependencies.
         </div>
       ) : graphType === 'outbound' ? (
         <OutboundDependencies
-          ref={network => {
+          getNetwork={network => {
             if (network) {
               visNetwork.current = network;
             }
@@ -99,8 +99,8 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
           padding="6"
         />
       ) : (
-        <InboundDependencies className={`px-${padding} pb-${padding}`} node={node} graph={nodeGraph} />
-      )}
+            <InboundDependencies className={`px-${padding} pb-${padding}`} node={node} graph={nodeGraph} />
+          )} */}
     </div>
   );
 };

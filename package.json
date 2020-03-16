@@ -41,7 +41,8 @@
     "@stoplight/prism-http": ">=3.2.9",
     "mobx": ">=5",
     "react": ">=16.8",
-    "react-dom": ">=16.8"
+    "react-dom": ">=16.8",
+    "vis-network": "^7.4.0"
   },
   "dependencies": {
     "@stoplight/json": "^3.5.1",
@@ -65,7 +66,6 @@
     "openapi-sampler": "^1.0.0-beta.15",
     "parse-prefer-header": "^1.0.0",
     "react-error-boundary": "^1.2.5",
-    "react-graph-vis": "^1.0.5",
     "swr": "^0.1.17",
     "type-is": "^1.6.18",
     "unist-util-select": "^3.0.1",
@@ -120,7 +120,10 @@
     "tslint-config-stoplight": "1.4.0",
     "tslint-react": "4.1.x",
     "tslint-react-hooks": "2.2.x",
-    "typescript": "3.7.x"
+    "typescript": "3.7.x",
+    "vis-network": "^7.4.0",
+    "vis-data": "^6.5.0",
+    "vis-util": "^4.0.0"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

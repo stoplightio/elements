@@ -67,3 +67,58 @@ import { TryIt } from '@stoplight/elements/components/TryIt';
 8. Push: `git push`.
 9. Open PR targeting the `master` branch.
 
+
+```
+/src
+  /components
+    /Changelog
+    /Dependencies
+      /Inbound
+      /Outbound
+    /Docs
+      /Article
+      /HttpOperation
+      /HttpService
+      /Model
+    /RequestMaker
+    /Search
+    /TableOfContents
+  /containers
+    /Changelog
+    /Dependencies
+    /Docs
+    /RequestMaker
+    /Search
+    /TableOfContents
+```
+
+
+```tsx
+<Provider 
+  workspace="bigcommerce.stoplight.io" 
+  project="dev-docs" 
+  uri="reference/bigcommerce_subscribers_api.oas2.yml"
+>
+  <div className='flex'>
+    <TableOfContents filter={{ startsWith: "reference" }} />
+
+    <Content className='flex-1'>
+      <Tab title="Docs">
+        <Docs />
+      </Tab>
+
+      <Tab title="Try It" filter={{ type: "http_operation" }}>
+        <RequestMaker />
+      </Tab>
+
+      <Tab title="Relationships" filter={{ type: "model" }}>
+        <Relationships />
+      </Tab>
+
+      <Tab title="Changelog" >
+        <Changelog />
+      </Tab>
+    </Content>
+  </div>
+</Provider>
+```

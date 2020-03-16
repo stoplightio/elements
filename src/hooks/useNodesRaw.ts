@@ -5,9 +5,9 @@ interface INodeRawOptions {
   deref?: 'bundle' | 'remote';
 }
 
-export function useNodeRaw(srn: string, opts?: INodeRawOptions) {
+export function useNodeRaw(workspace: string, project: string, uri: string, branch: string; opts?: INodeRawOptions) {
   const fetch = useFetchClient();
-  let query = `?srn=${srn}`;
+  let query = `branch=${branch}`;
 
   if (opts) {
     if (opts.deref) {
@@ -15,7 +15,7 @@ export function useNodeRaw(srn: string, opts?: INodeRawOptions) {
     }
   }
 
-  return useSWR<string>(`/nodes.raw${query}`, (input: RequestInfo, init?: RequestInit) =>
+  return useSWR<string>(`/projects/${workspace}/${project}/nodes/${uri}?${query}`, (input: RequestInfo, init?: RequestInit) =>
     fetch(input, init).then(res => {
       if (!res.ok) {
         throw new Error(`${res.status} ${res.statusText}`);

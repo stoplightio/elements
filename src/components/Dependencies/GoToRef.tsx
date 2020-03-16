@@ -4,13 +4,14 @@ import * as React from 'react';
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 
-export const GoToRef: React.FC<{ className?: string; title: string; srn: string; group?: string }> = ({
-  className,
-  title,
-  srn,
-  children,
-  group,
-}) => {
+export const GoToRef: React.FC<{
+  className?: string;
+  title: string;
+  workspace: string;
+  project: string;
+  uri: string;
+  branch: string;
+}> = ({ className, title, workspace, project, uri, branch, children }) => {
   const host = React.useContext(HostContext);
   const components = useComponents();
 
@@ -22,20 +23,22 @@ export const GoToRef: React.FC<{ className?: string; title: string; srn: string;
         node: {
           className,
           title,
-          url: srn,
-          srn,
-          group,
+          url: uri,
+          workspace,
+          project,
+          uri,
+          branch,
         },
         // @ts-ignore (CL): need to update the typing in MarkdownViewer to be ReactElement instead of ReactNode
         children: elem,
       },
-      srn,
+      uri,
     );
   }
   return (
     <a
       className={cn('text-sm', className, Classes.TEXT_MUTED)}
-      href={`${host}/nodes.raw?srn=${srn}${group ? `&group=${group}` : ''}`}
+      href={`${host}/projects/${workspace}/${project}/nodes/${uri}?branch=${branch}`}
       target="_blank"
       rel="noopener noreferrer"
     >
