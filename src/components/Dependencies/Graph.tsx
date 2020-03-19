@@ -34,10 +34,17 @@ const visOptions: Options = {
   edges: {
     smooth: true,
     arrowStrikethrough: false,
+    dashes: true,
+    chosen: {
+      edge(values) {
+        values.dashes = false;
+        values.color = 'rgba(216, 225, 230, 1.0)';
+        values.opacity = 1;
+      },
+    },
     width: 3,
     color: {
-      color: '#cfd9e0',
-      opacity: 0.8,
+      color: 'rgba(216, 225, 230, 0.3)',
     },
     font: {
       align: 'top',
