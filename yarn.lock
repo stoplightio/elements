@@ -1813,10 +1813,10 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.1.2", "@stoplight/json@^3.4", "@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.5.1.tgz#afc6ffcbe2ada8f9b16680fd7885688cf9beec7e"
-  integrity sha512-O5WUW2yfAvtrqeq60YrbxpTvk87Ti2IeJ5oVa2XNJ2s+IIxx0CM+j316QoOjSGs+twrRpwb3jT9CFPrq7Ghkzg==
+"@stoplight/json@^3.1.2", "@stoplight/json@^3.4", "@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.6.0.tgz#51ab4c677ec5aadcffd5c6ed67b6dbf51a5f93ba"
+  integrity sha512-6hJN735r+aPzHP28HnBj30uC+RGyf/ZWEtAMlrXI4DntzocWvhgDqxLuLgOlmXkMd/4OAlD7fJQ/cI2RXNuWvQ==
   dependencies:
     "@stoplight/types" "^11.4.0"
     jsonc-parser "~2.2.0"
@@ -2004,18 +2004,18 @@
     react-window "~1.8.5"
     yup "^0.28.0"
 
-"@stoplight/yaml-ast-parser@0.0.44":
-  version "0.0.44"
-  resolved "https://registry.yarnpkg.com/@stoplight/yaml-ast-parser/-/yaml-ast-parser-0.0.44.tgz#ed3c962564283e9983f7895a6effc3994286df5e"
-  integrity sha512-PdY8p2Ufgtorf4d2DbKMfknILMa8KwuyyMMR/2lgK1mLaU8F5PKWYc+h9hIzC+ar0bh7m9h2rINo32m7ADfVyA==
+"@stoplight/yaml-ast-parser@0.0.45":
+  version "0.0.45"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml-ast-parser/-/yaml-ast-parser-0.0.45.tgz#672c0a1511d581843be5a9c55899ca95a30dcadb"
+  integrity sha512-0MTEvgp3XMdeMUSTCGiNECuC+YlLbzytDEIOJVDHrrmzVZpIR3gGnHI6mmPI4P7saPxUiHxFF2uuoTuCNlKjrw==
 
-"@stoplight/yaml@^3.0.2", "@stoplight/yaml@^3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.6.0.tgz#ed1257ea7861b3a96d6e870013a9530f013150f1"
-  integrity sha512-38EhZjNsVwuwrxPawr5R3Q1QhO3l/MTLD5F/d0v7vIrvWgde6GJzdh6rmWbrKJttEqqwuqX8mpLjWihWB7Qm1A==
+"@stoplight/yaml@^3.0.2", "@stoplight/yaml@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.7.1.tgz#34e8f9d1f8101bf2cdf4b7e6b4c6ba5c77a76b8c"
+  integrity sha512-y/CeWdzOSdoD41K7zaGGDjyDa6rLV/gEvnG96EB7eYomUT+8ZIuuO4oK0sxkDulXmJY7MmnecqR8JtXDJFBy1w==
   dependencies:
     "@stoplight/types" "^11.1.1"
-    "@stoplight/yaml-ast-parser" "0.0.44"
+    "@stoplight/yaml-ast-parser" "0.0.45"
     lodash "^4.17.15"
 
 "@storybook/addon-actions@^5.3.8":
