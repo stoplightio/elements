@@ -24,7 +24,7 @@ export const PageHeadings: React.FC<IPageHeadings> = ({
   if (!headings || !headings.length) return null;
 
   const component = (
-    <div style={{ maxHeight: '85vh', overflow: 'scroll' }}>
+    <div style={{ maxHeight: '85vh', overflow: 'auto' }}>
       {title && (
         <div
           className="py-2 text-gray-5 dark:text-gray-6 font-medium text-sm flex items-center"
