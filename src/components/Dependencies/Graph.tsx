@@ -2,7 +2,8 @@ import { differenceWith, isEqual } from 'lodash';
 import * as React from 'react';
 import * as vis from 'vis-network/standalone';
 import { DataSetEdges, DataSetNodes, Edge, Network, NetworkEvents, Node, Options } from 'vis-network/standalone';
-import { IVisGraph } from '../../types';
+
+import { IVisGraph } from '../../hooks/useComputeVisGraph';
 
 // @ts-ignore: Need to add typings
 const DataSet = vis.DataSet;
@@ -11,7 +12,7 @@ export interface IGraph {
   id: string | number;
   graph: IVisGraph;
   events?: {
-    [key in NetworkEvents]?: any;
+    [key in NetworkEvents]?: (params: any) => void;
   };
   getNetwork?: (network?: Network) => void;
   getNodes?: (nodes: DataSetNodes) => void;
@@ -35,8 +36,9 @@ const visOptions: Options = {
     smooth: true,
     arrowStrikethrough: false,
     dashes: true,
+    // @ts-ignore
     chosen: {
-      edge(values) {
+      edge: (values: { dashes: boolean; color: string; opacity: number }) => {
         values.dashes = false;
         values.color = 'rgba(216, 225, 230, 1.0)';
         values.opacity = 1;
@@ -113,17 +115,21 @@ export class Graph extends React.Component<IGraph> {
       this.patchEdges({ edgesRemoved, edgesAdded, edgesChanged });
     }
 
-    if (eventsChange) {
+    if (eventsChange && this.Network) {
       let events = this.props.events || {};
       const eventKeys = Object.keys(events) as NetworkEvents[];
 
       for (const eventName of eventKeys) {
-        this.Network?.off(eventName, events[eventName]);
+        const cb = events[eventName];
+        this.Network.off(eventName, cb);
       }
 
       events = nextProps.events || {};
       for (const eventName of eventKeys) {
-        this.Network?.on(eventName, events[eventName]);
+        const cb = events[eventName];
+        if (cb) {
+          this.Network.on(eventName, cb);
+        }
       }
     }
 
@@ -186,10 +192,15 @@ export class Graph extends React.Component<IGraph> {
       this.props.getEdges(this.edges);
     }
 
-    // Add user provied events to network
-    const events = this.props.events || {};
-    for (const eventName of Object.keys(events) as NetworkEvents[]) {
-      this.Network?.on(eventName, events[eventName]);
+    if (this.Network) {
+      // Add user provied events to network
+      const events = this.props.events || {};
+      for (const eventName of Object.keys(events) as NetworkEvents[]) {
+        const cb = events[eventName];
+        if (cb) {
+          this.Network.on(eventName, cb);
+        }
+      }
     }
   }
 

@@ -11,6 +11,9 @@ type ViolationsDisplayProps = {
 };
 
 export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations }) => {
+  const errorCount = violations.filter((v) => v.severity === 0).length;
+  const warningCount = violations.length - errorCount;
+
   const [tree, setTree] = useState<ITreeNode[]>([]);
   useEffect(() => {
     const headerElement = (
@@ -41,7 +44,7 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
         childNodes: buildTreeStructure(violations),
       },
     ]);
-  }, [violations]);
+  }, [violations, errorCount, warningCount]);
 
   const refresh = () => setTree([...tree]);
 
@@ -60,11 +63,8 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
     refresh();
   };
 
-  const errorCount = violations.filter(v => v.severity === 0).length;
-  const warningCount = violations.length - errorCount;
-
   return (
-    <section className="RequestMaker__ViolationsDisplay p-3 px-4">
+    <section className="p-3 px-4 RequestMaker__ViolationsDisplay">
       <Tree
         contents={tree}
         onNodeCollapse={handleNodeCollapse}
@@ -81,12 +81,12 @@ const buildTreeStructure = (
   violationsFlat: readonly IPrismDiagnostic[],
   parentPaths: string[] = [],
 ): Array<ITreeNode<IPrismDiagnostic>> => {
-  const rootPaths = uniq(violationsFlat.map(v => (v.path && v.path[parentPaths.length]) || '').filter(v => !!v));
+  const rootPaths = uniq(violationsFlat.map((v) => (v.path && v.path[parentPaths.length]) || '').filter((v) => !!v));
 
-  return rootPaths.map(path => {
+  return rootPaths.map((path) => {
     const currentPathArray = [...parentPaths, path];
-    const violationsOnPath = violationsFlat.filter(v => isEqual(v.path, currentPathArray));
-    const violationsOnChildren = violationsFlat.filter(v =>
+    const violationsOnPath = violationsFlat.filter((v) => isEqual(v.path, currentPathArray));
+    const violationsOnChildren = violationsFlat.filter((v) =>
       isEqual(v.path?.slice(0, currentPathArray.length), currentPathArray),
     );
     return {

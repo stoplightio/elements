@@ -9,6 +9,7 @@ import {
   TreeStore,
 } from '@stoplight/tree-list';
 import * as React from 'react';
+
 import { renderTree } from '../../../utils/renderNode';
 import { JsonRow } from './JsonRow';
 
@@ -35,7 +36,7 @@ export const JsonViewer: React.FunctionComponent<JsonViewerProps> = ({
   React.useEffect(() => {
     // todo(jr): use tree structure
     tree.current.setRoot(Tree.toTree(renderTree(node)));
-  }, [tree.current]);
+  }, [node]);
 
   treeStore.current.events.on(TreeListEvents.NodeClick, (e, n) => {
     if (isParentNode(n)) {
@@ -55,5 +56,5 @@ export const JsonViewer: React.FunctionComponent<JsonViewerProps> = ({
       String(node)
     );
 
-  return <div className="RequestMaker__JsonViewer h-full w-full">{content}</div>;
+  return <div className="w-full h-full RequestMaker__JsonViewer">{content}</div>;
 };

@@ -1,38 +1,18 @@
-import { Dictionary, NodeType } from '@stoplight/types';
-import { IconName } from '@stoplight/ui-kit';
+import { IBranchNode, INodeFilter } from '../types';
 
-export const NodeTypeColors: Dictionary<string, NodeType> = {
-  http_operation: '#6a6acb',
-  http_service: '#e056fd',
-  article: '#399da6',
-  model: '#ef932b',
-  http_server: '',
-  unknown: '',
-};
+export function matchesNodeFilter(node: IBranchNode, filter?: INodeFilter) {
+  if (!filter) return true;
 
-export const NodeTypePrettyName: Dictionary<string, NodeType> = {
-  http_operation: 'Endpoint',
-  http_service: 'API',
-  article: 'Article',
-  model: 'Model',
-  http_server: 'Server',
-  unknown: '',
-};
+  let isMatch = false;
 
-export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
-  http_operation: 'locate',
-  http_service: 'cloud',
-  article: 'manual',
-  model: 'cube',
-  http_server: 'database',
-  unknown: 'help',
-};
+  if (filter.nodeType) {
+    isMatch = filter.nodeType === node.snapshot.type;
+  }
 
-export const NodeTypeIconsUnicode: Dictionary<string, NodeType> = {
-  http_operation: '\uf140',
-  http_service: '\uf0c2',
-  article: '\uf02d',
-  model: '\uf1b2',
-  http_server: '\uf1c0',
-  unknown: '\uf128',
-};
+  if (filter.nodeUri) {
+    // TODO (CL): use minimatch here to match glob patterns
+    isMatch = node.baseUri.startsWith(filter.nodeUri);
+  }
+
+  return isMatch;
+}

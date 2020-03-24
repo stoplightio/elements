@@ -1,31 +1,27 @@
 import { Dictionary, NodeType } from '@stoplight/types';
 import { escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
 import * as React from 'react';
+
 import { IconsContext } from '../containers/Provider';
-import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
-import { NodeIconMapping } from '../types';
-import { deserializeSrn } from '../utils/srns';
+import { IBranchNode, IContentsNodeWithId, NodeIconMapping } from '../types';
 
 const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
 
 /**
  * Memoized hook that computes a tree structure from an array of nodes
  */
-export function useComputeToc(nodes: IProjectNode[]) {
+export function useComputeToc(branchNodes: IBranchNode[]) {
   const icons = React.useContext(IconsContext);
-  return React.useMemo(() => computeToc(nodes, icons), [nodes]);
+  return React.useMemo(() => computeToc(branchNodes, icons), [branchNodes, icons]);
 }
 
 /**
  * Sorts project nodes into a flat array
  */
 
-export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): IContentsNodeWithId[] {
+export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): IContentsNodeWithId[] {
   // There is a chance that we pass an empty array
-  if (!_nodes.length) return [];
-
-  // Add uri to each node since it's used heavily in this function
-  const nodes: ProjectNodeWithUri[] = _nodes.map(n => ({ ...n, uri: deserializeSrn(n.srn).uri }));
+  if (!branchNodes.length) return [];
 
   let contents: IContentsNodeWithId[] = [];
   const folders: string[] = [];
@@ -33,16 +29,16 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** All document nodes */
   const docsNodes = sortBy(
-    nodes.filter(node => node.type === NodeType.Article),
-    node => toLower(node.srn),
+    branchNodes.filter((branchNode) => branchNode.snapshot.type === NodeType.Article),
+    (branchNode) => toLower(branchNode.node.uri),
   );
 
   for (const nodeIndex in docsNodes) {
     if (!docsNodes[nodeIndex]) continue;
-    const node = docsNodes[nodeIndex];
+    const branchNode = docsNodes[nodeIndex];
 
     // Strip off leading slash and the (optionally) docs since we ignore that folder
-    const uri = node.uri.replace(/^\/(?:docs\/)?/, '');
+    const uri = branchNode.node.uri.replace(/^\/(?:docs\/)?/, '');
     const parts = uri.split('/');
 
     // Handle adding the parent folders if we haven't already added them
@@ -60,7 +56,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
             id: `${nodeIndex}-${pathIndex}`,
             name: folderName
               .split('-')
-              .map(item => upperFirst(item))
+              .map((item) => upperFirst(item))
               .join(' '),
             depth: Number(pathIndex),
             type: 'group',
@@ -70,25 +66,25 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       }
 
       contents.push({
-        id: node.id,
-        name: node.name,
+        id: branchNode.id,
+        name: branchNode.snapshot.name,
         depth: parts.length - 1,
         type: 'item',
-        icon: icons[node.type] || icons.item,
-        href: node.srn,
+        icon: icons[branchNode.snapshot.type] || icons.item,
+        href: branchNode.node.uri,
       });
     } else {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
       const contentNode: IContentsNodeWithId = {
-        id: node.id,
-        name: node.name,
+        id: branchNode.id,
+        name: branchNode.snapshot.name,
         depth: 0,
         type: 'item',
-        icon: icons[node.type] || icons.item,
-        href: node.srn,
+        icon: icons[branchNode.snapshot.type] || icons.item,
+        href: branchNode.node.uri,
       };
 
-      if (README_REGEXP.test(node.uri)) {
+      if (README_REGEXP.test(branchNode.node.uri)) {
         rootNodes.unshift(contentNode);
       } else {
         rootNodes.push(contentNode);
@@ -101,25 +97,27 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** Reference folder */
   const httpServiceNodes = sortBy(
-    nodes.filter(n => n.type === NodeType.HttpService),
-    node => toLower(node.name),
+    branchNodes.filter((branchNode) => branchNode.snapshot.type === NodeType.HttpService),
+    (branchNode) => toLower(branchNode.snapshot.name),
   );
 
   for (const httpServiceNode of httpServiceNodes) {
-    const parentUriRegexp = new RegExp(`^${escapeRegExp(httpServiceNode.uri)}\/`, 'i');
-    const childNodes = nodes.filter(node => parentUriRegexp.test(node.uri) && node.type !== NodeType.HttpService);
+    const parentUriRegexp = new RegExp(`^${escapeRegExp(httpServiceNode.node.uri)}\/`, 'i');
+    const childNodes = branchNodes.filter(
+      (branchNode) => parentUriRegexp.test(branchNode.node.uri) && branchNode.snapshot.type !== NodeType.HttpService,
+    );
     if (!childNodes.length) continue;
 
     const dividerNode: IContentsNodeWithId = {
       id: httpServiceNode.id,
-      name: httpServiceNode.name,
+      name: httpServiceNode.snapshot.name,
       depth: 0,
       type: 'divider',
-      icon: icons[httpServiceNode.type] || icons.divider,
+      icon: icons[httpServiceNode.snapshot.type] || icons.divider,
     };
 
-    if (httpServiceNode.latestVersion && httpServiceNode.latestVersion !== '0.0') {
-      dividerNode.meta = `v${httpServiceNode.latestVersion}`;
+    if (httpServiceNode.version && httpServiceNode.version !== '0.0') {
+      dividerNode.meta = `v${httpServiceNode.version}`;
     }
 
     contents.push(dividerNode);
@@ -129,16 +127,16 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       depth: 0,
       icon: icons.item,
       type: 'item',
-      href: httpServiceNode.srn,
+      href: httpServiceNode.node.uri,
     });
 
-    const tags: Dictionary<IProjectNode[], string> = {};
+    const tags: Dictionary<IBranchNode[], string> = {};
     const other = [];
 
     /** Group by Tags */
     for (const childNode of childNodes) {
-      if (childNode.tags && childNode.tags.length) {
-        const tag = toLower(childNode.tags[0]);
+      if (childNode.snapshot.tagNames?.length) {
+        const tag = toLower(childNode.snapshot.tagNames[0]);
         if (!tags[tag]) {
           tags[tag] = [];
         }
@@ -150,7 +148,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     }
 
     /** Add tag groups to the tree */
-    const sortedTags = sortBy(Object.keys(tags), t => toLower(t));
+    const sortedTags = sortBy(Object.keys(tags), (t) => toLower(t));
     for (const tagIndex in sortedTags) {
       if (!sortedTags[tagIndex]) continue;
       const tag = sortedTags[tagIndex];
@@ -166,11 +164,11 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
       for (const tagChild of sortBy(tags[tag], 'name')) {
         contents.push({
           id: tagChild.id,
-          name: tagChild.name,
+          name: tagChild.snapshot.name,
           depth: 1,
-          icon: icons[tagChild.type] || icons.item,
+          icon: icons[tagChild.snapshot.type] || icons.item,
           type: 'item',
-          href: tagChild.srn,
+          href: tagChild.node.uri,
         });
       }
     }
@@ -185,14 +183,14 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
         icon: icons.group,
       });
 
-      for (const otherChild of sortBy(other, n => toLower(n.name))) {
+      for (const otherChild of sortBy(other, (branchNode) => toLower(branchNode.snapshot.name))) {
         contents.push({
           id: otherChild.id,
-          name: otherChild.name,
+          name: otherChild.snapshot.name,
           depth: 1,
-          icon: icons[otherChild.type] || icons.item,
+          icon: icons[otherChild.snapshot.type] || icons.item,
           type: 'item',
-          href: otherChild.srn,
+          href: otherChild.node.uri,
         });
       }
     }
@@ -202,25 +200,25 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
   const modelContents: IContentsNodeWithId[] = [];
 
   const modelNodes = sortBy(
-    nodes.filter(n => n.type === NodeType.Model),
-    node => toLower(node.name),
+    branchNodes.filter((branchNode) => branchNode.snapshot.type === NodeType.Model),
+    (branchNode) => toLower(branchNode.snapshot.name),
   );
 
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
-    if (contents.find(n => n.href === modelNode.srn)) continue;
+    if (contents.find((n) => n.href === modelNode.node.uri)) continue;
 
     const node: IContentsNodeWithId = {
       id: modelNode.id,
-      name: modelNode.name,
-      href: modelNode.srn,
+      name: modelNode.snapshot.name,
+      href: modelNode.node.uri,
       depth: 0,
       type: 'item',
-      icon: icons[modelNode.type] || icons.item,
+      icon: icons[modelNode.snapshot.type] || icons.item,
     };
 
-    if (modelNode.latestVersion && modelNode.latestVersion !== '0.0') {
-      node.meta = `v${modelNode.latestVersion}`;
+    if (modelNode.version && modelNode.version !== '0.0') {
+      node.meta = `v${modelNode.version}`;
     }
 
     modelContents.push(node);

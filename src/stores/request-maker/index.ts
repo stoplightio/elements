@@ -6,6 +6,7 @@ import { isEqual, kebabCase, mapKeys, mapValues, merge, pickBy, without } from '
 import { action, computed, configure, observable, reaction, runInAction } from 'mobx';
 import parsePreferHeader from 'parse-prefer-header';
 import URI from 'urijs';
+
 import { getOperationData } from '../../utils/getOperationData';
 import { formatMultiValueHeader } from '../../utils/headers';
 import { isAxiosError } from '../../utils/isAxiosError';
@@ -113,7 +114,7 @@ export class RequestMakerStore {
 
   @computed
   private get activePreferHeaders() {
-    return this.request.headerParams.filter(h => h.isEnabled && h.name.toLowerCase() === 'prefer');
+    return this.request.headerParams.filter((h) => h.isEnabled && h.name.toLowerCase() === 'prefer');
   }
 
   @computed
@@ -182,7 +183,7 @@ export class RequestMakerStore {
           body: request.body,
           query: request.query,
         },
-        v => v !== undefined && v !== null,
+        (v) => v !== undefined && v !== null,
       ),
     );
 
@@ -233,7 +234,7 @@ export class RequestMakerStore {
     // write the rest of the values into the last active prefer header
     const lastActivePreferHeader = activePreferHeaders[activePreferHeaders.length - 1];
     lastActivePreferHeader.value = formatMultiValueHeader(
-      ...Object.entries(mergedPreferences).filter(entry => entry[0] !== key),
+      ...Object.entries(mergedPreferences).filter((entry) => entry[0] !== key),
     );
 
     if (lastActivePreferHeader.value) {
@@ -368,13 +369,13 @@ export class RequestMakerStore {
 }
 
 function parsePreferHeaders(activePreferHeaders: RequestStore['headerParams']): Dictionary<string> {
-  const enabledHeaders = activePreferHeaders.map(h => h.value).map(parsePreferHeader);
+  const enabledHeaders = activePreferHeaders.map((h) => h.value).map(parsePreferHeader);
 
   const mergedPreferences = enabledHeaders.reduce((acc, current) => ({ ...acc, ...current }), {});
 
   return mapValues(
     mapKeys(mergedPreferences, (_, k) => kebabCase(k)),
-    v => (v === true ? '' : v),
+    (v) => (v === true ? '' : v),
   );
 }
 

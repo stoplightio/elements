@@ -3,6 +3,7 @@ import { Dictionary } from '@stoplight/types';
 import { Icon } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { JsonTreeListNode } from '../../../stores/request-maker/types';
 
 export interface IRowProps {

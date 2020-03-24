@@ -3,12 +3,13 @@ import { Button, Callout, Classes, Icon, NonIdealState, Spinner, Tag } from '@st
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
-import { useComponents } from '../../hooks';
-import { IProjectNode } from '../../types';
-import { NodeTypeColors, NodeTypeIcons, NodeTypePrettyName } from '../../utils/node';
+
+import { NodeTypeColors, NodeTypeIcons, NodeTypePrettyName } from '../../constants';
+import { useComponents } from '../../hooks/useComponents';
+import { IBranchNode } from '../../types';
 
 export const NodeList: React.FC<{
-  nodes?: IProjectNode[];
+  nodes?: IBranchNode[];
   error?: Error;
   isLoading?: boolean;
   onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
@@ -63,15 +64,15 @@ export const NodeList: React.FC<{
 };
 
 const NodeListItem: React.FC<{
-  item: IProjectNode;
+  item: IBranchNode;
   isLoading?: boolean;
   onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onClose?: () => void;
 }> = ({ isLoading, item, onReset, onClose }) => {
   const components = useComponents();
-  const { orgSlug, projectSlug } = deserializeSrn(item.srn);
+  const { orgSlug, projectSlug } = deserializeSrn(item.node.uri);
   const onClick = React.useCallback(
-    e => {
+    (e) => {
       if (onReset) {
         onReset(e);
       }
@@ -84,7 +85,7 @@ const NodeListItem: React.FC<{
   );
 
   let dataContext = null;
-  if (item.data && item.data.match('<em>')) {
+  if (typeof item.snapshot.data === 'string' && item.snapshot.data.match('<em>')) {
     dataContext = (
       <Callout
         style={{ maxHeight: 150 }}
@@ -92,22 +93,22 @@ const NodeListItem: React.FC<{
           [Classes.SKELETON]: isLoading,
         })}
       >
-        <HighlightSearchContext markup={item.data} />
+        <HighlightSearchContext markup={item.snapshot.data} />
       </Callout>
     );
   }
 
-  const children: any = (
+  const elem: any = (
     <div
       key="1"
-      className="NodeList__item flex px-6 py-8 border-b cursor-pointer dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
+      className="flex px-6 py-8 border-b cursor-pointer NodeList__item dark:border-lighten-4 hover:bg-gray-1 dark-hover:bg-lighten-3"
       onClick={onClick}
     >
       <div className="mr-4">
         <Tag
-          icon={NodeTypeIcons[item.type] && <Icon icon={NodeTypeIcons[item.type]} iconSize={11} />}
-          style={{ backgroundColor: NodeTypeColors[item.type] || undefined }}
-          title={NodeTypePrettyName[item.type] || item.type}
+          icon={NodeTypeIcons[item.snapshot.type] && <Icon icon={NodeTypeIcons[item.snapshot.type]} iconSize={11} />}
+          style={{ backgroundColor: NodeTypeColors[item.snapshot.type] || undefined }}
+          title={NodeTypePrettyName[item.snapshot.type] || item.snapshot.type}
           className="py-1 dark:text-white"
         />
       </div>
@@ -119,7 +120,7 @@ const NodeListItem: React.FC<{
               [Classes.SKELETON]: isLoading,
             })}
           >
-            <HighlightSearchContext markup={item.name || 'No Name...'} />
+            <HighlightSearchContext markup={item.snapshot.name || 'No Name...'} />
           </div>
 
           <div className="flex-1" />
@@ -135,14 +136,14 @@ const NodeListItem: React.FC<{
           </div>
         </div>
 
-        {item.summary && (
+        {item.snapshot.summary && (
           <div className="flex">
             <div
               className={cn('flex-1 mt-2', {
                 [Classes.SKELETON]: isLoading,
               })}
             >
-              <HighlightSearchContext markup={item.summary} />
+              <HighlightSearchContext markup={item.snapshot.summary} />
             </div>
           </div>
         )}
@@ -152,22 +153,16 @@ const NodeListItem: React.FC<{
   );
 
   if (components.link) {
-    return components.link(
-      {
-        node: {
-          className: 'reset',
-          url: item.srn,
-        },
-        children,
-        defaultComponents: components,
-        parent: {},
-        path: [],
-      },
-      item.id,
+    const Link = components.link;
+
+    return (
+      <Link index={0} node={{ className: 'reset', url: item.node.uri }} parent={null} path={[]}>
+        {elem}
+      </Link>
     );
   }
 
-  return children;
+  return elem;
 };
 
 const HighlightSearchContext: React.FC<{ markup: string; className?: string }> = ({ markup, className }) => {

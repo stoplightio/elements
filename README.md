@@ -1,6 +1,6 @@
 # @stoplight/elements
 
-[![npm version](https://badge.fury.io/js/%40stoplight%2Felements.svg)](https://badge.fury.io/js/%40stoplight%2Felements) [![Maintainability](https://api.codeclimate.com/v1/badges/ce451f605ca16ec84132/maintainability)](https://codeclimate.com/repos/5e0f5ecaeae96001a100cc3b/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ce451f605ca16ec84132/test_coverage)](https://codeclimate.com/repos/5e0f5ecaeae96001a100cc3b/test_coverage) [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplightio.github.io/elements)
+[![npm version](https://badge.fury.io/js/%40stoplight%2Felements.svg)](https://badge.fury.io/js/%40stoplight%2Felements) [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplightio.github.io/elements)
 
 UI components for composing beautiful developer documentation
 
@@ -14,43 +14,37 @@ yarn add @stoplight/elements
 ### Usage
 
 ```tsx
-import { Page, Provider, TableOfContents } from '@stoplight/elements';
-import { Docs } from '@stoplight/elements/components/Docs';
-import { TryIt } from '@stoplight/elements/components/TryIt';
+import { Docs, Content, ContentTabs, Provider, TableOfContents, RequestMaker, Relationships } from '@stoplight/elements';
 
-<Provider
-  host="https://stoplight.io/api"
+<Provider 
+  host="stoplight.io"
+  workspace="bigcommerce" 
+  project="dev-docs" 
+  node="reference/bigcommerce_subscribers_api.oas2.yml"
   components={{
-    link: ({ node, children }) => {
-      // Render a custom link component
-      return (
-        <a href={node.url} title={node.title}>
-          {children}
-        </a>
-      );
-    },
+    link: Link
   }}
 >
-  <div className="flex">
-    <TableOfContents srn="gh/stoplightio/studio-demo" />
+  <div className='flex'>
+    <TableOfContents filter={{ nodeUri: "reference" }} />
 
-    <Page
-      className="flex-1"
-      srn="gh/stoplightio/studio-demo/docs/introduction.md"
-      tabs={({ node }) => {
-        const tabs = [{ title: 'Docs', content: <Docs node={node} /> }];
+    <Content className='flex-1'>
+      <ContentTab title="Docs">
+        <Docs />
+      </ContentTab>
 
-        if (node.type === 'http_operation') {
-          tabs.push({ title: 'Try It', content: <TryIt value={node.data} /> });
-        }
+      <ContentTab title="Try It" filter={{ nodeType: "http_operation" }}>
+        <RequestMaker />
+      </ContentTab>
 
-        tabs.push({ title: 'Dependencies', content: <Dependencies node={node}> });
+      <ContentTab title="Relationships" filter={{ nodeType: "model" }}>
+        <Relationships />
+      </ContentTab>
 
-        tabs.push({ title: 'Changelog', content: <Changelog changes={node.changes}> });
-
-        return tabs;
-      }}
-    />
+      <ContentTab title="Changelog" >
+        <Changelog />
+      </ContentTab>
+    </Content>
   </div>
 </Provider>
 ```
@@ -69,56 +63,25 @@ import { TryIt } from '@stoplight/elements/components/TryIt';
 
 
 ```
-/src
-  /components
-    /Changelog
-    /Dependencies
-      /Inbound
-      /Outbound
-    /Docs
-      /Article
-      /HttpOperation
-      /HttpService
-      /Model
-    /RequestMaker
-    /Search
-    /TableOfContents
-  /containers
-    /Changelog
-    /Dependencies
-    /Docs
-    /RequestMaker
-    /Search
-    /TableOfContents
-```
-
-
-```tsx
-<Provider 
-  workspace="bigcommerce.stoplight.io" 
-  project="dev-docs" 
-  uri="reference/bigcommerce_subscribers_api.oas2.yml"
->
-  <div className='flex'>
-    <TableOfContents filter={{ startsWith: "reference" }} />
-
-    <Content className='flex-1'>
-      <Tab title="Docs">
-        <Docs />
-      </Tab>
-
-      <Tab title="Try It" filter={{ type: "http_operation" }}>
-        <RequestMaker />
-      </Tab>
-
-      <Tab title="Relationships" filter={{ type: "model" }}>
-        <Relationships />
-      </Tab>
-
-      <Tab title="Changelog" >
-        <Changelog />
-      </Tab>
-    </Content>
-  </div>
-</Provider>
+src
+  components
+    Changelog
+    Dependencies
+      Inbound
+      Outbound
+    Docs
+      Article
+      HttpOperation
+      HttpSecuritySchemes
+      HttpService
+      Model
+    RequestMaker
+    Search
+    TableOfContents
+  containers
+    Changelog
+    Dependencies
+    Docs
+    Search
+    Provider
 ```

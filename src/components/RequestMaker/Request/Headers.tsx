@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { toLower } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { ParamField as HeaderField } from '../../../stores/request-maker/types';
 import { allHeaderFields } from '../../../utils/headers';
 import { highlightText } from '../../../utils/highlightText';
@@ -26,7 +27,11 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
             onBlur,
             className: 'shadow-none',
           }}
-          noResults={<span>Unknown header <em>{name}</em></span>}
+          noResults={
+            <span>
+              Unknown header <em>{name}</em>
+            </span>
+          }
           inputValueRenderer={(headerField: HeaderField) => headerField.name}
           itemRenderer={renderHeaderField}
           items={allHeaderFields}
@@ -39,16 +44,16 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
             position: 'top-left',
             boundary: 'window',
           }}
-          selectedItem={allHeaderFields.find(headerField => headerField.name === name)}
-          itemDisabled={headerField => !!params.find(h => h.name === headerField.name)}
-          onItemSelect={headerField => {
+          selectedItem={allHeaderFields.find((headerField) => headerField.name === name)}
+          itemDisabled={(headerField) => !!params.find((h) => h.name === headerField.name)}
+          onItemSelect={(headerField) => {
             handlerPropChange('name', index, headerField.name);
             setInFocus({
               prop: 'value',
               index,
             });
           }}
-          onQueryChange={query => {
+          onQueryChange={(query) => {
             handlerPropChange('name', index, query);
             setInFocus({
               prop: 'value',

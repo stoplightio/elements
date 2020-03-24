@@ -5,8 +5,9 @@ import { FixedSizeList } from '@stoplight/ui-kit/ScrollList';
 import cn from 'classnames';
 import { findKey, groupBy, sortBy, toUpper } from 'lodash';
 import * as React from 'react';
+
+import { NodeTypeIcons } from '../../constants';
 import { IBranchNode, INodeEdge } from '../../types';
-import { NodeTypeIcons } from '../../utils/node';
 import { GoToRef } from './GoToRef';
 
 export interface IOutboundDependencies {
@@ -14,12 +15,11 @@ export interface IOutboundDependencies {
   edges: INodeEdge[];
 
   className?: string;
-  padding?: string;
 }
 
-export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, edges, className, padding }) => {
+export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, edges, className }) => {
   const edgesByNodeType = groupBy(edges, 'fromBranchNodeType');
-  const firstTab = edges.length ? findKey(edgesByNodeType, nodes => nodes?.length) : undefined;
+  const firstTab = edges.length ? findKey(edgesByNodeType, (nodes) => nodes?.length) : undefined;
   const [selectedTabId, setSelectedTabId] = React.useState();
 
   const onChangeTab = React.useCallback(
@@ -181,7 +181,7 @@ const DependencyTable = ({
                     <div className="font-medium">{edge.fromBranchNodeName}</div>
                     {/* {node.version !== '0.0' && <div className="px-2 text-sm text-gray-6">v{node.version}</div>} */}
                     <div className="flex-1"></div>
-                    <div className="text-sm text-gray-6 opacity-75">{node.branch.project.slug}</div>
+                    <div className="text-sm opacity-75 text-gray-6">{node.branch.project.slug}</div>
                   </div>
 
                   <div className="flex items-center opacity-75">

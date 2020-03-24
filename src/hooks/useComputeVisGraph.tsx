@@ -1,7 +1,14 @@
 import { sortBy } from 'lodash';
 import * as React from 'react';
-import { IBranchNode, INodeEdge, IVisGraph } from '../types';
-import { NodeTypeIconsUnicode } from '../utils/node';
+import { Edge, Node } from 'vis-network/standalone';
+
+import { NodeTypeIconsUnicode } from '../constants';
+import { IBranchNode, INodeEdge } from '../types';
+
+export interface IVisGraph {
+  nodes: Node[];
+  edges: Edge[];
+}
 
 export function useComputeVisGraph(rootNode: IBranchNode, edges: INodeEdge[]) {
   return React.useMemo(() => computeVisGraph(rootNode, edges), [rootNode, edges]);

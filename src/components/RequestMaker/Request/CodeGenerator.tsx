@@ -3,6 +3,7 @@ import cn from 'classnames';
 import copy from 'copy-to-clipboard';
 import { autorun } from 'mobx';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { languages } from './httpSnippetLanguages';
 
@@ -22,7 +23,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
   const requestStore = useRequestMakerStore('request');
 
   const [currentLanguage, setCurrentLanguage] = React.useState(defaultLanguage);
-  const [generatedCode, setGeneratedCode] = React.useState();
+  const [generatedCode, setGeneratedCode] = React.useState<string | null>('');
 
   React.useEffect(() => {
     return autorun(() => {
@@ -30,7 +31,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
     });
   }, [currentLanguage.codechoice, currentLanguage.librarychoice, requestStore]);
 
-  const hasError = typeof generatedCode === 'object' && generatedCode.error;
+  const hasError = generatedCode === null;
 
   return (
     <div className={cn(className, 'flex flex-col')}>
@@ -39,7 +40,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
           autoFocus={false}
           content={
             <Menu>
-              {languages.map(item => (
+              {languages.map((item) => (
                 <MenuItem
                   active={item.codechoice === currentLanguage.codechoice}
                   text={item.name}
@@ -55,32 +56,29 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
                       setGeneratedCode(requestStore.generateCode(item.codechoice));
                     }
                   }}
-                  children={
-                    item.libraries
-                      ? item.libraries.map(library => (
-                          <MenuItem
-                            active={library.librarychoice === currentLanguage.librarychoice}
-                            text={library.name}
-                            key={library.name}
-                            onClick={() => {
-                              setCurrentLanguage({
-                                codechoice: item.codechoice,
-                                librarychoice: library.librarychoice,
-                                mode: item.mode,
-                                text: `${item.name} / ${library.name}`,
-                              });
-                              setGeneratedCode(requestStore.generateCode(item.codechoice, library.librarychoice));
-                            }}
-                          />
-                        ))
-                      : null
-                  }
-                />
+                >
+                  {item.libraries?.map((library) => (
+                    <MenuItem
+                      active={library.librarychoice === currentLanguage.librarychoice}
+                      text={library.name}
+                      key={library.name}
+                      onClick={() => {
+                        setCurrentLanguage({
+                          codechoice: item.codechoice,
+                          librarychoice: library.librarychoice,
+                          mode: item.mode,
+                          text: `${item.name} / ${library.name}`,
+                        });
+                        setGeneratedCode(requestStore.generateCode(item.codechoice, library.librarychoice));
+                      }}
+                    />
+                  ))}
+                </MenuItem>
               ))}
             </Menu>
           }
           position={Position.BOTTOM}
-          minimal={true}
+          minimal
           boundary={'window'}
         >
           <Button rightIcon="caret-down" text={currentLanguage.text} />
@@ -92,13 +90,17 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
             icon="duplicate"
             text="Copy to Clipboard"
             onClick={() => {
-              copy(generatedCode);
+              copy(generatedCode || '');
 
-              try {
-                // @ts-ignore
-                window.getSelection().selectAllChildren(document.getElementById('request-generated-code'));
-              } catch (error) {
-                console.error(error);
+              if (typeof window !== 'undefined') {
+                try {
+                  const elem = window.document.getElementById('request-generated-code');
+                  if (elem) {
+                    window.getSelection()?.selectAllChildren(elem);
+                  }
+                } catch (error) {
+                  console.error(error);
+                }
               }
             }}
           />
@@ -106,7 +108,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
       </div>
 
       {hasError ? (
-        <div className="text-center p-10 text-gray-6">
+        <div className="p-10 text-center text-gray-6">
           There was an error generating the code for {currentLanguage.text}. Try editing your request or picking a
           different language.
         </div>
@@ -115,7 +117,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
           id="request-generated-code"
           className="m-5"
           language={currentLanguage.mode}
-          value={generatedCode}
+          value={generatedCode || ''}
           showLineNumbers={true}
         />
       )}

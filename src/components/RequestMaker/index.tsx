@@ -1,8 +1,7 @@
+import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 import * as React from 'react';
 
-import { IHttpOperation, IHttpRequest } from '@stoplight/types';
-
-import { RequestMakerProvider, useRequestMaker } from '../../hooks';
+import { RequestMakerProvider, useRequestMaker } from '../../hooks/useRequestMaker';
 import { RequestEditor, RequestEndpoint } from './Request';
 import { ResponseViewer } from './Response';
 
@@ -19,7 +18,7 @@ type RequestMakerProps =
       request?: undefined;
     };
 
-export const RequestMaker: React.FC<RequestMakerProps> = props => {
+export const RequestMaker: React.FC<RequestMakerProps> = (props) => {
   const store = useRequestMaker(props.request || props.operation);
   return (
     <RequestMakerProvider value={store}>

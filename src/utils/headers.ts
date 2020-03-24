@@ -9,7 +9,7 @@ export const formatMultiValueHeader = (...keyValuePairs: ReadonlyArray<readonly 
   // right now we are assuming that key is a valid token. We might want to implement parsing later.
   // *token* is defined in RFC 7230, section 3.2.6.
   return keyValuePairs
-    .map(item => {
+    .map((item) => {
       if (typeof item === 'string') return item;
 
       const [key, rawValue] = item;

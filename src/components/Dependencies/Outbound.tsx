@@ -1,13 +1,13 @@
-import { Icon } from '@blueprintjs/core';
+// import { Icon } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
 import { DataSetNodes, Network } from 'vis-network/standalone';
 
-import { Model } from '../../containers/Model';
+import { NodeTypePrettyName } from '../../constants';
+// import { Model } from '../../containers/Model';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
 import { IBranchNode, INodeEdge } from '../../types';
-import { NodeTypePrettyName } from '../../utils/node';
-import { GoToRef } from './GoToRef';
+// import { GoToRef } from './GoToRef';
 import { Graph } from './Graph';
 
 export interface IOutboundDependencies {
@@ -16,10 +16,10 @@ export interface IOutboundDependencies {
 
   getNetwork?: (network?: Network) => void;
   className?: string;
-  padding?: string;
 }
 
-export const OutboundDependencies = ({ className, node, padding = '0', edges, getNetwork }: IOutboundDependencies) => {
+export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOutboundDependencies) => {
+  const rootNodeId = node.id;
   const visGraph = useComputeVisGraph(node, edges);
   const visNodes = React.useRef<DataSetNodes>();
   const visNetwork = React.useRef<Network>();
@@ -53,16 +53,16 @@ export const OutboundDependencies = ({ className, node, padding = '0', edges, ge
             color: '#66b1e7',
           },
         });
-        setActiveNode(edges.find(edge => edge.toBranchNodeId === nodeId));
+        setActiveNode(edges.find((edge) => edge.toBranchNodeId === nodeId));
       }
     },
-    [activeNode],
+    [activeNode, edges, node.id],
   );
 
   React.useEffect(() => {
     visNetwork.current?.unselectAll();
     setActiveNode(undefined);
-  }, [node?.id]);
+  }, [rootNodeId]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
@@ -76,19 +76,19 @@ export const OutboundDependencies = ({ className, node, padding = '0', edges, ge
         events={{
           click: onClickNode,
         }}
-        getNetwork={network => {
+        getNetwork={(network) => {
           visNetwork.current = network;
 
           if (getNetwork) {
             getNetwork(network);
           }
         }}
-        getNodes={n => {
+        getNodes={(n) => {
           visNodes.current = n;
         }}
       />
 
-      {activeNode && (
+      {/* {activeNode && (
         <div className={cn('absolute bottom-0 right-0 left-0 pb-16', `px-${padding}`)}>
           <Model
             name={activeNode.toBranchNodeName}
@@ -117,7 +117,7 @@ export const OutboundDependencies = ({ className, node, padding = '0', edges, ge
             }
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

@@ -1,85 +1,99 @@
-import { Resolver } from '@stoplight/json-ref-resolver';
-import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
+import { Client, Provider as UrqlProvider } from 'urql';
 
-import { IResolverOpts } from '@stoplight/json-ref-resolver/types';
-import { SWRConfig } from 'swr';
-import { NodeIconMapping } from '../types';
-import { createFetchClient, IFetchProps } from '../utils/createFetchClient';
+import { IBranchNode, NodeIconMapping } from '../types';
 
 export interface IProvider {
-  host?: string;
-  token?: string;
-  projectToken?: string;
+  host: string;
+  workspace: string;
+  project: string;
+  branch: string;
+  node: string;
+
+  urqlClient?: Client;
   components?: IComponentMapping;
-  icons?: NodeIconMapping;
-  resolver?: Resolver;
-  inlineRefResolver?: SchemaTreeRefDereferenceFn;
+  Link?: React.FC<{ workspace: string; project: string; branch: string; node: string }>;
 }
 
-const defaultHost = 'http://localhost:8080/api';
-export const HostContext = React.createContext(defaultHost);
-export const RequestContext = React.createContext<IFetchProps>({
-  host: defaultHost,
-  headers: null,
-});
+let client: Client;
+function getClient(host: string, urqlClient?: Client) {
+  if (client) return client;
+
+  if (urqlClient) {
+    client = urqlClient;
+  } else {
+    // TODO (CL): create urql client
+  }
+
+  return client;
+}
+
 export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
-export const ActiveSrnContext = React.createContext('');
-export const ProjectTokenContext = React.createContext('');
-export const ResolverContext = React.createContext<Resolver | undefined>(undefined);
-export const ResolverOptionsContext = React.createContext<IResolverOpts | undefined>(undefined);
-export const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(undefined);
+
+export const ActiveNodeContext = React.createContext<[IBranchNode | undefined, (node?: IBranchNode) => void]>([
+  undefined,
+  () => undefined,
+]);
+
+export const ActiveNodeProvider: React.FC = ({ children }) => {
+  const [node, setNode] = React.useState<IBranchNode>();
+
+  return <ActiveNodeContext.Provider value={[node, setNode]}>{children}</ActiveNodeContext.Provider>;
+};
+
+const DefaultLink: React.FC<{ workspace: string; project: string; branch: string; node: string }> = ({ children }) => (
+  <>{children}</>
+);
+export const LinkContext = React.createContext<
+  React.FC<{ workspace: string; project: string; branch: string; node: string }>
+>(DefaultLink);
 
 const defaultIcons: NodeIconMapping = {};
 export const IconsContext = React.createContext<NodeIconMapping>(defaultIcons);
 
-export const Provider: React.FunctionComponent<IProvider> = ({
+const defaultInfo = {
+  workspace: '',
+  project: '',
+  branch: '',
+  node: '',
+};
+export const ActiveInfoContext = React.createContext<{
+  workspace: string;
+  project: string;
+  branch: string;
+  node: string;
+}>(defaultInfo);
+
+export const Provider: React.FC<IProvider> = ({
   host,
-  token,
-  projectToken,
+  workspace,
+  project,
+  branch,
+  node,
+  Link = DefaultLink,
+  urqlClient,
   components,
-  icons,
-  resolver,
-  inlineRefResolver,
   children,
 }) => {
-  const requestContext = React.useMemo<IFetchProps>(
-    () => ({
-      host: host || defaultHost,
-      headers: token
-        ? {
-            Authorization: `Bearer ${token}`,
-          }
-        : null,
-    }),
-    [host, token],
-  );
-  const fetcher = createFetchClient(requestContext);
+  const info = {
+    workspace,
+    project,
+    branch,
+    node,
+  };
 
   return (
-    <InlineRefResolverContext.Provider value={inlineRefResolver}>
-      <RequestContext.Provider value={requestContext}>
-        <SWRConfig
-          value={{
-            refreshInterval: 0,
-            shouldRetryOnError: false,
-            revalidateOnFocus: false,
-            dedupingInterval: 5 * 60 * 1000, // 5 minutes
-            fetcher: async (input: RequestInfo, init?: RequestInit) => {
-              return await (await fetcher(input, init)).json();
-            },
-          }}
-        >
-          <ProjectTokenContext.Provider value={projectToken ?? ''}>
-            <ComponentsContext.Provider value={components}>
-              <ResolverContext.Provider value={resolver}>
-                <IconsContext.Provider value={icons || defaultIcons}>{children}</IconsContext.Provider>
-              </ResolverContext.Provider>
-            </ComponentsContext.Provider>
-          </ProjectTokenContext.Provider>
-        </SWRConfig>
-      </RequestContext.Provider>
-    </InlineRefResolverContext.Provider>
+    <UrqlProvider value={getClient(host, urqlClient)}>
+      <IconsContext.Provider value={defaultIcons}>
+        <ComponentsContext.Provider value={components}>
+          <LinkContext.Provider value={Link}>
+            <ActiveInfoContext.Provider value={info}>
+              <ActiveNodeProvider>{children}</ActiveNodeProvider>
+            </ActiveInfoContext.Provider>
+          </LinkContext.Provider>
+        </ComponentsContext.Provider>
+      </IconsContext.Provider>
+    </UrqlProvider>
   );
 };

@@ -1,5 +1,6 @@
 import { CodeViewer } from '@stoplight/ui-kit';
 import * as React from 'react';
+
 import { usePrettifiedResponse } from '../../../hooks/usePrettifiedResponse';
 import { XHRResponseType } from '../../../stores/request-maker/types';
 

@@ -1,85 +1,49 @@
-import { JsonPath, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
-import { Edge, Node } from 'vis-network/standalone';
-export { IComponentMapping } from '@stoplight/markdown-viewer';
 
-export interface IDeserializedSrn {
-  service: string;
-  org: string;
-  project: string;
-  uri: string;
+export interface INodeFilter {
+  nodeUri?: string;
+  nodeType?: string;
 }
 
-export interface IChange {
-  createdAt: string;
-  semver: string;
-  message: string;
-}
-
-export interface IDiagnostic {
-  location: { uri: string; jsonPath?: JsonPath };
-  message: string;
-}
-
-export interface INodeInfo<D = unknown> {
+export interface IBranchNode {
   id: number;
-  type: NodeType;
-  name: string;
-  srn: string;
-  data: D;
+  baseUri: string;
+  version: string;
+  isLatestVersion: boolean;
 
-  errors?: IDiagnostic[];
-  changes?: IChange[];
-  version?: string;
-  versions?: string[];
-  tags?: string[];
-}
+  node: {
+    id: number;
+    uri: string;
+  };
 
-export interface IProjectNode {
-  type: NodeType;
-  srn: string;
-  name: string;
-  id: number | string;
+  snapshot: {
+    id: number;
+    name: string;
+    type: string;
+    data: unknown;
+    tagNames?: string[];
+  };
 
-  latestVersion?: string;
-  versions?: string[];
-  tags?: string[];
-  data?: string;
-  summary?: string;
+  branch: {
+    id: number;
+    slug: string;
+
+    project: {
+      id: number;
+      slug: string;
+
+      workspace: {
+        id: number;
+        slug: string;
+      };
+    };
+  };
 }
 
 export interface IContentsNodeWithId extends IContentsNode {
   id: number | string;
-}
-
-export type ProjectNodeWithUri = IProjectNode & { uri: string };
-
-export type IconMapType = NodeType | 'group' | 'divider' | 'item';
-export type NodeIconMapping = { [type in IconMapType]?: IconName };
-
-export type DocsNodeType = NodeType | 'json_schema' | 'http';
-
-export interface IPageHeading {
-  id: string;
-  title: string;
-  depth: number;
-}
-
-export interface IPaginatedResponse<T> {
-  items: T[];
-  pageInfo: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    startCursor: string;
-    endCursor: string;
-  };
-  totalCount: number;
-}
-
-export interface IVisGraph {
-  nodes: Node[];
-  edges: Edge[];
 }
 
 export interface INodeGraph {
@@ -125,33 +89,5 @@ export interface INodeEdge {
   toBranchNodePath: string;
 }
 
-export interface IBranchNode {
-  id: number;
-
-  node: {
-    id: number;
-    uri: string;
-  };
-
-  snapshot: {
-    id: number;
-    name: string;
-    type: string;
-    data: unknown;
-  };
-
-  branch: {
-    id: number;
-    slug: string;
-
-    project: {
-      id: number;
-      slug: string;
-
-      workspace: {
-        id: number;
-        slug: string;
-      };
-    };
-  };
-}
+export type IconMapType = NodeType | 'group' | 'divider' | 'item';
+export type NodeIconMapping = { [type in IconMapType]?: IconName };

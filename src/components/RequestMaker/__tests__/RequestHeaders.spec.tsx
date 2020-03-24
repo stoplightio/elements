@@ -1,6 +1,8 @@
-import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
+
+import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
+
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { HeaderParam } from '../../../stores/request-maker/types';
@@ -19,12 +21,12 @@ describe('Header editor component', () => {
     }
   });
 
-  test('should show default header editor', () => {
+  it('should show default header editor', () => {
     wrapper = mount(<RequestHeaders />);
     expect(wrapper.find('div.RequestMaker__RequestParameters-placeholder')).toHaveLength(1);
   });
 
-  test('should show provided headers', () => {
+  it('should show provided headers', () => {
     headers = [
       {
         name: 'TestHeader1',
@@ -51,7 +53,7 @@ describe('Header editor component', () => {
     expect(div.find('input').at(2)).toHaveValue('none');
   });
 
-  test('should correctly add headers', () => {
+  it('should correctly add headers', () => {
     wrapper = mount(
       <RequestMakerProvider value={requestMaker}>
         <RequestHeaders />
@@ -65,7 +67,7 @@ describe('Header editor component', () => {
     expect(wrapper.find('div.RequestMaker__RequestParameters-row')).toHaveLength(1);
   });
 
-  test('should correctly change header', () => {
+  it('should correctly change header', () => {
     headers = [
       {
         name: 'testHeader',
@@ -83,6 +85,6 @@ describe('Header editor component', () => {
     );
     const checkbox = wrapper.find('input[type="checkbox"]').first();
     checkbox.simulate('change', { target: { checked: false } });
-    expect(requestMaker.request.headerParams[0].isEnabled).toBeFalsy();
+    expect(requestMaker.request.headerParams[0].isEnabled).toBe(false);
   });
 });

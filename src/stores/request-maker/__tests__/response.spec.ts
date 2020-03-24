@@ -1,4 +1,5 @@
 import { IPrismDiagnostic } from '@stoplight/prism-core';
+
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
 import { ResponseStore } from '../response';
 

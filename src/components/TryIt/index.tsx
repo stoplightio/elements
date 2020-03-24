@@ -2,8 +2,10 @@ import { IHttpOperation, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
+
+import { useParsedValue } from '../../hooks/useParsedValue';
 import { useRequestMaker } from '../../hooks/useRequestMaker';
-import { useResolver } from '../../hooks/useResolver';
+// import { useResolver } from '../../hooks/useResolver';
 import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '../RequestMaker';
 
 export interface ITryItProps extends IErrorBoundary {
@@ -14,7 +16,10 @@ export interface ITryItProps extends IErrorBoundary {
 }
 
 const TryItComponent: React.FunctionComponent<ITryItProps> = ({ value, mockUrl, padding = '12', className }) => {
-  const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
+  // const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
+  const result = useParsedValue(value);
+
+  // @ts-ignore: TODO (CL): add typing
   const store = useRequestMaker(result, true, mockUrl);
 
   return (

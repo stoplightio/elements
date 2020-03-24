@@ -1,6 +1,7 @@
 import { HTMLSelect, Popover, Switch } from '@stoplight/ui-kit';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 
 const notSetOption = { value: '', label: 'Not Set' };
@@ -24,26 +25,26 @@ export const Mocking = observer(() => {
     if (!operationResponses) {
       return [notSetOption];
     }
-    return [notSetOption, ...operationResponses.map(r => ({ value: r.code, label: r.code }))];
+    return [notSetOption, ...operationResponses.map((r) => ({ value: r.code, label: r.code }))];
   }, [operationResponses]);
 
   const currentExample = (store.prismConfig.mock && store.prismConfig.mock.exampleKey) || '';
 
   const exampleOptions = React.useMemo(() => {
-    const response = operationResponses?.find(r => r.code === currentCode);
+    const response = operationResponses?.find((r) => r.code === currentCode);
     if (!response || !response.contents) {
       return [notSetOption];
     }
-    const options = response.contents.flatMap(c => c.examples || []).map(e => ({ value: e.key, label: e.key }));
+    const options = response.contents.flatMap((c) => c.examples || []).map((e) => ({ value: e.key, label: e.key }));
     return [notSetOption, ...options];
   }, [operationResponses, currentCode]);
 
   // if the current example is not available anymore, remove it from the URL
   React.useEffect(() => {
-    if (currentExample && !exampleOptions.find(o => o.value === currentExample)) {
+    if (currentExample && !exampleOptions.find((o) => o.value === currentExample)) {
       store.setPrismMockingOption('exampleKey', undefined);
     }
-  }, [exampleOptions, currentExample]);
+  }, [exampleOptions, currentExample, store]);
 
   const currentDynamicSetting = store.prismConfig.mock && store.prismConfig.mock.dynamic ? 'dynamic' : 'static';
 
@@ -55,8 +56,8 @@ export const Mocking = observer(() => {
         boundary={'window'}
         disabled={store.isMatchingOperation}
         content={
-          <div className="p-3 w-80 text-center">
-            <div className="text-red uppercase text-sm">Unable to mock this request</div>
+          <div className="p-3 text-center w-80">
+            <div className="text-sm uppercase text-red">Unable to mock this request</div>
             <div className="pt-1">
               Request method "{store.request.method}" does not match operation method "{store.operation.method}"
             </div>
@@ -87,7 +88,7 @@ export const Mocking = observer(() => {
           className="code-selector"
           disabled={!store.isMockEnabled}
           options={codeOptions}
-          onChange={event => store.setPrismMockingOption('code', event.currentTarget.value || undefined)}
+          onChange={(event) => store.setPrismMockingOption('code', event.currentTarget.value || undefined)}
           value={currentCode}
         />
       </ConfigurationRow>
@@ -105,7 +106,7 @@ export const Mocking = observer(() => {
           className="example-selector"
           disabled={!store.isMockEnabled}
           options={exampleOptions}
-          onChange={event => store.setPrismMockingOption('exampleKey', event.currentTarget.value || undefined)}
+          onChange={(event) => store.setPrismMockingOption('exampleKey', event.currentTarget.value || undefined)}
           value={currentExample}
         />
       </ConfigurationRow>
@@ -131,7 +132,7 @@ export const Mocking = observer(() => {
           className="dynamic-mode-selector"
           disabled={!store.isMockEnabled}
           options={dynamicOptions}
-          onChange={event => {
+          onChange={(event) => {
             store.setPrismMockingOption('dynamic', event.currentTarget.value === 'dynamic');
           }}
           value={currentDynamicSetting}
@@ -143,7 +144,7 @@ export const Mocking = observer(() => {
         description="You can validate your request. If you turn off request validation Prism will return a response even if the input does not match the specification."
       >
         <Switch
-          className="validate-request-switch mx-8 mt-6"
+          className="mx-8 mt-6 validate-request-switch"
           large
           innerLabel="Off"
           innerLabelChecked="On"
@@ -160,7 +161,7 @@ export const Mocking = observer(() => {
         description="You can validate the response. This checks if the selected example matches the specification."
       >
         <Switch
-          className="validate-response-switch mx-8 mt-6"
+          className="mx-8 mt-6 validate-response-switch"
           large
           innerLabel="Off"
           innerLabelChecked="On"
@@ -174,7 +175,7 @@ export const Mocking = observer(() => {
 
       <ConfigurationRow title="Check security" description="You can check the security of your request.">
         <Switch
-          className="check-security-switch mx-8 mt-6"
+          className="mx-8 mt-6 check-security-switch"
           large
           innerLabel="Off"
           innerLabelChecked="On"
@@ -195,7 +196,7 @@ type ConfigurationRowProps = {
 };
 
 const ConfigurationRow: React.FC<ConfigurationRowProps> = ({ title, description, children }) => (
-  <div className="mx-8 my-6 flex">
+  <div className="flex mx-8 my-6">
     <div className="w-2/3">
       <div className="font-bold">{title}</div>
       <div className="pt-4">{description}</div>

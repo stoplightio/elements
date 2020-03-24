@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { stringifyHTML } from '../../../utils/stringifiers/html';
 
 export type HTMLViewerProps = {
@@ -11,7 +12,7 @@ export const HTMLViewer: React.FunctionComponent<HTMLViewerProps> = ({ srcDoc })
   }
   return (
     <iframe
-      className="RequestMaker__HTMLViewer w-full"
+      className="w-full RequestMaker__HTMLViewer"
       srcDoc={stringifyHTML(srcDoc)}
       sandbox=""
       height="100%"

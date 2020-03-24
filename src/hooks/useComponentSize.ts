@@ -28,7 +28,7 @@ export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivEle
       updateComponentSize.cancel();
       window.removeEventListener('resize', updateComponentSize);
     };
-  }, [componentRef.current]);
+  });
 
   return componentSize;
 }

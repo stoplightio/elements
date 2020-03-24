@@ -1,7 +1,9 @@
-import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
+
+import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
+
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { SuggestionFunc } from '../../../hooks/useSuggestion';
 import { RequestMakerStore } from '../../../stores/request-maker';

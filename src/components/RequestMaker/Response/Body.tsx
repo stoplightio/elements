@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { isNonEmpty } from 'fp-ts/lib/Array';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { ErrorViewer } from './ErrorViewer';
 import { HTMLViewer } from './HTMLViewer';
@@ -23,7 +24,7 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
     if (responseType === 'img') {
       setSelectedView('rendered');
     }
-  }, [body]);
+  }, [body, responseType]);
 
   let content;
 
@@ -44,14 +45,14 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
         content = <ImageViewer dataUri={body} />;
         break;
       default:
-        content = <div className="text-center p-10 text-gray-6">{responseType || 'Response type'} not supported</div>;
+        content = <div className="p-10 text-center text-gray-6">{responseType || 'Response type'} not supported</div>;
         break;
     }
   } else if (responseType === 'img') {
     content = (
-      <div className="text-center p-10 text-gray-6">
+      <div className="p-10 text-center text-gray-6">
         This request has no raw data available. Try the{' '}
-        <span className="text-blue underline cursor-pointer" onClick={() => setSelectedView('rendered')}>
+        <span className="underline cursor-pointer text-blue" onClick={() => setSelectedView('rendered')}>
           rendered view
         </span>
         .
@@ -63,8 +64,8 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
     content = <RawViewer content={body} type={responseType} />;
   }
 
-  const onChange = React.useCallback(e => setSelectedView(e.currentTarget.value), []);
-  const bodyViolations = violations.filter(v => v.path && v.path[0] === 'body');
+  const onChange = React.useCallback((e) => setSelectedView(e.currentTarget.value), []);
+  const bodyViolations = violations.filter((v) => v.path && v.path[0] === 'body');
 
   const shouldShowViewSelector = !error;
 
@@ -72,7 +73,7 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
     <div className={cn(className, 'RequestMaker__ResponseBody flex flex-col')}>
       {shouldShowViewSelector && <ViewSelectorRadioGroup selectedView={selectedView} onChange={onChange} />}
       {isNonEmpty(bodyViolations) && <ViolationsDisplay violations={bodyViolations} />}
-      <div className="RequestMaker__ResponseBody--content flex-1 border-t">{content}</div>
+      <div className="flex-1 border-t RequestMaker__ResponseBody--content">{content}</div>
     </div>
   );
 });
@@ -85,7 +86,7 @@ type ViewSelectorRadioGroupProps = {
 
 const ViewSelectorRadioGroup: React.FC<ViewSelectorRadioGroupProps> = ({ onChange, selectedView }) => (
   <RadioGroup
-    className="RequestMaker__ResponseBody--type mx-5 mt-3"
+    className="mx-5 mt-3 RequestMaker__ResponseBody--type"
     inline
     onChange={onChange}
     selectedValue={selectedView}

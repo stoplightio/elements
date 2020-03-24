@@ -1,54 +1,35 @@
 import * as React from 'react';
+import { useQuery } from 'urql';
+
 import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
-import { useProjectNodes } from '../hooks/useProjectNodes';
+import { INodeFilter } from '../types';
+import { ActiveInfoContext } from './Provider';
 
 export interface ITableOfContents {
-  srn: string;
-
-  group?: string;
-  activeNodeSrn?: string;
+  filter?: INodeFilter;
   className?: string;
-  padding?: string;
-  isOpen?: boolean;
-  onClose?: () => void;
-  enableDrawer?: boolean | number;
 }
 
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
-  srn,
+// TODO (CL): add the sl_search_nodes query
+const query = ``;
 
-  group,
-  className,
-  padding = '12',
-  isOpen,
-  onClose,
-  enableDrawer,
-}) => {
-  const { isLoading, error, data } = useProjectNodes(srn, { group });
+export const TableOfContents: React.FC<ITableOfContents> = ({ className, filter }) => {
+  const info = React.useContext(ActiveInfoContext);
 
-  if (isLoading) {
-    return <TableOfContentsSkeleton className={className} padding={padding} />;
+  const [{ data, fetching }] = useQuery({
+    query,
+    variables: {
+      workspaceSlug: info.workspace,
+      projectSlug: info.project,
+      branchSlug: info.branch,
+      baseUri: filter?.nodeUri ? `${filter.nodeUri}%` : undefined,
+    },
+  });
+
+  if (fetching) {
+    return <TableOfContentsSkeleton className={className} />;
   }
 
-  if (error) {
-    console.error(error);
-    return <>Error loading resource. Check the developer console for more information.</>;
-  }
-
-  if (!data) {
-    return <>Not Found</>;
-  }
-
-  return (
-    <TableOfContentsComponent
-      className={className}
-      items={data.items}
-      padding={padding}
-      srn={srn}
-      isOpen={isOpen}
-      onClose={onClose}
-      enableDrawer={enableDrawer}
-    />
-  );
+  return <TableOfContentsComponent className={className} nodes={data.sl_search_nodes} />;
 };

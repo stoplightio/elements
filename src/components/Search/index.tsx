@@ -1,13 +1,14 @@
 import { Drawer } from '@stoplight/ui-kit';
 import * as React from 'react';
-import { IProjectNode } from '../../types';
+
+import { IBranchNode } from '../../types';
 import { NodeList } from './List';
 import { SearchBar } from './SearchBar';
 
 export interface ISearchComponent {
   query?: string;
   placeholder?: string;
-  nodes?: IProjectNode[];
+  nodes?: IBranchNode[];
   isLoading?: boolean;
   isOpen?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

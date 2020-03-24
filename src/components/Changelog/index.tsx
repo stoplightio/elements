@@ -2,12 +2,11 @@ import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { groupBy, orderBy } from 'lodash';
 import * as React from 'react';
-import { IChange } from '../../types';
 
 export interface IChangelogProps {
   padding?: string;
   className?: string;
-  changes?: IChange[];
+  changes?: any[]; // TODO (CL): Add a typing for changes
 }
 
 export const Changelog = React.memo<IChangelogProps>(({ className, padding, changes }) => {
@@ -19,7 +18,7 @@ export const Changelog = React.memo<IChangelogProps>(({ className, padding, chan
 
   const sortedChanges = orderBy(changes, ['createdAt'], ['desc']);
 
-  const groups = groupBy(sortedChanges, change => {
+  const groups = groupBy(sortedChanges, (change) => {
     return new Date(Number(change.createdAt)).toDateString();
   });
 
@@ -28,13 +27,13 @@ export const Changelog = React.memo<IChangelogProps>(({ className, padding, chan
       {Object.keys(groups).map((date, index) => {
         return (
           <div key={date} className={cn({ 'mt-6': index > 0 })}>
-            <div className="Changelog__date p-2 font-medium">{date}</div>
+            <div className="p-2 font-medium Changelog__date">{date}</div>
 
             {groups[date].map((change, i) => (
               <div key={i} className={cn('Changelog__item', 'p-2 border-b border-gray-2 dark:border-lighten-3')}>
                 <div className="flex text-sm">
-                  <div className="Changelog__message flex-1 mr-3">{change.message}</div>
-                  <div className="Changelog__semver lowercase font-semibold">{change.semver}</div>
+                  <div className="flex-1 mr-3 Changelog__message">{change.message}</div>
+                  <div className="font-semibold lowercase Changelog__semver">{change.semver}</div>
                 </div>
               </div>
             ))}

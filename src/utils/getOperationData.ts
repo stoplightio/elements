@@ -1,5 +1,6 @@
 import { HttpMethod, IHttpOperation, IHttpParam } from '@stoplight/types';
 import { filter, flatten, get, has } from 'lodash';
+
 import { RequestStore } from '../stores/request-maker/request';
 
 const sampler = require('openapi-sampler');
@@ -60,7 +61,7 @@ export function getOperationData(operation: Partial<IHttpOperation>): Partial<Re
 }
 
 function getParamsFromOperation(operation: Partial<IHttpOperation>, type: 'query' | 'path' | 'headers') {
-  return filter(get(operation, `request.${type}`, []), p => get(p, 'name')).map((p: IHttpParam) => ({
+  return filter(get(operation, `request.${type}`, []), (p) => get(p, 'name')).map((p: IHttpParam) => ({
     name: p.name,
     value: has(p.schema, 'default') ? String(get(p.schema, 'default')) : '',
     isEnabled: p.required || has(p.schema, 'default'),
