@@ -26,7 +26,11 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
             onBlur,
             className: 'shadow-none',
           }}
-          noResults={<span>Unknown header <em>{name}</em></span>}
+          noResults={
+            <span>
+              Unknown header <em>{name}</em>
+            </span>
+          }
           inputValueRenderer={(headerField: HeaderField) => headerField.name}
           itemRenderer={renderHeaderField}
           items={allHeaderFields}

@@ -1799,16 +1799,25 @@
     tslib "^1.10.0"
     urijs "~1.19.1"
 
+"@stoplight/json-schema-merge-allof@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.6.0.tgz#c4556c925796df45f8b3a83ed94cf9f99e4bc414"
+  integrity sha512-xQnQZa37Z6bHlf6xv1mcPxg73tHUBPORlSIgs1znYLg6VD7tSAnWAyskvi+tBUXi/zsZYsU1gwPQkmFBORldNA==
+  dependencies:
+    compute-lcm "^1.1.0"
+    json-schema-compare "^0.2.2"
+    lodash "^4.17.4"
+
 "@stoplight/json-schema-viewer@^3.0.0-beta.9":
-  version "3.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.9.tgz#af017c2afec26b575f1cc4de60914fed7ed77fa7"
-  integrity sha512-opkkPkBZboNAaLj0SQVq4B9X7Rljfh8YRM5Cysqfs8PVV3gxbpDOmz/HowHd4prNKsM5qyuX7L4kygY0YIxsnQ==
+  version "3.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.10.tgz#25aac5526497f61f4134dc49c9b8f53a5567e140"
+  integrity sha512-b8O3k89ea7X0KpM/zCP2bKlOa3QojCBj7HLyipnb/EbQNpkObQOfAF+kmx3lofYr1a7jygBy9E1diuWnAXZhkg==
   dependencies:
     "@stoplight/json" "^3.5.1"
+    "@stoplight/json-schema-merge-allof" "^0.6.0"
     "@stoplight/react-error-boundary" "^1.0.0"
     "@stoplight/tree-list" "5.0.0-beta.2"
     classnames "^2.2.6"
-    json-schema-merge-allof "git+https://github.com/stoplightio/json-schema-merge-allof.git"
     lodash "^4.17.15"
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
@@ -8129,7 +8138,7 @@ https-proxy-agent@^5.0.0:
     commander "^2.9.0"
     debug "^2.2.0"
     event-stream "3.3.4"
-    form-data "3.0.0"
+    form-data "^3"
     fs-readfile-promise "^2.0.1"
     fs-writefile-promise "^1.0.3"
     har-validator "^5.0.0"
@@ -9667,15 +9676,6 @@ json-schema-faker@0.5.0-rc23:
     json-schema-ref-parser "^6.1.0"
     jsonpath-plus "^1.0.0"
     randexp "^0.5.3"
-
-"json-schema-merge-allof@git+https://github.com/stoplightio/json-schema-merge-allof.git":
-  version "0.6.0"
-  uid bb02f48aba949226a8eafbbb03f850afcb7d203e
-  resolved "git+https://github.com/stoplightio/json-schema-merge-allof.git#bb02f48aba949226a8eafbbb03f850afcb7d203e"
-  dependencies:
-    compute-lcm "^1.1.0"
-    json-schema-compare "^0.2.2"
-    lodash "^4.17.4"
 
 json-schema-ref-parser@^6.1.0:
   version "6.1.0"

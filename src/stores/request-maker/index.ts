@@ -16,9 +16,9 @@ configure({ enforceActions: 'observed' });
 
 const defaultPrismConfig: IHttpConfig & { mock: IHttpOperationConfig } = {
   mock: { dynamic: false },
-  checkSecurity: true,
-  validateRequest: true,
-  validateResponse: true,
+  checkSecurity: false,
+  validateRequest: false,
+  validateResponse: false,
   errors: false,
 };
 
