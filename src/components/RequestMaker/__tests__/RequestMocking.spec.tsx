@@ -1,10 +1,11 @@
-import { Popover, Switch } from '@stoplight/ui-kit';
+import { Button, Menu, Popover, Switch } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
+import { formatMultiValueHeader } from '../../../utils/headers';
 import { operation } from '../__fixtures__/http';
 import { Mocking } from '../Request/Mocking';
 
@@ -97,6 +98,65 @@ describe('RequestSend component', () => {
       });
 
       expect(store.request.baseUrl).toBe(store.request.mockBaseUrl);
+    });
+  });
+
+  describe('Response Code selector', () => {
+    it.only('should set selected code and example', () => {
+      wrapper = mount(
+        <RequestMakerProvider value={store}>
+          <Mocking />
+        </RequestMakerProvider>,
+      );
+
+      const example = wrapper
+        .find(Popover)
+        .find(Button)
+        .simulate('click')
+        .simulate('change', { value: '200' })
+        .simulate('change', { value: 'application/json' });
+
+      expect(example.props().text).toBe('200 - application/json');
+      expect(store.request.headerParams).toContain({
+        name: 'Prefer',
+        value: formatMultiValueHeader(['200', 'application/json']),
+        isEnabled: true,
+      });
+    });
+
+    it('should set only code when no example is selected', () => {
+      wrapper = mount(
+        <RequestMakerProvider value={store}>
+          <Mocking />
+        </RequestMakerProvider>,
+      );
+
+      const example = wrapper
+        .find(Popover)
+        .find(Button)
+        .simulate('click')
+        .simulate('change', { value: '200' })
+        .simulate('change', { value: 'no-example' });
+
+      expect(example.props().text).toBe('200');
+    });
+
+    it('should remove example when Not Set is selected', () => {
+      wrapper = mount(
+        <RequestMakerProvider value={store}>
+          <Mocking />
+        </RequestMakerProvider>,
+      );
+
+      // set dropdown to value other than not set
+
+      const example = wrapper
+        .find(Popover)
+        .find(Button)
+        .simulate('click')
+        .simulate('change', { value: 'Not Set' });
+
+      expect(example.props().text).toBe('Not Set');
     });
   });
 

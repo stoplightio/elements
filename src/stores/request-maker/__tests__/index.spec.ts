@@ -285,7 +285,7 @@ describe('RequestMakerStore', () => {
       mock: { dynamic: false },
       checkSecurity: true,
       validateRequest: true,
-      validateResponse: true,
+      validateResponse: false,
       errors: false,
     };
 
