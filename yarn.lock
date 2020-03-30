@@ -1765,10 +1765,10 @@
   dependencies:
     type-detect "4.0.8"
 
-"@stoplight/eslint-config@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/eslint-config/-/eslint-config-1.0.0.tgz#278d63cb119d3216b1b5631a2ce689ad722a0356"
-  integrity sha512-mEDO5mNpSZIOu/R/j7JxE0zE7sCCu81hGxjqCUpcm0BVOXwZ/BUX14w2bHLPTE/Usns+0UfX/wbDA6GOVZdxlA==
+"@stoplight/eslint-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/eslint-config/-/eslint-config-1.0.1.tgz#adff78a8ad3ff3b52e0838871bf51b3e31f46124"
+  integrity sha512-5AVvrnHWTt0s3GVpt4wYgmMt7Si4Jyl/R5VZnDqub3/JESOunhm6AVtVEFhqRHEwCOVTaGvzHLtsvrMx8GMiTw==
   dependencies:
     eslint-config-prettier "^6.7.0"
 
