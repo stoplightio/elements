@@ -1,5 +1,6 @@
 import { IMarkdownViewerProps, MarkdownViewer as MarkdownViewerComponent } from '@stoplight/markdown-viewer';
 import * as React from 'react';
+
 import { useComponents } from '../../hooks/useComponents';
 
 /**

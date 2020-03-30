@@ -1,6 +1,7 @@
 import { NodeType } from '@stoplight/types';
 import * as fs from 'fs';
 import * as path from 'path';
+
 import httpOperation from '../../__fixtures__/operations/put-todos';
 import httpService from '../../__fixtures__/services/petstore';
 import { buildNodeMarkdownTree } from '../buildNodeMarkdownTree';

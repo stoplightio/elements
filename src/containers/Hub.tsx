@@ -1,6 +1,7 @@
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { PageSkeleton } from '../components/Page/Skeleton';
 import { TableOfContents } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
@@ -68,5 +69,5 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
 };
 
 function findFirstNode(nodes: IContentsNode[]): IContentsNode {
-  return nodes.find(node => !!node.href) || nodes[0];
+  return nodes.find((node) => !!node.href) || nodes[0];
 }

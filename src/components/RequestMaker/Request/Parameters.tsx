@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { get, map } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { IParam, ParamField, ParamType } from '../../../stores/request-maker/types';
 
@@ -139,7 +140,7 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
           <InputGroup
             className="w-full h-full"
             type="text"
-            onFocus={event => {
+            onFocus={(event) => {
               handleAddParam({ key: event.currentTarget.value });
               setInFocus({
                 prop: 'name',
@@ -156,7 +157,7 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
           <InputGroup
             className="w-full h-full"
             type="text"
-            onFocus={event => {
+            onFocus={(event) => {
               handleAddParam({ value: event.currentTarget.value });
               setInFocus({
                 prop: 'value',

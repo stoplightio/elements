@@ -1,8 +1,8 @@
+import { IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { IRoot } from '@stoplight/markdown';
+import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
-import { IResolverOpts } from '@stoplight/json-ref-resolver/types';
-import { NodeType } from '@stoplight/types';
 import { ActiveSrnContext, ResolverOptionsContext } from '../../containers/Provider';
 import { useComponentSize } from '../../hooks/useComponentSize';
 import { useComputeMarkdownHeadings } from '../../hooks/useComputeMarkdownHeadings';

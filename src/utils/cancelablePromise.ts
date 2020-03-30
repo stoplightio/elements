@@ -7,7 +7,7 @@ export function cancelablePromise<T = unknown>(promise: Promise<T>) {
   let hasCanceled = false;
 
   return {
-    promise: promise.then(v => {
+    promise: promise.then((v) => {
       if (hasCanceled) {
         throw { isCanceled: true };
       }

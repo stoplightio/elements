@@ -3,6 +3,7 @@ import { Button, Tooltip } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 import { Network } from 'vis';
+
 import { useNodeGraph } from '../../hooks/useNodeGraph';
 import { INodeInfo } from '../../types';
 import { NodeTypePrettyName } from '../../utils/node';
@@ -59,7 +60,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
       >
         <HTMLSelect
           value={graphType}
-          onChange={e => setGraphType(e.currentTarget.value as 'outbound' | 'inbound')}
+          onChange={(e) => setGraphType(e.currentTarget.value as 'outbound' | 'inbound')}
           options={[
             {
               label: 'What do I depend on? (Outbound)',
@@ -89,7 +90,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
         </div>
       ) : graphType === 'outbound' ? (
         <OutboundDependencies
-          ref={network => {
+          ref={(network) => {
             if (network) {
               visNetwork.current = network;
             }

@@ -134,7 +134,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "tslint -c tslint.json --fix"
+      "eslint --fix"
     ]
   },
   "husky": {

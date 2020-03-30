@@ -4,6 +4,7 @@ import { boolean, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { Docs } from '../../components/Docs';
 import { TryIt } from '../../components/TryIt';
 import { Hub } from '../../containers/Hub';
@@ -47,7 +48,7 @@ const Wrapper = ({ providerProps, hubProps }: any) => {
               title={props.node.title}
               className={props.node.className}
               href={props.node.url}
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
                 setSrn(props.node.url);
               }}

@@ -4,6 +4,7 @@ import { isNonEmpty } from 'fp-ts/lib/Array';
 import { map } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { ViolationsDisplay } from './ViolationsDisplay';
 
@@ -20,7 +21,7 @@ export const ResponseHeaders = observer<IResponseHeaders>(({ className }) => {
     return <div className="text-center p-10 text-gray-6">No response headers</div>;
   }
 
-  const headerViolations = responseStore.violations.filter(v => v.path && v.path[0] === 'header');
+  const headerViolations = responseStore.violations.filter((v) => v.path && v.path[0] === 'header');
 
   return (
     <>

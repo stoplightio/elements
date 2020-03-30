@@ -1,9 +1,9 @@
 import { Dictionary, NodeType } from '@stoplight/types';
 import { escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
 import * as React from 'react';
+
 import { IconsContext } from '../containers/Provider';
-import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
-import { NodeIconMapping } from '../types';
+import { IContentsNodeWithId, IProjectNode, NodeIconMapping, ProjectNodeWithUri } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
 const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
@@ -25,7 +25,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
   if (!_nodes.length) return [];
 
   // Add uri to each node since it's used heavily in this function
-  const nodes: ProjectNodeWithUri[] = _nodes.map(n => ({ ...n, uri: deserializeSrn(n.srn).uri }));
+  const nodes: ProjectNodeWithUri[] = _nodes.map((n) => ({ ...n, uri: deserializeSrn(n.srn).uri }));
 
   let contents: IContentsNodeWithId[] = [];
   const folders: string[] = [];
@@ -33,8 +33,8 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** All document nodes */
   const docsNodes = sortBy(
-    nodes.filter(node => node.type === NodeType.Article),
-    node => toLower(node.srn),
+    nodes.filter((node) => node.type === NodeType.Article),
+    (node) => toLower(node.srn),
   );
 
   for (const nodeIndex in docsNodes) {
@@ -60,7 +60,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
             id: `${nodeIndex}-${pathIndex}`,
             name: folderName
               .split('-')
-              .map(item => upperFirst(item))
+              .map((item) => upperFirst(item))
               .join(' '),
             depth: Number(pathIndex),
             type: 'group',
@@ -101,13 +101,13 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
 
   /** Reference folder */
   const httpServiceNodes = sortBy(
-    nodes.filter(n => n.type === NodeType.HttpService),
-    node => toLower(node.name),
+    nodes.filter((n) => n.type === NodeType.HttpService),
+    (node) => toLower(node.name),
   );
 
   for (const httpServiceNode of httpServiceNodes) {
     const parentUriRegexp = new RegExp(`^${escapeRegExp(httpServiceNode.uri)}\/`, 'i');
-    const childNodes = nodes.filter(node => parentUriRegexp.test(node.uri) && node.type !== NodeType.HttpService);
+    const childNodes = nodes.filter((node) => parentUriRegexp.test(node.uri) && node.type !== NodeType.HttpService);
     if (!childNodes.length) continue;
 
     const dividerNode: IContentsNodeWithId = {
@@ -150,7 +150,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
     }
 
     /** Add tag groups to the tree */
-    const sortedTags = sortBy(Object.keys(tags), t => toLower(t));
+    const sortedTags = sortBy(Object.keys(tags), (t) => toLower(t));
     for (const tagIndex in sortedTags) {
       if (!sortedTags[tagIndex]) continue;
       const tag = sortedTags[tagIndex];
@@ -185,7 +185,7 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
         icon: icons.group,
       });
 
-      for (const otherChild of sortBy(other, n => toLower(n.name))) {
+      for (const otherChild of sortBy(other, (n) => toLower(n.name))) {
         contents.push({
           id: otherChild.id,
           name: otherChild.name,
@@ -202,13 +202,13 @@ export function computeToc(_nodes: IProjectNode[], icons: NodeIconMapping): ICon
   const modelContents: IContentsNodeWithId[] = [];
 
   const modelNodes = sortBy(
-    nodes.filter(n => n.type === NodeType.Model),
-    node => toLower(node.name),
+    nodes.filter((n) => n.type === NodeType.Model),
+    (node) => toLower(node.name),
   );
 
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
-    if (contents.find(n => n.href === modelNode.srn)) continue;
+    if (contents.find((n) => n.href === modelNode.srn)) continue;
 
     const node: IContentsNodeWithId = {
       id: modelNode.id,

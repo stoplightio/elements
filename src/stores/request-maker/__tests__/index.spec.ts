@@ -1,10 +1,12 @@
+import 'jest-enzyme';
+
 import { safeStringify } from '@stoplight/json';
 import { IHttpConfig } from '@stoplight/prism-http';
 import { HttpParamStyles } from '@stoplight/types';
 import axios from 'axios';
-import 'jest-enzyme';
 import { without } from 'lodash';
 import parsePreferHeader from 'parse-prefer-header';
+
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
@@ -393,7 +395,7 @@ describe('RequestMakerStore', () => {
   describe('setPrismConfigurationOption', () => {
     const cases = ['checkSecurity', 'validateRequest', 'validateResponse', 'errors'] as const;
 
-    it.each(cases)('should correctly toggle %p', key => {
+    it.each(cases)('should correctly toggle %p', (key) => {
       const originalConfiguration = store.prismConfig;
       const originalValue = store.prismConfig[key];
 
@@ -411,7 +413,7 @@ describe('RequestMakerStore', () => {
 
       store.setPrismConfigurationOption('validateRequest', false);
 
-      const header = store.request.headerParams.find(h => h.name === 'Prefer');
+      const header = store.request.headerParams.find((h) => h.name === 'Prefer');
       expect(header).toBeDefined();
       expect(header?.isEnabled).toBe(true);
       const parsed = parsePreferHeader(header?.value);

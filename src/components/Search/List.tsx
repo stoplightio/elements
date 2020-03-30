@@ -3,6 +3,7 @@ import { Button, Callout, Classes, Icon, NonIdealState, Spinner, Tag } from '@st
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { useComponents } from '../../hooks';
 import { IProjectNode } from '../../types';
 import { NodeTypeColors, NodeTypeIcons, NodeTypePrettyName } from '../../utils/node';
@@ -71,7 +72,7 @@ const NodeListItem: React.FC<{
   const components = useComponents();
   const { orgSlug, projectSlug } = deserializeSrn(item.srn);
   const onClick = React.useCallback(
-    e => {
+    (e) => {
       if (onReset) {
         onReset(e);
       }

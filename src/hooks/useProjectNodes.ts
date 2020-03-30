@@ -1,5 +1,6 @@
 import { uniqBy } from 'lodash';
 import * as React from 'react';
+
 import { ProjectTokenContext } from '../containers/Provider';
 import { IPaginatedResponse, IProjectNode } from '../types';
 import { deserializeSrn, serializeSrn } from '../utils/srns';

@@ -9,6 +9,7 @@ import {
   TreeStore,
 } from '@stoplight/tree-list';
 import * as React from 'react';
+
 import { renderTree } from '../../../utils/renderNode';
 import { JsonRow } from './JsonRow';
 

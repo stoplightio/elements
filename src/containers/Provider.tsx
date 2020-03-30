@@ -1,10 +1,10 @@
 import { Resolver } from '@stoplight/json-ref-resolver';
+import { IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
-
-import { IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { SWRConfig } from 'swr';
+
 import { NodeIconMapping } from '../types';
 import { createFetchClient, IFetchProps } from '../utils/createFetchClient';
 

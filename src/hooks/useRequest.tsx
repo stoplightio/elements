@@ -4,6 +4,7 @@ import { Dictionary, Primitive } from '@stoplight/types';
 import { get } from 'lodash';
 import { MD5 } from 'object-hash';
 import * as React from 'react';
+
 import { RequestContext } from '..';
 import { useFetchClient } from '../utils/useFetchClient';
 
@@ -45,7 +46,7 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
   const { key, request } = createRequest(args);
 
   const sendRequest = React.useCallback(
-    req => {
+    (req) => {
       let isMounted = true;
 
       // Check if we have this request stored in the cache
@@ -60,8 +61,8 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
       }
 
       client(computeUrl(req))
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (!isMounted) return;
 
           if (!cachedData || safeStringify(responseData) !== safeStringify(cachedData)) {
@@ -88,7 +89,7 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
           setError(undefined);
           setIsLoading(false);
         })
-        .catch(e => {
+        .catch((e) => {
           if (!isMounted) return;
           // TODO (CL): Should we delete the cache entry if there's an error? Might be better to leave it so there's no disruption to viewing the docs
           if (!cachedData) {

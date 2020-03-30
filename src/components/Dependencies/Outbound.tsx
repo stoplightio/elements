@@ -1,12 +1,11 @@
 import { Icon } from '@blueprintjs/core';
+import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-import { Network, Options } from 'vis';
-
 // @ts-ignore: For documentation, see https://visjs.github.io/vis-network/docs/network/
 import { default as Graph } from 'react-graph-vis';
+import { Network, Options } from 'vis';
 
-import { NodeType } from '@stoplight/types';
 import { useParsedData } from '../../hooks';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
 import { useNodeRaw } from '../../hooks/useNodesRaw';
@@ -64,7 +63,7 @@ export const OutboundDependencies = React.forwardRef<Network, IOutboundDependenc
   const visGraph = useComputeVisGraph(node, activeNode?.groupNodeId, graph);
 
   const onClickNode = React.useCallback(
-    e => {
+    (e) => {
       const nodeId = e.nodes[0];
       if (!nodeId) return;
 

@@ -2,6 +2,7 @@ import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { groupBy, orderBy } from 'lodash';
 import * as React from 'react';
+
 import { IChange } from '../../types';
 
 export interface IChangelogProps {
@@ -19,7 +20,7 @@ export const Changelog = React.memo<IChangelogProps>(({ className, padding, chan
 
   const sortedChanges = orderBy(changes, ['createdAt'], ['desc']);
 
-  const groups = groupBy(sortedChanges, change => {
+  const groups = groupBy(sortedChanges, (change) => {
     return new Date(Number(change.createdAt)).toDateString();
   });
 

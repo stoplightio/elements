@@ -1,6 +1,7 @@
 import { IHeading, IRoot, ITextNode } from '@stoplight/markdown';
 import * as React from 'react';
 import { Parent } from 'unist';
+
 import { IPageHeading } from '../types';
 
 const selectAll = require('unist-util-select').selectAll;
@@ -20,5 +21,5 @@ export function computeMarkdownHeadings(tree: IRoot): IPageHeading[] {
 }
 
 const findTitle = (parent: Parent) => {
-  return (selectAll('[type=text]', parent) as ITextNode[]).map(textNode => textNode.value as string).join(' ');
+  return (selectAll('[type=text]', parent) as ITextNode[]).map((textNode) => textNode.value as string).join(' ');
 };

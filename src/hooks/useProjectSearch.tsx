@@ -1,6 +1,7 @@
 import { deserializeSrn, serializeSrn } from '@stoplight/path';
 import * as React from 'react';
 import useSWR from 'swr';
+
 import { ProjectTokenContext } from '../containers/Provider';
 import { IPaginatedResponse, IProjectNode } from '../types';
 import { useFetchClient } from '../utils/useFetchClient';
@@ -29,7 +30,7 @@ export function useProjectSearch(
   const { data, isValidating, error, revalidate } = useSWR<IPaginatedResponse<IProjectNode>>(
     !opts.skip ? [`/projects.nodes?${queryParams.join('&')}`] : null,
     (input: RequestInfo, init?: RequestInit) =>
-      fetch(input, init).then(res => {
+      fetch(input, init).then((res) => {
         if (!res.ok) {
           throw new Error(`${res.status} ${res.statusText}`);
         }

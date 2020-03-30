@@ -1,6 +1,7 @@
 import { array, object, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
+
 import { response as jsonResponse } from '../../../../__fixtures__/operations/simple';
 import { ResponseTab, ResponseViewer } from '../../../../components/RequestMaker';
 import { RequestMakerProvider } from '../../../../hooks/useRequestMaker';

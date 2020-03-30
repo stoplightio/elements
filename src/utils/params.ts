@@ -1,5 +1,6 @@
 import { Dictionary } from '@stoplight/types';
 import { forEach } from 'lodash';
+
 import { IParam } from '../stores/request-maker/types';
 
 export function getEnabledParams<T = string>(params: Array<IParam<T>>) {
@@ -39,7 +40,7 @@ export function getParamArray<T = string>(param: Dictionary<any> = {}): Array<IP
   forEach(param, (val, key) => {
     if (Array.isArray(val)) {
       paramArray.push(
-        ...val.map(value => ({
+        ...val.map((value) => ({
           name: key,
           value,
           isEnabled: true,

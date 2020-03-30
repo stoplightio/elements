@@ -60,7 +60,7 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
     refresh();
   };
 
-  const errorCount = violations.filter(v => v.severity === 0).length;
+  const errorCount = violations.filter((v) => v.severity === 0).length;
   const warningCount = violations.length - errorCount;
 
   return (
@@ -81,12 +81,12 @@ const buildTreeStructure = (
   violationsFlat: readonly IPrismDiagnostic[],
   parentPaths: string[] = [],
 ): Array<ITreeNode<IPrismDiagnostic>> => {
-  const rootPaths = uniq(violationsFlat.map(v => (v.path && v.path[parentPaths.length]) || '').filter(v => !!v));
+  const rootPaths = uniq(violationsFlat.map((v) => (v.path && v.path[parentPaths.length]) || '').filter((v) => !!v));
 
-  return rootPaths.map(path => {
+  return rootPaths.map((path) => {
     const currentPathArray = [...parentPaths, path];
-    const violationsOnPath = violationsFlat.filter(v => isEqual(v.path, currentPathArray));
-    const violationsOnChildren = violationsFlat.filter(v =>
+    const violationsOnPath = violationsFlat.filter((v) => isEqual(v.path, currentPathArray));
+    const violationsOnChildren = violationsFlat.filter((v) =>
       isEqual(v.path?.slice(0, currentPathArray.length), currentPathArray),
     );
     return {

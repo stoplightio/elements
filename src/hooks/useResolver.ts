@@ -1,6 +1,7 @@
 import { IResolveError, IResolveResult, IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { uniqBy } from 'lodash';
 import * as React from 'react';
+
 import { ActiveSrnContext, ResolverContext, ResolverOptionsContext } from '../containers/Provider';
 import { DocsNodeType } from '../types';
 import { cancelablePromise } from '../utils/cancelablePromise';
@@ -45,14 +46,14 @@ export function useResolver<T = any>(type: DocsNodeType, value: string) {
     const { promise, cancel } = cancelablePromise(resolver.resolve(parsedValue));
 
     promise
-      .then(res => {
+      .then((res) => {
         setResolved({
           result: res.result,
           errors: uniqBy(res.errors, 'message'), // remove any duplicate messages
           graph: res.graph,
         });
       })
-      .catch(e => {
+      .catch((e) => {
         if (!e.isCanceled) {
           console.error('Error resolving', type, e);
         }

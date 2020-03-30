@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { isNonEmpty } from 'fp-ts/lib/Array';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { ErrorViewer } from './ErrorViewer';
 import { HTMLViewer } from './HTMLViewer';
@@ -63,8 +64,8 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
     content = <RawViewer content={body} type={responseType} />;
   }
 
-  const onChange = React.useCallback(e => setSelectedView(e.currentTarget.value), []);
-  const bodyViolations = violations.filter(v => v.path && v.path[0] === 'body');
+  const onChange = React.useCallback((e) => setSelectedView(e.currentTarget.value), []);
+  const bodyViolations = violations.filter((v) => v.path && v.path[0] === 'body');
 
   const shouldShowViewSelector = !error;
 

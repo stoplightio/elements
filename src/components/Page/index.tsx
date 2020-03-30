@@ -2,6 +2,7 @@ import { NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { useParsedData } from '../../hooks/useParsedData';
 import { INodeInfo } from '../../types';
 import { PageContainer } from './Container';

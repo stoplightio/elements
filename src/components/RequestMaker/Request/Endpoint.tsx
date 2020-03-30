@@ -5,6 +5,7 @@ import { map, toLower, uniqBy } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import URI from 'urijs';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { highlightText } from '../../../utils/highlightText';
 import { RequestMethod } from './Method';
@@ -39,7 +40,7 @@ export const RequestEndpoint = observer<{
   const [baseUrlTransientValue, setBaseUrlTransientValue] = React.useState();
 
   const onServerSuggest = (serverUrl: string) => {
-    if (requestStore.servers && !requestStore.servers.find(s => s.url === serverUrl)) {
+    if (requestStore.servers && !requestStore.servers.find((s) => s.url === serverUrl)) {
       requestStore.publicServers = uniqBy(
         [
           ...requestStore.publicServers,
@@ -86,10 +87,10 @@ export const RequestEndpoint = observer<{
           className="border-r RequestMaker__RequestHost"
           query={baseUrlTransientValue || ''}
           onQueryChange={setBaseUrlTransientValue}
-          inputValueRenderer={item => item}
-          createNewItemFromQuery={newUrl => newUrl}
+          inputValueRenderer={(item) => item}
+          createNewItemFromQuery={(newUrl) => newUrl}
           createNewItemRenderer={addServerUrlRenderer}
-          items={map(requestStore.servers, server => server.url)}
+          items={map(requestStore.servers, (server) => server.url)}
           itemRenderer={serverUrlRenderer}
           itemPredicate={(q, item) => {
             if (requestStore.baseUrl === baseUrlTransientValue) return true;
@@ -116,7 +117,7 @@ export const RequestEndpoint = observer<{
         value={url || ''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUrl(e.target.value)}
         onBlur={onUrlChange}
-        onKeyPress={e => {
+        onKeyPress={(e) => {
           if (e.key === 'Enter') {
             // Trigger the onBlur event to prevent from sending stale data
             onUrlChange(e as any);

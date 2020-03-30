@@ -19,7 +19,7 @@ export const PageContainer: React.FC<{
   }
 
   return (
-    <ScrollContainer ref={ref => setScrollbarInstance(ref)} shadows={shadows}>
+    <ScrollContainer ref={(ref) => setScrollbarInstance(ref)} shadows={shadows}>
       {children}
     </ScrollContainer>
   );

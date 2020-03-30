@@ -7,6 +7,7 @@ import { isEmpty, mapKeys, pick, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
 import URI from 'urijs';
+
 import { getContentType } from '../../utils/getContentType';
 import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } from '../../utils/params';
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';
@@ -234,12 +235,12 @@ export class RequestStore {
     if (this.contentType === 'x-www-form-urlencoded') {
       postData = {
         mimeType: 'application/x-www-form-urlencoded',
-        params: getEnabledParams(this.urlEncodedParams).map(p => pick(p, 'name', 'value')),
+        params: getEnabledParams(this.urlEncodedParams).map((p) => pick(p, 'name', 'value')),
       };
     } else if (this.contentType === 'form-data') {
       postData = {
         mimeType: 'application/x-www-form-urlencoded',
-        params: getEnabledParams(this.formDataParams).map(p => pick(p, 'name', 'value')),
+        params: getEnabledParams(this.formDataParams).map((p) => pick(p, 'name', 'value')),
       };
     } else if (this.contentType === 'raw') {
       postData = {
@@ -261,7 +262,7 @@ export class RequestStore {
     } else if (this.contentType === 'binary') {
       postData = {
         mimeType: 'multipart/form-data',
-        params: getEnabledParams(this.formDataParams).map(p => ({
+        params: getEnabledParams(this.formDataParams).map((p) => ({
           name: p.name,
           fileName: p.name,
           value: p.value,
@@ -274,7 +275,7 @@ export class RequestStore {
       method: this.method.toUpperCase(),
       url: this.url,
       // @ts-ignore: Request is expecting a map, but HTTPSnippet is expecting an array
-      headers: getEnabledParams(this.headerParams).map(p => pick(p, 'name', 'value')),
+      headers: getEnabledParams(this.headerParams).map((p) => pick(p, 'name', 'value')),
       postData,
     };
   }
@@ -435,7 +436,7 @@ export class RequestStore {
     return this._pathParams || [];
   }
   public set pathParams(params: PathParam[]) {
-    const cleanParams = params.map(p => ({
+    const cleanParams = params.map((p) => ({
       ...p,
       name: p.name && p.name.replace(/[#?]/g, ''),
     }));
@@ -457,12 +458,12 @@ export class RequestStore {
 
   @computed
   public get activeContentTypeHeader() {
-    return this.headerParams.find(p => p.name.toLowerCase() === 'content-type' && p.isEnabled);
+    return this.headerParams.find((p) => p.name.toLowerCase() === 'content-type' && p.isEnabled);
   }
 
   @action
   public disableAllContentTypeHeaders() {
-    const headers = this.headerParams.filter(p => p.name.toLowerCase() === 'content-type' && p.isEnabled);
+    const headers = this.headerParams.filter((p) => p.name.toLowerCase() === 'content-type' && p.isEnabled);
     for (const header of headers) {
       this.setParam('header', this.headerParams.indexOf(header), 'isEnabled', false);
     }
@@ -555,9 +556,9 @@ export class RequestStore {
     if (this._validate) {
       let valid = true;
 
-      ['query', 'path', 'header'].forEach(type => {
+      ['query', 'path', 'header'].forEach((type) => {
         const parameters: IParam[] = this[`${type}Params`];
-        if (parameters.some(param => !!param.required && !param.value)) {
+        if (parameters.some((param) => !!param.required && !param.value)) {
           valid = false;
         }
       });
@@ -573,7 +574,7 @@ export class RequestStore {
     const params: IParam[] = this[`${type}Params`];
 
     if (typeof indexOrName === 'string') {
-      indexOrName = params.findIndex(p => p.name === indexOrName);
+      indexOrName = params.findIndex((p) => p.name === indexOrName);
     }
     const paramsCopy = [...params];
     if (paramsCopy[indexOrName]) {
@@ -601,7 +602,7 @@ export class RequestStore {
   public removeParam(type: ParamType, indexOrName: string | number) {
     const params: IParam[] = this[`${type}Params`];
     if (typeof indexOrName === 'string') {
-      indexOrName = params.findIndex(p => p.name === indexOrName);
+      indexOrName = params.findIndex((p) => p.name === indexOrName);
     }
     const paramsCopy = [...params];
     if (paramsCopy[indexOrName]) {

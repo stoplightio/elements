@@ -3,6 +3,7 @@ import cn from 'classnames';
 import copy from 'copy-to-clipboard';
 import { autorun } from 'mobx';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { languages } from './httpSnippetLanguages';
 
@@ -39,7 +40,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
           autoFocus={false}
           content={
             <Menu>
-              {languages.map(item => (
+              {languages.map((item) => (
                 <MenuItem
                   active={item.codechoice === currentLanguage.codechoice}
                   text={item.name}
@@ -57,7 +58,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
                   }}
                   children={
                     item.libraries
-                      ? item.libraries.map(library => (
+                      ? item.libraries.map((library) => (
                           <MenuItem
                             active={library.librarychoice === currentLanguage.librarychoice}
                             text={library.name}

@@ -1,6 +1,7 @@
 import { Icon, Popover } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { useLocationHash } from '../../hooks/useLocationHash';
 import { IPageHeading } from '../../types';
 

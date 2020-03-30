@@ -1,12 +1,14 @@
+import 'jest-enzyme';
+
 import { Button, ButtonGroup, InputGroup } from '@stoplight/ui-kit';
 import { Suggest } from '@stoplight/ui-kit/Select';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
+
+import { operation } from '../__fixtures__/http';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { RequestStore } from '../../../stores/request-maker/request';
-import { operation } from '../__fixtures__/http';
 import { RequestSend } from '../Request';
 import { RequestEndpoint } from '../Request/Endpoint';
 
@@ -24,7 +26,7 @@ describe('RequestEndpoint component', () => {
     }
   });
 
-  test('should show correct url and path', () => {
+  it('should show correct url and path', () => {
     Object.assign<RequestStore, Partial<RequestStore>>(store.request, {
       method: 'post',
       publicBaseUrl: 'https://test.com',
@@ -47,7 +49,7 @@ describe('RequestEndpoint component', () => {
     expect(wrapper.find(Suggest).find(InputGroup)).toHaveProp('value', 'https://test.com');
   });
 
-  test('should use default url', () => {
+  it('should use default url', () => {
     wrapper = mount(
       <RequestMakerProvider value={store}>
         <RequestEndpoint />
@@ -56,7 +58,7 @@ describe('RequestEndpoint component', () => {
     expect(wrapper.find(InputGroup).last()).toHaveValue('');
   });
 
-  test('should use url from request', () => {
+  it('should use url from request', () => {
     store.setRequestData({
       url: 'https://test.com/test?queryParamName=queryParamValue',
     });
@@ -69,7 +71,7 @@ describe('RequestEndpoint component', () => {
     expect(wrapper.find(InputGroup).last()).toHaveValue('https://test.com/test?queryParamName=queryParamValue');
   });
 
-  test('should use url from operation', () => {
+  it('should use url from operation', () => {
     store.setOperationData(operation);
 
     wrapper = mount(
@@ -81,7 +83,7 @@ describe('RequestEndpoint component', () => {
     expect(wrapper.find(Suggest).find(InputGroup)).toHaveProp('value', 'http://localhost:9001');
   });
 
-  test('should send request when the Enter key is pressed', () => {
+  it('should send request when the Enter key is pressed', () => {
     const sendSpy = jest.spyOn(store, 'send');
 
     wrapper = mount(
@@ -100,7 +102,7 @@ describe('RequestEndpoint component', () => {
     expect(sendSpy).toHaveBeenCalledTimes(1);
   });
 
-  test('runs mock() when isMockEnabled is true', () => {
+  it('runs mock() when isMockEnabled is true', () => {
     const rmStore = new RequestMakerStore({
       operation: { method: 'get', path: '/path' },
     });
@@ -113,12 +115,7 @@ describe('RequestEndpoint component', () => {
       </RequestMakerProvider>,
     );
 
-    wrapper
-      .find(RequestSend)
-      .find(ButtonGroup)
-      .find(Button)
-      .first()
-      .simulate('click');
+    wrapper.find(RequestSend).find(ButtonGroup).find(Button).first().simulate('click');
 
     expect(spy).toHaveBeenCalledTimes(1);
 

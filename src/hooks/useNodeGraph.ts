@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+
 import { INodeGraph } from '../types';
 
 interface INodeGraphOptions {
