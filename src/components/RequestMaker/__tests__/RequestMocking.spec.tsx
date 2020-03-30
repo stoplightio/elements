@@ -101,8 +101,8 @@ describe('RequestSend component', () => {
     });
   });
 
-  describe('Response Code selector', () => {
-    it.only('should set selected code and example', () => {
+  describe.only('Response Code selector', () => {
+    it('should set selected code and example', () => {
       wrapper = mount(
         <RequestMakerProvider value={store}>
           <Mocking />
@@ -113,8 +113,8 @@ describe('RequestSend component', () => {
         .find(Popover)
         .find(Button)
         .simulate('click')
-        .simulate('change', { value: '200' })
-        .simulate('change', { value: 'application/json' });
+        .simulate('change', { target: { value: '200' } })
+        .simulate('change', { target: { value: 'application/json' } });
 
       expect(example.props().text).toBe('200 - application/json');
       expect(store.request.headerParams).toContain({
@@ -135,28 +135,30 @@ describe('RequestSend component', () => {
         .find(Popover)
         .find(Button)
         .simulate('click')
-        .simulate('change', { value: '200' })
-        .simulate('change', { value: 'no-example' });
+        .simulate('change', { target: { value: '200' } })
+        .simulate('change', { target: { value: 'no-example' } });
 
       expect(example.props().text).toBe('200');
     });
 
     it('should remove example when Not Set is selected', () => {
+      store.setPrismMockingOption('code', '200');
+      store.setPrismMockingOption('exampleKey', 'application/json');
+
       wrapper = mount(
         <RequestMakerProvider value={store}>
           <Mocking />
         </RequestMakerProvider>,
       );
 
-      // set dropdown to value other than not set
-
       const example = wrapper
         .find(Popover)
         .find(Button)
         .simulate('click')
-        .simulate('change', { value: 'Not Set' });
+        .simulate('change', { target: { value: 'Not Set' } });
 
       expect(example.props().text).toBe('Not Set');
+      expect(store.request.headerParams).toHaveLength(0);
     });
   });
 
