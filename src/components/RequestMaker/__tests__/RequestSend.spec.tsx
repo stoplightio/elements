@@ -5,18 +5,18 @@ import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 
+import { mockCopy } from '../__fixtures__/mock-copy';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { RequestSend } from '../Request/Send';
-
-const mockCopy = jest.fn();
-jest.mock('copy-to-clipboard', () => mockCopy);
 
 describe('RequestSend component', () => {
   let wrapper: ReactWrapper;
   let store: RequestMakerStore;
 
   beforeEach(() => {
+    jest.resetAllMocks();
+
     store = new RequestMakerStore();
 
     wrapper = mount(
