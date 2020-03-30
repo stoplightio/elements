@@ -1808,10 +1808,10 @@
     json-schema-compare "^0.2.2"
     lodash "^4.17.4"
 
-"@stoplight/json-schema-viewer@^3.0.0-beta.10":
-  version "3.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.10.tgz#25aac5526497f61f4134dc49c9b8f53a5567e140"
-  integrity sha512-b8O3k89ea7X0KpM/zCP2bKlOa3QojCBj7HLyipnb/EbQNpkObQOfAF+kmx3lofYr1a7jygBy9E1diuWnAXZhkg==
+"@stoplight/json-schema-viewer@^3.0.0-beta.11":
+  version "3.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.11.tgz#40dc408bf270452999d45b89e47922346560c8dd"
+  integrity sha512-NwNNP+M2LOvguJKhLPzFfTCDow9w5+XLbT0bfBPqgDW6qTBWhaxBxDJ7ZVhbLN+c/jwIW0uNQBuhs6nBoUNW0g==
   dependencies:
     "@stoplight/json" "^3.5.1"
     "@stoplight/json-schema-merge-allof" "^0.6.0"
