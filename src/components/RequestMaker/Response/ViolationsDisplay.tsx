@@ -13,6 +13,9 @@ type ViolationsDisplayProps = {
 export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations }) => {
   const [tree, setTree] = useState<ITreeNode[]>([]);
   useEffect(() => {
+    const errorCount = violations.filter((v) => v.severity === 0).length;
+    const warningCount = violations.length - errorCount;
+
     const headerElement = (
       <strong className="mb-1">
         <span className="inline mr-3">
@@ -41,7 +44,7 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
         childNodes: buildTreeStructure(violations),
       },
     ]);
-  }, [violations]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [violations]);
 
   const refresh = () => setTree([...tree]);
 
@@ -59,9 +62,6 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
     nodeData.isExpanded = !nodeData.isExpanded;
     refresh();
   };
-
-  const errorCount = violations.filter((v) => v.severity === 0).length;
-  const warningCount = violations.length - errorCount;
 
   return (
     <section className="RequestMaker__ViolationsDisplay p-3 px-4">

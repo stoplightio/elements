@@ -85,6 +85,6 @@ const renderHeaderField: ItemRenderer<HeaderField> = (header, { handleClick, mod
   );
 };
 
-const filterHeaderField: ItemPredicate<HeaderField> = (query, headerField, _index) => {
+const filterHeaderField: ItemPredicate<HeaderField> = (query, headerField) => {
   return toLower(headerField.name).indexOf(toLower(query)) >= 0;
 };
