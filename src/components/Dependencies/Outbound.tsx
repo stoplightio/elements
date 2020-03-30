@@ -62,35 +62,34 @@ export const OutboundDependencies = React.forwardRef<Network, IOutboundDependenc
   const [activeNode, setActiveNode] = React.useState<Pick<IGraphNode, 'groupNodeId' | 'name' | 'srn'> | undefined>();
   const visGraph = useComputeVisGraph(node, activeNode?.groupNodeId, graph);
 
-  const onClickNode = React.useCallback(
-    (e) => {
-      const nodeId = e.nodes[0];
-      if (!nodeId) return;
+  // @ts-ignore: Because the import is ts-ignored
+  const onClickNode = (e) => {
+    const nodeId = e.nodes[0];
+    if (!nodeId) return;
 
-      if (activeNode && activeNode.groupNodeId === nodeId) {
-        setActiveNode(undefined);
-      } else if (node.id === nodeId) {
-        setActiveNode({
-          groupNodeId: node.id,
-          name: node.name,
-          srn: node.srn,
-        });
-      } else {
-        const n = graph?.nodes?.find((nd: IGraphNode) => nd.groupNodeId === nodeId);
-        if (!n) return;
+    if (activeNode && activeNode.groupNodeId === nodeId) {
+      setActiveNode(undefined);
+    } else if (node.id === nodeId) {
+      setActiveNode({
+        groupNodeId: node.id,
+        name: node.name,
+        srn: node.srn,
+      });
+    } else {
+      const n = graph?.nodes?.find((nd: IGraphNode) => nd.groupNodeId === nodeId);
+      if (!n) return;
 
-        setActiveNode(n);
-      }
-    },
-    [graph, activeNode],
-  );
+      setActiveNode(n);
+    }
+  };
 
+  const nodeId = node?.id;
   React.useEffect(() => {
     setActiveNode(undefined);
-  }, [node?.id]);
+  }, [nodeId]);
 
   if (!visGraph || !visGraph.nodes.length) {
-    return <div>This {NodeTypePrettyName[node.type]} does not have any outbound depdendencies.</div>;
+    return <div>This {NodeTypePrettyName[node.type]} does not have any outbound dependencies.</div>;
   }
 
   return (

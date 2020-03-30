@@ -4,7 +4,6 @@ import { isNonEmpty } from 'fp-ts/lib/Array';
 import * as React from 'react';
 
 import { ViolationsDisplay } from '../../../../components/RequestMaker/Response/ViolationsDisplay';
-import { RequestMakerStore } from '../../../../stores/request-maker';
 
 storiesOf('components/RequestMaker/Response/ViolationsDisplay', module)
   .addDecorator(withKnobs)

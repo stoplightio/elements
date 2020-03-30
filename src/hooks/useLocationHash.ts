@@ -12,7 +12,7 @@ export function useLocationHash() {
     window.addEventListener('hashchange', hashChange, false);
 
     return () => window.removeEventListener('hashchange', hashChange);
-  }, []);
+  }, [isBrowser]);
 
   return locationHash;
 }

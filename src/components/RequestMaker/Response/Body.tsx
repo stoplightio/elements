@@ -24,7 +24,7 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
     if (responseType === 'img') {
       setSelectedView('rendered');
     }
-  }, [body]);
+  }, [responseType]);
 
   let content;
 

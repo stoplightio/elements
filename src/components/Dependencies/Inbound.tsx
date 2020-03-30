@@ -18,7 +18,7 @@ export interface IOutboundDependencies {
   padding?: string;
 }
 
-export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, graph, className, padding }) => {
+export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, className }) => {
   const nodesByType = groupBy(graph.nodes, 'type');
   const firstTab = findKey(nodesByType, (nodes) => nodes?.length);
   const [selectedTabId, setSelectedTabId] = React.useState();

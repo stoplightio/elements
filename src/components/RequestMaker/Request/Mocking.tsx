@@ -44,7 +44,7 @@ export const Mocking = observer(() => {
     if (currentExample && !exampleOptions.find((o) => o.value === currentExample)) {
       store.setPrismMockingOption('exampleKey', undefined);
     }
-  }, [exampleOptions, currentExample]);
+  }, [exampleOptions, currentExample, store]);
 
   const currentDynamicSetting = store.prismConfig.mock && store.prismConfig.mock.dynamic ? 'dynamic' : 'static';
 

@@ -36,7 +36,7 @@ export const JsonViewer: React.FunctionComponent<JsonViewerProps> = ({
   React.useEffect(() => {
     // todo(jr): use tree structure
     tree.current.setRoot(Tree.toTree(renderTree(node)));
-  }, [tree.current]);
+  }, [node]);
 
   treeStore.current.events.on(TreeListEvents.NodeClick, (e, n) => {
     if (isParentNode(n)) {

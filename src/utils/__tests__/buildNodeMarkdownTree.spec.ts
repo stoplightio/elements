@@ -28,15 +28,9 @@ describe('buildNodeMarkdownTree', () => {
     it('renders no tabs with no examples', () => {
       expect(buildNodeMarkdownTree(NodeType.Model, modelWithNoExamples)).toMatchSnapshot();
     });
-  });
-
-  describe('Model', () => {
     it('renders no tabs with one example', () => {
       expect(buildNodeMarkdownTree(NodeType.Model, modelWithOneExample)).toMatchSnapshot();
     });
-  });
-
-  describe('Model', () => {
     it('renders no tabs with three examples', () => {
       expect(buildNodeMarkdownTree(NodeType.Model, modelWithThreeExamples)).toMatchSnapshot();
     });

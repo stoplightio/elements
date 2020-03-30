@@ -13,7 +13,7 @@ const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex
  */
 export function useComputeToc(nodes: IProjectNode[]) {
   const icons = React.useContext(IconsContext);
-  return React.useMemo(() => computeToc(nodes, icons), [nodes]);
+  return React.useMemo(() => computeToc(nodes, icons), [nodes, icons]);
 }
 
 /**

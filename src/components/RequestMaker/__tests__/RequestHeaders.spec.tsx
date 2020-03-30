@@ -85,6 +85,6 @@ describe('Header editor component', () => {
     );
     const checkbox = wrapper.find('input[type="checkbox"]').first();
     checkbox.simulate('change', { target: { checked: false } });
-    expect(requestMaker.request.headerParams[0].isEnabled).toBeFalsy();
+    expect(requestMaker.request.headerParams[0].isEnabled).toBe(false);
   });
 });

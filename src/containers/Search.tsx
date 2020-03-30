@@ -23,7 +23,7 @@ export const Search: React.FC<ISearchContainer> = ({ placeholder, srn, isOpen, o
     updateQuery(e.target.value);
   }, []);
 
-  const handleReset = React.useCallback((e) => {
+  const handleReset = React.useCallback(() => {
     updateQuery('');
   }, []);
 

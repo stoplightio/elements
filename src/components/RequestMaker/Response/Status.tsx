@@ -33,6 +33,7 @@ export const ResponseStatus = observer<IResponseStatusProps>(({ className }) => 
           browser, does the API support{' '}
           <a
             target="_blank"
+            rel="noopener noreferrer"
             className="font-semibold text-darken-7 dark:text-gray-6"
             href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"
           >

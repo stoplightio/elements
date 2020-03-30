@@ -17,7 +17,7 @@ jest.mock('@stoplight/ui-kit/ScrollContainer', () => ({
 
 jest.mock('../../../hooks/useComponents', () => ({
   __esModule: true,
-  useComponents: () => ({ link: ({ node, children }: any, id: any) => <a href={node.url}>{children}</a> }),
+  useComponents: () => ({ link: ({ node, children }: any) => <a href={node.url}>{children}</a> }),
 }));
 
 describe('Search', () => {

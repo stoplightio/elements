@@ -68,7 +68,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
       }
       return <DefaultRow key={item.href || item.id} item={item} />;
     },
-    [srn],
+    [srn, components],
   );
 
   return <UIKitTableOfContents {...props} contents={contents} rowRenderer={rowRenderer} />;
