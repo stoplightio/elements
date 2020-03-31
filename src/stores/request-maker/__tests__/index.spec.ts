@@ -464,7 +464,7 @@ describe('RequestMakerStore', () => {
         },
       ];
 
-      store.setPrismConfigurationOption('validateResponse', false);
+      store.setPrismConfigurationOption('validateResponse', true);
 
       expect(store.request.headerParams).toHaveLength(1);
       const header = store.request.headerParams[0];
@@ -473,7 +473,7 @@ describe('RequestMakerStore', () => {
       expect(parsePreferHeader(header.value)).toEqual({
         validateRequest: 'false',
         unrelatedValue: true,
-        validateResponse: 'false',
+        validateResponse: 'true',
       });
     });
 
