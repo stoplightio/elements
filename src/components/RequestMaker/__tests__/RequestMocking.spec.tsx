@@ -193,7 +193,7 @@ describe('RequestSend Response Code component', () => {
 
     it('should remove example when Not Set is selected', async () => {
       store.setPrismMockingOption('code', '200');
-      store.setPrismMockingOption('exampleKey', 'application/json');
+      store.setPrismMockingOption('exampleKey', 'first-example');
 
       render(
         <RequestMakerProvider value={store}>
@@ -201,7 +201,7 @@ describe('RequestSend Response Code component', () => {
         </RequestMakerProvider>,
       );
 
-      fireEvent.click(screen.getByText('200 - application/json'));
+      fireEvent.click(screen.getByText('200 - first-example'));
 
       const itemNotSet = await waitFor(() => screen.getByText('Not Set'));
       fireEvent.click(itemNotSet);
