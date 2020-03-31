@@ -1,6 +1,7 @@
 import 'jest-enzyme';
 
 import { Popover, Switch } from '@stoplight/ui-kit';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
@@ -8,6 +9,7 @@ import { act } from 'react-dom/test-utils';
 import { operation } from '../__fixtures__/http';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
+import { formatMultiValueHeader } from '../../../utils/headers';
 import { Mocking } from '../Request/Mocking';
 
 describe('RequestSend component', () => {
@@ -90,109 +92,6 @@ describe('RequestSend component', () => {
     });
   });
 
-  describe('Code selector', () => {
-    it('should change prism config when selecting a code', () => {
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      act(() => {
-        const select = wrapper.find('.code-selector > select');
-        simulateSelectChange(select, '200');
-      });
-
-      expect(store.prismConfig.mock && store.prismConfig.mock.code).toBe('200');
-    });
-
-    it('should remove the code from prism config when set to Not Set', () => {
-      store.setPrismMockingOption('code', '200');
-      store.setPrismMockingOption('dynamic', false);
-
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const select = wrapper.find('.code-selector > select');
-
-      expect(select).toHaveValue('200');
-
-      act(() => {
-        simulateSelectChange(select, '');
-      });
-
-      expect(store.prismConfig.mock && store.prismConfig.mock.code).toBeUndefined();
-    });
-  });
-
-  describe('Example selector', () => {
-    it('should change prismConfig when selecting an example', () => {
-      store.setPrismMockingOption('code', '200');
-      store.setPrismMockingOption('dynamic', false);
-
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const select = wrapper.find('.example-selector > select');
-
-      expect(select).toHaveValue('');
-
-      act(() => {
-        simulateSelectChange(select, 'second-example');
-      });
-
-      expect(store.prismConfig.mock && store.prismConfig.mock.exampleKey).toBe('second-example');
-    });
-
-    it('should remove the example from prismConfig when set to Not Set', () => {
-      store.setPrismMockingOption('code', '200');
-      store.setPrismMockingOption('dynamic', false);
-      store.setPrismMockingOption('exampleKey', 'first-example');
-
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const select = wrapper.find('.example-selector > select');
-
-      expect(select).toHaveValue('first-example');
-
-      act(() => {
-        simulateSelectChange(select, '');
-      });
-
-      expect(store.prismConfig.mock && store.prismConfig.mock.exampleKey).toBeUndefined();
-    });
-
-    it('should remove the the example from prismConfig if the code is changed', () => {
-      store.setPrismMockingOption('code', '200');
-      store.setPrismMockingOption('dynamic', false);
-      store.setPrismMockingOption('exampleKey', 'first-example');
-
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const codeSelect = wrapper.find('.code-selector > select');
-
-      act(() => {
-        simulateSelectChange(codeSelect, '400');
-      });
-
-      expect(store.prismConfig.mock && store.prismConfig.mock.exampleKey).toBeUndefined();
-    });
-  });
-
   describe('Dynamic/Static selector', () => {
     it('should turn on dynamic mocking in prismConfig', () => {
       wrapper = mount(
@@ -226,124 +125,88 @@ describe('RequestSend component', () => {
       expect(select.props().value).toBe('dynamic');
     });
   });
+});
 
-  describe('Validate Request switch', () => {
-    it('should set validateRequest in the prismConfig', () => {
-      store.setPrismConfigurationOption('validateRequest', false);
+describe('RequestSend Response Code component', () => {
+  let store: RequestMakerStore;
 
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const checkbox = wrapper.find('.validate-request-switch input');
-
-      expect(checkbox.props().checked).toBe(false);
-
-      act(() => {
-        simulateCheckboxToggle(checkbox);
-      });
-
-      expect(store.prismConfig.validateRequest).toBe(true);
+  beforeEach(() => {
+    store = new RequestMakerStore({
+      operation,
     });
-
-    it('should change validateRequest to false on click when already on', () => {
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const checkbox = wrapper.find('.validate-request-switch input');
-
-      expect(checkbox.props().checked).toBe(true);
-
-      act(() => {
-        simulateCheckboxToggle(checkbox);
-      });
-
-      expect(store.prismConfig.validateRequest).toBe(false);
-    });
+    store.request.method = 'post';
+    store.request.templatedPath = 'operationResource';
+    store.request.shouldMock = true;
   });
 
-  describe('Validate Response switch', () => {
-    it('should set validateResponse in the prismConfig', () => {
-      store.setPrismConfigurationOption('validateResponse', false);
-
-      wrapper = mount(
+  describe('Response Code selector', () => {
+    it('should set selected code and example', async () => {
+      render(
         <RequestMakerProvider value={store}>
           <Mocking />
         </RequestMakerProvider>,
       );
 
-      const checkbox = wrapper.find('.validate-response-switch input');
+      fireEvent.click(screen.getByText('Not Set'));
 
-      expect(checkbox.props().checked).toBe(false);
+      const item200 = await waitFor(() => screen.getByText('200'));
+      fireEvent.mouseOver(item200);
 
-      act(() => {
-        simulateCheckboxToggle(checkbox);
+      const subItem = await waitFor(() => screen.getByText('first-example'));
+      fireEvent.click(subItem);
+
+      const keyValuePairs: Array<string | [string, string]> = [
+        ['code', '200'],
+        ['example', 'first-example'],
+      ];
+
+      expect(store.request.headerParams).toContainEqual({
+        name: 'Prefer',
+        value: formatMultiValueHeader(...keyValuePairs),
+        isEnabled: true,
       });
-
-      expect(store.prismConfig.validateResponse).toBe(true);
     });
 
-    it('should change validateResponse to false on click when already on', () => {
-      wrapper = mount(
+    it('should set only code when no example is selected', async () => {
+      render(
         <RequestMakerProvider value={store}>
           <Mocking />
         </RequestMakerProvider>,
       );
 
-      const checkbox = wrapper.find('.validate-response-switch input');
+      fireEvent.click(screen.getByText('Not Set'));
 
-      expect(checkbox.props().checked).toBe(true);
+      const item200 = await waitFor(() => screen.getByText('200'));
+      fireEvent.mouseOver(item200);
 
-      act(() => {
-        simulateCheckboxToggle(checkbox);
+      const subItem = await waitFor(() => screen.getByText('No Example'));
+      fireEvent.click(subItem);
+
+      const keyValuePairs: Array<string | [string, string]> = [['code', '200']];
+
+      expect(store.request.headerParams).toContainEqual({
+        name: 'Prefer',
+        value: formatMultiValueHeader(...keyValuePairs),
+        isEnabled: true,
       });
-
-      expect(store.prismConfig.validateResponse).toBe(false);
-    });
-  });
-
-  describe('Check Security switch', () => {
-    it('should change checkSecurity to false on click when on', () => {
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const checkbox = wrapper.find('.check-security-switch input');
-
-      expect(checkbox.props().checked).toBe(true);
-
-      act(() => {
-        simulateCheckboxToggle(checkbox);
-      });
-
-      expect(store.prismConfig.checkSecurity).toBe(false);
     });
 
-    it('should change checkSecurity to true on click when off', () => {
-      store.setPrismConfigurationOption('checkSecurity', false);
+    it('should remove example when Not Set is selected', async () => {
+      store.setPrismMockingOption('code', '200');
+      store.setPrismMockingOption('exampleKey', 'first-example');
 
-      wrapper = mount(
+      render(
         <RequestMakerProvider value={store}>
           <Mocking />
         </RequestMakerProvider>,
       );
 
-      const checkbox = wrapper.find('.check-security-switch input');
+      fireEvent.click(screen.getByText('200 - first-example'));
 
-      expect(checkbox.props().checked).toBe(false);
+      const itemNotSet = await waitFor(() => screen.getByText('Not Set'));
+      fireEvent.click(itemNotSet);
 
-      act(() => {
-        simulateCheckboxToggle(checkbox);
-      });
-
-      expect(store.prismConfig.checkSecurity).toBe(true);
+      expect(store.request.headerParams).toHaveLength(0);
     });
   });
 });

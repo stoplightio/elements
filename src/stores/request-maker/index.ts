@@ -19,7 +19,7 @@ const defaultPrismConfig: IHttpConfig & { mock: IHttpOperationConfig } = {
   mock: { dynamic: false },
   checkSecurity: true,
   validateRequest: true,
-  validateResponse: true,
+  validateResponse: false,
   errors: false,
 };
 
