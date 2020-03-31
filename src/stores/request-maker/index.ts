@@ -283,8 +283,8 @@ export class RequestMakerStore {
 
     let store: ResponseStore;
     try {
-      const url = new URI(this.request.url);
-      const response = await this.prism.request(url.resource(), this.request.toPrism());
+      const url = extractPrismPathFromRequestUrl(this.request.url, this.request.baseUrl);
+      const response = await this.prism.request(url, this.request.toPrism());
       store = ResponseStore.fromMockObjectResponse({ ...response, violations: response.violations.output });
     } catch (err) {
       store = ResponseStore.fromError(err);
@@ -376,4 +376,17 @@ function parsePreferHeaders(activePreferHeaders: RequestStore['headerParams']): 
     mapKeys(mergedPreferences, (_, k) => kebabCase(k)),
     v => (v === true ? '' : v),
   );
+}
+
+/**
+ * This function extracts the relative URL (/operation) from the full request URL (https://httpbin.org/v1/operation)
+ * and the base URL given by the Server part of the HTTP Operation (https://httpbin.org/v1)
+ */
+export function extractPrismPathFromRequestUrl(requestUrl: string, baseUrl: string): string {
+  const requestUri = new URI(requestUrl);
+  const baseUri = new URI(baseUrl);
+
+  const baseUriResource = baseUri.path();
+
+  return requestUri.resource().replace(baseUriResource, baseUriResource.endsWith('/') ? '/' : '');
 }
