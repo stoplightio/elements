@@ -1,6 +1,7 @@
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { PageSkeleton } from '../components/Page/Skeleton';
 import { TableOfContents } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';

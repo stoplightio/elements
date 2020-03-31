@@ -3,6 +3,7 @@ import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import { get } from 'lodash';
 import * as React from 'react';
+
 import { HttpOperation } from '../components/HttpOperation';
 import { HttpRequest } from '../components/HttpRequest';
 import { HttpService } from '../components/HttpService';

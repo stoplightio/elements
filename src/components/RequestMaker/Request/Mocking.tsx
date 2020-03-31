@@ -2,12 +2,15 @@ import { Button, HTMLSelect, Menu, MenuDivider, MenuItem, Popover, Position, Swi
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 
 const dynamicOptions = [
   { value: 'dynamic', label: 'Dynamic' },
   { value: 'static', label: 'Static' },
 ];
+
+const notSetOption = { value: '', label: 'Not Set' };
 
 export const Mocking = observer(() => {
   const store = useRequestMakerStore();
@@ -20,6 +23,22 @@ export const Mocking = observer(() => {
   const currentCode = (store.prismConfig.mock && store.prismConfig.mock.code) || '';
 
   const currentExample = (store.prismConfig.mock && store.prismConfig.mock.exampleKey) || '';
+
+  const exampleOptions = React.useMemo(() => {
+    const response = operationResponses?.find(r => r.code === currentCode);
+    if (!response || !response.contents) {
+      return [notSetOption];
+    }
+    const options = response.contents.flatMap(c => c.examples || []).map(e => ({ value: e.key, label: e.key }));
+    return [notSetOption, ...options];
+  }, [operationResponses, currentCode]);
+
+  // if the current example is not available anymore, remove it from the URL
+  React.useEffect(() => {
+    if (currentExample && !exampleOptions.find(o => o.value === currentExample)) {
+      store.setPrismMockingOption('exampleKey', undefined);
+    }
+  }, [exampleOptions, currentExample, store]);
 
   const currentDynamicSetting = store.prismConfig.mock && store.prismConfig.mock.dynamic ? 'dynamic' : 'static';
 

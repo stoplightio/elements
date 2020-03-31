@@ -5,6 +5,7 @@ import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
+
 import httpOperation from '../../__fixtures__/operations/put-todos';
 import httpService from '../../__fixtures__/services/petstore';
 import { Changelog } from '../../components/Changelog';

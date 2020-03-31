@@ -1,8 +1,8 @@
+import { withKnobs } from '@storybook/addon-knobs';
+import { object, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
-import { withKnobs } from '@storybook/addon-knobs';
-import { object, text } from '@storybook/addon-knobs/react';
 import operation from '../../__fixtures__/operations/put-todos';
 import { TryIt } from '../../components/TryIt';
 

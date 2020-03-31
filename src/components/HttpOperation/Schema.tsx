@@ -5,6 +5,7 @@ import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight
 import cn from 'classnames';
 import { map, size } from 'lodash';
 import * as React from 'react';
+
 import { SchemaViewer } from '../SchemaViewer/SchemaViewer';
 
 export interface ISchema {

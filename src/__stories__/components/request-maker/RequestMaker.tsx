@@ -1,6 +1,7 @@
 import { object, select, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
+
 import { invalidOperation } from '../../../__fixtures__/operations/invalid-response-example';
 import { operation, request } from '../../../__fixtures__/operations/simple';
 import { RequestEditor, RequestEndpoint } from '../../../components/RequestMaker/Request';

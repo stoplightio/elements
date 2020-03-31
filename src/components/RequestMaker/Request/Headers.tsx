@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { toLower } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { ParamField as HeaderField } from '../../../stores/request-maker/types';
 import { allHeaderFields } from '../../../utils/headers';
 import { highlightText } from '../../../utils/highlightText';
@@ -67,20 +68,6 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
 
 const HeaderSuggest = Suggest.ofType<HeaderField>();
 
-const renderCreateHeaderFieldOption = (
-  query: string,
-  active: boolean,
-  handleClick: React.MouseEventHandler<HTMLElement>,
-) => (
-  <MenuItem
-    icon="add"
-    text={`Set custom header "${query}"`}
-    active={active}
-    onClick={handleClick}
-    shouldDismissPopover={false}
-  />
-);
-
 // REF: https://github.com/palantir/blueprint/blob/develop/packages/docs-app/src/examples/select-examples/suggestExample.tsx
 const renderHeaderField: ItemRenderer<HeaderField> = (header, { handleClick, modifiers, query }) => {
   if (!modifiers.matchesPredicate) {
@@ -98,6 +85,6 @@ const renderHeaderField: ItemRenderer<HeaderField> = (header, { handleClick, mod
   );
 };
 
-const filterHeaderField: ItemPredicate<HeaderField> = (query, headerField, _index, exactMatch) => {
+const filterHeaderField: ItemPredicate<HeaderField> = (query, headerField) => {
   return toLower(headerField.name).indexOf(toLower(query)) >= 0;
 };

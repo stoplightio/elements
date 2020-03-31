@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { isNonEmpty } from 'fp-ts/lib/Array';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { ErrorViewer } from './ErrorViewer';
 import { HTMLViewer } from './HTMLViewer';
@@ -23,7 +24,7 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
     if (responseType === 'img') {
       setSelectedView('rendered');
     }
-  }, [body]);
+  }, [responseType]);
 
   let content;
 

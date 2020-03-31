@@ -1,5 +1,6 @@
 import { Dictionary } from '@stoplight/types';
 import { forEach } from 'lodash';
+
 import { IParam } from '../stores/request-maker/types';
 
 export function getEnabledParams<T = string>(params: Array<IParam<T>>) {

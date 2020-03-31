@@ -4,6 +4,7 @@ import { Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { get, isEmpty, keys, omit, omitBy, sortBy } from 'lodash';
 import * as React from 'react';
+
 import { MarkdownViewer } from '../MarkdownViewer';
 
 export interface IParametersProps {

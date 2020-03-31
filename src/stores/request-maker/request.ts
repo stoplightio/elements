@@ -7,6 +7,7 @@ import { isEmpty, mapKeys, pick, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
 import URI from 'urijs';
+
 import { getContentType } from '../../utils/getContentType';
 import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } from '../../utils/params';
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';
@@ -572,13 +573,12 @@ export class RequestStore {
   public setParam<T extends keyof IParam>(type: ParamType, indexOrName: string | number, prop: T, value: IParam[T]) {
     const params: IParam[] = this[`${type}Params`];
 
-    if (typeof indexOrName === 'string') {
-      indexOrName = params.findIndex(p => p.name === indexOrName);
-    }
+    const index = typeof indexOrName === 'number' ? indexOrName : params.findIndex(p => p.name === indexOrName);
+
     const paramsCopy = [...params];
-    if (paramsCopy[indexOrName]) {
-      paramsCopy[indexOrName] = {
-        ...paramsCopy[indexOrName],
+    if (paramsCopy[index]) {
+      paramsCopy[index] = {
+        ...paramsCopy[index],
         [prop]: value,
       };
       this[`${type}Params`] = paramsCopy;
@@ -600,12 +600,12 @@ export class RequestStore {
   @action
   public removeParam(type: ParamType, indexOrName: string | number) {
     const params: IParam[] = this[`${type}Params`];
-    if (typeof indexOrName === 'string') {
-      indexOrName = params.findIndex(p => p.name === indexOrName);
-    }
+
+    const index = typeof indexOrName === 'number' ? indexOrName : params.findIndex(p => p.name === indexOrName);
+
     const paramsCopy = [...params];
-    if (paramsCopy[indexOrName]) {
-      paramsCopy.splice(indexOrName, 1);
+    if (paramsCopy[index]) {
+      paramsCopy.splice(index, 1);
       this[`${type}Params`] = paramsCopy;
     }
   }

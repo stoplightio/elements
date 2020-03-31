@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { Search as SearchComponent } from '../components/Search';
 import { useDebounce } from '../hooks';
 import { useProjectSearch } from '../hooks/useProjectSearch';
@@ -22,7 +23,7 @@ export const Search: React.FC<ISearchContainer> = ({ placeholder, srn, isOpen, o
     updateQuery(e.target.value);
   }, []);
 
-  const handleReset = React.useCallback(e => {
+  const handleReset = React.useCallback(() => {
     updateQuery('');
   }, []);
 

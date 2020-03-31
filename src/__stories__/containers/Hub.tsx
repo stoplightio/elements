@@ -1,9 +1,10 @@
 import { NodeType } from '@stoplight/types';
-import { object, withKnobs } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { boolean, text } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { Docs } from '../../components/Docs';
 import { TryIt } from '../../components/TryIt';
 import { Hub } from '../../containers/Hub';

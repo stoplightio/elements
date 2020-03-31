@@ -1,4 +1,5 @@
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
+
 import op from './put-todos';
 
 export const operation: IHttpOperation = op;

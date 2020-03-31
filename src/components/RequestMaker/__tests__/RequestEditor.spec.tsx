@@ -1,7 +1,9 @@
-import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
+
+import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
+
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { RequestEditor } from '../Request/Editor';
@@ -25,7 +27,7 @@ describe('RequestSend component', () => {
     wrapper.unmount();
   });
 
-  test('should show correct path parameter count', () => {
+  it('should show correct path parameter count', () => {
     act(() => {
       store.request.addParam('path', 'test', 'test', true);
     });
@@ -35,7 +37,7 @@ describe('RequestSend component', () => {
     expect(wrapper.findWhere(c => c.is(TabTitle) && c.prop('title') === 'Path')).toHaveProp('count', 1);
   });
 
-  test('should show correct query parameter count', () => {
+  it('should show correct query parameter count', () => {
     act(() => {
       store.request.addParam('query', 'test', 'test', true);
     });
@@ -45,7 +47,7 @@ describe('RequestSend component', () => {
     expect(wrapper.findWhere(c => c.is(TabTitle) && c.prop('title') === 'Query')).toHaveProp('count', 1);
   });
 
-  test('should show correct header parameter count', () => {
+  it('should show correct header parameter count', () => {
     act(() => {
       store.request.addParam('header', 'test', 'test', true);
     });
@@ -55,7 +57,7 @@ describe('RequestSend component', () => {
     expect(wrapper.findWhere(c => c.is(TabTitle) && c.prop('title') === 'Headers')).toHaveProp('count', 1);
   });
 
-  test('should show correct body count', () => {
+  it('should show correct body count', () => {
     act(() => {
       store.request.contentType = 'raw';
       store.request.body = '{}';

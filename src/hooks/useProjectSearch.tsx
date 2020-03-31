@@ -1,6 +1,7 @@
 import { deserializeSrn, serializeSrn } from '@stoplight/path';
 import * as React from 'react';
 import useSWR from 'swr';
+
 import { ProjectTokenContext } from '../containers/Provider';
 import { IPaginatedResponse, IProjectNode } from '../types';
 import { useFetchClient } from '../utils/useFetchClient';

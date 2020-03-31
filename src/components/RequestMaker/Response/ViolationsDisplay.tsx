@@ -1,6 +1,6 @@
 import { ITreeNode, Tree } from '@blueprintjs/core';
 import { IPrismDiagnostic } from '@stoplight/prism-core';
-import { Button, Code, Collapse, Icon } from '@stoplight/ui-kit';
+import { Code, Icon } from '@stoplight/ui-kit';
 import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray';
 import { isEqual, uniq } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -13,6 +13,9 @@ type ViolationsDisplayProps = {
 export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations }) => {
   const [tree, setTree] = useState<ITreeNode[]>([]);
   useEffect(() => {
+    const errorCount = violations.filter(v => v.severity === 0).length;
+    const warningCount = violations.length - errorCount;
+
     const headerElement = (
       <strong className="mb-1">
         <span className="inline mr-3">
@@ -59,9 +62,6 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
     nodeData.isExpanded = !nodeData.isExpanded;
     refresh();
   };
-
-  const errorCount = violations.filter(v => v.severity === 0).length;
-  const warningCount = violations.length - errorCount;
 
   return (
     <section className="RequestMaker__ViolationsDisplay p-3 px-4">

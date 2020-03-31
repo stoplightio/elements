@@ -1,4 +1,5 @@
 import { deserializeSrn as _desiralizeSrn, serializeSrn as _serializeSrn } from '@stoplight/path';
+
 import { IDeserializedSrn } from '../types';
 
 export function deserializeSrn(srn: string): IDeserializedSrn {

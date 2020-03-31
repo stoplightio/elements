@@ -5,6 +5,7 @@ import { Node } from '@stoplight/markdown/ast-types/unist';
 import { Builder } from '@stoplight/markdown/builder';
 import { NodeType } from '@stoplight/types';
 import { JSONSchema4 } from 'json-schema';
+
 import { IDiagnostic } from '../types';
 
 export function buildNodeMarkdownTree(type: NodeType, data: unknown, errors?: IDiagnostic[]): IRoot {

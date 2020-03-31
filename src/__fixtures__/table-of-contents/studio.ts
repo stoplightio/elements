@@ -1,4 +1,5 @@
 import { NodeType } from '@stoplight/types';
+
 import { IProjectNode } from '../../types';
 
 export const nodes: IProjectNode[] = [

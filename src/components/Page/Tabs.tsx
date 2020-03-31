@@ -1,6 +1,7 @@
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { INodeInfo } from '../../types';
 import { PageContainer } from './Container';
 
