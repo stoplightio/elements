@@ -1,17 +1,18 @@
 import { IBranchNode, INodeFilter } from '../types';
 
-export function matchesNodeFilter(node: IBranchNode, filter?: INodeFilter) {
+export function matchesNodeFilter(branchNode: IBranchNode, filter?: INodeFilter) {
   if (!filter) return true;
 
   let isMatch = false;
 
   if (filter.nodeType) {
-    isMatch = filter.nodeType === node.snapshot.type;
+    isMatch = filter.nodeType === branchNode.snapshot.type;
   }
 
   if (filter.nodeUri) {
     // TODO (CL): use minimatch here to match glob patterns
-    isMatch = node.baseUri.startsWith(filter.nodeUri);
+    const uri = branchNode.baseUri || branchNode.node.uri;
+    isMatch = uri.startsWith(filter.nodeUri);
   }
 
   return isMatch;

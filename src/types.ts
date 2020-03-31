@@ -9,9 +9,9 @@ export interface INodeFilter {
 
 export interface IBranchNode {
   id: number;
-  baseUri: string;
-  version: string;
-  isLatestVersion: boolean;
+  baseUri?: string;
+  version?: string;
+  isLatestVersion?: boolean;
 
   node: {
     id: number;
@@ -20,26 +20,11 @@ export interface IBranchNode {
 
   snapshot: {
     id: number;
-    name: string;
     type: string;
-    summary: string;
-    data: unknown;
+    name: string;
+    summary?: string;
+    data?: unknown;
     tagNames?: string[];
-  };
-
-  branch: {
-    id: number;
-    slug: string;
-
-    project: {
-      id: number;
-      slug: string;
-
-      workspace: {
-        id: number;
-        slug: string;
-      };
-    };
   };
 }
 
