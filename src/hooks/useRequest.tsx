@@ -108,6 +108,7 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
 
     return sendRequest(request);
   }, [request]); // eslint-disable-line react-hooks/exhaustive-deps
+  // TODO: think about why the disable is needed above and refactor it if we can (the effect was there before the eslint rule)
 
   return {
     isLoading,
