@@ -26,16 +26,17 @@
     "build.styles": "copyfiles -u 1 \"./src/styles/**/*\" ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "commit": "git-cz",
-    "lint": "tsc --noEmit && eslint --ext .ts,.tsx,.js,.jsx src",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx src",
     "lint.fix": "eslint --ext .ts,.tsx,.js,.jsx --fix src",
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
     "release.dryRun": "sl-scripts release --dry-run --debug",
     "storybook": "start-storybook -p 9001",
     "test": "jest",
-    "test.prod": "yarn lint && yarn test --coverage --maxWorkers=2",
+    "test.prod": "yarn type-check && yarn lint && yarn test --coverage --maxWorkers=2",
     "test.update": "yarn test --updateSnapshot",
-    "test.watch": "yarn test --watch"
+    "test.watch": "yarn test --watch",
+    "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
     "@stoplight/prism-http": ">=3.2.9",
