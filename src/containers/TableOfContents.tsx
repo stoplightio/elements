@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
 import { useProjectNodes } from '../hooks/useProjectNodes';

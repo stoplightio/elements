@@ -1,6 +1,7 @@
 import { NodeType } from '@stoplight/types';
 import * as fs from 'fs';
 import * as path from 'path';
+
 import { computeToc } from '../useComputeToc';
 
 const fixturesPath = '../../__fixtures__/table-of-contents';

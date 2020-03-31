@@ -1,4 +1,5 @@
 import { IApiKeySecurityScheme, IBasicSecurityScheme } from '@stoplight/types';
+
 import { getOperationData } from '../getOperationData';
 
 describe('getOperationData()', () => {

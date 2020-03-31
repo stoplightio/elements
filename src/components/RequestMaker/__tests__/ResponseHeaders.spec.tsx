@@ -1,7 +1,9 @@
+import 'jest-enzyme';
+
 import { IPrismDiagnostic } from '@stoplight/prism-core';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
+
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { ResponseStore } from '../../../stores/request-maker/response';
@@ -30,7 +32,7 @@ describe('ResponseHeaders component', () => {
     wrapper.unmount();
   });
 
-  test('should show message when no headers are present', () => {
+  it('should show message when no headers are present', () => {
     render();
     expect(wrapper.text()).toContain('No response headers');
   });
@@ -49,7 +51,7 @@ describe('ResponseHeaders component', () => {
       },
     ];
 
-    test('should only render header violations', () => {
+    it('should only render header violations', () => {
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
           'Content-Type': 'application/json',

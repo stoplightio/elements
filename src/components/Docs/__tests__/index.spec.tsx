@@ -1,10 +1,11 @@
+import 'jest-enzyme';
+
 import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
 import { mount } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';

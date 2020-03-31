@@ -1,6 +1,8 @@
-import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
+
+import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
+
 import httpService from '../../../__fixtures__/services/petstore';
 import { HttpService } from '../index';
 

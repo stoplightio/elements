@@ -1,8 +1,10 @@
+import 'jest-enzyme';
+
 import { HttpSecurityScheme } from '@stoplight/types';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import { flatten } from 'lodash';
 import * as React from 'react';
+
 import { HttpSecuritySchemes } from '../index';
 
 describe('HttpSecuritySchemes', () => {

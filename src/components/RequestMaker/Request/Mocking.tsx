@@ -1,6 +1,7 @@
 import { HTMLSelect, Popover, Switch } from '@stoplight/ui-kit';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 
 const notSetOption = { value: '', label: 'Not Set' };
@@ -43,7 +44,7 @@ export const Mocking = observer(() => {
     if (currentExample && !exampleOptions.find(o => o.value === currentExample)) {
       store.setPrismMockingOption('exampleKey', undefined);
     }
-  }, [exampleOptions, currentExample]);
+  }, [exampleOptions, currentExample, store]);
 
   const currentDynamicSetting = store.prismConfig.mock && store.prismConfig.mock.dynamic ? 'dynamic' : 'static';
 

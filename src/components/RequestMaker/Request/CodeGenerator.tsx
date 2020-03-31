@@ -3,6 +3,7 @@ import cn from 'classnames';
 import copy from 'copy-to-clipboard';
 import { autorun } from 'mobx';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 import { languages } from './httpSnippetLanguages';
 
@@ -55,27 +56,26 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
                       setGeneratedCode(requestStore.generateCode(item.codechoice));
                     }
                   }}
-                  children={
-                    item.libraries
-                      ? item.libraries.map(library => (
-                          <MenuItem
-                            active={library.librarychoice === currentLanguage.librarychoice}
-                            text={library.name}
-                            key={library.name}
-                            onClick={() => {
-                              setCurrentLanguage({
-                                codechoice: item.codechoice,
-                                librarychoice: library.librarychoice,
-                                mode: item.mode,
-                                text: `${item.name} / ${library.name}`,
-                              });
-                              setGeneratedCode(requestStore.generateCode(item.codechoice, library.librarychoice));
-                            }}
-                          />
-                        ))
-                      : null
-                  }
-                />
+                >
+                  {item.libraries
+                    ? item.libraries.map(library => (
+                        <MenuItem
+                          active={library.librarychoice === currentLanguage.librarychoice}
+                          text={library.name}
+                          key={library.name}
+                          onClick={() => {
+                            setCurrentLanguage({
+                              codechoice: item.codechoice,
+                              librarychoice: library.librarychoice,
+                              mode: item.mode,
+                              text: `${item.name} / ${library.name}`,
+                            });
+                            setGeneratedCode(requestStore.generateCode(item.codechoice, library.librarychoice));
+                          }}
+                        />
+                      ))
+                    : null}
+                </MenuItem>
               ))}
             </Menu>
           }

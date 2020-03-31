@@ -1,10 +1,12 @@
+import 'jest-enzyme';
+
 import { HTMLSelect } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
+
+import { operation, request } from '../__fixtures__/http';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
-import { operation, request } from '../__fixtures__/http';
 import { RequestMethod } from '../Request/Method';
 
 describe('RequestMethod component', () => {
@@ -21,7 +23,7 @@ describe('RequestMethod component', () => {
     }
   });
 
-  test('should show correct method', () => {
+  it('should show correct method', () => {
     requestMaker.request.method = 'post';
     wrapper = mount(
       <RequestMakerProvider value={requestMaker}>
@@ -31,7 +33,7 @@ describe('RequestMethod component', () => {
     expect(wrapper.find(HTMLSelect)).toHaveProp('value', 'POST');
   });
 
-  test('should use default method', () => {
+  it('should use default method', () => {
     wrapper = mount(
       <RequestMakerProvider value={requestMaker}>
         <RequestMethod />
@@ -40,7 +42,7 @@ describe('RequestMethod component', () => {
     expect(wrapper.find(HTMLSelect)).toHaveProp('value', 'GET');
   });
 
-  test('should use method from request', () => {
+  it('should use method from request', () => {
     requestMaker.setRequestData(request);
     wrapper = mount(
       <RequestMakerProvider value={requestMaker}>
@@ -50,7 +52,7 @@ describe('RequestMethod component', () => {
     expect(wrapper.find(HTMLSelect)).toHaveProp('value', 'PUT');
   });
 
-  test('should use method from operation', () => {
+  it('should use method from operation', () => {
     requestMaker.setOperationData(operation);
 
     wrapper = mount(

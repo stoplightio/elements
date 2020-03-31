@@ -1,11 +1,13 @@
+import 'jest-enzyme';
+
 import { Popover, Switch } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
+
+import { operation } from '../__fixtures__/http';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
-import { operation } from '../__fixtures__/http';
 import { Mocking } from '../Request/Mocking';
 
 describe('RequestSend component', () => {
@@ -35,11 +37,7 @@ describe('RequestSend component', () => {
         </RequestMakerProvider>,
       );
 
-      const checkbox = wrapper
-        .find(Popover)
-        .find(Switch)
-        .find({ type: 'checkbox' })
-        .first();
+      const checkbox = wrapper.find(Popover).find(Switch).find({ type: 'checkbox' }).first();
 
       expect(checkbox.props().checked).toBe(false);
 
@@ -59,11 +57,7 @@ describe('RequestSend component', () => {
         </RequestMakerProvider>,
       );
 
-      const checkbox = wrapper
-        .find(Popover)
-        .find(Switch)
-        .find({ type: 'checkbox' })
-        .first();
+      const checkbox = wrapper.find(Popover).find(Switch).find({ type: 'checkbox' }).first();
 
       expect(checkbox.props().checked).toBe(true);
 
@@ -84,11 +78,7 @@ describe('RequestSend component', () => {
         </RequestMakerProvider>,
       );
 
-      const checkbox = wrapper
-        .find(Popover)
-        .find(Switch)
-        .find({ type: 'checkbox' })
-        .first();
+      const checkbox = wrapper.find(Popover).find(Switch).find({ type: 'checkbox' }).first();
 
       expect(checkbox.props().checked).toBe(false);
 
@@ -360,10 +350,7 @@ describe('RequestSend component', () => {
 
 function simulateSelectChange(select: ReactWrapper, value: string) {
   // apparently this is the way you simulate a change to a dropdown in enzyme / jsdom.
-  const option = select
-    .find(`option[value='${value}']`)
-    .first()
-    .getDOMNode() as HTMLOptionElement;
+  const option = select.find(`option[value='${value}']`).first().getDOMNode() as HTMLOptionElement;
   option.selected = true;
   select.simulate('change');
 }

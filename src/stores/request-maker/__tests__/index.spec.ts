@@ -1,10 +1,12 @@
+import 'jest-enzyme';
+
 import { safeStringify } from '@stoplight/json';
 import { IHttpConfig } from '@stoplight/prism-http';
 import { HttpParamStyles } from '@stoplight/types';
 import axios from 'axios';
-import 'jest-enzyme';
 import { without } from 'lodash';
 import parsePreferHeader from 'parse-prefer-header';
+
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';

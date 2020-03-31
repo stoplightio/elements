@@ -3,7 +3,7 @@ import { replaceParamsInPath } from '../url';
 
 describe('url', () => {
   describe('replace path params', () => {
-    test('should replace path params correctly', () => {
+    it('should replace path params correctly', () => {
       const params: PathParam[] = [
         {
           name: 'pathName',

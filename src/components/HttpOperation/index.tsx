@@ -2,6 +2,7 @@ import { IHttpOperation, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { useResolver } from '../../hooks/useResolver';
 import { MarkdownViewer } from '../MarkdownViewer';
 import { Request } from './Request';

@@ -1,6 +1,7 @@
 import { IHeading, IRoot, ITextNode } from '@stoplight/markdown';
 import * as React from 'react';
 import { Parent } from 'unist';
+
 import { IPageHeading } from '../types';
 
 const selectAll = require('unist-util-select').selectAll;

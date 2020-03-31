@@ -5,6 +5,7 @@ import { FixedSizeList } from '@stoplight/ui-kit/ScrollList';
 import cn from 'classnames';
 import { findKey, groupBy, sortBy, toUpper } from 'lodash';
 import * as React from 'react';
+
 import { IGraphNode, INodeGraph, INodeInfo } from '../../types';
 import { NodeTypeIcons } from '../../utils/node';
 import { GoToRef } from './GoToRef';
@@ -17,7 +18,7 @@ export interface IOutboundDependencies {
   padding?: string;
 }
 
-export const InboundDependencies: React.FC<IOutboundDependencies> = ({ node, graph, className, padding }) => {
+export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, className }) => {
   const nodesByType = groupBy(graph.nodes, 'type');
   const firstTab = findKey(nodesByType, nodes => nodes?.length);
   const [selectedTabId, setSelectedTabId] = React.useState();

@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { RequestMakerStore } from '../stores/request-maker';
-import { RequestStore } from '../stores/request-maker/request';
-import { ResponseStore } from '../stores/request-maker/response';
-
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 import { has } from 'lodash';
 import { MD5 } from 'object-hash';
+import * as React from 'react';
+
+import { RequestMakerStore } from '../stores/request-maker';
+import { RequestStore } from '../stores/request-maker/request';
+import { ResponseStore } from '../stores/request-maker/response';
 
 // Maps a hash of the operation/request to the RequestMakerStore
 const RequestMakers = new Map<string, RequestMakerStore>();

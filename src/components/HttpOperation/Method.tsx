@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import * as React from 'react';
+
 import { HttpMethodColors } from '../../utils/http';
 
 export const Method: React.FunctionComponent<{

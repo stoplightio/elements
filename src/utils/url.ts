@@ -1,6 +1,7 @@
 import { Dictionary } from '@stoplight/types';
 import { differenceBy, filter, map, omit } from 'lodash';
 import URI from 'urijs';
+
 import { IParam, PathParam, QueryParam } from '../stores/request-maker/types';
 import { getNameValuePairs } from './params';
 

@@ -4,6 +4,7 @@ import { IHttpResponse as PrismHttpResponse } from '@stoplight/prism-http/dist/t
 import { Dictionary, IHttpRequest } from '@stoplight/types';
 import axios, { AxiosError } from 'axios';
 import { computed, observable } from 'mobx';
+
 import { arrayBufferToBase64String, arrayBufferUtf8ToString, stringToArrayBuffer } from '../../utils/arrayBuffer';
 import { getResponseType } from '../../utils/getResponseType';
 import { HttpCodeDescriptions } from '../../utils/http';
