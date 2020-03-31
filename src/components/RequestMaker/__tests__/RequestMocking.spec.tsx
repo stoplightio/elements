@@ -1,6 +1,8 @@
-import { Button, Menu, Popover, Switch } from '@stoplight/ui-kit';
+import { Button, MenuItem, Popover, Switch } from '@stoplight/ui-kit';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
+// import '@testing-library/jest-dom/extend-expect';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
@@ -102,24 +104,24 @@ describe('RequestSend component', () => {
   });
 
   describe.only('Response Code selector', () => {
-    it('should set selected code and example', () => {
-      wrapper = mount(
+    it('should set selected code and example', async () => {
+      render(
         <RequestMakerProvider value={store}>
           <Mocking />
         </RequestMakerProvider>,
       );
 
-      const example = wrapper
-        .find(Popover)
-        .find(Button)
-        .simulate('click')
-        .simulate('change', { target: { value: '200' } })
-        .simulate('change', { target: { value: 'application/json' } });
+      fireEvent.click(screen.getByText('Not Set'));
 
-      expect(example.props().text).toBe('200 - application/json');
+      const item200 = await waitFor(() => screen.getByText('200'));
+      fireEvent.mouseOver(item200);
+
+      const subItem = await waitFor(() => screen.getByText('first-example'));
+      fireEvent.click(subItem);
+
       expect(store.request.headerParams).toContain({
         name: 'Prefer',
-        value: formatMultiValueHeader(['200', 'application/json']),
+        value: formatMultiValueHeader(['200', 'first-example']),
         isEnabled: true,
       });
     });
