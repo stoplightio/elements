@@ -10,13 +10,5 @@ export const HTMLViewer: React.FunctionComponent<HTMLViewerProps> = ({ srcDoc })
   if (!srcDoc) {
     return null;
   }
-  return (
-    <iframe
-      className="w-full RequestMaker__HTMLViewer"
-      srcDoc={stringifyHTML(srcDoc)}
-      sandbox=""
-      height="100%"
-      csp="default-src 'self'; img-src 'none'"
-    />
-  );
+  return <iframe className="w-full RequestMaker__HTMLViewer" srcDoc={stringifyHTML(srcDoc)} sandbox="" height="100%" />;
 };

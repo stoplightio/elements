@@ -2,7 +2,9 @@ import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { Client, Provider as UrqlProvider } from 'urql';
 
-import { IBranchNode, NodeIconMapping } from '../types';
+import { defaultComponents } from '../hooks/useComponents';
+import { NodeIconMapping } from '../types';
+import { getUrqlClient } from '../utils/urql';
 
 export interface IProvider {
   host: string;
@@ -13,41 +15,9 @@ export interface IProvider {
 
   urqlClient?: Client;
   components?: IComponentMapping;
-  Link?: React.FC<{ workspace: string; project: string; branch: string; node: string }>;
 }
 
-let client: Client;
-function getClient(host: string, urqlClient?: Client) {
-  if (client) return client;
-
-  if (urqlClient) {
-    client = urqlClient;
-  } else {
-    // TODO (CL): create urql client
-  }
-
-  return client;
-}
-
-export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
-
-export const ActiveNodeContext = React.createContext<[IBranchNode | undefined, (node?: IBranchNode) => void]>([
-  undefined,
-  () => undefined,
-]);
-
-export const ActiveNodeProvider: React.FC = ({ children }) => {
-  const [node, setNode] = React.useState<IBranchNode>();
-
-  return <ActiveNodeContext.Provider value={[node, setNode]}>{children}</ActiveNodeContext.Provider>;
-};
-
-const DefaultLink: React.FC<{ workspace: string; project: string; branch: string; node: string }> = ({ children }) => (
-  <>{children}</>
-);
-export const LinkContext = React.createContext<
-  React.FC<{ workspace: string; project: string; branch: string; node: string }>
->(DefaultLink);
+export const ComponentsContext = React.createContext<IComponentMapping | undefined>(defaultComponents);
 
 const defaultIcons: NodeIconMapping = {};
 export const IconsContext = React.createContext<NodeIconMapping>(defaultIcons);
@@ -71,7 +41,6 @@ export const Provider: React.FC<IProvider> = ({
   project,
   branch,
   node,
-  Link = DefaultLink,
   urqlClient,
   components,
   children,
@@ -83,15 +52,13 @@ export const Provider: React.FC<IProvider> = ({
     node,
   };
 
+  const client = getUrqlClient(host, urqlClient);
+
   return (
-    <UrqlProvider value={getClient(host, urqlClient)}>
+    <UrqlProvider value={client}>
       <IconsContext.Provider value={defaultIcons}>
         <ComponentsContext.Provider value={components}>
-          <LinkContext.Provider value={Link}>
-            <ActiveInfoContext.Provider value={info}>
-              <ActiveNodeProvider>{children}</ActiveNodeProvider>
-            </ActiveInfoContext.Provider>
-          </LinkContext.Provider>
+          <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>
         </ComponentsContext.Provider>
       </IconsContext.Provider>
     </UrqlProvider>

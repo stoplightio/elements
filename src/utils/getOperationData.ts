@@ -1,3 +1,4 @@
+import { JSONSchema } from '@stoplight/prism-http';
 import { HttpMethod, IHttpOperation, IHttpParam } from '@stoplight/types';
 import { filter, flatten, get, has } from 'lodash';
 
@@ -11,15 +12,17 @@ export function getOperationData(operation: Partial<IHttpOperation>): Partial<Re
   let auth;
 
   for (const security of flatten(operation.security)) {
+    const schema: JSONSchema = {
+      type: 'string',
+      description: security.description,
+    };
+
     if (security.type === 'http' && security.scheme === 'bearer') {
       headerParams.push({
         name: 'authorization',
         value: 'Bearer',
         isEnabled: true,
-        schema: {
-          type: 'string',
-          description: security.description,
-        },
+        schema,
         required: true,
       });
     } else if (security.type === 'http' && security.scheme === 'basic') {
@@ -29,10 +32,7 @@ export function getOperationData(operation: Partial<IHttpOperation>): Partial<Re
         name: security.name,
         value: '',
         isEnabled: true,
-        schema: {
-          type: security.type,
-          description: security.description,
-        },
+        schema,
         required: true,
       };
 

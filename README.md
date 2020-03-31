@@ -13,6 +13,8 @@ yarn add @stoplight/elements
 
 ### Usage
 
+#### React Components
+
 ```tsx
 import { Docs, Content, ContentTabs, Provider, TableOfContents, RequestMaker, Relationships } from '@stoplight/elements';
 
@@ -49,6 +51,69 @@ import { Docs, Content, ContentTabs, Provider, TableOfContents, RequestMaker, Re
 </Provider>
 ```
 
+```tsx
+import { Docs, Content, ContentTabs, Provider, TableOfContents, RequestMaker, Relationships } from '@stoplight/elements';
+import { Tabs } from '@stoplight/ui-kit';
+
+<Provider 
+  host="stoplight.io"
+  workspace="bigcommerce" 
+  project="dev-docs" 
+  node="reference/bigcommerce_subscribers_api.oas2.yml"
+  components={{
+    link: Link
+  }}
+>
+  <Tabs>
+    <Tab
+      title="Docs"
+      content={<Docs node={node} />}
+    />
+
+    <Tab
+      title="TryIt"
+      content={<RequestMaker node={node} />}
+    />
+
+    <Tab
+      title="Relationships"
+      content={<Relationships node={node} edges={edges} />}
+    />
+    
+    <Tab
+      title="Changelog"
+      content={<Changelog node={node} changes={changes} />}
+    />
+  </Tabs>
+</Provider>
+```
+
+#### Web Components
+
+```html
+<html>
+  <head>
+    <script async defer src="https://cdn.stoplight.io/assets/elements.js"></script>
+  </head>
+
+  <body>
+    <stoplight-provider 
+      host="stoplight.io"
+      workspace="bigcommerce" 
+      project="dev-docs" 
+      node="reference/bigcommerce_subscribers_api.oas2.yml"
+      theme="dark"
+    >
+      <div className='flex'>
+        <stoplight-tableofcontents filter="nodeUri=reference;"></stoplight-tableofcontents>
+
+        <stoplight-docs></stoplight-docs>
+      </div>
+    </stoplight-provider>
+  </body>
+</html>
+```
+
 ### Contributing
 
 1. Clone repo.
@@ -60,28 +125,3 @@ import { Docs, Content, ContentTabs, Provider, TableOfContents, RequestMaker, Re
 7. Commit: `yarn commit`. _NOTE: Commits that don't follow the [conventional](https://github.com/marionebl/commitlint/tree/master/%40commitlint/config-conventional) format will be rejected. `yarn commit` creates this format for you, or you can put it together manually and then do a regular `git commit`._
 8. Push: `git push`.
 9. Open PR targeting the `master` branch.
-
-
-```
-src
-  components
-    Changelog
-    Dependencies
-      Inbound
-      Outbound
-    Docs
-      Article
-      HttpOperation
-      HttpSecuritySchemes
-      HttpService
-      Model
-    RequestMaker
-    Search
-    TableOfContents
-  containers
-    Changelog
-    Dependencies
-    Docs
-    Search
-    Provider
-```

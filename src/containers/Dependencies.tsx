@@ -3,6 +3,7 @@ import { useQuery } from 'urql';
 
 import { InboundDependencies } from '../components/Dependencies/Inbound';
 import { OutboundDependencies } from '../components/Dependencies/Outbound';
+import { BranchNodeBySlug } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
 export interface IDependencies {
@@ -12,13 +13,12 @@ export interface IDependencies {
 
 // TODO (CL): add the sl_node_edges query
 const nodeEdgesQuery = ``;
-const branchNodeQuery = ``;
 
 export const Dependencies = ({ className, direction }: IDependencies) => {
   const info = React.useContext(ActiveInfoContext);
 
   const [branchNodeResult] = useQuery({
-    query: branchNodeQuery,
+    query: BranchNodeBySlug,
     variables: {
       workspaceSlug: info.workspace,
       projectSlug: info.project,
@@ -46,7 +46,7 @@ export const Dependencies = ({ className, direction }: IDependencies) => {
   const edges = nodeEdgesResult.data.sl_node_edges;
 
   if (direction === 'inbound') {
-    return <InboundDependencies className={className} node={branchNode} edges={edges} />;
+    return <InboundDependencies className={className} edges={edges} />;
   }
 
   return <OutboundDependencies className={className} node={branchNode} edges={edges} />;

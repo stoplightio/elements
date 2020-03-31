@@ -1,33 +1,26 @@
+import { JSONSchema } from '@stoplight/prism-http';
+import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { useParsedValue } from '../../../hooks/useParsedValue';
-import { IBranchNode } from '../../../types';
-import { isJSONSchema } from '../../../utils/json-schema';
+import { IDocsComponentProps } from '..';
 import { SchemaViewer } from '../../SchemaViewer';
 
-export interface IModelProps {
-  node: IBranchNode;
+export type ModelProps = IDocsComponentProps<JSONSchema>;
 
-  className?: string;
-  errors?: string[];
-  maxRows?: number;
-  actions?: React.ReactElement;
-}
-
-export const Model = ({ node, className, maxRows = 50 }: IModelProps) => {
-  const schema = useParsedValue(node.snapshot.data);
-
-  if (!isJSONSchema(schema)) return null;
-
+const ModelComponent: React.FC<ModelProps> = ({ data, className }) => {
   let examples;
-
-  // TODO (CL): Handle other examples?
-  if ('x-examples' in schema) {
-    examples = schema['x-examples'];
-  } else if ('examples' in schema) {
-    examples = schema.examples;
+  if ('x-examples' in data) {
+    examples = data['x-examples'];
+  } else if ('examples' in data) {
+    examples = data.examples;
   }
 
-  return <SchemaViewer className={cn('Model', className)} schema={schema} examples={examples} maxRows={maxRows} />;
+  return (
+    <div className={cn('Model', className)}>
+      <SchemaViewer schema={data} description={data.description} examples={examples} />
+    </div>
+  );
 };
+
+export const Model = withErrorBoundary<ModelProps>(ModelComponent, ['data'], 'Model');

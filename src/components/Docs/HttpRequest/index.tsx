@@ -1,23 +1,16 @@
 import { IHttpRequest } from '@stoplight/types';
-import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
+import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { useParsedValue } from '../../../hooks/useParsedValue';
+import { IDocsComponentProps } from '..';
 import { RequestMakerProvider, useRequestMaker } from '../../../hooks/useRequestMaker';
-// import { useResolver } from '../../../hooks/useResolver';
 import { RequestEditor, RequestEndpoint, ResponseViewer } from '../../RequestMaker';
 
-export interface IHttpRequestProps extends IErrorBoundary {
-  value: string;
-  className?: string;
-}
+export type HttpRequestProps = IDocsComponentProps<Partial<IHttpRequest>>;
 
-const HttpRequestComponent = React.memo<IHttpRequestProps>(({ value, className }) => {
-  // const { result } = useResolver<IHttpRequest>('http', value);
-  const result = useParsedValue(value);
-  // @ts-ignore: add isHttpRequest guard
-  const store = useRequestMaker(result, true);
+const HttpRequestComponent = React.memo<HttpRequestProps>(({ data, className }) => {
+  const store = useRequestMaker(data, true);
 
   return (
     <div className={cn('RequestMaker', className)}>
@@ -32,4 +25,4 @@ const HttpRequestComponent = React.memo<IHttpRequestProps>(({ value, className }
   );
 });
 
-export const HttpRequest = withErrorBoundary<IHttpRequestProps>(HttpRequestComponent, ['value'], 'TryIt');
+export const HttpRequest = withErrorBoundary<HttpRequestProps>(HttpRequestComponent, ['data'], 'TryIt');

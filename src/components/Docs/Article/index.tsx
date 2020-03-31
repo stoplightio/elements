@@ -1,24 +1,20 @@
 import { processMarkdownTree } from '@stoplight/markdown-viewer';
 import { Builder } from '@stoplight/markdown/builder';
-import { NodeType } from '@stoplight/types';
+import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { IBranchNode } from '../../../types';
+import { IDocsComponentProps } from '..';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { ArticleHeadings } from './Headings';
 
-export interface IArticle {
-  node: IBranchNode;
-  className?: string;
-}
+export type ArticleProps = IDocsComponentProps<string>;
 
-export const Article = ({ node, className }: IArticle) => {
+const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
-  if (node.snapshot.type !== NodeType.Article) return null;
 
   const markdown = new Builder();
-  markdown.addMarkdown(String(node.snapshot.data || ''));
+  markdown.addMarkdown(data);
   const tree = processMarkdownTree(markdown.root);
 
   return (
@@ -28,4 +24,6 @@ export const Article = ({ node, className }: IArticle) => {
       <ArticleHeadings tree={tree} containerRef={containerRef} />
     </div>
   );
-};
+});
+
+export const Article = withErrorBoundary<ArticleProps>(ArticleComponent, ['data'], 'Article');

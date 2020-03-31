@@ -1,12 +1,12 @@
 import { IHttpOperationResponse } from '@stoplight/types';
 import { Button, ButtonGroup, Icon } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { get } from 'lodash';
 import * as React from 'react';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
 import { Parameters } from './Parameters';
+import { getExamplesObject } from './utils';
 
 export const HttpCodeColor = {
   1: 'gray',
@@ -26,7 +26,7 @@ export interface IResponsesProps {
   className?: string;
 }
 
-export const Responses: React.FunctionComponent<IResponsesProps> = ({ className, responses }) => {
+export const Responses = ({ className, responses }: IResponsesProps) => {
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!responses || !responses.length) return null;
 
@@ -60,10 +60,10 @@ export const Responses: React.FunctionComponent<IResponsesProps> = ({ className,
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-export const Response: React.FunctionComponent<IResponseProps> = ({ className, response }) => {
+export const Response = ({ className, response }: IResponseProps) => {
   if (!response || typeof response !== 'object') return null;
 
-  const schema = get(response, 'contents[0].schema');
+  const examples = getExamplesObject(response.contents?.[0].examples || []);
 
   return (
     <div className={cn('HttpOperation__Response', className)}>
@@ -71,7 +71,7 @@ export const Response: React.FunctionComponent<IResponseProps> = ({ className, r
 
       <Parameters className="mb-6" title="Headers" parameters={response.headers} />
 
-      <SchemaViewer schema={schema} examples={get(response, 'contents[0].examples')} />
+      {response?.contents?.[0].schema && <SchemaViewer schema={response?.contents?.[0].schema} examples={examples} />}
     </div>
   );
 };

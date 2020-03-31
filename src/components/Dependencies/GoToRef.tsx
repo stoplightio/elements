@@ -2,17 +2,15 @@ import { Classes } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
 
+import { ActiveInfoContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 
 export const GoToRef: React.FC<{
-  className?: string;
-  title: string;
-  workspace: string;
-  project: string;
   uri: string;
-  branch: string;
-}> = ({ className, title, workspace, project, uri, branch, children }) => {
+  className?: string;
+}> = ({ uri, className, children }) => {
   const components = useComponents();
+  const info = React.useContext(ActiveInfoContext);
 
   const elem = children || 'Go To Ref';
 
@@ -20,7 +18,7 @@ export const GoToRef: React.FC<{
     const Link = components.link;
 
     return (
-      <Link index={0} parent={null} path={['']} node={{ className, title, uri, workspace }}>
+      <Link index={0} parent={null} path={['']} node={{ ...info, uri }}>
         {elem}
       </Link>
     );
@@ -29,7 +27,7 @@ export const GoToRef: React.FC<{
   return (
     <a
       className={cn('text-sm', className, Classes.TEXT_MUTED)}
-      href={`/projects/${workspace}/${project}/nodes/${uri}?branch=${branch}`}
+      href={`/projects/${info.workspace}/${info.project}/nodes/${uri}?branch=${info.branch}`}
       target="_blank"
       rel="noopener noreferrer"
     >

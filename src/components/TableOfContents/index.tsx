@@ -1,7 +1,8 @@
 import { TableOfContents as UIKitTableOfContents } from '@stoplight/ui-kit/TableOfContents';
 import * as React from 'react';
 
-import { ActiveInfoContext, LinkContext } from '../../containers/Provider';
+import { ActiveInfoContext } from '../../containers/Provider';
+import { useComponents } from '../../hooks/useComponents';
 import { useComputeToc } from '../../hooks/useComputeToc';
 import { IBranchNode } from '../../types';
 
@@ -12,7 +13,7 @@ export interface ITableOfContents {
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nodes, className }) => {
   const contents = useComputeToc(nodes);
-  const Link = React.useContext(LinkContext);
+  const { link: Link } = useComponents();
   const info = React.useContext(ActiveInfoContext);
 
   const rowRenderer = React.useCallback(
@@ -23,7 +24,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nod
       };
 
       return (
-        <Link {...info} node={item.href}>
+        <Link parent={null} index={0} path={item.href} node={{ ...info, node: item.href }}>
           <DefaultRow key={item.href || item.id} item={item} />
         </Link>
       );

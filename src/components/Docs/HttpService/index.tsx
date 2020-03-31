@@ -1,37 +1,25 @@
 import { Icon } from '@blueprintjs/core';
 import { IHttpService } from '@stoplight/types';
-import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
+import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
-import { isObject } from 'lodash';
 import * as React from 'react';
 
-import { useParsedValue } from '../../../hooks/useParsedValue';
-import { IBranchNode } from '../../../types';
+import { IDocsComponentProps } from '..';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 
-export interface IHttpServiceProps extends IErrorBoundary {
-  node: IBranchNode;
-  className?: string;
-}
+export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
-const isHttpService = (maybeHttpService: unknown): maybeHttpService is IHttpService => {
-  return isObject(maybeHttpService);
-};
-
-const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ className, node }) => {
-  const result = useParsedValue(node.snapshot.data);
-  if (!isHttpService(result)) return null;
-
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
   return (
     <div className={cn('HttpService', className)}>
-      {result.description && <MarkdownViewer className="mb-10" markdown={result.description} />}
+      {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
 
-      {result.servers && result.servers.length > 0 ? (
+      {data.servers && data.servers.length > 0 ? (
         <div className="mb-10">
           <div className="mb-4 text-lg font-semibold select-none">Servers</div>
 
-          {result.servers.map((server, index) => (
+          {data.servers.map((server, index) => (
             <div className="flex items-center flex-1 mt-4" key={index}>
               {server.name && <div>{server.name} - </div>}
               {server.description && <div>{server.description} - </div>}
@@ -44,26 +32,24 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
         </div>
       ) : null}
 
-      {result.security && (
-        <HttpSecuritySchemes className="mb-10" title="Global Securities" securities={result.security} />
+      {data.security && <HttpSecuritySchemes className="mb-10" title="Global Securities" securities={data.security} />}
+
+      {data.securitySchemes && (
+        <HttpSecuritySchemes className="mb-10" title="Security Schemes" securities={data.securitySchemes} />
       )}
 
-      {result.securitySchemes && (
-        <HttpSecuritySchemes className="mb-10" title="Security Schemes" securities={result.securitySchemes} />
-      )}
-
-      {result.contact && (result.contact.email || result.contact.url) && (
+      {data.contact && (data.contact.email || data.contact.url) && (
         <div className="mb-10">
           <div className="mb-4 text-lg font-semibold select-none">Contact</div>
 
-          {result.contact.name && <div>{result.contact.name}</div>}
+          {data.contact.name && <div>{data.contact.name}</div>}
 
-          {result.contact.email && result.contact.url && (
+          {data.contact.email && data.contact.url && (
             <div className="flex items-center mt-2">
-              {result.contact.email && (
+              {data.contact.email && (
                 <a
                   className="flex items-center mr-4"
-                  href={`mailto:${result.contact.email}`}
+                  href={`mailto:${data.contact.email}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -72,8 +58,8 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
                 </a>
               )}
 
-              {result.contact.url && (
-                <a className="flex items-center" href={result.contact.url} target="_blank" rel="noopener noreferrer">
+              {data.contact.url && (
+                <a className="flex items-center" href={data.contact.url} target="_blank" rel="noopener noreferrer">
                   <Icon icon="link" className="mr-2" iconSize={12} /> URL
                 </a>
               )}
@@ -82,32 +68,32 @@ const HttpServiceComponent: React.FunctionComponent<IHttpServiceProps> = ({ clas
         </div>
       )}
 
-      {result.termsOfService && (
+      {data.termsOfService && (
         <div className="mb-10">
           <div className="mb-4 text-lg font-semibold select-none">Terms of Service</div>
 
-          <a href={result.termsOfService} target="_blank" rel="noopener noreferrer">
-            {result.termsOfService}
+          <a href={data.termsOfService} target="_blank" rel="noopener noreferrer">
+            {data.termsOfService}
           </a>
         </div>
       )}
 
-      {result.license && (result.license.url || result.license.name) && (
+      {data.license && (data.license.url || data.license.name) && (
         <div>
           <div className="mb-4 text-lg font-semibold select-none">License</div>
 
-          {result.license.url ? (
-            <a href={result.license.url} target="_blank" rel="noopener noreferrer">
-              {result.license.name || result.license.url}
+          {data.license.url ? (
+            <a href={data.license.url} target="_blank" rel="noopener noreferrer">
+              {data.license.name || data.license.url}
             </a>
           ) : (
-            <span>{result.license.name}</span>
-          )}
+              <span>{data.license.name}</span>
+            )}
         </div>
       )}
     </div>
   );
-};
+});
 HttpServiceComponent.displayName = 'HttpService.Component';
 
-export const HttpService = withErrorBoundary<IHttpServiceProps>(HttpServiceComponent, ['node'], 'HttpService');
+export const HttpService = withErrorBoundary<HttpServiceProps>(HttpServiceComponent, ['data'], 'HttpService');

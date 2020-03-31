@@ -1,5 +1,8 @@
-import { Classes, Icon, IconName, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
+import { Classes, Icon, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
+import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { CLASSNAMES } from '@stoplight/markdown-viewer';
+import { JSONSchema } from '@stoplight/prism-http';
 import { Dictionary } from '@stoplight/types';
 import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
@@ -8,11 +11,15 @@ import { JSONSchema4 } from 'json-schema';
 import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
-import { InlineRefResolverContext } from '../../containers/Provider';
+import { NodeTypeColors, NodeTypeIcons } from '../../constants';
+import { MarkdownViewer } from '../MarkdownViewer';
+
+// import { InlineRefResolverContext } from '../../containers/Provider';
 
 export interface ISchemaViewerProps {
-  schema: JSONSchema4;
+  schema: JSONSchema;
   title?: string;
+  description?: string;
   errors?: string[];
   maxRows?: number;
   examples?: Dictionary<string>;
@@ -23,6 +30,7 @@ const JSV_MAX_ROWS = 20;
 export const SchemaViewer = ({
   className,
   title,
+  description,
   schema,
   examples,
   errors,
@@ -30,19 +38,23 @@ export const SchemaViewer = ({
 }: ISchemaViewerProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const resolveRef = React.useContext(InlineRefResolverContext);
+  // TODO (CL): Do we need to add this back?
+  // const resolveRef = React.useContext(InlineRefResolverContext);
 
-  const renderJSV = () => {
+  const JSV = ({ jsvClassName }: { jsvClassName?: string }) => {
     return (
       <>
         <SchemaTitle title={title} errors={errors} />
-        <JsonSchemaViewer className={className} schema={schema} maxRows={maxRows} resolveRef={resolveRef} />
+
+        {description && <MarkdownViewer markdown={description} />}
+
+        <JsonSchemaViewer className={jsvClassName} schema={schema as JSONSchema4} maxRows={maxRows} />
       </>
     );
   };
 
-  if (!isEmpty(examples)) {
-    return renderJSV();
+  if (isEmpty(examples)) {
+    return <JSV jsvClassName={cn(className, 'dark:border-darken', CLASSNAMES.bordered, CLASSNAMES.block)} />;
   }
 
   return (
@@ -55,35 +67,33 @@ export const SchemaViewer = ({
         ))}
       </SimpleTabList>
 
-      <SimpleTabPanel className="p-0">{renderJSV()}</SimpleTabPanel>
+      <SimpleTabPanel className="p-0">{<JSV />}</SimpleTabPanel>
 
       {map(examples, (example, key) => (
         <SimpleTabPanel key={key} className="p-0">
-          <CodeViewer showLineNumbers className="py-4 overflow-auto max-h-400px" value={example} />
+          <CodeViewer
+            language="json"
+            showLineNumbers
+            className="py-4 overflow-auto max-h-400px"
+            value={safeStringify(example)}
+          />
         </SimpleTabPanel>
       ))}
     </SimpleTabs>
   );
 };
 
-const icon: IconName = 'cube';
-const color = '#ef932b';
-function SchemaTitle({ title, actions, errors }: { title?: string; actions?: React.ReactElement; errors?: string[] }) {
+const SchemaTitle = ({ title, errors }: { title?: string; errors?: string[] }) => {
   const hasErrors = errors && errors.length;
-  if (!title && !actions && !hasErrors) {
+  if (!title && !hasErrors) {
     return null;
   }
 
   return (
-    <div
-      className={cn('flex items-center p-2', {
-        'border border-b-0 dark:border-darken-3 bg-white dark:bg-gray-7': actions,
-      })}
-      style={{ height: 30 }}
-    >
+    <div className={cn('flex items-center p-2')} style={{ height: 30 }}>
       {title && (
         <div className="flex items-center flex-1">
-          <Icon icon={icon} color={color} iconSize={14} />
+          <Icon icon={NodeTypeIcons['model']} color={NodeTypeColors['model']} iconSize={14} />
 
           <div className={cn(Classes.TEXT_MUTED, 'px-2')} style={{ fontSize: 12 }}>
             {title}
@@ -94,13 +104,11 @@ function SchemaTitle({ title, actions, errors }: { title?: string; actions?: Rea
       <div className="flex-1" />
 
       {errors && <Errors errors={errors} />}
-
-      {actions}
     </div>
   );
-}
+};
 
-function Errors({ errors }: { errors: string[] }) {
+const Errors = ({ errors }: { errors: string[] }) => {
   if (!errors || !errors.length) {
     return null;
   }
@@ -130,4 +138,4 @@ function Errors({ errors }: { errors: string[] }) {
       }
     />
   );
-}
+};

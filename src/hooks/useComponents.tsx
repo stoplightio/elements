@@ -1,12 +1,19 @@
-import { CLASSNAMES, defaultComponentMapping, IComponentMapping } from '@stoplight/markdown-viewer';
+import {
+  CLASSNAMES,
+  defaultComponentMapping,
+  ICodeAnnotations,
+  IComponentMapping,
+  IComponentMappingProps,
+} from '@stoplight/markdown-viewer';
+import { ICode } from '@stoplight/markdown/ast-types/smdast';
 import cn from 'classnames';
-import { get } from 'lodash';
+import { get, isObject } from 'lodash';
 import * as React from 'react';
 
 import { HttpRequest } from '../components/Docs/HttpRequest';
 import { SchemaViewer } from '../components/SchemaViewer';
 import { ComponentsContext } from '../containers/Provider';
-import { isJSONSchema } from '../utils/json-schema';
+import { isHttpRequest, isJSONSchema } from '../utils/guards';
 import { useParsedValue } from './useParsedValue';
 
 export function useComponents() {
@@ -20,34 +27,25 @@ export function useComponents() {
   }, [Components]);
 }
 
-export const defaultComponents: IComponentMapping = {
-  code: (props, key) => {
-    const { node, parent } = props;
-    const { annotations, value } = node;
+const CodeComponent = (props: IComponentMappingProps<ICode>) => {
+  const { node } = props;
+  const { annotations } = node;
+  const nodeType = get(annotations, 'type') || node.meta;
 
-    const nodeType = get(annotations, 'type') || node.meta;
-    if (['json_schema', 'http'].includes(nodeType)) {
-      return <WrapperComponent key={key} value={value} nodeType={nodeType} annotations={annotations} parent={parent} />;
-    }
+  if (['json_schema', 'http'].includes(nodeType)) {
+    return <WrapperComponent {...props} />;
+  }
 
-    const DefaultCode = defaultComponentMapping.code;
-    return <DefaultCode {...props} />;
-  },
+  const DefaultCode = defaultComponentMapping.code;
+  return <DefaultCode {...props} />;
 };
 
-// TODO (CL): remove when merged https://github.com/stoplightio/markdown-viewer/pull/40
-const WrapperComponent = ({
-  value,
-  nodeType,
-  annotations,
-  parent,
-}: {
-  value: string;
-  nodeType: 'json_schema' | 'http';
-  annotations: any;
-  parent: any;
-}) => {
+const WrapperComponent = ({ node, parent }: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
+  const { annotations, value } = node;
+
+  // TODO (CL): We need to resolve this value to support $ref's in Markdown
   const parsedValue = useParsedValue(value);
+  const nodeType = get(annotations, 'type') || node.meta;
 
   if (nodeType === 'json_schema' && isJSONSchema(parsedValue)) {
     let examples;
@@ -59,28 +57,21 @@ const WrapperComponent = ({
       examples = parsedValue.examples;
     }
 
-    return (
-      <SchemaViewer
-        className={cn('dark:border-darken', {
-          [CLASSNAMES.bordered]: !parent || parent.type !== 'tab',
-          [CLASSNAMES.block]: !parent || parent.type !== 'tab',
-        })}
-        title={annotations?.title}
-        schema={parsedValue}
-        examples={examples}
-        errors={annotations?.errors}
-      />
-    );
-  } else if (nodeType === 'http') {
+    return <SchemaViewer title={annotations?.title} schema={parsedValue} examples={examples} />;
+  } else if (nodeType === 'http' && isObject(parsedValue)) {
     return (
       <HttpRequest
         className={cn('my-10', {
           [CLASSNAMES.block]: !parent || parent.type !== 'tab',
         })}
-        value={value}
+        data={isHttpRequest(parsedValue) ? parsedValue : { method: 'get', ...parsedValue }}
       />
     );
   }
 
   return null;
+};
+
+export const defaultComponents: IComponentMapping = {
+  code: CodeComponent,
 };

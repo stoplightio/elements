@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { useQuery } from 'urql';
 
-import { Docs as DocsComponent } from '../components/Docs';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
+import { TryIt as TryItComponent } from '../components/TryIt';
 import { BranchNodeBySlug } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
-export interface IDocsProps {
+export interface ITryItProps {
   className?: string;
   node?: string;
 }
 
-export const Docs = ({ className, node }: IDocsProps) => {
+export const TryIt = ({ className, node }: ITryItProps) => {
   const info = React.useContext(ActiveInfoContext);
 
   const [{ data, fetching }] = useQuery({
@@ -23,16 +23,17 @@ export const Docs = ({ className, node }: IDocsProps) => {
       uri: node || info.node,
     },
   });
+  const branchNode = data?.branchNodes[0];
+
   if (fetching) {
     return <DocsSkeleton />;
   }
 
-  const branchNode = data?.branchNodes[0];
   if (!branchNode) {
     // TODO (CL): return <NotFound />;
   }
 
   return (
-    <DocsComponent className={className} nodeType={branchNode?.snapshot?.type} nodeData={branchNode?.snapshot?.data} />
+    <TryItComponent className={className} nodeType={branchNode.snapshot.type} nodeData={branchNode.snapshot.data} />
   );
 };

@@ -1,29 +1,31 @@
-import { IHttpOperation, NodeType } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
 
 import { useParsedValue } from '../../hooks/useParsedValue';
 import { useRequestMaker } from '../../hooks/useRequestMaker';
-// import { useResolver } from '../../hooks/useResolver';
+import { isHttpOperation } from '../../utils/guards';
 import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '../RequestMaker';
 
 export interface ITryItProps extends IErrorBoundary {
-  value: any;
+  nodeType: string;
+  nodeData: string;
   mockUrl?: string;
-  padding?: string;
   className?: string;
 }
 
-const TryItComponent: React.FunctionComponent<ITryItProps> = ({ value, mockUrl, padding = '12', className }) => {
-  // const { result } = useResolver<IHttpOperation>(NodeType.HttpOperation, value);
-  const result = useParsedValue(value);
+const TryItComponent = React.memo<ITryItProps>(({ nodeType, nodeData, mockUrl, className }) => {
+  const data = useParsedValue(nodeData);
 
-  // @ts-ignore: TODO (CL): add typing
-  const store = useRequestMaker(result, true, mockUrl);
+  let operation = {};
+  if (nodeType === 'http_operation' && isHttpOperation(data)) {
+    operation = data;
+  }
+
+  const store = useRequestMaker(operation, true, mockUrl);
 
   return (
-    <div className={cn('Page__content TryIt', `p-${padding}`, className)}>
+    <div className={cn('TryIt', className)}>
       <RequestMakerProvider value={store}>
         <RequestEndpoint className="rounded" />
 
@@ -33,7 +35,7 @@ const TryItComponent: React.FunctionComponent<ITryItProps> = ({ value, mockUrl, 
       </RequestMakerProvider>
     </div>
   );
-};
+});
 TryItComponent.displayName = 'TryIt.Component';
 
-export const TryIt = withErrorBoundary<ITryItProps>(TryItComponent, ['value'], 'TryIt');
+export const TryIt = withErrorBoundary<ITryItProps>(TryItComponent, ['nodeData'], 'TryIt');

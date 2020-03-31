@@ -34,10 +34,10 @@ export const RequestEndpoint = observer<{
 }>(({ className }) => {
   const store = useRequestMakerStore();
   const requestStore = useRequestMakerStore('request');
-  const [url, setUrl] = React.useState();
+  const [url, setUrl] = React.useState<string | undefined>();
 
   // the current value of the base url selector text box
-  const [baseUrlTransientValue, setBaseUrlTransientValue] = React.useState();
+  const [baseUrlTransientValue, setBaseUrlTransientValue] = React.useState<string | undefined>();
 
   const onServerSuggest = (serverUrl: string) => {
     if (requestStore.servers && !requestStore.servers.find((s) => s.url === serverUrl)) {
