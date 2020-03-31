@@ -5,12 +5,12 @@ import * as React from 'react';
 
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 
+const notSetOption = { value: '', label: 'Not Set' };
+
 const dynamicOptions = [
   { value: 'dynamic', label: 'Dynamic' },
   { value: 'static', label: 'Static' },
 ];
-
-const notSetOption = { value: '', label: 'Not Set' };
 
 export const Mocking = observer(() => {
   const store = useRequestMakerStore();
