@@ -59,7 +59,7 @@ export const createContentTypeSuggestion = (
       }
 
       const correctHeader = requestStore.headerParams.findIndex(
-        (p) => p.name.toLowerCase() === 'content-type' && p.value === contentTypeHeaderValue,
+        p => p.name.toLowerCase() === 'content-type' && p.value === contentTypeHeaderValue,
       );
 
       if (correctHeader > -1) {

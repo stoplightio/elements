@@ -61,8 +61,8 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
       }
 
       client(computeUrl(req))
-        .then((response) => response.json())
-        .then((responseData) => {
+        .then(response => response.json())
+        .then(responseData => {
           if (!isMounted) return;
 
           if (!cachedData || safeStringify(responseData) !== safeStringify(cachedData)) {
@@ -89,7 +89,7 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
           setError(undefined);
           setIsLoading(false);
         })
-        .catch((e) => {
+        .catch(e => {
           if (!isMounted) return;
           // TODO (CL): Should we delete the cache entry if there's an error? Might be better to leave it so there's no disruption to viewing the docs
           if (!cachedData) {

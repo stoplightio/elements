@@ -395,7 +395,7 @@ describe('RequestMakerStore', () => {
   describe('setPrismConfigurationOption', () => {
     const cases = ['checkSecurity', 'validateRequest', 'validateResponse', 'errors'] as const;
 
-    it.each(cases)('should correctly toggle %p', (key) => {
+    it.each(cases)('should correctly toggle %p', key => {
       const originalConfiguration = store.prismConfig;
       const originalValue = store.prismConfig[key];
 
@@ -413,7 +413,7 @@ describe('RequestMakerStore', () => {
 
       store.setPrismConfigurationOption('validateRequest', false);
 
-      const header = store.request.headerParams.find((h) => h.name === 'Prefer');
+      const header = store.request.headerParams.find(h => h.name === 'Prefer');
       expect(header).toBeDefined();
       expect(header?.isEnabled).toBe(true);
       const parsed = parsePreferHeader(header?.value);

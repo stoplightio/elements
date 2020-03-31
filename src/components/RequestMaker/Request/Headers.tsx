@@ -44,16 +44,16 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
             position: 'top-left',
             boundary: 'window',
           }}
-          selectedItem={allHeaderFields.find((headerField) => headerField.name === name)}
-          itemDisabled={(headerField) => !!params.find((h) => h.name === headerField.name)}
-          onItemSelect={(headerField) => {
+          selectedItem={allHeaderFields.find(headerField => headerField.name === name)}
+          itemDisabled={headerField => !!params.find(h => h.name === headerField.name)}
+          onItemSelect={headerField => {
             handlerPropChange('name', index, headerField.name);
             setInFocus({
               prop: 'value',
               index,
             });
           }}
-          onQueryChange={(query) => {
+          onQueryChange={query => {
             handlerPropChange('name', index, query);
             setInFocus({
               prop: 'value',

@@ -20,7 +20,7 @@ export const RequestBody = observer<IRequestBody>(({ className }) => {
   const request = useRequestMakerStore('request');
 
   const onChange = React.useCallback(
-    (e) => {
+    e => {
       request.contentType = e.currentTarget.value;
     },
     [request],
@@ -35,7 +35,7 @@ export const RequestBody = observer<IRequestBody>(({ className }) => {
           className="m-5 flex-1"
           language="json"
           value={request.body}
-          onChange={(value) => {
+          onChange={value => {
             request.body = value;
           }}
           padding={0}
@@ -48,7 +48,7 @@ export const RequestBody = observer<IRequestBody>(({ className }) => {
       <div className="RequestMaker__RequestBody--binary mx-5 my-3 flex-1">
         <FileInput
           text={request.formDataParams.length ? request.formDataParams[0].name : 'Choose file...'}
-          onInputChange={(e) => {
+          onInputChange={e => {
             const files = e.currentTarget.files;
             if (files && files.length) {
               const formDataParams = [];
@@ -141,7 +141,7 @@ export const RequestBody = observer<IRequestBody>(({ className }) => {
 RequestBody.displayName = 'RequestMaker.RequestBody';
 
 const suggestions: Array<SuggestionFunc<RequestMakerStore>> = [
-  (store) => {
+  store => {
     if (store.request.contentType !== 'none' || !store.request.activeContentTypeHeader) {
       return undefined;
     }
@@ -161,7 +161,7 @@ const suggestions: Array<SuggestionFunc<RequestMakerStore>> = [
   },
 
   createContentTypeSuggestion(
-    (store) => {
+    store => {
       const requestStore = store.request;
       if (requestStore.contentType !== 'raw') {
         // this suggestion only applies in raw mode
@@ -185,7 +185,7 @@ const suggestions: Array<SuggestionFunc<RequestMakerStore>> = [
       return false;
     },
     'application/json',
-    (resolution) => (
+    resolution => (
       <div className="flex items-center">
         Content is a valid JSON object, but the Content-Type header is not set.
         <Button minimal intent="primary" className="ml-2" rightIcon="tick" onClick={resolution}>
@@ -196,7 +196,7 @@ const suggestions: Array<SuggestionFunc<RequestMakerStore>> = [
   ),
 
   createContentTypeSuggestion(
-    (store) => {
+    store => {
       if (store.request.contentType !== 'x-www-form-urlencoded') {
         return false;
       }
@@ -204,7 +204,7 @@ const suggestions: Array<SuggestionFunc<RequestMakerStore>> = [
       return store.request.activeContentTypeHeader?.value !== 'application/x-www-form-urlencoded';
     },
     'application/x-www-form-urlencoded',
-    (resolution) => (
+    resolution => (
       <div className="flex items-center">
         Content-Type header is not set to 'application/x-www-form-urlencoded'.
         <Button minimal intent="primary" className="ml-2" rightIcon="tick" onClick={resolution}>
@@ -215,7 +215,7 @@ const suggestions: Array<SuggestionFunc<RequestMakerStore>> = [
   ),
 
   createContentTypeSuggestion(
-    (store) => {
+    store => {
       if (store.request.contentType !== 'form-data') {
         return false;
       }
@@ -223,7 +223,7 @@ const suggestions: Array<SuggestionFunc<RequestMakerStore>> = [
       return store.request.activeContentTypeHeader?.value !== 'multipart/form-data';
     },
     'multipart/form-data',
-    (resolution) => (
+    resolution => (
       <div className="flex items-center">
         Content-Type header is not set to 'multipart/form-data'.
         <Button minimal intent="primary" className="ml-2" rightIcon="tick" onClick={resolution}>

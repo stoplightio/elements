@@ -69,5 +69,5 @@ export const Hub: React.FC<IHub> = ({ srn, tabs, className, padding = '12', NotF
 };
 
 function findFirstNode(nodes: IContentsNode[]): IContentsNode {
-  return nodes.find((node) => !!node.href) || nodes[0];
+  return nodes.find(node => !!node.href) || nodes[0];
 }

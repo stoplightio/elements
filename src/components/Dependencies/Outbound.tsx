@@ -63,7 +63,7 @@ export const OutboundDependencies = React.forwardRef<Network, IOutboundDependenc
   const visGraph = useComputeVisGraph(node, activeNode?.groupNodeId, graph);
 
   // @ts-ignore: Because the import is ts-ignored
-  const onClickNode = (e) => {
+  const onClickNode = e => {
     const nodeId = e.nodes[0];
     if (!nodeId) return;
 

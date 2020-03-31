@@ -60,7 +60,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
       >
         <HTMLSelect
           value={graphType}
-          onChange={(e) => setGraphType(e.currentTarget.value as 'outbound' | 'inbound')}
+          onChange={e => setGraphType(e.currentTarget.value as 'outbound' | 'inbound')}
           options={[
             {
               label: 'What do I depend on? (Outbound)',
@@ -90,7 +90,7 @@ export const Dependencies: React.FC<IDependencies> = ({ className, node, padding
         </div>
       ) : graphType === 'outbound' ? (
         <OutboundDependencies
-          ref={(network) => {
+          ref={network => {
             if (network) {
               visNetwork.current = network;
             }

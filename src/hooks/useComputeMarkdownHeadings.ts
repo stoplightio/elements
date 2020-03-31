@@ -21,5 +21,5 @@ export function computeMarkdownHeadings(tree: IRoot): IPageHeading[] {
 }
 
 const findTitle = (parent: Parent) => {
-  return (selectAll('[type=text]', parent) as ITextNode[]).map((textNode) => textNode.value as string).join(' ');
+  return (selectAll('[type=text]', parent) as ITextNode[]).map(textNode => textNode.value as string).join(' ');
 };

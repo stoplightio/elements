@@ -20,7 +20,7 @@ export interface IOutboundDependencies {
 
 export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, className }) => {
   const nodesByType = groupBy(graph.nodes, 'type');
-  const firstTab = findKey(nodesByType, (nodes) => nodes?.length);
+  const firstTab = findKey(nodesByType, nodes => nodes?.length);
   const [selectedTabId, setSelectedTabId] = React.useState();
 
   const onChangeTab = React.useCallback(

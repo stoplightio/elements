@@ -30,7 +30,7 @@ export function useProjectSearch(
   const { data, isValidating, error, revalidate } = useSWR<IPaginatedResponse<IProjectNode>>(
     !opts.skip ? [`/projects.nodes?${queryParams.join('&')}`] : null,
     (input: RequestInfo, init?: RequestInit) =>
-      fetch(input, init).then((res) => {
+      fetch(input, init).then(res => {
         if (!res.ok) {
           throw new Error(`${res.status} ${res.statusText}`);
         }

@@ -8,7 +8,7 @@ const fixturesPath = '../../__fixtures__/table-of-contents';
 const files = fs.readdirSync(path.resolve(__dirname, fixturesPath));
 
 describe('computeToc', () => {
-  files.forEach((filePath) => {
+  files.forEach(filePath => {
     describe(filePath, () => {
       const file = require(`${fixturesPath}/${filePath}`);
 

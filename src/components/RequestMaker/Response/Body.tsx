@@ -64,8 +64,8 @@ export const ResponseBody = observer<{ className?: string }>(({ className }) => 
     content = <RawViewer content={body} type={responseType} />;
   }
 
-  const onChange = React.useCallback((e) => setSelectedView(e.currentTarget.value), []);
-  const bodyViolations = violations.filter((v) => v.path && v.path[0] === 'body');
+  const onChange = React.useCallback(e => setSelectedView(e.currentTarget.value), []);
+  const bodyViolations = violations.filter(v => v.path && v.path[0] === 'body');
 
   const shouldShowViewSelector = !error;
 

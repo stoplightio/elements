@@ -21,7 +21,7 @@ export const ResponseHeaders = observer<IResponseHeaders>(({ className }) => {
     return <div className="text-center p-10 text-gray-6">No response headers</div>;
   }
 
-  const headerViolations = responseStore.violations.filter((v) => v.path && v.path[0] === 'header');
+  const headerViolations = responseStore.violations.filter(v => v.path && v.path[0] === 'header');
 
   return (
     <>

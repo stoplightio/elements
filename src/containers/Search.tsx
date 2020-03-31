@@ -19,7 +19,7 @@ export const Search: React.FC<ISearchContainer> = ({ placeholder, srn, isOpen, o
 
   const { data, isValidating, error } = useProjectSearch(debouncedQuery, srn, { group, limit, skip: !isOpen || !srn });
 
-  const handleChange = React.useCallback((e) => {
+  const handleChange = React.useCallback(e => {
     updateQuery(e.target.value);
   }, []);
 

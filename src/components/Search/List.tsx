@@ -72,7 +72,7 @@ const NodeListItem: React.FC<{
   const components = useComponents();
   const { orgSlug, projectSlug } = deserializeSrn(item.srn);
   const onClick = React.useCallback(
-    (e) => {
+    e => {
       if (onReset) {
         onReset(e);
       }

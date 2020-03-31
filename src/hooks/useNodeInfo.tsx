@@ -25,7 +25,7 @@ export function useNodeInfo(srn: string, opts: { group?: string; version?: strin
   const { data, isValidating, error, revalidate } = useSWR<INodeInfo>(
     opts.skip || !uri ? null : [`/nodes.info?${queryParams.join('&')}`],
     (input: RequestInfo, init?: RequestInit) =>
-      fetch(input, init).then((res) => {
+      fetch(input, init).then(res => {
         if (!res.ok) {
           throw new Error(`${res.status} ${res.statusText}`);
         }

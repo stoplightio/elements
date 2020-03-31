@@ -40,7 +40,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
           autoFocus={false}
           content={
             <Menu>
-              {languages.map((item) => (
+              {languages.map(item => (
                 <MenuItem
                   active={item.codechoice === currentLanguage.codechoice}
                   text={item.name}
@@ -58,7 +58,7 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
                   }}
                 >
                   {item.libraries
-                    ? item.libraries.map((library) => (
+                    ? item.libraries.map(library => (
                         <MenuItem
                           active={library.librarychoice === currentLanguage.librarychoice}
                           text={library.name}

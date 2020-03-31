@@ -48,7 +48,7 @@ const Wrapper = ({ providerProps, hubProps }: any) => {
               title={props.node.title}
               className={props.node.className}
               href={props.node.url}
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault();
                 setSrn(props.node.url);
               }}

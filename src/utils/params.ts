@@ -40,7 +40,7 @@ export function getParamArray<T = string>(param: Dictionary<any> = {}): Array<IP
   forEach(param, (val, key) => {
     if (Array.isArray(val)) {
       paramArray.push(
-        ...val.map((value) => ({
+        ...val.map(value => ({
           name: key,
           value,
           isEnabled: true,

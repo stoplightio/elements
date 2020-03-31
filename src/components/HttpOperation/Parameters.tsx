@@ -55,7 +55,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       ...omit(get(parameter, 'schema'), ['description', 'type']),
     },
     // Remove empty arrays and objects
-    (value) => typeof value === 'object' && isEmpty(value),
+    value => typeof value === 'object' && isEmpty(value),
   );
 
   return (
@@ -100,7 +100,7 @@ Parameter.displayName = 'HttpOperation.Parameter';
 const ParameterValidation = ({ className, name, value }: { className?: string; name: string; value: any }) => {
   let validation;
   if (Array.isArray(value)) {
-    validation = value.map((v) => JSON.stringify(v)).join(', ');
+    validation = value.map(v => JSON.stringify(v)).join(', ');
   } else if (typeof value === 'object') {
     return (
       <>

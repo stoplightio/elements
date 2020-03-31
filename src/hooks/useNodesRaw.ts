@@ -17,7 +17,7 @@ export function useNodeRaw(srn: string, opts?: INodeRawOptions) {
   }
 
   return useSWR<string>(`/nodes.raw${query}`, (input: RequestInfo, init?: RequestInit) =>
-    fetch(input, init).then((res) => {
+    fetch(input, init).then(res => {
       if (!res.ok) {
         throw new Error(`${res.status} ${res.statusText}`);
       }
