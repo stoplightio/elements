@@ -1,4 +1,4 @@
-import { Button, MenuItem, Popover, Switch } from '@stoplight/ui-kit';
+import { Popover, Switch } from '@stoplight/ui-kit';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
@@ -103,67 +103,6 @@ describe('RequestSend component', () => {
     });
   });
 
-  describe.only('Response Code selector', () => {
-    it('should set selected code and example', async () => {
-      render(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      fireEvent.click(screen.getByText('Not Set'));
-
-      const item200 = await waitFor(() => screen.getByText('200'));
-      fireEvent.mouseOver(item200);
-
-      const subItem = await waitFor(() => screen.getByText('first-example'));
-      fireEvent.click(subItem);
-
-      expect(store.request.headerParams).toContain({
-        name: 'Prefer',
-        value: formatMultiValueHeader(['200', 'first-example']),
-        isEnabled: true,
-      });
-    });
-
-    it('should set only code when no example is selected', () => {
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const example = wrapper
-        .find(Popover)
-        .find(Button)
-        .simulate('click')
-        .simulate('change', { target: { value: '200' } })
-        .simulate('change', { target: { value: 'no-example' } });
-
-      expect(example.props().text).toBe('200');
-    });
-
-    it('should remove example when Not Set is selected', () => {
-      store.setPrismMockingOption('code', '200');
-      store.setPrismMockingOption('exampleKey', 'application/json');
-
-      wrapper = mount(
-        <RequestMakerProvider value={store}>
-          <Mocking />
-        </RequestMakerProvider>,
-      );
-
-      const example = wrapper
-        .find(Popover)
-        .find(Button)
-        .simulate('click')
-        .simulate('change', { target: { value: 'Not Set' } });
-
-      expect(example.props().text).toBe('Not Set');
-      expect(store.request.headerParams).toHaveLength(0);
-    });
-  });
-
   describe('Dynamic/Static selector', () => {
     it('should turn on dynamic mocking in prismConfig', () => {
       wrapper = mount(
@@ -195,6 +134,90 @@ describe('RequestSend component', () => {
       const select = wrapper.find('.dynamic-mode-selector > select');
 
       expect(select.props().value).toBe('dynamic');
+    });
+  });
+});
+
+describe('RequestSend Response Code component', () => {
+  let store: RequestMakerStore;
+
+  beforeEach(() => {
+    store = new RequestMakerStore({
+      operation,
+    });
+    store.request.method = 'post';
+    store.request.templatedPath = 'operationResource';
+    store.request.shouldMock = true;
+  });
+
+  describe('Response Code selector', () => {
+    it('should set selected code and example', async () => {
+      render(
+        <RequestMakerProvider value={store}>
+          <Mocking />
+        </RequestMakerProvider>,
+      );
+
+      fireEvent.click(screen.getByText('Not Set'));
+
+      const item200 = await waitFor(() => screen.getByText('200'));
+      fireEvent.mouseOver(item200);
+
+      const subItem = await waitFor(() => screen.getByText('first-example'));
+      fireEvent.click(subItem);
+
+      const keyValuePairs: Array<string | [string, string]> = [
+        ['code', '200'],
+        ['example', 'first-example'],
+      ];
+
+      expect(store.request.headerParams).toContainEqual({
+        name: 'Prefer',
+        value: formatMultiValueHeader(...keyValuePairs),
+        isEnabled: true,
+      });
+    });
+
+    it('should set only code when no example is selected', async () => {
+      render(
+        <RequestMakerProvider value={store}>
+          <Mocking />
+        </RequestMakerProvider>,
+      );
+
+      fireEvent.click(screen.getByText('Not Set'));
+
+      const item200 = await waitFor(() => screen.getByText('200'));
+      fireEvent.mouseOver(item200);
+
+      const subItem = await waitFor(() => screen.getByText('No Example'));
+      fireEvent.click(subItem);
+
+      const keyValuePairs: Array<string | [string, string]> = [['code', '200']];
+
+      expect(store.request.headerParams).toContainEqual({
+        name: 'Prefer',
+        value: formatMultiValueHeader(...keyValuePairs),
+        isEnabled: true,
+      });
+    });
+
+    it('should remove example when Not Set is selected', async () => {
+      store.setPrismMockingOption('code', '200');
+      store.setPrismMockingOption('exampleKey', 'application/json');
+
+      render(
+        <RequestMakerProvider value={store}>
+          <Mocking />
+        </RequestMakerProvider>,
+      );
+
+      fireEvent.click(screen.getByText('200 - application/json'));
+
+      const itemNotSet = await waitFor(() => screen.getByText('Not Set'));
+      fireEvent.click(itemNotSet);
+
+      expect(store.request.headerParams).toHaveLength(0);
     });
   });
 });
