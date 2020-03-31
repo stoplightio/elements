@@ -1,4 +1,5 @@
 import 'jest-enzyme';
+
 import { Popover, Switch } from '@stoplight/ui-kit';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { mount, ReactWrapper } from 'enzyme';

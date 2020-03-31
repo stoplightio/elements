@@ -167,8 +167,9 @@ export const Mocking = observer(() => {
                         store.setPrismMockingOption('code', operationResponse.code);
                         store.setPrismMockingOption('exampleKey', undefined);
                       }}
-                      children={exampleChildren}
-                    />
+                    >
+                      {exampleChildren}
+                    </MenuItem>
                   );
                 })}
               </Menu>
