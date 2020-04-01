@@ -71,7 +71,7 @@ export const Response = ({ className, response }: IResponseProps) => {
 
       <Parameters className="mb-6" title="Headers" parameters={response.headers} />
 
-      {response?.contents?.[0].schema && <SchemaViewer schema={response?.contents?.[0].schema} examples={examples} />}
+      {response?.contents?.[0]?.schema && <SchemaViewer schema={response.contents[0].schema} examples={examples} />}
     </div>
   );
 };
