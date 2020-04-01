@@ -63,7 +63,7 @@ Responses.displayName = 'HttpOperation.Responses';
 export const Response = ({ className, response }: IResponseProps) => {
   if (!response || typeof response !== 'object') return null;
 
-  const examples = getExamplesObject(response.contents?.[0].examples || []);
+  const examples = getExamplesObject(response.contents?.[0]?.examples || []);
 
   return (
     <div className={cn('HttpOperation__Response', className)}>

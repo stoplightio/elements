@@ -3,7 +3,7 @@ import { useQuery } from 'urql';
 
 import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
-import { INodeFilter } from '../types';
+import { IBranchNode, INodeFilter } from '../types';
 import { ActiveInfoContext } from './Provider';
 
 export interface ITableOfContents {
@@ -27,15 +27,19 @@ query ElementsTableOfContents(
   ) {
     id
 
-    node {
+    branchNode {
       id
-      uri
-    }
 
-    snapshot {
-      id
-      name
-      type
+      node {
+        id
+        uri
+      }
+  
+      snapshot {
+        id
+        name
+        type
+      }
     }
   }
 }
@@ -58,7 +62,7 @@ export const TableOfContents: React.FC<ITableOfContents> = ({ className, filter 
       slug: info.workspace,
     },
   });
-  const workspaceId = workspaceData?.workspaces[0]?.id;
+  const workspaceId = workspaceData?.workspaces?.[0]?.id;
 
   const [{ data, fetching }] = useQuery({
     query,
@@ -75,5 +79,10 @@ export const TableOfContents: React.FC<ITableOfContents> = ({ className, filter 
     return <TableOfContentsSkeleton className={className} />;
   }
 
-  return <TableOfContentsComponent className={className} nodes={data?.sl_search_nodes} />;
+  return (
+    <TableOfContentsComponent
+      className={className}
+      nodes={(data?.sl_search_nodes || []).map(({ branchNode }: { branchNode: IBranchNode }) => branchNode)}
+    />
+  );
 };

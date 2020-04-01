@@ -16,13 +16,11 @@ export const Body = ({ body, className }: IBodyProps) => {
   if (typeof body !== 'object' || !body.contents) return null;
 
   // TODO (CL): Support multiple bodies?
-  const requestBody = body.contents[0];
-  const schema = requestBody.schema;
-
-  const examples = getExamplesObject(requestBody.examples || []);
+  const schema = body.contents?.[0]?.schema;
+  const examples = getExamplesObject(body.contents?.[0]?.examples || []);
 
   // If we have nothing to show then don't render this section
-  if (!requestBody || (!body.description && !schema && !examples)) return null;
+  if (!body.contents[0] || (!body.description && !schema && !examples)) return null;
 
   return (
     <div className={cn('HttpOperation__Body', className)}>
