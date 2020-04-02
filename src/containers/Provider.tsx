@@ -3,6 +3,7 @@ import { IResolverOpts } from '@stoplight/json-ref-resolver/types';
 import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
+import { Context } from 'react';
 import { SWRConfig } from 'swr';
 
 import { NodeIconMapping } from '../types';
@@ -19,20 +20,26 @@ export interface IProvider {
 }
 
 const defaultHost = 'http://localhost:8080/api';
-export const HostContext = React.createContext(defaultHost);
+export const HostContext = createNamedContext('Context', defaultHost);
 export const RequestContext = React.createContext<IFetchProps>({
   host: defaultHost,
   headers: null,
 });
-export const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
-export const ActiveSrnContext = React.createContext('');
-export const ProjectTokenContext = React.createContext('');
-export const ResolverContext = React.createContext<Resolver | undefined>(undefined);
-export const ResolverOptionsContext = React.createContext<IResolverOpts | undefined>(undefined);
-export const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(undefined);
+export const ComponentsContext = createNamedContext<IComponentMapping | undefined>('ComponentsContext', undefined);
+export const ActiveSrnContext = createNamedContext('ActiveSrnContext', '');
+export const ProjectTokenContext = createNamedContext('ProjectTokenContext', '');
+export const ResolverContext = createNamedContext<Resolver | undefined>('ResolverContext', undefined);
+export const ResolverOptionsContext = createNamedContext<IResolverOpts | undefined>(
+  'ResolverOptionsContext',
+  undefined,
+);
+export const InlineRefResolverContext = createNamedContext<SchemaTreeRefDereferenceFn | undefined>(
+  'InlineRefResolverContext',
+  undefined,
+);
 
 const defaultIcons: NodeIconMapping = {};
-export const IconsContext = React.createContext<NodeIconMapping>(defaultIcons);
+export const IconsContext = createNamedContext<NodeIconMapping>('IconsContext', defaultIcons);
 
 export const Provider: React.FunctionComponent<IProvider> = ({
   host,
@@ -83,3 +90,9 @@ export const Provider: React.FunctionComponent<IProvider> = ({
     </InlineRefResolverContext.Provider>
   );
 };
+
+function createNamedContext<T>(name: string, defaultValue: T): React.Context<T> {
+  const context = React.createContext(defaultValue);
+  context.displayName = name;
+  return context;
+}
