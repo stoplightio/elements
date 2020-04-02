@@ -79,7 +79,7 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
     "@stoplight/eslint-config": "^1.1.0",
-    "@stoplight/prism-http": "^3.3.0",
+    "@stoplight/prism-http": "^3.3.3",
     "@stoplight/scripts": "8.2.0",
     "@stoplight/storybook-config": "^2.0.5",
     "@testing-library/react": "^10.0.2",
