@@ -8499,7 +8499,7 @@ https-proxy-agent@^5.0.0:
     commander "^2.9.0"
     debug "^2.2.0"
     event-stream "3.3.4"
-    form-data "^3"
+    form-data "3.0.0"
     fs-readfile-promise "^2.0.1"
     fs-writefile-promise "^1.0.3"
     har-validator "^5.0.0"

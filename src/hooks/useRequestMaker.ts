@@ -55,6 +55,7 @@ function getCachedRequestMaker({
 }
 
 const RequestMakerStoreContext = React.createContext<RequestMakerStore>(new RequestMakerStore());
+RequestMakerStoreContext.displayName = 'RequestMakerStoreContext';
 export const RequestMakerProvider = RequestMakerStoreContext.Provider;
 
 export function useRequestMakerStore(): RequestMakerStore;
