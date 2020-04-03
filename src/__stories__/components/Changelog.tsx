@@ -3,6 +3,7 @@ import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { Changelog } from '../../components/Changelog';
 
 export const darkMode = () => boolean('dark mode', false);

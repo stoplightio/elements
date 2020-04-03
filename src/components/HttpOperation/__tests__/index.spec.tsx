@@ -1,10 +1,12 @@
+import 'jest-enzyme';
+
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { CodeViewer } from '@stoplight/ui-kit';
 import { SimpleTab } from '@stoplight/ui-kit/SimpleTabs';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
+
 import { HttpOperation } from '../index';
 import { Parameters } from '../Parameters';
 

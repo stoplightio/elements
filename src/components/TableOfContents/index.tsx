@@ -1,6 +1,7 @@
 import { TableOfContents as UIKitTableOfContents } from '@stoplight/ui-kit/TableOfContents';
 import { IContentsNode } from '@stoplight/ui-kit/TableOfContents/types';
 import * as React from 'react';
+
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeToc } from '../../hooks/useComputeToc';
 import { IProjectNode } from '../../types';
@@ -67,7 +68,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
       }
       return <DefaultRow key={item.href || item.id} item={item} />;
     },
-    [srn],
+    [srn, components],
   );
 
   return <UIKitTableOfContents {...props} contents={contents} rowRenderer={rowRenderer} />;

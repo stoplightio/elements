@@ -1,4 +1,5 @@
 import { NodeType } from '@stoplight/types';
+
 import { INodeGraph } from '../../../types';
 
 export const graph: INodeGraph = {

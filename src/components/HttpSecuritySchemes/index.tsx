@@ -9,6 +9,7 @@ import { Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { entries, flatten, isEmpty, map, startCase } from 'lodash';
 import * as React from 'react';
+
 import { HttpSecuritySchemeColors } from '../../utils/http';
 import { MarkdownViewer } from '../MarkdownViewer';
 

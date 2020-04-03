@@ -1,6 +1,8 @@
-import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
+
+import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
+
 import { Changelog } from '../index';
 
 describe('Changelog', () => {

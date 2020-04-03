@@ -4,6 +4,7 @@ import { Dictionary, Primitive } from '@stoplight/types';
 import { get } from 'lodash';
 import { MD5 } from 'object-hash';
 import * as React from 'react';
+
 import { RequestContext } from '..';
 import { useFetchClient } from '../utils/useFetchClient';
 
@@ -42,10 +43,10 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
   const [data, setData] = React.useState<T>();
   const [error, setError] = React.useState();
 
-  const { key, request } = createRequest(args);
+  const { key, request } = useCreateRequest(args);
 
-  const sendRequest = React.useCallback(
-    req => {
+  React.useEffect(() => {
+    const sendRequest = (req: IRequestConfig) => {
       let isMounted = true;
 
       // Check if we have this request stored in the cache
@@ -103,11 +104,11 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
       return () => {
         isMounted = false;
       };
-    },
-    [client, key],
-  );
+    };
 
-  React.useEffect(() => sendRequest(request), [request]);
+    return sendRequest(request);
+  }, [request]); // eslint-disable-line react-hooks/exhaustive-deps
+  // TODO: think about why the disable is needed above and refactor it if we can (the effect was there before the eslint rule)
 
   return {
     isLoading,
@@ -118,11 +119,11 @@ export function useRequest<T>(args: IRequestConfig): UseRequestState<T> {
 
 interface IRequestCacheEnty {
   key: string;
-  request: object;
+  request: IRequestConfig;
 }
 
 // Creates a request object with a stable reference as long as key doesn't change
-function createRequest(request: object): IRequestCacheEnty {
+function useCreateRequest(request: IRequestConfig): IRequestCacheEnty {
   const prev = React.useRef<IRequestCacheEnty | null>(null);
 
   return React.useMemo(() => {

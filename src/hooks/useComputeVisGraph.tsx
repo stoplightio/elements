@@ -1,9 +1,7 @@
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
-import URI from 'urijs';
-import { Edge, Node } from 'vis';
+
 import { INodeGraph, INodeInfo, IVisGraph } from '../types';
-import { getNodeTitle } from '../utils/node';
 
 export function useComputeVisGraph(rootNode?: INodeInfo, activeNodeId?: number, graph?: INodeGraph) {
   return React.useMemo(() => {

@@ -2,6 +2,7 @@ import { HttpSecurityScheme, IHttpOperationRequest } from '@stoplight/types';
 import cn from 'classnames';
 import { flatten } from 'lodash';
 import * as React from 'react';
+
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 import { Body } from './Body';
 import { Parameters } from './Parameters';

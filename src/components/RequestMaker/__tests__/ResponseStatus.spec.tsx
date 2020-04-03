@@ -1,6 +1,8 @@
-import { mount, ReactWrapper } from 'enzyme';
 import 'jest-enzyme';
+
+import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
+
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { ResponseStatus } from '../Response/Status';
@@ -27,7 +29,7 @@ describe('ResponseStatus component', () => {
     wrapper.unmount();
   });
 
-  test('should show correct status code and color', () => {
+  it('should show correct status code and color', () => {
     setWrapper({
       statusCode: 404,
     });
@@ -35,7 +37,7 @@ describe('ResponseStatus component', () => {
     expect(wrapper.find(ResponseStatus).html()).toContain('bg-orange');
   });
 
-  test('should show error', () => {
+  it('should show error', () => {
     setWrapper({
       error: {},
     });

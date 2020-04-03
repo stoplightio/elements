@@ -1,5 +1,6 @@
 import { HttpMethod, IHttpOperation, IHttpParam } from '@stoplight/types';
 import { filter, flatten, get, has } from 'lodash';
+
 import { RequestStore } from '../stores/request-maker/request';
 
 const sampler = require('openapi-sampler');

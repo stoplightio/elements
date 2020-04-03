@@ -1,9 +1,10 @@
 import { safeStringify } from '@stoplight/json';
-import { Button, ButtonGroup, Menu, MenuItem, Popover, Position, Switch } from '@stoplight/ui-kit';
+import { Button, ButtonGroup, Menu, MenuItem, Popover, Position } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import copy from 'copy-to-clipboard';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
 
 export interface ISendButton {

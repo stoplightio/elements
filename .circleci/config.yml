@@ -7,6 +7,7 @@ jobs:
     steps:
       - checkout
       - run: yarn
+      - run: yarn test.prod
   release:
     docker:
       - image: circleci/node:12

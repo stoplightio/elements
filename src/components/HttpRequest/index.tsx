@@ -2,6 +2,7 @@ import { IHttpRequest } from '@stoplight/types';
 import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { RequestMakerProvider, useRequestMaker } from '../../hooks/useRequestMaker';
 import { useResolver } from '../../hooks/useResolver';
 import { RequestEditor, RequestEndpoint, ResponseViewer } from '../RequestMaker';

@@ -1,12 +1,14 @@
+import 'jest-enzyme';
+
 import { RadioGroup } from '@blueprintjs/core';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { IPrismDiagnostic } from '@stoplight/prism-core';
 import { ProblemJsonError } from '@stoplight/prism-http';
 import { CodeViewer } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
+
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { ResponseStore } from '../../../stores/request-maker/response';
@@ -42,7 +44,7 @@ describe('ResponseBody component', () => {
   });
 
   describe('error', () => {
-    test('should show error in ErrorViewer', () => {
+    it('should show error in ErrorViewer', () => {
       const errorObj = {
         name: 'testError',
         message: 'test error',
@@ -57,7 +59,7 @@ describe('ResponseBody component', () => {
       expect(wrapper.find(ErrorViewer).text()).toContain('test error');
     });
 
-    test('should show details for prism error in ErrorViewer', () => {
+    it('should show details for prism error in ErrorViewer', () => {
       const errorObj = new ProblemJsonError('test', 'dummy', 500, 'test detail', { test: 'object' });
       store.response = ResponseStore.fromError(errorObj);
 
@@ -68,7 +70,7 @@ describe('ResponseBody component', () => {
   });
 
   describe('raw', () => {
-    test('should show RawViewer for xml', () => {
+    it('should show RawViewer for xml', () => {
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
           'Content-Type': 'application/xml',
@@ -80,10 +82,7 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper
-          .find('input')
-          .filter({ value: 'raw' })
-          .simulate('change');
+        wrapper.find('input').filter({ value: 'raw' }).simulate('change');
       });
 
       wrapper.update();
@@ -91,7 +90,7 @@ describe('ResponseBody component', () => {
       expect(wrapper.find(CodeViewer)).toHaveProp('value', '<xml></xml>');
     });
 
-    test('should not format code in raw mode', () => {
+    it('should not format code in raw mode', () => {
       const raw = `{"some": "object", "with": ["nested", "elements"]}`;
 
       store.response = ResponseStore.fromNetworkResponse({
@@ -105,10 +104,7 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper
-          .find('input')
-          .filter({ value: 'raw' })
-          .simulate('change');
+        wrapper.find('input').filter({ value: 'raw' }).simulate('change');
       });
 
       wrapper.update();
@@ -118,14 +114,14 @@ describe('ResponseBody component', () => {
   });
 
   describe('pretty', () => {
-    test('should show PrettyViewer by default', () => {
+    it('should show PrettyViewer by default', () => {
       render();
 
       expect(wrapper.find(RadioGroup)).toHaveProp('selectedValue', 'pretty');
       expect(wrapper.find(PrettyViewer)).toExist();
     });
 
-    test('should format code in pretty mode', async () => {
+    it('should format code in pretty mode', async () => {
       const raw = `{"message":"NOT AUTHORIZED"}`;
       const formatted = JSON.stringify({ message: 'NOT AUTHORIZED' }, null, 2);
 
@@ -150,7 +146,7 @@ describe('ResponseBody component', () => {
   });
 
   describe('rendered', () => {
-    test('should show JsonViewer when responseType is json', () => {
+    it('should show JsonViewer when responseType is json', () => {
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
           'Content-Type': 'application/json',
@@ -162,10 +158,7 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper
-          .find('input')
-          .filter({ value: 'rendered' })
-          .simulate('change');
+        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
       });
 
       wrapper.update();
@@ -173,7 +166,7 @@ describe('ResponseBody component', () => {
       expect(wrapper.find(JsonViewer)).toExist();
     });
 
-    test('should show HTMLViewer when responseType is html', () => {
+    it('should show HTMLViewer when responseType is html', () => {
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
           'Content-Type': 'text/html',
@@ -185,10 +178,7 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper
-          .find('input')
-          .filter({ value: 'rendered' })
-          .simulate('change');
+        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
       });
 
       wrapper.update();
@@ -196,7 +186,7 @@ describe('ResponseBody component', () => {
       expect(wrapper.find(HTMLViewer)).toExist();
     });
 
-    test('should show MarkdownViewer when responseType is md', () => {
+    it('should show MarkdownViewer when responseType is md', () => {
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
           'Content-Type': 'text/markdown',
@@ -207,10 +197,7 @@ describe('ResponseBody component', () => {
 
       render();
       act(() => {
-        wrapper
-          .find('input')
-          .filter({ value: 'rendered' })
-          .simulate('change');
+        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
       });
 
       wrapper.update();
@@ -218,7 +205,7 @@ describe('ResponseBody component', () => {
       expect(wrapper.find(MarkdownViewer)).toExist();
     });
 
-    test('should show ImageViewer when responseType is img', () => {
+    it('should show ImageViewer when responseType is img', () => {
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
           'Content-Type': 'image/png',
@@ -229,10 +216,7 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper
-          .find('input')
-          .filter({ value: 'rendered' })
-          .simulate('change');
+        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
       });
 
       wrapper.update();
@@ -240,7 +224,7 @@ describe('ResponseBody component', () => {
       expect(wrapper.find(ImageViewer)).toExist();
     });
 
-    test('should show message if responseType not supported', () => {
+    it('should show message if responseType not supported', () => {
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
           'Content-Type': 'application/xml',
@@ -251,10 +235,7 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper
-          .find('input')
-          .filter({ value: 'rendered' })
-          .simulate('change');
+        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
       });
 
       wrapper.update();
@@ -277,7 +258,7 @@ describe('ResponseBody component', () => {
       },
     ];
 
-    test('should only render body violations', () => {
+    it('should only render body violations', () => {
       store.response = ResponseStore.fromNetworkResponse({
         headers: {
           'Content-Type': 'application/json',

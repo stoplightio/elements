@@ -1,8 +1,10 @@
+import 'jest-enzyme';
+
 import { NodeType } from '@stoplight/types';
 import { FormInput, InputGroup } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
+
 import { IProjectNode } from '../../../types';
 import { Search } from '../index';
 import { NodeList } from '../List';
@@ -15,7 +17,7 @@ jest.mock('@stoplight/ui-kit/ScrollContainer', () => ({
 
 jest.mock('../../../hooks/useComponents', () => ({
   __esModule: true,
-  useComponents: () => ({ link: ({ node, children }: any, id: any) => <a href={node.url}>{children}</a> }),
+  useComponents: () => ({ link: ({ node, children }: any) => <a href={node.url}>{children}</a> }),
 }));
 
 describe('Search', () => {

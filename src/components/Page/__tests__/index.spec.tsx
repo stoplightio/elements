@@ -1,8 +1,10 @@
+import 'jest-enzyme';
+
 import { NodeType } from '@stoplight/types';
 import { parse } from '@stoplight/yaml';
 import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
 import * as React from 'react';
+
 import { Page } from '..';
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import { Docs } from '../../Docs';

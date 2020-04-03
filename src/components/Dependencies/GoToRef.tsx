@@ -1,6 +1,7 @@
 import { Classes } from '@blueprintjs/core';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { HostContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 

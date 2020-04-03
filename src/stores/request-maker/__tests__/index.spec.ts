@@ -1,10 +1,12 @@
+import 'jest-enzyme';
+
 import { safeStringify } from '@stoplight/json';
 import { IHttpConfig } from '@stoplight/prism-http';
 import { HttpParamStyles } from '@stoplight/types';
 import axios from 'axios';
-import 'jest-enzyme';
 import { without } from 'lodash';
 import parsePreferHeader from 'parse-prefer-header';
+
 import { RequestMakerStore } from '..';
 import { operation as emptyResponseOperation } from '../../../__fixtures__/operations/empty-response';
 import { stringToArrayBuffer } from '../../../utils/arrayBuffer';
@@ -285,7 +287,7 @@ describe('RequestMakerStore', () => {
       mock: { dynamic: false },
       checkSecurity: true,
       validateRequest: true,
-      validateResponse: true,
+      validateResponse: false,
       errors: false,
     };
 
@@ -462,7 +464,7 @@ describe('RequestMakerStore', () => {
         },
       ];
 
-      store.setPrismConfigurationOption('validateResponse', false);
+      store.setPrismConfigurationOption('validateResponse', true);
 
       expect(store.request.headerParams).toHaveLength(1);
       const header = store.request.headerParams[0];
@@ -471,7 +473,7 @@ describe('RequestMakerStore', () => {
       expect(parsePreferHeader(header.value)).toEqual({
         validateRequest: 'false',
         unrelatedValue: true,
-        validateResponse: 'false',
+        validateResponse: 'true',
       });
     });
 

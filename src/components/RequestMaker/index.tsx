@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
+import * as React from 'react';
 
 import { RequestMakerProvider, useRequestMaker } from '../../hooks';
 import { RequestEditor, RequestEndpoint } from './Request';

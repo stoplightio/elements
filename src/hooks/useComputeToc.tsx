@@ -1,9 +1,9 @@
 import { Dictionary, NodeType } from '@stoplight/types';
 import { escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
 import * as React from 'react';
+
 import { IconsContext } from '../containers/Provider';
-import { IContentsNodeWithId, IProjectNode, ProjectNodeWithUri } from '../types';
-import { NodeIconMapping } from '../types';
+import { IContentsNodeWithId, IProjectNode, NodeIconMapping, ProjectNodeWithUri } from '../types';
 import { deserializeSrn } from '../utils/srns';
 
 const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
@@ -13,7 +13,7 @@ const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex
  */
 export function useComputeToc(nodes: IProjectNode[]) {
   const icons = React.useContext(IconsContext);
-  return React.useMemo(() => computeToc(nodes, icons), [nodes]);
+  return React.useMemo(() => computeToc(nodes, icons), [nodes, icons]);
 }
 
 /**

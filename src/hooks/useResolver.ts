@@ -1,6 +1,7 @@
-import { IResolveError, IResolveResult, IResolverOpts } from '@stoplight/json-ref-resolver/types';
+import { IResolveError, IResolveResult } from '@stoplight/json-ref-resolver/types';
 import { uniqBy } from 'lodash';
 import * as React from 'react';
+
 import { ActiveSrnContext, ResolverContext, ResolverOptionsContext } from '../containers/Provider';
 import { DocsNodeType } from '../types';
 import { cancelablePromise } from '../utils/cancelablePromise';
@@ -62,7 +63,7 @@ export function useResolver<T = any>(type: DocsNodeType, value: string) {
       // If the component unmounts, cancel the promise so we don't try to update the React state
       cancel();
     };
-  }, [value, srn]);
+  }, [value, srn, parsedValue, resolverOpts]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return resolved;
 }

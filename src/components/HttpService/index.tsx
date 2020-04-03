@@ -4,6 +4,7 @@ import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBo
 import cn from 'classnames';
 import { isEmpty } from 'lodash';
 import * as React from 'react';
+
 import { useResolver } from '../../hooks/useResolver';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 import { MarkdownViewer } from '../MarkdownViewer';
