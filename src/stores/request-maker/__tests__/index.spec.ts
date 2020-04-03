@@ -360,6 +360,7 @@ describe('RequestMakerStore', () => {
         {
           name: 'Prefer',
           value: 'dynamic="true"',
+          isEnabled: false,
         },
       ];
 
@@ -376,6 +377,7 @@ describe('RequestMakerStore', () => {
         {
           name: 'Prefer',
           value: 'check-security=false',
+          isEnabled: false,
         },
         {
           name: 'Prefer',

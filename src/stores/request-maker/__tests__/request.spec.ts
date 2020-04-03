@@ -81,7 +81,7 @@ describe('RequestStore', () => {
           },
           {
             schema: {
-              type: 'string',
+              type: 'string' as const,
               enum: ['one', 'two', 'three'],
             },
             value: undefined,
@@ -91,10 +91,11 @@ describe('RequestStore', () => {
           {
             value: undefined,
             schema: {
-              type: 'boolean',
+              type: 'boolean' as const,
               description: 'True or false?',
             },
             name: 'booleanParam',
+            isEnabled: false,
           },
         ],
       });
@@ -419,10 +420,12 @@ describe('RequestStore', () => {
         {
           name: 'queryParam',
           value: 'value',
+          isEnabled: false,
         },
         {
           name: 'anotherParam',
           value: 'testValue',
+          isEnabled: false,
         },
       ];
 
@@ -432,10 +435,12 @@ describe('RequestStore', () => {
         {
           name: 'queryParam',
           value: 'value',
+          isEnabled: false,
         },
         {
           name: 'anotherParam',
           value: 'testValue2',
+          isEnabled: false,
         },
       ]);
     });
