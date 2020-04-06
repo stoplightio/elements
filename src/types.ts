@@ -67,12 +67,14 @@ export interface INodeEdge {
   fromBranchNodeType: string;
   fromBranchNodeUri: string;
   fromBranchNodePath: string;
+  fromBranchNodeVersion: string;
 
   toBranchNodeId: number;
   toBranchNodeName: string;
   toBranchNodeType: string;
   toBranchNodeUri: string;
   toBranchNodePath: string;
+  toBranchNodeVersion: string;
 }
 
 export type IconMapType = NodeType | 'group' | 'divider' | 'item';

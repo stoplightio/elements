@@ -17,7 +17,7 @@ export interface IInboundDependencies {
   className?: string;
 }
 
-export const InboundDependencies: React.FC<IInboundDependencies> = ({ edges, className }) => {
+export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, className }) => {
   const edgesByNodeType = groupBy(edges, 'fromBranchNodeType');
   const firstTab = edges.length ? findKey(edgesByNodeType, (nodes) => nodes?.length) : undefined;
   const [selectedTabId, setSelectedTabId] = React.useState();
@@ -34,38 +34,96 @@ export const InboundDependencies: React.FC<IInboundDependencies> = ({ edges, cla
   return (
     <div className={cn(className, 'InboundDependencies')}>
       <Tabs
-        id="InboundDependencies"
+        id="InboundDependencies-tabs"
         className="p-6 border rounded dark:border-darken-3"
         selectedTabId={selectedTabId ?? firstTab}
         onChange={onChangeTab}
         renderActiveTabPanelOnly
         vertical
       >
-        <InboundDependencyTab type={NodeType.Model} edges={edgesByNodeType[NodeType.Model]} />
-        <InboundDependencyTab type={NodeType.HttpService} edges={edgesByNodeType[NodeType.HttpService]} />
-        <InboundDependencyTab type={NodeType.HttpOperation} edges={edgesByNodeType[NodeType.HttpOperation]} />
-        <InboundDependencyTab type={NodeType.Article} edges={edgesByNodeType[NodeType.Article]} />
+        <Tab
+          id={`InboundDependencies-${NodeType.Model}`}
+          title={
+            <div className="flex items-center">
+              <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Model]} iconSize={14} />
+              {NodeTypePrettyName[NodeType.Model]}s{' '}
+              {edgesByNodeType[NodeType.Model]?.length ? <>({edgesByNodeType[NodeType.Model].length})</> : null}
+            </div>
+          }
+          panel={
+            <DependencyTable
+              className={`InboundDependencies__DependencyTable`}
+              edges={edgesByNodeType[NodeType.Model]}
+            />
+          }
+          panelClassName="w-full"
+          disabled={!edgesByNodeType[NodeType.Model]?.length}
+        />
+
+        <Tab
+          id={`InboundDependencies-${NodeType.HttpService}`}
+          title={
+            <div className="flex items-center">
+              <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpService]} iconSize={14} />
+              {NodeTypePrettyName[NodeType.HttpService]}s{' '}
+              {edgesByNodeType[NodeType.HttpService]?.length ? (
+                <>({edgesByNodeType[NodeType.HttpService].length})</>
+              ) : null}
+            </div>
+          }
+          panel={
+            <DependencyTable
+              className={`InboundDependencies__DependencyTable`}
+              edges={edgesByNodeType[NodeType.HttpService]}
+            />
+          }
+          panelClassName="w-full"
+          disabled={!edgesByNodeType[NodeType.HttpService]?.length}
+        />
+
+        <Tab
+          id={`InboundDependencies-${NodeType.HttpOperation}`}
+          title={
+            <div className="flex items-center">
+              <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpOperation]} iconSize={14} />
+              {NodeTypePrettyName[NodeType.HttpOperation]}s{' '}
+              {edgesByNodeType[NodeType.HttpOperation]?.length ? (
+                <>({edgesByNodeType[NodeType.HttpOperation].length})</>
+              ) : null}
+            </div>
+          }
+          panel={
+            <DependencyTable
+              className={`InboundDependencies__DependencyTable`}
+              edges={edgesByNodeType[NodeType.HttpOperation]}
+            />
+          }
+          panelClassName="w-full"
+          disabled={!edgesByNodeType[NodeType.HttpOperation]?.length}
+        />
+
+        <Tab
+          id={`InboundDependencies-${NodeType.Article}`}
+          title={
+            <div className="flex items-center">
+              <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Article]} iconSize={14} />
+              {NodeTypePrettyName[NodeType.Article]}s{' '}
+              {edgesByNodeType[NodeType.Article]?.length ? <>({edgesByNodeType[NodeType.Article].length})</> : null}
+            </div>
+          }
+          panel={
+            <DependencyTable
+              className={`InboundDependencies__DependencyTable`}
+              edges={edgesByNodeType[NodeType.Article]}
+            />
+          }
+          panelClassName="w-full"
+          disabled={!edgesByNodeType[NodeType.Article]?.length}
+        />
       </Tabs>
     </div>
   );
-};
-
-const InboundDependencyTab = ({ type, edges }: { type: NodeType; edges?: INodeEdge[] }) => {
-  return (
-    <Tab
-      id={`InboundDependencyTab-${type}`}
-      title={
-        <div className="flex items-center">
-          <Icon className="mr-2" icon={NodeTypeIcons[type]} iconSize={14} />
-          {NodeTypePrettyName[type]}s {edges?.length ? <>({edges.length})</> : null}
-        </div>
-      }
-      panel={<DependencyTable className={`InboundDependencies__DependencyTable`} edges={edges} />}
-      panelClassName="w-full overflow-auto"
-      disabled={!edges?.length}
-    />
-  );
-};
+});
 
 const DependencyTable = ({ className, edges = [] }: { edges?: INodeEdge[]; className?: string }) => {
   const info = React.useContext(ActiveInfoContext);
@@ -105,7 +163,9 @@ const DependencyTable = ({ className, edges = [] }: { edges?: INodeEdge[]; class
                 >
                   <div className="flex items-center">
                     <div className="font-medium">{edge.fromBranchNodeName}</div>
-                    {/* {node.version !== '0.0' && <div className="px-2 text-sm text-gray-6">v{node.version}</div>} */}
+                    {edge.fromBranchNodeVersion !== '0.0' && (
+                      <div className="px-2 text-sm text-gray-6">v{edge.fromBranchNodeVersion}</div>
+                    )}
                     <div className="flex-1"></div>
                     <div className="text-sm opacity-75 text-gray-6">{info.project}</div>
                   </div>
