@@ -23,21 +23,12 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   const visNetwork = React.useRef<Network>();
 
   const [activeNode, setActiveNode] = React.useState<INodeEdge | undefined>();
+  const prevActiveNodeId = React.useRef<number | undefined>();
 
   const onClickNode = React.useCallback(
     (e: any) => {
       const nodeId = e.nodes[0];
       if (!nodeId) return;
-
-      if (activeNode) {
-        // Reset the previous active node
-        visNodes.current?.updateOnly({
-          id: activeNode.toBranchNodeId,
-          icon: {
-            color: activeNode.toBranchNodeId === node.id ? '#ef932b' : '#cfd9e0',
-          },
-        });
-      }
 
       if (activeNode?.toBranchNodeId === nodeId) {
         // Unselect nodes and edges
@@ -54,13 +45,23 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
         setActiveNode(edges.find((edge) => edge.toBranchNodeId === nodeId));
       }
     },
-    [activeNode, edges, node.id],
+    [activeNode, edges],
   );
 
   React.useEffect(() => {
-    visNetwork.current?.unselectAll();
-    setActiveNode(undefined);
-  }, [rootNodeId]);
+    if (prevActiveNodeId.current) {
+      visNodes.current?.updateOnly({
+        id: prevActiveNodeId.current,
+        icon: {
+          color: prevActiveNodeId.current === rootNodeId ? '#ef932b' : '#cfd9e0',
+        },
+      });
+    }
+
+    if (activeNode) {
+      prevActiveNodeId.current = activeNode.toBranchNodeId;
+    }
+  }, [activeNode, rootNodeId]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
