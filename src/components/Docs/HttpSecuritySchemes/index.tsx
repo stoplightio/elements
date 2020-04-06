@@ -32,7 +32,7 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
             'TreeListItem--striped': index % 2 !== 0,
           });
 
-          return <SecurityScheme key={index} className={securityClassName} security={security} />;
+          return <SecurityScheme key={security.key} className={securityClassName} security={security} />;
         })}
       </div>
     </div>

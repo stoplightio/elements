@@ -20,7 +20,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
           <div className="mb-4 text-lg font-semibold select-none">Servers</div>
 
           {data.servers.map((server, index) => (
-            <div className="flex items-center flex-1 mt-4" key={index}>
+            <div className="flex items-center flex-1 mt-4" key={server.name}>
               {server.name && <div>{server.name} - </div>}
               {server.description && <div>{server.description} - </div>}
 

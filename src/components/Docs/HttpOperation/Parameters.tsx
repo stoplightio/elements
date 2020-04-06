@@ -23,7 +23,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
       <div className="mt-6 border rounded TreeList dark:border-darken">
         {sortBy(parameters, ['required', 'name']).map((parameter, index) => (
           <Parameter
-            key={index}
+            key={parameter.name}
             parameter={parameter}
             className={cn('TreeListItem', {
               'TreeListItem--striped': index % 2 !== 0,
@@ -79,8 +79,8 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
               </div>
             )}
 
-            {keys(validations).map((key, index) => {
-              return <ParameterValidation key={index} className="mt-2 mr-2" name={key} value={validations[key]} />;
+            {keys(validations).map((key) => {
+              return <ParameterValidation key={key} className="mt-2 mr-2" name={key} value={validations[key]} />;
             })}
           </div>
         </div>
@@ -104,7 +104,7 @@ const ParameterValidation = ({ className, name, value }: { className?: string; n
     return (
       <>
         {keys(value).map((key, i) => (
-          <ParameterValidation key={i} className={className} name={`${name}.${key}`} value={value[key]} />
+          <ParameterValidation key={key} className={className} name={`${name}.${key}`} value={value[key]} />
         ))}
       </>
     );

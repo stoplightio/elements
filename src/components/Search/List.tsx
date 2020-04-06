@@ -51,7 +51,7 @@ export const NodeList: React.FC<{
   return (
     <ScrollContainer className="NodeList">
       {nodes.map((item, i) => (
-        <NodeListItem key={i} item={item} isLoading={isLoading} onClose={onClose} onReset={onReset} />
+        <NodeListItem key={item.id} item={item} isLoading={isLoading} onClose={onClose} onReset={onReset} />
       ))}
 
       {isLoading && (
