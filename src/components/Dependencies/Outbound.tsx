@@ -1,14 +1,12 @@
-import { Icon } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 import { DataSetNodes, Network } from 'vis-network/standalone';
 
 import { NodeTypePrettyName } from '../../constants';
-import { Docs } from '../../containers/Docs';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
 import { IBranchNode, INodeEdge } from '../../types';
-import { GoToRef } from './GoToRef';
 import { Graph } from './Graph';
+import { NodeDialog } from './NodeDialog';
 
 export interface IOutboundDependencies {
   node: IBranchNode;
@@ -88,23 +86,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
         }}
       />
 
-      {activeNode && (
-        <div className={cn('absolute bottom-0 right-0 left-0 pb-16 px-16')}>
-          <div className="flex bg-gray-2 border-b px-4">
-            <GoToRef className="flex-1" uri={activeNode.toBranchNodeUri}>
-              {activeNode.toBranchNodeName}
-            </GoToRef>
-
-            <Icon
-              className="ml-2 cursor-pointer text-gray-5 hover:text-gray-6"
-              icon="small-cross"
-              onClick={() => setActiveNode(undefined)}
-            />
-          </div>
-
-          <Docs node={activeNode.toBranchNodeUri} />
-        </div>
-      )}
+      <NodeDialog direction="to" edge={activeNode} onClose={() => setActiveNode(undefined)} />
     </div>
   );
 };

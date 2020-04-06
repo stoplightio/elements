@@ -4,6 +4,7 @@ import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
+
 import { edges as todoFullInboundEdges } from '../../__fixtures__/dependencies/inbound/todo-full';
 import { edges as todoFullOutboundEdges } from '../../__fixtures__/dependencies/outbound/todo-full';
 import { InboundDependencies } from '../../components/Dependencies/Inbound';
@@ -15,20 +16,6 @@ export const darkMode = () => boolean('dark mode', false);
 
 const branchNode: IBranchNode = {
   id: 9720,
-  branch: {
-    id: 1,
-    slug: 'master',
-
-    project: {
-      id: 1,
-      slug: 'studio-demo',
-
-      workspace: {
-        id: 1,
-        slug: 'demo',
-      },
-    },
-  },
   node: {
     id: 1,
     uri: '/reference/petstore/openapi.v1.yaml',
@@ -46,8 +33,8 @@ storiesOf('components/Dependencies', module)
   .add('Inbound', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Provider>
-          <InboundDependencies node={branchNode} edges={object('edges', todoFullInboundEdges)} padding="12" />
+        <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
+          <InboundDependencies edges={object('edges', todoFullInboundEdges)} />
         </Provider>
       </div>
     );
@@ -55,8 +42,8 @@ storiesOf('components/Dependencies', module)
   .add('Outbound', () => {
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Provider>
-          <OutboundDependencies node={branchNode} edges={object('edges', todoFullOutboundEdges)} padding="12" />
+        <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
+          <OutboundDependencies node={branchNode} edges={object('edges', todoFullOutboundEdges)} />
         </Provider>
       </div>
     );

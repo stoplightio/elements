@@ -1,2 +1,1 @@
-// import * from './components';
-// import * from './containers';
+import './components/Dependencies';

@@ -6,34 +6,35 @@ import { defaultComponents } from '../hooks/useComponents';
 import { NodeIconMapping } from '../types';
 import { getUrqlClient } from '../utils/urql';
 
-export interface IProvider {
-  host: string;
-  workspace: string;
-  project: string;
-  branch: string;
-  node: string;
-
+export interface IProvider extends IActiveInfo {
   urqlClient?: Client;
   components?: IComponentMapping;
 }
 
-export const ComponentsContext = React.createContext<IComponentMapping | undefined>(defaultComponents);
+export interface IActiveInfo {
+  host: string;
+  workspace: string;
+  project: string;
+  branch?: string;
+  node?: string;
+}
+
+export const ComponentsContext = createNamedContext<IComponentMapping | undefined>(
+  'ComponentsContext',
+  defaultComponents,
+);
 
 const defaultIcons: NodeIconMapping = {};
-export const IconsContext = React.createContext<NodeIconMapping>(defaultIcons);
+export const IconsContext = createNamedContext<NodeIconMapping>('IconsContext', defaultIcons);
 
 const defaultInfo = {
+  host: '',
   workspace: '',
   project: '',
   branch: '',
   node: '',
 };
-export const ActiveInfoContext = React.createContext<{
-  workspace: string;
-  project: string;
-  branch: string;
-  node: string;
-}>(defaultInfo);
+export const ActiveInfoContext = createNamedContext<IActiveInfo>('ActiveInfoContext', defaultInfo);
 
 export const Provider: React.FC<IProvider> = ({
   host,
@@ -46,13 +47,14 @@ export const Provider: React.FC<IProvider> = ({
   children,
 }) => {
   const info = {
+    host,
     workspace,
     project,
     branch,
     node,
   };
 
-  const client = getUrqlClient(host, urqlClient);
+  const client = getUrqlClient(`${host}/graphql`, urqlClient);
 
   return (
     <UrqlProvider value={client}>
@@ -64,3 +66,9 @@ export const Provider: React.FC<IProvider> = ({
     </UrqlProvider>
   );
 };
+
+function createNamedContext<T>(name: string, defaultValue: T): React.Context<T> {
+  const context = React.createContext(defaultValue);
+  context.displayName = name;
+  return context;
+}

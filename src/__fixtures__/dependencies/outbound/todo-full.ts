@@ -15,6 +15,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'model',
     toBranchNodeUri: '/reference/petstore/models/category.v1.yaml',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 4,
@@ -30,6 +32,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'http_operation',
     toBranchNodeUri: '/reference/petstore/openapi.v1.yaml/paths/~1pets/get',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 5,
@@ -45,6 +49,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'model',
     toBranchNodeUri: '/reference/petstore/openapi.v1.yaml/components/schemas/Pets',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 6,
@@ -60,6 +66,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'model',
     toBranchNodeUri: '/reference/common/models/error.v1.yaml',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 7,
@@ -75,6 +83,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'http_operation',
     toBranchNodeUri: '/reference/petstore/openapi.v1.yaml/paths/~1pets/post',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 8,
@@ -90,6 +100,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'model',
     toBranchNodeUri: '/reference/common/models/error.v1.yaml',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 9,
@@ -105,6 +117,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'http_operation',
     toBranchNodeUri: '/reference/petstore/openapi.v1.yaml/paths/~1pets~1{petId}/get',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 10,
@@ -120,6 +134,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'model',
     toBranchNodeUri: '/reference/petstore/models/pet.v1.yaml',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 11,
@@ -135,6 +151,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'model',
     toBranchNodeUri: '/reference/common/models/error.v1.yaml',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 12,
@@ -150,6 +168,8 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'model',
     toBranchNodeUri: '/reference/petstore/openapi.v1.yaml/components/schemas/Pets',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
   {
     id: 13,
@@ -165,5 +185,7 @@ export const edges: INodeEdge[] = [
     toBranchNodeType: 'model',
     toBranchNodeUri: '/reference/petstore/models/pet.v1.yaml',
     toBranchNodePath: '#/',
+    toBranchNodeVersion: '1.0',
+    fromBranchNodeVersion: '1.0',
   },
 ];

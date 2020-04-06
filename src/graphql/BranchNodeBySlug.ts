@@ -1,5 +1,5 @@
 export const BranchNodeBySlug = `
-query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String!, $uri: String!) {
+query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String, $uri: String!) {
   branchNodes(
     limit: 1,
     where: {
@@ -9,7 +9,10 @@ query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $
       ], 
       
       branch: {
-        slug: { _eq: $branchSlug }, 
+        _or: [
+          { slug: { _eq: $branchSlug } },
+          { isDefault: { _eq: true } }
+        ],
       	project: {
         	slug: { _eq: $projectSlug },
         	workspace: { slug: { _eq: $workspaceSlug } }

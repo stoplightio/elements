@@ -59,12 +59,11 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   );
 
   return (
-    <div className={cn('HttpOperation__Parameter p-4 flex items-start', className)} style={{ alignItems: 'start' }}>
-      <div className="flex flex-1 flex-start">
-        <div style={{ minWidth: '60px' }}>
-          <div className="mr-2">{parameter.name}</div>
-          <div className={`${PropertyTypeColors[type]} text-sm`}>{type}</div>
-        </div>
+    <div className={cn('HttpOperation__Parameter p-3 flex items-start', className)} style={{ alignItems: 'start' }}>
+      <div className="flex flex-1 flex-start items-center">
+        <div style={{ minWidth: '60px' }}>{parameter.name}</div>
+
+        <div className={`${PropertyTypeColors[type]} mx-2`}>{type}</div>
 
         <div className="flex-1 ml-4">
           {description && (
