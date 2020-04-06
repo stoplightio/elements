@@ -26,9 +26,12 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
       title={
         <div className="flex items-center mr-2">
           <div className="flex-1 flex items-center">
-            {nodeName} {nodeVersion !== '0.0' && <span className="mx-2 text-sm text-gray-6">v{nodeVersion}</span>}
+            {nodeName} {nodeVersion !== '0.0' && <span className="mx-2 text-base text-gray-6">v{nodeVersion}</span>}
           </div>
-          <GoToRef uri={nodeUri}>Go to ref</GoToRef>
+
+          <GoToRef className="text-base" uri={nodeUri}>
+            Go to ref
+          </GoToRef>
         </div>
       }
       icon={<Icon icon={NodeTypeIcons[nodeType]} iconSize={20} color={NodeTypeColors[nodeType]} />}

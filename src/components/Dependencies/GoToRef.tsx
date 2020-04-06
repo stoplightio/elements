@@ -1,5 +1,3 @@
-import { Classes } from '@blueprintjs/core';
-import cn from 'classnames';
 import * as React from 'react';
 
 import { ActiveInfoContext } from '../../containers/Provider';
@@ -16,7 +14,7 @@ export const GoToRef: React.FC<{
     const Link = components.link;
 
     return (
-      <Link index={0} parent={null} path={['']} node={{ ...info, node: uri, url: uri }}>
+      <Link index={0} parent={null} path={['']} node={{ ...info, node: uri, url: uri, className }}>
         {children}
       </Link>
     );
@@ -29,7 +27,7 @@ export const GoToRef: React.FC<{
 
   return (
     <a
-      className={cn('text-sm', className, Classes.TEXT_MUTED)}
+      className={className}
       href={`${info.host}/api/v1/projects/${info.workspace}/${info.project}/nodes/${uri}${query}`}
       target="_blank"
       rel="noopener noreferrer"
