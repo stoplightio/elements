@@ -1,12 +1,13 @@
 import { Prettifier } from './types';
 
-export const prettifyJSON: Prettifier<unknown> = json => {
+export const prettifyJSON: Prettifier<unknown> = (json) => {
   try {
+    let parsedJson = json;
     if (typeof json === 'string') {
-      json = JSON.parse(json);
+      parsedJson = JSON.parse(json);
     }
 
-    return JSON.stringify(json, null, 2);
+    return JSON.stringify(parsedJson, null, 2);
   } catch {
     return String(json);
   }

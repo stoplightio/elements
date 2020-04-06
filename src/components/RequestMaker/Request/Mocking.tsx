@@ -25,17 +25,17 @@ export const Mocking = observer(() => {
   const currentExample = (store.prismConfig.mock && store.prismConfig.mock.exampleKey) || '';
 
   const exampleOptions = React.useMemo(() => {
-    const response = operationResponses?.find(r => r.code === currentCode);
+    const response = operationResponses?.find((r) => r.code === currentCode);
     if (!response || !response.contents) {
       return [notSetOption];
     }
-    const options = response.contents.flatMap(c => c.examples || []).map(e => ({ value: e.key, label: e.key }));
+    const options = response.contents.flatMap((c) => c.examples || []).map((e) => ({ value: e.key, label: e.key }));
     return [notSetOption, ...options];
   }, [operationResponses, currentCode]);
 
   // if the current example is not available anymore, remove it from the URL
   React.useEffect(() => {
-    if (currentExample && !exampleOptions.find(o => o.value === currentExample)) {
+    if (currentExample && !exampleOptions.find((o) => o.value === currentExample)) {
       store.setPrismMockingOption('exampleKey', undefined);
     }
   }, [exampleOptions, currentExample, store]);
@@ -125,13 +125,13 @@ export const Mocking = observer(() => {
                   }}
                 />
 
-                {operationResponses?.map(operationResponse => {
+                {operationResponses?.map((operationResponse) => {
                   const isActive = operationResponse.code === currentCode;
                   const exampleKeys = operationResponse.contents
-                    ?.flatMap(c => c.examples || [])
-                    .map(example => example.key);
+                    ?.flatMap((c) => c.examples || [])
+                    .map((example) => example.key);
 
-                  const exampleChildren = exampleKeys?.map(exampleKey => (
+                  const exampleChildren = exampleKeys?.map((exampleKey) => (
                     <MenuItem
                       active={isActive && exampleKey === currentExample}
                       text={exampleKey}
@@ -199,7 +199,7 @@ export const Mocking = observer(() => {
             className="dynamic-mode-selector"
             disabled={!store.isMockEnabled}
             options={dynamicOptions}
-            onChange={event => {
+            onChange={(event) => {
               store.setPrismMockingOption('dynamic', event.currentTarget.value === 'dynamic');
             }}
             value={currentDynamicSetting}

@@ -87,8 +87,8 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
               {data.license.name || data.license.url}
             </a>
           ) : (
-              <span>{data.license.name}</span>
-            )}
+            <span>{data.license.name}</span>
+          )}
         </div>
       )}
     </div>
