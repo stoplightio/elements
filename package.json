@@ -75,7 +75,7 @@
     "urql": "^1.9.5"
   },
   "devDependencies": {
-    "@stoplight/eslint-config": "^1.0.1",
+    "@stoplight/eslint-config": "^1.1.0",
     "@stoplight/prism-http": "^3.3.0",
     "@stoplight/scripts": "8.2.0",
     "@stoplight/storybook-config": "^2.0.5",
