@@ -1,5 +1,5 @@
 import { IHttpRequest } from '@stoplight/types';
-import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
+import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -25,4 +25,4 @@ const HttpRequestComponent = React.memo<HttpRequestProps>(({ data, className }) 
   );
 });
 
-export const HttpRequest = withErrorBoundary<HttpRequestProps>(HttpRequestComponent, ['data'], 'TryIt');
+export const HttpRequest = withErrorBoundary<HttpRequestProps>(HttpRequestComponent, { recoverableProps: ['data'] });

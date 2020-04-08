@@ -1,6 +1,6 @@
 import { IHttpOperation } from '@stoplight/types';
 import { Classes } from '@stoplight/ui-kit';
-import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
+import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -40,4 +40,4 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 });
 HttpOperationComponent.displayName = 'HttpOperation.Component';
 
-export const HttpOperation = withErrorBoundary<HttpOperationProps>(HttpOperationComponent, ['data'], 'HttpOperation');
+export const HttpOperation = withErrorBoundary<HttpOperationProps>(HttpOperationComponent, { recoverableProps: ['data'] });

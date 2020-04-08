@@ -1,4 +1,4 @@
-import { IErrorBoundary, withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
+import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -7,7 +7,7 @@ import { useRequestMaker } from '../../hooks/useRequestMaker';
 import { isHttpOperation } from '../../utils/guards';
 import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '../RequestMaker';
 
-export interface ITryItProps extends IErrorBoundary {
+export interface ITryItProps {
   nodeType: string;
   nodeData: string;
   mockUrl?: string;
@@ -38,4 +38,4 @@ const TryItComponent = React.memo<ITryItProps>(({ nodeType, nodeData, mockUrl, c
 });
 TryItComponent.displayName = 'TryIt.Component';
 
-export const TryIt = withErrorBoundary<ITryItProps>(TryItComponent, ['nodeData'], 'TryIt');
+export const TryIt = withErrorBoundary<ITryItProps>(TryItComponent, { recoverableProps: ['nodeData'] });

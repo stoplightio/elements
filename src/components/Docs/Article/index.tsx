@@ -1,6 +1,6 @@
 import { processMarkdownTree } from '@stoplight/markdown-viewer';
 import { Builder } from '@stoplight/markdown/builder';
-import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
+import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -25,4 +25,4 @@ const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
   );
 });
 
-export const Article = withErrorBoundary<ArticleProps>(ArticleComponent, ['data'], 'Article');
+export const Article = withErrorBoundary<ArticleProps>(ArticleComponent, { recoverableProps: ['data'] });

@@ -1,7 +1,7 @@
 import { Icon } from '@blueprintjs/core';
 import { IHttpService } from '@stoplight/types';
 import { Classes } from '@stoplight/ui-kit';
-import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
+import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -84,4 +84,4 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
 });
 HttpServiceComponent.displayName = 'HttpService.Component';
 
-export const HttpService = withErrorBoundary<HttpServiceProps>(HttpServiceComponent, ['data'], 'HttpService');
+export const HttpService = withErrorBoundary<HttpServiceProps>(HttpServiceComponent, { recoverableProps: ['data'] });
