@@ -18,6 +18,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data, className }) => {
 
   return (
     <div className={cn('Model', className)}>
+      {data.title !== void 0 && <h3 className="text-2xl mb-10">{data.title}</h3>}
       <SchemaViewer schema={data} description={data.description} examples={examples} />
     </div>
   );
