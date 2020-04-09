@@ -13,6 +13,8 @@ export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
   return (
     <div className={cn('HttpService', className)}>
+      {data.name && <h3 className="text-2xl mb-10">{data.name}</h3>}
+
       {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
 
       {data.servers && data.servers.length > 0 ? (
