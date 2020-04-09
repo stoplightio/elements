@@ -12,9 +12,8 @@ import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
 import { NodeTypeColors, NodeTypeIcons } from '../../constants';
+import { InlineRefResolverContext } from '../../containers/Provider';
 import { MarkdownViewer } from '../MarkdownViewer';
-
-// import { InlineRefResolverContext } from '../../containers/Provider';
 
 export interface ISchemaViewerProps {
   schema: JSONSchema;
@@ -38,8 +37,7 @@ export const SchemaViewer = ({
 }: ISchemaViewerProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  // TODO (CL): Do we need to add this back?
-  // const resolveRef = React.useContext(InlineRefResolverContext);
+  const resolveRef = React.useContext(InlineRefResolverContext);
 
   const JSV = ({ jsvClassName }: { jsvClassName?: string }) => {
     return (
@@ -48,7 +46,13 @@ export const SchemaViewer = ({
 
         {description && <MarkdownViewer markdown={description} />}
 
-        <JsonSchemaViewer className={jsvClassName} schema={schema as JSONSchema4} maxRows={maxRows} />
+        <JsonSchemaViewer
+          mergeAllOf
+          resolveRef={resolveRef}
+          className={jsvClassName}
+          schema={schema as JSONSchema4}
+          maxRows={maxRows}
+        />
       </>
     );
   };

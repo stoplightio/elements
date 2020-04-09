@@ -1,3 +1,4 @@
+import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { Client, Provider as UrqlProvider } from 'urql';
@@ -23,6 +24,8 @@ export const ComponentsContext = createNamedContext<IComponentMapping | undefine
   'ComponentsContext',
   defaultComponents,
 );
+
+export const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(void 0);
 
 const defaultIcons: NodeIconMapping = {};
 export const IconsContext = createNamedContext<NodeIconMapping>('IconsContext', defaultIcons);
