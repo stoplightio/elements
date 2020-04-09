@@ -22,7 +22,7 @@ export interface IBranchNode {
     id: number;
     type: string;
     name: string;
-    summary?: string;
+    summary?: string | null;
     data?: unknown;
     tagNames?: string[];
   };
