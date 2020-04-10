@@ -28,7 +28,7 @@ import { Docs, Content, ContentTabs, Provider, TableOfContents, RequestMaker, Re
   }}
 >
   <div className='flex'>
-    <TableOfContents filter={{ nodeUri: "reference" }} />
+    <TableOfContents filter={{ nodeUri: "/reference" }} />
 
     <Content className='flex-1'>
       <ContentTab title="Docs">
