@@ -1,4 +1,8 @@
+/* eslint-disable import/first */
 import 'jest-enzyme';
+
+const mockCopy = jest.fn();
+jest.mock('copy-to-clipboard', () => mockCopy);
 
 import { Button } from '@blueprintjs/core';
 import { mount, ReactWrapper } from 'enzyme';
@@ -8,9 +12,6 @@ import { act } from 'react-dom/test-utils';
 import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { RequestSend } from '../Request/Send';
-
-const mockCopy = jest.fn();
-jest.mock('copy-to-clipboard', () => mockCopy);
 
 describe('RequestSend component', () => {
   let wrapper: ReactWrapper;

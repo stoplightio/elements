@@ -1,6 +1,6 @@
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 
-const httpOperation: IHttpOperation = {
+export const httpOperation: IHttpOperation = {
   id: '?http-operation-id?',
   iid: 'PUT_todos',
   method: 'put',

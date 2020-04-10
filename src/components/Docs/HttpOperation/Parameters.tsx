@@ -1,11 +1,12 @@
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
 import { IHttpParam } from '@stoplight/types';
-import { Tag } from '@stoplight/ui-kit';
+import { Classes, Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { get, isEmpty, keys, omit, omitBy, sortBy } from 'lodash';
 import * as React from 'react';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
+import { SectionTitle } from './SectionTitle';
 
 export interface IParametersProps {
   parameters?: IHttpParam[];
@@ -18,7 +19,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
 
   return (
     <div className={cn('HttpOperation__Parameters', className)}>
-      {title && <div className="text-lg font-semibold">{title}</div>}
+      {title && <SectionTitle title={title} />}
 
       <div className="mt-6 border rounded TreeList dark:border-darken">
         {sortBy(parameters, ['required', 'name']).map((parameter, index) => (
@@ -59,11 +60,14 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   );
 
   return (
-    <div className={cn('HttpOperation__Parameter p-3 flex items-start', className)} style={{ alignItems: 'start' }}>
+    <div
+      className={cn('HttpOperation__Parameter px-4 py-3 flex items-start', className)}
+      style={{ alignItems: 'start' }}
+    >
       <div className="flex flex-1 flex-start items-center">
-        <div style={{ minWidth: '60px' }}>{parameter.name}</div>
+        <div style={{ minWidth: '100px' }}>{parameter.name}</div>
 
-        <div className={`${PropertyTypeColors[type]} mx-2`}>{type}</div>
+        <div className={`${PropertyTypeColors[type]} mx-4`}>{type}</div>
 
         <div className="flex-1 ml-4">
           {description && (

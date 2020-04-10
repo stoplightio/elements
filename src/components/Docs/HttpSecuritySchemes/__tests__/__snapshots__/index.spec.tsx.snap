@@ -81,7 +81,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
     >
       <HttpSecuritySchemes.SecurityScheme
         className="TreeListItem"
-        key="0"
+        key="api_key"
         security={
           Object {
             "description": "Use \`?apikey=123\` to authenticate requests. It's super secure.",
@@ -93,7 +93,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
+          className="TreeListItem HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -147,27 +147,231 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <p
+                      <paragraph
+                        index={0}
                         key="0"
-                      >
-                        Use 
-                        <CodeViewer
-                          className="inline-block line-none"
-                          inline={true}
-                          key="1"
-                          value="?apikey=123"
-                        >
-                          <code
-                            className="bp3-code-editor inline-block line-none isInline"
-                            dangerouslySetInnerHTML={
+                        node={
+                          Object {
+                            "children": Array [
                               Object {
-                                "__html": "?apikey=123",
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 5,
+                                    "line": 1,
+                                    "offset": 4,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Use ",
+                              },
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 18,
+                                    "line": 1,
+                                    "offset": 17,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 5,
+                                    "line": 1,
+                                    "offset": 4,
+                                  },
+                                },
+                                "type": "inlineCode",
+                                "value": "?apikey=123",
+                              },
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 63,
+                                    "line": 1,
+                                    "offset": 62,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 18,
+                                    "line": 1,
+                                    "offset": 17,
+                                  },
+                                },
+                                "type": "text",
+                                "value": " to authenticate requests. It's super secure.",
+                              },
+                            ],
+                            "position": Position {
+                              "end": Object {
+                                "column": 63,
+                                "line": 1,
+                                "offset": 62,
+                              },
+                              "indent": Array [],
+                              "start": Object {
+                                "column": 1,
+                                "line": 1,
+                                "offset": 0,
+                              },
+                            },
+                            "type": "paragraph",
+                          }
+                        }
+                        parent={
+                          Object {
+                            "type": "root",
+                          }
+                        }
+                        path={
+                          Array [
+                            "children",
+                            0,
+                          ]
+                        }
+                      >
+                        <p>
+                          <N
+                            index={0}
+                            key="0"
+                            node={
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 5,
+                                    "line": 1,
+                                    "offset": 4,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Use ",
                               }
                             }
-                          />
-                        </CodeViewer>
-                         to authenticate requests. It's super secure.
-                      </p>
+                            parent={
+                              Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              }
+                            }
+                            path={
+                              Array [
+                                "children",
+                                0,
+                                "children",
+                                0,
+                              ]
+                            }
+                          >
+                            Use 
+                          </N>
+                          <inlineCode
+                            index={1}
+                            key="1"
+                            node={
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 18,
+                                    "line": 1,
+                                    "offset": 17,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 5,
+                                    "line": 1,
+                                    "offset": 4,
+                                  },
+                                },
+                                "type": "inlineCode",
+                                "value": "?apikey=123",
+                              }
+                            }
+                            parent={
+                              Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              }
+                            }
+                            path={
+                              Array [
+                                "children",
+                                0,
+                                "children",
+                                1,
+                              ]
+                            }
+                          >
+                            <CodeViewer
+                              className="inline-block line-none"
+                              inline={true}
+                              value="?apikey=123"
+                            >
+                              <code
+                                className="bp3-code-editor inline-block line-none isInline"
+                                dangerouslySetInnerHTML={
+                                  Object {
+                                    "__html": "?apikey=123",
+                                  }
+                                }
+                              />
+                            </CodeViewer>
+                          </inlineCode>
+                          <N
+                            index={2}
+                            key="2"
+                            node={
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 63,
+                                    "line": 1,
+                                    "offset": 62,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 18,
+                                    "line": 1,
+                                    "offset": 17,
+                                  },
+                                },
+                                "type": "text",
+                                "value": " to authenticate requests. It's super secure.",
+                              }
+                            }
+                            parent={
+                              Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              }
+                            }
+                            path={
+                              Array [
+                                "children",
+                                0,
+                                "children",
+                                2,
+                              ]
+                            }
+                          >
+                             to authenticate requests. It's super secure.
+                          </N>
+                        </p>
+                      </paragraph>
                     </div>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
@@ -206,7 +410,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       </HttpSecuritySchemes.SecurityScheme>
       <HttpSecuritySchemes.SecurityScheme
         className="TreeListItem TreeListItem--striped"
-        key="1"
+        key="basicKey"
         security={
           Object {
             "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
@@ -217,7 +421,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
+          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -271,11 +475,102 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <p
+                      <paragraph
+                        index={0}
                         key="0"
+                        node={
+                          Object {
+                            "children": Array [
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 125,
+                                    "line": 1,
+                                    "offset": 124,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                              },
+                            ],
+                            "position": Position {
+                              "end": Object {
+                                "column": 125,
+                                "line": 1,
+                                "offset": 124,
+                              },
+                              "indent": Array [],
+                              "start": Object {
+                                "column": 1,
+                                "line": 1,
+                                "offset": 0,
+                              },
+                            },
+                            "type": "paragraph",
+                          }
+                        }
+                        parent={
+                          Object {
+                            "type": "root",
+                          }
+                        }
+                        path={
+                          Array [
+                            "children",
+                            0,
+                          ]
+                        }
                       >
-                        Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                      </p>
+                        <p>
+                          <N
+                            index={0}
+                            key="0"
+                            node={
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 125,
+                                    "line": 1,
+                                    "offset": 124,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                              }
+                            }
+                            parent={
+                              Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              }
+                            }
+                            path={
+                              Array [
+                                "children",
+                                0,
+                                "children",
+                                0,
+                              ]
+                            }
+                          >
+                            Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                          </N>
+                        </p>
+                      </paragraph>
                     </div>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
@@ -313,7 +608,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       </HttpSecuritySchemes.SecurityScheme>
       <HttpSecuritySchemes.SecurityScheme
         className="TreeListItem"
-        key="2"
+        key="bearerKey"
         security={
           Object {
             "bearerFormat": "Authorization",
@@ -325,7 +620,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
+          className="TreeListItem HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -379,11 +674,102 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <p
+                      <paragraph
+                        index={0}
                         key="0"
+                        node={
+                          Object {
+                            "children": Array [
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 125,
+                                    "line": 1,
+                                    "offset": 124,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                              },
+                            ],
+                            "position": Position {
+                              "end": Object {
+                                "column": 125,
+                                "line": 1,
+                                "offset": 124,
+                              },
+                              "indent": Array [],
+                              "start": Object {
+                                "column": 1,
+                                "line": 1,
+                                "offset": 0,
+                              },
+                            },
+                            "type": "paragraph",
+                          }
+                        }
+                        parent={
+                          Object {
+                            "type": "root",
+                          }
+                        }
+                        path={
+                          Array [
+                            "children",
+                            0,
+                          ]
+                        }
                       >
-                        Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                      </p>
+                        <p>
+                          <N
+                            index={0}
+                            key="0"
+                            node={
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 125,
+                                    "line": 1,
+                                    "offset": 124,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                              }
+                            }
+                            parent={
+                              Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              }
+                            }
+                            path={
+                              Array [
+                                "children",
+                                0,
+                                "children",
+                                0,
+                              ]
+                            }
+                          >
+                            Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                          </N>
+                        </p>
+                      </paragraph>
                     </div>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
@@ -444,7 +830,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       </HttpSecuritySchemes.SecurityScheme>
       <HttpSecuritySchemes.SecurityScheme
         className="TreeListItem TreeListItem--striped"
-        key="3"
+        key="openIdConnectKey"
         security={
           Object {
             "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
@@ -455,7 +841,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
+          className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -509,11 +895,102 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <p
+                      <paragraph
+                        index={0}
                         key="0"
+                        node={
+                          Object {
+                            "children": Array [
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 125,
+                                    "line": 1,
+                                    "offset": 124,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                              },
+                            ],
+                            "position": Position {
+                              "end": Object {
+                                "column": 125,
+                                "line": 1,
+                                "offset": 124,
+                              },
+                              "indent": Array [],
+                              "start": Object {
+                                "column": 1,
+                                "line": 1,
+                                "offset": 0,
+                              },
+                            },
+                            "type": "paragraph",
+                          }
+                        }
+                        parent={
+                          Object {
+                            "type": "root",
+                          }
+                        }
+                        path={
+                          Array [
+                            "children",
+                            0,
+                          ]
+                        }
                       >
-                        Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                      </p>
+                        <p>
+                          <N
+                            index={0}
+                            key="0"
+                            node={
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 125,
+                                    "line": 1,
+                                    "offset": 124,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                              }
+                            }
+                            parent={
+                              Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              }
+                            }
+                            path={
+                              Array [
+                                "children",
+                                0,
+                                "children",
+                                0,
+                              ]
+                            }
+                          >
+                            Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                          </N>
+                        </p>
+                      </paragraph>
                     </div>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
@@ -551,7 +1028,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       </HttpSecuritySchemes.SecurityScheme>
       <HttpSecuritySchemes.SecurityScheme
         className="TreeListItem"
-        key="4"
+        key="oauth2Key"
         security={
           Object {
             "description": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
@@ -596,7 +1073,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
         }
       >
         <div
-          className="TreeListItem HttpSecuritySchemes__SecurityScheme p-4 flex items-start"
+          className="TreeListItem HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
           style={
             Object {
               "alignItems": "start",
@@ -650,11 +1127,102 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <p
+                      <paragraph
+                        index={0}
                         key="0"
+                        node={
+                          Object {
+                            "children": Array [
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 125,
+                                    "line": 1,
+                                    "offset": 124,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                              },
+                            ],
+                            "position": Position {
+                              "end": Object {
+                                "column": 125,
+                                "line": 1,
+                                "offset": 124,
+                              },
+                              "indent": Array [],
+                              "start": Object {
+                                "column": 1,
+                                "line": 1,
+                                "offset": 0,
+                              },
+                            },
+                            "type": "paragraph",
+                          }
+                        }
+                        parent={
+                          Object {
+                            "type": "root",
+                          }
+                        }
+                        path={
+                          Array [
+                            "children",
+                            0,
+                          ]
+                        }
                       >
-                        Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                      </p>
+                        <p>
+                          <N
+                            index={0}
+                            key="0"
+                            node={
+                              Object {
+                                "position": Position {
+                                  "end": Object {
+                                    "column": 125,
+                                    "line": 1,
+                                    "offset": 124,
+                                  },
+                                  "indent": Array [],
+                                  "start": Object {
+                                    "column": 1,
+                                    "line": 1,
+                                    "offset": 0,
+                                  },
+                                },
+                                "type": "text",
+                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
+                              }
+                            }
+                            parent={
+                              Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              }
+                            }
+                            path={
+                              Array [
+                                "children",
+                                0,
+                                "children",
+                                0,
+                              ]
+                            }
+                          >
+                            Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                          </N>
+                        </p>
+                      </paragraph>
                     </div>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>

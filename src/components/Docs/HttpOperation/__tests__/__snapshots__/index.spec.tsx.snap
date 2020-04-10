@@ -2,17 +2,19 @@
 
 exports[`HttpOperation Header Parameters should render correct validations 1`] = `
 <HttpOperation
-  value={
+  data={
     Object {
+      "id": "get",
+      "method": "get",
+      "path": "/path",
       "request": Object {
         "headers": Array [
           Object {
-            "allowEmptyValue": true,
-            "allowReserved": true,
             "deprecated": true,
             "description": "a parameter description",
             "examples": Array [
               Object {
+                "key": "example",
                 "value": "example value",
               },
             ],
@@ -26,21 +28,24 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
           },
         ],
       },
+      "responses": Array [],
     }
   }
 >
   <HttpOperation.Component
-    value={
+    data={
       Object {
+        "id": "get",
+        "method": "get",
+        "path": "/path",
         "request": Object {
           "headers": Array [
             Object {
-              "allowEmptyValue": true,
-              "allowReserved": true,
               "deprecated": true,
               "description": "a parameter description",
               "examples": Array [
                 Object {
+                  "key": "example",
                   "value": "example value",
                 },
               ],
@@ -54,23 +59,37 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
             },
           ],
         },
+        "responses": Array [],
       }
     }
   >
     <div
       className="HttpOperation"
     >
+      <h2
+        className="bp3-heading flex items-center mb-10"
+      >
+        <div
+          className="uppercase mr-4 font-semibold text-success dark:text-success"
+        >
+          get
+        </div>
+        <div
+          className="flex-1"
+        >
+          /path
+        </div>
+      </h2>
       <HttpOperation.Request
         request={
           Object {
             "headers": Array [
               Object {
-                "allowEmptyValue": true,
-                "allowReserved": true,
                 "deprecated": true,
                 "description": "a parameter description",
                 "examples": Array [
                   Object {
+                    "key": "example",
                     "value": "example value",
                   },
                 ],
@@ -111,12 +130,11 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
             parameters={
               Array [
                 Object {
-                  "allowEmptyValue": true,
-                  "allowReserved": true,
                   "deprecated": true,
                   "description": "a parameter description",
                   "examples": Array [
                     Object {
+                      "key": "example",
                       "value": "example value",
                     },
                   ],
@@ -135,25 +153,28 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
             <div
               className="HttpOperation__Parameters mb-10"
             >
-              <div
-                className="text-lg font-semibold"
+              <Component
+                title="Header Parameters"
               >
-                Header Parameters
-              </div>
+                <h3
+                  className="bp3-heading font-normal"
+                >
+                  Header Parameters
+                </h3>
+              </Component>
               <div
                 className="mt-6 border rounded TreeList dark:border-darken"
               >
                 <HttpOperation.Parameter
                   className="TreeListItem"
-                  key="0"
+                  key="parameter name"
                   parameter={
                     Object {
-                      "allowEmptyValue": true,
-                      "allowReserved": true,
                       "deprecated": true,
                       "description": "a parameter description",
                       "examples": Array [
                         Object {
+                          "key": "example",
                           "value": "example value",
                         },
                       ],
@@ -168,7 +189,7 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                   }
                 >
                   <div
-                    className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+                    className="HttpOperation__Parameter px-4 py-3 flex items-start TreeListItem"
                     style={
                       Object {
                         "alignItems": "start",
@@ -176,25 +197,21 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                     }
                   >
                     <div
-                      className="flex flex-1 flex-start"
+                      className="flex flex-1 flex-start items-center"
                     >
                       <div
                         style={
                           Object {
-                            "minWidth": "60px",
+                            "minWidth": "100px",
                           }
                         }
                       >
-                        <div
-                          className="mr-2"
-                        >
-                          parameter name
-                        </div>
-                        <div
-                          className="undefined text-sm"
-                        >
-                          string
-                        </div>
+                        parameter name
+                      </div>
+                      <div
+                        className="undefined mx-4"
+                      >
+                        string
                       </div>
                       <div
                         className="flex-1 ml-4"
@@ -227,11 +244,102 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                                 <div
                                   className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                 >
-                                  <p
+                                  <paragraph
+                                    index={0}
                                     key="0"
+                                    node={
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "position": Position {
+                                              "end": Object {
+                                                "column": 24,
+                                                "line": 1,
+                                                "offset": 23,
+                                              },
+                                              "indent": Array [],
+                                              "start": Object {
+                                                "column": 1,
+                                                "line": 1,
+                                                "offset": 0,
+                                              },
+                                            },
+                                            "type": "text",
+                                            "value": "a parameter description",
+                                          },
+                                        ],
+                                        "position": Position {
+                                          "end": Object {
+                                            "column": 24,
+                                            "line": 1,
+                                            "offset": 23,
+                                          },
+                                          "indent": Array [],
+                                          "start": Object {
+                                            "column": 1,
+                                            "line": 1,
+                                            "offset": 0,
+                                          },
+                                        },
+                                        "type": "paragraph",
+                                      }
+                                    }
+                                    parent={
+                                      Object {
+                                        "type": "root",
+                                      }
+                                    }
+                                    path={
+                                      Array [
+                                        "children",
+                                        0,
+                                      ]
+                                    }
                                   >
-                                    a parameter description
-                                  </p>
+                                    <p>
+                                      <N
+                                        index={0}
+                                        key="0"
+                                        node={
+                                          Object {
+                                            "position": Position {
+                                              "end": Object {
+                                                "column": 24,
+                                                "line": 1,
+                                                "offset": 23,
+                                              },
+                                              "indent": Array [],
+                                              "start": Object {
+                                                "column": 1,
+                                                "line": 1,
+                                                "offset": 0,
+                                              },
+                                            },
+                                            "type": "text",
+                                            "value": "a parameter description",
+                                          }
+                                        }
+                                        parent={
+                                          Object {
+                                            "parent": Object {
+                                              "type": "root",
+                                            },
+                                            "type": "paragraph",
+                                          }
+                                        }
+                                        path={
+                                          Array [
+                                            "children",
+                                            0,
+                                            "children",
+                                            0,
+                                          ]
+                                        }
+                                      >
+                                        a parameter description
+                                      </N>
+                                    </p>
+                                  </paragraph>
                                 </div>
                               </MarkdownViewer.Component>
                             </ErrorBoundary>
@@ -268,75 +376,7 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                           </div>
                           <ParameterValidation
                             className="mt-2 mr-2"
-                            key="0"
-                            name="allowEmptyValue"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      allowEmptyValue
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="1"
-                            name="allowReserved"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      allowReserved
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="2"
+                            key="explode"
                             name="explode"
                             value={true}
                           >
@@ -370,11 +410,12 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                           </ParameterValidation>
                           <ParameterValidation
                             className="mt-2 mr-2"
-                            key="3"
+                            key="examples"
                             name="examples"
                             value={
                               Array [
                                 Object {
+                                  "key": "example",
                                   "value": "example value",
                                 },
                               ]
@@ -400,7 +441,7 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
                                     >
                                       examples
                                       : 
-                                      {"value":"example value"}
+                                      {"key":"example","value":"example value"}
                                     </span>
                                   </Blueprint3.Text>
                                   <Blueprint3.Icon />
@@ -427,7 +468,9 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
           </HttpOperation.Parameters>
         </div>
       </HttpOperation.Request>
-      <HttpOperation.Responses />
+      <HttpOperation.Responses
+        responses={Array []}
+      />
     </div>
   </HttpOperation.Component>
 </HttpOperation>
@@ -435,17 +478,19 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
 
 exports[`HttpOperation Path Parameters should render correct validations 1`] = `
 <HttpOperation
-  value={
+  data={
     Object {
+      "id": "get",
+      "method": "get",
+      "path": "/path",
       "request": Object {
         "path": Array [
           Object {
-            "allowEmptyValue": true,
-            "allowReserved": true,
             "deprecated": true,
             "description": "a parameter description",
             "examples": Array [
               Object {
+                "key": "example",
                 "value": "example value",
               },
             ],
@@ -455,25 +500,28 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
             "schema": Object {
               "type": "string",
             },
-            "style": "form",
+            "style": "simple",
           },
         ],
       },
+      "responses": Array [],
     }
   }
 >
   <HttpOperation.Component
-    value={
+    data={
       Object {
+        "id": "get",
+        "method": "get",
+        "path": "/path",
         "request": Object {
           "path": Array [
             Object {
-              "allowEmptyValue": true,
-              "allowReserved": true,
               "deprecated": true,
               "description": "a parameter description",
               "examples": Array [
                 Object {
+                  "key": "example",
                   "value": "example value",
                 },
               ],
@@ -483,27 +531,41 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
               "schema": Object {
                 "type": "string",
               },
-              "style": "form",
+              "style": "simple",
             },
           ],
         },
+        "responses": Array [],
       }
     }
   >
     <div
       className="HttpOperation"
     >
+      <h2
+        className="bp3-heading flex items-center mb-10"
+      >
+        <div
+          className="uppercase mr-4 font-semibold text-success dark:text-success"
+        >
+          get
+        </div>
+        <div
+          className="flex-1"
+        >
+          /path
+        </div>
+      </h2>
       <HttpOperation.Request
         request={
           Object {
             "path": Array [
               Object {
-                "allowEmptyValue": true,
-                "allowReserved": true,
                 "deprecated": true,
                 "description": "a parameter description",
                 "examples": Array [
                   Object {
+                    "key": "example",
                     "value": "example value",
                   },
                 ],
@@ -513,7 +575,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                 "schema": Object {
                   "type": "string",
                 },
-                "style": "form",
+                "style": "simple",
               },
             ],
           }
@@ -532,12 +594,11 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
             parameters={
               Array [
                 Object {
-                  "allowEmptyValue": true,
-                  "allowReserved": true,
                   "deprecated": true,
                   "description": "a parameter description",
                   "examples": Array [
                     Object {
+                      "key": "example",
                       "value": "example value",
                     },
                   ],
@@ -547,7 +608,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                   "schema": Object {
                     "type": "string",
                   },
-                  "style": "form",
+                  "style": "simple",
                 },
               ]
             }
@@ -556,25 +617,28 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
             <div
               className="HttpOperation__Parameters mb-10"
             >
-              <div
-                className="text-lg font-semibold"
+              <Component
+                title="Path Parameters"
               >
-                Path Parameters
-              </div>
+                <h3
+                  className="bp3-heading font-normal"
+                >
+                  Path Parameters
+                </h3>
+              </Component>
               <div
                 className="mt-6 border rounded TreeList dark:border-darken"
               >
                 <HttpOperation.Parameter
                   className="TreeListItem"
-                  key="0"
+                  key="parameter name"
                   parameter={
                     Object {
-                      "allowEmptyValue": true,
-                      "allowReserved": true,
                       "deprecated": true,
                       "description": "a parameter description",
                       "examples": Array [
                         Object {
+                          "key": "example",
                           "value": "example value",
                         },
                       ],
@@ -584,12 +648,12 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                       "schema": Object {
                         "type": "string",
                       },
-                      "style": "form",
+                      "style": "simple",
                     }
                   }
                 >
                   <div
-                    className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+                    className="HttpOperation__Parameter px-4 py-3 flex items-start TreeListItem"
                     style={
                       Object {
                         "alignItems": "start",
@@ -597,25 +661,21 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                     }
                   >
                     <div
-                      className="flex flex-1 flex-start"
+                      className="flex flex-1 flex-start items-center"
                     >
                       <div
                         style={
                           Object {
-                            "minWidth": "60px",
+                            "minWidth": "100px",
                           }
                         }
                       >
-                        <div
-                          className="mr-2"
-                        >
-                          parameter name
-                        </div>
-                        <div
-                          className="undefined text-sm"
-                        >
-                          string
-                        </div>
+                        parameter name
+                      </div>
+                      <div
+                        className="undefined mx-4"
+                      >
+                        string
                       </div>
                       <div
                         className="flex-1 ml-4"
@@ -648,11 +708,102 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                                 <div
                                   className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                 >
-                                  <p
+                                  <paragraph
+                                    index={0}
                                     key="0"
+                                    node={
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "position": Position {
+                                              "end": Object {
+                                                "column": 24,
+                                                "line": 1,
+                                                "offset": 23,
+                                              },
+                                              "indent": Array [],
+                                              "start": Object {
+                                                "column": 1,
+                                                "line": 1,
+                                                "offset": 0,
+                                              },
+                                            },
+                                            "type": "text",
+                                            "value": "a parameter description",
+                                          },
+                                        ],
+                                        "position": Position {
+                                          "end": Object {
+                                            "column": 24,
+                                            "line": 1,
+                                            "offset": 23,
+                                          },
+                                          "indent": Array [],
+                                          "start": Object {
+                                            "column": 1,
+                                            "line": 1,
+                                            "offset": 0,
+                                          },
+                                        },
+                                        "type": "paragraph",
+                                      }
+                                    }
+                                    parent={
+                                      Object {
+                                        "type": "root",
+                                      }
+                                    }
+                                    path={
+                                      Array [
+                                        "children",
+                                        0,
+                                      ]
+                                    }
                                   >
-                                    a parameter description
-                                  </p>
+                                    <p>
+                                      <N
+                                        index={0}
+                                        key="0"
+                                        node={
+                                          Object {
+                                            "position": Position {
+                                              "end": Object {
+                                                "column": 24,
+                                                "line": 1,
+                                                "offset": 23,
+                                              },
+                                              "indent": Array [],
+                                              "start": Object {
+                                                "column": 1,
+                                                "line": 1,
+                                                "offset": 0,
+                                              },
+                                            },
+                                            "type": "text",
+                                            "value": "a parameter description",
+                                          }
+                                        }
+                                        parent={
+                                          Object {
+                                            "parent": Object {
+                                              "type": "root",
+                                            },
+                                            "type": "paragraph",
+                                          }
+                                        }
+                                        path={
+                                          Array [
+                                            "children",
+                                            0,
+                                            "children",
+                                            0,
+                                          ]
+                                        }
+                                      >
+                                        a parameter description
+                                      </N>
+                                    </p>
+                                  </paragraph>
                                 </div>
                               </MarkdownViewer.Component>
                             </ErrorBoundary>
@@ -689,75 +840,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                           </div>
                           <ParameterValidation
                             className="mt-2 mr-2"
-                            key="0"
-                            name="allowEmptyValue"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      allowEmptyValue
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="1"
-                            name="allowReserved"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      allowReserved
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="2"
+                            key="explode"
                             name="explode"
                             value={true}
                           >
@@ -791,11 +874,12 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                           </ParameterValidation>
                           <ParameterValidation
                             className="mt-2 mr-2"
-                            key="3"
+                            key="examples"
                             name="examples"
                             value={
                               Array [
                                 Object {
+                                  "key": "example",
                                   "value": "example value",
                                 },
                               ]
@@ -821,7 +905,7 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
                                     >
                                       examples
                                       : 
-                                      {"value":"example value"}
+                                      {"key":"example","value":"example value"}
                                     </span>
                                   </Blueprint3.Text>
                                   <Blueprint3.Icon />
@@ -860,7 +944,9 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
           />
         </div>
       </HttpOperation.Request>
-      <HttpOperation.Responses />
+      <HttpOperation.Responses
+        responses={Array []}
+      />
     </div>
   </HttpOperation.Component>
 </HttpOperation>
@@ -868,8 +954,11 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
 
 exports[`HttpOperation Query Parameters should render correct validations 1`] = `
 <HttpOperation
-  value={
+  data={
     Object {
+      "id": "get",
+      "method": "get",
+      "path": "/path",
       "request": Object {
         "query": Array [
           Object {
@@ -879,6 +968,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
             "description": "a parameter description",
             "examples": Array [
               Object {
+                "key": "example",
                 "value": "example value",
               },
             ],
@@ -892,12 +982,16 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
           },
         ],
       },
+      "responses": Array [],
     }
   }
 >
   <HttpOperation.Component
-    value={
+    data={
       Object {
+        "id": "get",
+        "method": "get",
+        "path": "/path",
         "request": Object {
           "query": Array [
             Object {
@@ -907,6 +1001,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
               "description": "a parameter description",
               "examples": Array [
                 Object {
+                  "key": "example",
                   "value": "example value",
                 },
               ],
@@ -920,12 +1015,27 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
             },
           ],
         },
+        "responses": Array [],
       }
     }
   >
     <div
       className="HttpOperation"
     >
+      <h2
+        className="bp3-heading flex items-center mb-10"
+      >
+        <div
+          className="uppercase mr-4 font-semibold text-success dark:text-success"
+        >
+          get
+        </div>
+        <div
+          className="flex-1"
+        >
+          /path
+        </div>
+      </h2>
       <HttpOperation.Request
         request={
           Object {
@@ -937,6 +1047,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                 "description": "a parameter description",
                 "examples": Array [
                   Object {
+                    "key": "example",
                     "value": "example value",
                   },
                 ],
@@ -975,6 +1086,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                   "description": "a parameter description",
                   "examples": Array [
                     Object {
+                      "key": "example",
                       "value": "example value",
                     },
                   ],
@@ -993,17 +1105,21 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
             <div
               className="HttpOperation__Parameters mb-10"
             >
-              <div
-                className="text-lg font-semibold"
+              <Component
+                title="Query Parameters"
               >
-                Query Parameters
-              </div>
+                <h3
+                  className="bp3-heading font-normal"
+                >
+                  Query Parameters
+                </h3>
+              </Component>
               <div
                 className="mt-6 border rounded TreeList dark:border-darken"
               >
                 <HttpOperation.Parameter
                   className="TreeListItem"
-                  key="0"
+                  key="parameter name"
                   parameter={
                     Object {
                       "allowEmptyValue": true,
@@ -1012,6 +1128,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                       "description": "a parameter description",
                       "examples": Array [
                         Object {
+                          "key": "example",
                           "value": "example value",
                         },
                       ],
@@ -1026,7 +1143,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                   }
                 >
                   <div
-                    className="HttpOperation__Parameter p-4 flex items-start TreeListItem"
+                    className="HttpOperation__Parameter px-4 py-3 flex items-start TreeListItem"
                     style={
                       Object {
                         "alignItems": "start",
@@ -1034,25 +1151,21 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                     }
                   >
                     <div
-                      className="flex flex-1 flex-start"
+                      className="flex flex-1 flex-start items-center"
                     >
                       <div
                         style={
                           Object {
-                            "minWidth": "60px",
+                            "minWidth": "100px",
                           }
                         }
                       >
-                        <div
-                          className="mr-2"
-                        >
-                          parameter name
-                        </div>
-                        <div
-                          className="undefined text-sm"
-                        >
-                          string
-                        </div>
+                        parameter name
+                      </div>
+                      <div
+                        className="undefined mx-4"
+                      >
+                        string
                       </div>
                       <div
                         className="flex-1 ml-4"
@@ -1085,11 +1198,102 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                                 <div
                                   className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
                                 >
-                                  <p
+                                  <paragraph
+                                    index={0}
                                     key="0"
+                                    node={
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "position": Position {
+                                              "end": Object {
+                                                "column": 24,
+                                                "line": 1,
+                                                "offset": 23,
+                                              },
+                                              "indent": Array [],
+                                              "start": Object {
+                                                "column": 1,
+                                                "line": 1,
+                                                "offset": 0,
+                                              },
+                                            },
+                                            "type": "text",
+                                            "value": "a parameter description",
+                                          },
+                                        ],
+                                        "position": Position {
+                                          "end": Object {
+                                            "column": 24,
+                                            "line": 1,
+                                            "offset": 23,
+                                          },
+                                          "indent": Array [],
+                                          "start": Object {
+                                            "column": 1,
+                                            "line": 1,
+                                            "offset": 0,
+                                          },
+                                        },
+                                        "type": "paragraph",
+                                      }
+                                    }
+                                    parent={
+                                      Object {
+                                        "type": "root",
+                                      }
+                                    }
+                                    path={
+                                      Array [
+                                        "children",
+                                        0,
+                                      ]
+                                    }
                                   >
-                                    a parameter description
-                                  </p>
+                                    <p>
+                                      <N
+                                        index={0}
+                                        key="0"
+                                        node={
+                                          Object {
+                                            "position": Position {
+                                              "end": Object {
+                                                "column": 24,
+                                                "line": 1,
+                                                "offset": 23,
+                                              },
+                                              "indent": Array [],
+                                              "start": Object {
+                                                "column": 1,
+                                                "line": 1,
+                                                "offset": 0,
+                                              },
+                                            },
+                                            "type": "text",
+                                            "value": "a parameter description",
+                                          }
+                                        }
+                                        parent={
+                                          Object {
+                                            "parent": Object {
+                                              "type": "root",
+                                            },
+                                            "type": "paragraph",
+                                          }
+                                        }
+                                        path={
+                                          Array [
+                                            "children",
+                                            0,
+                                            "children",
+                                            0,
+                                          ]
+                                        }
+                                      >
+                                        a parameter description
+                                      </N>
+                                    </p>
+                                  </paragraph>
                                 </div>
                               </MarkdownViewer.Component>
                             </ErrorBoundary>
@@ -1126,7 +1330,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                           </div>
                           <ParameterValidation
                             className="mt-2 mr-2"
-                            key="0"
+                            key="allowEmptyValue"
                             name="allowEmptyValue"
                             value={true}
                           >
@@ -1160,7 +1364,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                           </ParameterValidation>
                           <ParameterValidation
                             className="mt-2 mr-2"
-                            key="1"
+                            key="allowReserved"
                             name="allowReserved"
                             value={true}
                           >
@@ -1194,7 +1398,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                           </ParameterValidation>
                           <ParameterValidation
                             className="mt-2 mr-2"
-                            key="2"
+                            key="explode"
                             name="explode"
                             value={true}
                           >
@@ -1228,11 +1432,12 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                           </ParameterValidation>
                           <ParameterValidation
                             className="mt-2 mr-2"
-                            key="3"
+                            key="examples"
                             name="examples"
                             value={
                               Array [
                                 Object {
+                                  "key": "example",
                                   "value": "example value",
                                 },
                               ]
@@ -1258,7 +1463,7 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
                                     >
                                       examples
                                       : 
-                                      {"value":"example value"}
+                                      {"value":"example value","key":"example"}
                                     </span>
                                   </Blueprint3.Text>
                                   <Blueprint3.Icon />
@@ -1293,7 +1498,9 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
           />
         </div>
       </HttpOperation.Request>
-      <HttpOperation.Responses />
+      <HttpOperation.Responses
+        responses={Array []}
+      />
     </div>
   </HttpOperation.Component>
 </HttpOperation>

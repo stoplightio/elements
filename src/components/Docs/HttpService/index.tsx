@@ -1,5 +1,6 @@
 import { Icon } from '@blueprintjs/core';
 import { IHttpService } from '@stoplight/types';
+import { Classes } from '@stoplight/ui-kit';
 import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
@@ -13,18 +14,56 @@ export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
   return (
     <div className={cn('HttpService', className)}>
-      {data.name && <h3 className="text-2xl mb-10">{data.name}</h3>}
+      {data.name && <h2 className={cn(Classes.HEADING, 'mb-10')}>{data.name}</h2>}
 
-      {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
+      <div className="MarkdownViewer flex">
+        {data?.contact?.email && (
+          <a
+            className="flex items-center mr-4"
+            href={`mailto:${data.contact.email}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon icon="envelope" className="mr-2" iconSize={12} />
+            {data.contact.email ? data.contact.email : 'Email'}
+          </a>
+        )}
+
+        {data?.contact?.url && (
+          <a className="flex items-center mr-4" href={data.contact.url} target="_blank" rel="noopener noreferrer">
+            <Icon icon="link" className="mr-2" iconSize={12} /> URL
+          </a>
+        )}
+
+        {data.license && (data.license.url || data.license.name) && (
+          <div className="mr-4">
+            {data.license.url ? (
+              <a href={data.license.url} target="_blank" rel="noopener noreferrer">
+                {data.license.name || 'Licence'}
+              </a>
+            ) : (
+              <span>{data.license.name}</span>
+            )}
+          </div>
+        )}
+
+        {data.termsOfService && (
+          <a href={data.termsOfService} target="_blank" rel="noopener noreferrer">
+            Terms of Service
+          </a>
+        )}
+      </div>
+
+      {data.description && <MarkdownViewer className="mb-10 mt-4" markdown={data.description} />}
 
       {data.servers && data.servers.length > 0 ? (
         <div className="mb-10">
-          <div className="mb-4 text-lg font-semibold select-none">Servers</div>
+          <h3 className={cn(Classes.HEADING, 'font-normal', 'mb-6')}>Servers</h3>
 
           {data.servers.map((server, index) => (
-            <div className="flex items-center flex-1 mt-4" key={server.name}>
-              {server.name && <div>{server.name} - </div>}
-              {server.description && <div>{server.description} - </div>}
+            <div className="MarkdownViewer flex items-center flex-1 mt-4" key={server.name}>
+              {server.name && <div className="mr-2">{server.name}</div>}
+              {server.description && <div className="mr-2">{server.description}</div>}
 
               <a href={server.url} target="_blank" rel="noopener noreferrer">
                 {server.url}
@@ -38,60 +77,6 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
 
       {data.securitySchemes && (
         <HttpSecuritySchemes className="mb-10" title="Security Schemes" securities={data.securitySchemes} />
-      )}
-
-      {data.contact && (data.contact.email || data.contact.url) && (
-        <div className="mb-10">
-          <div className="mb-4 text-lg font-semibold select-none">Contact</div>
-
-          {data.contact.name && <div>{data.contact.name}</div>}
-
-          {data.contact.email && data.contact.url && (
-            <div className="flex items-center mt-2">
-              {data.contact.email && (
-                <a
-                  className="flex items-center mr-4"
-                  href={`mailto:${data.contact.email}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Icon icon="envelope" className="mr-2" iconSize={12} />
-                  Email
-                </a>
-              )}
-
-              {data.contact.url && (
-                <a className="flex items-center" href={data.contact.url} target="_blank" rel="noopener noreferrer">
-                  <Icon icon="link" className="mr-2" iconSize={12} /> URL
-                </a>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {data.termsOfService && (
-        <div className="mb-10">
-          <div className="mb-4 text-lg font-semibold select-none">Terms of Service</div>
-
-          <a href={data.termsOfService} target="_blank" rel="noopener noreferrer">
-            {data.termsOfService}
-          </a>
-        </div>
-      )}
-
-      {data.license && (data.license.url || data.license.name) && (
-        <div>
-          <div className="mb-4 text-lg font-semibold select-none">License</div>
-
-          {data.license.url ? (
-            <a href={data.license.url} target="_blank" rel="noopener noreferrer">
-              {data.license.name || data.license.url}
-            </a>
-          ) : (
-            <span>{data.license.name}</span>
-          )}
-        </div>
       )}
     </div>
   );

@@ -6,6 +6,7 @@ import * as React from 'react';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
 import { Parameters } from './Parameters';
+import { SectionTitle } from './SectionTitle';
 import { getExamplesObject } from './utils';
 
 export const HttpCodeColor = {
@@ -34,9 +35,7 @@ export const Responses = ({ className, responses }: IResponsesProps) => {
 
   return (
     <div className={cn('HttpOperation__Responses', className)}>
-      <div className="flex items-center">
-        <div className="text-lg font-semibold">Responses</div>
-      </div>
+      <SectionTitle title="Responses" />
 
       <ButtonGroup className="mt-6">
         {sortedResponses.map((response, index) => {
@@ -63,7 +62,9 @@ Responses.displayName = 'HttpOperation.Responses';
 export const Response = ({ className, response }: IResponseProps) => {
   if (!response || typeof response !== 'object') return null;
 
-  const examples = getExamplesObject(response.contents?.[0]?.examples || []);
+  const content = response.contents && response.contents[0];
+
+  const examples = getExamplesObject(content?.examples || []);
 
   return (
     <div className={cn('HttpOperation__Response', className)}>
@@ -71,7 +72,7 @@ export const Response = ({ className, response }: IResponseProps) => {
 
       <Parameters className="mb-6" title="Headers" parameters={response.headers} />
 
-      {response?.contents?.[0]?.schema && <SchemaViewer schema={response.contents[0].schema} examples={examples} />}
+      {content?.schema && <SchemaViewer schema={content.schema} examples={examples} />}
     </div>
   );
 };

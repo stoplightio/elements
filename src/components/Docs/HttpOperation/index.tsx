@@ -1,4 +1,5 @@
 import { IHttpOperation } from '@stoplight/types';
+import { Classes } from '@stoplight/ui-kit';
 import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
@@ -14,20 +15,18 @@ export type HttpOperationProps = IDocsComponentProps<Partial<IHttpOperation>>;
 const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data }) => {
   return (
     <div className={cn('HttpOperation', className)}>
-      <div className="flex items-center text-2xl mb-8">
-        {data.method && (
-          <div
-            className={cn(
-              `uppercase mr-2 font-semibold`,
-              `text-${HttpMethodColors[data.method]} dark:text-${HttpMethodColors[data.method]}`,
-            )}
-          >
-            {data.method}
-          </div>
-        )}
+      <h2 className={cn(Classes.HEADING, 'flex items-center mb-10')}>
+        <div
+          className={cn(
+            `uppercase mr-4 font-semibold`,
+            `text-${HttpMethodColors[data.method!] || 'gray'} dark:text-${HttpMethodColors[data.method!] || 'gray'}`,
+          )}
+        >
+          {data.method || 'UNKOWN'}
+        </div>
 
         {data.path && <div className="flex-1">{data.path}</div>}
-      </div>
+      </h2>
 
       {data.description && <MarkdownViewer className="mb-10 HttpOperation__Description" markdown={data.description} />}
 

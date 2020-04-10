@@ -1,6 +1,6 @@
 import { IHttpService } from '@stoplight/types';
 
-const httpService: IHttpService = {
+export const httpService: IHttpService = {
   id: '?http-service?',
   name: 'Petstore (OpenAPI v3)',
   description:

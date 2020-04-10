@@ -5,7 +5,7 @@ import {
   IOauth2ImplicitFlow,
   IOauth2PasswordFlow,
 } from '@stoplight/types';
-import { Tag } from '@stoplight/ui-kit';
+import { Classes, Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { entries, flatten, isEmpty, map, startCase } from 'lodash';
 import * as React from 'react';
@@ -24,7 +24,7 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
 
   return (
     <div className={cn('HttpSecuritySchemes', className)}>
-      {title && <div className="text-lg font-semibold">{title}</div>}
+      {title && <h3 className={cn(Classes.HEADING, 'font-normal mb-6')}>{title}</h3>}
 
       <div className="mt-6 border rounded TreeList dark:border-darken">
         {flatten(securities).map((security, index) => {
@@ -43,7 +43,7 @@ HttpSecuritySchemes.displayName = 'HttpSecuritySchemes';
 const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme; className?: string }) => {
   return (
     <div
-      className={cn(className, 'HttpSecuritySchemes__SecurityScheme p-4 flex items-start')}
+      className={cn(className, 'HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start')}
       style={{ alignItems: 'start' }}
     >
       <div style={{ minWidth: '60px' }}>

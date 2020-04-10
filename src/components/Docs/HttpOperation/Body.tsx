@@ -5,6 +5,7 @@ import * as React from 'react';
 import { isJSONSchema } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
+import { SectionTitle } from './SectionTitle';
 import { getExamplesObject } from './utils';
 
 export interface IBodyProps {
@@ -16,15 +17,16 @@ export const Body = ({ body, className }: IBodyProps) => {
   if (typeof body !== 'object' || !body.contents) return null;
 
   // TODO (CL): Support multiple bodies?
-  const schema = body.contents?.[0]?.schema;
-  const examples = getExamplesObject(body.contents?.[0]?.examples || []);
+  const content = body.contents && body.contents[0];
+  const schema = content?.schema;
+  const examples = getExamplesObject(content?.examples || []);
 
   // If we have nothing to show then don't render this section
-  if (!body.contents[0] || (!body.description && !schema && !examples)) return null;
+  if (!content || (!body.description && !schema && !examples)) return null;
 
   return (
     <div className={cn('HttpOperation__Body', className)}>
-      <div className="text-lg font-semibold">Body</div>
+      <SectionTitle title="Body" />
 
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}
 

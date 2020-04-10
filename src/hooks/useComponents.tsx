@@ -10,6 +10,7 @@ import cn from 'classnames';
 import { get, isObject } from 'lodash';
 import * as React from 'react';
 
+import { getExamplesFromSchema } from '../components/Docs/HttpOperation/utils';
 import { HttpRequest } from '../components/Docs/HttpRequest';
 import { SchemaViewer } from '../components/SchemaViewer';
 import { ComponentsContext } from '../containers/Provider';
@@ -48,16 +49,9 @@ const WrapperComponent = ({ node, parent }: IComponentMappingProps<ICode<ICodeAn
   const nodeType = get(annotations, 'type') || node.meta;
 
   if (nodeType === 'json_schema' && isJSONSchema(parsedValue)) {
-    let examples;
-
-    // TODO (CL): Handle other examples?
-    if ('x-examples' in parsedValue) {
-      examples = parsedValue['x-examples'];
-    } else if ('examples' in parsedValue) {
-      examples = parsedValue.examples;
-    }
-
-    return <SchemaViewer title={annotations?.title} schema={parsedValue} examples={examples} />;
+    return (
+      <SchemaViewer title={annotations?.title} schema={parsedValue} examples={getExamplesFromSchema(parsedValue)} />
+    );
   } else if (nodeType === 'http' && isObject(parsedValue)) {
     return (
       <HttpRequest

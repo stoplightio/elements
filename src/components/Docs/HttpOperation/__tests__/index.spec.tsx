@@ -2,6 +2,7 @@ import 'jest-enzyme';
 
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
+import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { CodeViewer } from '@stoplight/ui-kit';
 import { SimpleTab } from '@stoplight/ui-kit/SimpleTabs';
 import { mount, ReactWrapper } from 'enzyme';
@@ -10,9 +11,9 @@ import * as React from 'react';
 import { HttpOperation } from '../index';
 import { Parameters } from '../Parameters';
 
-jest.mock('../../../hooks/useResolver', () => ({
-  useResolver: (type: any, result: any) => ({ result }),
-}));
+// jest.mock('../../../hooks/useResolver', () => ({
+//   useResolver: (type: any, result: any) => ({ result }),
+// }));
 
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
@@ -29,102 +30,107 @@ describe('HttpOperation', () => {
 
   describe('Query Parameters', () => {
     it('should render correct validations', () => {
-      wrapper = mount(
-        <HttpOperation
-          value={{
-            request: {
-              query: [
+      const operationData: IHttpOperation = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {
+          query: [
+            {
+              name: 'parameter name',
+              description: 'a parameter description',
+              schema: {
+                type: 'string',
+              },
+              allowEmptyValue: true,
+              allowReserved: true,
+              deprecated: true,
+              explode: true,
+              required: true,
+              style: HttpParamStyles.Form,
+              examples: [
                 {
-                  name: 'parameter name',
-                  description: 'a parameter description',
-                  schema: {
-                    type: 'string',
-                  },
-                  allowEmptyValue: true,
-                  allowReserved: true,
-                  deprecated: true,
-                  explode: true,
-                  required: true,
-                  style: 'form',
-                  examples: [
-                    {
-                      value: 'example value',
-                    },
-                  ],
+                  value: 'example value',
+                  key: 'example',
                 },
               ],
             },
-          }}
-        />,
-      );
+          ],
+        },
+      };
+
+      wrapper = mount(<HttpOperation data={operationData} />);
       expect(wrapper).toMatchSnapshot();
     });
   });
 
   describe('Header Parameters', () => {
     it('should render correct validations', () => {
-      wrapper = mount(
-        <HttpOperation
-          value={{
-            request: {
-              headers: [
+      const data: IHttpOperation = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {
+          headers: [
+            {
+              name: 'parameter name',
+              description: 'a parameter description',
+              schema: {
+                type: 'string',
+              },
+              deprecated: true,
+              explode: true,
+              required: true,
+              style: HttpParamStyles.Simple,
+              examples: [
                 {
-                  name: 'parameter name',
-                  description: 'a parameter description',
-                  schema: {
-                    type: 'string',
-                  },
-                  allowEmptyValue: true,
-                  allowReserved: true,
-                  deprecated: true,
-                  explode: true,
-                  required: true,
-                  style: 'simple',
-                  examples: [
-                    {
-                      value: 'example value',
-                    },
-                  ],
+                  key: 'example',
+                  value: 'example value',
                 },
               ],
             },
-          }}
-        />,
-      );
+          ],
+        },
+      };
+
+      wrapper = mount(<HttpOperation data={data} />);
       expect(wrapper).toMatchSnapshot();
     });
   });
 
   describe('Path Parameters', () => {
     it('should render correct validations', () => {
-      wrapper = mount(
-        <HttpOperation
-          value={{
-            request: {
-              path: [
+      const data: IHttpOperation = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {
+          path: [
+            {
+              name: 'parameter name',
+              description: 'a parameter description',
+              schema: {
+                type: 'string',
+              },
+              deprecated: true,
+              explode: true,
+              required: true,
+              style: HttpParamStyles.Simple,
+              examples: [
                 {
-                  name: 'parameter name',
-                  description: 'a parameter description',
-                  schema: {
-                    type: 'string',
-                  },
-                  allowEmptyValue: true,
-                  allowReserved: true,
-                  deprecated: true,
-                  explode: true,
-                  required: true,
-                  style: 'form',
-                  examples: [
-                    {
-                      value: 'example value',
-                    },
-                  ],
+                  key: 'example',
+                  value: 'example value',
                 },
               ],
             },
-          }}
-        />,
-      );
+          ],
+        },
+      };
+
+      wrapper = mount(<HttpOperation data={data} />);
       expect(wrapper).toMatchSnapshot();
     });
   });
@@ -133,7 +139,7 @@ describe('HttpOperation', () => {
     it('should render the MarkdownViewer with description', () => {
       wrapper = mount(
         <HttpOperation
-          value={{
+          data={{
             responses: [
               {
                 code: '200',
@@ -148,28 +154,29 @@ describe('HttpOperation', () => {
     });
 
     it('should render Parameters with headers', () => {
-      wrapper = mount(
-        <HttpOperation
-          value={{
-            responses: [
+      const data: IHttpOperation = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [
+          {
+            code: '200',
+            headers: [
               {
-                code: '200',
-                headers: [
-                  {
-                    schema: {
-                      type: 'string',
-                    },
-                    description: 'header-description',
-                    name: 'header-name',
-                    style: 'simple',
-                    required: true,
-                  },
-                ],
+                schema: {
+                  type: 'string',
+                },
+                description: 'header-description',
+                name: 'header-name',
+                style: HttpParamStyles.Simple,
+                required: true,
               },
             ],
-          }}
-        />,
-      );
+          },
+        ],
+      };
+
+      wrapper = mount(<HttpOperation data={data} />);
 
       expect(wrapper.find(Parameters)).toHaveProp('parameters', [
         {
@@ -187,7 +194,7 @@ describe('HttpOperation', () => {
     it('should render JSV with schema', () => {
       wrapper = mount(
         <HttpOperation
-          value={{
+          data={{
             responses: [
               {
                 code: '200',
@@ -215,7 +222,6 @@ describe('HttpOperation', () => {
         />,
       );
 
-      expect(wrapper.find(SimpleTab)).toHaveText('Schema');
       expect(wrapper.find(JsonSchemaViewer)).toHaveProp('schema', {
         $schema: 'http://json-schema.org/draft-04/schema#',
         title: 'Todo',
@@ -229,56 +235,6 @@ describe('HttpOperation', () => {
         },
         required: ['name', 'completed'],
       });
-    });
-
-    it('should render response example tabs even with no schema defined', () => {
-      wrapper = mount(
-        <HttpOperation
-          value={{
-            responses: [
-              {
-                code: '200',
-                contents: [
-                  {
-                    mediaType: 'application/json',
-                    examples: [
-                      {
-                        key: 'application/json',
-                        value: {
-                          id: 9000,
-                          name: "It's Over 9000!!!",
-                          completed: true,
-                          completed_at: null,
-                          created_at: '2014-08-28T14:14:28.494Z',
-                          updated_at: '2015-08-28T14:14:28.494Z',
-                        },
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          }}
-        />,
-      );
-
-      expect(wrapper.find(SimpleTab)).toHaveText('application/json');
-
-      expect(wrapper.find(CodeViewer)).toHaveProp(
-        'value',
-        JSON.stringify(
-          {
-            id: 9000,
-            name: "It's Over 9000!!!",
-            completed: true,
-            completed_at: null,
-            created_at: '2014-08-28T14:14:28.494Z',
-            updated_at: '2015-08-28T14:14:28.494Z',
-          },
-          null,
-          4,
-        ),
-      );
     });
   });
 });

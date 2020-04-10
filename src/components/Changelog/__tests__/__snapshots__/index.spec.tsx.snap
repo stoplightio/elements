@@ -30,7 +30,7 @@ exports[`Changelog should match snapshot 1`] = `
       key="Fri Jan 03 2020"
     >
       <div
-        className="Changelog__date p-2 font-medium"
+        className="p-2 font-medium Changelog__date"
       >
         Fri Jan 03 2020
       </div>
@@ -42,12 +42,12 @@ exports[`Changelog should match snapshot 1`] = `
           className="flex text-sm"
         >
           <div
-            className="Changelog__message flex-1 mr-3"
+            className="flex-1 mr-3 Changelog__message"
           >
             major message
           </div>
           <div
-            className="Changelog__semver lowercase font-semibold"
+            className="font-semibold lowercase Changelog__semver"
           >
             major
           </div>
@@ -61,12 +61,12 @@ exports[`Changelog should match snapshot 1`] = `
           className="flex text-sm"
         >
           <div
-            className="Changelog__message flex-1 mr-3"
+            className="flex-1 mr-3 Changelog__message"
           >
             minor message
           </div>
           <div
-            className="Changelog__semver lowercase font-semibold"
+            className="font-semibold lowercase Changelog__semver"
           >
             minor
           </div>
@@ -78,7 +78,7 @@ exports[`Changelog should match snapshot 1`] = `
       key="Thu Jan 02 2020"
     >
       <div
-        className="Changelog__date p-2 font-medium"
+        className="p-2 font-medium Changelog__date"
       >
         Thu Jan 02 2020
       </div>
@@ -90,12 +90,12 @@ exports[`Changelog should match snapshot 1`] = `
           className="flex text-sm"
         >
           <div
-            className="Changelog__message flex-1 mr-3"
+            className="flex-1 mr-3 Changelog__message"
           >
             patch message
           </div>
           <div
-            className="Changelog__semver lowercase font-semibold"
+            className="font-semibold lowercase Changelog__semver"
           >
             patch
           </div>
