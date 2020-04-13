@@ -12,6 +12,7 @@ import * as React from 'react';
 
 import { HttpSecuritySchemeColors } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
+import { SectionTitle } from '../HttpOperation/SectionTitle';
 
 export interface ISecuritiesProps {
   securities?: HttpSecurityScheme[];
@@ -24,9 +25,9 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
 
   return (
     <div className={cn('HttpSecuritySchemes', className)}>
-      {title && <h3 className={cn(Classes.HEADING, 'font-normal mb-6')}>{title}</h3>}
+      {title && <SectionTitle title={title} />}
 
-      <div className="mt-6 border rounded TreeList dark:border-darken">
+      <div className="TreeList">
         {flatten(securities).map((security, index) => {
           const securityClassName = cn('TreeListItem', {
             'TreeListItem--striped': index % 2 !== 0,

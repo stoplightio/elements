@@ -1,5 +1,6 @@
 @import '~@stoplight/ui-kit/styles/blueprint/variables';
-@import '~@stoplight/ui-kit/styles/components/Code/_base';
+@import '~@stoplight/ui-kit/styles/components/Code/_theme-light';
+@import '~@stoplight/ui-kit/styles/components/Code/_theme-dark';
 
 $PageContent: 1000px;
 $PageHeadings: 200px;
@@ -39,7 +40,7 @@ $PageHeadings: 200px;
 
 .Page__docs {
   .#{$ns}-simple-tab-panel {
-    .#{$ns}-code-editor:only-child {
+    .CodeEditor:only-child {
       // Don't add margin when inside a tab panel
       margin: 0;
     }
@@ -49,7 +50,7 @@ $PageHeadings: 200px;
 .MarkdownViewer {
   .RequestMaker__RequestEditor,
   .RequestMaker__ResponseViewer {
-    .#{$ns}-code-editor {
+    .CodeEditor {
       margin: 1.25rem;
       padding: 0;
       background: transparent !important;

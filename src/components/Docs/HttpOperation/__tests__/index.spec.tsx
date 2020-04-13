@@ -3,8 +3,6 @@ import 'jest-enzyme';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
-import { CodeViewer } from '@stoplight/ui-kit';
-import { SimpleTab } from '@stoplight/ui-kit/SimpleTabs';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
@@ -150,7 +148,7 @@ describe('HttpOperation', () => {
         />,
       );
 
-      expect(wrapper.find(MarkdownViewer)).toHaveProp('markdown', 'Hello world!');
+      expect(wrapper.find('.HttpOperation__Response').find(MarkdownViewer)).toHaveProp('markdown', 'Hello world!');
     });
 
     it('should render Parameters with headers', () => {

@@ -7,16 +7,17 @@ import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
 import { MarkdownViewer } from '../../MarkdownViewer';
+import { SectionTitle } from '../HttpOperation/SectionTitle';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
   return (
-    <div className={cn('HttpService', className)}>
-      {data.name && <h2 className={cn(Classes.HEADING, 'mb-10')}>{data.name}</h2>}
+    <div className={cn('HttpService MarkdownViewer', className)}>
+      {data.name !== void 0 && <h1 className={Classes.HEADING}>{data.name}</h1>}
 
-      <div className="MarkdownViewer flex">
+      <div className="MarkdownViewer flex mb-10">
         {data?.contact?.email && (
           <a
             className="flex items-center mr-4"
@@ -54,14 +55,14 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
         )}
       </div>
 
-      {data.description && <MarkdownViewer className="mb-10 mt-4" markdown={data.description} />}
+      {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
 
       {data.servers && data.servers.length > 0 ? (
         <div className="mb-10">
-          <h3 className={cn(Classes.HEADING, 'font-normal', 'mb-6')}>Servers</h3>
+          <SectionTitle title="Servers" />
 
           {data.servers.map((server, index) => (
-            <div className="MarkdownViewer flex items-center flex-1 mt-4" key={server.name}>
+            <div key={index} className="MarkdownViewer flex items-center flex-1 mt-4">
               {server.name && <div className="mr-2">{server.name}</div>}
               {server.description && <div className="mr-2">{server.description}</div>}
 

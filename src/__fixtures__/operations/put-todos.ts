@@ -10,7 +10,17 @@ export const httpOperation: IHttpOperation = {
     {
       code: '200',
       description: '',
-      headers: [],
+      headers: [
+        {
+          schema: {
+            type: 'string',
+            description: 'Resolver errors.',
+          },
+          name: 'X-Stoplight-Resolver',
+          style: HttpParamStyles.Simple,
+          required: true,
+        },
+      ],
       contents: [
         {
           mediaType: 'application/json',
@@ -78,19 +88,6 @@ export const httpOperation: IHttpOperation = {
             ],
             'x-tags': ['Todos'],
           },
-          examples: [
-            {
-              key: 'application/json',
-              value: {
-                id: 9000,
-                name: "It's Over 9000!!!",
-                completed: true,
-                completed_at: null,
-                created_at: '2014-08-28T14:14:28.494Z',
-                updated_at: '2015-08-28T14:14:28.494Z',
-              },
-            },
-          ],
         },
       ],
     },

@@ -1,5 +1,5 @@
 import { IHttpOperationResponse } from '@stoplight/types';
-import { Button, ButtonGroup, Icon } from '@stoplight/ui-kit';
+import { FAIcon } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -37,23 +37,39 @@ export const Responses = ({ className, responses }: IResponsesProps) => {
     <div className={cn('HttpOperation__Responses', className)}>
       <SectionTitle title="Responses" />
 
-      <ButtonGroup className="mt-6">
-        {sortedResponses.map((response, index) => {
-          if (!response.code) return null;
+      <div className="flex">
+        <div>
+          {sortedResponses.map((response, index) => {
+            if (!response.code) return null;
 
-          return (
-            <Button
-              key={response.code}
-              active={activeResponse === index}
-              text={response.code}
-              icon={<Icon icon="full-circle" iconSize={10} color={HttpCodeColor[String(response.code)[0]]} />}
-              onClick={() => setActiveResponse(index)}
-            />
-          );
-        })}
-      </ButtonGroup>
+            const isActive = activeResponse === index;
 
-      <Response className="mt-6" response={sortedResponses[activeResponse]} />
+            return (
+              <div
+                key={response.code}
+                className={cn('py-3 pr-12 hover:bg-gray-1 dark-hover:bg-gray-7', {
+                  'border-t border-gray-2 dark:border-gray-7': index > 0,
+                  'cursor-pointer': !isActive,
+                  'bg-gray-1 dark:bg-gray-7': isActive,
+                })}
+                onClick={() => setActiveResponse(index)}
+              >
+                <FAIcon
+                  icon={['fas', 'circle']}
+                  className="ml-4 mr-3"
+                  style={{ color: HttpCodeColor[String(response.code)[0]] }}
+                />
+
+                {response.code}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="flex-1 border-l dark:border-gray-6">
+          <Response response={sortedResponses[activeResponse]} />
+        </div>
+      </div>
     </div>
   );
 };
@@ -67,12 +83,12 @@ export const Response = ({ className, response }: IResponseProps) => {
   const examples = getExamplesObject(content?.examples || []);
 
   return (
-    <div className={cn('HttpOperation__Response', className)}>
-      {response.description && <MarkdownViewer className="mb-6" markdown={response.description} />}
+    <div className={cn('HttpOperation__Response pt-6 pl-8', className)}>
+      <MarkdownViewer className="ml-1 mb-6" markdown={response.description || '*No description.*'} />
 
       <Parameters className="mb-6" title="Headers" parameters={response.headers} />
 
-      {content?.schema && <SchemaViewer schema={content.schema} examples={examples} />}
+      {content?.schema && <SchemaViewer schema={content.schema} examples={examples} forceShowTabs />}
     </div>
   );
 };

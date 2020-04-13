@@ -70,16 +70,228 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
         className="bp3-heading flex items-center mb-10"
       >
         <div
-          className="uppercase mr-4 font-semibold text-success dark:text-success"
+          className="uppercase mr-5 font-semibold border rounded py-1 px-2 text-success border-success"
         >
           get
         </div>
         <div
-          className="flex-1"
+          className="flex-1 font-medium text-gray-6 dark:text-gray-3"
         >
           /path
         </div>
       </h2>
+      <MarkdownViewer
+        className="HttpOperation__Description mb-10 ml-1"
+        markdown="*No description.*"
+      >
+        <MarkdownViewer
+          className="HttpOperation__Description mb-10 ml-1"
+          components={
+            Object {
+              "code": [Function],
+            }
+          }
+          markdown="*No description.*"
+        >
+          <ErrorBoundary
+            FallbackComponent={[Function]}
+          >
+            <MarkdownViewer.Component
+              className="HttpOperation__Description mb-10 ml-1"
+              components={
+                Object {
+                  "code": [Function],
+                }
+              }
+              markdown="*No description.*"
+            >
+              <div
+                className="MarkdownViewer HttpOperation__Description mb-10 ml-1"
+              >
+                <paragraph
+                  index={0}
+                  key="0"
+                  node={
+                    Object {
+                      "children": Array [
+                        Object {
+                          "children": Array [
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            },
+                          ],
+                          "position": Position {
+                            "end": Object {
+                              "column": 18,
+                              "line": 1,
+                              "offset": 17,
+                            },
+                            "indent": Array [],
+                            "start": Object {
+                              "column": 1,
+                              "line": 1,
+                              "offset": 0,
+                            },
+                          },
+                          "type": "emphasis",
+                        },
+                      ],
+                      "position": Position {
+                        "end": Object {
+                          "column": 18,
+                          "line": 1,
+                          "offset": 17,
+                        },
+                        "indent": Array [],
+                        "start": Object {
+                          "column": 1,
+                          "line": 1,
+                          "offset": 0,
+                        },
+                      },
+                      "type": "paragraph",
+                    }
+                  }
+                  parent={
+                    Object {
+                      "type": "root",
+                    }
+                  }
+                  path={
+                    Array [
+                      "children",
+                      0,
+                    ]
+                  }
+                >
+                  <p>
+                    <emphasis
+                      index={0}
+                      key="0"
+                      node={
+                        Object {
+                          "children": Array [
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            },
+                          ],
+                          "position": Position {
+                            "end": Object {
+                              "column": 18,
+                              "line": 1,
+                              "offset": 17,
+                            },
+                            "indent": Array [],
+                            "start": Object {
+                              "column": 1,
+                              "line": 1,
+                              "offset": 0,
+                            },
+                          },
+                          "type": "emphasis",
+                        }
+                      }
+                      parent={
+                        Object {
+                          "parent": Object {
+                            "type": "root",
+                          },
+                          "type": "paragraph",
+                        }
+                      }
+                      path={
+                        Array [
+                          "children",
+                          0,
+                          "children",
+                          0,
+                        ]
+                      }
+                    >
+                      <em>
+                        <N
+                          index={0}
+                          key="0"
+                          node={
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            }
+                          }
+                          parent={
+                            Object {
+                              "parent": Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              },
+                              "type": "emphasis",
+                            }
+                          }
+                          path={
+                            Array [
+                              "children",
+                              0,
+                              "children",
+                              0,
+                              "children",
+                              0,
+                            ]
+                          }
+                        >
+                          No description.
+                        </N>
+                      </em>
+                    </emphasis>
+                  </p>
+                </paragraph>
+              </div>
+            </MarkdownViewer.Component>
+          </ErrorBoundary>
+        </MarkdownViewer>
+      </MarkdownViewer>
       <HttpOperation.Request
         request={
           Object {
@@ -156,314 +368,284 @@ exports[`HttpOperation Header Parameters should render correct validations 1`] =
               <Component
                 title="Header Parameters"
               >
-                <h3
-                  className="bp3-heading font-normal"
+                <div
+                  className="SectionTitle pl-1 pb-3 text-lg font-medium text-gray-7 dark:text-gray-4 border-b-2 dark:border-gray-6"
                 >
                   Header Parameters
-                </h3>
+                </div>
               </Component>
-              <div
-                className="mt-6 border rounded TreeList dark:border-darken"
-              >
-                <HttpOperation.Parameter
-                  className="TreeListItem"
-                  key="parameter name"
-                  parameter={
-                    Object {
-                      "deprecated": true,
-                      "description": "a parameter description",
-                      "examples": Array [
-                        Object {
-                          "key": "example",
-                          "value": "example value",
-                        },
-                      ],
-                      "explode": true,
-                      "name": "parameter name",
-                      "required": true,
-                      "schema": Object {
-                        "type": "string",
+              <HttpOperation.Parameter
+                className="pt-4"
+                key="parameter name"
+                parameter={
+                  Object {
+                    "deprecated": true,
+                    "description": "a parameter description",
+                    "examples": Array [
+                      Object {
+                        "key": "example",
+                        "value": "example value",
                       },
-                      "style": "simple",
-                    }
+                    ],
+                    "explode": true,
+                    "name": "parameter name",
+                    "required": true,
+                    "schema": Object {
+                      "type": "string",
+                    },
+                    "style": "simple",
                   }
+                }
+              >
+                <div
+                  className="HttpOperation__Parameter pl-1 pt-4"
                 >
                   <div
-                    className="HttpOperation__Parameter px-4 py-3 flex items-start TreeListItem"
-                    style={
-                      Object {
-                        "alignItems": "start",
-                      }
-                    }
+                    className="flex items-center"
                   >
                     <div
-                      className="flex flex-1 flex-start items-center"
+                      className="font-medium font-mono"
                     >
-                      <div
-                        style={
-                          Object {
-                            "minWidth": "100px",
-                          }
-                        }
-                      >
-                        parameter name
-                      </div>
-                      <div
-                        className="undefined mx-4"
-                      >
-                        string
-                      </div>
-                      <div
-                        className="flex-1 ml-4"
-                      >
-                        <MarkdownViewer
-                          className="flex-1 text-darken-7 dark:text-lighten-6"
-                          markdown="a parameter description"
-                        >
-                          <MarkdownViewer
-                            className="flex-1 text-darken-7 dark:text-lighten-6"
-                            components={
-                              Object {
-                                "code": [Function],
-                              }
-                            }
-                            markdown="a parameter description"
-                          >
-                            <ErrorBoundary
-                              FallbackComponent={[Function]}
-                            >
-                              <MarkdownViewer.Component
-                                className="flex-1 text-darken-7 dark:text-lighten-6"
-                                components={
-                                  Object {
-                                    "code": [Function],
-                                  }
-                                }
-                                markdown="a parameter description"
-                              >
-                                <div
-                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
-                                >
-                                  <paragraph
-                                    index={0}
-                                    key="0"
-                                    node={
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "position": Position {
-                                              "end": Object {
-                                                "column": 24,
-                                                "line": 1,
-                                                "offset": 23,
-                                              },
-                                              "indent": Array [],
-                                              "start": Object {
-                                                "column": 1,
-                                                "line": 1,
-                                                "offset": 0,
-                                              },
-                                            },
-                                            "type": "text",
-                                            "value": "a parameter description",
-                                          },
-                                        ],
-                                        "position": Position {
-                                          "end": Object {
-                                            "column": 24,
-                                            "line": 1,
-                                            "offset": 23,
-                                          },
-                                          "indent": Array [],
-                                          "start": Object {
-                                            "column": 1,
-                                            "line": 1,
-                                            "offset": 0,
-                                          },
-                                        },
-                                        "type": "paragraph",
-                                      }
-                                    }
-                                    parent={
-                                      Object {
-                                        "type": "root",
-                                      }
-                                    }
-                                    path={
-                                      Array [
-                                        "children",
-                                        0,
-                                      ]
-                                    }
-                                  >
-                                    <p>
-                                      <N
-                                        index={0}
-                                        key="0"
-                                        node={
-                                          Object {
-                                            "position": Position {
-                                              "end": Object {
-                                                "column": 24,
-                                                "line": 1,
-                                                "offset": 23,
-                                              },
-                                              "indent": Array [],
-                                              "start": Object {
-                                                "column": 1,
-                                                "line": 1,
-                                                "offset": 0,
-                                              },
-                                            },
-                                            "type": "text",
-                                            "value": "a parameter description",
-                                          }
-                                        }
-                                        parent={
-                                          Object {
-                                            "parent": Object {
-                                              "type": "root",
-                                            },
-                                            "type": "paragraph",
-                                          }
-                                        }
-                                        path={
-                                          Array [
-                                            "children",
-                                            0,
-                                            "children",
-                                            0,
-                                          ]
-                                        }
-                                      >
-                                        a parameter description
-                                      </N>
-                                    </p>
-                                  </paragraph>
-                                </div>
-                              </MarkdownViewer.Component>
-                            </ErrorBoundary>
-                          </MarkdownViewer>
-                        </MarkdownViewer>
-                        <div
-                          className="flex flex-wrap text-darken-7 dark:text-lighten-6"
-                        >
-                          <div
-                            className="mt-2 mr-2"
-                          >
-                            <Blueprint3.Tag
-                              intent="warning"
-                              minimal={true}
-                            >
-                              <span
-                                className="bp3-tag bp3-intent-warning bp3-minimal"
-                              >
-                                <Blueprint3.Icon />
-                                <Blueprint3.Text
-                                  className="bp3-fill"
-                                  ellipsize={true}
-                                  tagName="span"
-                                >
-                                  <span
-                                    className="bp3-text-overflow-ellipsis bp3-fill"
-                                  >
-                                    Deprecated
-                                  </span>
-                                </Blueprint3.Text>
-                                <Blueprint3.Icon />
-                              </span>
-                            </Blueprint3.Tag>
-                          </div>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="explode"
-                            name="explode"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      explode
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="examples"
-                            name="examples"
-                            value={
-                              Array [
-                                Object {
-                                  "key": "example",
-                                  "value": "example value",
-                                },
-                              ]
-                            }
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      examples
-                                      : 
-                                      {"key":"example","value":"example value"}
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                        </div>
-                      </div>
+                      parameter name
                     </div>
                     <div
-                      className="ml-4 text-right"
+                      className="ml-2 text-sm"
                     >
-                      <div
-                        className="font-medium"
-                      >
-                        required
-                      </div>
+                      string
+                    </div>
+                    <div
+                      className="ml-2 text-sm text-danger"
+                    >
+                      required
                     </div>
                   </div>
-                </HttpOperation.Parameter>
-              </div>
+                  <MarkdownViewer
+                    className="text-gray-7 dark:text-gray-4 mt-1"
+                    markdown="a parameter description"
+                  >
+                    <MarkdownViewer
+                      className="text-gray-7 dark:text-gray-4 mt-1"
+                      components={
+                        Object {
+                          "code": [Function],
+                        }
+                      }
+                      markdown="a parameter description"
+                    >
+                      <ErrorBoundary
+                        FallbackComponent={[Function]}
+                      >
+                        <MarkdownViewer.Component
+                          className="text-gray-7 dark:text-gray-4 mt-1"
+                          components={
+                            Object {
+                              "code": [Function],
+                            }
+                          }
+                          markdown="a parameter description"
+                        >
+                          <div
+                            className="MarkdownViewer text-gray-7 dark:text-gray-4 mt-1"
+                          >
+                            <paragraph
+                              index={0}
+                              key="0"
+                              node={
+                                Object {
+                                  "children": Array [
+                                    Object {
+                                      "position": Position {
+                                        "end": Object {
+                                          "column": 24,
+                                          "line": 1,
+                                          "offset": 23,
+                                        },
+                                        "indent": Array [],
+                                        "start": Object {
+                                          "column": 1,
+                                          "line": 1,
+                                          "offset": 0,
+                                        },
+                                      },
+                                      "type": "text",
+                                      "value": "a parameter description",
+                                    },
+                                  ],
+                                  "position": Position {
+                                    "end": Object {
+                                      "column": 24,
+                                      "line": 1,
+                                      "offset": 23,
+                                    },
+                                    "indent": Array [],
+                                    "start": Object {
+                                      "column": 1,
+                                      "line": 1,
+                                      "offset": 0,
+                                    },
+                                  },
+                                  "type": "paragraph",
+                                }
+                              }
+                              parent={
+                                Object {
+                                  "type": "root",
+                                }
+                              }
+                              path={
+                                Array [
+                                  "children",
+                                  0,
+                                ]
+                              }
+                            >
+                              <p>
+                                <N
+                                  index={0}
+                                  key="0"
+                                  node={
+                                    Object {
+                                      "position": Position {
+                                        "end": Object {
+                                          "column": 24,
+                                          "line": 1,
+                                          "offset": 23,
+                                        },
+                                        "indent": Array [],
+                                        "start": Object {
+                                          "column": 1,
+                                          "line": 1,
+                                          "offset": 0,
+                                        },
+                                      },
+                                      "type": "text",
+                                      "value": "a parameter description",
+                                    }
+                                  }
+                                  parent={
+                                    Object {
+                                      "parent": Object {
+                                        "type": "root",
+                                      },
+                                      "type": "paragraph",
+                                    }
+                                  }
+                                  path={
+                                    Array [
+                                      "children",
+                                      0,
+                                      "children",
+                                      0,
+                                    ]
+                                  }
+                                >
+                                  a parameter description
+                                </N>
+                              </p>
+                            </paragraph>
+                          </div>
+                        </MarkdownViewer.Component>
+                      </ErrorBoundary>
+                    </MarkdownViewer>
+                  </MarkdownViewer>
+                  <div
+                    className="flex flex-wrap"
+                  >
+                    <Blueprint3.Tag
+                      className="mt-2 mr-2"
+                      intent="warning"
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-intent-warning bp3-minimal mt-2 mr-2"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            Deprecated
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                    <ParameterValidation
+                      className="mt-2 mr-2"
+                      key="explode"
+                      name="explode"
+                      value={true}
+                    >
+                      <Blueprint3.Tag
+                        className="mt-2 mr-2"
+                        minimal={true}
+                      >
+                        <span
+                          className="bp3-tag bp3-minimal mt-2 mr-2"
+                        >
+                          <Blueprint3.Icon />
+                          <Blueprint3.Text
+                            className="bp3-fill"
+                            ellipsize={true}
+                            tagName="span"
+                          >
+                            <span
+                              className="bp3-text-overflow-ellipsis bp3-fill"
+                            >
+                              explode
+                              : 
+                              true
+                            </span>
+                          </Blueprint3.Text>
+                          <Blueprint3.Icon />
+                        </span>
+                      </Blueprint3.Tag>
+                    </ParameterValidation>
+                    <ParameterValidation
+                      className="mt-2 mr-2"
+                      key="examples"
+                      name="examples"
+                      value={
+                        Array [
+                          Object {
+                            "key": "example",
+                            "value": "example value",
+                          },
+                        ]
+                      }
+                    >
+                      <Blueprint3.Tag
+                        className="mt-2 mr-2"
+                        minimal={true}
+                      >
+                        <span
+                          className="bp3-tag bp3-minimal mt-2 mr-2"
+                        >
+                          <Blueprint3.Icon />
+                          <Blueprint3.Text
+                            className="bp3-fill"
+                            ellipsize={true}
+                            tagName="span"
+                          >
+                            <span
+                              className="bp3-text-overflow-ellipsis bp3-fill"
+                            >
+                              examples
+                              : 
+                              {"key":"example","value":"example value"}
+                            </span>
+                          </Blueprint3.Text>
+                          <Blueprint3.Icon />
+                        </span>
+                      </Blueprint3.Tag>
+                    </ParameterValidation>
+                  </div>
+                </div>
+              </HttpOperation.Parameter>
             </div>
           </HttpOperation.Parameters>
         </div>
@@ -546,16 +728,228 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
         className="bp3-heading flex items-center mb-10"
       >
         <div
-          className="uppercase mr-4 font-semibold text-success dark:text-success"
+          className="uppercase mr-5 font-semibold border rounded py-1 px-2 text-success border-success"
         >
           get
         </div>
         <div
-          className="flex-1"
+          className="flex-1 font-medium text-gray-6 dark:text-gray-3"
         >
           /path
         </div>
       </h2>
+      <MarkdownViewer
+        className="HttpOperation__Description mb-10 ml-1"
+        markdown="*No description.*"
+      >
+        <MarkdownViewer
+          className="HttpOperation__Description mb-10 ml-1"
+          components={
+            Object {
+              "code": [Function],
+            }
+          }
+          markdown="*No description.*"
+        >
+          <ErrorBoundary
+            FallbackComponent={[Function]}
+          >
+            <MarkdownViewer.Component
+              className="HttpOperation__Description mb-10 ml-1"
+              components={
+                Object {
+                  "code": [Function],
+                }
+              }
+              markdown="*No description.*"
+            >
+              <div
+                className="MarkdownViewer HttpOperation__Description mb-10 ml-1"
+              >
+                <paragraph
+                  index={0}
+                  key="0"
+                  node={
+                    Object {
+                      "children": Array [
+                        Object {
+                          "children": Array [
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            },
+                          ],
+                          "position": Position {
+                            "end": Object {
+                              "column": 18,
+                              "line": 1,
+                              "offset": 17,
+                            },
+                            "indent": Array [],
+                            "start": Object {
+                              "column": 1,
+                              "line": 1,
+                              "offset": 0,
+                            },
+                          },
+                          "type": "emphasis",
+                        },
+                      ],
+                      "position": Position {
+                        "end": Object {
+                          "column": 18,
+                          "line": 1,
+                          "offset": 17,
+                        },
+                        "indent": Array [],
+                        "start": Object {
+                          "column": 1,
+                          "line": 1,
+                          "offset": 0,
+                        },
+                      },
+                      "type": "paragraph",
+                    }
+                  }
+                  parent={
+                    Object {
+                      "type": "root",
+                    }
+                  }
+                  path={
+                    Array [
+                      "children",
+                      0,
+                    ]
+                  }
+                >
+                  <p>
+                    <emphasis
+                      index={0}
+                      key="0"
+                      node={
+                        Object {
+                          "children": Array [
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            },
+                          ],
+                          "position": Position {
+                            "end": Object {
+                              "column": 18,
+                              "line": 1,
+                              "offset": 17,
+                            },
+                            "indent": Array [],
+                            "start": Object {
+                              "column": 1,
+                              "line": 1,
+                              "offset": 0,
+                            },
+                          },
+                          "type": "emphasis",
+                        }
+                      }
+                      parent={
+                        Object {
+                          "parent": Object {
+                            "type": "root",
+                          },
+                          "type": "paragraph",
+                        }
+                      }
+                      path={
+                        Array [
+                          "children",
+                          0,
+                          "children",
+                          0,
+                        ]
+                      }
+                    >
+                      <em>
+                        <N
+                          index={0}
+                          key="0"
+                          node={
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            }
+                          }
+                          parent={
+                            Object {
+                              "parent": Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              },
+                              "type": "emphasis",
+                            }
+                          }
+                          path={
+                            Array [
+                              "children",
+                              0,
+                              "children",
+                              0,
+                              "children",
+                              0,
+                            ]
+                          }
+                        >
+                          No description.
+                        </N>
+                      </em>
+                    </emphasis>
+                  </p>
+                </paragraph>
+              </div>
+            </MarkdownViewer.Component>
+          </ErrorBoundary>
+        </MarkdownViewer>
+      </MarkdownViewer>
       <HttpOperation.Request
         request={
           Object {
@@ -620,314 +1014,284 @@ exports[`HttpOperation Path Parameters should render correct validations 1`] = `
               <Component
                 title="Path Parameters"
               >
-                <h3
-                  className="bp3-heading font-normal"
+                <div
+                  className="SectionTitle pl-1 pb-3 text-lg font-medium text-gray-7 dark:text-gray-4 border-b-2 dark:border-gray-6"
                 >
                   Path Parameters
-                </h3>
+                </div>
               </Component>
-              <div
-                className="mt-6 border rounded TreeList dark:border-darken"
-              >
-                <HttpOperation.Parameter
-                  className="TreeListItem"
-                  key="parameter name"
-                  parameter={
-                    Object {
-                      "deprecated": true,
-                      "description": "a parameter description",
-                      "examples": Array [
-                        Object {
-                          "key": "example",
-                          "value": "example value",
-                        },
-                      ],
-                      "explode": true,
-                      "name": "parameter name",
-                      "required": true,
-                      "schema": Object {
-                        "type": "string",
+              <HttpOperation.Parameter
+                className="pt-4"
+                key="parameter name"
+                parameter={
+                  Object {
+                    "deprecated": true,
+                    "description": "a parameter description",
+                    "examples": Array [
+                      Object {
+                        "key": "example",
+                        "value": "example value",
                       },
-                      "style": "simple",
-                    }
+                    ],
+                    "explode": true,
+                    "name": "parameter name",
+                    "required": true,
+                    "schema": Object {
+                      "type": "string",
+                    },
+                    "style": "simple",
                   }
+                }
+              >
+                <div
+                  className="HttpOperation__Parameter pl-1 pt-4"
                 >
                   <div
-                    className="HttpOperation__Parameter px-4 py-3 flex items-start TreeListItem"
-                    style={
-                      Object {
-                        "alignItems": "start",
-                      }
-                    }
+                    className="flex items-center"
                   >
                     <div
-                      className="flex flex-1 flex-start items-center"
+                      className="font-medium font-mono"
                     >
-                      <div
-                        style={
-                          Object {
-                            "minWidth": "100px",
-                          }
-                        }
-                      >
-                        parameter name
-                      </div>
-                      <div
-                        className="undefined mx-4"
-                      >
-                        string
-                      </div>
-                      <div
-                        className="flex-1 ml-4"
-                      >
-                        <MarkdownViewer
-                          className="flex-1 text-darken-7 dark:text-lighten-6"
-                          markdown="a parameter description"
-                        >
-                          <MarkdownViewer
-                            className="flex-1 text-darken-7 dark:text-lighten-6"
-                            components={
-                              Object {
-                                "code": [Function],
-                              }
-                            }
-                            markdown="a parameter description"
-                          >
-                            <ErrorBoundary
-                              FallbackComponent={[Function]}
-                            >
-                              <MarkdownViewer.Component
-                                className="flex-1 text-darken-7 dark:text-lighten-6"
-                                components={
-                                  Object {
-                                    "code": [Function],
-                                  }
-                                }
-                                markdown="a parameter description"
-                              >
-                                <div
-                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
-                                >
-                                  <paragraph
-                                    index={0}
-                                    key="0"
-                                    node={
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "position": Position {
-                                              "end": Object {
-                                                "column": 24,
-                                                "line": 1,
-                                                "offset": 23,
-                                              },
-                                              "indent": Array [],
-                                              "start": Object {
-                                                "column": 1,
-                                                "line": 1,
-                                                "offset": 0,
-                                              },
-                                            },
-                                            "type": "text",
-                                            "value": "a parameter description",
-                                          },
-                                        ],
-                                        "position": Position {
-                                          "end": Object {
-                                            "column": 24,
-                                            "line": 1,
-                                            "offset": 23,
-                                          },
-                                          "indent": Array [],
-                                          "start": Object {
-                                            "column": 1,
-                                            "line": 1,
-                                            "offset": 0,
-                                          },
-                                        },
-                                        "type": "paragraph",
-                                      }
-                                    }
-                                    parent={
-                                      Object {
-                                        "type": "root",
-                                      }
-                                    }
-                                    path={
-                                      Array [
-                                        "children",
-                                        0,
-                                      ]
-                                    }
-                                  >
-                                    <p>
-                                      <N
-                                        index={0}
-                                        key="0"
-                                        node={
-                                          Object {
-                                            "position": Position {
-                                              "end": Object {
-                                                "column": 24,
-                                                "line": 1,
-                                                "offset": 23,
-                                              },
-                                              "indent": Array [],
-                                              "start": Object {
-                                                "column": 1,
-                                                "line": 1,
-                                                "offset": 0,
-                                              },
-                                            },
-                                            "type": "text",
-                                            "value": "a parameter description",
-                                          }
-                                        }
-                                        parent={
-                                          Object {
-                                            "parent": Object {
-                                              "type": "root",
-                                            },
-                                            "type": "paragraph",
-                                          }
-                                        }
-                                        path={
-                                          Array [
-                                            "children",
-                                            0,
-                                            "children",
-                                            0,
-                                          ]
-                                        }
-                                      >
-                                        a parameter description
-                                      </N>
-                                    </p>
-                                  </paragraph>
-                                </div>
-                              </MarkdownViewer.Component>
-                            </ErrorBoundary>
-                          </MarkdownViewer>
-                        </MarkdownViewer>
-                        <div
-                          className="flex flex-wrap text-darken-7 dark:text-lighten-6"
-                        >
-                          <div
-                            className="mt-2 mr-2"
-                          >
-                            <Blueprint3.Tag
-                              intent="warning"
-                              minimal={true}
-                            >
-                              <span
-                                className="bp3-tag bp3-intent-warning bp3-minimal"
-                              >
-                                <Blueprint3.Icon />
-                                <Blueprint3.Text
-                                  className="bp3-fill"
-                                  ellipsize={true}
-                                  tagName="span"
-                                >
-                                  <span
-                                    className="bp3-text-overflow-ellipsis bp3-fill"
-                                  >
-                                    Deprecated
-                                  </span>
-                                </Blueprint3.Text>
-                                <Blueprint3.Icon />
-                              </span>
-                            </Blueprint3.Tag>
-                          </div>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="explode"
-                            name="explode"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      explode
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="examples"
-                            name="examples"
-                            value={
-                              Array [
-                                Object {
-                                  "key": "example",
-                                  "value": "example value",
-                                },
-                              ]
-                            }
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      examples
-                                      : 
-                                      {"key":"example","value":"example value"}
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                        </div>
-                      </div>
+                      parameter name
                     </div>
                     <div
-                      className="ml-4 text-right"
+                      className="ml-2 text-sm"
                     >
-                      <div
-                        className="font-medium"
-                      >
-                        required
-                      </div>
+                      string
+                    </div>
+                    <div
+                      className="ml-2 text-sm text-danger"
+                    >
+                      required
                     </div>
                   </div>
-                </HttpOperation.Parameter>
-              </div>
+                  <MarkdownViewer
+                    className="text-gray-7 dark:text-gray-4 mt-1"
+                    markdown="a parameter description"
+                  >
+                    <MarkdownViewer
+                      className="text-gray-7 dark:text-gray-4 mt-1"
+                      components={
+                        Object {
+                          "code": [Function],
+                        }
+                      }
+                      markdown="a parameter description"
+                    >
+                      <ErrorBoundary
+                        FallbackComponent={[Function]}
+                      >
+                        <MarkdownViewer.Component
+                          className="text-gray-7 dark:text-gray-4 mt-1"
+                          components={
+                            Object {
+                              "code": [Function],
+                            }
+                          }
+                          markdown="a parameter description"
+                        >
+                          <div
+                            className="MarkdownViewer text-gray-7 dark:text-gray-4 mt-1"
+                          >
+                            <paragraph
+                              index={0}
+                              key="0"
+                              node={
+                                Object {
+                                  "children": Array [
+                                    Object {
+                                      "position": Position {
+                                        "end": Object {
+                                          "column": 24,
+                                          "line": 1,
+                                          "offset": 23,
+                                        },
+                                        "indent": Array [],
+                                        "start": Object {
+                                          "column": 1,
+                                          "line": 1,
+                                          "offset": 0,
+                                        },
+                                      },
+                                      "type": "text",
+                                      "value": "a parameter description",
+                                    },
+                                  ],
+                                  "position": Position {
+                                    "end": Object {
+                                      "column": 24,
+                                      "line": 1,
+                                      "offset": 23,
+                                    },
+                                    "indent": Array [],
+                                    "start": Object {
+                                      "column": 1,
+                                      "line": 1,
+                                      "offset": 0,
+                                    },
+                                  },
+                                  "type": "paragraph",
+                                }
+                              }
+                              parent={
+                                Object {
+                                  "type": "root",
+                                }
+                              }
+                              path={
+                                Array [
+                                  "children",
+                                  0,
+                                ]
+                              }
+                            >
+                              <p>
+                                <N
+                                  index={0}
+                                  key="0"
+                                  node={
+                                    Object {
+                                      "position": Position {
+                                        "end": Object {
+                                          "column": 24,
+                                          "line": 1,
+                                          "offset": 23,
+                                        },
+                                        "indent": Array [],
+                                        "start": Object {
+                                          "column": 1,
+                                          "line": 1,
+                                          "offset": 0,
+                                        },
+                                      },
+                                      "type": "text",
+                                      "value": "a parameter description",
+                                    }
+                                  }
+                                  parent={
+                                    Object {
+                                      "parent": Object {
+                                        "type": "root",
+                                      },
+                                      "type": "paragraph",
+                                    }
+                                  }
+                                  path={
+                                    Array [
+                                      "children",
+                                      0,
+                                      "children",
+                                      0,
+                                    ]
+                                  }
+                                >
+                                  a parameter description
+                                </N>
+                              </p>
+                            </paragraph>
+                          </div>
+                        </MarkdownViewer.Component>
+                      </ErrorBoundary>
+                    </MarkdownViewer>
+                  </MarkdownViewer>
+                  <div
+                    className="flex flex-wrap"
+                  >
+                    <Blueprint3.Tag
+                      className="mt-2 mr-2"
+                      intent="warning"
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-intent-warning bp3-minimal mt-2 mr-2"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            Deprecated
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                    <ParameterValidation
+                      className="mt-2 mr-2"
+                      key="explode"
+                      name="explode"
+                      value={true}
+                    >
+                      <Blueprint3.Tag
+                        className="mt-2 mr-2"
+                        minimal={true}
+                      >
+                        <span
+                          className="bp3-tag bp3-minimal mt-2 mr-2"
+                        >
+                          <Blueprint3.Icon />
+                          <Blueprint3.Text
+                            className="bp3-fill"
+                            ellipsize={true}
+                            tagName="span"
+                          >
+                            <span
+                              className="bp3-text-overflow-ellipsis bp3-fill"
+                            >
+                              explode
+                              : 
+                              true
+                            </span>
+                          </Blueprint3.Text>
+                          <Blueprint3.Icon />
+                        </span>
+                      </Blueprint3.Tag>
+                    </ParameterValidation>
+                    <ParameterValidation
+                      className="mt-2 mr-2"
+                      key="examples"
+                      name="examples"
+                      value={
+                        Array [
+                          Object {
+                            "key": "example",
+                            "value": "example value",
+                          },
+                        ]
+                      }
+                    >
+                      <Blueprint3.Tag
+                        className="mt-2 mr-2"
+                        minimal={true}
+                      >
+                        <span
+                          className="bp3-tag bp3-minimal mt-2 mr-2"
+                        >
+                          <Blueprint3.Icon />
+                          <Blueprint3.Text
+                            className="bp3-fill"
+                            ellipsize={true}
+                            tagName="span"
+                          >
+                            <span
+                              className="bp3-text-overflow-ellipsis bp3-fill"
+                            >
+                              examples
+                              : 
+                              {"key":"example","value":"example value"}
+                            </span>
+                          </Blueprint3.Text>
+                          <Blueprint3.Icon />
+                        </span>
+                      </Blueprint3.Tag>
+                    </ParameterValidation>
+                  </div>
+                </div>
+              </HttpOperation.Parameter>
             </div>
           </HttpOperation.Parameters>
           <HttpOperation.Parameters
@@ -1026,16 +1390,228 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
         className="bp3-heading flex items-center mb-10"
       >
         <div
-          className="uppercase mr-4 font-semibold text-success dark:text-success"
+          className="uppercase mr-5 font-semibold border rounded py-1 px-2 text-success border-success"
         >
           get
         </div>
         <div
-          className="flex-1"
+          className="flex-1 font-medium text-gray-6 dark:text-gray-3"
         >
           /path
         </div>
       </h2>
+      <MarkdownViewer
+        className="HttpOperation__Description mb-10 ml-1"
+        markdown="*No description.*"
+      >
+        <MarkdownViewer
+          className="HttpOperation__Description mb-10 ml-1"
+          components={
+            Object {
+              "code": [Function],
+            }
+          }
+          markdown="*No description.*"
+        >
+          <ErrorBoundary
+            FallbackComponent={[Function]}
+          >
+            <MarkdownViewer.Component
+              className="HttpOperation__Description mb-10 ml-1"
+              components={
+                Object {
+                  "code": [Function],
+                }
+              }
+              markdown="*No description.*"
+            >
+              <div
+                className="MarkdownViewer HttpOperation__Description mb-10 ml-1"
+              >
+                <paragraph
+                  index={0}
+                  key="0"
+                  node={
+                    Object {
+                      "children": Array [
+                        Object {
+                          "children": Array [
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            },
+                          ],
+                          "position": Position {
+                            "end": Object {
+                              "column": 18,
+                              "line": 1,
+                              "offset": 17,
+                            },
+                            "indent": Array [],
+                            "start": Object {
+                              "column": 1,
+                              "line": 1,
+                              "offset": 0,
+                            },
+                          },
+                          "type": "emphasis",
+                        },
+                      ],
+                      "position": Position {
+                        "end": Object {
+                          "column": 18,
+                          "line": 1,
+                          "offset": 17,
+                        },
+                        "indent": Array [],
+                        "start": Object {
+                          "column": 1,
+                          "line": 1,
+                          "offset": 0,
+                        },
+                      },
+                      "type": "paragraph",
+                    }
+                  }
+                  parent={
+                    Object {
+                      "type": "root",
+                    }
+                  }
+                  path={
+                    Array [
+                      "children",
+                      0,
+                    ]
+                  }
+                >
+                  <p>
+                    <emphasis
+                      index={0}
+                      key="0"
+                      node={
+                        Object {
+                          "children": Array [
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            },
+                          ],
+                          "position": Position {
+                            "end": Object {
+                              "column": 18,
+                              "line": 1,
+                              "offset": 17,
+                            },
+                            "indent": Array [],
+                            "start": Object {
+                              "column": 1,
+                              "line": 1,
+                              "offset": 0,
+                            },
+                          },
+                          "type": "emphasis",
+                        }
+                      }
+                      parent={
+                        Object {
+                          "parent": Object {
+                            "type": "root",
+                          },
+                          "type": "paragraph",
+                        }
+                      }
+                      path={
+                        Array [
+                          "children",
+                          0,
+                          "children",
+                          0,
+                        ]
+                      }
+                    >
+                      <em>
+                        <N
+                          index={0}
+                          key="0"
+                          node={
+                            Object {
+                              "position": Position {
+                                "end": Object {
+                                  "column": 17,
+                                  "line": 1,
+                                  "offset": 16,
+                                },
+                                "indent": Array [],
+                                "start": Object {
+                                  "column": 2,
+                                  "line": 1,
+                                  "offset": 1,
+                                },
+                              },
+                              "type": "text",
+                              "value": "No description.",
+                            }
+                          }
+                          parent={
+                            Object {
+                              "parent": Object {
+                                "parent": Object {
+                                  "type": "root",
+                                },
+                                "type": "paragraph",
+                              },
+                              "type": "emphasis",
+                            }
+                          }
+                          path={
+                            Array [
+                              "children",
+                              0,
+                              "children",
+                              0,
+                              "children",
+                              0,
+                            ]
+                          }
+                        >
+                          No description.
+                        </N>
+                      </em>
+                    </emphasis>
+                  </p>
+                </paragraph>
+              </div>
+            </MarkdownViewer.Component>
+          </ErrorBoundary>
+        </MarkdownViewer>
+      </MarkdownViewer>
       <HttpOperation.Request
         request={
           Object {
@@ -1108,384 +1684,348 @@ exports[`HttpOperation Query Parameters should render correct validations 1`] = 
               <Component
                 title="Query Parameters"
               >
-                <h3
-                  className="bp3-heading font-normal"
+                <div
+                  className="SectionTitle pl-1 pb-3 text-lg font-medium text-gray-7 dark:text-gray-4 border-b-2 dark:border-gray-6"
                 >
                   Query Parameters
-                </h3>
+                </div>
               </Component>
-              <div
-                className="mt-6 border rounded TreeList dark:border-darken"
-              >
-                <HttpOperation.Parameter
-                  className="TreeListItem"
-                  key="parameter name"
-                  parameter={
-                    Object {
-                      "allowEmptyValue": true,
-                      "allowReserved": true,
-                      "deprecated": true,
-                      "description": "a parameter description",
-                      "examples": Array [
-                        Object {
-                          "key": "example",
-                          "value": "example value",
-                        },
-                      ],
-                      "explode": true,
-                      "name": "parameter name",
-                      "required": true,
-                      "schema": Object {
-                        "type": "string",
+              <HttpOperation.Parameter
+                className="pt-4"
+                key="parameter name"
+                parameter={
+                  Object {
+                    "allowEmptyValue": true,
+                    "allowReserved": true,
+                    "deprecated": true,
+                    "description": "a parameter description",
+                    "examples": Array [
+                      Object {
+                        "key": "example",
+                        "value": "example value",
                       },
-                      "style": "form",
-                    }
+                    ],
+                    "explode": true,
+                    "name": "parameter name",
+                    "required": true,
+                    "schema": Object {
+                      "type": "string",
+                    },
+                    "style": "form",
                   }
+                }
+              >
+                <div
+                  className="HttpOperation__Parameter pl-1 pt-4"
                 >
                   <div
-                    className="HttpOperation__Parameter px-4 py-3 flex items-start TreeListItem"
-                    style={
-                      Object {
-                        "alignItems": "start",
-                      }
-                    }
+                    className="flex items-center"
                   >
                     <div
-                      className="flex flex-1 flex-start items-center"
+                      className="font-medium font-mono"
                     >
-                      <div
-                        style={
-                          Object {
-                            "minWidth": "100px",
-                          }
-                        }
-                      >
-                        parameter name
-                      </div>
-                      <div
-                        className="undefined mx-4"
-                      >
-                        string
-                      </div>
-                      <div
-                        className="flex-1 ml-4"
-                      >
-                        <MarkdownViewer
-                          className="flex-1 text-darken-7 dark:text-lighten-6"
-                          markdown="a parameter description"
-                        >
-                          <MarkdownViewer
-                            className="flex-1 text-darken-7 dark:text-lighten-6"
-                            components={
-                              Object {
-                                "code": [Function],
-                              }
-                            }
-                            markdown="a parameter description"
-                          >
-                            <ErrorBoundary
-                              FallbackComponent={[Function]}
-                            >
-                              <MarkdownViewer.Component
-                                className="flex-1 text-darken-7 dark:text-lighten-6"
-                                components={
-                                  Object {
-                                    "code": [Function],
-                                  }
-                                }
-                                markdown="a parameter description"
-                              >
-                                <div
-                                  className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-6"
-                                >
-                                  <paragraph
-                                    index={0}
-                                    key="0"
-                                    node={
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "position": Position {
-                                              "end": Object {
-                                                "column": 24,
-                                                "line": 1,
-                                                "offset": 23,
-                                              },
-                                              "indent": Array [],
-                                              "start": Object {
-                                                "column": 1,
-                                                "line": 1,
-                                                "offset": 0,
-                                              },
-                                            },
-                                            "type": "text",
-                                            "value": "a parameter description",
-                                          },
-                                        ],
-                                        "position": Position {
-                                          "end": Object {
-                                            "column": 24,
-                                            "line": 1,
-                                            "offset": 23,
-                                          },
-                                          "indent": Array [],
-                                          "start": Object {
-                                            "column": 1,
-                                            "line": 1,
-                                            "offset": 0,
-                                          },
-                                        },
-                                        "type": "paragraph",
-                                      }
-                                    }
-                                    parent={
-                                      Object {
-                                        "type": "root",
-                                      }
-                                    }
-                                    path={
-                                      Array [
-                                        "children",
-                                        0,
-                                      ]
-                                    }
-                                  >
-                                    <p>
-                                      <N
-                                        index={0}
-                                        key="0"
-                                        node={
-                                          Object {
-                                            "position": Position {
-                                              "end": Object {
-                                                "column": 24,
-                                                "line": 1,
-                                                "offset": 23,
-                                              },
-                                              "indent": Array [],
-                                              "start": Object {
-                                                "column": 1,
-                                                "line": 1,
-                                                "offset": 0,
-                                              },
-                                            },
-                                            "type": "text",
-                                            "value": "a parameter description",
-                                          }
-                                        }
-                                        parent={
-                                          Object {
-                                            "parent": Object {
-                                              "type": "root",
-                                            },
-                                            "type": "paragraph",
-                                          }
-                                        }
-                                        path={
-                                          Array [
-                                            "children",
-                                            0,
-                                            "children",
-                                            0,
-                                          ]
-                                        }
-                                      >
-                                        a parameter description
-                                      </N>
-                                    </p>
-                                  </paragraph>
-                                </div>
-                              </MarkdownViewer.Component>
-                            </ErrorBoundary>
-                          </MarkdownViewer>
-                        </MarkdownViewer>
-                        <div
-                          className="flex flex-wrap text-darken-7 dark:text-lighten-6"
-                        >
-                          <div
-                            className="mt-2 mr-2"
-                          >
-                            <Blueprint3.Tag
-                              intent="warning"
-                              minimal={true}
-                            >
-                              <span
-                                className="bp3-tag bp3-intent-warning bp3-minimal"
-                              >
-                                <Blueprint3.Icon />
-                                <Blueprint3.Text
-                                  className="bp3-fill"
-                                  ellipsize={true}
-                                  tagName="span"
-                                >
-                                  <span
-                                    className="bp3-text-overflow-ellipsis bp3-fill"
-                                  >
-                                    Deprecated
-                                  </span>
-                                </Blueprint3.Text>
-                                <Blueprint3.Icon />
-                              </span>
-                            </Blueprint3.Tag>
-                          </div>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="allowEmptyValue"
-                            name="allowEmptyValue"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      allowEmptyValue
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="allowReserved"
-                            name="allowReserved"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      allowReserved
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="explode"
-                            name="explode"
-                            value={true}
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      explode
-                                      : 
-                                      true
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                          <ParameterValidation
-                            className="mt-2 mr-2"
-                            key="examples"
-                            name="examples"
-                            value={
-                              Array [
-                                Object {
-                                  "key": "example",
-                                  "value": "example value",
-                                },
-                              ]
-                            }
-                          >
-                            <div
-                              className="mt-2 mr-2"
-                            >
-                              <Blueprint3.Tag
-                                minimal={true}
-                              >
-                                <span
-                                  className="bp3-tag bp3-minimal"
-                                >
-                                  <Blueprint3.Icon />
-                                  <Blueprint3.Text
-                                    className="bp3-fill"
-                                    ellipsize={true}
-                                    tagName="span"
-                                  >
-                                    <span
-                                      className="bp3-text-overflow-ellipsis bp3-fill"
-                                    >
-                                      examples
-                                      : 
-                                      {"value":"example value","key":"example"}
-                                    </span>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Icon />
-                                </span>
-                              </Blueprint3.Tag>
-                            </div>
-                          </ParameterValidation>
-                        </div>
-                      </div>
+                      parameter name
                     </div>
                     <div
-                      className="ml-4 text-right"
+                      className="ml-2 text-sm"
                     >
-                      <div
-                        className="font-medium"
-                      >
-                        required
-                      </div>
+                      string
+                    </div>
+                    <div
+                      className="ml-2 text-sm text-danger"
+                    >
+                      required
                     </div>
                   </div>
-                </HttpOperation.Parameter>
-              </div>
+                  <MarkdownViewer
+                    className="text-gray-7 dark:text-gray-4 mt-1"
+                    markdown="a parameter description"
+                  >
+                    <MarkdownViewer
+                      className="text-gray-7 dark:text-gray-4 mt-1"
+                      components={
+                        Object {
+                          "code": [Function],
+                        }
+                      }
+                      markdown="a parameter description"
+                    >
+                      <ErrorBoundary
+                        FallbackComponent={[Function]}
+                      >
+                        <MarkdownViewer.Component
+                          className="text-gray-7 dark:text-gray-4 mt-1"
+                          components={
+                            Object {
+                              "code": [Function],
+                            }
+                          }
+                          markdown="a parameter description"
+                        >
+                          <div
+                            className="MarkdownViewer text-gray-7 dark:text-gray-4 mt-1"
+                          >
+                            <paragraph
+                              index={0}
+                              key="0"
+                              node={
+                                Object {
+                                  "children": Array [
+                                    Object {
+                                      "position": Position {
+                                        "end": Object {
+                                          "column": 24,
+                                          "line": 1,
+                                          "offset": 23,
+                                        },
+                                        "indent": Array [],
+                                        "start": Object {
+                                          "column": 1,
+                                          "line": 1,
+                                          "offset": 0,
+                                        },
+                                      },
+                                      "type": "text",
+                                      "value": "a parameter description",
+                                    },
+                                  ],
+                                  "position": Position {
+                                    "end": Object {
+                                      "column": 24,
+                                      "line": 1,
+                                      "offset": 23,
+                                    },
+                                    "indent": Array [],
+                                    "start": Object {
+                                      "column": 1,
+                                      "line": 1,
+                                      "offset": 0,
+                                    },
+                                  },
+                                  "type": "paragraph",
+                                }
+                              }
+                              parent={
+                                Object {
+                                  "type": "root",
+                                }
+                              }
+                              path={
+                                Array [
+                                  "children",
+                                  0,
+                                ]
+                              }
+                            >
+                              <p>
+                                <N
+                                  index={0}
+                                  key="0"
+                                  node={
+                                    Object {
+                                      "position": Position {
+                                        "end": Object {
+                                          "column": 24,
+                                          "line": 1,
+                                          "offset": 23,
+                                        },
+                                        "indent": Array [],
+                                        "start": Object {
+                                          "column": 1,
+                                          "line": 1,
+                                          "offset": 0,
+                                        },
+                                      },
+                                      "type": "text",
+                                      "value": "a parameter description",
+                                    }
+                                  }
+                                  parent={
+                                    Object {
+                                      "parent": Object {
+                                        "type": "root",
+                                      },
+                                      "type": "paragraph",
+                                    }
+                                  }
+                                  path={
+                                    Array [
+                                      "children",
+                                      0,
+                                      "children",
+                                      0,
+                                    ]
+                                  }
+                                >
+                                  a parameter description
+                                </N>
+                              </p>
+                            </paragraph>
+                          </div>
+                        </MarkdownViewer.Component>
+                      </ErrorBoundary>
+                    </MarkdownViewer>
+                  </MarkdownViewer>
+                  <div
+                    className="flex flex-wrap"
+                  >
+                    <Blueprint3.Tag
+                      className="mt-2 mr-2"
+                      intent="warning"
+                      minimal={true}
+                    >
+                      <span
+                        className="bp3-tag bp3-intent-warning bp3-minimal mt-2 mr-2"
+                      >
+                        <Blueprint3.Icon />
+                        <Blueprint3.Text
+                          className="bp3-fill"
+                          ellipsize={true}
+                          tagName="span"
+                        >
+                          <span
+                            className="bp3-text-overflow-ellipsis bp3-fill"
+                          >
+                            Deprecated
+                          </span>
+                        </Blueprint3.Text>
+                        <Blueprint3.Icon />
+                      </span>
+                    </Blueprint3.Tag>
+                    <ParameterValidation
+                      className="mt-2 mr-2"
+                      key="allowEmptyValue"
+                      name="allowEmptyValue"
+                      value={true}
+                    >
+                      <Blueprint3.Tag
+                        className="mt-2 mr-2"
+                        minimal={true}
+                      >
+                        <span
+                          className="bp3-tag bp3-minimal mt-2 mr-2"
+                        >
+                          <Blueprint3.Icon />
+                          <Blueprint3.Text
+                            className="bp3-fill"
+                            ellipsize={true}
+                            tagName="span"
+                          >
+                            <span
+                              className="bp3-text-overflow-ellipsis bp3-fill"
+                            >
+                              allowEmptyValue
+                              : 
+                              true
+                            </span>
+                          </Blueprint3.Text>
+                          <Blueprint3.Icon />
+                        </span>
+                      </Blueprint3.Tag>
+                    </ParameterValidation>
+                    <ParameterValidation
+                      className="mt-2 mr-2"
+                      key="allowReserved"
+                      name="allowReserved"
+                      value={true}
+                    >
+                      <Blueprint3.Tag
+                        className="mt-2 mr-2"
+                        minimal={true}
+                      >
+                        <span
+                          className="bp3-tag bp3-minimal mt-2 mr-2"
+                        >
+                          <Blueprint3.Icon />
+                          <Blueprint3.Text
+                            className="bp3-fill"
+                            ellipsize={true}
+                            tagName="span"
+                          >
+                            <span
+                              className="bp3-text-overflow-ellipsis bp3-fill"
+                            >
+                              allowReserved
+                              : 
+                              true
+                            </span>
+                          </Blueprint3.Text>
+                          <Blueprint3.Icon />
+                        </span>
+                      </Blueprint3.Tag>
+                    </ParameterValidation>
+                    <ParameterValidation
+                      className="mt-2 mr-2"
+                      key="explode"
+                      name="explode"
+                      value={true}
+                    >
+                      <Blueprint3.Tag
+                        className="mt-2 mr-2"
+                        minimal={true}
+                      >
+                        <span
+                          className="bp3-tag bp3-minimal mt-2 mr-2"
+                        >
+                          <Blueprint3.Icon />
+                          <Blueprint3.Text
+                            className="bp3-fill"
+                            ellipsize={true}
+                            tagName="span"
+                          >
+                            <span
+                              className="bp3-text-overflow-ellipsis bp3-fill"
+                            >
+                              explode
+                              : 
+                              true
+                            </span>
+                          </Blueprint3.Text>
+                          <Blueprint3.Icon />
+                        </span>
+                      </Blueprint3.Tag>
+                    </ParameterValidation>
+                    <ParameterValidation
+                      className="mt-2 mr-2"
+                      key="examples"
+                      name="examples"
+                      value={
+                        Array [
+                          Object {
+                            "key": "example",
+                            "value": "example value",
+                          },
+                        ]
+                      }
+                    >
+                      <Blueprint3.Tag
+                        className="mt-2 mr-2"
+                        minimal={true}
+                      >
+                        <span
+                          className="bp3-tag bp3-minimal mt-2 mr-2"
+                        >
+                          <Blueprint3.Icon />
+                          <Blueprint3.Text
+                            className="bp3-fill"
+                            ellipsize={true}
+                            tagName="span"
+                          >
+                            <span
+                              className="bp3-text-overflow-ellipsis bp3-fill"
+                            >
+                              examples
+                              : 
+                              {"value":"example value","key":"example"}
+                            </span>
+                          </Blueprint3.Text>
+                          <Blueprint3.Icon />
+                        </span>
+                      </Blueprint3.Tag>
+                    </ParameterValidation>
+                  </div>
+                </div>
+              </HttpOperation.Parameter>
             </div>
           </HttpOperation.Parameters>
           <HttpOperation.Parameters

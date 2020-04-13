@@ -17,10 +17,10 @@ export const nodeType = () => select('nodeType', ['article', 'http_service', 'ht
 export const nodeData = () => object('nodeData', article);
 
 storiesOf('components/Docs', module)
-  .addDecorator(withKnobs)
+  .addDecorator(withKnobs({ escapeHTML: false }))
   .add('Article', () => {
     return (
-      <div className={cn('absolute top-0 bottom-0 right-0 left-0 p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <Docs nodeType="article" nodeData={article} />
         </Provider>
@@ -29,7 +29,7 @@ storiesOf('components/Docs', module)
   })
   .add('Model', () => {
     return (
-      <div className={cn('absolute top-0 bottom-0 right-0 left-0 p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <Docs nodeType="model" nodeData={model} />
         </Provider>
@@ -38,7 +38,7 @@ storiesOf('components/Docs', module)
   })
   .add('HTTP Service', () => {
     return (
-      <div className={cn('absolute top-0 bottom-0 right-0 left-0 p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <Docs nodeType="http_service" nodeData={JSON.stringify(httpService)} />
         </Provider>
@@ -47,7 +47,7 @@ storiesOf('components/Docs', module)
   })
   .add('HTTP Operation', () => {
     return (
-      <div className={cn('absolute top-0 bottom-0 right-0 left-0 p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <Docs nodeType="http_operation" nodeData={JSON.stringify(httpOperation)} />
         </Provider>
@@ -56,7 +56,7 @@ storiesOf('components/Docs', module)
   })
   .add('Playground', () => {
     return (
-      <div className={cn('absolute top-0 bottom-0 right-0 left-0 p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <Docs nodeType={nodeType()} nodeData={nodeData()} />
         </Provider>

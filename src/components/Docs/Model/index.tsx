@@ -1,5 +1,5 @@
 import { JSONSchema } from '@stoplight/prism-http';
-import { Classes } from '@stoplight/ui-kit';
+import { Classes, FAIcon } from '@stoplight/ui-kit';
 import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import cn from 'classnames';
 import * as React from 'react';
@@ -12,9 +12,10 @@ export type ModelProps = IDocsComponentProps<JSONSchema>;
 
 const ModelComponent: React.FC<ModelProps> = ({ data, className }) => {
   return (
-    <div className={cn('Model', className)}>
-      {data.title !== void 0 && <h2 className={cn(Classes.HEADING, 'mb-10')}>{data.title}</h2>}
-      <SchemaViewer schema={data} description={data.description} examples={getExamplesFromSchema(data)} />
+    <div className={cn('Model MarkdownViewer', className)}>
+      {data.title !== void 0 && <h1 className={Classes.HEADING}>{data.title}</h1>}
+
+      <SchemaViewer schema={data} description={data.description} examples={getExamplesFromSchema(data)} maxRows={50} />
     </div>
   );
 };

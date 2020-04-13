@@ -23,6 +23,7 @@ export interface ISchemaViewerProps {
   maxRows?: number;
   examples?: Dictionary<string>;
   className?: string;
+  forceShowTabs?: boolean;
 }
 
 const JSV_MAX_ROWS = 20;
@@ -34,6 +35,7 @@ export const SchemaViewer = ({
   examples,
   errors,
   maxRows = JSV_MAX_ROWS,
+  forceShowTabs,
 }: ISchemaViewerProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -57,12 +59,17 @@ export const SchemaViewer = ({
     );
   };
 
-  if (isEmpty(examples)) {
-    return <JSV jsvClassName={cn(className, 'dark:border-darken', CLASSNAMES.bordered, CLASSNAMES.block)} />;
+  if (isEmpty(examples) && !forceShowTabs) {
+    return <JSV jsvClassName={cn(className, 'dark:border-white', CLASSNAMES.bordered, CLASSNAMES.block)} />;
   }
 
   return (
-    <SimpleTabs className={cn('SchemaViewer', className)} selectedIndex={selectedIndex} onSelect={setSelectedIndex}>
+    <SimpleTabs
+      className={cn('SchemaViewer', className)}
+      selectedIndex={selectedIndex}
+      onSelect={setSelectedIndex}
+      forceRenderTabPanel
+    >
       <SimpleTabList>
         <SimpleTab>Schema</SimpleTab>
 
@@ -73,16 +80,18 @@ export const SchemaViewer = ({
 
       <SimpleTabPanel className="p-0">{<JSV />}</SimpleTabPanel>
 
-      {map(examples, (example, key) => (
-        <SimpleTabPanel key={key} className="p-0">
-          <CodeViewer
-            language="json"
-            showLineNumbers
-            className="py-4 overflow-auto max-h-400px"
-            value={safeStringify(example)}
-          />
-        </SimpleTabPanel>
-      ))}
+      {map(examples, (example, key) => {
+        return (
+          <SimpleTabPanel key={key} className="p-0">
+            <CodeViewer
+              language="json"
+              showLineNumbers
+              className="py-4 px-4 overflow-auto max-h-400px"
+              value={safeStringify(example, undefined, 2)}
+            />
+          </SimpleTabPanel>
+        );
+      })}
     </SimpleTabs>
   );
 };

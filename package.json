@@ -48,13 +48,13 @@
   "dependencies": {
     "@stoplight/json": "^3.6.0",
     "@stoplight/json-ref-resolver": "^3.0.8",
-    "@stoplight/json-schema-viewer": "^3.0.0-beta.13",
+    "@stoplight/json-schema-viewer": "^3.0.0-beta.14",
     "@stoplight/markdown": "^2.7.2",
-    "@stoplight/markdown-viewer": "^4.0.1",
+    "@stoplight/markdown-viewer": "^4.0.2",
     "@stoplight/path": "^1.3.1",
-    "@stoplight/tree-list": "^5.0.0-beta.2",
+    "@stoplight/tree-list": "^5.0.0",
     "@stoplight/types": "^11.6.0",
-    "@stoplight/ui-kit": "^2.16.0",
+    "@stoplight/ui-kit": "^3.0.0-beta.2",
     "@stoplight/yaml": "^3.7.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
@@ -100,9 +100,9 @@
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.8.2",
-    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-react-hooks": "^3.0.0",
     "eslint-plugin-simple-import-sort": "^5.0.2",
     "jest": "25.x.x",
     "jest-environment-jsdom-sixteen": "^1.0.3",
@@ -114,7 +114,7 @@
     "typescript": "3.8.x",
     "vis-data": "^6.5.1",
     "vis-network": "^7.5.2",
-    "vis-util": "^3.0.0"
+    "vis-util": "^4.0.0"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

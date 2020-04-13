@@ -1,5 +1,4 @@
 @import '~@stoplight/ui-kit/styles/blueprint/variables';
-@import '~@stoplight/markdown-viewer/styles/markdown-viewer';
 
 .RequestMaker__RequestEditor,
 .RequestMaker__ResponseViewer {
@@ -87,10 +86,6 @@
     * {
       border-color: rgba(16, 22, 26, 0.4);
     }
-  }
-
-  .#{$ns}-code-editor {
-    background-color: transparent;
   }
 
   .RequestMaker__RequestViewer,

@@ -26,7 +26,7 @@ export const Body = ({ body, className }: IBodyProps) => {
 
   return (
     <div className={cn('HttpOperation__Body', className)}>
-      <SectionTitle title="Body" />
+      <SectionTitle title="Request Body" />
 
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}
 

@@ -160,15 +160,15 @@ exports[`HttpService should match snapshot 1`] = `
     }
   >
     <div
-      className="HttpService"
+      className="HttpService MarkdownViewer"
     >
-      <h2
-        className="bp3-heading mb-10"
+      <h1
+        className="bp3-heading"
       >
         Petstore (OpenAPI v3)
-      </h2>
+      </h1>
       <div
-        className="MarkdownViewer flex"
+        className="MarkdownViewer flex mb-10"
       >
         <a
           className="flex items-center mr-4"
@@ -258,13 +258,13 @@ exports[`HttpService should match snapshot 1`] = `
         </a>
       </div>
       <MarkdownViewer
-        className="mb-10 mt-4"
+        className="mb-10"
         markdown="This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key \`special-key\` to test the authorization filters. 
 
 "
       >
         <MarkdownViewer
-          className="mb-10 mt-4"
+          className="mb-10"
           components={
             Object {
               "code": [Function],
@@ -278,7 +278,7 @@ exports[`HttpService should match snapshot 1`] = `
             FallbackComponent={[Function]}
           >
             <MarkdownViewer.Component
-              className="mb-10 mt-4"
+              className="mb-10"
               components={
                 Object {
                   "code": [Function],
@@ -289,7 +289,7 @@ exports[`HttpService should match snapshot 1`] = `
 "
             >
               <div
-                className="MarkdownViewer mb-10 mt-4"
+                className="MarkdownViewer mb-10"
               >
                 <paragraph
                   index={0}
@@ -880,7 +880,7 @@ exports[`HttpService should match snapshot 1`] = `
                         value="special-key"
                       >
                         <code
-                          className="bp3-code-editor inline-block line-none isInline"
+                          className="CodeEditor inline-block line-none CodeEditor--inline"
                           dangerouslySetInnerHTML={
                             Object {
                               "__html": "special-key",
@@ -940,14 +940,18 @@ exports[`HttpService should match snapshot 1`] = `
       <div
         className="mb-10"
       >
-        <h3
-          className="bp3-heading font-normal mb-6"
+        <Component
+          title="Servers"
         >
-          Servers
-        </h3>
+          <div
+            className="SectionTitle pl-1 pb-3 text-lg font-medium text-gray-7 dark:text-gray-4 border-b-2 dark:border-gray-6"
+          >
+            Servers
+          </div>
+        </Component>
         <div
           className="MarkdownViewer flex items-center flex-1 mt-4"
-          key="Production API"
+          key="0"
         >
           <div
             className="mr-2"
@@ -964,7 +968,7 @@ exports[`HttpService should match snapshot 1`] = `
         </div>
         <div
           className="MarkdownViewer flex items-center flex-1 mt-4"
-          key="Staging API"
+          key="1"
         >
           <div
             className="mr-2"
@@ -981,7 +985,7 @@ exports[`HttpService should match snapshot 1`] = `
         </div>
         <div
           className="MarkdownViewer flex items-center flex-1 mt-4"
-          key="Integration API"
+          key="2"
         >
           <div
             className="mr-2"
@@ -998,7 +1002,7 @@ exports[`HttpService should match snapshot 1`] = `
         </div>
         <div
           className="MarkdownViewer flex items-center flex-1 mt-4"
-          key="Development API"
+          key="3"
         >
           <div
             className="mr-2"
@@ -1066,13 +1070,17 @@ exports[`HttpService should match snapshot 1`] = `
         <div
           className="HttpSecuritySchemes mb-10"
         >
-          <h3
-            className="bp3-heading font-normal mb-6"
+          <Component
+            title="Security Schemes"
           >
-            Security Schemes
-          </h3>
+            <div
+              className="SectionTitle pl-1 pb-3 text-lg font-medium text-gray-7 dark:text-gray-4 border-b-2 dark:border-gray-6"
+            >
+              Security Schemes
+            </div>
+          </Component>
           <div
-            className="mt-6 border rounded TreeList dark:border-darken"
+            className="TreeList"
           >
             <HttpSecuritySchemes.SecurityScheme
               className="TreeListItem"

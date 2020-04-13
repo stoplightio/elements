@@ -1,6 +1,5 @@
 import 'jest-enzyme';
 
-import { IHttpService } from '@stoplight/types';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 

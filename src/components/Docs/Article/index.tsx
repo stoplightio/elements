@@ -18,9 +18,8 @@ const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
   const tree = processMarkdownTree(markdown.root);
 
   return (
-    <div className={cn(className, 'flex w-full')} ref={containerRef}>
+    <div className={cn(className, 'flex w-full relative')} ref={containerRef}>
       <MarkdownViewer className="flex-1" markdown={tree} />
-
       <ArticleHeadings tree={tree} containerRef={containerRef} />
     </div>
   );
