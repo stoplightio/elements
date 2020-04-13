@@ -52,7 +52,7 @@ export function computeVisGraph(rootNode: INodeInfo, graph: INodeGraph, activeNo
   }
 
   for (const edge of graph.edges) {
-    let edgeColor = { color: '#cfd9e0', opacity: 0.8 };
+    let edgeColor = { color: '#92a9b9', opacity: 0.8 };
     if (activeNodeId === edge.fromGroupNodeId || activeNodeId === edge.toGroupNodeId) {
       edgeColor = { color: '#66b1e7', opacity: 1 };
     }

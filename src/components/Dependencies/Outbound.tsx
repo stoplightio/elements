@@ -83,10 +83,13 @@ export const OutboundDependencies = React.forwardRef<Network, IOutboundDependenc
     }
   };
 
-  const nodeId = node?.id;
   React.useEffect(() => {
-    setActiveNode(undefined);
-  }, [nodeId]);
+    setActiveNode({
+      groupNodeId: node.id,
+      name: node.name,
+      srn: node.srn,
+    });
+  }, [node]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.type]} does not have any outbound dependencies.</div>;
