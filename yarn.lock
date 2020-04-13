@@ -1985,10 +1985,10 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.0.1.tgz#acb53368b46b429b1a0ac88881d04a378138d730"
-  integrity sha512-xxQWBxOtszfeffiNGsvNu0alRudC3i7xGxpXgveRFOvCzi1XFDUcoQ3pzwIfiBq7EeAJS9C+sdZ+Y6eM/pT/jQ==
+"@stoplight/markdown-viewer@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.0.2.tgz#5df87837b1d1ef0d2b1d48f9ea90dd79420fe084"
+  integrity sha512-Uaa5eD7svFGgomQVpUEDEi/sABtyXTs/rrWe/VTAV3rIvOQdFsfTfQu8KjUayA2sUfty8Dc5GTbI8ey3LH2yjA==
   dependencies:
     "@stoplight/json" "^3.6"
     "@stoplight/markdown" "^2.7.2"
@@ -1996,8 +1996,8 @@
     classnames "^2"
     remark-inline-links "^4.0.0"
     remark-slug "^6.0.0"
-    sanitize-html "^1.22.1"
-    unified "^8.4.2"
+    sanitize-html "^1.23.0"
+    unified "^9.0.0"
 
 "@stoplight/markdown@^2.7.2":
   version "2.7.2"
@@ -14663,10 +14663,10 @@ sanitize-html@1.20.1:
     srcset "^1.0.0"
     xtend "^4.0.1"
 
-sanitize-html@^1.22.1:
-  version "1.22.1"
-  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-1.22.1.tgz#5b36c92ab27917ddd2775396815c2bc1a6268310"
-  integrity sha512-++IMC00KfMQc45UWZJlhWOlS9eMrME38sFG9GXfR+k6oBo9JXSYQgTOZCl9j3v/smFTRNT9XNwz5DseFdMY+2Q==
+sanitize-html@^1.23.0:
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-1.23.0.tgz#e7a5ce7427cd2844dae5b9961cd372e349f91fb5"
+  integrity sha512-7MgUrbZpaig6zHwuHjpNqhkiuutFPWWoFY/RmdtEnvrFKMLafzSHfFyOozVpKWytkZIUhbYu3VQ/93OmYdo3ag==
   dependencies:
     chalk "^2.4.1"
     htmlparser2 "^4.1.0"
@@ -16413,6 +16413,18 @@ unified@^8.4.2:
   dependencies:
     bail "^1.0.0"
     extend "^3.0.0"
+    is-plain-obj "^2.0.0"
+    trough "^1.0.0"
+    vfile "^4.0.0"
+
+unified@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/unified/-/unified-9.0.0.tgz#12b099f97ee8b36792dbad13d278ee2f696eed1d"
+  integrity sha512-ssFo33gljU3PdlWLjNp15Inqb77d6JnJSfyplGJPT/a+fNRNyCBeveBAYJdO5khKdF6WVHa/yYCC7Xl6BDwZUQ==
+  dependencies:
+    bail "^1.0.0"
+    extend "^3.0.0"
+    is-buffer "^2.0.0"
     is-plain-obj "^2.0.0"
     trough "^1.0.0"
     vfile "^4.0.0"
