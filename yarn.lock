@@ -2136,10 +2136,10 @@
     mobx-react-lite "^1.5.2"
     strict-event-emitter-types "^2.0.0"
 
-"@stoplight/tree-list@^5.0.0-beta.2":
-  version "5.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.0-beta.6.tgz#29867452959cafebb9c8392a97d9fae2467b3ce7"
-  integrity sha512-Ptdvi/DLjbzVoA0lQKEiShbEeKsCLwq7aDb5eKuMkuV+cZ3dYOB1lVvigd1IW2LHK9DDe3S1CAG0JFnsEfLy8w==
+"@stoplight/tree-list@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.0.tgz#49eb010ff2a5b53fa09c4d1e22a46b3a42befcbb"
+  integrity sha512-CDfqYrzgxmaJ0RIkU76Kk1xbHGMw5knw7Gu44IbqusnkyB8kugczd/xv6EWasBGEYZChGGCsZZGCRJkFhnTtlw==
   dependencies:
     "@stoplight/lifecycle" "^2.2.1"
     "@stoplight/react-error-boundary" "^1.0.0"
