@@ -1934,14 +1934,15 @@
     json-schema-compare "^0.2.2"
     lodash "^4.17.4"
 
-"@stoplight/json-schema-viewer@^3.0.0-beta.14":
-  version "3.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.14.tgz#ce5f2b7e848bd9497bdebe92e248c60865ecda31"
-  integrity sha512-J8TLHkDIT8/s2o4filDhU5e1lB5EsNvlzZWJ9pYprFY8Ro//lC5Xcei6PHUnDiYP0onTsKVWtx3CghUCw9DHNw==
+"@stoplight/json-schema-viewer@^3.0.0-beta.15":
+  version "3.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.15.tgz#36c87a023364b3ac5f92f318872d5c17842016f5"
+  integrity sha512-+XrA8bzK2qVWDrxQ6E1LlnRNEsN6bKFwCL7Jy4RVu2rYZu7fOjI/Bq/m0U20PFcMBjC+SgM54DL5Cwt+81YYzg==
   dependencies:
     "@stoplight/json" "^3.5.1"
     "@stoplight/json-schema-merge-allof" "^0.6.0"
     "@stoplight/react-error-boundary" "^1.0.0"
+    "@stoplight/tree-list" "^5.0.0"
     classnames "^2.2.6"
     lodash "^4.17.15"
     mobx-react-lite "^1.4.1"
