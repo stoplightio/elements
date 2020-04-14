@@ -21,6 +21,9 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   const visGraph = useComputeVisGraph(node, edges);
   const visNodes = React.useRef<DataSetNodes>();
   const visNetwork = React.useRef<Network>();
+  const defaultNode = edges.find(
+    (e) => e.fromBranchNodeId === rootNodeId && e.fromBranchNodeName === node.snapshot.name,
+  );
 
   const [activeNode, setActiveNode] = React.useState<INodeEdge | undefined>();
   const prevActiveNodeId = React.useRef<number | undefined>();
@@ -60,8 +63,16 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
 
     if (activeNode) {
       prevActiveNodeId.current = activeNode.toBranchNodeId;
+    } else {
+      visNodes.current?.updateOnly({
+        id: rootNodeId,
+        icon: {
+          color: '#66b1e7',
+        },
+      });
+      setActiveNode(defaultNode);
     }
-  }, [activeNode, rootNodeId]);
+  }, [activeNode, rootNodeId, edges, node.snapshot.name, defaultNode]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
@@ -87,7 +98,11 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
         }}
       />
 
-      <NodeDialog direction="to" edge={activeNode} onClose={() => setActiveNode(undefined)} />
+      <NodeDialog
+        direction="to"
+        edge={activeNode === defaultNode ? undefined : activeNode}
+        onClose={() => setActiveNode(undefined)}
+      />
     </div>
   );
 };
