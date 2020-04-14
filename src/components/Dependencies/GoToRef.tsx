@@ -40,7 +40,7 @@ export const GoToRef: React.FC<{ className?: string; title: string; srn: string;
       target="_blank"
       rel="noopener noreferrer"
     >
-      {elem}
+      <div style={{ width: 800, height: 500 }}>{elem}</div>
     </a>
   );
 };
