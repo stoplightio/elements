@@ -3,7 +3,7 @@ import { NodeType } from '@stoplight/types';
 import { Icon, Tab, Tabs } from '@stoplight/ui-kit';
 import { FixedSizeList } from '@stoplight/ui-kit/ScrollList';
 import cn from 'classnames';
-import { findKey, groupBy, sortBy, toUpper } from 'lodash';
+import { findKey, groupBy, sortBy, toUpper, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { NodeTypeIcons, NodeTypePrettyName } from '../../constants';
@@ -18,7 +18,7 @@ export interface IInboundDependencies {
 }
 
 export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, className }) => {
-  const edgesByNodeType = groupBy(edges, 'fromBranchNodeType');
+  const edgesByNodeType = groupBy(uniqBy(edges, 'id'), 'fromBranchNodeType');
   const firstTab = edges.length ? findKey(edgesByNodeType, (nodes) => nodes?.length) : undefined;
   const [selectedTabId, setSelectedTabId] = React.useState();
 
