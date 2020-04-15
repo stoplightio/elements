@@ -1,6 +1,6 @@
 import { JSONSchema } from '@stoplight/prism-http';
-import { Classes } from '@stoplight/ui-kit';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
+import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 

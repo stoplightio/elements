@@ -1,7 +1,7 @@
 import { Icon } from '@blueprintjs/core';
+import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import { Classes } from '@stoplight/ui-kit';
-import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import * as React from 'react';
 

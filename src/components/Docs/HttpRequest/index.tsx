@@ -1,5 +1,5 @@
-import { IHttpRequest } from '@stoplight/types';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
+import { IHttpRequest } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
