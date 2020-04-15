@@ -21,9 +21,9 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   const visGraph = useComputeVisGraph(node, edges);
   const visNodes = React.useRef<DataSetNodes>();
   const visNetwork = React.useRef<Network>();
-  const defaultNode = edges.find((e) => e.depth === 0);
+  const defaultNodeEdge = edges.find((e) => e.fromBranchNodeId === rootNodeId);
 
-  const [activeNode, setActiveNode] = React.useState<INodeEdge | undefined>();
+  const [activeNodeEdge, setActiveNodeEdge] = React.useState<INodeEdge | undefined>();
   const prevActiveNodeId = React.useRef<number | undefined>();
 
   const onClickNode = React.useCallback(
@@ -31,10 +31,10 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
       const nodeId = e.nodes[0];
       if (!nodeId) return;
 
-      if (activeNode?.toBranchNodeId === nodeId) {
+      if (activeNodeEdge?.toBranchNodeId === nodeId) {
         // Unselect nodes and edges
         visNetwork.current?.unselectAll();
-        setActiveNode(undefined);
+        setActiveNodeEdge(undefined);
       } else {
         // Update the active node's color
         visNodes.current?.updateOnly({
@@ -43,10 +43,10 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
             color: '#66b1e7',
           },
         });
-        setActiveNode(edges.find((edge) => edge.toBranchNodeId === nodeId));
+        setActiveNodeEdge(edges.find((edge) => edge.toBranchNodeId === nodeId));
       }
     },
-    [activeNode, edges],
+    [activeNodeEdge, edges],
   );
 
   React.useEffect(() => {
@@ -59,8 +59,8 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
       });
     }
 
-    if (activeNode) {
-      prevActiveNodeId.current = activeNode.toBranchNodeId;
+    if (activeNodeEdge) {
+      prevActiveNodeId.current = activeNodeEdge.toBranchNodeId;
     } else {
       visNodes.current?.updateOnly({
         id: rootNodeId,
@@ -68,9 +68,9 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
           color: '#66b1e7',
         },
       });
-      setActiveNode(defaultNode);
+      setActiveNodeEdge(defaultNodeEdge);
     }
-  }, [activeNode, rootNodeId, edges, node.snapshot.name, defaultNode]);
+  }, [activeNodeEdge, rootNodeId, edges, node.snapshot.name, defaultNodeEdge]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
@@ -98,8 +98,8 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
 
       <NodeDialog
         direction="to"
-        edge={activeNode === defaultNode ? undefined : activeNode}
-        onClose={() => setActiveNode(undefined)}
+        edge={activeNodeEdge === defaultNodeEdge ? undefined : activeNodeEdge}
+        onClose={() => setActiveNodeEdge(undefined)}
       />
     </div>
   );
