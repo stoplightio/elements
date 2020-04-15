@@ -201,6 +201,10 @@ export class Graph extends React.Component<IGraph> {
           this.Network.on(eventName, cb);
         }
       }
+
+      if (!this.Network.getSelectedNodes().length) {
+        this.Network.selectNodes([this.props.id], true);
+      }
     }
   }
 
