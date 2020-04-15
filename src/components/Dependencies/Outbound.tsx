@@ -21,9 +21,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   const visGraph = useComputeVisGraph(node, edges);
   const visNodes = React.useRef<DataSetNodes>();
   const visNetwork = React.useRef<Network>();
-  const defaultNode = edges.find(
-    (e) => e.fromBranchNodeId === rootNodeId && e.fromBranchNodeName === node.snapshot.name,
-  );
+  const defaultNode = edges.find((e) => e.depth === 0);
 
   const [activeNode, setActiveNode] = React.useState<INodeEdge | undefined>();
   const prevActiveNodeId = React.useRef<number | undefined>();
