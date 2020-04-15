@@ -6,7 +6,7 @@
   "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
 
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ES2015",
     "noUnusedLocals": false,
     "esModuleInterop": true
   }
