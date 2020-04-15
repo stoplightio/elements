@@ -28,7 +28,7 @@ describe('HttpOperation', () => {
 
   describe('Query Parameters', () => {
     it('should render correct validations', () => {
-      const operationData: IHttpOperation = {
+      const operationData = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -39,14 +39,14 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string',
+                type: 'string' as const,
               },
               allowEmptyValue: true,
               allowReserved: true,
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Form,
+              style: HttpParamStyles.Form as const,
               examples: [
                 {
                   value: 'example value',
@@ -59,13 +59,16 @@ describe('HttpOperation', () => {
       };
 
       wrapper = mount(<HttpOperation data={operationData} />);
-      expect(wrapper).toMatchSnapshot();
+      const queryParameterElement = wrapper.findWhere(
+        (w) => w.type() === Parameters && w.props().title === 'Query Parameters',
+      );
+      expect(queryParameterElement.props().parameters).toEqual(operationData.request.query);
     });
   });
 
   describe('Header Parameters', () => {
     it('should render correct validations', () => {
-      const data: IHttpOperation = {
+      const data = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -76,12 +79,12 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string',
+                type: 'string' as const,
               },
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Simple,
+              style: HttpParamStyles.Simple as const,
               examples: [
                 {
                   key: 'example',
@@ -94,13 +97,16 @@ describe('HttpOperation', () => {
       };
 
       wrapper = mount(<HttpOperation data={data} />);
-      expect(wrapper).toMatchSnapshot();
+      const headerParameterElement = wrapper.findWhere(
+        (w) => w.type() === Parameters && w.props().title === 'Header Parameters',
+      );
+      expect(headerParameterElement.props().parameters).toEqual(data.request.headers);
     });
   });
 
   describe('Path Parameters', () => {
     it('should render correct validations', () => {
-      const data: IHttpOperation = {
+      const data = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -111,12 +117,12 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string',
+                type: 'string' as const,
               },
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Simple,
+              style: HttpParamStyles.Simple as const,
               examples: [
                 {
                   key: 'example',
@@ -129,7 +135,10 @@ describe('HttpOperation', () => {
       };
 
       wrapper = mount(<HttpOperation data={data} />);
-      expect(wrapper).toMatchSnapshot();
+      const pathParameterElement = wrapper.findWhere(
+        (w) => w.type() === Parameters && w.props().title === 'Path Parameters',
+      );
+      expect(pathParameterElement.props().parameters).toEqual(data.request.path);
     });
   });
 

@@ -1,25 +1,15 @@
 import 'jest-enzyme';
 
-import { mount, ReactWrapper } from 'enzyme';
+import { render } from '@testing-library/react';
 import * as React from 'react';
 
 import httpService from '../../../../__fixtures__/services/petstore';
 import { HttpService } from '../index';
 
-// jest.mock('../../../hooks/useResolver', () => ({
-//   useResolver: (type: any, result: any) => ({ result }),
-// }));
-
 describe('HttpService', () => {
-  let wrapper: ReactWrapper;
+  it('Should render correctly', () => {
+    const wrapper = render(<HttpService data={httpService} />);
 
-  afterEach(() => {
-    wrapper.unmount();
-  });
-
-  it('should match snapshot', () => {
-    wrapper = mount(<HttpService data={httpService} />);
-
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.getByText(httpService.name).tagName.toLowerCase()).toBe('h1');
   });
 });
