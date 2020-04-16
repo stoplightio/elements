@@ -2125,10 +2125,10 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/ui-kit@^3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.2.tgz#90492ce72373a4120cb5304a9121bcb82a812dd5"
-  integrity sha512-sZoW214BMuMvuKkGFtonZ47Km445VapA3F6O5MUTrwhcfBNnZfDBp3flYRI3MW1QQF5gNbWha2SyVBwvo+ZJ3w==
+"@stoplight/ui-kit@^3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.4.tgz#d131274e24c3abff2ba4298f0787196159ec3ab2"
+  integrity sha512-mc4WLlytMdSztAYR6v5aJP+uLU8SjweSsx7PAsAuAr552wrCEdFqCdu/CQ0jdl8Lzlj+d9JPMCeiV1W8hleWPQ==
   dependencies:
     "@blueprintjs/core" "^3.25.0"
     "@blueprintjs/icons" "^3.15.0"
@@ -2142,6 +2142,7 @@
     react-tabs "^3.1.0"
     react-virtualized-auto-sizer "^1.0.2"
     react-window "~1.8.5"
+    use-debounce "^3.4.1"
     yup "^0.28.3"
 
 "@stoplight/yaml-ast-parser@0.0.45":
@@ -16594,6 +16595,11 @@ use-callback-ref@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.1.tgz#898759ccb9e14be6c7a860abafa3ffbd826c89bb"
   integrity sha512-C3nvxh0ZpaOxs9RCnWwAJ+7bJPwQI8LHF71LzbQ3BvzH5XkdtlkMadqElGevg5bYBDFip4sAnD4m06zAKebg1w==
+
+use-debounce@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-3.4.1.tgz#361a20e583c1bd4a44f8b29a26793a52a0b84d2c"
+  integrity sha512-KHZPsL+cZvOt/ZAsHTcoAK65ImXU0iG9FDeofuj9uJTdUULF6Gjws8HpK+JlIjZpZ7LTqPHZtEknc+Im4cB3AA==
 
 use-sidecar@^1.0.1:
   version "1.0.2"
