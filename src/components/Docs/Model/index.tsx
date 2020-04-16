@@ -1,6 +1,6 @@
 import { JSONSchema } from '@stoplight/prism-http';
-import { Classes, FAIcon } from '@stoplight/ui-kit';
-import { withErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
+import { withErrorBoundary } from '@stoplight/react-error-boundary';
+import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -20,4 +20,4 @@ const ModelComponent: React.FC<ModelProps> = ({ data, className }) => {
   );
 };
 
-export const Model = withErrorBoundary<ModelProps>(ModelComponent, ['data'], 'Model');
+export const Model = withErrorBoundary<ModelProps>(ModelComponent, { recoverableProps: ['data'] });

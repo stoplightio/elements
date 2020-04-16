@@ -1,5 +1,4 @@
 import { Dictionary, NodeType } from '@stoplight/types';
-import { IErrorBoundary } from '@stoplight/ui-kit/withErrorBoundary';
 import * as React from 'react';
 
 import { useParsedValue } from '../../hooks/useParsedValue';
@@ -14,7 +13,7 @@ export interface IDocsProps {
   className?: string;
 }
 
-export interface IDocsComponentProps<T = unknown> extends IErrorBoundary {
+export interface IDocsComponentProps<T = unknown> {
   data: T;
   className?: string;
 }
