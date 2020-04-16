@@ -5,17 +5,17 @@ exports[`Changelog should match snapshot 1`] = `
   changes={
     Array [
       Object {
-        "createdAt": "1578032747722",
+        "createdAt": "Fri Jan 03 2020 06:25:47 GMT+0000 (Coordinated Universal Time)",
         "message": "major message",
         "semver": "major",
       },
       Object {
-        "createdAt": "1578032747722",
+        "createdAt": "Fri Jan 03 2020 06:25:47 GMT+0000 (Coordinated Universal Time)",
         "message": "minor message",
         "semver": "minor",
       },
       Object {
-        "createdAt": "1577946373272",
+        "createdAt": "Thu Jan 02 2020 06:26:13 GMT+0000 (Coordinated Universal Time)",
         "message": "patch message",
         "semver": "patch",
       },

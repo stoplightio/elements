@@ -29,17 +29,17 @@ describe('Changelog', () => {
       <Changelog
         changes={[
           {
-            createdAt: '1578032747722',
+            createdAt: new Date(1578032747722).toString(),
             message: 'major message',
             semver: 'major',
           },
           {
-            createdAt: '1578032747722',
+            createdAt: new Date(1578032747722).toString(),
             message: 'minor message',
             semver: 'minor',
           },
           {
-            createdAt: '1577946373272',
+            createdAt: new Date(1577946373272).toString(),
             message: 'patch message',
             semver: 'patch',
           },
