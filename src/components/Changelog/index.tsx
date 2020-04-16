@@ -20,10 +20,12 @@ export const Changelog = React.memo<IChangelogProps>(({ className, padding, chan
 
   const sortedChanges = orderBy(
     changes,
-    [change => {
-      return new Date(change.createdAt).getTime();
-    }],
-    ['desc']
+    [
+      (change) => {
+        return new Date(change.createdAt).getTime();
+      },
+    ],
+    ['desc'],
   );
 
   const groups = groupBy(sortedChanges, (change) => {
