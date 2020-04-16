@@ -89,36 +89,15 @@ export class Graph extends React.Component<IGraph> {
     this.updateGraph();
   }
 
+  public shouldComponentUpdate(nextProps: IGraph) {
+    const nodesChange = !isEqual(this.props.graph.nodes, nextProps.graph.nodes);
+    const edgesChange = !isEqual(this.props.graph.edges, nextProps.graph.edges);
+
+    return nodesChange && edgesChange;
+  }
+
   public componentDidUpdate() {
     this.updateGraph();
-  }
-
-  public patchEdges({
-    edgesRemoved,
-    edgesAdded,
-    edgesChanged,
-  }: {
-    edgesRemoved: Edge[];
-    edgesAdded: Edge[];
-    edgesChanged: Edge[];
-  }) {
-    this.edges.remove(edgesRemoved);
-    this.edges.add(edgesAdded);
-    this.edges.update(edgesChanged);
-  }
-
-  public patchNodes({
-    nodesRemoved,
-    nodesAdded,
-    nodesChanged,
-  }: {
-    nodesRemoved: Node[];
-    nodesAdded: Node[];
-    nodesChanged: Node[];
-  }) {
-    this.nodes.remove(nodesRemoved);
-    this.nodes.add(nodesAdded);
-    this.nodes.update(nodesChanged);
   }
 
   public updateGraph() {
@@ -131,6 +110,9 @@ export class Graph extends React.Component<IGraph> {
         }),
         visOptions,
       );
+
+      this.Network.selectNodes([this.props.id], true);
+      this.Network.once('afterDrawing', () => this.Network?.setSize('', ''));
     }
 
     if (this.props.getNetwork) {
@@ -153,10 +135,6 @@ export class Graph extends React.Component<IGraph> {
         if (cb) {
           this.Network.on(eventName, cb);
         }
-      }
-
-      if (!this.Network.getSelectedNodes().length) {
-        this.Network.selectNodes([this.props.id], true);
       }
     }
   }
