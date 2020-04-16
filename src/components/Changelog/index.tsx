@@ -3,10 +3,12 @@ import cn from 'classnames';
 import { groupBy, orderBy } from 'lodash';
 import * as React from 'react';
 
+import { IChange } from '../../types';
+
 export interface IChangelogProps {
   padding?: string;
   className?: string;
-  changes?: any[]; // TODO (CL): Add a typing for changes
+  changes?: IChange[];
 }
 
 export const Changelog = React.memo<IChangelogProps>(({ className, padding, changes }) => {
@@ -19,7 +21,7 @@ export const Changelog = React.memo<IChangelogProps>(({ className, padding, chan
   const sortedChanges = orderBy(changes, ['createdAt'], ['desc']);
 
   const groups = groupBy(sortedChanges, (change) => {
-    return new Date(Number(change.createdAt)).toDateString();
+    return new Date(change.createdAt).toDateString();
   });
 
   return (
