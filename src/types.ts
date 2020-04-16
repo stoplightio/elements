@@ -7,10 +7,9 @@ export interface INodeFilter {
   nodeType?: string;
 }
 
-export type DateString = string;
 export interface IChange {
   message: string;
-  createdAt: DateString;
+  createdAt: string;
   // TODO: generate graphql types, so we can set this as an enum.
   semver: string;
 }
