@@ -55,7 +55,7 @@
     "@stoplight/react-error-boundary": "^1.0.0",
     "@stoplight/tree-list": "^5.0.0",
     "@stoplight/types": "^11.6.0",
-    "@stoplight/ui-kit": "^3.0.0-beta.4",
+    "@stoplight/ui-kit": "^3.0.0-beta.6",
     "@stoplight/yaml": "^3.7.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
