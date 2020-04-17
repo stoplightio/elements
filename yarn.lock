@@ -1995,6 +1995,11 @@
     unified "^8.4.2"
     unist-util-select "^3.0.1"
 
+"@stoplight/ordered-object-literal@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/ordered-object-literal/-/ordered-object-literal-1.0.0.tgz#c47523924a5ff573d00a46e231e0060060fdbc6d"
+  integrity sha512-nnyPqCeWUqBY2hmeF9psftty35anYytP5Gz1iI7qL/hiSb+hkFAV6k6FuLYZZShaQdmHAPsanG3f6rvhA8sOzg==
+
 "@stoplight/path@^1.3.0", "@stoplight/path@^1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.1.tgz#1246c983279af20dcfb806d138add9f81cb1efd2"
@@ -2150,11 +2155,12 @@
   resolved "https://registry.yarnpkg.com/@stoplight/yaml-ast-parser/-/yaml-ast-parser-0.0.45.tgz#672c0a1511d581843be5a9c55899ca95a30dcadb"
   integrity sha512-0MTEvgp3XMdeMUSTCGiNECuC+YlLbzytDEIOJVDHrrmzVZpIR3gGnHI6mmPI4P7saPxUiHxFF2uuoTuCNlKjrw==
 
-"@stoplight/yaml@^3.0.2", "@stoplight/yaml@^3.7.1":
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.7.1.tgz#34e8f9d1f8101bf2cdf4b7e6b4c6ba5c77a76b8c"
-  integrity sha512-y/CeWdzOSdoD41K7zaGGDjyDa6rLV/gEvnG96EB7eYomUT+8ZIuuO4oK0sxkDulXmJY7MmnecqR8JtXDJFBy1w==
+"@stoplight/yaml@^3.0.2", "@stoplight/yaml@^3.8.0":
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.8.0.tgz#0b04f71f489f38d9eed4740a58592847a6b214aa"
+  integrity sha512-8aqwCRJd4ZGQM+6veAYU/TcELtqd/wiPjAEIPAfHJLiZr5wZice2fRkefT3/Ntr6zLlLIhQcNfXTUlCrfdQ8xQ==
   dependencies:
+    "@stoplight/ordered-object-literal" "^1.0.0"
     "@stoplight/types" "^11.1.1"
     "@stoplight/yaml-ast-parser" "0.0.45"
     lodash "^4.17.15"
