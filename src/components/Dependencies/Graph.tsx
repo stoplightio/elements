@@ -92,80 +92,12 @@ export class Graph extends React.Component<IGraph> {
   public shouldComponentUpdate(nextProps: IGraph) {
     const nodesChange = !isEqual(this.props.graph.nodes, nextProps.graph.nodes);
     const edgesChange = !isEqual(this.props.graph.edges, nextProps.graph.edges);
-    const eventsChange = !isEqual(this.props.events, nextProps.events);
 
-    if (nodesChange) {
-      const idIsEqual = (n1: Node, n2: Node) => n1.id === n2.id;
-      const nodesRemoved = differenceWith(this.props.graph.nodes, nextProps.graph.nodes, idIsEqual);
-      const nodesAdded = differenceWith(nextProps.graph.nodes, this.props.graph.nodes, idIsEqual);
-      const nodesChanged = differenceWith(
-        differenceWith(nextProps.graph.nodes, this.props.graph.nodes, isEqual),
-        nodesAdded,
-      );
-      this.patchNodes({ nodesRemoved, nodesAdded, nodesChanged });
-    }
-
-    if (edgesChange) {
-      const edgesRemoved = differenceWith(this.props.graph.edges, nextProps.graph.edges, isEqual);
-      const edgesAdded = differenceWith(nextProps.graph.edges, this.props.graph.edges, isEqual);
-      const edgesChanged = differenceWith(
-        differenceWith(nextProps.graph.edges, this.props.graph.edges, isEqual),
-        edgesAdded,
-      );
-      this.patchEdges({ edgesRemoved, edgesAdded, edgesChanged });
-    }
-
-    if (eventsChange && this.Network) {
-      let events = this.props.events || {};
-      const eventKeys = Object.keys(events) as NetworkEvents[];
-
-      for (const eventName of eventKeys) {
-        const cb = events[eventName];
-        this.Network.off(eventName, cb);
-      }
-
-      events = nextProps.events || {};
-      for (const eventName of eventKeys) {
-        const cb = events[eventName];
-        if (cb) {
-          this.Network.on(eventName, cb);
-        }
-      }
-    }
-
-    return false;
+    return nodesChange && edgesChange;
   }
 
   public componentDidUpdate() {
     this.updateGraph();
-  }
-
-  public patchEdges({
-    edgesRemoved,
-    edgesAdded,
-    edgesChanged,
-  }: {
-    edgesRemoved: Edge[];
-    edgesAdded: Edge[];
-    edgesChanged: Edge[];
-  }) {
-    this.edges.remove(edgesRemoved);
-    this.edges.add(edgesAdded);
-    this.edges.update(edgesChanged);
-  }
-
-  public patchNodes({
-    nodesRemoved,
-    nodesAdded,
-    nodesChanged,
-  }: {
-    nodesRemoved: Node[];
-    nodesAdded: Node[];
-    nodesChanged: Node[];
-  }) {
-    this.nodes.remove(nodesRemoved);
-    this.nodes.add(nodesAdded);
-    this.nodes.update(nodesChanged);
   }
 
   public updateGraph() {
@@ -178,6 +110,9 @@ export class Graph extends React.Component<IGraph> {
         }),
         visOptions,
       );
+
+      this.Network.selectNodes([this.props.id], true);
+      this.Network.once('afterDrawing', () => this.Network?.setSize('', ''));
     }
 
     if (this.props.getNetwork) {

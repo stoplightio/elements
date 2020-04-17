@@ -65,6 +65,7 @@ export function computeVisGraph(rootNode: IBranchNode, edges: INodeEdge[]): IVis
       from: edge.fromBranchNodeId,
       to: edge.toBranchNodeId,
       title: edge.fromBranchNodePath,
+      color: '#c3cdd4',
     });
   }
 
