@@ -2112,10 +2112,10 @@
     ts-loader "^6.2.1"
     webpack "^4.41.5"
 
-"@stoplight/tree-list@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.0.tgz#49eb010ff2a5b53fa09c4d1e22a46b3a42befcbb"
-  integrity sha512-CDfqYrzgxmaJ0RIkU76Kk1xbHGMw5knw7Gu44IbqusnkyB8kugczd/xv6EWasBGEYZChGGCsZZGCRJkFhnTtlw==
+"@stoplight/tree-list@^5.0.0", "@stoplight/tree-list@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.1.tgz#95b7bd1cde70c0b16d7f2dd2f451ca80d3b35209"
+  integrity sha512-qGFHem+Ae8W3nxKCI8HgxRsHyNDXQAnAhD5kmL1H/T65IEAgDhAuMFgDaOf0rqw4X9YTRedSHLcFQZ3Wcg/HjQ==
   dependencies:
     "@stoplight/lifecycle" "^2.2.1"
     "@stoplight/react-error-boundary" "^1.0.0"
