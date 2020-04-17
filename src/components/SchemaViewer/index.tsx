@@ -60,7 +60,7 @@ export const SchemaViewer = ({
   };
 
   if (isEmpty(examples) && !forceShowTabs) {
-    return <JSV jsvClassName={cn(className, 'dark:border-white', CLASSNAMES.bordered, CLASSNAMES.block)} />;
+    return <JSV jsvClassName={cn(className, 'dark:border-gray-9', CLASSNAMES.bordered, CLASSNAMES.block)} />;
   }
 
   return (
