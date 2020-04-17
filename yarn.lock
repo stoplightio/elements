@@ -1948,11 +1948,12 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.1.2", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.6.0.tgz#51ab4c677ec5aadcffd5c6ed67b6dbf51a5f93ba"
-  integrity sha512-6hJN735r+aPzHP28HnBj30uC+RGyf/ZWEtAMlrXI4DntzocWvhgDqxLuLgOlmXkMd/4OAlD7fJQ/cI2RXNuWvQ==
+"@stoplight/json@^3.1.2", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.7.0.tgz#fe9b4c9024170bdd127e0c8f1dcda699ec33355b"
+  integrity sha512-qiEe/kDi1N7Gq2CJ8g7RdKs+h5NY3z2k5LVK5G+NijXKez0m+W89/N4z45aDwl7RmihGxCOv0OuFye8Fa2AGLA==
   dependencies:
+    "@stoplight/ordered-object-literal" "^1.0.0"
     "@stoplight/types" "^11.4.0"
     jsonc-parser "~2.2.0"
     lodash "^4.17.15"
