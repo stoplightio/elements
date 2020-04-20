@@ -44,6 +44,7 @@ describe('HttpOperation', () => {
               },
               allowEmptyValue: true,
               allowReserved: true,
+              deprecated: true,
               explode: true,
               required: true,
               style: HttpParamStyles.Form as const,
@@ -63,7 +64,7 @@ describe('HttpOperation', () => {
         (w) => w.type() === Parameters && w.props().title === 'Query Parameters',
       );
       expect(queryParameterElement.props().parameters).toEqual(operationData.request.query);
-      expect(queryParameterElement.find(Tag).length).toEqual(4);
+      expect(queryParameterElement.find(Tag).length).toEqual(6);
     });
   });
 
