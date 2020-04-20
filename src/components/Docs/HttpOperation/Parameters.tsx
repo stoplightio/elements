@@ -52,7 +52,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   const validations = omitBy(
     {
-      ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style']),
+      ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema']),
       ...omit(get(parameter, 'schema'), ['description', 'type']),
     },
     // Remove empty arrays and objects
@@ -78,7 +78,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
       <MarkdownViewer className="text-gray-7 dark:text-gray-4 mt-1" markdown={description || '*No description.*'} />
 
-      {parameter.deprecated || validations.length ? (
+      {parameter.deprecated || keys(validations).length ? (
         <div className="flex flex-wrap">
           {parameter.deprecated && (
             <Tag className="mt-2 mr-2" intent="warning" minimal>
