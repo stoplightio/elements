@@ -7,7 +7,7 @@ import { findKey, groupBy, sortBy, toUpper } from 'lodash';
 import * as React from 'react';
 
 import { IGraphNode, INodeGraph, INodeInfo } from '../../types';
-import { NodeTypeIcons } from '../../utils/node';
+import { NodeTypeIcons, NodeTypePrettyName } from '../../utils/node';
 import { GoToRef } from './GoToRef';
 
 export interface IOutboundDependencies {
@@ -18,7 +18,7 @@ export interface IOutboundDependencies {
   padding?: string;
 }
 
-export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, className }) => {
+export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, className, node }) => {
   const nodesByType = groupBy(graph.nodes, 'type');
   const firstTab = findKey(nodesByType, nodes => nodes?.length);
   const [selectedTabId, setSelectedTabId] = React.useState();
@@ -47,14 +47,17 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, cl
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Model]} iconSize={14} />
-              Models {nodesByType[NodeType.Model]?.length ? <>({nodesByType[NodeType.Model].length})</> : null}
+              Models {nodesByType[NodeType.Model]?.length ? <>({nodesByType[NodeType.Model].length})</> : <>(0)</>}
             </div>
           }
           panel={
-            <DependencyTable className={`InboundDependencies__DependencyTable`} nodes={nodesByType[NodeType.Model]} />
+            nodesByType[NodeType.Model]?.length ? (
+              <DependencyTable className={`InboundDependencies__DependencyTable`} nodes={nodesByType[NodeType.Model]} />
+            ) : (
+              <div>There are no models that depend on this {NodeTypePrettyName[node.type]}</div>
+            )
           }
           panelClassName="w-full overflow-auto"
-          disabled={!nodesByType[NodeType.Model]?.length}
         />
 
         <Tab
@@ -63,17 +66,20 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, cl
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpService]} iconSize={14} />
               APIs{' '}
-              {nodesByType[NodeType.HttpService]?.length ? <>({nodesByType[NodeType.HttpService].length})</> : null}
+              {nodesByType[NodeType.HttpService]?.length ? <>({nodesByType[NodeType.HttpService].length})</> : <>(0)</>}
             </div>
           }
           panel={
-            <DependencyTable
-              className={`InboundDependencies__DependencyTable`}
-              nodes={nodesByType[NodeType.HttpService]}
-            />
+            nodesByType[NodeType.HttpService]?.length ? (
+              <DependencyTable
+                className={`InboundDependencies__DependencyTable`}
+                nodes={nodesByType[NodeType.HttpService]}
+              />
+            ) : (
+              <div>There are no services that depend on this {NodeTypePrettyName[node.type]}</div>
+            )
           }
           panelClassName="w-full overflow-auto"
-          disabled={!nodesByType[NodeType.HttpService]?.length}
         />
 
         <Tab
@@ -81,18 +87,25 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, cl
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpOperation]} iconSize={14} />
-              HTTP Operations{' '}
-              {nodesByType[NodeType.HttpOperation]?.length ? <>({nodesByType[NodeType.HttpOperation].length})</> : null}
+              Endpoints{' '}
+              {nodesByType[NodeType.HttpOperation]?.length ? (
+                <>({nodesByType[NodeType.HttpOperation].length})</>
+              ) : (
+                <>(0)</>
+              )}
             </div>
           }
           panel={
-            <DependencyTable
-              className={`InboundDependencies__DependencyTable`}
-              nodes={nodesByType[NodeType.HttpOperation]}
-            />
+            nodesByType[NodeType.HttpOperation]?.length ? (
+              <DependencyTable
+                className={`InboundDependencies__DependencyTable`}
+                nodes={nodesByType[NodeType.HttpOperation]}
+              />
+            ) : (
+              <div>There are no endpoints that depend on this {NodeTypePrettyName[node.type]}</div>
+            )
           }
           panelClassName="w-full overflow-auto"
-          disabled={!nodesByType[NodeType.HttpOperation]?.length}
         />
 
         <Tab
@@ -100,14 +113,21 @@ export const InboundDependencies: React.FC<IOutboundDependencies> = ({ graph, cl
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Article]} iconSize={14} />
-              Articles {nodesByType[NodeType.Article]?.length ? <>({nodesByType[NodeType.Article].length})</> : null}
+              Articles{' '}
+              {nodesByType[NodeType.Article]?.length ? <>({nodesByType[NodeType.Article].length})</> : <>(0)</>}
             </div>
           }
           panel={
-            <DependencyTable className={`InboundDependencies__DependencyTable`} nodes={nodesByType[NodeType.Article]} />
+            nodesByType[NodeType.Article]?.length ? (
+              <DependencyTable
+                className={`InboundDependencies__DependencyTable`}
+                nodes={nodesByType[NodeType.Article]}
+              />
+            ) : (
+              <div>There are no articles that depend on this {NodeTypePrettyName[node.type]}</div>
+            )
           }
           panelClassName="w-full overflow-auto"
-          disabled={!nodesByType[NodeType.Article]?.length}
         />
       </Tabs>
     </div>
