@@ -3,6 +3,7 @@ import 'jest-enzyme';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
+import { Tag } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
@@ -43,7 +44,6 @@ describe('HttpOperation', () => {
               },
               allowEmptyValue: true,
               allowReserved: true,
-              deprecated: true,
               explode: true,
               required: true,
               style: HttpParamStyles.Form as const,
@@ -63,6 +63,7 @@ describe('HttpOperation', () => {
         (w) => w.type() === Parameters && w.props().title === 'Query Parameters',
       );
       expect(queryParameterElement.props().parameters).toEqual(operationData.request.query);
+      expect(queryParameterElement.find(Tag).length).toEqual(4);
     });
   });
 
