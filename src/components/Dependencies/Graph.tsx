@@ -64,8 +64,9 @@ const visOptions: Options = {
     shape: 'icon',
     labelHighlightBold: true,
     icon: {
-      face: 'FontAwesome',
+      face: '"Font Awesome 5 Pro"',
       color: '#cfd9e0',
+      weight: 900,
     },
   },
 };
