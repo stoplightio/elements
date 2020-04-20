@@ -52,7 +52,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   const validations = omitBy(
     {
-      ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style']),
+      ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema']),
       ...omit(get(parameter, 'schema'), ['description', 'type']),
     },
     // Remove empty arrays and objects
