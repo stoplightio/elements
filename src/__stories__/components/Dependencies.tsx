@@ -34,7 +34,7 @@ storiesOf('components/Dependencies', module)
     return (
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
-          <InboundDependencies edges={object('edges', todoFullInboundEdges)} />
+          <InboundDependencies edges={object('edges', todoFullInboundEdges)} node={branchNode} />
         </Provider>
       </div>
     );

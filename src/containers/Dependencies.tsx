@@ -46,7 +46,7 @@ export const Dependencies = ({ className, direction }: IDependencies) => {
   const edges = nodeEdgesResult.data.sl_node_edges;
 
   if (direction === 'inbound') {
-    return <InboundDependencies className={className} edges={edges} />;
+    return <InboundDependencies className={className} edges={edges} node={branchNode} />;
   }
 
   return <OutboundDependencies className={className} node={branchNode} edges={edges} />;
