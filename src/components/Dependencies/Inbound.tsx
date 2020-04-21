@@ -8,17 +8,17 @@ import * as React from 'react';
 
 import { NodeTypeIcons, NodeTypePrettyName } from '../../constants';
 import { ActiveInfoContext } from '../../containers/Provider';
-import { IBranchNode, INodeEdge } from '../../types';
+import { INodeEdge } from '../../types';
 import { NodeDialog } from './NodeDialog';
 
 export interface IInboundDependencies {
   edges: INodeEdge[];
-  node: IBranchNode;
+  nodeType: NodeType;
 
   className?: string;
 }
 
-export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, node, className }) => {
+export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, nodeType, className }) => {
   const edgesByNodeType = groupBy(uniqBy(edges, 'fromBranchNodeId'), 'fromBranchNodeType');
   const firstTab = edges.length ? findKey(edgesByNodeType, (nodes) => nodes?.length) : undefined;
   const [selectedTabId, setSelectedTabId] = React.useState();
@@ -47,7 +47,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Model]} iconSize={14} />
-              Models{' '}
+              {NodeTypePrettyName[NodeType.Model]}s{' '}
               {edgesByNodeType[NodeType.Model]?.length ? <>({edgesByNodeType[NodeType.Model].length})</> : <>(0)</>}
             </div>
           }
@@ -58,7 +58,9 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
                 edges={edgesByNodeType[NodeType.Model]}
               />
             ) : (
-              <div>There are no models that depend on this {NodeTypePrettyName[node.snapshot.type]}</div>
+              <div>
+                There are no {NodeTypePrettyName[NodeType.Model]}s that depend on this {NodeTypePrettyName[nodeType]}
+              </div>
             )
           }
           panelClassName="w-full"
@@ -69,7 +71,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpService]} iconSize={14} />
-              APIs{' '}
+              {NodeTypePrettyName[NodeType.HttpService]}s{' '}
               {edgesByNodeType[NodeType.HttpService]?.length ? (
                 <>({edgesByNodeType[NodeType.HttpService].length})</>
               ) : (
@@ -84,7 +86,10 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
                 edges={edgesByNodeType[NodeType.HttpService]}
               />
             ) : (
-              <div>There are no services that depend on this {NodeTypePrettyName[node.snapshot.type]}</div>
+              <div>
+                There are no {NodeTypePrettyName[NodeType.HttpService]}s that depend on this{' '}
+                {NodeTypePrettyName[nodeType]}
+              </div>
             )
           }
           panelClassName="w-full"
@@ -95,7 +100,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpOperation]} iconSize={14} />
-              Endpoints{' '}
+              {NodeTypePrettyName[NodeType.HttpOperation]}s{' '}
               {edgesByNodeType[NodeType.HttpOperation]?.length ? (
                 <>({edgesByNodeType[NodeType.HttpOperation].length})</>
               ) : (
@@ -110,7 +115,10 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
                 edges={edgesByNodeType[NodeType.HttpOperation]}
               />
             ) : (
-              <div>There are no endpoints that depend on this {NodeTypePrettyName[node.snapshot.type]}</div>
+              <div>
+                There are no {NodeTypePrettyName[NodeType.HttpOperation]}s that depend on this{' '}
+                {NodeTypePrettyName[nodeType]}
+              </div>
             )
           }
           panelClassName="w-full"
@@ -121,7 +129,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Article]} iconSize={14} />
-              Articles{' '}
+              {NodeTypePrettyName[NodeType.Article]}s{' '}
               {edgesByNodeType[NodeType.Article]?.length ? <>({edgesByNodeType[NodeType.Article].length})</> : <>(0)</>}
             </div>
           }
@@ -132,7 +140,9 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
                 edges={edgesByNodeType[NodeType.Article]}
               />
             ) : (
-              <div>There are no articles that depend on this {NodeTypePrettyName[node.snapshot.type]}</div>
+              <div>
+                There are no {NodeTypePrettyName[NodeType.Article]}s that depend on this {NodeTypePrettyName[nodeType]}
+              </div>
             )
           }
           panelClassName="w-full"
