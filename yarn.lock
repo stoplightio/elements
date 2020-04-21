@@ -1948,12 +1948,12 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.1.2", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.0":
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.7.0.tgz#fe9b4c9024170bdd127e0c8f1dcda699ec33355b"
-  integrity sha512-qiEe/kDi1N7Gq2CJ8g7RdKs+h5NY3z2k5LVK5G+NijXKez0m+W89/N4z45aDwl7RmihGxCOv0OuFye8Fa2AGLA==
+"@stoplight/json@^3.1.2", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.7.1.tgz#3855478ed3e0baaee6a7627948957ce537e481ad"
+  integrity sha512-5VUVZxO7Jg+yoyEPa+ymD+fz5Pij96Nv3ei8FpzkzJwZLqY0ycAe8pBTz1mMf9QDUB+7HZZnCrWGCqGtDLYZZA==
   dependencies:
-    "@stoplight/ordered-object-literal" "^1.0.0"
+    "@stoplight/ordered-object-literal" "^1.0.1"
     "@stoplight/types" "^11.4.0"
     jsonc-parser "~2.2.0"
     lodash "^4.17.15"
@@ -1996,10 +1996,10 @@
     unified "^8.4.2"
     unist-util-select "^3.0.1"
 
-"@stoplight/ordered-object-literal@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/ordered-object-literal/-/ordered-object-literal-1.0.0.tgz#c47523924a5ff573d00a46e231e0060060fdbc6d"
-  integrity sha512-nnyPqCeWUqBY2hmeF9psftty35anYytP5Gz1iI7qL/hiSb+hkFAV6k6FuLYZZShaQdmHAPsanG3f6rvhA8sOzg==
+"@stoplight/ordered-object-literal@^1.0.0", "@stoplight/ordered-object-literal@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/ordered-object-literal/-/ordered-object-literal-1.0.1.tgz#01ece81ba5dda199ca3dc5ec7464691efa5d5b76"
+  integrity sha512-kDcBIKwzAXZTkgzaiPXH2I0JXavBkOb3jFzYNFS5cBuvZS3s/K+knpk2wLVt0n8XrnRQsSffzN6XG9HqUhfq6Q==
 
 "@stoplight/path@^1.3.0", "@stoplight/path@^1.3.1":
   version "1.3.1"
@@ -2156,12 +2156,12 @@
   resolved "https://registry.yarnpkg.com/@stoplight/yaml-ast-parser/-/yaml-ast-parser-0.0.45.tgz#672c0a1511d581843be5a9c55899ca95a30dcadb"
   integrity sha512-0MTEvgp3XMdeMUSTCGiNECuC+YlLbzytDEIOJVDHrrmzVZpIR3gGnHI6mmPI4P7saPxUiHxFF2uuoTuCNlKjrw==
 
-"@stoplight/yaml@^3.0.2", "@stoplight/yaml@^3.8.0":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.8.0.tgz#0b04f71f489f38d9eed4740a58592847a6b214aa"
-  integrity sha512-8aqwCRJd4ZGQM+6veAYU/TcELtqd/wiPjAEIPAfHJLiZr5wZice2fRkefT3/Ntr6zLlLIhQcNfXTUlCrfdQ8xQ==
+"@stoplight/yaml@^3.0.2", "@stoplight/yaml@^3.8.1":
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.8.1.tgz#2a2accdb8b3b6df5c3f1ba93086ca9deb99be0e4"
+  integrity sha512-wbhcgo7dTjwjjwFziC/SAcQlwPucYhYq6vjzyOjj8zeOVnnmoa7hzU1i9Kj31473FG/re7xtt6j3LWu2VnYbxg==
   dependencies:
-    "@stoplight/ordered-object-literal" "^1.0.0"
+    "@stoplight/ordered-object-literal" "^1.0.1"
     "@stoplight/types" "^11.1.1"
     "@stoplight/yaml-ast-parser" "0.0.45"
     lodash "^4.17.15"
