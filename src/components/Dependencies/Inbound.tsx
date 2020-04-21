@@ -57,7 +57,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
                 edges={edgesByNodeType[NodeType.Model]}
               />
             ) : (
-              <div>
+              <div className="flex justify-center items-center h-full">
                 There are no {NodeTypePrettyName[NodeType.Model]}s that depend on this {NodeTypePrettyName[nodeType]}
               </div>
             )
@@ -80,7 +80,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
                 edges={edgesByNodeType[NodeType.HttpService]}
               />
             ) : (
-              <div>
+              <div className="flex justify-center items-center h-full">
                 There are no {NodeTypePrettyName[NodeType.HttpService]}s that depend on this{' '}
                 {NodeTypePrettyName[nodeType]}
               </div>
@@ -104,7 +104,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
                 edges={edgesByNodeType[NodeType.HttpOperation]}
               />
             ) : (
-              <div>
+              <div className="flex justify-center items-center h-full">
                 There are no {NodeTypePrettyName[NodeType.HttpOperation]}s that depend on this{' '}
                 {NodeTypePrettyName[nodeType]}
               </div>
@@ -128,7 +128,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
                 edges={edgesByNodeType[NodeType.Article]}
               />
             ) : (
-              <div>
+              <div className="flex justify-center items-center h-full">
                 There are no {NodeTypePrettyName[NodeType.Article]}s that depend on this {NodeTypePrettyName[nodeType]}
               </div>
             )
