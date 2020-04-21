@@ -47,8 +47,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Model]} iconSize={14} />
-              {NodeTypePrettyName[NodeType.Model]}s{' '}
-              {edgesByNodeType[NodeType.Model]?.length ? <>({edgesByNodeType[NodeType.Model].length})</> : <>(0)</>}
+              {NodeTypePrettyName[NodeType.Model]}s ({edgesByNodeType[NodeType.Model]?.length || 0})
             </div>
           }
           panel={
@@ -71,12 +70,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpService]} iconSize={14} />
-              {NodeTypePrettyName[NodeType.HttpService]}s{' '}
-              {edgesByNodeType[NodeType.HttpService]?.length ? (
-                <>({edgesByNodeType[NodeType.HttpService].length})</>
-              ) : (
-                <>(0)</>
-              )}
+              {NodeTypePrettyName[NodeType.HttpService]}s ({edgesByNodeType[NodeType.HttpService]?.length || 0})
             </div>
           }
           panel={
@@ -100,12 +94,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpOperation]} iconSize={14} />
-              {NodeTypePrettyName[NodeType.HttpOperation]}s{' '}
-              {edgesByNodeType[NodeType.HttpOperation]?.length ? (
-                <>({edgesByNodeType[NodeType.HttpOperation].length})</>
-              ) : (
-                <>(0)</>
-              )}
+              {NodeTypePrettyName[NodeType.HttpOperation]}s ({edgesByNodeType[NodeType.HttpOperation]?.length || 0})
             </div>
           }
           panel={
@@ -129,8 +118,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Article]} iconSize={14} />
-              {NodeTypePrettyName[NodeType.Article]}s{' '}
-              {edgesByNodeType[NodeType.Article]?.length ? <>({edgesByNodeType[NodeType.Article].length})</> : <>(0)</>}
+              {NodeTypePrettyName[NodeType.Article]}s ({edgesByNodeType[NodeType.Article]?.length || 0})
             </div>
           }
           panel={
