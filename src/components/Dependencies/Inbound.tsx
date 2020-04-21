@@ -13,11 +13,12 @@ import { NodeDialog } from './NodeDialog';
 
 export interface IInboundDependencies {
   edges: INodeEdge[];
+  nodeType: NodeType;
 
   className?: string;
 }
 
-export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, className }) => {
+export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, nodeType, className }) => {
   const edgesByNodeType = groupBy(uniqBy(edges, 'fromBranchNodeId'), 'fromBranchNodeType');
   const firstTab = edges.length ? findKey(edgesByNodeType, (nodes) => nodes?.length) : undefined;
   const [selectedTabId, setSelectedTabId] = React.useState();
@@ -46,18 +47,22 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, cl
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Model]} iconSize={14} />
-              {NodeTypePrettyName[NodeType.Model]}s{' '}
-              {edgesByNodeType[NodeType.Model]?.length ? <>({edgesByNodeType[NodeType.Model].length})</> : null}
+              {NodeTypePrettyName[NodeType.Model]}s ({edgesByNodeType[NodeType.Model]?.length || 0})
             </div>
           }
           panel={
-            <DependencyTable
-              className={`InboundDependencies__DependencyTable`}
-              edges={edgesByNodeType[NodeType.Model]}
-            />
+            edgesByNodeType[NodeType.Model]?.length ? (
+              <DependencyTable
+                className={`InboundDependencies__DependencyTable`}
+                edges={edgesByNodeType[NodeType.Model]}
+              />
+            ) : (
+              <div>
+                There are no {NodeTypePrettyName[NodeType.Model]}s that depend on this {NodeTypePrettyName[nodeType]}
+              </div>
+            )
           }
           panelClassName="w-full"
-          disabled={!edgesByNodeType[NodeType.Model]?.length}
         />
 
         <Tab
@@ -65,20 +70,23 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, cl
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpService]} iconSize={14} />
-              {NodeTypePrettyName[NodeType.HttpService]}s{' '}
-              {edgesByNodeType[NodeType.HttpService]?.length ? (
-                <>({edgesByNodeType[NodeType.HttpService].length})</>
-              ) : null}
+              {NodeTypePrettyName[NodeType.HttpService]}s ({edgesByNodeType[NodeType.HttpService]?.length || 0})
             </div>
           }
           panel={
-            <DependencyTable
-              className={`InboundDependencies__DependencyTable`}
-              edges={edgesByNodeType[NodeType.HttpService]}
-            />
+            edgesByNodeType[NodeType.HttpService]?.length ? (
+              <DependencyTable
+                className={`InboundDependencies__DependencyTable`}
+                edges={edgesByNodeType[NodeType.HttpService]}
+              />
+            ) : (
+              <div>
+                There are no {NodeTypePrettyName[NodeType.HttpService]}s that depend on this{' '}
+                {NodeTypePrettyName[nodeType]}
+              </div>
+            )
           }
           panelClassName="w-full"
-          disabled={!edgesByNodeType[NodeType.HttpService]?.length}
         />
 
         <Tab
@@ -86,20 +94,23 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, cl
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.HttpOperation]} iconSize={14} />
-              {NodeTypePrettyName[NodeType.HttpOperation]}s{' '}
-              {edgesByNodeType[NodeType.HttpOperation]?.length ? (
-                <>({edgesByNodeType[NodeType.HttpOperation].length})</>
-              ) : null}
+              {NodeTypePrettyName[NodeType.HttpOperation]}s ({edgesByNodeType[NodeType.HttpOperation]?.length || 0})
             </div>
           }
           panel={
-            <DependencyTable
-              className={`InboundDependencies__DependencyTable`}
-              edges={edgesByNodeType[NodeType.HttpOperation]}
-            />
+            edgesByNodeType[NodeType.HttpOperation]?.length ? (
+              <DependencyTable
+                className={`InboundDependencies__DependencyTable`}
+                edges={edgesByNodeType[NodeType.HttpOperation]}
+              />
+            ) : (
+              <div>
+                There are no {NodeTypePrettyName[NodeType.HttpOperation]}s that depend on this{' '}
+                {NodeTypePrettyName[nodeType]}
+              </div>
+            )
           }
           panelClassName="w-full"
-          disabled={!edgesByNodeType[NodeType.HttpOperation]?.length}
         />
 
         <Tab
@@ -107,18 +118,22 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, cl
           title={
             <div className="flex items-center">
               <Icon className="mr-2" icon={NodeTypeIcons[NodeType.Article]} iconSize={14} />
-              {NodeTypePrettyName[NodeType.Article]}s{' '}
-              {edgesByNodeType[NodeType.Article]?.length ? <>({edgesByNodeType[NodeType.Article].length})</> : null}
+              {NodeTypePrettyName[NodeType.Article]}s ({edgesByNodeType[NodeType.Article]?.length || 0})
             </div>
           }
           panel={
-            <DependencyTable
-              className={`InboundDependencies__DependencyTable`}
-              edges={edgesByNodeType[NodeType.Article]}
-            />
+            edgesByNodeType[NodeType.Article]?.length ? (
+              <DependencyTable
+                className={`InboundDependencies__DependencyTable`}
+                edges={edgesByNodeType[NodeType.Article]}
+              />
+            ) : (
+              <div>
+                There are no {NodeTypePrettyName[NodeType.Article]}s that depend on this {NodeTypePrettyName[nodeType]}
+              </div>
+            )
           }
           panelClassName="w-full"
-          disabled={!edgesByNodeType[NodeType.Article]?.length}
         />
       </Tabs>
     </div>
