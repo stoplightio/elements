@@ -37,7 +37,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
       icon={<Icon icon={NodeTypeIcons[nodeType]} iconSize={20} color={NodeTypeColors[nodeType]} />}
       style={{ width: 800, height: 500 }}
     >
-      <div className="h-96">
+      <div className="h-full mb-10">
         <ScrollContainer>
           <Docs className="p-10" node={nodeUri} />
         </ScrollContainer>
