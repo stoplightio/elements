@@ -67,7 +67,6 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
           color: '#66b1e7',
         },
       });
-      setActiveNodeEdge(undefined);
     }
   }, [activeNodeEdge, rootNodeId, edges, node.snapshot.name]);
 
