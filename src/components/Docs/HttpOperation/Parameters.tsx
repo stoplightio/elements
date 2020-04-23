@@ -78,10 +78,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
     pickBy(validations, (v) => ['true', 'false'].includes(String(v))),
     ['exclusiveMinimum', 'exclusiveMaximum'],
   );
-  const keyValueValidations = omit(validations, [
-    ...Object.keys(numberValidations),
-    ...Object.keys(booleanValidations),
-  ]);
+  const keyValueValidations = omit(validations, [...keys(numberValidations), ...keys(booleanValidations)]);
 
   return (
     <div className={cn('HttpOperation__Parameter pl-1', className)}>
@@ -127,7 +124,7 @@ Parameter.displayName = 'HttpOperation.Parameter';
 
 const NumberValidations = ({ validations, className }: { validations: any; className?: string }) => (
   <>
-    {Object.keys(omit(validations, ['exclusiveMinimum', 'exclusiveMaximum'])).map((key) => {
+    {keys(omit(validations, ['exclusiveMinimum', 'exclusiveMaximum'])).map((key) => {
       let suffix;
       if (key.includes('Length')) {
         suffix = ' characters';
@@ -154,7 +151,7 @@ const NumberValidations = ({ validations, className }: { validations: any; class
 
 const KeyValueValidations = ({ validations, className }: { validations: any; className?: string }) => (
   <>
-    {Object.keys(validations).map((key) => {
+    {keys(validations).map((key) => {
       return <KeyValueValidation key={key} name={key} value={validations[key]} className={className} />;
     })}
   </>
@@ -170,22 +167,30 @@ const KeyValueValidation = ({ className, name, value }: { className?: string; na
       </>
     );
   }
-  let validation: string[] = Array.isArray(value) ? value : [value];
+  let validation: any[] = Array.isArray(value) ? value : [value];
   return (
     <div className={cn('text-sm mt-2 bp3-running-text', className)}>
       {capitalize(name)}:
-      {validation.map((v, i) => (
-        <code className="ml-1" key={i}>
-          {v}
-        </code>
-      ))}
+      {validation
+        .filter((v) => typeof v !== 'object' || 'value' in v) // prints only objects with `value` property
+        .map((v, i) => {
+          let value = v;
+          if (typeof v === 'object' && 'value' in v) {
+            value = v.value;
+          }
+          return (
+            <code className="ml-1" key={i}>
+              {value}
+            </code>
+          );
+        })}
     </div>
   );
 };
 
 const NameValidations = ({ validations, className }: { validations: any; className?: string }) => (
   <>
-    {Object.keys(validations)
+    {keys(validations)
       .filter((key) => validations[key])
       .map((key) => {
         return (
