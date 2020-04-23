@@ -323,6 +323,20 @@ export const httpOperation: IHttpOperation = {
         description: 'How many string todos to limit?',
         name: 'value',
         style: HttpParamStyles.Form,
+        examples: [
+          {
+            value: 'example value',
+            key: 'example',
+          },
+          {
+            value: 'another example',
+            key: 'example',
+          },
+          {
+            value: 'something else',
+            key: 'example',
+          },
+        ],
       },
       {
         schema: {
