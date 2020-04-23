@@ -1,4 +1,4 @@
-import { INodeExample, INodeExternalExample } from '@stoplight/types';
+import { HttpParamStyles, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { isObject } from 'lodash';
 
 export function getExamplesObject(examples: Array<INodeExample | INodeExternalExample>) {
@@ -24,4 +24,24 @@ export function getExamplesFromSchema(data: unknown) {
   }
 
   return examples;
+}
+
+export function getReadableStyleValue(style: any) {
+  switch (style) {
+    case HttpParamStyles.PipeDelimited:
+      return 'Pipe separated values';
+    case HttpParamStyles.SpaceDelimited:
+      return 'Space separated values';
+    case HttpParamStyles.CommaDelimited:
+    case HttpParamStyles.Simple:
+      return 'Comma separated values';
+    case HttpParamStyles.Matrix:
+      return 'Path style values';
+    case HttpParamStyles.Label:
+      return 'Label style values';
+    case HttpParamStyles.Form:
+      return 'Form style values';
+    default:
+      return style;
+  }
 }
