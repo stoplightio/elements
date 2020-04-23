@@ -49,7 +49,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   );
 
   React.useEffect(() => {
-    if (prevActiveNodeId.current) {
+    if (prevActiveNodeId.current && visNetwork.current?.findNode(prevActiveNodeId.current)) {
       visNodes.current?.updateOnly({
         id: prevActiveNodeId.current,
         icon: {
@@ -60,15 +60,8 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
 
     if (activeNodeEdge) {
       prevActiveNodeId.current = activeNodeEdge.toBranchNodeId;
-    } else {
-      visNodes.current?.updateOnly({
-        id: rootNodeId,
-        icon: {
-          color: '#66b1e7',
-        },
-      });
     }
-  }, [activeNodeEdge, rootNodeId, edges, node.snapshot.name]);
+  }, [activeNodeEdge, rootNodeId, prevActiveNodeId]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
