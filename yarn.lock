@@ -1925,22 +1925,22 @@
     tslib "^1.10.0"
     urijs "~1.19.1"
 
-"@stoplight/json-schema-merge-allof@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.6.0.tgz#c4556c925796df45f8b3a83ed94cf9f99e4bc414"
-  integrity sha512-xQnQZa37Z6bHlf6xv1mcPxg73tHUBPORlSIgs1znYLg6VD7tSAnWAyskvi+tBUXi/zsZYsU1gwPQkmFBORldNA==
+"@stoplight/json-schema-merge-allof@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.0.tgz#c3bad916c813d41a1ad385182a465cce2a14abbd"
+  integrity sha512-tMeLC52x+46t5NJ8nrNiZcFVK/V9XKRM/89WG7VT6zmKP+QS/Q6iORUTja6Am6YeBUT9rjP/W9gC4FBiiutUXA==
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
     lodash "^4.17.4"
 
-"@stoplight/json-schema-viewer@^3.0.0-beta.16":
-  version "3.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.16.tgz#46883c9de10aa1f380b495229dabbfd3ff908bce"
-  integrity sha512-GOiVftb7Kbnj846tvIlB8Vzj5w7u00JAuq0as7ayLK+SamkYOywu5jNrtLj4KvHlQ8Wukp2yQxow5fMxwMHtfw==
+"@stoplight/json-schema-viewer@^3.0.0-beta.18":
+  version "3.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.18.tgz#6105bd0c8b8a1b52949d89386b5051558d3494e6"
+  integrity sha512-oG3Gyq/6ZTtbtKPvGsGyITM8apzmM/M4Drt2XeNVOBBRFIeXex9aNVz4URVnE+2gEW0RYBVe1qFmyKVOxk7Kew==
   dependencies:
     "@stoplight/json" "^3.5.1"
-    "@stoplight/json-schema-merge-allof" "^0.6.0"
+    "@stoplight/json-schema-merge-allof" "^0.7.0"
     "@stoplight/react-error-boundary" "^1.0.0"
     "@stoplight/tree-list" "^5.0.0"
     classnames "^2.2.6"
@@ -1996,7 +1996,7 @@
     unified "^8.4.2"
     unist-util-select "^3.0.1"
 
-"@stoplight/ordered-object-literal@^1.0.0", "@stoplight/ordered-object-literal@^1.0.1":
+"@stoplight/ordered-object-literal@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@stoplight/ordered-object-literal/-/ordered-object-literal-1.0.1.tgz#01ece81ba5dda199ca3dc5ec7464691efa5d5b76"
   integrity sha512-kDcBIKwzAXZTkgzaiPXH2I0JXavBkOb3jFzYNFS5cBuvZS3s/K+knpk2wLVt0n8XrnRQsSffzN6XG9HqUhfq6Q==
