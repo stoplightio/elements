@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import * as React from 'react';
-import { DataSetNodes, Network } from 'vis-network/standalone';
+import { Network } from 'vis-network/standalone';
 
 import { NodeTypePrettyName } from '../../constants';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
@@ -19,9 +19,9 @@ export interface IOutboundDependencies {
 export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOutboundDependencies) => {
   const rootNodeId = node.id;
   const visGraph = useComputeVisGraph(node, edges);
-  const visNodes = React.useRef<DataSetNodes>();
   const visNetwork = React.useRef<Network>();
 
+  const [activeNodeEdgeId, setActiveNodeEdgeId] = React.useState<INodeEdge | undefined>();
   const [activeNodeEdge, setActiveNodeEdge] = React.useState<INodeEdge | undefined>();
 
   const onClickNode = React.useCallback(
@@ -29,7 +29,11 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
       const nodeId = e.nodes[0];
       if (!nodeId) return;
 
-      setActiveNodeEdge(edges.find((edge) => edge.toBranchNodeId === nodeId));
+      const foundEdge = edges.find((edge) => edge.toBranchNodeId === nodeId || edge.fromBranchNodeId === nodeId);
+      if (foundEdge) {
+        setActiveNodeEdgeId(nodeId);
+        setActiveNodeEdge(foundEdge);
+      }
     },
     [edges],
   );
@@ -58,12 +62,13 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
             getNetwork(network);
           }
         }}
-        getNodes={(n) => {
-          visNodes.current = n;
-        }}
       />
 
-      <NodeDialog direction="to" edge={activeNodeEdge} onClose={() => setActiveNodeEdge(undefined)} />
+      <NodeDialog
+        direction={activeNodeEdgeId === activeNodeEdge?.toBranchNodeId ? 'to' : 'from'}
+        edge={activeNodeEdge}
+        onClose={() => setActiveNodeEdge(undefined)}
+      />
     </div>
   );
 };
