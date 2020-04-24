@@ -70,7 +70,6 @@ export const Graph = React.memo<IGraph>(
     const container = React.useRef<HTMLDivElement | null>(null);
 
     React.useEffect(() => {
-      console.log('Graph useEffect');
       if (!container.current) return;
 
       const visNetwork = new Network(container.current, graph, visOptions);
@@ -90,6 +89,10 @@ export const Graph = React.memo<IGraph>(
           }
         }
       }
+
+      return () => {
+        visNetwork.destroy();
+      };
     });
 
     return <div id={String(id)} ref={container} style={{ width: '100%', height: '100%' }} />;
