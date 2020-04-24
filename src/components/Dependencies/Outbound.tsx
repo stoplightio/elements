@@ -23,45 +23,21 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   const visNetwork = React.useRef<Network>();
 
   const [activeNodeEdge, setActiveNodeEdge] = React.useState<INodeEdge | undefined>();
-  const prevActiveNodeId = React.useRef<number | undefined>();
 
   const onClickNode = React.useCallback(
     (e: any) => {
       const nodeId = e.nodes[0];
       if (!nodeId) return;
 
-      if (activeNodeEdge?.toBranchNodeId === nodeId) {
-        // Unselect nodes and edges
-        visNetwork.current?.unselectAll();
-        setActiveNodeEdge(undefined);
-      } else {
-        // Update the active node's color
-        visNodes.current?.updateOnly({
-          id: nodeId,
-          icon: {
-            color: '#66b1e7',
-          },
-        });
-        setActiveNodeEdge(edges.find((edge) => edge.toBranchNodeId === nodeId));
-      }
+      setActiveNodeEdge(edges.find((edge) => edge.toBranchNodeId === nodeId));
     },
-    [activeNodeEdge, edges],
+    [edges],
   );
 
   React.useEffect(() => {
-    if (prevActiveNodeId.current && visNetwork.current?.findNode(prevActiveNodeId.current)) {
-      visNodes.current?.updateOnly({
-        id: prevActiveNodeId.current,
-        icon: {
-          color: prevActiveNodeId.current === rootNodeId ? '#ef932b' : '#cfd9e0',
-        },
-      });
-    }
-
-    if (activeNodeEdge) {
-      prevActiveNodeId.current = activeNodeEdge.toBranchNodeId;
-    }
-  }, [activeNodeEdge, rootNodeId, prevActiveNodeId]);
+    // Whenever the root node changes, unset the active node edge
+    setActiveNodeEdge(undefined);
+  }, [rootNodeId]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
@@ -70,7 +46,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   return (
     <div className={cn(className, 'w-full h-full')}>
       <Graph
-        id={node.id}
+        id={rootNodeId}
         graph={visGraph}
         events={{
           click: onClickNode,

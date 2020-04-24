@@ -1,7 +1,7 @@
-import { differenceWith, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import * as React from 'react';
 import * as vis from 'vis-network/standalone';
-import { DataSetEdges, DataSetNodes, Edge, Network, NetworkEvents, Node, Options } from 'vis-network/standalone';
+import { DataSetEdges, DataSetNodes, Network, NetworkEvents, Options } from 'vis-network/standalone';
 
 import { IVisGraph } from '../../hooks/useComputeVisGraph';
 
@@ -94,7 +94,8 @@ export class Graph extends React.Component<IGraph> {
     const nodesChange = !isEqual(this.props.graph.nodes, nextProps.graph.nodes);
     const edgesChange = !isEqual(this.props.graph.edges, nextProps.graph.edges);
 
-    return nodesChange && edgesChange;
+    // Should update if nodes, edges, or the ID changes
+    return nodesChange || edgesChange || this.props.id !== nextProps.id;
   }
 
   public componentDidUpdate() {
@@ -112,7 +113,6 @@ export class Graph extends React.Component<IGraph> {
         visOptions,
       );
 
-      this.Network.selectNodes([this.props.id], true);
       this.Network.once('afterDrawing', () => this.Network?.setSize('', ''));
     }
 
