@@ -2131,10 +2131,10 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/ui-kit@^3.0.0-beta.9":
-  version "3.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.9.tgz#fdb32893ad17fc476bdb150f7c05e55d91c32a4c"
-  integrity sha512-UvkSqW/JvvRQZ/mMG+SGA80zCx0fXeJwUtpdlEStsd8KX4q6rH/S7wnZW2O7aMbJRy7b+Hx2pCJrxf8JSSc/7w==
+"@stoplight/ui-kit@^3.0.0-beta.10":
+  version "3.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.10.tgz#b7d9b05970495cbe3c798fa5d9713a904afc0626"
+  integrity sha512-sJRVaOpp2KttPMNMp2v5iGt4Uifk5oyf+d1MWZB2GND9b62ygytDvWM0fPngajNl7Ad6ZR5JAVeYHE3kESGV4Q==
   dependencies:
     "@blueprintjs/core" "^3.25.0"
     "@blueprintjs/icons" "^3.15.0"
