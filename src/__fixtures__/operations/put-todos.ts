@@ -295,18 +295,56 @@ export const httpOperation: IHttpOperation = {
     query: [
       {
         schema: {
-          type: 'string',
-          default: '300',
+          type: 'number',
+          default: 300,
           enum: [0, 1, 3],
           exclusiveMinimum: 0,
           exclusiveMaximum: 10,
           minimum: 5,
           maximum: 10,
-          maxItems: 10,
         },
         deprecated: true,
         description: 'How many todos to limit?',
         name: 'limit',
+        style: HttpParamStyles.Form,
+      },
+      {
+        schema: {
+          type: 'string',
+          default: '300',
+          enum: ['0', '1', '3'],
+          minLength: 0,
+          maxLength: 10,
+          explode: true,
+          allowEmptyValues: true,
+          allowReserved: true,
+        },
+        deprecated: true,
+        description: 'How many string todos to limit?',
+        name: 'value',
+        style: HttpParamStyles.Form,
+        examples: [
+          {
+            value: 'example value',
+            key: 'example',
+          },
+          {
+            value: 'another example',
+            key: 'example',
+          },
+          {
+            value: 'something else',
+            key: 'example',
+          },
+        ],
+      },
+      {
+        schema: {
+          type: 'array',
+          minItems: 5,
+          maxItems: 10,
+        },
+        name: 'items',
         style: HttpParamStyles.Form,
       },
       {
