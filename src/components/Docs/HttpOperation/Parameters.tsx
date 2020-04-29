@@ -71,6 +71,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   const type = get(parameter, 'schema.type', 'unknown');
 
+  // TODO (JJ): schema.deprecated is used in platform - to be removed once it's updated https://github.com/stoplightio/platform-internal/issues/2267
   const deprecated = get(parameter, 'deprecated') || get(parameter, 'schema.deprecated', false);
 
   const validations = omitBy(
@@ -109,7 +110,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
       <MarkdownViewer className="text-gray-7 dark:text-gray-4 mt-1" markdown={description || '*No description.*'} />
 
-      {parameter.deprecated || parameter.style || keys(validations).length ? (
+      {deprecated || parameter.style || keys(validations).length ? (
         <div className="flex flex-wrap">
           {deprecated && (
             <Tag className="mt-2 mr-2" intent="warning" minimal>
