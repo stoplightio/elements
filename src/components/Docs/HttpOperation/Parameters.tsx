@@ -1,13 +1,12 @@
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
-import { IHttpParam } from '@stoplight/types';
+import { Dictionary, HttpParamStyles, IHttpParam, Primitive } from '@stoplight/types';
 import { FAIconProp, Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { capitalize, get, isEmpty, isPlainObject, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
+import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
 import * as React from 'react';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
-import { getReadableStyleValue } from './utils';
 
 export interface IParametersProps {
   title: string;
@@ -25,7 +24,17 @@ const numberValidationNames = [
   'maxItems',
   'exclusiveMinimum',
   'exclusiveMaximum',
-];
+] as const;
+
+const readableStyles = {
+  [HttpParamStyles.PipeDelimited]: 'Pipe separated values',
+  [HttpParamStyles.SpaceDelimited]: 'Space separated values',
+  [HttpParamStyles.CommaDelimited]: 'Comma separated values',
+  [HttpParamStyles.Simple]: 'Comma separated values',
+  [HttpParamStyles.Matrix]: 'Path style values',
+  [HttpParamStyles.Label]: 'Label style values',
+  [HttpParamStyles.Form]: 'Form style values',
+} as const;
 
 export const Parameters: React.FunctionComponent<IParametersProps> = ({ parameters, title, className, icon }) => {
   if (!parameters || !parameters.length) return null;
@@ -112,7 +121,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
           {parameter.style && (
             <Tag className="mt-2 mr-2" minimal>
-              {getReadableStyleValue(parameter.style)}
+              {readableStyles[parameter.style] || parameter.style}
             </Tag>
           )}
         </div>
@@ -122,7 +131,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 };
 Parameter.displayName = 'HttpOperation.Parameter';
 
-const NumberValidations = ({ validations, className }: { validations: any; className?: string }) => (
+const NumberValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
     {keys(omit(validations, ['exclusiveMinimum', 'exclusiveMaximum'])).map((key) => {
       let suffix;
@@ -149,7 +158,7 @@ const NumberValidations = ({ validations, className }: { validations: any; class
   </>
 );
 
-const KeyValueValidations = ({ validations, className }: { validations: any; className?: string }) => (
+const KeyValueValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
     {keys(validations).map((key) => {
       return <KeyValueValidation key={key} name={key} value={validations[key]} className={className} />;
@@ -157,8 +166,16 @@ const KeyValueValidations = ({ validations, className }: { validations: any; cla
   </>
 );
 
-const KeyValueValidation = ({ className, name, value }: { className?: string; name: string; value: any }) => {
-  if (isPlainObject(value)) {
+const KeyValueValidation = ({
+  className,
+  name,
+  value,
+}: {
+  className?: string;
+  name: string;
+  value: Dictionary<unknown> | unknown[] | unknown;
+}) => {
+  if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
     return (
       <>
         {keys(value).map((key) => (
@@ -167,19 +184,19 @@ const KeyValueValidation = ({ className, name, value }: { className?: string; na
       </>
     );
   }
-  let validation: any[] = Array.isArray(value) ? value : [value];
+  const validation = Array.isArray(value) ? value : [value];
   return (
     <div className={cn('text-sm mt-2 bp3-running-text', className)}>
       {capitalize(name)}:
       {validation
-        .filter((v) => typeof v !== 'object' || 'value' in v) // prints only objects with `value` property
-        .map((v, i) => {
-          let value = v;
-          if (typeof v === 'object' && 'value' in v) {
-            value = v.value;
-          }
+        .filter(
+          (v): v is Exclude<Primitive, null> | { value: string } =>
+            typeof v !== 'object' || (typeof v === 'object' && v !== null && 'value' in v),
+        )
+        .map((v) => {
+          const value = typeof v === 'object' ? v.value : String(v);
           return (
-            <code className="ml-1" key={i}>
+            <code className="ml-1" key={value}>
               {value}
             </code>
           );
@@ -188,7 +205,7 @@ const KeyValueValidation = ({ className, name, value }: { className?: string; na
   );
 };
 
-const NameValidations = ({ validations, className }: { validations: any; className?: string }) => (
+const NameValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
     {keys(validations)
       .filter((key) => validations[key])
