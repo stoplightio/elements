@@ -1,19 +1,19 @@
 import * as React from 'react';
 
-import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
+import {
+  ITableOfContents as IITableOfContentsComponent,
+  TableOfContents as TableOfContentsComponent,
+} from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
 import { useProjectNodes } from '../hooks/useProjectNodes';
 
-export interface ITableOfContents {
+export interface ITableOfContents extends Omit<IITableOfContentsComponent, 'items' | 'contents'> {
   srn: string;
 
   group?: string;
   activeNodeSrn?: string;
   className?: string;
   padding?: string;
-  isOpen?: boolean;
-  onClose?: () => void;
-  enableDrawer?: boolean | number;
 }
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
@@ -22,9 +22,8 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   group,
   className,
   padding = '12',
-  isOpen,
-  onClose,
-  enableDrawer,
+
+  ...tocProps
 }) => {
   const { isLoading, error, data } = useProjectNodes(srn, { group });
 
@@ -42,14 +41,6 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({
   }
 
   return (
-    <TableOfContentsComponent
-      className={className}
-      items={data.items}
-      padding={padding}
-      srn={srn}
-      isOpen={isOpen}
-      onClose={onClose}
-      enableDrawer={enableDrawer}
-    />
+    <TableOfContentsComponent className={className} items={data.items} padding={padding} srn={srn} {...tocProps} />
   );
 };
