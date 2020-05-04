@@ -20,6 +20,7 @@ export interface IHub {
   padding?: string;
   NotFoundComponent?: React.FC<{ srn: string; error?: { message: string }; items: IProjectNode[] }>;
 
+  pageProps?: Partial<IPageContainer>;
   tableOfContentsProps?: Omit<ITableOfContents, 'items' | 'contents'>;
 }
 
@@ -30,7 +31,9 @@ export const Hub: React.FC<IHub> = ({
   padding = '12',
   NotFoundComponent,
   group,
+
   tableOfContentsProps,
+  pageProps,
 }) => {
   const { isLoading, data, error } = useProjectNodes(srn, { group });
   const contents = useComputeToc(data ? data.items : []);
@@ -70,6 +73,7 @@ export const Hub: React.FC<IHub> = ({
           tabs={tabs}
           padding={padding}
           scrollInnerContainer
+          {...pageProps}
         />
       ) : (
         <PageSkeleton className="flex-1 border-l dark:border-darken-4" padding={padding} />
