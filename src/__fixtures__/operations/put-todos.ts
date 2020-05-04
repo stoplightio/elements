@@ -361,7 +361,7 @@ export const httpOperation: IHttpOperation = {
           enum: ['something', 'another'],
         },
         name: 'type',
-        style: HttpParamStyles.Form,
+        style: HttpParamStyles.SpaceDelimited,
       },
     ],
     headers: [
