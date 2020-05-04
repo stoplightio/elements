@@ -103,6 +103,7 @@ export const RequestEndpoint = observer<{
           resetOnSelect={false}
           popoverProps={{
             minimal: true,
+            usePortal: false,
           }}
           inputProps={{
             placeholder: 'Enter request URL',

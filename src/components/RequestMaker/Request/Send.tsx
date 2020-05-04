@@ -26,7 +26,7 @@ export const RequestSend = observer<ISendButton>(({ className }) => {
       <Button intent="primary" loading={store.isSending} onClick={handleClick}>
         Send
       </Button>
-      <Popover minimal position={Position.BOTTOM_RIGHT}>
+      <Popover minimal position={Position.BOTTOM_RIGHT} usePortal={false}>
         <Button small intent="primary" icon="caret-down" />
 
         <Menu>

@@ -76,6 +76,7 @@ export const Mocking = observer(() => {
           position={'bottom-right'}
           boundary={'window'}
           disabled={store.isMatchingOperation}
+          usePortal={false}
           content={
             <div className="p-3 w-80 text-center">
               <div className="text-red uppercase text-sm">Unable to mock this request</div>
@@ -176,6 +177,7 @@ export const Mocking = observer(() => {
             }
             position={Position.BOTTOM}
             boundary="window"
+            usePortal={false}
             minimal
           >
             <Button rightIcon="double-caret-vertical" disabled={!store.isMockEnabled} text={responseText} />

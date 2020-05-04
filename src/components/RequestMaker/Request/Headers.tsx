@@ -43,6 +43,7 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
             minimal: true,
             position: 'top-left',
             boundary: 'window',
+            usePortal: false,
           }}
           selectedItem={allHeaderFields.find(headerField => headerField.name === name)}
           itemDisabled={headerField => !!params.find(h => h.name === headerField.name)}

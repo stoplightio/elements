@@ -60,6 +60,7 @@ export const PageHeadings: React.FC<IPageHeadings> = ({
           content={<div className={cn('p-2', className)}>{component}</div>}
           position="bottom-right"
           boundary="scrollParent"
+          usePortal={false}
         />
       </div>
     );
