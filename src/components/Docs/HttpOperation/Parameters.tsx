@@ -39,7 +39,7 @@ const readableStyles = {
   [HttpParamStyles.Form]: 'Form style values',
 } as const;
 
-const defaultStyle: Dictionary<HttpParamStyles, ParameterIn> = {
+const defaultStyle = {
   query: HttpParamStyles.Form,
   header: HttpParamStyles.Simple,
   path: HttpParamStyles.Simple,
