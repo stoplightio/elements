@@ -64,7 +64,39 @@ describe('HttpOperation', () => {
         (w) => w.type() === Parameters && w.props().title === 'Query Parameters',
       );
       expect(queryParameterElement.props().parameters).toEqual(operationData.request.query);
-      expect(queryParameterElement.find(Tag).length).toEqual(5);
+      expect(queryParameterElement.find(Tag).length).toEqual(4);
+    });
+
+    it('should not render default styles', () => {
+      const operationData = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {
+          query: [
+            {
+              name: 'default style param',
+              schema: {
+                type: 'string' as const,
+              },
+              style: HttpParamStyles.Form as const,
+            },
+            {
+              name: 'different style param',
+              schema: {
+                type: 'string' as const,
+              },
+              style: HttpParamStyles.SpaceDelimited as const,
+            },
+          ],
+        },
+      };
+      wrapper = mount(<HttpOperation data={operationData} />);
+      const queryParameterElement = wrapper.findWhere(
+        (w) => w.type() === Parameters && w.props().title === 'Query Parameters',
+      );
+      expect(queryParameterElement.find(Tag).length).toEqual(1);
     });
   });
 
