@@ -55,6 +55,7 @@
     "@stoplight/types": "^11.6.0",
     "@stoplight/ui-kit": "^2.15.1",
     "@stoplight/yaml": "^3.7.1",
+    "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.2.1",
     "fast-text-encoding": "^1.0.0",
