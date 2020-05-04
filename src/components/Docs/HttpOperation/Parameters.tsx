@@ -8,11 +8,11 @@ import * as React from 'react';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
 
-type ParameterIn = 'query' | 'header' | 'path' | 'cookie';
+type ParameterType = 'query' | 'header' | 'path' | 'cookie';
 
 export interface IParametersProps {
   title: string;
-  parameterIn: ParameterIn;
+  parameterType: ParameterType;
   parameters?: IHttpParam[];
   className?: string;
   icon?: FAIconProp;
@@ -48,7 +48,7 @@ const defaultStyle = {
 
 export const Parameters: React.FunctionComponent<IParametersProps> = ({
   parameters,
-  parameterIn,
+  parameterType,
   title,
   className,
   icon,
@@ -63,7 +63,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
         <Parameter
           key={parameter.name}
           parameter={parameter}
-          parameterIn={parameterIn}
+          parameterType={parameterType}
           className={cn('pt-4', {
             'pb-4': parameters.length - 1 !== index,
             'border-t border-gray-2 dark:border-gray-6': index > 0,
@@ -77,11 +77,11 @@ Parameters.displayName = 'HttpOperation.Parameters';
 
 export interface IParameterProps {
   parameter: IHttpParam;
-  parameterIn: ParameterIn;
+  parameterType: ParameterType;
   className?: string;
 }
 
-export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterIn, className }) => {
+export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterType, className }) => {
   if (!parameter) return null;
 
   // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
@@ -138,7 +138,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
           <NameValidations validations={booleanValidations} />
 
-          {parameter.style && defaultStyle[parameterIn] !== parameter.style && (
+          {parameter.style && defaultStyle[parameterType] !== parameter.style && (
             <Tag className="mt-2 mr-2" minimal>
               {readableStyles[parameter.style] || parameter.style}
             </Tag>

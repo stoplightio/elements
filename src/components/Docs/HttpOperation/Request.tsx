@@ -22,10 +22,10 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, secur
     <div className={cn('HttpOperation__Request', className)}>
       <HttpSecuritySchemes className="mb-10" title="Authorization" securities={flatten(security)} />
 
-      <Parameters className="mb-10" title="Path Parameters" parameterIn="path" parameters={path} />
-      <Parameters className="mb-10" title="Query Parameters" parameterIn="query" parameters={query} />
-      <Parameters className="mb-10" title="Cookie Parameters" parameterIn="cookie" parameters={cookie} />
-      <Parameters className="mb-10" title="Header Parameters" parameterIn="header" parameters={headers} />
+      <Parameters className="mb-10" title="Path Parameters" parameterType="path" parameters={path} />
+      <Parameters className="mb-10" title="Query Parameters" parameterType="query" parameters={query} />
+      <Parameters className="mb-10" title="Cookie Parameters" parameterType="cookie" parameters={cookie} />
+      <Parameters className="mb-10" title="Header Parameters" parameterType="header" parameters={headers} />
 
       {body && <Body className="mb-10" body={body} />}
     </div>
