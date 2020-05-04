@@ -86,7 +86,7 @@ export const Response = ({ className, response }: IResponseProps) => {
     <div className={cn('HttpOperation__Response pt-6 pl-8', className)}>
       <MarkdownViewer className="ml-1 mb-6" markdown={response.description || '*No description.*'} />
 
-      <Parameters className="mb-6" title="Headers" type="header" parameters={response.headers} />
+      <Parameters className="mb-6" title="Headers" parameterIn="header" parameters={response.headers} />
 
       {content?.schema && <SchemaViewer schema={content.schema} examples={examples} forceShowTabs />}
     </div>

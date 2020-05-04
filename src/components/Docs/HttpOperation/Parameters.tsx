@@ -8,11 +8,11 @@ import * as React from 'react';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
 
-type ParameterType = 'query' | 'header' | 'path' | 'cookie';
+type ParameterIn = 'query' | 'header' | 'path' | 'cookie';
 
 export interface IParametersProps {
   title: string;
-  type: ParameterType;
+  parameterIn: ParameterIn;
   parameters?: IHttpParam[];
   className?: string;
   icon?: FAIconProp;
@@ -39,14 +39,20 @@ const readableStyles = {
   [HttpParamStyles.Form]: 'Form style values',
 } as const;
 
-const defaultStyle: Dictionary<HttpParamStyles, ParameterType> = {
+const defaultStyle: Dictionary<HttpParamStyles, ParameterIn> = {
   query: HttpParamStyles.Form,
   header: HttpParamStyles.Simple,
   path: HttpParamStyles.Simple,
   cookie: HttpParamStyles.Form,
 } as const;
 
-export const Parameters: React.FunctionComponent<IParametersProps> = ({ parameters, type, title, className, icon }) => {
+export const Parameters: React.FunctionComponent<IParametersProps> = ({
+  parameters,
+  parameterIn,
+  title,
+  className,
+  icon,
+}) => {
   if (!parameters || !parameters.length) return null;
 
   return (
@@ -57,7 +63,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ paramete
         <Parameter
           key={parameter.name}
           parameter={parameter}
-          paramType={type}
+          parameterIn={parameterIn}
           className={cn('pt-4', {
             'pb-4': parameters.length - 1 !== index,
             'border-t border-gray-2 dark:border-gray-6': index > 0,
@@ -71,11 +77,11 @@ Parameters.displayName = 'HttpOperation.Parameters';
 
 export interface IParameterProps {
   parameter: IHttpParam;
-  paramType: ParameterType;
+  parameterIn: ParameterIn;
   className?: string;
 }
 
-export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, paramType, className }) => {
+export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterIn, className }) => {
   if (!parameter) return null;
 
   // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
@@ -132,7 +138,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
           <NameValidations validations={booleanValidations} />
 
-          {parameter.style && defaultStyle[paramType] !== parameter.style && (
+          {parameter.style && defaultStyle[parameterIn] !== parameter.style && (
             <Tag className="mt-2 mr-2" minimal>
               {readableStyles[parameter.style] || parameter.style}
             </Tag>
