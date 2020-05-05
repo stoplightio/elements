@@ -34,7 +34,7 @@ describe('getOperationData()', () => {
           value: '',
           isEnabled: true,
           schema: {
-            type: 'apiKey',
+            type: 'string',
             description: "Use `?apikey=123` to authenticate requests. It's super secure.",
           },
           required: true,
