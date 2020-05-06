@@ -63,9 +63,9 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
         }}
         getNetwork={(network) => {
           visNetwork.current = network;
-
-          if (getNetwork) {
-            getNetwork(network);
+          if (network) {
+            network.setSelection({ edges: [], nodes: [activeNodeId || node.id] });
+            getNetwork?.(network);
           }
         }}
       />
