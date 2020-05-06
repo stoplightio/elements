@@ -21,6 +21,9 @@ const visOptions: Options = {
       levelSeparation: 300,
       direction: 'LR',
       sortMethod: 'directed',
+      shakeTowards: 'leaves',
+      edgeMinimization: false,
+      blockShifting: false,
     },
   },
   physics: {
