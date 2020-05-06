@@ -34,6 +34,30 @@ describe('getOperationData()', () => {
     });
   });
 
+  it('should generate sample from schema', () => {
+    expect(
+      typeof getOperationData({
+        request: {
+          body: {
+            contents: [
+              {
+                mediaType: 'application/json',
+                schema: {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'integer',
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      }).body.id,
+    ).toBe('number');
+  });
+
   it('should handle invalid ref', () => {
     expect(
       getOperationData({
