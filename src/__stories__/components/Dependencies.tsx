@@ -6,6 +6,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { edges as todoFullInboundEdges } from '../../__fixtures__/dependencies/inbound/todo-full';
+import { edges as complexEdges, node as complexNode } from '../../__fixtures__/dependencies/outbound/complex';
 import { edges as todoFullOutboundEdges } from '../../__fixtures__/dependencies/outbound/todo-full';
 import { InboundDependencies } from '../../components/Dependencies/Inbound';
 import { OutboundDependencies } from '../../components/Dependencies/Outbound';
@@ -47,6 +48,15 @@ storiesOf('components/Dependencies', module)
       <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <OutboundDependencies node={branchNode} edges={object('edges', todoFullOutboundEdges)} />
+        </Provider>
+      </div>
+    );
+  })
+  .add('Complex graph', () => {
+    return (
+      <div className={cn('absolute top-0 bottom-0 right-0 left-0', { 'bp3-dark bg-gray-8': darkMode() })}>
+        <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
+          <OutboundDependencies edges={object('edges', complexEdges)} node={complexNode} />
         </Provider>
       </div>
     );
