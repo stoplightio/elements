@@ -1,5 +1,7 @@
 import { JSONSchema } from '@stoplight/prism-http';
 import { HttpMethod, IHttpOperation, IHttpParam } from '@stoplight/types';
+import * as E from 'fp-ts/lib/Either';
+import { pipe } from 'fp-ts/lib/pipeable';
 import { filter, flatten, get, has } from 'lodash';
 
 import { RequestStore } from '../stores/request-maker/request';
@@ -44,7 +46,13 @@ export function getOperationData(operation: Partial<IHttpOperation>): Partial<Re
     }
   }
 
-  const body = getBodyFromOperation(operation) || '';
+  const body = pipe(
+    getBodyFromOperation(operation),
+    E.getOrElse((e) => {
+      console.warn('Unable to generate request body', e);
+      return '';
+    }),
+  );
 
   return {
     publicServers: operation.servers || [],
@@ -71,16 +79,16 @@ function getParamsFromOperation(operation: Partial<IHttpOperation>, type: 'query
 }
 
 function getBodyFromOperation(operation: Partial<IHttpOperation>) {
-  try {
-    const schema = get(operation, 'request.body.contents[0].schema');
-
-    if (schema) {
-      return sampler.sample(schema);
-    }
-  } catch (e) {
-    console.warn('Unable to create sample request body from schema', e);
-    return undefined;
+  if (!operation?.request?.body?.contents?.[0]?.schema) {
+    return E.right('');
   }
-
-  return undefined;
+  return pipe(
+    E.right(operation.request.body.contents[0].schema),
+    E.chain((schema) =>
+      E.tryCatch(
+        () => sampler.sample(schema),
+        (e) => (e instanceof Error ? e : new Error('Unknown error while generating sample request body.')),
+      ),
+    ),
+  );
 }
