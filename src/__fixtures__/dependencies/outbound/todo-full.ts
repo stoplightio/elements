@@ -1,4 +1,4 @@
-import { INodeEdge } from '../../../types';
+import type { INodeEdge } from '../../../types';
 
 export const edges: INodeEdge[] = [
   {
