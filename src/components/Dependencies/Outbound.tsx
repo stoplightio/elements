@@ -21,7 +21,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   const visGraph = useComputeVisGraph(node, edges);
   const visNetwork = React.useRef<Network>();
 
-  const [activeNodeEdgeId, setActiveNodeEdgeId] = React.useState<INodeEdge | undefined>();
+  const [activeNodeId, setActiveNodeId] = React.useState<number | undefined>();
   const [activeNodeEdge, setActiveNodeEdge] = React.useState<INodeEdge | undefined>();
 
   const onClickNode = React.useCallback(
@@ -31,7 +31,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
 
       const foundEdge = edges.find((edge) => edge.toBranchNodeId === nodeId || edge.fromBranchNodeId === nodeId);
       if (foundEdge) {
-        setActiveNodeEdgeId(nodeId);
+        setActiveNodeId(nodeId);
         setActiveNodeEdge(foundEdge);
       }
     },
@@ -42,6 +42,12 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
     // Whenever the root node changes, unset the active node edge
     setActiveNodeEdge(undefined);
   }, [rootNodeId]);
+
+  React.useEffect(() => {
+    if (visNetwork.current) {
+      visNetwork.current.setSelection({ edges: [], nodes: [activeNodeId || node.id] });
+    }
+  }, [activeNodeId, node.id]);
 
   if (!visGraph || !visGraph.nodes.length) {
     return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
@@ -65,7 +71,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
       />
 
       <NodeDialog
-        direction={activeNodeEdgeId === activeNodeEdge?.toBranchNodeId ? 'to' : 'from'}
+        direction={activeNodeId === activeNodeEdge?.toBranchNodeId ? 'to' : 'from'}
         edge={activeNodeEdge}
         onClose={() => setActiveNodeEdge(undefined)}
       />

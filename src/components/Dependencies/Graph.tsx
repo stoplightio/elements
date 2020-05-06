@@ -19,6 +19,7 @@ const visOptions: Options = {
     hierarchical: {
       enabled: true,
       levelSeparation: 300,
+      nodeSpacing: 150,
       direction: 'LR',
       sortMethod: 'directed',
       shakeTowards: 'leaves',
@@ -30,20 +31,19 @@ const visOptions: Options = {
     enabled: false,
   },
   edges: {
-    smooth: true,
     arrowStrikethrough: false,
     dashes: true,
     // @ts-ignore
     chosen: {
-      edge: (values: { dashes: boolean; color: string; opacity: number }) => {
+      edge: (values: { dashes: boolean; color: string; width: number }) => {
         values.dashes = false;
-        values.color = 'rgba(216, 225, 230, 1.0)';
-        values.opacity = 1;
+        values.color = 'rgb(166, 175, 180)';
+        values.width = 3;
       },
     },
-    width: 3,
+    width: 2,
     color: {
-      color: 'rgba(216, 225, 230, 0.3)',
+      color: 'rgb(216, 225, 230)',
     },
     font: {
       align: 'top',
