@@ -45,11 +45,10 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
     if (parts.length > 1) {
       // All the path parts not including the file name
       const pathToItem = parts.slice(0, -1);
-      for (const pathIndex in pathToItem) {
-        if (!pathToItem.hasOwnProperty(pathIndex) || !pathToItem[pathIndex]) continue;
+      for (const [pathIndex, folderName] of pathToItem.entries()) {
+        if (!folderName) continue;
 
         // Create a folder if one doesn't already exist
-        const folderName = pathToItem[pathIndex];
         if (!folders.includes(`${folderName}/${pathIndex}`)) {
           folders.push(`${folderName}/${pathIndex}`);
           contents.push({
