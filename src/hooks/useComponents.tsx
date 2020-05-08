@@ -68,4 +68,5 @@ const WrapperComponent = ({ node, parent }: IComponentMappingProps<ICode<ICodeAn
 
 export const defaultComponents: IComponentMapping = {
   code: CodeComponent,
+  link: defaultComponentMapping.link,
 };
