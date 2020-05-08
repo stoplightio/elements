@@ -28,7 +28,7 @@ export const ArticleHeadings = ({
   containerRef: React.MutableRefObject<HTMLDivElement | null>;
 }) => {
   const { width } = useComponentSize(containerRef);
-  const showHeadings = width >= 1000;
+  const showHeadings = width >= 768;
 
   const headings = useComputeMarkdownHeadings(tree);
 

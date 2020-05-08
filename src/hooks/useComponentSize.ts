@@ -6,16 +6,15 @@ function getSize(el: HTMLDivElement | null) {
 }
 
 export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivElement | null>) {
-  const currentComponentNode = componentRef.current;
-  const [componentSize, setComponentSize] = React.useState<DOMRect>(getSize(currentComponentNode));
+  const [componentSize, setComponentSize] = React.useState<DOMRect>(getSize(null));
 
-  React.useLayoutEffect(() => {
-    if (!currentComponentNode) {
+  React.useEffect(() => {
+    if (!componentRef.current) {
       return;
     }
 
     const updateComponentSize = throttle(
-      () => currentComponentNode && setComponentSize(getSize(currentComponentNode)),
+      () => componentRef.current && setComponentSize(getSize(componentRef.current)),
       1000,
       {
         trailing: true,
@@ -29,7 +28,7 @@ export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivEle
       updateComponentSize.cancel();
       window.removeEventListener('resize', updateComponentSize);
     };
-  }, [currentComponentNode]);
+  }, [componentRef]);
 
   return componentSize;
 }
