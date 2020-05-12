@@ -70,6 +70,7 @@
     "openapi-sampler": "^1.0.0-beta.15",
     "parse-prefer-header": "^1.0.0",
     "react-error-boundary": "^1.2.5",
+    "tslib": "^1.12.0",
     "type-is": "^1.6.18",
     "unist-util-select": "^3.0.1",
     "urijs": "^1.19.2",
