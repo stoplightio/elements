@@ -2132,10 +2132,10 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/ui-kit@^3.0.0-beta.11":
-  version "3.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.11.tgz#51710ffc9a442f01cf121f77dbddadc2bd98715b"
-  integrity sha512-UhliRXHTNHytDCWtOiNjNk/gbjKgs3ldUej1MKy51IPaNZdsbCH2u/DMvfcJyC0qjDzswWwuR7P/WJME+YTTIQ==
+"@stoplight/ui-kit@^3.0.0-beta.12":
+  version "3.0.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.12.tgz#828e02392d8353217085f2794b2500208094e157"
+  integrity sha512-OPk41Bg38RIu0laun+njhDQ36/1eb7zpjbpMpL7IbCfQ2tJlxt3GM6/MH44tj3dzs801E2reXurQub720KuhSw==
   dependencies:
     "@blueprintjs/core" "^3.25.0"
     "@blueprintjs/icons" "^3.15.0"
@@ -2149,6 +2149,7 @@
     react-tabs "^3.1.0"
     react-virtualized-auto-sizer "^1.0.2"
     react-window "~1.8.5"
+    tslib "^1.12.0"
     use-debounce "^3.4.1"
     yup "^0.28.3"
 
@@ -16169,6 +16170,11 @@ tslib@^1.10.0, tslib@^1.11.1, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
+
+tslib@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.12.0.tgz#d1fc9cacd06a1456c62f2902b361573e83d66473"
+  integrity sha512-5rxCQkP0kytf4H1T4xz1imjxaUUPMvc5aWp0rJ/VMIN7ClRiH1FwFvBt8wOeMasp/epeUnmSW6CixSIePtiLqA==
 
 tsutils@^3.17.1:
   version "3.17.1"
