@@ -11,16 +11,16 @@ import { ArticleHeadings } from './Headings';
 export type ArticleProps = IDocsComponentProps<string>;
 
 const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
 
   const markdown = new Builder();
   markdown.addMarkdown(data);
   const tree = processMarkdownTree(markdown.root);
 
   return (
-    <div className={cn(className, 'flex w-full relative')} ref={containerRef}>
+    <div className={cn(className, 'flex w-full relative')} ref={setContainer}>
       <MarkdownViewer className="flex-1" markdown={tree} />
-      <ArticleHeadings tree={tree} containerRef={containerRef} />
+      <ArticleHeadings tree={tree} container={container} />
     </div>
   );
 });
