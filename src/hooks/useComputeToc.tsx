@@ -52,23 +52,24 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
         const folderName = pathToItem[pathIndex];
         if (!folders.includes(`${folderName}/${pathIndex}`)) {
           folders.push(`${folderName}/${pathIndex}`);
+
+          const id = `${nodeIndex}-${pathIndex}`;
+          const name = folderName
+            .split('-')
+            .map((item) => upperFirst(item))
+            .join(' ');
+
           if (Number(pathIndex) === 0) {
             contents.push({
-              id: `${nodeIndex}-${pathIndex}`,
-              name: folderName
-                .split('-')
-                .map((item) => upperFirst(item))
-                .join(' '),
+              id,
+              name,
               depth: 0,
               type: 'divider',
             });
           } else {
             contents.push({
-              id: `${nodeIndex}-${pathIndex}`,
-              name: folderName
-                .split('-')
-                .map((item) => upperFirst(item))
-                .join(' '),
+              id,
+              name,
               depth: Number(pathIndex) - 1,
               type: 'group',
               icon: icons.group,
@@ -80,7 +81,7 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
       contents.push({
         id: branchNode.id,
         name: branchNode.snapshot.name,
-        depth: parts.length - 2,
+        depth: Math.max(parts.length - 2, 0),
         type: 'item',
         icon: icons[branchNode.snapshot.type] || icons.item,
         href: branchNode.node.uri,
