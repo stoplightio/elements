@@ -1,7 +1,8 @@
 import { IHttpConfig, IHttpOperationConfig } from '@stoplight/prism-http';
 import * as PrismClient from '@stoplight/prism-http/dist/client';
 import { Dictionary, IHttpOperation, IHttpRequest } from '@stoplight/types';
-import axios, { CancelTokenSource } from 'axios';
+import type { CancelTokenSource } from 'axios';
+import axios from 'axios';
 import { isEqual, kebabCase, mapKeys, mapValues, merge, pickBy, without } from 'lodash';
 import { action, computed, configure, observable, reaction, runInAction } from 'mobx';
 import parsePreferHeader from 'parse-prefer-header';
