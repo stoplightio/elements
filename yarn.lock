@@ -2157,7 +2157,12 @@
   resolved "https://registry.yarnpkg.com/@stoplight/yaml-ast-parser/-/yaml-ast-parser-0.0.45.tgz#672c0a1511d581843be5a9c55899ca95a30dcadb"
   integrity sha512-0MTEvgp3XMdeMUSTCGiNECuC+YlLbzytDEIOJVDHrrmzVZpIR3gGnHI6mmPI4P7saPxUiHxFF2uuoTuCNlKjrw==
 
-"@stoplight/yaml@^3.0.2", "@stoplight/yaml@^3.8.1":
+"@stoplight/yaml-ast-parser@0.0.46":
+  version "0.0.46"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml-ast-parser/-/yaml-ast-parser-0.0.46.tgz#ee9c8da3d8b89ae9007bfe015daf34ee68db9bd5"
+  integrity sha512-eKVeNt6n3U/nA2hjwUsyLOC48DaMiwRx/qrLPzt9Oie+ke4lPA2Jm8ozUMcleVdV5JyZNpG3UhBcSb3PTlt0Kw==
+
+"@stoplight/yaml@^3.0.2":
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-3.8.1.tgz#2a2accdb8b3b6df5c3f1ba93086ca9deb99be0e4"
   integrity sha512-wbhcgo7dTjwjjwFziC/SAcQlwPucYhYq6vjzyOjj8zeOVnnmoa7hzU1i9Kj31473FG/re7xtt6j3LWu2VnYbxg==
@@ -2166,6 +2171,16 @@
     "@stoplight/types" "^11.1.1"
     "@stoplight/yaml-ast-parser" "0.0.45"
     lodash "^4.17.15"
+
+"@stoplight/yaml@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-4.0.0.tgz#c91dffa708b37cdd0f808c3a497a697cff3cdaba"
+  integrity sha512-bSXT0laIgKI0aEMiYkEZ9O9I1Y14+7VzghO9Z4MEFPOqflbp7OG891R8BXq+XPeUWOb4ucozAOoDYr3OOCieWw==
+  dependencies:
+    "@stoplight/ordered-object-literal" "^1.0.1"
+    "@stoplight/types" "^11.6.0"
+    "@stoplight/yaml-ast-parser" "0.0.46"
+    tslib "^1.12.0"
 
 "@storybook/addon-actions@^5.3.8":
   version "5.3.17"
@@ -16165,10 +16180,10 @@ tslib@1.10.0, tslib@~1.10.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
 
-tslib@^1.10.0, tslib@^1.11.1, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
-  integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
+tslib@^1.10.0, tslib@^1.11.1, tslib@^1.12.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.12.0.tgz#d1fc9cacd06a1456c62f2902b361573e83d66473"
+  integrity sha512-5rxCQkP0kytf4H1T4xz1imjxaUUPMvc5aWp0rJ/VMIN7ClRiH1FwFvBt8wOeMasp/epeUnmSW6CixSIePtiLqA==
 
 tsutils@^3.17.1:
   version "3.17.1"
