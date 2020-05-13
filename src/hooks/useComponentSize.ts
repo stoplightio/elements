@@ -5,21 +5,17 @@ function getSize(el: HTMLDivElement | null) {
   return el ? el.getBoundingClientRect() : new DOMRect();
 }
 
-export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivElement | null>) {
+export function useComponentSize(container: HTMLDivElement | null) {
   const [componentSize, setComponentSize] = React.useState<DOMRect>(getSize(null));
 
   React.useEffect(() => {
-    if (!componentRef.current) {
+    if (!container) {
       return;
     }
 
-    const updateComponentSize = throttle(
-      () => componentRef.current && setComponentSize(getSize(componentRef.current)),
-      1000,
-      {
-        trailing: true,
-      },
-    );
+    const updateComponentSize = throttle(() => container && setComponentSize(getSize(container)), 1000, {
+      trailing: true,
+    });
 
     updateComponentSize();
 
@@ -28,7 +24,7 @@ export function useComponentSize(componentRef: React.MutableRefObject<HTMLDivEle
       updateComponentSize.cancel();
       window.removeEventListener('resize', updateComponentSize);
     };
-  }, [componentRef]);
+  }, [container]);
 
   return componentSize;
 }

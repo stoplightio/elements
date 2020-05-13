@@ -20,14 +20,8 @@ export interface IArticleHeading {
   depth: number;
 }
 
-export const ArticleHeadings = ({
-  tree,
-  containerRef,
-}: {
-  tree: IRoot;
-  containerRef: React.MutableRefObject<HTMLDivElement | null>;
-}) => {
-  const { width } = useComponentSize(containerRef);
+export const ArticleHeadings = ({ tree, container }: { tree: IRoot; container: HTMLDivElement | null }) => {
+  const { width } = useComponentSize(container);
   const showHeadings = width >= 768;
 
   const headings = useComputeMarkdownHeadings(tree);
