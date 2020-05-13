@@ -2113,10 +2113,10 @@
     ts-loader "^6.2.1"
     webpack "^4.41.5"
 
-"@stoplight/tree-list@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.0.tgz#49eb010ff2a5b53fa09c4d1e22a46b3a42befcbb"
-  integrity sha512-CDfqYrzgxmaJ0RIkU76Kk1xbHGMw5knw7Gu44IbqusnkyB8kugczd/xv6EWasBGEYZChGGCsZZGCRJkFhnTtlw==
+"@stoplight/tree-list@^5.0.0", "@stoplight/tree-list@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.2.tgz#c12f1df652400e216745901e95cac9f7f1fe1d61"
+  integrity sha512-EvAh0sJFVbH66ab1NEop1nxDHkYoiczaB/PbYQIEuymynflGzOc1gZNSUxwUs4Xv5v6jPOcNWyIJsaIyh1Mslg==
   dependencies:
     "@stoplight/lifecycle" "^2.2.1"
     "@stoplight/react-error-boundary" "^1.0.0"
@@ -2132,10 +2132,10 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/ui-kit@^3.0.0-beta.10":
-  version "3.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.10.tgz#b7d9b05970495cbe3c798fa5d9713a904afc0626"
-  integrity sha512-sJRVaOpp2KttPMNMp2v5iGt4Uifk5oyf+d1MWZB2GND9b62ygytDvWM0fPngajNl7Ad6ZR5JAVeYHE3kESGV4Q==
+"@stoplight/ui-kit@^3.0.0-beta.11":
+  version "3.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.11.tgz#51710ffc9a442f01cf121f77dbddadc2bd98715b"
+  integrity sha512-UhliRXHTNHytDCWtOiNjNk/gbjKgs3ldUej1MKy51IPaNZdsbCH2u/DMvfcJyC0qjDzswWwuR7P/WJME+YTTIQ==
   dependencies:
     "@blueprintjs/core" "^3.25.0"
     "@blueprintjs/icons" "^3.15.0"

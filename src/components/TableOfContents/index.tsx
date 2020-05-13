@@ -17,10 +17,10 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nod
   const info = React.useContext(ActiveInfoContext);
 
   const rowRenderer = React.useCallback(
-    (_item, DefaultRow) => {
+    ({ item: _item, DefaultRow }) => {
       const item = {
         ..._item,
-        isActive: _item.href ? _item.href === info.node : false,
+        isActive: _item.to ? _item.to === info.node : false,
       };
 
       return (

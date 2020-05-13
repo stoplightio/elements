@@ -3,7 +3,7 @@ import { escapeRegExp, sortBy, startCase, toLower, upperFirst } from 'lodash';
 import * as React from 'react';
 
 import { IconsContext } from '../containers/Provider';
-import { IBranchNode, IContentsNodeWithId, NodeIconMapping } from '../types';
+import type { IBranchNode, NodeIconMapping, TableOfContentsLinkWithId } from '../types';
 
 const README_REGEXP = new RegExp(`${escapeRegExp('README.md')}$`, 'i'); // Regex to get the README file
 
@@ -19,13 +19,13 @@ export function useComputeToc(branchNodes: IBranchNode[]) {
  * Sorts project nodes into a flat array
  */
 
-export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): IContentsNodeWithId[] {
+export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): TableOfContentsLinkWithId[] {
   // There is a chance that we pass an empty array
   if (!branchNodes.length) return [];
 
-  let contents: IContentsNodeWithId[] = [];
+  let contents: TableOfContentsLinkWithId[] = [];
   const folders: string[] = [];
-  const rootNodes: IContentsNodeWithId[] = []; // These nodes will appear at the top of the tree
+  const rootNodes: TableOfContentsLinkWithId[] = []; // These nodes will appear at the top of the tree
 
   /** All document nodes */
   const docsNodes = sortBy(
@@ -45,43 +45,55 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
     if (parts.length > 1) {
       // All the path parts not including the file name
       const pathToItem = parts.slice(0, -1);
-      for (const pathIndex in pathToItem) {
-        if (!pathToItem[pathIndex]) continue;
+      for (const [pathIndex, folderName] of pathToItem.entries()) {
+        if (!folderName) continue;
 
         // Create a folder if one doesn't already exist
-        const folderName = pathToItem[pathIndex];
         if (!folders.includes(`${folderName}/${pathIndex}`)) {
           folders.push(`${folderName}/${pathIndex}`);
-          contents.push({
-            id: `${nodeIndex}-${pathIndex}`,
-            name: folderName
-              .split('-')
-              .map((item) => upperFirst(item))
-              .join(' '),
-            depth: Number(pathIndex),
-            type: 'group',
-            icon: icons.group,
-          });
+
+          const id = `${nodeIndex}-${pathIndex}`;
+          const name = folderName
+            .split('-')
+            .map((item) => upperFirst(item))
+            .join(' ');
+
+          if (Number(pathIndex) === 0) {
+            contents.push({
+              id,
+              name,
+              depth: 0,
+              type: 'divider',
+            });
+          } else {
+            contents.push({
+              id,
+              name,
+              depth: Number(pathIndex) - 1,
+              type: 'group',
+              icon: icons.group,
+            });
+          }
         }
       }
 
       contents.push({
         id: branchNode.id,
         name: branchNode.snapshot.name,
-        depth: parts.length - 1,
+        depth: Math.max(parts.length - 2, 0),
         type: 'item',
         icon: icons[branchNode.snapshot.type] || icons.item,
-        href: branchNode.node.uri,
+        to: branchNode.node.uri,
       });
     } else {
       // if our node only has one part, it must not be listed in a folder! Lets add it to a group that we will push onto the front of the stack at the end of this loop
-      const contentNode: IContentsNodeWithId = {
+      const contentNode: TableOfContentsLinkWithId = {
         id: branchNode.id,
         name: branchNode.snapshot.name,
         depth: 0,
         type: 'item',
         icon: icons[branchNode.snapshot.type] || icons.item,
-        href: branchNode.node.uri,
+        to: branchNode.node.uri,
       };
 
       if (README_REGEXP.test(branchNode.node.uri)) {
@@ -108,7 +120,7 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
     );
     if (!childNodes.length) continue;
 
-    const dividerNode: IContentsNodeWithId = {
+    const dividerNode: TableOfContentsLinkWithId = {
       id: httpServiceNode.id,
       name: httpServiceNode.snapshot.name,
       depth: 0,
@@ -127,7 +139,7 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
       depth: 0,
       icon: icons.item,
       type: 'item',
-      href: httpServiceNode.node.uri,
+      to: httpServiceNode.node.uri,
     });
 
     const tags: Dictionary<IBranchNode[], string> = {};
@@ -168,7 +180,7 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
           depth: 1,
           icon: icons[tagChild.snapshot.type] || icons.item,
           type: 'item',
-          href: tagChild.node.uri,
+          to: tagChild.node.uri,
         });
       }
     }
@@ -190,14 +202,14 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
           depth: 1,
           icon: icons[otherChild.snapshot.type] || icons.item,
           type: 'item',
-          href: otherChild.node.uri,
+          to: otherChild.node.uri,
         });
       }
     }
   }
 
   /** Models folder */
-  const modelContents: IContentsNodeWithId[] = [];
+  const modelContents: TableOfContentsLinkWithId[] = [];
 
   const modelNodes = sortBy(
     branchNodes.filter((branchNode) => branchNode.snapshot.type === NodeType.Model),
@@ -206,12 +218,12 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
 
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
-    if (contents.find((n) => n.href === modelNode.node.uri)) continue;
+    if (contents.find((n) => n.to === modelNode.node.uri)) continue;
 
-    const node: IContentsNodeWithId = {
+    const node: TableOfContentsLinkWithId = {
       id: modelNode.id,
       name: modelNode.snapshot.name,
-      href: modelNode.node.uri,
+      to: modelNode.node.uri,
       depth: 0,
       type: 'item',
       icon: icons[modelNode.snapshot.type] || icons.item,
