@@ -39,7 +39,7 @@ export const Schema: React.FunctionComponent<ISchema> = ({ className, value, exa
 
       {schema && (
         <SimpleTabPanel className="p-0">
-          <SchemaViewer maxRows={JSV_MAX_ROWS} schema={schema} />
+          <SchemaViewer maxRows={JSV_MAX_ROWS} schema={schema} shouldResolveEagerly />
         </SimpleTabPanel>
       )}
 

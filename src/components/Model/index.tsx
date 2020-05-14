@@ -27,7 +27,7 @@ export function Model({ value, className, title, maxRows = 50, actions, errors =
     <div className="Model">
       <ModelHeader title={title} actions={actions} errors={errors} />
 
-      <SchemaViewer className={className} schema={result} maxRows={maxRows} />
+      <SchemaViewer className={className} schema={result} maxRows={maxRows} shouldResolveEagerly />
     </div>
   );
 }
