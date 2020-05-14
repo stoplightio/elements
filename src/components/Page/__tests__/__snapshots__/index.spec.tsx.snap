@@ -7732,6 +7732,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                         ],
                                                       }
                                                     }
+                                                    shouldResolveEagerly={true}
                                                   >
                                                     <JsonSchemaViewer
                                                       maxRows={20}
@@ -7760,6 +7761,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                           ],
                                                         }
                                                       }
+                                                      shouldResolveEagerly={true}
                                                     >
                                                       <div />
                                                     </JsonSchemaViewer>
@@ -8842,6 +8844,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                         ],
                                                       }
                                                     }
+                                                    shouldResolveEagerly={true}
                                                   >
                                                     <JsonSchemaViewer
                                                       maxRows={20}
@@ -8932,6 +8935,7 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                           ],
                                                         }
                                                       }
+                                                      shouldResolveEagerly={true}
                                                     >
                                                       <div />
                                                     </JsonSchemaViewer>
