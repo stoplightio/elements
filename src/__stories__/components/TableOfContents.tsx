@@ -21,8 +21,8 @@ storiesOf('components/TableOfContents', module)
     return (
       <div style={styles}>
         <Provider
-          host="http://stoplight-local.com:8080"
-          workspace="chris"
+          host="https://meta.stoplight.io"
+          workspace="meta"
           project="studio-demo"
           components={{
             link: ({ children }) => {
