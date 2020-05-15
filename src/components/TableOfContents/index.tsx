@@ -24,7 +24,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nod
       };
 
       return (
-        <Link key={item.href || item.id} parent={null} index={0} path={item.href} node={{ ...info, node: item.href }}>
+        <Link key={item.href || item.id} parent={null} index={0} path={item.to} node={{ ...info, node: item.href }}>
           <DefaultRow item={item} />
         </Link>
       );
