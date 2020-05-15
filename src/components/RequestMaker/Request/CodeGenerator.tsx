@@ -81,7 +81,6 @@ export const CodeGenerator: React.FunctionComponent<ICodeGeneratorProps> = ({ cl
           }
           position={Position.BOTTOM}
           minimal={true}
-          boundary={'window'}
           usePortal={false}
         >
           <Button rightIcon="caret-down" text={currentLanguage.text} />
