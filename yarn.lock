@@ -1948,10 +1948,10 @@
     sanitize-html "^1.23.0"
     unified "^9.0.0"
 
-"@stoplight/markdown@^2.7.2":
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.7.2.tgz#1916e35f0f226d99001dd547c2e936f653e81dea"
-  integrity sha512-kn0z8wqipqB3t6O4qFx6N5Fuh9p1Xq85bV4ey2CfmJlymHQq43W31e+DdhvLG33ngZubVCGx0VGqeIacAAPNtw==
+"@stoplight/markdown@^2.7.2", "@stoplight/markdown@^2.7.3":
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.7.3.tgz#1189160b5fe40bf47a7282c08833febbee332cda"
+  integrity sha512-fsQE7ctQGJPGXQQWuCKgwQ6oa6UG940xK5hAiOJqWZCpzcfmeyVPJfnUYoxi/AGZcKevKfQnd89W4WcCVfZSfQ==
   dependencies:
     js-yaml "^3.13"
     lodash "^4.17.15"
