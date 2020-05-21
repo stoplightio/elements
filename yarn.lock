@@ -1901,15 +1901,15 @@
     json-schema-compare "^0.2.2"
     lodash "^4.17.4"
 
-"@stoplight/json-schema-viewer@^3.0.0-beta.21":
-  version "3.0.0-beta.21"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.21.tgz#4ccda674936986ca27c3dcf76e9393e62f7e05d0"
-  integrity sha512-WlZal/BYSghoS4NGDrNWNZV6OfrH+ysEV52/U86PTm4drXgkSwFR/gBNnfDcSsvEC6vIMEiidFhOKI+1Efph0w==
+"@stoplight/json-schema-viewer@^3.0.0-beta.24":
+  version "3.0.0-beta.24"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.24.tgz#ebffd6e2bffe2061c465c7b98e5a363f7c67d69e"
+  integrity sha512-b+3mJ51Ju2r33OYSMo17boEkgaiRDgWZ5xnrJ2cbK3jFjOmEJiVDRFC1YPbHBWnCxO6OrdZRul1Lm1spw6iufA==
   dependencies:
     "@stoplight/json" "^3.5.1"
     "@stoplight/json-schema-merge-allof" "^0.7.1"
     "@stoplight/react-error-boundary" "^1.0.0"
-    "@stoplight/tree-list" "^5.0.0"
+    "@stoplight/tree-list" "^5.0.3"
     classnames "^2.2.6"
     lodash "^4.17.15"
     mobx-react-lite "^1.4.1"
@@ -2078,7 +2078,7 @@
     ts-loader "^6.2.1"
     webpack "^4.41.5"
 
-"@stoplight/tree-list@^5.0.0", "@stoplight/tree-list@^5.0.3":
+"@stoplight/tree-list@^5.0.3":
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.3.tgz#dfbc2175cb359a26da1ceb6af2bea91ca9d828b3"
   integrity sha512-TI/ffQbVDZsS0lM1z0Fp5aWkrbqzmyk7oP+YZle0oTauS7lK/2TXKbuenCwNuzjbe7jU4G7hMnrLBItN+IlYuA==
