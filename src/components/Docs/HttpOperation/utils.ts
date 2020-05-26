@@ -21,5 +21,5 @@ export function getExamplesFromSchema(data: unknown) {
         ...(isObject(data['examples']) && { ...data['examples'] }),
         ...('x-example' in data && { default: data['x-example'] }),
       }
-    : {};
+    : void 0;
 }
