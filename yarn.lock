@@ -1973,23 +1973,23 @@
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.1.tgz#1246c983279af20dcfb806d138add9f81cb1efd2"
   integrity sha512-I6YEfxspGglxt7MbgNbKThHdqh8CJWnDC1x1JUk2rka2D7mCpMSEu5I8IiAp997Dp4YIXDY6Did6gge8OY8KnA==
 
-"@stoplight/prism-core@^4.0.0-beta.6":
-  version "4.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/prism-core/-/prism-core-4.0.0-beta.6.tgz#ca8ad54601fef250a60a68fa49cfdd3da9e76743"
-  integrity sha512-m+RGc968zjkAkLdkE63w5wbyW74CRyF5z10GO07LMgyv1GxI2ddUAspDlFOa2y5Dk9iX4Ii6M3ARSFYZ0iiOnw==
+"@stoplight/prism-core@^4.0.0-beta.7":
+  version "4.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/@stoplight/prism-core/-/prism-core-4.0.0-beta.7.tgz#e283131d66095d6d53de816ab8536012e72fd2e4"
+  integrity sha512-RmaV1OAlXC22pRKKAgztKpCYC+U/twQDENxl0huCnPmEPu1/4KuQenjjhR1L1ocz2ThiQeCMMW0Dr3DFPg2cfw==
   dependencies:
     fp-ts "^2.5.3"
     lodash "^4.17.15"
     pino "^6.2.1"
     tslib "^2.0.0"
 
-"@stoplight/prism-http@^4.0.0-beta.6":
-  version "4.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/prism-http/-/prism-http-4.0.0-beta.6.tgz#ee21cc5c89059133a4c72a2f2d345466c99f8735"
-  integrity sha512-5XJYsjDBSh/LrFGpCBzlKyEVSSlYlBl9R/8wMkxFY2Iz896KG1zRFgjGqYsr4jnHZ0vY1OEoWqjlwHIvwJNG/A==
+"@stoplight/prism-http@^4.0.0-beta.7":
+  version "4.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/@stoplight/prism-http/-/prism-http-4.0.0-beta.7.tgz#689c669ca7611146f823a81014822f4b425da33d"
+  integrity sha512-24z6+lznCYHdKbvhkuQ45wEvWmZUQMA8BeSJCtAxFVa9VLagleMP7Z0VgTfpMVrWz+Xq8Qcy0Tbd5V2qx797OQ==
   dependencies:
     "@stoplight/json" "^3.7.1"
-    "@stoplight/prism-core" "^4.0.0-beta.6"
+    "@stoplight/prism-core" "^4.0.0-beta.7"
     "@stoplight/types" "^11.6.0"
     "@stoplight/yaml" "^4.0.1"
     abstract-logging "^2.0.0"
@@ -2008,7 +2008,7 @@
     pino "^6.2.1"
     tslib "^2.0.0"
     type-is "^1.6.18"
-    uri-template-lite "^19.4.0"
+    uri-template-lite "^20.5.0"
 
 "@stoplight/react-error-boundary@^1.0.0":
   version "1.0.0"
@@ -16384,10 +16384,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-uri-template-lite@^19.4.0:
-  version "19.12.0"
-  resolved "https://registry.yarnpkg.com/uri-template-lite/-/uri-template-lite-19.12.0.tgz#57405dd209519be6d9b25ca8b14f182dc0d51ea8"
-  integrity sha512-LNNx1aUJbZhCHkT+spIyIcVIOnVZsFu53Ar05hFb+OCSwk2R3TEhBw7ArfCtUjx6NiZIEMkYntJfNscHrotSVg==
+uri-template-lite@^20.5.0:
+  version "20.5.0"
+  resolved "https://registry.yarnpkg.com/uri-template-lite/-/uri-template-lite-20.5.0.tgz#6904cb90006d3c4d93423d1e37bde76260d6b8b3"
+  integrity sha512-RL6Pnz0DO4XH9WZhZTX6u0SP6afNM9z+u7lXYHO+RkVGzpNcgKc1Y2tcAX/KVIEi2ctfzf+iLcofkwKoYiGH4Q==
 
 urijs@^1.19.2, urijs@~1.19.1:
   version "1.19.2"
