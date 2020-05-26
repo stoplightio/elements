@@ -1,9 +1,10 @@
+import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { useQuery } from 'urql';
 
 import { InboundDependencies } from '../components/Dependencies/Inbound';
 import { OutboundDependencies } from '../components/Dependencies/Outbound';
-import { BranchNodeBySlug } from '../graphql/BranchNodeBySlug';
+import { BranchNodeBySlug, ElementsBranchNode } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
 export interface IDependencies {
@@ -17,7 +18,7 @@ const nodeEdgesQuery = ``;
 export const Dependencies = ({ className, direction }: IDependencies) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [branchNodeResult] = useQuery({
+  const [branchNodeResult] = useQuery<ElementsBranchNode>({
     query: BranchNodeBySlug,
     variables: {
       workspaceSlug: info.workspace,
@@ -27,18 +28,16 @@ export const Dependencies = ({ className, direction }: IDependencies) => {
     },
   });
 
-  const branchNode = branchNodeResult?.data?.branchNodes[0];
-
   const [nodeEdgesResult] = useQuery({
     query: nodeEdgesQuery,
     variables: {
-      branchNodeId: branchNode.id,
+      branchNodeId: branchNodeResult.data?.id,
       direction,
     },
-    pause: !branchNode?.id,
+    pause: !branchNodeResult.data?.id,
   });
 
-  if (branchNodeResult.fetching || nodeEdgesResult.fetching) {
+  if (branchNodeResult.fetching || nodeEdgesResult.fetching || !branchNodeResult.data) {
     // TODO (CL): loading spinner
     return null;
   }
@@ -46,8 +45,8 @@ export const Dependencies = ({ className, direction }: IDependencies) => {
   const edges = nodeEdgesResult.data.sl_node_edges;
 
   if (direction === 'inbound') {
-    return <InboundDependencies className={className} edges={edges} nodeType={branchNode.snapshot.type} />;
+    return <InboundDependencies className={className} edges={edges} nodeType={branchNodeResult.data.type} />;
   }
 
-  return <OutboundDependencies className={className} node={branchNode} edges={edges} />;
+  return <OutboundDependencies className={className} node={branchNodeResult.data} edges={edges} />;
 };

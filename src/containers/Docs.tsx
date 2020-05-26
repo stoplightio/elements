@@ -3,7 +3,7 @@ import { useQuery } from 'urql';
 
 import { Docs as DocsComponent } from '../components/Docs';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
-import { BranchNodeBySlug } from '../graphql/BranchNodeBySlug';
+import { BranchNodeBySlug, ElementsBranchNode } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
 export interface IDocsProps {
@@ -14,7 +14,7 @@ export interface IDocsProps {
 export const Docs = ({ className, node }: IDocsProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data, fetching }] = useQuery({
+  const [{ data, fetching }] = useQuery<ElementsBranchNode>({
     query: BranchNodeBySlug,
     variables: {
       workspaceSlug: info.workspace,
@@ -23,16 +23,14 @@ export const Docs = ({ className, node }: IDocsProps) => {
       uri: node || info.node,
     },
   });
-  if (fetching) {
+  if (fetching || !data) {
     return <DocsSkeleton />;
   }
 
-  const branchNode = data?.branchNodes[0];
+  const branchNode = data.data;
   if (!branchNode) {
     // TODO (CL): return <NotFound />;
   }
 
-  return (
-    <DocsComponent className={className} nodeType={branchNode?.snapshot?.type} nodeData={branchNode?.snapshot?.data} />
-  );
+  return <DocsComponent className={className} nodeType={data.type} nodeData={data.data} />;
 };

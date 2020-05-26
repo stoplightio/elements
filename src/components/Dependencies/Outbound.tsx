@@ -3,13 +3,14 @@ import * as React from 'react';
 import { Network } from 'vis-network/standalone';
 
 import { NodeTypePrettyName } from '../../constants';
+import { ElementsBranchNode } from '../../graphql/BranchNodeBySlug';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
-import { IBranchNode, INodeEdge } from '../../types';
+import { INodeEdge } from '../../types';
 import { Graph } from './Graph';
 import { NodeDialog } from './NodeDialog';
 
 export interface IOutboundDependencies {
-  node: IBranchNode;
+  node: ElementsBranchNode;
   edges: INodeEdge[];
 
   getNetwork?: (network?: Network) => void;
@@ -50,7 +51,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
   }, [activeNodeId, node.id]);
 
   if (!visGraph || !visGraph.nodes.length) {
-    return <div>This {NodeTypePrettyName[node.snapshot.type]} does not have any outbound dependencies.</div>;
+    return <div>This {NodeTypePrettyName[node.type]} does not have any outbound dependencies.</div>;
   }
 
   return (

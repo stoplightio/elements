@@ -3,7 +3,7 @@ import { useQuery } from 'urql';
 
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { TryIt as TryItComponent } from '../components/TryIt';
-import { BranchNodeBySlug } from '../graphql/BranchNodeBySlug';
+import { BranchNodeBySlug, ElementsBranchNode } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
 export interface ITryItProps {
@@ -14,7 +14,7 @@ export interface ITryItProps {
 export const TryIt = ({ className, node }: ITryItProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data, fetching }] = useQuery({
+  const [{ data, fetching }] = useQuery<ElementsBranchNode>({
     query: BranchNodeBySlug,
     variables: {
       workspaceSlug: info.workspace,
@@ -23,17 +23,10 @@ export const TryIt = ({ className, node }: ITryItProps) => {
       uri: node || info.node,
     },
   });
-  const branchNode = data?.branchNodes[0];
 
-  if (fetching) {
+  if (fetching || !data) {
     return <DocsSkeleton />;
   }
 
-  if (!branchNode) {
-    // TODO (CL): return <NotFound />;
-  }
-
-  return (
-    <TryItComponent className={className} nodeType={branchNode.snapshot.type} nodeData={branchNode.snapshot.data} />
-  );
+  return <TryItComponent className={className} nodeType={data.type} nodeData={data.data} />;
 };

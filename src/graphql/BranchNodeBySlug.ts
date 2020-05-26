@@ -1,38 +1,18 @@
+import { NodeType } from '@stoplight/types';
+
 export const BranchNodeBySlug = `
 query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String, $uri: String!) {
-  branchNodes(
-    limit: 1,
-    where: {
-      _or: [
-        { baseUri: { _eq: $uri } },
-        { node: { uri: { _eq: $uri } } }
-      ], 
-      
-      branch: {
-        _or: [
-          { slug: { _eq: $branchSlug } },
-          { isDefault: { _eq: true } }
-        ],
-      	project: {
-        	slug: { _eq: $projectSlug },
-        	workspace: { slug: { _eq: $workspaceSlug } }
-        }
-      }
-    }
-  ) {
-    id
-
-    node {
-      id
-      uri
-    }
-
-    snapshot {
-      id
-      name
-      type
-      data
-    }
-  }
+  id
+  snapshot_data
+  snapshot_type
 }
 `;
+
+export type ElementsBranchNode = {
+  __typename?: 'ElementsBranchNode';
+  data: string;
+  id: number;
+  name: string;
+  type: NodeType;
+  uri: string;
+};
