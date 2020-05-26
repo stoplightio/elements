@@ -79,7 +79,7 @@
   "devDependencies": {
     "@stoplight/eslint-config": "^1.1.0",
     "@stoplight/prism-http": "^4.0.0-beta.6",
-    "@stoplight/scripts": "8.2.0",
+    "@stoplight/scripts": "8.2.1",
     "@stoplight/storybook-config": "^2.0.5",
     "@testing-library/react": "^10.0.2",
     "@types/classnames": "^2.2.10",
