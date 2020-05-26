@@ -37,7 +37,7 @@ const CodeComponent = (props: IComponentMappingProps<ICode>) => {
     return <WrapperComponent {...props} />;
   }
 
-  const DefaultCode = defaultComponentMapping.code;
+  const DefaultCode = defaultComponentMapping.code!;
   return <DefaultCode {...props} />;
 };
 
