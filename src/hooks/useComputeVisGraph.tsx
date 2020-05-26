@@ -4,7 +4,7 @@ import { Edge, Node } from 'vis-network/standalone';
 
 import { NodeTypeIconsUnicode } from '../constants';
 import { ElementsBranchNode } from '../graphql/BranchNodeBySlug';
-import { IBranchNode, INodeEdge } from '../types';
+import { INodeEdge } from '../types';
 
 export interface IVisGraph {
   nodes: Node[];
