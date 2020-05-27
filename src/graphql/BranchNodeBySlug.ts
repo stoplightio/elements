@@ -1,7 +1,7 @@
 import { NodeType } from '@stoplight/types';
 
-export const BranchNodeBySlug = `
-query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String, $uri: String!) {
+export const elementsBranchNode = `
+query elementsBranchNode($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String, $uri: String!) {
   id
   data
   type

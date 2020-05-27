@@ -3,7 +3,7 @@ import { useQuery } from 'urql';
 
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { TryIt as TryItComponent } from '../components/TryIt';
-import { BranchNodeBySlug, ElementsBranchNode } from '../graphql/BranchNodeBySlug';
+import { ElementsBranchNode, elementsBranchNode } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
 export interface ITryItProps {
@@ -15,7 +15,7 @@ export const TryIt = ({ className, node }: ITryItProps) => {
   const info = React.useContext(ActiveInfoContext);
 
   const [{ data, fetching }] = useQuery<ElementsBranchNode>({
-    query: BranchNodeBySlug,
+    query: elementsBranchNode,
     variables: {
       workspaceSlug: info.workspace,
       projectSlug: info.project,

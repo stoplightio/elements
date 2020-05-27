@@ -4,7 +4,7 @@ import { useQuery } from 'urql';
 
 import { InboundDependencies } from '../components/Dependencies/Inbound';
 import { OutboundDependencies } from '../components/Dependencies/Outbound';
-import { BranchNodeBySlug, ElementsBranchNode } from '../graphql/BranchNodeBySlug';
+import { ElementsBranchNode, elementsBranchNode } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
 export interface IDependencies {
@@ -19,7 +19,7 @@ export const Dependencies = ({ className, direction }: IDependencies) => {
   const info = React.useContext(ActiveInfoContext);
 
   const [branchNodeResult] = useQuery<ElementsBranchNode>({
-    query: BranchNodeBySlug,
+    query: elementsBranchNode,
     variables: {
       workspaceSlug: info.workspace,
       projectSlug: info.project,
