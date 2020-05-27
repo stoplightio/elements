@@ -54,6 +54,7 @@ export const SchemaViewer = ({
           className={jsvClassName}
           schema={schema as JSONSchema4}
           maxRows={maxRows}
+          shouldResolveEagerly
         />
       </>
     );
