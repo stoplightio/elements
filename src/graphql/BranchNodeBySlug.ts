@@ -12,7 +12,7 @@ query elementsBranchNode($workspaceSlug: String!, $projectSlug: String!, $branch
 
 export type ElementsBranchNode = {
   __typename?: 'ElementsBranchNode';
-  data: string;
+  data: any;
   id: number;
   name: string;
   type: NodeType;

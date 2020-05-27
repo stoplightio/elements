@@ -27,10 +27,5 @@ export const Docs = ({ className, node }: IDocsProps) => {
     return <DocsSkeleton />;
   }
 
-  const branchNode = result.data;
-  if (!branchNode) {
-    // TODO (CL): return <NotFound />;
-  }
-
   return <DocsComponent className={className} nodeType={result.type} nodeData={result.data} />;
 };
