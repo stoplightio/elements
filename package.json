@@ -46,7 +46,7 @@
     "vis-network": "^7.5.2"
   },
   "dependencies": {
-    "@stoplight/json": "^3.7.1",
+    "@stoplight/json": "^3.7.2",
     "@stoplight/json-ref-resolver": "^3.0.8",
     "@stoplight/json-schema-viewer": "^3.0.0-beta.25",
     "@stoplight/markdown": "^2.7.2",
