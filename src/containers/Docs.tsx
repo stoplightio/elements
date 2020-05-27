@@ -14,7 +14,7 @@ export interface IDocsProps {
 export const Docs = ({ className, node }: IDocsProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data, fetching }] = useQuery<ElementsBranchNode>({
+  const [{ data: result, fetching }] = useQuery<ElementsBranchNode>({
     query: BranchNodeBySlug,
     variables: {
       workspaceSlug: info.workspace,
@@ -23,14 +23,14 @@ export const Docs = ({ className, node }: IDocsProps) => {
       uri: node || info.node,
     },
   });
-  if (fetching || !data) {
+  if (fetching || !result) {
     return <DocsSkeleton />;
   }
 
-  const branchNode = data.data;
+  const branchNode = result.data;
   if (!branchNode) {
     // TODO (CL): return <NotFound />;
   }
 
-  return <DocsComponent className={className} nodeType={data.type} nodeData={data.data} />;
+  return <DocsComponent className={className} nodeType={result.type} nodeData={result.data} />;
 };
