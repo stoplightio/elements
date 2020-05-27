@@ -3,27 +3,28 @@ import * as React from 'react';
 import { Edge, Node } from 'vis-network/standalone';
 
 import { NodeTypeIconsUnicode } from '../constants';
-import { IBranchNode, INodeEdge } from '../types';
+import { ElementsBranchNode } from '../graphql/BranchNodeBySlug';
+import { INodeEdge } from '../types';
 
 export interface IVisGraph {
   nodes: Node[];
   edges: Edge[];
 }
 
-export function useComputeVisGraph(rootNode: IBranchNode, edges: INodeEdge[]) {
+export function useComputeVisGraph(rootNode: ElementsBranchNode, edges: INodeEdge[]) {
   return React.useMemo(() => computeVisGraph(rootNode, edges), [rootNode, edges]);
 }
 
-export function computeVisGraph(rootNode: IBranchNode, edges: INodeEdge[]): IVisGraph {
+export function computeVisGraph(rootNode: ElementsBranchNode, edges: INodeEdge[]): IVisGraph {
   const visGraph: IVisGraph = {
     nodes: [
       {
         level: 0,
         id: rootNode.id,
-        title: rootNode.node.uri,
-        label: rootNode.snapshot.name,
+        title: rootNode.uri,
+        label: rootNode.name,
         icon: {
-          code: NodeTypeIconsUnicode[rootNode.snapshot.type],
+          code: NodeTypeIconsUnicode[rootNode.type],
           color: '#ef932b',
         },
       },
