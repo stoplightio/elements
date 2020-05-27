@@ -3,8 +3,10 @@ import { NodeType } from '@stoplight/types';
 export const BranchNodeBySlug = `
 query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String, $uri: String!) {
   id
-  snapshot_data
-  snapshot_type
+  data
+  type
+  name
+  uri
 }
 `;
 
