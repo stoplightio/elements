@@ -14,7 +14,7 @@ export interface ITryItProps {
 export const TryIt = ({ className, node }: ITryItProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data, fetching }] = useQuery<ElementsBranchNode>({
+  const [{ data: result, fetching }] = useQuery<ElementsBranchNode>({
     query: elementsBranchNode,
     variables: {
       workspaceSlug: info.workspace,
@@ -24,9 +24,9 @@ export const TryIt = ({ className, node }: ITryItProps) => {
     },
   });
 
-  if (fetching || !data) {
+  if (fetching || !result) {
     return <DocsSkeleton />;
   }
 
-  return <TryItComponent className={className} nodeType={data.type} nodeData={data.data} />;
+  return <TryItComponent className={className} nodeType={result.type} nodeData={result.data} />;
 };
