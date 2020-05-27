@@ -236,7 +236,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                         }
                       >
                         <p>
-                          <N
+                          <text
                             index={0}
                             key="0"
                             node={
@@ -276,7 +276,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                             }
                           >
                             Use 
-                          </N>
+                          </text>
                           <inlineCode
                             index={1}
                             key="1"
@@ -331,7 +331,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                               />
                             </CodeViewer>
                           </inlineCode>
-                          <N
+                          <text
                             index={2}
                             key="2"
                             node={
@@ -371,7 +371,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                             }
                           >
                              to authenticate requests. It's super secure.
-                          </N>
+                          </text>
                         </p>
                       </paragraph>
                     </div>
@@ -532,7 +532,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                         }
                       >
                         <p>
-                          <N
+                          <text
                             index={0}
                             key="0"
                             node={
@@ -572,7 +572,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                             }
                           >
                             Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </N>
+                          </text>
                         </p>
                       </paragraph>
                     </div>
@@ -733,7 +733,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                         }
                       >
                         <p>
-                          <N
+                          <text
                             index={0}
                             key="0"
                             node={
@@ -773,7 +773,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                             }
                           >
                             Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </N>
+                          </text>
                         </p>
                       </paragraph>
                     </div>
@@ -956,7 +956,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                         }
                       >
                         <p>
-                          <N
+                          <text
                             index={0}
                             key="0"
                             node={
@@ -996,7 +996,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                             }
                           >
                             Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </N>
+                          </text>
                         </p>
                       </paragraph>
                     </div>
@@ -1190,7 +1190,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                         }
                       >
                         <p>
-                          <N
+                          <text
                             index={0}
                             key="0"
                             node={
@@ -1230,7 +1230,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                             }
                           >
                             Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </N>
+                          </text>
                         </p>
                       </paragraph>
                     </div>

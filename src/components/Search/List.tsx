@@ -156,7 +156,12 @@ const NodeListItem: React.FC<{
     const Link = components.link;
 
     return (
-      <Link index={0} node={{ className: 'reset', url: item.node.uri }} parent={null} path={[]}>
+      <Link
+        index={0}
+        node={{ type: 'link', className: 'reset', url: item.node.uri, children: [] }}
+        parent={null}
+        path={[]}
+      >
         {elem}
       </Link>
     );
