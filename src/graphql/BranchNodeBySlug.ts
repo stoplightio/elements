@@ -15,7 +15,7 @@ query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $
 export type ElementsBranchNode = {
   __typename?: 'ElementsBranchNode';
   id: number;
-  data: any;
+  data: string;
   type: NodeType;
   name: string;
   uri: string;
