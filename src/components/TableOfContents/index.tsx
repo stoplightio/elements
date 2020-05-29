@@ -35,7 +35,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nod
           </Link>
         );
       }
-      return <></>;
+      return <DefaultRow item={item} />;
     },
     [info, Link],
   );
