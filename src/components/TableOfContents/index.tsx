@@ -22,14 +22,22 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nod
         ..._item,
         isActive: _item.to ? _item.to === info.node : false,
       };
-
-      return (
-        <Link key={item.href || item.id} parent={null} index={0} path={item.to} node={{ ...info, node: item.href }}>
-          <DefaultRow item={item} />
-        </Link>
-      );
+      if (Link) {
+        return (
+          <Link
+            key={item.href || item.id}
+            parent={null}
+            index={0}
+            path={item.to}
+            node={{ ...info, node: item.href, type: 'link', children: [], url: item.href }}
+          >
+            <DefaultRow item={item} />
+          </Link>
+        );
+      }
+      return <DefaultRow item={item} />;
     },
-    [info],
+    [info, Link],
   );
 
   return <UIKitTableOfContents className={className} contents={contents} rowRenderer={rowRenderer} />;
