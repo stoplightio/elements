@@ -14,7 +14,12 @@ export const GoToRef: React.FC<{
     const Link = components.link;
 
     return (
-      <Link index={0} parent={null} path={['']} node={{ ...info, node: uri, url: uri, className }}>
+      <Link
+        index={0}
+        parent={null}
+        path={['']}
+        node={{ ...info, node: uri, url: uri, className, type: 'link', children: [] }}
+      >
         {children}
       </Link>
     );
