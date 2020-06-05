@@ -323,12 +323,9 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                             >
                               <code
                                 className="CodeEditor inline-block line-none CodeEditor--inline"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "?apikey=123",
-                                  }
-                                }
-                              />
+                              >
+                                ?apikey=123
+                              </code>
                             </CodeViewer>
                           </inlineCode>
                           <text
