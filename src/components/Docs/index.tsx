@@ -7,10 +7,17 @@ import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
 import { Model } from './Model';
 
-export interface IDocsProps {
+interface IBaseDocsProps {
   nodeType: string;
-  nodeData: string;
   className?: string;
+}
+
+export interface IDocsProps extends IBaseDocsProps {
+  nodeData: string;
+}
+
+export interface IParsedDocsProps<T = unknown> extends IBaseDocsProps {
+  nodeData: T;
 }
 
 export interface IDocsComponentProps<T = unknown> {
@@ -32,15 +39,20 @@ export const NodeTypeComponent: Dictionary<React.ComponentType<IDocsComponentPro
 };
 
 export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className }) => {
-  const Component = NodeTypeComponent[nodeType];
   const parsedData = useParsedData(nodeType, nodeData);
+
+  return <ParsedDocs className={className} nodeData={parsedData} nodeType={nodeType} />;
+});
+
+export const ParsedDocs: React.FC<IParsedDocsProps> = ({ nodeType, nodeData, className }) => {
+  const Component = NodeTypeComponent[nodeType];
 
   if (!Component) return null;
 
-  return <Component className={className} data={parsedData} />;
-});
+  return <Component className={className} data={nodeData} />;
+};
 
-function useParsedData(nodeType: string, data: unknown) {
+export function useParsedData(nodeType: string, data: unknown) {
   const isParseable =
     nodeType === NodeType.HttpOperation || nodeType === NodeType.HttpService || nodeType === NodeType.Model;
   const parsedData = useParsedValue(isParseable ? data : null);
