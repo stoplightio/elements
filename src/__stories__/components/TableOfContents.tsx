@@ -25,8 +25,19 @@ storiesOf('components/TableOfContents', module)
           workspace="meta"
           project="studio-demo"
           components={{
-            link: ({ children }) => {
-              return <>{children}</>;
+            link: ({ children, node: { url } }) => {
+              return (
+                <a
+                  className="no-underline"
+                  href={url}
+                  onClick={(e) => {
+                    alert('Link clicked: ' + url);
+                    e.preventDefault();
+                  }}
+                >
+                  {children}
+                </a>
+              );
             },
           }}
         >
