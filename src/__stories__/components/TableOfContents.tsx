@@ -18,20 +18,44 @@ const styles = {
 storiesOf('components/TableOfContents', module)
   .addDecorator(withKnobs)
   .add('Playground', () => {
-    return (
+    return <TocStory />;
+  });
+
+const TocStory: React.FC = () => {
+  const [node, setNode] = React.useState('');
+
+  return (
+    <div className="flex flex-row">
       <div style={styles}>
         <Provider
           host="https://meta.stoplight.io"
           workspace="meta"
           project="studio-demo"
+          node={node}
           components={{
-            link: ({ children }) => {
-              return <>{children}</>;
+            link: ({ children, node: { url } }) => {
+              return (
+                <a
+                  className="no-underline"
+                  href={url}
+                  onClick={(e) => {
+                    setNode(url);
+                    e.preventDefault();
+                  }}
+                >
+                  {children}
+                </a>
+              );
             },
           }}
         >
           <TableOfContents className="h-full" nodes={object('nodes', nodes)} />
         </Provider>
       </div>
-    );
-  });
+      <div className="flex-grow p-5">
+        <h2>Docs go here</h2>
+        <p>{node}</p>
+      </div>
+    </div>
+  );
+};

@@ -1,10 +1,14 @@
-import { TableOfContents as UIKitTableOfContents } from '@stoplight/ui-kit/TableOfContents';
+import {
+  DefaultRow,
+  RowComponentType,
+  TableOfContents as UIKitTableOfContents,
+} from '@stoplight/ui-kit/TableOfContents';
 import * as React from 'react';
 
 import { ActiveInfoContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeToc } from '../../hooks/useComputeToc';
-import { IBranchNode } from '../../types';
+import { IBranchNode, TableOfContentsLinkWithId } from '../../types';
 
 export interface ITableOfContents {
   nodes: IBranchNode[];
@@ -13,32 +17,32 @@ export interface ITableOfContents {
 
 export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nodes, className }) => {
   const contents = useComputeToc(nodes);
+
+  return <UIKitTableOfContents className={className} contents={contents} rowComponent={ElementsTocRow} />;
+};
+
+const ElementsTocRow: RowComponentType<TableOfContentsLinkWithId> = (props) => {
   const { link: Link } = useComponents();
   const info = React.useContext(ActiveInfoContext);
 
-  const rowRenderer = React.useCallback(
-    ({ item: _item, DefaultRow }) => {
-      const item = {
-        ..._item,
-        isActive: _item.to ? _item.to === info.node : false,
-      };
-      if (Link) {
-        return (
-          <Link
-            key={item.href || item.id}
-            parent={null}
-            index={0}
-            path={item.to}
-            node={{ ...info, node: item.href, type: 'link', children: [], url: item.href }}
-          >
-            <DefaultRow item={item} />
-          </Link>
-        );
-      }
-      return <DefaultRow item={item} />;
-    },
-    [info, Link],
-  );
+  if (!Link || !props.item.to) {
+    return <DefaultRow {...props} />;
+  }
 
-  return <UIKitTableOfContents className={className} contents={contents} rowRenderer={rowRenderer} />;
+  const item = {
+    ...props.item,
+    isActive: props.item.to ? props.item.to === info.node : false,
+    to: props.item.to ?? '',
+  };
+
+  return (
+    <Link
+      parent={null}
+      index={0}
+      path={[item.to]}
+      node={{ ...info, node: item.to, type: 'link', children: [], url: item.to }}
+    >
+      <DefaultRow {...props} item={item} />
+    </Link>
+  );
 };
