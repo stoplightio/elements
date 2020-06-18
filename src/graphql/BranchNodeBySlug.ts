@@ -1,8 +1,8 @@
 import { NodeType } from '@stoplight/types';
 
-export const elementsBranchNode = `
-query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String, $uri: String!) {
-  elementsBranchNode(projectSlug: $projectSlug, uri: $uri, workspaceSlug: $workspaceSlug, branchSlug: $branchSlug) {
+export const bundledBranchNodes = `
+query BundledBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String, $uri: String!) {
+  bundledBranchNodes(projectSlug: $projectSlug, uri: $uri, workspaceSlug: $workspaceSlug, branchSlug: $branchSlug) {
     id
     data
     type
@@ -12,8 +12,8 @@ query ElementsBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $
 }
 `;
 
-export type ElementsBranchNode = {
-  __typename?: 'ElementsBranchNode';
+export type BundledBranchNode = {
+  __typename?: 'BundledBranchNode';
   id: number;
   data: string;
   type: NodeType;

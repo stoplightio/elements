@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Edge, Node } from 'vis-network/standalone';
 
 import { NodeTypeIconsUnicode } from '../constants';
-import { ElementsBranchNode } from '../graphql/BranchNodeBySlug';
+import { BundledBranchNode } from '../graphql/BranchNodeBySlug';
 import { INodeEdge } from '../types';
 
 export interface IVisGraph {
@@ -11,11 +11,11 @@ export interface IVisGraph {
   edges: Edge[];
 }
 
-export function useComputeVisGraph(rootNode: ElementsBranchNode, edges: INodeEdge[]) {
+export function useComputeVisGraph(rootNode: BundledBranchNode, edges: INodeEdge[]) {
   return React.useMemo(() => computeVisGraph(rootNode, edges), [rootNode, edges]);
 }
 
-export function computeVisGraph(rootNode: ElementsBranchNode, edges: INodeEdge[]): IVisGraph {
+export function computeVisGraph(rootNode: BundledBranchNode, edges: INodeEdge[]): IVisGraph {
   const visGraph: IVisGraph = {
     nodes: [
       {

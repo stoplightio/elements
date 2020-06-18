@@ -1,10 +1,9 @@
-import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { useQuery } from 'urql';
 
 import { InboundDependencies } from '../components/Dependencies/Inbound';
 import { OutboundDependencies } from '../components/Dependencies/Outbound';
-import { ElementsBranchNode, elementsBranchNode } from '../graphql/BranchNodeBySlug';
+import { BundledBranchNode, bundledBranchNodes } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
 export interface IDependencies {
@@ -18,8 +17,8 @@ const nodeEdgesQuery = ``;
 export const Dependencies = ({ className, direction }: IDependencies) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [branchNodeResult] = useQuery<ElementsBranchNode>({
-    query: elementsBranchNode,
+  const [branchNodeResult] = useQuery<BundledBranchNode>({
+    query: bundledBranchNodes,
     variables: {
       workspaceSlug: info.workspace,
       projectSlug: info.project,
