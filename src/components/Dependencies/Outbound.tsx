@@ -3,14 +3,14 @@ import * as React from 'react';
 import { Network } from 'vis-network/standalone';
 
 import { NodeTypePrettyName } from '../../constants';
-import { ElementsBranchNode } from '../../graphql/BranchNodeBySlug';
+import { BundledBranchNode } from '../../graphql/BranchNodeBySlug';
 import { useComputeVisGraph } from '../../hooks/useComputeVisGraph';
 import { INodeEdge } from '../../types';
 import { Graph } from './Graph';
 import { NodeDialog } from './NodeDialog';
 
 export interface IOutboundDependencies {
-  node: ElementsBranchNode;
+  node: BundledBranchNode;
   edges: INodeEdge[];
 
   getNetwork?: (network?: Network) => void;
