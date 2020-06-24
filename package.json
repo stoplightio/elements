@@ -56,7 +56,7 @@
     "@stoplight/tree-list": "^5.0.3",
     "@stoplight/types": "^11.8.0",
     "@stoplight/ui-kit": "^3.0.0-beta.19",
-    "@stoplight/yaml": "^4.1.0",
+    "@stoplight/yaml": "^4.2.0",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.3.1",
