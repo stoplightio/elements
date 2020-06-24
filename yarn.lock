@@ -2089,10 +2089,10 @@
     mobx-react-lite "^1.5.2"
     strict-event-emitter-types "^2.0.0"
 
-"@stoplight/types@^11.1.0", "@stoplight/types@^11.6.0":
-  version "11.6.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.6.0.tgz#c4507f564ea4be719f66ae2fd2bb83f4719c2210"
-  integrity sha512-J2wOl6FlN4IeY99MZTbgLVbIqrE9eVcHIvWmSEFzxfnbHCh4reXcGkvxlQ7I/pTKScd5/F/HJKSYnNXRjCnM2A==
+"@stoplight/types@^11.1.0", "@stoplight/types@^11.6.0", "@stoplight/types@^11.8.0":
+  version "11.8.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.8.0.tgz#5fba735d730bd50754ed587e86854a8becbf90bb"
+  integrity sha512-JSCLtuy9Buf89rRV9AmnK452mUqen3cpZgx0eOQdv+ayDuy8uuezU6hcsC93cfQ9E3OOpWs91El4sTrjZkv9IQ==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
@@ -2124,13 +2124,13 @@
   resolved "https://registry.yarnpkg.com/@stoplight/yaml-ast-parser/-/yaml-ast-parser-0.0.48.tgz#442b21f419427acaa8a3106ebc5d73351c407002"
   integrity sha512-sV+51I7WYnLJnKPn2EMWgS4EUfoP4iWEbrWwbXsj0MZCB/xOK8j6+C9fntIdOM50kpx45ZLC3s6kwKivWuqvyg==
 
-"@stoplight/yaml@^4.0.1", "@stoplight/yaml@^4.0.2", "@stoplight/yaml@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-4.1.0.tgz#f3b25a4cadaa27cca612d9c461d9bec57277e6c7"
-  integrity sha512-3eb37LZ88HcBmA2jr9tsncrxy3bWEgJH6+z809uBU1BrjtpzHcrg1ROIhaefMAv0Mt+yj8LpDjAYgCAbKB3ehw==
+"@stoplight/yaml@^4.0.1", "@stoplight/yaml@^4.0.2", "@stoplight/yaml@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/yaml/-/yaml-4.2.0.tgz#215d4423a675eacb69cad2458acd889c2a55da73"
+  integrity sha512-d6fLHd7aOfVfcSSAbicQ4tLlWZ8RetD+emrU6rbEMVHweVf2O6ibpTXW0qDZeSEDEtk5i5oa0npWcrATm/PtLQ==
   dependencies:
     "@stoplight/ordered-object-literal" "^1.0.1"
-    "@stoplight/types" "^11.6.0"
+    "@stoplight/types" "^11.8.0"
     "@stoplight/yaml-ast-parser" "0.0.48"
     tslib "^1.12.0"
 
