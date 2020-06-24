@@ -35,6 +35,7 @@ export const NodeTypeComponent: Dictionary<React.ComponentType<IDocsComponentPro
   [NodeType.HttpService]: HttpService,
   [NodeType.Model]: Model,
   [NodeType.HttpServer]: UnsupportedNodeType,
+  [NodeType.Generic]: UnsupportedNodeType,
   [NodeType.Unknown]: UnsupportedNodeType,
 };
 
