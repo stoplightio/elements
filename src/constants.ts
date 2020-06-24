@@ -7,6 +7,7 @@ export const NodeTypeColors: Dictionary<string, NodeType> = {
   article: '#399da6',
   model: '#ef932b',
   http_server: '',
+  generic: '',
   unknown: '',
 };
 
@@ -16,6 +17,7 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   article: 'Article',
   model: 'Model',
   http_server: 'Server',
+  generic: '',
   unknown: '',
 };
 
@@ -26,6 +28,7 @@ export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
   model: 'cube',
   http_server: 'database',
   unknown: 'help',
+  generic: 'help',
 };
 
 export const NodeTypeIconsUnicode: Dictionary<string, NodeType> = {
@@ -35,6 +38,7 @@ export const NodeTypeIconsUnicode: Dictionary<string, NodeType> = {
   model: '\uf1b2',
   http_server: '\uf1c0',
   unknown: '\uf128',
+  generic: '\uf128',
 };
 
 export const HttpSecuritySchemeColors: Dictionary<string, HttpSecurityScheme['type']> = {
