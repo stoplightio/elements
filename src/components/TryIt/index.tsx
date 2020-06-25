@@ -9,7 +9,7 @@ import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } 
 
 export interface ITryItProps {
   nodeType: string;
-  nodeData: string;
+  nodeData: unknown;
   mockUrl?: string;
   className?: string;
 }
