@@ -1,8 +1,8 @@
 import { NodeType } from '@stoplight/types';
 
-export const bundledBranchNodes = `
+export const bundledBranchNode = `
 query BundledBranchNodeBySlug($workspaceSlug: String!, $projectSlug: String!, $branchSlug: String, $uri: String!) {
-  bundledBranchNodes(projectSlug: $projectSlug, uri: $uri, workspaceSlug: $workspaceSlug, branchSlug: $branchSlug) {
+  bundledBranchNode(projectSlug: $projectSlug, uri: $uri, workspaceSlug: $workspaceSlug, branchSlug: $branchSlug) {
     id
     data
     type

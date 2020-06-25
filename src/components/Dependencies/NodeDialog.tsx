@@ -1,3 +1,4 @@
+import { NodeType } from '@stoplight/types';
 import { Dialog, Icon, IDialogProps } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import * as React from 'react';
@@ -18,7 +19,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
   const nodeUri = edge && edge[`${direction}BranchNodeUri`];
   const nodeType = edge && edge[`${direction}BranchNodeType`];
   const nodeVersion = edge && edge[`${direction}BranchNodeVersion`];
-
+  const showGoToRef = ![NodeType.Generic, NodeType.Unknown].includes(nodeType);
   return (
     <Dialog
       {...dialogProps}
@@ -29,9 +30,11 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
             {nodeName} {nodeVersion !== '0.0' && <span className="mx-2 text-base text-gray-6">v{nodeVersion}</span>}
           </div>
 
-          <GoToRef className="text-base" uri={nodeUri}>
-            Go to ref
-          </GoToRef>
+          {showGoToRef && (
+            <GoToRef className="text-base" uri={nodeUri}>
+              Go to ref
+            </GoToRef>
+          )}
         </div>
       }
       icon={<Icon icon={NodeTypeIcons[nodeType]} iconSize={20} color={NodeTypeColors[nodeType]} />}
