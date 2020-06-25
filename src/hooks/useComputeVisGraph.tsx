@@ -1,3 +1,4 @@
+import { NodeType } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 import { Edge, Node } from 'vis-network/standalone';
@@ -35,7 +36,10 @@ export function computeVisGraph(rootNode: BundledBranchNode, edges: INodeEdge[])
   const nodesInGraph = [rootNode.id];
 
   for (const edge of edges) {
-    if (!nodesInGraph.includes(edge.fromBranchNodeId)) {
+    if (
+      !nodesInGraph.includes(edge.fromBranchNodeId) &&
+      ![String(NodeType.Unknown), String(NodeType.Generic)].includes(edge.fromBranchNodeType)
+    ) {
       nodesInGraph.push(edge.fromBranchNodeId);
       visGraph.nodes.push({
         level: edge.depth,
@@ -48,7 +52,10 @@ export function computeVisGraph(rootNode: BundledBranchNode, edges: INodeEdge[])
       });
     }
 
-    if (!nodesInGraph.includes(edge.toBranchNodeId)) {
+    if (
+      !nodesInGraph.includes(edge.toBranchNodeId) &&
+      ![String(NodeType.Unknown), String(NodeType.Generic)].includes(edge.toBranchNodeType)
+    ) {
       nodesInGraph.push(edge.toBranchNodeId);
       visGraph.nodes.push({
         level: edge.depth,
