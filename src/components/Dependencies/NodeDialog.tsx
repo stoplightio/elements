@@ -14,12 +14,20 @@ export interface INodeDialogProps {
   edge?: INodeEdge;
 }
 
+export const IRRELEVANT_NODE_TYPES = Object.freeze([NodeType.Generic, NodeType.Unknown]);
+// could be camel case or pascal case, whatever we use in elements
+
+export function isIrrelevantNodeType(type: NodeType) {
+  return IRRELEVANT_NODE_TYPES.includes(type);
+}
+
 export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps) => {
   const nodeName = edge && edge[`${direction}BranchNodeName`];
   const nodeUri = edge && edge[`${direction}BranchNodeUri`];
   const nodeType = edge && edge[`${direction}BranchNodeType`];
   const nodeVersion = edge && edge[`${direction}BranchNodeVersion`];
-  const showGoToRef = ![NodeType.Generic, NodeType.Unknown].includes(nodeType);
+  const showGoToRef = !isIrrelevantNodeType(nodeType);
+
   return (
     <Dialog
       {...dialogProps}
