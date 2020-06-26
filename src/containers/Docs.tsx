@@ -3,7 +3,7 @@ import { useQuery } from 'urql';
 
 import { Docs as DocsComponent } from '../components/Docs';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
-import { bundledBranchNodes } from '../graphql/BranchNodeBySlug';
+import { bundledBranchNode } from '../graphql/BranchNodeBySlug';
 import { ActiveInfoContext } from './Provider';
 
 export interface IDocsProps {
@@ -15,7 +15,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
   const info = React.useContext(ActiveInfoContext);
 
   const [{ data: result, fetching }] = useQuery({
-    query: bundledBranchNodes,
+    query: bundledBranchNode,
     variables: {
       workspaceSlug: info.workspace,
       projectSlug: info.project,
