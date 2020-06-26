@@ -20,7 +20,7 @@ export function matchesNodeFilter(branchNode: IBranchNode, filter?: INodeFilter)
   return isMatch;
 }
 
-export const IRRELEVANT_NODE_TYPES = Object.freeze([NodeType.Generic, NodeType.Unknown]).map(String);
+export const IRRELEVANT_NODE_TYPES = Object.freeze([NodeType.Generic, NodeType.Unknown].map(String));
 // could be camel case or pascal case, whatever we use in elements
 
 export function isIrrelevantNodeType(type: NodeType | string) {
