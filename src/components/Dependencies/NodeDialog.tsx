@@ -1,4 +1,3 @@
-import { NodeType } from '@stoplight/types';
 import { Dialog, Icon, IDialogProps } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import * as React from 'react';

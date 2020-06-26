@@ -29,8 +29,8 @@ export const Docs = ({ className, node }: IDocsProps) => {
   return (
     <DocsComponent
       className={className}
-      nodeType={result.elementsBranchNode.type}
-      nodeData={result.elementsBranchNode.data}
+      nodeType={result.bundledBranchNode.type}
+      nodeData={result.bundledBranchNode.data}
     />
   );
 };
