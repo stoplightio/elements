@@ -6,6 +6,7 @@ import { Edge, Node } from 'vis-network/standalone';
 import { NodeTypeIconsUnicode } from '../constants';
 import { BundledBranchNode } from '../graphql/BranchNodeBySlug';
 import { INodeEdge } from '../types';
+import { isIrrelevantNodeType } from '../utils/node';
 
 export interface IVisGraph {
   nodes: Node[];
@@ -36,10 +37,7 @@ export function computeVisGraph(rootNode: BundledBranchNode, edges: INodeEdge[])
   const nodesInGraph = [rootNode.id];
 
   for (const edge of edges) {
-    if (
-      !nodesInGraph.includes(edge.fromBranchNodeId) &&
-      ![String(NodeType.Unknown), String(NodeType.Generic)].includes(edge.fromBranchNodeType)
-    ) {
+    if (!nodesInGraph.includes(edge.fromBranchNodeId) && !isIrrelevantNodeType(edge.fromBranchNodeType)) {
       nodesInGraph.push(edge.fromBranchNodeId);
       visGraph.nodes.push({
         level: edge.depth,
@@ -52,10 +50,7 @@ export function computeVisGraph(rootNode: BundledBranchNode, edges: INodeEdge[])
       });
     }
 
-    if (
-      !nodesInGraph.includes(edge.toBranchNodeId) &&
-      ![String(NodeType.Unknown), String(NodeType.Generic)].includes(edge.toBranchNodeType)
-    ) {
+    if (!nodesInGraph.includes(edge.toBranchNodeId) && !isIrrelevantNodeType(edge.toBranchNodeType)) {
       nodesInGraph.push(edge.toBranchNodeId);
       visGraph.nodes.push({
         level: edge.depth,
