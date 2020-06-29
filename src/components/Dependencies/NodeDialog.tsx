@@ -5,6 +5,7 @@ import * as React from 'react';
 import { NodeTypeColors, NodeTypeIcons } from '../../constants';
 import { Docs } from '../../containers/Docs';
 import { INodeEdge } from '../../types';
+import { isIrrelevantNodeType } from '../../utils/node';
 import { GoToRef } from './GoToRef';
 
 export interface INodeDialogProps {
@@ -18,6 +19,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
   const nodeUri = edge && edge[`${direction}BranchNodeUri`];
   const nodeType = edge && edge[`${direction}BranchNodeType`];
   const nodeVersion = edge && edge[`${direction}BranchNodeVersion`];
+  const showGoToRef = !isIrrelevantNodeType(nodeType);
 
   return (
     <Dialog
@@ -29,9 +31,11 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
             {nodeName} {nodeVersion !== '0.0' && <span className="mx-2 text-base text-gray-6">v{nodeVersion}</span>}
           </div>
 
-          <GoToRef className="text-base" uri={nodeUri}>
-            Go to ref
-          </GoToRef>
+          {showGoToRef && (
+            <GoToRef className="text-base" uri={nodeUri}>
+              Go to ref
+            </GoToRef>
+          )}
         </div>
       }
       icon={<Icon icon={NodeTypeIcons[nodeType]} iconSize={20} color={NodeTypeColors[nodeType]} />}

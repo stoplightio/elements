@@ -1901,10 +1901,10 @@
     json-schema-compare "^0.2.2"
     lodash "^4.17.4"
 
-"@stoplight/json-schema-viewer@^3.0.0-beta.26":
-  version "3.0.0-beta.26"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.26.tgz#36d1bcc3cd816d42198afa30cb8df22f39100a15"
-  integrity sha512-n7xIBySlEUFHs9AnpSZ2fLg9BE6eHhRiij2hKTDTfREfa8DWr6gVnqXRANIYesM2dY+3BHF8ZwCUGvYN1c4NyA==
+"@stoplight/json-schema-viewer@^3.0.0-beta.27":
+  version "3.0.0-beta.27"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.27.tgz#7b14d4609a477671655c395a74ada5ac7109b16a"
+  integrity sha512-3vK0zLr70oDmAArmKVYVZkNx81RKovLbfh7yDvqW7gnZIXjnVxewwAbaXqVx6KI1DdOc9XZqyE/iqrBnqcQotA==
   dependencies:
     "@stoplight/json" "^3.5.1"
     "@stoplight/json-schema-merge-allof" "^0.7.1"
@@ -1934,10 +1934,10 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.1.1.tgz#8434180529013b9c47469dae6bd662cfb32bee97"
-  integrity sha512-w7l0fMQImeiYLAPeoWL5IEfrMkPgEVt2hgZKiIhGi+UozyiQtjyK7z3GEaiGASBbBOmys/aQIqlhyQsC9O22pA==
+"@stoplight/markdown-viewer@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.1.2.tgz#24232bcfe529262c36f720b7884993e8cc94b9c7"
+  integrity sha512-zGPU6hsnjlvMcQzp7KlzJKZYiC/tckqbbhPlth65XMcb1I3zhJ/OHZ0QuBFsKHwu0atft/ae4bUCUhGSFwz2Mw==
   dependencies:
     "@stoplight/json" "^3.6"
     "@stoplight/markdown" "^2.7.3"
@@ -1948,10 +1948,10 @@
     remark-slug "^6.0.0"
     unified "^9.0.0"
 
-"@stoplight/markdown@^2.7.3", "@stoplight/markdown@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.8.0.tgz#aec3d781326e65e0dd35f03494f2a4653d83e5d2"
-  integrity sha512-ZvTCn2AYDbfFwNRPw7ydZw3P8d9JEa9UYblYzveOdBhA8r18XS32fYF/UUlkm2una8PHuxcEhX1Wjq+UizGt+w==
+"@stoplight/markdown@^2.7.3", "@stoplight/markdown@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.9.0.tgz#37dfd1dae4ea5a621e408249b31876caab69723f"
+  integrity sha512-JuoTUlIv1ptHRzmJkMQv94Mk9tfTrPPu2pY3Ea8fo2Y23gZfhqGSaXbLd/FLUbL2rpboJ5UlwneMWllJxkjOsw==
   dependencies:
     "@stoplight/yaml" "^4.0.2"
     lodash "^4.17.15"
@@ -1959,9 +1959,11 @@
     remark-frontmatter "^1.3"
     remark-parse "^8.0.2"
     remark-stringify "^8.0.0"
+    source-component "^1.2.1"
     tslib "^1.13.0"
     unified "^9.0.0"
     unist-util-select "^3.0.1"
+    unist-util-visit "^2.0.2"
 
 "@stoplight/ordered-object-literal@^1.0.1":
   version "1.0.1"
@@ -14949,6 +14951,11 @@ sorted-union-stream@~2.1.3:
     from2 "^1.3.0"
     stream-iterate "^1.1.0"
 
+source-component@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/source-component/-/source-component-1.2.1.tgz#e6a76d260e97bef676e1153ef934563b6743ed87"
+  integrity sha1-5qdtJg6XvvZ24RU++TRWO2dD7Yc=
+
 source-list-map@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
@@ -16236,7 +16243,7 @@ unist-util-visit-parents@^3.0.0:
     "@types/unist" "^2.0.0"
     unist-util-is "^4.0.0"
 
-unist-util-visit@^2.0.0:
+unist-util-visit@^2.0.0, unist-util-visit@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/unist-util-visit/-/unist-util-visit-2.0.2.tgz#3843782a517de3d2357b4c193b24af2d9366afb7"
   integrity sha512-HoHNhGnKj6y+Sq+7ASo2zpVdfdRifhTgX2KTU3B/sO/TTlZchp7E3S4vjRzDJ7L60KmrCPsQkVK3lEF3cz36XQ==
