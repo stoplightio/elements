@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
 import * as React from 'react';
 
+import { InlineRefResolverContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
 
@@ -53,23 +54,31 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
   className,
   icon,
 }) => {
+  const resolveRef = React.useContext(InlineRefResolverContext);
   if (!parameters || !parameters.length) return null;
 
   return (
     <div className={cn('HttpOperation__Parameters', className)}>
       {title && <SectionTitle title={title} icon={icon} />}
 
-      {sortBy(parameters, ['required', 'name']).map((parameter, index) => (
-        <Parameter
-          key={parameter.name}
-          parameter={parameter}
-          parameterType={parameterType}
-          className={cn('pt-4', {
-            'pb-4': parameters.length - 1 !== index,
-            'border-t border-gray-2 dark:border-gray-6': index > 0,
-          })}
-        />
-      ))}
+      {sortBy(parameters, ['required', 'name']).map((parameter, index) => {
+        const resolvedSchema =
+          parameter.schema?.$ref && resolveRef
+            ? resolveRef({ pointer: parameter.schema.$ref, source: null }, null, {})
+            : null;
+
+        return (
+          <Parameter
+            key={parameter.name}
+            parameter={resolvedSchema ? { ...parameter, schema: resolvedSchema } : parameter}
+            parameterType={parameterType}
+            className={cn('pt-4', {
+              'pb-4': parameters.length - 1 !== index,
+              'border-t border-gray-2 dark:border-gray-6': index > 0,
+            })}
+          />
+        );
+      })}
     </div>
   );
 };
