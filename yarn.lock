@@ -1934,13 +1934,13 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.2.0.tgz#4c8fda213925b4a2f95a2db98db68d115c28bfb5"
-  integrity sha512-2Hc35wVSk481DPFjjBfncud13Q3BscGJRphh0MKYGG1NEDGyd5rAbuo1wsW1jjMlPrlyFEMxKfSXKMSXbLLSaw==
+"@stoplight/markdown-viewer@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.2.1.tgz#99244827cb63067cd92b9148b1b45d74bd695e9e"
+  integrity sha512-VgMhxaRq9ZH0PL/3GWo71gGalfarHJln0HtqyRvnKokaDO4mP7p6ZTLBBdsv2fosNtJ7D9jnHIl1zjEPFkevkQ==
   dependencies:
     "@stoplight/json" "^3.6"
-    "@stoplight/markdown" "^2.9.0"
+    "@stoplight/markdown" "^2.9.1"
     "@stoplight/react-error-boundary" "^1.0.0"
     classnames "^2"
     dompurify "^2.0.11"
@@ -1949,10 +1949,10 @@
     remark-slug "^6.0.0"
     unified "^9.0.0"
 
-"@stoplight/markdown@^2.9.0":
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.9.0.tgz#37dfd1dae4ea5a621e408249b31876caab69723f"
-  integrity sha512-JuoTUlIv1ptHRzmJkMQv94Mk9tfTrPPu2pY3Ea8fo2Y23gZfhqGSaXbLd/FLUbL2rpboJ5UlwneMWllJxkjOsw==
+"@stoplight/markdown@^2.9.0", "@stoplight/markdown@^2.9.1":
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.9.1.tgz#971d1d791c03b1b1bf9b12e5ed62dc01e36f064a"
+  integrity sha512-T1/8NrVQBg0kj/ntAZ7uIhj53LHKcP22c+hwWwvEeG/zLutAROM9ekCu79czxNA6MTLioHQOCkS4KGAKaQgehw==
   dependencies:
     "@stoplight/yaml" "^4.0.2"
     lodash "^4.17.15"
