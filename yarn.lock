@@ -2092,10 +2092,10 @@
     mobx-react-lite "^1.5.2"
     strict-event-emitter-types "^2.0.0"
 
-"@stoplight/types@^11.1.0", "@stoplight/types@^11.6.0", "@stoplight/types@^11.8.0":
-  version "11.8.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.8.0.tgz#5fba735d730bd50754ed587e86854a8becbf90bb"
-  integrity sha512-JSCLtuy9Buf89rRV9AmnK452mUqen3cpZgx0eOQdv+ayDuy8uuezU6hcsC93cfQ9E3OOpWs91El4sTrjZkv9IQ==
+"@stoplight/types@^11.1.0", "@stoplight/types@^11.6.0", "@stoplight/types@^11.8.0", "@stoplight/types@^11.9.0":
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.9.0.tgz#ced7de2dd53439d2409a3cb390bf7d5b76382ac6"
+  integrity sha512-4bzPpWZobt0e+d0OtALCJyl1HGzKo6ur21qxnId9dTl8v3yeD+5HJKZ2h1mv7e94debH5QDtimMU80V6jbXM8Q==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
