@@ -75,7 +75,7 @@ function getBodyFromOperation(operation: Partial<IHttpOperation>) {
     const schema = get(operation, 'request.body.contents[0].schema');
 
     if (schema) {
-      return sampler.sample(schema);
+      return sampler.sample(schema, {}, operation);
     }
   } catch (e) {
     console.warn('Unable to create sample request body from schema', e);
