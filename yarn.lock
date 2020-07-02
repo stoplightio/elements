@@ -2100,6 +2100,14 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
+"@stoplight/types@^11.9.0":
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.9.0.tgz#ced7de2dd53439d2409a3cb390bf7d5b76382ac6"
+  integrity sha512-4bzPpWZobt0e+d0OtALCJyl1HGzKo6ur21qxnId9dTl8v3yeD+5HJKZ2h1mv7e94debH5QDtimMU80V6jbXM8Q==
+  dependencies:
+    "@types/json-schema" "^7.0.4"
+    utility-types "^3.10.0"
+
 "@stoplight/ui-kit@^3.0.0-beta.19":
   version "3.0.0-beta.19"
   resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.19.tgz#812d44590130617dc9d2c0bc84fbfb2a163210a2"
