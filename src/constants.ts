@@ -9,6 +9,7 @@ export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_server: '',
   generic: '',
   unknown: '',
+  table_of_contents: '',
 };
 
 export const NodeTypePrettyName: Dictionary<string, NodeType> = {
@@ -19,6 +20,7 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   http_server: 'Server',
   generic: '',
   unknown: '',
+  table_of_contents: '',
 };
 
 export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
@@ -29,6 +31,7 @@ export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
   http_server: 'database',
   unknown: 'help',
   generic: 'help',
+  table_of_contents: 'help',
 };
 
 export const NodeTypeIconsUnicode: Dictionary<string, NodeType> = {
@@ -39,6 +42,7 @@ export const NodeTypeIconsUnicode: Dictionary<string, NodeType> = {
   http_server: '\uf1c0',
   unknown: '\uf128',
   generic: '\uf128',
+  table_of_contents: '\uf128',
 };
 
 export const HttpSecuritySchemeColors: Dictionary<string, HttpSecurityScheme['type']> = {

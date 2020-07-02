@@ -36,6 +36,7 @@ export const NodeTypeComponent: Dictionary<React.ComponentType<IDocsComponentPro
   [NodeType.Model]: Model,
   [NodeType.HttpServer]: UnsupportedNodeType,
   [NodeType.Generic]: UnsupportedNodeType,
+  [NodeType.TableOfContents]: UnsupportedNodeType,
   [NodeType.Unknown]: UnsupportedNodeType,
 };
 
