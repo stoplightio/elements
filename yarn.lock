@@ -1915,13 +1915,13 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1", "@stoplight/json@^3.8.0":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.8.0.tgz#a7a5f6863b090177105fde8583eacf547c933e23"
-  integrity sha512-TATbG+MCXstGeUrMQQL6/S34JvJCK0LuLFA7jbBxYJDrkymELWtbB0S76OSjkvyd15qSX0xIkhTOwpe8BjSeQQ==
+"@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1", "@stoplight/json@^3.8.1":
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.8.1.tgz#7ece9a165c0dd49d8d01552304b065ff0eb6b45e"
+  integrity sha512-1OQH4VxQnwvANaK2NZHAbtfZrF4Y9WKv6aRvg25Ow52C3aP6FD/Cz3NWRiKJNybB3wnvgWC7PNJvAUwx1+WIBA==
   dependencies:
     "@stoplight/ordered-object-literal" "^1.0.1"
-    "@stoplight/types" "^11.8.0"
+    "@stoplight/types" "^11.9.0"
     jsonc-parser "~2.2.1"
     lodash "^4.17.15"
     safe-stable-stringify "^1.1"
@@ -2092,15 +2092,7 @@
     mobx-react-lite "^1.5.2"
     strict-event-emitter-types "^2.0.0"
 
-"@stoplight/types@^11.1.0", "@stoplight/types@^11.6.0", "@stoplight/types@^11.8.0":
-  version "11.8.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.8.0.tgz#5fba735d730bd50754ed587e86854a8becbf90bb"
-  integrity sha512-JSCLtuy9Buf89rRV9AmnK452mUqen3cpZgx0eOQdv+ayDuy8uuezU6hcsC93cfQ9E3OOpWs91El4sTrjZkv9IQ==
-  dependencies:
-    "@types/json-schema" "^7.0.4"
-    utility-types "^3.10.0"
-
-"@stoplight/types@^11.9.0":
+"@stoplight/types@^11.1.0", "@stoplight/types@^11.6.0", "@stoplight/types@^11.8.0", "@stoplight/types@^11.9.0":
   version "11.9.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.9.0.tgz#ced7de2dd53439d2409a3cb390bf7d5b76382ac6"
   integrity sha512-4bzPpWZobt0e+d0OtALCJyl1HGzKo6ur21qxnId9dTl8v3yeD+5HJKZ2h1mv7e94debH5QDtimMU80V6jbXM8Q==
