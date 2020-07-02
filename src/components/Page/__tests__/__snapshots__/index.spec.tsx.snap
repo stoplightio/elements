@@ -5490,12 +5490,9 @@ exports[`Page HttpOperation should render docs tab correctly 1`] = `
                                                         >
                                                           <code
                                                             className="bp3-code-editor inline-block line-none isInline"
-                                                            dangerouslySetInnerHTML={
-                                                              Object {
-                                                                "__html": "?apikey=123",
-                                                              }
-                                                            }
-                                                          />
+                                                          >
+                                                            ?apikey=123
+                                                          </code>
                                                         </CodeViewer>
                                                          to authenticate requests. It's super secure.
                                                       </p>

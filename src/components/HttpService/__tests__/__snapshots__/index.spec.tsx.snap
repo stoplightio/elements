@@ -224,12 +224,9 @@ exports[`HttpService should match snapshot 1`] = `
                   >
                     <code
                       className="bp3-code-editor inline-block line-none isInline"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "special-key",
-                        }
-                      }
-                    />
+                    >
+                      special-key
+                    </code>
                   </CodeViewer>
                    to test the authorization filters. 
                 </p>
