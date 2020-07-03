@@ -39,7 +39,7 @@
     "test.watch": "yarn test --watch"
   },
   "peerDependencies": {
-    "@stoplight/prism-http": "^4.0.0-beta.10",
+    "@stoplight/prism-http": "^4.0.0-beta.12",
     "mobx": ">=5",
     "react": ">=16.8",
     "react-dom": ">=16.8",
@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "@stoplight/eslint-config": "^1.1.0",
-    "@stoplight/prism-http": "^4.0.0-beta.10",
+    "@stoplight/prism-http": "^4.0.0-beta.12",
     "@stoplight/scripts": "8.2.1",
     "@stoplight/storybook-config": "^2.0.5",
     "@testing-library/react": "^10.0.2",
