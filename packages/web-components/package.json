@@ -1,6 +1,7 @@
 {
-  "name": "root",
-  "private": true,
+  "name": "@stoplight/web-components",
+  "version": "0.0.0",
+  "main": "index.js",
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",
   "author": "Stoplight <support@stoplight.io>",
@@ -9,13 +10,7 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
-  "workspaces": [
-    "packages/*"
-  ],
-  "devDependencies": {
-    "lerna": "^3.22.1"
-  },
-  "scripts": {
-    "elements": "yarn workspace @stoplight/elements"
+  "dependencies": {
+    "@stoplight/elements": "^0.0.0"
   }
 }
