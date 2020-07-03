@@ -16,6 +16,7 @@
     "lerna": "^3.22.1"
   },
   "scripts": {
-    "elements": "yarn workspace @stoplight/elements"
+    "elements": "yarn workspace @stoplight/elements",
+    "web-components": "yarn workspace @stoplight/web-components"
   }
 }

@@ -11,14 +11,21 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "build": "rollup --config"
+    "build": "rollup --config",
+    "storybook": "start-storybook"
   },
   "dependencies": {
     "@stoplight/elements": "^0.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.4",
     "@rollup/plugin-typescript": "^5.0.1",
+    "@stoplight/storybook-config": "^2.0.5",
+    "@storybook/html": "^5.3.19",
+    "babel-loader": "^8.1.0",
+    "lodash": "^4.17.15",
     "rollup": "^2.18.2",
+    "sass-inline-svg": "^1.2.3",
     "typescript": "^3.9.6"
   }
 }
