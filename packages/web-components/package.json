@@ -10,7 +10,15 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
+  "scripts": {
+    "build": "rollup --config"
+  },
   "dependencies": {
     "@stoplight/elements": "^0.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^5.0.1",
+    "rollup": "^2.18.2",
+    "typescript": "^3.9.6"
   }
 }
