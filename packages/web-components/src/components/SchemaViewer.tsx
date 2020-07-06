@@ -1,8 +1,8 @@
-import { SchemaViewer, ISchemaViewerProps } from '@stoplight/elements/dist/components/SchemaViewer';
-import { safeStringify, safeParse } from '@stoplight/json';
+import { ISchemaViewerProps, SchemaViewer } from '@stoplight/elements/dist/components/SchemaViewer';
+import { safeParse, safeStringify } from '@stoplight/json';
+import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 
 type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
 
@@ -25,10 +25,22 @@ export class SchemaViewerComponentElement extends HTMLElement {
   public set schema(value: JSONSchema | undefined) {
     this._props.schema = value;
     this.renderComponent();
+
     if (!value) {
       this.removeAttribute('schema');
     }
     this.setAttribute('schema', safeStringify(value));
+  }
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+    // When the drawer is disabled, update keyboard/screen reader behavior.
+    if (name === 'schema') {
+      const deserialized = safeParse(newValue || '');
+      if (deserialized !== this._props.schema) {
+        this._props.schema = deserialized;
+        this.renderComponent();
+      }
+    }
   }
 
   connectedCallback() {
