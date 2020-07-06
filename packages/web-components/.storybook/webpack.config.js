@@ -14,6 +14,17 @@ module.exports = (baseConfig, env, config) => {
     fs: 'empty',
   };
 
+  config.module.rules.unshift({
+    test: /\.tsx?$/,
+    loaders: [
+      {
+        loader: require.resolve('@storybook/source-loader'),
+        options: { parser: 'typescript' },
+      },
+    ],
+    enforce: 'pre',
+  });
+
   last(config.module.rules).include = undefined;
   last(last(config.module.rules).use).options.sassOptions.functions['svg-icon'] = inliner(
     path.resolve('../', '../', 'node_modules', '@stoplight', 'ui-kit', 'styles', 'icons'),
