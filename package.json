@@ -13,7 +13,8 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^3.22.1"
+    "lerna": "^3.22.1",
+    "@stoplight/eslint-config": "^1.1.0"
   },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
