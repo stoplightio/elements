@@ -12,7 +12,7 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
-  "main": "",
+  "main": "src/index.ts",
   "files": [
     "**/*"
   ],
@@ -112,6 +112,7 @@
     "jest-fetch-mock": "^3.0.3",
     "mobx": "^5.13.0",
     "prettier": "^2.0.4",
+    "rimraf": "^3.0.2",
     "ts-jest": "25.3.1",
     "typescript": "3.9.3",
     "vis-data": "^6.5.1",

@@ -14,6 +14,7 @@ module.exports = (baseConfig, env, config) => {
     fs: 'empty',
   };
 
+  last(config.module.rules).include = undefined;
   last(last(config.module.rules).use).options.sassOptions.functions['svg-icon'] = inliner(
     path.resolve('../', '../', 'node_modules', '@stoplight', 'ui-kit', 'styles', 'icons'),
     {
