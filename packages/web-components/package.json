@@ -15,7 +15,9 @@
     "storybook": "start-storybook"
   },
   "dependencies": {
-    "@stoplight/elements": "^0.0.0"
+    "@stoplight/elements": "^0.0.0",
+    "@stoplight/json": "^3.8.1",
+    "json-schema": "^0.2.5"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
