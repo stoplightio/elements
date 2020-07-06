@@ -15,7 +15,7 @@ module.exports = (baseConfig, env, config) => {
   };
 
   config.module.rules.unshift({
-    test: /\.tsx?$/,
+    test: /__stories__\/.*.tsx?$/,
     loaders: [
       {
         loader: require.resolve('@storybook/source-loader'),

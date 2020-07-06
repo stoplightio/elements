@@ -6,7 +6,7 @@ module.exports = {
       name: '@storybook/addon-storysource',
       options: {
         rule: {
-          test: [/.tsx$/],
+          test: [/__stories__\/.*.tsx?$/],
         },
         loaderOptions: {
           parser: 'typescript',

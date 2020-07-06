@@ -13,8 +13,9 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^3.22.1",
-    "@stoplight/eslint-config": "^1.1.0"
+    "@stoplight/eslint-config": "^1.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "lerna": "^3.22.1"
   },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
