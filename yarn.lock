@@ -897,37 +897,37 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@blueprintjs/core@^3.25.0":
-  version "3.25.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.25.0.tgz#a6c8cee85bfdb25df54098642dbff319aed0cca7"
-  integrity sha512-tA6D0+eT6sNjc7GHQFVg6sxch5s4CCz36YnyfjTg5bDfU7BOtIvRmU/52Ki0cfj3PApKBxpSGNbakhY/wRSsXQ==
+"@blueprintjs/core@^3.29.0":
+  version "3.29.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.29.0.tgz#3b8df57e512f9e42623ee21a3fe71fa13c2b7ba1"
+  integrity sha512-3BO6hAFHEN0dS4yeDFH+Luh5ZPbCgl9LHWgaI+Aj4/5doPRImF5lRY+r9L3nW/KK7LBPnCS8gVc1BcfvoZgQVw==
   dependencies:
-    "@blueprintjs/icons" "^3.15.0"
+    "@blueprintjs/icons" "^3.19.0"
     "@types/dom4" "^2.0.1"
     classnames "^2.2"
     dom4 "^2.1.5"
     normalize.css "^8.0.1"
-    popper.js "^1.15.0"
+    popper.js "^1.16.1"
     react-lifecycles-compat "^3.0.4"
     react-popper "^1.3.7"
     react-transition-group "^2.9.0"
     resize-observer-polyfill "^1.5.1"
     tslib "~1.10.0"
 
-"@blueprintjs/icons@^3.15.0":
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.15.0.tgz#264c975826bad3ec8d6f02e9ae3bef092e0ea946"
-  integrity sha512-Mf3OJHT6kYzwdKfiLUBYviQ9oLauxQYrTUi/9ORw8deXLdM1MQddv3H1amD/Oo2FyUPPYlPwsWrFSXViBM0Aiw==
+"@blueprintjs/icons@^3.19.0":
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.19.0.tgz#83ad9fe213705f6656dbec6e9d6bec75d3564455"
+  integrity sha512-pFgEdSDj8q8ESofuXXSfonsiiqQNJ0u54vr8zxQyKggSwgMyASM/h9MdFVED7jXaj5nsda4or+hWM1ilUeES4Q==
   dependencies:
     classnames "^2.2"
     tslib "~1.10.0"
 
-"@blueprintjs/select@^3.12.1":
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-3.12.1.tgz#3cd1444525e6edc1e7f1940454107b9ce4fe5afb"
-  integrity sha512-bu/gQ9Z5sy4KBvEB9gUgut5LluMFdMsVrMu482ySNPZh7gHcfEid5LuiGIG1Vl18dI7jr3dfkF09m5alt+Yr9g==
+"@blueprintjs/select@^3.13.4":
+  version "3.13.4"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-3.13.4.tgz#3ef633239e2eaf69d5579634324d52cf5a323669"
+  integrity sha512-kUw6paX/0ktQp84CF9go4MlDT9lblG+8VHF+Jf5PCKolF2gIaAjV0GxAUCaUnkOu6We7XGlWfhj/pTyOYVzCew==
   dependencies:
-    "@blueprintjs/core" "^3.25.0"
+    "@blueprintjs/core" "^3.29.0"
     classnames "^2.2"
     tslib "~1.10.0"
 
@@ -1171,10 +1171,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@fortawesome/fontawesome-common-types@^0.2.28":
-  version "0.2.28"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.28.tgz#1091bdfe63b3f139441e9cba27aa022bff97d8b2"
-  integrity sha512-gtis2/5yLdfI6n0ia0jH7NJs5i/Z/8M/ZbQL6jXQhCthEOe5Cr5NcQPhgTvFxNOtURE03/ZqUcEskdn2M+QaBg==
+"@fortawesome/fontawesome-common-types@^0.2.29":
+  version "0.2.29"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.29.tgz#e1a456b643237462d390304cab6975ff3fd68397"
+  integrity sha512-cY+QfDTbZ7XVxzx7jxbC98Oxr/zc7R2QpTLqTxqlfyXDrAJjzi/xUIqAUsygELB62JIrbsWxtSRhayKFkGI7MA==
 
 "@iarna/cli@^1.2.0":
   version "1.2.0"
@@ -2100,26 +2100,26 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/ui-kit@^3.0.0-beta.19":
-  version "3.0.0-beta.19"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.19.tgz#812d44590130617dc9d2c0bc84fbfb2a163210a2"
-  integrity sha512-8NTxe9GKEuY5ja7YGzdxDQSqy/aNPLaVITlOrBthRGuCCnbMlKQ1Kq9ZYyII+7Y+YIJgPiebQeUBJ0hCfBhBNA==
+"@stoplight/ui-kit@^3.0.0-beta.20":
+  version "3.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.20.tgz#108f6b24f7e005b656ef0bc0bff879a2b421fba9"
+  integrity sha512-yVCW7qWaWfpPORGofLot+LQ4d8T6uk2RlRjNB9tsq/GDaC0jXQ5QWSWosVJi6aTXKrIQ9ooYL789hPILfjQxWg==
   dependencies:
-    "@blueprintjs/core" "^3.25.0"
-    "@blueprintjs/icons" "^3.15.0"
-    "@blueprintjs/select" "^3.12.1"
-    "@fortawesome/fontawesome-common-types" "^0.2.28"
+    "@blueprintjs/core" "^3.29.0"
+    "@blueprintjs/icons" "^3.19.0"
+    "@blueprintjs/select" "^3.13.4"
+    "@fortawesome/fontawesome-common-types" "^0.2.29"
     classnames "^2.2.6"
     prismjs "^1.20.0"
     react-input-autosize "^2.2.2"
-    react-scrollbars-custom "~4.0.21"
+    react-scrollbars-custom "~4.0.25"
     react-simple-code-editor "~0.11.0"
-    react-tabs "^3.1.0"
+    react-tabs "^3.1.1"
     react-virtualized-auto-sizer "^1.0.2"
     react-window "~1.8.5"
     refractor "^3.0.0"
     tslib "^1.12.0"
-    use-debounce "^3.4.1"
+    use-debounce "^3.4.3"
     yup "^0.28.3"
 
 "@stoplight/yaml-ast-parser@0.0.48":
@@ -4790,7 +4790,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2, classnames@^2.2, classnames@^2.2.0, classnames@^2.2.5, classnames@^2.2.6:
+classnames@^2, classnames@^2.2, classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -4984,6 +4984,11 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
+clsx@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
+
 cmd-shim@^3.0.0, cmd-shim@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/cmd-shim/-/cmd-shim-3.0.3.tgz#2c35238d3df37d98ecdd7d5f6b8dc6b21cadc7cb"
@@ -4992,10 +4997,10 @@ cmd-shim@^3.0.0, cmd-shim@^3.0.3:
     graceful-fs "^4.1.2"
     mkdirp "~0.5.0"
 
-cnbuilder@^1.1.7:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/cnbuilder/-/cnbuilder-1.3.2.tgz#f8ade3986543e6736fc2c8a304d74a244c36d541"
-  integrity sha512-4WygslpZg+W4uVGF4dzN/Vbz0q4arACdMfgPJlx2EZA6+/OhfRT7KFIX6MuN3P+0MUwx8R7sNe+xOKINatwJrg==
+cnbuilder@^2.5.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/cnbuilder/-/cnbuilder-2.6.0.tgz#309b4f34371be80ad5452f983b7bac1af4f09ac8"
+  integrity sha512-SA2gBDcU6B9T1uMhA3m13dVffdaA8RC9TIz7zQygYwbdwOf6l8IGem5UbDc661W2YcQ0aiwt6FqDhDpAE7YUqA==
 
 co@^4.6.0:
   version "4.6.0"
@@ -12756,7 +12761,7 @@ polished@^3.3.1:
   dependencies:
     "@babel/runtime" "^7.8.7"
 
-popper.js@^1.14.4, popper.js@^1.14.7, popper.js@^1.15.0:
+popper.js@^1.14.4, popper.js@^1.14.7, popper.js@^1.16.1:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
   integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -13363,18 +13368,18 @@ react-dom@^16.8.3:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-draggable@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-3.3.2.tgz#966ef1d90f2387af3c2d8bd3516f601ea42ca359"
-  integrity sha512-oaz8a6enjbPtx5qb0oDWxtDNuybOylvto1QLydsXgKmwT7e3GXC2eMVDwEMIUYJIFqVG72XpOv673UuuAq6LhA==
-  dependencies:
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
-
 react-draggable@^4.0.3:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.2.0.tgz#40cc5209082ca7d613104bf6daf31372cc0e1114"
   integrity sha512-5wFq//gEoeTYprnd4ze8GrFc+Rbnx+9RkOMR3vk4EbWxj02U6L6T3yrlKeiw4X5CtjD2ma2+b3WujghcXNRzkw==
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+
+react-draggable@^4.4.2:
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.4.3.tgz#0727f2cae5813e36b0e4962bf11b2f9ef2b406f3"
+  integrity sha512-jV4TE59MBuWm7gb6Ns3Q1mxX8Azffb7oTtDtBgFkxRvhDp38YAARmRplrj0+XGkhOJB5XziArX+4HUUABtyZ0w==
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
@@ -13471,14 +13476,14 @@ react-popper@^1.3.6, react-popper@^1.3.7:
     typed-styles "^0.0.7"
     warning "^4.0.2"
 
-react-scrollbars-custom@~4.0.21:
-  version "4.0.21"
-  resolved "https://registry.yarnpkg.com/react-scrollbars-custom/-/react-scrollbars-custom-4.0.21.tgz#daab3104b9707033a5be29fdc5b7408dee41a5ad"
-  integrity sha512-EwIVXBYsZG91Wm90a8ajSjpclXMu3XehcSGz+QbnLDQbmc+Rj/Uj+gP9bgbhyvQTKlhfjoka77VEWu9/DxOwBg==
+react-scrollbars-custom@~4.0.25:
+  version "4.0.25"
+  resolved "https://registry.yarnpkg.com/react-scrollbars-custom/-/react-scrollbars-custom-4.0.25.tgz#64c1390fc04fe2b90373d5d142bd129a3d46e394"
+  integrity sha512-kipJK49fwvHsDgumIGiTmrJkxw5QD9urN7f4o2VvSrsHNOWMrDppNf+IjgobT5w+ZjbaaHfLk5NmZ/n1zgKtcw==
   dependencies:
-    cnbuilder "^1.1.7"
-    react-draggable "^3.3.2"
-    zoom-level "^1.2.4"
+    cnbuilder "^2.5.0"
+    react-draggable "^4.4.2"
+    zoom-level "^2.5.0"
 
 react-select@^3.0.8:
   version "3.1.0"
@@ -13520,12 +13525,12 @@ react-syntax-highlighter@^11.0.2:
     prismjs "^1.8.4"
     refractor "^2.4.1"
 
-react-tabs@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-3.1.0.tgz#ecc50f034c1d6da2606fab9293055bbc861b382e"
-  integrity sha512-9RKc77HCPsjQDVPyZEw37g3JPtg26oSQ9o4mtaVXjJuLedDX5+TQcE+MRNKR+4aO3GMAY4YslCePGG1//MQ3Jg==
+react-tabs@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-3.1.1.tgz#b363a239f76046bb2158875a1e5921b11064052f"
+  integrity sha512-HpySC29NN1BkzBAnOC+ajfzPbTaVZcSWzMSjk56uAhPC/rBGtli8lTysR4CfPAyEE/hfweIzagOIoJ7nu80yng==
   dependencies:
-    classnames "^2.2.0"
+    clsx "^1.1.0"
     prop-types "^15.5.0"
 
 react-test-renderer@^16.0.0-0:
@@ -16405,10 +16410,10 @@ use-callback-ref@^1.2.1:
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.1.tgz#898759ccb9e14be6c7a860abafa3ffbd826c89bb"
   integrity sha512-C3nvxh0ZpaOxs9RCnWwAJ+7bJPwQI8LHF71LzbQ3BvzH5XkdtlkMadqElGevg5bYBDFip4sAnD4m06zAKebg1w==
 
-use-debounce@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-3.4.1.tgz#361a20e583c1bd4a44f8b29a26793a52a0b84d2c"
-  integrity sha512-KHZPsL+cZvOt/ZAsHTcoAK65ImXU0iG9FDeofuj9uJTdUULF6Gjws8HpK+JlIjZpZ7LTqPHZtEknc+Im4cB3AA==
+use-debounce@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-3.4.3.tgz#5df9322322b3f1b1c263d46413f9facf6d8b56ab"
+  integrity sha512-nxy+opOxDccWfhMl36J5BSCTpvcj89iaQk2OZWLAtBJQj7ISCtx1gh+rFbdjGfMl6vtCZf6gke/kYvrkVfHMoA==
 
 use-sidecar@^1.0.1:
   version "1.0.2"
@@ -17199,10 +17204,10 @@ yup@^0.28.3:
     synchronous-promise "^2.0.10"
     toposort "^2.0.2"
 
-zoom-level@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/zoom-level/-/zoom-level-1.2.4.tgz#52bc5ae3af945cac82f9f685e8707fa2c9b962e2"
-  integrity sha512-nGFUhyU3Y4jWh6l+hYCVVUxu3vrD0i/RkumJRzYGU0COMWMs2Szs84mltacd64R9zJcxwKckWQN/KKbfB1btVA==
+zoom-level@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/zoom-level/-/zoom-level-2.5.0.tgz#286ec16f247b8bb7a900df6612567688eeef498a"
+  integrity sha512-7UlRWU4Q3uCMCeDVMOm7eBrIu145OqsIJ3p6zq58l8UsSYwKWxc6zEapC5YA9tIeh0oheb4cT9Kk2Wq353loFg==
 
 zwitch@^1.0.0:
   version "1.0.5"
