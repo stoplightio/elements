@@ -1,298 +1,112 @@
-import { IBranchNode } from '../../types';
+import { IBranchNode, ITableOfContentsTree } from '../../types';
 
-export const nodes: IBranchNode[] = [
-  {
-    id: 32,
-    baseUri: '/docs/introduction.md',
-    node: {
-      id: 1,
-      uri: '/docs/introduction.md',
+export const tree: ITableOfContentsTree = {
+  items: [
+    {
+      title: 'Introduction',
+      uri: 'docs/introduction.md',
     },
-    snapshot: {
-      id: 1,
-      type: 'article',
-      name: 'Introduction',
-      tagNames: ['00. Welcome'],
+    {
+      title: 'UI Overview',
+      uri: 'docs/ui-overview.md',
     },
-  },
-  {
-    id: 39,
-    baseUri: '/docs/markdown/basic-syntax.md',
-    node: {
-      id: 3,
-      uri: '/docs/markdown/basic-syntax.md',
+    {
+      title: 'Markdown',
     },
-    snapshot: {
-      id: 40462,
-      type: 'article',
-      name: 'Markdown Basics',
-      tagNames: ['01. Using Markdown'],
+    {
+      title: 'Markdown Basics',
+      uri: 'docs/markdown/basic-syntax.md',
     },
-  },
-  {
-    id: 40,
-    baseUri: '/docs/markdown/stoplight-flavored-markdown.md',
-    node: {
-      id: 4,
-      uri: '/docs/markdown/stoplight-flavored-markdown.md',
+    {
+      title: 'Stoplight Flavored Markdown (SMD)',
+      uri: 'docs/markdown/stoplight-flavored-markdown.md',
     },
-    snapshot: {
-      id: 4,
-      type: 'article',
-      name: 'Stoplight Flavored Markdown (SMD)',
-      tagNames: ['01. Using Markdown'],
+    {
+      title: 'Swagger Petstore',
     },
-  },
-  {
-    id: 36,
-    baseUri: '/docs/ui-overview.md',
-    node: {
-      id: 2,
-      uri: '/docs/ui-overview.md',
+    {
+      title: 'Overview',
+      uri: 'reference/petstore/openapi.yaml',
     },
-    snapshot: {
-      id: 2,
-      type: 'article',
-      name: 'UI Overview',
-      tagNames: ['00. Welcome'],
+    {
+      title: 'Pets',
+      items: [
+        {
+          title: 'Create a pet',
+          uri: 'reference/petstore/openapi.yaml/paths/~1pets/post',
+        },
+        {
+          title: 'Info for a specific pet',
+          uri: 'reference/petstore/openapi.yaml/paths/~1pets~1%7BpetId%7D/get',
+        },
+        {
+          title: 'List all pets',
+          uri: 'reference/petstore/openapi.yaml/paths/~1pets/get',
+        },
+        {
+          title: 'Pets',
+          uri: 'reference/petstore/openapi.yaml/components/schemas/Pets',
+        },
+      ],
     },
-  },
-  {
-    id: 41,
-    baseUri: '/reference/common/models/error.yaml',
-    node: {
-      id: 5,
-      uri: '/reference/common/models/error.v1.yaml',
+    {
+      title: 'To-dos',
     },
-    snapshot: {
-      id: 5,
-      type: 'model',
-      name: 'Error',
-      tagNames: ['Common'],
+    {
+      title: 'Overview',
+      uri: 'reference/todos/openapi.json',
     },
-  },
-  {
-    id: 45,
-    baseUri: '/reference/petstore/models/category.yaml',
-    node: {
-      id: 6,
-      uri: '/reference/petstore/models/category.v1.yaml',
+    {
+      title: 'Todos',
+      items: [
+        {
+          title: 'Create Todo',
+          uri: 'reference/todos/openapi.json/paths/~1todos/post',
+        },
+        {
+          title: 'Delete Todo',
+          uri: 'reference/todos/openapi.json/paths/~1todos~1%7BtodoId%7D/delete',
+        },
+        {
+          title: 'Get Todo',
+          uri: 'reference/todos/openapi.json/paths/~1todos~1%7BtodoId%7D/get',
+        },
+        {
+          title: 'List Todo',
+          uri: 'reference/todos/openapi.json/paths/~1todos/get',
+        },
+        {
+          title: 'Update Todo',
+          uri: 'reference/todos/openapi.json/paths/~1todos~1%7BtodoId%7D/put',
+        },
+      ],
     },
-    snapshot: {
-      id: 6,
-      type: 'model',
-      name: 'Category',
-      tagNames: ['Pets'],
+    {
+      title: 'Models',
     },
-  },
-  {
-    id: 46,
-    baseUri: '/reference/petstore/models/pet.yaml',
-    node: {
-      id: 7,
-      uri: '/reference/petstore/models/pet.v1.yaml',
+    {
+      title: 'Category',
+      uri: 'reference/petstore/models/category.yaml',
     },
-    snapshot: {
-      id: 7,
-      type: 'model',
-      name: 'Pet',
-      tagNames: ['Pets'],
+    {
+      title: 'Error',
+      uri: 'reference/common/models/error.yaml',
     },
-  },
-  {
-    id: 51,
-    baseUri: '/reference/petstore/openapi.yaml',
-    node: {
-      id: 12,
-      uri: '/reference/petstore/openapi.v1.yaml',
+    {
+      title: 'Pet',
+      uri: 'reference/petstore/models/pet.yaml',
     },
-    snapshot: {
-      id: 12,
-      type: 'http_service',
-      name: 'Swagger Petstore',
-      tagNames: [],
+    {
+      title: 'Todo Full',
+      uri: 'reference/todos/models/todo-full.json',
     },
-  },
-  {
-    id: 47,
-    baseUri: '/reference/petstore/openapi.yaml/components/schemas/Pets',
-    node: {
-      id: 8,
-      uri: '/reference/petstore/openapi.v1.yaml/components/schemas/Pets',
+    {
+      title: 'Todo Partial',
+      uri: 'reference/todos/models/todo-partial.json',
     },
-    snapshot: {
-      id: 8,
-      type: 'model',
-      name: 'Pets',
-      tagNames: ['Pets'],
+    {
+      title: 'User',
+      uri: 'reference/todos/models/user.json',
     },
-  },
-  {
-    id: 55,
-    baseUri: '/reference/petstore/openapi.yaml/paths/~1pets~1{petId}/get',
-    node: {
-      id: 16,
-      uri: '/reference/petstore/openapi.v1.yaml/paths/~1pets~1{petId}/get',
-    },
-    snapshot: {
-      id: 37441,
-      type: 'http_operation',
-      name: 'Info for a specific pet',
-      tagNames: ['pets'],
-    },
-  },
-  {
-    id: 53,
-    baseUri: '/reference/petstore/openapi.yaml/paths/~1pets/get',
-    node: {
-      id: 14,
-      uri: '/reference/petstore/openapi.v1.yaml/paths/~1pets/get',
-    },
-    snapshot: {
-      id: 37439,
-      type: 'http_operation',
-      name: 'List all pets',
-      tagNames: ['pets'],
-    },
-  },
-  {
-    id: 54,
-    baseUri: '/reference/petstore/openapi.yaml/paths/~1pets/post',
-    node: {
-      id: 15,
-      uri: '/reference/petstore/openapi.v1.yaml/paths/~1pets/post',
-    },
-    snapshot: {
-      id: 35833,
-      type: 'http_operation',
-      name: 'Create a pet',
-      tagNames: ['pets'],
-    },
-  },
-  {
-    id: 48,
-    baseUri: '/reference/todos/models/todo-full.json',
-    node: {
-      id: 9,
-      uri: '/reference/todos/models/todo-full.v1.json',
-    },
-    snapshot: {
-      id: 9,
-      type: 'model',
-      name: 'Todo Full',
-      tagNames: ['Todos'],
-    },
-  },
-  {
-    id: 49,
-    baseUri: '/reference/todos/models/todo-partial.json',
-    node: {
-      id: 10,
-      uri: '/reference/todos/models/todo-partial.v1.json',
-    },
-    snapshot: {
-      id: 10,
-      type: 'model',
-      name: 'Todo Partial',
-      tagNames: ['Todos'],
-    },
-  },
-  {
-    id: 50,
-    baseUri: '/reference/todos/models/user.json',
-    node: {
-      id: 11,
-      uri: '/reference/todos/models/user.v1.json',
-    },
-    snapshot: {
-      id: 11,
-      type: 'model',
-      name: 'User',
-      tagNames: ['Todos'],
-    },
-  },
-  {
-    id: 52,
-    baseUri: '/reference/todos/openapi.json',
-    node: {
-      id: 13,
-      uri: '/reference/todos/openapi.v1.json',
-    },
-    snapshot: {
-      id: 13,
-      type: 'http_service',
-      name: 'To-dos',
-      tagNames: ['Todos'],
-    },
-  },
-  {
-    id: 58,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos~1{todoId}/delete',
-    node: {
-      id: 19,
-      uri: '/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/delete',
-    },
-    snapshot: {
-      id: 37444,
-      type: 'http_operation',
-      name: 'Delete Todo',
-      tagNames: ['Todos'],
-    },
-  },
-  {
-    id: 56,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos~1{todoId}/get',
-    node: {
-      id: 17,
-      uri: '/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/get',
-    },
-    snapshot: {
-      id: 37442,
-      type: 'http_operation',
-      name: 'Get Todo',
-      tagNames: ['Todos'],
-    },
-  },
-  {
-    id: 57,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos~1{todoId}/put',
-    node: {
-      id: 18,
-      uri: '/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
-    },
-    snapshot: {
-      id: 37443,
-      type: 'http_operation',
-      name: 'Update Todo',
-      tagNames: ['Todos'],
-    },
-  },
-  {
-    id: 60,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos/get',
-    node: {
-      id: 21,
-      uri: '/reference/todos/openapi.v1.json/paths/~1todos/get',
-    },
-    snapshot: {
-      id: 37446,
-      type: 'http_operation',
-      name: 'List Todos',
-      tagNames: ['Todos'],
-    },
-  },
-  {
-    id: 59,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos/post',
-    node: {
-      id: 20,
-      uri: '/reference/todos/openapi.v1.json/paths/~1todos/post',
-    },
-    snapshot: {
-      id: 37445,
-      type: 'http_operation',
-      name: 'Create Todo',
-      tagNames: ['Todos'],
-    },
-  },
-];
+  ],
+};
