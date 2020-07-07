@@ -8,15 +8,10 @@ import * as React from 'react';
 import { ActiveInfoContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
 import { useComputeToc } from '../../hooks/useComputeToc';
-import { IBranchNode, TableOfContentsLinkWithId } from '../../types';
+import { ITableOfContentsComponent, TableOfContentsLinkWithId } from '../../types';
 
-export interface ITableOfContents {
-  nodes: IBranchNode[];
-  className?: string;
-}
-
-export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nodes, className }) => {
-  const contents = useComputeToc(nodes);
+export const TableOfContents: React.FunctionComponent<ITableOfContentsComponent> = ({ tree, className }) => {
+  const contents = useComputeToc(tree);
 
   return <UIKitTableOfContents className={className} contents={contents} rowComponent={ElementsTocRow} />;
 };
