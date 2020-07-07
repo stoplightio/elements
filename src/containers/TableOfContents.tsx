@@ -3,86 +3,62 @@ import { useQuery } from 'urql';
 
 import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
-import { IBranchNode, INodeFilter } from '../types';
 import { ActiveInfoContext } from './Provider';
 
 export interface ITableOfContents {
-  filter?: INodeFilter;
   className?: string;
 }
 
-const query = `
-query ElementsTableOfContents(
+const tocQuery = `
+query ProjectTableOfContents(
   $workspaceId: Int!
-  $projectSlug: String
+  $projectId: Int!
   $branchSlug: String
-  $baseUri: String
 ) {
-  sl_search_nodes(
-    args: { workspaceid: $workspaceId, search: "" }
-    where: {
-      branchNode: { baseUri: { _ilike: $baseUri }, branch: { slug: { _eq: $branchSlug } } }
-      project: { slug: { _eq: $projectSlug } }
-    }
-  ) {
-    id
-
-    branchNode {
-      id
-
-      node {
-        id
-        uri
-      }
-  
-      snapshot {
-        id
-        name
-        type
-      }
-    }
+  projectTableOfContents(projectId: $projectId, workspaceId: $workspaceId) {
+    data
   }
 }
 `;
 
-const workspaceQuery = `
-query ElementsWorkspaceBySlug($slug: String!) {
-  workspaces(limit: 1, where: { slug: { _eq: $slug } }) {
+const projectQuery = `
+query ElementsProjectBySlug($workspaceSlug: String!, $projectSlug: String!) {
+  workspaces(limit: 1, where: { slug: { _eq: $workspaceSlug } }) {
+    id
+  }
+  projects(limit: 1, where: { slug: { _eq: $projectSlug } }) {
     id
   }
 }
 `;
 
-export const TableOfContents: React.FC<ITableOfContents> = ({ className, filter }) => {
+export const TableOfContents: React.FC<ITableOfContents> = ({ className }) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data: workspaceData, fetching: workspaceFetching }] = useQuery({
-    query: workspaceQuery,
+  const [{ data: projectData, fetching: projectFetching }] = useQuery({
+    query: projectQuery,
     variables: {
-      slug: info.workspace,
+      workspaceSlug: info.workspace,
+      projectSlug: info.project,
     },
   });
-  const workspaceId = workspaceData?.workspaces?.[0]?.id;
+
+  const workspaceId = projectData?.workspaces?.[0]?.id;
+  const projectId = projectData?.projects?.[0]?.id;
 
   const [{ data, fetching }] = useQuery({
-    query,
-    pause: !workspaceId,
+    query: tocQuery,
     variables: {
       workspaceId,
-      projectSlug: info.project,
-      branchSlug: info.branch,
-      baseUri: filter?.nodeUri ? `${filter.nodeUri}%` : undefined,
+      projectId,
     },
   });
+  const tocData = data?.projectTableOfContents?.data;
+  const tree = tocData ? (typeof tocData === 'string' ? JSON.parse(tocData) : tocData) : { items: [] };
 
-  if (workspaceFetching || fetching) {
+  if (projectFetching || fetching) {
     return <TableOfContentsSkeleton className={className} />;
   }
 
-  return (
-    <TableOfContentsComponent
-      className={className}
-      nodes={(data?.sl_search_nodes || []).map(({ branchNode }: { branchNode: IBranchNode }) => branchNode)}
-    />
-  );
+  return <TableOfContentsComponent className={className} tree={tree} />;
 };
