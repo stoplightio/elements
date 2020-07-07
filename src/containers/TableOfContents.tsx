@@ -3,6 +3,7 @@ import { useQuery } from 'urql';
 
 import { TableOfContents as TableOfContentsComponent } from '../components/TableOfContents';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
+import { ITableOfContentsTree } from '../types';
 import { ActiveInfoContext } from './Provider';
 
 export interface ITableOfContents {
@@ -54,7 +55,11 @@ export const TableOfContents: React.FC<ITableOfContents> = ({ className }) => {
     },
   });
   const tocData = data?.projectTableOfContents?.data;
-  const tree = tocData ? (typeof tocData === 'string' ? JSON.parse(tocData) : tocData) : { items: [] };
+  const tree: ITableOfContentsTree = tocData
+    ? typeof tocData === 'string'
+      ? JSON.parse(tocData)
+      : tocData
+    : { items: [] };
 
   if (projectFetching || fetching) {
     return <TableOfContentsSkeleton className={className} />;
