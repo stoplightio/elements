@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: yarn
-      - run: yarn tsc --noEmit
+      - run: yarn type-check
       - run: yarn test.prod
   release:
     docker:
