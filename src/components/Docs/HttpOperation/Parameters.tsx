@@ -122,14 +122,16 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       <div className="flex items-center">
         <div className="font-medium font-mono">{parameter.name}</div>
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>
-        <div
-          className={cn('ml-2 text-sm', {
-            'text-danger': parameter.required,
-            'opacity-50': !parameter.required,
-          })}
-        >
-          {parameter.required ? 'required' : 'optional'}
-        </div>
+        {parameterType !== 'path' && (
+          <div
+            className={cn('ml-2 text-sm', {
+              'text-danger': parameter.required,
+              'opacity-50': !parameter.required,
+            })}
+          >
+            {parameter.required ? 'required' : 'optional'}
+          </div>
+        )}
         <NumberValidations validations={numberValidations} />
       </div>
 
