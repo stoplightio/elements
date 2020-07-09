@@ -12,23 +12,12 @@ export interface ITableOfContents {
 
 const tocQuery = `
 query ProjectTableOfContents(
-  $workspaceId: Int!
-  $projectId: Int!
+  $workspaceSlug: String!
+  $projectSlug: String!
   $branchSlug: String
 ) {
-  projectTableOfContents(projectId: $projectId, workspaceId: $workspaceId) {
+  projectTableOfContents(projectSlug: $projectSlug, workspaceSlug: $workspaceSlug) {
     data
-  }
-}
-`;
-
-const projectQuery = `
-query ElementsProjectBySlug($workspaceSlug: String!, $projectSlug: String!) {
-  workspaces(limit: 1, where: { slug: { _eq: $workspaceSlug } }) {
-    id
-  }
-  projects(limit: 1, where: { slug: { _eq: $projectSlug } }) {
-    id
   }
 }
 `;
@@ -36,22 +25,11 @@ query ElementsProjectBySlug($workspaceSlug: String!, $projectSlug: String!) {
 export const TableOfContents: React.FC<ITableOfContents> = ({ className }) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data: projectData, fetching: projectFetching }] = useQuery({
-    query: projectQuery,
-    variables: {
-      workspaceSlug: info.workspace,
-      projectSlug: info.project,
-    },
-  });
-
-  const workspaceId = projectData?.workspaces?.[0]?.id;
-  const projectId = projectData?.projects?.[0]?.id;
-
   const [{ data, fetching }] = useQuery({
     query: tocQuery,
     variables: {
-      workspaceId,
-      projectId,
+      workspaceSlug: info.workspace,
+      projectSlug: info.project,
     },
   });
   const tocData = data?.projectTableOfContents?.data;
@@ -61,7 +39,7 @@ export const TableOfContents: React.FC<ITableOfContents> = ({ className }) => {
       : tocData
     : { items: [] };
 
-  if (projectFetching || fetching) {
+  if (fetching) {
     return <TableOfContentsSkeleton className={className} />;
   }
 
