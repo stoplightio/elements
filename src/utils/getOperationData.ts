@@ -44,7 +44,7 @@ export function getOperationData(operation: Partial<IHttpOperation>): Partial<Re
     }
   }
 
-  const body = getBodyFromOperation(operation);
+  const body = getBodyFromOperation(operation) || '';
 
   return {
     publicServers: operation.servers || [],
@@ -71,11 +71,16 @@ function getParamsFromOperation(operation: Partial<IHttpOperation>, type: 'query
 }
 
 function getBodyFromOperation(operation: Partial<IHttpOperation>) {
-  const schema = get(operation, 'request.body.contents[0].schema');
+  try {
+    const schema = get(operation, 'request.body.contents[0].schema');
 
-  if (schema) {
-    return sampler.sample(schema);
+    if (schema) {
+      return sampler.sample(schema);
+    }
+  } catch (e) {
+    console.warn('Unable to create sample request body from schema', e);
+    return undefined;
   }
 
-  return '';
+  return undefined;
 }
