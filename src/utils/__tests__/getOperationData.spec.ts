@@ -89,4 +89,26 @@ describe('getOperationData()', () => {
       queryParams: [],
     });
   });
+
+  it('should handle invalid ref', () => {
+    expect(
+      getOperationData({
+        request: {
+          body: {
+            contents: [
+              {
+                mediaType: 'application/json',
+                schema: {
+                  $ref: 'https://nonexistent.external.ref',
+                },
+              },
+            ],
+          },
+        },
+      }),
+    ).toMatchObject({
+      method: 'get',
+      body: '',
+    });
+  });
 });

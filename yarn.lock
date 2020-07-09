@@ -7528,7 +7528,7 @@ fork-ts-checker-webpack-plugin@1.5.0:
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
 
-form-data@3.0.0:
+form-data@^3:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
   integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
@@ -8467,7 +8467,7 @@ https-proxy-agent@^5.0.0:
     commander "^2.9.0"
     debug "^2.2.0"
     event-stream "3.3.4"
-    form-data "^3"
+    form-data "3.0.0"
     fs-readfile-promise "^2.0.1"
     fs-writefile-promise "^1.0.3"
     har-validator "^5.0.0"
