@@ -2013,12 +2013,12 @@
     type-is "^1.6.18"
     uri-template-lite "^20.5.0"
 
-"@stoplight/react-error-boundary@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/react-error-boundary/-/react-error-boundary-1.0.0.tgz#758dbee1ae3afa8f2cc42f6fc82aefc9d4efaa67"
-  integrity sha512-UH5ZyNqzQp8w/fm8cpq0tmsc63xtMBFmfp7g6ZYW4+/Bhnm/T1RhRpG/5d7/3ZkMLiJ7avsoslbHJ2JU6geEDQ==
+"@stoplight/react-error-boundary@^1.0.0", "@stoplight/react-error-boundary@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/react-error-boundary/-/react-error-boundary-1.0.1.tgz#158f494aa591f2859728535008334c3337765ccf"
+  integrity sha512-cth0zNZapFPmRJjUhhmWp5p89hnXTkBwBxKGXLEDtdeQtdR8NoEA7UF3SraTqPiycq0wz7+P0yH0mUVMZuO9fA==
   dependencies:
-    "@stoplight/types" "^11.1.0"
+    "@stoplight/types" "^11.9.0"
 
 "@stoplight/scripts@8.2.1":
   version "8.2.1"
@@ -2092,7 +2092,7 @@
     mobx-react-lite "^1.5.2"
     strict-event-emitter-types "^2.0.0"
 
-"@stoplight/types@^11.1.0", "@stoplight/types@^11.6.0", "@stoplight/types@^11.9.0":
+"@stoplight/types@^11.6.0", "@stoplight/types@^11.9.0":
   version "11.9.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.9.0.tgz#ced7de2dd53439d2409a3cb390bf7d5b76382ac6"
   integrity sha512-4bzPpWZobt0e+d0OtALCJyl1HGzKo6ur21qxnId9dTl8v3yeD+5HJKZ2h1mv7e94debH5QDtimMU80V6jbXM8Q==
