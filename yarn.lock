@@ -2013,10 +2013,10 @@
     type-is "^1.6.18"
     uri-template-lite "^20.5.0"
 
-"@stoplight/react-error-boundary@^1.0.0", "@stoplight/react-error-boundary@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/react-error-boundary/-/react-error-boundary-1.0.1.tgz#158f494aa591f2859728535008334c3337765ccf"
-  integrity sha512-cth0zNZapFPmRJjUhhmWp5p89hnXTkBwBxKGXLEDtdeQtdR8NoEA7UF3SraTqPiycq0wz7+P0yH0mUVMZuO9fA==
+"@stoplight/react-error-boundary@^1.0.0", "@stoplight/react-error-boundary@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/react-error-boundary/-/react-error-boundary-1.1.0.tgz#9b0fb5d0538abbf9a416723b90f5b776bf68a75d"
+  integrity sha512-z/1gDVQAafqYuJksL212F1DXHSr604KDqAspZwbC+kWVqCsddQBmXzwI4Lqqem4wHbNGeVZYk3svW+sILX/PUQ==
   dependencies:
     "@stoplight/types" "^11.9.0"
 
