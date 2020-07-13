@@ -75,10 +75,6 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
       ) : null}
 
       {data.security && <HttpSecuritySchemes className="mb-10" title="Global Securities" securities={data.security} />}
-
-      {data.securitySchemes && (
-        <HttpSecuritySchemes className="mb-10" title="Security Schemes" securities={data.securitySchemes} />
-      )}
     </div>
   );
 });
