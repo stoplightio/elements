@@ -1,0 +1,29 @@
+{
+  "name": "root",
+  "private": true,
+  "homepage": "https://github.com/stoplightio/elements",
+  "bugs": "https://github.com/stoplightio/elements/issues",
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/elements"
+  },
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@stoplight/eslint-config": "^1.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "lerna": "^3.22.1"
+  },
+  "scripts": {
+    "elements": "yarn workspace @stoplight/elements",
+    "build": "yarn workspaces run build",
+    "build.docs": "yarn workspaces run build.docs",
+    "release": "yarn workspaces run release",
+    "release.docs": "yarn workspaces run release.docs",
+    "type-check": "yarn workspaces run type-check",
+    "test.prod": "yarn workspaces run test.prod"
+  }
+}
