@@ -10,7 +10,7 @@
 
 # production
 /build
-/dist
+dist
 /docs-auto
 
 # misc
