@@ -2020,10 +2020,10 @@
   dependencies:
     "@stoplight/types" "^11.9.0"
 
-"@stoplight/scripts@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/scripts/-/scripts-8.2.1.tgz#87a50fc849319aa6e401aea0a3b5c626b6e559f8"
-  integrity sha512-8SROPbbQZHrS0y56MLlIIF0GU4nWYS6Ghu3+wVvgLXV5KWkXbYazqH70Mfmpk6z9xl8ro+srLdCTAwtiH45+Bg==
+"@stoplight/scripts@8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/scripts/-/scripts-8.2.2.tgz#148356d9a4ac44931e7c9a2237f92c686e7a2cb8"
+  integrity sha512-QBj+yhTeGMEtU9T54B8ZRF2k8De3GgLjVXIeazi0QLPlEXz/I99txqTK6YHCGSchHCB7kt9cxyPngETCdqohSQ==
   dependencies:
     "@commitlint/cli" "8.3.5"
     "@commitlint/config-conventional" "8.3.4"
