@@ -1876,10 +1876,10 @@
   dependencies:
     eslint-config-prettier "^6.7.0"
 
-"@stoplight/json-ref-resolver@^3.0.9":
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-3.0.9.tgz#47239d69704129fa9682e3451f3a69d6e874c10c"
-  integrity sha512-PawoheQniPbL9gBt5WstwgtU/ex+CrV5JYkSm0xnNtinx76eAAofm+3cCZUQvyaAK4uMfvvIA5fyX33iSlzVJg==
+"@stoplight/json-ref-resolver@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-ref-resolver/-/json-ref-resolver-3.1.0.tgz#50753b49e650840247aede5734fabb7992eda87d"
+  integrity sha512-tEVlRi9sMVektCiPsnint0OD/2zzQOPb7GoWboBznDc3f/99SAjgL6TBWvuFCJXWLwhZP4GA55FggmtsF5OvQg==
   dependencies:
     "@stoplight/json" "^3.4.0"
     "@stoplight/path" "^1.3.1"
