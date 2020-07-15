@@ -2020,10 +2020,10 @@
   dependencies:
     "@stoplight/types" "^11.9.0"
 
-"@stoplight/scripts@8.2.2":
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/scripts/-/scripts-8.2.2.tgz#148356d9a4ac44931e7c9a2237f92c686e7a2cb8"
-  integrity sha512-QBj+yhTeGMEtU9T54B8ZRF2k8De3GgLjVXIeazi0QLPlEXz/I99txqTK6YHCGSchHCB7kt9cxyPngETCdqohSQ==
+"@stoplight/scripts@8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/scripts/-/scripts-8.2.3.tgz#641191ff47b74109ca275bdfe77468f2a06d3a37"
+  integrity sha512-v0hh+e7PqdNuMLc9fv4rBKvtaLYU2Lva/Mmd7HZ9joSrczEfVcowM4BNDGrkbfIeA74mbWIFebi0+dJ9asYzrg==
   dependencies:
     "@commitlint/cli" "8.3.5"
     "@commitlint/config-conventional" "8.3.4"
@@ -2040,6 +2040,7 @@
     commitizen "4.0.3"
     cz-conventional-changelog "3.1.x"
     esm "^3.2.25"
+    find-up "^4.1.0"
     husky "4.2.3"
     inquirer "7.0.4"
     lint-staged "10.0.7"
