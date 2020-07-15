@@ -24,7 +24,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
           {data.method || 'UNKNOWN'}
         </div>
 
-        {data.path && <div className="flex-1 font-medium text-gray-6 dark:text-gray-3">{data.path}</div>}
+        {data.path && <div className="flex-1 font-medium text-gray-6 dark:text-gray-3 break-all">{data.path}</div>}
       </h2>
 
       <MarkdownViewer
