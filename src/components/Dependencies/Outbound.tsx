@@ -30,7 +30,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
       const nodeId = e.nodes[0];
       if (!nodeId) return;
 
-      const foundEdge = edges.find((edge) => edge.toBranchNodeId === nodeId || edge.fromBranchNodeId === nodeId);
+      const foundEdge = edges.find(edge => edge.toBranchNodeId === nodeId || edge.fromBranchNodeId === nodeId);
       if (foundEdge) {
         setActiveNodeId(nodeId);
         setActiveNodeEdge(foundEdge);
@@ -62,7 +62,7 @@ export const OutboundDependencies = ({ className, node, edges, getNetwork }: IOu
         events={{
           click: onClickNode,
         }}
-        getNetwork={(network) => {
+        getNetwork={network => {
           visNetwork.current = network;
           if (network) {
             network.setSelection({ edges: [], nodes: [activeNodeId || node.id] });

@@ -20,7 +20,7 @@ export interface IInboundDependencies {
 
 export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, nodeType, className }) => {
   const edgesByNodeType = groupBy(uniqBy(edges, 'fromBranchNodeId'), 'fromBranchNodeType');
-  const firstTab = edges.length ? findKey(edgesByNodeType, (nodes) => nodes?.length) : undefined;
+  const firstTab = edges.length ? findKey(edgesByNodeType, nodes => nodes?.length) : undefined;
   const [selectedTabId, setSelectedTabId] = React.useState();
 
   const onChangeTab = React.useCallback(

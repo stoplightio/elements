@@ -140,7 +140,7 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
           <InputGroup
             className="w-full h-full"
             type="text"
-            onFocus={(event) => {
+            onFocus={event => {
               handleAddParam({ key: event.currentTarget.value });
               setInFocus({
                 prop: 'name',
@@ -157,7 +157,7 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
           <InputGroup
             className="w-full h-full"
             type="text"
-            onFocus={(event) => {
+            onFocus={event => {
               handleAddParam({ value: event.currentTarget.value });
               setInFocus({
                 prop: 'value',

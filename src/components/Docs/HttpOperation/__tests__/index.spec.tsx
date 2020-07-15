@@ -62,7 +62,7 @@ describe('HttpOperation', () => {
 
       wrapper = mount(<HttpOperation data={operationData} />);
       const queryParameterElement = wrapper.findWhere(
-        (w) => w.type() === Parameters && w.props().title === 'Query Parameters',
+        w => w.type() === Parameters && w.props().title === 'Query Parameters',
       );
       expect(queryParameterElement.props().parameters).toEqual(operationData.request.query);
       expect(queryParameterElement.find(Tag).length).toEqual(4);
@@ -95,7 +95,7 @@ describe('HttpOperation', () => {
       };
       wrapper = mount(<HttpOperation data={operationData} />);
       const queryParameterElement = wrapper.findWhere(
-        (w) => w.type() === Parameters && w.props().title === 'Query Parameters',
+        w => w.type() === Parameters && w.props().title === 'Query Parameters',
       );
       expect(queryParameterElement.find(Tag).length).toEqual(1);
     });
@@ -193,7 +193,7 @@ describe('HttpOperation', () => {
 
       wrapper = mount(<HttpOperation data={data} />);
       const headerParameterElement = wrapper.findWhere(
-        (w) => w.type() === Parameters && w.props().title === 'Header Parameters',
+        w => w.type() === Parameters && w.props().title === 'Header Parameters',
       );
       expect(headerParameterElement.props().parameters).toEqual(data.request.headers);
     });
@@ -231,7 +231,7 @@ describe('HttpOperation', () => {
 
       wrapper = mount(<HttpOperation data={data} />);
       const pathParameterElement = wrapper.findWhere(
-        (w) => w.type() === Parameters && w.props().title === 'Path Parameters',
+        w => w.type() === Parameters && w.props().title === 'Path Parameters',
       );
       expect(pathParameterElement.props().parameters).toEqual(data.request.path);
     });

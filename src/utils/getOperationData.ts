@@ -61,7 +61,7 @@ export function getOperationData(operation: Partial<IHttpOperation>): Partial<Re
 }
 
 function getParamsFromOperation(operation: Partial<IHttpOperation>, type: 'query' | 'path' | 'headers') {
-  return filter(get(operation, `request.${type}`, []), (p) => get(p, 'name')).map((p: IHttpParam) => ({
+  return filter(get(operation, `request.${type}`, []), p => get(p, 'name')).map((p: IHttpParam) => ({
     name: p.name,
     value: has(p.schema, 'default') ? String(get(p.schema, 'default')) : '',
     isEnabled: p.required || has(p.schema, 'default'),

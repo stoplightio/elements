@@ -21,7 +21,7 @@ export const TableOfContents: React.FunctionComponent<ITableOfContents> = ({ nod
   return <UIKitTableOfContents className={className} contents={contents} rowComponent={ElementsTocRow} />;
 };
 
-const ElementsTocRow: RowComponentType<TableOfContentsLinkWithId> = (props) => {
+const ElementsTocRow: RowComponentType<TableOfContentsLinkWithId> = props => {
   const { link: Link } = useComponents();
   const info = React.useContext(ActiveInfoContext);
 

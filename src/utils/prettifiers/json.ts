@@ -1,6 +1,6 @@
 import { Prettifier } from './types';
 
-export const prettifyJSON: Prettifier<unknown> = (json) => {
+export const prettifyJSON: Prettifier<unknown> = json => {
   try {
     let parsedJson = json;
     if (typeof json === 'string') {
