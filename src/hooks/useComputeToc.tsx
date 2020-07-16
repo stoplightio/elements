@@ -29,8 +29,8 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
 
   /** All document nodes */
   const docsNodes = sortBy(
-    branchNodes.filter((branchNode) => branchNode.snapshot.type === NodeType.Article),
-    (branchNode) => toLower(branchNode.node.uri),
+    branchNodes.filter(branchNode => branchNode.snapshot.type === NodeType.Article),
+    branchNode => toLower(branchNode.node.uri),
   );
 
   for (const nodeIndex in docsNodes) {
@@ -55,7 +55,7 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
           const id = `${nodeIndex}-${pathIndex}`;
           const name = folderName
             .split('-')
-            .map((item) => upperFirst(item))
+            .map(item => upperFirst(item))
             .join(' ');
 
           if (Number(pathIndex) === 0) {
@@ -109,14 +109,14 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
 
   /** Reference folder */
   const httpServiceNodes = sortBy(
-    branchNodes.filter((branchNode) => branchNode.snapshot.type === NodeType.HttpService),
-    (branchNode) => toLower(branchNode.snapshot.name),
+    branchNodes.filter(branchNode => branchNode.snapshot.type === NodeType.HttpService),
+    branchNode => toLower(branchNode.snapshot.name),
   );
 
   for (const httpServiceNode of httpServiceNodes) {
     const parentUriRegexp = new RegExp(`^${escapeRegExp(httpServiceNode.node.uri)}\/`, 'i');
     const childNodes = branchNodes.filter(
-      (branchNode) => parentUriRegexp.test(branchNode.node.uri) && branchNode.snapshot.type !== NodeType.HttpService,
+      branchNode => parentUriRegexp.test(branchNode.node.uri) && branchNode.snapshot.type !== NodeType.HttpService,
     );
     if (!childNodes.length) continue;
 
@@ -160,7 +160,7 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
     }
 
     /** Add tag groups to the tree */
-    const sortedTags = sortBy(Object.keys(tags), (t) => toLower(t));
+    const sortedTags = sortBy(Object.keys(tags), t => toLower(t));
     for (const tagIndex in sortedTags) {
       if (!sortedTags[tagIndex]) continue;
       const tag = sortedTags[tagIndex];
@@ -195,7 +195,7 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
         icon: icons.group,
       });
 
-      for (const otherChild of sortBy(other, (branchNode) => toLower(branchNode.snapshot.name))) {
+      for (const otherChild of sortBy(other, branchNode => toLower(branchNode.snapshot.name))) {
         contents.push({
           id: otherChild.id,
           name: otherChild.snapshot.name,
@@ -212,13 +212,13 @@ export function computeToc(branchNodes: IBranchNode[], icons: NodeIconMapping): 
   const modelContents: TableOfContentsLinkWithId[] = [];
 
   const modelNodes = sortBy(
-    branchNodes.filter((branchNode) => branchNode.snapshot.type === NodeType.Model),
-    (branchNode) => toLower(branchNode.snapshot.name),
+    branchNodes.filter(branchNode => branchNode.snapshot.type === NodeType.Model),
+    branchNode => toLower(branchNode.snapshot.name),
   );
 
   for (const modelNode of modelNodes) {
     // Only add models that aren't already in the tree
-    if (contents.find((n) => n.to === modelNode.node.uri)) continue;
+    if (contents.find(n => n.to === modelNode.node.uri)) continue;
 
     const node: TableOfContentsLinkWithId = {
       id: modelNode.id,

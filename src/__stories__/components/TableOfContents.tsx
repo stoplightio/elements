@@ -38,7 +38,7 @@ const TocStory: React.FC = () => {
                 <a
                   className="no-underline"
                   href={url}
-                  onClick={(e) => {
+                  onClick={e => {
                     setNode(url);
                     e.preventDefault();
                   }}

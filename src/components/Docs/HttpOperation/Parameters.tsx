@@ -107,12 +107,12 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       ...omit(get(parameter, 'schema'), ['description', 'type', 'deprecated']),
     },
     // Remove empty arrays and objects
-    (value) => typeof value === 'object' && isEmpty(value),
+    value => typeof value === 'object' && isEmpty(value),
   );
 
   const numberValidations = pick(validations, numberValidationNames);
   const booleanValidations = omit(
-    pickBy(validations, (v) => ['true', 'false'].includes(String(v))),
+    pickBy(validations, v => ['true', 'false'].includes(String(v))),
     ['exclusiveMinimum', 'exclusiveMaximum'],
   );
   const keyValueValidations = omit(validations, [...keys(numberValidations), ...keys(booleanValidations)]);
@@ -163,7 +163,7 @@ Parameter.displayName = 'HttpOperation.Parameter';
 
 const NumberValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
-    {keys(omit(validations, ['exclusiveMinimum', 'exclusiveMaximum'])).map((key) => {
+    {keys(omit(validations, ['exclusiveMinimum', 'exclusiveMaximum'])).map(key => {
       let suffix;
       if (key.includes('Length')) {
         suffix = ' characters';
@@ -190,7 +190,7 @@ const NumberValidations = ({ validations, className }: { validations: Dictionary
 
 const KeyValueValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
-    {keys(validations).map((key) => {
+    {keys(validations).map(key => {
       return <KeyValueValidation key={key} name={key} value={validations[key]} className={className} />;
     })}
   </>
@@ -208,7 +208,7 @@ const KeyValueValidation = ({
   if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
     return (
       <>
-        {keys(value).map((key) => (
+        {keys(value).map(key => (
           <KeyValueValidation key={key} className={className} name={`${name}.${key}`} value={value[key]} />
         ))}
       </>
@@ -223,7 +223,7 @@ const KeyValueValidation = ({
           (v): v is Exclude<Primitive, null> | { value: string } =>
             typeof v !== 'object' || (typeof v === 'object' && v !== null && 'value' in v),
         )
-        .map((v) => {
+        .map(v => {
           const value = typeof v === 'object' ? v.value : String(v);
           return (
             <code className="ml-1" key={value}>
@@ -238,8 +238,8 @@ const KeyValueValidation = ({
 const NameValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
     {keys(validations)
-      .filter((key) => validations[key])
-      .map((key) => {
+      .filter(key => validations[key])
+      .map(key => {
         return (
           <Tag key={key} className={cn('mt-2 mr-2 capitalize', className)} minimal>
             {key}

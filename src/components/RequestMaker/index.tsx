@@ -18,7 +18,7 @@ type RequestMakerProps =
       request?: undefined;
     };
 
-export const RequestMaker: React.FC<RequestMakerProps> = (props) => {
+export const RequestMaker: React.FC<RequestMakerProps> = props => {
   const store = useRequestMaker(props.request || props.operation);
   return (
     <RequestMakerProvider value={store}>
