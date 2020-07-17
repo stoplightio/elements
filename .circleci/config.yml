@@ -6,7 +6,7 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
-      - run: yarn
+      - run: yarn --frozen-lockfile
       - run: yarn type-check
       - run: yarn test.prod
   release:
@@ -14,7 +14,7 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
-      - run: yarn
+      - run: yarn --frozen-lockfile
       - run: yarn build
       - run: yarn build.docs
       - run: yarn release
