@@ -31,5 +31,6 @@ workflows:
               only:
                 - master
                 - beta
+                - monorepo
           requires:
             - test_node_12
