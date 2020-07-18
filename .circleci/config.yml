@@ -19,7 +19,7 @@ jobs:
       - run: yarn build.docs
       - run:
           name: set npmrc
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ./.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
       - run:
           name: release
           command: |
