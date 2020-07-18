@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-alpha.102](https://github.com/stoplightio/elements/compare/v6.0.0-alpha.101...v6.0.0-alpha.102) (2020-07-18)
+
+**Note:** Version bump only for package @stoplight/elements
+
+
+
+
+
 # [6.0.0-alpha.101](https://github.com/stoplightio/elements/compare/v6.0.0-beta.95...v6.0.0-alpha.101) (2020-07-18)
 
 
