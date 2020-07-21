@@ -1,4 +1,3 @@
-
 import '../../index';
 
 import { object, withKnobs } from '@storybook/addon-knobs';
