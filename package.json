@@ -21,7 +21,7 @@
     "elements": "yarn workspace @stoplight/elements",
     "build": "yarn workspaces run build",
     "build.docs": "yarn workspaces run build.docs",
-    "release": "lerna publish --conventional-commits --force-publish --yes",
+    "release": "lerna publish --conventional-commits --yes",
     "release.docs": "yarn workspaces run release.docs",
     "type-check": "yarn workspaces run type-check",
     "test.prod": "yarn workspaces run test.prod"
