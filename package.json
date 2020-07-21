@@ -19,6 +19,7 @@
   },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
+    "web-components": "yarn workspace @stoplight/web-components",
     "build": "yarn workspaces run build",
     "build.docs": "yarn workspaces run build.docs",
     "release": "lerna publish --conventional-commits --force-publish --yes",
