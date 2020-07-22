@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.106](https://github.com/stoplightio/elements/compare/v6.0.0-beta.96...v6.0.0-beta.106) (2020-07-22)
+
+
+### Bug Fixes
+
+* release ([#495](https://github.com/stoplightio/elements/issues/495)) ([feb9b5e](https://github.com/stoplightio/elements/commit/feb9b5e70ddd39ff30b6379cb60a269c24245aa7))
+* **deps:** bump @stoplight/markdown-viewer from 4.2.1 to 4.2.2 ([#494](https://github.com/stoplightio/elements/issues/494)) ([5012cd5](https://github.com/stoplightio/elements/commit/5012cd5cf600f91d3b837b1152883499a50a40b1))
+
+
+
+
+
 # [6.0.0-alpha.105](https://github.com/stoplightio/elements/compare/v6.0.0-alpha.104...v6.0.0-alpha.105) (2020-07-18)
 
 **Note:** Version bump only for package root
