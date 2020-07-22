@@ -28,9 +28,9 @@ jobs:
               yarn release --dist-tag latest
             elif [[ $CIRCLE_BRANCH == "beta" ]]
             then
-              yarn release --dist-tag beta --canary --preid beta
+              yarn release --dist-tag beta --preid beta
             else
-              yarn release --dist-tag alpha --canary --preid alpha
+              yarn release --dist-tag alpha --preid alpha
             fi
       - run: yarn release.docs
 
