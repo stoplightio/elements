@@ -8,16 +8,9 @@ update_configs:
 
     commit_message:
       prefix: 'fix'
-      prefix_development: 'chore'
+      prefix_development: 'fix'
       include_scope: true
 
     allowed_updates:
       - match:
           update_type: 'security'
-      - match:
-          dependency_name: '@stoplight/*'
-
-    automerged_updates:
-      - match:
-          dependency_name: '@stoplight/*'
-          update_type: 'semver:minor'
