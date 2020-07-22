@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.110](https://github.com/stoplightio/elements/compare/v6.0.0-beta.109...v6.0.0-beta.110) (2020-07-22)
+
+
+### Bug Fixes
+
+* stop infinite release loop ([#498](https://github.com/stoplightio/elements/issues/498)) ([7f2bfdf](https://github.com/stoplightio/elements/commit/7f2bfdf3573e3702a9078c413f62ce1fc139c985))
+
+
+
+
+
 # [6.0.0-beta.109](https://github.com/stoplightio/elements/compare/v6.0.0-beta.108...v6.0.0-beta.109) (2020-07-22)
 
 **Note:** Version bump only for package root
