@@ -12,6 +12,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "rollup --config",
+    "build.docs": "build-storybook -c .storybook -o docs-auto",
     "storybook": "start-storybook",
     "type-check": "tsc --noEmit"
   },

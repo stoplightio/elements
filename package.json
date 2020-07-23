@@ -25,7 +25,7 @@
     "release": "lerna publish --conventional-commits --force-publish --yes",
     "release.docs": "yarn workspaces run release.docs",
     "type-check": "yarn workspaces run type-check",
-    "test.prod": "yarn workspaces run test.prod"
+    "test.prod": "yarn workspace @stoplight/elements test.prod"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
