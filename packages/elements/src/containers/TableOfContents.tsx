@@ -1,3 +1,4 @@
+import { safeParse } from '@stoplight/json';
 import * as React from 'react';
 import { useQuery } from 'urql';
 
@@ -30,12 +31,13 @@ export const TableOfContents: React.FC<ITableOfContents> = ({ className }) => {
     variables: {
       workspaceSlug: info.workspace,
       projectSlug: info.project,
+      branchSlug: info.branch,
     },
   });
   const tocData = data?.projectTableOfContents?.data;
   const tree: ITableOfContentsTree = tocData
     ? typeof tocData === 'string'
-      ? JSON.parse(tocData)
+      ? safeParse(tocData)
       : tocData
     : { items: [] };
 
