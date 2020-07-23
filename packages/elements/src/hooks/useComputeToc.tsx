@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { IconsContext } from '../containers/Provider';
-import type {
+import {
   Divider,
   Group,
   ITableOfContentsTree,
@@ -9,6 +9,7 @@ import type {
   NodeIconMapping,
   TableOfContentItem,
   TableOfContentsLinkWithId,
+  TocItemType,
 } from '../types';
 
 /**
@@ -20,15 +21,15 @@ export function useComputeToc(tree: ITableOfContentsTree) {
 }
 
 function isDivider(item: TableOfContentItem): item is Divider {
-  return 'title' in item && !('uri' in item || 'items' in item);
+  return item.type === TocItemType.Divider;
 }
 
 function isGroup(item: TableOfContentItem): item is Group {
-  return 'title' in item && 'items' in item && !('uri' in item);
+  return item.type === TocItemType.Group;
 }
 
 function isItem(item: TableOfContentItem): item is Item {
-  return 'title' in item && 'uri' in item;
+  return item.type === TocItemType.Item;
 }
 
 /**

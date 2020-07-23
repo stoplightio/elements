@@ -97,16 +97,25 @@ export interface ITableOfContentsTree {
 
 export type TableOfContentItem = Divider | Group | Item;
 
+export enum TocItemType {
+  Divider = 'divider',
+  Group = 'group',
+  Item = 'item',
+}
+
 export type Divider = {
   title: string;
+  type: TocItemType.Divider;
 };
 
 export type Group = {
   title: string;
+  type: TocItemType.Group;
   items: TableOfContentItem[];
 };
 
 export type Item = {
   title: string;
+  type: TocItemType.Item;
   uri: string;
 };
