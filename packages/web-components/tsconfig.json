@@ -1,4 +1,6 @@
 {
+  "extends": "../../tsconfig.json",
+
   "include": ["src"],
 
   "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
@@ -27,6 +29,6 @@
     "removeComments": true,
     "jsx": "react",
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   }
 }

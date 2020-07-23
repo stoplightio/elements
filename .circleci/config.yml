@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: yarn --frozen-lockfile
-      - run: yarn type-check
+      - run: yarn elements type-check
       - run: yarn test.prod
   release:
     docker:

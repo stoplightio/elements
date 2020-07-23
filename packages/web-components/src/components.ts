@@ -1,4 +1,4 @@
-import { SchemaViewer } from '@stoplight/elements/dist/components/SchemaViewer';
+import { SchemaViewer } from '@stoplight/elements';
 
 import { createElementClass } from './createElementClass';
 
