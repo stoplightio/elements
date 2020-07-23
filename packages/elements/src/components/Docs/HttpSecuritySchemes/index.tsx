@@ -5,7 +5,7 @@ import {
   IOauth2ImplicitFlow,
   IOauth2PasswordFlow,
 } from '@stoplight/types';
-import { Classes, Tag } from '@stoplight/ui-kit';
+import { Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { entries, flatten, isEmpty, map, startCase } from 'lodash';
 import * as React from 'react';

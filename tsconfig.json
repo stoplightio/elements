@@ -1,7 +1,6 @@
 {
   "extends": "@stoplight/scripts/tsconfig.json",
   "compilerOptions": {
-    "noUnusedLocals": false,
     "esModuleInterop": true,
     "baseUrl": "./packages",
     "paths": {

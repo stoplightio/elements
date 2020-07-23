@@ -1,6 +1,6 @@
 import { ITreeNode, Tree } from '@blueprintjs/core';
 import { IPrismDiagnostic } from '@stoplight/prism-core';
-import { Button, Code, Collapse, Icon } from '@stoplight/ui-kit';
+import { Code, Icon } from '@stoplight/ui-kit';
 import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray';
 import { isEqual, uniq } from 'lodash';
 import { useEffect, useState } from 'react';
