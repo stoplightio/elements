@@ -24,7 +24,8 @@
     "release": "lerna publish --conventional-commits --yes --contents dist",
     "release.docs": "yarn workspaces run release.docs",
     "type-check": "yarn workspaces run type-check",
-    "test.prod": "yarn workspaces run test.prod"
+    "test.prod": "yarn workspaces run test.prod",
+    "prepublishOnly": "yarn workspaces run build"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
