@@ -12,7 +12,7 @@ import { Provider } from '../../containers/Provider';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
 
-export const darkMode = () => boolean('dark mode', false);
+export const darkMode = () => boolean('Dark Mode', false);
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
 
