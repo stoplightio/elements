@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.111](https://github.com/stoplightio/elements/compare/v6.0.0-beta.110...v6.0.0-beta.111) (2020-07-24)
+
+
+### Bug Fixes
+
+* dummy update to trigger release ([#501](https://github.com/stoplightio/elements/issues/501)) ([657f8b3](https://github.com/stoplightio/elements/commit/657f8b3568533a6ae46861c72352decaf5617362))
+* publish the dist folder only ([#500](https://github.com/stoplightio/elements/issues/500)) ([0aaa3fb](https://github.com/stoplightio/elements/commit/0aaa3fbab9ffe25840c65694b4d6e3dcea303fda))
+
+
+
+
+
 # [6.0.0-beta.110](https://github.com/stoplightio/elements/compare/v6.0.0-beta.109...v6.0.0-beta.110) (2020-07-22)
 
 
