@@ -7,11 +7,11 @@ import * as React from 'react';
 
 import { ActiveInfoContext } from '../../containers/Provider';
 import { useComponents } from '../../hooks/useComponents';
-import { useComputeToc } from '../../hooks/useComputeToc';
+import { useTocContents } from '../../hooks/useTocContents';
 import { ITableOfContentsComponent, TableOfContentsLinkWithId } from '../../types';
 
 export const TableOfContents: React.FunctionComponent<ITableOfContentsComponent> = ({ tree, className }) => {
-  const contents = useComputeToc(tree);
+  const contents = useTocContents(tree);
 
   return <UIKitTableOfContents className={className} contents={contents} rowComponent={ElementsTocRow} />;
 };
