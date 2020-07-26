@@ -17,7 +17,7 @@ query ProjectTableOfContents(
   $projectSlug: String!
   $branchSlug: String
 ) {
-  projectTableOfContents(projectSlug: $projectSlug, workspaceSlug: $workspaceSlug) {
+  projectTableOfContents(projectSlug: $projectSlug, workspaceSlug: $workspaceSlug, branchSlug: $branchSlug) {
     data
   }
 }
