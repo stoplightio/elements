@@ -14,8 +14,17 @@
   ],
   "devDependencies": {
     "@stoplight/eslint-config": "^1.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.7.0",
+    "@typescript-eslint/parser": "^3.7.0",
+    "eslint": "^7.5.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.18.2",
     "eslint-plugin-prettier": "^3.1.4",
-    "lerna": "^3.22.1"
+    "eslint-plugin-react": "^7.20.4",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "lerna": "^3.22.1",
+    "prettier": "^2.0.5"
   },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
