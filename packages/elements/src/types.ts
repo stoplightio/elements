@@ -119,3 +119,22 @@ export type Item = {
   type: TocItemType.Item;
   uri: string;
 };
+
+export interface IProjectRouter {
+  basePath?: string;
+  router?: 'history' | 'hash' | 'memory';
+}
+
+export interface IStoplightProject extends IProjectRouter {
+  renderLink?: React.FunctionComponent;
+}
+
+export interface IAPIComponent extends IStoplightProject {
+  specUrl: string;
+}
+
+export interface IStoplightProjectComponent extends IStoplightProject {
+  workspace: string;
+  project: string;
+  branch?: string;
+}

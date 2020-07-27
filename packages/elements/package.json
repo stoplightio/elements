@@ -41,12 +41,14 @@
   },
   "peerDependencies": {
     "@stoplight/prism-http": "^4.0.0-beta.26",
+    "@stoplight/http-spec": "^3.1.1",
     "mobx": ">=5",
     "react": ">=16.8",
     "react-dom": ">=16.8",
     "vis-network": "^7.5.2"
   },
   "dependencies": {
+    "@stoplight/http-spec": "^3.1.1",
     "@stoplight/json": "^3.8.3",
     "@stoplight/json-ref-resolver": "^3.1.0",
     "@stoplight/json-schema-viewer": "^3.0.0-beta.28",
@@ -58,6 +60,7 @@
     "@stoplight/types": "^11.9.0",
     "@stoplight/ui-kit": "^3.0.0-beta.20",
     "@stoplight/yaml": "^4.2.1",
+    "@types/react-router-dom": "^5.1.5",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.3.1",
@@ -71,6 +74,7 @@
     "openapi-sampler": "^1.0.0-beta.15",
     "parse-prefer-header": "^1.0.0",
     "react-error-boundary": "^1.2.5",
+    "react-router-dom": "^5.2.0",
     "tslib": "^1.12.0",
     "type-is": "^1.6.18",
     "unist-util-select": "^3.0.1",
@@ -114,6 +118,7 @@
     "jest-fetch-mock": "^3.0.3",
     "mobx": "^5.13.0",
     "prettier": "^2.0.4",
+    "storybook-react-router": "^1.0.8",
     "ts-jest": "25.3.1",
     "typescript": "3.9.3",
     "vis-data": "^6.5.1",
