@@ -4015,6 +4015,11 @@
   resolved "https://registry.yarnpkg.com/@types/object-hash/-/object-hash-1.3.1.tgz#b8145122b230bad5a13cba52016e78c54dae6ed5"
   integrity sha512-xhLwbVGAXi/LJEowMjRY1anbF5sQWeuocVjaMrFYy4bOEpl79A4eIby3xlowbkXytUdbISwOZB+vQx9Y/n0p8A==
 
+"@types/openapi-sampler@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/openapi-sampler/-/openapi-sampler-1.0.0.tgz#0975f342e82a83b79bb529895fe3e465be8b7f1c"
+  integrity sha512-u2AojBhWiatFxI/ACLKmJBSXDoVLSky7UTkeV0ZTre2CszA0R+XDzON/OaRK31nbbWLpcQFsm++bwT2LmNVsgA==
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"

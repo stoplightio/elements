@@ -1,10 +1,9 @@
 import { JSONSchema } from '@stoplight/prism-http';
 import { HttpMethod, IHttpOperation, IHttpParam } from '@stoplight/types';
 import { filter, flatten, get, has } from 'lodash';
+import { sample } from 'openapi-sampler';
 
 import { RequestStore } from '../stores/request-maker/request';
-
-const sampler = require('openapi-sampler');
 
 export function getOperationData(operation: Partial<IHttpOperation>): Partial<RequestStore> {
   const queryParams = getParamsFromOperation(operation, 'query');
@@ -75,7 +74,7 @@ function getBodyFromOperation(operation: Partial<IHttpOperation>) {
     const schema = get(operation, 'request.body.contents[0].schema');
 
     if (schema) {
-      return sampler.sample(schema, {}, operation);
+      return sample(schema, {}, operation);
     }
   } catch (e) {
     console.warn('Unable to create sample request body from schema', e);

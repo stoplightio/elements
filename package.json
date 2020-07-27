@@ -22,10 +22,11 @@
     "web-components": "yarn workspace @stoplight/web-components",
     "build": "yarn workspaces run build",
     "build.docs": "yarn workspaces run build.docs",
-    "release": "lerna publish --conventional-commits --force-publish --yes",
+    "release": "lerna publish --conventional-commits --yes --contents dist",
     "release.docs": "yarn workspaces run release.docs",
     "type-check": "yarn workspaces run type-check",
-    "test.prod": "yarn workspace @stoplight/elements test.prod"
+    "test.prod": "yarn workspace @stoplight/elements test.prod",
+    "prepublishOnly": "yarn workspaces run build"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
