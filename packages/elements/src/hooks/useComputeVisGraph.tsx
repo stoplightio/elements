@@ -1,4 +1,3 @@
-import { NodeType } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 import { Edge, Node } from 'vis-network/standalone';

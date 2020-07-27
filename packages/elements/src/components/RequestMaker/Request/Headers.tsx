@@ -68,20 +68,6 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
 
 const HeaderSuggest = Suggest.ofType<HeaderField>();
 
-const renderCreateHeaderFieldOption = (
-  query: string,
-  active: boolean,
-  handleClick: React.MouseEventHandler<HTMLElement>,
-) => (
-  <MenuItem
-    icon="add"
-    text={`Set custom header "${query}"`}
-    active={active}
-    onClick={handleClick}
-    shouldDismissPopover={false}
-  />
-);
-
 // REF: https://github.com/palantir/blueprint/blob/develop/packages/docs-app/src/examples/select-examples/suggestExample.tsx
 const renderHeaderField: ItemRenderer<HeaderField> = (header, { handleClick, modifiers, query }) => {
   if (!modifiers.matchesPredicate) {
