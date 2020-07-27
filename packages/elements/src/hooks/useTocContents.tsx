@@ -1,15 +1,7 @@
 import * as React from 'react';
 
 import { IconsContext } from '../containers/Provider';
-import {
-  Divider,
-  Group,
-  ITableOfContentsTree,
-  Item,
-  NodeIconMapping,
-  TableOfContentItem,
-  TableOfContentsLinkWithId,
-} from '../types';
+import { ITableOfContentsTree, NodeIconMapping, TableOfContentsLinkWithId } from '../types';
 
 /**
  * Memoized hook that provides Toc contents by parsing a tree
@@ -17,18 +9,6 @@ import {
 export function useTocContents(tree: ITableOfContentsTree) {
   const icons = React.useContext(IconsContext);
   return React.useMemo(() => computeToc(tree.items, null, 0, icons), [tree, icons]);
-}
-
-function isDivider(item: TableOfContentItem): item is Divider {
-  return item.type === 'divider';
-}
-
-function isGroup(item: TableOfContentItem): item is Group {
-  return item.type === 'group';
-}
-
-function isItem(item: TableOfContentItem): item is Item {
-  return item.type === 'item';
 }
 
 /**
@@ -51,21 +31,21 @@ function computeToc(
     const tocNode = items[nodeIndex];
 
     const id = parentId ? `${parentId}-${nodeIndex}` : nodeIndex;
-    if (isDivider(tocNode)) {
+    if (tocNode.type === 'divider') {
       contents.push({
         id,
         name: tocNode.title,
         depth,
-        type: 'divider',
+        type: tocNode.type,
       });
     }
 
-    if (isGroup(tocNode)) {
+    if (tocNode.type === 'group') {
       contents.push({
         id,
         name: tocNode.title,
         depth,
-        type: 'group',
+        type: tocNode.type,
         icon: icons.group,
       });
 
@@ -74,12 +54,12 @@ function computeToc(
       }
     }
 
-    if (isItem(tocNode)) {
+    if (tocNode.type === 'item') {
       contents.push({
         id,
         name: tocNode.title,
         depth: depth,
-        type: 'item',
+        type: tocNode.type,
         icon: icons.item,
         to: tocNode.uri,
       });
