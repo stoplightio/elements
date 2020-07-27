@@ -82,7 +82,10 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper.find('input').filter({ value: 'raw' }).simulate('change');
+        wrapper
+          .find('input')
+          .filter({ value: 'raw' })
+          .simulate('change');
       });
 
       wrapper.update();
@@ -104,7 +107,10 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper.find('input').filter({ value: 'raw' }).simulate('change');
+        wrapper
+          .find('input')
+          .filter({ value: 'raw' })
+          .simulate('change');
       });
 
       wrapper.update();
@@ -158,7 +164,10 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
+        wrapper
+          .find('input')
+          .filter({ value: 'rendered' })
+          .simulate('change');
       });
 
       wrapper.update();
@@ -178,7 +187,10 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
+        wrapper
+          .find('input')
+          .filter({ value: 'rendered' })
+          .simulate('change');
       });
 
       wrapper.update();
@@ -197,7 +209,10 @@ describe('ResponseBody component', () => {
 
       render();
       act(() => {
-        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
+        wrapper
+          .find('input')
+          .filter({ value: 'rendered' })
+          .simulate('change');
       });
 
       wrapper.update();
@@ -216,7 +231,10 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
+        wrapper
+          .find('input')
+          .filter({ value: 'rendered' })
+          .simulate('change');
       });
 
       wrapper.update();
@@ -235,7 +253,10 @@ describe('ResponseBody component', () => {
       render();
 
       act(() => {
-        wrapper.find('input').filter({ value: 'rendered' }).simulate('change');
+        wrapper
+          .find('input')
+          .filter({ value: 'rendered' })
+          .simulate('change');
       });
 
       wrapper.update();
