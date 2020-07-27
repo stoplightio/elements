@@ -92,7 +92,7 @@ export interface ITableOfContentsComponent {
 }
 
 export interface ITableOfContentsTree {
-  items: TableOfContentItem[] & { 0: TableOfContentItem };
+  items: TableOfContentItem[];
 }
 
 export type TableOfContentItem = Divider | Group | Item;
@@ -107,7 +107,7 @@ export type Divider = {
 export type Group = {
   title: string;
   type: 'group';
-  items: TableOfContentItem[] & { 0: TableOfContentItem };
+  items: TableOfContentItem[];
 };
 
 export type Item = {

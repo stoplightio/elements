@@ -1,14 +1,14 @@
 import * as React from 'react';
 
 import { IconsContext } from '../containers/Provider';
-import { ITableOfContentsTree, NodeIconMapping, TableOfContentsLinkWithId } from '../types';
+import { ITableOfContentsTree, NodeIconMapping, TableOfContentItem, TableOfContentsLinkWithId } from '../types';
 
 /**
  * Memoized hook that provides Toc contents by parsing a tree
  */
 export function useTocContents(tree: ITableOfContentsTree) {
   const icons = React.useContext(IconsContext);
-  return React.useMemo(() => computeToc(tree.items, null, 0, icons), [tree, icons]);
+  return React.useMemo(() => computeToc(tree.items, { icons }), [tree, icons]);
 }
 
 /**
@@ -16,10 +16,16 @@ export function useTocContents(tree: ITableOfContentsTree) {
  */
 
 function computeToc(
-  items: ITableOfContentsTree['items'],
-  parentId: string | null,
-  depth: number,
-  icons: NodeIconMapping,
+  items: TableOfContentItem[],
+  {
+    parentId,
+    depth = 0,
+    icons,
+  }: {
+    parentId?: string;
+    depth?: number;
+    icons: NodeIconMapping;
+  },
 ): TableOfContentsLinkWithId[] {
   // There is a chance that we pass an empty array
   if (!items.length) return [];
@@ -50,7 +56,7 @@ function computeToc(
       });
 
       if (tocNode.items.length) {
-        contents.push(...computeToc(tocNode.items, id, depth + 1, icons));
+        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1, icons }));
       }
     }
 

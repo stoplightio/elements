@@ -35,11 +35,7 @@ export const TableOfContents: React.FC<ITableOfContents> = ({ className }) => {
     },
   });
   const tocData = data?.projectTableOfContents?.data;
-  const tree: ITableOfContentsTree = tocData
-    ? typeof tocData === 'string'
-      ? safeParse(tocData)
-      : tocData
-    : { items: [] };
+  const tree: ITableOfContentsTree = tocData ? tocData : { items: [] };
 
   if (fetching) {
     return <TableOfContentsSkeleton className={className} />;
