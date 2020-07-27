@@ -9,7 +9,6 @@ import {
   NodeIconMapping,
   TableOfContentItem,
   TableOfContentsLinkWithId,
-  TocItemType,
 } from '../types';
 
 /**
@@ -21,15 +20,15 @@ export function useTocContents(tree: ITableOfContentsTree) {
 }
 
 function isDivider(item: TableOfContentItem): item is Divider {
-  return item.type === TocItemType.Divider;
+  return item.type === 'divider';
 }
 
 function isGroup(item: TableOfContentItem): item is Group {
-  return item.type === TocItemType.Group;
+  return item.type === 'group';
 }
 
 function isItem(item: TableOfContentItem): item is Item {
-  return item.type === TocItemType.Item;
+  return item.type === 'item';
 }
 
 /**
@@ -37,7 +36,7 @@ function isItem(item: TableOfContentItem): item is Item {
  */
 
 function computeToc(
-  items: TableOfContentItem[],
+  items: ITableOfContentsTree['items'],
   parentId: string | null,
   depth: number,
   icons: NodeIconMapping,

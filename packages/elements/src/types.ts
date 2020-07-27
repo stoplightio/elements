@@ -92,30 +92,26 @@ export interface ITableOfContentsComponent {
 }
 
 export interface ITableOfContentsTree {
-  items: TableOfContentItem[];
+  items: TableOfContentItem[] & { 0: TableOfContentItem };
 }
 
 export type TableOfContentItem = Divider | Group | Item;
 
-export enum TocItemType {
-  Divider = 'divider',
-  Group = 'group',
-  Item = 'item',
-}
+export type TocItemType = 'divider' | 'group' | 'item';
 
 export type Divider = {
   title: string;
-  type: TocItemType.Divider;
+  type: 'divider';
 };
 
 export type Group = {
   title: string;
-  type: TocItemType.Group;
-  items: TableOfContentItem[];
+  type: 'group';
+  items: TableOfContentItem[] & { 0: TableOfContentItem };
 };
 
 export type Item = {
   title: string;
-  type: TocItemType.Item;
+  type: 'item';
   uri: string;
 };
