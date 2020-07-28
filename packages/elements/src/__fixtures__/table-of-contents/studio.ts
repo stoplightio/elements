@@ -1,4 +1,4 @@
-import { IBranchNode } from '../../types';
+import { IBranchNode, ITableOfContentsTree } from '../../types';
 
 export const nodes: IBranchNode[] = [
   {
@@ -296,3 +296,141 @@ export const nodes: IBranchNode[] = [
     },
   },
 ];
+
+export const tree: ITableOfContentsTree = {
+  items: [
+    {
+      title: 'Introduction',
+      type: 'item',
+      uri: 'docs/introduction.md',
+    },
+    {
+      title: 'UI Overview',
+      type: 'item',
+      uri: 'docs/ui-overview.md',
+    },
+    {
+      title: 'Markdown',
+      type: 'divider',
+    },
+    {
+      title: 'Markdown Basics',
+      type: 'item',
+      uri: 'docs/markdown/basic-syntax.md',
+    },
+    {
+      title: 'Stoplight Flavored Markdown (SMD)',
+      type: 'item',
+      uri: 'docs/markdown/stoplight-flavored-markdown.md',
+    },
+    {
+      title: 'Swagger Petstore',
+      type: 'divider',
+    },
+    {
+      title: 'Overview',
+      type: 'item',
+      uri: 'reference/petstore/openapi.yaml',
+    },
+    {
+      title: 'Pets',
+      type: 'group',
+      items: [
+        {
+          title: 'Create a pet',
+          type: 'item',
+          uri: 'reference/petstore/openapi.yaml/paths/~1pets/post',
+        },
+        {
+          title: 'Info for a specific pet',
+          type: 'item',
+          uri: 'reference/petstore/openapi.yaml/paths/~1pets~1%7BpetId%7D/get',
+        },
+        {
+          title: 'List all pets',
+          type: 'item',
+          uri: 'reference/petstore/openapi.yaml/paths/~1pets/get',
+        },
+        {
+          title: 'Pets',
+          type: 'item',
+          uri: 'reference/petstore/openapi.yaml/components/schemas/Pets',
+        },
+      ],
+    },
+    {
+      title: 'To-dos',
+      type: 'divider',
+    },
+    {
+      title: 'Overview',
+      type: 'item',
+      uri: 'reference/todos/openapi.json',
+    },
+    {
+      title: 'Todos',
+      type: 'group',
+      items: [
+        {
+          title: 'Create Todo',
+          type: 'item',
+          uri: 'reference/todos/openapi.json/paths/~1todos/post',
+        },
+        {
+          title: 'Delete Todo',
+          type: 'item',
+          uri: 'reference/todos/openapi.json/paths/~1todos~1%7BtodoId%7D/delete',
+        },
+        {
+          title: 'Get Todo',
+          type: 'item',
+          uri: 'reference/todos/openapi.json/paths/~1todos~1%7BtodoId%7D/get',
+        },
+        {
+          title: 'List Todo',
+          type: 'item',
+          uri: 'reference/todos/openapi.json/paths/~1todos/get',
+        },
+        {
+          title: 'Update Todo',
+          type: 'item',
+          uri: 'reference/todos/openapi.json/paths/~1todos~1%7BtodoId%7D/put',
+        },
+      ],
+    },
+    {
+      title: 'Models',
+      type: 'divider',
+    },
+    {
+      title: 'Category',
+      type: 'item',
+      uri: 'reference/petstore/models/category.yaml',
+    },
+    {
+      title: 'Error',
+      type: 'item',
+      uri: 'reference/common/models/error.yaml',
+    },
+    {
+      title: 'Pet',
+      type: 'item',
+      uri: 'reference/petstore/models/pet.yaml',
+    },
+    {
+      title: 'Todo Full',
+      type: 'item',
+      uri: 'reference/todos/models/todo-full.json',
+    },
+    {
+      title: 'Todo Partial',
+      type: 'item',
+      uri: 'reference/todos/models/todo-partial.json',
+    },
+    {
+      title: 'User',
+      type: 'item',
+      uri: 'reference/todos/models/user.json',
+    },
+  ],
+};

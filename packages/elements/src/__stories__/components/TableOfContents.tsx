@@ -2,7 +2,7 @@ import { object, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
-import { nodes } from '../../__fixtures__/table-of-contents/studio';
+import { tree } from '../../__fixtures__/table-of-contents/studio';
 import { TableOfContents } from '../../components/TableOfContents';
 import { Provider } from '../../containers/Provider';
 
@@ -49,7 +49,7 @@ const TocStory: React.FC = () => {
             },
           }}
         >
-          <TableOfContents className="h-full" nodes={object('nodes', nodes)} />
+          <TableOfContents className="h-full" tree={object('tree', tree)} />
         </Provider>
       </div>
       <div className="flex-grow p-5">
