@@ -8,10 +8,10 @@ import StoryRouter from 'storybook-react-router';
 import { StoplightProject } from '../../containers/StoplightProject';
 
 const darkMode = () => boolean('dark mode', false);
-const workspace = () => text('workspace', 'http://burrito.localhost:8080');
+const workspace = () => text('workspace', 'http://meta.localhost:8080');
 const project = () => text('project', 'studio-demo');
 
-storiesOf('components/Project', module)
+storiesOf('components/StoplightProject', module)
   .addDecorator(StoryRouter())
   .addDecorator(withKnobs())
   .add('Playground', () => {
