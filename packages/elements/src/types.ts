@@ -85,3 +85,33 @@ export interface INodeEdge {
 
 export type IconMapType = NodeType | 'group' | 'divider' | 'item';
 export type NodeIconMapping = { [type in IconMapType]?: FAIconProp };
+
+export interface ITableOfContentsComponent {
+  tree: ITableOfContentsTree;
+  className?: string;
+}
+
+export interface ITableOfContentsTree {
+  items: TableOfContentItem[];
+}
+
+export type TableOfContentItem = Divider | Group | Item;
+
+export type TocItemType = 'divider' | 'group' | 'item';
+
+export type Divider = {
+  title: string;
+  type: 'divider';
+};
+
+export type Group = {
+  title: string;
+  type: 'group';
+  items: TableOfContentItem[];
+};
+
+export type Item = {
+  title: string;
+  type: 'item';
+  uri: string;
+};

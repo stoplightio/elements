@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.115](https://github.com/stoplightio/elements/compare/v6.0.0-beta.114...v6.0.0-beta.115) (2020-07-28)
+
+
+### Bug Fixes
+
+* clean imports ([#506](https://github.com/stoplightio/elements/issues/506)) ([0d01184](https://github.com/stoplightio/elements/commit/0d011846e7da73060fd76eb80d91536f86dcce13))
+
+
+### Features
+
+* update toc computing to support new file interface ([#469](https://github.com/stoplightio/elements/issues/469)) ([18dfca8](https://github.com/stoplightio/elements/commit/18dfca8107a510b3ad67a33195579ad7d9c1a026))
+
+
+
+
+
+# [6.0.0-beta.114](https://github.com/stoplightio/elements/compare/v6.0.0-beta.113...v6.0.0-beta.114) (2020-07-27)
+
+**Note:** Version bump only for package @stoplight/elements
+
+
+
+
+
 # [6.0.0-beta.113](https://github.com/stoplightio/elements/compare/v6.0.0-beta.112...v6.0.0-beta.113) (2020-07-27)
 
 **Note:** Version bump only for package @stoplight/elements
