@@ -1,4 +1,3 @@
-import { safeParse } from '@stoplight/json';
 import * as React from 'react';
 import { useQuery } from 'urql';
 
