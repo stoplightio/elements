@@ -1,3 +1,4 @@
+import { IComponentMapping } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import axios from 'axios';
 import * as React from 'react';
@@ -37,17 +38,19 @@ export const APIComponent: React.FC<IAPIComponent> = ({ specUrl, basePath = '/',
     }
   }, [document]);
 
+  const components = React.useMemo<IComponentMapping>(
+    () => ({
+      link: ({ node, children }) => {
+        let nodeDestinationUri = node.url;
+        return <Link to={nodeDestinationUri}>{children}</Link>;
+      },
+    }),
+    [],
+  );
   const tree = computeTocTree(uriMap);
 
   return (
-    <ComponentsContext.Provider
-      value={{
-        link: ({ node, children }) => {
-          let nodeDestinationUri = node.url;
-          return <Link to={nodeDestinationUri}>{children}</Link>;
-        },
-      }}
-    >
+    <ComponentsContext.Provider value={components}>
       <div className="flex flex-row">
         <Router {...routerProps}>
           <TableOfContents tree={tree} className="" />
