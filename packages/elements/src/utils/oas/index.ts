@@ -1,8 +1,10 @@
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
 import { pointerToPath } from '@stoplight/json';
 import { get, isObject, last } from 'lodash';
+import { OpenAPIObject } from 'openapi3-ts';
+import { Spec } from 'swagger-schema-official';
 
-import { ITableOfContentsTree, TableOfContentItem, TocItemType } from '../../types';
+import { ITableOfContentsTree, TableOfContentItem } from '../../types';
 import { ISourceNodeMap, NodeTypes } from './types';
 
 export const isOas2 = (parsed: unknown) =>
@@ -23,8 +25,8 @@ export interface IUriMap {
 }
 
 interface IComputeUriMapProps {
-  document: any;
-  data: any;
+  document: Spec | OpenAPIObject;
+  data: unknown;
   map: ISourceNodeMap[];
   transformer: Oas2HttpOperationTransformer | Oas3HttpOperationTransformer;
   parentUri?: string;
@@ -33,43 +35,37 @@ interface IComputeUriMapProps {
 export function computeUriMap({ document, data, map, transformer, parentUri }: IComputeUriMapProps): IUriMap {
   const uriMap: IUriMap = {};
 
-  switch (typeof data) {
-    case 'object':
-      for (const key in data) {
-        if (!Object.prototype.hasOwnProperty.call(data, key)) {
-          continue;
+  if (isObject(data)) {
+    for (const key in data) {
+      const sanitizedKey = key.replace(/~/g, '~0').replace(/\//g, '~1');
+      const match = findMapMatch(sanitizedKey, map);
+      if (match) {
+        const uri = `${parentUri || ''}/${sanitizedKey}`;
+
+        const jsonPath = pointerToPath(`#${uri}`);
+        if (match.type === NodeTypes.Operation) {
+          const path = jsonPath[1].toString();
+          const method = jsonPath[2].toString();
+          uriMap[uri] = transformer({ document, path, method });
         }
-        const sanitizedKey = key.replace(/~/g, '~0').replace(/\//g, '~1');
-        const match = findMapMatch(sanitizedKey, data[key], map);
-        if (match) {
-          const uri = `${parentUri || ''}/${sanitizedKey}`;
+        if (match.type === NodeTypes.Model) {
+          uriMap[uri] = get(document, jsonPath);
+        }
 
-          const jsonPath = pointerToPath(`#${uri}`);
-          if (match.type === NodeTypes.Operation) {
-            const path = jsonPath[1].toString();
-            const method = jsonPath[2].toString();
-            uriMap[uri] = transformer({ document, path, method });
-          }
-          if (match.type === NodeTypes.Model) {
-            uriMap[uri] = get(document, jsonPath);
-          }
-
-          if (match.children) {
-            Object.assign(
-              uriMap,
-              computeUriMap({ map: match.children, document, data: data[key], parentUri: uri, transformer }),
-            );
-          }
+        if (match.children) {
+          Object.assign(
+            uriMap,
+            computeUriMap({ map: match.children, document, data: data[key], parentUri: uri, transformer }),
+          );
         }
       }
-
-      break;
+    }
   }
 
   return uriMap;
 }
 
-function findMapMatch(key: string | number, value: any, map: ISourceNodeMap[]): ISourceNodeMap | void {
+function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeMap | void {
   for (const entry of map) {
     let match = true;
 
@@ -96,11 +92,11 @@ export const computeTocTree = (uriMap: IUriMap) => {
     items.push(
       {
         title: httpService['name'],
-        type: TocItemType.Divider,
+        type: 'divider',
       },
       {
         title: 'Overview',
-        type: TocItemType.Item,
+        type: 'item',
         uri: '/',
       },
     );
@@ -108,12 +104,12 @@ export const computeTocTree = (uriMap: IUriMap) => {
   if (operationUris.length) {
     items.push({
       title: 'Operations',
-      type: TocItemType.Group,
+      type: 'group',
       items: operationUris.map(uri => {
         const operation = uriMap[uri];
         return {
           title: isObject(operation) ? operation['summary'] || operation['path'] : void 0,
-          type: TocItemType.Item,
+          type: 'item',
           uri,
         } as TableOfContentItem;
       }),
@@ -122,12 +118,12 @@ export const computeTocTree = (uriMap: IUriMap) => {
   if (modelUris.length) {
     items.push({
       title: 'Models',
-      type: TocItemType.Group,
+      type: 'group',
       items: modelUris.map(
         uri =>
           ({
             title: last(uri.split('/')),
-            type: TocItemType.Item,
+            type: 'item',
             uri,
           } as TableOfContentItem),
       ),
