@@ -8,6 +8,7 @@ jobs:
       - checkout
       - run: yarn --frozen-lockfile
       - run: yarn type-check
+      - run: yarn lint
       - run: yarn test.prod
   release:
     docker:
@@ -15,7 +16,6 @@ jobs:
     steps:
       - checkout
       - run: yarn --frozen-lockfile
-      - run: yarn build
       - run: yarn build.docs
       - run:
           name: set npmrc

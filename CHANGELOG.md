@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.115](https://github.com/stoplightio/elements/compare/v6.0.0-beta.114...v6.0.0-beta.115) (2020-07-28)
+
+
+### Bug Fixes
+
+* clean imports ([#506](https://github.com/stoplightio/elements/issues/506)) ([0d01184](https://github.com/stoplightio/elements/commit/0d011846e7da73060fd76eb80d91536f86dcce13))
+
+
+### Features
+
+* update toc computing to support new file interface ([#469](https://github.com/stoplightio/elements/issues/469)) ([18dfca8](https://github.com/stoplightio/elements/commit/18dfca8107a510b3ad67a33195579ad7d9c1a026))
+
+
+
+
+
+# [6.0.0-beta.114](https://github.com/stoplightio/elements/compare/v6.0.0-beta.113...v6.0.0-beta.114) (2020-07-27)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [6.0.0-beta.113](https://github.com/stoplightio/elements/compare/v6.0.0-beta.112...v6.0.0-beta.113) (2020-07-27)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [6.0.0-beta.112](https://github.com/stoplightio/elements/compare/v6.0.0-beta.111...v6.0.0-beta.112) (2020-07-24)
+
+
+### Bug Fixes
+
+* version number in released package ([#502](https://github.com/stoplightio/elements/issues/502)) ([1467809](https://github.com/stoplightio/elements/commit/1467809de3d55da02f6563e9f63be4ff7dfdf981))
+* wonderful UX improvement ([#503](https://github.com/stoplightio/elements/issues/503)) ([6452d75](https://github.com/stoplightio/elements/commit/6452d75d75278681014e38e62931afe8ce4ef24a))
+
+
+
+
+
+# [6.0.0-beta.111](https://github.com/stoplightio/elements/compare/v6.0.0-beta.110...v6.0.0-beta.111) (2020-07-24)
+
+
+### Bug Fixes
+
+* dummy update to trigger release ([#501](https://github.com/stoplightio/elements/issues/501)) ([657f8b3](https://github.com/stoplightio/elements/commit/657f8b3568533a6ae46861c72352decaf5617362))
+* publish the dist folder only ([#500](https://github.com/stoplightio/elements/issues/500)) ([0aaa3fb](https://github.com/stoplightio/elements/commit/0aaa3fbab9ffe25840c65694b4d6e3dcea303fda))
+
+
+
+
+
 # [6.0.0-beta.110](https://github.com/stoplightio/elements/compare/v6.0.0-beta.109...v6.0.0-beta.110) (2020-07-22)
 
 

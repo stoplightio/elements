@@ -13,7 +13,7 @@ import { OutboundDependencies } from '../../components/Dependencies/Outbound';
 import { Provider } from '../../containers/Provider';
 import { IBranchNode } from '../../types';
 
-export const darkMode = () => boolean('dark mode', false);
+export const darkMode = () => boolean('Dark Mode', false);
 
 const branchNode: IBranchNode = {
   id: 9720,

@@ -1,35 +1,14 @@
 import * as React from 'react';
 
 import { IconsContext } from '../containers/Provider';
-import {
-  Divider,
-  Group,
-  ITableOfContentsTree,
-  Item,
-  NodeIconMapping,
-  TableOfContentItem,
-  TableOfContentsLinkWithId,
-  TocItemType,
-} from '../types';
+import { ITableOfContentsTree, NodeIconMapping, TableOfContentItem, TableOfContentsLinkWithId } from '../types';
 
 /**
  * Memoized hook that provides Toc contents by parsing a tree
  */
 export function useTocContents(tree: ITableOfContentsTree) {
   const icons = React.useContext(IconsContext);
-  return React.useMemo(() => computeToc(tree.items, null, 0, icons), [tree, icons]);
-}
-
-function isDivider(item: TableOfContentItem): item is Divider {
-  return item.type === TocItemType.Divider;
-}
-
-function isGroup(item: TableOfContentItem): item is Group {
-  return item.type === TocItemType.Group;
-}
-
-function isItem(item: TableOfContentItem): item is Item {
-  return item.type === TocItemType.Item;
+  return React.useMemo(() => computeToc(tree.items, { icons }), [tree, icons]);
 }
 
 /**
@@ -38,9 +17,15 @@ function isItem(item: TableOfContentItem): item is Item {
 
 function computeToc(
   items: TableOfContentItem[],
-  parentId: string | null,
-  depth: number,
-  icons: NodeIconMapping,
+  {
+    parentId,
+    depth = 0,
+    icons,
+  }: {
+    parentId?: string;
+    depth?: number;
+    icons: NodeIconMapping;
+  },
 ): TableOfContentsLinkWithId[] {
   // There is a chance that we pass an empty array
   if (!items.length) return [];
@@ -52,35 +37,35 @@ function computeToc(
     const tocNode = items[nodeIndex];
 
     const id = parentId ? `${parentId}-${nodeIndex}` : nodeIndex;
-    if (isDivider(tocNode)) {
+    if (tocNode.type === 'divider') {
       contents.push({
         id,
         name: tocNode.title,
         depth,
-        type: 'divider',
+        type: tocNode.type,
       });
     }
 
-    if (isGroup(tocNode)) {
+    if (tocNode.type === 'group') {
       contents.push({
         id,
         name: tocNode.title,
         depth,
-        type: 'group',
+        type: tocNode.type,
         icon: icons.group,
       });
 
       if (tocNode.items.length) {
-        contents.push(...computeToc(tocNode.items, id, depth + 1, icons));
+        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1, icons }));
       }
     }
 
-    if (isItem(tocNode)) {
+    if (tocNode.type === 'item') {
       contents.push({
         id,
         name: tocNode.title,
         depth: depth,
-        type: 'item',
+        type: tocNode.type,
         icon: icons.item,
         to: tocNode.uri,
       });
