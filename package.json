@@ -24,7 +24,8 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "lerna": "^3.22.1",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "tsconfig-paths-webpack-plugin": "^3.2.0"
   },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
