@@ -34,25 +34,16 @@ describe('RequestSend component', () => {
   it('clicking send should call store.send', () => {
     const sendSpy = jest.spyOn(store, 'send');
 
-    wrapper
-      .find(Button)
-      .at(0)
-      .simulate('click');
+    wrapper.find(Button).at(0).simulate('click');
 
     expect(sendSpy).toHaveBeenCalledTimes(1);
     expect(wrapper.find(Button).at(0)).toHaveProp('loading', true);
   });
 
   it('clicking copy should copy request data to clipboard', () => {
-    wrapper
-      .find(Button)
-      .at(1)
-      .simulate('click');
+    wrapper.find(Button).at(1).simulate('click');
 
-    wrapper
-      .find('.bp3-icon-duplicate')
-      .at(0)
-      .simulate('click');
+    wrapper.find('.bp3-icon-duplicate').at(0).simulate('click');
 
     expect(mockCopy).toHaveBeenCalledTimes(1);
   });
@@ -71,15 +62,9 @@ describe('RequestSend component', () => {
       store.request.method = 'get';
     });
 
-    wrapper
-      .find(Button)
-      .at(1)
-      .simulate('click');
+    wrapper.find(Button).at(1).simulate('click');
 
-    wrapper
-      .find('.bp3-icon-reset')
-      .at(0)
-      .simulate('click');
+    wrapper.find('.bp3-icon-reset').at(0).simulate('click');
 
     expect(store.request.toPartialHttpRequest()).toEqual(originalRequest);
   });
@@ -92,10 +77,7 @@ describe('RequestSend component', () => {
       value: newStore,
     });
 
-    wrapper
-      .find(Button)
-      .at(0)
-      .simulate('click');
+    wrapper.find(Button).at(0).simulate('click');
 
     expect(oldSend).not.toHaveBeenCalled();
     expect(newSend).toHaveBeenCalledTimes(1);

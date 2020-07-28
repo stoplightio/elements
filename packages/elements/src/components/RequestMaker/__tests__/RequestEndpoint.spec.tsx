@@ -115,12 +115,7 @@ describe('RequestEndpoint component', () => {
       </RequestMakerProvider>,
     );
 
-    wrapper
-      .find(RequestSend)
-      .find(ButtonGroup)
-      .find(Button)
-      .first()
-      .simulate('click');
+    wrapper.find(RequestSend).find(ButtonGroup).find(Button).first().simulate('click');
 
     expect(spy).toHaveBeenCalledTimes(1);
 
