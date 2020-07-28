@@ -53,7 +53,7 @@ export const APIComponent: React.FC<IAPIComponent> = ({ specUrl, basePath = '/',
     <ComponentsContext.Provider value={components}>
       <div className="flex flex-row">
         <Router {...routerProps}>
-          <TableOfContents tree={tree} className="" />
+          <TableOfContents tree={tree} className="flex-none w-64" />
           <div className="flex-grow p-5">
             <Switch>
               <Route path="/">
