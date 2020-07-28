@@ -1,4 +1,3 @@
-import { safeParse } from '@stoplight/json';
 import { NodeType } from '@stoplight/types';
 import axios from 'axios';
 import * as React from 'react';
@@ -7,6 +6,7 @@ import { Link, Route, Switch, useLocation } from 'react-router-dom';
 import { Docs } from '../components/Docs';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { TableOfContents } from '../components/TableOfContents';
+import { useParsedValue } from '../hooks/useParsedValue';
 import { useRouter } from '../hooks/useRouter';
 import { IAPIComponent } from '../types';
 import { computeTocTree, isOas2, isOas3, IUriMap, MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
@@ -15,15 +15,16 @@ import { computeOas3UriMap } from '../utils/oas/oas3';
 import { ComponentsContext } from './Provider';
 
 export const APIComponent: React.FC<IAPIComponent> = ({ specUrl, basePath = '/', router = 'history' }) => {
-  const [document, setDocument] = React.useState();
+  const [data, setData] = React.useState();
   const [uriMap, setUriMap] = React.useState<IUriMap>({});
   const { Router, routerProps } = useRouter(router, basePath);
+  const document = useParsedValue(data);
 
   React.useEffect(() => {
     axios
       .get(specUrl)
       .then(response => {
-        setDocument(safeParse(response.data));
+        setData(response.data);
       })
       .catch(error => {
         console.error('Could not fetch spec', error);
@@ -31,7 +32,9 @@ export const APIComponent: React.FC<IAPIComponent> = ({ specUrl, basePath = '/',
   }, [specUrl]);
 
   React.useEffect(() => {
-    setUriMap(isOas3(document) ? computeOas3UriMap(document) : isOas2(document) ? computeOas2UriMap(document) : {});
+    if (document) {
+      setUriMap(isOas3(document) ? computeOas3UriMap(document) : isOas2(document) ? computeOas2UriMap(document) : {});
+    }
   }, [document]);
 
   const tree = computeTocTree(uriMap);
