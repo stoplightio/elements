@@ -1,3 +1,4 @@
+import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { Link, Route, Switch, useLocation } from 'react-router-dom';
 
@@ -20,19 +21,18 @@ export const StoplightProject: React.FC<IStoplightProjectComponent> = ({
 
   const { Router, routerProps } = useRouter(router, basePath);
 
+  const components = React.useMemo<IComponentMapping>(
+    () => ({
+      link: ({ node, children }) => {
+        let nodeDestinationUri = node.url;
+        return <Link to={nodeDestinationUri}>{children}</Link>;
+      },
+    }),
+    [],
+  );
+
   return (
-    <Provider
-      host={workspace}
-      workspace={workspaceName}
-      project={project}
-      branch={branch}
-      components={{
-        link: ({ node, children }) => {
-          let nodeDestinationUri = node.url;
-          return <Link to={nodeDestinationUri}>{children}</Link>;
-        },
-      }}
-    >
+    <Provider host={workspace} workspace={workspaceName} project={project} branch={branch} components={components}>
       <div className="flex flex-row">
         <Router {...routerProps}>
           <TableOfContents />
