@@ -1,6 +1,6 @@
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
 import { pointerToPath } from '@stoplight/json';
-import { get, isObject, last } from 'lodash';
+import { compact, get, isObject, last, uniq } from 'lodash';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
@@ -20,8 +20,15 @@ export const isOas3 = (parsed: unknown) =>
 export const MODEL_REGEXP = new RegExp('^/(definitions|components/schemas)');
 export const OPERATION_REGEXP = new RegExp('^/paths');
 
+const MODEL_TAG_PATH = ['x-tags', 0];
+const OPERATION_TAG_PATH = ['tags', 0, 'name'];
+
 export interface IUriMap {
   [uri: string]: any;
+}
+
+interface ITagUriMap {
+  [tag: string]: string[];
 }
 
 interface IComputeUriMapProps {
@@ -88,6 +95,31 @@ export const computeTocTree = (uriMap: IUriMap) => {
   const operationUris = uris.filter(uri => OPERATION_REGEXP.test(uri));
   const modelUris = uris.filter(uri => MODEL_REGEXP.test(uri));
 
+  const tags = uniq(
+    compact(
+      Object.values(uriMap).map(node => {
+        const tag = get(node, OPERATION_TAG_PATH) || get(node, MODEL_TAG_PATH);
+        return typeof tag === 'string' ? tag.toLowerCase() : void 0;
+      }),
+    ),
+  );
+
+  const tagUriMap: ITagUriMap = tags.reduce(
+    (obj, tag) => ({
+      ...obj,
+      [tag]: [
+        ...modelUris.filter(uri => get(uriMap[uri], MODEL_TAG_PATH) === tag),
+        ...operationUris.filter(uri => get(uriMap[uri], OPERATION_TAG_PATH) === tag),
+      ],
+    }),
+    {},
+  );
+
+  const noTagUris = [
+    ...modelUris.filter(uri => !tags.includes(get(uriMap[uri], MODEL_TAG_PATH))),
+    ...operationUris.filter(uri => !tags.includes(get(uriMap[uri], OPERATION_TAG_PATH))),
+  ];
+
   if (httpService && isObject(httpService)) {
     items.push(
       {
@@ -101,36 +133,49 @@ export const computeTocTree = (uriMap: IUriMap) => {
       },
     );
   }
-  if (operationUris.length) {
-    items.push({
-      title: 'Operations',
-      type: 'group',
-      items: operationUris.map(uri => {
-        const operation = uriMap[uri];
-        return {
-          title: isObject(operation) ? operation['summary'] || operation['path'] : void 0,
-          type: 'item',
-          uri,
-        } as TableOfContentItem;
-      }),
-    });
-  }
-  if (modelUris.length) {
-    items.push({
-      title: 'Models',
-      type: 'group',
-      items: modelUris.map(
-        uri =>
+  if (tags.length) {
+    items.push(
+      ...tags.map(
+        tag =>
           ({
-            title: last(uri.split('/')),
-            type: 'item',
-            uri,
+            title: tag,
+            type: 'group',
+            items: [
+              ...modelUris.filter(uri => tagUriMap[tag].includes(uri)).map(mapModel),
+              ...operationUris.filter(uri => tagUriMap[tag].includes(uri)).map(mapOperation(uriMap)),
+            ],
           } as TableOfContentItem),
       ),
+    );
+  }
+  if (noTagUris.length) {
+    items.push({
+      title: 'Others',
+      type: 'group',
+      items: [
+        ...modelUris.filter(uri => noTagUris.includes(uri)).map(mapModel),
+        ...operationUris.filter(uri => noTagUris.includes(uri)).map(mapOperation(uriMap)),
+      ],
     });
   }
 
   return {
     items,
   } as ITableOfContentsTree;
+};
+
+const mapModel = (uri: string) =>
+  ({
+    title: last(uri.split('/')),
+    type: 'item',
+    uri,
+  } as TableOfContentItem);
+
+const mapOperation = (uriMap: IUriMap) => (uri: string) => {
+  const operation = uriMap[uri];
+  return {
+    title: isObject(operation) ? operation['summary'] || operation['path'] : void 0,
+    type: 'item',
+    uri,
+  } as TableOfContentItem;
 };
