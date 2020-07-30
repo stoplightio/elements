@@ -11,7 +11,7 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "build": "rollup --config",
+    "build": "webpack",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "storybook": "start-storybook",
     "type-check": "tsc --noEmit"
@@ -33,6 +33,9 @@
     "lodash": "^4.17.15",
     "rollup": "^2.18.2",
     "sass-inline-svg": "^1.2.3",
-    "typescript": "^3.9.6"
+    "ts-loader": "^8.0.1",
+    "typescript": "^3.9.6",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }
