@@ -25,6 +25,10 @@ p {
   flex: 1;
 }
 
+.docs {
+  height: calc(100vh - 60px);
+}
+
 .toolbar {
   height: 60px;
   display: flex;
