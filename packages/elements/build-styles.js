@@ -15,7 +15,8 @@ ncp(resolve(__dirname, 'src', 'styles'), resolve(__dirname, 'dist', 'styles'), e
 
 console.log('Compiling SCSS...');
 
-const outFile = resolve(__dirname, 'dist', 'styles', 'widgets.min.css');
+const outFileName = 'elements.min.css';
+const outFile = resolve(__dirname, 'dist', 'styles', outFileName);
 render(
   {
     file: resolve(__dirname, 'src', 'styles', 'widgets.scss'),
@@ -28,7 +29,7 @@ render(
       return console.error(err);
     }
     writeFile(outFile, result.css, () => {
-      console.log('Done compiling widgets.min.css.');
+      console.log(`Done compiling \`${outFileName}\`.`);
     });
   },
 );
