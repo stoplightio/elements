@@ -10,10 +10,16 @@ import { useComponents } from '../../hooks/useComponents';
 import { useTocContents } from '../../hooks/useTocContents';
 import { ITableOfContentsComponent, TableOfContentsLinkWithId } from '../../types';
 
-export const TableOfContents: React.FunctionComponent<ITableOfContentsComponent> = ({ tree, className }) => {
+export const TableOfContents: React.FunctionComponent<ITableOfContentsComponent> = ({
+  tree,
+  rowComponent,
+  className,
+}) => {
   const contents = useTocContents(tree);
 
-  return <UIKitTableOfContents className={className} contents={contents} rowComponent={ElementsTocRow} />;
+  return (
+    <UIKitTableOfContents className={className} contents={contents} rowComponent={rowComponent || ElementsTocRow} />
+  );
 };
 
 const ElementsTocRow: RowComponentType<TableOfContentsLinkWithId> = props => {
