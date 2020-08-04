@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.117](https://github.com/stoplightio/elements/compare/v6.0.0-beta.116...v6.0.0-beta.117) (2020-08-04)
+
+
+### Features
+
+* compile SCSS to CSS on build ([#510](https://github.com/stoplightio/elements/issues/510)) ([37db26d](https://github.com/stoplightio/elements/commit/37db26d82b73dfa2dc1e7191cf81a269fbdacf76))
+
+
+### BREAKING CHANGES
+
+* renaming of SCSS source file
+
+
+
+
+
 # [6.0.0-beta.116](https://github.com/stoplightio/elements/compare/v6.0.0-beta.115...v6.0.0-beta.116) (2020-07-30)
 
 
