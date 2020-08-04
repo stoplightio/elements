@@ -2865,7 +2865,7 @@
     shelljs "0.8.x"
     tslib "1.10.0"
 
-"@stoplight/storybook-config@^2.0.5", "@stoplight/storybook-config@^2.0.6":
+"@stoplight/storybook-config@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@stoplight/storybook-config/-/storybook-config-2.0.6.tgz#8b5077c92632eef00f5e4db1f4e269570f988a20"
   integrity sha512-AJYPzrbwcsovypBwljEBoolkJEP7USp/Sa6o2UFBWdpekqerL2xJKFsPJWRIVd/q7jsEYn7HP+qVJ7iP1DqNBg==
