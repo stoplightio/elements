@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.118](https://github.com/stoplightio/elements/compare/v6.0.0-beta.117...v6.0.0-beta.118) (2020-08-04)
+
+
+### Features
+
+* add onData and rowComponent props ([#511](https://github.com/stoplightio/elements/issues/511)) ([409b747](https://github.com/stoplightio/elements/commit/409b7471c5e65deb1eed25412764368cdabc5d64))
+
+
+
+
+
 # [6.0.0-beta.117](https://github.com/stoplightio/elements/compare/v6.0.0-beta.116...v6.0.0-beta.117) (2020-08-04)
 
 
