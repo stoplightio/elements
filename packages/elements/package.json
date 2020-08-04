@@ -108,6 +108,9 @@
     "vis-network": "^7.5.2",
     "vis-util": "^4.0.0"
   },
+  "publishConfig": {
+    "directory": "dist"
+  },
   "release": {
     "extends": "@stoplight/scripts/release"
   }
