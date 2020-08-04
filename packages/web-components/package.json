@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
-    "@rollup/plugin-typescript": "^5.0.1",
     "@stoplight/storybook-config": "^2.0.5",
     "@stoplight/types": "^11.9.0",
     "@storybook/addon-knobs": "^5.3.19",
@@ -31,7 +30,6 @@
     "@storybook/html": "^5.3.19",
     "babel-loader": "^8.1.0",
     "lodash": "^4.17.15",
-    "rollup": "^2.18.2",
     "sass-inline-svg": "^1.2.3",
     "ts-loader": "^8.0.1",
     "typescript": "^3.9.6",
