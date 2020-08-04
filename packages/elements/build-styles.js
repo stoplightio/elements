@@ -19,7 +19,7 @@ const outFileName = 'elements.min.css';
 const outFile = resolve(__dirname, 'dist', 'styles', outFileName);
 render(
   {
-    file: resolve(__dirname, 'src', 'styles', 'widgets.scss'),
+    file: resolve(__dirname, 'src', 'styles', 'elements.scss'),
     outFile: outFile,
     importer: packageImporter(),
     outputStyle: 'compressed',
