@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.118](https://github.com/stoplightio/elements/compare/v6.0.0-beta.117...v6.0.0-beta.118) (2020-08-04)
+
+
+### Features
+
+* add onData and rowComponent props ([#511](https://github.com/stoplightio/elements/issues/511)) ([409b747](https://github.com/stoplightio/elements/commit/409b7471c5e65deb1eed25412764368cdabc5d64))
+
+
+
+
+
+# [6.0.0-beta.117](https://github.com/stoplightio/elements/compare/v6.0.0-beta.116...v6.0.0-beta.117) (2020-08-04)
+
+
+### Features
+
+* compile SCSS to CSS on build ([#510](https://github.com/stoplightio/elements/issues/510)) ([37db26d](https://github.com/stoplightio/elements/commit/37db26d82b73dfa2dc1e7191cf81a269fbdacf76))
+
+
+### BREAKING CHANGES
+
+* renaming of SCSS source file
+
+
+
+
+
+# [6.0.0-beta.116](https://github.com/stoplightio/elements/compare/v6.0.0-beta.115...v6.0.0-beta.116) (2020-07-30)
+
+
+### Bug Fixes
+
+* toc row data ([#509](https://github.com/stoplightio/elements/issues/509)) ([2cefe4a](https://github.com/stoplightio/elements/commit/2cefe4aa92efd49d1ca055a6f54443fdce329a12))
+
+
+
+
+
 # [6.0.0-beta.115](https://github.com/stoplightio/elements/compare/v6.0.0-beta.114...v6.0.0-beta.115) (2020-07-28)
 
 
