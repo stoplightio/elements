@@ -35,7 +35,7 @@ const ElementsTocRow: RowComponentType<TableOfContentsLinkWithId> = props => {
       parent={null}
       index={0}
       path={[item.to]}
-      node={{ ...info, node: item.to, type: 'link', children: [], url: item.to }}
+      node={{ ...info, node: item.to, data: item, type: 'link', children: [], url: item.to }}
     >
       <DefaultRow {...props} item={item} />
     </Link>
