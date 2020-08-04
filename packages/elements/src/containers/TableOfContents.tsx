@@ -53,11 +53,14 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
     },
   });
   const tocData = data?.projectTableOfContents?.data;
-  const tree: ITableOfContentsTree = tocData ? tocData : { items: [] };
 
-  if (onData && tocData) {
-    onData(tocData);
-  }
+  React.useEffect(() => {
+    if (onData && tocData) {
+      onData(tocData);
+    }
+  }, [onData, tocData]);
+
+  const tree: ITableOfContentsTree = tocData ? tocData : { items: [] };
 
   if (fetching) {
     return <TableOfContentsSkeleton className={className} />;
