@@ -1,5 +1,5 @@
 {
-  "extends": "@stoplight/scripts/tsconfig.json",
+  "extends": "../../tsconfig.json",
 
   "include": ["src"],
 
@@ -7,6 +7,5 @@
 
   "compilerOptions": {
     "module": "commonjs",
-    "esModuleInterop": true
   }
 }

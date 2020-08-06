@@ -14,6 +14,7 @@
   ],
   "devDependencies": {
     "@stoplight/eslint-config": "^1.1.0",
+    "@stoplight/storybook-config": "^2.0.6",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
     "eslint": "^7.5.0",
@@ -24,17 +25,20 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "lerna": "^3.22.1",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.9.6"
   },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
+    "web-components": "yarn workspace @stoplight/web-components",
     "build": "yarn workspaces run build",
     "build.docs": "yarn workspaces run build.docs",
     "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
-    "release": "lerna publish --conventional-commits --yes --contents dist",
+    "release": "lerna publish --conventional-commits --yes",
     "release.docs": "yarn workspaces run release.docs",
     "type-check": "yarn workspaces run type-check",
-    "test.prod": "yarn workspaces run test.prod",
+    "test.prod": "yarn workspace @stoplight/elements test.prod",
     "prepublishOnly": "yarn workspaces run build"
   },
   "lint-staged": {
