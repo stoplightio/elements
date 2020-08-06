@@ -11,6 +11,7 @@ export interface ITableOfContents {
   workspaceUrl: string;
   projectSlug: string;
   branchSlug?: string;
+  node?: string;
   onData?: (tocTree: ITableOfContentsTree) => void;
   rowComponent?: RowComponentType<TableOfContentsLinkWithId>;
   className?: string;
@@ -36,6 +37,7 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
   workspaceUrl,
   projectSlug,
   branchSlug,
+  node,
   onData,
   rowComponent,
   className,
@@ -66,7 +68,7 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
     return <TableOfContentsSkeleton className={className} />;
   }
 
-  return <TableOfContentsComponent className={className} tree={tree} rowComponent={rowComponent} />;
+  return <TableOfContentsComponent className={className} tree={tree} activeNode={node} rowComponent={rowComponent} />;
 };
 
 export const TableOfContents: React.FC<ITableOfContentsWithUqrl> = ({ workspaceUrl, urqlClient, ...rest }) => {

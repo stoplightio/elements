@@ -89,6 +89,7 @@ export type NodeIconMapping = { [type in IconMapType]?: FAIconProp };
 export interface ITableOfContentsComponent {
   tree: ITableOfContentsTree;
   rowComponent?: RowComponentType<TableOfContentsLinkWithId>;
+  activeNode?: string;
   className?: string;
 }
 

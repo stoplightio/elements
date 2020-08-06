@@ -13,9 +13,15 @@ import { ITableOfContentsComponent, TableOfContentsLinkWithId } from '../../type
 export const TableOfContents: React.FunctionComponent<ITableOfContentsComponent> = ({
   tree,
   rowComponent,
+  activeNode,
   className,
 }) => {
-  const contents = useTocContents(tree);
+  const contents = useTocContents(tree).map(item => {
+    return {
+      ...item,
+      isActive: item.type === 'item' && activeNode !== void 0 ? item.to === activeNode : false,
+    };
+  });
 
   return (
     <UIKitTableOfContents className={className} contents={contents} rowComponent={rowComponent || ElementsTocRow} />
