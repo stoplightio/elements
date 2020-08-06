@@ -35,7 +35,7 @@ export const StoplightProject: React.FC<IStoplightProjectComponent> = ({
     <Provider host={workspace} workspace={workspaceName} project={project} branch={branch} components={components}>
       <div className="flex flex-row">
         <Router {...routerProps}>
-          <TableOfContents />
+          <TableOfContents workspaceUrl={workspace} projectSlug={project} branchSlug={branch} />
           <div className="flex-grow p-5">
             <Switch>
               <Route path="/">
