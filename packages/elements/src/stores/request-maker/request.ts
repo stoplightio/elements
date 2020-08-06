@@ -295,8 +295,7 @@ export class RequestStore {
 
       return markdown;
     } else if (language === 'har') {
-      const har = safeStringify(this.toHAR(), undefined, 2);
-      return har;
+      return safeStringify(this.toHAR(), undefined, 2) ?? null;
     }
 
     try {
@@ -482,7 +481,7 @@ export class RequestStore {
     return this._body || '';
   }
   public set body(body: any) {
-    this._body = safeStringify(body, undefined, 2);
+    this._body = safeStringify(body, undefined, 2) || '';
 
     if (this.contentType === 'form-data' || this.contentType === 'binary') {
       this.formDataParams = getParamArray(body);
