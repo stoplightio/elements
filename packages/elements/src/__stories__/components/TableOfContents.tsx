@@ -1,10 +1,11 @@
-import { object, withKnobs } from '@storybook/addon-knobs';
+import { DefaultRow, TableOfContents } from '@stoplight/ui-kit';
+import { object, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
 import { tree } from '../../__fixtures__/table-of-contents/studio';
-import { TableOfContents } from '../../components/TableOfContents';
-import { Provider } from '../../containers/Provider';
+import { TableOfContents as TocContainer } from '../../containers/TableOfContents';
+import { useTocContents } from '../../hooks/useTocContents';
 
 const styles = {
   height: '100%',
@@ -17,40 +18,60 @@ const styles = {
 
 storiesOf('components/TableOfContents', module)
   .addDecorator(withKnobs)
-  .add('Playground', () => {
+  .add('ToC', () => {
     return <TocStory />;
+  })
+  .add('Toc Container', () => {
+    return <TocStoryContainer />;
   });
 
 const TocStory: React.FC = () => {
+  const [node, setNode] = React.useState('');
+  const tocTree = object('tree', tree);
+  const contents = useTocContents(tocTree).map(item => ({
+    ...item,
+    onClick: () => {
+      setNode(item.to);
+    },
+  }));
+
+  return (
+    <div className="flex flex-row">
+      <div style={styles}>
+        <TableOfContents className="h-full" contents={contents} />
+      </div>
+      <div className="flex-grow p-5">
+        <h2>Docs go here</h2>
+        <p>{node}</p>
+      </div>
+    </div>
+  );
+};
+
+const TocStoryContainer: React.FC = () => {
   const [node, setNode] = React.useState('');
 
   return (
     <div className="flex flex-row">
       <div style={styles}>
-        <Provider
-          host="https://meta.stoplight.io"
-          workspace="meta"
-          project="studio-demo"
-          node={node}
-          components={{
-            link: ({ children, node: { url } }) => {
-              return (
-                <a
-                  className="no-underline"
-                  href={url}
-                  onClick={e => {
-                    setNode(url);
-                    e.preventDefault();
-                  }}
-                >
-                  {children}
-                </a>
-              );
-            },
+        <TocContainer
+          className="h-full"
+          workspaceUrl={text('workspaceUrl', 'http://meta.localhost:8080')}
+          projectSlug={text('projectSlug', 'studio-demo')}
+          rowComponent={({ item, ...rest }) => {
+            return (
+              <DefaultRow
+                item={{
+                  ...item,
+                  onClick: () => {
+                    setNode(item.to);
+                  },
+                }}
+                {...rest}
+              />
+            );
           }}
-        >
-          <TableOfContents className="h-full" tree={object('tree', tree)} />
-        </Provider>
+        />
       </div>
       <div className="flex-grow p-5">
         <h2>Docs go here</h2>
