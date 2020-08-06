@@ -95,12 +95,14 @@ export const ResponseViewer = observer<ResponseProps>(({ tabs = defaultTabs, cla
             panelClassName={panelClassName}
             panel={
               <div className="RequestMaker__RequestViewer">
-                <CodeViewer
-                  language="json"
-                  value={safeStringify(responseStore.originalRequest, undefined, 2)}
-                  showLineNumbers
-                  className="p-5"
-                />
+                {responseStore.originalRequest !== undefined && (
+                  <CodeViewer
+                    language="json"
+                    value={safeStringify(responseStore.originalRequest, undefined, 2)}
+                    showLineNumbers
+                    className="p-5"
+                  />
+                )}
               </div>
             }
           />

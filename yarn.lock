@@ -2736,10 +2736,10 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1", "@stoplight/json@^3.8.1", "@stoplight/json@^3.8.3":
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.8.3.tgz#83b904a643e1b0a56816ad750bc5f36939791b63"
-  integrity sha512-HkW4QsiuAku4PHTML1HxpQV2eRjw8GObn1cfjt5pE5hMZlS3fmW2bwoqzMs1cifTcT+TanyarVX8GGPbch2qog==
+"@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1", "@stoplight/json@^3.8.1", "@stoplight/json@^3.8.3", "@stoplight/json@^3.8.5":
+  version "3.8.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.8.5.tgz#66bad40a75f941bc9667522b11093adf50dc4b14"
+  integrity sha512-YljbQcQsMbHw92pXUELDg7N5OdXCsIzDP/bzw+ooKponi9lRxk1vcu3956vNGsf/ldf5OZZv2Wo7wI0ggNkNgQ==
   dependencies:
     "@stoplight/ordered-object-literal" "^1.0.1"
     "@stoplight/types" "^11.9.0"
