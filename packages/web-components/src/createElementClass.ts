@@ -120,7 +120,7 @@ export const createElementClass = <P>(Component: React.ComponentType<P>, propDes
         }
 
         if (type === 'object') {
-          return safeStringify(val);
+          return safeStringify(val) || '';
         }
 
         return '';

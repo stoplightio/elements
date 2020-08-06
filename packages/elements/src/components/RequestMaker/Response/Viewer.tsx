@@ -98,7 +98,7 @@ export const ResponseViewer = observer<ResponseProps>(({ tabs = defaultTabs, cla
                 {responseStore.originalRequest !== undefined && (
                   <CodeViewer
                     language="json"
-                    value={safeStringify(responseStore.originalRequest, undefined, 2)}
+                    value={safeStringify(responseStore.originalRequest, undefined, 2) || ''}
                     showLineNumbers
                     className="p-5"
                   />
