@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.119](https://github.com/stoplightio/elements/compare/v6.0.0-beta.118...v6.0.0-beta.119) (2020-08-06)
+
+
+### Bug Fixes
+
+* storybook release ([#513](https://github.com/stoplightio/elements/issues/513)) ([03544a9](https://github.com/stoplightio/elements/commit/03544a9eca73a6b2f4911653dda8bf88864ead8c))
+
+
+### Features
+
+* toc active node prop ([#512](https://github.com/stoplightio/elements/issues/512)) ([f63e55c](https://github.com/stoplightio/elements/commit/f63e55c02398ba5fc9e38a3f41ab81bec190c810))
+
+
+
+
+
 # [6.0.0-beta.118](https://github.com/stoplightio/elements/compare/v6.0.0-beta.117...v6.0.0-beta.118) (2020-08-04)
 
 
