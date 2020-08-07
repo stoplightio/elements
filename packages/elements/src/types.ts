@@ -15,7 +15,6 @@ export interface IChange {
 
 export interface IBranchNode {
   id: number;
-  baseUri?: string;
   version?: string;
   isLatestVersion?: boolean;
 

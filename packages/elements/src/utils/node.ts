@@ -13,7 +13,7 @@ export function matchesNodeFilter(branchNode: IBranchNode, filter?: INodeFilter)
 
   if (filter.nodeUri) {
     // TODO (CL): use minimatch here to match glob patterns
-    const uri = branchNode.baseUri || branchNode.node.uri;
+    const uri = branchNode.node.uri;
     isMatch = uri.startsWith(filter.nodeUri);
   }
 
