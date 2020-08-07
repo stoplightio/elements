@@ -1,3 +1,3 @@
 import '@stoplight/storybook-config/config';
 
-import '@stoplight/elements/dist/styles/elements.scss';
+import '@stoplight/elements/src/styles/elements.scss';
