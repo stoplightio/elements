@@ -2736,18 +2736,7 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1", "@stoplight/json@^3.8.3":
-  version "3.8.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.8.4.tgz#cdba664e0e9cc51e3f88404971a76e22a39b5a17"
-  integrity sha512-iUMC03ykFS57Uy5lPTFyLZDlImAZSZSgW/4hvsW1uKAbzu+vuk3yCgRoLTDMMf6ErPE8OMjBP/oHn+uyB0TftA==
-  dependencies:
-    "@stoplight/ordered-object-literal" "^1.0.1"
-    "@stoplight/types" "^11.9.0"
-    jsonc-parser "~2.2.1"
-    lodash "^4.17.15"
-    safe-stable-stringify "^1.1"
-
-"@stoplight/json@^3.8.6":
+"@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1", "@stoplight/json@^3.8.3", "@stoplight/json@^3.8.6":
   version "3.8.6"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.8.6.tgz#7b865508273dae628e029f88a48a55aa582f40fe"
   integrity sha512-EgrNYEr7GXLq55t8Yp9HeETgIfEX1Uh1oP7T9o+PW6IxLadddtz5IC99flgX6BSzrarhx3W9e1ZiEcxd2uWk1w==
@@ -9037,7 +9026,7 @@ fork-ts-checker-webpack-plugin@1.5.0:
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
 
-form-data@^3.0.0:
+form-data@^3:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
   integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
