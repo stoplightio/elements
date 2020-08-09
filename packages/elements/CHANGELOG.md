@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.122](https://github.com/stoplightio/elements/compare/v6.0.0-beta.121...v6.0.0-beta.122) (2020-08-09)
+
+
+### Bug Fixes
+
+* **deps:** bump @stoplight/{path,ui-kit} ([#517](https://github.com/stoplightio/elements/issues/517)) ([edb873f](https://github.com/stoplightio/elements/commit/edb873f2cdcdfda2c1c7ac2497ea089ea0ac8cce))
+
+
+
+
+
 # [6.0.0-beta.121](https://github.com/stoplightio/elements/compare/v6.0.0-beta.119...v6.0.0-beta.121) (2020-08-07)
 
 
