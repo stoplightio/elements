@@ -4,6 +4,8 @@ import { isEqual, mapValues } from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+const elementsCss = require('@stoplight/elements/styles/elements.scss').toString();
+
 type TypeNameMap<T> = T extends string
   ? 'string'
   : T extends number
@@ -70,6 +72,11 @@ export const createElementClass = <P>(Component: React.ComponentType<P>, propDes
       const mountPoint = document.createElement('div');
       const shadowRoot = this.attachShadow({ mode: 'open' });
       shadowRoot.appendChild(mountPoint);
+
+      const style = document.createElement('style');
+      style.innerHTML = elementsCss;
+      shadowRoot.appendChild(style);
+
       this._shadow = { mountPoint, root: shadowRoot };
 
       for (const key in propDescriptors) {

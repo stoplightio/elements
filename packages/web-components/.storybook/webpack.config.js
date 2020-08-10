@@ -10,12 +10,23 @@ const pkg = require.resolve(path.join(cwd, 'package.json'), {
   paths: [process.cwd()],
 });
 
+const postcssOptions = {
+  plugins: [
+    require('postcss-import'),
+    require('autoprefixer')({
+      env: 'last 2 Chrome versions, last 2 Firefox versions, last 1 Safari version',
+    }),
+  ],
+};
+
 module.exports = ({ config }) => {
   config.context = cwd;
   config.mode = 'development';
   config.resolve.alias['@project/stories'] = require.resolve(path.join(cwd, 'src', '__stories__', 'index.ts'), {
     paths: [cwd],
   });
+  config.resolve.alias['@stoplight/elements'] = path.resolve(__dirname, '../../elements/src');
+
   config.resolve.plugins = [new TsconfigPathsPlugin()];
 
   config.node = {
@@ -84,40 +95,55 @@ module.exports = ({ config }) => {
     };
   }
 
+
   config.module.rules.push({
     test: /\.scss$/,
-    use: [
+    oneOf: [
       {
-        loader: require.resolve('style-loader'),
-      },
-      {
-        loader: require.resolve('css-loader'),
-        options: {
-          importLoaders: 2,
-        },
-      },
-      {
-        loader: require.resolve('postcss-loader'),
-        options: {
-          plugins: [
-            require('postcss-import'),
-            require('autoprefixer')({
-              env: 'last 2 Chrome versions, last 2 Firefox versions, last 1 Safari version',
-            }),
-          ],
-        },
-      },
-      'resolve-url-loader',
-      {
-        loader: require.resolve('sass-loader'),
-        options: {
-          sassOptions: {
-            importer: [PackageImporter()],
-            functions: {
-              'svg-icon': svgIconFunc,
+        test: /elements.scss/,
+        use: [
+          {
+            loader: require.resolve('css-loader'),
+            options: {
+              importLoaders: 2,
             },
           },
-        },
+          {
+            loader: require.resolve('postcss-loader'),
+            options: postcssOptions,
+          },
+          'resolve-url-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        use: [
+          {
+            loader: require.resolve('style-loader'),
+          },
+          {
+            loader: require.resolve('css-loader'),
+            options: {
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: require.resolve('postcss-loader'),
+            options: postcssOptions,
+          },
+          'resolve-url-loader',
+          {
+            loader: require.resolve('sass-loader'),
+            options: {
+              sassOptions: {
+                importer: [PackageImporter()],
+                functions: {
+                  'svg-icon': svgIconFunc,
+                },
+              },
+            },
+          },
+        ],
       },
     ],
   });
