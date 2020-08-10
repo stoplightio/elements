@@ -1,24 +1,11 @@
 const path = require('path');
 
-const postcssOptions = {
-  plugins: [
-    require('postcss-import'),
-    require('autoprefixer')({
-      env: 'last 2 Chrome versions, last 2 Firefox versions, last 1 Safari version',
-    }),
-  ],
-};
-
 const sassLoaderChain = [
   {
     loader: require.resolve('css-loader'),
     options: {
       importLoaders: 2,
     },
-  },
-  {
-    loader: require.resolve('postcss-loader'),
-    options: postcssOptions,
   },
   'resolve-url-loader',
   'sass-loader',

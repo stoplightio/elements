@@ -10,15 +10,6 @@ const pkg = require.resolve(path.join(cwd, 'package.json'), {
   paths: [process.cwd()],
 });
 
-const postcssOptions = {
-  plugins: [
-    require('postcss-import'),
-    require('autoprefixer')({
-      env: 'last 2 Chrome versions, last 2 Firefox versions, last 1 Safari version',
-    }),
-  ],
-};
-
 module.exports = ({ config }) => {
   config.context = cwd;
   config.mode = 'development';
@@ -64,17 +55,7 @@ module.exports = ({ config }) => {
       {
         loader: require.resolve('css-loader'),
         options: {
-          importLoaders: 1,
-        },
-      },
-      {
-        loader: require.resolve('postcss-loader'),
-        options: {
-          plugins: [
-            require('autoprefixer')({
-              env: 'last 2 Chrome versions, last 2 Firefox versions, last 1 Safari version',
-            }),
-          ],
+          importLoaders: 0,
         },
       },
     ],
@@ -108,28 +89,18 @@ module.exports = ({ config }) => {
               importLoaders: 2,
             },
           },
-          {
-            loader: require.resolve('postcss-loader'),
-            options: postcssOptions,
-          },
           'resolve-url-loader',
           'sass-loader',
         ],
       },
       {
         use: [
-          {
-            loader: require.resolve('style-loader'),
-          },
+          'style-loader',
           {
             loader: require.resolve('css-loader'),
             options: {
               importLoaders: 2,
             },
-          },
-          {
-            loader: require.resolve('postcss-loader'),
-            options: postcssOptions,
           },
           'resolve-url-loader',
           {
