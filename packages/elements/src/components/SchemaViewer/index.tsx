@@ -88,7 +88,7 @@ export const SchemaViewer = ({
               language="json"
               showLineNumbers
               className="py-4 px-4 overflow-auto max-h-400px"
-              value={safeStringify(example, undefined, 2)}
+              value={safeStringify(example, undefined, 2) || ''}
             />
           </SimpleTabPanel>
         );

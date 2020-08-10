@@ -2291,7 +2291,6 @@ export const edges: INodeEdge[] = [
 
 export const node = {
   id: 13774,
-  baseUri: '/reference/giphy/giphy.yaml/paths/~1gifs/get',
   version: '0.0',
   isLatestVersion: true,
   branch: {

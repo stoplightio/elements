@@ -23,7 +23,7 @@ export const Dependencies = ({ className, direction }: IDependencies) => {
       workspaceSlug: info.workspace,
       projectSlug: info.project,
       branchSlug: info.branch,
-      baseUri: info.node,
+      uri: info.node,
     },
   });
 

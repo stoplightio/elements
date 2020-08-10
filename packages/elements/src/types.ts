@@ -1,5 +1,5 @@
 import type { NodeType } from '@stoplight/types';
-import type { FAIconProp, ITableOfContentsLink, RowComponentType } from '@stoplight/ui-kit';
+import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
 
 export interface INodeFilter {
   nodeUri?: string;
@@ -15,7 +15,6 @@ export interface IChange {
 
 export interface IBranchNode {
   id: number;
-  baseUri?: string;
   version?: string;
   isLatestVersion?: boolean;
 
@@ -85,12 +84,6 @@ export interface INodeEdge {
 
 export type IconMapType = NodeType | 'group' | 'divider' | 'item';
 export type NodeIconMapping = { [type in IconMapType]?: FAIconProp };
-
-export interface ITableOfContentsComponent {
-  tree: ITableOfContentsTree;
-  rowComponent?: RowComponentType<TableOfContentsLinkWithId>;
-  className?: string;
-}
 
 export interface ITableOfContentsTree {
   items: TableOfContentItem[];

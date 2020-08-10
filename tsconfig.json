@@ -1,0 +1,10 @@
+{
+  "extends": "@stoplight/scripts/tsconfig.json",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "baseUrl": "./packages",
+    "paths": {
+      "@stoplight/elements": ["./elements/src"]
+    }
+  }
+}

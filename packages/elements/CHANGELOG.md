@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.122](https://github.com/stoplightio/elements/compare/v6.0.0-beta.121...v6.0.0-beta.122) (2020-08-09)
+
+
+### Bug Fixes
+
+* **deps:** bump @stoplight/{path,ui-kit} ([#517](https://github.com/stoplightio/elements/issues/517)) ([edb873f](https://github.com/stoplightio/elements/commit/edb873f2cdcdfda2c1c7ac2497ea089ea0ac8cce))
+
+
+
+
+
+# [6.0.0-beta.121](https://github.com/stoplightio/elements/compare/v6.0.0-beta.119...v6.0.0-beta.121) (2020-08-07)
+
+
+### Bug Fixes
+
+* remove base uri ([#515](https://github.com/stoplightio/elements/issues/515)) ([ea359de](https://github.com/stoplightio/elements/commit/ea359dec77570087e6635749f597df964c0249ea))
+* update json package ([#516](https://github.com/stoplightio/elements/issues/516)) ([376eaba](https://github.com/stoplightio/elements/commit/376eaba085995439abe921c18fa3bcf1dfc06ac5))
+* **response-viewer:** originalRequest might be undefined ([#514](https://github.com/stoplightio/elements/issues/514)) ([01a3b83](https://github.com/stoplightio/elements/commit/01a3b833443547bcab2c888e09f5421c9f4cdc24))
+
+
+### Features
+
+* add web-components project ([#499](https://github.com/stoplightio/elements/issues/499)) ([c5e1937](https://github.com/stoplightio/elements/commit/c5e1937bb097a9c6b817694bea743c93acd204ff))
+
+
+
+
+
+# [6.0.0](https://github.com/stoplightio/elements/compare/v6.0.0-beta.119...v6.0.0) (2020-08-07)
+
+
+### Bug Fixes
+
+* remove base uri ([#515](https://github.com/stoplightio/elements/issues/515)) ([ea359de](https://github.com/stoplightio/elements/commit/ea359dec77570087e6635749f597df964c0249ea))
+* update json package ([#516](https://github.com/stoplightio/elements/issues/516)) ([376eaba](https://github.com/stoplightio/elements/commit/376eaba085995439abe921c18fa3bcf1dfc06ac5))
+* **response-viewer:** originalRequest might be undefined ([#514](https://github.com/stoplightio/elements/issues/514)) ([01a3b83](https://github.com/stoplightio/elements/commit/01a3b833443547bcab2c888e09f5421c9f4cdc24))
+
+
+### Features
+
+* add web-components project ([#499](https://github.com/stoplightio/elements/issues/499)) ([c5e1937](https://github.com/stoplightio/elements/commit/c5e1937bb097a9c6b817694bea743c93acd204ff))
+
+
+
+
+
+# [6.0.0-beta.119](https://github.com/stoplightio/elements/compare/v6.0.0-beta.118...v6.0.0-beta.119) (2020-08-06)
+
+
+### Bug Fixes
+
+* storybook release ([#513](https://github.com/stoplightio/elements/issues/513)) ([03544a9](https://github.com/stoplightio/elements/commit/03544a9eca73a6b2f4911653dda8bf88864ead8c))
+
+
+### Features
+
+* toc active node prop ([#512](https://github.com/stoplightio/elements/issues/512)) ([f63e55c](https://github.com/stoplightio/elements/commit/f63e55c02398ba5fc9e38a3f41ab81bec190c810))
+
+
+
+
+
 # [6.0.0-beta.118](https://github.com/stoplightio/elements/compare/v6.0.0-beta.117...v6.0.0-beta.118) (2020-08-04)
 
 

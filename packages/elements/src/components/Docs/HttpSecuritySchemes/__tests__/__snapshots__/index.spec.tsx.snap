@@ -321,11 +321,16 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                               inline={true}
                               value="?apikey=123"
                             >
-                              <code
-                                className="CodeEditor inline-block line-none CodeEditor--inline"
+                              <Component
+                                className="inline-block line-none"
+                                value="?apikey=123"
                               >
-                                ?apikey=123
-                              </code>
+                                <code
+                                  className="CodeViewer inline-block line-none CodeViewer--inline"
+                                >
+                                  ?apikey=123
+                                </code>
+                              </Component>
                             </CodeViewer>
                           </inlineCode>
                           <text

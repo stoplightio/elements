@@ -10,6 +10,8 @@ jobs:
       - run: yarn type-check
       - run: yarn lint
       - run: yarn test.prod
+      - run: yarn build
+      - run: yarn build.docs
   release:
     docker:
       - image: circleci/node:12

@@ -3,7 +3,6 @@ import { IBranchNode, ITableOfContentsTree } from '../../types';
 export const nodes: IBranchNode[] = [
   {
     id: 32,
-    baseUri: '/docs/introduction.md',
     node: {
       id: 1,
       uri: '/docs/introduction.md',
@@ -17,7 +16,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 39,
-    baseUri: '/docs/markdown/basic-syntax.md',
     node: {
       id: 3,
       uri: '/docs/markdown/basic-syntax.md',
@@ -31,7 +29,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 40,
-    baseUri: '/docs/markdown/stoplight-flavored-markdown.md',
     node: {
       id: 4,
       uri: '/docs/markdown/stoplight-flavored-markdown.md',
@@ -45,7 +42,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 36,
-    baseUri: '/docs/ui-overview.md',
     node: {
       id: 2,
       uri: '/docs/ui-overview.md',
@@ -59,7 +55,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 41,
-    baseUri: '/reference/common/models/error.yaml',
     node: {
       id: 5,
       uri: '/reference/common/models/error.v1.yaml',
@@ -73,7 +68,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 45,
-    baseUri: '/reference/petstore/models/category.yaml',
     node: {
       id: 6,
       uri: '/reference/petstore/models/category.v1.yaml',
@@ -87,7 +81,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 46,
-    baseUri: '/reference/petstore/models/pet.yaml',
     node: {
       id: 7,
       uri: '/reference/petstore/models/pet.v1.yaml',
@@ -101,7 +94,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 51,
-    baseUri: '/reference/petstore/openapi.yaml',
     node: {
       id: 12,
       uri: '/reference/petstore/openapi.v1.yaml',
@@ -115,7 +107,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 47,
-    baseUri: '/reference/petstore/openapi.yaml/components/schemas/Pets',
     node: {
       id: 8,
       uri: '/reference/petstore/openapi.v1.yaml/components/schemas/Pets',
@@ -129,7 +120,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 55,
-    baseUri: '/reference/petstore/openapi.yaml/paths/~1pets~1{petId}/get',
     node: {
       id: 16,
       uri: '/reference/petstore/openapi.v1.yaml/paths/~1pets~1{petId}/get',
@@ -143,7 +133,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 53,
-    baseUri: '/reference/petstore/openapi.yaml/paths/~1pets/get',
     node: {
       id: 14,
       uri: '/reference/petstore/openapi.v1.yaml/paths/~1pets/get',
@@ -157,7 +146,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 54,
-    baseUri: '/reference/petstore/openapi.yaml/paths/~1pets/post',
     node: {
       id: 15,
       uri: '/reference/petstore/openapi.v1.yaml/paths/~1pets/post',
@@ -171,7 +159,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 48,
-    baseUri: '/reference/todos/models/todo-full.json',
     node: {
       id: 9,
       uri: '/reference/todos/models/todo-full.v1.json',
@@ -185,7 +172,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 49,
-    baseUri: '/reference/todos/models/todo-partial.json',
     node: {
       id: 10,
       uri: '/reference/todos/models/todo-partial.v1.json',
@@ -199,7 +185,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 50,
-    baseUri: '/reference/todos/models/user.json',
     node: {
       id: 11,
       uri: '/reference/todos/models/user.v1.json',
@@ -213,7 +198,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 52,
-    baseUri: '/reference/todos/openapi.json',
     node: {
       id: 13,
       uri: '/reference/todos/openapi.v1.json',
@@ -227,7 +211,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 58,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos~1{todoId}/delete',
     node: {
       id: 19,
       uri: '/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/delete',
@@ -241,7 +224,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 56,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos~1{todoId}/get',
     node: {
       id: 17,
       uri: '/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/get',
@@ -255,7 +237,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 57,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos~1{todoId}/put',
     node: {
       id: 18,
       uri: '/reference/todos/openapi.v1.json/paths/~1todos~1{todoId}/put',
@@ -269,7 +250,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 60,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos/get',
     node: {
       id: 21,
       uri: '/reference/todos/openapi.v1.json/paths/~1todos/get',
@@ -283,7 +263,6 @@ export const nodes: IBranchNode[] = [
   },
   {
     id: 59,
-    baseUri: '/reference/todos/openapi.json/paths/~1todos/post',
     node: {
       id: 20,
       uri: '/reference/todos/openapi.v1.json/paths/~1todos/post',
