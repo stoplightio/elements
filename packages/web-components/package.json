@@ -1,7 +1,7 @@
 {
   "name": "@stoplight/web-components",
   "version": "6.0.0-beta.121",
-  "main": "dist/bundle.js",
+  "main": "dist/elements.min.js",
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",
   "author": "Stoplight <support@stoplight.io>",
