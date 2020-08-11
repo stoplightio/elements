@@ -1,4 +1,4 @@
-import type { NodeType } from '@stoplight/types';
+import type { Dictionary, NodeType } from '@stoplight/types';
 import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
 
 export interface INodeFilter {
@@ -109,3 +109,20 @@ export type Item = {
   type: 'item';
   uri: string;
 };
+
+export interface IRouter {
+  basePath?: string;
+  router?: 'history' | 'hash' | 'memory';
+}
+export interface IRenderLink {
+  renderLink?: (props: React.PropsWithChildren<IRenderLinkProps>) => React.ReactElement<unknown>;
+}
+
+export interface IRenderLinkProps {
+  data: Dictionary<unknown>;
+  url: string;
+}
+
+export interface IAPI extends IRouter, IRenderLink {
+  specUrl: string;
+}
