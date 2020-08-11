@@ -31,7 +31,7 @@
   },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
-    "web-components": "yarn workspace @stoplight/elements-web-components",
+    "elements-web-components": "yarn workspace @stoplight/elements-web-components",
     "build": "yarn workspaces run build",
     "build.docs": "yarn workspaces run build.docs",
     "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
