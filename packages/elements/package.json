@@ -53,7 +53,7 @@
     "@stoplight/react-error-boundary": "^1.1.0",
     "@stoplight/tree-list": "^5.0.3",
     "@stoplight/types": "^11.9.0",
-    "@stoplight/ui-kit": "^3.0.0-beta.29",
+    "@stoplight/ui-kit": "^3.0.0-beta.31",
     "@stoplight/yaml": "^4.2.1",
     "@types/react-router-dom": "^5.1.5",
     "axios": "^0.19.2",
