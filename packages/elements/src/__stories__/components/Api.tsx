@@ -5,7 +5,7 @@ import cn from 'classnames';
 import * as React from 'react';
 import StoryRouter from 'storybook-react-router';
 
-import { APIComponent } from '../../containers/APIComponent';
+import { API } from '../../containers/API';
 
 const darkMode = () => boolean('dark mode', false);
 const specUrl = () =>
@@ -20,7 +20,7 @@ storiesOf('components/APIComponent', module)
   .add('APIComponent', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <APIComponent specUrl={specUrl()} />
+        <API specUrl={specUrl()} />
       </div>
     );
   });

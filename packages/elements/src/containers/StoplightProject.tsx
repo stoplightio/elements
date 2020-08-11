@@ -1,56 +1,55 @@
-import { IComponentMapping } from '@stoplight/markdown-viewer';
+import { DefaultRow, RowComponentType } from '@stoplight/ui-kit';
 import * as React from 'react';
-import { Link, Route, Switch, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import { useRouter } from '../hooks/useRouter';
-import { IStoplightProjectComponent } from '../types';
+import { withRouter } from '../hoc/withRouter';
+import { IStoplightProject, TableOfContentsLinkWithId } from '../types';
 import { Docs } from './Docs';
-import { Provider } from './Provider';
 import { TableOfContents } from './TableOfContents';
 
-export const StoplightProject: React.FC<IStoplightProjectComponent> = ({
-  workspace,
-  project,
-  branch,
-  basePath = '/',
-  router = 'history',
-}) => {
-  const regExp = /^(https?:\/\/)?([^.]+)\./g;
-  const match = regExp.exec(workspace);
-  const workspaceName = match?.length === 3 ? match[2] : '';
+export const StoplightProject: React.FC<IStoplightProject> = withRouter(
+  ({ workspace, project, branch, renderLink: RenderLink }) => {
+    const { pathname } = useLocation();
 
-  const { Router, routerProps } = useRouter(router, basePath);
+    const rowComponent: RowComponentType<TableOfContentsLinkWithId> = props => {
+      if (!props.item.to) {
+        return <DefaultRow {...props} />;
+      }
 
-  const components = React.useMemo<IComponentMapping>(
-    () => ({
-      link: ({ node, children }) => {
-        let nodeDestinationUri = node.url;
-        return <Link to={nodeDestinationUri}>{children}</Link>;
-      },
-    }),
-    [],
-  );
+      const item = {
+        ...props.item,
+        isSelected: props.item.to === pathname,
+        to: props.item.to ?? '',
+      };
 
-  return (
-    <Provider host={workspace} workspace={workspaceName} project={project} branch={branch} components={components}>
-      <div className="flex flex-row">
-        <Router {...routerProps}>
-          <TableOfContents workspaceUrl={workspace} projectSlug={project} branchSlug={branch} />
-          <div className="flex-grow p-5">
-            <Switch>
-              <Route path="/">
-                <DocsRoute />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
+      if (RenderLink) {
+        return (
+          <RenderLink url={item.to} data={{ item }}>
+            <DefaultRow {...props} item={item} />
+          </RenderLink>
+        );
+      }
+
+      return (
+        <Link to={item.to} className="no-underline block">
+          <DefaultRow {...props} item={item} />
+        </Link>
+      );
+    };
+
+    return (
+      <div className="StoplightProject flex flex-row">
+        <TableOfContents
+          workspaceUrl={workspace}
+          projectSlug={project}
+          branchSlug={branch}
+          rowComponent={rowComponent}
+          nodeUri={pathname}
+        />
+        <div className="flex-grow p-5">
+          <Docs workspaceUrl={workspace} projectSlug={project} branchSlug={branch} node={pathname} />
+        </div>
       </div>
-    </Provider>
-  );
-};
-
-const DocsRoute: React.FC = () => {
-  const { pathname } = useLocation();
-  console.log({ pathname });
-  return <Docs node={pathname} />;
-};
+    );
+  },
+);

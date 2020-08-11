@@ -1,4 +1,4 @@
-import type { NodeType } from '@stoplight/types';
+import type { Dictionary, NodeType } from '@stoplight/types';
 import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
 
 export interface INodeFilter {
@@ -110,20 +110,24 @@ export type Item = {
   uri: string;
 };
 
-export interface IProjectRouter {
+export interface IRouter {
   basePath?: string;
   router?: 'history' | 'hash' | 'memory';
 }
-
-export interface IStoplightProject extends IProjectRouter {
-  renderLink?: React.FunctionComponent;
+export interface IRenderLink {
+  renderLink?: (props: React.PropsWithChildren<IRenderLinkProps>) => React.ReactElement<unknown>;
 }
 
-export interface IAPIComponent extends IStoplightProject {
+export interface IRenderLinkProps {
+  data: Dictionary<unknown>;
+  url: string;
+}
+
+export interface IAPI extends IRouter, IRenderLink {
   specUrl: string;
 }
 
-export interface IStoplightProjectComponent extends IStoplightProject {
+export interface IStoplightProject extends IRouter, IRenderLink {
   workspace: string;
   project: string;
   branch?: string;

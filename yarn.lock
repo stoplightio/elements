@@ -2774,6 +2774,17 @@
     lodash "^4.17.15"
     safe-stable-stringify "^1.1"
 
+"@stoplight/json@^3.8.1":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.9.0.tgz#ade6c5a75bfc55a464d81e902c53a8862c98b462"
+  integrity sha512-jgEKIPMLbhaU5Nw9yw+VBw2OSfDxm8VQ/k5JNezAuDMjcmqCPz3rOQTVNOROStzi70l4DRxF7eBN9liYJq5Ojw==
+  dependencies:
+    "@stoplight/ordered-object-literal" "^1.0.1"
+    "@stoplight/types" "^11.9.0"
+    jsonc-parser "~2.2.1"
+    lodash "^4.17.15"
+    safe-stable-stringify "^1.1"
+
 "@stoplight/lifecycle@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@stoplight/lifecycle/-/lifecycle-2.2.1.tgz#bfa837d1dd3bd97eab96d8c8cf1bc3ea5ddcd263"
@@ -8150,7 +8161,7 @@ es6-templates@^0.2.3:
     recast "~0.11.12"
     through "~2.3.6"
 
-escape-html@^1.0.3, escape-html@~1.0.3:
+escape-html@1.0.3, escape-html@^1.0.3, escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
@@ -16728,6 +16739,22 @@ sane@^4.0.3:
     micromatch "^3.1.4"
     minimist "^1.1.1"
     walker "~1.0.5"
+
+sanitize-html@1.20.1:
+  version "1.20.1"
+  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-1.20.1.tgz#f6effdf55dd398807171215a62bfc21811bacf85"
+  integrity sha512-txnH8TQjaQvg2Q0HY06G6CDJLVYCpbnxrdO0WN8gjCKaU5J0KbyGYhZxx5QJg3WLZ1lB7XU9kDkfrCXUozqptA==
+  dependencies:
+    chalk "^2.4.1"
+    htmlparser2 "^3.10.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.escaperegexp "^4.1.2"
+    lodash.isplainobject "^4.0.6"
+    lodash.isstring "^4.0.1"
+    lodash.mergewith "^4.6.1"
+    postcss "^7.0.5"
+    srcset "^1.0.0"
+    xtend "^4.0.1"
 
 sass-graph@2.2.5:
   version "2.2.5"
