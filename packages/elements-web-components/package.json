@@ -16,16 +16,15 @@
     "storybook": "start-storybook",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@stoplight/elements": "beta",
     "@stoplight/json": "^3.8.6",
-    "json-schema": "^0.2.5"
-  },
-  "devDependencies": {
     "@stoplight/types": "^11.9.0",
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/addon-storysource": "^5.3.19",
     "@storybook/html": "^5.3.19",
+    "json-schema": "^0.2.5",
     "sass-inline-svg": "^1.2.3",
     "ts-loader": "^8.0.1",
     "webpack": "^4.44.1",
