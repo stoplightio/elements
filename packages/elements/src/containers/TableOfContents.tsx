@@ -5,6 +5,7 @@ import { Client, Provider, useQuery } from 'urql';
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
 import { useTocContents } from '../hooks/useTocContents';
 import { ITableOfContentsTree, TableOfContentsLinkWithId } from '../types';
+import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 import { getUrqlClient } from '../utils/urql';
 
 export interface ITableOfContents {
@@ -42,9 +43,7 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
   rowComponent,
   className,
 }) => {
-  const regExp = /^(https?:\/\/)?([^.]+)\./g;
-  const match = regExp.exec(workspaceUrl);
-  const workspaceSlug = match?.length === 3 ? match[2] : '';
+  const workspaceSlug = getWorkspaceSlug(workspaceUrl);
 
   const [{ data, fetching }] = useQuery({
     query: tocQuery,
