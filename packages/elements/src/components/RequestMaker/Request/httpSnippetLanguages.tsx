@@ -37,6 +37,8 @@ export const languages: IHttpSnippetLanguage[] = [
     libraries: [
       { name: 'Unirest', librarychoice: 'unirest' },
       { name: 'OkHttp', librarychoice: 'okhttp' },
+      { name: 'AsyncHttp', librarychoice: 'asynchttp' },
+      { name: 'NetHttp', librarychoice: 'nethttp' },
     ],
   },
   {
@@ -44,6 +46,7 @@ export const languages: IHttpSnippetLanguage[] = [
     mode: 'javascript',
     codechoice: 'javascript',
     libraries: [
+      { name: 'Fetch', librarychoice: 'fetch' },
       { name: 'XMLHttpRequest', librarychoice: 'xmlhttprequest' },
       { name: 'jQuery', librarychoice: 'jquery' },
     ],
@@ -130,6 +133,11 @@ export const languages: IHttpSnippetLanguage[] = [
     name: 'OCaml',
     mode: 'ocaml',
     codechoice: 'ocaml',
+  },
+  {
+    name: 'HTTP/1.1',
+    mode: 'http',
+    codechoice: 'http',
   },
   {
     name: 'HAR',
