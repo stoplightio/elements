@@ -8,10 +8,7 @@ import { API } from '../../containers/API';
 
 const darkMode = () => boolean('dark mode', false);
 const specUrl = () =>
-  text(
-    'specUrl',
-    'https://gist.githubusercontent.com/danielflower/5c5ae8a46a0a49aee508690c19b33ada/raw/b06ff4d9764b5800424f6a21a40158c35277ee65/petstore.json',
-  );
+  text('specUrl', 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json');
 
 storiesOf('components/APIComponent', module)
   .addDecorator(withKnobs())
