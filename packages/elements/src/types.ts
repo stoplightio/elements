@@ -115,7 +115,7 @@ export interface IRouter {
   router?: 'history' | 'hash' | 'memory';
 }
 export interface IRenderLink {
-  renderLink?: (props: React.PropsWithChildren<IRenderLinkProps>) => React.ReactElement<unknown>;
+  renderLink?: React.ComponentType<IRenderLinkProps>;
 }
 
 export interface IRenderLinkProps {

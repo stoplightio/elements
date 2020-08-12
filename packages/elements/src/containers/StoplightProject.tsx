@@ -7,7 +7,7 @@ import { IStoplightProject, TableOfContentsLinkWithId } from '../types';
 import { Docs } from './Docs';
 import { TableOfContents } from './TableOfContents';
 
-export const StoplightProject: React.FC<IStoplightProject> = withRouter(
+export const StoplightProject = withRouter<IStoplightProject>(
   ({ workspace, project, branch, renderLink: RenderLink }) => {
     const { pathname } = useLocation();
 
