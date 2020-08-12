@@ -14,7 +14,7 @@ import { computeTocTree, isOas2, isOas3, IUriMap, MODEL_REGEXP, OPERATION_REGEXP
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
 
-export const API: React.FC<IAPI> = withRouter(({ specUrl, renderLink: RenderLink }) => {
+export const API = withRouter<IAPI>(({ specUrl, renderLink: RenderLink }) => {
   const [data, setData] = React.useState();
   const [uriMap, setUriMap] = React.useState<IUriMap>({});
   const document = useParsedValue(data);

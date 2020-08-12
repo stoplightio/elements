@@ -3,7 +3,6 @@ import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
-import StoryRouter from 'storybook-react-router';
 
 import { API } from '../../containers/API';
 
@@ -15,7 +14,6 @@ const specUrl = () =>
   );
 
 storiesOf('components/APIComponent', module)
-  .addDecorator(StoryRouter())
   .addDecorator(withKnobs())
   .add('APIComponent', () => {
     return (
