@@ -99,7 +99,7 @@ export const computeTocTree = (uriMap: IUriMap) => {
     compact(
       Object.values(uriMap).map(node => {
         const tag = get(node, OPERATION_TAG_PATH) || get(node, MODEL_TAG_PATH);
-        return typeof tag === 'string' ? tag.toLowerCase() : void 0;
+        return typeof tag === 'string' ? tag : void 0;
       }),
     ),
   );
