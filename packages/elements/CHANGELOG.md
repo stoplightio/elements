@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.124](https://github.com/stoplightio/elements/compare/v6.0.0-beta.123...v6.0.0-beta.124) (2020-08-13)
+
+
+### Features
+
+* **request-maker:** add support for JavaScript Fetch library in request maker code generation ([#531](https://github.com/stoplightio/elements/issues/531)) ([95a0ae7](https://github.com/stoplightio/elements/commit/95a0ae76a5c25aac7f048af9ddb1913755891847))
+
+
+
+
+
 # [6.0.0-beta.122](https://github.com/stoplightio/elements/compare/v6.0.0-beta.121...v6.0.0-beta.122) (2020-08-09)
 
 
