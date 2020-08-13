@@ -13,7 +13,7 @@ import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } fro
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';
 import { Auth, ContentType, HeaderParam, IParam, ParamType, PathParam, QueryParam } from './types';
 
-const HTTPSnippet = require('httpsnippet');
+const HTTPSnippet = require('@stoplight/httpsnippet');
 
 const DEFAULT_EMPTY_JSON = '{\n  \n}';
 const DEFAULT_EMPTY_GQL = 'query {\n  \n}';
