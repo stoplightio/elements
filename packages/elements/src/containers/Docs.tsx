@@ -3,25 +3,20 @@ import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { NodeType } from '@stoplight/types';
 import { get, isObject } from 'lodash';
 import * as React from 'react';
-import { Client, Provider, useQuery } from 'urql';
+import { useQuery } from 'urql';
 
 import { ParsedDocs, useParsedData } from '../components/Docs';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { bundledBranchNode } from '../graphql/BranchNodeBySlug';
-import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
-import { getUrqlClient } from '../utils/urql';
-import { InlineRefResolverContext } from './Provider';
+import { ActiveInfoContext, InlineRefResolverContext, IProvider, Provider } from './Provider';
 
 export interface IDocsProps {
-  workspaceUrl: string;
-  projectSlug: string;
-  branchSlug?: string;
   className?: string;
   node?: string;
 }
 
-interface IDocsPropsWithUqrl extends IDocsProps {
-  urqlClient?: Client;
+interface IDocsProvider extends IProvider {
+  className?: string;
 }
 
 const DocsPopup = React.memo<{ nodeType: NodeType; nodeData: unknown; className?: string }>(
@@ -40,15 +35,15 @@ const DocsPopup = React.memo<{ nodeType: NodeType; nodeData: unknown; className?
   },
 );
 
-const DocsContainer = ({ className, node, workspaceUrl, projectSlug, branchSlug }: IDocsProps) => {
-  const workspaceSlug = getWorkspaceSlug(workspaceUrl);
+export const Docs = ({ className, node }: IDocsProps) => {
+  const info = React.useContext(ActiveInfoContext);
 
   const [{ data: result, fetching }] = useQuery({
     query: bundledBranchNode,
     variables: {
-      workspaceSlug,
-      projectSlug,
-      branchSlug,
+      workspaceSlug: info.workspace,
+      projectSlug: info.project,
+      branchSlug: info.branch,
       uri: node,
     },
   });
@@ -65,14 +60,27 @@ const DocsContainer = ({ className, node, workspaceUrl, projectSlug, branchSlug 
   );
 };
 
-export const Docs: React.FC<IDocsPropsWithUqrl> = ({ workspaceUrl, urqlClient, ...rest }) => {
-  const client = React.useMemo(() => {
-    return getUrqlClient(`${workspaceUrl}/graphql`, urqlClient);
-  }, [workspaceUrl, urqlClient]);
-
+export const DocsProvider: React.FC<IDocsProvider> = ({
+  host,
+  workspace,
+  project,
+  branch,
+  node,
+  components,
+  urqlClient,
+  className,
+}) => {
   return (
-    <Provider value={client}>
-      <DocsContainer workspaceUrl={workspaceUrl} {...rest} />
+    <Provider
+      host={host}
+      workspace={workspace}
+      project={project}
+      branch={branch}
+      urqlClient={urqlClient}
+      components={components}
+      node={node}
+    >
+      <Docs className={className} node={node} />
     </Provider>
   );
 };

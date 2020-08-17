@@ -119,7 +119,7 @@ export interface IRenderLink {
 }
 
 export interface IRenderLinkProps {
-  data: Dictionary<unknown>;
+  data?: Dictionary<unknown>;
   url: string;
 }
 

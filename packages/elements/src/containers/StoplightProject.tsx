@@ -1,31 +1,58 @@
+import { IComponentMapping } from '@stoplight/markdown-viewer';
+import { Optional } from '@stoplight/types';
 import { DefaultRow, RowComponentType } from '@stoplight/ui-kit';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { withRouter } from '../hoc/withRouter';
 import { IRenderLinkProps, IStoplightProject, TableOfContentsLinkWithId } from '../types';
-import { Docs } from './Docs';
+import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
+import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
 
-export const StoplightProject = withRouter<IStoplightProject>(({ workspace, project, branch, renderLink }) => {
-  const { pathname } = useLocation();
+export const StoplightProject = withRouter<IStoplightProject>(
+  ({ workspace, project, branch, renderLink: RenderLink }) => {
+    const { pathname } = useLocation();
+    const workspaceSlug = getWorkspaceSlug(workspace);
 
-  return (
-    <div className="StoplightProject flex flex-row">
-      <TableOfContents
-        workspaceUrl={workspace}
-        projectSlug={project}
-        branchSlug={branch}
-        rowComponent={Row}
-        rowComponentExtraProps={{ pathname, renderLink }}
-        nodeUri={pathname}
-      />
-      <div className="flex-grow p-5">
-        <Docs workspaceUrl={workspace} projectSlug={project} branchSlug={branch} node={pathname} />
+    const components: Optional<IComponentMapping> = React.useMemo(() => {
+      return RenderLink !== void 0
+        ? {
+            link: ({ node, children }) => {
+              return (
+                <RenderLink url={node.url} data={node.data}>
+                  {children}
+                </RenderLink>
+              );
+            },
+          }
+        : void 0;
+    }, [RenderLink]);
+
+    return (
+      <div className="StoplightProject flex flex-row">
+        <TableOfContents
+          workspaceUrl={workspace}
+          projectSlug={project}
+          branchSlug={branch}
+          rowComponent={Row}
+          rowComponentExtraProps={{ pathname, renderLink: RenderLink }}
+          nodeUri={pathname}
+        />
+        <div className="flex-grow p-5">
+          <DocsProvider
+            host={workspace}
+            workspace={workspaceSlug}
+            project={project}
+            branch={branch}
+            node={pathname}
+            components={components}
+          />
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 type ToCExtraProps = {
   pathname: string;
