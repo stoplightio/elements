@@ -60,7 +60,7 @@ type ToCExtraProps = {
 };
 
 const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props => {
-  const RenderLink = props.extra.renderLink;
+  const RenderLink = props.extra?.renderLink;
 
   if (!props.item.to) {
     return <DefaultRow {...props} />;
@@ -68,7 +68,7 @@ const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props =>
 
   const item = {
     ...props.item,
-    isSelected: props.item.to === props.extra.pathname,
+    isSelected: props.item.to === props.extra?.pathname,
     to: props.item.to ?? '',
   };
 

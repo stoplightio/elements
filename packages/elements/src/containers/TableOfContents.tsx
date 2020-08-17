@@ -1,3 +1,4 @@
+import { Dictionary } from '@stoplight/types';
 import { RowComponentType, TableOfContents as UIKitTableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
 import { Client, Provider, useQuery } from 'urql';
@@ -15,6 +16,7 @@ export interface ITableOfContents {
   nodeUri?: string;
   onData?: (tocTree: ITableOfContentsTree) => void;
   rowComponent?: RowComponentType<TableOfContentsLinkWithId>;
+  rowComponentExtraProps?: Dictionary<unknown>;
   className?: string;
 }
 
@@ -41,6 +43,7 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
   nodeUri,
   onData,
   rowComponent,
+  rowComponentExtraProps,
   className,
 }) => {
   const workspaceSlug = getWorkspaceSlug(workspaceUrl);
@@ -74,7 +77,14 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
     return <TableOfContentsSkeleton className={className} />;
   }
 
-  return <UIKitTableOfContents className={className} contents={contents} rowComponent={rowComponent} />;
+  return (
+    <UIKitTableOfContents
+      className={className}
+      contents={contents}
+      rowComponent={rowComponent}
+      rowComponentExtraProps={rowComponentExtraProps}
+    />
+  );
 };
 
 export const TableOfContents: React.FC<ITableOfContentsWithUqrl> = ({ workspaceUrl, urqlClient, ...rest }) => {
