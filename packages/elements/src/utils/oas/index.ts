@@ -24,7 +24,7 @@ const MODEL_TAG_PATH = ['x-tags', 0];
 const OPERATION_TAG_PATH = ['tags', 0, 'name'];
 
 export interface IUriMap {
-  [uri: string]: any;
+  [uri: string]: unknown;
 }
 
 interface ITagUriMap {
@@ -43,14 +43,14 @@ export function computeUriMap({ document, data, map, transformer, parentUri }: I
   const uriMap: IUriMap = {};
 
   if (isObject(data)) {
-    for (const key in data) {
+    for (const key of Object.keys(data)) {
       const sanitizedKey = key.replace(/~/g, '~0').replace(/\//g, '~1');
       const match = findMapMatch(sanitizedKey, map);
       if (match) {
         const uri = `${parentUri || ''}/${sanitizedKey}`;
 
         const jsonPath = pointerToPath(`#${uri}`);
-        if (match.type === NodeTypes.Operation) {
+        if (match.type === NodeTypes.Operation && jsonPath.length === 3) {
           const path = jsonPath[1].toString();
           const method = jsonPath[2].toString();
           uriMap[uri] = transformer({ document, path, method });
