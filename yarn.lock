@@ -2944,10 +2944,10 @@
     use-resize-observer "^6.1.0"
     yup "^0.28.3"
 
-"@stoplight/ui-kit@^3.0.0-beta.31":
-  version "3.0.0-beta.31"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.31.tgz#8a73704019a4c78c08fbc73d7d4f10de55811380"
-  integrity sha512-hsB8tMisiTV8gruBqWmdJtW2gT1juV+fP5BKOdWMLOOF6XbFVX14Pp/w6QVT55JnumNvZHI23D5DaJSi0TwDaw==
+"@stoplight/ui-kit@^3.0.0-beta.33":
+  version "3.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.33.tgz#b0eb5374af3e30181e5293a310e36c199b8ff726"
+  integrity sha512-CEhWLzBh0cqLtYDewoJKbI3mGRUrnZr1yYh+2JImjBL3NJtJCQNEpI8YiOJpNgm61Jx5XcRmFUO2VURx9eepFQ==
   dependencies:
     "@blueprintjs/core" "^3.29.0"
     "@blueprintjs/icons" "^3.19.0"

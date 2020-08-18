@@ -1,5 +1,4 @@
-import { Dictionary } from '@stoplight/types';
-import { RowComponentType, TableOfContents as UIKitTableOfContents } from '@stoplight/ui-kit';
+import { ITableOfContents as UiKitITableOfContents, TableOfContents as UIKitTableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
 import { Client, Provider, useQuery } from 'urql';
 
@@ -9,20 +8,14 @@ import { ITableOfContentsTree, TableOfContentsLinkWithId } from '../types';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 import { getUrqlClient } from '../utils/urql';
 
-export interface ITableOfContents {
+export type ITableOfContents<E> = {
   workspaceUrl: string;
   projectSlug: string;
   branchSlug?: string;
   nodeUri?: string;
   onData?: (tocTree: ITableOfContentsTree) => void;
-  rowComponent?: RowComponentType<TableOfContentsLinkWithId>;
-  rowComponentExtraProps?: Dictionary<unknown>;
   className?: string;
-}
-
-interface ITableOfContentsWithUqrl extends ITableOfContents {
-  urqlClient?: Client;
-}
+} & Pick<UiKitITableOfContents<TableOfContentsLinkWithId, E>, 'rowComponent' | 'rowComponentExtraProps'>;
 
 const tocQuery = `
 query ProjectTableOfContents(
@@ -36,16 +29,15 @@ query ProjectTableOfContents(
 }
 `;
 
-const TableOfContentsContainer: React.FC<ITableOfContents> = ({
+function TableOfContentsContainer<E>({
   workspaceUrl,
   projectSlug,
   branchSlug,
   nodeUri,
   onData,
-  rowComponent,
-  rowComponentExtraProps,
   className,
-}) => {
+  ...extra
+}: ITableOfContents<E>) {
   const workspaceSlug = getWorkspaceSlug(workspaceUrl);
 
   const [{ data, fetching }] = useQuery({
@@ -66,7 +58,7 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
 
   const tree: ITableOfContentsTree = tocData ?? { items: [] };
 
-  const contents = useTocContents(tree).map(item => {
+  const contents: TableOfContentsLinkWithId[] = useTocContents(tree).map(item => {
     return {
       ...item,
       isActive: item.type === 'item' && nodeUri !== void 0 ? item.to === nodeUri : false,
@@ -77,17 +69,15 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
     return <TableOfContentsSkeleton className={className} />;
   }
 
-  return (
-    <UIKitTableOfContents
-      className={className}
-      contents={contents}
-      rowComponent={rowComponent}
-      rowComponentExtraProps={rowComponentExtraProps}
-    />
-  );
+  // any: unfortunately the typings for extra props break for some reason. Can't seem to figure out why, but I believe the behavior is valid.
+  return <UIKitTableOfContents className={className} contents={contents} {...(extra as any)} />;
+}
+
+type TableOfContentsContainerProps<E> = ITableOfContents<E> & {
+  urqlClient?: Client;
 };
 
-export const TableOfContents: React.FC<ITableOfContentsWithUqrl> = ({ workspaceUrl, urqlClient, ...rest }) => {
+export function TableOfContents<E>({ workspaceUrl, urqlClient, ...rest }: TableOfContentsContainerProps<E>) {
   const client = React.useMemo(() => {
     return getUrqlClient(`${workspaceUrl}/graphql`, { urqlClient });
   }, [workspaceUrl, urqlClient]);
@@ -97,4 +87,4 @@ export const TableOfContents: React.FC<ITableOfContentsWithUqrl> = ({ workspaceU
       <TableOfContentsContainer workspaceUrl={workspaceUrl} {...rest} />
     </Provider>
   );
-};
+}
