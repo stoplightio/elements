@@ -21,3 +21,14 @@ process.env.TZ = 'UTC';
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
+
+window.IntersectionObserver = class implements IntersectionObserver {
+  readonly root!: Element | null;
+  readonly rootMargin!: string;
+  readonly thresholds!: ReadonlyArray<number>;
+
+  public readonly observe = jest.fn();
+  public readonly unobserve = jest.fn();
+  public readonly disconnect = jest.fn();
+  public readonly takeRecords = jest.fn();
+};
