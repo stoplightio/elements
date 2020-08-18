@@ -75,7 +75,7 @@ export const SchemaViewer = ({
         <SimpleTab>Schema</SimpleTab>
 
         {map(examples, (_, key) => (
-          <SimpleTab key={key}>{key}</SimpleTab>
+          <SimpleTab key={key}>{key === 'default' ? 'Example' : key}</SimpleTab>
         ))}
       </SimpleTabList>
 
