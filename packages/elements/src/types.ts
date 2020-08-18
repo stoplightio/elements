@@ -127,4 +127,5 @@ export interface IStoplightProject extends IRouter, IRenderLink {
   workspace: string;
   project: string;
   branch?: string;
+  authToken?: string;
 }
