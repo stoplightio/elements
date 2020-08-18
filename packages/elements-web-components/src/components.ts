@@ -9,7 +9,7 @@ export const SchemaViewerComponentElement = createElementClass(SchemaViewer, {
   description: { type: 'string' },
 });
 
-export const StoplightProjectComponentElement = createElementClass(StoplightProject, {
+export const StoplightProjectElement = createElementClass(StoplightProject, {
   workspace: { type: 'string', defaultValue: '' },
   project: { type: 'string', defaultValue: '' },
 });
