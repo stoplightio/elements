@@ -57,7 +57,7 @@ export const Provider: React.FC<IProvider> = ({
     node,
   };
 
-  const client = getUrqlClient(`${host}/graphql`, urqlClient);
+  const client = getUrqlClient(`${host}/graphql`, { urqlClient });
 
   return (
     <UrqlProvider value={client}>

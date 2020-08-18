@@ -89,7 +89,7 @@ const TableOfContentsContainer: React.FC<ITableOfContents> = ({
 
 export const TableOfContents: React.FC<ITableOfContentsWithUqrl> = ({ workspaceUrl, urqlClient, ...rest }) => {
   const client = React.useMemo(() => {
-    return getUrqlClient(`${workspaceUrl}/graphql`, urqlClient);
+    return getUrqlClient(`${workspaceUrl}/graphql`, { urqlClient });
   }, [workspaceUrl, urqlClient]);
 
   return (

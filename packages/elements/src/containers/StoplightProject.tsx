@@ -7,13 +7,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { withRouter } from '../hoc/withRouter';
 import { IRenderLinkProps, IStoplightProject, TableOfContentsLinkWithId } from '../types';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
+import { getUrqlClient } from '../utils/urql';
 import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
 
 export const StoplightProject = withRouter<IStoplightProject>(
-  ({ workspace, project, branch, renderLink: RenderLink }) => {
+  ({ workspace, project, branch, renderLink: RenderLink, authToken }) => {
     const { pathname } = useLocation();
     const workspaceSlug = getWorkspaceSlug(workspace);
+
+    const client = React.useMemo(() => {
+      return getUrqlClient(`${workspace}/graphql`, { authToken });
+    }, [workspace, authToken]);
 
     const components: Optional<IComponentMapping> = React.useMemo(() => {
       return RenderLink !== void 0
@@ -38,6 +43,7 @@ export const StoplightProject = withRouter<IStoplightProject>(
           rowComponent={Row}
           rowComponentExtraProps={{ pathname, renderLink: RenderLink }}
           nodeUri={pathname}
+          urqlClient={client}
         />
         <div className="flex-grow p-5">
           <DocsProvider
@@ -47,6 +53,7 @@ export const StoplightProject = withRouter<IStoplightProject>(
             branch={branch}
             node={pathname}
             components={components}
+            urqlClient={client}
           />
         </div>
       </div>
