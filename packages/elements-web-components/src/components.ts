@@ -12,4 +12,8 @@ export const SchemaViewerComponentElement = createElementClass(SchemaViewer, {
 export const StoplightProjectElement = createElementClass(StoplightProject, {
   workspace: { type: 'string', defaultValue: '' },
   project: { type: 'string', defaultValue: '' },
+  branch: { type: 'string' },
+  authToken: { type: 'string' },
+  basePath: { type: 'string' },
+  router: { type: 'string' },
 });
