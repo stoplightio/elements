@@ -8743,7 +8743,7 @@ faker@4.1.0, faker@^4.1.0:
   resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
   integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
 
-fast-deep-equal@^2.0.1:
+fast-deep-equal@2.0.1, fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
@@ -17933,6 +17933,13 @@ swap-case@^1.1.0:
   dependencies:
     lower-case "^1.1.1"
     upper-case "^1.1.1"
+
+swr@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.0.tgz#69602953dd50ab07fe60c920fd63199256645675"
+  integrity sha512-3p0p5TWH0qiaKAph5wBkMwqe2WjNseITfjmdVoNzjqRZGn/gnpRi6whMDjhMVb/vp/yyDtKWPlyjid8QZH+UhA==
+  dependencies:
+    fast-deep-equal "2.0.1"
 
 symbol-observable@^1.1.0:
   version "1.2.0"
