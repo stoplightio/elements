@@ -124,5 +124,5 @@ export interface IRenderLinkProps {
 }
 
 export interface IAPI extends IRouter, IRenderLink {
-  specUrl: string;
+  apiDescriptionUrl: string;
 }

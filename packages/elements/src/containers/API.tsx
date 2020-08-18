@@ -14,7 +14,7 @@ import { computeTocTree, isOas2, isOas3, IUriMap, MODEL_REGEXP, OPERATION_REGEXP
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
 
-export const API = withRouter<IAPI>(({ specUrl, renderLink: RenderLink }) => {
+export const API = withRouter<IAPI>(({ apiDescriptionUrl, renderLink: RenderLink }) => {
   const [data, setData] = React.useState();
   const [uriMap, setUriMap] = React.useState<IUriMap>({});
   const document = useParsedValue(data);
@@ -23,7 +23,7 @@ export const API = withRouter<IAPI>(({ specUrl, renderLink: RenderLink }) => {
   React.useEffect(() => {
     let canceled = false;
     axios
-      .get(specUrl)
+      .get(apiDescriptionUrl)
       .then(response => {
         if (!canceled) {
           setData(response.data);
@@ -35,7 +35,7 @@ export const API = withRouter<IAPI>(({ specUrl, renderLink: RenderLink }) => {
     return () => {
       canceled = true;
     };
-  }, [specUrl]);
+  }, [apiDescriptionUrl]);
 
   React.useEffect(() => {
     if (document) {

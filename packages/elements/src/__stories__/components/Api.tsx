@@ -7,15 +7,15 @@ import * as React from 'react';
 import { API } from '../../containers/API';
 
 const darkMode = () => boolean('dark mode', false);
-const specUrl = () =>
-  text('specUrl', 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json');
+const apiDescriptionUrl = () =>
+  text('apiDescriptionUrl', 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json');
 
 storiesOf('components/APIComponent', module)
   .addDecorator(withKnobs())
   .add('APIComponent', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <API specUrl={specUrl()} />
+        <API apiDescriptionUrl={apiDescriptionUrl()} />
       </div>
     );
   });
