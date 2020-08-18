@@ -21,19 +21,33 @@ export const API = withRouter<IAPI>(({ specUrl, renderLink: RenderLink }) => {
   const { pathname } = useLocation();
 
   React.useEffect(() => {
+    let canceled = false;
     axios
       .get(specUrl)
       .then(response => {
-        setData(response.data);
+        if (!canceled) {
+          setData(response.data);
+        }
       })
       .catch(error => {
         console.error('Could not fetch spec', error);
       });
+    return () => {
+      canceled = true;
+    };
   }, [specUrl]);
 
   React.useEffect(() => {
     if (document) {
-      setUriMap(isOas3(document) ? computeOas3UriMap(document) : isOas2(document) ? computeOas2UriMap(document) : {});
+      let uriMap: IUriMap = {};
+      if (isOas3(document)) {
+        uriMap = computeOas3UriMap(document);
+      } else if (isOas2(document)) {
+        uriMap = computeOas2UriMap(document);
+      } else {
+        console.warn('Document type is unknown');
+      }
+      setUriMap(uriMap);
     }
   }, [document]);
 
