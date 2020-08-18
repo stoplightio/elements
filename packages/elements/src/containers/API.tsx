@@ -3,7 +3,7 @@ import { DefaultRow, RowComponentType, TableOfContents } from '@stoplight/ui-kit
 import axios from 'axios';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import useSwr, {  } from 'swr';
+import useSwr from 'swr';
 
 import { Docs } from '../components/Docs';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
