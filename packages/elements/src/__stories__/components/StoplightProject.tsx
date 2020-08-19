@@ -7,8 +7,8 @@ import * as React from 'react';
 import { StoplightProject } from '../../containers/StoplightProject';
 
 const darkMode = () => boolean('dark mode', false);
-const workspace = () => text('workspace', 'http://meta.localhost:8080');
-const project = () => text('project', 'studio-demo');
+const workspace = () => text('workspace', 'https://demo.stoplight.io');
+const project = () => text('project', 'public-apis');
 
 storiesOf('components/StoplightProject', module)
   .addDecorator(withKnobs())

@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { withRouter } from '../hoc/withRouter';
+import { useUrqlClient } from '../hooks/useUrqlClient';
 import {
   IRenderLinkProps,
   IStoplightProject,
@@ -14,7 +15,6 @@ import {
   TableOfContentsLinkWithId,
 } from '../types';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
-import { getUrqlClient } from '../utils/urql';
 import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
 
@@ -23,10 +23,7 @@ export const StoplightProject = withRouter<IStoplightProject>(
     const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
     const workspaceSlug = getWorkspaceSlug(workspace);
-
-    const client = React.useMemo(() => {
-      return getUrqlClient(`${workspace}/graphql`, { authToken });
-    }, [workspace, authToken]);
+    const client = useUrqlClient(`${workspace}/graphql`, { authToken });
 
     const components: Optional<IComponentMapping> = React.useMemo(() => {
       return RenderLink !== void 0

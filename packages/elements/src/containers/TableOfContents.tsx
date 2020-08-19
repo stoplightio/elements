@@ -4,9 +4,9 @@ import { Client, Provider, useQuery } from 'urql';
 
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
 import { useTocContents } from '../hooks/useTocContents';
+import { useUrqlClient } from '../hooks/useUrqlClient';
 import { ITableOfContentsTree, TableOfContentsLinkWithId } from '../types';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
-import { getUrqlClient } from '../utils/urql';
 
 export type ITableOfContents<E> = {
   workspaceUrl: string;
@@ -78,10 +78,7 @@ type TableOfContentsContainerProps<E> = ITableOfContents<E> & {
 };
 
 export function TableOfContents<E>({ workspaceUrl, urqlClient, ...rest }: TableOfContentsContainerProps<E>) {
-  const client = React.useMemo(() => {
-    return getUrqlClient(`${workspaceUrl}/graphql`, { urqlClient });
-  }, [workspaceUrl, urqlClient]);
-
+  const client = useUrqlClient(`${workspaceUrl}/graphql`, { urqlClient });
   return (
     <Provider value={client}>
       <TableOfContentsContainer workspaceUrl={workspaceUrl} {...rest} />
