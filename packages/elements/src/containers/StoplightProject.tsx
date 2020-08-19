@@ -2,10 +2,17 @@ import { IComponentMapping } from '@stoplight/markdown-viewer';
 import { Optional } from '@stoplight/types';
 import { DefaultRow, RowComponentType } from '@stoplight/ui-kit';
 import * as React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { withRouter } from '../hoc/withRouter';
-import { IRenderLinkProps, IStoplightProject, TableOfContentsLinkWithId } from '../types';
+import {
+  IRenderLinkProps,
+  IStoplightProject,
+  ITableOfContentsTree,
+  Item,
+  TableOfContentItem,
+  TableOfContentsLinkWithId,
+} from '../types';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 import { getUrqlClient } from '../utils/urql';
 import { DocsProvider } from './Docs';
@@ -13,6 +20,7 @@ import { TableOfContents } from './TableOfContents';
 
 export const StoplightProject = withRouter<IStoplightProject>(
   ({ workspace, project, branch, renderLink: RenderLink, authToken }) => {
+    const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
     const workspaceSlug = getWorkspaceSlug(workspace);
 
@@ -34,6 +42,10 @@ export const StoplightProject = withRouter<IStoplightProject>(
         : void 0;
     }, [RenderLink]);
 
+    if (pathname === '/' && firstItem) {
+      return <Redirect to={firstItem.uri} />;
+    }
+
     return (
       <div className="StoplightProject flex flex-row">
         <TableOfContents
@@ -44,6 +56,12 @@ export const StoplightProject = withRouter<IStoplightProject>(
           rowComponentExtraProps={{ pathname, renderLink: RenderLink }}
           nodeUri={pathname}
           urqlClient={client}
+          onData={(tocTree: ITableOfContentsTree) => {
+            if (pathname === '/' && tocTree?.items?.length) {
+              const firstItem = tocTree.items.find(isItem);
+              setFirstItem(firstItem);
+            }
+          }}
         />
         <div className="flex-grow p-5">
           <DocsProvider
@@ -93,3 +111,5 @@ const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props =>
     </Link>
   );
 };
+
+const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
