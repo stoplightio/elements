@@ -9,13 +9,14 @@ import { StoplightProject } from '../../containers/StoplightProject';
 const darkMode = () => boolean('dark mode', false);
 const workspace = () => text('workspace', 'https://demo.stoplight.io');
 const project = () => text('project', 'public-apis');
+const authToken = () => text('authToken', '');
 
 storiesOf('components/StoplightProject', module)
   .addDecorator(withKnobs())
   .add('Playground', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <StoplightProject workspace={workspace()} project={project()} />
+        <StoplightProject workspace={workspace()} project={project()} authToken={authToken()} />
       </div>
     );
   });
