@@ -55,7 +55,6 @@
     "@stoplight/types": "^11.9.0",
     "@stoplight/ui-kit": "^3.0.0-beta.33",
     "@stoplight/yaml": "^4.2.1",
-    "@types/react-router-dom": "^5.1.5",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.3.1",
