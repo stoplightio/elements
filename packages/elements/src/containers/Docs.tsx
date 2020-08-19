@@ -1,6 +1,7 @@
 import { pointerToPath } from '@stoplight/json';
 import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { NodeType } from '@stoplight/types';
+import { FAIcon, NonIdealState } from '@stoplight/ui-kit';
 import { get, isObject } from 'lodash';
 import * as React from 'react';
 import { useQuery } from 'urql';
@@ -38,7 +39,7 @@ const DocsPopup = React.memo<{ nodeType: NodeType; nodeData: unknown; className?
 export const Docs = ({ className, node }: IDocsProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data: result, fetching }] = useQuery({
+  const [{ data: result, fetching, error }] = useQuery({
     query: bundledBranchNode,
     variables: {
       workspaceSlug: info.workspace,
@@ -47,6 +48,19 @@ export const Docs = ({ className, node }: IDocsProps) => {
       uri: node,
     },
   });
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen justify-center items-center w-full">
+        <NonIdealState
+          title="Something went wrong"
+          description={error.message.replace('[GraphQL]', '')}
+          icon={<FAIcon icon={['fad', 'exclamation-triangle']} />}
+        />
+      </div>
+    );
+  }
+
   if (fetching || !result) {
     return <DocsSkeleton />;
   }
