@@ -29,6 +29,7 @@ query ProjectTableOfContents(
 ) {
   projectTableOfContents(projectSlug: $projectSlug, workspaceSlug: $workspaceSlug, branchSlug: $branchSlug) {
     data
+    id
   }
 }
 `;
