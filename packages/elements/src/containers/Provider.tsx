@@ -4,8 +4,8 @@ import * as React from 'react';
 import { Client, Provider as UrqlProvider } from 'urql';
 
 import { defaultComponents } from '../hooks/useComponents';
+import { useUrqlClient } from '../hooks/useUrqlClient';
 import { NodeIconMapping } from '../types';
-import { getUrqlClient } from '../utils/urql';
 
 export interface IProvider extends IActiveInfo {
   urqlClient?: Client;
@@ -57,7 +57,7 @@ export const Provider: React.FC<IProvider> = ({
     node,
   };
 
-  const client = getUrqlClient(`${host}/graphql`, urqlClient);
+  const client = useUrqlClient(`${host}/graphql`, { urqlClient });
 
   return (
     <UrqlProvider value={client}>

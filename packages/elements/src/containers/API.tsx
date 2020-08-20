@@ -17,7 +17,7 @@ import { computeOas3UriMap } from '../utils/oas/oas3';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
-export const API = withRouter<IAPI>(({ apiDescriptionUrl, renderLink: RenderLink }) => {
+export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkComponent }) => {
   const [uriMap, setUriMap] = React.useState<IUriMap>({});
   const { pathname } = useLocation();
 
@@ -53,11 +53,11 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, renderLink: RenderLink
       to: props.item.to ?? '',
     };
 
-    if (RenderLink) {
+    if (LinkComponent) {
       return (
-        <RenderLink url={item.to} data={{ item }}>
+        <LinkComponent url={item.to} data={{ item }}>
           <DefaultRow {...props} item={item} />
-        </RenderLink>
+        </LinkComponent>
       );
     }
 

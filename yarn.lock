@@ -1515,6 +1515,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@jsdevtools/ono@^7.1.2":
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@jsdevtools/ono/-/ono-7.1.3.tgz#9df03bbd7c696a5c58885c34aa06da41c8543796"
+  integrity sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==
+
 "@lerna/add@3.21.0":
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.21.0.tgz#27007bde71cc7b0a2969ab3c2f0ae41578b4577b"
@@ -2748,6 +2753,15 @@
     json-schema-compare "^0.2.2"
     lodash "^4.17.4"
 
+"@stoplight/json-schema-ref-parser@^9.0.4":
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-ref-parser/-/json-schema-ref-parser-9.0.4.tgz#e369b135101d66ff24262c2cfdaf20a482669058"
+  integrity sha512-ccS+iSxf3/ZuvSFkH0ZmP3lIaNbZmpsXo8K9lkGLjl7vOSmnCTTKk5riAe61ez4+qkuhIJ5rz78dXuYlT2Q+Xw==
+  dependencies:
+    "@jsdevtools/ono" "^7.1.2"
+    "@stoplight/yaml" "^4.0.2"
+    call-me-maybe "^1.0.1"
+
 "@stoplight/json-schema-viewer@^3.0.0-beta.28":
   version "3.0.0-beta.28"
   resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.28.tgz#0bbb196ee328c0c3cf9db8877f2dcda226231367"
@@ -2959,10 +2973,10 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/ui-kit@^3.0.0-beta.29":
-  version "3.0.0-beta.29"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.29.tgz#39db3c12e724390a3d8330ec1d5ee91c56b5325f"
-  integrity sha512-zSHzgCKA8Ca+hpZdIWa2ayXpzRIBCxQHjSYYYLHFwiSVAwUYDoPEcGADqhtTsj75LC/BCvjdnOagZVVd2N39YQ==
+"@stoplight/ui-kit@^3.0.0-beta.29", "@stoplight/ui-kit@^3.0.0-beta.33":
+  version "3.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.33.tgz#b0eb5374af3e30181e5293a310e36c199b8ff726"
+  integrity sha512-CEhWLzBh0cqLtYDewoJKbI3mGRUrnZr1yYh+2JImjBL3NJtJCQNEpI8YiOJpNgm61Jx5XcRmFUO2VURx9eepFQ==
   dependencies:
     "@blueprintjs/core" "^3.29.0"
     "@blueprintjs/icons" "^3.19.0"
@@ -17924,9 +17938,9 @@ swap-case@^1.1.0:
     upper-case "^1.1.1"
 
 swr@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.0.tgz#69602953dd50ab07fe60c920fd63199256645675"
-  integrity sha512-3p0p5TWH0qiaKAph5wBkMwqe2WjNseITfjmdVoNzjqRZGn/gnpRi6whMDjhMVb/vp/yyDtKWPlyjid8QZH+UhA==
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.1.tgz#b673f32a470418a785d962c86bd96ec555986dd0"
+  integrity sha512-g9JrXXMo54CSc+DU+KS0S8+5r6cpeBmBmVLhCu23ifQL9u0KKirkJpNX3Za3eOttmUuRQLXA8N1YPpoc8ejdpA==
   dependencies:
     fast-deep-equal "2.0.1"
 
