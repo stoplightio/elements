@@ -7,7 +7,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 import { withRouter } from '../hoc/withRouter';
 import { useUrqlClient } from '../hooks/useUrqlClient';
 import {
-  IRenderLinkProps,
+  ILinkComponentProps,
   IStoplightProject,
   ITableOfContentsTree,
   Item,
@@ -20,7 +20,7 @@ import { TableOfContents } from './TableOfContents';
 import { TryItProvider } from './TryIt';
 
 export const StoplightProject = withRouter<IStoplightProject>(
-  ({ workspace, project, branch, renderLink: RenderLink, authToken }) => {
+  ({ workspace, project, branch, linkComponent: LinkComponent, authToken }) => {
     const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
     const workspaceSlug = getWorkspaceSlug(workspace);
@@ -29,18 +29,18 @@ export const StoplightProject = withRouter<IStoplightProject>(
     const showTryIt = isOperation(pathname);
 
     const components: Optional<IComponentMapping> = React.useMemo(() => {
-      return RenderLink !== void 0
+      return LinkComponent !== void 0
         ? {
             link: ({ node, children }) => {
               return (
-                <RenderLink url={node.url} data={node.data}>
+                <LinkComponent url={node.url} data={node.data}>
                   {children}
-                </RenderLink>
+                </LinkComponent>
               );
             },
           }
         : void 0;
-    }, [RenderLink]);
+    }, [LinkComponent]);
 
     if (pathname === '/' && firstItem) {
       return <Redirect to={firstItem.uri} />;
@@ -53,7 +53,7 @@ export const StoplightProject = withRouter<IStoplightProject>(
           projectSlug={project}
           branchSlug={branch}
           rowComponent={Row}
-          rowComponentExtraProps={{ pathname, renderLink: RenderLink }}
+          rowComponentExtraProps={{ pathname, linkComponent: LinkComponent }}
           nodeUri={pathname}
           urqlClient={client}
           onData={(tocTree: ITableOfContentsTree) => {
@@ -99,11 +99,11 @@ export const StoplightProject = withRouter<IStoplightProject>(
 
 type ToCExtraProps = {
   pathname: string;
-  renderLink?: React.ComponentType<IRenderLinkProps>;
+  linkComponent?: React.ComponentType<ILinkComponentProps>;
 };
 
 const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props => {
-  const RenderLink = props.extra.renderLink;
+  const LinkComponent = props.extra.linkComponent;
 
   if (!props.item.to) {
     return <DefaultRow {...props} />;
@@ -115,11 +115,11 @@ const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props =>
     to: props.item.to ?? '',
   };
 
-  if (RenderLink) {
+  if (LinkComponent) {
     return (
-      <RenderLink url={item.to} data={{ item }}>
+      <LinkComponent url={item.to} data={{ item }}>
         <DefaultRow {...props} item={item} />
-      </RenderLink>
+      </LinkComponent>
     );
   }
 

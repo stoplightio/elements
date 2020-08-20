@@ -114,16 +114,16 @@ export interface IRouter {
   basePath?: string;
   router?: 'history' | 'hash' | 'memory';
 }
-export interface IRenderLink {
-  renderLink?: React.ComponentType<IRenderLinkProps>;
+export interface ILinkComponent {
+  linkComponent?: React.ComponentType<ILinkComponentProps>;
 }
 
-export interface IRenderLinkProps {
+export interface ILinkComponentProps {
   data?: Dictionary<unknown>;
   url: string;
 }
 
-export interface IStoplightProject extends IRouter, IRenderLink {
+export interface IStoplightProject extends IRouter, ILinkComponent {
   workspace: string;
   project: string;
   branch?: string;
