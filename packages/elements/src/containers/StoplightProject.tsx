@@ -7,6 +7,7 @@ import { Row } from '../components/TableOfContents/Row';
 import { withRouter } from '../hoc/withRouter';
 import { useUrqlClient } from '../hooks/useUrqlClient';
 import { IStoplightProject, ITableOfContentsTree, Item, TableOfContentItem } from '../types';
+import { isOperation } from '../utils/oas';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
@@ -91,5 +92,3 @@ export const StoplightProject = withRouter<IStoplightProject>(
 );
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
-
-const isOperation = (uri: string) => /\/paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/.test(uri);

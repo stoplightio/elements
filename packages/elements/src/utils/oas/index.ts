@@ -17,8 +17,10 @@ export const isOas3 = (parsed: unknown) =>
   'openapi' in parsed &&
   Number.parseInt(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3;
 
+export const isOperation = (uri: string) => OPERATION_REGEXP.test(uri);
+
 export const MODEL_REGEXP = new RegExp('^/(definitions|components/schemas)');
-export const OPERATION_REGEXP = new RegExp('^/paths');
+export const OPERATION_REGEXP = new RegExp('/paths/.+/(get|post|put|patch|delete|head|options|trace)$');
 
 const MODEL_TAG_PATH = ['x-tags', 0];
 const OPERATION_TAG_PATH = ['tags', 0, 'name'];
