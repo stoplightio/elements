@@ -17,6 +17,7 @@ import {
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
+import { TryItProvider } from './TryIt';
 
 export const StoplightProject = withRouter<IStoplightProject>(
   ({ workspace, project, branch, renderLink: RenderLink, authToken }) => {
@@ -24,6 +25,8 @@ export const StoplightProject = withRouter<IStoplightProject>(
     const { pathname } = useLocation();
     const workspaceSlug = getWorkspaceSlug(workspace);
     const client = useUrqlClient(`${workspace}/graphql`, { authToken });
+
+    const showTryIt = isOperation(pathname);
 
     const components: Optional<IComponentMapping> = React.useMemo(() => {
       return RenderLink !== void 0
@@ -60,16 +63,34 @@ export const StoplightProject = withRouter<IStoplightProject>(
             }
           }}
         />
-        <div className="flex-grow p-5">
-          <DocsProvider
-            host={workspace}
-            workspace={workspaceSlug}
-            project={project}
-            branch={branch}
-            node={pathname}
-            components={components}
-            urqlClient={client}
-          />
+        <div className="flex-grow">
+          <div className="flex">
+            <DocsProvider
+              host={workspace}
+              workspace={workspaceSlug}
+              project={project}
+              branch={branch}
+              node={pathname}
+              components={components}
+              urqlClient={client}
+              className="px-10"
+            />
+            {showTryIt && (
+              <div className="w-2/5 border-l relative">
+                <div className="absolute inset-0 overflow-auto px-10">
+                  <TryItProvider
+                    host={workspace}
+                    workspace={workspaceSlug}
+                    project={project}
+                    branch={branch}
+                    node={pathname}
+                    components={components}
+                    urqlClient={client}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -110,3 +131,5 @@ const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props =>
 };
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
+
+const isOperation = (uri: string) => /\/paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/.test(uri);

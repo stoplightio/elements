@@ -1515,6 +1515,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@jsdevtools/ono@^7.1.2":
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@jsdevtools/ono/-/ono-7.1.3.tgz#9df03bbd7c696a5c58885c34aa06da41c8543796"
+  integrity sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==
+
 "@lerna/add@3.21.0":
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.21.0.tgz#27007bde71cc7b0a2969ab3c2f0ae41578b4577b"
@@ -2720,6 +2725,15 @@
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
     lodash "^4.17.4"
+
+"@stoplight/json-schema-ref-parser@^9.0.4":
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-ref-parser/-/json-schema-ref-parser-9.0.4.tgz#e369b135101d66ff24262c2cfdaf20a482669058"
+  integrity sha512-ccS+iSxf3/ZuvSFkH0ZmP3lIaNbZmpsXo8K9lkGLjl7vOSmnCTTKk5riAe61ez4+qkuhIJ5rz78dXuYlT2Q+Xw==
+  dependencies:
+    "@jsdevtools/ono" "^7.1.2"
+    "@stoplight/yaml" "^4.0.2"
+    call-me-maybe "^1.0.1"
 
 "@stoplight/json-schema-viewer@^3.0.0-beta.28":
   version "3.0.0-beta.28"

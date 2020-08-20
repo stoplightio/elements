@@ -46,6 +46,7 @@
   "dependencies": {
     "@stoplight/httpsnippet": "^1.2.1",
     "@stoplight/json": "^3.8.6",
+    "@stoplight/json-schema-ref-parser": "^9.0.4",
     "@stoplight/json-schema-viewer": "^3.0.0-beta.28",
     "@stoplight/markdown": "^2.9.0",
     "@stoplight/markdown-viewer": "^4.2.2",

@@ -45,7 +45,7 @@ function TableOfContentsContainer<E>({
     variables: {
       workspaceSlug,
       projectSlug,
-      branchSlug,
+      branchSlug: branchSlug !== '' ? branchSlug : void 0, // needed as empty string branch returns error
     },
   });
   const tocData = data?.projectTableOfContents?.data;
