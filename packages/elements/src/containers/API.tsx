@@ -1,16 +1,17 @@
 import { NodeType } from '@stoplight/types';
-import { DefaultRow, RowComponentType, TableOfContents } from '@stoplight/ui-kit';
+import { TableOfContents } from '@stoplight/ui-kit';
 import axios from 'axios';
 import * as React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import useSwr from 'swr';
 
 import { Docs } from '../components/Docs';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
+import { Row } from '../components/TableOfContents/Row';
 import { withRouter } from '../hoc/withRouter';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { useTocContents } from '../hooks/useTocContents';
-import { IAPI, TableOfContentsLinkWithId } from '../types';
+import { IAPI } from '../types';
 import { computeTocTree, isOas2, isOas3, IUriMap, MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
@@ -42,32 +43,6 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
     }
   }, [document]);
 
-  const rowComponent: RowComponentType<TableOfContentsLinkWithId> = props => {
-    if (!props.item.to) {
-      return <DefaultRow {...props} />;
-    }
-
-    const item = {
-      ...props.item,
-      isSelected: props.item.to === pathname,
-      to: props.item.to ?? '',
-    };
-
-    if (LinkComponent) {
-      return (
-        <LinkComponent url={item.to} data={{ item }}>
-          <DefaultRow {...props} item={item} />
-        </LinkComponent>
-      );
-    }
-
-    return (
-      <Link to={item.to} className="no-underline block">
-        <DefaultRow {...props} item={item} />
-      </Link>
-    );
-  };
-
   const tree = computeTocTree(uriMap);
   const contents = useTocContents(tree).map(item => ({
     ...item,
@@ -84,7 +59,11 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
 
   return (
     <div className="APIComponent flex flex-row">
-      <TableOfContents contents={contents} rowComponent={rowComponent} />
+      <TableOfContents
+        contents={contents}
+        rowComponent={Row}
+        rowComponentExtraProps={{ pathname, linkComponent: LinkComponent }}
+      />
       <div className="flex-grow p-5">{data ? <Docs nodeData={nodeData} nodeType={nodeType} /> : <DocsSkeleton />}</div>
     </div>
   );
