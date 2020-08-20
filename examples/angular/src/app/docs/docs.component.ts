@@ -11,11 +11,11 @@ export class DocsComponent {
     // When the angular router emits a route change event, update the Hub uri
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const hub = document.querySelector<Element & { uri: string }>('stoplight-hub');
-        const baseUrl = hub.getAttribute('baseUrl');
-        hub.uri = event.url.replace(baseUrl, '');
+        const hub = document.querySelector<Element & { basePath: string }>('stoplight-project');
+        const baseUrl = hub.getAttribute('url');
+        hub.basePath = event.url.replace(baseUrl, '');
 
-        console.log('NavigationEnd', { browserUrl: event.url, stoplightUri: hub.uri });
+        console.log('NavigationEnd', { browserUrl: event.url, stoplightUri: hub.basePath });
       }
     });
   }
