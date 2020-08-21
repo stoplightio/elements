@@ -74,18 +74,11 @@ export function computeUriMap({ document, data, map, transformer, parentUri }: I
 }
 
 function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeMap | void {
+  if (typeof key === 'number') return;
   for (const entry of map) {
-    let match = true;
-
-    let target = key;
-
-    if (entry.match) {
-      match = target && typeof target === 'string' ? !!target.match(entry.match) : false;
-    } else if (entry.notMatch) {
-      match = target && typeof target === 'string' ? !!!target.match(entry.notMatch) : true;
+    if (!!entry.match?.match(key) || (entry.notMatch !== void 0 && !entry.notMatch.match(key))) {
+      return entry;
     }
-
-    if (match) return entry;
   }
 }
 
