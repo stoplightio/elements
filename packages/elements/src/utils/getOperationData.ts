@@ -1,3 +1,4 @@
+import { stringify } from '@stoplight/json';
 import { JSONSchema } from '@stoplight/prism-http';
 import { HttpMethod, IHttpOperation, IHttpParam } from '@stoplight/types';
 import { filter, flatten, get, has } from 'lodash';
@@ -74,7 +75,8 @@ function getBodyFromOperation(operation: Partial<IHttpOperation>) {
     const schema = get(operation, 'request.body.contents[0].schema');
 
     if (schema) {
-      return sample(schema, {}, operation);
+      // Stringify + parse here to remove any cycles since openapi-sampler does not handle them well
+      return sample(schema, {}, JSON.parse(stringify(operation)));
     }
   } catch (e) {
     console.warn('Unable to create sample request body from schema', e);

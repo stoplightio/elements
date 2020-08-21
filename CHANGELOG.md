@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.128](https://github.com/stoplightio/elements/compare/v6.0.0-beta.127...v6.0.0-beta.128) (2020-08-21)
+
+
+### Bug Fixes
+
+* remove cycles before running openapi-sampler ([#543](https://github.com/stoplightio/elements/issues/543)) ([747e6ae](https://github.com/stoplightio/elements/commit/747e6ae0bc68fb623e375d060d45da4ae8104ab0))
+
+
+
+
+
+# [6.0.0-beta.127](https://github.com/stoplightio/elements/compare/v6.0.0-beta.126...v6.0.0-beta.127) (2020-08-20)
+
+
+### Features
+
+* stoplight project container ([#529](https://github.com/stoplightio/elements/issues/529)) ([07d0444](https://github.com/stoplightio/elements/commit/07d0444ec3844ba305e8512ced90454b035eaeb3)), closes [#539](https://github.com/stoplightio/elements/issues/539)
+
+
+
+
+
+# [6.0.0-beta.126](https://github.com/stoplightio/elements/compare/v6.0.0-beta.125...v6.0.0-beta.126) (2020-08-20)
+
+
+### Bug Fixes
+
+* request id as well for projectTableOfContent ([#545](https://github.com/stoplightio/elements/issues/545)) ([0fbbe21](https://github.com/stoplightio/elements/commit/0fbbe213a430537d3f0cc261db2a109accbee39f))
+
+
+
+
+
+# [6.0.0-beta.125](https://github.com/stoplightio/elements/compare/v6.0.0-beta.124...v6.0.0-beta.125) (2020-08-13)
+
+
+### Bug Fixes
+
+* show Example instead of default ([#532](https://github.com/stoplightio/elements/issues/532)) ([3b8157a](https://github.com/stoplightio/elements/commit/3b8157a2e59b476aa1742a684c45a737cce44cd0))
+
+
+
+
+
+# [6.0.0-beta.124](https://github.com/stoplightio/elements/compare/v6.0.0-beta.123...v6.0.0-beta.124) (2020-08-13)
+
+
+### Features
+
+* **request-maker:** add support for JavaScript Fetch library in request maker code generation ([#531](https://github.com/stoplightio/elements/issues/531)) ([95a0ae7](https://github.com/stoplightio/elements/commit/95a0ae76a5c25aac7f048af9ddb1913755891847))
+
+
+
+
+
+# [6.0.0-beta.123](https://github.com/stoplightio/elements/compare/v6.0.0-beta.122...v6.0.0-beta.123) (2020-08-11)
+
+
+### Features
+
+* **web-components:** publish as @stoplight/elements-web-components ([#527](https://github.com/stoplightio/elements/issues/527)) ([aebc77a](https://github.com/stoplightio/elements/commit/aebc77a4c70d8af9c9dd4b80496855ce56ec03c6))
+* add example ([#521](https://github.com/stoplightio/elements/issues/521)) ([fe059ac](https://github.com/stoplightio/elements/commit/fe059ac10751a2f80b6d251445969a05f355994b))
+
+
+
+
+
 # [6.0.0-beta.122](https://github.com/stoplightio/elements/compare/v6.0.0-beta.121...v6.0.0-beta.122) (2020-08-09)
 
 
