@@ -15,7 +15,7 @@ export const isOas2 = (parsed: unknown) =>
 export const isOas3 = (parsed: unknown) =>
   isObject(parsed) &&
   'openapi' in parsed &&
-  Number.parseInt(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3;
+  Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3;
 
 export const isOperation = (uri: string) => OPERATION_REGEXP.test(uri);
 
