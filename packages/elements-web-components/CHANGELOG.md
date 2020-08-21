@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.128](https://github.com/stoplightio/elements/compare/v6.0.0-beta.127...v6.0.0-beta.128) (2020-08-21)
+
+
+### Bug Fixes
+
+* remove cycles before running openapi-sampler ([#543](https://github.com/stoplightio/elements/issues/543)) ([747e6ae](https://github.com/stoplightio/elements/commit/747e6ae0bc68fb623e375d060d45da4ae8104ab0))
+
+
+
+
+
 # [6.0.0-beta.127](https://github.com/stoplightio/elements/compare/v6.0.0-beta.126...v6.0.0-beta.127) (2020-08-20)
 
 
