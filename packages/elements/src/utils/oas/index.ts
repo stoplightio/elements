@@ -1,5 +1,5 @@
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
-import { pointerToPath } from '@stoplight/json';
+import { encodePointerFragment, pointerToPath } from '@stoplight/json';
 import { compact, get, isObject, last, uniq } from 'lodash';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
@@ -19,8 +19,8 @@ export const isOas3 = (parsed: unknown) =>
 
 export const isOperation = (uri: string) => OPERATION_REGEXP.test(uri);
 
-export const MODEL_REGEXP = new RegExp('^/(definitions|components/schemas)');
-export const OPERATION_REGEXP = new RegExp('/paths/.+/(get|post|put|patch|delete|head|options|trace)$');
+export const MODEL_REGEXP = /^\/(definitions|components\/schemas)/;
+export const OPERATION_REGEXP = /\/paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
 
 const MODEL_TAG_PATH = ['x-tags', 0];
 const OPERATION_TAG_PATH = ['tags', 0, 'name'];
@@ -46,18 +46,17 @@ export function computeUriMap({ document, data, map, transformer, parentUri }: I
 
   if (isObject(data)) {
     for (const key of Object.keys(data)) {
-      const sanitizedKey = key.replace(/~/g, '~0').replace(/\//g, '~1');
+      const sanitizedKey = encodePointerFragment(key);
       const match = findMapMatch(sanitizedKey, map);
       if (match) {
         const uri = `${parentUri || ''}/${sanitizedKey}`;
 
         const jsonPath = pointerToPath(`#${uri}`);
         if (match.type === NodeTypes.Operation && jsonPath.length === 3) {
-          const path = jsonPath[1].toString();
-          const method = jsonPath[2].toString();
+          const path = String(jsonPath[1]);
+          const method = String(jsonPath[2]);
           uriMap[uri] = transformer({ document, path, method });
-        }
-        if (match.type === NodeTypes.Model) {
+        } else if (match.type === NodeTypes.Model) {
           uriMap[uri] = get(document, jsonPath);
         }
 
@@ -166,18 +165,17 @@ export const computeTocTree = (uriMap: IUriMap) => {
   } as ITableOfContentsTree;
 };
 
-const mapModel = (uri: string) =>
-  ({
-    title: last(uri.split('/')),
-    type: 'item',
-    uri,
-  } as TableOfContentItem);
+const mapModel = (uri: string): TableOfContentItem => ({
+  title: last(uri.split('/')) ?? '',
+  type: 'item',
+  uri,
+});
 
-const mapOperation = (uriMap: IUriMap) => (uri: string) => {
+const mapOperation = (uriMap: IUriMap) => (uri: string): TableOfContentItem => {
   const operation = uriMap[uri];
   return {
-    title: isObject(operation) ? operation['summary'] || operation['path'] : void 0,
+    title: isObject(operation) ? operation['summary'] || operation['path'] : '',
     type: 'item',
     uri,
-  } as TableOfContentItem;
+  };
 };

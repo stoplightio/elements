@@ -32,8 +32,6 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
   const document = useParsedValue(data);
   const showTryIt = isOperation(pathname);
 
-  console.log({ showTryIt, pathname, document });
-
   React.useEffect(() => {
     if (document) {
       let uriMap: IUriMap = {};
