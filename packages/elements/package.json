@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@stoplight/httpsnippet": "^1.2.1",
-    "@stoplight/json": "^3.8.6",
+    "@stoplight/json": "^3.9.0",
     "@stoplight/json-schema-ref-parser": "^9.0.4",
     "@stoplight/json-schema-viewer": "^3.0.0-beta.28",
     "@stoplight/markdown": "^2.9.0",
@@ -65,7 +65,7 @@
     "lodash": "^4.17.19",
     "mobx-react-lite": "^1.5.2",
     "object-hash": "^2.0.3",
-    "openapi-sampler": "^1.0.0-beta.15",
+    "openapi-sampler": "^1.0.0-beta.16",
     "parse-prefer-header": "^1.0.0",
     "react-error-boundary": "^1.2.5",
     "react-router-dom": "^5.2.0",
