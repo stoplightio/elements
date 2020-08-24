@@ -11,7 +11,8 @@
     "url": "git+https://github.com/stoplightio/elements.git"
   },
   "scripts": {
-    "start": "ng serve"
+    "start": "ng serve",
+    "postinstall": "ngcc --tsconfig './tsconfig.app.json'"
   },
   "bugs": {
     "url": "https://github.com/stoplightio/elements/issues"
