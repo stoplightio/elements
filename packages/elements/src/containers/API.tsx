@@ -69,7 +69,7 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
       />
       <div className="flex-grow p-5">
         <div className="flex">
-          {data ? <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} /> : <DocsSkeleton />}
+          {nodeData ? <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} /> : <DocsSkeleton />}
           {showTryIt && (
             <div className="w-2/5 border-l relative">
               <div className="absolute inset-0 overflow-auto px-10">
