@@ -35,7 +35,7 @@ const mockUrlQuery = `
 export const TryIt = ({ className, node }: ITryItProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data: result, fetching }] = useQuery({
+  const [{ data: result, fetching, error }] = useQuery({
     query: bundledBranchNode,
     variables: {
       workspaceSlug: info.workspace,
@@ -60,6 +60,10 @@ export const TryIt = ({ className, node }: ITryItProps) => {
 
   // dereference data to use in TryIt since prism needs fully dereferenced data to work
   const dereferencedData = useDereferencedData(nodeType, nodeData);
+
+  if (error) {
+    return null;
+  }
 
   if (fetching || mockFetching || !result) {
     return <DocsSkeleton />;
