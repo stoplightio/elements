@@ -1,0 +1,13 @@
+{
+  "extends": "@stoplight/scripts/tsconfig.json",
+
+  "include": ["src"],
+
+  "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
+
+  "compilerOptions": {
+    "module": "commonjs",
+    "noUnusedLocals": false,
+    "esModuleInterop": true
+  }
+}
