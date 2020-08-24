@@ -21,7 +21,6 @@ import { computeOas3UriMap } from '../utils/oas/oas3';
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkComponent }) => {
-  const [uriMap, setUriMap] = React.useState<IUriMap>({});
   const { pathname } = useLocation();
 
   const { data, error } = useSwr(apiDescriptionUrl, fetcher);
@@ -32,18 +31,18 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
   const document = useParsedValue(data);
   const showTryIt = isOperation(pathname);
 
-  React.useEffect(() => {
+  const uriMap = React.useMemo(() => {
+    let map: IUriMap = {};
     if (document) {
-      let uriMap: IUriMap = {};
       if (isOas3(document)) {
-        uriMap = computeOas3UriMap(document);
+        map = computeOas3UriMap(document);
       } else if (isOas2(document)) {
-        uriMap = computeOas2UriMap(document);
+        map = computeOas2UriMap(document);
       } else {
         console.warn('Document type is unknown');
       }
-      setUriMap(uriMap);
     }
+    return map;
   }, [document]);
 
   const tree = computeTocTree(uriMap);
