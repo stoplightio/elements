@@ -2,4 +2,4 @@ import { ApiElement, SchemaViewerComponentElement, StoplightProjectElement } fro
 
 window.customElements.define('stoplight-component-schema-viewer', SchemaViewerComponentElement);
 window.customElements.define('stoplight-project', StoplightProjectElement);
-window.customElements.define('api-component', ApiElement);
+window.customElements.define('stoplight-api', ApiElement);
