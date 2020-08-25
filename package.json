@@ -32,7 +32,7 @@
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
     "elements-web-components": "yarn workspace @stoplight/elements-web-components",
-    "build": "yarn workspaces run build",
+    "build": "yarn workspace @stoplight/elements build && yarn workspace @stoplight/elements-web-components build",
     "build.docs": "yarn workspaces run build.docs",
     "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
     "release": "lerna publish --conventional-commits --yes",
