@@ -39,7 +39,7 @@
     "release.docs": "yarn workspace @stoplight/elements release.docs",
     "type-check": "yarn workspaces run type-check",
     "test.prod": "yarn workspace @stoplight/elements test.prod",
-    "prepublishOnly": "yarn workspaces run build"
+    "prepublishOnly": "yarn build"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
