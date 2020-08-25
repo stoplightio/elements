@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "6.0.0-beta.128",
+  "version": "6.0.0-beta.130",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": false,
@@ -44,6 +44,7 @@
     "vis-network": "^7.5.2"
   },
   "dependencies": {
+    "@stoplight/http-spec": "^3.1.1",
     "@stoplight/httpsnippet": "^1.2.1",
     "@stoplight/json": "^3.9.0",
     "@stoplight/json-schema-ref-parser": "^9.0.4",
@@ -69,6 +70,7 @@
     "parse-prefer-header": "^1.0.0",
     "react-error-boundary": "^1.2.5",
     "react-router-dom": "^5.2.0",
+    "swr": "^0.3.0",
     "tslib": "^1.12.0",
     "type-is": "^1.6.18",
     "unist-util-select": "^3.0.1",

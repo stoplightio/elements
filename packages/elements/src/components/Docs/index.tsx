@@ -13,7 +13,7 @@ interface IBaseDocsProps {
 }
 
 export interface IDocsProps extends IBaseDocsProps {
-  nodeData: string;
+  nodeData: unknown;
 }
 
 export interface IParsedDocsProps<T = unknown> extends IBaseDocsProps {
