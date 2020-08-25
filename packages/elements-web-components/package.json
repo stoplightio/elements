@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-web-components",
-  "version": "6.0.0-beta.129",
+  "version": "6.0.0-beta.130",
   "main": "dist/elements.min.js",
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",

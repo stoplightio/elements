@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.130](https://github.com/stoplightio/elements/compare/v6.0.0-beta.129...v6.0.0-beta.130) (2020-08-25)
+
+
+### Features
+
+* api container ([#530](https://github.com/stoplightio/elements/issues/530)) ([d326327](https://github.com/stoplightio/elements/commit/d3263275c2802fe6d717a4f903867ccc5263960d))
+
+
+
+
+
 # [6.0.0-beta.129](https://github.com/stoplightio/elements/compare/v6.0.0-beta.128...v6.0.0-beta.129) (2020-08-21)
 
 
