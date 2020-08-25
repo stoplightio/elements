@@ -2026,7 +2026,7 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@openapi-contrib/openapi-schema-to-json-schema@^3.0":
+"@openapi-contrib/openapi-schema-to-json-schema@^3.0", "@openapi-contrib/openapi-schema-to-json-schema@^3.0.2":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@openapi-contrib/openapi-schema-to-json-schema/-/openapi-schema-to-json-schema-3.0.4.tgz#a0e29445b9cd76331c473ab820e97b28ae828ebc"
   integrity sha512-+1RBoJ+xjX8mIXxisTJVlN/r6DOh4kyszw3cLBSAxwKP7Ui42DjlxWgR2PnWxOOWtRCnQurRzlsvL1ce5FUrWg==
@@ -2394,11 +2394,12 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
 
-"@stoplight/elements@^6.0.0-beta.128":
-  version "6.0.0-beta.128"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-6.0.0-beta.128.tgz#e588ce87cffb7f550955ec81739dd5738d1e1ac1"
-  integrity sha512-kFH1c9v/ZtzQI4wUpgjwilPp5yVHaPyCLOxg0nLLaUk+OmwqzzuoQeIo53WkdDsDPz1wT7BqpzRpW7S2DajtEg==
+"@stoplight/elements@^6.0.0-beta.130":
+  version "6.0.0-beta.130"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-6.0.0-beta.130.tgz#6e19877862f94232bbabfddfc67f76d10bfb48af"
+  integrity sha512-IFKv9BdrB0SQw0Irhds4CsARBp8cbFjCpTo3qeWywBcyzP5eJg8aJ75L4nztfDG3DGMbVn7//xWlPcXI2kPjHA==
   dependencies:
+    "@stoplight/http-spec" "^3.1.1"
     "@stoplight/httpsnippet" "^1.2.1"
     "@stoplight/json" "^3.9.0"
     "@stoplight/json-schema-ref-parser" "^9.0.4"
@@ -2424,6 +2425,7 @@
     parse-prefer-header "^1.0.0"
     react-error-boundary "^1.2.5"
     react-router-dom "^5.2.0"
+    swr "^0.3.0"
     tslib "^1.12.0"
     type-is "^1.6.18"
     unist-util-select "^3.0.1"
@@ -2453,6 +2455,25 @@
     lodash "^4.17.15"
     openapi3-ts "~1.3.0"
     postman-collection "^3.6.0"
+    type-is "^1.6.18"
+    urijs "~1.19.2"
+
+"@stoplight/http-spec@^3.1.1":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-3.2.2.tgz#9099c1b3e4e560764f7a8b5e0231efb8da0b179d"
+  integrity sha512-hSRp51O74TcqUJMOiiiaal8QS5ct6StJFKHaxCTXNTNrfnDt3YrtRv9Zmf3AYpVNDkJIoqkFM0Bu8Sysfg5N4w==
+  dependencies:
+    "@openapi-contrib/openapi-schema-to-json-schema" "^3.0.2"
+    "@stoplight/json" "^3.8.1"
+    "@stoplight/types" "^11.9.0"
+    "@types/swagger-schema-official" "~2.0.21"
+    "@types/to-json-schema" "^0.2.0"
+    "@types/type-is" "^1.6.3"
+    "@types/urijs" "~1.19.9"
+    json-schema-generator "^2.0.6"
+    lodash "^4.17.15"
+    openapi3-ts "~1.4.0"
+    postman-collection "^3.6.2"
     type-is "^1.6.18"
     urijs "~1.19.2"
 
@@ -2527,7 +2548,7 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.1.2", "@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.9.0":
+"@stoplight/json@^3.1.2", "@stoplight/json@^3.4.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.8.1", "@stoplight/json@^3.9.0":
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.9.0.tgz#ade6c5a75bfc55a464d81e902c53a8862c98b462"
   integrity sha512-jgEKIPMLbhaU5Nw9yw+VBw2OSfDxm8VQ/k5JNezAuDMjcmqCPz3rOQTVNOROStzi70l4DRxF7eBN9liYJq5Ojw==
@@ -3032,7 +3053,7 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
-"@types/urijs@^1.19.9", "@types/urijs@~1.19.7":
+"@types/urijs@^1.19.9", "@types/urijs@~1.19.7", "@types/urijs@~1.19.9":
   version "1.19.10"
   resolved "https://registry.yarnpkg.com/@types/urijs/-/urijs-1.19.10.tgz#c65855716264489f9384e560220a681a87b162e9"
   integrity sha512-/R3arh6LDmdWYHFsIRM2UgqbsOimc8nR3TNTjEMpEy2lzWkUSPavCN90ihygu2togtc8oB/VRwrevgx6tnzxDA==
@@ -7681,6 +7702,11 @@ faker@4.1.0, faker@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
   integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
+
+fast-deep-equal@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+  integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
@@ -13512,6 +13538,11 @@ openapi3-ts@~1.3.0:
   resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-1.3.0.tgz#a6b4a6dda1d037cb826f3230426ce5243c75edb3"
   integrity sha512-Xk3hsB0PzB4dzr/r/FdmK+VfQbZH7lQQ2iipMS1/1eoz1wUvh5R7rmOakYvw0bQJJE6PYrOLx8UHsYmzgTr+YQ==
 
+openapi3-ts@~1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-1.4.0.tgz#679d5a24be0efc36f5de4fc2c4b8513663e16f65"
+  integrity sha512-8DmE2oKayvSkIR3XSZ4+pRliBsx19bSNeIzkTPswY8r4wvjX86bMxsORdqwAwMxE8PefOcSAT2auvi/0TZe9yA==
+
 opencollective-postinstall@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
@@ -14704,7 +14735,7 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.26, postcss@^7.0.27, postcss@^7.0.3
     source-map "^0.6.1"
     supports-color "^6.1.0"
 
-postman-collection@^3.6.0, postman-collection@^3.6.4:
+postman-collection@^3.6.0, postman-collection@^3.6.2, postman-collection@^3.6.4:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/postman-collection/-/postman-collection-3.6.5.tgz#088bcdbf8ebcfdff7fb2423908b7de0124287135"
   integrity sha512-MoYK32gurXvgXrRuXQ8Xl8vCfRlMJjJX8UCzpXGvl1tQU4NBzVwO83vY1+6P70l4WBU4q0ibDTuahVpXEt/ZbA==
@@ -17712,6 +17743,13 @@ swap-case@^1.1.0:
   dependencies:
     lower-case "^1.1.1"
     upper-case "^1.1.1"
+
+swr@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.1.tgz#b673f32a470418a785d962c86bd96ec555986dd0"
+  integrity sha512-g9JrXXMo54CSc+DU+KS0S8+5r6cpeBmBmVLhCu23ifQL9u0KKirkJpNX3Za3eOttmUuRQLXA8N1YPpoc8ejdpA==
+  dependencies:
+    fast-deep-equal "2.0.1"
 
 symbol-observable@^1.0.4, symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"

@@ -18,7 +18,7 @@ const Layout: React.FC<{ centered: boolean }> = ({ children, centered }) => {
   `);
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header siteTitle={data.site.siteMetadata.title} centered={true} />
 
       <main

@@ -2,7 +2,7 @@ import '@stoplight/elements/styles/elements.scss';
 import '../styles/stoplight.scss';
 
 import { StoplightProject } from '@stoplight/elements';
-import { Button, InputGroup } from '@stoplight/ui-kit';
+import { InputGroup } from '@stoplight/ui-kit';
 import React from 'react';
 
 const StoplightProjectPage = ({ basePath }: { basePath: string }) => {
@@ -18,24 +18,24 @@ const StoplightProjectPage = ({ basePath }: { basePath: string }) => {
           name="workspace"
           id="workspace"
           placeholder="Workspace URL"
-          value={workspaceUrl}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWorkspaceUrl(e.target.value)}
+          defaultValue={workspaceUrl}
+          onBlur={(e: React.ChangeEvent<HTMLInputElement>) => setWorkspaceUrl(e.target.value)}
         />
         <InputGroup
           className="mt-4 mr-6"
           name="project"
           id="project"
           placeholder="Project Slug"
-          value={project}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProject(e.target.value)}
+          defaultValue={project}
+          onBlur={(e: React.ChangeEvent<HTMLInputElement>) => setProject(e.target.value)}
         />
         <InputGroup
           className="mt-4 mr-6"
           name="branch"
           id="branch"
           placeholder="Branch Slug"
-          value={branch}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBranch(e.target.value)}
+          defaultValue={branch}
+          onBlur={(e: React.ChangeEvent<HTMLInputElement>) => setBranch(e.target.value)}
         />
       </div>
       {workspaceUrl && project && (

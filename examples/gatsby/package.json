@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "Stoplight <support@stoplight.io>",
   "dependencies": {
-    "@stoplight/elements": "^6.0.0-beta.128",
+    "@stoplight/elements": "^6.0.0-beta.130",
     "@stoplight/prism-http": "^3.3.4",
     "@types/classnames": "^2.2.10",
     "classnames": "^2.2.6",
