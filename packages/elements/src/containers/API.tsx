@@ -1,5 +1,5 @@
 import { NodeType } from '@stoplight/types';
-import { TableOfContents } from '@stoplight/ui-kit';
+import { FAIcon, NonIdealState, TableOfContents } from '@stoplight/ui-kit';
 import axios from 'axios';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -24,9 +24,12 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
   const { pathname } = useLocation();
 
   const { data, error } = useSwr(apiDescriptionUrl, fetcher);
-  if (error) {
-    console.error('Could not fetch spec', error);
-  }
+
+  React.useEffect(() => {
+    if (error) {
+      console.error('Could not fetch spec', error);
+    }
+  }, [error]);
 
   const document = useParsedValue(data);
   const showTryIt = isOperation(pathname);
@@ -59,6 +62,22 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
     : NodeType.HttpService;
   const nodeData = uriMap[pathname] || uriMap['/'];
 
+  if (error) {
+    return (
+      <div className="flex min-h-screen justify-center items-center w-full">
+        <NonIdealState
+          title="Something went wrong"
+          description={error.message}
+          icon={<FAIcon icon={['fad', 'exclamation-triangle']} />}
+        />
+      </div>
+    );
+  }
+
+  if (!nodeData) {
+    return <DocsSkeleton />;
+  }
+
   return (
     <div className="APIComponent flex flex-row">
       <TableOfContents
@@ -68,7 +87,7 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
       />
       <div className="flex-grow p-5">
         <div className="flex">
-          {nodeData ? <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} /> : <DocsSkeleton />}
+          <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
           {showTryIt && (
             <div className="w-2/5 border-l relative">
               <div className="absolute inset-0 overflow-auto px-10">

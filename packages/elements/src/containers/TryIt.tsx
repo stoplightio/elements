@@ -61,6 +61,12 @@ export const TryIt = ({ className, node }: ITryItProps) => {
   // dereference data to use in TryIt since prism needs fully dereferenced data to work
   const dereferencedData = useDereferencedData(nodeType, nodeData);
 
+  React.useEffect(() => {
+    if (error) {
+      console.error('Could not fetch node', error);
+    }
+  }, [error]);
+
   if (error) {
     return null;
   }
