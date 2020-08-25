@@ -6,11 +6,6 @@ exports.onCreateWebpackConfig = ({ actions }) => {
       // Needed for node_modules/@stoplight/prism-http/dist/getHttpOperations.js
       fs: 'empty',
     },
-    resolve: {
-      alias: {
-        'decimal.js': path.join(__dirname, '..', '..', 'node_modules', 'decimal.js', 'decimal.js'),
-      },
-    },
   });
 };
 
