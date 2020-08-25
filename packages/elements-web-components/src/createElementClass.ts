@@ -4,8 +4,6 @@ import { isEqual, mapValues } from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-const elementsCss = require('@stoplight/elements/styles/elements.scss').toString();
-
 type TypeNameMap<T> = T extends string
   ? 'string'
   : T extends number
@@ -28,7 +26,7 @@ type PropDescriptorMap<P> = {
 
 export const createElementClass = <P>(Component: React.ComponentType<P>, propDescriptors: PropDescriptorMap<P>) => {
   return class extends HTMLElement {
-    private _shadow: { root: ShadowRoot; mountPoint: HTMLElement } | undefined;
+    private _mountPoint: HTMLElement | undefined;
     private readonly _props: Partial<P> = {};
 
     static get observedAttributes() {
@@ -69,15 +67,8 @@ export const createElementClass = <P>(Component: React.ComponentType<P>, propDes
     }
 
     connectedCallback() {
-      const mountPoint = document.createElement('div');
-      const shadowRoot = this.attachShadow({ mode: 'open' });
-      shadowRoot.appendChild(mountPoint);
-
-      const style = document.createElement('style');
-      style.innerHTML = elementsCss;
-      shadowRoot.appendChild(style);
-
-      this._shadow = { mountPoint, root: shadowRoot };
+      this._mountPoint = document.createElement('div');
+      this.appendChild(this._mountPoint);
 
       for (const key in propDescriptors) {
         if (propDescriptors.hasOwnProperty(key)) {
@@ -137,16 +128,17 @@ export const createElementClass = <P>(Component: React.ComponentType<P>, propDes
     }
 
     private renderComponent() {
-      if (this._shadow) {
+      if (this._mountPoint) {
         const props = mapValues(propDescriptors, (descriptor, key) => this._props[key] ?? descriptor.defaultValue);
-        ReactDOM.render(React.createElement(Component, props), this._shadow.mountPoint);
+        ReactDOM.render(React.createElement(Component, props), this._mountPoint);
       }
     }
 
     disconnectedCallback() {
-      if (this._shadow) {
-        ReactDOM.unmountComponentAtNode(this._shadow.mountPoint);
-        this._shadow = undefined;
+      if (this._mountPoint) {
+        ReactDOM.unmountComponentAtNode(this._mountPoint);
+        this.removeChild(this._mountPoint);
+        this._mountPoint = undefined;
       }
     }
   };
