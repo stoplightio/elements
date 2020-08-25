@@ -123,6 +123,10 @@ export interface ILinkComponentProps {
   url: string;
 }
 
+export interface IAPI extends IRouter, ILinkComponent {
+  apiDescriptionUrl: string;
+}
+
 export interface IStoplightProject extends IRouter, ILinkComponent {
   workspace: string;
   project: string;

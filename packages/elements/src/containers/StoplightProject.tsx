@@ -1,19 +1,13 @@
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import { Optional } from '@stoplight/types';
-import { DefaultRow, RowComponentType } from '@stoplight/ui-kit';
 import * as React from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 
+import { Row } from '../components/TableOfContents/Row';
 import { withRouter } from '../hoc/withRouter';
 import { useUrqlClient } from '../hooks/useUrqlClient';
-import {
-  ILinkComponentProps,
-  IStoplightProject,
-  ITableOfContentsTree,
-  Item,
-  TableOfContentItem,
-  TableOfContentsLinkWithId,
-} from '../types';
+import { IStoplightProject, ITableOfContentsTree, Item, TableOfContentItem } from '../types';
+import { isOperation } from '../utils/oas';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
@@ -97,39 +91,4 @@ export const StoplightProject = withRouter<IStoplightProject>(
   },
 );
 
-type ToCExtraProps = {
-  pathname: string;
-  linkComponent?: React.ComponentType<ILinkComponentProps>;
-};
-
-const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props => {
-  const LinkComponent = props.extra.linkComponent;
-
-  if (!props.item.to) {
-    return <DefaultRow {...props} />;
-  }
-
-  const item = {
-    ...props.item,
-    isSelected: props.item.to === props.extra.pathname,
-    to: props.item.to ?? '',
-  };
-
-  if (LinkComponent) {
-    return (
-      <LinkComponent url={item.to} data={{ item }}>
-        <DefaultRow {...props} item={item} />
-      </LinkComponent>
-    );
-  }
-
-  return (
-    <Link to={item.to} className="no-underline block">
-      <DefaultRow {...props} item={item} />
-    </Link>
-  );
-};
-
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
-
-const isOperation = (uri: string) => /\/paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/.test(uri);
