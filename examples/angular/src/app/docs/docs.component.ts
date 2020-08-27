@@ -1,10 +1,10 @@
-import { Component, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-docs',
   templateUrl: './docs.component.html',
 })
 export class DocsComponent {
-  constructor(private ngZone: NgZone, private router: Router) {}
+  workspace = 'https://marcelltoth.x-4054.stoplight-dev.com';
+  project = 'studio-demo';
 }

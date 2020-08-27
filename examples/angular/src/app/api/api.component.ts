@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './api.component.html',
 })
 export class ApiComponent {
-  constructor() {}
+  descriptionUrl = 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json';
 }
