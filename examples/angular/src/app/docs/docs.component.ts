@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './docs.component.html',
 })
 export class DocsComponent {
-  workspace = 'https://marcelltoth.x-4054.stoplight-dev.com';
+  workspace = 'https://elements.stoplight.io';
   project = 'studio-demo';
 }
