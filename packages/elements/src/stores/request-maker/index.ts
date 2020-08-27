@@ -288,9 +288,11 @@ export class RequestMakerStore {
 
     this.isSending = true;
 
-    this.onRequestSent({
-      mockingEnabled: true,
-    });
+    try {
+      this.onRequestSent({
+        mockingEnabled: true,
+      });
+    } catch (ignore) {}
 
     const time = Date.now();
 
@@ -303,10 +305,12 @@ export class RequestMakerStore {
       store = ResponseStore.fromError(err);
     }
 
-    this.onResponseReceived({
-      mockingEnabled: true,
-      responseStatus: store.statusCode,
-    });
+    try {
+      this.onResponseReceived({
+        mockingEnabled: true,
+        responseStatus: store.statusCode,
+      });
+    } catch (ignore) {}
 
     store.responseTime = Date.now() - time;
     store.originalRequest = this.request.toPartialHttpRequest();
@@ -328,9 +332,11 @@ export class RequestMakerStore {
 
     this.cancelToken = axios.CancelToken.source();
 
-    this.onRequestSent({
-      mockingEnabled: false,
-    });
+    try {
+      this.onRequestSent({
+        mockingEnabled: false,
+      });
+    } catch (ignore) {}
 
     const time = Date.now();
 
@@ -356,10 +362,12 @@ export class RequestMakerStore {
       }
     }
 
-    this.onResponseReceived({
-      mockingEnabled: false,
-      responseStatus: store.statusCode,
-    });
+    try {
+      this.onResponseReceived({
+        mockingEnabled: false,
+        responseStatus: store.statusCode,
+      });
+    } catch (ignore) {}
 
     store.responseTime = Date.now() - time;
     store.originalRequest = this.request.toPartialHttpRequest();
