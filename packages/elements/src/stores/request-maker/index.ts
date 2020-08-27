@@ -31,12 +31,18 @@ export interface IRequestMakerStoreOptions {
   mockUrl?: string;
 }
 
+export type onRequestSent = (configs: { mockingEnabled: boolean }) => void;
+export type onResponseReceived = (configs: { mockingEnabled: boolean; responseStatus: number }) => void;
+
 export class RequestMakerStore {
   @observable.ref
   public cancelToken?: CancelTokenSource;
 
   @observable
   public isSending = false;
+
+  public onResponseReceived: onResponseReceived = () => {};
+  public onRequestSent: onRequestSent = () => {};
 
   @observable.ref
   public request = new RequestStore();
@@ -94,6 +100,7 @@ export class RequestMakerStore {
     // DEPRECATED
     return this._originalOperation;
   }
+
   public set operation(operation) {
     // DEPRECATED
     if (operation) {
@@ -281,6 +288,10 @@ export class RequestMakerStore {
 
     this.isSending = true;
 
+    this.onRequestSent({
+      mockingEnabled: true,
+    });
+
     const time = Date.now();
 
     let store: ResponseStore;
@@ -291,6 +302,11 @@ export class RequestMakerStore {
     } catch (err) {
       store = ResponseStore.fromError(err);
     }
+
+    this.onResponseReceived({
+      mockingEnabled: true,
+      responseStatus: store.statusCode,
+    });
 
     store.responseTime = Date.now() - time;
     store.originalRequest = this.request.toPartialHttpRequest();
@@ -311,6 +327,10 @@ export class RequestMakerStore {
     }
 
     this.cancelToken = axios.CancelToken.source();
+
+    this.onRequestSent({
+      mockingEnabled: false,
+    });
 
     const time = Date.now();
 
@@ -335,6 +355,11 @@ export class RequestMakerStore {
         store = ResponseStore.fromError(err);
       }
     }
+
+    this.onResponseReceived({
+      mockingEnabled: false,
+      responseStatus: store.statusCode,
+    });
 
     store.responseTime = Date.now() - time;
     store.originalRequest = this.request.toPartialHttpRequest();
