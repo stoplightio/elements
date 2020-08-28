@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.132](https://github.com/stoplightio/elements/compare/v6.0.0-beta.131...v6.0.0-beta.132) (2020-08-28)
+
+
+### Bug Fixes
+
+* publishing ([#547](https://github.com/stoplightio/elements/issues/547)) ([eecadda](https://github.com/stoplightio/elements/commit/eecadda734afa34d06e724d686ef468d32fed85b))
+
+
+### Features
+
+* Angular example ([#544](https://github.com/stoplightio/elements/issues/544)) ([4998a7a](https://github.com/stoplightio/elements/commit/4998a7aee23cd4b1cb8195dd80bb6fe579af9db4))
+
+
+
+
+
 # [6.0.0-beta.131](https://github.com/stoplightio/elements/compare/v6.0.0-beta.130...v6.0.0-beta.131) (2020-08-25)
 
 
