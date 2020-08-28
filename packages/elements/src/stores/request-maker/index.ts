@@ -31,8 +31,8 @@ export interface IRequestMakerStoreOptions {
   mockUrl?: string;
 }
 
-export type onRequestSent = (configs: { mockingEnabled: boolean }) => void;
-export type onResponseReceived = (configs: { mockingEnabled: boolean; responseStatus: number }) => void;
+export type OnRequestSent = (configs: { mockingEnabled: boolean }) => void;
+export type OnResponseReceived = (configs: { mockingEnabled: boolean; responseStatus: number }) => void;
 
 export class RequestMakerStore {
   @observable.ref
@@ -41,8 +41,8 @@ export class RequestMakerStore {
   @observable
   public isSending = false;
 
-  public onResponseReceived: onResponseReceived = () => {};
-  public onRequestSent: onRequestSent = () => {};
+  public onResponseReceived: OnResponseReceived = () => {};
+  public onRequestSent: OnRequestSent = () => {};
 
   @observable.ref
   public request = new RequestStore();

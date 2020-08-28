@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { useParsedValue } from '../../hooks/useParsedValue';
 import { useRequestMaker } from '../../hooks/useRequestMaker';
-import { onRequestSent, onResponseReceived } from '../../stores/request-maker';
+import { OnRequestSent, OnResponseReceived } from '../../stores/request-maker';
 import { isHttpOperation } from '../../utils/guards';
 import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '../RequestMaker';
 
@@ -13,8 +13,8 @@ export interface ITryItProps {
   nodeData: unknown;
   mockUrl?: string;
   className?: string;
-  onRequestSent?: onRequestSent;
-  onResponseReceived?: onResponseReceived;
+  onRequestSent?: OnRequestSent;
+  onResponseReceived?: OnResponseReceived;
 }
 
 const TryItComponent = React.memo<ITryItProps>(
