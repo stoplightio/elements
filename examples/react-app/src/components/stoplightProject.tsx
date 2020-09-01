@@ -5,7 +5,7 @@ import React from 'react';
 
 export const StoplightProjectDocs: React.FC = () => {
   return (
-    <div>
+    <div className="stoplight-container">
       <StoplightProject
         basePath="stoplightProject"
         workspace="https://elements.stoplight.io"

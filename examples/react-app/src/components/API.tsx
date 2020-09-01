@@ -5,7 +5,7 @@ import React from 'react';
 
 export const StoplightAPI: React.FC = () => {
   return (
-    <div>
+    <div className="stoplight-container">
       <API
         basePath="API"
         apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json"
