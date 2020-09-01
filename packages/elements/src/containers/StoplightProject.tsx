@@ -6,6 +6,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import { Row } from '../components/TableOfContents/Row';
 import { withRouter } from '../hoc/withRouter';
 import { useUrqlClient } from '../hooks/useUrqlClient';
+import { withStyles } from '../styled';
 import { IStoplightProject, ITableOfContentsTree, Item, TableOfContentItem } from '../types';
 import { isOperation } from '../utils/oas';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
@@ -13,7 +14,7 @@ import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
 import { TryItProvider } from './TryIt';
 
-export const StoplightProject = withRouter<IStoplightProject>(
+const StoplightProjectImpl = withRouter<IStoplightProject>(
   ({ workspace, project, branch, linkComponent: LinkComponent, authToken }) => {
     const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
@@ -90,5 +91,7 @@ export const StoplightProject = withRouter<IStoplightProject>(
     );
   },
 );
+
+export const StoplightProject = withStyles(StoplightProjectImpl);
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
