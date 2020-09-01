@@ -1,13 +1,12 @@
-import React from 'react';
-import { StoplightProject } from '@stoplight/elements'
-import '@stoplight/elements/styles/elements.scss'
+import '@stoplight/elements/styles/elements.scss';
 
-function stoplightProject() {
+import { StoplightProject } from '@stoplight/elements';
+import React from 'react';
+
+export const StoplightProjectDocs: React.FC = () => {
   return (
     <div>
-      <StoplightProject workspace="https://elements.stoplight.io" project="studio-demo"></StoplightProject>
+      <StoplightProject basePath="" workspace="https://elements.stoplight.io" project="studio-demo"></StoplightProject>
     </div>
   );
-}
-
-export default stoplightProject;
+};

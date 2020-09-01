@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
- 
-import stoplightAPI from './components/API';
-import stoplightProject from './components/stoplightProject';
-import Error from './components/Error';
-import Navigation from './components/Navigation';
- 
+
+import { StoplightAPI } from './components/API';
+import { Error } from './components/Error';
+import { Navigation } from './components/Navigation';
+import { StoplightProjectDocs } from './components/stoplightProject';
+
 class App extends Component {
   render() {
-    return (      
-       <BrowserRouter>
+    return (
+      <BrowserRouter>
         <div>
           <Navigation />
-            <Switch>
-             <Route path="/" component={stoplightProject} exact/>
-             <Route path="/stoplightAPI" component={stoplightAPI}/>
-            <Route component={Error}/>
-           </Switch>
-        </div> 
+          <Switch>
+            <Route path="/API" component={StoplightAPI} />
+            <Route path="/" component={StoplightProjectDocs} exact />
+            <Route component={Error} />
+          </Switch>
+        </div>
       </BrowserRouter>
     );
   }
 }
- 
+
 export default App;
