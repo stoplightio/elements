@@ -6,7 +6,11 @@ import React from 'react';
 export const StoplightProjectDocs: React.FC = () => {
   return (
     <div>
-      <StoplightProject basePath="" workspace="https://elements.stoplight.io" project="studio-demo"></StoplightProject>
+      <StoplightProject
+        basePath="stoplightProject"
+        workspace="https://elements.stoplight.io"
+        project="studio-demo"
+      ></StoplightProject>
     </div>
   );
 };

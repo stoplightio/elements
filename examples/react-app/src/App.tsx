@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import { StoplightAPI } from './components/API';
 import { Error } from './components/Error';
@@ -13,8 +13,11 @@ class App extends Component {
         <div>
           <Navigation />
           <Switch>
+            <Route exact path="/">
+              <Redirect to="/stoplightProject" />
+            </Route>
             <Route path="/API" component={StoplightAPI} />
-            <Route path="/" component={StoplightProjectDocs} exact />
+            <Route path="/stoplightProject" component={StoplightProjectDocs} />
             <Route component={Error} />
           </Switch>
         </div>

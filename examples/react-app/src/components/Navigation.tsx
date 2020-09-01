@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export const Navigation = () => {
   return (
     <div className="topnav">
-      <NavLink to="/">Stoplight Project</NavLink>
+      <NavLink to="/stoplightProject">Stoplight Project</NavLink>
       <NavLink to="/API">Stoplight API</NavLink>
     </div>
   );
