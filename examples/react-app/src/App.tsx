@@ -14,10 +14,10 @@ class App extends Component {
           <Navigation />
           <Switch>
             <Route exact path="/">
-              <Redirect to="/stoplightProject" />
+              <Redirect to="/stoplight-project" />
             </Route>
-            <Route path="/API" component={StoplightAPI} />
-            <Route path="/stoplightProject" component={StoplightProjectDocs} />
+            <Route path="/stoplight-api" component={StoplightAPI} />
+            <Route path="/stoplight-project" component={StoplightProjectDocs} />
             <Route component={Error} />
           </Switch>
         </div>
