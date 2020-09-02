@@ -1,3 +1,10 @@
+// Public exports
+
+export { StoplightProject } from './containers/StoplightProject';
+export { API } from './containers/API';
+
+// Ninja requirements
+
 export { Provider, IProvider } from './containers/Provider';
 export { TableOfContents, ITableOfContents } from './containers/TableOfContents';
 export { Changelog, IChangelogProps } from './components/Changelog';
