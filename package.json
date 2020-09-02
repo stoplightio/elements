@@ -34,7 +34,7 @@
     "elements-web-components": "yarn workspace @stoplight/elements-web-components",
     "elements-utils": "yarn workspace @stoplight/elements-utils",
     "build": "yarn workspace @stoplight/elements build && yarn workspace @stoplight/elements-web-components build && yarn workspace @stoplight/elements-utils build",
-    "build.docs": "yarn workspaces run build.docs",
+    "build.docs": "yarn workspace @stoplight/elements build.docs && yarn workspace @stoplight/elements-web-components build.docs",
     "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
     "release": "lerna publish --conventional-commits --yes",
     "release.docs": "yarn workspace @stoplight/elements release.docs",
