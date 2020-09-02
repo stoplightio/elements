@@ -1,13 +1,6 @@
-import { API, SchemaViewer, StoplightProject } from '@stoplight/elements';
+import { API, StoplightProject } from '@stoplight/elements';
 
 import { createElementClass } from './createElementClass';
-
-export const SchemaViewerComponentElement = createElementClass(SchemaViewer, {
-  schema: { type: 'object', defaultValue: { type: 'any' } },
-  title: { type: 'string' },
-  className: { type: 'string' },
-  description: { type: 'string' },
-});
 
 export const StoplightProjectElement = createElementClass(StoplightProject, {
   workspace: { type: 'string', defaultValue: '' },
