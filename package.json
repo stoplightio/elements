@@ -39,7 +39,7 @@
     "release": "lerna publish --conventional-commits --yes",
     "release.docs": "yarn workspace @stoplight/elements release.docs",
     "type-check": "yarn workspaces run type-check",
-    "test.prod": "yarn workspace @stoplight/elements test.prod",
+    "test.prod": "yarn workspace @stoplight/elements test.prod && yarn workspace @stoplight/elements-utils test.prod",
     "prepublishOnly": "yarn build"
   },
   "lint-staged": {

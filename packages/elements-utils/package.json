@@ -19,6 +19,7 @@
   "scripts": {
     "build": "sl-scripts build",
     "test": "jest",
+    "test.prod": "yarn test --coverage --maxWorkers=2",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
