@@ -6,9 +6,10 @@ import { get, isObject } from 'lodash';
 import * as React from 'react';
 import { useQuery } from 'urql';
 
-import { ParsedDocs, useParsedData } from '../components/Docs';
+import { ParsedDocs } from '../components/Docs';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { bundledBranchNode } from '../graphql/BranchNodeBySlug';
+import { useParsedData } from '../hooks/useParsedData';
 import { ActiveInfoContext, InlineRefResolverContext, IProvider, Provider } from './Provider';
 
 export interface IDocsProps {

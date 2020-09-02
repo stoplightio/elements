@@ -3,7 +3,7 @@ import { NodeType } from '@stoplight/types';
 import { isObject } from 'lodash';
 import * as React from 'react';
 
-import { useParsedData } from '../components/Docs';
+import { useParsedData } from './useParsedData';
 
 /**
  * Parses the branch node data and ONLY dereferences if it's an HTTP Operation
