@@ -1,17 +1,19 @@
 import { NodeType } from '@stoplight/types';
 
-export interface ITableOfContents {
-  items: TableOfContentItem[];
-}
-
-export type TableOfContentItem = Divider | Group | Item;
-
 export type NodeData = {
   name: string;
   type: NodeType;
   tags: string[];
   uri: string;
 };
+
+export interface ITableOfContents {
+  items: TableOfContentItem[];
+}
+
+export type TableOfContentItem = Divider | Group | Item;
+
+export type TocItemType = 'divider' | 'group' | 'item';
 
 export type Divider = {
   type: 'divider';
