@@ -1,7 +1,7 @@
 import { Dictionary, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
-import { useParsedValue } from '../../hooks/useParsedValue';
+import { useParsedData } from '../../hooks/useParsedData';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
@@ -54,10 +54,4 @@ export const ParsedDocs: React.FC<IParsedDocsProps> = ({ nodeType, nodeData, cla
   return <Component className={className} data={nodeData} />;
 };
 
-export function useParsedData(nodeType: string, data: unknown) {
-  const isParseable =
-    nodeType === NodeType.HttpOperation || nodeType === NodeType.HttpService || nodeType === NodeType.Model;
-  const parsedData = useParsedValue(isParseable ? data : null);
-
-  return isParseable ? parsedData : data;
-}
+export { DocsSkeleton } from './Skeleton';
