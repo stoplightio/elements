@@ -1,5 +1,6 @@
 import { NodeType } from '@stoplight/types';
-import { useParsedValue } from 'elements/src/hooks/useParsedValue';
+
+import { useParsedValue } from './useParsedValue';
 
 export function useParsedData(nodeType: string, data: unknown) {
   const isParseable =
