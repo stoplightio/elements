@@ -49,7 +49,7 @@ yarn
 
 If the above was successful, launch the example project using `yarn start`.
 
-![project launching](./src/assets/images/yarn-start-success.png)
+![project launching](https://user-images.githubusercontent.com/58433203/92106507-c7e19e80-ede4-11ea-99f6-190ab309c424.png)
 
 Now if you open your browser and navigate to http://localhost:300/ as instructed, you will see a React App that contains both Stoplight Project and Stoplight API components embedded in it.
 
@@ -59,13 +59,13 @@ Now if you open your browser and navigate to http://localhost:300/ as instructed
 
 Click on the `Stoplight Project` button in the topbar menu to see that component in action:
 
-![stoplight-project-example](./src/assets/images/stoplight-project-example.png)
+![stoplight-project-example](https://user-images.githubusercontent.com/58433203/92106502-c617db00-ede4-11ea-8331-34b65bd36391.png)
 
 #### **Stoplight API**
 
 Click on the `Stoplight API` button in the topbar menu to see that component in action:
 
-![stoplight-project-example](./src/assets/images/stoplight-api-example.png)
+![stoplight-project-example](https://user-images.githubusercontent.com/58433203/92106493-c31cea80-ede4-11ea-95fa-e786b6b00efa.png)
 
 ### **Functionalities**
 

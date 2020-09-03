@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import { StoplightAPI } from './components/API';
-import { Error } from './components/Error';
 import { Navigation } from './components/Navigation';
+import { NotFound } from './components/NotFound';
 import { StoplightProjectDocs } from './components/stoplightProject';
 
 class App extends Component {
@@ -18,7 +18,7 @@ class App extends Component {
             </Route>
             <Route path="/stoplight-api" component={StoplightAPI} />
             <Route path="/stoplight-project" component={StoplightProjectDocs} />
-            <Route component={Error} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </BrowserRouter>
