@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.133](https://github.com/stoplightio/elements/compare/v6.0.0-beta.132...v6.0.0-beta.133) (2020-09-04)
+
+
+### Bug Fixes
+
+* **deps:** [security] bump markdown-to-jsx from 6.11.0 to 6.11.4 ([#560](https://github.com/stoplightio/elements/issues/560)) ([e3c2609](https://github.com/stoplightio/elements/commit/e3c2609f7437ab66de3132e43da72f9ede55da57))
+
+
+### Features
+
+* update root export ([#557](https://github.com/stoplightio/elements/issues/557)) ([e252a31](https://github.com/stoplightio/elements/commit/e252a31649dcdc46c6f4dd8e6f19805c74a48762))
+
+
+
+
+
 # [6.0.0-beta.132](https://github.com/stoplightio/elements/compare/v6.0.0-beta.131...v6.0.0-beta.132) (2020-08-28)
 
 
