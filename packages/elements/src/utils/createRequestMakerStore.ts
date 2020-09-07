@@ -7,6 +7,11 @@ import { RequestMakerStore } from '../stores/request-maker';
 
 const RequestMakers = new Map<string, RequestMakerStore>();
 
+function isPartialOperation(value: Partial<IHttpOperation> | Partial<IHttpRequest>): value is Partial<IHttpOperation> {
+  // TODO (CL): Need a better way to determine if value is an http operation or http request
+  return has(value, 'id') || has(value, 'iid') || has(value, 'request') || has(value, 'servers');
+}
+
 export function createRequestMakerStore(
   value: Partial<IHttpOperation | IHttpRequest>,
   checkCache: boolean = false,
@@ -16,11 +21,10 @@ export function createRequestMakerStore(
   let request: Partial<IHttpRequest> | undefined;
 
   if (typeof value === 'object') {
-    // TODO (CL): Need a better way to determine if value is an http operation or http request
-    if (has(value, 'id') || has(value, 'iid') || has(value, 'request') || has(value, 'servers')) {
-      operation = value as IHttpOperation;
+    if (isPartialOperation(value)) {
+      operation = value;
     } else {
-      request = value as IHttpRequest;
+      request = value;
     }
   }
 
