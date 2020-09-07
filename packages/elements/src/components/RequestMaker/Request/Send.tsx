@@ -5,7 +5,7 @@ import copy from 'copy-to-clipboard';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 
-import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { useRequestMakerStore } from '../../../hooks/useRequestMakerStore';
 
 export interface ISendButton {
   className?: string;

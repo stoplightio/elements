@@ -4,7 +4,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
-import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { createRequestMakerStore } from '../../../utils/createRequestMakerStore';
 import { RequestEditor, RequestEndpoint, ResponseViewer } from '../../RequestMaker';
 

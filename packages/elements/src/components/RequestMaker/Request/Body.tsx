@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import * as typeis from 'type-is';
 
-import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { useRequestMakerStore } from '../../../hooks/useRequestMakerStore';
 import { createContentTypeSuggestion, SuggestionFunc } from '../../../hooks/useSuggestion';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { SuggestionBar } from '../SuggestionBar';

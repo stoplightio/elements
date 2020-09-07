@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import URI from 'urijs';
 
-import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { useRequestMakerStore } from '../../../hooks/useRequestMakerStore';
 import { highlightText } from '../../../utils/highlightText';
 import { RequestMethod } from './Method';
 import { RequestSend } from './Send';

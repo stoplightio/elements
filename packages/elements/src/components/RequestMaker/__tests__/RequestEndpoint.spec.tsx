@@ -6,7 +6,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
 import { operation } from '../__fixtures__/http';
-import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { RequestStore } from '../../../stores/request-maker/request';
 import { RequestSend } from '../Request';

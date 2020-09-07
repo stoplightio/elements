@@ -1,7 +1,7 @@
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 import * as React from 'react';
 
-import { RequestMakerProvider } from '../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../hooks/useRequestMakerStore';
 import { createRequestMakerStore } from '../../utils/createRequestMakerStore';
 import { RequestEditor, RequestEndpoint } from './Request';
 import { ResponseViewer } from './Response';

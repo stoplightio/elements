@@ -4,7 +4,7 @@ import { Button } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
-import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { ResponseViewer } from '../Response/Viewer';
 
