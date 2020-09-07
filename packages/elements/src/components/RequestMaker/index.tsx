@@ -1,7 +1,8 @@
 import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 import * as React from 'react';
 
-import { RequestMakerProvider, useRequestMaker } from '../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../hooks/useRequestMaker';
+import { createRequestMakerStore } from '../../utils/createRequestMakerStore';
 import { RequestEditor, RequestEndpoint } from './Request';
 import { ResponseViewer } from './Response';
 
@@ -19,7 +20,8 @@ type RequestMakerProps =
     };
 
 export const RequestMaker: React.FC<RequestMakerProps> = props => {
-  const store = useRequestMaker(props.request || props.operation);
+  const input = props.request || props.operation;
+  const store = React.useMemo(() => createRequestMakerStore(input), [input]);
   return (
     <RequestMakerProvider value={store}>
       <RequestEndpoint />
