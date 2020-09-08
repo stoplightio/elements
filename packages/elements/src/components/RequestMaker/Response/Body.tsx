@@ -5,7 +5,7 @@ import { isNonEmpty } from 'fp-ts/lib/Array';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 
-import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { useRequestMakerStore } from '../../../hooks/useRequestMakerStore';
 import { ErrorViewer } from './ErrorViewer';
 import { HTMLViewer } from './HTMLViewer';
 import { ImageViewer } from './ImageViewer';

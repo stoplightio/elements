@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../../constants';
-import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { useRequestMakerStore } from '../../../hooks/useRequestMakerStore';
 import { getHttpCodeColor } from '../../../utils/http';
 
 interface IResponseStatusProps {

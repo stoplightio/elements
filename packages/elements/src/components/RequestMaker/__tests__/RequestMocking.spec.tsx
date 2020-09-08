@@ -7,7 +7,7 @@ import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 
 import { operation } from '../__fixtures__/http';
-import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { formatMultiValueHeader } from '../../../utils/headers';
 import { Mocking } from '../Request/Mocking';

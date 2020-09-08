@@ -4,13 +4,14 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
-import { RequestMakerProvider, useRequestMaker } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
+import { createRequestMakerStore } from '../../../utils/createRequestMakerStore';
 import { RequestEditor, RequestEndpoint, ResponseViewer } from '../../RequestMaker';
 
 export type HttpRequestProps = IDocsComponentProps<Partial<IHttpRequest>>;
 
 const HttpRequestComponent = React.memo<HttpRequestProps>(({ data, className }) => {
-  const store = useRequestMaker(data, true);
+  const store = React.useMemo(() => createRequestMakerStore(data, true), [data]);
 
   return (
     <div className={cn('RequestMaker', className)}>

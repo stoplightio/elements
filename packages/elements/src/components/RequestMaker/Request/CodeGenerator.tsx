@@ -4,7 +4,7 @@ import copy from 'copy-to-clipboard';
 import { autorun } from 'mobx';
 import * as React from 'react';
 
-import { useRequestMakerStore } from '../../../hooks/useRequestMaker';
+import { useRequestMakerStore } from '../../../hooks/useRequestMakerStore';
 import { languages } from './httpSnippetLanguages';
 
 export interface ICodeGeneratorProps {
