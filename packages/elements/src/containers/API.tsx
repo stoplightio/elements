@@ -13,6 +13,7 @@ import { TryItHeader } from '../components/TryIt/header';
 import { withRouter } from '../hoc/withRouter';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { useTocContents } from '../hooks/useTocContents';
+import { withStyles } from '../styled';
 import { IAPI } from '../types';
 import { computeTocTree, isOas2, isOas3, isOperation, IUriMap, MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
@@ -20,7 +21,7 @@ import { computeOas3UriMap } from '../utils/oas/oas3';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
-export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkComponent }) => {
+const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkComponent }) => {
   const { pathname } = useLocation();
 
   const { data, error } = useSwr(apiDescriptionUrl, fetcher);
@@ -101,3 +102,5 @@ export const API = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCom
     </div>
   );
 });
+
+export const API = withStyles(APIImpl);
