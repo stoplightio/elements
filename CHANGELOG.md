@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.135](https://github.com/stoplightio/elements/compare/v6.0.0-beta.134...v6.0.0-beta.135) (2020-09-09)
+
+
+### Features
+
+* scope CSS ([#554](https://github.com/stoplightio/elements/issues/554)) ([d4459c5](https://github.com/stoplightio/elements/commit/d4459c5b0b48a2a0032899227c0e00bc1df96042))
+
+
+
+
+
 # [6.0.0-beta.134](https://github.com/stoplightio/elements/compare/v6.0.0-beta.133...v6.0.0-beta.134) (2020-09-08)
 
 
