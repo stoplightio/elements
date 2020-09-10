@@ -109,7 +109,7 @@ export const computeNodeData: (uriMap: IUriMap) => NodeData[] = uriMap => {
           break;
         case NodeType.Model:
           nodes.push({
-            name: last(uri.split('/')) ?? '',
+            name: node['title'] || last(uri.split('/')) || '',
             type,
             uri,
             tags: node['x-tags'],
