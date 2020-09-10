@@ -125,6 +125,7 @@ export interface ILinkComponentProps {
 
 export interface IAPI extends IRouter, ILinkComponent {
   apiDescriptionUrl: string;
+  layout?: 'sidebar' | 'stacked';
 }
 
 export interface IStoplightProject extends IRouter, ILinkComponent {

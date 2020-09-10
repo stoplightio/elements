@@ -21,4 +21,11 @@ storiesOf('components/APIComponent', module)
         <API apiDescriptionUrl={apiDescriptionUrl()} />
       </div>
     );
+  })
+  .add('APIComponent Stacked', () => {
+    return (
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
+        <API apiDescriptionUrl={apiDescriptionUrl()} layout="stacked" />
+      </div>
+    );
   });

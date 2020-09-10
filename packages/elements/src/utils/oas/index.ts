@@ -1,5 +1,6 @@
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
+import { NodeType } from '@stoplight/types';
 import { compact, get, isObject, last, uniq } from 'lodash';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
@@ -39,6 +40,14 @@ interface IComputeUriMapProps {
   map: ISourceNodeMap[];
   transformer: Oas2HttpOperationTransformer | Oas3HttpOperationTransformer;
   parentUri?: string;
+}
+
+export function getNodeType(uri: string): NodeType {
+  return MODEL_REGEXP.test(uri)
+    ? NodeType.Model
+    : OPERATION_REGEXP.test(uri)
+    ? NodeType.HttpOperation
+    : NodeType.HttpService;
 }
 
 export function computeUriMap({ document, data, map, transformer, parentUri }: IComputeUriMapProps): IUriMap {

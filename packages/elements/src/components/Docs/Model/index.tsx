@@ -10,10 +10,10 @@ import { getExamplesFromSchema } from '../HttpOperation/utils';
 
 export type ModelProps = IDocsComponentProps<JSONSchema>;
 
-const ModelComponent: React.FC<ModelProps> = ({ data, className }) => {
+const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => {
   return (
     <div className={cn('Model MarkdownViewer', className)}>
-      {data.title !== void 0 && <h1 className={Classes.HEADING}>{data.title}</h1>}
+      {!headless && data.title !== void 0 && <h1 className={Classes.HEADING}>{data.title}</h1>}
 
       <SchemaViewer schema={data} description={data.description} examples={getExamplesFromSchema(data)} maxRows={50} />
     </div>
