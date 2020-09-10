@@ -44,6 +44,7 @@
     "vis-network": "^7.5.2"
   },
   "dependencies": {
+    "@stoplight/elements-utils": "beta",
     "@stoplight/http-spec": "^3.1.1",
     "@stoplight/httpsnippet": "^1.2.1",
     "@stoplight/json": "^3.9.0",
