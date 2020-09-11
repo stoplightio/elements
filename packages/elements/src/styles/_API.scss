@@ -1,0 +1,21 @@
+.APIComponent,
+.StoplightProject {
+  .MarkdownViewer,
+  .HttpOperation,
+  .Model,
+  .PageSkeleton {
+    flex-basis: 600px;
+    max-width: 900px;
+    flex-grow: 2;
+  }
+
+  .ArticleHeadings {
+    flex-basis: 300px;
+    max-width: 600px;
+    flex-grow: 1;
+  }
+
+  .TableOfContents {
+    width: 300px;
+  }
+}

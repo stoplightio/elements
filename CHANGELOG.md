@@ -3,6 +3,137 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.136](https://github.com/stoplightio/elements/compare/v6.0.0-beta.135...v6.0.0-beta.136) (2020-09-10)
+
+
+### Features
+
+* **element-utils:** unified toc generation ([#555](https://github.com/stoplightio/elements/issues/555)) ([56521f3](https://github.com/stoplightio/elements/commit/56521f36a7ada747414d9105a213991b714ac2bb))
+
+
+
+
+
+# [6.0.0-beta.135](https://github.com/stoplightio/elements/compare/v6.0.0-beta.134...v6.0.0-beta.135) (2020-09-09)
+
+
+### Features
+
+* scope CSS ([#554](https://github.com/stoplightio/elements/issues/554)) ([d4459c5](https://github.com/stoplightio/elements/commit/d4459c5b0b48a2a0032899227c0e00bc1df96042))
+
+
+
+
+
+# [6.0.0-beta.134](https://github.com/stoplightio/elements/compare/v6.0.0-beta.133...v6.0.0-beta.134) (2020-09-08)
+
+
+### Features
+
+* **request-maker:** useRequestMaker hook -> createRequestMakerStore function ([#565](https://github.com/stoplightio/elements/issues/565)) ([dc76f69](https://github.com/stoplightio/elements/commit/dc76f69974cf2a1f565b20657b6d6358da188ff8))
+
+
+
+
+
+# [6.0.0-beta.133](https://github.com/stoplightio/elements/compare/v6.0.0-beta.132...v6.0.0-beta.133) (2020-09-04)
+
+
+### Bug Fixes
+
+* **deps:** [security] bump markdown-to-jsx from 6.11.0 to 6.11.4 ([#560](https://github.com/stoplightio/elements/issues/560)) ([e3c2609](https://github.com/stoplightio/elements/commit/e3c2609f7437ab66de3132e43da72f9ede55da57))
+
+
+### Features
+
+* update root export ([#557](https://github.com/stoplightio/elements/issues/557)) ([e252a31](https://github.com/stoplightio/elements/commit/e252a31649dcdc46c6f4dd8e6f19805c74a48762))
+
+
+
+
+
+# [6.0.0-beta.132](https://github.com/stoplightio/elements/compare/v6.0.0-beta.131...v6.0.0-beta.132) (2020-08-28)
+
+
+### Bug Fixes
+
+* publishing ([#547](https://github.com/stoplightio/elements/issues/547)) ([eecadda](https://github.com/stoplightio/elements/commit/eecadda734afa34d06e724d686ef468d32fed85b))
+
+
+### Features
+
+* Angular example ([#544](https://github.com/stoplightio/elements/issues/544)) ([4998a7a](https://github.com/stoplightio/elements/commit/4998a7aee23cd4b1cb8195dd80bb6fe579af9db4))
+
+
+
+
+
+# [6.0.0-beta.131](https://github.com/stoplightio/elements/compare/v6.0.0-beta.130...v6.0.0-beta.131) (2020-08-25)
+
+
+### Bug Fixes
+
+* **web-components:** rollback Shadow DOM but distribute CSS ([#546](https://github.com/stoplightio/elements/issues/546)) ([ab2a68d](https://github.com/stoplightio/elements/commit/ab2a68d22df9b3aa4e8343fe017aff8b9c9e2879)), closes [#528](https://github.com/stoplightio/elements/issues/528)
+
+
+
+
+
+# [6.0.0-beta.130](https://github.com/stoplightio/elements/compare/v6.0.0-beta.129...v6.0.0-beta.130) (2020-08-25)
+
+
+### Features
+
+* api container ([#530](https://github.com/stoplightio/elements/issues/530)) ([d326327](https://github.com/stoplightio/elements/commit/d3263275c2802fe6d717a4f903867ccc5263960d))
+
+
+
+
+
+# [6.0.0-beta.129](https://github.com/stoplightio/elements/compare/v6.0.0-beta.128...v6.0.0-beta.129) (2020-08-21)
+
+
+### Features
+
+* **web-components:** use Shadow DOM to include CSS into the bundle ([#528](https://github.com/stoplightio/elements/issues/528)) ([086d568](https://github.com/stoplightio/elements/commit/086d5681948bb91839ba90f4ed3f4bb33431300a))
+
+
+
+
+
+# [6.0.0-beta.128](https://github.com/stoplightio/elements/compare/v6.0.0-beta.127...v6.0.0-beta.128) (2020-08-21)
+
+
+### Bug Fixes
+
+* remove cycles before running openapi-sampler ([#543](https://github.com/stoplightio/elements/issues/543)) ([747e6ae](https://github.com/stoplightio/elements/commit/747e6ae0bc68fb623e375d060d45da4ae8104ab0))
+
+
+
+
+
+# [6.0.0-beta.127](https://github.com/stoplightio/elements/compare/v6.0.0-beta.126...v6.0.0-beta.127) (2020-08-20)
+
+
+### Features
+
+* stoplight project container ([#529](https://github.com/stoplightio/elements/issues/529)) ([07d0444](https://github.com/stoplightio/elements/commit/07d0444ec3844ba305e8512ced90454b035eaeb3)), closes [#539](https://github.com/stoplightio/elements/issues/539)
+
+
+
+
+
+# [6.0.0-beta.126](https://github.com/stoplightio/elements/compare/v6.0.0-beta.125...v6.0.0-beta.126) (2020-08-20)
+
+
+### Bug Fixes
+
+* request id as well for projectTableOfContent ([#545](https://github.com/stoplightio/elements/issues/545)) ([0fbbe21](https://github.com/stoplightio/elements/commit/0fbbe213a430537d3f0cc261db2a109accbee39f))
+
+
+
+
+
 # [6.0.0-beta.125](https://github.com/stoplightio/elements/compare/v6.0.0-beta.124...v6.0.0-beta.125) (2020-08-13)
 
 

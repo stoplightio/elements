@@ -5,7 +5,7 @@ import { CodeEditor } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
-import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { RequestBody } from '../Request/Body';
 import { RequestParameters } from '../Request/Parameters';

@@ -1,7 +1,7 @@
 {
   "name": "@stoplight/elements-web-components",
-  "version": "6.0.0-beta.123",
-  "main": "dist/bundle.js",
+  "version": "6.0.0-beta.133",
+  "main": "dist/elements.min.js",
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",
   "author": "Stoplight <support@stoplight.io>",
@@ -11,7 +11,7 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack && cp ../elements/dist/styles/elements.min.css ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "storybook": "start-storybook",
     "type-check": "tsc --noEmit"
@@ -19,7 +19,7 @@
   "dependencies": {},
   "devDependencies": {
     "@stoplight/elements": "beta",
-    "@stoplight/json": "^3.8.6",
+    "@stoplight/json": "^3.9.0",
     "@stoplight/types": "^11.9.0",
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/addon-storysource": "^5.3.19",

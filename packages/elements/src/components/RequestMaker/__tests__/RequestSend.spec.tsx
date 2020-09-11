@@ -9,7 +9,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 
-import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { RequestSend } from '../Request/Send';
 

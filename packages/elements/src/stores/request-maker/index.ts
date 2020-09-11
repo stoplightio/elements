@@ -31,12 +31,18 @@ export interface IRequestMakerStoreOptions {
   mockUrl?: string;
 }
 
+export type OnRequestSent = (configs: { mockingEnabled: boolean }) => void;
+export type OnResponseReceived = (configs: { mockingEnabled: boolean; responseStatus: number }) => void;
+
 export class RequestMakerStore {
   @observable.ref
   public cancelToken?: CancelTokenSource;
 
   @observable
   public isSending = false;
+
+  public onResponseReceived: OnResponseReceived = () => {};
+  public onRequestSent: OnRequestSent = () => {};
 
   @observable.ref
   public request = new RequestStore();
@@ -94,6 +100,7 @@ export class RequestMakerStore {
     // DEPRECATED
     return this._originalOperation;
   }
+
   public set operation(operation) {
     // DEPRECATED
     if (operation) {
@@ -281,6 +288,12 @@ export class RequestMakerStore {
 
     this.isSending = true;
 
+    try {
+      this.onRequestSent({
+        mockingEnabled: true,
+      });
+    } catch (ignore) {}
+
     const time = Date.now();
 
     let store: ResponseStore;
@@ -291,6 +304,13 @@ export class RequestMakerStore {
     } catch (err) {
       store = ResponseStore.fromError(err);
     }
+
+    try {
+      this.onResponseReceived({
+        mockingEnabled: true,
+        responseStatus: store.statusCode,
+      });
+    } catch (ignore) {}
 
     store.responseTime = Date.now() - time;
     store.originalRequest = this.request.toPartialHttpRequest();
@@ -311,6 +331,12 @@ export class RequestMakerStore {
     }
 
     this.cancelToken = axios.CancelToken.source();
+
+    try {
+      this.onRequestSent({
+        mockingEnabled: false,
+      });
+    } catch (ignore) {}
 
     const time = Date.now();
 
@@ -335,6 +361,13 @@ export class RequestMakerStore {
         store = ResponseStore.fromError(err);
       }
     }
+
+    try {
+      this.onResponseReceived({
+        mockingEnabled: false,
+        responseStatus: store.statusCode,
+      });
+    } catch (ignore) {}
 
     store.responseTime = Date.now() - time;
     store.originalRequest = this.request.toPartialHttpRequest();
