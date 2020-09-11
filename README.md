@@ -6,7 +6,7 @@ UI components for composing beautiful developer documentation
 
 ## Docs
 
-**[View the docs here](https://meta.stoplight.io/elements)**
+**[View the docs here](https://meta.stoplight.io/docs/elements)**
 
 
 ## Packages
