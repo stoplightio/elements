@@ -1,5 +1,4 @@
-import { text, withKnobs } from '@storybook/addon-knobs';
-import { boolean } from '@storybook/addon-knobs/react';
+import { boolean, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
