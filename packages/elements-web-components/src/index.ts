@@ -1,4 +1,4 @@
 import { ApiElement, StoplightProjectElement } from './components';
 
-window.customElements.define('stoplight-project', StoplightProjectElement);
-window.customElements.define('stoplight-api', ApiElement);
+window.customElements.define('elements-stoplight-project', StoplightProjectElement);
+window.customElements.define('elements-api', ApiElement);
