@@ -1,2 +1,2 @@
-export { generateToC, injectHttpOperationsAndModels } from './toc/toc';
+export { generateToC, injectHttpOperationsAndModels } from './toc';
 export * from './toc/types';
