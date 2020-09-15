@@ -10,7 +10,7 @@ import { useParsedData } from './useParsedData';
  * @param type branch node snapshot type
  * @param data branch node snapshot data
  */
-export function useDereferencedData(type: NodeType, data: string) {
+export function useDereferencedData(type: NodeType, data: unknown) {
   const parsedData = useParsedData(type, data);
 
   const [dereferencedData, setDereferencedData] = React.useState(parsedData);
