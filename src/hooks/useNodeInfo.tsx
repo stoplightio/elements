@@ -11,7 +11,7 @@ export function useNodeInfo(srn: string, opts: { group?: string; version?: strin
   const fetch = useFetchClient();
   const projectToken = React.useContext(ProjectTokenContext);
 
-  const queryParams = [`srn=${srn}&deref=bundle`];
+  const queryParams = [`srn=${encodeURI(decodeURI(srn))}&deref=bundle`];
   if (opts.version) {
     queryParams.push(`version=${opts.version}`);
   }
