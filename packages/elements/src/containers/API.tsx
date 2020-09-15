@@ -10,7 +10,7 @@ import { Row } from '../components/TableOfContents/Row';
 import { TryIt } from '../components/TryIt';
 import { TryItHeader } from '../components/TryIt/header';
 import { withRouter } from '../hoc/withRouter';
-import { useParsedValue } from '../hooks/useParsedValue';
+import { useBundledData } from '../hooks/useBundledData';
 import { useTocContents } from '../hooks/useTocContents';
 import { withStyles } from '../styled';
 import { IAPI } from '../types';
@@ -32,7 +32,7 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCompon
     }
   }, [error]);
 
-  const document = useParsedValue(data);
+  const document = useBundledData(NodeType.Model, data);
   const showTryIt = isOperation(pathname);
 
   const uriMap = React.useMemo(() => {
