@@ -83,6 +83,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [tabId, setTabId] = React.useState<PanelTabId>('docs');
   const color = HttpMethodColors[type] || 'gray';
+  const showTabs = nodeType === NodeType.HttpOperation;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -99,15 +100,24 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
         <div className="flex-1 font-medium break-all">{title}</div>
       </h2>
       <Collapse isOpen={isExpanded} keepChildrenMounted>
-        <Tabs
-          className="PreviewTabs mx-auto max-w-6xl mb-6"
-          selectedTabId={tabId}
-          onChange={(tabId: PanelTabId) => setTabId(tabId)}
-          renderActiveTabPanelOnly
-        >
-          <Tab id="docs" title="Docs" className="pt-10" panel={<Docs nodeType={nodeType} nodeData={data} headless />} />
-          <Tab id="tryit" title="Try It" className="pt-10" panel={<TryIt nodeType={nodeType} nodeData={data} />} />
-        </Tabs>
+        {showTabs ? (
+          <Tabs
+            className="PreviewTabs mx-auto max-w-6xl mb-6"
+            selectedTabId={tabId}
+            onChange={(tabId: PanelTabId) => setTabId(tabId)}
+            renderActiveTabPanelOnly
+          >
+            <Tab
+              id="docs"
+              title="Docs"
+              className="pt-10"
+              panel={<Docs nodeType={nodeType} nodeData={data} headless />}
+            />
+            <Tab id="tryit" title="Try It" className="pt-10" panel={<TryIt nodeType={nodeType} nodeData={data} />} />
+          </Tabs>
+        ) : (
+          <Docs className="mx-auto max-w-6xl pt-10" nodeType={nodeType} nodeData={data} headless />
+        )}
       </Collapse>
     </div>
   );
