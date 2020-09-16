@@ -7,14 +7,22 @@ import { Row } from '../components/TableOfContents/Row';
 import { withRouter } from '../hoc/withRouter';
 import { useUrqlClient } from '../hooks/useUrqlClient';
 import { withStyles } from '../styled';
-import { IStoplightProject, ITableOfContentsTree, Item, TableOfContentItem } from '../types';
+import { ITableOfContentsTree, Item, LinkComponentType, RoutingProps, TableOfContentItem } from '../types';
 import { isOperation } from '../utils/oas';
 import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
 import { TryItProvider } from './TryIt';
 
-const StoplightProjectImpl = withRouter<IStoplightProject>(
+export interface StoplightProjectProps extends RoutingProps {
+  workspace: string;
+  project: string;
+  branch?: string;
+  authToken?: string;
+  linkComponent?: LinkComponentType;
+}
+
+const StoplightProjectImpl = withRouter<StoplightProjectProps>(
   ({ workspace, project, branch, linkComponent: LinkComponent, authToken }) => {
     const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
