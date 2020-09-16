@@ -1,3 +1,4 @@
+import { generateToC } from '@stoplight/elements-utils';
 import { FAIcon, NonIdealState, TableOfContents } from '@stoplight/ui-kit';
 import axios from 'axios';
 import * as React from 'react';
@@ -15,7 +16,7 @@ import { useParsedValue } from '../hooks/useParsedValue';
 import { useTocContents } from '../hooks/useTocContents';
 import { withStyles } from '../styled';
 import { IAPI } from '../types';
-import { computeTocTree, getNodeType, isOas2, isOas3, isOperation, IUriMap } from '../utils/oas';
+import { computeNodeData, getNodeType, isOas2, isOas3, isOperation, IUriMap } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
 
@@ -49,7 +50,9 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCompon
     return map;
   }, [document]);
 
-  const tree = computeTocTree(uriMap);
+  const nodes = computeNodeData(uriMap);
+  const tree = generateToC(nodes);
+
   const contents = useTocContents(tree).map(item => ({
     ...item,
     isActive: item.to === pathname,
