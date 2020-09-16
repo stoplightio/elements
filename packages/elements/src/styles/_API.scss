@@ -19,3 +19,24 @@
     width: 300px;
   }
 }
+
+.PreviewTabs {
+  > .bp3-tab-list {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    @extend .border-editor;
+    @extend .px-8;
+
+    > .bp3-tab {
+      @extend .px-1;
+      @extend .py-3;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  > .bp3-tab-panel {
+    margin-top: 0;
+  }
+}
