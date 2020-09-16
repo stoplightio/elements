@@ -5,8 +5,8 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import useSwr from 'swr';
 
+import { SidebarLayout } from '../components/API/SidebarLayout';
 import { StackedLayout } from '../components/API/StackedLayout';
-import { TraditionalLayout } from '../components/API/TraditionalLayout';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { withRouter } from '../hoc/withRouter';
 import { useParsedValue } from '../hooks/useParsedValue';
@@ -70,7 +70,7 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent, layout }) 
       {layout === 'stacked' ? (
         <StackedLayout uriMap={uriMap} tree={tree} />
       ) : (
-        <TraditionalLayout pathname={pathname} uriMap={uriMap} tree={tree} linkComponent={linkComponent} />
+        <SidebarLayout pathname={pathname} uriMap={uriMap} tree={tree} linkComponent={linkComponent} />
       )}
     </div>
   );

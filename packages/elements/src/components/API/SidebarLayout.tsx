@@ -9,14 +9,14 @@ import { Row } from '../TableOfContents/Row';
 import { TryIt } from '../TryIt';
 import { TryItHeader } from '../TryIt/header';
 
-type TraditionalLayoutProps = {
+type SidebarLayoutProps = {
   pathname: string;
   uriMap: IUriMap;
   tree: ITableOfContentsTree;
   linkComponent?: React.ComponentType<ILinkComponentProps>;
 };
 
-export const TraditionalLayout: React.FC<TraditionalLayoutProps> = ({
+export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
   pathname,
   tree,
   uriMap,
