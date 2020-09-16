@@ -1,6 +1,5 @@
-import $RefParser, { ResolverOptions } from '@stoplight/json-schema-ref-parser';
+import $RefParser from '@stoplight/json-schema-ref-parser';
 import { NodeType } from '@stoplight/types';
-import axios from 'axios';
 import { isObject } from 'lodash';
 import * as React from 'react';
 
@@ -27,29 +26,8 @@ export function useDereferencedData(type: NodeType, data: unknown, options?: Opt
       setDereferencedData(parsedData);
       return;
     }
-    let fileResolver: ResolverOptions | undefined;
-    if (options?.baseUrl) {
-      fileResolver = {
-        order: 202,
-        canRead: true,
 
-        async read(file) {
-          const fullPath = new URL(file.url, options.baseUrl);
-          console.log(fullPath.toString());
-          const response = await axios.get(fullPath.toString(), { responseType: 'arraybuffer' });
-          console.log(response);
-          return response.data;
-        },
-      };
-    } else {
-      fileResolver = undefined;
-    }
-
-    $RefParser
-      .dereference(parsedData, {
-        continueOnError: true,
-        resolve: fileResolver ? { file: fileResolver } : {},
-      })
+    doDereference(parsedData, options?.baseUrl)
       .then(res => setDereferencedData(res))
       .catch(reason => {
         console.error(`Could not dereference operation: ${reason.message}`);
@@ -60,3 +38,12 @@ export function useDereferencedData(type: NodeType, data: unknown, options?: Opt
 
   return dereferencedData;
 }
+
+const commonDereferenceOptions = { continueOnError: true };
+const doDereference = (data: object, baseUrl?: string) => {
+  if (!baseUrl) {
+    return $RefParser.dereference(data, commonDereferenceOptions);
+  } else {
+    return $RefParser.dereference(baseUrl, data, commonDereferenceOptions);
+  }
+};
