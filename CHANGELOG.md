@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.140](https://github.com/stoplightio/elements/compare/v6.0.0-beta.139...v6.0.0-beta.140) (2020-09-16)
+
+
+### Features
+
+* **elements:** use elements-utils for tree generation ([#568](https://github.com/stoplightio/elements/issues/568)) ([e4581d8](https://github.com/stoplightio/elements/commit/e4581d8181a8280f1fb9e8bad9ed5d74010cc081))
+
+
+
+
+
 # [6.0.0-beta.139](https://github.com/stoplightio/elements/compare/v6.0.0-beta.138...v6.0.0-beta.139) (2020-09-16)
 
 
