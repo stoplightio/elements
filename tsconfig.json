@@ -4,6 +4,7 @@
     "esModuleInterop": true,
     "baseUrl": "./packages",
     "paths": {
+      "@stoplight/elements-utils": ["./elements-utils/src"],
       "@stoplight/elements": ["./elements/src"]
     }
   }

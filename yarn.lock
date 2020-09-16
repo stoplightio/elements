@@ -3692,6 +3692,13 @@
   dependencies:
     type-detect "4.0.8"
 
+"@stoplight/elements-utils@beta":
+  version "6.0.0-beta.136"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements-utils/-/elements-utils-6.0.0-beta.136.tgz#cddc48ad906e7d2fa657013566e8c361ba55d823"
+  integrity sha512-zXDLxQyFHeS4bZUfr4ZGvObz4QB99zB+BUGUnMiwGRlsN+sEL5Y3p2gIUH1yP4B12TKEzvUbha3ZidsBLPtRlQ==
+  dependencies:
+    lodash "^4.17.19"
+
 "@stoplight/elements@beta":
   version "6.0.0-beta.122"
   resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-6.0.0-beta.122.tgz#e9599f51cd101ed4abf7e17bbae709672b52fbb9"

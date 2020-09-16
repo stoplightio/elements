@@ -1,13 +1,12 @@
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   entry: './src/index.ts',
   resolve: {
-    alias: {
-      '@stoplight/elements': path.resolve(__dirname, '../elements/src'),
-    },
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    plugins: [new TsconfigPathsPlugin()],
   },
   output: {
     filename: 'elements.min.js',
