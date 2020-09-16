@@ -9,7 +9,7 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "files": [
     "**/*"
   ],
