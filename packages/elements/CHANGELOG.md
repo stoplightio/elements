@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.135](https://github.com/stoplightio/elements/compare/v6.0.0-beta.134...v6.0.0-beta.135) (2020-09-09)
+
+
+### Features
+
+* scope CSS ([#554](https://github.com/stoplightio/elements/issues/554)) ([d4459c5](https://github.com/stoplightio/elements/commit/d4459c5b0b48a2a0032899227c0e00bc1df96042))
+
+
+
+
+
+# [6.0.0-beta.134](https://github.com/stoplightio/elements/compare/v6.0.0-beta.133...v6.0.0-beta.134) (2020-09-08)
+
+
+### Features
+
+* **request-maker:** useRequestMaker hook -> createRequestMakerStore function ([#565](https://github.com/stoplightio/elements/issues/565)) ([dc76f69](https://github.com/stoplightio/elements/commit/dc76f69974cf2a1f565b20657b6d6358da188ff8))
+
+
+
+
+
 # [6.0.0-beta.133](https://github.com/stoplightio/elements/compare/v6.0.0-beta.132...v6.0.0-beta.133) (2020-09-04)
 
 

@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.138](https://github.com/stoplightio/elements/compare/v6.0.0-beta.137...v6.0.0-beta.138) (2020-09-14)
+
+
+### Bug Fixes
+
+* **elements-utils:** export functions ([#574](https://github.com/stoplightio/elements/issues/574)) ([61024d6](https://github.com/stoplightio/elements/commit/61024d65edb5e0eee7306653050935a5e3a41c78))
+
+
+
+
+
+# [6.0.0-beta.137](https://github.com/stoplightio/elements/compare/v6.0.0-beta.136...v6.0.0-beta.137) (2020-09-11)
+
+
+### Bug Fixes
+
+* **web-components:** everything is a dev-dep ([#534](https://github.com/stoplightio/elements/issues/534)) ([6438f05](https://github.com/stoplightio/elements/commit/6438f054588c98231175060dc3e541f9a9f46917))
+
+
+
+
+
+# [6.0.0-beta.136](https://github.com/stoplightio/elements/compare/v6.0.0-beta.135...v6.0.0-beta.136) (2020-09-10)
+
+
+### Features
+
+* **element-utils:** unified toc generation ([#555](https://github.com/stoplightio/elements/issues/555)) ([56521f3](https://github.com/stoplightio/elements/commit/56521f36a7ada747414d9105a213991b714ac2bb))
+
+
+
+
+
+# [6.0.0-beta.135](https://github.com/stoplightio/elements/compare/v6.0.0-beta.134...v6.0.0-beta.135) (2020-09-09)
+
+
+### Features
+
+* scope CSS ([#554](https://github.com/stoplightio/elements/issues/554)) ([d4459c5](https://github.com/stoplightio/elements/commit/d4459c5b0b48a2a0032899227c0e00bc1df96042))
+
+
+
+
+
+# [6.0.0-beta.134](https://github.com/stoplightio/elements/compare/v6.0.0-beta.133...v6.0.0-beta.134) (2020-09-08)
+
+
+### Features
+
+* **request-maker:** useRequestMaker hook -> createRequestMakerStore function ([#565](https://github.com/stoplightio/elements/issues/565)) ([dc76f69](https://github.com/stoplightio/elements/commit/dc76f69974cf2a1f565b20657b6d6358da188ff8))
+
+
+
+
+
 # [6.0.0-beta.133](https://github.com/stoplightio/elements/compare/v6.0.0-beta.132...v6.0.0-beta.133) (2020-09-04)
 
 

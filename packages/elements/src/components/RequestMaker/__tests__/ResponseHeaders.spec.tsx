@@ -4,7 +4,7 @@ import { IPrismDiagnostic } from '@stoplight/prism-core';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
-import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { ResponseStore } from '../../../stores/request-maker/response';
 import { ResponseHeaders } from '../Response/Headers';

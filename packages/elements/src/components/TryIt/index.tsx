@@ -3,8 +3,8 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { useParsedValue } from '../../hooks/useParsedValue';
-import { useRequestMaker } from '../../hooks/useRequestMaker';
 import { OnRequestSent, OnResponseReceived } from '../../stores/request-maker';
+import { createRequestMakerStore } from '../../utils/createRequestMakerStore';
 import { isHttpOperation } from '../../utils/guards';
 import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '../RequestMaker';
 
@@ -26,7 +26,7 @@ const TryItComponent = React.memo<ITryItProps>(
       operation = data;
     }
 
-    const store = useRequestMaker(operation, true, mockUrl);
+    const store = React.useMemo(() => createRequestMakerStore(operation, true, mockUrl), [operation, mockUrl]);
 
     if (onRequestSent) {
       store.onRequestSent = onRequestSent;

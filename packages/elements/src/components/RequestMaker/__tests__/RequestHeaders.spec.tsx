@@ -3,7 +3,7 @@ import 'jest-enzyme';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
-import { RequestMakerProvider } from '../../../hooks/useRequestMaker';
+import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { HeaderParam } from '../../../stores/request-maker/types';
 import { RequestHeaders } from '../Request/Headers';
