@@ -25,11 +25,11 @@
     border-bottom-style: solid;
     border-bottom-width: 1px;
     @extend .border-editor;
-    @extend .px-8;
+    @extend .px-5;
 
     > .bp3-tab {
-      @extend .px-1;
-      @extend .py-3;
+      @extend .px-2;
+      @extend .py-2;
       &:focus {
         outline: none;
       }

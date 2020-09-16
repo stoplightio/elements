@@ -1,28 +1,24 @@
 import { generateToC } from '@stoplight/elements-utils';
-import { FAIcon, NonIdealState, TableOfContents } from '@stoplight/ui-kit';
+import { FAIcon, NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import useSwr from 'swr';
 
-import { Docs } from '../components/Docs';
+import { StackedLayout } from '../components/API/StackedLayout';
+import { TraditionalLayout } from '../components/API/TraditionalLayout';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
-import { StackLayout } from '../components/Stack';
-import { Row } from '../components/TableOfContents/Row';
-import { TryIt } from '../components/TryIt';
-import { TryItHeader } from '../components/TryIt/header';
 import { withRouter } from '../hoc/withRouter';
 import { useParsedValue } from '../hooks/useParsedValue';
-import { useTocContents } from '../hooks/useTocContents';
 import { withStyles } from '../styled';
 import { IAPI } from '../types';
-import { computeNodeData, getNodeType, isOas2, isOas3, isOperation, IUriMap } from '../utils/oas';
+import { computeNodeData, isOas2, isOas3, IUriMap } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
-const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkComponent, layout }) => {
+const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent, layout }) => {
   const { pathname } = useLocation();
 
   const { data, error } = useSwr(apiDescriptionUrl, fetcher);
@@ -34,7 +30,6 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCompon
   }, [error]);
 
   const document = useParsedValue(data);
-  const showTryIt = isOperation(pathname);
 
   const uriMap = React.useMemo(() => {
     let map: IUriMap = {};
@@ -52,14 +47,6 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCompon
 
   const nodes = computeNodeData(uriMap);
   const tree = generateToC(nodes);
-
-  const contents = useTocContents(tree).map(item => ({
-    ...item,
-    isActive: item.to === pathname,
-    isSelected: item.to === pathname,
-  }));
-
-  const nodeType = getNodeType(pathname);
   const nodeData = uriMap[pathname] || uriMap['/'];
 
   if (error) {
@@ -81,28 +68,9 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCompon
   return (
     <div className="APIComponent flex flex-row">
       {layout === 'stacked' ? (
-        <StackLayout uriMap={uriMap} tree={tree} />
+        <StackedLayout uriMap={uriMap} tree={tree} />
       ) : (
-        <>
-          <TableOfContents
-            contents={contents}
-            rowComponent={Row}
-            rowComponentExtraProps={{ pathname, linkComponent: LinkComponent }}
-          />
-          <div className="flex-grow p-5">
-            <div className="flex">
-              <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
-              {showTryIt && (
-                <div className="w-2/5 border-l relative">
-                  <div className="absolute inset-0 overflow-auto px-10">
-                    <TryItHeader />
-                    <TryIt nodeType={nodeType} nodeData={nodeData} />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </>
+        <TraditionalLayout pathname={pathname} uriMap={uriMap} tree={tree} linkComponent={linkComponent} />
       )}
     </div>
   );

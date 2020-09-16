@@ -9,7 +9,7 @@ import { getNodeType, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { TryIt } from '../TryIt';
 
-type StackLayoutProps = {
+type StackedLayoutProps = {
   uriMap: IUriMap;
   tree: ITableOfContentsTree;
 };
@@ -21,11 +21,11 @@ type ItemRowProps = {
   title: string;
 };
 
-export const StackLayout: React.FC<StackLayoutProps> = ({ uriMap, tree }) => {
+export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) => {
   const groups = tree.items.filter(item => item.type === 'group') as GroupItem[];
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col m-auto max-w-4xl">
       <div className="w-full border-b dark:border-gray-6">
         <Docs className="mx-auto" nodeData={uriMap['/']} nodeType={NodeType.HttpService} />
       </div>
@@ -42,18 +42,16 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
   return (
-    <div className="mt-6">
+    <div>
       <div
         onClick={onClick}
-        className="mx-auto max-w-6xl flex justify-between border-b dark:border-gray-6 text-gray-5 dark:text-gray-5 hover:text-gray-6 pb-3 cursor-pointer"
+        className="mx-auto flex justify-between items-center border-b dark:border-gray-6 text-gray-7 dark:text-gray-7 hover:text-gray-6 px-2 py-4 cursor-pointer"
       >
-        <h1 className="flex items-center">
-          <Icon className="mr-2" icon="tag" iconSize={14} />
-          <span className="text-lg">{group.title}</span>
-        </h1>
+        <div className="text-lg font-medium">{group.title}</div>
         <Icon className="mr-2" icon={isExpanded ? 'chevron-down' : 'chevron-right'} iconSize={14} />
       </div>
-      <Collapse className="mt-6" isOpen={isExpanded} keepChildrenMounted>
+
+      <Collapse isOpen={isExpanded}>
         {group.items
           .filter(item => item.type === 'item')
           .sort(sortNodes)
@@ -88,35 +86,41 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
   return (
-    <div className="w-full">
-      <h2
+    <div
+      className={cn('w-full my-2 border border-transparent hover:border-gray-2 hover:bg-darken-1', {
+        'border-gray-2 bg-darken-1': isExpanded,
+      })}
+    >
+      <div
         onClick={onClick}
-        className="mx-auto max-w-6xl flex items-center text-gray-5 dark:text-gray-3 hover:text-gray-6  mt-10 cursor-pointer"
+        className="mx-auto flex items-center text-gray-7 dark:text-gray-3 hover:text-gray-8 p-2 cursor-pointer text-lg"
       >
-        <div className={cn(`uppercase mr-5 font-semibold border rounded px-2`, `text-${color}`, `border-${color}`)}>
+        <div
+          className={cn(
+            `uppercase mr-5 font-semibold border rounded px-2 bg-white`,
+            `text-${color}`,
+            `border-${color}`,
+          )}
+        >
           {type || 'UNKNOWN'}
         </div>
 
         <div className="flex-1 font-medium break-all">{title}</div>
-      </h2>
+      </div>
+
       <Collapse isOpen={isExpanded} keepChildrenMounted>
         {showTabs ? (
           <Tabs
-            className="PreviewTabs mx-auto max-w-6xl mb-6"
+            className="PreviewTabs mx-auto"
             selectedTabId={tabId}
             onChange={(tabId: PanelTabId) => setTabId(tabId)}
             renderActiveTabPanelOnly
           >
-            <Tab
-              id="docs"
-              title="Docs"
-              className="pt-10"
-              panel={<Docs nodeType={nodeType} nodeData={data} headless />}
-            />
-            <Tab id="tryit" title="Try It" className="pt-10" panel={<TryIt nodeType={nodeType} nodeData={data} />} />
+            <Tab id="docs" title="Docs" className="p-4" panel={<Docs nodeType={nodeType} nodeData={data} headless />} />
+            <Tab id="tryit" title="Try It" className="p-4" panel={<TryIt nodeType={nodeType} nodeData={data} />} />
           </Tabs>
         ) : (
-          <Docs className="mx-auto max-w-6xl pt-10" nodeType={nodeType} nodeData={data} headless />
+          <Docs className="mx-auto p-4" nodeType={nodeType} nodeData={data} headless />
         )}
       </Collapse>
     </div>
