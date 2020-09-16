@@ -97,7 +97,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
       >
         <div
           className={cn(
-            `uppercase mr-5 font-semibold border rounded px-2 bg-white`,
+            `w-24 uppercase mr-5 text-center text-base font-semibold border rounded px-2 bg-white`,
             `text-${color}`,
             `border-${color}`,
           )}
