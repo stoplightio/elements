@@ -63,7 +63,7 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCompon
     ? NodeType.HttpOperation
     : NodeType.HttpService;
   const nodeData = uriMap[pathname] || uriMap['/'];
-  const dereferencedNodeData = useDereferencedData(nodeType, nodeData);
+  const dereferencedNodeData = useDereferencedData(nodeType, nodeData, { baseUrl: apiDescriptionUrl });
 
   if (error) {
     return (
