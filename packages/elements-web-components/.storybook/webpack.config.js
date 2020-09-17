@@ -13,9 +13,6 @@ const pkg = require.resolve(path.join(cwd, 'package.json'), {
 module.exports = ({ config }) => {
   config.context = cwd;
   config.mode = 'development';
-  config.resolve.alias['@project/stories'] = require.resolve(path.join(cwd, 'src', '__stories__', 'index.ts'), {
-    paths: [cwd],
-  });
   config.resolve.plugins = [new TsconfigPathsPlugin()];
 
   config.node = {

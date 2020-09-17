@@ -1,5 +1,6 @@
 import type { Dictionary, NodeType } from '@stoplight/types';
 import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
+import * as React from 'react';
 
 export interface INodeFilter {
   nodeUri?: string;
@@ -110,27 +111,14 @@ export type Item = {
   uri: string;
 };
 
-export interface IRouter {
+export interface RoutingProps {
   basePath?: string;
   router?: 'history' | 'hash' | 'memory';
 }
-export interface ILinkComponent {
-  linkComponent?: React.ComponentType<ILinkComponentProps>;
-}
+
+export type LinkComponentType = React.ComponentType<ILinkComponentProps>;
 
 export interface ILinkComponentProps {
   data?: Dictionary<unknown>;
   url: string;
-}
-
-export interface IAPI extends IRouter, ILinkComponent {
-  apiDescriptionUrl: string;
-  layout?: 'sidebar' | 'stacked';
-}
-
-export interface IStoplightProject extends IRouter, ILinkComponent {
-  workspace: string;
-  project: string;
-  branch?: string;
-  authToken?: string;
 }
