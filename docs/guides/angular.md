@@ -60,10 +60,10 @@ This should generate an `api-reference` folder with a few files. In the `api-ref
 title: api-reference.component.html
 -->
 ```html
-<stoplight-api
+<elements-api
   apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
   basePath="/api-reference"
-></stoplight-api>
+></elements-api>
 ```
 
 Noticed we added a `basePath` to our API component? We'll also want to add a route for the `/api-reference` path in our `app-routing.module.ts` file. It's important that we also add a catch-all route `**`, so we can deep link to paths in our API reference docs.

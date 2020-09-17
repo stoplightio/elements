@@ -23,13 +23,13 @@ Then place one of the Elements components within the `<body>`.
 The [API component](https://meta.stoplight.io/docs/elements/components/API.md) displays API reference documentation for any OpenAPI v2 or v3 document.
 
 ```html
-<stoplight-api apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"></stoplight-api>
+<elements-api apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"></elements-api>
 ```
 
 The [Stoplight Project component](https://meta.stoplight.io/docs/elements/components/StoplightProject.md) displays the generated documentation for any Stoplight project.
 
 ```html
-<stoplight-project workspace="https://elements.stoplight.io" project="studio-demo"></stoplight-project>
+<elements-stoplight-project workspace="https://elements.stoplight.io" project="studio-demo"></elements-stoplight-project>
 ```
 
 ## Examples

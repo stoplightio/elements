@@ -14,7 +14,7 @@ The API component displays API reference documentation for any OpenAPI v2 or v3 
 import { API } from "@stoplight/elements";
 
 <API
-  apiDescriptionUrl="https://elements.stoplight.io/api/v1/projects/elements/studio-demo/nodes/reference/todos/openapi.v1.json?deref=bundle"
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
   layout="traditional"
   router="history"
 />
@@ -23,8 +23,8 @@ import { API } from "@stoplight/elements";
 <!-- title: Web Component -->
 
 ```html
-<stoplight-api
-  apiDescriptionUrl="https://elements.stoplight.io/api/v1/projects/elements/studio-demo/nodes/reference/todos/openapi.v1.json?deref=bundle"
+<elements-api
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
   layout="stacked"
   router="hash"
 />
@@ -48,7 +48,7 @@ import { API } from "@stoplight/elements";
       <td>apiDescriptionUrl</td>
       <td>string</td>
       <td></td>
-      <td><a href="https://elements.stoplight.io/api/v1/projects/elements/studio-demo/nodes/reference/todos/openapi.v1.json?deref=bundle">https://elements.stoplight.io/api/...</a></td>
+      <td><a href="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml">https://raw.githubusercontent.com/...</a></td>
       <td>URL where your OpenAPI document can be retrieved.</td>
       <td>[x]</td>
     </tr>

@@ -24,7 +24,7 @@ import { StoplightProject } from "@stoplight/elements";
 <!-- title: Web Component -->
 
 ```html
-<stoplight-project
+<elements-stoplight-project
   workspace="https://meta.stoplight.io"
   project="elements"
   branch="main"
