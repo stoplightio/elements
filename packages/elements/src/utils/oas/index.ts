@@ -1,10 +1,11 @@
+import { NodeData } from '@stoplight/elements-utils';
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
-import { compact, get, isObject, last, uniq } from 'lodash';
+import { NodeType } from '@stoplight/types';
+import { get, isObject, last, map } from 'lodash';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
-import { ITableOfContentsTree, TableOfContentItem } from '../../types';
 import { ISourceNodeMap, NodeTypes } from './types';
 
 export const isOas2 = (parsed: unknown) =>
@@ -22,15 +23,8 @@ export const isOperation = (uri: string) => OPERATION_REGEXP.test(uri);
 export const MODEL_REGEXP = /^\/(definitions|components\/schemas)/;
 export const OPERATION_REGEXP = /\/paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
 
-const MODEL_TAG_PATH = ['x-tags', 0];
-const OPERATION_TAG_PATH = ['tags', 0, 'name'];
-
 export interface IUriMap {
   [uri: string]: unknown;
-}
-
-interface ITagUriMap {
-  [tag: string]: string[];
 }
 
 interface IComputeUriMapProps {
@@ -82,93 +76,48 @@ function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeM
   }
 }
 
-export const computeTocTree = (uriMap: IUriMap) => {
-  const items: TableOfContentItem[] = [];
-  const uris = Object.keys(uriMap);
-  const httpService = uriMap['/'];
-  const operationUris = uris.filter(uri => OPERATION_REGEXP.test(uri));
-  const modelUris = uris.filter(uri => MODEL_REGEXP.test(uri));
+export const computeNodeData: (uriMap: IUriMap) => NodeData[] = uriMap => {
+  const nodes: NodeData[] = [];
 
-  const tags = uniq(
-    compact(
-      Object.values(uriMap).map(node => {
-        const tag = get(node, OPERATION_TAG_PATH) || get(node, MODEL_TAG_PATH);
-        return typeof tag === 'string' ? tag : void 0;
-      }),
-    ),
-  );
+  for (const [uri, node] of Object.entries(uriMap)) {
+    if (node && isObject(node)) {
+      const type =
+        uri === '/'
+          ? NodeType.HttpService
+          : OPERATION_REGEXP.test(uri)
+          ? NodeType.HttpOperation
+          : MODEL_REGEXP.test(uri)
+          ? NodeType.Model
+          : NodeType.Unknown;
 
-  const tagUriMap: ITagUriMap = tags.reduce(
-    (obj, tag) => ({
-      ...obj,
-      [tag]: [
-        ...modelUris.filter(uri => get(uriMap[uri], MODEL_TAG_PATH) === tag),
-        ...operationUris.filter(uri => get(uriMap[uri], OPERATION_TAG_PATH) === tag),
-      ],
-    }),
-    {},
-  );
-
-  const noTagUris = [
-    ...modelUris.filter(uri => !tags.includes(get(uriMap[uri], MODEL_TAG_PATH))),
-    ...operationUris.filter(uri => !tags.includes(get(uriMap[uri], OPERATION_TAG_PATH))),
-  ];
-
-  if (httpService && isObject(httpService)) {
-    items.push(
-      {
-        title: httpService['name'],
-        type: 'divider',
-      },
-      {
-        title: 'Overview',
-        type: 'item',
-        uri: '/',
-      },
-    );
-  }
-  if (tags.length) {
-    items.push(
-      ...tags.map(
-        tag =>
-          ({
-            title: tag,
-            type: 'group',
-            items: [
-              ...modelUris.filter(uri => tagUriMap[tag].includes(uri)).map(mapModel),
-              ...operationUris.filter(uri => tagUriMap[tag].includes(uri)).map(mapOperation(uriMap)),
-            ],
-          } as TableOfContentItem),
-      ),
-    );
-  }
-  if (noTagUris.length) {
-    items.push({
-      title: 'Others',
-      type: 'group',
-      items: [
-        ...modelUris.filter(uri => noTagUris.includes(uri)).map(mapModel),
-        ...operationUris.filter(uri => noTagUris.includes(uri)).map(mapOperation(uriMap)),
-      ],
-    });
+      switch (type) {
+        case NodeType.HttpService:
+          nodes.push({
+            name: node['name'],
+            type,
+            uri,
+            tags: [],
+          });
+          break;
+        case NodeType.HttpOperation:
+          nodes.push({
+            name: node['summary'] || node['path'],
+            type,
+            uri,
+            tags: map(node['tags'], tag => tag['name']),
+          });
+          break;
+        case NodeType.Model:
+          nodes.push({
+            name: node['title'] || last(uri.split('/')) || '',
+            type,
+            uri,
+            tags: node['x-tags'],
+          });
+          break;
+      }
+    }
   }
 
-  return {
-    items,
-  } as ITableOfContentsTree;
-};
-
-const mapModel = (uri: string): TableOfContentItem => ({
-  title: last(uri.split('/')) ?? '',
-  type: 'item',
-  uri,
-});
-
-const mapOperation = (uriMap: IUriMap) => (uri: string): TableOfContentItem => {
-  const operation = uriMap[uri];
-  return {
-    title: isObject(operation) ? operation['summary'] || operation['path'] : '',
-    type: 'item',
-    uri,
-  };
+  return nodes;
 };

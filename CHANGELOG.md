@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.142](https://github.com/stoplightio/elements/compare/v6.0.0-beta.141...v6.0.0-beta.142) (2020-09-17)
+
+
+### Bug Fixes
+
+* elements storybook ([#581](https://github.com/stoplightio/elements/issues/581)) ([ac85935](https://github.com/stoplightio/elements/commit/ac859350e8af14368634a5a9ced7277f98d261c0))
+
+
+
+
+
+# [6.0.0-beta.141](https://github.com/stoplightio/elements/compare/v6.0.0-beta.140...v6.0.0-beta.141) (2020-09-17)
+
+
+### Features
+
+* apply new component naming conventions to the public components ([#579](https://github.com/stoplightio/elements/issues/579)) ([f3c75e4](https://github.com/stoplightio/elements/commit/f3c75e477174bc8bcf2a0bf08a9ca04ea64c3bb1))
+
+
+
+
+
+# [6.0.0-beta.140](https://github.com/stoplightio/elements/compare/v6.0.0-beta.139...v6.0.0-beta.140) (2020-09-16)
+
+
+### Features
+
+* **elements:** use elements-utils for tree generation ([#568](https://github.com/stoplightio/elements/issues/568)) ([e4581d8](https://github.com/stoplightio/elements/commit/e4581d8181a8280f1fb9e8bad9ed5d74010cc081))
+
+
+
+
+
+# [6.0.0-beta.139](https://github.com/stoplightio/elements/compare/v6.0.0-beta.138...v6.0.0-beta.139) (2020-09-16)
+
+
+### Bug Fixes
+
+* **elements-utils:** package.json main ([#576](https://github.com/stoplightio/elements/issues/576)) ([2684a1e](https://github.com/stoplightio/elements/commit/2684a1eda10ce7bfca9ab512577ffd100b56aa19))
+
+
+
+
+
+# [6.0.0-beta.138](https://github.com/stoplightio/elements/compare/v6.0.0-beta.137...v6.0.0-beta.138) (2020-09-14)
+
+
+### Bug Fixes
+
+* **elements-utils:** export functions ([#574](https://github.com/stoplightio/elements/issues/574)) ([61024d6](https://github.com/stoplightio/elements/commit/61024d65edb5e0eee7306653050935a5e3a41c78))
+
+
+
+
+
+# [6.0.0-beta.137](https://github.com/stoplightio/elements/compare/v6.0.0-beta.136...v6.0.0-beta.137) (2020-09-11)
+
+
+### Bug Fixes
+
+* **web-components:** everything is a dev-dep ([#534](https://github.com/stoplightio/elements/issues/534)) ([6438f05](https://github.com/stoplightio/elements/commit/6438f054588c98231175060dc3e541f9a9f46917))
+
+
+
+
+
 # [6.0.0-beta.136](https://github.com/stoplightio/elements/compare/v6.0.0-beta.135...v6.0.0-beta.136) (2020-09-10)
 
 
