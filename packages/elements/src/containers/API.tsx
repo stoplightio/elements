@@ -6,8 +6,7 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import useSwr from 'swr';
 
-import { Docs } from '../components/Docs';
-import { DocsSkeleton } from '../components/Docs/Skeleton';
+import { Docs, DocsSkeleton } from '../components/Docs';
 import { Row } from '../components/TableOfContents/Row';
 import { TryIt } from '../components/TryIt';
 import { TryItHeader } from '../components/TryIt/header';
@@ -15,14 +14,19 @@ import { withRouter } from '../hoc/withRouter';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { useTocContents } from '../hooks/useTocContents';
 import { withStyles } from '../styled';
-import { IAPI } from '../types';
+import { LinkComponentType, RoutingProps } from '../types';
 import { computeNodeData, isOas2, isOas3, isOperation, IUriMap, MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
-const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkComponent }) => {
+export interface APIProps extends RoutingProps {
+  apiDescriptionUrl: string;
+  linkComponent?: LinkComponentType;
+}
+
+const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkComponent: LinkComponent }) {
   const { pathname } = useLocation();
 
   const { data, error } = useSwr(apiDescriptionUrl, fetcher);

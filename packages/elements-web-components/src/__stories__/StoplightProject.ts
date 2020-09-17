@@ -1,11 +1,20 @@
 import '../index';
 
-import { text, withKnobs } from '@storybook/addon-knobs';
+import { createTemplate } from './util';
 
-export default { title: 'Stoplight Project', decorators: [withKnobs] };
+const Template = createTemplate('elements-stoplight-project');
 
-export const defaultProject = () =>
-  `<stoplight-project workspace='${text('workspace', 'http://demo.stoplight.io')}' project='${text(
-    'project',
-    'public-apis',
-  )}' />`;
+export default {
+  title: 'Stoplight Project',
+  argType: {
+    workspace: { control: 'text' },
+    project: { control: 'text' },
+  },
+};
+
+export const defaultProject = Template.bind({});
+defaultProject.storyName = 'Stoplight Demo workspace';
+defaultProject.args = {
+  workspace: 'https://demo.stoplight.io',
+  project: 'public-apis',
+};
