@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "type": "item",
+      "title": "Introduction to Elements",
+      "uri": "docs/introduction.md"
+    },
+    {
+      "type": "divider",
+      "title": "Guides"
+    },
+    {
+      "type": "item",
+      "title": "Quick Start with React",
+      "uri": "docs/guides/react.md"
+    },
+    {
+      "type": "item",
+      "title": "Quick Start with Angular",
+      "uri": "docs/guides/angular.md"
+    },
+    {
+      "type": "divider",
+      "title": "Components"
+    },
+    {
+      "type": "item",
+      "title": "API",
+      "uri": "docs/components/API.md"
+    },
+    {
+      "type": "item",
+      "title": "StoplightProject",
+      "uri": "docs/components/StoplightProject.md"
+    }
+  ]
+}
