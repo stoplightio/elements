@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.141](https://github.com/stoplightio/elements/compare/v6.0.0-beta.140...v6.0.0-beta.141) (2020-09-17)
+
+
+### Features
+
+* apply new component naming conventions to the public components ([#579](https://github.com/stoplightio/elements/issues/579)) ([f3c75e4](https://github.com/stoplightio/elements/commit/f3c75e477174bc8bcf2a0bf08a9ca04ea64c3bb1))
+
+
+
+
+
 # [6.0.0-beta.140](https://github.com/stoplightio/elements/compare/v6.0.0-beta.139...v6.0.0-beta.140) (2020-09-16)
 
 
