@@ -81,6 +81,8 @@
   "devDependencies": {
     "@stoplight/prism-http": "^4.0.0-beta.26",
     "@stoplight/scripts": "8.2.3",
+    "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/react": "^5.3.19",
     "@testing-library/react": "^10.0.2",
     "@types/classnames": "^2.2.10",
     "@types/enzyme": "3.x.x",
