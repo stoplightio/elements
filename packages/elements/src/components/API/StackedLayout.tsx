@@ -1,17 +1,17 @@
+import { Group as GroupItem, isGroup, isItem, ITableOfContents, TableOfContentItem } from '@stoplight/elements-utils';
 import { IHttpOperation, NodeType } from '@stoplight/types';
 import { Collapse, Icon, Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
-import { Group as GroupItem, ITableOfContentsTree, TableOfContentItem } from '../../types';
 import { getNodeType, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { TryIt } from '../TryIt';
 
 type StackedLayoutProps = {
   uriMap: IUriMap;
-  tree: ITableOfContentsTree;
+  tree: ITableOfContents;
 };
 
 type ItemRowProps = {
@@ -22,7 +22,7 @@ type ItemRowProps = {
 };
 
 export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) => {
-  const groups = tree.items.filter(item => item.type === 'group') as GroupItem[];
+  const groups = tree.items.filter(isGroup);
 
   return (
     <div className="w-full flex flex-col m-auto max-w-4xl">
@@ -53,10 +53,9 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
 
       <Collapse isOpen={isExpanded}>
         {group.items
-          .filter(item => item.type === 'item')
+          .filter(isItem)
           .sort(sortNodes)
           .map(item => {
-            if (item.type !== 'item') return;
             const nodeData = uriMap[item.uri];
             const nodeType = getNodeType(item.uri);
 
@@ -128,7 +127,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
 };
 
 function sortNodes(a: TableOfContentItem, b: TableOfContentItem) {
-  if (a.type !== 'item' || b.type !== 'item') return 0;
+  if (!isItem(a) || !isItem(b)) return 0;
   const typeA = getNodeType(a.uri);
   const typeB = getNodeType(b.uri);
   return typeA === NodeType.Model && typeB === NodeType.HttpOperation ? 1 : -1;
