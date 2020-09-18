@@ -3,7 +3,6 @@ import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { Client, Provider as UrqlProvider } from 'urql';
 
-import { defaultComponents } from '../hooks/useComponents';
 import { useUrqlClient } from '../hooks/useUrqlClient';
 import { NodeIconMapping } from '../types';
 
@@ -20,10 +19,7 @@ export interface IActiveInfo {
   node?: string;
 }
 
-export const ComponentsContext = createNamedContext<IComponentMapping | undefined>(
-  'ComponentsContext',
-  defaultComponents,
-);
+export const ComponentsContext = createNamedContext<IComponentMapping | undefined>('ComponentsContext', undefined);
 
 export const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(void 0);
 
