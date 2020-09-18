@@ -1,4 +1,4 @@
-import { Group as GroupItem, isGroup, isItem, ITableOfContents, TableOfContentItem } from '@stoplight/elements-utils';
+import { Group as GroupItem, isGroup, isItem, ITableOfContents } from '@stoplight/elements-utils';
 import { IHttpOperation, NodeType } from '@stoplight/types';
 import { Collapse, Icon, Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
@@ -52,23 +52,20 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
       </div>
 
       <Collapse isOpen={isExpanded}>
-        {group.items
-          .filter(isItem)
-          .sort(sortNodes)
-          .map(item => {
-            const nodeData = uriMap[item.uri];
-            const nodeType = getNodeType(item.uri);
+        {group.items.filter(isItem).map(item => {
+          const nodeData = uriMap[item.uri];
+          const nodeType = getNodeType(item.uri);
 
-            return (
-              <ItemRow
-                key={item.uri}
-                data={nodeData}
-                nodeType={nodeType}
-                type={nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).method : 'model'}
-                title={nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).path : item.title}
-              />
-            );
-          })}
+          return (
+            <ItemRow
+              key={item.uri}
+              data={nodeData}
+              nodeType={nodeType}
+              type={nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).method : 'model'}
+              title={nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).path : item.title}
+            />
+          );
+        })}
       </Collapse>
     </div>
   );
@@ -125,10 +122,3 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
     </div>
   );
 };
-
-function sortNodes(a: TableOfContentItem, b: TableOfContentItem) {
-  if (!isItem(a) || !isItem(b)) return 0;
-  const typeA = getNodeType(a.uri);
-  const typeB = getNodeType(b.uri);
-  return typeA === NodeType.Model && typeB === NodeType.HttpOperation ? 1 : -1;
-}
