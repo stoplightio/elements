@@ -10,7 +10,7 @@ import { Row } from '../components/TableOfContents/Row';
 import { TryIt } from '../components/TryIt';
 import { TryItHeader } from '../components/TryIt/header';
 import { withRouter } from '../hoc/withRouter';
-import { useDereferencedData } from '../hooks/useDereferencedData';
+import { useBundledData } from '../hooks/useBundledData';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { useTocContents } from '../hooks/useTocContents';
 import { withStyles } from '../styled';
@@ -63,7 +63,7 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCompon
     ? NodeType.HttpOperation
     : NodeType.HttpService;
   const nodeData = uriMap[pathname] || uriMap['/'];
-  const dereferencedNodeData = useDereferencedData(nodeType, nodeData, { baseUrl: apiDescriptionUrl });
+  const bundledNodeData = useBundledData(nodeType, nodeData, { baseUrl: apiDescriptionUrl });
 
   if (error) {
     return (
@@ -91,12 +91,12 @@ const APIImpl = withRouter<IAPI>(({ apiDescriptionUrl, linkComponent: LinkCompon
       <div className="flex-grow p-5">
         <div className="flex">
           <InlineRefResolverProvider document={document}>
-            <Docs className="px-10" nodeData={dereferencedNodeData} nodeType={nodeType} />
+            <Docs className="px-10" nodeData={bundledNodeData} nodeType={nodeType} />
             {showTryIt && (
               <div className="w-2/5 border-l relative">
                 <div className="absolute inset-0 overflow-auto px-10">
                   <TryItHeader />
-                  <TryIt nodeType={nodeType} nodeData={dereferencedNodeData} />
+                  <TryIt nodeType={nodeType} nodeData={bundledNodeData} />
                 </div>
               </div>
             )}

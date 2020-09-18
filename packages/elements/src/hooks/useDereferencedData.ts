@@ -10,12 +10,7 @@ import { useParsedData } from './useParsedData';
  * @param type branch node snapshot type
  * @param data branch node snapshot data
  */
-
-interface Options {
-  baseUrl?: string;
-}
-
-export function useDereferencedData(type: NodeType, data: unknown, options?: Options) {
+export function useDereferencedData(type: NodeType, data: string) {
   const parsedData = useParsedData(type, data);
 
   const [dereferencedData, setDereferencedData] = React.useState(parsedData);
@@ -27,23 +22,15 @@ export function useDereferencedData(type: NodeType, data: unknown, options?: Opt
       return;
     }
 
-    doDereference(parsedData, options?.baseUrl)
+    $RefParser
+      .dereference(parsedData, { continueOnError: true })
       .then(res => setDereferencedData(res))
       .catch(reason => {
         console.error(`Could not dereference operation: ${reason.message}`);
         console.error(reason);
         setDereferencedData(parsedData);
       });
-  }, [parsedData, type, options?.baseUrl]);
+  }, [parsedData, type]);
 
   return dereferencedData;
 }
-
-const commonDereferenceOptions = { continueOnError: true };
-const doDereference = (data: object, baseUrl?: string) => {
-  if (!baseUrl) {
-    return $RefParser.dereference(data, commonDereferenceOptions);
-  } else {
-    return $RefParser.dereference(baseUrl, data, commonDereferenceOptions);
-  }
-};
