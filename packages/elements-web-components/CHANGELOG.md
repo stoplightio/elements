@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.145](https://github.com/stoplightio/elements/compare/v6.0.0-beta.144...v6.0.0-beta.145) (2020-09-18)
+
+
+### Bug Fixes
+
+* **elements-web-components:** Scoped CSS applies to Portals ([#586](https://github.com/stoplightio/elements/issues/586)) ([e63659f](https://github.com/stoplightio/elements/commit/e63659f922cff5377f7170db0463269c70645f47))
+
+
+
+
+
 # [6.0.0-beta.143](https://github.com/stoplightio/elements/compare/v6.0.0-beta.142...v6.0.0-beta.143) (2020-09-17)
 
 **Note:** Version bump only for package @stoplight/elements-web-components
