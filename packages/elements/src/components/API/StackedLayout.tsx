@@ -108,7 +108,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
         <div className="flex-1 font-medium break-all">{title}</div>
       </div>
 
-      <Collapse isOpen={isExpanded} keepChildrenMounted>
+      <Collapse isOpen={isExpanded}>
         {showTabs ? (
           <Tabs
             className="PreviewTabs mx-auto"
