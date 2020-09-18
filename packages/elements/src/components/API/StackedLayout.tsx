@@ -62,7 +62,7 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
 
             return (
               <ItemRow
-                key={item.title}
+                key={item.uri}
                 data={nodeData}
                 nodeType={nodeType}
                 type={nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).method : 'model'}
