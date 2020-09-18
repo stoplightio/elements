@@ -10,10 +10,9 @@
   .#{$ns}-tab-list {
     z-index: 10;
     bottom: -1px;
-    padding: 0 0.5rem;
+    padding: 0 0.5rem 1px;
     align-items: center;
     overflow-x: auto;
-    overflow-y: hidden;
   }
 
   .#{$ns}-tab {
