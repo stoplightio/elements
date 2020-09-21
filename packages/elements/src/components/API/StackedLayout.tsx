@@ -1,8 +1,9 @@
-import { Group as GroupItem, isGroup, isItem, ITableOfContents } from '@stoplight/elements-utils';
+import { Group as GroupItem, isGroup, isItem, ITableOfContents, Item } from '@stoplight/elements-utils';
 import { IHttpOperation, NodeType } from '@stoplight/types';
 import { Collapse, Icon, Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { HttpMethodColors } from '../../constants';
 import { getNodeType, IUriMap } from '../../utils/oas';
@@ -38,12 +39,59 @@ export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) =>
 
 const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const [isActive, setIsActive] = React.useState(false);
+  const { hash } = useLocation();
+  const scrollRef = React.useRef<HTMLDivElement | null>(null);
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
+
+  const mapItems = React.useCallback(
+    (item: Item) => {
+      const nodeData = uriMap[item.uri];
+      const nodeType = getNodeType(item.uri);
+      const type = nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).method : 'model';
+      const title = nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).path : item.title;
+
+      return {
+        nodeData,
+        nodeType,
+        type,
+        title,
+        uri: item.uri,
+      };
+    },
+    [uriMap],
+  );
+
+  const shouldExpand = React.useCallback(() => {
+    const anchor = hash.substr(1);
+    return (
+      isActive ||
+      group.items
+        .filter(isItem)
+        .map(mapItems)
+        .some(item => anchor === `${item.title}-${item.type}`)
+    );
+  }, [group, hash, isActive, mapItems]);
+
+  React.useEffect(() => {
+    setIsActive(hash.substr(1) === group.title);
+  }, [group, hash]);
+
+  React.useEffect(() => {
+    if (shouldExpand()) {
+      setIsExpanded(true);
+      if (isActive && scrollRef?.current?.offsetTop) {
+        // scroll only if group is active
+        window.scrollTo(0, scrollRef.current.offsetTop);
+      }
+    }
+  }, [shouldExpand, isActive]);
 
   return (
     <div>
       <div
+        ref={scrollRef}
         onClick={onClick}
         className="mx-auto flex justify-between items-center border-b dark:border-gray-6 text-gray-7 dark:text-gray-7 hover:text-gray-6 px-2 py-4 cursor-pointer"
       >
@@ -52,20 +100,12 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
       </div>
 
       <Collapse isOpen={isExpanded}>
-        {group.items.filter(isItem).map(item => {
-          const nodeData = uriMap[item.uri];
-          const nodeType = getNodeType(item.uri);
-
-          return (
-            <ItemRow
-              key={item.uri}
-              data={nodeData}
-              nodeType={nodeType}
-              type={nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).method : 'model'}
-              title={nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).path : item.title}
-            />
-          );
-        })}
+        {group.items
+          .filter(isItem)
+          .map(mapItems)
+          .map(({ nodeData, nodeType, type, title, uri }) => {
+            return <ItemRow key={uri} data={nodeData} nodeType={nodeType} type={type} title={title} />;
+          })}
       </Collapse>
     </div>
   );
@@ -75,14 +115,26 @@ type PanelTabId = 'docs' | 'tryit';
 
 const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const { hash } = useLocation();
+  const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const [tabId, setTabId] = React.useState<PanelTabId>('docs');
   const color = HttpMethodColors[type] || 'gray';
   const showTabs = nodeType === NodeType.HttpOperation;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
+  React.useEffect(() => {
+    if (hash.substr(1) === `${title}-${type}`) {
+      setIsExpanded(true);
+      if (scrollRef?.current?.offsetTop) {
+        window.scrollTo(0, scrollRef.current.offsetTop);
+      }
+    }
+  }, [hash, title, type]);
+
   return (
     <div
+      ref={scrollRef}
       className={cn('w-full my-2 border border-transparent hover:border-gray-2 hover:bg-darken-1', {
         'border-gray-2 bg-darken-1': isExpanded,
       })}
