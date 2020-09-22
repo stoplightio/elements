@@ -45,6 +45,7 @@ const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme;
   return (
     <div
       className={cn(className, 'HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start')}
+      data-key={security.key}
       style={{ alignItems: 'start' }}
     >
       <div style={{ minWidth: '60px' }}>
@@ -108,7 +109,7 @@ const OAuth2Flow = ({
   if (!flowObject) return null;
 
   return (
-    <div className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow">
+    <div className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow" data-flow={flow}>
       <div className="py-2 font-semibold">{startCase(flow)} OAuth Flow</div>
 
       {'authorizationUrl' in flowObject && flowObject.authorizationUrl && (

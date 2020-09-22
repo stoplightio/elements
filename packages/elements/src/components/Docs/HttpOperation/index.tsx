@@ -16,15 +16,23 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
   const color = HttpMethodColors[data.method!] || 'gray';
 
   return (
-    <div className={cn('HttpOperation', className)}>
+    <div className={cn('HttpOperation', className)} data-nodeid={data.id}>
       <h2 className={cn(Classes.HEADING, 'flex items-center mb-10')}>
         <div
-          className={cn(`uppercase mr-5 font-semibold border rounded py-1 px-2`, `text-${color}`, `border-${color}`)}
+          className={cn(
+            `HttpOperation__Method uppercase mr-5 font-semibold border rounded py-1 px-2`,
+            `text-${color}`,
+            `border-${color}`,
+          )}
         >
           {data.method || 'UNKNOWN'}
         </div>
 
-        {data.path && <div className="flex-1 font-medium text-gray-6 dark:text-gray-3 break-all">{data.path}</div>}
+        {data.path && (
+          <div className="HttpOperation__Path flex-1 font-medium text-gray-6 dark:text-gray-3 break-all">
+            {data.path}
+          </div>
+        )}
       </h2>
 
       <MarkdownViewer

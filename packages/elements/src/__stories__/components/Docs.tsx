@@ -16,6 +16,83 @@ export const darkMode = () => boolean('Dark Mode', false);
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
 
+let highlighted: HTMLElement = null;
+
+const highlight = (el: HTMLElement) => {
+  if (highlighted) {
+    highlighted.classList.remove('highlight');
+  }
+  highlighted = el;
+  highlighted.classList.add('highlight');
+};
+
+const spy: React.MouseEventHandler = e => {
+  let el = e.target as HTMLElement | null;
+  while (el) {
+    for (const className of el.className.split(' ')) {
+      switch (className) {
+        case 'HttpOperation': {
+          console.log('HttpOperation', el.dataset.nodeid);
+          highlight(el);
+          return;
+        }
+        case 'HttpOperation__Description': {
+          console.log('HttpOperation__Description');
+          highlight(el);
+          return;
+        }
+        case 'HttpOperation__Path': {
+          console.log('HttpOperation__Path');
+          highlight(el);
+          return;
+        }
+        case 'HttpOperation__Method': {
+          console.log('HttpOperation__Method');
+          highlight(el);
+          return;
+        }
+        case 'HttpSecuritySchemes__SecurityScheme': {
+          console.log('HttpSecuritySchemes__SecurityScheme', el.dataset.key);
+          highlight(el);
+          return;
+        }
+        case 'HttpSecuritySchemes__OAuth2Flow': {
+          console.log('HttpSecuritySchemes__OAuth2Flow', el.dataset.flow);
+          highlight(el);
+          return;
+        }
+        case 'HttpOperation__Body': {
+          console.log('HttpOperation__Body');
+          highlight(el);
+          return;
+        }
+        case 'HttpOperation__Parameters': {
+          console.log('HttpOperation__Parameters', el.dataset.type);
+          highlight(el);
+          return;
+        }
+        case 'HttpOperation__Parameter': {
+          console.log('HttpOperation__Parameter', el.dataset.type, el.dataset.name);
+          highlight(el);
+          return;
+        }
+        case 'HttpOperation__Responses': {
+          console.log('HttpOperation__Responses');
+          highlight(el);
+          return;
+        }
+        case 'HttpOperation__Response': {
+          console.log('HttpOperation__Response');
+          highlight(el);
+          return;
+        }
+        default:
+      }
+    }
+    el = el.parentElement;
+  }
+};
+
 storiesOf('components/Docs', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
   .add('Article', () => {
@@ -47,7 +124,7 @@ storiesOf('components/Docs', module)
   })
   .add('HTTP Operation', () => {
     return (
-      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })} onClick={spy}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <Docs nodeType="http_operation" nodeData={JSON.stringify(httpOperation)} />
         </Provider>

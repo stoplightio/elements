@@ -58,7 +58,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
   if (!parameters || !parameters.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Parameters', className)}>
+    <div className={cn('HttpOperation__Parameters', className)} data-type={parameterType}>
       {title && <SectionTitle title={title} icon={icon} />}
 
       {sortBy(parameters, ['required', 'name']).map((parameter, index) => {
@@ -118,7 +118,11 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   const keyValueValidations = omit(validations, [...keys(numberValidations), ...keys(booleanValidations)]);
 
   return (
-    <div className={cn('HttpOperation__Parameter pl-1', className)}>
+    <div
+      className={cn('HttpOperation__Parameter pl-1', className)}
+      data-type={parameterType}
+      data-name={parameter.name}
+    >
       <div className="flex items-center">
         <div className="font-medium font-mono">{parameter.name}</div>
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>
