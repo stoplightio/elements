@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.147](https://github.com/stoplightio/elements/compare/v6.0.0-beta.146...v6.0.0-beta.147) (2020-09-22)
+
+
+### Bug Fixes
+
+* **request-maker:** update link to Mocking docs ([#594](https://github.com/stoplightio/elements/issues/594)) ([d79bd4d](https://github.com/stoplightio/elements/commit/d79bd4d3ee3fbef995cf47af8379f50aa7c85627))
+
+
+
+
+
 # [6.0.0-beta.146](https://github.com/stoplightio/elements/compare/v6.0.0-beta.145...v6.0.0-beta.146) (2020-09-22)
 
 
