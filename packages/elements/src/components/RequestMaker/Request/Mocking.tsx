@@ -64,9 +64,7 @@ export const Mocking = observer(() => {
 
             <div className="mt-2">
               For more information on mocking,{' '}
-              <a href="https://stoplight.io/p/docs/gh/stoplightio/prism/docs/guides/01-mocking.md">
-                check out the docs
-              </a>
+              <a href="https://meta.stoplight.io/docs/prism/docs/guides/01-mocking.md">check out the docs</a>
             </div>
           </div>
         }
