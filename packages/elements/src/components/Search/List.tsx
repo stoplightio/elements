@@ -1,5 +1,5 @@
 import { deserializeSrn } from '@stoplight/path';
-import { Button, Callout, Classes, Icon, NonIdealState, Spinner, Tag } from '@stoplight/ui-kit';
+import { Button, Callout, Classes, FAIcon, NonIdealState, Spinner, Tag } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
@@ -106,7 +106,7 @@ const NodeListItem: React.FC<{
     >
       <div className="mr-4">
         <Tag
-          icon={NodeTypeIcons[item.snapshot.type] && <Icon icon={NodeTypeIcons[item.snapshot.type]} iconSize={11} />}
+          icon={NodeTypeIcons[item.snapshot.type] && <FAIcon icon={NodeTypeIcons[item.snapshot.type]} />}
           style={{ backgroundColor: NodeTypeColors[item.snapshot.type] || undefined }}
           title={NodeTypePrettyName[item.snapshot.type] || item.snapshot.type}
           className="py-1 dark:text-white"

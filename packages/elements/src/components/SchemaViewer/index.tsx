@@ -1,9 +1,10 @@
-import { Classes, Icon, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
+import { Classes, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES } from '@stoplight/markdown-viewer';
 import { JSONSchema } from '@stoplight/prism-http';
 import { Dictionary } from '@stoplight/types';
+import { FAIcon } from '@stoplight/ui-kit';
 import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import cn from 'classnames';
@@ -11,7 +12,7 @@ import { JSONSchema4 } from 'json-schema';
 import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
-import { NodeTypeColors, NodeTypeIcons } from '../../constants';
+import { NodeTypeIcons } from '../../constants';
 import { InlineRefResolverContext } from '../../containers/Provider';
 import { MarkdownViewer } from '../MarkdownViewer';
 
@@ -107,8 +108,7 @@ const SchemaTitle = ({ title, errors }: { title?: string; errors?: string[] }) =
     <div className={cn('flex items-center p-2')} style={{ height: 30 }}>
       {title && (
         <div className="flex items-center flex-1">
-          <Icon icon={NodeTypeIcons['model']} color={NodeTypeColors['model']} iconSize={14} />
-
+          <FAIcon icon={NodeTypeIcons['model']} />
           <div className={cn(Classes.TEXT_MUTED, 'px-2')} style={{ fontSize: 12 }}>
             {title}
           </div>
