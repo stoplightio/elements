@@ -29,7 +29,7 @@ const branchNode: IBranchNode = {
   },
 };
 
-storiesOf('Components/Internal/Dependencies', module)
+storiesOf('Internal/Dependencies', module)
   .addDecorator(withKnobs)
   .add('Inbound', () => {
     return (

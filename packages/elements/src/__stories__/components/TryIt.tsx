@@ -14,7 +14,7 @@ export const darkMode = () => boolean('dark mode', false);
 export const mockUrl = () => text('mockUrl', '');
 export const nodeData = () => object('nodeData', httpOperation);
 
-storiesOf('Components/Internal/TryIt', module)
+storiesOf('Internal/TryIt', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
   .add('Playground', () => {
     return (

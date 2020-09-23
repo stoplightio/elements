@@ -16,7 +16,7 @@ const styles = {
   width: 350,
 };
 
-storiesOf('Components/Internal/TableOfContents', module)
+storiesOf('Internal/TableOfContents', module)
   .addDecorator(withKnobs)
   .add('Component', () => {
     return <TocStory />;

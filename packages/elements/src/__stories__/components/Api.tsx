@@ -13,7 +13,7 @@ const apiDescriptionUrl = () =>
     'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
   );
 
-storiesOf('Components/Public/API', module)
+storiesOf('Public/API', module)
   .addDecorator(withKnobs())
   .add('Sidebar Layout', () => {
     return (

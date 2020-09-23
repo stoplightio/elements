@@ -12,7 +12,7 @@ const project = () => text('project', 'public-apis');
 const branch = () => text('branch', '');
 const authToken = () => text('authToken', '');
 
-storiesOf('Components/Public/StoplightProject', module)
+storiesOf('Public/StoplightProject', module)
   .addDecorator(withKnobs())
   .add('Playground', () => {
     return (

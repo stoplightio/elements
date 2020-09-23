@@ -16,7 +16,7 @@ export const darkMode = () => boolean('Dark Mode', false);
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
 
-storiesOf('Components/Internal/Docs', module)
+storiesOf('Internal/Docs', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
   .add('Article', () => {
     return (
