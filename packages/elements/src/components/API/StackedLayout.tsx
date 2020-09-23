@@ -22,6 +22,10 @@ type ItemRowProps = {
   title: string;
 };
 
+const itemMatchesHash = (hash: string, item: Pick<ItemRowProps, 'title' | 'type'>) => {
+  return hash.substr(1) === `${item.title}-${item.type}`;
+};
+
 export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) => {
   const groups = tree.items.filter(isGroup);
 
@@ -39,9 +43,9 @@ export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) =>
 
 const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const [isActive, setIsActive] = React.useState(false);
   const { hash } = useLocation();
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
+  const urlHashMatches = hash.substr(1) === group.title;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -63,30 +67,25 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
     [uriMap],
   );
 
-  const shouldExpand = React.useCallback(() => {
-    const anchor = hash.substr(1);
+  const shouldExpand = React.useMemo(() => {
     return (
-      isActive ||
+      urlHashMatches ||
       group.items
         .filter(isItem)
         .map(mapItems)
-        .some(item => anchor === `${item.title}-${item.type}`)
+        .some(item => itemMatchesHash(hash, item))
     );
-  }, [group, hash, isActive, mapItems]);
+  }, [group, hash, urlHashMatches, mapItems]);
 
   React.useEffect(() => {
-    setIsActive(hash.substr(1) === group.title);
-  }, [group, hash]);
-
-  React.useEffect(() => {
-    if (shouldExpand()) {
+    if (shouldExpand) {
       setIsExpanded(true);
-      if (isActive && scrollRef?.current?.offsetTop) {
+      if (urlHashMatches && scrollRef?.current?.offsetTop) {
         // scroll only if group is active
         window.scrollTo(0, scrollRef.current.offsetTop);
       }
     }
-  }, [shouldExpand, isActive]);
+  }, [shouldExpand, urlHashMatches, group, hash]);
 
   return (
     <div>
@@ -124,7 +123,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
   React.useEffect(() => {
-    if (hash.substr(1) === `${title}-${type}`) {
+    if (itemMatchesHash(hash, { title, type })) {
       setIsExpanded(true);
       if (scrollRef?.current?.offsetTop) {
         window.scrollTo(0, scrollRef.current.offsetTop);
