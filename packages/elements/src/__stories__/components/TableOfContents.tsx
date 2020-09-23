@@ -16,12 +16,12 @@ const styles = {
   width: 350,
 };
 
-storiesOf('components/TableOfContents', module)
+storiesOf('Components/Internal/TableOfContents', module)
   .addDecorator(withKnobs)
-  .add('ToC', () => {
+  .add('Component', () => {
     return <TocStory />;
   })
-  .add('Toc Container', () => {
+  .add('Container', () => {
     return <TocStoryContainer />;
   });
 
@@ -56,7 +56,7 @@ const TocStoryContainer: React.FC = () => {
       <div style={styles}>
         <TocContainer
           className="h-full"
-          workspaceUrl={text('workspaceUrl', 'http://meta.localhost:8080')}
+          workspaceUrl={text('workspaceUrl', 'https://elements.stoplight.io')}
           projectSlug={text('projectSlug', 'studio-demo')}
           rowComponent={({ item, ...rest }) => {
             return (
