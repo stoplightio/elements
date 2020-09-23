@@ -13,9 +13,9 @@ const apiDescriptionUrl = () =>
     'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
   );
 
-storiesOf('components/API', module)
+storiesOf('Public/API', module)
   .addDecorator(withKnobs())
-  .add('Traditional Layout', () => {
+  .add('Sidebar Layout', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <API apiDescriptionUrl={apiDescriptionUrl()} />
