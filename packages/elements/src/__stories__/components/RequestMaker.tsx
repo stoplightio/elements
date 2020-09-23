@@ -5,7 +5,7 @@ import * as React from 'react';
 import { operation, request } from '../../__fixtures__/operations/simple';
 import { RequestMaker } from '../../components/RequestMaker';
 
-storiesOf('components/StoplightProject', module)
+storiesOf('components/RequestMaker', module)
   .addDecorator(withKnobs())
   .add('Request Maker', () => {
     return (
