@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.148](https://github.com/stoplightio/elements/compare/v6.0.0-beta.147...v6.0.0-beta.148) (2020-09-23)
+
+
+### Features
+
+* **api:** stacked layout ([#578](https://github.com/stoplightio/elements/issues/578)) ([cd6aa21](https://github.com/stoplightio/elements/commit/cd6aa215fd006686187093231c169bbdd2e06d3c))
+
+
+
+
+
 # [6.0.0-beta.147](https://github.com/stoplightio/elements/compare/v6.0.0-beta.146...v6.0.0-beta.147) (2020-09-22)
 
 
