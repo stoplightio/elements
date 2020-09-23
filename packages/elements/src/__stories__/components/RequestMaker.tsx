@@ -10,7 +10,7 @@ storiesOf('components/StoplightProject', module)
   .add('Request Maker', () => {
     return (
       <div>
-        <RequestMaker request={request} operation={operation}></RequestMaker>
+        <RequestMaker request={request} operation={operation} />
       </div>
     );
   });
