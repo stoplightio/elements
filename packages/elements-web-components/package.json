@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-web-components",
-  "version": "6.0.0-beta.143",
+  "version": "6.0.0-beta.150",
   "main": "dist/elements.min.js",
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",
@@ -10,6 +10,12 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
+  "files": [
+    "README.md",
+    "LICENSE.md",
+    "CHANGELOG.md",
+    "dist"
+  ],
   "scripts": {
     "build": "webpack && cp ../elements/dist/styles/elements.min.css ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",

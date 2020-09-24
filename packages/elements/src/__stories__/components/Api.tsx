@@ -10,15 +10,22 @@ const darkMode = () => boolean('dark mode', false);
 const apiDescriptionUrl = () =>
   text(
     'apiDescriptionUrl',
-    'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json',
+    'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
   );
 
-storiesOf('components/APIComponent', module)
+storiesOf('Public/API', module)
   .addDecorator(withKnobs())
-  .add('APIComponent', () => {
+  .add('Sidebar Layout', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <API apiDescriptionUrl={apiDescriptionUrl()} />
+      </div>
+    );
+  })
+  .add('Stacked Layout', () => {
+    return (
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
+        <API apiDescriptionUrl={apiDescriptionUrl()} layout="stacked" />
       </div>
     );
   });
