@@ -1,13 +1,14 @@
-import { object, select, withKnobs } from '@storybook/addon-knobs';
+import { object, select, text, withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
 import { httpOperation } from '../../__fixtures__/operations/put-todos';
+import { httpOperation as shipengineHttpOperation } from '../../__fixtures__/operations/shipengine';
 import model from '../../__fixtures__/schemas/contact.json';
 import { httpService } from '../../__fixtures__/services/petstore';
-import { Docs } from '../../components/Docs';
+import { Docs, ParsedDocs } from '../../components/Docs';
 import { Provider } from '../../containers/Provider';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
@@ -139,4 +140,57 @@ storiesOf('components/Docs', module)
         </Provider>
       </div>
     );
+  })
+  .add('Editing', () => {
+    const [count, setCount] = React.useState(0);
+    React.useEffect(() => {
+      const i = setTimeout(() => setCount(count + 1), 0);
+      console.time('edit');
+      return () => {
+        clearTimeout(i);
+        console.timeEnd('edit');
+      };
+    });
+
+    shipengineHttpOperation.path = originalPath.slice(0, count % originalPath.length);
+    shipengineHttpOperation.method = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch'][
+      Math.floor(count / 10) % 8
+    ];
+    shipengineHttpOperation.description = originalDescription.slice(0, count % originalDescription.length);
+    shipengineHttpOperation.security[0][0].description = originalSecurityDescription.slice(
+      0,
+      count % originalSecurityDescription.length,
+    );
+    shipengineHttpOperation.request.body.description = originalRequestBodyDescription.slice(
+      0,
+      count % originalRequestBodyDescription.length,
+    );
+
+    for (let i = 0; i < 3; i++) {
+      shipengineHttpOperation.responses[i].description = originalResponseDescriptions[i].slice(
+        0,
+        count % originalResponseDescriptions[i].length,
+      );
+    }
+
+    const el = (
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })} onClick={spy}>
+        <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
+          <ParsedDocs nodeType="http_operation" nodeData={shipengineHttpOperation} />
+        </Provider>
+      </div>
+    );
+    return el;
   });
+
+const originalPath = shipengineHttpOperation.path;
+const originalDescription = shipengineHttpOperation.description;
+const originalSecurityDescription = shipengineHttpOperation.security[0][0].description;
+
+const originalRequestBodyDescription = shipengineHttpOperation.request.body.description;
+
+const originalResponseDescriptions = [
+  shipengineHttpOperation.responses[0].description,
+  shipengineHttpOperation.responses[1].description,
+  shipengineHttpOperation.responses[2].description,
+];
