@@ -10,6 +10,12 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
+  "files":[
+    "README.md",
+    "LICENSE.md",
+    "CHANGELOG.md",
+    "dist"
+  ],
   "scripts": {
     "build": "webpack && cp ../elements/dist/styles/elements.min.css ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
