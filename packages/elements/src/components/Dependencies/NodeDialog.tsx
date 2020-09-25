@@ -38,7 +38,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
           )}
         </div>
       }
-      icon={<FAIcon icon={NodeTypeIcons[nodeType]} style={{ color: NodeTypeColors[nodeType] }} />}
+      icon={<FAIcon className="fa-lg" icon={NodeTypeIcons[nodeType]} style={{ color: NodeTypeColors[nodeType] }} />}
       style={{ width: 800, height: 500 }}
     >
       <div className="h-full">
