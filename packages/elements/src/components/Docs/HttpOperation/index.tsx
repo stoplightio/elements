@@ -5,7 +5,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
-import { HttpMethodColors } from '../../../constants';
+import { EditHandle, HttpMethodColors } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { Request } from './Request';
 import { Responses } from './Responses';
@@ -16,7 +16,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
   const color = HttpMethodColors[data.method!] || 'gray';
 
   return (
-    <div className={cn('HttpOperation', className)} data-nodeid={data.id}>
+    <div className={cn('HttpOperation', className)} data-edithandle={data[EditHandle]}>
       <h2 className={cn(Classes.HEADING, 'flex items-center mb-10')}>
         <div
           className={cn(

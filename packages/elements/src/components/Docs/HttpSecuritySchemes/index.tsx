@@ -10,12 +10,12 @@ import cn from 'classnames';
 import { entries, flatten, isEmpty, map, startCase } from 'lodash';
 import * as React from 'react';
 
-import { HttpSecuritySchemeColors } from '../../../constants';
+import { EditHandle, ExtendWithEditHandle, HttpSecuritySchemeColors } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from '../HttpOperation/SectionTitle';
 
 export interface ISecuritiesProps {
-  securities?: HttpSecurityScheme[];
+  securities?: ExtendWithEditHandle<HttpSecurityScheme[]>;
   className?: string;
   title?: string;
 }
@@ -41,12 +41,19 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
 };
 HttpSecuritySchemes.displayName = 'HttpSecuritySchemes';
 
-const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme; className?: string }) => {
+const SecurityScheme = ({
+  security,
+  className,
+}: {
+  security: ExtendWithEditHandle<HttpSecurityScheme>;
+  className?: string;
+}) => {
   return (
     <div
       className={cn(className, 'HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start')}
       data-key={security.key}
       style={{ alignItems: 'start' }}
+      data-edithandle={security[EditHandle]}
     >
       <div style={{ minWidth: '60px' }}>
         <div>{security.key}</div>

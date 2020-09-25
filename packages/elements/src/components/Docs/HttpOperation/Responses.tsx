@@ -3,6 +3,7 @@ import { FAIcon } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
+import { EditHandle, ExtendWithEditHandle } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
 import { Parameters } from './Parameters';
@@ -19,11 +20,11 @@ export const HttpCodeColor = {
 
 export interface IResponseProps {
   className?: string;
-  response: IHttpOperationResponse;
+  response: ExtendWithEditHandle<IHttpOperationResponse>;
 }
 
 export interface IResponsesProps {
-  responses: IHttpOperationResponse[];
+  responses: ExtendWithEditHandle<IHttpOperationResponse[]>;
   className?: string;
 }
 
@@ -34,7 +35,7 @@ export const Responses = ({ className, responses }: IResponsesProps) => {
   const sortedResponses = [...responses].sort();
 
   return (
-    <div className={cn('HttpOperation__Responses', className)}>
+    <div className={cn('HttpOperation__Responses', className)} data-edithandle={responses[EditHandle]}>
       <SectionTitle title="Responses" />
 
       <div className="flex">
@@ -83,7 +84,7 @@ export const Response = ({ className, response }: IResponseProps) => {
   const examples = getExamplesObject(content?.examples || []);
 
   return (
-    <div className={cn('HttpOperation__Response pt-6 pl-8', className)}>
+    <div className={cn('HttpOperation__Response pt-6 pl-8', className)} data-edithandle={response[EditHandle]}>
       <MarkdownViewer className="ml-1 mb-6" markdown={response.description || '*No description.*'} />
 
       <Parameters className="mb-6" title="Headers" parameterType="header" parameters={response.headers} />

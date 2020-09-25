@@ -137,3 +137,48 @@ export const HttpCodeDescriptions = {
   598: 'Network read timeout error',
   599: 'Network connect timeout error',
 };
+
+export const EditHandle = Symbol('EditHandle');
+
+// Deeply extend an interface with optional `EditHandle` symbol properties
+export type ExtendWithEditHandle<T> = T extends Array<infer P>
+  ? Array<ExtendWithEditHandle<P>> & { [EditHandle]?: any }
+  : T extends object
+  ? { [P in keyof T]: ExtendWithEditHandle<T[P]> } & { [EditHandle]?: any }
+  : T;
+
+// Hide Edit handles from other code that interacts with it.
+// Should work for basic Object and Array types - no attempt to deal with
+// classes / functions / Maps / Sets / Proxies
+export function HideEditHandles(o: unknown) {
+  if (typeof o === 'object' && o !== null) {
+    if (o.hasOwnProperty(EditHandle)) {
+      Object.defineProperty(o, EditHandle, {
+        enumerable: false,
+      });
+    }
+    for (const entry of Object.values(o)) {
+      HideEditHandles(entry);
+    }
+  } else if (Array.isArray(o)) {
+    for (const entry of o) {
+      HideEditHandles(entry);
+    }
+  }
+}
+
+export function MapEditHandles(o: unknown, map: Map<number, any> = new Map()): Map<number, any> {
+  if (typeof o === 'object' && o !== null) {
+    if (o.hasOwnProperty(EditHandle)) {
+      map.set(o[EditHandle], o);
+    }
+    for (const entry of Object.values(o)) {
+      MapEditHandles(entry, map);
+    }
+  } else if (Array.isArray(o)) {
+    for (const entry of o) {
+      MapEditHandles(entry, map);
+    }
+  }
+  return map;
+}
