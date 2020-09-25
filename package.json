@@ -1,5 +1,5 @@
 {
-  "name": "@stoplight/elements",
+  "name": "root",
   "private": true,
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",
@@ -36,7 +36,7 @@
     "build": "yarn workspace @stoplight/elements build && yarn workspace @stoplight/elements-web-components build && yarn workspace @stoplight/elements-utils build",
     "build.docs": "yarn workspace @stoplight/elements build.docs && yarn workspace @stoplight/elements-web-components build.docs",
     "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
-    "release": "lerna publish --conventional-commits --yes",
+    "release": "lerna publish from-package --conventional-commits --yes",
     "release.docs": "yarn workspace @stoplight/elements release.docs",
     "type-check": "yarn workspaces run type-check",
     "test.prod": "yarn workspace @stoplight/elements test.prod && yarn workspace @stoplight/elements-utils test.prod",
