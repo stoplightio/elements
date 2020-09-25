@@ -12,7 +12,7 @@ import { JSONSchema4 } from 'json-schema';
 import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
-import { NodeTypeIcons } from '../../constants';
+import { NodeTypeColors, NodeTypeIcons } from '../../constants';
 import { InlineRefResolverContext } from '../../containers/Provider';
 import { MarkdownViewer } from '../MarkdownViewer';
 
@@ -108,7 +108,7 @@ const SchemaTitle = ({ title, errors }: { title?: string; errors?: string[] }) =
     <div className={cn('flex items-center p-2')} style={{ height: 30 }}>
       {title && (
         <div className="flex items-center flex-1">
-          <FAIcon icon={NodeTypeIcons['model']} />
+          <FAIcon icon={NodeTypeIcons['model']} style={{ color: NodeTypeColors['model'] }} />
           <div className={cn(Classes.TEXT_MUTED, 'px-2')} style={{ fontSize: 12 }}>
             {title}
           </div>
