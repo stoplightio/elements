@@ -1,4 +1,4 @@
-import { IHttpOperation } from '@stoplight/types';
+import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 
 import { EditHandle, ExtendWithEditHandle, HideEditHandles, MapEditHandles } from '../../constants';
 
@@ -330,10 +330,87 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
         },
       ],
     },
-    headers: [],
-    query: [],
-    cookie: [],
-    path: [],
+    query: [
+      {
+        [EditHandle]: { id: '16' },
+        schema: {
+          type: 'number',
+          default: 300,
+          enum: [0, 1, 3],
+          exclusiveMinimum: 0,
+          exclusiveMaximum: 10,
+          minimum: 5,
+          maximum: 10,
+        },
+        deprecated: true,
+        description: 'How many todos to limit?',
+        name: 'limit',
+        style: HttpParamStyles.Form,
+      },
+      {
+        [EditHandle]: { id: '17' },
+        schema: {
+          type: 'string',
+          default: '300',
+          enum: ['0', '1', '3'],
+          minLength: 0,
+          maxLength: 10,
+          explode: true,
+          allowEmptyValues: true,
+          allowReserved: true,
+        },
+        deprecated: true,
+        description: 'How many string todos to limit?',
+        name: 'value',
+        style: HttpParamStyles.Form,
+        examples: [
+          {
+            value: 'example value',
+            key: 'example',
+          },
+          {
+            value: 'another example',
+            key: 'example',
+          },
+          {
+            value: 'something else',
+            key: 'example',
+          },
+        ],
+      },
+      {
+        [EditHandle]: { id: '18' },
+        schema: {
+          type: 'boolean',
+          description: 'Only return completed',
+        },
+        name: 'completed',
+        style: HttpParamStyles.Form,
+      },
+    ],
+    headers: [
+      {
+        [EditHandle]: { id: '19' },
+        schema: {
+          type: 'string',
+          description: 'Your Stoplight account id',
+        },
+        name: 'account-id',
+        style: HttpParamStyles.Simple,
+        required: true,
+      },
+    ],
+    path: [
+      {
+        [EditHandle]: { id: '20' },
+        schema: {
+          type: 'string',
+        },
+        name: 'todoId',
+        style: HttpParamStyles.Simple,
+        required: true,
+      },
+    ],
   },
   tags: [
     {
@@ -356,6 +433,9 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
 };
 
 httpOperation.responses[EditHandle] = { id: '15' };
+httpOperation.request.query[EditHandle] = { id: '21' };
+httpOperation.request.headers[EditHandle] = { id: '22' };
+httpOperation.request.path[EditHandle] = { id: '23' };
 
 HideEditHandles(httpOperation);
 

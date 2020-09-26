@@ -1,3 +1,4 @@
+import { HttpParamStyles } from '@stoplight/types';
 import { boolean, button, object, RESET, select, text, withKnobs } from '@storybook/addon-knobs';
 import addons from '@storybook/addons';
 import { storiesOf } from '@storybook/react';
@@ -18,87 +19,12 @@ export const darkMode = () => boolean('Dark Mode', false);
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
 
-let highlighted: Element = null;
-
-// const highlight = (el: HTMLElement) => {
-//   if (highlighted) {
-//     highlighted.classList.remove('highlight');
-//   }
-//   highlighted = el;
-//   highlighted.classList.add('highlight');
-// };
-
-// const spy: React.MouseEventHandler = e => {
-//   let el = e.target as HTMLElement | null;
-//   while (el) {
-//     for (const className of el.className.split(' ')) {
-//       switch (className) {
-//         case 'HttpOperation': {
-//           console.log('HttpOperation', el.dataset.nodeid);
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpOperation__Description': {
-//           console.log('HttpOperation__Description');
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpOperation__Path': {
-//           console.log('HttpOperation__Path');
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpOperation__Method': {
-//           console.log('HttpOperation__Method');
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpSecuritySchemes__SecurityScheme': {
-//           console.log('HttpSecuritySchemes__SecurityScheme', el.dataset.key);
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpSecuritySchemes__OAuth2Flow': {
-//           console.log('HttpSecuritySchemes__OAuth2Flow', el.dataset.flow);
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpOperation__Body': {
-//           console.log('HttpOperation__Body');
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpOperation__Parameters': {
-//           console.log('HttpOperation__Parameters', el.dataset.type);
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpOperation__Parameter': {
-//           console.log('HttpOperation__Parameter', el.dataset.type, el.dataset.name);
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpOperation__Responses': {
-//           console.log('HttpOperation__Responses');
-//           highlight(el);
-//           return;
-//         }
-//         case 'HttpOperation__Response': {
-//           console.log('HttpOperation__Response');
-//           highlight(el);
-//           return;
-//         }
-//         default:
-//       }
-//     }
-//     el = el.parentElement;
-//   }
-// };
-
 let selected: { kind: string; edithandle: EditMetadata } = {
   kind: null,
   edithandle: null,
 };
+
+const selections: string[] = [];
 
 storiesOf('components/Docs', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
@@ -131,7 +57,7 @@ storiesOf('components/Docs', module)
   })
   .add('HTTP Operation', () => {
     return (
-      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })} onClick={spy}>
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <Docs nodeType="http_operation" nodeData={JSON.stringify(httpOperation)} />
         </Provider>
@@ -149,34 +75,14 @@ storiesOf('components/Docs', module)
   })
   .add('Editing', () => {
     const channel = addons.getChannel();
-    // const highlight = (el: HTMLElement) => {
-    //   if (highlighted) {
-    //     highlighted.classList.remove('highlight');
-    //   }
-    //   highlighted = el;
-    //   highlighted.classList.add('highlight');
-
-    //   console.log(selected);
-    //   console.log(EditHandlesMap.get(parseInt(selected.edithandle)));
-    //   // Force re-render in order to get Knobs.
-    //   bar(!foo);
-    //   channel.emit(RESET);
-    // };
 
     const highlight = () => {
       console.log('selected', selected);
       if (selected.kind && selected.edithandle) {
-        // const el = document.querySelector(`.${selected.kind}[data-edithandle="${selected.edithandle}"]`);
-        // if (highlighted) {
-        //   highlighted.classList.remove('highlight');
-        // }
-        // if (!el) return;
-        // highlighted = el;
-        // highlighted.classList.add('highlight');
-
-        console.log(selected);
+        selections.push(selected.edithandle.id);
+        console.log('selections', selections);
         const o = EditHandlesMap.get(selected.edithandle.id);
-        console.log(o);
+        console.log('current', o);
         o[EditHandle].selected = selected.edithandle.selected;
         // Force re-render in order to get Knobs.
         channel.emit(RESET);
@@ -232,17 +138,44 @@ storiesOf('components/Docs', module)
           }
           break;
         }
-        case 'HttpOperation__Body': {
+        case 'HttpOperation__Parameters': {
           const o = EditHandlesMap.get(selected.edithandle.id);
-          o.description = text('body description', o.description, 'In Situdio');
-          o.required = boolean('body required', o.required, 'In Situdio');
+          button(
+            'Add Parameter',
+            () => {
+              selected.edithandle = {
+                id: String(Math.floor(Math.random() * 1000000)),
+                selected: true,
+              };
+              const p = {
+                schema: {
+                  type: 'string',
+                },
+                name: '',
+                style: HttpParamStyles.Simple,
+                required: true,
+                [EditHandle]: selected.edithandle,
+              };
+              EditHandlesMap.set(selected.edithandle.id, p);
+              o.push(p);
+            },
+            'In Situdio',
+          );
           break;
         }
-        case 'HttpOperation__Response': {
+        case 'HttpOperation__Parameter': {
           const o = EditHandlesMap.get(selected.edithandle.id);
-          o.code = text('response code', o.code);
-          o.description = text('response description', o.description, 'In Situdio');
-          o.required = boolean('response required', o.required, 'In Situdio');
+          o.name = text('name', o.name, 'In Situdio');
+          o.style = select('style', Object.values(HttpParamStyles), o.style, 'In Situdio');
+          o.description = text('description', o.description, 'In Situdio');
+          o.required = boolean('required', o.required, 'In Situdio');
+          o.deprecated = boolean('deprecated', o.deprecated, 'In Situdio');
+          break;
+        }
+        case 'HttpOperation__Body': {
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.description = text('description', o.description, 'In Situdio');
+          o.required = boolean('required', o.required, 'In Situdio');
           break;
         }
         case 'HttpOperation__Responses': {
@@ -250,20 +183,29 @@ storiesOf('components/Docs', module)
           button(
             'Add Response',
             () => {
-              const h = Math.floor(Math.random() * 1000000);
+              selected.edithandle = {
+                id: String(Math.floor(Math.random() * 1000000)),
+                selected: true,
+              };
               const p = {
                 code: '100',
                 description: '',
                 required: '',
                 headers: [],
                 content: [],
-                [EditHandle]: h,
+                [EditHandle]: selected.edithandle,
               };
-              EditHandlesMap.set(h, p);
+              EditHandlesMap.set(selected.edithandle.id, p);
               o.push(p);
             },
             'In Situdio',
           );
+          break;
+        }
+        case 'HttpOperation__Response': {
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.code = text('code', o.code, 'In Situdio');
+          o.description = text('description', o.description, 'In Situdio');
           break;
         }
       }
@@ -272,9 +214,12 @@ storiesOf('components/Docs', module)
     const spy: React.MouseEventHandler = e => {
       let el = e.target as HTMLElement | null;
 
-      if (selected.edithandle) {
-        const o = EditHandlesMap.get(selected.edithandle.id);
-        if (o) delete o[EditHandle].selected;
+      if (selections.length && !(e.metaKey || e.ctrlKey)) {
+        for (const id of selections) {
+          const o = EditHandlesMap.get(id);
+          if (o) delete o[EditHandle].selected;
+        }
+        selections.length = 0;
       }
 
       selected = {
@@ -328,13 +273,13 @@ storiesOf('components/Docs', module)
             }
             case 'HttpOperation__Parameters': {
               selected.kind = selected.kind ?? 'HttpOperation__Parameters';
-              console.log('HttpOperation__Parameters', el.dataset.type);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
               highlight();
               return;
             }
             case 'HttpOperation__Parameter': {
               selected.kind = selected.kind ?? 'HttpOperation__Parameter';
-              console.log('HttpOperation__Parameter', el.dataset.type, el.dataset.name);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
               highlight();
               return;
             }

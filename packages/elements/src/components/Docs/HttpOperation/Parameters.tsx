@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
 import * as React from 'react';
 
+import { editHandle } from '../../../constants';
 import { InlineRefResolverContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
@@ -58,7 +59,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
   if (!parameters || !parameters.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Parameters', className)} data-type={parameterType}>
+    <div className={cn('HttpOperation__Parameters', className)} data-type={parameterType} {...editHandle(parameters)}>
       {title && <SectionTitle title={title} icon={icon} />}
 
       {sortBy(parameters, ['required', 'name']).map((parameter, index) => {
@@ -122,6 +123,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       className={cn('HttpOperation__Parameter pl-1', className)}
       data-type={parameterType}
       data-name={parameter.name}
+      {...editHandle(parameter)}
     >
       <div className="flex items-center">
         <div className="font-medium font-mono">{parameter.name}</div>
