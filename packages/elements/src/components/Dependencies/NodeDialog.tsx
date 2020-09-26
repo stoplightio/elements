@@ -1,4 +1,4 @@
-import { Dialog, Icon, IDialogProps } from '@stoplight/ui-kit';
+import { Dialog, FAIcon, IDialogProps } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import * as React from 'react';
 
@@ -27,7 +27,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
       isOpen={!!edge}
       title={
         <div className="flex items-center mr-2">
-          <div className="flex-1 flex items-center">
+          <div className="flex-1 flex mx-2 items-center">
             {nodeName} {nodeVersion !== '0.0' && <span className="mx-2 text-base text-gray-6">v{nodeVersion}</span>}
           </div>
 
@@ -38,7 +38,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
           )}
         </div>
       }
-      icon={<Icon icon={NodeTypeIcons[nodeType]} iconSize={20} color={NodeTypeColors[nodeType]} />}
+      icon={<FAIcon className="fa-lg" icon={NodeTypeIcons[nodeType]} style={{ color: NodeTypeColors[nodeType] }} />}
       style={{ width: 800, height: 500 }}
     >
       <div className="h-full">

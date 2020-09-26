@@ -1,5 +1,5 @@
 import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
-import { IconName } from '@stoplight/ui-kit';
+import { FAIconName } from '@stoplight/ui-kit';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',
@@ -23,15 +23,15 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   table_of_contents: '',
 };
 
-export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
-  http_operation: 'locate',
+export const NodeTypeIcons: Dictionary<FAIconName, NodeType> = {
+  http_operation: 'crosshairs',
   http_service: 'cloud',
-  article: 'manual',
+  article: 'book-open',
   model: 'cube',
   http_server: 'database',
-  unknown: 'help',
-  generic: 'help',
-  table_of_contents: 'help',
+  unknown: 'question-circle',
+  generic: 'question-circle',
+  table_of_contents: 'question-circle',
 };
 
 export const NodeTypeIconsUnicode: Dictionary<string, NodeType> = {
