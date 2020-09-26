@@ -170,6 +170,13 @@ storiesOf('components/Docs', module)
           o.description = text('description', o.description, 'In Situdio');
           o.required = boolean('required', o.required, 'In Situdio');
           o.deprecated = boolean('deprecated', o.deprecated, 'In Situdio');
+          button(
+            'Delete',
+            () => {
+              alert('Actually... that is kinda hard to implement using this data model. Who IS my parent?');
+            },
+            'In Situdio',
+          );
           break;
         }
         case 'HttpOperation__Body': {
