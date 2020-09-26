@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.151](https://github.com/stoplightio/elements/compare/v6.0.0-beta.150...v6.0.0-beta.151) (2020-09-26)
+
+
+### Features
+
+* replace Blueprint icons with FontAwesome ([#596](https://github.com/stoplightio/elements/issues/596)) ([3dfe59d](https://github.com/stoplightio/elements/commit/3dfe59d6ae7d2a64962a405bb768e3e89c5f4ab2))
+
+
+
+
+
 # [6.0.0-beta.150](https://github.com/stoplightio/elements/compare/v6.0.0-beta.149...v6.0.0-beta.150) (2020-09-24)
 
 
