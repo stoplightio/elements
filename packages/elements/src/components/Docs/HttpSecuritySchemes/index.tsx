@@ -10,12 +10,12 @@ import cn from 'classnames';
 import { entries, flatten, isEmpty, map, startCase } from 'lodash';
 import * as React from 'react';
 
-import { editHandle, ExtendWithEditHandle, HttpSecuritySchemeColors } from '../../../constants';
+import { editHandle, HttpSecuritySchemeColors } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from '../HttpOperation/SectionTitle';
 
 export interface ISecuritiesProps {
-  securities?: ExtendWithEditHandle<HttpSecurityScheme[]>;
+  securities?: HttpSecurityScheme[];
   className?: string;
   title?: string;
 }
@@ -41,17 +41,10 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
 };
 HttpSecuritySchemes.displayName = 'HttpSecuritySchemes';
 
-const SecurityScheme = ({
-  security,
-  className,
-}: {
-  security: ExtendWithEditHandle<HttpSecurityScheme>;
-  className?: string;
-}) => {
+const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme; className?: string }) => {
   return (
     <div
       className={cn(className, 'HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start')}
-      data-key={security.key}
       style={{ alignItems: 'start' }}
       {...editHandle(security)}
     >
@@ -116,7 +109,7 @@ const OAuth2Flow = ({
   if (!flowObject) return null;
 
   return (
-    <div className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow" data-flow={flow}>
+    <div className="py-2 mt-2 border-t HttpSecuritySchemes__OAuth2Flow">
       <div className="py-2 font-semibold">{startCase(flow)} OAuth Flow</div>
 
       {'authorizationUrl' in flowObject && flowObject.authorizationUrl && (

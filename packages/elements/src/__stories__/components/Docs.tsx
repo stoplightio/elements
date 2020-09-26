@@ -266,12 +266,6 @@ storiesOf('components/Docs', module)
               highlight();
               return;
             }
-            case 'HttpSecuritySchemes__OAuth2Flow': {
-              selected.kind = selected.kind ?? 'HttpSecuritySchemes__OAuth2Flow';
-              console.log('HttpSecuritySchemes__OAuth2Flow', el.dataset.flow);
-              highlight();
-              return;
-            }
             case 'HttpOperation__Body': {
               selected.kind = selected.kind ?? 'HttpOperation__Body';
               selected.edithandle = { id: el.dataset.edithandle, selected: true };

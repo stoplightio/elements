@@ -3,7 +3,7 @@ import { FAIcon } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { editHandle, ExtendWithEditHandle } from '../../../constants';
+import { editHandle } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
 import { Parameters } from './Parameters';
@@ -20,11 +20,11 @@ export const HttpCodeColor = {
 
 export interface IResponseProps {
   className?: string;
-  response: ExtendWithEditHandle<IHttpOperationResponse>;
+  response: IHttpOperationResponse;
 }
 
 export interface IResponsesProps {
-  responses: ExtendWithEditHandle<IHttpOperationResponse[]>;
+  responses: IHttpOperationResponse[];
   className?: string;
 }
 

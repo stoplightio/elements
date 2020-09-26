@@ -2,7 +2,7 @@ import { IHttpOperationRequestBody } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { editHandle, ExtendWithEditHandle } from '../../../constants';
+import { editHandle } from '../../../constants';
 import { isJSONSchema } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
@@ -10,7 +10,7 @@ import { SectionTitle } from './SectionTitle';
 import { getExamplesObject } from './utils';
 
 export interface IBodyProps {
-  body: ExtendWithEditHandle<IHttpOperationRequestBody>;
+  body: IHttpOperationRequestBody;
   className?: string;
 }
 
