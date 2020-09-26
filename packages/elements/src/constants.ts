@@ -140,11 +140,16 @@ export const HttpCodeDescriptions = {
 
 export const EditHandle = Symbol('EditHandle');
 
+export type EditMetadata = {
+  id: string;
+  selected?: boolean | string;
+};
+
 // Deeply extend an interface with optional `EditHandle` symbol properties
 export type ExtendWithEditHandle<T> = T extends Array<infer P>
-  ? Array<ExtendWithEditHandle<P>> & { [EditHandle]?: any }
+  ? Array<ExtendWithEditHandle<P>> & { [EditHandle]?: EditMetadata }
   : T extends object
-  ? { [P in keyof T]: ExtendWithEditHandle<T[P]> } & { [EditHandle]?: any }
+  ? { [P in keyof T]: ExtendWithEditHandle<T[P]> } & { [EditHandle]?: EditMetadata }
   : T;
 
 // Hide Edit handles from other code that interacts with it.
@@ -167,10 +172,10 @@ export function HideEditHandles(o: unknown) {
   }
 }
 
-export function MapEditHandles(o: unknown, map: Map<number, any> = new Map()): Map<number, any> {
+export function MapEditHandles(o: unknown, map: Map<string, any> = new Map()): Map<string, any> {
   if (typeof o === 'object' && o !== null) {
     if (o.hasOwnProperty(EditHandle)) {
-      map.set(o[EditHandle], o);
+      map.set(o[EditHandle].id, o);
     }
     for (const entry of Object.values(o)) {
       MapEditHandles(entry, map);
@@ -181,4 +186,16 @@ export function MapEditHandles(o: unknown, map: Map<number, any> = new Map()): M
     }
   }
   return map;
+}
+
+export function editHandle(o: unknown, p: string | boolean = true) {
+  if (typeof o === 'object' && o !== null) {
+    if (o[EditHandle]) {
+      return {
+        'data-edithandle': o[EditHandle].id,
+        ...(o[EditHandle].selected && o[EditHandle].selected === p ? { 'data-selected': '' } : {}),
+      };
+    }
+  }
+  return {};
 }

@@ -10,7 +10,7 @@ import cn from 'classnames';
 import { entries, flatten, isEmpty, map, startCase } from 'lodash';
 import * as React from 'react';
 
-import { EditHandle, ExtendWithEditHandle, HttpSecuritySchemeColors } from '../../../constants';
+import { editHandle, ExtendWithEditHandle, HttpSecuritySchemeColors } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from '../HttpOperation/SectionTitle';
 
@@ -53,7 +53,7 @@ const SecurityScheme = ({
       className={cn(className, 'HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start')}
       data-key={security.key}
       style={{ alignItems: 'start' }}
-      data-edithandle={security[EditHandle]}
+      {...editHandle(security)}
     >
       <div style={{ minWidth: '60px' }}>
         <div>{security.key}</div>

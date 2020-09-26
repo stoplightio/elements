@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
+import { editHandle } from '../../../constants';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 import { Body } from './Body';
 import { Parameters } from './Parameters';
@@ -19,7 +20,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ request, secur
   const { path, headers, query, cookie, body } = request;
 
   return (
-    <div className={cn('HttpOperation__Request', className)}>
+    <div className={cn('HttpOperation__Request', className)} {...editHandle(request)}>
       <HttpSecuritySchemes className="mb-10" title="Authorization" securities={flatten(security)} />
 
       <Parameters className="mb-10" title="Path Parameters" parameterType="path" parameters={path} />

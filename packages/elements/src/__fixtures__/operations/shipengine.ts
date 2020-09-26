@@ -3,7 +3,7 @@ import { IHttpOperation } from '@stoplight/types';
 import { EditHandle, ExtendWithEditHandle, HideEditHandles, MapEditHandles } from '../../constants';
 
 export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
-  [EditHandle]: 1,
+  [EditHandle]: { id: '1' },
   id: '?http-operation-id?',
   iid: 'parse_address',
   description:
@@ -13,14 +13,14 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
   summary: 'Parse an address',
   responses: [
     {
-      [EditHandle]: 2,
+      [EditHandle]: { id: '2' },
       code: '200',
       description:
         'Returns the parsed address, as well as a confidence score and a list of all the entities that were recognized in the text.\n',
       headers: [],
       contents: [
         {
-          [EditHandle]: 3,
+          [EditHandle]: { id: '3' },
           mediaType: 'application/json',
           schema: {
             $ref: '#/components/schemas/parse_address_response_body',
@@ -28,7 +28,7 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
           },
           examples: [
             {
-              [EditHandle]: 4,
+              [EditHandle]: { id: '4' },
               key: 'text_only',
               description:
                 'This response shows that the address-recognition API was able to recognize all the address entities in the text.  Notice that the `country_code` is not populated and the `address_residential_indicator` is "unknown", since neither of these fields was included in the text.\n',
@@ -133,7 +133,7 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
               },
             },
             {
-              [EditHandle]: 5,
+              [EditHandle]: { id: '5' },
               key: 'some_known_fields',
               description:
                 'This response is shows that the address-recognition API was able to recognize all the address entities in the text.  Notice that the `country_code` and `address_residential_indicator` fields are populated with the values that were provided in the request.\n',
@@ -244,13 +244,13 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
       ],
     },
     {
-      [EditHandle]: 6,
+      [EditHandle]: { id: '6' },
       code: '400',
       description: 'The request contained errors.',
       headers: [],
       contents: [
         {
-          [EditHandle]: 7,
+          [EditHandle]: { id: '7' },
           mediaType: 'application/json',
           schema: {
             $ref: '#/components/schemas/error_response_body',
@@ -262,17 +262,17 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
       ],
     },
     {
-      [EditHandle]: 8,
+      [EditHandle]: { id: '8' },
       code: '500',
       description:
         "An error occurred on ShipEngine's side.\n\n> This error will automatically be reported to our engineers.\n",
       headers: [],
       contents: [
         {
-          [EditHandle]: 9,
+          [EditHandle]: { id: '9' },
           mediaType: 'application/json',
           schema: {
-            [EditHandle]: 10,
+            [EditHandle]: { id: '10' },
             $ref: '#/components/schemas/error_response_body',
             $schema: 'http://json-schema.org/draft-04/schema#',
           },
@@ -284,14 +284,14 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
   ],
   servers: [
     {
-      [EditHandle]: 11,
+      [EditHandle]: { id: '11' },
       url: 'https://api.shipengine.com',
     },
   ],
   request: {
-    [EditHandle]: 12,
+    [EditHandle]: { id: '12' },
     body: {
-      [EditHandle]: 13,
+      [EditHandle]: { id: '13' },
       required: true,
       description:
         "The only required field is `text`, which is the text to be parsed. You can optionally also provide an `address` containing already-known values. For example, you may already know the recipient's name, city, and country, and only want to parse the street address into separate lines.\n",
@@ -343,7 +343,7 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
   security: [
     [
       {
-        [EditHandle]: 14,
+        [EditHandle]: { id: '14' },
         key: 'api_key',
         description:
           "To authenticate yourself to ShipEngine, you need to include an `API-Key` header in each API call. If you don't include a key when making an API request, or if you use an incorrect or expired key, then ShipEngine will respond with a `401 Unauthorized` error.\n\nLearn more about API keys in our [authentication guide](https://www.shipengine.com/docs/auth/).\n",
@@ -355,7 +355,7 @@ export const httpOperation: ExtendWithEditHandle<IHttpOperation> = {
   ],
 };
 
-httpOperation.responses[EditHandle] = 15;
+httpOperation.responses[EditHandle] = { id: '15' };
 
 HideEditHandles(httpOperation);
 

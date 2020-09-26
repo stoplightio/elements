@@ -1,5 +1,5 @@
-import { button, object, select, text, withKnobs } from '@storybook/addon-knobs';
-import { boolean } from '@storybook/addon-knobs/react';
+import { boolean, button, object, RESET, select, text, withKnobs } from '@storybook/addon-knobs';
+import addons from '@storybook/addons';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
@@ -9,7 +9,7 @@ import { EditHandlesMap, httpOperation as shipengineHttpOperation } from '../../
 import model from '../../__fixtures__/schemas/contact.json';
 import { httpService } from '../../__fixtures__/services/petstore';
 import { Docs, ParsedDocs } from '../../components/Docs';
-import { EditHandle } from '../../constants';
+import { EditHandle, EditMetadata } from '../../constants';
 import { Provider } from '../../containers/Provider';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
@@ -18,7 +18,7 @@ export const darkMode = () => boolean('Dark Mode', false);
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
 
-let highlighted: HTMLElement = null;
+let highlighted: Element = null;
 
 // const highlight = (el: HTMLElement) => {
 //   if (highlighted) {
@@ -95,7 +95,7 @@ let highlighted: HTMLElement = null;
 //   }
 // };
 
-let selected: { kind: string; edithandle: string } = {
+let selected: { kind: string; edithandle: EditMetadata } = {
   kind: null,
   edithandle: null,
 };
@@ -148,69 +148,105 @@ storiesOf('components/Docs', module)
     );
   })
   .add('Editing', () => {
-    const [foo, bar] = React.useState(false);
-    const highlight = (el: HTMLElement) => {
-      if (highlighted) {
-        highlighted.classList.remove('highlight');
-      }
-      highlighted = el;
-      highlighted.classList.add('highlight');
+    const channel = addons.getChannel();
+    // const highlight = (el: HTMLElement) => {
+    //   if (highlighted) {
+    //     highlighted.classList.remove('highlight');
+    //   }
+    //   highlighted = el;
+    //   highlighted.classList.add('highlight');
 
-      console.log(selected);
-      console.log(EditHandlesMap.get(parseInt(selected.edithandle)));
-      // Force re-render in order to get Knobs.
-      bar(!foo);
+    //   console.log(selected);
+    //   console.log(EditHandlesMap.get(parseInt(selected.edithandle)));
+    //   // Force re-render in order to get Knobs.
+    //   bar(!foo);
+    //   channel.emit(RESET);
+    // };
+
+    const highlight = () => {
+      console.log('selected', selected);
+      if (selected.kind && selected.edithandle) {
+        // const el = document.querySelector(`.${selected.kind}[data-edithandle="${selected.edithandle}"]`);
+        // if (highlighted) {
+        //   highlighted.classList.remove('highlight');
+        // }
+        // if (!el) return;
+        // highlighted = el;
+        // highlighted.classList.add('highlight');
+
+        console.log(selected);
+        const o = EditHandlesMap.get(selected.edithandle.id);
+        console.log(o);
+        o[EditHandle].selected = selected.edithandle.selected;
+        // Force re-render in order to get Knobs.
+        channel.emit(RESET);
+      }
     };
 
     if (selected.edithandle) {
       switch (selected.kind) {
         case 'HttpOperation': {
-          const o = EditHandlesMap.get(parseInt(selected.edithandle));
-          o.method = select('method', ['get', 'put', 'post', 'delete', 'etc'], o.method, 'Operation');
-          o.path = text('path', o.path, 'Operation');
-          o.description = text('description', o.description, 'Operation');
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.method = select('method', ['get', 'put', 'post', 'delete', 'etc'], o.method, 'In Situdio');
+          o.path = text('path', o.path, 'In Situdio');
+          o.description = text('description', o.description, 'In Situdio');
+          break;
+        }
+        case 'HttpOperation__Method': {
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.method = select('method', ['get', 'put', 'post', 'delete', 'etc'], o.method, 'In Situdio');
+          break;
+        }
+        case 'HttpOperation__Path': {
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.path = text('path', o.path, 'In Situdio');
+          break;
+        }
+        case 'HttpOperation__Description': {
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.description = text('description', o.description, 'In Situdio');
           break;
         }
         case 'HttpSecuritySchemes__SecurityScheme': {
-          const o = EditHandlesMap.get(parseInt(selected.edithandle));
-          o.key = text('key', o.key, 'SecurityScheme');
-          o.description = text('description', o.description, 'SecurityScheme');
-          o.type = select('type', ['apiKey', 'http', 'openIdConnect', 'oauth2'], o.type, 'SecurityScheme');
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.key = text('key', o.key, 'In Situdio');
+          o.description = text('description', o.description, 'In Situdio');
+          o.type = select('type', ['apiKey', 'http', 'openIdConnect', 'oauth2'], o.type, 'In Situdio');
           switch (o.type) {
             case 'apiKey': {
-              o.name = text('name', o.name, 'SecurityScheme');
-              o.in = select('in', ['query', 'header', 'cookie'], o.in, 'SecurityScheme');
+              o.name = text('name', o.name, 'In Situdio');
+              o.in = select('in', ['query', 'header', 'cookie'], o.in, 'In Situdio');
               break;
             }
             case 'http': {
-              o.scheme = select('scheme', ['basic', 'digest', 'bearer'], o.scheme, 'SecurityScheme');
+              o.scheme = select('scheme', ['basic', 'digest', 'bearer'], o.scheme, 'In Situdio');
               if (o.scheme === 'bearer') {
-                o.bearerFormat = text('bearerFormat', o.bearerFormat, 'SecurityScheme');
+                o.bearerFormat = text('bearerFormat', o.bearerFormat, 'In Situdio');
               }
               break;
             }
             case 'openIdConnect': {
-              o.openIdConnectUrl = text('openIdConnectUrl', o.openIdConnectUrl, 'SecurityScheme');
+              o.openIdConnectUrl = text('openIdConnectUrl', o.openIdConnectUrl, 'In Situdio');
               break;
             }
           }
           break;
         }
         case 'HttpOperation__Body': {
-          const o = EditHandlesMap.get(parseInt(selected.edithandle));
-          o.description = text('description', o.description, 'Body');
-          o.required = boolean('required', o.required, 'Body');
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.description = text('body description', o.description, 'In Situdio');
+          o.required = boolean('body required', o.required, 'In Situdio');
           break;
         }
         case 'HttpOperation__Response': {
-          const o = EditHandlesMap.get(parseInt(selected.edithandle));
-          o.code = text('code', o.code, 'Response');
-          o.description = text('description', o.description, 'Response');
-          o.required = boolean('required', o.required, 'Response');
+          const o = EditHandlesMap.get(selected.edithandle.id);
+          o.code = text('response code', o.code);
+          o.description = text('response description', o.description, 'In Situdio');
+          o.required = boolean('response required', o.required, 'In Situdio');
           break;
         }
         case 'HttpOperation__Responses': {
-          const o = EditHandlesMap.get(parseInt(selected.edithandle));
+          const o = EditHandlesMap.get(selected.edithandle.id);
           button(
             'Add Response',
             () => {
@@ -226,7 +262,7 @@ storiesOf('components/Docs', module)
               EditHandlesMap.set(h, p);
               o.push(p);
             },
-            'Responses',
+            'In Situdio',
           );
           break;
         }
@@ -235,6 +271,12 @@ storiesOf('components/Docs', module)
 
     const spy: React.MouseEventHandler = e => {
       let el = e.target as HTMLElement | null;
+
+      if (selected.edithandle) {
+        const o = EditHandlesMap.get(selected.edithandle.id);
+        if (o) delete o[EditHandle].selected;
+      }
+
       selected = {
         kind: null,
         edithandle: null,
@@ -244,86 +286,82 @@ storiesOf('components/Docs', module)
           switch (className) {
             case 'HttpOperation': {
               selected.kind = selected.kind ?? 'HttpOperation';
-              selected.edithandle = el.dataset.edithandle;
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
+              highlight();
               return;
             }
             case 'HttpOperation__Description': {
               selected.kind = selected.kind ?? 'HttpOperation__Description';
-              console.log('HttpOperation__Description');
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: 'description' };
+              highlight();
               return;
             }
             case 'HttpOperation__Path': {
               selected.kind = selected.kind ?? 'HttpOperation__Path';
-              console.log('HttpOperation__Path');
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: 'path' };
+              highlight();
               return;
             }
             case 'HttpOperation__Method': {
               selected.kind = selected.kind ?? 'HttpOperation__Method';
-              console.log('HttpOperation__Method');
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: 'method' };
+              highlight();
               return;
             }
             case 'HttpSecuritySchemes__SecurityScheme': {
               selected.kind = selected.kind ?? 'HttpSecuritySchemes__SecurityScheme';
-              selected.edithandle = el.dataset.edithandle;
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
+              highlight();
               return;
             }
             case 'HttpSecuritySchemes__OAuth2Flow': {
               selected.kind = selected.kind ?? 'HttpSecuritySchemes__OAuth2Flow';
               console.log('HttpSecuritySchemes__OAuth2Flow', el.dataset.flow);
-              selected.flow = el.dataset.flow;
-              highlight(el);
+              highlight();
               return;
             }
             case 'HttpOperation__Body': {
               selected.kind = selected.kind ?? 'HttpOperation__Body';
-              selected.edithandle = el.dataset.edithandle;
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
+              highlight();
               return;
             }
             case 'HttpOperation__Parameters': {
               selected.kind = selected.kind ?? 'HttpOperation__Parameters';
               console.log('HttpOperation__Parameters', el.dataset.type);
-              selected.type = el.dataset.type;
-              highlight(el);
+              highlight();
               return;
             }
             case 'HttpOperation__Parameter': {
               selected.kind = selected.kind ?? 'HttpOperation__Parameter';
               console.log('HttpOperation__Parameter', el.dataset.type, el.dataset.name);
-              selected.type = el.dataset.type;
-              selected.name = el.dataset.name;
-              highlight(el);
+              highlight();
               return;
             }
             case 'HttpOperation__Responses': {
               selected.kind = selected.kind ?? 'HttpOperation__Responses';
-              selected.edithandle = el.dataset.edithandle;
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
+              highlight();
               return;
             }
             case 'HttpOperation__Response': {
               selected.kind = selected.kind ?? 'HttpOperation__Response';
-              selected.edithandle = el.dataset.edithandle;
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
+              highlight();
               return;
             }
             case 'HttpOperation__ResponseExample': {
               selected.kind = selected.kind ?? 'HttpOperation__ResponseExample';
               console.log('HttpOperation__ResponseExample');
-              selected.edithandle = el.dataset.edithandle;
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
+              highlight();
               return;
             }
             case 'HttpOperation__ResponseExample_Tab': {
               selected.kind = selected.kind ?? 'HttpOperation__ResponseExample_Tab';
               console.log('HttpOperation__ResponseExample_Tab');
-              selected.edithandle = el.dataset.edithandle;
-              highlight(el);
+              selected.edithandle = { id: el.dataset.edithandle, selected: true };
+              highlight();
               return;
             }
             default:

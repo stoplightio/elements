@@ -2,7 +2,7 @@ import { IHttpOperationRequestBody } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { EditHandle, ExtendWithEditHandle } from '../../../constants';
+import { editHandle, ExtendWithEditHandle } from '../../../constants';
 import { isJSONSchema } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
@@ -26,7 +26,7 @@ export const Body = ({ body, className }: IBodyProps) => {
   if (!content || (!body.description && !schema && !examples)) return null;
 
   return (
-    <div className={cn('HttpOperation__Body', className)} data-edithandle={body[EditHandle]}>
+    <div className={cn('HttpOperation__Body', className)} {...editHandle(body)}>
       <SectionTitle title="Request Body" />
 
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}

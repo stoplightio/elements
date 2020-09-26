@@ -4,3 +4,8 @@
 @import 'Search.scss';
 @import 'RequestMaker.scss';
 @import 'API.scss';
+
+[data-selected] {
+  outline-style: auto;
+  outline-color: Highlight;
+}

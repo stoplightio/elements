@@ -5,7 +5,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
-import { EditHandle, HttpMethodColors } from '../../../constants';
+import { editHandle, HttpMethodColors } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { Request } from './Request';
 import { Responses } from './Responses';
@@ -16,7 +16,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
   const color = HttpMethodColors[data.method!] || 'gray';
 
   return (
-    <div className={cn('HttpOperation', className)} data-edithandle={data[EditHandle]}>
+    <div className={cn('HttpOperation', className)} {...editHandle(data)}>
       <h2 className={cn(Classes.HEADING, 'flex items-center mb-10')}>
         <div
           className={cn(
@@ -24,12 +24,16 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
             `text-${color}`,
             `border-${color}`,
           )}
+          {...editHandle(data, 'method')}
         >
           {data.method || 'UNKNOWN'}
         </div>
 
         {data.path && (
-          <div className="HttpOperation__Path flex-1 font-medium text-gray-6 dark:text-gray-3 break-all">
+          <div
+            className="HttpOperation__Path flex-1 font-medium text-gray-6 dark:text-gray-3 break-all"
+            {...editHandle(data, 'path')}
+          >
             {data.path}
           </div>
         )}
@@ -38,6 +42,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
       <MarkdownViewer
         className="HttpOperation__Description mb-10 ml-1"
         markdown={data.description || '*No description.*'}
+        {...editHandle(data, 'description')}
       />
 
       <Request request={data.request} security={data.security} />
