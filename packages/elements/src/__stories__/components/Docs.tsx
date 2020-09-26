@@ -358,7 +358,7 @@ storiesOf('components/Docs', module)
     }
 
     const el = (
-      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })} onClick={spy}>
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <ParsedDocs nodeType="http_operation" nodeData={shipengineHttpOperation} />
         </Provider>
