@@ -1,6 +1,6 @@
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
 import { Dictionary, HttpParamStyles, IHttpParam, Primitive } from '@stoplight/types';
-import { FAIconProp, Tag } from '@stoplight/ui-kit';
+import { Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
 import * as React from 'react';
@@ -16,7 +16,6 @@ export interface IParametersProps {
   parameterType: ParameterType;
   parameters?: IHttpParam[];
   className?: string;
-  icon?: FAIconProp;
 }
 
 const numberValidationNames = [
@@ -52,14 +51,13 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
   parameterType,
   title,
   className,
-  icon,
 }) => {
   const resolveRef = React.useContext(InlineRefResolverContext);
   if (!parameters || !parameters.length) return null;
 
   return (
     <div className={cn('HttpOperation__Parameters', className)}>
-      {title && <SectionTitle title={title} icon={icon} />}
+      {title && <SectionTitle title={title} />}
 
       {sortBy(parameters, ['required', 'name']).map((parameter, index) => {
         const resolvedSchema =
