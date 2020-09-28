@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.148](https://github.com/stoplightio/elements/compare/v6.0.0-beta.147...v6.0.0-beta.148) (2020-09-23)
+
+
+### Features
+
+* **api:** stacked layout ([#578](https://github.com/stoplightio/elements/issues/578)) ([cd6aa21](https://github.com/stoplightio/elements/commit/cd6aa215fd006686187093231c169bbdd2e06d3c))
+
+
+
+
+
+# [6.0.0-beta.145](https://github.com/stoplightio/elements/compare/v6.0.0-beta.144...v6.0.0-beta.145) (2020-09-18)
+
+
+### Bug Fixes
+
+* **elements-web-components:** Scoped CSS applies to Portals ([#586](https://github.com/stoplightio/elements/issues/586)) ([e63659f](https://github.com/stoplightio/elements/commit/e63659f922cff5377f7170db0463269c70645f47))
+
+
+
+
+
+# [6.0.0-beta.143](https://github.com/stoplightio/elements/compare/v6.0.0-beta.142...v6.0.0-beta.143) (2020-09-17)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.141](https://github.com/stoplightio/elements/compare/v6.0.0-beta.140...v6.0.0-beta.141) (2020-09-17)
+
+
+### Features
+
+* apply new component naming conventions to the public components ([#579](https://github.com/stoplightio/elements/issues/579)) ([f3c75e4](https://github.com/stoplightio/elements/commit/f3c75e477174bc8bcf2a0bf08a9ca04ea64c3bb1))
+
+
+
+
+
+# [6.0.0-beta.140](https://github.com/stoplightio/elements/compare/v6.0.0-beta.139...v6.0.0-beta.140) (2020-09-16)
+
+
+### Features
+
+* **elements:** use elements-utils for tree generation ([#568](https://github.com/stoplightio/elements/issues/568)) ([e4581d8](https://github.com/stoplightio/elements/commit/e4581d8181a8280f1fb9e8bad9ed5d74010cc081))
+
+
+
+
+
 # [6.0.0-beta.137](https://github.com/stoplightio/elements/compare/v6.0.0-beta.136...v6.0.0-beta.137) (2020-09-11)
 
 

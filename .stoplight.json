@@ -1,0 +1,13 @@
+{
+  "exclude": [
+    "**/__fixtures__/**"
+  ],
+  "formats": {
+    "markdown": {
+      "rootDir": "docs"
+    },
+    "image": {
+      "rootDir": "docs/assets/images"
+    }
+  }
+}

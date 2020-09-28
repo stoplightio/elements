@@ -1,11 +1,18 @@
 import '../index';
 
-import { text, withKnobs } from '@storybook/addon-knobs';
+import { createTemplate } from './util';
 
-export default { title: 'Api', decorators: [withKnobs] };
+const Template = createTemplate('elements-api');
 
-export const defaultApi = () =>
-  `<stoplight-api apiDescriptionUrl='${text(
-    'apiDescriptionUrl',
-    'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json',
-  )}' />`;
+export default { title: 'API' };
+
+export const TodosAPI = Template.bind({});
+TodosAPI.args = {
+  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json',
+};
+
+export const ZoomApi = Template.bind({});
+ZoomApi.args = {
+  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
+};
+ZoomApi.storyName = 'Complex API with inline `$ref`s';

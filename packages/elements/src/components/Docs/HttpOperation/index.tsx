@@ -12,20 +12,22 @@ import { Responses } from './Responses';
 
 export type HttpOperationProps = IDocsComponentProps<Partial<IHttpOperation>>;
 
-const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data }) => {
+const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless }) => {
   const color = HttpMethodColors[data.method!] || 'gray';
 
   return (
     <div className={cn('HttpOperation', className)}>
-      <h2 className={cn(Classes.HEADING, 'flex items-center mb-10')}>
-        <div
-          className={cn(`uppercase mr-5 font-semibold border rounded py-1 px-2`, `text-${color}`, `border-${color}`)}
-        >
-          {data.method || 'UNKNOWN'}
-        </div>
+      {!headless && (
+        <h2 className={cn(Classes.HEADING, 'flex items-center mb-10')}>
+          <div
+            className={cn(`uppercase mr-5 font-semibold border rounded py-1 px-2`, `text-${color}`, `border-${color}`)}
+          >
+            {data.method || 'UNKNOWN'}
+          </div>
 
-        {data.path && <div className="flex-1 font-medium text-gray-6 dark:text-gray-3 break-all">{data.path}</div>}
-      </h2>
+          {data.path && <div className="flex-1 font-medium text-gray-6 dark:text-gray-3 break-all">{data.path}</div>}
+        </h2>
+      )}
 
       <MarkdownViewer
         className="HttpOperation__Description mb-10 ml-1"
