@@ -6,8 +6,6 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { HttpMethodColors } from '../../constants';
-import { InlineRefResolverProvider } from '../../containers/Provider';
-import { useBundledData } from '../../hooks/useBundledData';
 import { getNodeType, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { TryIt } from '../TryIt';
@@ -15,8 +13,7 @@ import { TryIt } from '../TryIt';
 type StackedLayoutProps = {
   uriMap: IUriMap;
   tree: ITableOfContents;
-  apiDescriptionUrl?: string;
-  document?: unknown;
+  bundledNodeData: unknown;
 };
 
 type ItemRowProps = {
@@ -24,15 +21,13 @@ type ItemRowProps = {
   nodeType: NodeType;
   type: string;
   title: string;
-  apiDescriptionUrl?: string;
-  document?: unknown;
 };
 
 const itemMatchesHash = (hash: string, item: Pick<ItemRowProps, 'title' | 'type'>) => {
   return hash.substr(1) === `${item.title}-${item.type}`;
 };
 
-export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree, apiDescriptionUrl, document }) => {
+export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree, bundledNodeData }) => {
   const groups = tree.items.filter(isGroup);
 
   return (
@@ -41,24 +36,13 @@ export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree, apiD
         <Docs className="mx-auto" nodeData={uriMap['/']} nodeType={NodeType.HttpService} />
       </div>
       {groups.map(group => (
-        <Group
-          key={group.title}
-          group={group}
-          uriMap={uriMap}
-          apiDescriptionUrl={apiDescriptionUrl}
-          document={document}
-        />
+        <Group key={group.title} group={group} uriMap={uriMap} />
       ))}
     </div>
   );
 };
 
-const Group: React.FC<{ group: GroupItem; uriMap: IUriMap; apiDescriptionUrl?: string; document?: unknown }> = ({
-  group,
-  uriMap,
-  apiDescriptionUrl,
-  document,
-}) => {
+const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const { hash } = useLocation();
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
@@ -120,17 +104,7 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap; apiDescriptionUrl?: s
           .filter(isItem)
           .map(mapItems)
           .map(({ nodeData, nodeType, type, title, uri }) => {
-            return (
-              <ItemRow
-                key={uri}
-                data={nodeData}
-                nodeType={nodeType}
-                type={type}
-                title={title}
-                apiDescriptionUrl={apiDescriptionUrl}
-                document={document}
-              />
-            );
+            return <ItemRow key={uri} data={nodeData} nodeType={nodeType} type={type} title={title} />;
           })}
       </Collapse>
     </div>
@@ -139,14 +113,13 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap; apiDescriptionUrl?: s
 
 type PanelTabId = 'docs' | 'tryit';
 
-const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title, apiDescriptionUrl, document }) => {
+const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const { hash } = useLocation();
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const [tabId, setTabId] = React.useState<PanelTabId>('docs');
   const color = HttpMethodColors[type] || 'gray';
   const showTabs = nodeType === NodeType.HttpOperation;
-  const bundledNodeData = useBundledData(nodeType, data, { baseUrl: apiDescriptionUrl });
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -195,11 +168,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title, apiDescr
               id="docs"
               title="Docs"
               className="p-4"
-              panel={
-                <InlineRefResolverProvider document={document}>
-                  <Docs nodeType={nodeType} nodeData={bundledNodeData} headless />
-                </InlineRefResolverProvider>
-              }
+              panel={<Docs nodeType={nodeType} nodeData={bundledNodeData} headless />}
             />
             <Tab
               id="tryit"
@@ -209,9 +178,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title, apiDescr
             />
           </Tabs>
         ) : (
-          <InlineRefResolverProvider document={document}>
-            <Docs className="mx-auto p-4" nodeType={nodeType} nodeData={bundledNodeData} headless />
-          </InlineRefResolverProvider>
+          <Docs className="mx-auto p-4" nodeType={nodeType} nodeData={bundledNodeData} headless />
         )}
       </Collapse>
     </div>

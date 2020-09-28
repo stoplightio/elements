@@ -9,12 +9,14 @@ import { SidebarLayout } from '../components/API/SidebarLayout';
 import { StackedLayout } from '../components/API/StackedLayout';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { withRouter } from '../hoc/withRouter';
+import { useBundledData } from '../hooks/useBundledData';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { withStyles } from '../styled';
 import { LinkComponentType, RoutingProps } from '../types';
-import { computeNodeData, isOas2, isOas3, IUriMap } from '../utils/oas';
+import { computeNodeData, getNodeType, isOas2, isOas3, IUriMap } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
+import { InlineRefResolverProvider } from './Provider';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
@@ -54,6 +56,8 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
   const nodes = computeNodeData(uriMap);
   const tree = generateToC(nodes);
   const nodeData = uriMap[pathname] || uriMap['/'];
+  const nodeType = getNodeType(pathname);
+  const bundledNodeData = useBundledData(nodeType, nodeData, { baseUrl: apiDescriptionUrl });
 
   if (error) {
     return (
@@ -72,20 +76,20 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
   }
 
   return (
-    <div className="APIComponent flex flex-row">
-      {layout === 'stacked' ? (
-        <StackedLayout uriMap={uriMap} tree={tree} apiDescriptionUrl={apiDescriptionUrl} document={document} />
-      ) : (
-        <SidebarLayout
-          pathname={pathname}
-          uriMap={uriMap}
-          tree={tree}
-          linkComponent={linkComponent}
-          apiDescriptionUrl={apiDescriptionUrl}
-          document={document}
-        />
-      )}
-    </div>
+    <InlineRefResolverProvider document={document}>
+      <div className="APIComponent flex flex-row">
+        {layout === 'stacked' ? (
+          <StackedLayout uriMap={uriMap} tree={tree} bundledNodeData={bundledNodeData} />
+        ) : (
+          <SidebarLayout
+            pathname={pathname}
+            tree={tree}
+            bundledNodeData={bundledNodeData}
+            linkComponent={linkComponent}
+          />
+        )}
+      </div>
+    </InlineRefResolverProvider>
   );
 });
 
