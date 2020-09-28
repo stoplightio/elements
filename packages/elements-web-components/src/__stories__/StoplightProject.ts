@@ -13,7 +13,7 @@ export default {
 };
 
 export const defaultProject = Template.bind({});
-defaultProject.storyName = 'Stoplight Demo workspace';
+defaultProject.storyName = "Stoplight's Demo workspace";
 defaultProject.args = {
   workspace: 'https://demo.stoplight.io',
   project: 'public-apis',
