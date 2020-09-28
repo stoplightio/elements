@@ -1,8 +1,8 @@
 import { TableOfContents } from '@stoplight/ui-kit';
-import { InlineRefResolverProvider } from 'elements/src/containers/Provider';
-import { useBundledData } from 'elements/src/hooks/useBundledData';
 import * as React from 'react';
 
+import { InlineRefResolverProvider } from '../../containers/Provider';
+import { useBundledData } from '../../hooks/useBundledData';
 import { useTocContents } from '../../hooks/useTocContents';
 import { ILinkComponentProps, ITableOfContentsTree } from '../../types';
 import { getNodeType, isOperation, IUriMap } from '../../utils/oas';

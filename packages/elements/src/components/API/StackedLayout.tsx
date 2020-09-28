@@ -2,12 +2,12 @@ import { Group as GroupItem, isGroup, isItem, ITableOfContents, Item } from '@st
 import { IHttpOperation, NodeType } from '@stoplight/types';
 import { Collapse, Icon, Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { InlineRefResolverProvider } from 'elements/src/containers/Provider';
-import { useBundledData } from 'elements/src/hooks/useBundledData';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { HttpMethodColors } from '../../constants';
+import { InlineRefResolverProvider } from '../../containers/Provider';
+import { useBundledData } from '../../hooks/useBundledData';
 import { getNodeType, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { TryIt } from '../TryIt';
