@@ -1,6 +1,7 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generateToC } from '@stoplight/elements-utils';
-import { FAIcon, NonIdealState } from '@stoplight/ui-kit';
+import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -65,7 +66,7 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
         <NonIdealState
           title="Something went wrong"
           description={error.message}
-          icon={<FAIcon icon={['fad', faExclamationTriangle.iconName]} />}
+          icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
         />
       </div>
     );

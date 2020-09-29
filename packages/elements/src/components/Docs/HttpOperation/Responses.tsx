@@ -1,6 +1,6 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IHttpOperationResponse } from '@stoplight/types';
-import { FAIcon } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -55,8 +55,8 @@ export const Responses = ({ className, responses }: IResponsesProps) => {
                 })}
                 onClick={() => setActiveResponse(index)}
               >
-                <FAIcon
-                  icon={['fas', faCircle.iconName]}
+                <FontAwesomeIcon
+                  icon={faCircle}
                   className="ml-4 mr-3"
                   style={{ color: HttpCodeColor[String(response.code)[0]] }}
                 />

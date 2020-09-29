@@ -47,7 +47,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           id={`InboundDependencies-${NodeType.Model}`}
           title={
             <div className="flex items-center">
-              <FontAwesomeIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.Model].iconName} />
+              <FontAwesomeIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.Model]} />
               {NodeTypePrettyName[NodeType.Model]}s ({edgesByNodeType[NodeType.Model]?.length || 0})
             </div>
           }
