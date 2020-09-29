@@ -9,12 +9,14 @@ import { SidebarLayout } from '../components/API/SidebarLayout';
 import { StackedLayout } from '../components/API/StackedLayout';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { withRouter } from '../hoc/withRouter';
+import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { withStyles } from '../styled';
 import { LinkComponentType, RoutingProps } from '../types';
 import { computeNodeData, isOas2, isOas3, IUriMap } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
+import { InlineRefResolverProvider } from './Provider';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
@@ -36,20 +38,21 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
   }, [error]);
 
   const document = useParsedValue(data);
+  const bundledDocument = useBundleRefsIntoDocument(document, { baseUrl: apiDescriptionUrl });
 
   const uriMap = React.useMemo(() => {
     let map: IUriMap = {};
-    if (document) {
-      if (isOas3(document)) {
-        map = computeOas3UriMap(document);
-      } else if (isOas2(document)) {
-        map = computeOas2UriMap(document);
+    if (bundledDocument) {
+      if (isOas3(bundledDocument)) {
+        map = computeOas3UriMap(bundledDocument);
+      } else if (isOas2(bundledDocument)) {
+        map = computeOas2UriMap(bundledDocument);
       } else {
         console.warn('Document type is unknown');
       }
     }
     return map;
-  }, [document]);
+  }, [bundledDocument]);
 
   const nodes = computeNodeData(uriMap);
   const tree = generateToC(nodes);
@@ -72,13 +75,15 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
   }
 
   return (
-    <div className="APIComponent flex flex-row">
-      {layout === 'stacked' ? (
-        <StackedLayout uriMap={uriMap} tree={tree} />
-      ) : (
-        <SidebarLayout pathname={pathname} uriMap={uriMap} tree={tree} linkComponent={linkComponent} />
-      )}
-    </div>
+    <InlineRefResolverProvider document={document}>
+      <div className="APIComponent flex flex-row">
+        {layout === 'stacked' ? (
+          <StackedLayout uriMap={uriMap} tree={tree} />
+        ) : (
+          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} linkComponent={linkComponent} />
+        )}
+      </div>
+    </InlineRefResolverProvider>
   );
 });
 
