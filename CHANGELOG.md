@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.156](https://github.com/stoplightio/elements/compare/v6.0.0-beta.155...v6.0.0-beta.156) (2020-09-29)
+
+
+### Bug Fixes
+
+* hide vertical scrolling ([#585](https://github.com/stoplightio/elements/issues/585)) ([6434ee1](https://github.com/stoplightio/elements/commit/6434ee1e05dfc8e546b47598687238c7933c5e3f))
+
+
+
+
+
 # [6.0.0-beta.155](https://github.com/stoplightio/elements/compare/v6.0.0-beta.154...v6.0.0-beta.155) (2020-09-29)
 
 **Note:** Version bump only for package root
