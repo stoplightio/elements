@@ -7,7 +7,10 @@ import { API } from '../../containers/API';
 
 const darkMode = () => boolean('dark mode', false);
 const apiDescriptionUrl = () =>
-  text('apiDescriptionUrl', 'https://raw.githubusercontent.com/mmiask/anothertesting/master/reference/test.v1.yaml');
+  text(
+    'apiDescriptionUrl',
+    'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
+  );
 
 storiesOf('Public/API', module)
   .addDecorator(withKnobs())
