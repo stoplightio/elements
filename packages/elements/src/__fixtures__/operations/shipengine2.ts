@@ -64,64 +64,6 @@ httpOperation.children.push(
   makeProperty(httpOperation, 'path', '/v1/addresses/recognize'),
 );
 
-// 200
-{
-  const response: IResponse = {
-    parent: httpOperation,
-    id: id(),
-    type: 'response',
-    children: [],
-  };
-  httpOperation.children.push(response);
-
-  response.children.push(
-    makeProperty(response, 'code', 200),
-    makeProperty(
-      response,
-      'description',
-      'Returns the parsed address, as well as a confidence score and a list of all the entities that were recognized in the text.\n',
-    ),
-  );
-}
-
-// 400
-
-{
-  const response: IResponse = {
-    parent: httpOperation,
-    id: id(),
-    type: 'response',
-    children: [],
-  };
-  httpOperation.children.push(response);
-
-  response.children.push(
-    makeProperty(response, 'code', 400),
-    makeProperty(response, 'description', 'The request contained errors.'),
-  );
-}
-
-// 500
-
-{
-  const response: IResponse = {
-    parent: httpOperation,
-    id: id(),
-    type: 'response',
-    children: [],
-  };
-  httpOperation.children.push(response);
-
-  response.children.push(
-    makeProperty(response, 'code', 400),
-    makeProperty(
-      response,
-      'description',
-      "An error occurred on ShipEngine's side.\n\n> This error will automatically be reported to our engineers.\n",
-    ),
-  );
-}
-
 // server
 
 {
@@ -316,6 +258,64 @@ httpOperation.children.push(request);
   }
 }
 
+// 200
+{
+  const response: IResponse = {
+    parent: httpOperation,
+    id: id(),
+    type: 'response',
+    children: [],
+  };
+  httpOperation.children.push(response);
+
+  response.children.push(
+    makeProperty(response, 'code', 200),
+    makeProperty(
+      response,
+      'description',
+      'Returns the parsed address, as well as a confidence score and a list of all the entities that were recognized in the text.\n',
+    ),
+  );
+}
+
+// 400
+
+{
+  const response: IResponse = {
+    parent: httpOperation,
+    id: id(),
+    type: 'response',
+    children: [],
+  };
+  httpOperation.children.push(response);
+
+  response.children.push(
+    makeProperty(response, 'code', 400),
+    makeProperty(response, 'description', 'The request contained errors.'),
+  );
+}
+
+// 500
+
+{
+  const response: IResponse = {
+    parent: httpOperation,
+    id: id(),
+    type: 'response',
+    children: [],
+  };
+  httpOperation.children.push(response);
+
+  response.children.push(
+    makeProperty(response, 'code', 400),
+    makeProperty(
+      response,
+      'description',
+      "An error occurred on ShipEngine's side.\n\n> This error will automatically be reported to our engineers.\n",
+    ),
+  );
+}
+
 // @ts-ignore
 httpOperation.serialize = () => {
   return JSON.parse(
@@ -324,3 +324,6 @@ httpOperation.serialize = () => {
     }),
   );
 };
+
+// @ts-ignore
+console.log(httpOperation.serialize());
