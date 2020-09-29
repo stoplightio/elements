@@ -1,4 +1,4 @@
-import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
+import { Dictionary, HttpSecurityScheme, IHttpOperation, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
@@ -157,6 +157,41 @@ export type ReplaceArraysWithSets<T> = T extends Array<infer P>
   ? Set<ReplaceArraysWithSets<P>>
   : T extends object
   ? { [P in keyof T]: ReplaceArraysWithSets<T[P]> }
+  : T;
+
+type TypedMapArgs1<T extends object> = {
+  [P in keyof T]: [P, T[P]];
+};
+
+type TypedMapArgs2<T extends object> = T[keyof T];
+
+type TypedMapArgs<T extends object> = TypedMapArgs2<TypedMapArgs1<T>>[];
+
+export class TypedMap<T extends object> {
+  private _map: Map<any, any>;
+  constructor(args: TypedMapArgs<T>) {
+    this._map = new Map(args);
+  }
+  set<K extends keyof T>(key: K, value: T[K]) {
+    this._map.set(key, value);
+  }
+  get<K extends keyof T>(key: K): T[K] {
+    return this._map.get(key);
+  }
+}
+
+// Replace Objects with Maps
+export type ReplaceObjectsWithMaps<T> = T extends Array<infer P>
+  ? Array<ReplaceObjectsWithMaps<P>>
+  : T extends object
+  ? TypedMap<{ [P in keyof T]: ReplaceObjectsWithMaps<T[P]> }>
+  : T;
+
+// Replace Objects with Maps and Arrays with Sets
+export type ReplaceObjectsAndArrays<T> = T extends Array<infer P>
+  ? Set<ReplaceObjectsAndArrays<P>>
+  : T extends object
+  ? TypedMap<{ [P in keyof T]: ReplaceObjectsAndArrays<T[P]> }>
   : T;
 
 // Hide Edit handles from other code that interacts with it.
