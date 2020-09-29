@@ -152,6 +152,13 @@ export type ExtendWithEditHandle<T> = T extends Array<infer P>
   ? { [P in keyof T]: ExtendWithEditHandle<T[P]> } & { [EditHandle]?: EditMetadata }
   : T;
 
+// Replace Arrays with Sets
+export type ReplaceArraysWithSets<T> = T extends Array<infer P>
+  ? Set<ReplaceArraysWithSets<P>>
+  : T extends object
+  ? { [P in keyof T]: ReplaceArraysWithSets<T[P]> }
+  : T;
+
 // Hide Edit handles from other code that interacts with it.
 // Should work for basic Object and Array types - no attempt to deal with
 // classes / functions / Maps / Sets / Proxies
