@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.154](https://github.com/stoplightio/elements/compare/v6.0.0-beta.153...v6.0.0-beta.154) (2020-09-29)
+
+
+### Features
+
+* **api:** make API component resolve inline and remote refs ([#575](https://github.com/stoplightio/elements/issues/575)) ([f040968](https://github.com/stoplightio/elements/commit/f04096852bb44870e03059e7516c4c1cd789548c))
+
+
+
+
+
 # [6.0.0-beta.153](https://github.com/stoplightio/elements/compare/v6.0.0-beta.152...v6.0.0-beta.153) (2020-09-29)
 
 **Note:** Version bump only for package @stoplight/elements
