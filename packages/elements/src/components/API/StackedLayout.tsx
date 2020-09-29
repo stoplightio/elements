@@ -13,7 +13,6 @@ import { TryIt } from '../TryIt';
 type StackedLayoutProps = {
   uriMap: IUriMap;
   tree: ITableOfContents;
-  bundledNodeData: unknown;
 };
 
 type ItemRowProps = {
@@ -27,7 +26,7 @@ const itemMatchesHash = (hash: string, item: Pick<ItemRowProps, 'title' | 'type'
   return hash.substr(1) === `${item.title}-${item.type}`;
 };
 
-export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree, bundledNodeData }) => {
+export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) => {
   const groups = tree.items.filter(isGroup);
 
   return (
@@ -164,21 +163,11 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
             onChange={(tabId: PanelTabId) => setTabId(tabId)}
             renderActiveTabPanelOnly
           >
-            <Tab
-              id="docs"
-              title="Docs"
-              className="p-4"
-              panel={<Docs nodeType={nodeType} nodeData={bundledNodeData} headless />}
-            />
-            <Tab
-              id="tryit"
-              title="Try It"
-              className="p-4"
-              panel={<TryIt nodeType={nodeType} nodeData={bundledNodeData} />}
-            />
+            <Tab id="docs" title="Docs" className="p-4" panel={<Docs nodeType={nodeType} nodeData={data} headless />} />
+            <Tab id="tryit" title="Try It" className="p-4" panel={<TryIt nodeType={nodeType} nodeData={data} />} />
           </Tabs>
         ) : (
-          <Docs className="mx-auto p-4" nodeType={nodeType} nodeData={bundledNodeData} headless />
+          <Docs className="mx-auto p-4" nodeType={nodeType} nodeData={data} headless />
         )}
       </Collapse>
     </div>

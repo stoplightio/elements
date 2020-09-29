@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { useTocContents } from '../../hooks/useTocContents';
 import { ILinkComponentProps, ITableOfContentsTree } from '../../types';
-import { getNodeType, isOperation } from '../../utils/oas';
+import { getNodeType, isOperation, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { Row } from '../TableOfContents/Row';
 import { TryIt } from '../TryIt';
@@ -11,16 +11,15 @@ import { TryItHeader } from '../TryIt/header';
 
 type SidebarLayoutProps = {
   pathname: string;
+  uriMap: IUriMap;
   tree: ITableOfContentsTree;
-  bundledNodeData: unknown;
   linkComponent?: React.ComponentType<ILinkComponentProps>;
-  apiDescriptionUrl?: string;
 };
 
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
   pathname,
   tree,
-  bundledNodeData,
+  uriMap,
   linkComponent: LinkComponent,
 }) => {
   const contents = useTocContents(tree).map(item => ({
@@ -30,6 +29,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
   }));
 
   const nodeType = getNodeType(pathname);
+  const nodeData = uriMap[pathname] || uriMap['/'];
   const showTryIt = isOperation(pathname);
 
   return (
@@ -41,12 +41,12 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
       />
       <div className="flex-grow p-5">
         <div className="flex">
-          <Docs className="px-10" nodeData={bundledNodeData} nodeType={nodeType} />
+          <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
           {showTryIt && (
             <div className="w-2/5 border-l relative">
               <div className="absolute inset-0 overflow-auto px-10">
                 <TryItHeader />
-                <TryIt nodeType={nodeType} nodeData={bundledNodeData} />
+                <TryIt nodeType={nodeType} nodeData={nodeData} />
               </div>
             </div>
           )}
