@@ -1,6 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { decodePointerFragment } from '@stoplight/json';
 import { NodeType } from '@stoplight/types';
-import { FAIcon, Tab, Tabs } from '@stoplight/ui-kit';
+import { Tab, Tabs } from '@stoplight/ui-kit';
 import { FixedSizeList } from '@stoplight/ui-kit/ScrollList';
 import cn from 'classnames';
 import { findKey, groupBy, sortBy, toUpper, uniqBy } from 'lodash';
@@ -46,7 +47,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           id={`InboundDependencies-${NodeType.Model}`}
           title={
             <div className="flex items-center">
-              <FAIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.Model]} />
+              <FontAwesomeIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.Model].iconName} />
               {NodeTypePrettyName[NodeType.Model]}s ({edgesByNodeType[NodeType.Model]?.length || 0})
             </div>
           }
@@ -69,7 +70,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           id={`InboundDependencies-${NodeType.HttpService}`}
           title={
             <div className="flex items-center">
-              <FAIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.HttpService]} />
+              <FontAwesomeIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.HttpService]} />
               {NodeTypePrettyName[NodeType.HttpService]}s ({edgesByNodeType[NodeType.HttpService]?.length || 0})
             </div>
           }
@@ -93,7 +94,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           id={`InboundDependencies-${NodeType.HttpOperation}`}
           title={
             <div className="flex items-center">
-              <FAIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.HttpOperation]} />
+              <FontAwesomeIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.HttpOperation]} />
               {NodeTypePrettyName[NodeType.HttpOperation]}s ({edgesByNodeType[NodeType.HttpOperation]?.length || 0})
             </div>
           }
@@ -117,7 +118,7 @@ export const InboundDependencies = React.memo<IInboundDependencies>(({ edges, no
           id={`InboundDependencies-${NodeType.Article}`}
           title={
             <div className="flex items-center">
-              <FAIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.Article]} />
+              <FontAwesomeIcon className="mr-2 fa-fw" icon={NodeTypeIconDefs[NodeType.Article]} />
               {NodeTypePrettyName[NodeType.Article]}s ({edgesByNodeType[NodeType.Article]?.length || 0})
             </div>
           }
