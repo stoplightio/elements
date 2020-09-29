@@ -1,4 +1,5 @@
 import { ITreeNode, Tree } from '@blueprintjs/core';
+import { faExclamationCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { IPrismDiagnostic } from '@stoplight/prism-core';
 import { Code, FAIcon } from '@stoplight/ui-kit';
 import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray';
@@ -23,13 +24,13 @@ export const ViolationsDisplay: React.FC<ViolationsDisplayProps> = ({ violations
         </span>
         {errorCount > 0 && (
           <span className="pr-3">
-            <FAIcon icon="exclamation-circle" className="mr-2" />
+            <FAIcon icon={faExclamationCircle.iconName} className="mr-2" />
             <span>{errorCount}</span>
           </span>
         )}
         {warningCount > 0 && (
           <span className="pr-3">
-            <FAIcon icon="exclamation-triangle" className="mr-1" />
+            <FAIcon icon={faExclamationTriangle.iconName} className="mr-1" />
             <span>{warningCount}</span>
           </span>
         )}

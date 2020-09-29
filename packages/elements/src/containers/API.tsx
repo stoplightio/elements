@@ -1,3 +1,4 @@
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { generateToC } from '@stoplight/elements-utils';
 import { FAIcon, NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
@@ -64,7 +65,7 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
         <NonIdealState
           title="Something went wrong"
           description={error.message}
-          icon={<FAIcon icon={['fad', 'exclamation-triangle']} />}
+          icon={<FAIcon icon={['fad', faExclamationTriangle.iconName]} />}
         />
       </div>
     );

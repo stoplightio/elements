@@ -1,3 +1,4 @@
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { NodeType } from '@stoplight/types';
 import { FAIcon, NonIdealState } from '@stoplight/ui-kit';
 import * as React from 'react';
@@ -47,7 +48,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
         <NonIdealState
           title="Something went wrong"
           description={error.message.replace('[GraphQL]', '')}
-          icon={<FAIcon icon={['fad', 'exclamation-triangle']} />}
+          icon={<FAIcon icon={['fad', faExclamationTriangle.iconName]} />}
         />
       </div>
     );

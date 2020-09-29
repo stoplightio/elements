@@ -1,3 +1,4 @@
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { isParentNode, Tree } from '@stoplight/tree-list';
 import { Dictionary } from '@stoplight/types';
 import { FAIcon } from '@stoplight/ui-kit';
@@ -35,7 +36,10 @@ export const JsonRow: React.FunctionComponent<IRowProps> = ({ node, isExpanded }
               height: ICON_DIMENSION,
             }}
           >
-            <FAIcon icon={isExpanded ? 'caret-down' : 'caret-right'} className="text-darken-9 dark:text-lighten-9" />
+            <FAIcon
+              icon={isExpanded ? faCaretDown.iconName : faCaretRight.iconName}
+              className="text-darken-9 dark:text-lighten-9"
+            />
           </div>
         )}
 
