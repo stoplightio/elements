@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.157](https://github.com/stoplightio/elements/compare/v6.0.0-beta.156...v6.0.0-beta.157) (2020-10-01)
+
+
+### Features
+
+* use SVG FA icons directly from NPM ([#607](https://github.com/stoplightio/elements/issues/607)) ([a2a9b3c](https://github.com/stoplightio/elements/commit/a2a9b3c92f81d462e6edd05a2dc22ae3550ec44e))
+
+
+
+
+
 # [6.0.0-beta.156](https://github.com/stoplightio/elements/compare/v6.0.0-beta.155...v6.0.0-beta.156) (2020-09-29)
 
 
