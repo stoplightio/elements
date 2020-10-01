@@ -108,7 +108,7 @@ const SchemaTitle = ({ title, errors }: { title?: string; errors?: string[] }) =
     <div className={cn('flex items-center p-2')} style={{ height: 30 }}>
       {title && (
         <div className="flex items-center flex-1">
-          <FontAwesomeIcon icon={NodeTypeIconDefs[NodeType.Model]} style={{ color: NodeTypeColors[NodeType.Model] }} />
+          <FontAwesomeIcon icon={NodeTypeIconDefs[NodeType.Model]} color={NodeTypeColors[NodeType.Model]} />
           <div className={cn(Classes.TEXT_MUTED, 'px-2')} style={{ fontSize: 12 }}>
             {title}
           </div>

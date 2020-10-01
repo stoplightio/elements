@@ -58,7 +58,7 @@ export const Responses = ({ className, responses }: IResponsesProps) => {
                 <FontAwesomeIcon
                   icon={faCircle}
                   className="ml-4 mr-3"
-                  style={{ color: HttpCodeColor[String(response.code)[0]] }}
+                  color={HttpCodeColor[String(response.code)[0]]}
                 />
 
                 {response.code}

@@ -39,13 +39,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
           )}
         </div>
       }
-      icon={
-        <FontAwesomeIcon
-          className="fa-lg"
-          icon={NodeTypeIconDefs[nodeType]}
-          style={{ color: NodeTypeColors[nodeType] }}
-        />
-      }
+      icon={<FontAwesomeIcon size="lg" icon={NodeTypeIconDefs[nodeType]} color={NodeTypeColors[nodeType]} />}
       style={{ width: 800, height: 500 }}
     >
       <div className="h-full">

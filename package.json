@@ -29,9 +29,6 @@
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.9.6"
   },
-  "resolutions": {
-    "@fortawesome/fontawesome-common-types": "^0.2.31"
-  },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
     "elements-web-components": "yarn workspace @stoplight/elements-web-components",

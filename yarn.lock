@@ -4014,7 +4014,7 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/ui-kit@^3.0.0-beta.29", "@stoplight/ui-kit@^3.0.0-beta.33":
+"@stoplight/ui-kit@^3.0.0-beta.29":
   version "3.0.0-beta.33"
   resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.33.tgz#b0eb5374af3e30181e5293a310e36c199b8ff726"
   integrity sha512-CEhWLzBh0cqLtYDewoJKbI3mGRUrnZr1yYh+2JImjBL3NJtJCQNEpI8YiOJpNgm61Jx5XcRmFUO2VURx9eepFQ==
@@ -4035,6 +4035,28 @@
     tslib "^1.12.0"
     use-debounce "^3.4.3"
     use-resize-observer "^6.1.0"
+    yup "^0.28.3"
+
+"@stoplight/ui-kit@^3.0.0-beta.37":
+  version "3.0.0-beta.37"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.37.tgz#7666f15e7a4b1f719308d3b3878bbb265c748ff2"
+  integrity sha512-xtn7M595JwTCkg/kbUHz2TJqpqFCcLxHfqSC8SM3LS0Jg7S0abWUZbZgNNL5oJQ5cmFg3MGmZ2K29bApSsfuxw==
+  dependencies:
+    "@blueprintjs/core" "^3.29.0"
+    "@blueprintjs/icons" "^3.19.0"
+    "@blueprintjs/select" "^3.13.4"
+    "@fortawesome/fontawesome-common-types" "^0.2.31"
+    classnames "^2.2.6"
+    prismjs "^1.20.0"
+    react-input-autosize "^2.2.2"
+    react-scrollbars-custom "~4.0.25"
+    react-simple-code-editor "~0.11.0"
+    react-tabs "^3.1.1"
+    react-virtualized-auto-sizer "^1.0.2"
+    react-window "~1.8.5"
+    refractor "^3.0.0"
+    tslib "^1.12.0"
+    use-debounce "^3.4.3"
     yup "^0.28.3"
 
 "@stoplight/yaml-ast-parser@0.0.48":
