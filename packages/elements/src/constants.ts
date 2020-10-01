@@ -1,4 +1,4 @@
-import { Dictionary, HttpSecurityScheme, IHttpOperation, NodeType } from '@stoplight/types';
+import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
 import { IconName } from '@stoplight/ui-kit';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
