@@ -1,6 +1,8 @@
+import { faEnvelope, faLink } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
-import { Classes, FAIcon } from '@stoplight/ui-kit';
+import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -24,14 +26,14 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FAIcon icon="envelope" className="mr-2" />
+            <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
             {data.contact.email ? data.contact.email : 'Email'}
           </a>
         )}
 
         {data?.contact?.url && (
           <a className="flex items-center mr-4" href={data.contact.url} target="_blank" rel="noopener noreferrer">
-            <FAIcon icon="link" className="mr-2" /> URL
+            <FontAwesomeIcon icon={faLink} className="mr-2" /> URL
           </a>
         )}
 

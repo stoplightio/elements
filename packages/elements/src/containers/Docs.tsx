@@ -1,5 +1,7 @@
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NodeType } from '@stoplight/types';
-import { FAIcon, NonIdealState } from '@stoplight/ui-kit';
+import { NonIdealState } from '@stoplight/ui-kit';
 import * as React from 'react';
 import { useQuery } from 'urql';
 
@@ -47,7 +49,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
         <NonIdealState
           title="Something went wrong"
           description={error.message.replace('[GraphQL]', '')}
-          icon={<FAIcon icon={['fad', 'exclamation-triangle']} />}
+          icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
         />
       </div>
     );

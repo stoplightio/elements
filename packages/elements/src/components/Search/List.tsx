@@ -1,10 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deserializeSrn } from '@stoplight/path';
-import { Button, Callout, Classes, FAIcon, NonIdealState, Spinner, Tag } from '@stoplight/ui-kit';
+import { Button, Callout, Classes, NonIdealState, Spinner, Tag } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { NodeTypeColors, NodeTypeIcons, NodeTypePrettyName } from '../../constants';
+import { NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName } from '../../constants';
 import { useComponents } from '../../hooks/useComponents';
 import { IBranchNode } from '../../types';
 
@@ -106,7 +107,7 @@ const NodeListItem: React.FC<{
     >
       <div className="mr-4">
         <Tag
-          icon={NodeTypeIcons[item.snapshot.type] && <FAIcon icon={NodeTypeIcons[item.snapshot.type]} />}
+          icon={NodeTypeIconDefs[item.snapshot.type] && <FontAwesomeIcon icon={NodeTypeIconDefs[item.snapshot.type]} />}
           style={{ backgroundColor: NodeTypeColors[item.snapshot.type] || undefined }}
           title={NodeTypePrettyName[item.snapshot.type] || item.snapshot.type}
           className="py-1 dark:text-white"

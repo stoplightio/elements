@@ -1,5 +1,7 @@
+import { faStream } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRoot } from '@stoplight/markdown';
-import { Button, FAIcon, Popover, Position } from '@stoplight/ui-kit';
+import { Button, Popover, Position } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -41,7 +43,7 @@ const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On
           className="py-2 text-gray-5 dark:text-gray-4 font-medium text-sm flex items-center"
           style={{ paddingLeft: 18 }}
         >
-          <FAIcon icon={['far', 'stream']} className="mr-2" />
+          <FontAwesomeIcon icon={faStream} className="mr-2" />
           {title}
         </div>
       )}
@@ -56,7 +58,7 @@ const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On
     return (
       <div className="absolute top-0 right-0" style={{ top: 10 }}>
         <Popover
-          target={<Button outlined small icon={<FAIcon icon={['far', 'stream']} />} />}
+          target={<Button outlined small icon={<FontAwesomeIcon icon={faStream} />} />}
           content={<div className={cn('py-2', className)}>{component}</div>}
           position={Position.TOP_RIGHT}
           boundary="scrollParent"

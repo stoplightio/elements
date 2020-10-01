@@ -1,8 +1,9 @@
-import { Dialog, FAIcon, IDialogProps } from '@stoplight/ui-kit';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dialog, IDialogProps } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import * as React from 'react';
 
-import { NodeTypeColors, NodeTypeIcons } from '../../constants';
+import { NodeTypeColors, NodeTypeIconDefs } from '../../constants';
 import { Docs } from '../../containers/Docs';
 import { INodeEdge } from '../../types';
 import { isIrrelevantNodeType } from '../../utils/node';
@@ -38,7 +39,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
           )}
         </div>
       }
-      icon={<FAIcon className="fa-lg" icon={NodeTypeIcons[nodeType]} style={{ color: NodeTypeColors[nodeType] }} />}
+      icon={<FontAwesomeIcon size="lg" icon={NodeTypeIconDefs[nodeType]} color={NodeTypeColors[nodeType]} />}
       style={{ width: 800, height: 500 }}
     >
       <div className="h-full">
