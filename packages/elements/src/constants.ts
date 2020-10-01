@@ -1,5 +1,13 @@
+import {
+  faBookOpen,
+  faCloud,
+  faCrosshairs,
+  faCube,
+  faDatabase,
+  faQuestionCircle,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
-import { IconName } from '@stoplight/ui-kit';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',
@@ -23,15 +31,15 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   table_of_contents: '',
 };
 
-export const NodeTypeIcons: Dictionary<IconName, NodeType> = {
-  http_operation: 'locate',
-  http_service: 'cloud',
-  article: 'manual',
-  model: 'cube',
-  http_server: 'database',
-  unknown: 'help',
-  generic: 'help',
-  table_of_contents: 'help',
+export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
+  http_operation: faCrosshairs,
+  http_service: faCloud,
+  article: faBookOpen,
+  model: faCube,
+  http_server: faDatabase,
+  unknown: faQuestionCircle,
+  generic: faQuestionCircle,
+  table_of_contents: faQuestionCircle,
 };
 
 export const NodeTypeIconsUnicode: Dictionary<string, NodeType> = {

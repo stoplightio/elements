@@ -1,6 +1,7 @@
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isParentNode, Tree } from '@stoplight/tree-list';
 import { Dictionary } from '@stoplight/types';
-import { Icon } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -11,7 +12,6 @@ export interface IRowProps {
   isExpanded: boolean;
 }
 
-const ICON_SIZE = 12;
 const ICON_DIMENSION = 20;
 const ROW_OFFSET = 7;
 
@@ -36,9 +36,8 @@ export const JsonRow: React.FunctionComponent<IRowProps> = ({ node, isExpanded }
               height: ICON_DIMENSION,
             }}
           >
-            <Icon
-              iconSize={ICON_SIZE}
-              icon={isExpanded ? 'caret-down' : 'caret-right'}
+            <FontAwesomeIcon
+              icon={isExpanded ? faCaretDown : faCaretRight}
               className="text-darken-9 dark:text-lighten-9"
             />
           </div>

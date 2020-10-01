@@ -26,7 +26,7 @@ let selected: { kind: string; edithandle: EditMetadata } = {
 
 const selections: string[] = [];
 
-storiesOf('components/Docs', module)
+storiesOf('Internal/Docs', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
   .add('Article', () => {
     return (

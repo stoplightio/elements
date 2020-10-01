@@ -1,8 +1,9 @@
-import { Dialog, Icon, IDialogProps } from '@stoplight/ui-kit';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dialog, IDialogProps } from '@stoplight/ui-kit';
 import { ScrollContainer } from '@stoplight/ui-kit/ScrollContainer';
 import * as React from 'react';
 
-import { NodeTypeColors, NodeTypeIcons } from '../../constants';
+import { NodeTypeColors, NodeTypeIconDefs } from '../../constants';
 import { Docs } from '../../containers/Docs';
 import { INodeEdge } from '../../types';
 import { isIrrelevantNodeType } from '../../utils/node';
@@ -27,7 +28,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
       isOpen={!!edge}
       title={
         <div className="flex items-center mr-2">
-          <div className="flex-1 flex items-center">
+          <div className="flex-1 flex mx-2 items-center">
             {nodeName} {nodeVersion !== '0.0' && <span className="mx-2 text-base text-gray-6">v{nodeVersion}</span>}
           </div>
 
@@ -38,7 +39,7 @@ export const NodeDialog = ({ edge, direction, ...dialogProps }: INodeDialogProps
           )}
         </div>
       }
-      icon={<Icon icon={NodeTypeIcons[nodeType]} iconSize={20} color={NodeTypeColors[nodeType]} />}
+      icon={<FontAwesomeIcon size="lg" icon={NodeTypeIconDefs[nodeType]} color={NodeTypeColors[nodeType]} />}
       style={{ width: 800, height: 500 }}
     >
       <div className="h-full">

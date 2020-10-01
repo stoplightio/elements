@@ -1,32 +1,34 @@
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generateToC } from '@stoplight/elements-utils';
-import { NodeType } from '@stoplight/types';
-import { FAIcon, NonIdealState, TableOfContents } from '@stoplight/ui-kit';
+import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import useSwr from 'swr';
 
-import { Docs, DocsSkeleton } from '../components/Docs';
-import { Row } from '../components/TableOfContents/Row';
-import { TryIt } from '../components/TryIt';
-import { TryItHeader } from '../components/TryIt/header';
+import { SidebarLayout } from '../components/API/SidebarLayout';
+import { StackedLayout } from '../components/API/StackedLayout';
+import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { withRouter } from '../hoc/withRouter';
+import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
-import { useTocContents } from '../hooks/useTocContents';
 import { withStyles } from '../styled';
 import { LinkComponentType, RoutingProps } from '../types';
-import { computeNodeData, isOas2, isOas3, isOperation, IUriMap, MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
+import { computeNodeData, isOas2, isOas3, IUriMap } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
+import { InlineRefResolverProvider } from './Provider';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 export interface APIProps extends RoutingProps {
   apiDescriptionUrl: string;
   linkComponent?: LinkComponentType;
+  layout?: 'sidebar' | 'stacked';
 }
 
-const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkComponent: LinkComponent }) {
+const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkComponent, layout }) {
   const { pathname } = useLocation();
 
   const { data, error } = useSwr(apiDescriptionUrl, fetcher);
@@ -38,36 +40,24 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
   }, [error]);
 
   const document = useParsedValue(data);
-  const showTryIt = isOperation(pathname);
+  const bundledDocument = useBundleRefsIntoDocument(document, { baseUrl: apiDescriptionUrl });
 
   const uriMap = React.useMemo(() => {
     let map: IUriMap = {};
-    if (document) {
-      if (isOas3(document)) {
-        map = computeOas3UriMap(document);
-      } else if (isOas2(document)) {
-        map = computeOas2UriMap(document);
+    if (bundledDocument) {
+      if (isOas3(bundledDocument)) {
+        map = computeOas3UriMap(bundledDocument);
+      } else if (isOas2(bundledDocument)) {
+        map = computeOas2UriMap(bundledDocument);
       } else {
         console.warn('Document type is unknown');
       }
     }
     return map;
-  }, [document]);
+  }, [bundledDocument]);
 
   const nodes = computeNodeData(uriMap);
   const tree = generateToC(nodes);
-
-  const contents = useTocContents(tree).map(item => ({
-    ...item,
-    isActive: item.to === pathname,
-    isSelected: item.to === pathname,
-  }));
-
-  const nodeType = MODEL_REGEXP.test(pathname)
-    ? NodeType.Model
-    : OPERATION_REGEXP.test(pathname)
-    ? NodeType.HttpOperation
-    : NodeType.HttpService;
   const nodeData = uriMap[pathname] || uriMap['/'];
 
   if (error) {
@@ -76,7 +66,7 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
         <NonIdealState
           title="Something went wrong"
           description={error.message}
-          icon={<FAIcon icon={['fad', 'exclamation-triangle']} />}
+          icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
         />
       </div>
     );
@@ -87,26 +77,15 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
   }
 
   return (
-    <div className="APIComponent flex flex-row">
-      <TableOfContents
-        contents={contents}
-        rowComponent={Row}
-        rowComponentExtraProps={{ pathname, linkComponent: LinkComponent }}
-      />
-      <div className="flex-grow p-5">
-        <div className="flex">
-          <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
-          {showTryIt && (
-            <div className="w-2/5 border-l relative">
-              <div className="absolute inset-0 overflow-auto px-10">
-                <TryItHeader />
-                <TryIt nodeType={nodeType} nodeData={nodeData} />
-              </div>
-            </div>
-          )}
-        </div>
+    <InlineRefResolverProvider document={document}>
+      <div className="APIComponent flex flex-row">
+        {layout === 'stacked' ? (
+          <StackedLayout uriMap={uriMap} tree={tree} />
+        ) : (
+          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} linkComponent={linkComponent} />
+        )}
       </div>
-    </div>
+    </InlineRefResolverProvider>
   );
 });
 

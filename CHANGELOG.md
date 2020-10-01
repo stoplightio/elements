@@ -3,6 +3,112 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.157](https://github.com/stoplightio/elements/compare/v6.0.0-beta.156...v6.0.0-beta.157) (2020-10-01)
+
+
+### Bug Fixes
+
+* don't forget to publish web-components ([#605](https://github.com/stoplightio/elements/issues/605)) ([1d10cfb](https://github.com/stoplightio/elements/commit/1d10cfb45b3ba37127b03b45993c574bfc49c6ce))
+
+
+### Features
+
+* use SVG FA icons directly from NPM ([#607](https://github.com/stoplightio/elements/issues/607)) ([a2a9b3c](https://github.com/stoplightio/elements/commit/a2a9b3c92f81d462e6edd05a2dc22ae3550ec44e))
+
+
+
+
+
+# [6.0.0-beta.156](https://github.com/stoplightio/elements/compare/v6.0.0-beta.155...v6.0.0-beta.156) (2020-09-29)
+
+
+### Bug Fixes
+
+* hide vertical scrolling ([#585](https://github.com/stoplightio/elements/issues/585)) ([6434ee1](https://github.com/stoplightio/elements/commit/6434ee1e05dfc8e546b47598687238c7933c5e3f))
+
+
+
+
+
+# [6.0.0-beta.155](https://github.com/stoplightio/elements/compare/v6.0.0-beta.154...v6.0.0-beta.155) (2020-09-29)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [6.0.0-beta.154](https://github.com/stoplightio/elements/compare/v6.0.0-beta.153...v6.0.0-beta.154) (2020-09-29)
+
+
+### Features
+
+* **api:** make API component resolve inline and remote refs ([#575](https://github.com/stoplightio/elements/issues/575)) ([f040968](https://github.com/stoplightio/elements/commit/f04096852bb44870e03059e7516c4c1cd789548c))
+
+
+
+
+
+# [6.0.0-beta.153](https://github.com/stoplightio/elements/compare/v6.0.0-beta.152...v6.0.0-beta.153) (2020-09-29)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [6.0.0-beta.152](https://github.com/stoplightio/elements/compare/v6.0.0-beta.151...v6.0.0-beta.152) (2020-09-28)
+
+
+### Bug Fixes
+
+* hopefully fix publishing web-components ([#602](https://github.com/stoplightio/elements/issues/602)) ([6a61195](https://github.com/stoplightio/elements/commit/6a611957e3606da2f04cb2c3b1821159ce87fcbc))
+
+
+
+
+
+# [6.0.0-beta.151](https://github.com/stoplightio/elements/compare/v6.0.0-beta.150...v6.0.0-beta.151) (2020-09-26)
+
+
+### Features
+
+* replace Blueprint icons with FontAwesome ([#596](https://github.com/stoplightio/elements/issues/596)) ([3dfe59d](https://github.com/stoplightio/elements/commit/3dfe59d6ae7d2a64962a405bb768e3e89c5f4ab2))
+
+
+
+
+
+# [6.0.0-beta.150](https://github.com/stoplightio/elements/compare/v6.0.0-beta.149...v6.0.0-beta.150) (2020-09-24)
+
+
+### Bug Fixes
+
+* whitelist necessary files ([#598](https://github.com/stoplightio/elements/issues/598)) ([20b2e5e](https://github.com/stoplightio/elements/commit/20b2e5e17d6264bee5d9a1b9cc06a3537e08f6d1))
+
+
+
+
+
+# [6.0.0-beta.149](https://github.com/stoplightio/elements/compare/v6.0.0-beta.148...v6.0.0-beta.149) (2020-09-23)
+
+**Note:** Version bump only for package @stoplight/elements
+
+
+
+
+
+# [6.0.0-beta.148](https://github.com/stoplightio/elements/compare/v6.0.0-beta.147...v6.0.0-beta.148) (2020-09-23)
+
+
+### Features
+
+* **api:** stacked layout ([#578](https://github.com/stoplightio/elements/issues/578)) ([cd6aa21](https://github.com/stoplightio/elements/commit/cd6aa215fd006686187093231c169bbdd2e06d3c))
+
+
+
+
+
 # [6.0.0-beta.147](https://github.com/stoplightio/elements/compare/v6.0.0-beta.146...v6.0.0-beta.147) (2020-09-22)
 
 

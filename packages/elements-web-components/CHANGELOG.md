@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.157](https://github.com/stoplightio/elements/compare/v6.0.0-beta.156...v6.0.0-beta.157) (2020-10-01)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.152](https://github.com/stoplightio/elements/compare/v6.0.0-beta.151...v6.0.0-beta.152) (2020-09-28)
+
+
+### Bug Fixes
+
+* hopefully fix publishing web-components ([#602](https://github.com/stoplightio/elements/issues/602)) ([6a61195](https://github.com/stoplightio/elements/commit/6a611957e3606da2f04cb2c3b1821159ce87fcbc))
+
+
+
+
+
+# [6.0.0-beta.150](https://github.com/stoplightio/elements/compare/v6.0.0-beta.149...v6.0.0-beta.150) (2020-09-24)
+
+
+### Bug Fixes
+
+* whitelist necessary files ([#598](https://github.com/stoplightio/elements/issues/598)) ([20b2e5e](https://github.com/stoplightio/elements/commit/20b2e5e17d6264bee5d9a1b9cc06a3537e08f6d1))
+
+
+
+
+
+# [6.0.0-beta.148](https://github.com/stoplightio/elements/compare/v6.0.0-beta.147...v6.0.0-beta.148) (2020-09-23)
+
+
+### Features
+
+* **api:** stacked layout ([#578](https://github.com/stoplightio/elements/issues/578)) ([cd6aa21](https://github.com/stoplightio/elements/commit/cd6aa215fd006686187093231c169bbdd2e06d3c))
+
+
+
+
+
 # [6.0.0-beta.145](https://github.com/stoplightio/elements/compare/v6.0.0-beta.144...v6.0.0-beta.145) (2020-09-18)
 
 

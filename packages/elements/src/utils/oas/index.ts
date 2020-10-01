@@ -35,6 +35,14 @@ interface IComputeUriMapProps {
   parentUri?: string;
 }
 
+export function getNodeType(uri: string): NodeType {
+  return MODEL_REGEXP.test(uri)
+    ? NodeType.Model
+    : OPERATION_REGEXP.test(uri)
+    ? NodeType.HttpOperation
+    : NodeType.HttpService;
+}
+
 export function computeUriMap({ document, data, map, transformer, parentUri }: IComputeUriMapProps): IUriMap {
   const uriMap: IUriMap = {};
 
