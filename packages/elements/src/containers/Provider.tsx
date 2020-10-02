@@ -2,6 +2,7 @@ import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { Client, Provider as UrqlProvider } from 'urql';
 
+import { ComponentsProvider } from '../context/Components';
 import { useUrqlClient } from '../hooks/useUrqlClient';
 import { NodeIconMapping } from '../types';
 
@@ -17,8 +18,6 @@ export interface IActiveInfo {
   branch?: string;
   node?: string;
 }
-
-export const ComponentsContext = createNamedContext<IComponentMapping | undefined>('ComponentsContext', undefined);
 
 const defaultIcons: NodeIconMapping = {};
 export const IconsContext = createNamedContext<NodeIconMapping>('IconsContext', defaultIcons);
@@ -55,9 +54,9 @@ export const Provider: React.FC<IProvider> = ({
   return (
     <UrqlProvider value={client}>
       <IconsContext.Provider value={defaultIcons}>
-        <ComponentsContext.Provider value={components}>
+        <ComponentsProvider value={components}>
           <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>
-        </ComponentsContext.Provider>
+        </ComponentsProvider>
       </IconsContext.Provider>
     </UrqlProvider>
   );
