@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { InlineRefResolverContext } from '../../../containers/Provider';
+import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
 
@@ -52,7 +52,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
   title,
   className,
 }) => {
-  const resolveRef = React.useContext(InlineRefResolverContext);
+  const resolveRef = useInlineRefResolver();
   if (!parameters || !parameters.length) return null;
 
   return (
