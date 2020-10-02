@@ -1,11 +1,11 @@
 import { IBranch } from './basics';
-import { ICookieParam } from './CookieParam';
-import { IHeaderParam } from './HeaderParam';
-import { IPathParam } from './PathParam';
-import { IQueryParam } from './QueryParam';
+import { ICookieParams } from './CookieParams';
+import { IHeaderParams } from './HeaderParams';
+import { IPathParams } from './PathParams';
+import { IQueryParams } from './QueryParams';
 import { IRequestBody } from './RequestBody';
 
-type IRequestChildren = IPathParam | IQueryParam | IHeaderParam | ICookieParam | IRequestBody;
+type IRequestChildren = IPathParams | IQueryParams | IHeaderParams | ICookieParams | IRequestBody;
 
 export interface IRequest extends IBranch {
   type: 'request';

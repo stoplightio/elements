@@ -1,32 +1,30 @@
-import { IBool, IBranch, IProperty, IString } from './basics';
+import { IBranch } from './basics';
+import { IPropertyAllowEmptyValue } from './PropertyAllowEmptyValue';
+import { IPropertyAllowReserved } from './PropertyAllowReserved';
+import { IPropertyDeprecated } from './PropertyDeprecated';
+import { IPropertyDescription } from './PropertyDescription';
+import { IPropertyExplode } from './PropertyExplode';
+import { IPropertyName } from './PropertyName';
+import { IPropertyRequired } from './PropertyRequired';
+import { IPropertyStyleQueryParam } from './PropertyStyleQueryParam';
+import { IQueryParams } from './QueryParams';
 import { ISchema } from './Schema';
 
-type ParamStyle = 'form' | 'spaceDelimited' | 'pipeDelimited' | 'deepObject';
-
-type INameProperty = IProperty<IString<'name'>, IString>;
-type IStyleProperty = IProperty<IString<'style'>, IString<ParamStyle>>;
-type IDescriptionProperty = IProperty<IString<'description'>, IString>;
-type IExplode = IProperty<IString<'explode'>, IBool>;
-type IRequiredProperty = IProperty<IString<'required'>, IBool>;
-type IDeprecatedProperty = IProperty<IString<'deprecated'>, IBool>;
-type ISchemaProperty = IProperty<IString<'schema'>, ISchema>;
-type IAllowEmptyValue = IProperty<IString<'allowEmptyValue'>, IBool>;
-type IAllowReserved = IProperty<IString<'allowReserved'>, IBool>;
-
 type IQueryParamChildren =
-  | INameProperty
-  | IStyleProperty
-  | IDescriptionProperty
-  | IExplode
-  | IRequiredProperty
-  | IDeprecatedProperty
-  | ISchemaProperty
-  | IAllowEmptyValue
-  | IAllowReserved;
+  | IPropertyName
+  | IPropertyStyleQueryParam
+  | IPropertyDescription
+  | IPropertyExplode
+  | IPropertyRequired
+  | IPropertyDeprecated
+  | ISchema
+  | IPropertyAllowEmptyValue
+  | IPropertyAllowReserved;
 //| IExample
 //| IEncoding;
 
 export interface IQueryParam extends IBranch {
   type: 'queryParam';
+  parent: IQueryParams;
   children: IQueryParamChildren[];
 }

@@ -1,33 +1,54 @@
-export type NodeType =
-  | 'root'
-  | 'service'
-  | 'operation'
-  | 'request'
-  | 'response'
-  | 'query'
-  | 'object'
-  | 'property'
-  | 'string'
-  | 'number'
-  | 'boolean'
-  | 'responseExample'
-  | 'responseBody'
-  | 'requestBody'
-  | 'requestExample'
-  | 'contact'
-  | 'license'
-  | 'server'
-  | 'enum'
-  | 'variable'
-  | 'pathParam'
-  | 'queryParam'
-  | 'headerParam'
-  | 'cookieParam';
+const nodeTypes = [
+  'root',
+  'service',
+  'operation',
+  'request',
+  'response',
+  'schema',
+  'property',
+  'string',
+  'number',
+  'boolean',
+  'responseExample',
+  'responseBody',
+  'requestBody',
+  'requestExample',
+  'contact',
+  'license',
+  'server',
+  'enum',
+  'variable',
+  'pathParam',
+  'pathParams',
+  'queryParam',
+  'queryParams',
+  'headerParam',
+  'headerParams',
+  'cookieParam',
+  'cookieParams',
+  'propertyName',
+  'propertyDescription',
+  'propertyExplode',
+  'propertyRequired',
+  'propertyDeprecated',
+  'propertyStyleCookieParam',
+  'propertyStyleHeaderParam',
+  'propertyStylePathParam',
+  'propertyStyleQueryParam',
+  'propertyAllowEmptyValue',
+  'propertyAllowReserved',
+  'propertyMethod',
+  'propertyPath',
+] as const;
 
-export interface IMagicNode {
+export type NodeTypes = typeof nodeTypes;
+
+export type NodeType = NodeTypes[number];
+
+export interface IMagicNode<T extends NodeType = NodeType> {
   /** A permenant globally unique identifier. For example, can be a UUID or a ${clientId}-${vectorClock} like in YJS. */
   id: string;
-  type: NodeType;
+  type: T;
 }
 
 export interface IParent extends IMagicNode {
@@ -40,10 +61,7 @@ export interface ILeaf extends IMagicNode {
 
 export interface IBranch extends ILeaf, IParent {}
 
-export interface IRoot extends IParent {
-  type: 'root';
-  parent: undefined;
-}
+// Basic Leaf types
 
 export interface IString<S extends string = string> extends ILeaf {
   type: 'string';
@@ -60,12 +78,12 @@ export interface IBool<B extends boolean = boolean> extends ILeaf {
   value: B;
 }
 
-export interface IEnum<B extends IMagicNode> extends ILeaf {
+export interface IEnum<B extends IMagicNode = IMagicNode> extends ILeaf {
   type: 'enum';
   value: B[];
 }
 
-export interface IProperty<K extends IMagicNode, T extends IMagicNode> extends ILeaf {
+export interface IProperty<K extends IMagicNode = IMagicNode, T extends IMagicNode = IMagicNode> extends ILeaf {
   type: 'property';
   key?: K;
   value?: T;

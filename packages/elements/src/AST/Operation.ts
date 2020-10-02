@@ -1,19 +1,18 @@
-import { IBool, IParent, IProperty, IString } from './basics';
+import { IParent } from './basics';
+import { IPropertyDeprecated } from './PropertyDeprecated';
+import { IPropertyDescription } from './PropertyDescription';
+import { IPropertyMethod } from './PropertyMethod';
+import { IPropertyPath } from './PropertyPath';
 import { IRequest } from './Request';
 import { IResponse } from './Response';
 import { IServer } from './Server';
 
-export type IDescriptionProperty = IProperty<IString<'description'>, IString>;
-export type IMethodProperty = IProperty<IString<'method'>, IString>;
-export type IPathProperty = IProperty<IString<'path'>, IString>;
-export type IDeprecatedProperty = IProperty<IString<'deprecated'>, IBool>;
-
 type IOperationChildren =
-  | IDescriptionProperty
-  | IMethodProperty
-  | IPathProperty
+  | IPropertyDescription
+  | IPropertyMethod
+  | IPropertyPath
   | IServer
-  | IDeprecatedProperty
+  | IPropertyDeprecated
   | IRequest
   | IResponse;
 

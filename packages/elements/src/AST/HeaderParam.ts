@@ -1,28 +1,26 @@
-import { IBool, IBranch, IProperty, IString } from './basics';
+import { IBranch } from './basics';
+import { IHeaderParams } from './HeaderParams';
+import { IPropertyDeprecated } from './PropertyDeprecated';
+import { IPropertyDescription } from './PropertyDescription';
+import { IPropertyExplode } from './PropertyExplode';
+import { IPropertyName } from './PropertyName';
+import { IPropertyRequired } from './PropertyRequired';
+import { IPropertyStyleHeaderParam } from './PropertyStyleHeaderParam';
 import { ISchema } from './Schema';
 
-type ParamStyle = 'simple';
-
-type INameProperty = IProperty<IString<'name'>, IString>;
-type IStyleProperty = IProperty<IString<'style'>, IString<ParamStyle>>;
-type IDescriptionProperty = IProperty<IString<'description'>, IString>;
-type IExplode = IProperty<IString<'explode'>, IBool>;
-type IRequiredProperty = IProperty<IString<'required'>, IBool>;
-type IDeprecatedProperty = IProperty<IString<'deprecated'>, IBool>;
-type ISchemaProperty = IProperty<IString<'schema'>, ISchema>;
-
 type IHeaderParamChildren =
-  | INameProperty
-  | IStyleProperty
-  | IDescriptionProperty
-  | IExplode
-  | IRequiredProperty
-  | IDeprecatedProperty
-  | ISchemaProperty;
+  | IPropertyName
+  | IPropertyStyleHeaderParam
+  | IPropertyDescription
+  | IPropertyExplode
+  | IPropertyRequired
+  | IPropertyDeprecated
+  | ISchema;
 //| IExample
 //| IEncoding;
 
 export interface IHeaderParam extends IBranch {
   type: 'headerParam';
+  parent: IHeaderParams;
   children: IHeaderParamChildren[];
 }

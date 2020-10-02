@@ -7,9 +7,13 @@ import * as React from 'react';
 
 import { httpOperation } from '../../__fixtures__/operations/put-todos';
 import { EditHandlesMap, httpOperation as shipengineHttpOperation } from '../../__fixtures__/operations/shipengine';
+import { httpOperation as shipengineHttpOperation2, IdMap } from '../../__fixtures__/operations/shipengine2';
 import model from '../../__fixtures__/schemas/contact.json';
 import { httpService } from '../../__fixtures__/services/petstore';
+import { IRequestBody } from '../../AST/RequestBody';
 import { Docs, ParsedDocs } from '../../components/Docs';
+import { HttpOperation } from '../../components/Docs/HttpOperation2';
+import { SelectionContext } from '../../components/Docs/HttpOperation2/SelectionContext';
 import { EditHandle, EditMetadata } from '../../constants';
 import { Provider } from '../../containers/Provider';
 
@@ -25,6 +29,9 @@ let selected: { kind: string; edithandle: EditMetadata } = {
 };
 
 const selections: string[] = [];
+
+let selected2: string | undefined;
+const selections2 = new Set<string>();
 
 storiesOf('Internal/Docs', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
@@ -365,6 +372,194 @@ storiesOf('Internal/Docs', module)
       </div>
     );
     return el;
+  })
+  .add('Editing Stoplight AST', () => {
+    const channel = addons.getChannel();
+    const dark = darkMode();
+
+    if (selected2) {
+      const o = IdMap.get(selected2);
+      switch (o.type) {
+        case 'request': {
+          button('Add Body', () => {
+            selected2 = String(Math.floor(Math.random() * 1000000));
+            const node = {
+              parent: o,
+              id: selected2,
+              type: 'requestBody' as const,
+              children: [],
+            };
+            node.children.push(
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'propertyRequired',
+                value: false,
+              },
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'propertyDescription',
+                value: '',
+              },
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'schema',
+                value: {},
+                children: [],
+              },
+            );
+            IdMap.set(node.id, node);
+            for (const child of node.children) {
+              IdMap.set(child.id, child);
+            }
+            o.children.push(node);
+          });
+          break;
+        }
+        case 'propertyName': {
+          o.value = text('name', o.value);
+          break;
+        }
+        case 'propertyDescription': {
+          o.value = text('description', o.value);
+          break;
+        }
+        case 'propertyPath': {
+          o.value = text('path', o.value);
+          break;
+        }
+        case 'propertyMethod': {
+          o.value = select('method', ['get', 'put', 'post', 'delete', 'etc'], o.value);
+          break;
+        }
+        case 'cookieParams':
+        case 'headerParams':
+        case 'pathParams':
+        case 'queryParams': {
+          button('Add Parameter', () => {
+            selected2 = String(Math.floor(Math.random() * 1000000));
+            const node = {
+              parent: o,
+              id: selected2,
+              type: o.type.slice(0, o.type.slice.length - 2) as
+                | 'cookieParam'
+                | 'headerParam'
+                | 'pathParam'
+                | 'queryParam',
+              children: [],
+            };
+            node.children.push(
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'propertyName',
+                value: 'untitled',
+              },
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'propertyDescription',
+                value: '',
+              },
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'propertyStyle',
+                value: 'HttpParamStyles.Simple',
+              },
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'propertyRequired',
+                value: false,
+              },
+            );
+            // @ts-ignore
+            IdMap.set(node.id, node);
+            for (const child of node.children) {
+              IdMap.set(child.id, child);
+            }
+            // @ts-ignore
+            o.children.push(node);
+          });
+          break;
+        }
+        case 'propertyStyleCookieParam': {
+          o.value = select('style', ['form'], o.value);
+          break;
+        }
+        case 'propertyStyleHeaderParam': {
+          o.value = select('style', ['simple'], o.value);
+          break;
+        }
+        case 'propertyStylePathParam': {
+          o.value = select('style', ['simple', 'matrix', 'label'], o.value);
+          break;
+        }
+        case 'propertyStyleQueryParam': {
+          o.value = select('style', ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'], o.value);
+          break;
+        }
+        case 'propertyRequired': {
+          o.value = boolean('required', o.value);
+          break;
+        }
+        case 'propertyDeprecated': {
+          o.value = boolean('deprecated', o.value);
+          break;
+        }
+        case 'cookieParam':
+        case 'headerParam':
+        case 'pathParam':
+        case 'queryParam': {
+          button('Delete', () => {
+            selected2 = void 0;
+            const i = o.parent.children.indexOf(o);
+            o.parent.children.splice(i, 1);
+            // Force re-render in order to get Knobs.
+            channel.emit(RESET);
+          });
+          break;
+        }
+      }
+    }
+
+    const spy: React.MouseEventHandler = e => {
+      let el = e.target as HTMLElement | null;
+
+      if (selections2.size && !(e.metaKey || e.ctrlKey)) {
+        for (const id of selections) {
+          const o = IdMap.get(id);
+          if (o) delete o[EditHandle].selected;
+        }
+        selections2.clear();
+      }
+
+      selected2 = void 0;
+      while (el) {
+        console.log(el);
+        if (el.dataset.id) {
+          selected2 = el.dataset.id;
+          selections2.add(el.dataset.id);
+          // Force re-render in order to get Knobs.
+          channel.emit(RESET);
+          return;
+        }
+        el = el.parentElement;
+      }
+    };
+    const el = (
+      <div className={cn('p-10', { 'bp3-dark bg-gray-8': dark })} onClick={spy}>
+        <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
+          <SelectionContext.Provider value={selections2}>
+            <HttpOperation data={shipengineHttpOperation2} />
+          </SelectionContext.Provider>
+        </Provider>
+      </div>
+    );
+    return el;
   });
 
 const originalPath = shipengineHttpOperation.path;
@@ -379,4 +574,4 @@ const originalResponseDescriptions = [
   shipengineHttpOperation.responses[2].description,
 ];
 
-console.log(EditHandlesMap);
+console.log(IdMap);

@@ -1,8 +1,11 @@
-import { IOperation } from '../../AST';
-import { IBool, IMagicNode, INumber, IProperty, IString } from '../../ast/basics';
+import { IAny, IOperation } from '../../AST';
+import { IBool, IBranch, IMagicNode, INumber, IProperty, IString } from '../../ast/basics';
 import { IHeaderParam } from '../../ast/HeaderParam';
+import { IHeaderParams } from '../../AST/HeaderParams';
 import { IPathParam } from '../../ast/PathParam';
+import { IPathParams } from '../../AST/PathParams';
 import { IQueryParam } from '../../ast/QueryParam';
+import { IQueryParams } from '../../AST/QueryParams';
 import { IRequest } from '../../ast/Request';
 import { IRequestBody } from '../../ast/RequestBody';
 import { IRequestExample } from '../../ast/RequestExample';
@@ -55,13 +58,25 @@ export const httpOperation: IOperation = {
 };
 
 httpOperation.children.push(
-  makeProperty(
-    httpOperation,
-    'description',
-    "The address-recognition API makes it easy for you to extract address data from unstructured text, including the recipient name, line 1, line 2, city, postal code, and more.\n\nData often enters your system as unstructured text (for example: emails, SMS messages, support tickets, or other documents). ShipEngine's address-recognition API helps you extract meaningful, structured data from this unstructured text. The parsed address data is returned in the same structure that's used for other ShipEngine APIs, such as address validation, rate quotes, and shipping labels.\n\n> **Note:** Address recognition is currently supported for the United States, Canada, Australia, New Zealand, the United Kingdom, and Ireland.\n",
-  ),
-  makeProperty(httpOperation, 'method', 'put'),
-  makeProperty(httpOperation, 'path', '/v1/addresses/recognize'),
+  {
+    parent: httpOperation,
+    id: id(),
+    type: 'propertyDescription',
+    value:
+      "The address-recognition API makes it easy for you to extract address data from unstructured text, including the recipient name, line 1, line 2, city, postal code, and more.\n\nData often enters your system as unstructured text (for example: emails, SMS messages, support tickets, or other documents). ShipEngine's address-recognition API helps you extract meaningful, structured data from this unstructured text. The parsed address data is returned in the same structure that's used for other ShipEngine APIs, such as address validation, rate quotes, and shipping labels.\n\n> **Note:** Address recognition is currently supported for the United States, Canada, Australia, New Zealand, the United Kingdom, and Ireland.\n",
+  },
+  {
+    parent: httpOperation,
+    id: id(),
+    type: 'propertyMethod',
+    value: 'put',
+  },
+  {
+    parent: httpOperation,
+    id: id(),
+    type: 'propertyPath',
+    value: '/v1/addresses/recognize',
+  },
 );
 
 // server
@@ -88,97 +103,223 @@ const request: IRequest = {
 };
 httpOperation.children.push(request);
 
-// Query Param 'limit'
+// Query Params
 
 {
-  const param: IQueryParam = {
+  const params: IQueryParams = {
     parent: request,
     id: id(),
-    type: 'queryParam',
+    type: 'queryParams',
     children: [],
   };
-  request.children.push(param);
+  request.children.push(params);
 
-  param.children.push(
-    makeProperty(param, 'name', 'limit'),
-    makeProperty(param, 'description', 'How many todos to limit?'),
-    makeProperty(param, 'deprecated', true),
-    makeProperty(param, 'style', 'form'),
-  );
+  // Query Param 'limit'
+
+  {
+    const param: IQueryParam = {
+      parent: params,
+      id: id(),
+      type: 'queryParam',
+      children: [],
+    };
+    params.children.push(param);
+
+    param.children.push(
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyName',
+        value: 'limit',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyDescription',
+        value: 'How many todos to limit?',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyDeprecated',
+        value: true,
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyStyleQueryParam',
+        value: 'form',
+      },
+    );
+  }
+
+  // Query Param 'value'
+
+  {
+    const param: IQueryParam = {
+      parent: params,
+      id: id(),
+      type: 'queryParam',
+      children: [],
+    };
+    params.children.push(param);
+
+    param.children.push(
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyName',
+        value: 'value',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyDescription',
+        value: 'How many string todos to limit?',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyDeprecated',
+        value: true,
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyStyleQueryParam',
+        value: 'form',
+      },
+    );
+  }
+
+  // Query Param 'completed'
+
+  {
+    const param: IQueryParam = {
+      parent: params,
+      id: id(),
+      type: 'queryParam',
+      children: [],
+    };
+    params.children.push(param);
+
+    param.children.push(
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyName',
+        value: 'completed',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyDescription',
+        value: 'Only return completed',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyStyleQueryParam',
+        value: 'form',
+      },
+    );
+  }
 }
 
-// Query Param 'value'
+// Header Params
 
 {
-  const param: IQueryParam = {
+  const params: IHeaderParams = {
     parent: request,
     id: id(),
-    type: 'queryParam',
+    type: 'headerParams',
     children: [],
   };
-  request.children.push(param);
+  request.children.push(params);
 
-  param.children.push(
-    makeProperty(param, 'name', 'value'),
-    makeProperty(param, 'description', 'How many string todos to limit?'),
-    makeProperty(param, 'deprecated', true),
-    makeProperty(param, 'style', 'form'),
-  );
+  // Header Param 'completed'
+
+  {
+    const param: IHeaderParam = {
+      parent: request,
+      id: id(),
+      type: 'headerParam',
+      children: [],
+    };
+    params.children.push(param);
+
+    param.children.push(
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyName',
+        value: 'account-id',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyDescription',
+        value: 'Your Stoplight account id',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyStyleHeaderParam',
+        value: 'simple',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyRequired',
+        value: true,
+      },
+    );
+  }
 }
 
-// Query Param 'completed'
+// Path Params
 
 {
-  const param: IQueryParam = {
+  const params: IPathParams = {
     parent: request,
     id: id(),
-    type: 'queryParam',
+    type: 'pathParams',
     children: [],
   };
-  request.children.push(param);
+  request.children.push(params);
 
-  param.children.push(
-    makeProperty(param, 'name', 'completed'),
-    makeProperty(param, 'description', 'Only return completed'),
-    makeProperty(param, 'style', 'form'),
-  );
-}
+  // Path Param 'todoId'
 
-// Header Param 'completed'
+  {
+    const param: IPathParam = {
+      parent: request,
+      id: id(),
+      type: 'pathParam',
+      children: [],
+    };
+    params.children.push(param);
 
-{
-  const param: IHeaderParam = {
-    parent: request,
-    id: id(),
-    type: 'headerParam',
-    children: [],
-  };
-  request.children.push(param);
-
-  param.children.push(
-    makeProperty(param, 'name', 'account-id'),
-    makeProperty(param, 'description', 'Your Stoplight account id'),
-    makeProperty(param, 'style', 'simple'),
-    makeProperty(param, 'required', true),
-  );
-}
-
-// Path Param 'todoId'
-
-{
-  const param: IPathParam = {
-    parent: request,
-    id: id(),
-    type: 'pathParam',
-    children: [],
-  };
-  request.children.push(param);
-
-  param.children.push(
-    makeProperty(param, 'name', 'todoId'),
-    makeProperty(param, 'style', 'simple'),
-    makeProperty(param, 'required', true),
-  );
+    param.children.push(
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyName',
+        value: 'todoId',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyStylePathParam',
+        value: 'simple',
+      },
+      {
+        parent: param,
+        id: id(),
+        type: 'propertyRequired',
+        value: true,
+      },
+    );
+  }
 }
 
 // Request Body
@@ -327,3 +468,16 @@ httpOperation.serialize = () => {
 
 // @ts-ignore
 console.log(httpOperation.serialize());
+
+export function MapIds(o: IAny, map: Map<string, any> = new Map()): Map<string, IAny> {
+  map.set(o.id, o);
+  if ('children' in o) {
+    for (const entry of o.children) {
+      // @ts-ignore
+      MapIds(entry, map);
+    }
+  }
+  return map;
+}
+
+export const IdMap = MapIds(httpOperation);
