@@ -30,7 +30,17 @@ export function withRouter<T>(
   return WithRouter;
 }
 
+const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
+
 const ReactRouterMarkdownLink: MarkdownComponent<ILink> = ({ node: { url, title }, children }) => {
+  const isExternal = externalRegex.test(url);
+  if (isExternal) {
+    return (
+      <a target="_blank" rel="noreferrer noopener" href={url} title={title}>
+        {children}
+      </a>
+    );
+  }
   return (
     <HashLink to={url} title={title}>
       {children}
