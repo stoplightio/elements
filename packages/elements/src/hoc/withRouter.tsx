@@ -1,7 +1,8 @@
 import { ILink } from '@stoplight/markdown';
 import { MarkdownComponent } from '@stoplight/markdown-viewer';
 import * as React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import { ComponentsProvider } from '../context/Components';
 import { useRouter } from '../hooks/useRouter';
@@ -31,8 +32,8 @@ export function withRouter<T>(
 
 const ReactRouterMarkdownLink: MarkdownComponent<ILink> = ({ node: { url, title }, children }) => {
   return (
-    <Link to={url} title={title}>
+    <HashLink to={url} title={title}>
       {children}
-    </Link>
+    </HashLink>
   );
 };
