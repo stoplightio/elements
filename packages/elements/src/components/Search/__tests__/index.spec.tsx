@@ -14,11 +14,6 @@ jest.mock('@stoplight/ui-kit/ScrollContainer', () => ({
   ScrollContainer: (props: any) => props.children,
 }));
 
-jest.mock('../../../hooks/useComponents', () => ({
-  __esModule: true,
-  useComponents: () => ({ link: ({ node, children }: any, id: any) => <a href={node.url}>{children}</a> }),
-}));
-
 describe('Search', () => {
   let wrapper: ReactWrapper;
 

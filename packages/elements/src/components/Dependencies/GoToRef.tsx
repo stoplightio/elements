@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { ActiveInfoContext } from '../../containers/Provider';
-import { useComponents } from '../../hooks/useComponents';
+import { useComponents } from '../../context/Components';
 
 export const GoToRef: React.FC<{
   uri: string;

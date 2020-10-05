@@ -13,7 +13,7 @@ import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../../constants';
-import { InlineRefResolverContext } from '../../containers/Provider';
+import { useInlineRefResolver } from '../../context/InlineRefResolver';
 import { MarkdownViewer } from '../MarkdownViewer';
 
 export interface ISchemaViewerProps {
@@ -40,7 +40,7 @@ export const SchemaViewer = ({
 }: ISchemaViewerProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const resolveRef = React.useContext(InlineRefResolverContext);
+  const resolveRef = useInlineRefResolver();
 
   const JSV = ({ jsvClassName }: { jsvClassName?: string }) => {
     return (

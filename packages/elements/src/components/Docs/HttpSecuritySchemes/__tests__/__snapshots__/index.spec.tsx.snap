@@ -128,7 +128,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 components={
                   Object {
                     "code": [Function],
-                    "link": [Function],
                   }
                 }
                 markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
@@ -141,7 +140,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     components={
                       Object {
                         "code": [Function],
-                        "link": [Function],
                       }
                     }
                     markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
@@ -460,7 +458,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 components={
                   Object {
                     "code": [Function],
-                    "link": [Function],
                   }
                 }
                 markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
@@ -473,7 +470,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     components={
                       Object {
                         "code": [Function],
-                        "link": [Function],
                       }
                     }
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
@@ -661,7 +657,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 components={
                   Object {
                     "code": [Function],
-                    "link": [Function],
                   }
                 }
                 markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
@@ -674,7 +669,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     components={
                       Object {
                         "code": [Function],
-                        "link": [Function],
                       }
                     }
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
@@ -884,7 +878,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 components={
                   Object {
                     "code": [Function],
-                    "link": [Function],
                   }
                 }
                 markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
@@ -897,7 +890,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     components={
                       Object {
                         "code": [Function],
-                        "link": [Function],
                       }
                     }
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
@@ -1118,7 +1110,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 components={
                   Object {
                     "code": [Function],
-                    "link": [Function],
                   }
                 }
                 markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
@@ -1131,7 +1122,6 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     components={
                       Object {
                         "code": [Function],
-                        "link": [Function],
                       }
                     }
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."

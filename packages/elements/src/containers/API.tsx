@@ -10,6 +10,7 @@ import useSwr from 'swr';
 import { SidebarLayout } from '../components/API/SidebarLayout';
 import { StackedLayout } from '../components/API/StackedLayout';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
+import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { withRouter } from '../hoc/withRouter';
 import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
@@ -18,7 +19,6 @@ import { LinkComponentType, RoutingProps } from '../types';
 import { computeNodeData, isOas2, isOas3, IUriMap } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
-import { InlineRefResolverProvider } from './Provider';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
