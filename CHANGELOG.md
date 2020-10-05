@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.158](https://github.com/stoplightio/elements/compare/v6.0.0-beta.157...v6.0.0-beta.158) (2020-10-05)
+
+
+### Features
+
+* **with-router:** react to basePath changes ([#608](https://github.com/stoplightio/elements/issues/608)) ([a3054c7](https://github.com/stoplightio/elements/commit/a3054c7579eace16dd6023ea9d6b0e9faf19b9b5))
+
+
+
+
+
 # [6.0.0-beta.157](https://github.com/stoplightio/elements/compare/v6.0.0-beta.156...v6.0.0-beta.157) (2020-10-01)
 
 
