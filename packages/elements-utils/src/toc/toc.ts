@@ -83,7 +83,7 @@ export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: IT
     groupNodesByType,
     ({ models, httpServices, httpOperations }) => {
       modifyEach(toc.items, ({ uri }) => {
-        const httpService = httpServices.find(httpService => httpService.uri === uri);
+        const httpService = httpServices.find(matchesUri(uri));
 
         if (!httpService) return [];
 
@@ -113,20 +113,24 @@ export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfCont
       modifyEach(
         toc.items,
         item => {
-          const httpService = httpServices.find(httpService => httpService.uri === item.uri);
+          const httpService = httpServices.find(matchesUri(item.uri));
 
           if (!httpService) return [];
 
           return [
-            { type: 'divider', title: httpService.name },
+            { type: 'divider', title: item.title },
             { type: 'item', title: 'Overview', uri: httpService.uri },
           ];
         },
-        item => httpServices.some(httpService => httpService.uri === item.uri),
+        item => httpServices.some(matchesUri(item.uri)),
       );
     },
   )();
   injectHttpOperationsAndModels(searchResults, toc);
+}
+
+function matchesUri(uri: string) {
+  return (item: NodeData) => item.uri.replace(/^\//, '') === uri.replace(/^\//, '');
 }
 
 export function groupNodesByType(searchResults: NodeData[]) {
