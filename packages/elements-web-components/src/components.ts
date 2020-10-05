@@ -3,12 +3,13 @@ import { API, StoplightProject } from '@stoplight/elements';
 import { createElementClass } from './createElementClass';
 
 export const StoplightProjectElement = createElementClass(StoplightProject, {
-  workspace: { type: 'string', defaultValue: '' },
+  workspaceSlug: { type: 'string', defaultValue: '' },
   project: { type: 'string', defaultValue: '' },
   branch: { type: 'string' },
   authToken: { type: 'string' },
   basePath: { type: 'string' },
   router: { type: 'string' },
+  platformUrl: { type: 'string' },
 });
 
 export const ApiElement = createElementClass(API, {
