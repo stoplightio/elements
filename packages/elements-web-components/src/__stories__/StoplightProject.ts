@@ -8,7 +8,7 @@ export default {
   title: 'Stoplight Project',
   argType: {
     workspaceSlug: { control: 'text' },
-    project: { control: 'text' },
+    projectSlug: { control: 'text' },
     platformUrl: { control: 'text' },
   },
 };
@@ -17,6 +17,6 @@ export const defaultProject = Template.bind({});
 defaultProject.storyName = "Stoplight's Demo workspace";
 defaultProject.args = {
   workspaceSlug: 'demo',
-  project: 'public-apis',
+  projectSlug: 'public-apis',
   platformUrl: 'https://stoplight.io',
 };

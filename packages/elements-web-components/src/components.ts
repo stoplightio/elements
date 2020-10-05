@@ -4,8 +4,8 @@ import { createElementClass } from './createElementClass';
 
 export const StoplightProjectElement = createElementClass(StoplightProject, {
   workspaceSlug: { type: 'string', defaultValue: '' },
-  project: { type: 'string', defaultValue: '' },
-  branch: { type: 'string' },
+  projectSlug: { type: 'string', defaultValue: '' },
+  branchSlug: { type: 'string' },
   authToken: { type: 'string' },
   basePath: { type: 'string' },
   router: { type: 'string' },

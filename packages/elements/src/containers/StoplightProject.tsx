@@ -16,15 +16,15 @@ import { TryItProvider } from './TryIt';
 
 export interface StoplightProjectProps extends RoutingProps {
   workspaceSlug: string;
-  project: string;
+  projectSlug: string;
   platformUrl?: string;
-  branch?: string;
+  branchSlug?: string;
   authToken?: string;
   linkComponent?: LinkComponentType;
 }
 
 const StoplightProjectImpl = withRouter<StoplightProjectProps>(
-  ({ workspaceSlug, platformUrl, project, branch, linkComponent: LinkComponent, authToken }) => {
+  ({ workspaceSlug, platformUrl, projectSlug, branchSlug, linkComponent: LinkComponent, authToken }) => {
     const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
     const client = useUrqlClient(`${platformUrl ?? defaultPlatformUrl}/graphql`, { authToken });
@@ -54,8 +54,8 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
         <TableOfContents
           workspaceSlug={workspaceSlug}
           platformUrl={platformUrl}
-          projectSlug={project}
-          branchSlug={branch}
+          projectSlug={projectSlug}
+          branchSlug={branchSlug}
           rowComponent={Row}
           rowComponentExtraProps={{ pathname, linkComponent: LinkComponent }}
           nodeUri={pathname}
@@ -72,8 +72,8 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
             <DocsProvider
               host={platformUrl ?? defaultPlatformUrl}
               workspace={workspaceSlug}
-              project={project}
-              branch={branch}
+              project={projectSlug}
+              branch={branchSlug}
               node={pathname}
               components={components}
               urqlClient={client}
@@ -85,8 +85,8 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
                   <TryItProvider
                     host={platformUrl ?? defaultPlatformUrl}
                     workspace={workspaceSlug}
-                    project={project}
-                    branch={branch}
+                    project={projectSlug}
+                    branch={branchSlug}
                     node={pathname}
                     components={components}
                     urqlClient={client}

@@ -52,7 +52,7 @@ import { StoplightProject } from "@stoplight/elements";
       <td>[x]</td>
     </tr>
     <tr>
-      <td>project</td>
+      <td>projectSlug</td>
       <td>string</td>
       <td></td>
       <td>elements</td>
@@ -60,11 +60,11 @@ import { StoplightProject } from "@stoplight/elements";
       <td>[x]</td>
     </tr>
     <tr>
-      <td>branch</td>
+      <td>branchSlug</td>
       <td>string</td>
       <td>[default branch]</td>
       <td>beta</td>
-      <td>A specific branch of the project to show. If no branch is provided, the default branch will be shown.</td>
+      <td>The name of a specific branch of the project to show. If no branch is provided, the default branch will be shown.</td>
       <td></td>
     </tr>
     <tr>
