@@ -8,6 +8,7 @@ import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, Ta
 export function generateToC(searchResults: NodeData[]) {
   return pipe(
     () => searchResults,
+    normalizeNodes,
     groupNodesByType,
     ({ articles, models, httpServices, httpOperations }) => {
       const toc: ITableOfContents = { items: [] };
@@ -39,6 +40,7 @@ export function generateToC(searchResults: NodeData[]) {
 export function generateTocSkeleton(searchResults: NodeData[]) {
   return pipe(
     () => searchResults,
+    normalizeNodes,
     groupNodesByType,
     ({ articles, models, httpServices }) => {
       const toc: ITableOfContents = { items: [] };
@@ -80,6 +82,7 @@ function modifyEach(
 export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: ITableOfContents) {
   pipe(
     () => searchResults,
+    normalizeNodes,
     groupNodesByType,
     ({ models, httpServices, httpOperations }) => {
       modifyEach(toc.items, ({ uri }) => {
@@ -108,6 +111,7 @@ export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: IT
 export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfContents) {
   pipe(
     () => searchResults,
+    normalizeNodes,
     groupNodesByType,
     ({ httpServices }) => {
       modifyEach(
@@ -118,7 +122,7 @@ export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfCont
           if (!httpService) return [];
 
           return [
-            { type: 'divider', title: httpService.name },
+            { type: 'divider', title: item.title },
             { type: 'item', title: 'Overview', uri: httpService.uri },
           ];
         },
@@ -127,6 +131,15 @@ export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfCont
     },
   )();
   injectHttpOperationsAndModels(searchResults, toc);
+}
+
+function normalizeNodes(searchResults: NodeData[]): NodeData[] {
+  return searchResults.map(({ type, name, uri, tags }) => ({
+    type,
+    name,
+    uri: uri.replace(/^\//, ''),
+    tags,
+  }));
 }
 
 export function groupNodesByType(searchResults: NodeData[]) {
