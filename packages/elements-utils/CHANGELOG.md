@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.161](https://github.com/stoplightio/elements/compare/v6.0.0-beta.160...v6.0.0-beta.161) (2020-10-05)
+
+
+### Features
+
+* normalize toc nodes uris ([#614](https://github.com/stoplightio/elements/issues/614)) ([43ed11d](https://github.com/stoplightio/elements/commit/43ed11d8df1407368edfd93ce6a75a6060fa9d97))
+
+
+
+
+
 # [6.0.0-beta.160](https://github.com/stoplightio/elements/compare/v6.0.0-beta.159...v6.0.0-beta.160) (2020-10-05)
 
 
