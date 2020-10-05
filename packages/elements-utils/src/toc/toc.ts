@@ -36,14 +36,43 @@ export function generateToC(searchResults: NodeData[]) {
   )();
 }
 
-function traverseToC(items: TableOfContentItem[], apply: (item: Item) => TableOfContentItem[]) {
+export function generateTocSkeleton(searchResults: NodeData[]) {
+  return pipe(
+    () => searchResults,
+    groupNodesByType,
+    ({ articles, models, httpServices }) => {
+      const toc: ITableOfContents = { items: [] };
+
+      // Articles
+      pipe(() => articles, sortArticlesByTypeAndPath, appendArticlesToToC(toc))();
+
+      // HTTP Services
+      pipe(() => httpServices, sortNodesByUri, appendHttpServicesItemsToToC(toc))();
+
+      // Models
+      pipe(() => models, sortNodesByUri, appendModelsToToc(toc))();
+
+      return toc;
+    },
+  )();
+}
+
+function modifyEach(
+  items: TableOfContentItem[],
+  apply: (item: Item) => TableOfContentItem[],
+  shouldReplace?: (item: Item) => boolean,
+) {
   for (let i = items.length - 1; i > -1; i--) {
     const item = items[i];
     if (isItem(item)) {
-      items.splice(i + 1, 0, ...apply(item));
+      if (shouldReplace?.(item)) {
+        items.splice(i, 1, ...apply(item));
+      } else {
+        items.splice(i + 1, 0, ...apply(item));
+      }
     }
     if (isGroup(item)) {
-      traverseToC(item.items, apply);
+      modifyEach(item.items, apply);
     }
   }
 }
@@ -53,7 +82,7 @@ export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: IT
     () => searchResults,
     groupNodesByType,
     ({ models, httpServices, httpOperations }) => {
-      traverseToC(toc.items, ({ uri }) => {
+      modifyEach(toc.items, ({ uri }) => {
         const httpService = httpServices.find(httpService => httpService.uri === uri);
 
         if (!httpService) return [];
@@ -74,6 +103,30 @@ export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: IT
       });
     },
   )();
+}
+
+export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfContents) {
+  pipe(
+    () => searchResults,
+    groupNodesByType,
+    ({ httpServices }) => {
+      modifyEach(
+        toc.items,
+        item => {
+          const httpService = httpServices.find(httpService => httpService.uri === item.uri);
+
+          if (!httpService) return [];
+
+          return [
+            { type: 'divider', title: httpService.name },
+            { type: 'item', title: 'Overview', uri: httpService.uri },
+          ];
+        },
+        item => httpServices.some(httpService => httpService.uri === item.uri),
+      );
+    },
+  )();
+  injectHttpOperationsAndModels(searchResults, toc);
 }
 
 export function groupNodesByType(searchResults: NodeData[]) {
@@ -278,6 +331,16 @@ function appendHttpServiceItemsToToCWithTags(toc: ITableOfContents) {
   };
 }
 
+function appendHttpServicesItemsToToC(toc: ITableOfContents) {
+  return (httpServices: NodeData[]) => {
+    if (httpServices.length) {
+      httpServices.forEach(httpService =>
+        toc.items.push({ type: 'item', title: httpService.name, uri: httpService.uri }),
+      );
+    }
+  };
+}
+
 export function appendHttpServicesToToC(toc: ITableOfContents) {
   return ({
     httpServices,
@@ -322,6 +385,6 @@ export function appendModelsToToc(toc: ITableOfContents) {
 }
 
 function getDirsFromUri(uri: string) {
-  const strippedUri = uri.replace(/^\/(?:docs\/)?/, '');
+  const strippedUri = uri.replace(/^\/?(?:docs\/)?/, '');
   return strippedUri.split(sep).slice(0, -1);
 }
