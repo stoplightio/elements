@@ -10,6 +10,8 @@ import { EditHandlesMap, httpOperation as shipengineHttpOperation } from '../../
 import { httpOperation as shipengineHttpOperation2, IdMap } from '../../__fixtures__/operations/shipengine2';
 import model from '../../__fixtures__/schemas/contact.json';
 import { httpService } from '../../__fixtures__/services/petstore';
+import { IAny } from '../../AST';
+import { IMagicNode } from '../../AST/basics';
 import { IRequestBody } from '../../AST/RequestBody';
 import { Docs, ParsedDocs } from '../../components/Docs';
 import { HttpOperation } from '../../components/Docs/HttpOperation2';
@@ -377,62 +379,23 @@ storiesOf('Internal/Docs', module)
     const channel = addons.getChannel();
     const dark = darkMode();
 
-    if (selected2) {
-      const o = IdMap.get(selected2);
+    const addKnobs = (o: IAny) => {
       switch (o.type) {
-        case 'request': {
-          button('Add Body', () => {
-            selected2 = String(Math.floor(Math.random() * 1000000));
-            const node = {
-              parent: o,
-              id: selected2,
-              type: 'requestBody' as const,
-              children: [],
-            };
-            node.children.push(
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'propertyRequired',
-                value: false,
-              },
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'propertyDescription',
-                value: '',
-              },
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'schema',
-                value: {},
-                children: [],
-              },
-            );
-            IdMap.set(node.id, node);
-            for (const child of node.children) {
-              IdMap.set(child.id, child);
-            }
-            o.children.push(node);
-          });
-          break;
-        }
         case 'propertyName': {
           o.value = text('name', o.value);
-          break;
+          return;
         }
         case 'propertyDescription': {
           o.value = text('description', o.value);
-          break;
+          return;
         }
         case 'propertyPath': {
           o.value = text('path', o.value);
-          break;
+          return;
         }
         case 'propertyMethod': {
           o.value = select('method', ['get', 'put', 'post', 'delete', 'etc'], o.value);
-          break;
+          return;
         }
         case 'cookieParams':
         case 'headerParams':
@@ -484,36 +447,40 @@ storiesOf('Internal/Docs', module)
             // @ts-ignore
             o.children.push(node);
           });
-          break;
+          return;
         }
         case 'propertyStyleCookieParam': {
           o.value = select('style', ['form'], o.value);
-          break;
+          return;
         }
         case 'propertyStyleHeaderParam': {
           o.value = select('style', ['simple'], o.value);
-          break;
+          return;
         }
         case 'propertyStylePathParam': {
           o.value = select('style', ['simple', 'matrix', 'label'], o.value);
-          break;
+          return;
         }
         case 'propertyStyleQueryParam': {
           o.value = select('style', ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'], o.value);
-          break;
+          return;
         }
         case 'propertyRequired': {
           o.value = boolean('required', o.value);
-          break;
+          return;
         }
         case 'propertyDeprecated': {
           o.value = boolean('deprecated', o.value);
-          break;
+          return;
         }
         case 'cookieParam':
         case 'headerParam':
         case 'pathParam':
         case 'queryParam': {
+          for (const child of o.children) {
+            addKnobs(child);
+          }
+
           button('Delete', () => {
             selected2 = void 0;
             const i = o.parent.children.indexOf(o);
@@ -521,9 +488,52 @@ storiesOf('Internal/Docs', module)
             // Force re-render in order to get Knobs.
             channel.emit(RESET);
           });
-          break;
+          return;
+        }
+        case 'request': {
+          button('Add Body', () => {
+            selected2 = String(Math.floor(Math.random() * 1000000));
+            const node = {
+              parent: o,
+              id: selected2,
+              type: 'requestBody' as const,
+              children: [],
+            };
+            node.children.push(
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'propertyRequired',
+                value: false,
+              },
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'propertyDescription',
+                value: '',
+              },
+              {
+                parent: node,
+                id: String(Math.floor(Math.random() * 1000000)),
+                type: 'schema',
+                value: {},
+                children: [],
+              },
+            );
+            IdMap.set(node.id, node);
+            for (const child of node.children) {
+              IdMap.set(child.id, child);
+            }
+            o.children.push(node);
+          });
+          return;
         }
       }
+    };
+
+    if (selected2) {
+      const o = IdMap.get(selected2);
+      addKnobs(o);
     }
 
     const spy: React.MouseEventHandler = e => {
