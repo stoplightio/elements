@@ -122,7 +122,7 @@ export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfCont
             { type: 'item', title: 'Overview', uri: httpService.uri },
           ];
         },
-        item => httpServices.find(httpService => httpService.uri === item.uri) !== void 0,
+        item => httpServices.some(httpService => httpService.uri === item.uri),
       );
     },
   )();
