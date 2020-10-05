@@ -8,7 +8,6 @@ import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, Ta
 export function generateToC(searchResults: NodeData[]) {
   return pipe(
     () => searchResults,
-    normalizeNodes,
     groupNodesByType,
     ({ articles, models, httpServices, httpOperations }) => {
       const toc: ITableOfContents = { items: [] };
@@ -40,7 +39,6 @@ export function generateToC(searchResults: NodeData[]) {
 export function generateTocSkeleton(searchResults: NodeData[]) {
   return pipe(
     () => searchResults,
-    normalizeNodes,
     groupNodesByType,
     ({ articles, models, httpServices }) => {
       const toc: ITableOfContents = { items: [] };
@@ -82,11 +80,10 @@ function modifyEach(
 export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: ITableOfContents) {
   pipe(
     () => searchResults,
-    normalizeNodes,
     groupNodesByType,
     ({ models, httpServices, httpOperations }) => {
       modifyEach(toc.items, ({ uri }) => {
-        const httpService = httpServices.find(httpService => httpService.uri === uri);
+        const httpService = httpServices.find(matchesUri(uri));
 
         if (!httpService) return [];
 
@@ -111,13 +108,12 @@ export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: IT
 export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfContents) {
   pipe(
     () => searchResults,
-    normalizeNodes,
     groupNodesByType,
     ({ httpServices }) => {
       modifyEach(
         toc.items,
         item => {
-          const httpService = httpServices.find(httpService => httpService.uri === item.uri);
+          const httpService = httpServices.find(matchesUri(item.uri));
 
           if (!httpService) return [];
 
@@ -126,20 +122,15 @@ export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfCont
             { type: 'item', title: 'Overview', uri: httpService.uri },
           ];
         },
-        item => httpServices.some(httpService => httpService.uri === item.uri),
+        item => httpServices.some(matchesUri(item.uri)),
       );
     },
   )();
   injectHttpOperationsAndModels(searchResults, toc);
 }
 
-function normalizeNodes(searchResults: NodeData[]): NodeData[] {
-  return searchResults.map(({ type, name, uri, tags }) => ({
-    type,
-    name,
-    uri: uri.replace(/^\//, ''),
-    tags,
-  }));
+function matchesUri(uri: string) {
+  return (item: NodeData) => item.uri.replace(/^\//, '') === uri.replace(/^\//, '');
 }
 
 export function groupNodesByType(searchResults: NodeData[]) {
