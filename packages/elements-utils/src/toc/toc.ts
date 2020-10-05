@@ -57,7 +57,7 @@ export function generateTocSkeleton(searchResults: NodeData[]) {
   )();
 }
 
-function traverseToC(
+function modifyEach(
   items: TableOfContentItem[],
   apply: (item: Item) => TableOfContentItem[],
   shouldReplace?: (item: Item) => boolean,
@@ -72,7 +72,7 @@ function traverseToC(
       }
     }
     if (isGroup(item)) {
-      traverseToC(item.items, apply);
+      modifyEach(item.items, apply);
     }
   }
 }
@@ -82,7 +82,7 @@ export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: IT
     () => searchResults,
     groupNodesByType,
     ({ models, httpServices, httpOperations }) => {
-      traverseToC(toc.items, ({ uri }) => {
+      modifyEach(toc.items, ({ uri }) => {
         const httpService = httpServices.find(httpService => httpService.uri === uri);
 
         if (!httpService) return [];
@@ -110,7 +110,7 @@ export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfCont
     () => searchResults,
     groupNodesByType,
     ({ httpServices }) => {
-      traverseToC(
+      modifyEach(
         toc.items,
         item => {
           const httpService = httpServices.find(httpService => httpService.uri === item.uri);
