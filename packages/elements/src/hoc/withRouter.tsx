@@ -9,9 +9,10 @@ export function withRouter<T>(
   WrappedComponent: React.ComponentType<T & RoutingProps>,
 ): React.ComponentType<T & RoutingProps> {
   const WithRouter = (props: T & RoutingProps) => {
-    const { Router, routerProps } = useRouter(props.router ?? 'history', props.basePath ?? '/');
+    const basePath = props.basePath ?? '/';
+    const { Router, routerProps } = useRouter(props.router ?? 'history', basePath);
     return (
-      <Router {...routerProps}>
+      <Router {...routerProps} key={basePath}>
         <Route path="/">
           <WrappedComponent {...props} />
         </Route>
