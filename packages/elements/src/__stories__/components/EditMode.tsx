@@ -19,7 +19,6 @@ export const darkMode = () => boolean('Dark Mode', false);
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
 
-let selected: string | undefined;
 const selections = new Set<string>();
 
 storiesOf('Internal/Stoplight AST', module)
@@ -27,10 +26,18 @@ storiesOf('Internal/Stoplight AST', module)
   .add('Editing', () => {
     const channel = addons.getChannel();
     const dark = darkMode();
+
+    // A quirk of Storybook is that when knob values change the entire component is unmounted and remounted apparently,
+    // causing local component state to be lost.
+    const [selected, _setSelected] = React.useState<string>(window.localStorage.selected);
+    const setSelected = (value?: string) => {
+      window.localStorage.selected = value;
+      _setSelected(value);
+    };
+
     useYDoc(ydoc);
     const httpOperationYjs = ydoc.doc.getMap('root').get('operation');
     useObserveDeep(httpOperationYjs);
-    console.log('httpOperationYjs', httpOperationYjs);
 
     const IdMapYjs = getIdMap();
 
@@ -103,7 +110,7 @@ storiesOf('Internal/Stoplight AST', module)
               // @ts-ignore
               IdMapYjs.set(getId(child), child);
             }
-            selected = getId(node);
+            setSelected(getId(node));
           });
           return;
         }
@@ -140,7 +147,7 @@ storiesOf('Internal/Stoplight AST', module)
           }
 
           button('Delete', () => {
-            selected = void 0;
+            setSelected(void 0);
             const i = getParent(o)
               .get('children')
               .toArray()
@@ -180,7 +187,7 @@ storiesOf('Internal/Stoplight AST', module)
               // @ts-ignore
               IdMapYjs.set(getId(child), child);
             }
-            selected = getId(node);
+            setSelected(getId(node));
           });
           return;
         }
@@ -193,7 +200,10 @@ storiesOf('Internal/Stoplight AST', module)
     React.useEffect(() => {
       if (selected) {
         const o = IdMapYjs.get(selected);
-        addKnobs(o);
+        if (o) {
+          console.log('adding knobs');
+          addKnobs(o);
+        }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected]);
@@ -205,14 +215,13 @@ storiesOf('Internal/Stoplight AST', module)
         selections.clear();
       }
 
-      selected = void 0;
+      setSelected(void 0);
       while (el) {
         console.log(el);
         if (el.dataset.id) {
-          selected = el.dataset.id;
-          console.log('selected', selected);
           selections.add(el.dataset.id);
-          // Force re-render in order to get Knobs.
+          setSelected(el.dataset.id);
+          // Clear knobs.
           channel.emit(RESET);
           return;
         }

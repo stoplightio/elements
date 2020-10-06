@@ -10,12 +10,11 @@ import { YDoc } from '../../YAST/YDoc';
 export function useYDoc(doc: YDoc) {
   const [count, setCount] = React.useState(1);
   React.useEffect(() => {
-    console.log('doc', doc);
     let cancel = false;
     if (count === 1) {
       doc.ready.then(() => {
         if (cancel) return;
-        console.log('hey ready');
+        console.log('doc.ready');
         setCount(count + 1);
       });
     }
