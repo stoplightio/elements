@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.161](https://github.com/stoplightio/elements/compare/v6.0.0-beta.160...v6.0.0-beta.161) (2020-10-05)
+
+
+### Features
+
+* normalize toc nodes uris ([#614](https://github.com/stoplightio/elements/issues/614)) ([43ed11d](https://github.com/stoplightio/elements/commit/43ed11d8df1407368edfd93ce6a75a6060fa9d97))
+
+
+
+
+
+# [6.0.0-beta.160](https://github.com/stoplightio/elements/compare/v6.0.0-beta.159...v6.0.0-beta.160) (2020-10-05)
+
+
+### Features
+
+* **elements-utils:** generate and resolve toc skeleten ([#612](https://github.com/stoplightio/elements/issues/612)) ([9a99cbc](https://github.com/stoplightio/elements/commit/9a99cbc3882536b129159a94e6185dbfc84d40a0))
+
+
+
+
+
+# [6.0.0-beta.159](https://github.com/stoplightio/elements/compare/v6.0.0-beta.158...v6.0.0-beta.159) (2020-10-05)
+
+
+### Bug Fixes
+
+* link handling in markdown documents ([#611](https://github.com/stoplightio/elements/issues/611)) ([f5f379e](https://github.com/stoplightio/elements/commit/f5f379eeabb9760ad5a22227fc258778878bbd13))
+
+
+
+
+
+# [6.0.0-beta.158](https://github.com/stoplightio/elements/compare/v6.0.0-beta.157...v6.0.0-beta.158) (2020-10-05)
+
+
+### Features
+
+* **with-router:** react to basePath changes ([#608](https://github.com/stoplightio/elements/issues/608)) ([a3054c7](https://github.com/stoplightio/elements/commit/a3054c7579eace16dd6023ea9d6b0e9faf19b9b5))
+
+
+
+
+
 # [6.0.0-beta.157](https://github.com/stoplightio/elements/compare/v6.0.0-beta.156...v6.0.0-beta.157) (2020-10-01)
 
 

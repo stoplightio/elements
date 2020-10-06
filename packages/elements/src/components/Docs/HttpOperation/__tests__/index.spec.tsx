@@ -7,13 +7,8 @@ import { Tag } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
-import { InlineRefResolverContext } from '../../../../containers/Provider';
 import { HttpOperation } from '../index';
 import { Parameters } from '../Parameters';
-
-// jest.mock('../../../hooks/useResolver', () => ({
-//   useResolver: (type: any, result: any) => ({ result }),
-// }));
 
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
@@ -98,66 +93,6 @@ describe('HttpOperation', () => {
         w => w.type() === Parameters && w.props().title === 'Query Parameters',
       );
       expect(queryParameterElement.find(Tag).length).toEqual(1);
-    });
-
-    it('should resolve refs', () => {
-      const operationData = {
-        id: 'get',
-        method: 'get',
-        path: '/path',
-        responses: [],
-        request: {
-          query: [
-            {
-              name: 'default style param',
-              schema: {
-                $ref: 'some-ref',
-              },
-              style: HttpParamStyles.Form as const,
-            },
-          ],
-        },
-      };
-
-      const resolver = jest.fn().mockReturnValue({ type: 'string' });
-
-      wrapper = mount(
-        <InlineRefResolverContext.Provider value={resolver}>
-          <HttpOperation data={operationData} />
-        </InlineRefResolverContext.Provider>,
-      );
-
-      expect(resolver).toHaveBeenCalled();
-    });
-
-    it('should not resolve refs when none', () => {
-      const operationData = {
-        id: 'get',
-        method: 'get',
-        path: '/path',
-        responses: [],
-        request: {
-          query: [
-            {
-              name: 'default style param',
-              schema: {
-                type: 'string' as const,
-              },
-              style: HttpParamStyles.Form as const,
-            },
-          ],
-        },
-      };
-
-      const resolver = jest.fn().mockReturnValue({ type: 'string' });
-
-      wrapper = mount(
-        <InlineRefResolverContext.Provider value={resolver}>
-          <HttpOperation data={operationData} />
-        </InlineRefResolverContext.Provider>,
-      );
-
-      expect(resolver).not.toHaveBeenCalled();
     });
   });
 

@@ -6,7 +6,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName } from '../../constants';
-import { useComponents } from '../../hooks/useComponents';
+import { useComponents } from '../../context/Components';
 import { IBranchNode } from '../../types';
 
 export const NodeList: React.FC<{
@@ -51,7 +51,7 @@ export const NodeList: React.FC<{
 
   return (
     <ScrollContainer className="NodeList">
-      {nodes.map((item, i) => (
+      {nodes.map(item => (
         <NodeListItem key={item.id} item={item} isLoading={isLoading} onClose={onClose} onReset={onReset} />
       ))}
 
