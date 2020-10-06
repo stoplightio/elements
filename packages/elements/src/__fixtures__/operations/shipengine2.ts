@@ -1,16 +1,16 @@
 import { IAny, IOperation } from '../../AST';
-import { IBool, IBranch, IMagicNode, INumber, IProperty, IString } from '../../ast/basics';
-import { IHeaderParam } from '../../ast/HeaderParam';
+import { IBool, IBranch, IMagicNode, INumber, IProperty, IString } from '../../AST/basics';
+import { IHeaderParam } from '../../AST/HeaderParam';
 import { IHeaderParams } from '../../AST/HeaderParams';
-import { IPathParam } from '../../ast/PathParam';
+import { IPathParam } from '../../AST/PathParam';
 import { IPathParams } from '../../AST/PathParams';
-import { IQueryParam } from '../../ast/QueryParam';
+import { IQueryParam } from '../../AST/QueryParam';
 import { IQueryParams } from '../../AST/QueryParams';
-import { IRequest } from '../../ast/Request';
-import { IRequestBody } from '../../ast/RequestBody';
-import { IRequestExample } from '../../ast/RequestExample';
-import { IResponse } from '../../ast/Response';
-import { IServer } from '../../ast/Server';
+import { IRequest } from '../../AST/Request';
+import { IRequestBody } from '../../AST/RequestBody';
+import { IRequestExample } from '../../AST/RequestExample';
+import { IResponse } from '../../AST/Response';
+import { IServer } from '../../AST/Server';
 
 let _id = 0;
 const id = () => String(_id++);

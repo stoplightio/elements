@@ -8,9 +8,10 @@ import * as React from 'react';
 import { httpOperation } from '../../__fixtures__/operations/put-todos';
 import { EditHandlesMap, httpOperation as shipengineHttpOperation } from '../../__fixtures__/operations/shipengine';
 import { httpOperation as shipengineHttpOperation2, IdMap } from '../../__fixtures__/operations/shipengine2';
+import { getIdMap, getOperation, ydoc } from '../../__fixtures__/operations/shipengineYjs';
 import model from '../../__fixtures__/schemas/contact.json';
 import { httpService } from '../../__fixtures__/services/petstore';
-import { IAny } from '../../AST';
+import { IAny, IOperation } from '../../AST';
 import { IMagicNode } from '../../AST/basics';
 import { IRequestBody } from '../../AST/RequestBody';
 import { Docs, ParsedDocs } from '../../components/Docs';
@@ -18,6 +19,9 @@ import { HttpOperation } from '../../components/Docs/HttpOperation2';
 import { SelectionContext } from '../../components/Docs/HttpOperation2/SelectionContext';
 import { EditHandle, EditMetadata } from '../../constants';
 import { Provider } from '../../containers/Provider';
+import { useObserveDeep } from '../../hooks/y/useObserveDeep';
+import { useYDoc } from '../../hooks/y/useYDoc';
+import { DeYjsify, getId, getParent, Yify, Yjsify } from '../../YAST/YDoc';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
 
@@ -378,23 +382,40 @@ storiesOf('Internal/Docs', module)
   .add('Editing Stoplight AST', () => {
     const channel = addons.getChannel();
     const dark = darkMode();
+    useYDoc(ydoc);
+    const httpOperationYjs = ydoc.doc.getMap('root').get('operation');
+    console.log('httpOperationYjs', httpOperationYjs);
+    const IdMapYjs = getIdMap();
 
-    const addKnobs = (o: IAny) => {
-      switch (o.type) {
+    useObserveDeep(httpOperationYjs);
+
+    if (!httpOperationYjs) return null;
+
+    const addKnobs = (o: Yify<IAny>) => {
+      // We need to prevent setting the value to its current value so as not to trigger infinite update loops.
+      const oset = (prop, value) => {
+        // @ts-ignore
+        if (o.get(prop) !== value) {
+          // @ts-ignore
+          o.set(prop, value);
+        }
+      };
+      // @ts-ignore
+      switch (o.get('type')) {
         case 'propertyName': {
-          o.value = text('name', o.value);
+          oset('value', text('name', o.get('value')));
           return;
         }
         case 'propertyDescription': {
-          o.value = text('description', o.value);
+          oset('value', text('description', o.get('value')));
           return;
         }
         case 'propertyPath': {
-          o.value = text('path', o.value);
+          oset('value', text('path', o.get('value')));
           return;
         }
         case 'propertyMethod': {
-          o.value = select('method', ['get', 'put', 'post', 'delete', 'etc'], o.value);
+          oset('value', select('method', ['get', 'put', 'post', 'delete', 'etc'], o.get('value')));
           return;
         }
         case 'cookieParams':
@@ -402,89 +423,84 @@ storiesOf('Internal/Docs', module)
         case 'pathParams':
         case 'queryParams': {
           button('Add Parameter', () => {
-            selected2 = String(Math.floor(Math.random() * 1000000));
-            const node = {
-              parent: o,
-              id: selected2,
-              type: o.type.slice(0, o.type.slice.length - 2) as
+            const node = Yjsify({
+              // @ts-ignore
+              type: o.get('type').slice(0, o.get('type').slice.length - 2) as
                 | 'cookieParam'
                 | 'headerParam'
                 | 'pathParam'
                 | 'queryParam',
-              children: [],
-            };
-            node.children.push(
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'propertyName',
-                value: 'untitled',
-              },
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'propertyDescription',
-                value: '',
-              },
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'propertyStyle',
-                value: 'HttpParamStyles.Simple',
-              },
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'propertyRequired',
-                value: false,
-              },
-            );
+              children: [
+                {
+                  type: 'propertyName',
+                  value: 'untitled',
+                },
+                {
+                  type: 'propertyDescription',
+                  value: '',
+                },
+                {
+                  type: 'propertyStyle',
+                  value: 'HttpParamStyles.Simple',
+                },
+                {
+                  type: 'propertyRequired',
+                  value: false,
+                },
+              ],
+            });
             // @ts-ignore
-            IdMap.set(node.id, node);
-            for (const child of node.children) {
-              IdMap.set(child.id, child);
+            o.get('children').push([node]);
+
+            // @ts-ignore
+            IdMapYjs.set(getId(node), node);
+            for (const child of node.get('children')) {
+              // @ts-ignore
+              IdMapYjs.set(getId(child), child);
             }
-            // @ts-ignore
-            o.children.push(node);
+            selected2 = getId(node);
           });
           return;
         }
         case 'propertyStyleCookieParam': {
-          o.value = select('style', ['form'], o.value);
+          oset('value', select('style', ['form'], o.get('value')));
           return;
         }
         case 'propertyStyleHeaderParam': {
-          o.value = select('style', ['simple'], o.value);
+          oset('value', select('style', ['simple'], o.get('value')));
           return;
         }
         case 'propertyStylePathParam': {
-          o.value = select('style', ['simple', 'matrix', 'label'], o.value);
+          oset('value', select('style', ['simple', 'matrix', 'label'], o.get('value')));
           return;
         }
         case 'propertyStyleQueryParam': {
-          o.value = select('style', ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'], o.value);
+          oset('value', select('style', ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'], o.get('value')));
           return;
         }
         case 'propertyRequired': {
-          o.value = boolean('required', o.value);
+          oset('value', boolean('required', o.get('value')));
           return;
         }
         case 'propertyDeprecated': {
-          o.value = boolean('deprecated', o.value);
+          oset('value', boolean('deprecated', o.get('value')));
           return;
         }
         case 'cookieParam':
         case 'headerParam':
         case 'pathParam':
         case 'queryParam': {
-          for (const child of o.children) {
+          for (const child of o.get('children')) {
             addKnobs(child);
           }
 
           button('Delete', () => {
             selected2 = void 0;
-            const i = o.parent.children.indexOf(o);
-            o.parent.children.splice(i, 1);
+            const i = getParent(o)
+              .get('children')
+              .toArray()
+              .findIndex(j => getId(j) === getId(o));
+            getParent(o).get('children').delete(i);
             // Force re-render in order to get Knobs.
             channel.emit(RESET);
           });
@@ -492,39 +508,34 @@ storiesOf('Internal/Docs', module)
         }
         case 'request': {
           button('Add Body', () => {
-            selected2 = String(Math.floor(Math.random() * 1000000));
-            const node = {
-              parent: o,
-              id: selected2,
-              type: 'requestBody' as const,
-              children: [],
-            };
-            node.children.push(
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'propertyRequired',
-                value: false,
-              },
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'propertyDescription',
-                value: '',
-              },
-              {
-                parent: node,
-                id: String(Math.floor(Math.random() * 1000000)),
-                type: 'schema',
-                value: {},
-                children: [],
-              },
-            );
-            IdMap.set(node.id, node);
-            for (const child of node.children) {
-              IdMap.set(child.id, child);
+            const node = Yjsify({
+              type: 'requestBody',
+              children: [
+                {
+                  type: 'propertyRequired',
+                  value: false,
+                },
+                {
+                  type: 'propertyDescription',
+                  value: '',
+                },
+                {
+                  type: 'schema',
+                  value: {},
+                  children: [],
+                },
+              ],
+            });
+            // @ts-ignore
+            o.get('children').push([node]);
+
+            // @ts-ignore
+            IdMapYjs.set(getId(node), node);
+            for (const child of node.get('children')) {
+              // @ts-ignore
+              IdMapYjs.set(getId(child), child);
             }
-            o.children.push(node);
+            selected2 = getId(node);
           });
           return;
         }
@@ -532,7 +543,7 @@ storiesOf('Internal/Docs', module)
     };
 
     if (selected2) {
-      const o = IdMap.get(selected2);
+      const o = IdMapYjs.get(selected2);
       addKnobs(o);
     }
 
@@ -541,7 +552,7 @@ storiesOf('Internal/Docs', module)
 
       if (selections2.size && !(e.metaKey || e.ctrlKey)) {
         for (const id of selections) {
-          const o = IdMap.get(id);
+          const o = IdMapYjs.get(id);
           if (o) delete o[EditHandle].selected;
         }
         selections2.clear();
@@ -552,6 +563,7 @@ storiesOf('Internal/Docs', module)
         console.log(el);
         if (el.dataset.id) {
           selected2 = el.dataset.id;
+          console.log('selected2', selected2);
           selections2.add(el.dataset.id);
           // Force re-render in order to get Knobs.
           channel.emit(RESET);
@@ -560,11 +572,13 @@ storiesOf('Internal/Docs', module)
         el = el.parentElement;
       }
     };
+    // const transformed = httpOperationYjs.toJSON();
+    const transformed = DeYjsify<IOperation>(httpOperationYjs);
     const el = (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': dark })} onClick={spy}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <SelectionContext.Provider value={selections2}>
-            <HttpOperation data={shipengineHttpOperation2} />
+            <HttpOperation data={transformed} />
           </SelectionContext.Provider>
         </Provider>
       </div>

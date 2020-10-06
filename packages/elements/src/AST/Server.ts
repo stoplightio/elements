@@ -1,11 +1,10 @@
 import { IBranch, IProperty, IString } from './basics';
+import { IPropertyDescription } from './PropertyDescription';
+import { IPropertyName } from './PropertyName';
+import { IPropertyUrl } from './PropertyUrl';
 import { IServerVariable } from './ServerVariable';
 
-type INameProperty = IProperty<IString<'name'>, IString>;
-type IUrlProperty = IProperty<IString<'url'>, IString>;
-type IDescriptionProperty = IProperty<IString<'description'>, IString>;
-
-type IServerChildren = INameProperty | IUrlProperty | IDescriptionProperty | IServerVariable;
+type IServerChildren = IPropertyName | IPropertyUrl | IPropertyDescription | IServerVariable;
 
 export interface IServer extends IBranch {
   type: 'server';

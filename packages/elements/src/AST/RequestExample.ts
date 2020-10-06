@@ -1,11 +1,11 @@
-import { IBranch, IProperty, IString } from './basics';
+import { IBranch } from './basics';
+import { IPropertyDescription } from './PropertyDescription';
+import { IPropertyExplode } from './PropertyExplode';
+import { IPropertyKey } from './PropertyKey';
+import { IPropertySummary } from './PropertySummary';
+import { IPropertyUrl } from './PropertyUrl';
 
-type IRequestExampleChildren =
-  | IProperty<IString<'key'>, IString>
-  | IProperty<IString<'summary'>, IString>
-  | IProperty<IString<'description'>, IString>
-  | IProperty<IString<'example'>, IString>
-  | IProperty<IString<'external'>, IString>;
+type IRequestExampleChildren = IPropertyKey | IPropertySummary | IPropertyDescription | IPropertyExplode | IPropertyUrl;
 
 export interface IRequestExample extends IBranch {
   type: 'requestExample';

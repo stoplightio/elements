@@ -39,6 +39,10 @@ const nodeTypes = [
   'propertyAllowReserved',
   'propertyMethod',
   'propertyPath',
+  'propertyUrl',
+  'propertyKey',
+  'propertySummary',
+  'propertyExample',
 ] as const;
 
 export type NodeTypes = typeof nodeTypes;
