@@ -16,7 +16,7 @@ export class YDoc {
     this.wsProvider = new WebsocketProvider(
       process.env.NODE_ENV === 'production'
         ? 'wss://demos.yjs.dev' // `${location.protocol === 'http:' ? 'ws' : 'wss'}://${location.host}`
-        : 'wss://demos.yjs.dev', // 'ws://localhost:1234',
+        : 'ws://localhost:1234',
       nodeUri,
       this.doc,
       { connect: false },

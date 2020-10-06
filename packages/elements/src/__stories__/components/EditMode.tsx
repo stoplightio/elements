@@ -1,331 +1,237 @@
-import { HttpParamStyles } from '@stoplight/types';
 import { boolean, button, object, RESET, select, text, withKnobs } from '@storybook/addon-knobs';
 import addons from '@storybook/addons';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { EditHandlesMap, httpOperation as shipengineHttpOperation } from '../../__fixtures__/operations/shipengine';
-import { httpOperation as shipengineHttpOperation2 } from '../../__fixtures__/operations/shipengine2';
-import { ParsedDocs } from '../../components/Docs';
-import { EditHandle, EditMetadata } from '../../constants';
+import { getIdMap, ydoc } from '../../__fixtures__/operations/shipengineYjs';
+import { IAny, IOperation } from '../../AST';
+import { HttpOperation } from '../../components/Docs/HttpOperation2';
+import { SelectionContext } from '../../components/Docs/HttpOperation2/SelectionContext';
 import { Provider } from '../../containers/Provider';
-
-// @ts-ignore
-window.ast = shipengineHttpOperation2;
+import { useObserveDeep } from '../../hooks/y/useObserveDeep';
+import { useYDoc } from '../../hooks/y/useYDoc';
+import { DeYjsify, getId, getParent, Yify, Yjsify } from '../../YAST/YDoc';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
 
 export const darkMode = () => boolean('Dark Mode', false);
+export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
+export const nodeData = () => object('nodeData', article);
 
-let selected: { kind: string; edithandle: EditMetadata } = {
-  kind: null,
-  edithandle: null,
-};
+let selected: string | undefined;
+const selections = new Set<string>();
 
-const selections: string[] = [];
-
-storiesOf('components/EditMode', module)
+storiesOf('Internal/Stoplight AST', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
   .add('Editing', () => {
-    const dark = darkMode();
     const channel = addons.getChannel();
+    const dark = darkMode();
+    useYDoc(ydoc);
+    const httpOperationYjs = ydoc.doc.getMap('root').get('operation');
+    useObserveDeep(httpOperationYjs);
+    console.log('httpOperationYjs', httpOperationYjs);
 
-    const highlight = () => {
-      console.log('selected', selected);
-      if (selected.kind && selected.edithandle) {
-        selections.push(selected.edithandle.id);
-        console.log('selections', selections);
-        const o = EditHandlesMap.get(selected.edithandle.id);
-        console.log('current', o);
-        o[EditHandle].selected = selected.edithandle.selected;
-        // Force re-render in order to get Knobs.
-        channel.emit(RESET);
-      }
-    };
-    const clearSelections = () => {
-      for (const id of selections) {
-        const o = EditHandlesMap.get(id);
-        if (o) delete o[EditHandle].selected;
-      }
-      selections.length = 0;
-    };
+    const IdMapYjs = getIdMap();
 
-    if (selected.edithandle) {
-      switch (selected.kind) {
-        case 'HttpOperation': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          o.method = select('method', ['get', 'put', 'post', 'delete', 'etc'], o.method);
-          o.path = text('path', o.path);
-          o.description = text('description', o.description);
-          break;
+    const addKnobs = (o: Yify<IAny>) => {
+      // We need to prevent setting the value to its current value so as not to trigger infinite update loops.
+      const oset = (prop, value) => {
+        // @ts-ignore
+        if (o.get(prop) !== value) {
+          ydoc.doc.transact(() => {
+            // @ts-ignore
+            o.set(prop, value);
+          }, ydoc.doc.clientID);
         }
-        case 'HttpOperation__Method': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          o.method = select('method', ['get', 'put', 'post', 'delete', 'etc'], o.method);
-          break;
+      };
+      // @ts-ignore
+      switch (o.get('type')) {
+        case 'propertyName': {
+          oset('value', text('name', o.get('value')));
+          return;
         }
-        case 'HttpOperation__Path': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          o.path = text('path', o.path);
-          break;
+        case 'propertyDescription': {
+          oset('value', text('description', o.get('value')));
+          return;
         }
-        case 'HttpOperation__Description': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          o.description = text('description', o.description);
-          break;
+        case 'propertyPath': {
+          oset('value', text('path', o.get('value')));
+          return;
         }
-        case 'HttpSecuritySchemes__SecurityScheme': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          o.key = text('key', o.key);
-          o.description = text('description', o.description);
-          o.type = select('type', ['apiKey', 'http', 'openIdConnect', 'oauth2'], o.type);
-          switch (o.type) {
-            case 'apiKey': {
-              o.name = text('name', o.name);
-              o.in = select('in', ['query', 'header', 'cookie'], o.in);
-              break;
-            }
-            case 'http': {
-              o.scheme = select('scheme', ['basic', 'digest', 'bearer'], o.scheme);
-              if (o.scheme === 'bearer') {
-                o.bearerFormat = text('bearerFormat', o.bearerFormat);
-              }
-              break;
-            }
-            case 'openIdConnect': {
-              o.openIdConnectUrl = text('openIdConnectUrl', o.openIdConnectUrl);
-              break;
-            }
-          }
-          break;
+        case 'propertyMethod': {
+          oset('value', select('method', ['get', 'put', 'post', 'delete', 'etc'], o.get('value')));
+          return;
         }
-        case 'HttpOperation__Parameters': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
+        case 'cookieParams':
+        case 'headerParams':
+        case 'pathParams':
+        case 'queryParams': {
           button('Add Parameter', () => {
-            clearSelections();
-            selected.kind = 'HttpOperation__Parameter';
-            selected.edithandle = {
-              id: String(Math.floor(Math.random() * 1000000)),
-              selected: true,
-            };
-            const p = {
-              schema: {
-                type: 'string',
-              },
-              name: '',
-              style: HttpParamStyles.Simple,
-              required: true,
-              [EditHandle]: selected.edithandle,
-            };
-            EditHandlesMap.set(selected.edithandle.id, p);
-            o.push(p);
-            highlight();
+            const node = Yjsify({
+              // @ts-ignore
+              type: o.get('type').slice(0, o.get('type').slice.length - 2) as
+                | 'cookieParam'
+                | 'headerParam'
+                | 'pathParam'
+                | 'queryParam',
+              children: [
+                {
+                  type: 'propertyName',
+                  value: 'untitled',
+                },
+                {
+                  type: 'propertyDescription',
+                  value: '',
+                },
+                {
+                  type: 'propertyStyle',
+                  value: 'HttpParamStyles.Simple',
+                },
+                {
+                  type: 'propertyRequired',
+                  value: false,
+                },
+              ],
+            });
+            // @ts-ignore
+            o.get('children').push([node]);
+
+            // @ts-ignore
+            IdMapYjs.set(getId(node), node);
+            for (const child of node.get('children')) {
+              // @ts-ignore
+              IdMapYjs.set(getId(child), child);
+            }
+            selected = getId(node);
           });
-          break;
+          return;
         }
-        case 'HttpOperation__Parameter': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          o.name = text('name', o.name);
-          o.style = select('style', Object.values(HttpParamStyles), o.style);
-          o.description = text('description', o.description);
-          o.required = boolean('required', o.required);
-          o.deprecated = boolean('deprecated', o.deprecated);
+        case 'propertyStyleCookieParam': {
+          oset('value', select('style', ['form'], o.get('value')));
+          return;
+        }
+        case 'propertyStyleHeaderParam': {
+          oset('value', select('style', ['simple'], o.get('value')));
+          return;
+        }
+        case 'propertyStylePathParam': {
+          oset('value', select('style', ['simple', 'matrix', 'label'], o.get('value')));
+          return;
+        }
+        case 'propertyStyleQueryParam': {
+          oset('value', select('style', ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'], o.get('value')));
+          return;
+        }
+        case 'propertyRequired': {
+          oset('value', boolean('required', o.get('value')));
+          return;
+        }
+        case 'propertyDeprecated': {
+          oset('value', boolean('deprecated', o.get('value')));
+          return;
+        }
+        case 'cookieParam':
+        case 'headerParam':
+        case 'pathParam':
+        case 'queryParam': {
+          for (const child of o.get('children')) {
+            addKnobs(child);
+          }
+
           button('Delete', () => {
-            alert('Actually... that is kinda hard to implement using this data model. Who IS my parent?');
+            selected = void 0;
+            const i = getParent(o)
+              .get('children')
+              .toArray()
+              .findIndex(j => getId(j) === getId(o));
+            getParent(o).get('children').delete(i);
+            // Force re-render in order to get Knobs.
+            channel.emit(RESET);
           });
-          break;
+          return;
         }
-        case 'HttpOperation__Body': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          o.description = text('description', o.description);
-          o.required = boolean('required', o.required);
-          break;
-        }
-        case 'HttpOperation__Responses': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          button('Add Response', () => {
-            selected.edithandle = {
-              id: String(Math.floor(Math.random() * 1000000)),
-              selected: true,
-            };
-            const p = {
-              code: '100',
-              description: '',
-              required: '',
-              headers: [],
-              content: [],
-              [EditHandle]: selected.edithandle,
-            };
-            EditHandlesMap.set(selected.edithandle.id, p);
-            o.push(p);
+        case 'request': {
+          button('Add Body', () => {
+            const node = Yjsify({
+              type: 'requestBody',
+              children: [
+                {
+                  type: 'propertyRequired',
+                  value: false,
+                },
+                {
+                  type: 'propertyDescription',
+                  value: '',
+                },
+                {
+                  type: 'schema',
+                  value: {},
+                  children: [],
+                },
+              ],
+            });
+            // @ts-ignore
+            o.get('children').push([node]);
+
+            // @ts-ignore
+            IdMapYjs.set(getId(node), node);
+            for (const child of node.get('children')) {
+              // @ts-ignore
+              IdMapYjs.set(getId(child), child);
+            }
+            selected = getId(node);
           });
-          break;
-        }
-        case 'HttpOperation__Response': {
-          const o = EditHandlesMap.get(selected.edithandle.id);
-          o.code = text('code', o.code);
-          o.description = text('description', o.description);
-          break;
+          return;
         }
       }
-    }
+    };
+
+    // To improve the experience if two people have the same thing selected
+    // (regardless of whether they are editing it)
+    // We need to render the knobs conditionally only when the selected item changes.
+    React.useEffect(() => {
+      if (selected) {
+        const o = IdMapYjs.get(selected);
+        addKnobs(o);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selected]);
 
     const spy: React.MouseEventHandler = e => {
       let el = e.target as HTMLElement | null;
 
-      if (selections.length && !(e.metaKey || e.ctrlKey)) {
-        clearSelections();
+      if (selections.size && !(e.metaKey || e.ctrlKey)) {
+        selections.clear();
       }
 
-      selected = {
-        kind: null,
-        edithandle: null,
-      };
+      selected = void 0;
       while (el) {
-        for (const className of el.className.split(' ')) {
-          switch (className) {
-            case 'HttpOperation': {
-              selected.kind = selected.kind ?? 'HttpOperation';
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__Description': {
-              selected.kind = selected.kind ?? 'HttpOperation__Description';
-              selected.edithandle = { id: el.dataset.edithandle, selected: 'description' };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__Path': {
-              selected.kind = selected.kind ?? 'HttpOperation__Path';
-              selected.edithandle = { id: el.dataset.edithandle, selected: 'path' };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__Method': {
-              selected.kind = selected.kind ?? 'HttpOperation__Method';
-              selected.edithandle = { id: el.dataset.edithandle, selected: 'method' };
-              highlight();
-              return;
-            }
-            case 'HttpSecuritySchemes__SecurityScheme': {
-              selected.kind = selected.kind ?? 'HttpSecuritySchemes__SecurityScheme';
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__Body': {
-              selected.kind = selected.kind ?? 'HttpOperation__Body';
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__Parameters': {
-              selected.kind = selected.kind ?? 'HttpOperation__Parameters';
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__Parameter': {
-              selected.kind = selected.kind ?? 'HttpOperation__Parameter';
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__Responses': {
-              selected.kind = selected.kind ?? 'HttpOperation__Responses';
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__Response': {
-              selected.kind = selected.kind ?? 'HttpOperation__Response';
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__ResponseExample': {
-              selected.kind = selected.kind ?? 'HttpOperation__ResponseExample';
-              console.log('HttpOperation__ResponseExample');
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            case 'HttpOperation__ResponseExample_Tab': {
-              selected.kind = selected.kind ?? 'HttpOperation__ResponseExample_Tab';
-              console.log('HttpOperation__ResponseExample_Tab');
-              selected.edithandle = { id: el.dataset.edithandle, selected: true };
-              highlight();
-              return;
-            }
-            default:
-          }
+        console.log(el);
+        if (el.dataset.id) {
+          selected = el.dataset.id;
+          console.log('selected', selected);
+          selections.add(el.dataset.id);
+          // Force re-render in order to get Knobs.
+          channel.emit(RESET);
+          return;
         }
         el = el.parentElement;
       }
     };
+
+    if (!httpOperationYjs) return null;
+
+    // const transformed = httpOperationYjs.toJSON();
+    const transformed = DeYjsify<IOperation>(httpOperationYjs);
     const el = (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': dark })} onClick={spy}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
-          <ParsedDocs nodeType="http_operation" nodeData={shipengineHttpOperation} />
-        </Provider>
-      </div>
-    );
-    return el;
-  })
-  .add('Editing Performance', () => {
-    const [count, setCount] = React.useState(0);
-    React.useEffect(() => {
-      const i = setTimeout(() => setCount(count + 1), 0);
-      console.time('edit');
-      return () => {
-        clearTimeout(i);
-        console.timeEnd('edit');
-      };
-    });
-
-    shipengineHttpOperation.path = originalPath.slice(0, count % originalPath.length);
-    shipengineHttpOperation.method = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch'][
-      Math.floor(count / 10) % 8
-    ];
-    shipengineHttpOperation.description = originalDescription.slice(0, count % originalDescription.length);
-    shipengineHttpOperation.security[0][0].description = originalSecurityDescription.slice(
-      0,
-      count % originalSecurityDescription.length,
-    );
-    shipengineHttpOperation.request.body.description = originalRequestBodyDescription.slice(
-      0,
-      count % originalRequestBodyDescription.length,
-    );
-
-    for (let i = 0; i < 3; i++) {
-      shipengineHttpOperation.responses[i].description = originalResponseDescriptions[i].slice(
-        0,
-        count % originalResponseDescriptions[i].length,
-      );
-    }
-
-    const el = (
-      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
-          <ParsedDocs nodeType="http_operation" nodeData={shipengineHttpOperation} />
+          <SelectionContext.Provider value={selections}>
+            <HttpOperation data={transformed} />
+          </SelectionContext.Provider>
         </Provider>
       </div>
     );
     return el;
   });
-
-const originalPath = shipengineHttpOperation.path;
-const originalDescription = shipengineHttpOperation.description;
-const originalSecurityDescription = shipengineHttpOperation.security[0][0].description;
-
-const originalRequestBodyDescription = shipengineHttpOperation.request.body.description;
-
-const originalResponseDescriptions = [
-  shipengineHttpOperation.responses[0].description,
-  shipengineHttpOperation.responses[1].description,
-  shipengineHttpOperation.responses[2].description,
-];
-
-console.log(EditHandlesMap);
