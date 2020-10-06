@@ -77,7 +77,7 @@ storiesOf('Internal/Stoplight AST', module)
           button('Add Parameter', () => {
             const node = Yjsify({
               // @ts-ignore
-              type: o.get('type').slice(0, o.get('type').slice.length - 2) as
+              type: o.get('type').slice(0, o.get('type').length - 1) as
                 | 'cookieParam'
                 | 'headerParam'
                 | 'pathParam'
