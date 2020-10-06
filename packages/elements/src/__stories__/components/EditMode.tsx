@@ -104,13 +104,17 @@ storiesOf('Internal/Stoplight AST', module)
             // @ts-ignore
             o.get('children').push([node]);
 
+            const id = getId(node);
             // @ts-ignore
-            IdMapYjs.set(getId(node), node);
+            IdMapYjs.set(id, node);
             for (const child of node.get('children')) {
               // @ts-ignore
               IdMapYjs.set(getId(child), child);
             }
-            setSelected(getId(node));
+            selections.clear();
+            selections.add(id);
+            setSelected(id);
+            channel.emit(RESET);
           });
           return;
         }
