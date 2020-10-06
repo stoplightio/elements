@@ -21634,11 +21634,6 @@ vis-data@^6.5.1:
   resolved "https://registry.yarnpkg.com/vis-data/-/vis-data-6.5.1.tgz#cd11f8bbf4a17064559b7c75532c3d6f419ff290"
   integrity sha512-bOIG0REskXot0JbuAYLFRR61xf4ls+nIYNnZ7X04iq2y/Vrg896A/bfquQjhsERZipOmCgllAR0d58OGyo9s0g==
 
-vis-network@^7.5.2:
-  version "7.5.2"
-  resolved "https://registry.yarnpkg.com/vis-network/-/vis-network-7.5.2.tgz#13e3b0f22adbec36b34c4316c107df331f0659b8"
-  integrity sha512-clc5DsIrMUKiyTATKJYCnmfmwA7IUYq4GWFr0f43Hy4ZlBTMo0mVje4JsO5Hfe+zbwzm4HsEpu3nSs4DHpbDGw==
-
 vis-util@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/vis-util/-/vis-util-4.0.0.tgz#a9900cffb0bbcef3ce88d5834f82b03808101e10"
