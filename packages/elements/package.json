@@ -41,7 +41,6 @@
     "mobx": ">=5",
     "react": ">=16.8",
     "react-dom": ">=16.8",
-    "vis-network": "^7.5.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
@@ -119,7 +118,6 @@
     "prettier": "^2.0.4",
     "ts-jest": "25.3.1",
     "vis-data": "^6.5.1",
-    "vis-network": "^7.5.2",
     "vis-util": "^4.0.0"
   },
   "publishConfig": {
