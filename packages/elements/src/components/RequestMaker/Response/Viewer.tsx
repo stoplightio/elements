@@ -2,8 +2,7 @@ import 'prismjs/components/prism-graphql';
 import 'prismjs/components/prism-json';
 
 import { Button, Tab, Tabs } from '@blueprintjs/core';
-import { safeStringify } from '@stoplight/json';
-import { CodeViewer, Tag } from '@stoplight/ui-kit';
+import { Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { keys } from 'lodash';
 import { observer } from 'mobx-react-lite';
