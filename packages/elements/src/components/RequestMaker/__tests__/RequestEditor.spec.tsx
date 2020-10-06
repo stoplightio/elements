@@ -34,7 +34,7 @@ describe('RequestSend component', () => {
 
     wrapper.update();
 
-    expect(wrapper.findWhere(c => c.is(TabTitle) && c.prop('title') === 'Path')).toHaveProp('count', 1);
+    expect(wrapper.findWhere(c => c.is(TabTitle) && c.prop('title') === 'Params')).toHaveProp('count', 1);
   });
 
   it('should show correct query parameter count', () => {
@@ -44,7 +44,7 @@ describe('RequestSend component', () => {
 
     wrapper.update();
 
-    expect(wrapper.findWhere(c => c.is(TabTitle) && c.prop('title') === 'Query')).toHaveProp('count', 1);
+    expect(wrapper.findWhere(c => c.is(TabTitle) && c.prop('title') === 'Params')).toHaveProp('count', 1);
   });
 
   it('should show correct header parameter count', () => {

@@ -1,7 +1,6 @@
 import 'jest-enzyme';
 
 import { Button, ButtonGroup, InputGroup } from '@stoplight/ui-kit';
-import { Suggest } from '@stoplight/ui-kit/Select';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
@@ -45,8 +44,7 @@ describe('RequestEndpoint component', () => {
         <RequestEndpoint />
       </RequestMakerProvider>,
     );
-    expect(wrapper.find(InputGroup).last()).toHaveValue('/test');
-    expect(wrapper.find(Suggest).find(InputGroup)).toHaveProp('value', 'https://test.com');
+    expect(wrapper.find(InputGroup).last()).toHaveValue('https://test.com/test');
   });
 
   it('should use default url', () => {
@@ -79,8 +77,7 @@ describe('RequestEndpoint component', () => {
         <RequestEndpoint />
       </RequestMakerProvider>,
     );
-    expect(wrapper.find(InputGroup).last()).toHaveValue('/operationResource?queryParamName=');
-    expect(wrapper.find(Suggest).find(InputGroup)).toHaveProp('value', 'http://localhost:9001');
+    expect(wrapper.find(InputGroup).last()).toHaveValue('http://localhost:9001/operationResource?queryParamName=');
   });
 
   it('should send request when the Enter key is pressed', () => {
