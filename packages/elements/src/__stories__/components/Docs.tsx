@@ -384,20 +384,20 @@ storiesOf('Internal/Docs', module)
     const dark = darkMode();
     useYDoc(ydoc);
     const httpOperationYjs = ydoc.doc.getMap('root').get('operation');
-    console.log('httpOperationYjs', httpOperationYjs);
-    const IdMapYjs = getIdMap();
-
     useObserveDeep(httpOperationYjs);
+    console.log('httpOperationYjs', httpOperationYjs);
 
-    if (!httpOperationYjs) return null;
+    const IdMapYjs = getIdMap();
 
     const addKnobs = (o: Yify<IAny>) => {
       // We need to prevent setting the value to its current value so as not to trigger infinite update loops.
       const oset = (prop, value) => {
         // @ts-ignore
         if (o.get(prop) !== value) {
-          // @ts-ignore
-          o.set(prop, value);
+          ydoc.doc.transact(() => {
+            // @ts-ignore
+            o.set(prop, value);
+          }, ydoc.doc.clientID);
         }
       };
       // @ts-ignore
@@ -542,10 +542,16 @@ storiesOf('Internal/Docs', module)
       }
     };
 
-    if (selected2) {
-      const o = IdMapYjs.get(selected2);
-      addKnobs(o);
-    }
+    // To improve the experience if two people have the same thing selected
+    // (regardless of whether they are editing it)
+    // We need to render the knobs conditionally only when the selected item changes.
+    React.useEffect(() => {
+      if (selected2) {
+        const o = IdMapYjs.get(selected2);
+        addKnobs(o);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selected2]);
 
     const spy: React.MouseEventHandler = e => {
       let el = e.target as HTMLElement | null;
@@ -572,6 +578,9 @@ storiesOf('Internal/Docs', module)
         el = el.parentElement;
       }
     };
+
+    if (!httpOperationYjs) return null;
+
     // const transformed = httpOperationYjs.toJSON();
     const transformed = DeYjsify<IOperation>(httpOperationYjs);
     const el = (

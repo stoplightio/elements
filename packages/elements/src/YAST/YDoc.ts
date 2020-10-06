@@ -22,9 +22,10 @@ export class YDoc {
       { connect: false },
     );
 
-    // TODO: fire event when ready etc.
     this.ready = new Promise((resolve, reject) => {
-      this.wsProvider.once('sync', () => resolve);
+      // TODO: Fix this
+      setTimeout(resolve, 1000);
+      // this.wsProvider.once('sync', () => resolve);
       // TODO: Implement a timeout
     });
 

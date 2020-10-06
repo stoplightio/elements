@@ -11,9 +11,16 @@ export function useYDoc(doc: YDoc) {
   const [count, setCount] = React.useState(1);
   React.useEffect(() => {
     console.log('doc', doc);
-    doc.ready.then(() => {
-      console.log('hey ready');
-      setCount(count + 1);
-    });
+    let cancel = false;
+    if (count === 1) {
+      doc.ready.then(() => {
+        if (cancel) return;
+        console.log('hey ready');
+        setCount(count + 1);
+      });
+    }
+    return () => {
+      cancel = true;
+    };
   });
 }

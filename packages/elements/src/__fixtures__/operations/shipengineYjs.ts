@@ -153,6 +153,7 @@ const makeOperation: () => Yify<IOperation> = () =>
 
 ydoc.ready.then(() => {
   if (!ydoc.doc.getMap('root').has('operation')) {
+    console.log('Populating with initial data.');
     const httpOperation = makeOperation();
     ydoc.doc.getMap('root').set('operation', httpOperation);
     console.log('httpOperation', httpOperation);
