@@ -73,7 +73,7 @@ export const ResponseViewer = observer<ResponseProps>(({ tabs = defaultTabs, cla
         {tabs.includes(ResponseTab.BODY) && (
           <Tab
             id="response-body"
-            title={<TabTitle title="Response Body" />}
+            title={<TabTitle title="Response" />}
             panelClassName={panelClassName}
             panel={<ResponseBody />}
           />
@@ -82,47 +82,27 @@ export const ResponseViewer = observer<ResponseProps>(({ tabs = defaultTabs, cla
         {tabs.includes(ResponseTab.HEADERS) && (
           <Tab
             id="response-headers"
-            title={<TabTitle title="Response Headers" count={keys(responseStore.headers).length} />}
+            title={<TabTitle title="Headers" count={keys(responseStore.headers).length} />}
             panelClassName={panelClassName}
             panel={<ResponseHeaders />}
           />
         )}
 
-        {tabs.includes(ResponseTab.ORIGINAL) && (
-          <Tab
-            id="response-original"
-            title={<TabTitle title="Original Request" />}
-            panelClassName={panelClassName}
-            panel={
-              <div className="RequestMaker__RequestViewer">
-                {responseStore.originalRequest !== undefined && (
-                  <CodeViewer
-                    language="json"
-                    value={safeStringify(responseStore.originalRequest, undefined, 2) || ''}
-                    showLineNumbers
-                    className="p-5"
-                  />
-                )}
-              </div>
-            }
-          />
-        )}
-
         <Tabs.Expander />
 
-        <div className="flex flex-wrap items-center py-1 text-sm">
+        <div className="flex items-center py-1 text-sm">
           {responseStore.isMockedResponse && (
-            <div className="flex mx-3">
-              <Tag intent="success">Mocked Response</Tag>
+            <div className="flex mr-3">
+              <Tag intent="success">Mocked</Tag>
             </div>
           )}
 
-          <div className="flex mx-3">
+          <div className="flex mr-3">
             <div className="mr-2">Status:</div>
             <div className={`text-${color} whitespace-no-wrap`}>{responseStore.statusText}</div>
           </div>
 
-          <div className="flex mx-3">
+          <div className="flex mr-3">
             <div className="mr-2">Time:</div>
             <div className={`text-${color}`}>
               {responseStore.responseTime}

@@ -81,9 +81,21 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
         {shouldRenderQuery && (
           <Tab
             id="request-query"
-            title={<TabTitle title="Query" count={getEnabledParams(requestStore.queryParams).length} />}
+            title={
+              <TabTitle
+                title="Params"
+                count={
+                  getEnabledParams(requestStore.queryParams).length + getEnabledParams(requestStore.pathParams).length
+                }
+              />
+            }
             panelClassName={panelClassName}
-            panel={<RequestParameters type="query" />}
+            panel={
+              <>
+                {requestStore.pathParams.length > 0 && <RequestParameters type="path" allowAdditions={false} />}
+                <RequestParameters type="query" />
+              </>
+            }
           />
         )}
 
@@ -105,19 +117,10 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
           />
         )}
 
-        {shouldRenderPath && (
-          <Tab
-            id="request-path"
-            title={<TabTitle title="Path" count={getEnabledParams(requestStore.pathParams).length} />}
-            panelClassName={panelClassName}
-            panel={<RequestParameters type="path" />}
-          />
-        )}
-
         {shouldRenderCodeGen && (
           <Tab
             id="code-editor"
-            title={<TabTitle title="Code Generation" />}
+            title={<TabTitle title="Code Gen" />}
             panelClassName={panelClassName}
             panel={<CodeGenerator />}
           />

@@ -16,7 +16,7 @@
   }
 
   .#{$ns}-tab {
-    margin: 0 10px;
+    margin: 0 5px;
   }
 }
 
@@ -51,11 +51,11 @@
   background-color: #fefcbf;
 }
 
-.RequestMaker__ViolationsDisplay .#{$ns}-tree-node-content{
+.RequestMaker__ViolationsDisplay .#{$ns}-tree-node-content {
   height: auto;
   min-height: 30px;
 
-  .#{$ns}-tree-node-label{
+  .#{$ns}-tree-node-label {
     min-height: 19px;
     display: unset;
     white-space: normal;
@@ -63,13 +63,12 @@
     span {
       display: inline-block;
 
-      &.inline{
+      &.inline {
         display: inline;
       }
     }
   }
 }
-
 
 .#{$ns}-dark {
   .RequestMaker,

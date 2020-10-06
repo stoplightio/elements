@@ -9,6 +9,7 @@ import { NodeIconMapping } from '../types';
 export interface IProvider extends IActiveInfo {
   urqlClient?: Client;
   components?: IComponentMapping;
+  authToken?: string;
 }
 
 export interface IActiveInfo {
@@ -38,6 +39,7 @@ export const Provider: React.FC<IProvider> = ({
   branch,
   node,
   urqlClient,
+  authToken,
   components,
   children,
 }) => {
@@ -49,7 +51,7 @@ export const Provider: React.FC<IProvider> = ({
     node,
   };
 
-  const client = useUrqlClient(`${host}/graphql`, { urqlClient });
+  const client = useUrqlClient(`${host}/graphql`, { urqlClient, authToken });
 
   return (
     <UrqlProvider value={client}>

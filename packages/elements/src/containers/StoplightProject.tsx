@@ -66,34 +66,32 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
             }
           }}
         />
-        <div className="flex-grow">
-          <div className="flex">
-            <DocsProvider
-              host={workspace}
-              workspace={workspaceSlug}
-              project={project}
-              branch={branch}
-              node={pathname}
-              components={components}
-              urqlClient={client}
-              className="px-10"
-            />
-            {showTryIt && (
-              <div className="w-2/5 border-l relative">
-                <div className="absolute inset-0 overflow-auto px-10">
-                  <TryItProvider
-                    host={workspace}
-                    workspace={workspaceSlug}
-                    project={project}
-                    branch={branch}
-                    node={pathname}
-                    components={components}
-                    urqlClient={client}
-                  />
-                </div>
+        <div className="flex flex-grow">
+          <DocsProvider
+            host={workspace}
+            workspace={workspaceSlug}
+            project={project}
+            branch={branch}
+            node={pathname}
+            components={components}
+            urqlClient={client}
+            className="px-10"
+          />
+          {showTryIt && (
+            <div className="w-2/5 border-l relative">
+              <div className="absolute inset-0 overflow-auto px-10">
+                <TryItProvider
+                  host={workspace}
+                  workspace={workspaceSlug}
+                  project={project}
+                  branch={branch}
+                  node={pathname}
+                  components={components}
+                  urqlClient={client}
+                />
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     );
