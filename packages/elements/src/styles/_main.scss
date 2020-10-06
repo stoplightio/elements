@@ -6,6 +6,10 @@
 @import 'API.scss';
 
 [data-selected] {
-  outline-style: auto;
-  outline-color: Highlight;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 5px #7fb3f9;
+}
+
+.bp3-dark [data-selected] {
+  box-shadow: 0 0 2px 5px #2998e7;
 }
