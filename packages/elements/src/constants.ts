@@ -42,17 +42,6 @@ export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
   table_of_contents: faQuestionCircle,
 };
 
-export const NodeTypeIconsUnicode: Dictionary<string, NodeType> = {
-  http_operation: '\uf140',
-  http_service: '\uf0c2',
-  article: '\uf02d',
-  model: '\uf1b2',
-  http_server: '\uf1c0',
-  unknown: '\uf128',
-  generic: '\uf128',
-  table_of_contents: '\uf128',
-};
-
 export const HttpSecuritySchemeColors: Dictionary<string, HttpSecurityScheme['type']> = {
   apiKey: 'green',
   http: 'orange',

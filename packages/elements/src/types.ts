@@ -7,13 +7,6 @@ export interface INodeFilter {
   nodeType?: string;
 }
 
-export interface IChange {
-  message: string;
-  createdAt: string;
-  // TODO: generate graphql types, so we can set this as an enum.
-  semver: string;
-}
-
 export interface IBranchNode {
   id: number;
   version?: string;
@@ -61,26 +54,6 @@ export interface IGraphEdge {
   fromPath: string;
   toGroupNodeId: number;
   toPath: string;
-}
-
-export interface INodeEdge {
-  id: number;
-  depth: number;
-  type: string;
-
-  fromBranchNodeId: number;
-  fromBranchNodeName: string;
-  fromBranchNodeType: string;
-  fromBranchNodeUri: string;
-  fromBranchNodePath: string;
-  fromBranchNodeVersion: string;
-
-  toBranchNodeId: number;
-  toBranchNodeName: string;
-  toBranchNodeType: string;
-  toBranchNodeUri: string;
-  toBranchNodePath: string;
-  toBranchNodeVersion: string;
 }
 
 export type IconMapType = NodeType | 'group' | 'divider' | 'item';
