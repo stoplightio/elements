@@ -1,7 +1,7 @@
 import { IBranch } from './basics';
-import { IPathParam } from './PathParam';
+import { IParam_Path } from './Param';
 
 export interface IPathParams extends IBranch {
   type: 'pathParams';
-  children: IPathParam[];
+  children: IParam_Path[];
 }

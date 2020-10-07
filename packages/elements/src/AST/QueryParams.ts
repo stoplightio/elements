@@ -1,7 +1,7 @@
 import { IBranch } from './basics';
-import { IQueryParam } from './QueryParam';
+import { IParam_Query } from './Param';
 
 export interface IQueryParams extends IBranch {
   type: 'queryParams';
-  children: IQueryParam[];
+  children: IParam_Query[];
 }

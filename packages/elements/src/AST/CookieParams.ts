@@ -1,7 +1,7 @@
 import { IBranch } from './basics';
-import { ICookieParam } from './CookieParam';
+import { IParam_Cookie } from './Param';
 
 export interface ICookieParams extends IBranch {
   type: 'cookieParams';
-  children: ICookieParam[];
+  children: IParam_Cookie[];
 }

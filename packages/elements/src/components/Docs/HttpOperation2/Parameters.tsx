@@ -13,20 +13,18 @@ export interface IParametersProps {
   data?: IQueryParams | IPathParams | ICookieParams | IHeaderParams;
 }
 
+const titles = {
+  cookieParams: 'Cookie Parameters',
+  headerParams: 'Header Parameters',
+  pathParams: 'Path Parameters',
+  queryParams: 'Query Parameters',
+};
+
 export const Parameters: React.FunctionComponent<IParametersProps> = ({ data }) => {
   const selection = useSelection(data);
   if (!data) return null;
 
-  const title =
-    data.type === 'cookieParams'
-      ? 'Cookie Parameters'
-      : data.type === 'headerParams'
-      ? 'Header Parameters'
-      : data.type === 'pathParams'
-      ? 'Path Parameters'
-      : data.type === 'queryParams'
-      ? 'Query Parameters'
-      : '';
+  const title = titles[data.type] || '';
 
   if (!data?.children || !data.children.length) return null;
 
@@ -36,6 +34,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ data }) 
       <Parameter
         key={child.id}
         data={child}
+        context={data.type}
         className={cn('pt-4', {
           'pb-4': child !== data.children[data.children.length - 1],
           'border-t border-gray-2 dark:border-gray-6': child !== data.children[0],

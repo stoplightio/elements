@@ -35,6 +35,8 @@ const nodeTypes = [
   'propertyStyleHeaderParam',
   'propertyStylePathParam',
   'propertyStyleQueryParam',
+  'style',
+  'param',
   'allowEmptyValue',
   'allowReserved',
   'httpMethod',

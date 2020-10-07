@@ -15,7 +15,7 @@ import { DeYjsify, getId, getParent, Yify, Yjsify } from '../../YAST/YDoc';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
 
-export const darkMode = () => boolean('Dark Mode', false);
+export const darkMode = () => boolean('Dark Mode', Boolean(Number(localStorage.darkMode)));
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
 
@@ -26,6 +26,7 @@ storiesOf('Internal/Stoplight AST', module)
   .add('Editing', () => {
     const channel = addons.getChannel();
     const dark = darkMode();
+    localStorage.darkMode = Number(dark);
 
     // A quirk of Storybook is that when knob values change the entire component is unmounted and remounted apparently,
     // causing local component state to be lost.
@@ -76,12 +77,7 @@ storiesOf('Internal/Stoplight AST', module)
         case 'queryParams': {
           button('Add Parameter', () => {
             const node = Yjsify({
-              // @ts-ignore
-              type: o.get('type').slice(0, o.get('type').length - 1) as
-                | 'cookieParam'
-                | 'headerParam'
-                | 'pathParam'
-                | 'queryParam',
+              type: 'param',
               children: [
                 {
                   type: 'name',
@@ -92,8 +88,8 @@ storiesOf('Internal/Stoplight AST', module)
                   value: '',
                 },
                 {
-                  type: 'propertyStyle',
-                  value: 'HttpParamStyles.Simple',
+                  type: 'style',
+                  value: 'simple',
                 },
                 {
                   type: 'required',
@@ -118,20 +114,16 @@ storiesOf('Internal/Stoplight AST', module)
           });
           return;
         }
-        case 'propertyStyleCookieParam': {
-          oset('value', select('style', ['form'], o.get('value')));
-          return;
-        }
-        case 'propertyStyleHeaderParam': {
-          oset('value', select('style', ['simple'], o.get('value')));
-          return;
-        }
-        case 'propertyStylePathParam': {
-          oset('value', select('style', ['simple', 'matrix', 'label'], o.get('value')));
-          return;
-        }
-        case 'propertyStyleQueryParam': {
-          oset('value', select('style', ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'], o.get('value')));
+        case 'style': {
+          const subtype = getParent(getParent(o)).get('type');
+          console.log('style.parent.parent.type', subtype);
+          const choices = {
+            cookieParams: ['form'],
+            headerParams: ['simple'],
+            pathParams: ['simple', 'matrix', 'label'],
+            queryParams: ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'],
+          };
+          oset('value', select('style', choices[subtype], o.get('value')));
           return;
         }
         case 'required': {
@@ -142,10 +134,7 @@ storiesOf('Internal/Stoplight AST', module)
           oset('value', boolean('deprecated', o.get('value')));
           return;
         }
-        case 'cookieParam':
-        case 'headerParam':
-        case 'pathParam':
-        case 'queryParam': {
+        case 'param': {
           for (const child of o.get('children')) {
             addKnobs(child);
           }

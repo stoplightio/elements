@@ -2,7 +2,7 @@ import { HttpParamStyles } from '@stoplight/types';
 import { Tag } from '@stoplight/ui-kit';
 import * as React from 'react';
 
-import { IPropertyStyle } from '../../../AST/PropertyStyle';
+import { IStyle } from '../../../AST/leafs/Style';
 import { useSelection } from './utils';
 
 const readableStyles = {
@@ -16,7 +16,7 @@ const readableStyles = {
 } as const;
 
 export const ParameterStyle: React.FunctionComponent<{
-  data?: IPropertyStyle;
+  data?: IStyle;
 }> = ({ data }) => {
   const selection = useSelection(data);
   if (!data) return null;

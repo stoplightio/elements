@@ -1,20 +1,14 @@
 /* eslint-disable prettier/prettier */
 import { NodeType } from './basics';
 import { IContact } from './Contact';
-import { ICookieParam } from './CookieParam';
 import { ICookieParams } from './CookieParams';
-import { IHeaderParam } from './HeaderParam';
 import { IHeaderParams } from './HeaderParams';
 import { IAllowEmptyValue , IAllowReserved , IDeprecated , IDescription , IExplode , IHttpMethod , IName , IPath , IRequired } from './leafs';
+import { IStyle } from './leafs/Style';
 import { ILicense } from './License';
 import { IOperation } from './Operation';
-import { IPathParam } from './PathParam';
+import { IParam } from './Param';
 import { IPathParams } from './PathParams';
-import { IPropertyStyleCookieParam } from './PropertyStyleCookieParam';
-import { IPropertyStyleHeaderParam } from './PropertyStyleHeaderParam';
-import { IPropertyStylePathParam } from './PropertyStylePathParam';
-import { IPropertyStyleQueryParam } from './PropertyStyleQueryParam';
-import { IQueryParam } from './QueryParam';
 import { IQueryParams } from './QueryParams';
 import { IRequest } from './Request';
 import { IRequestBody } from './RequestBody';
@@ -34,13 +28,10 @@ export type { IOperation } from './Operation';
 
 export type IAny =
   | IContact
-  | ICookieParam
   | ICookieParams
-  | IHeaderParam
   | IHeaderParams
   | ILicense
   | IOperation
-  | IPathParam
   | IPathParams
   | IAllowEmptyValue
   | IAllowReserved
@@ -51,11 +42,8 @@ export type IAny =
   | IName
   | IPath
   | IRequired
-  | IPropertyStyleCookieParam
-  | IPropertyStyleHeaderParam
-  | IPropertyStylePathParam
-  | IPropertyStyleQueryParam
-  | IQueryParam
+  | IStyle
+  | IParam
   | IQueryParams
   | IRequest
   | IRequestBody
@@ -70,13 +58,11 @@ export type IAny =
 
 export type toAstNode<T extends NodeType> =
   T extends IContact['type'] ? IContact :
-  T extends ICookieParam['type'] ? ICookieParam :
+  T extends IParam['type'] ? IParam :
   T extends ICookieParams['type'] ? ICookieParams :
-  T extends IHeaderParam['type'] ? IHeaderParam :
   T extends IHeaderParams['type'] ? IHeaderParams :
   T extends ILicense['type'] ? ILicense :
   T extends IOperation['type'] ? IOperation :
-  T extends IPathParam['type'] ? IPathParam :
   T extends IPathParams['type'] ? IPathParams :
   T extends IAllowEmptyValue['type'] ? IAllowEmptyValue :
   T extends IAllowReserved['type'] ? IAllowReserved :
@@ -87,11 +73,7 @@ export type toAstNode<T extends NodeType> =
   T extends IName['type'] ? IName :
   T extends IPath['type'] ? IPath :
   T extends IRequired['type'] ? IRequired :
-  T extends IPropertyStyleCookieParam['type'] ? IPropertyStyleCookieParam :
-  T extends IPropertyStyleHeaderParam['type'] ? IPropertyStyleHeaderParam :
-  T extends IPropertyStylePathParam['type'] ? IPropertyStylePathParam :
-  T extends IPropertyStyleQueryParam['type'] ? IPropertyStyleQueryParam :
-  T extends IQueryParam['type'] ? IQueryParam :
+  T extends IStyle['type'] ? IStyle :
   T extends IQueryParams['type'] ? IQueryParams :
   T extends IRequest['type'] ? IRequest :
   T extends IRequestBody['type'] ? IRequestBody :

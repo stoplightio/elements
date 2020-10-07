@@ -1,7 +1,7 @@
 import { IBranch } from './basics';
-import { IHeaderParam } from './HeaderParam';
+import { IParam_Header } from './Param';
 
 export interface IHeaderParams extends IBranch {
   type: 'headerParams';
-  children: IHeaderParam[];
+  children: IParam_Header[];
 }

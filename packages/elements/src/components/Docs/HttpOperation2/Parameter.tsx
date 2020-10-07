@@ -1,17 +1,9 @@
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
-import { HttpParamStyles } from '@stoplight/types';
 import cn from 'classnames';
 import { get, isEmpty, omit, omitBy } from 'lodash';
 import * as React from 'react';
 
-import { ICookieParam } from '../../../AST/CookieParam';
-import { ICookieParams } from '../../../AST/CookieParams';
-import { IHeaderParam } from '../../../AST/HeaderParam';
-import { IHeaderParams } from '../../../AST/HeaderParams';
-import { IPathParam } from '../../../AST/PathParam';
-import { IPathParams } from '../../../AST/PathParams';
-import { IQueryParam } from '../../../AST/QueryParam';
-import { IQueryParams } from '../../../AST/QueryParams';
+import { IParam } from '../../../AST/Param';
 import { groupNodes } from '../../../AST/utils';
 import { ParameterDeprecated } from './ParameterDeprecated';
 import { ParameterDescription } from './ParameterDescription';
@@ -19,15 +11,6 @@ import { ParameterName } from './ParameterName';
 import { ParameterRequired } from './ParameterRequired';
 import { ParameterStyle } from './ParameterStyle';
 import { useSelection } from './utils';
-
-type ParameterType = 'query' | 'header' | 'path' | 'cookie';
-
-export interface IParametersProps {
-  title: string;
-  parameterType: ParameterType;
-  parameters?: IQueryParams | IPathParams | ICookieParams | IHeaderParams;
-  className?: string;
-}
 
 const numberValidationNames = [
   'minimum',
@@ -40,29 +23,13 @@ const numberValidationNames = [
   'exclusiveMaximum',
 ] as const;
 
-const readableStyles = {
-  [HttpParamStyles.PipeDelimited]: 'Pipe separated values',
-  [HttpParamStyles.SpaceDelimited]: 'Space separated values',
-  [HttpParamStyles.CommaDelimited]: 'Comma separated values',
-  [HttpParamStyles.Simple]: 'Comma separated values',
-  [HttpParamStyles.Matrix]: 'Path style values',
-  [HttpParamStyles.Label]: 'Label style values',
-  [HttpParamStyles.Form]: 'Form style values',
-} as const;
-
-const defaultStyle = {
-  queryParam: HttpParamStyles.Form,
-  headerParam: HttpParamStyles.Simple,
-  pathParam: HttpParamStyles.Simple,
-  cookieParam: HttpParamStyles.Form,
-} as const;
-
 export interface IParameterProps {
-  data: IQueryParam | IPathParam | ICookieParam | IHeaderParam;
+  data: IParam;
+  context: 'cookieParams' | 'headerParams' | 'pathParams' | 'queryParams';
   className?: string;
 }
 
-export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, className }) => {
+export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, context, className }) => {
   const selection = useSelection(data);
   if (!data) return null;
 
@@ -86,18 +53,14 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, clas
   // );
   // const keyValueValidations = omit(validations, [...keys(numberValidations), ...keys(booleanValidations)]);
 
-  const propertyStyle =
-    grouped.propertyStyleCookieParam?.[0] ||
-    grouped.propertyStyleHeaderParam?.[0] ||
-    grouped.propertyStylePathParam?.[0] ||
-    grouped.propertyStyleQueryParam?.[0];
+  const propertyStyle = grouped.style?.[0];
 
   return (
     <div className={cn('HttpOperation__Parameter pl-1', className)} {...selection}>
       <div className="flex items-center">
         <ParameterName data={grouped.name?.[0]} />
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>
-        {data.type !== 'pathParam' && <ParameterRequired data={grouped.required?.[0]} />}
+        {context !== 'pathParams' && <ParameterRequired data={grouped.required?.[0]} />}
         {/* <NumberValidations validations={numberValidations} /> */}
       </div>
 

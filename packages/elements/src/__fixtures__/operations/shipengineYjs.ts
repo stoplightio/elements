@@ -38,7 +38,7 @@ const makeOperation: () => Yify<IOperation> = () =>
             type: 'queryParams' as const,
             children: [
               {
-                type: 'queryParam' as const,
+                type: 'param' as const,
                 children: [
                   {
                     type: 'name',
@@ -53,13 +53,13 @@ const makeOperation: () => Yify<IOperation> = () =>
                     value: true,
                   },
                   {
-                    type: 'propertyStyleQueryParam',
+                    type: 'style',
                     value: 'form',
                   },
                 ],
               },
               {
-                type: 'queryParam' as const,
+                type: 'param' as const,
                 children: [
                   {
                     type: 'name',
@@ -74,13 +74,13 @@ const makeOperation: () => Yify<IOperation> = () =>
                     value: true,
                   },
                   {
-                    type: 'propertyStyleQueryParam',
+                    type: 'style',
                     value: 'form',
                   },
                 ],
               },
               {
-                type: 'queryParam' as const,
+                type: 'param' as const,
                 children: [
                   {
                     type: 'name',
@@ -91,7 +91,7 @@ const makeOperation: () => Yify<IOperation> = () =>
                     value: 'Only return completed',
                   },
                   {
-                    type: 'propertyStyleQueryParam',
+                    type: 'style',
                     value: 'form',
                   },
                   {
@@ -106,7 +106,7 @@ const makeOperation: () => Yify<IOperation> = () =>
             type: 'headerParams' as const,
             children: [
               {
-                type: 'headerParam' as const,
+                type: 'param' as const,
                 children: [
                   {
                     type: 'name',
@@ -117,7 +117,7 @@ const makeOperation: () => Yify<IOperation> = () =>
                     value: 'Your Stoplight account id',
                   },
                   {
-                    type: 'propertyStyleHeaderParam',
+                    type: 'style',
                     value: 'simple',
                   },
                   {
@@ -132,14 +132,14 @@ const makeOperation: () => Yify<IOperation> = () =>
             type: 'pathParams' as const,
             children: [
               {
-                type: 'pathParam' as const,
+                type: 'param' as const,
                 children: [
                   {
                     type: 'name',
                     value: 'todoId',
                   },
                   {
-                    type: 'propertyStylePathParam',
+                    type: 'style',
                     value: 'simple',
                   },
                   {
