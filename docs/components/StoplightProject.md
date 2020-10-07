@@ -15,8 +15,8 @@ import { StoplightProject } from "@stoplight/elements";
 
 <StoplightProject
   workspaceSlug="meta"
-  project="elements"
-  branch="main"
+  projectSlug="elements"
+  branchSlug="main"
 />
 ```
 
@@ -25,8 +25,8 @@ import { StoplightProject } from "@stoplight/elements";
 ```html
 <elements-stoplight-project
   workspaceSlug="meta"
-  project="elements"
-  branch="main"
+  projectSlug="elements"
+  branchSlug="main"
 />
 ```
 

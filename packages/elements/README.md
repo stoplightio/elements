@@ -33,7 +33,7 @@ The [Stoplight Project component](https://meta.stoplight.io/docs/elements/compon
 import { StoplightProject } from '@stoplight/elements';
 import '@stoplight/elements/styles/elements.min.css';
 
-<StoplightProject workspaceSlug="elements" project="studio-demo" />
+<StoplightProject workspaceSlug="elements" projectSlug="studio-demo" />
 ```
 
 ## Examples

@@ -29,7 +29,7 @@ The [API component](https://meta.stoplight.io/docs/elements/components/API.md) d
 The [Stoplight Project component](https://meta.stoplight.io/docs/elements/components/StoplightProject.md) displays the generated documentation for any Stoplight project.
 
 ```html
-<elements-stoplight-project workspace="https://elements.stoplight.io" projectSlug="studio-demo"></elements-stoplight-project>
+<elements-stoplight-project workspaceSlug="elements" projectSlug="studio-demo"></elements-stoplight-project>
 ```
 
 ## Examples

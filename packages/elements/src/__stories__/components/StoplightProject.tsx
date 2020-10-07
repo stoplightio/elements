@@ -8,8 +8,8 @@ import { StoplightProject } from '../../containers/StoplightProject';
 
 const darkMode = () => boolean('dark mode', false);
 const workspaceSlug = () => text('workspaceSlug', 'elements');
-const project = () => text('project', 'public-apis');
-const branch = () => text('branch', '');
+const projectSlug = () => text('projectSlug', 'public-apis');
+const branchSlug = () => text('branchSlug', '');
 const authToken = () => text('authToken', '');
 
 storiesOf('Public/StoplightProject', module)
@@ -19,8 +19,8 @@ storiesOf('Public/StoplightProject', module)
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <StoplightProject
           workspaceSlug={workspaceSlug()}
-          project={project()}
-          branch={branch()}
+          projectSlug={projectSlug()}
+          branchSlug={branchSlug()}
           authToken={authToken()}
         />
       </div>
