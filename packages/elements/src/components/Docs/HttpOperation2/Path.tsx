@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { IPropertyPath } from '../../../AST/PropertyPath';
+import { IPath } from '../../../AST/leafs/Path';
 import { useSelection } from './utils';
 
 export const Path: React.FunctionComponent<{
-  data?: IPropertyPath;
+  data?: IPath;
 }> = ({ data }) => {
   const selection = useSelection(data);
   if (!data) return null;

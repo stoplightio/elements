@@ -54,15 +54,15 @@ storiesOf('Internal/Stoplight AST', module)
       };
       // @ts-ignore
       switch (o.get('type')) {
-        case 'propertyName': {
+        case 'name': {
           oset('value', text('name', o.get('value')));
           return;
         }
-        case 'propertyDescription': {
+        case 'description': {
           oset('value', text('description', o.get('value')));
           return;
         }
-        case 'propertyPath': {
+        case 'path': {
           oset('value', text('path', o.get('value')));
           return;
         }
@@ -84,11 +84,11 @@ storiesOf('Internal/Stoplight AST', module)
                 | 'queryParam',
               children: [
                 {
-                  type: 'propertyName',
+                  type: 'name',
                   value: 'untitled',
                 },
                 {
-                  type: 'propertyDescription',
+                  type: 'description',
                   value: '',
                 },
                 {
@@ -172,7 +172,7 @@ storiesOf('Internal/Stoplight AST', module)
                   value: false,
                 },
                 {
-                  type: 'propertyDescription',
+                  type: 'description',
                   value: '',
                 },
                 {

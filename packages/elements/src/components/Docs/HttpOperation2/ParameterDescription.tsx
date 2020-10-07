@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { IPropertyDescription } from '../../../AST/PropertyDescription';
+import { IDescription } from '../../../AST/leafs/Description';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { useSelection } from './utils';
 
 export const ParameterDescription: React.FunctionComponent<{
-  data?: IPropertyDescription;
+  data?: IDescription;
 }> = ({ data }) => {
   const selection = useSelection(data);
 

@@ -1,17 +1,17 @@
 import { IBranch } from './basics';
 import { ICookieParams } from './CookieParams';
+import { IDescription } from './leafs/Description';
+import { IName } from './leafs/Name';
 import { IPropertyDeprecated } from './PropertyDeprecated';
-import { IPropertyDescription } from './PropertyDescription';
 import { IPropertyExplode } from './PropertyExplode';
-import { IPropertyName } from './PropertyName';
 import { IPropertyRequired } from './PropertyRequired';
 import { IPropertyStyleCookieParam } from './PropertyStyleCookieParam';
 import { ISchema } from './Schema';
 
 type ICookieParamChildren =
-  | IPropertyName
+  | IName
   | IPropertyStyleCookieParam
-  | IPropertyDescription
+  | IDescription
   | IPropertyExplode
   | IPropertyRequired
   | IPropertyDeprecated

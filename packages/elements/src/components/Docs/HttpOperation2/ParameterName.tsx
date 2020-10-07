@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { IPropertyName } from '../../../AST/PropertyName';
+import { IName } from '../../../AST/leafs/Name';
 import { useSelection } from './utils';
 
 export interface IParameterNameProps {
-  data?: IPropertyName;
+  data?: IName;
 }
 
 export const ParameterName: React.FunctionComponent<IParameterNameProps> = ({ data }) => {

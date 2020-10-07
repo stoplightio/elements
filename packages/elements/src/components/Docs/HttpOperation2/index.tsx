@@ -25,11 +25,11 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
       {!headless && (
         <h2 className={cn(Classes.HEADING, 'flex items-center mb-10')}>
           <Method data={groupedNodes.propertyMethod?.[0]}></Method>
-          <Path data={groupedNodes.propertyPath?.[0]}></Path>
+          <Path data={groupedNodes.path?.[0]}></Path>
         </h2>
       )}
 
-      <Description data={groupedNodes.propertyDescription?.[0]} />
+      <Description data={groupedNodes.description?.[0]} />
 
       <Request data={groupedNodes.request?.[0]} />
 

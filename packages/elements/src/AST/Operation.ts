@@ -1,20 +1,13 @@
 import { IParent } from './basics';
+import { IDescription } from './leafs/Description';
+import { IPath } from './leafs/Path';
 import { IPropertyDeprecated } from './PropertyDeprecated';
-import { IPropertyDescription } from './PropertyDescription';
 import { IPropertyMethod } from './PropertyMethod';
-import { IPropertyPath } from './PropertyPath';
 import { IRequest } from './Request';
 import { IResponse } from './Response';
 import { IServer } from './Server';
 
-type IOperationChildren =
-  | IPropertyDescription
-  | IPropertyMethod
-  | IPropertyPath
-  | IServer
-  | IPropertyDeprecated
-  | IRequest
-  | IResponse;
+type IOperationChildren = IDescription | IPropertyMethod | IPath | IServer | IPropertyDeprecated | IRequest | IResponse;
 
 export interface IOperation extends IParent {
   type: 'operation';

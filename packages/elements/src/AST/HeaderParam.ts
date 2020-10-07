@@ -1,17 +1,17 @@
 import { IBranch } from './basics';
 import { IHeaderParams } from './HeaderParams';
+import { IDescription } from './leafs/Description';
+import { IName } from './leafs/Name';
 import { IPropertyDeprecated } from './PropertyDeprecated';
-import { IPropertyDescription } from './PropertyDescription';
 import { IPropertyExplode } from './PropertyExplode';
-import { IPropertyName } from './PropertyName';
 import { IPropertyRequired } from './PropertyRequired';
 import { IPropertyStyleHeaderParam } from './PropertyStyleHeaderParam';
 import { ISchema } from './Schema';
 
 type IHeaderParamChildren =
-  | IPropertyName
+  | IName
   | IPropertyStyleHeaderParam
-  | IPropertyDescription
+  | IDescription
   | IPropertyExplode
   | IPropertyRequired
   | IPropertyDeprecated

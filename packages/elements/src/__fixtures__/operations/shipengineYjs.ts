@@ -10,7 +10,7 @@ const makeOperation: () => Yify<IOperation> = () =>
     type: 'operation' as const,
     children: [
       {
-        type: 'propertyDescription' as const,
+        type: 'description' as const,
         value:
           "The address-recognition API makes it easy for you to extract address data from unstructured text, including the recipient name, line 1, line 2, city, postal code, and more.\n\nData often enters your system as unstructured text (for example: emails, SMS messages, support tickets, or other documents). ShipEngine's address-recognition API helps you extract meaningful, structured data from this unstructured text. The parsed address data is returned in the same structure that's used for other ShipEngine APIs, such as address validation, rate quotes, and shipping labels.\n\n> **Note:** Address recognition is currently supported for the United States, Canada, Australia, New Zealand, the United Kingdom, and Ireland.\n",
       },
@@ -19,7 +19,7 @@ const makeOperation: () => Yify<IOperation> = () =>
         value: 'put',
       },
       {
-        type: 'propertyPath' as const,
+        type: 'path' as const,
         value: '/v1/addresses/recognize',
       },
       {
@@ -41,11 +41,11 @@ const makeOperation: () => Yify<IOperation> = () =>
                 type: 'queryParam' as const,
                 children: [
                   {
-                    type: 'propertyName',
+                    type: 'name',
                     value: 'limit',
                   },
                   {
-                    type: 'propertyDescription',
+                    type: 'description',
                     value: 'How many todos to limit?',
                   },
                   {
@@ -62,11 +62,11 @@ const makeOperation: () => Yify<IOperation> = () =>
                 type: 'queryParam' as const,
                 children: [
                   {
-                    type: 'propertyName',
+                    type: 'name',
                     value: 'value',
                   },
                   {
-                    type: 'propertyDescription',
+                    type: 'description',
                     value: 'How many string todos to limit?',
                   },
                   {
@@ -83,11 +83,11 @@ const makeOperation: () => Yify<IOperation> = () =>
                 type: 'queryParam' as const,
                 children: [
                   {
-                    type: 'propertyName',
+                    type: 'name',
                     value: 'completed',
                   },
                   {
-                    type: 'propertyDescription',
+                    type: 'description',
                     value: 'Only return completed',
                   },
                   {
@@ -105,11 +105,11 @@ const makeOperation: () => Yify<IOperation> = () =>
                 type: 'headerParam' as const,
                 children: [
                   {
-                    type: 'propertyName',
+                    type: 'name',
                     value: 'account-id',
                   },
                   {
-                    type: 'propertyDescription',
+                    type: 'description',
                     value: 'Your Stoplight account id',
                   },
                   {
@@ -131,7 +131,7 @@ const makeOperation: () => Yify<IOperation> = () =>
                 type: 'pathParam' as const,
                 children: [
                   {
-                    type: 'propertyName',
+                    type: 'name',
                     value: 'todoId',
                   },
                   {

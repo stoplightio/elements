@@ -101,7 +101,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, clas
   return (
     <div className={cn('HttpOperation__Parameter pl-1', className)} {...selection}>
       <div className="flex items-center">
-        <ParameterName data={grouped.propertyName?.[0]} />
+        <ParameterName data={grouped.name?.[0]} />
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>
         {data.type !== 'pathParam' && <ParameterRequired data={grouped.propertyRequired?.[0]} />}
         {/* <NumberValidations validations={numberValidations} /> */}
@@ -109,7 +109,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, clas
 
       {/* <KeyValueValidations validations={keyValueValidations} /> */}
 
-      <ParameterDescription data={grouped.propertyDescription?.[0]} />
+      <ParameterDescription data={grouped.description?.[0]} />
 
       <div className="flex flex-wrap">
         <ParameterDeprecated data={grouped.propertyDeprecated?.[0]} />

@@ -5,6 +5,9 @@ import { ICookieParam } from './CookieParam';
 import { ICookieParams } from './CookieParams';
 import { IHeaderParam } from './HeaderParam';
 import { IHeaderParams } from './HeaderParams';
+import { IDescription } from './leafs/Description';
+import { IName } from './leafs/Name';
+import { IPath } from './leafs/Path';
 import { ILicense } from './License';
 import { IOperation } from './Operation';
 import { IPathParam } from './PathParam';
@@ -12,11 +15,8 @@ import { IPathParams } from './PathParams';
 import { IPropertyAllowEmptyValue } from './PropertyAllowEmptyValue';
 import { IPropertyAllowReserved } from './PropertyAllowReserved';
 import { IPropertyDeprecated } from './PropertyDeprecated';
-import { IPropertyDescription } from './PropertyDescription';
 import { IPropertyExplode } from './PropertyExplode';
 import { IPropertyMethod } from './PropertyMethod';
-import { IPropertyName } from './PropertyName';
-import { IPropertyPath } from './PropertyPath';
 import { IPropertyRequired } from './PropertyRequired';
 import { IPropertyStyleCookieParam } from './PropertyStyleCookieParam';
 import { IPropertyStyleHeaderParam } from './PropertyStyleHeaderParam';
@@ -58,11 +58,11 @@ export type IAny =
   | IPropertyAllowEmptyValue
   | IPropertyAllowReserved
   | IPropertyDeprecated
-  | IPropertyDescription
+  | IDescription
   | IPropertyExplode
   | IPropertyMethod
-  | IPropertyName
-  | IPropertyPath
+  | IName
+  | IPath
   | IPropertyRequired
   | IPropertyStyleCookieParam
   | IPropertyStyleHeaderParam
@@ -98,11 +98,11 @@ export type toAstNode<T extends NodeType> =
   T extends IPropertyAllowEmptyValue['type'] ? IPropertyAllowEmptyValue :
   T extends IPropertyAllowReserved['type'] ? IPropertyAllowReserved :
   T extends IPropertyDeprecated['type'] ? IPropertyDeprecated :
-  T extends IPropertyDescription['type'] ? IPropertyDescription :
+  T extends IDescription['type'] ? IDescription :
   T extends IPropertyExplode['type'] ? IPropertyExplode :
   T extends IPropertyMethod['type'] ? IPropertyMethod :
-  T extends IPropertyName['type'] ? IPropertyName :
-  T extends IPropertyPath['type'] ? IPropertyPath :
+  T extends IName['type'] ? IName :
+  T extends IPath['type'] ? IPath :
   T extends IPropertyRequired['type'] ? IPropertyRequired :
   T extends IPropertyStyleCookieParam['type'] ? IPropertyStyleCookieParam :
   T extends IPropertyStyleHeaderParam['type'] ? IPropertyStyleHeaderParam :
