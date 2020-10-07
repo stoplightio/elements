@@ -5,7 +5,7 @@ import { dirname, sep } from 'path';
 
 import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, TableOfContentItem } from './types';
 
-export function generateToC(searchResults: NodeData[]) {
+export function generateToC(searchResults: NodeData[], docsDir: string = 'docs') {
   return pipe(
     () => searchResults,
     groupNodesByType,
@@ -13,7 +13,7 @@ export function generateToC(searchResults: NodeData[]) {
       const toc: ITableOfContents = { items: [] };
 
       // Articles
-      pipe(() => articles, sortArticlesByTypeAndPath, appendArticlesToToC(toc))();
+      pipe(() => articles, sortArticlesByTypeAndPath(docsDir), appendArticlesToToC(toc, docsDir))();
 
       pipe(
         // HTTP Services
@@ -36,7 +36,7 @@ export function generateToC(searchResults: NodeData[]) {
   )();
 }
 
-export function generateTocSkeleton(searchResults: NodeData[]) {
+export function generateTocSkeleton(searchResults: NodeData[], docsDir: string = 'docs') {
   return pipe(
     () => searchResults,
     groupNodesByType,
@@ -44,7 +44,7 @@ export function generateTocSkeleton(searchResults: NodeData[]) {
       const toc: ITableOfContents = { items: [] };
 
       // Articles
-      pipe(() => articles, sortArticlesByTypeAndPath, appendArticlesToToC(toc))();
+      pipe(() => articles, sortArticlesByTypeAndPath(docsDir), appendArticlesToToC(toc, docsDir))();
 
       // HTTP Services
       pipe(() => httpServices, sortNodesByUri, appendHttpServicesItemsToToC(toc))();
@@ -158,16 +158,20 @@ export function groupNodesByType(searchResults: NodeData[]) {
   );
 }
 
-export function sortArticlesByTypeAndPath(articles: NodeData[]) {
-  return articles.sort((a1, a2) => {
-    const a1DirPath = dirname(a1.uri);
-    const a2DirPath = dirname(a2.uri);
+export function sortArticlesByTypeAndPath(docsDir: string) {
+  return (articles: NodeData[]) => {
+    return articles.sort((a1, a2) => {
+      const rootDirs = ['/', '.', `/${docsDir}`, docsDir];
+      const a1DirPath = dirname(a1.uri);
+      const a2DirPath = dirname(a2.uri);
 
-    // articles without a directory are lifted to the top
-    const dirOrder = a1DirPath === '/' || a2DirPath === '/' ? a1DirPath.localeCompare(a2DirPath) : 0;
+      // articles without a directory are lifted to the top
+      const dirOrder =
+        rootDirs.includes(a1DirPath) || rootDirs.includes(a2DirPath) ? a1DirPath.localeCompare(a2DirPath) : 0;
 
-    return dirOrder === 0 ? a1.uri.localeCompare(a2.uri) : dirOrder;
-  });
+      return dirOrder === 0 ? a1.uri.localeCompare(a2.uri) : dirOrder;
+    });
+  };
 }
 
 function findOrCreateArticleGroup(toc: ITableOfContents) {
@@ -199,11 +203,11 @@ function findOrCreateArticleGroup(toc: ITableOfContents) {
   };
 }
 
-export function appendArticlesToToC(toc: ITableOfContents) {
+export function appendArticlesToToC(toc: ITableOfContents, docsDir: string) {
   return (articles: NodeData[]) => {
     return articles.reduce<ITableOfContents>(
       (toc, article) =>
-        pipe(partial(getDirsFromUri, article.uri), findOrCreateArticleGroup(toc), group => {
+        pipe(partial(getDirsFromUri(docsDir), article.uri), findOrCreateArticleGroup(toc), group => {
           group.items.push({ type: 'item', title: article.name, uri: article.uri });
           return toc;
         })(),
@@ -384,7 +388,9 @@ export function appendModelsToToc(toc: ITableOfContents) {
   };
 }
 
-function getDirsFromUri(uri: string) {
-  const strippedUri = uri.replace(/^\/?(?:docs\/)?/, '');
-  return strippedUri.split(sep).slice(0, -1);
+function getDirsFromUri(docsDir: string) {
+  return (uri: string) => {
+    const strippedUri = uri.replace(new RegExp(`^/?(?:${docsDir}/)?`), '');
+    return strippedUri.split(sep).slice(0, -1);
+  };
 }
