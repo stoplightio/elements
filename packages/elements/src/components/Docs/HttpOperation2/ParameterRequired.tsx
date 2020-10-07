@@ -1,11 +1,11 @@
 import cn from 'classnames';
 import * as React from 'react';
 
-import { IPropertyRequired } from '../../../AST/PropertyRequired';
+import { IRequired } from '../../../AST/leafs/Required';
 import { useSelection } from './utils';
 
 export interface IParameterRequiredProps {
-  data?: IPropertyRequired;
+  data?: IRequired;
 }
 
 export const ParameterRequired: React.FunctionComponent<IParameterRequiredProps> = ({ data }) => {

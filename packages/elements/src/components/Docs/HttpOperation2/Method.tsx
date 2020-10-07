@@ -1,12 +1,12 @@
 import cn from 'classnames';
 import * as React from 'react';
 
-import { IPropertyMethod } from '../../../AST/PropertyMethod';
+import { IHttpMethod } from '../../../AST/leafs/HttpMethod';
 import { HttpMethodColors } from '../../../constants';
 import { useSelection } from './utils';
 
 export const Method: React.FunctionComponent<{
-  data?: IPropertyMethod;
+  data?: IHttpMethod;
 }> = ({ data }) => {
   const selection = useSelection(data);
   if (!data) return null;

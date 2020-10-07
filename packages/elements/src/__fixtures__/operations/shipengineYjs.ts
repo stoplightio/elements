@@ -15,7 +15,7 @@ const makeOperation: () => Yify<IOperation> = () =>
           "The address-recognition API makes it easy for you to extract address data from unstructured text, including the recipient name, line 1, line 2, city, postal code, and more.\n\nData often enters your system as unstructured text (for example: emails, SMS messages, support tickets, or other documents). ShipEngine's address-recognition API helps you extract meaningful, structured data from this unstructured text. The parsed address data is returned in the same structure that's used for other ShipEngine APIs, such as address validation, rate quotes, and shipping labels.\n\n> **Note:** Address recognition is currently supported for the United States, Canada, Australia, New Zealand, the United Kingdom, and Ireland.\n",
       },
       {
-        type: 'propertyMethod' as const,
+        type: 'httpMethod' as const,
         value: 'put',
       },
       {
@@ -94,6 +94,10 @@ const makeOperation: () => Yify<IOperation> = () =>
                     type: 'propertyStyleQueryParam',
                     value: 'form',
                   },
+                  {
+                    type: 'required',
+                    value: false,
+                  },
                 ],
               },
             ],
@@ -117,7 +121,7 @@ const makeOperation: () => Yify<IOperation> = () =>
                     value: 'simple',
                   },
                   {
-                    type: 'propertyRequired',
+                    type: 'required',
                     value: true,
                   },
                 ],
@@ -139,7 +143,7 @@ const makeOperation: () => Yify<IOperation> = () =>
                     value: 'simple',
                   },
                   {
-                    type: 'propertyRequired',
+                    type: 'required',
                     value: true,
                   },
                 ],
@@ -151,12 +155,16 @@ const makeOperation: () => Yify<IOperation> = () =>
     ],
   });
 
+export const resetOperation = () => {
+  const httpOperation = makeOperation();
+  ydoc.doc.getMap('root').set('operation', httpOperation);
+  console.log('httpOperation', httpOperation);
+};
+
 ydoc.ready.then(() => {
   if (!ydoc.doc.getMap('root').has('operation')) {
     console.log('Populating with initial data.');
-    const httpOperation = makeOperation();
-    ydoc.doc.getMap('root').set('operation', httpOperation);
-    console.log('httpOperation', httpOperation);
+    resetOperation();
   }
 });
 

@@ -68,7 +68,7 @@ httpOperation.children.push(
   {
     parent: httpOperation,
     id: id(),
-    type: 'propertyMethod',
+    type: 'httpMethod',
     value: 'put',
   },
   {
@@ -270,7 +270,7 @@ httpOperation.children.push(request);
       {
         parent: param,
         id: id(),
-        type: 'propertyRequired',
+        type: 'required',
         value: true,
       },
     );
@@ -315,7 +315,7 @@ httpOperation.children.push(request);
       {
         parent: param,
         id: id(),
-        type: 'propertyRequired',
+        type: 'required',
         value: true,
       },
     );

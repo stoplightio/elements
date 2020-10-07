@@ -1,10 +1,10 @@
 import { IBranch } from './basics';
 import { IDescription } from './leafs/Description';
 import { IName } from './leafs/Name';
+import { IRequired } from './leafs/Required';
 import { IPathParams } from './PathParams';
 import { IPropertyDeprecated } from './PropertyDeprecated';
 import { IPropertyExplode } from './PropertyExplode';
-import { IPropertyRequired } from './PropertyRequired';
 import { IPropertyStylePathParam } from './PropertyStylePathParam';
 import { ISchema } from './Schema';
 
@@ -13,7 +13,7 @@ type IPathParamChildren =
   | IPropertyStylePathParam
   | IDescription
   | IPropertyExplode
-  | IPropertyRequired
+  | IRequired
   | IPropertyDeprecated
   | ISchema;
 //| IExample

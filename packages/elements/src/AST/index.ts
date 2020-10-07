@@ -6,8 +6,10 @@ import { ICookieParams } from './CookieParams';
 import { IHeaderParam } from './HeaderParam';
 import { IHeaderParams } from './HeaderParams';
 import { IDescription } from './leafs/Description';
+import { IHttpMethod } from './leafs/HttpMethod';
 import { IName } from './leafs/Name';
 import { IPath } from './leafs/Path';
+import { IRequired } from './leafs/Required';
 import { ILicense } from './License';
 import { IOperation } from './Operation';
 import { IPathParam } from './PathParam';
@@ -16,8 +18,6 @@ import { IPropertyAllowEmptyValue } from './PropertyAllowEmptyValue';
 import { IPropertyAllowReserved } from './PropertyAllowReserved';
 import { IPropertyDeprecated } from './PropertyDeprecated';
 import { IPropertyExplode } from './PropertyExplode';
-import { IPropertyMethod } from './PropertyMethod';
-import { IPropertyRequired } from './PropertyRequired';
 import { IPropertyStyleCookieParam } from './PropertyStyleCookieParam';
 import { IPropertyStyleHeaderParam } from './PropertyStyleHeaderParam';
 import { IPropertyStylePathParam } from './PropertyStylePathParam';
@@ -60,10 +60,10 @@ export type IAny =
   | IPropertyDeprecated
   | IDescription
   | IPropertyExplode
-  | IPropertyMethod
+  | IHttpMethod
   | IName
   | IPath
-  | IPropertyRequired
+  | IRequired
   | IPropertyStyleCookieParam
   | IPropertyStyleHeaderParam
   | IPropertyStylePathParam
@@ -100,10 +100,10 @@ export type toAstNode<T extends NodeType> =
   T extends IPropertyDeprecated['type'] ? IPropertyDeprecated :
   T extends IDescription['type'] ? IDescription :
   T extends IPropertyExplode['type'] ? IPropertyExplode :
-  T extends IPropertyMethod['type'] ? IPropertyMethod :
+  T extends IHttpMethod['type'] ? IHttpMethod :
   T extends IName['type'] ? IName :
   T extends IPath['type'] ? IPath :
-  T extends IPropertyRequired['type'] ? IPropertyRequired :
+  T extends IRequired['type'] ? IRequired :
   T extends IPropertyStyleCookieParam['type'] ? IPropertyStyleCookieParam :
   T extends IPropertyStyleHeaderParam['type'] ? IPropertyStyleHeaderParam :
   T extends IPropertyStylePathParam['type'] ? IPropertyStylePathParam :

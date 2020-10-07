@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { getIdMap, ydoc } from '../../__fixtures__/operations/shipengineYjs';
+import { getIdMap, resetOperation, ydoc } from '../../__fixtures__/operations/shipengineYjs';
 import { IAny, IOperation } from '../../AST';
 import { HttpOperation } from '../../components/Docs/HttpOperation2';
 import { SelectionContext } from '../../components/Docs/HttpOperation2/SelectionContext';
@@ -66,7 +66,7 @@ storiesOf('Internal/Stoplight AST', module)
           oset('value', text('path', o.get('value')));
           return;
         }
-        case 'propertyMethod': {
+        case 'httpMethod': {
           oset('value', select('method', ['get', 'put', 'post', 'delete', 'etc'], o.get('value')));
           return;
         }
@@ -96,7 +96,7 @@ storiesOf('Internal/Stoplight AST', module)
                   value: 'HttpParamStyles.Simple',
                 },
                 {
-                  type: 'propertyRequired',
+                  type: 'required',
                   value: false,
                 },
               ],
@@ -134,7 +134,7 @@ storiesOf('Internal/Stoplight AST', module)
           oset('value', select('style', ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'], o.get('value')));
           return;
         }
-        case 'propertyRequired': {
+        case 'required': {
           oset('value', boolean('required', o.get('value')));
           return;
         }
@@ -163,12 +163,15 @@ storiesOf('Internal/Stoplight AST', module)
           return;
         }
         case 'request': {
+          for (const child of o.get('children')) {
+            addKnobs(child);
+          }
           button('Add Body', () => {
             const node = Yjsify({
               type: 'requestBody',
               children: [
                 {
-                  type: 'propertyRequired',
+                  type: 'required',
                   value: false,
                 },
                 {
@@ -195,6 +198,11 @@ storiesOf('Internal/Stoplight AST', module)
           });
           return;
         }
+        case 'operation': {
+          for (const child of o.get('children')) {
+            addKnobs(child);
+          }
+        }
       }
     };
 
@@ -208,6 +216,11 @@ storiesOf('Internal/Stoplight AST', module)
           console.log('adding knobs');
           addKnobs(o);
         }
+      } else {
+        button('Reset', () => {
+          resetOperation();
+          setSelected(void 0);
+        });
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected]);
@@ -231,6 +244,9 @@ storiesOf('Internal/Stoplight AST', module)
         }
         el = el.parentElement;
       }
+
+      // Clear knobs.
+      // channel.emit(RESET);
     };
 
     if (!httpOperationYjs) return null;

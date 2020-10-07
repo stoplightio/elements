@@ -1,10 +1,10 @@
 import { IBool, IBranch, IProperty, IString } from './basics';
 import { IDescription } from './leafs/Description';
-import { IPropertyRequired } from './PropertyRequired';
+import { IRequired } from './leafs/Required';
 import { IRequestExample } from './RequestExample';
 import { ISchema } from './Schema';
 
-type IRequestBodyChildren = IPropertyRequired | IDescription | IRequestExample | ISchema;
+type IRequestBodyChildren = IRequired | IDescription | IRequestExample | ISchema;
 
 export interface IRequestBody extends IBranch {
   type: 'requestBody';
