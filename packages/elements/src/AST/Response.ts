@@ -1,11 +1,9 @@
-import { IBranch, INumber, IProperty, IString } from './basics';
+import { IBranch } from './basics';
 import { IHeaderParam } from './HeaderParam';
+import { IDescription, IHttpStatus } from './leafs';
 import { IResponseBody } from './ResponseBody';
 
-type ICodeProperty = IProperty<IString<'code'>, INumber>;
-type IDescriptionProperty = IProperty<IString<'description'>, IString>;
-
-type IResponseChildren = ICodeProperty | IHeaderParam | IDescriptionProperty | IResponseBody;
+type IResponseChildren = IHttpStatus | IHeaderParam | IDescription | IResponseBody;
 
 export interface IResponse extends IBranch {
   type: 'response';

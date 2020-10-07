@@ -1,8 +1,5 @@
 import { IParent } from './basics';
-import { IDeprecated } from './leafs/Deprecated';
-import { IDescription } from './leafs/Description';
-import { IHttpMethod } from './leafs/HttpMethod';
-import { IPath } from './leafs/Path';
+import { IDeprecated, IDescription, IHttpMethod, IPath } from './leafs';
 import { IRequest } from './Request';
 import { IResponse } from './Response';
 import { IServer } from './Server';

@@ -1,11 +1,7 @@
-import { IBranch, IProperty, IString } from './basics';
+import { IBranch } from './basics';
+import { IDescription, IExample, IKey, ISummary, IUrl } from './leafs';
 
-type IResponseExampleChildren =
-  | IProperty<IString<'key'>, IString>
-  | IProperty<IString<'summary'>, IString>
-  | IProperty<IString<'description'>, IString>
-  | IProperty<IString<'example'>, IString>
-  | IProperty<IString<'external'>, IString>;
+type IResponseExampleChildren = IKey | ISummary | IDescription | IExample | IUrl;
 
 export interface IResponseExample extends IBranch {
   type: 'responseExample';

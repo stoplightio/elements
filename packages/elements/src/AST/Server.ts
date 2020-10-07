@@ -1,7 +1,5 @@
-import { IBranch, IProperty, IString } from './basics';
-import { IDescription } from './leafs/Description';
-import { IName } from './leafs/Name';
-import { IUrl } from './leafs/Url';
+import { IBranch } from './basics';
+import { IDescription, IName, IUrl } from './leafs';
 import { IServerVariable } from './ServerVariable';
 
 type IServerChildren = IName | IUrl | IDescription | IServerVariable;

@@ -4,7 +4,6 @@ import { flatten } from 'lodash';
 import * as React from 'react';
 
 import { IRequest } from '../../../AST/Request';
-import { editHandle } from '../../../constants';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 import { Body } from './Body';
 import { Parameters } from './Parameters';

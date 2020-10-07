@@ -7,7 +7,6 @@ import {
   faQuestionCircle,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { IProperty } from '@stoplight/json-schema-viewer/components';
 import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {

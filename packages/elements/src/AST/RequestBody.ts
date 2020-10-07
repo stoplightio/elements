@@ -1,6 +1,5 @@
-import { IBool, IBranch, IProperty, IString } from './basics';
-import { IDescription } from './leafs/Description';
-import { IRequired } from './leafs/Required';
+import { IBranch } from './basics';
+import { IDescription, IRequired } from './leafs';
 import { IRequestExample } from './RequestExample';
 import { ISchema } from './Schema';
 

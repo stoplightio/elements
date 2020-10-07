@@ -1,65 +1,17 @@
-import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
-import { Dictionary, HttpParamStyles, Primitive } from '@stoplight/types';
-import { Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { ICookieParam } from '../../../AST/CookieParam';
 import { ICookieParams } from '../../../AST/CookieParams';
-import { IHeaderParam } from '../../../AST/HeaderParam';
 import { IHeaderParams } from '../../../AST/HeaderParams';
-import { IDeprecated } from '../../../AST/leafs/Deprecated';
-import { IDescription } from '../../../AST/leafs/Description';
-import { IName } from '../../../AST/leafs/Name';
-import { IRequired } from '../../../AST/leafs/Required';
-import { IPathParam } from '../../../AST/PathParam';
 import { IPathParams } from '../../../AST/PathParams';
-import { IPropertyStyle } from '../../../AST/PropertyStyle';
-import { IQueryParam } from '../../../AST/QueryParam';
 import { IQueryParams } from '../../../AST/QueryParams';
-import { ISchema } from '../../../AST/Schema';
-import { groupNodes } from '../../../AST/utils';
-import { editHandle } from '../../../constants';
-import { InlineRefResolverContext } from '../../../containers/Provider';
-import { MarkdownViewer } from '../../MarkdownViewer';
 import { Parameter } from './Parameter';
 import { SectionTitle } from './SectionTitle';
 import { useSelection } from './utils';
 
-type ParameterType = 'query' | 'header' | 'path' | 'cookie';
-
 export interface IParametersProps {
   data?: IQueryParams | IPathParams | ICookieParams | IHeaderParams;
 }
-
-const numberValidationNames = [
-  'minimum',
-  'maximum',
-  'minLength',
-  'maxLength',
-  'minItems',
-  'maxItems',
-  'exclusiveMinimum',
-  'exclusiveMaximum',
-] as const;
-
-const readableStyles = {
-  [HttpParamStyles.PipeDelimited]: 'Pipe separated values',
-  [HttpParamStyles.SpaceDelimited]: 'Space separated values',
-  [HttpParamStyles.CommaDelimited]: 'Comma separated values',
-  [HttpParamStyles.Simple]: 'Comma separated values',
-  [HttpParamStyles.Matrix]: 'Path style values',
-  [HttpParamStyles.Label]: 'Label style values',
-  [HttpParamStyles.Form]: 'Form style values',
-} as const;
-
-const defaultStyle = {
-  query: HttpParamStyles.Form,
-  header: HttpParamStyles.Simple,
-  path: HttpParamStyles.Simple,
-  cookie: HttpParamStyles.Form,
-} as const;
 
 export const Parameters: React.FunctionComponent<IParametersProps> = ({ data }) => {
   const selection = useSelection(data);

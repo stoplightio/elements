@@ -1,9 +1,7 @@
-import { IBranch, IProperty, IString } from './basics';
+import { IBranch } from './basics';
+import { IName, IUrl } from './leafs';
 
-type INameProperty = IProperty<IString<'name'>, IString>;
-type IUrlProperty = IProperty<IString<'url'>, IString>;
-
-type ILicenseChildren = INameProperty | IUrlProperty;
+type ILicenseChildren = IName | IUrl;
 
 export interface ILicense extends IBranch {
   type: 'license';

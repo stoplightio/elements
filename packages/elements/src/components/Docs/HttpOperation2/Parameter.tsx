@@ -1,8 +1,7 @@
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
-import { Dictionary, HttpParamStyles, Primitive } from '@stoplight/types';
-import { Tag } from '@stoplight/ui-kit';
+import { HttpParamStyles } from '@stoplight/types';
 import cn from 'classnames';
-import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
+import { get, isEmpty, omit, omitBy } from 'lodash';
 import * as React from 'react';
 
 import { ICookieParam } from '../../../AST/CookieParam';
@@ -13,17 +12,12 @@ import { IPathParam } from '../../../AST/PathParam';
 import { IPathParams } from '../../../AST/PathParams';
 import { IQueryParam } from '../../../AST/QueryParam';
 import { IQueryParams } from '../../../AST/QueryParams';
-import { ISchema } from '../../../AST/Schema';
 import { groupNodes } from '../../../AST/utils';
-import { editHandle } from '../../../constants';
-import { InlineRefResolverContext } from '../../../containers/Provider';
-import { MarkdownViewer } from '../../MarkdownViewer';
 import { ParameterDeprecated } from './ParameterDeprecated';
 import { ParameterDescription } from './ParameterDescription';
 import { ParameterName } from './ParameterName';
 import { ParameterRequired } from './ParameterRequired';
 import { ParameterStyle } from './ParameterStyle';
-import { SectionTitle } from './SectionTitle';
 import { useSelection } from './utils';
 
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';

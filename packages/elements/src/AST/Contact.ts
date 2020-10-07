@@ -1,10 +1,7 @@
-import { IBranch, IProperty, IString } from './basics';
+import { IBranch } from './basics';
+import { IEmail, IName, IUrl } from './leafs';
 
-type INameProperty = IProperty<IString<'name'>, IString>;
-type IUrlProperty = IProperty<IString<'url'>, IString>;
-type IEmailProperty = IProperty<IString<'email'>, IString>;
-
-type IContactChildren = INameProperty | IUrlProperty | IEmailProperty;
+type IContactChildren = IName | IUrl | IEmail;
 
 export interface IContact extends IBranch {
   type: 'contact';

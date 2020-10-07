@@ -1,12 +1,13 @@
-import { IBranch, IEnum, IProperty, IString } from './basics';
+import { IBranch } from './basics';
+import { IDescription } from './leafs';
 
-type IDefaultProperty = IProperty<IString<'default'>, IString>;
-type IDescriptionProperty = IProperty<IString<'description'>, IString>;
-type IEnumProperty = IProperty<IString<'enum'>, IEnum<IString>>;
-
-type IServerVariableChildren = IDefaultProperty | IDescriptionProperty | IEnumProperty;
+type IServerVariableChildren = IDescription;
 
 export interface IServerVariable extends IBranch {
   type: 'variable';
+  properties: {
+    default: string;
+    enum: string[];
+  };
   children: IServerVariableChildren[];
 }

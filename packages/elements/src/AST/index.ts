@@ -1,19 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { IBool, IEnum, INumber, IProperty, IString, NodeType } from './basics';
+import { NodeType } from './basics';
 import { IContact } from './Contact';
 import { ICookieParam } from './CookieParam';
 import { ICookieParams } from './CookieParams';
 import { IHeaderParam } from './HeaderParam';
 import { IHeaderParams } from './HeaderParams';
-import { IAllowEmptyValue } from './leafs/AllowEmptyValue';
-import { IAllowReserved } from './leafs/AllowReserved';
-import { IDeprecated } from './leafs/Deprecated';
-import { IDescription } from './leafs/Description';
-import { IExplode } from './leafs/Explode';
-import { IHttpMethod } from './leafs/HttpMethod';
-import { IName } from './leafs/Name';
-import { IPath } from './leafs/Path';
-import { IRequired } from './leafs/Required';
+import { IAllowEmptyValue , IAllowReserved , IDeprecated , IDescription , IExplode , IHttpMethod , IName , IPath , IRequired } from './leafs';
 import { ILicense } from './License';
 import { IOperation } from './Operation';
 import { IPathParam } from './PathParam';
@@ -41,11 +33,6 @@ export type { IService } from './Service';
 export type { IOperation } from './Operation';
 
 export type IAny =
-  | IString
-  | INumber
-  | IBool
-  | IEnum
-  | IProperty
   | IContact
   | ICookieParam
   | ICookieParams
@@ -82,10 +69,6 @@ export type IAny =
   | IService;
 
 export type toAstNode<T extends NodeType> =
-  T extends IString['type'] ? IString :
-  T extends INumber['type'] ? INumber :
-  T extends IBool['type'] ? IBool :
-  T extends IEnum['type'] ? IEnum :
   T extends IContact['type'] ? IContact :
   T extends ICookieParam['type'] ? ICookieParam :
   T extends ICookieParams['type'] ? ICookieParams :

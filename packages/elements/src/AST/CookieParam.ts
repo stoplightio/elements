@@ -1,10 +1,6 @@
 import { IBranch } from './basics';
 import { ICookieParams } from './CookieParams';
-import { IDeprecated } from './leafs/Deprecated';
-import { IDescription } from './leafs/Description';
-import { IExplode } from './leafs/Explode';
-import { IName } from './leafs/Name';
-import { IRequired } from './leafs/Required';
+import { IDeprecated, IDescription, IExplode, IName, IRequired } from './leafs';
 import { IPropertyStyleCookieParam } from './PropertyStyleCookieParam';
 import { ISchema } from './Schema';
 

@@ -1,9 +1,5 @@
 import { IBranch } from './basics';
-import { IDeprecated } from './leafs/Deprecated';
-import { IDescription } from './leafs/Description';
-import { IExplode } from './leafs/Explode';
-import { IName } from './leafs/Name';
-import { IRequired } from './leafs/Required';
+import { IDeprecated, IDescription, IExplode, IName, IRequired } from './leafs';
 import { IPathParams } from './PathParams';
 import { IPropertyStylePathParam } from './PropertyStylePathParam';
 import { ISchema } from './Schema';

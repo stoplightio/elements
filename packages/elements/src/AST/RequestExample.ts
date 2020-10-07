@@ -1,11 +1,7 @@
 import { IBranch } from './basics';
-import { IDescription } from './leafs/Description';
-import { IExplode } from './leafs/Explode';
-import { ISummary } from './leafs/Summary';
-import { IUrl } from './leafs/Url';
-import { IPropertyKey } from './PropertyKey';
+import { IDescription, IExample, IExplode, IKey, ISummary, IUrl } from './leafs';
 
-type IRequestExampleChildren = IPropertyKey | ISummary | IDescription | IExplode | IUrl;
+type IRequestExampleChildren = IKey | ISummary | IDescription | IExplode | IExample | IUrl;
 
 export interface IRequestExample extends IBranch {
   type: 'requestExample';

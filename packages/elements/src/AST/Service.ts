@@ -1,15 +1,11 @@
-import { IBranch, IProperty, IString } from './basics';
+import { IBranch } from './basics';
 import { IContact } from './Contact';
+import { IName, IVersion } from './leafs';
 import { ILicense } from './License';
 import { IServer } from './Server';
+import { ITermsOfService } from './TermsOfService';
 
-type INameProperty = IProperty<IString<'name'>, IString>;
-
-type IVersionProperty = IProperty<IString<'version'>, IString>;
-
-type ITermsOfServiceProperty = IProperty<IString<'termsOfService'>, IString>;
-
-type IServiceChildren = INameProperty | IVersionProperty | IServer | IContact | ILicense | ITermsOfServiceProperty;
+type IServiceChildren = IName | IVersion | IServer | IContact | ILicense | ITermsOfService;
 
 export interface IService extends IBranch {
   type: 'service';

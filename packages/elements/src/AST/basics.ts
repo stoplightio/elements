@@ -38,11 +38,15 @@ const nodeTypes = [
   'allowEmptyValue',
   'allowReserved',
   'httpMethod',
+  'httpStatus',
   'path',
   'url',
-  'propertyKey',
+  'key',
   'summary',
-  'propertyExample',
+  'email',
+  'example',
+  'version',
+  'termsOfService',
 ] as const;
 
 export type NodeTypes = typeof nodeTypes;
@@ -64,31 +68,3 @@ export interface ILeaf extends IMagicNode {
 }
 
 export interface IBranch extends ILeaf, IParent {}
-
-// Basic Leaf types
-
-export interface IString<S extends string = string> extends ILeaf {
-  type: 'string';
-  value: S;
-}
-
-export interface INumber<N extends number = number> extends ILeaf {
-  type: 'number';
-  value: N;
-}
-
-export interface IBool<B extends boolean = boolean> extends ILeaf {
-  type: 'boolean';
-  value: B;
-}
-
-export interface IEnum<B extends IMagicNode = IMagicNode> extends ILeaf {
-  type: 'enum';
-  value: B[];
-}
-
-export interface IProperty<K extends IMagicNode = IMagicNode, T extends IMagicNode = IMagicNode> extends ILeaf {
-  type: 'property';
-  key?: K;
-  value?: T;
-}
