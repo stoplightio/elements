@@ -18,10 +18,7 @@ describe('toc', () => {
     it('ignores docs as directory', () => {
       const toc = { items: [] };
 
-      appendArticlesToToC(
-        toc,
-        'docs',
-      )([
+      appendArticlesToToC(toc)([
         {
           tags: [],
           type: NodeType.Article,
@@ -59,10 +56,7 @@ describe('toc', () => {
     it('does the same when there is no docs', () => {
       const toc = { items: [] };
 
-      appendArticlesToToC(
-        toc,
-        'docs',
-      )([
+      appendArticlesToToC(toc)([
         {
           tags: [],
           type: NodeType.Article,
@@ -451,7 +445,7 @@ describe('toc', () => {
         },
       ];
 
-      expect(sortArticlesByTypeAndPath('docs')(articles)).toEqual([
+      expect(sortArticlesByTypeAndPath(articles)).toEqual([
         {
           name: 'c',
           uri: '/c',
@@ -473,6 +467,118 @@ describe('toc', () => {
         {
           name: 'b',
           uri: '/hello/b',
+          type: NodeType.Article,
+          tags: [],
+        },
+      ]);
+    });
+
+    it('moves articles from root and docs directories to the top', () => {
+      const articles = [
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'aa',
+          uri: '/hello/a/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'a',
+          uri: '/hello/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'README',
+          uri: '/README',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'b',
+          uri: '/docs/b',
+        },
+      ];
+
+      expect(sortArticlesByTypeAndPath(articles)).toEqual([
+        {
+          name: 'README',
+          uri: '/README',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'b',
+          uri: '/docs/b',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'a',
+          uri: '/hello/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'aa',
+          uri: '/hello/a/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+      ]);
+    });
+
+    it('sorts articles with uris without leading slash', () => {
+      const articles = [
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'aa',
+          uri: 'hello/a/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'a',
+          uri: 'hello/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'README',
+          uri: 'README',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'b',
+          uri: 'docs/b',
+        },
+      ];
+
+      expect(sortArticlesByTypeAndPath(articles)).toEqual([
+        {
+          name: 'README',
+          uri: 'README',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'b',
+          uri: 'docs/b',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'a',
+          uri: 'hello/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'aa',
+          uri: 'hello/a/a',
           type: NodeType.Article,
           tags: [],
         },
