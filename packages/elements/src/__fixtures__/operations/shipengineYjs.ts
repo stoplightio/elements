@@ -26,7 +26,7 @@ const makeOperation: () => Yify<IOperation> = () =>
         type: 'server' as const,
         children: [
           {
-            type: 'propertyUrl' as const,
+            type: 'url' as const,
             value: 'https://api.shipengine.com',
           },
         ],
@@ -49,7 +49,7 @@ const makeOperation: () => Yify<IOperation> = () =>
                     value: 'How many todos to limit?',
                   },
                   {
-                    type: 'propertyDeprecated',
+                    type: 'deprecated',
                     value: true,
                   },
                   {
@@ -70,7 +70,7 @@ const makeOperation: () => Yify<IOperation> = () =>
                     value: 'How many string todos to limit?',
                   },
                   {
-                    type: 'propertyDeprecated',
+                    type: 'deprecated',
                     value: true,
                   },
                   {

@@ -1,10 +1,10 @@
 import { IBranch } from './basics';
 import { ICookieParams } from './CookieParams';
+import { IDeprecated } from './leafs/Deprecated';
 import { IDescription } from './leafs/Description';
+import { IExplode } from './leafs/Explode';
 import { IName } from './leafs/Name';
 import { IRequired } from './leafs/Required';
-import { IPropertyDeprecated } from './PropertyDeprecated';
-import { IPropertyExplode } from './PropertyExplode';
 import { IPropertyStyleCookieParam } from './PropertyStyleCookieParam';
 import { ISchema } from './Schema';
 
@@ -12,9 +12,9 @@ type ICookieParamChildren =
   | IName
   | IPropertyStyleCookieParam
   | IDescription
-  | IPropertyExplode
+  | IExplode
   | IRequired
-  | IPropertyDeprecated
+  | IDeprecated
   | ISchema;
 //| IExample
 //| IEncoding;

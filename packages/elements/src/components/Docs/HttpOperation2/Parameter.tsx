@@ -112,7 +112,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, clas
       <ParameterDescription data={grouped.description?.[0]} />
 
       <div className="flex flex-wrap">
-        <ParameterDeprecated data={grouped.propertyDeprecated?.[0]} />
+        <ParameterDeprecated data={grouped.deprecated?.[0]} />
 
         {/* <NameValidations validations={booleanValidations} /> */}
 

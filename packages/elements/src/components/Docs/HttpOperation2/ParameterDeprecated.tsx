@@ -1,11 +1,11 @@
 import { Tag } from '@stoplight/ui-kit';
 import * as React from 'react';
 
-import { IPropertyDeprecated } from '../../../AST/PropertyDeprecated';
+import { IDeprecated } from '../../../AST/leafs/Deprecated';
 import { useSelection } from './utils';
 
 export const ParameterDeprecated: React.FunctionComponent<{
-  data?: IPropertyDeprecated;
+  data?: IDeprecated;
 }> = ({ data }) => {
   const selection = useSelection(data);
   if (!data || !data.value) return null;

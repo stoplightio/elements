@@ -1,10 +1,10 @@
 import { IBranch } from './basics';
 import { IHeaderParams } from './HeaderParams';
+import { IDeprecated } from './leafs/Deprecated';
 import { IDescription } from './leafs/Description';
+import { IExplode } from './leafs/Explode';
 import { IName } from './leafs/Name';
 import { IRequired } from './leafs/Required';
-import { IPropertyDeprecated } from './PropertyDeprecated';
-import { IPropertyExplode } from './PropertyExplode';
 import { IPropertyStyleHeaderParam } from './PropertyStyleHeaderParam';
 import { ISchema } from './Schema';
 
@@ -12,9 +12,9 @@ type IHeaderParamChildren =
   | IName
   | IPropertyStyleHeaderParam
   | IDescription
-  | IPropertyExplode
+  | IExplode
   | IRequired
-  | IPropertyDeprecated
+  | IDeprecated
   | ISchema;
 //| IExample
 //| IEncoding;

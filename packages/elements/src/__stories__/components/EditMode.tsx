@@ -138,7 +138,7 @@ storiesOf('Internal/Stoplight AST', module)
           oset('value', boolean('required', o.get('value')));
           return;
         }
-        case 'propertyDeprecated': {
+        case 'deprecated': {
           oset('value', boolean('deprecated', o.get('value')));
           return;
         }

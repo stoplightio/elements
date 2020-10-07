@@ -141,7 +141,7 @@ httpOperation.children.push(request);
       {
         parent: param,
         id: id(),
-        type: 'propertyDeprecated',
+        type: 'deprecated',
         value: true,
       },
       {
@@ -180,7 +180,7 @@ httpOperation.children.push(request);
       {
         parent: param,
         id: id(),
-        type: 'propertyDeprecated',
+        type: 'deprecated',
         value: true,
       },
       {

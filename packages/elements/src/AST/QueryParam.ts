@@ -1,11 +1,11 @@
 import { IBranch } from './basics';
+import { IAllowEmptyValue } from './leafs/AllowEmptyValue';
+import { IAllowReserved } from './leafs/AllowReserved';
+import { IDeprecated } from './leafs/Deprecated';
 import { IDescription } from './leafs/Description';
+import { IExplode } from './leafs/Explode';
 import { IName } from './leafs/Name';
 import { IRequired } from './leafs/Required';
-import { IPropertyAllowEmptyValue } from './PropertyAllowEmptyValue';
-import { IPropertyAllowReserved } from './PropertyAllowReserved';
-import { IPropertyDeprecated } from './PropertyDeprecated';
-import { IPropertyExplode } from './PropertyExplode';
 import { IPropertyStyleQueryParam } from './PropertyStyleQueryParam';
 import { IQueryParams } from './QueryParams';
 import { ISchema } from './Schema';
@@ -14,12 +14,12 @@ type IQueryParamChildren =
   | IName
   | IPropertyStyleQueryParam
   | IDescription
-  | IPropertyExplode
+  | IExplode
   | IRequired
-  | IPropertyDeprecated
+  | IDeprecated
   | ISchema
-  | IPropertyAllowEmptyValue
-  | IPropertyAllowReserved;
+  | IAllowEmptyValue
+  | IAllowReserved;
 //| IExample
 //| IEncoding;
 

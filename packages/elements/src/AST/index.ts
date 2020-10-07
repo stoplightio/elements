@@ -5,7 +5,11 @@ import { ICookieParam } from './CookieParam';
 import { ICookieParams } from './CookieParams';
 import { IHeaderParam } from './HeaderParam';
 import { IHeaderParams } from './HeaderParams';
+import { IAllowEmptyValue } from './leafs/AllowEmptyValue';
+import { IAllowReserved } from './leafs/AllowReserved';
+import { IDeprecated } from './leafs/Deprecated';
 import { IDescription } from './leafs/Description';
+import { IExplode } from './leafs/Explode';
 import { IHttpMethod } from './leafs/HttpMethod';
 import { IName } from './leafs/Name';
 import { IPath } from './leafs/Path';
@@ -14,10 +18,6 @@ import { ILicense } from './License';
 import { IOperation } from './Operation';
 import { IPathParam } from './PathParam';
 import { IPathParams } from './PathParams';
-import { IPropertyAllowEmptyValue } from './PropertyAllowEmptyValue';
-import { IPropertyAllowReserved } from './PropertyAllowReserved';
-import { IPropertyDeprecated } from './PropertyDeprecated';
-import { IPropertyExplode } from './PropertyExplode';
 import { IPropertyStyleCookieParam } from './PropertyStyleCookieParam';
 import { IPropertyStyleHeaderParam } from './PropertyStyleHeaderParam';
 import { IPropertyStylePathParam } from './PropertyStylePathParam';
@@ -55,11 +55,11 @@ export type IAny =
   | IOperation
   | IPathParam
   | IPathParams
-  | IPropertyAllowEmptyValue
-  | IPropertyAllowReserved
-  | IPropertyDeprecated
+  | IAllowEmptyValue
+  | IAllowReserved
+  | IDeprecated
   | IDescription
-  | IPropertyExplode
+  | IExplode
   | IHttpMethod
   | IName
   | IPath
@@ -95,11 +95,11 @@ export type toAstNode<T extends NodeType> =
   T extends IOperation['type'] ? IOperation :
   T extends IPathParam['type'] ? IPathParam :
   T extends IPathParams['type'] ? IPathParams :
-  T extends IPropertyAllowEmptyValue['type'] ? IPropertyAllowEmptyValue :
-  T extends IPropertyAllowReserved['type'] ? IPropertyAllowReserved :
-  T extends IPropertyDeprecated['type'] ? IPropertyDeprecated :
+  T extends IAllowEmptyValue['type'] ? IAllowEmptyValue :
+  T extends IAllowReserved['type'] ? IAllowReserved :
+  T extends IDeprecated['type'] ? IDeprecated :
   T extends IDescription['type'] ? IDescription :
-  T extends IPropertyExplode['type'] ? IPropertyExplode :
+  T extends IExplode['type'] ? IExplode :
   T extends IHttpMethod['type'] ? IHttpMethod :
   T extends IName['type'] ? IName :
   T extends IPath['type'] ? IPath :
