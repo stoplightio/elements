@@ -18,7 +18,10 @@ describe('toc', () => {
     it('ignores docs as directory', () => {
       const toc = { items: [] };
 
-      appendArticlesToToC(toc)([
+      appendArticlesToToC(
+        toc,
+        'docs',
+      )([
         {
           tags: [],
           type: NodeType.Article,
@@ -56,7 +59,10 @@ describe('toc', () => {
     it('does the same when there is no docs', () => {
       const toc = { items: [] };
 
-      appendArticlesToToC(toc)([
+      appendArticlesToToC(
+        toc,
+        'docs',
+      )([
         {
           tags: [],
           type: NodeType.Article,
@@ -445,7 +451,7 @@ describe('toc', () => {
         },
       ];
 
-      expect(sortArticlesByTypeAndPath(articles)).toEqual([
+      expect(sortArticlesByTypeAndPath('docs')(articles)).toEqual([
         {
           name: 'c',
           uri: '/c',
