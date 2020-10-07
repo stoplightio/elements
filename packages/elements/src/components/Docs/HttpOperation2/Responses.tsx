@@ -1,15 +1,12 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IHttpOperationResponse } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { editHandle } from '../../../constants';
-import { MarkdownViewer } from '../../MarkdownViewer';
-import { SchemaViewer } from '../../SchemaViewer';
-import { Parameters } from './Parameters';
+import { IResponse } from '../../../AST/Response';
+import { Response } from './Response';
+import { ResponseTab } from './ResponseTab';
 import { SectionTitle } from './SectionTitle';
-import { getExamplesObject } from './utils';
 
 export const HttpCodeColor = {
   1: 'gray',
@@ -21,55 +18,47 @@ export const HttpCodeColor = {
 
 export interface IResponseProps {
   className?: string;
-  response: IHttpOperationResponse;
+  data: IResponse;
 }
 
 export interface IResponsesProps {
-  responses: IHttpOperationResponse[];
+  data?: IResponse[];
   className?: string;
 }
 
-export const Responses = ({ className, responses }: IResponsesProps) => {
+export const Responses = ({ className, data }: IResponsesProps) => {
   const [activeResponse, setActiveResponse] = React.useState(0);
-  if (!responses || !responses.length) return null;
-
-  const sortedResponses = [...responses].sort();
+  if (!data || !data.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Responses', className)} {...editHandle(responses)}>
+    <div className={cn('HttpOperation__Responses', className)}>
       <SectionTitle title="Responses" />
 
       <div className="flex">
         <div>
-          {sortedResponses.map((response, index) => {
-            if (!response.code) return null;
+          {data.map((response, index) => {
+            const code = getCode(response);
+            if (!code) return null;
 
             const isActive = activeResponse === index;
 
             return (
-              <div
-                key={response.code}
+              <ResponseTab
+                key={code}
+                data={response}
                 className={cn('py-3 pr-12 hover:bg-gray-1 dark-hover:bg-gray-7', {
                   'border-t border-gray-2 dark:border-gray-7': index > 0,
                   'cursor-pointer': !isActive,
                   'bg-gray-1 dark:bg-gray-7': isActive,
                 })}
                 onClick={() => setActiveResponse(index)}
-              >
-                <FontAwesomeIcon
-                  icon={faCircle}
-                  className="ml-4 mr-3"
-                  color={HttpCodeColor[String(response.code)[0]]}
-                />
-
-                {response.code}
-              </div>
+              />
             );
           })}
         </div>
 
         <div className="flex-1 border-l dark:border-gray-6">
-          <Response response={sortedResponses[activeResponse]} />
+          <Response data={data[activeResponse]} />
         </div>
       </div>
     </div>
@@ -77,21 +66,9 @@ export const Responses = ({ className, responses }: IResponsesProps) => {
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-export const Response = ({ className, response }: IResponseProps) => {
-  if (!response || typeof response !== 'object') return null;
-
-  const content = response.contents && response.contents[0];
-
-  const examples = getExamplesObject(content?.examples || []);
-
-  return (
-    <div className={cn('HttpOperation__Response pt-6 pl-8', className)} {...editHandle(response)}>
-      <MarkdownViewer className="ml-1 mb-6" markdown={response.description || '*No description.*'} />
-
-      <Parameters className="mb-6" title="Headers" parameterType="header" parameters={response.headers} />
-
-      {content?.schema && <SchemaViewer schema={content.schema} examples={examples} forceShowTabs />}
-    </div>
-  );
+const getCode = (response: IResponse) => {
+  for (const child of response.children) {
+    if (child.type === 'httpStatus') return child.value;
+  }
+  return;
 };
-Response.displayName = 'HttpOperation.Response';

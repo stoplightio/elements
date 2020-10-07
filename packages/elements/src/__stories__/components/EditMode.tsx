@@ -191,6 +191,42 @@ storiesOf('Internal/Stoplight AST', module)
           for (const child of o.get('children')) {
             addKnobs(child);
           }
+          button('Add Response', () => {
+            const node = Yjsify({
+              type: 'response',
+              children: [
+                {
+                  type: 'httpStatus',
+                  value: '1xx',
+                },
+                {
+                  type: 'description',
+                  value: '',
+                },
+              ],
+            });
+            // @ts-ignore
+            o.get('children').push([node]);
+
+            const id = getId(node);
+            // @ts-ignore
+            IdMapYjs.set(id, node);
+            for (const child of node.get('children')) {
+              // @ts-ignore
+              IdMapYjs.set(getId(child), child);
+            }
+            selections.clear();
+            selections.add(id);
+            channel.emit(RESET);
+            setSelected(id);
+          });
+
+          return;
+        }
+        case 'response': {
+          for (const child of o.get('children')) {
+            addKnobs(child);
+          }
         }
       }
     };

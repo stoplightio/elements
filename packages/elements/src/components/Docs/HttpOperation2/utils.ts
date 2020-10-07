@@ -3,6 +3,7 @@ import { isObject } from 'lodash';
 import * as React from 'react';
 
 import { IMagicNode } from '../../../AST/basics';
+import { IResponseExample } from '../../../AST/ResponseExample';
 import { SelectionContext } from './SelectionContext';
 
 export function getExamplesObject(examples: Array<INodeExample | INodeExternalExample>) {
@@ -14,6 +15,31 @@ export function getExamplesObject(examples: Array<INodeExample | INodeExternalEx
 
     return collection;
   }, {});
+}
+
+export function getExamplesObjectFromAST(examples: Array<IResponseExample>) {
+  const collection = {};
+  for (const item of examples) {
+    let key = '';
+    let value = '';
+    for (const child of item.children) {
+      switch (child.type) {
+        case 'key':
+          key = child.value;
+          break;
+        case 'example':
+          value = child.value;
+          break;
+        case 'url':
+          value = child.value;
+          break;
+      }
+    }
+    if (key && value) {
+      collection[key] = value;
+    }
+  }
+  return collection;
 }
 
 export function getExamplesFromSchema(data: unknown) {

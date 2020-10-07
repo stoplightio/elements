@@ -24,7 +24,7 @@ const numberValidationNames = [
 ] as const;
 
 export interface IParameterProps {
-  data: IParam;
+  data?: IParam;
   context: 'cookieParams' | 'headerParams' | 'pathParams' | 'queryParams';
   className?: string;
 }
