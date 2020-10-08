@@ -10,10 +10,11 @@ import { useParsedData } from './useParsedData';
  * @param type branch node snapshot type
  * @param data branch node snapshot data
  */
-export function useDereferencedData(type: NodeType, data: string) {
+export function useDereferencedData(type: NodeType, data: string | object) {
   const parsedData = useParsedData(type, data);
-
   const [dereferencedData, setDereferencedData] = React.useState(parsedData);
+
+  const key = type === NodeType.HttpOperation ? data['iid'] : parsedData;
 
   React.useEffect(() => {
     // Only dereference HTTP Operations
@@ -30,7 +31,7 @@ export function useDereferencedData(type: NodeType, data: string) {
         console.error(reason);
         setDereferencedData(parsedData);
       });
-  }, [parsedData, type]);
+  }, [parsedData, key, type]);
 
   return dereferencedData;
 }
