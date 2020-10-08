@@ -11,10 +11,7 @@ export function useObserveDeep(o?: Y.Map<any>) {
   const [count, setCount] = React.useState(1);
   React.useEffect(() => {
     const increment = (e: Y.YEvent[], t: Y.Transaction) => {
-      console.log(t.changed);
-      console.log(t.origin);
-      // Ignore self-changes (for now)
-      if (t.origin === o?.doc?.clientID) return;
+      console.log('useObserveDeep');
       setCount(count + 1);
     };
     if (typeof o === 'undefined') return;
