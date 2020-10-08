@@ -164,11 +164,13 @@ export function groupNodesByType(searchResults: NodeData[]) {
 
 export function sortArticlesByTypeAndPath(articles: NodeData[]) {
   return articles.sort((a1, a2) => {
+    const rootDirs = ['/', '.', '/docs', 'docs'];
     const a1DirPath = dirname(a1.uri);
     const a2DirPath = dirname(a2.uri);
 
     // articles without a directory are lifted to the top
-    const dirOrder = a1DirPath === '/' || a2DirPath === '/' ? a1DirPath.localeCompare(a2DirPath) : 0;
+    const dirOrder =
+      rootDirs.includes(a1DirPath) || rootDirs.includes(a2DirPath) ? a1DirPath.localeCompare(a2DirPath) : 0;
 
     return dirOrder === 0 ? a1.uri.localeCompare(a2.uri) : dirOrder;
   });

@@ -472,6 +472,118 @@ describe('toc', () => {
         },
       ]);
     });
+
+    it('moves articles from root and docs directories to the top', () => {
+      const articles = [
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'aa',
+          uri: '/hello/a/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'a',
+          uri: '/hello/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'README',
+          uri: '/README',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'b',
+          uri: '/docs/b',
+        },
+      ];
+
+      expect(sortArticlesByTypeAndPath(articles)).toEqual([
+        {
+          name: 'README',
+          uri: '/README',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'b',
+          uri: '/docs/b',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'a',
+          uri: '/hello/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'aa',
+          uri: '/hello/a/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+      ]);
+    });
+
+    it('sorts articles with uris without leading slash', () => {
+      const articles = [
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'aa',
+          uri: 'hello/a/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'a',
+          uri: 'hello/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'README',
+          uri: 'README',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'b',
+          uri: 'docs/b',
+        },
+      ];
+
+      expect(sortArticlesByTypeAndPath(articles)).toEqual([
+        {
+          name: 'README',
+          uri: 'README',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'b',
+          uri: 'docs/b',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'a',
+          uri: 'hello/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'aa',
+          uri: 'hello/a/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+      ]);
+    });
   });
 
   describe('groupNodesByType()', () => {
