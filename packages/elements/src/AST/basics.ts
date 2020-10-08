@@ -49,6 +49,7 @@ const nodeTypes = [
   'example',
   'version',
   'termsOfService',
+  'responses',
 ] as const;
 
 export type NodeTypes = typeof nodeTypes;

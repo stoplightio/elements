@@ -20,8 +20,6 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
   const groupedNodes = groupNodes(data.children);
 
-  console.log(groupedNodes.response);
-
   return (
     <div className={cn('HttpOperation', className)} {...selection}>
       {!headless && (
@@ -35,7 +33,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
       <Request data={groupedNodes.request?.[0]} />
 
-      <Responses data={groupedNodes.response} />
+      <Responses data={groupedNodes.responses?.[0]} />
     </div>
   );
 });

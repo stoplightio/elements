@@ -148,6 +148,24 @@ const Formite = ({ selected, setSelected }: IFormite) => {
         );
         return;
       }
+      case 'httpStatus': {
+        knobs.push(
+          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+            <label className="bp3-label flex-1">Status Code</label>
+            <InputGroup
+              name="name"
+              placeholder="2xx"
+              autoComplete="off"
+              autoFocus
+              value={o.get('value')}
+              onChange={e => {
+                oset('value', e.currentTarget.value);
+              }}
+            />
+          </div>,
+        );
+        return;
+      }
       case 'required': {
         knobs.push(
           <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
@@ -324,11 +342,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
         }
         return;
       }
-      case 'operation': {
-        for (const child of o.get('children')) {
-          addKnobs(child);
-        }
-
+      case 'responses': {
         knobs.push(
           <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
             <Button
@@ -368,8 +382,17 @@ const Formite = ({ selected, setSelected }: IFormite) => {
               Add Response
             </Button>
           </div>,
+        );
+        return;
+      }
+      case 'operation': {
+        for (const child of o.get('children')) {
+          addKnobs(child);
+        }
+
+        knobs.push(
           <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-            <Button className="w-full" type="submit" intent="primary" large onClick={() => resetOperation()}>
+            <Button className="w-full" type="submit" intent="danger" large onClick={() => resetOperation()}>
               Reset Operation
             </Button>
           </div>,

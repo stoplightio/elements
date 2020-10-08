@@ -1,10 +1,10 @@
 import { IParent } from './basics';
 import { IDeprecated, IDescription, IHttpMethod, IPath } from './leafs';
 import { IRequest } from './Request';
-import { IResponse } from './Response';
+import { IResponses } from './Responses';
 import { IServer } from './Server';
 
-type IOperationChildren = IDescription | IHttpMethod | IPath | IServer | IDeprecated | IRequest | IResponse;
+type IOperationChildren = IDescription | IHttpMethod | IPath | IServer | IDeprecated | IRequest | IResponses;
 
 export interface IOperation extends IParent {
   type: 'operation';

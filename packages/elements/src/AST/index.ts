@@ -16,6 +16,7 @@ import { IRequestExample } from './RequestExample';
 import { IResponse } from './Response';
 import { IResponseBody } from './ResponseBody';
 import { IResponseExample } from './ResponseExample';
+import { IResponses } from './Responses';
 import { ISchema } from './Schema';
 import { IServer } from './Server';
 import { IServerVariable } from './ServerVariable';
@@ -48,6 +49,7 @@ export type IAny =
   | IRequest
   | IRequestBody
   | IRequestExample
+  | IResponses
   | IResponse
   | IResponseBody
   | IResponseExample
@@ -78,6 +80,7 @@ export type toAstNode<T extends NodeType> =
   T extends IRequest['type'] ? IRequest :
   T extends IRequestBody['type'] ? IRequestBody :
   T extends IRequestExample['type'] ? IRequestExample :
+  T extends IResponses['type'] ? IResponses :
   T extends IResponse['type'] ? IResponse :
   T extends IResponseBody['type'] ? IResponseBody :
   T extends IResponseExample['type'] ? IResponseExample :

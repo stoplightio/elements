@@ -153,43 +153,48 @@ const makeOperation: () => Yify<IOperation> = () =>
         ],
       },
       {
-        type: 'response' as const,
+        type: 'responses' as const,
         children: [
           {
-            type: 'httpStatus' as const,
-            value: '200',
+            type: 'response' as const,
+            children: [
+              {
+                type: 'httpStatus' as const,
+                value: '200',
+              },
+              {
+                type: 'description' as const,
+                value:
+                  'Returns the parsed address, as well as a confidence score and a list of all the entities that were recognized in the text.\n',
+              },
+            ],
           },
           {
-            type: 'description' as const,
-            value:
-              'Returns the parsed address, as well as a confidence score and a list of all the entities that were recognized in the text.\n',
-          },
-        ],
-      },
-      {
-        type: 'response' as const,
-        children: [
-          {
-            type: 'httpStatus' as const,
-            value: '400',
-          },
-          {
-            type: 'description' as const,
-            value: 'The request contained errors.',
-          },
-        ],
-      },
-      {
-        type: 'response' as const,
-        children: [
-          {
-            type: 'httpStatus' as const,
-            value: '500',
+            type: 'response' as const,
+            children: [
+              {
+                type: 'httpStatus' as const,
+                value: '400',
+              },
+              {
+                type: 'description' as const,
+                value: 'The request contained errors.',
+              },
+            ],
           },
           {
-            type: 'description' as const,
-            value:
-              "An error occurred on ShipEngine's side.\n\n> This error will automatically be reported to our engineers.\n",
+            type: 'response' as const,
+            children: [
+              {
+                type: 'httpStatus' as const,
+                value: '500',
+              },
+              {
+                type: 'description' as const,
+                value:
+                  "An error occurred on ShipEngine's side.\n\n> This error will automatically be reported to our engineers.\n",
+              },
+            ],
           },
         ],
       },

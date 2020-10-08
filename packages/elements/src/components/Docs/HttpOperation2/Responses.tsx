@@ -1,12 +1,12 @@
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
 import * as React from 'react';
 
 import { IResponse } from '../../../AST/Response';
+import { IResponses } from '../../../AST/Responses';
 import { Response } from './Response';
 import { ResponseTab } from './ResponseTab';
 import { SectionTitle } from './SectionTitle';
+import { useSelection } from './utils';
 
 export const HttpCodeColor = {
   1: 'gray',
@@ -16,27 +16,23 @@ export const HttpCodeColor = {
   5: 'red',
 };
 
-export interface IResponseProps {
-  className?: string;
-  data: IResponse;
-}
-
 export interface IResponsesProps {
-  data?: IResponse[];
+  data?: IResponses;
   className?: string;
 }
 
 export const Responses = ({ className, data }: IResponsesProps) => {
+  const selection = useSelection(data);
   const [activeResponse, setActiveResponse] = React.useState(0);
-  if (!data || !data.length) return null;
+  if (!data || !data.children.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Responses', className)}>
+    <div className={cn('HttpOperation__Responses', className)} {...selection}>
       <SectionTitle title="Responses" />
 
       <div className="flex">
         <div>
-          {data.map((response, index) => {
+          {data.children.map((response, index) => {
             const code = getCode(response);
             if (!code) return null;
 
@@ -58,7 +54,7 @@ export const Responses = ({ className, data }: IResponsesProps) => {
         </div>
 
         <div className="flex-1 border-l dark:border-gray-6">
-          <Response data={data[activeResponse]} />
+          <Response data={data.children[activeResponse]} />
         </div>
       </div>
     </div>
