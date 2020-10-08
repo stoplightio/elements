@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.165](https://github.com/stoplightio/elements/compare/v6.0.0-beta.164...v6.0.0-beta.165) (2020-10-08)
+
+
+### Bug Fixes
+
+* overriding existing svg styling rule ([#616](https://github.com/stoplightio/elements/issues/616)) ([d0c575c](https://github.com/stoplightio/elements/commit/d0c575c9c93fffc4a4b6c0d8b84e12e1a6438e27))
+
+
+
+
+
 # [6.0.0-beta.164](https://github.com/stoplightio/elements/compare/v6.0.0-beta.163...v6.0.0-beta.164) (2020-10-08)
 
 
