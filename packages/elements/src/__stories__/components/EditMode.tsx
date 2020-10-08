@@ -1,6 +1,5 @@
 import { Button, Checkbox, CodeEditor, FormGroup, HTMLSelect, InputGroup } from '@stoplight/ui-kit';
 import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
-import addons from '@storybook/addons';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
@@ -30,10 +29,6 @@ type IFormite = {
 const Formite = ({ selected, setSelected }: IFormite) => {
   const knobs = [];
 
-  useYDoc(ydoc);
-  const httpOperationYjs = ydoc.doc.getMap('root').get('operation');
-  useObserveDeep(httpOperationYjs);
-
   const IdMapYjs = getIdMap();
 
   const addKnobs = (o: Yify<IAny>) => {
@@ -52,27 +47,28 @@ const Formite = ({ selected, setSelected }: IFormite) => {
     switch (o.get('type')) {
       case 'name': {
         knobs.push(
-          <FormGroup label="name">
+          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+            <label className="bp3-label">Name</label>
             <InputGroup
               name="name"
-              className="w-full pb-4"
+              className="flex-1"
               placeholder="Name"
               autoComplete="off"
               autoFocus
-              large
               value={o.get('value')}
               onChange={e => {
                 oset('value', e.currentTarget.value);
               }}
             />
-          </FormGroup>,
+          </div>,
         );
         return;
       }
       case 'description': {
         knobs.push(
-          <FormGroup label="Description">
-            <div className="w-full pb-4">
+          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+            <label className="bp3-label">Description</label>
+            <div className="w-full">
               <CodeEditor
                 value={o.get('value')}
                 onChange={value => {
@@ -81,38 +77,39 @@ const Formite = ({ selected, setSelected }: IFormite) => {
                 }}
                 placeholder={``}
                 language="markdown"
-                className="border-solid border-2"
+                className="border border-gray-2 dark:border-gray-6"
                 style={{ minHeight: 140 }}
               />
             </div>
-          </FormGroup>,
+          </div>,
         );
         return;
       }
       case 'path': {
         knobs.push(
-          <FormGroup label="Path">
+          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+            <label className="bp3-label">Path</label>
             <InputGroup
               name="path"
-              className="w-full pb-4"
+              className="w-full"
               placeholder="Path"
               autoComplete="off"
               autoFocus
-              large
               value={o.get('value')}
               onChange={e => {
                 console.log(e.currentTarget.value);
                 oset('value', e.currentTarget.value);
               }}
             />
-          </FormGroup>,
+          </div>,
         );
         return;
       }
       case 'httpMethod': {
         const items = ['get', 'put', 'post', 'delete', 'etc'];
         knobs.push(
-          <FormGroup label="Method">
+          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+            <label className="bp3-label flex-1">Method</label>
             <HTMLSelect
               name="method"
               defaultValue={'get'}
@@ -122,7 +119,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
                 oset('value', e.currentTarget.value);
               }}
             />
-          </FormGroup>,
+          </div>,
         );
         return;
       }
@@ -136,7 +133,8 @@ const Formite = ({ selected, setSelected }: IFormite) => {
           queryParams: ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'],
         };
         knobs.push(
-          <FormGroup label="Style">
+          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+            <label className="bp3-label flex-1">Style</label>
             <HTMLSelect
               name="style"
               defaultValue={'get'}
@@ -146,13 +144,14 @@ const Formite = ({ selected, setSelected }: IFormite) => {
                 oset('value', e.currentTarget.value);
               }}
             />
-          </FormGroup>,
+          </div>,
         );
         return;
       }
       case 'required': {
         knobs.push(
-          <FormGroup label="Required">
+          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+            <label className="bp3-label flex-1">Required</label>
             <Checkbox
               name="required"
               defaultValue={'get'}
@@ -162,13 +161,14 @@ const Formite = ({ selected, setSelected }: IFormite) => {
                 oset('value', e.currentTarget.checked);
               }}
             />
-          </FormGroup>,
+          </div>,
         );
         return;
       }
       case 'deprecated': {
         knobs.push(
-          <FormGroup label="Deprecated">
+          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+            <label className="bp3-label flex-1">Deprecated</label>
             <Checkbox
               name="deprecated"
               defaultValue={'get'}
@@ -178,7 +178,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
                 oset('value', e.currentTarget.checked);
               }}
             />
-          </FormGroup>,
+          </div>,
         );
         return;
       }
@@ -193,7 +193,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
           queryParams: 'Query',
         }[o.get('type')];
         knobs.push(
-          <FormGroup label={`Add ${subtype} Parameter`}>
+          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
             <Button
               className="w-full"
               type="submit"
@@ -238,7 +238,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
             >
               Add {subtype} Parameter
             </Button>
-          </FormGroup>,
+          </div>,
         );
         return;
       }
@@ -248,7 +248,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
         }
 
         knobs.push(
-          <FormGroup label="Delete Parameter">
+          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
             <Button
               className="w-full"
               type="submit"
@@ -265,7 +265,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
             >
               Delete Parameter
             </Button>
-          </FormGroup>,
+          </div>,
         );
         return;
       }
@@ -275,7 +275,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
         }
 
         knobs.push(
-          <FormGroup label="Add Body">
+          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
             <Button
               className="w-full"
               type="submit"
@@ -314,8 +314,14 @@ const Formite = ({ selected, setSelected }: IFormite) => {
             >
               Add Body
             </Button>
-          </FormGroup>,
+          </div>,
         );
+        return;
+      }
+      case 'response': {
+        for (const child of o.get('children')) {
+          addKnobs(child);
+        }
         return;
       }
       case 'operation': {
@@ -324,7 +330,7 @@ const Formite = ({ selected, setSelected }: IFormite) => {
         }
 
         knobs.push(
-          <FormGroup label="Add Response">
+          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
             <Button
               className="w-full"
               type="submit"
@@ -361,19 +367,14 @@ const Formite = ({ selected, setSelected }: IFormite) => {
             >
               Add Response
             </Button>
-          </FormGroup>,
-          <FormGroup label="Reset">
+          </div>,
+          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
             <Button className="w-full" type="submit" intent="primary" large onClick={() => resetOperation()}>
               Reset Operation
             </Button>
-          </FormGroup>,
+          </div>,
         );
         return;
-      }
-      case 'response': {
-        for (const child of o.get('children')) {
-          addKnobs(child);
-        }
       }
     }
   };
@@ -388,13 +389,11 @@ const Formite = ({ selected, setSelected }: IFormite) => {
         minWidth: 400,
         maxWidth: 400,
         marginLeft: '2em',
-        background: 'white',
-        borderLeft: '1px solid rgba(0,0,0,.1)',
         boxShadow: '-5px 0 5px rgba(0,0,0,.1)',
-        padding: '1.5em',
       }}
+      className="p-6 pt-2 border border-gray-2 dark:border-gray-6"
     >
-      Welcome back Formtron.
+      <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Formtron II</h1>
       {knobs}
     </aside>
   );
@@ -403,7 +402,6 @@ const Formite = ({ selected, setSelected }: IFormite) => {
 storiesOf('Internal/Stoplight AST', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
   .add('Editing', () => {
-    const channel = addons.getChannel();
     const dark = darkMode();
     localStorage.darkMode = Number(dark);
 
@@ -417,9 +415,7 @@ storiesOf('Internal/Stoplight AST', module)
 
     useYDoc(ydoc);
     const httpOperationYjs = ydoc.doc.getMap('root').get('operation');
-    useObserveDeep(httpOperationYjs);
-
-    const IdMapYjs = getIdMap();
+    useObserveDeep(ydoc.doc.getMap('root'));
 
     const spy: React.MouseEventHandler = e => {
       let el = e.target as HTMLElement | null;
