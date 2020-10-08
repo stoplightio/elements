@@ -56,7 +56,7 @@ const TocStoryContainer: React.FC = () => {
       <div style={styles}>
         <TocContainer
           className="h-full"
-          workspaceUrl={text('workspaceUrl', 'https://elements.stoplight.io')}
+          workspaceSlug={text('workspaceSlug', 'elements')}
           projectSlug={text('projectSlug', 'studio-demo')}
           rowComponent={({ item, ...rest }) => {
             return (

@@ -3,14 +3,15 @@ import * as React from 'react';
 import { Client, Provider, useQuery } from 'urql';
 
 import { TableOfContentsSkeleton } from '../components/TableOfContents/Skeleton';
+import { defaultPlatformUrl } from '../constants';
 import { useTocContents } from '../hooks/useTocContents';
 import { useUrqlClient } from '../hooks/useUrqlClient';
 import { ITableOfContentsTree, TableOfContentsLinkWithId } from '../types';
-import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 
 export type ITableOfContents<E> = {
-  workspaceUrl: string;
+  workspaceSlug: string;
   projectSlug: string;
+  platformUrl?: string;
   branchSlug?: string;
   nodeUri?: string;
   onData?: (tocTree: ITableOfContentsTree) => void;
@@ -31,7 +32,8 @@ query ProjectTableOfContents(
 `;
 
 function TableOfContentsContainer<E>({
-  workspaceUrl,
+  workspaceSlug,
+  platformUrl,
   projectSlug,
   branchSlug,
   nodeUri,
@@ -39,8 +41,6 @@ function TableOfContentsContainer<E>({
   className,
   ...extra
 }: ITableOfContents<E>) {
-  const workspaceSlug = getWorkspaceSlug(workspaceUrl);
-
   const [{ data, fetching }] = useQuery({
     query: tocQuery,
     variables: {
@@ -78,11 +78,11 @@ type TableOfContentsContainerProps<E> = ITableOfContents<E> & {
   urqlClient?: Client;
 };
 
-export function TableOfContents<E>({ workspaceUrl, urqlClient, ...rest }: TableOfContentsContainerProps<E>) {
-  const client = useUrqlClient(`${workspaceUrl}/graphql`, { urqlClient });
+export function TableOfContents<E>({ platformUrl, urqlClient, ...rest }: TableOfContentsContainerProps<E>) {
+  const client = useUrqlClient(`${platformUrl ?? defaultPlatformUrl}/graphql`, { urqlClient });
   return (
     <Provider value={client}>
-      <TableOfContentsContainer workspaceUrl={workspaceUrl} {...rest} />
+      <TableOfContentsContainer platformUrl={platformUrl} {...rest} />
     </Provider>
   );
 }

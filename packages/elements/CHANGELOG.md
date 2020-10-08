@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.165](https://github.com/stoplightio/elements/compare/v6.0.0-beta.164...v6.0.0-beta.165) (2020-10-08)
+
+
+### Bug Fixes
+
+* overriding existing svg styling rule ([#616](https://github.com/stoplightio/elements/issues/616)) ([d0c575c](https://github.com/stoplightio/elements/commit/d0c575c9c93fffc4a4b6c0d8b84e12e1a6438e27))
+
+
+
+
+
+# [6.0.0-beta.164](https://github.com/stoplightio/elements/compare/v6.0.0-beta.163...v6.0.0-beta.164) (2020-10-08)
+
+
+### Features
+
+* split workspace(Url) prop into platformUrl+workspaceSlug ([#615](https://github.com/stoplightio/elements/issues/615)) ([32d9ce9](https://github.com/stoplightio/elements/commit/32d9ce9b23460b5b2954355b05ff7e6765605692))
+
+
+### BREAKING CHANGES
+
+* change in props on the public API
+
+* docs: update README.md
+
+* docs: update StoplightProject.md
+
+* fix: update elements-web-components
+
+* chore: update elements-web-components stories
+
+* feat: rename props of StoplightProject
+* two breaking renames
+- project -> projectSlug
+- branch -> branchSlug
+
+* chore: address PR feedback
+
+
+
+
+
+# [6.0.0-beta.163](https://github.com/stoplightio/elements/compare/v6.0.0-beta.162...v6.0.0-beta.163) (2020-10-08)
+
+**Note:** Version bump only for package @stoplight/elements
+
+
+
+
+
 # [6.0.0-beta.162](https://github.com/stoplightio/elements/compare/v6.0.0-beta.161...v6.0.0-beta.162) (2020-10-07)
 
 **Note:** Version bump only for package @stoplight/elements
