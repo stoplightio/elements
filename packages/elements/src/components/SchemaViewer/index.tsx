@@ -105,7 +105,7 @@ const SchemaTitle = ({ title, errors }: { title?: string; errors?: string[] }) =
   }
 
   return (
-    <div className={cn('flex items-center p-2')} style={{ height: 30 }}>
+    <div className={cn('MV_block_header flex items-center p-2')} style={{ height: 30 }}>
       {title && (
         <div className="flex items-center flex-1">
           <FontAwesomeIcon icon={NodeTypeIconDefs[NodeType.Model]} color={NodeTypeColors[NodeType.Model]} />
