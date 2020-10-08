@@ -25,6 +25,7 @@ const selections = new Set<string>();
 type IFormite = {
   selected?: string;
   setSelected: (id: string) => void;
+  focus?: string;
 };
 
 const Formite = ({ selected, setSelected, focus }: IFormite) => {
@@ -422,13 +423,13 @@ const Formite = ({ selected, setSelected, focus }: IFormite) => {
   return (
     <aside
       style={{
-        minHeight: '100vh',
-        minWidth: 400,
-        maxWidth: 400,
-        marginLeft: '2em',
+        height: '100vh',
+        width: 400,
         boxShadow: '-5px 0 5px rgba(0,0,0,.1)',
+        right: 0,
+        top: 0,
       }}
-      className="p-6 pt-2 border border-gray-2 dark:border-gray-6"
+      className="p-6 pt-2 border fixed border-gray-2 dark:border-gray-6 overflow-y-auto"
     >
       <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Formtron II</h1>
       {knobs}
@@ -500,10 +501,10 @@ storiesOf('Internal/Stoplight AST', module)
 
     const transformed = DeYjsify<IOperation>(httpOperationYjs);
     const el = (
-      <div className={cn('p-10 flex', { 'bp3-dark bg-gray-8': dark })}>
+      <div className={cn('p-10 flex overflow-y-auto ', { 'bp3-dark bg-gray-8': dark })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
           <SelectionContext.Provider value={selections}>
-            <div onClick={spy}>
+            <div onClick={spy} style={{ marginRight: 400 }}>
               <HttpOperation data={transformed} />
             </div>
             <Formite selected={selected} setSelected={setSelected} focus={focus} />
