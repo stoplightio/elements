@@ -13,6 +13,7 @@ import { Provider } from '../../containers/Provider';
 import { useObserveDeep } from '../../hooks/y/useObserveDeep';
 import { useYDoc } from '../../hooks/y/useYDoc';
 import { DeYjsify, getId, getParent, Yify, Yjsify } from '../../YAST/YDoc';
+import { YQuill } from './YQuill';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
 
@@ -432,6 +433,7 @@ const Formite = ({ selected, setSelected, focus }: IFormite) => {
       className="p-6 pt-2 border fixed border-gray-2 dark:border-gray-6 overflow-y-auto"
     >
       <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Formtron II</h1>
+      <YQuill type={ydoc.doc.getText('quill')} />
       {knobs}
     </aside>
   );
