@@ -25,23 +25,22 @@ export interface IResponseTabProps {
 }
 
 export const ResponseTab = ({ className, data, onClick }: IResponseTabProps) => {
-  const selection = useSelection(data);
-  if (!data) return null;
-
-  const code = getCode(data);
-  if (!code) return null;
+  const code = getHttpStatus(data);
+  const selection = useSelection(code);
+  if (!data || !code || !code.value) return null;
 
   return (
-    <div key={code} className={className} onClick={onClick} {...selection}>
-      <FontAwesomeIcon icon={faCircle} className="ml-4 mr-3" color={HttpCodeColor[String(code)[0]]} />
-      {code}
+    <div className={className} onClick={onClick} {...selection}>
+      <FontAwesomeIcon icon={faCircle} className="ml-4 mr-3" color={HttpCodeColor[String(code.value)[0]]} />
+      {code.value}
     </div>
   );
 };
 
-const getCode = (response: IResponse) => {
+const getHttpStatus = (response?: IResponse) => {
+  if (!response) return;
   for (const child of response.children) {
-    if (child.type === 'httpStatus') return child.value;
+    if (child.type === 'httpStatus') return child;
   }
   return;
 };

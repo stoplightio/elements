@@ -6,6 +6,7 @@ import * as React from 'react';
 
 import { getIdMap, resetOperation, ydoc } from '../../__fixtures__/operations/shipengineYjs';
 import { IAny, IOperation } from '../../AST';
+import { leafNodeTypes } from '../../AST/leafs';
 import { HttpOperation } from '../../components/Docs/HttpOperation2';
 import { SelectionContext } from '../../components/Docs/HttpOperation2/SelectionContext';
 import { Provider } from '../../containers/Provider';
@@ -26,7 +27,7 @@ type IFormite = {
   setSelected: (id: string) => void;
 };
 
-const Formite = ({ selected, setSelected }: IFormite) => {
+const Formite = ({ selected, setSelected, focus }: IFormite) => {
   const knobs = [];
 
   const IdMapYjs = getIdMap();
@@ -54,11 +55,12 @@ const Formite = ({ selected, setSelected }: IFormite) => {
               className="flex-1"
               placeholder="Name"
               autoComplete="off"
-              autoFocus
+              autoFocus={getId(o) === focus}
               value={o.get('value')}
               onChange={e => {
                 oset('value', e.currentTarget.value);
               }}
+              data-controller-for={getId(o)}
             />
           </div>,
         );
@@ -76,9 +78,11 @@ const Formite = ({ selected, setSelected }: IFormite) => {
                   oset('value', value);
                 }}
                 placeholder={``}
+                autoFocus={getId(o) === focus}
                 language="markdown"
                 className="border border-gray-2 dark:border-gray-6"
                 style={{ minHeight: 140 }}
+                data-controller-for={getId(o)}
               />
             </div>
           </div>,
@@ -94,12 +98,13 @@ const Formite = ({ selected, setSelected }: IFormite) => {
               className="w-full"
               placeholder="Path"
               autoComplete="off"
-              autoFocus
+              autoFocus={getId(o) === focus}
               value={o.get('value')}
               onChange={e => {
                 console.log(e.currentTarget.value);
                 oset('value', e.currentTarget.value);
               }}
+              data-controller-for={getId(o)}
             />
           </div>,
         );
@@ -115,9 +120,11 @@ const Formite = ({ selected, setSelected }: IFormite) => {
               defaultValue={'get'}
               value={o.get('value')}
               options={items}
+              autoFocus={getId(o) === focus}
               onChange={async e => {
                 oset('value', e.currentTarget.value);
               }}
+              data-controller-for={getId(o)}
             />
           </div>,
         );
@@ -139,10 +146,12 @@ const Formite = ({ selected, setSelected }: IFormite) => {
               name="style"
               defaultValue={'get'}
               value={o.get('value')}
+              autoFocus={getId(o) === focus}
               options={choices[subtype]}
               onChange={async e => {
                 oset('value', e.currentTarget.value);
               }}
+              data-controller-for={getId(o)}
             />
           </div>,
         );
@@ -156,11 +165,12 @@ const Formite = ({ selected, setSelected }: IFormite) => {
               name="name"
               placeholder="2xx"
               autoComplete="off"
-              autoFocus
+              autoFocus={getId(o) === focus}
               value={o.get('value')}
               onChange={e => {
                 oset('value', e.currentTarget.value);
               }}
+              data-controller-for={getId(o)}
             />
           </div>,
         );
@@ -175,9 +185,11 @@ const Formite = ({ selected, setSelected }: IFormite) => {
               defaultValue={'get'}
               checked={o.get('value')}
               label="Required"
+              autoFocus={getId(o) === focus}
               onChange={async e => {
                 oset('value', e.currentTarget.checked);
               }}
+              data-controller-for={getId(o)}
             />
           </div>,
         );
@@ -192,9 +204,11 @@ const Formite = ({ selected, setSelected }: IFormite) => {
               defaultValue={'get'}
               checked={o.get('value')}
               label="Deprecated"
+              autoFocus={getId(o) === focus}
               onChange={async e => {
                 oset('value', e.currentTarget.checked);
               }}
+              data-controller-for={getId(o)}
             />
           </div>,
         );
@@ -436,9 +450,13 @@ storiesOf('Internal/Stoplight AST', module)
       _setSelected(value);
     };
 
+    const [focus, setFocus] = React.useState<string>(selected);
+
     useYDoc(ydoc);
     const httpOperationYjs = ydoc.doc.getMap('root').get('operation');
     useObserveDeep(ydoc.doc.getMap('root'));
+
+    const IdMapYjs = getIdMap();
 
     const spy: React.MouseEventHandler = e => {
       let el = e.target as HTMLElement | null;
@@ -451,8 +469,27 @@ storiesOf('Internal/Stoplight AST', module)
       while (el) {
         console.log(el);
         if (el.dataset.id) {
-          selections.add(el.dataset.id);
-          setSelected(el.dataset.id);
+          let node = IdMapYjs.get(el.dataset.id);
+          let focus = node;
+          if (leafNodeTypes.includes(node.get('type'))) {
+            node = getParent(node);
+          }
+          selections.add(getId(node));
+          setSelected(getId(node));
+          setFocus(getId(focus));
+          // Best effort to set focus.
+          setTimeout(() => {
+            const el = document.querySelector(`[data-controller-for="${getId(focus)}"]`);
+            if (el === null) return;
+
+            (el as HTMLElement).focus();
+            if (document.activeElement === el) return;
+
+            const input = el.querySelector('textarea,input');
+            if (!input) return;
+
+            (input as HTMLElement).focus();
+          }, 0);
           return;
         }
         el = el.parentElement;
@@ -469,7 +506,7 @@ storiesOf('Internal/Stoplight AST', module)
             <div onClick={spy}>
               <HttpOperation data={transformed} />
             </div>
-            <Formite selected={selected} setSelected={setSelected} />
+            <Formite selected={selected} setSelected={setSelected} focus={focus} />
           </SelectionContext.Provider>
         </Provider>
       </div>
