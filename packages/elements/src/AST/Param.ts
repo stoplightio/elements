@@ -16,6 +16,21 @@ type IParamChildren =
 //| IExample
 //| IEncoding;
 
+// Just thinking about whether we can make primitive properties non-children.
+enum EnumParamProps {
+  name = 0,
+  style,
+  description,
+  explode,
+  required,
+  deprecated,
+  allowEmptyValue,
+  allowReserved,
+  schema,
+  example,
+  encoding,
+}
+
 export interface IParam extends IBranch {
   type: 'param';
   children: IParamChildren[];

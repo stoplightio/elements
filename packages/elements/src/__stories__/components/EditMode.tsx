@@ -73,7 +73,7 @@ const Formite = ({ selected, setSelected, focus }: IFormite) => {
           <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
             <label className="bp3-label">Description</label>
             <div className="w-full">
-              <YQuill type={o.get('value')} />
+              <YQuill type={o.get('value')} awareness={ydoc.wsProvider.awareness} />
               {/* <CodeEditor
                 value={o.get('value')}
                 onChange={value => {
