@@ -1,17 +1,20 @@
 import { Tag } from '@stoplight/ui-kit';
+import cn from 'classnames';
 import * as React from 'react';
 
 import { IDeprecated } from '../../../AST/leafs/Deprecated';
-import { useSelection } from './utils';
+import { useClasses } from './useClasses';
+import { useClick } from './useClick';
 
 export const ParameterDeprecated: React.FunctionComponent<{
   data?: IDeprecated;
 }> = ({ data }) => {
-  const selection = useSelection(data);
+  const classes = useClasses(data);
+  const notify = useClick(data);
   if (!data || !data.value) return null;
 
   return (
-    <Tag className="mt-2 mr-2" intent="warning" minimal {...selection}>
+    <Tag className={cn('mt-2 mr-2', classes)} onClick={notify} intent="warning" minimal>
       Deprecated
     </Tag>
   );

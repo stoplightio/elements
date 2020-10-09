@@ -2,13 +2,14 @@ import { Button, Checkbox, CodeEditor, FormGroup, HTMLSelect, InputGroup } from 
 import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
+import { debounce, throttle } from 'lodash';
 import * as React from 'react';
 
 import { getIdMap, resetOperation, ydoc } from '../../__fixtures__/operations/shipengineYjs';
 import { IAny, IOperation } from '../../AST';
 import { leafNodeTypes } from '../../AST/leafs';
 import { HttpOperation } from '../../components/Docs/HttpOperation2';
-import { SelectionContext } from '../../components/Docs/HttpOperation2/SelectionContext';
+import { EnhancerContext } from '../../components/Docs/HttpOperation2/EnhancerContext';
 import { Provider } from '../../containers/Provider';
 import { useObserveDeep } from '../../hooks/y/useObserveDeep';
 import { useYDoc } from '../../hooks/y/useYDoc';
@@ -72,7 +73,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
         knobs.push(
           <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
             <label className="bp3-label">Description</label>
-            <div className="w-full">
+            <div className="w-full" data-controller-for={getId(o)}>
               <YQuill type={o.get('value')} awareness={ydoc.wsProvider.awareness} />
               {/* <CodeEditor
                 value={o.get('value')}
@@ -85,7 +86,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
                 language="markdown"
                 className="border border-gray-2 dark:border-gray-6"
                 style={{ minHeight: 140 }}
-                data-controller-for={getId(o)}
+                
               /> */}
             </div>
           </div>,
@@ -457,6 +458,8 @@ storiesOf('Internal/Stoplight AST', module)
     useObserveDeep(ydoc.doc.getMap('root'));
 
     const IdMapYjs = getIdMap();
+    // @ts-ignore
+    window.IdMapYjs = IdMapYjs;
 
     const onChange = () => {
       const states = ydoc.wsProvider.awareness.getStates();
@@ -475,18 +478,26 @@ storiesOf('Internal/Stoplight AST', module)
       return () => ydoc.wsProvider.awareness.off('change', onChange);
     });
 
-    const spy: React.MouseEventHandler = e => {
-      let el = e.target as HTMLElement | null;
+    if (!httpOperationYjs) return null;
 
-      if (selections.size && !(e.metaKey || e.ctrlKey)) {
-        selections.clear();
-      }
+    const enhancer = {
+      getClasses: (id: string) => {
+        return {
+          selected: selections.has(id),
+        };
+      },
+      // Throttling is used instead of e.stopPropagation() to make sure we only react to the first (deepest) DOM node that's clicked,
+      // because we don't want to interfere with Element's inner workings which also rely on mouse clicks.
+      onClick: throttle(
+        (e: React.MouseEvent, id: string) => {
+          console.log('clicked', id);
 
-      setSelected(void 0);
-      while (el) {
-        console.log(el);
-        if (el.dataset.id) {
-          let node = IdMapYjs.get(el.dataset.id);
+          if (selections.size && !(e.metaKey || e.ctrlKey)) {
+            selections.clear();
+          }
+
+          setSelected(void 0);
+          let node = IdMapYjs.get(id);
           let focus = node;
           if (leafNodeTypes.includes(node.get('type'))) {
             node = getParent(node);
@@ -500,30 +511,42 @@ storiesOf('Internal/Stoplight AST', module)
           // Best effort to set focus.
           setTimeout(() => {
             const el = document.querySelector(`[data-controller-for="${getId(focus)}"]`);
-            if (el === null) return;
+            if (el === null) {
+              console.log('No data-controller-for found');
+              return;
+            }
 
             (el as HTMLElement).focus();
-            if (document.activeElement === el) return;
+            if (document.activeElement === el) {
+              console.log('focussed directly');
+              return;
+            }
 
-            const input = el.querySelector('textarea,input');
-            if (!input) return;
+            const input = el.querySelector('textarea,input,[contenteditable]');
+            if (!input) {
+              console.log('Unable to find a child input');
+              return;
+            }
 
             (input as HTMLElement).focus();
-          }, 0);
+            if (document.activeElement === el) {
+              console.log('focussed child input');
+            }
+            // 0 works for everything except Quill. So for Quill's sake I'm bumping the delay.
+          }, 100);
           return;
-        }
-        el = el.parentElement;
-      }
+        },
+        100,
+        { leading: true, trailing: false },
+      ),
     };
-
-    if (!httpOperationYjs) return null;
 
     const transformed = DeYjsify<IOperation>(httpOperationYjs);
     const el = (
       <div className={cn('p-10 flex overflow-y-auto ', { 'bp3-dark bg-gray-8': dark })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
-          <SelectionContext.Provider value={selections}>
-            <div onClick={spy} style={{ marginRight: 400 }}>
+          <EnhancerContext.Provider value={enhancer}>
+            <div style={{ marginRight: 400 }}>
               <HttpOperation data={transformed} />
             </div>
             <Formite
@@ -533,7 +556,7 @@ storiesOf('Internal/Stoplight AST', module)
               setSelections={setSelections}
               focus={focus}
             />
-          </SelectionContext.Provider>
+          </EnhancerContext.Provider>
         </Provider>
       </div>
     );

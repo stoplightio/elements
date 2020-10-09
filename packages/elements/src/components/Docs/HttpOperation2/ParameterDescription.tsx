@@ -1,19 +1,22 @@
+import cn from 'classnames';
 import * as React from 'react';
 
 import { IDescription } from '../../../AST/leafs/Description';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { useSelection } from './utils';
+import { useClasses } from './useClasses';
+import { useClick } from './useClick';
 
 export const ParameterDescription: React.FunctionComponent<{
   data?: IDescription;
 }> = ({ data }) => {
-  const selection = useSelection(data);
+  const classes = useClasses(data);
+  const notify = useClick(data);
 
   return (
     <MarkdownViewer
-      className="text-gray-7 dark:text-gray-4 mt-1"
+      className={cn('text-gray-7 dark:text-gray-4 mt-1', classes)}
       markdown={data?.value || '*No description.*'}
-      {...selection}
+      onClick={notify}
     />
   );
 };

@@ -7,7 +7,8 @@ import { IPathParams } from '../../../AST/PathParams';
 import { IQueryParams } from '../../../AST/QueryParams';
 import { Parameter } from './Parameter';
 import { SectionTitle } from './SectionTitle';
-import { useSelection } from './utils';
+import { useClasses } from './useClasses';
+import { useClick } from './useClick';
 
 export interface IParametersProps {
   data?: IQueryParams | IPathParams | ICookieParams | IHeaderParams;
@@ -21,7 +22,8 @@ const titles = {
 };
 
 export const Parameters: React.FunctionComponent<IParametersProps> = ({ data }) => {
-  const selection = useSelection(data);
+  const classes = useClasses(data);
+  const notify = useClick(data);
   if (!data) return null;
 
   const title = titles[data.type] || '';
@@ -43,8 +45,8 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ data }) 
     );
   }
   return (
-    <div className={cn('HttpOperation__Parameters', 'mb-10')} {...selection}>
-      <SectionTitle title={title} />
+    <div className={cn('HttpOperation__Parameters', 'mb-10', classes)}>
+      <SectionTitle title={title} onClick={notify} />
       {children}
     </div>
   );

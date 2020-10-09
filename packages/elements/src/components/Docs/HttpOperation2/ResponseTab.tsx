@@ -1,9 +1,11 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
 import * as React from 'react';
 
 import { IResponse } from '../../../AST/Response';
-import { useSelection } from './utils';
+import { useClasses } from './useClasses';
+import { useClick } from './useClick';
 
 export const HttpCodeColor = {
   1: 'gray',
@@ -21,16 +23,24 @@ export interface IResponseProps {
 export interface IResponseTabProps {
   data?: IResponse;
   className?: string;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
 }
 
 export const ResponseTab = ({ className, data, onClick }: IResponseTabProps) => {
   const code = getHttpStatus(data);
-  const selection = useSelection(code);
+  const notify = useClick(code);
+  const classes1 = useClasses(data);
+  const classes2 = useClasses(code);
   if (!data || !code || !code.value) return null;
 
   return (
-    <div className={className} onClick={onClick} {...selection}>
+    <div
+      className={cn(className, classes1, classes2)}
+      onClick={e => {
+        onClick(e);
+        notify(e);
+      }}
+    >
       <FontAwesomeIcon icon={faCircle} className="ml-4 mr-3" color={HttpCodeColor[String(code.value)[0]]} />
       {code.value}
     </div>

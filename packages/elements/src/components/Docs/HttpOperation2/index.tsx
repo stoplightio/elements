@@ -11,17 +11,17 @@ import { Method } from './Method';
 import { Path } from './Path';
 import { Request } from './Request';
 import { Responses } from './Responses';
-import { useSelection } from './utils';
+import { useClasses } from './useClasses';
 
 export type HttpOperationProps = IDocsComponentProps<IOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless }) => {
-  let selection = useSelection(data);
+  const classes = useClasses(data);
 
   const groupedNodes = groupNodes(data.children);
 
   return (
-    <div className={cn('HttpOperation', className)} {...selection}>
+    <div className={cn('HttpOperation', className, classes)}>
       {!headless && (
         <h2 className={cn(Classes.HEADING, 'flex items-center mb-10')}>
           <Method data={groupedNodes.httpMethod?.[0]}></Method>

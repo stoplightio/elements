@@ -1,10 +1,7 @@
 import { INodeExample, INodeExternalExample } from '@stoplight/types';
 import { isObject } from 'lodash';
-import * as React from 'react';
 
-import { IMagicNode } from '../../../AST/basics';
 import { IResponseExample } from '../../../AST/ResponseExample';
-import { SelectionContext } from './SelectionContext';
 
 export function getExamplesObject(examples: Array<INodeExample | INodeExternalExample>) {
   return examples.reduce((collection, item) => {
@@ -52,13 +49,4 @@ export function getExamplesFromSchema(data: unknown) {
         ...('x-example' in data && { default: data['x-example'] }),
       }
     : void 0;
-}
-
-export function useSelection<T extends IMagicNode>(data?: T) {
-  const SC = React.useContext(SelectionContext);
-  if (!data) return {};
-  return {
-    'data-id': data.id,
-    ...(SC.has(data.id) ? { 'data-selected': '' } : {}),
-  };
 }

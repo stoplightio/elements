@@ -6,7 +6,8 @@ import { IResponses } from '../../../AST/Responses';
 import { Response } from './Response';
 import { ResponseTab } from './ResponseTab';
 import { SectionTitle } from './SectionTitle';
-import { useSelection } from './utils';
+import { useClasses } from './useClasses';
+import { useClick } from './useClick';
 
 export const HttpCodeColor = {
   1: 'gray',
@@ -22,12 +23,12 @@ export interface IResponsesProps {
 }
 
 export const Responses = ({ className, data }: IResponsesProps) => {
-  const selection = useSelection(data);
+  const classes = useClasses(data);
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!data || !data.children.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Responses', className)} {...selection}>
+    <div className={cn('HttpOperation__Responses', className, classes)}>
       <SectionTitle title="Responses" />
 
       <div className="flex">
