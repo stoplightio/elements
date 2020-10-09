@@ -22,7 +22,7 @@ export const YQuill = React.memo(({ type }: { type: Y.Text }) => {
       editor = new Quill(ref.current, {
         modules: {
           cursors: true,
-          toolbar: [[{ header: [1, 2, false] }], ['bold', 'italic', 'underline'], ['image', 'code-block']],
+          toolbar: false,
         },
         placeholder: 'Start collaborating...',
         theme: 'snow', // or 'bubble'

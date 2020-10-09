@@ -1,5 +1,5 @@
 import { IAny, IOperation } from '../../AST';
-import { getId, YDoc, Yify, Yjsify } from '../../YAST/YDoc';
+import { getId, YDoc, Yify, Yjsify } from '../../YAST';
 
 export const ydoc = new YDoc('shipengine');
 // @ts-ignore

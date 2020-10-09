@@ -12,7 +12,7 @@ import { SelectionContext } from '../../components/Docs/HttpOperation2/Selection
 import { Provider } from '../../containers/Provider';
 import { useObserveDeep } from '../../hooks/y/useObserveDeep';
 import { useYDoc } from '../../hooks/y/useYDoc';
-import { DeYjsify, getId, getParent, Yify, Yjsify } from '../../YAST/YDoc';
+import { DeYjsify, getId, getParent, Yify, Yjsify } from '../../YAST';
 import { YQuill } from './YQuill';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
