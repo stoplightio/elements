@@ -203,6 +203,7 @@ const makeOperation: () => Yify<IOperation> = () =>
 
 export const resetOperation = () => {
   const httpOperation = makeOperation();
+  console.log(httpOperation);
   ydoc.doc.getMap('root').set('operation', httpOperation);
   console.log('httpOperation', httpOperation);
 };

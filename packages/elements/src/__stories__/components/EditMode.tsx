@@ -73,7 +73,8 @@ const Formite = ({ selected, setSelected, focus }: IFormite) => {
           <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
             <label className="bp3-label">Description</label>
             <div className="w-full">
-              <CodeEditor
+              <YQuill type={o.get('value')} />
+              {/* <CodeEditor
                 value={o.get('value')}
                 onChange={value => {
                   console.log(value);
@@ -85,7 +86,7 @@ const Formite = ({ selected, setSelected, focus }: IFormite) => {
                 className="border border-gray-2 dark:border-gray-6"
                 style={{ minHeight: 140 }}
                 data-controller-for={getId(o)}
-              />
+              /> */}
             </div>
           </div>,
         );
@@ -433,7 +434,6 @@ const Formite = ({ selected, setSelected, focus }: IFormite) => {
       className="p-6 pt-2 border fixed border-gray-2 dark:border-gray-6 overflow-y-auto"
     >
       <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Formtron II</h1>
-      <YQuill type={ydoc.doc.getText('quill')} />
       {knobs}
     </aside>
   );

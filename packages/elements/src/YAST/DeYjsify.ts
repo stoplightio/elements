@@ -1,3 +1,5 @@
+import * as Y from 'yjs';
+
 import { IMagicNode } from '../AST/basics';
 import { getId } from './getId';
 import { getParent } from './getParent';
@@ -5,6 +7,8 @@ import { Yify } from './Yify';
 
 export function DeYjsify<T extends IMagicNode>(map: Yify<T>): T {
   if (typeof map !== 'object' || map === null) return map;
+  // @ts-ignore
+  if (map instanceof Y.Text) return map.toString();
   // @ts-ignore
   return new Proxy(
     {},

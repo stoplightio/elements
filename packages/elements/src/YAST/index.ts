@@ -3,6 +3,7 @@ export * from './getId';
 export * from './getParent';
 export * from './TypedYArray';
 export * from './TypedYMap';
+export * from './TypedYText';
 export * from './YDoc';
 export * from './Yify';
 export * from './Yjsify';
