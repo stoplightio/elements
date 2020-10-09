@@ -10,7 +10,6 @@ jest.mock('@stoplight/json-schema-ref-parser', () => ({
       new Promise(resolve => {
         setTimeout(() => {
           resolve({ ...input, __dereferenced: true });
-          console.log('hello');
         }, 100);
       }),
   },
@@ -28,7 +27,24 @@ describe('useDereferencedData', () => {
     const { result, waitForNextUpdate } = renderHook(() =>
       useDereferencedData(NodeType.HttpOperation, JSON.stringify(input)),
     );
-    await waitForNextUpdate({ timeout: 3000 });
+    await waitForNextUpdate({ timeout: 500 });
     expect(result.current).toEqual({ ...input, __dereferenced: true });
+  });
+
+  it('is not prone to race conditions', async () => {
+    const input = { a: 5 };
+    let type = NodeType.HttpOperation;
+
+    const { result, waitForNextUpdate, rerender } = renderHook(() => useDereferencedData(type, JSON.stringify(input)));
+
+    type = NodeType.Article;
+    rerender();
+
+    // Articles should not be dereferenced.
+    expect(result.current).toEqual(JSON.stringify(input));
+
+    // Let's make sure the original dereferencing operation does not override the new input
+
+    await expect(waitForNextUpdate({ timeout: 500 })).rejects.toBeInstanceOf(Error);
   });
 });
