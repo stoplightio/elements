@@ -21,15 +21,15 @@ export const darkMode = () => boolean('Dark Mode', Boolean(Number(localStorage.d
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
 
-const selections = new Set<string>();
-
 type IFormite = {
   selected?: string;
   setSelected: (id: string) => void;
+  selections: Set<string>;
+  setSelections: (selections: Set<string>) => void;
   focus?: string;
 };
 
-const Formite = ({ selected, setSelected, focus }: IFormite) => {
+const Formite = ({ selected, setSelected, selections, setSelections, focus }: IFormite) => {
   const knobs = [];
 
   const IdMapYjs = getIdMap();
@@ -269,6 +269,7 @@ const Formite = ({ selected, setSelected, focus }: IFormite) => {
                 selections.clear();
                 selections.add(id);
                 setSelected(id);
+                setSelections(selections);
               }}
             >
               Add {subtype} Parameter
@@ -394,6 +395,7 @@ const Formite = ({ selected, setSelected, focus }: IFormite) => {
                 selections.clear();
                 selections.add(id);
                 setSelected(id);
+                setSelections(selections);
               }}
             >
               Add Response
@@ -445,13 +447,8 @@ storiesOf('Internal/Stoplight AST', module)
     const dark = darkMode();
     localStorage.darkMode = Number(dark);
 
-    // A quirk of Storybook is that when knob values change the entire component is unmounted and remounted apparently,
-    // causing local component state to be lost.
-    const [selected, _setSelected] = React.useState<string>(window.localStorage.selected);
-    const setSelected = (value?: string) => {
-      window.localStorage.selected = value;
-      _setSelected(value);
-    };
+    const [selections, setSelections] = React.useState(new Set<string>());
+    const [selected, setSelected] = React.useState<string>(window.localStorage.selected);
 
     const [focus, setFocus] = React.useState<string>(selected);
 
@@ -460,6 +457,23 @@ storiesOf('Internal/Stoplight AST', module)
     useObserveDeep(ydoc.doc.getMap('root'));
 
     const IdMapYjs = getIdMap();
+
+    const onChange = () => {
+      const states = ydoc.wsProvider.awareness.getStates();
+      console.log('states', states);
+      for (const [client, state] of states) {
+        if (client !== ydoc.doc.clientID) {
+          console.log('selected', state.selected);
+          selections.add(state.selected);
+          // force re-render
+          setFocus(void 0);
+        }
+      }
+    };
+    React.useEffect(() => {
+      ydoc.wsProvider.awareness.on('change', onChange);
+      return () => ydoc.wsProvider.awareness.off('change', onChange);
+    });
 
     const spy: React.MouseEventHandler = e => {
       let el = e.target as HTMLElement | null;
@@ -480,6 +494,9 @@ storiesOf('Internal/Stoplight AST', module)
           selections.add(getId(node));
           setSelected(getId(node));
           setFocus(getId(focus));
+          ydoc.wsProvider.awareness.setLocalStateField('selected', getId(node));
+          ydoc.wsProvider.awareness.setLocalStateField('focus', getId(focus));
+
           // Best effort to set focus.
           setTimeout(() => {
             const el = document.querySelector(`[data-controller-for="${getId(focus)}"]`);
@@ -509,7 +526,13 @@ storiesOf('Internal/Stoplight AST', module)
             <div onClick={spy} style={{ marginRight: 400 }}>
               <HttpOperation data={transformed} />
             </div>
-            <Formite selected={selected} setSelected={setSelected} focus={focus} />
+            <Formite
+              selected={selected}
+              setSelected={setSelected}
+              selections={selections}
+              setSelections={setSelections}
+              focus={focus}
+            />
           </SelectionContext.Provider>
         </Provider>
       </div>
