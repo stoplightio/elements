@@ -150,6 +150,20 @@ const makeOperation: () => Yify<IOperation> = () =>
               },
             ],
           },
+          {
+            type: 'requestBody' as const,
+            children: [
+              {
+                type: 'description' as const,
+                value:
+                  "The only required field is `text`, which is the text to be parsed. You can optionally also provide an `address` containing already-known values. For example, you may already know the recipient's name, city, and country, and only want to parse the street address into separate lines.\n",
+              },
+              {
+                type: 'required' as const,
+                value: true,
+              },
+            ],
+          },
         ],
       },
       {
@@ -227,15 +241,6 @@ ydoc.ready.then(() => {
 //     children: [],
 //   };
 //   request.children.push(body);
-
-//   body.children.push(
-//     makeProperty(
-//       body,
-//       'description',
-//       "The only required field is `text`, which is the text to be parsed. You can optionally also provide an `address` containing already-known values. For example, you may already know the recipient's name, city, and country, and only want to parse the street address into separate lines.\n",
-//     ),
-//     makeProperty(body, 'required', true),
-//   );
 
 //   // Text Only Example
 

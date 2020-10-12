@@ -24,11 +24,12 @@ export interface IResponsesProps {
 
 export const Responses = ({ className, data }: IResponsesProps) => {
   const classes = useClasses(data);
+  const notify = useClick(data);
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!data || !data.children.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Responses', className, classes)}>
+    <div className={cn('HttpOperation__Responses', className, classes)} onClick={notify}>
       <SectionTitle title="Responses" />
 
       <div className="flex">

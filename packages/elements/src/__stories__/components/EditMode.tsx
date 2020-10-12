@@ -1,10 +1,10 @@
 import './EditMode.scss';
 
-import { Button, Checkbox, CodeEditor, FormGroup, HTMLSelect, InputGroup } from '@stoplight/ui-kit';
+import { Button, Checkbox, HTMLSelect, InputGroup } from '@stoplight/ui-kit';
 import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
-import { debounce, throttle } from 'lodash';
+import { throttle } from 'lodash';
 import * as React from 'react';
 
 import { getIdMap, resetOperation, ydoc } from '../../__fixtures__/operations/shipengineYjs';
@@ -355,6 +355,12 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             </Button>
           </div>,
         );
+        return;
+      }
+      case 'requestBody': {
+        for (const child of o.get('children')) {
+          addKnobs(child);
+        }
         return;
       }
       case 'response': {

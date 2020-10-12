@@ -5,8 +5,8 @@ import * as React from 'react';
 
 import { IRequest } from '../../../AST/Request';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
-import { Body } from './Body';
 import { Parameters } from './Parameters';
+import { RequestBody } from './RequestBody';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
 
@@ -32,7 +32,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({ data, security
           case 'headerParams':
             return <Parameters data={child} />;
           case 'requestBody':
-            return <Body className="mb-10" body={child} />;
+            return <RequestBody className="mb-10" data={child} />;
           default:
             return null;
         }
