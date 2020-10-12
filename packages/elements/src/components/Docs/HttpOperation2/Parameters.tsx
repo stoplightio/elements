@@ -9,6 +9,7 @@ import { Parameter } from './Parameter';
 import { SectionTitle } from './SectionTitle';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
+import { useStyle } from './useStyle';
 
 export interface IParametersProps {
   data?: IQueryParams | IPathParams | ICookieParams | IHeaderParams;
@@ -23,6 +24,7 @@ const titles = {
 
 export const Parameters: React.FunctionComponent<IParametersProps> = ({ data }) => {
   const classes = useClasses(data);
+  const style = useStyle(data);
   const notify = useClick(data);
   if (!data) return null;
 
@@ -45,7 +47,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({ data }) 
     );
   }
   return (
-    <div className={cn('HttpOperation__Parameters', 'mb-10', classes)}>
+    <div className={cn('HttpOperation__Parameters', 'mb-10', classes)} style={style}>
       <SectionTitle title={title} onClick={notify} />
       {children}
     </div>

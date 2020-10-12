@@ -9,6 +9,7 @@ import { RequestBodyDescription } from './RequestBodyDescription';
 import { SectionTitle } from './SectionTitle';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
+import { useStyle } from './useStyle';
 import { getExamplesObject } from './utils';
 
 export interface IRequestBodyProps {
@@ -18,6 +19,7 @@ export interface IRequestBodyProps {
 
 export const RequestBody = ({ data, className }: IRequestBodyProps) => {
   const classes = useClasses(data);
+  const style = useStyle(data);
   const notify = useClick(data);
   if (typeof data !== 'object' || data.children.length === 0) return null;
 
@@ -27,7 +29,7 @@ export const RequestBody = ({ data, className }: IRequestBodyProps) => {
   // const examples = getExamplesObject(content?.examples || []);
 
   return (
-    <div className={cn('HttpOperation__Body', className, classes)} onClick={notify}>
+    <div className={cn('HttpOperation__Body', className, classes)} style={style} onClick={notify}>
       <SectionTitle title="Request Body" />
 
       <RequestBodyDescription data={grouped.description?.[0]} />

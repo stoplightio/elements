@@ -37,3 +37,15 @@
   100% {
   }
 }
+
+.selection-label {
+  --username: '';
+
+  &::before {
+    position: absolute;
+    content: var(--username);
+    top: 0px;
+    right: 5px;
+    white-space: pre;
+  }
+}

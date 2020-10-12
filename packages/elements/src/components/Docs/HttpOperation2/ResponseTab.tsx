@@ -6,6 +6,7 @@ import * as React from 'react';
 import { IResponse } from '../../../AST/Response';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
+import { useStyle } from './useStyle';
 
 export const HttpCodeColor = {
   1: 'gray',
@@ -30,12 +31,14 @@ export const ResponseTab = ({ className, data, onClick }: IResponseTabProps) => 
   const code = getHttpStatus(data);
   const notify = useClick(code);
   const classes1 = useClasses(data);
+  const style = useStyle(data);
   const classes2 = useClasses(code);
   if (!data || !code || !code.value) return null;
 
   return (
     <div
       className={cn(className, classes1, classes2)}
+      style={style}
       onClick={e => {
         onClick(e);
         notify(e);

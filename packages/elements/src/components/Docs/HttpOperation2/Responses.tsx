@@ -8,6 +8,7 @@ import { ResponseTab } from './ResponseTab';
 import { SectionTitle } from './SectionTitle';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
+import { useStyle } from './useStyle';
 
 export const HttpCodeColor = {
   1: 'gray',
@@ -24,12 +25,13 @@ export interface IResponsesProps {
 
 export const Responses = ({ className, data }: IResponsesProps) => {
   const classes = useClasses(data);
+  const style = useStyle(data);
   const notify = useClick(data);
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!data || !data.children.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Responses', className, classes)} onClick={notify}>
+    <div className={cn('HttpOperation__Responses', className, classes)} style={style} onClick={notify}>
       <SectionTitle title="Responses" />
 
       <div className="flex">

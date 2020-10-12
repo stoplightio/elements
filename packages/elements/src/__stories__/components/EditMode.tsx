@@ -502,6 +502,24 @@ storiesOf('Internal/Stoplight AST', module)
     if (!httpOperationYjs) return null;
 
     const enhancer = {
+      getStyle: (id: string) => {
+        const states = ydoc.wsProvider.awareness.getStates();
+        const names = [];
+        for (const [client, state] of states) {
+          if (client !== ydoc.doc.clientID) {
+            if (id === state.selected) {
+              names.push(client);
+            }
+          }
+        }
+        if (names.length > 0) {
+          return {
+            '--username': `'User ${names.join(',')}'`,
+          };
+        } else {
+          return {};
+        }
+      },
       getClasses: (id: string) => {
         const self = selections.has(id);
         const other = foreignSelections.has(id);
@@ -511,6 +529,7 @@ storiesOf('Internal/Stoplight AST', module)
           'selected-self': self,
           'selected-other': other,
           'selected-focus': focussed,
+          'selection-label': other,
         };
       },
       // Throttling is used instead of e.stopPropagation() to make sure we only react to the first (deepest) DOM node that's clicked,

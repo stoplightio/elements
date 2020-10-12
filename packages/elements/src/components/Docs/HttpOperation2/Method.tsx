@@ -5,11 +5,13 @@ import { IHttpMethod } from '../../../AST/leafs/HttpMethod';
 import { HttpMethodColors } from '../../../constants';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
+import { useStyle } from './useStyle';
 
 export const Method: React.FunctionComponent<{
   data?: IHttpMethod;
 }> = ({ data }) => {
   const classes = useClasses(data);
+  const style = useStyle(data);
   const notify = useClick(data);
   if (!data) return null;
 
@@ -22,6 +24,7 @@ export const Method: React.FunctionComponent<{
         `border-${color}`,
         classes,
       )}
+      style={style}
       onClick={notify}
     >
       {data.value || 'UNKNOWN'}

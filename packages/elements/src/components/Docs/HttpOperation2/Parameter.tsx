@@ -12,6 +12,7 @@ import { ParameterRequired } from './ParameterRequired';
 import { ParameterStyle } from './ParameterStyle';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
+import { useStyle } from './useStyle';
 
 const numberValidationNames = [
   'minimum',
@@ -32,6 +33,7 @@ export interface IParameterProps {
 
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, context, className }) => {
   const classes = useClasses(data);
+  const style = useStyle(data);
   const notify = useClick(data);
   if (!data) return null;
 
@@ -58,7 +60,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, cont
   const propertyStyle = grouped.style?.[0];
 
   return (
-    <div className={cn('HttpOperation__Parameter pl-1', className, classes)} onClick={notify}>
+    <div className={cn('HttpOperation__Parameter pl-1', className, classes)} onClick={notify} style={style}>
       <div className="flex items-center">
         <ParameterName data={grouped.name?.[0]} />
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>

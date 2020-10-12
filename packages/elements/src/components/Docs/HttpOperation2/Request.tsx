@@ -9,6 +9,7 @@ import { Parameters } from './Parameters';
 import { RequestBody } from './RequestBody';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
+import { useStyle } from './useStyle';
 
 export interface IRequestProps {
   data?: IRequest;
@@ -18,11 +19,12 @@ export interface IRequestProps {
 
 export const Request: React.FunctionComponent<IRequestProps> = ({ data, security, className }) => {
   const classes = useClasses(data);
+  const style = useStyle(data);
   const notify = useClick(data);
   if (!data) return null;
 
   return (
-    <div className={cn('HttpOperation__Request', className, classes)} onClick={notify}>
+    <div className={cn('HttpOperation__Request', className, classes)} style={style} onClick={notify}>
       <HttpSecuritySchemes className="mb-10" title="Authorization" securities={flatten(security)} />
       {data.children.map(child => {
         switch (child.type) {
