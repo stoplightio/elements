@@ -1,3 +1,5 @@
+import './EditMode.scss';
+
 import { Button, Checkbox, CodeEditor, FormGroup, HTMLSelect, InputGroup } from '@stoplight/ui-kit';
 import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
@@ -448,7 +450,10 @@ storiesOf('Internal/Stoplight AST', module)
     const dark = darkMode();
     localStorage.darkMode = Number(dark);
 
+    const [, forceRender] = React.useReducer(s => s + 1, 0);
+
     const [selections, setSelections] = React.useState(new Set<string>());
+    const [foreignSelections, setForeignSelections] = React.useState(new Set<string>());
     const [selected, setSelected] = React.useState<string>(window.localStorage.selected);
 
     const [focus, setFocus] = React.useState<string>(selected);
@@ -463,13 +468,15 @@ storiesOf('Internal/Stoplight AST', module)
 
     const onChange = () => {
       const states = ydoc.wsProvider.awareness.getStates();
+      foreignSelections.clear();
       console.log('states', states);
       for (const [client, state] of states) {
         if (client !== ydoc.doc.clientID) {
           console.log('selected', state.selected);
-          selections.add(state.selected);
+          foreignSelections.add(state.selected);
+          setForeignSelections(foreignSelections);
           // force re-render
-          setFocus(void 0);
+          forceRender();
         }
       }
     };
@@ -484,6 +491,7 @@ storiesOf('Internal/Stoplight AST', module)
       getClasses: (id: string) => {
         return {
           selected: selections.has(id),
+          'selected-1': foreignSelections.has(id),
         };
       },
       // Throttling is used instead of e.stopPropagation() to make sure we only react to the first (deepest) DOM node that's clicked,
