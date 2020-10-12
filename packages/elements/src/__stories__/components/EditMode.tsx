@@ -463,6 +463,7 @@ storiesOf('Internal/Stoplight AST', module)
     const [selected, setSelected] = React.useState<string>(window.localStorage.selected);
 
     const [focus, setFocus] = React.useState<string>(selected);
+    const [foreignFocus, setForeignFocus] = React.useState(new Set<string>());
 
     useYDoc(ydoc);
     const httpOperationYjs = ydoc.doc.getMap('root').get('operation');
@@ -475,16 +476,23 @@ storiesOf('Internal/Stoplight AST', module)
     const onChange = () => {
       const states = ydoc.wsProvider.awareness.getStates();
       foreignSelections.clear();
+      foreignFocus.clear();
       console.log('states', states);
+      let needsRender = false;
       for (const [client, state] of states) {
         if (client !== ydoc.doc.clientID) {
           console.log('selected', state.selected);
           foreignSelections.add(state.selected);
           setForeignSelections(foreignSelections);
-          // force re-render
-          forceRender();
+          if (state.focus !== state.selected) {
+            console.log('focus', state.focus);
+            foreignFocus.add(state.focus);
+            setForeignFocus(foreignFocus);
+          }
+          needsRender = true;
         }
       }
+      forceRender();
     };
     React.useEffect(() => {
       ydoc.wsProvider.awareness.on('change', onChange);
@@ -497,10 +505,12 @@ storiesOf('Internal/Stoplight AST', module)
       getClasses: (id: string) => {
         const self = selections.has(id);
         const other = foreignSelections.has(id);
+        const focussed = (focus !== selected && id === focus) || foreignFocus.has(id);
         return {
           selected: self || other,
           'selected-self': self,
           'selected-other': other,
+          'selected-focus': focussed,
         };
       },
       // Throttling is used instead of e.stopPropagation() to make sure we only react to the first (deepest) DOM node that's clicked,

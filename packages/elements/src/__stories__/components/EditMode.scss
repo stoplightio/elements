@@ -25,3 +25,15 @@
     }
   }
 }
+
+.selected-focus {
+  animation: pulse 1s;
+}
+
+@keyframes pulse {
+  0% {
+    text-decoration: underline;
+  }
+  100% {
+  }
+}
