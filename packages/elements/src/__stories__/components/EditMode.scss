@@ -1,21 +1,27 @@
 .selected {
   border-radius: 5px;
-  box-shadow: 0 0 5px 5px #7fb3f9;
   position: relative; // needed so box-shadow appears on top of surrounding elements.
-  // background-color: #7fb3f9;
-  .bp3-dark & {
-    box-shadow: 0 0 2px 5px #2998e7;
-    // background-color: #2998e7;
-  }
-}
 
-.selected-1 {
-  border-radius: 5px;
-  box-shadow: 0 0 5px 5px rgb(255, 165, 0);
-  position: relative; // needed so box-shadow appears on top of surrounding elements.
-  // background-color: #7fb3f9;
-  .bp3-dark & {
-    box-shadow: 0 0 2px 5px rgb(255, 165, 0);
-    // background-color: #2998e7;
+  &.selected-self {
+    box-shadow: 0 0 5px 5px #7fb3f9;
+    .bp3-dark & {
+      box-shadow: 0 0 5px 5px #2998e7;
+    }
+  }
+
+  &.selected-other {
+    box-shadow: 0 0 5px 5px rgb(255, 165, 0);
+    .bp3-dark & {
+      box-shadow: 0 0 5px 5px rgb(255, 165, 0);
+    }
+  }
+
+  &.selected-self.selected-other {
+    box-shadow: 0 0 3px 5px #7fb3f9,
+                0 0 3px 9px rgb(255, 165, 0);
+    .bp3-dark & {
+      box-shadow: 0 0 3px 5px #2998e7,
+                  0 0 3px 9px rgb(255, 165, 0);
+    }
   }
 }

@@ -495,9 +495,12 @@ storiesOf('Internal/Stoplight AST', module)
 
     const enhancer = {
       getClasses: (id: string) => {
+        const self = selections.has(id);
+        const other = foreignSelections.has(id);
         return {
-          selected: selections.has(id),
-          'selected-1': foreignSelections.has(id),
+          selected: self || other,
+          'selected-self': self,
+          'selected-other': other,
         };
       },
       // Throttling is used instead of e.stopPropagation() to make sure we only react to the first (deepest) DOM node that's clicked,
