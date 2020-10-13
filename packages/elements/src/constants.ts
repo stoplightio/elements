@@ -249,3 +249,27 @@ export function editHandle(o: unknown, p: string | boolean = true) {
   }
   return {};
 }
+
+export function editHandleId(o: unknown): string | undefined {
+  if (typeof o === 'object' && o !== null) {
+    if (o[EditHandle]) {
+      return o[EditHandle].id;
+    }
+  }
+  return;
+}
+
+export function editHandleClick(
+  o: unknown,
+  p: string,
+  onClick: (e: any, id: [string, string]) => void,
+): (e: any) => void {
+  const id = editHandleId(o);
+  if (id) {
+    return e => {
+      onClick(e, [id, p]);
+    };
+  } else {
+    return () => void 0;
+  }
+}

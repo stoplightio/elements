@@ -11,6 +11,7 @@ import model from '../../__fixtures__/schemas/contact.json';
 import { httpService } from '../../__fixtures__/services/petstore';
 import { Docs, ParsedDocs } from '../../components/Docs';
 import { EditHandle, EditMetadata } from '../../constants';
+import { EditModeContext } from '../../containers/EditingProvider';
 import { Provider } from '../../containers/Provider';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
@@ -319,7 +320,9 @@ storiesOf('Internal/Docs', module)
     const el = (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })} onClick={spy}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
-          <ParsedDocs nodeType="http_operation" nodeData={shipengineHttpOperation} />
+          <EditModeContext.Provider value={{ onClick: console.log, getClasses: () => ({}), getStyle: () => ({}) }}>
+            <ParsedDocs nodeType="http_operation" nodeData={shipengineHttpOperation} />
+          </EditModeContext.Provider>
         </Provider>
       </div>
     );

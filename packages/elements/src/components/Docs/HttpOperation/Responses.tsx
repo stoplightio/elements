@@ -33,7 +33,7 @@ export const Responses = ({ className, responses }: IResponsesProps) => {
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!responses || !responses.length) return null;
 
-  const sortedResponses = [...responses].sort();
+  const sortedResponses = responses;
 
   return (
     <div className={cn('HttpOperation__Responses', className)} {...editHandle(responses)}>

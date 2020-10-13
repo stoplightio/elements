@@ -84,7 +84,7 @@ export const Provider: React.FC<IProvider> = ({
   );
 };
 
-function createNamedContext<T>(name: string, defaultValue: T): React.Context<T> {
+export function createNamedContext<T>(name: string, defaultValue: T): React.Context<T> {
   const context = React.createContext(defaultValue);
   context.displayName = name;
   return context;

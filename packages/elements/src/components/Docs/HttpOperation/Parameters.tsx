@@ -5,7 +5,8 @@ import cn from 'classnames';
 import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { editHandle } from '../../../constants';
+import { EditHandle, editHandle, editHandleClick, editHandleId } from '../../../constants';
+import { EditModeContext } from '../../../containers/EditingProvider';
 import { InlineRefResolverContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
@@ -90,6 +91,8 @@ export interface IParameterProps {
 }
 
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterType, className }) => {
+  const { onClick } = React.useContext(EditModeContext);
+  console.log('onClick', onClick);
   if (!parameter) return null;
 
   // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
@@ -121,10 +124,13 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       className={cn('HttpOperation__Parameter pl-1', className)}
       data-type={parameterType}
       data-name={parameter.name}
+      onClick={editHandleClick(parameter, '', onClick)}
       {...editHandle(parameter)}
     >
       <div className="flex items-center">
-        <div className="font-medium font-mono">{parameter.name}</div>
+        <div className="font-medium font-mono" onClick={editHandleClick(parameter, 'name', onClick)}>
+          {parameter.name}
+        </div>
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>
         {parameterType !== 'path' && (
           <div

@@ -1,9 +1,11 @@
+import { action } from '@storybook/addon-actions';
 import { boolean, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import * as React from 'react';
 
 import { API } from '../../containers/API';
+import { EditModeContext } from '../../containers/EditingProvider';
 
 const darkMode = () => boolean('dark mode', false);
 const apiDescriptionUrl = () =>
@@ -17,7 +19,9 @@ storiesOf('Public/API', module)
   .add('Sidebar Layout', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <API apiDescriptionUrl={apiDescriptionUrl()} />
+        <EditModeContext.Provider value={{ onClick: console.log, getClasses: () => ({}), getStyle: () => ({}) }}>
+          <API apiDescriptionUrl={apiDescriptionUrl()} />
+        </EditModeContext.Provider>
       </div>
     );
   })
