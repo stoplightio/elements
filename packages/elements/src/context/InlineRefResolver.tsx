@@ -7,20 +7,31 @@ import { useContext } from 'react';
 const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(void 0);
 InlineRefResolverContext.displayName = 'InlineRefResolverContext';
 
-interface InlineRefResolverProviderTypes {
-  document: unknown;
-}
+type InlineRefResolverProviderProps =
+  | {
+      document: unknown;
+    }
+  | {
+      resolver: SchemaTreeRefDereferenceFn;
+    };
 
 /**
- * Populates `InlineRefResolverContext` with a standard inline ref resolver based on `document`.
+ * Populates `InlineRefResolverContext` with either a standard inline ref resolver based on `document`, or a custom resolver function provided by the caller.
  */
-export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderTypes> = ({ document, children }) => {
-  const inlineRefResolver = React.useCallback<SchemaTreeRefDereferenceFn>(
+export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps> = ({ children, ...props }) => {
+  const document = 'document' in props ? props.document : undefined;
+
+  const documentBasedRefResolver = React.useCallback<SchemaTreeRefDereferenceFn>(
     ({ pointer }, _, schema) =>
       pointer === null ? null : get(isObject(document) ? document : schema, pointerToPath(pointer)),
     [document],
   );
-  return <InlineRefResolverContext.Provider value={inlineRefResolver}>{children}</InlineRefResolverContext.Provider>;
+
+  return (
+    <InlineRefResolverContext.Provider value={'resolver' in props ? props.resolver : documentBasedRefResolver}>
+      {children}
+    </InlineRefResolverContext.Provider>
+  );
 };
 
 export const useInlineRefResolver = () => useContext(InlineRefResolverContext);
