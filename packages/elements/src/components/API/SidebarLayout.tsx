@@ -44,7 +44,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
           <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
           {showTryIt && (
             <div className="w-2/5 border-l relative">
-              <div className="absolute inset-0 overflow-auto px-10">
+              <div className="absolute inset-0 overflow-visible px-10">
                 <TryItHeader />
                 <TryIt nodeType={nodeType} nodeData={nodeData} />
               </div>
