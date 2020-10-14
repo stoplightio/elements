@@ -14,5 +14,8 @@
   }
   .bp3-running-text {
     word-break: break-word;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
   }
 }
