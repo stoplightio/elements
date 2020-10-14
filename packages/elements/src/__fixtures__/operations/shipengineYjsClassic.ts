@@ -2,6 +2,7 @@ import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import * as Y from 'yjs';
 
 import { YDoc } from '../../YAST';
+import { resolvePathClassic } from '../../YAST/resolvePathClassic';
 import { WithIds, YifyClassic, YjsifyClassic } from '../../YAST/YjsifyClassic';
 
 export const ydoc = new YDoc('shipengine');
@@ -458,9 +459,6 @@ export function MapIds(
 ): Map<string, YifyClassic<object>> {
   if (typeof o !== 'object' || o === null) return map;
   if (o instanceof Y.Map) {
-    if (o.has('id')) {
-      const key = o.get('id');
-    }
     for (const [key, value] of o.entries()) {
       if (key === 'id') {
         map.set(value, o);
@@ -477,3 +475,81 @@ export function MapIds(
 }
 
 export const getIdMap = () => MapIds(ydoc.doc.getMap('root').get('operation-classic'));
+
+// @ts-ignore
+// window.devtoolsFormatters = window.devtoolsFormatters || [];
+
+// @ts-ignore
+window.devtoolsFormatters = [
+  {
+    header: function (obj: any, config: any) {
+      // if (obj instanceof Y.Text) {
+      //   return ['div', {}, obj.toString()];
+      // }
+      if (config?.yjsFormatter) {
+        return ['div', {}, config.key];
+      }
+      if (obj instanceof Y.Text) {
+        return ['div', {}, `Y.Text { ${obj.toString()} }`];
+      }
+      if (!(obj instanceof Y.Map)) {
+        return null;
+      }
+      return ['div', {}, 'YMap' /*JSON.stringify(obj.toJSON())*/];
+    },
+    hasBody: function () {
+      return true;
+    },
+    body: function (obj, config) {
+      var elements = [];
+      if (obj instanceof Y.Array) {
+        obj.forEach((childObj, key) => {
+          const child = [
+            'div',
+            { style: 'margin-left: 1em' },
+            typeof childObj === 'object' && !(childObj instanceof Y.Text)
+              ? [
+                  'object',
+                  {
+                    object: childObj,
+                    config: {
+                      key: key,
+                      yjsFormatter: true,
+                    },
+                  },
+                ]
+              : key + ': ' + childObj.toString(),
+          ];
+          elements.push(child);
+        });
+      } else if (obj instanceof Y.Map) {
+        for (let [key, childObj] of obj.entries()) {
+          const child = [
+            'div',
+            { style: 'margin-left: 1em' },
+            childObj instanceof Y.Text
+              ? key + ': ' + `(Y.Text) ${childObj.toString()}`
+              : typeof childObj === 'object'
+              ? [
+                  'object',
+                  {
+                    object: childObj,
+                    config: {
+                      key: key,
+                      yjsFormatter: true,
+                    },
+                  },
+                ]
+              : key + ': ' + childObj.toString(),
+          ];
+          elements.push(child);
+        }
+      }
+
+      return ['div', {}].concat(elements);
+    },
+  },
+];
+
+// @ts-ignore
+window.resolvePathClassic = resolvePathClassic;

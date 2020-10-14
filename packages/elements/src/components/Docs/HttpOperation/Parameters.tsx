@@ -8,6 +8,8 @@ import * as React from 'react';
 import { EditHandle, editHandle, editHandleClick, editHandleId } from '../../../constants';
 import { EditModeContext } from '../../../containers/EditingProvider';
 import { InlineRefResolverContext } from '../../../containers/Provider';
+import { useClick } from '../../../hooks/useClick';
+import { WithIds } from '../../../YAST/YjsifyClassic';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
 
@@ -85,14 +87,19 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
 Parameters.displayName = 'HttpOperation.Parameters';
 
 export interface IParameterProps {
-  parameter: IHttpParam;
+  parameter: WithIds<IHttpParam>;
   parameterType: ParameterType;
   className?: string;
 }
 
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterType, className }) => {
-  const { onClick } = React.useContext(EditModeContext);
-  console.log('onClick', onClick);
+  const onParamClick = useClick(parameter);
+  const onNameClick = useClick(parameter, 'name');
+  const onRequiredClick = useClick(parameter, 'required');
+  const onDescriptionClick = useClick(parameter, 'description');
+  const onDeprecatedClick = useClick(parameter, 'deprecated');
+  const onStyleClick = useClick(parameter, 'style');
+
   if (!parameter) return null;
 
   // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
@@ -124,11 +131,11 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       className={cn('HttpOperation__Parameter pl-1', className)}
       data-type={parameterType}
       data-name={parameter.name}
-      onClick={editHandleClick(parameter, '', onClick)}
+      onClick={onParamClick}
       {...editHandle(parameter)}
     >
       <div className="flex items-center">
-        <div className="font-medium font-mono" onClick={editHandleClick(parameter, 'name', onClick)}>
+        <div className="font-medium font-mono" onClick={onNameClick}>
           {parameter.name}
         </div>
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>
@@ -138,6 +145,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
               'text-danger': parameter.required,
               'opacity-50': !parameter.required,
             })}
+            onClick={onRequiredClick}
           >
             {parameter.required ? 'required' : 'optional'}
           </div>
@@ -147,12 +155,16 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
       <KeyValueValidations validations={keyValueValidations} />
 
-      <MarkdownViewer className="text-gray-7 dark:text-gray-4 mt-1" markdown={description || '*No description.*'} />
+      <MarkdownViewer
+        className="text-gray-7 dark:text-gray-4 mt-1"
+        markdown={description || '*No description.*'}
+        onClick={onDescriptionClick}
+      />
 
       {deprecated || parameter.style || keys(validations).length ? (
         <div className="flex flex-wrap">
           {deprecated && (
-            <Tag className="mt-2 mr-2" intent="warning" minimal>
+            <Tag className="mt-2 mr-2" intent="warning" minimal onClick={onDeprecatedClick}>
               Deprecated
             </Tag>
           )}
@@ -160,7 +172,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
           <NameValidations validations={booleanValidations} />
 
           {parameter.style && defaultStyle[parameterType] !== parameter.style && (
-            <Tag className="mt-2 mr-2" minimal>
+            <Tag className="mt-2 mr-2" minimal onClick={onStyleClick}>
               {readableStyles[parameter.style] || parameter.style}
             </Tag>
           )}

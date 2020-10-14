@@ -19,9 +19,7 @@ storiesOf('Public/API', module)
   .add('Sidebar Layout', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <EditModeContext.Provider value={{ onClick: console.log, getClasses: () => ({}), getStyle: () => ({}) }}>
-          <API apiDescriptionUrl={apiDescriptionUrl()} />
-        </EditModeContext.Provider>
+        <API apiDescriptionUrl={apiDescriptionUrl()} />
       </div>
     );
   })

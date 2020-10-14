@@ -9,20 +9,26 @@ export function DeYjsifyClassic<T>(map: YifyClassic<T>): T {
   if (map instanceof Y.Text) return map.toString();
   // @ts-ignore
   if (map instanceof Y.Array) return map.map(x => DeYjsifyClassic(x));
-  // @ts-ignore
-  return new Proxy(
-    {},
-    {
-      get(target, prop, receiver) {
-        if (prop === 'toJSON') {
-          // @ts-ignore
-          return map.toJSON.bind(map);
-        }
-        // @ts-ignore
-        return DeYjsifyClassic(map.get(prop));
+
+  if (map instanceof Y.Map) {
+    // @ts-ignore
+    return new Proxy(
+      {},
+      {
+        has(target, prop) {
+          return map.has(String(prop));
+        },
+        get(target, prop, receiver) {
+          if (prop === 'toJSON') {
+            return map.toJSON.bind(map);
+          }
+          return DeYjsifyClassic(map.get(String(prop)));
+        },
       },
-    },
-  );
+    );
+  }
+  // @ts-ignore
+  return map;
 }
 
 // @ts-ignore

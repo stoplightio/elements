@@ -6,17 +6,20 @@ import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import { throttle } from 'lodash';
 import * as React from 'react';
+import * as Y from 'yjs';
 
 import { getIdMap, resetOperation, ydoc } from '../../__fixtures__/operations/shipengineYjsClassic';
 import { IAny, IOperation } from '../../AST';
 import { leafNodeTypes } from '../../AST/leafs';
 import { HttpOperation } from '../../components/Docs/HttpOperation';
-import { EnhancerContext } from '../../components/Docs/HttpOperation2/EnhancerContext';
+import { EditModeContext } from '../../containers/EditingProvider';
 import { Provider } from '../../containers/Provider';
 import { useObserveDeep } from '../../hooks/y/useObserveDeep';
 import { useYDoc } from '../../hooks/y/useYDoc';
-import { getId, getParent, Yify, Yjsify } from '../../YAST';
+import { getId, getParent, TypedYArray, TypedYMap, Yify, Yjsify } from '../../YAST';
 import { DeYjsifyClassic } from '../../YAST/DeYjsifyClassic';
+import { resolvePathClassic } from '../../YAST/resolvePathClassic';
+import { YjsifyClassic } from '../../YAST/YjsifyClassic';
 import { YQuill } from './YQuill';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
@@ -38,8 +41,11 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
 
   const IdMapYjs = getIdMap();
 
-  const addKnobs = (o: Yify<IAny>) => {
+  const addKnobs = (o: TypedYMap<any>) => {
     if (!o) return;
+    const nodePath = resolvePathClassic(o, ydoc.doc.getMap('operation-classic'));
+    const fullPath = focus ? `${nodePath}.${focus}` : nodePath;
+
     // We need to prevent setting the value to its current value so as not to trigger infinite update loops.
     const oset = (prop, value) => {
       // @ts-ignore
@@ -50,388 +56,428 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
         }, ydoc.doc.clientID);
       }
     };
-    // @ts-ignore
-    switch (o.get('type')) {
-      case 'name': {
-        knobs.push(
-          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-            <label className="bp3-label">Name</label>
-            <InputGroup
-              name="name"
-              className="flex-1"
-              placeholder="Name"
-              autoComplete="off"
-              autoFocus={getId(o) === focus}
-              value={o.get('value')}
-              onChange={e => {
-                oset('value', e.currentTarget.value);
-              }}
-              data-controller-for={getId(o)}
-            />
-          </div>,
-        );
-        return;
-      }
-      case 'description': {
-        knobs.push(
-          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-            <label className="bp3-label">Description</label>
-            <div className="w-full" data-controller-for={getId(o)}>
-              <YQuill type={o.get('value')} awareness={ydoc.wsProvider.awareness} />
-              {/* <CodeEditor
-                value={o.get('value')}
-                onChange={value => {
-                  console.log(value);
-                  oset('value', value);
-                }}
-                placeholder={``}
-                autoFocus={getId(o) === focus}
-                language="markdown"
-                className="border border-gray-2 dark:border-gray-6"
-                style={{ minHeight: 140 }}
-                
-              /> */}
-            </div>
-          </div>,
-        );
-        return;
-      }
-      case 'path': {
-        knobs.push(
-          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-            <label className="bp3-label">Path</label>
-            <InputGroup
-              name="path"
-              className="w-full"
-              placeholder="Path"
-              autoComplete="off"
-              autoFocus={getId(o) === focus}
-              value={o.get('value')}
-              onChange={e => {
-                console.log(e.currentTarget.value);
-                oset('value', e.currentTarget.value);
-              }}
-              data-controller-for={getId(o)}
-            />
-          </div>,
-        );
-        return;
-      }
-      case 'httpMethod': {
-        const items = ['get', 'put', 'post', 'delete', 'etc'];
-        knobs.push(
-          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-            <label className="bp3-label flex-1">Method</label>
-            <HTMLSelect
-              name="method"
-              defaultValue={'get'}
-              value={o.get('value')}
-              options={items}
-              autoFocus={getId(o) === focus}
-              onChange={async e => {
-                oset('value', e.currentTarget.value);
-              }}
-              data-controller-for={getId(o)}
-            />
-          </div>,
-        );
-        return;
-      }
-      case 'style': {
-        const subtype = getParent(getParent(o)).get('type');
-        console.log('style.parent.parent.type', subtype);
-        const choices = {
-          cookieParams: ['form'],
-          headerParams: ['simple'],
-          pathParams: ['simple', 'matrix', 'label'],
-          queryParams: ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject'],
-        };
-        knobs.push(
-          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-            <label className="bp3-label flex-1">Style</label>
-            <HTMLSelect
-              name="style"
-              defaultValue={'get'}
-              value={o.get('value')}
-              autoFocus={getId(o) === focus}
-              options={choices[subtype]}
-              onChange={async e => {
-                oset('value', e.currentTarget.value);
-              }}
-              data-controller-for={getId(o)}
-            />
-          </div>,
-        );
-        return;
-      }
-      case 'httpStatus': {
-        knobs.push(
-          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-            <label className="bp3-label flex-1">Status Code</label>
-            <InputGroup
-              name="name"
-              placeholder="2xx"
-              autoComplete="off"
-              autoFocus={getId(o) === focus}
-              value={o.get('value')}
-              onChange={e => {
-                oset('value', e.currentTarget.value);
-              }}
-              data-controller-for={getId(o)}
-            />
-          </div>,
-        );
-        return;
-      }
-      case 'required': {
-        knobs.push(
-          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-            <label className="bp3-label flex-1">Required</label>
-            <Checkbox
-              name="required"
-              defaultValue={'get'}
-              checked={o.get('value')}
-              label="Required"
-              autoFocus={getId(o) === focus}
-              onChange={async e => {
-                oset('value', e.currentTarget.checked);
-              }}
-              data-controller-for={getId(o)}
-            />
-          </div>,
-        );
-        return;
-      }
-      case 'deprecated': {
-        knobs.push(
-          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-            <label className="bp3-label flex-1">Deprecated</label>
-            <Checkbox
-              name="deprecated"
-              defaultValue={'get'}
-              checked={o.get('value')}
-              label="Deprecated"
-              autoFocus={getId(o) === focus}
-              onChange={async e => {
-                oset('value', e.currentTarget.checked);
-              }}
-              data-controller-for={getId(o)}
-            />
-          </div>,
-        );
-        return;
-      }
-      case 'cookieParams':
-      case 'headerParams':
-      case 'pathParams':
-      case 'queryParams': {
-        const subtype = {
-          cookieParams: 'Cookie',
-          headerParams: 'Header',
-          pathParams: 'Path',
-          queryParams: 'Query',
-        }[o.get('type')];
-        knobs.push(
-          <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-            <Button
-              className="w-full"
-              type="submit"
-              intent="primary"
-              large
-              onClick={() => {
-                const node = Yjsify({
-                  type: 'param',
-                  children: [
-                    {
-                      type: 'name',
-                      value: 'untitled',
-                    },
-                    {
-                      type: 'description',
-                      value: '',
-                    },
-                    {
-                      type: 'style',
-                      value: 'simple',
-                    },
-                    {
-                      type: 'required',
-                      value: false,
-                    },
-                  ],
-                });
-                // @ts-ignore
-                o.get('children').push([node]);
 
-                const id = getId(node);
-                // @ts-ignore
-                IdMapYjs.set(id, node);
-                for (const child of node.get('children')) {
-                  // @ts-ignore
-                  IdMapYjs.set(getId(child), child);
-                }
-                selections.clear();
-                selections.add(id);
-                setSelected(id);
-                setSelections(selections);
-              }}
-            >
-              Add {subtype} Parameter
-            </Button>
-          </div>,
-        );
-        return;
-      }
-      case 'param': {
-        for (const child of o.get('children')) {
-          addKnobs(child);
-        }
+    if (
+      nodePath === 'request.cookie[]' ||
+      nodePath === 'request.headers[]' ||
+      nodePath === 'request.path[]' ||
+      nodePath === 'request.query[]'
+    ) {
+      const choices = nodePath.endsWith('request.cookie[]')
+        ? ['form']
+        : nodePath.endsWith('request.headers[]')
+        ? ['simple']
+        : nodePath.endsWith('request.path[]')
+        ? ['simple', 'matrix', 'label']
+        : nodePath.endsWith('request.query[]')
+        ? ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject']
+        : [];
+      knobs.push(
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Name</label>
+          <InputGroup
+            name="name"
+            className="flex-1"
+            placeholder="Name"
+            autoComplete="off"
+            autoFocus={focus === 'name'}
+            value={o.get('name')}
+            onChange={e => {
+              oset('name', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-name`}
+          />
+        </div>,
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Description</label>
+          <div className="w-full" data-controller-for={`${o.get('id')}-description`}>
+            <YQuill type={o.get('description')} awareness={ydoc.wsProvider.awareness} />
+          </div>
+        </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label flex-1">Required</label>
+          <Checkbox
+            name="required"
+            defaultValue={'get'}
+            checked={o.get('required')}
+            label="Required"
+            autoFocus={focus === 'required'}
+            onChange={async e => {
+              oset('required', e.currentTarget.checked);
+            }}
+            data-controller-for={`${o.get('id')}-required`}
+          />
+        </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label flex-1">Deprecated</label>
+          <Checkbox
+            name="deprecated"
+            defaultValue={'get'}
+            checked={o.get('deprecated')}
+            label="Deprecated"
+            autoFocus={focus === 'deprecated'}
+            onChange={async e => {
+              oset('deprecated', e.currentTarget.checked);
+            }}
+            data-controller-for={`${o.get('id')}-deprecated`}
+          />
+        </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label flex-1">Style</label>
+          <HTMLSelect
+            name="style"
+            defaultValue={'get'}
+            value={o.get('style')}
+            autoFocus={focus === 'style'}
+            options={choices}
+            onChange={async e => {
+              oset('style', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-style`}
+          />
+        </div>,
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <Button
+            className="w-full"
+            type="submit"
+            intent="primary"
+            large
+            onClick={() => {
+              setSelected(void 0);
+              const i = getParent(o)
+                .get('children')
+                .toArray()
+                .findIndex(j => getId(j) === getId(o));
+              getParent(o).get('children').delete(i);
+            }}
+          >
+            Delete Parameter
+          </Button>
+        </div>,
+      );
+      return;
+    } else if (
+      fullPath === 'request.cookie' ||
+      fullPath === 'request.headers' ||
+      fullPath === 'request.path' ||
+      fullPath === 'request.query'
+    ) {
+      const subtype =
+        focus === 'cookie'
+          ? 'Cookie'
+          : focus === 'headers'
+          ? 'Header'
+          : focus === 'path'
+          ? 'Path'
+          : focus === 'query'
+          ? 'Query'
+          : '?';
+      knobs.push(
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <Button
+            className="w-full"
+            type="submit"
+            intent="primary"
+            large
+            onClick={() => {
+              const node = YjsifyClassic({
+                id: String(Math.floor(Math.random() * 10000)),
+                name: 'untitled',
+                description: '',
+                style: 'simple',
+                required: false,
+              });
+              // @ts-ignore
+              o.get(focus).push([node]);
 
-        knobs.push(
-          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-            <Button
-              className="w-full"
-              type="submit"
-              intent="primary"
-              large
-              onClick={() => {
-                setSelected(void 0);
-                const i = getParent(o)
-                  .get('children')
-                  .toArray()
-                  .findIndex(j => getId(j) === getId(o));
-                getParent(o).get('children').delete(i);
-              }}
-            >
-              Delete Parameter
-            </Button>
-          </div>,
-        );
-        return;
-      }
-      case 'request': {
-        for (const child of o.get('children')) {
-          addKnobs(child);
-        }
-
-        knobs.push(
-          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-            <Button
-              className="w-full"
-              type="submit"
-              intent="primary"
-              large
-              onClick={() => {
-                const node = Yjsify({
-                  type: 'requestBody',
-                  children: [
-                    {
-                      type: 'required',
-                      value: false,
-                    },
-                    {
-                      type: 'description',
-                      value: '',
-                    },
-                    {
-                      type: 'schema',
-                      value: {},
-                      children: [],
-                    },
-                  ],
-                });
-                // @ts-ignore
-                o.get('children').push([node]);
-
-                // @ts-ignore
-                IdMapYjs.set(getId(node), node);
-                for (const child of node.get('children')) {
-                  // @ts-ignore
-                  IdMapYjs.set(getId(child), child);
-                }
-                setSelected(getId(node));
-              }}
-            >
-              Add Body
-            </Button>
-          </div>,
-        );
-        return;
-      }
-      case 'requestBody': {
-        for (const child of o.get('children')) {
-          addKnobs(child);
-        }
-        return;
-      }
-      case 'response': {
-        for (const child of o.get('children')) {
-          addKnobs(child);
-        }
-        return;
-      }
-      case 'responses': {
-        knobs.push(
-          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-            <Button
-              className="w-full"
-              type="submit"
-              intent="primary"
-              large
-              onClick={() => {
-                const node = Yjsify({
-                  type: 'response',
-                  children: [
-                    {
-                      type: 'httpStatus',
-                      value: '1xx',
-                    },
-                    {
-                      type: 'description',
-                      value: '',
-                    },
-                  ],
-                });
-                // @ts-ignore
-                o.get('children').push([node]);
-
-                const id = getId(node);
-                // @ts-ignore
-                IdMapYjs.set(id, node);
-                for (const child of node.get('children')) {
-                  // @ts-ignore
-                  IdMapYjs.set(getId(child), child);
-                }
-                selections.clear();
-                selections.add(id);
-                setSelected(id);
-                setSelections(selections);
-              }}
-            >
-              Add Response
-            </Button>
-          </div>,
-        );
-        return;
-      }
-      case 'operation': {
-        for (const child of o.get('children')) {
-          addKnobs(child);
-        }
-
-        knobs.push(
-          <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-            <Button className="w-full" type="submit" intent="danger" large onClick={() => resetOperation()}>
-              Reset Operation
-            </Button>
-          </div>,
-        );
-        return;
-      }
+              const id = node.get('id');
+              // @ts-ignore
+              IdMapYjs.set(id, node);
+              selections.clear();
+              selections.add(id);
+              setSelected(id);
+              setSelections(selections);
+            }}
+          >
+            Add {subtype} Parameter
+          </Button>
+        </div>,
+      );
+    } else if (nodePath === '') {
+      const items = ['get', 'put', 'post', 'delete', 'etc'];
+      knobs.push(
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label flex-1">Method</label>
+          <HTMLSelect
+            name="method"
+            defaultValue={'get'}
+            value={o.get('method')}
+            options={items}
+            autoFocus={focus === 'method'}
+            onChange={async e => {
+              oset('method', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-method`}
+          />
+        </div>,
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Path</label>
+          <InputGroup
+            name="path"
+            className="w-full"
+            placeholder="Path"
+            autoComplete="off"
+            autoFocus={focus === 'path'}
+            value={o.get('path')}
+            onChange={e => {
+              console.log(e.currentTarget.value);
+              oset('path', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-path`}
+          />
+        </div>,
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Description</label>
+          <div className="w-full" data-controller-for={`${o.get('id')}-description`}>
+            <YQuill type={o.get('description')} awareness={ydoc.wsProvider.awareness} />
+          </div>
+        </div>,
+      );
     }
+
+    //   case 'name': {
+    //     return;
+    //   }
+    //   case 'description': {
+    //     knobs.push(
+    //     );
+    //     return;
+    //   }
+    //   case 'path': {
+    //     knobs.push(
+    //     );
+    //     return;
+    //   }
+    //   case 'httpMethod': {
+    //     return;
+    //   }
+    //   case 'style': {
+    //     const subtype = getParent(getParent(o)).get('type');
+    //     console.log('style.parent.parent.type', subtype);
+    //     knobs.push(
+    //     );
+    //     return;
+    //   }
+    //   case 'httpStatus': {
+    //     knobs.push(
+    //       <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+    //         <label className="bp3-label flex-1">Status Code</label>
+    //         <InputGroup
+    //           name="name"
+    //           placeholder="2xx"
+    //           autoComplete="off"
+    //           autoFocus={focus === 'code'}
+    //           value={o.get('code')}
+    //           onChange={e => {
+    //             oset('code', e.currentTarget.value);
+    //           }}
+    //           data-controller-for={`${o.get('id')}-code`}
+    //         />
+    //       </div>,
+    //     );
+    //     return;
+    //   }
+    //   case 'required': {
+    //     knobs.push(
+    //       <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+    //         <label className="bp3-label flex-1">Required</label>
+    //         <Checkbox
+    //           name="required"
+    //           defaultValue={'get'}
+    //           checked={o.get('required')}
+    //           label="Required"
+    //           autoFocus={focus === 'required'}
+    //           onChange={async e => {
+    //             oset('required', e.currentTarget.checked);
+    //           }}
+    //           data-controller-for={`${o.get('id')}-required`}
+    //         />
+    //       </div>,
+    //     );
+    //     return;
+    //   }
+    //   case 'deprecated': {
+    //     knobs.push(
+    //     );
+    //     return;
+    //   }
+    //   case 'cookieParams':
+    //   case 'headerParams':
+    //   case 'pathParams':
+    //   case 'queryParams': {
+    //     const subtype = {
+    //       cookieParams: 'Cookie',
+    //       headerParams: 'Header',
+    //       pathParams: 'Path',
+    //       queryParams: 'Query',
+    //     }[type];
+    //     knobs.push(
+    //       <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+    //         <Button
+    //           className="w-full"
+    //           type="submit"
+    //           intent="primary"
+    //           large
+    //           onClick={() => {
+    //             const node = YjsifyClassic({
+    //               id: String(Math.floor(Math.random() * 10000)),
+    //               name: 'untitled',
+    //               description: '',
+    //               style: 'simple',
+    //               required: false,
+    //             });
+    //             // @ts-ignore
+    //             o.get(focus).push([node]);
+
+    //             const id = node.get('id');
+    //             // @ts-ignore
+    //             IdMapYjs.set(id, node);
+    //             selections.clear();
+    //             selections.add(id);
+    //             setSelected(id);
+    //             setSelections(selections);
+    //           }}
+    //         >
+    //           Add {subtype} Parameter
+    //         </Button>
+    //       </div>,
+    //     );
+    //     return;
+    //   }
+    //   case 'request': {
+    //     for (const child of o.get('children')) {
+    //       addKnobs(child);
+    //     }
+
+    //     knobs.push(
+    //       <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+    //         <Button
+    //           className="w-full"
+    //           type="submit"
+    //           intent="primary"
+    //           large
+    //           onClick={() => {
+    //             const node = Yjsify({
+    //               type: 'requestBody',
+    //               children: [
+    //                 {
+    //                   type: 'required',
+    //                   value: false,
+    //                 },
+    //                 {
+    //                   type: 'description',
+    //                   value: '',
+    //                 },
+    //                 {
+    //                   type: 'schema',
+    //                   value: {},
+    //                   children: [],
+    //                 },
+    //               ],
+    //             });
+    //             // @ts-ignore
+    //             o.get('children').push([node]);
+
+    //             // @ts-ignore
+    //             IdMapYjs.set(getId(node), node);
+    //             for (const child of node.get('children')) {
+    //               // @ts-ignore
+    //               IdMapYjs.set(getId(child), child);
+    //             }
+    //             setSelected(getId(node));
+    //           }}
+    //         >
+    //           Add Body
+    //         </Button>
+    //       </div>,
+    //     );
+    //     return;
+    //   }
+    //   case 'requestBody': {
+    //     for (const child of o.get('children')) {
+    //       addKnobs(child);
+    //     }
+    //     return;
+    //   }
+    //   case 'response': {
+    //     for (const child of o.get('children')) {
+    //       addKnobs(child);
+    //     }
+    //     return;
+    //   }
+    //   case 'responses': {
+    //     knobs.push(
+    //       <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+    //         <Button
+    //           className="w-full"
+    //           type="submit"
+    //           intent="primary"
+    //           large
+    //           onClick={() => {
+    //             const node = Yjsify({
+    //               type: 'response',
+    //               children: [
+    //                 {
+    //                   type: 'httpStatus',
+    //                   value: '1xx',
+    //                 },
+    //                 {
+    //                   type: 'description',
+    //                   value: '',
+    //                 },
+    //               ],
+    //             });
+    //             // @ts-ignore
+    //             o.get('children').push([node]);
+
+    //             const id = getId(node);
+    //             // @ts-ignore
+    //             IdMapYjs.set(id, node);
+    //             for (const child of node.get('children')) {
+    //               // @ts-ignore
+    //               IdMapYjs.set(getId(child), child);
+    //             }
+    //             selections.clear();
+    //             selections.add(id);
+    //             setSelected(id);
+    //             setSelections(selections);
+    //           }}
+    //         >
+    //           Add Response
+    //         </Button>
+    //       </div>,
+    //     );
+    //     return;
+    //   }
+    //   case 'operation': {
+    //     for (const child of o.get('children')) {
+    //       addKnobs(child);
+    //     }
+
+    //     knobs.push(
+    //       <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+    //         <Button className="w-full" type="submit" intent="danger" large onClick={() => resetOperation()}>
+    //           Reset Operation
+    //         </Button>
+    //       </div>,
+    //     );
+    //     return;
+    //   }
+    // }
   };
 
   const o = IdMapYjs.get(selected);
+
   addKnobs(o);
 
   return (
@@ -544,20 +590,18 @@ storiesOf('Internal/Stoplight AST', module)
           }
 
           setSelected(void 0);
-          let node = IdMapYjs.get(id);
-          let focus = node;
-          if (leafNodeTypes.includes(node.get('type'))) {
-            node = getParent(node);
-          }
-          selections.add(getId(node));
-          setSelected(getId(node));
-          setFocus(getId(focus));
-          ydoc.wsProvider.awareness.setLocalStateField('selected', getId(node));
-          ydoc.wsProvider.awareness.setLocalStateField('focus', getId(focus));
+          const [nodeId, propName] = id.split('-');
+          let node = IdMapYjs.get(nodeId);
+          let focus = propName;
+          selections.add(nodeId);
+          setSelected(nodeId);
+          setFocus(focus);
+          ydoc.wsProvider.awareness.setLocalStateField('selected', nodeId);
+          ydoc.wsProvider.awareness.setLocalStateField('focus', focus);
 
           // Best effort to set focus.
           setTimeout(() => {
-            const el = document.querySelector(`[data-controller-for="${getId(focus)}"]`);
+            const el = document.querySelector(`[data-controller-for="${id}"]`);
             if (el === null) {
               console.log('No data-controller-for found');
               return;
@@ -593,7 +637,7 @@ storiesOf('Internal/Stoplight AST', module)
     const el = (
       <div className={cn('p-10 flex overflow-y-auto ', { 'bp3-dark bg-gray-8': dark })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
-          <EnhancerContext.Provider value={enhancer}>
+          <EditModeContext.Provider value={enhancer}>
             <div style={{ marginRight: 400 }}>
               <HttpOperation data={transformed} />
             </div>
@@ -604,7 +648,7 @@ storiesOf('Internal/Stoplight AST', module)
               setSelections={setSelections}
               focus={focus}
             />
-          </EnhancerContext.Provider>
+          </EditModeContext.Provider>
         </Provider>
       </div>
     );
