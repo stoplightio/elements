@@ -224,9 +224,12 @@ const KeyValueValidation = ({
         .map(v => {
           const value = typeof v === 'object' ? v.value : String(v);
           return (
-            <code className="ml-1" key={value}>
-              {value}
-            </code>
+            <span>
+              <code className="ml-1" key={value}>
+                {value}
+              </code>
+              {' '}
+            </span>
           );
         })}
     </div>
