@@ -23,15 +23,29 @@ import { computeOas3UriMap } from '../utils/oas/oas3';
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 export interface APIProps extends RoutingProps {
-  apiDescriptionUrl: string;
+  apiDescriptionUrl?: string;
+  apiDescriptionDocument?: string | object;
   linkComponent?: LinkComponentType;
   layout?: 'sidebar' | 'stacked';
 }
 
-const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkComponent, layout }) {
+const APIImpl = withRouter<APIProps>(function API({
+  apiDescriptionUrl,
+  apiDescriptionDocument,
+  linkComponent,
+  layout,
+}) {
   const { pathname } = useLocation();
 
-  const { data, error } = useSwr(apiDescriptionUrl, fetcher);
+  const { data, error } = useSwr(apiDescriptionUrl || null, fetcher);
+
+  React.useEffect(() => {
+    if (apiDescriptionUrl && apiDescriptionDocument) {
+      console.warn(
+        `Both 'apiDescriptionUrl' and 'apiDescriptionDocument' props were provided, so 'apiDescriptionDocument' took precedence.`,
+      );
+    }
+  }, [apiDescriptionUrl, apiDescriptionDocument]);
 
   React.useEffect(() => {
     if (error) {
@@ -39,7 +53,7 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
     }
   }, [error]);
 
-  const document = useParsedValue(data);
+  const document = useParsedValue(apiDescriptionDocument || data);
   const bundledDocument = useBundleRefsIntoDocument(document, { baseUrl: apiDescriptionUrl });
 
   const uriMap = React.useMemo(() => {
