@@ -225,10 +225,7 @@ const KeyValueValidation = ({
           const value = typeof v === 'object' ? v.value : String(v);
           return (
             <span key={value}>
-              <code className="ml-1">
-                {value}
-              </code>
-              {' '}
+              <code className="ml-1">{value}</code>{' '}
             </span>
           );
         })}
