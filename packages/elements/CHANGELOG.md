@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.167](https://github.com/stoplightio/elements/compare/v6.0.0-beta.166...v6.0.0-beta.167) (2020-10-14)
+
+
+### Features
+
+* **inline-ref-resolver:** allow passing fully custom resolver functions ([#624](https://github.com/stoplightio/elements/issues/624)) ([291248b](https://github.com/stoplightio/elements/commit/291248b6ddddf9c1e953ab41d04c07adab0f5c6d))
+
+
+
+
+
 # [6.0.0-beta.166](https://github.com/stoplightio/elements/compare/v6.0.0-beta.165...v6.0.0-beta.166) (2020-10-08)
 
 **Note:** Version bump only for package @stoplight/elements
