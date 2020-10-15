@@ -178,7 +178,7 @@ const NumberValidations = ({ validations, className }: { validations: Dictionary
       const sign = `${key.includes('min') ? '>' : '<'}${exclusive ? '' : '='}`;
 
       return (
-        <div key={key} className={cn('ml-2 text-sm bp3-running-text', className)}>
+        <div key={key} className={cn('ml-2 text-sm bp3-running-text break-all', className)}>
           <code>{`${sign} ${validations[key]}${suffix}`}</code>
         </div>
       );
@@ -214,7 +214,7 @@ const KeyValueValidation = ({
   }
   const validation = Array.isArray(value) ? value : [value];
   return (
-    <div className={cn('text-sm mt-2 bp3-running-text', className)}>
+    <div className={cn('text-sm mt-2 bp3-running-text break-all flex flex-wrap', className)}>
       {capitalize(name)}:
       {validation
         .filter(
