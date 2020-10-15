@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.168](https://github.com/stoplightio/elements/compare/v6.0.0-beta.167...v6.0.0-beta.168) (2020-10-15)
+
+
+### Bug Fixes
+
+* breaking layout on long request param string ([#626](https://github.com/stoplightio/elements/issues/626)) ([aa99697](https://github.com/stoplightio/elements/commit/aa996971da29fa822f933aaecd4e8ddc532b72a0))
+
+
+
+
+
 # [6.0.0-beta.167](https://github.com/stoplightio/elements/compare/v6.0.0-beta.166...v6.0.0-beta.167) (2020-10-14)
 
 
