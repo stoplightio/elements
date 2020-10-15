@@ -22,30 +22,35 @@ import { computeOas3UriMap } from '../utils/oas/oas3';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
-export interface APIProps extends RoutingProps {
+export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
+
+export type APIPropsWithUrl = { apiDescriptionUrl: string } & CommonAPIProps;
+export type APIPropsWithDocument = {
+  apiDescriptionDocument: string | object;
   apiDescriptionUrl?: string;
-  apiDescriptionDocument?: string | object;
+} & CommonAPIProps;
+
+export interface CommonAPIProps extends RoutingProps {
   linkComponent?: LinkComponentType;
   layout?: 'sidebar' | 'stacked';
 }
 
-const APIImpl = withRouter<APIProps>(function API({
-  apiDescriptionUrl,
-  apiDescriptionDocument,
-  linkComponent,
-  layout,
-}) {
+const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
+  return (props as object).hasOwnProperty('apiDescriptionDocument');
+};
+
+const APIImpl = withRouter<APIProps>(function API(props) {
+  const { layout, linkComponent, apiDescriptionUrl } = props;
+
+  let apiDescriptionDocument: string | object | undefined;
+  if (propsAreWithDocument(props)) {
+    ({ apiDescriptionDocument } = props);
+  }
+
   const { pathname } = useLocation();
 
-  const { data, error } = useSwr(apiDescriptionUrl || null, fetcher);
-
-  React.useEffect(() => {
-    if (apiDescriptionUrl && apiDescriptionDocument) {
-      console.warn(
-        `Both 'apiDescriptionUrl' and 'apiDescriptionDocument' props were provided, so 'apiDescriptionDocument' took precedence.`,
-      );
-    }
-  }, [apiDescriptionUrl, apiDescriptionDocument]);
+  const documentShouldBeFetched = apiDescriptionUrl && !apiDescriptionDocument;
+  const { data: fetchedDocument, error } = useSwr(documentShouldBeFetched ? apiDescriptionUrl! : null, fetcher);
 
   React.useEffect(() => {
     if (error) {
@@ -53,7 +58,7 @@ const APIImpl = withRouter<APIProps>(function API({
     }
   }, [error]);
 
-  const document = useParsedValue(apiDescriptionDocument || data);
+  const document = useParsedValue(apiDescriptionDocument || fetchedDocument);
   const bundledDocument = useBundleRefsIntoDocument(document, { baseUrl: apiDescriptionUrl });
 
   const uriMap = React.useMemo(() => {

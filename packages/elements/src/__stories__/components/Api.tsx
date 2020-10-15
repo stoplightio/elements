@@ -7,6 +7,8 @@ import * as React from 'react';
 import { zoomApiYaml } from '../../__fixtures__/api-descriptions/zoomApiYaml';
 import { API } from '../../containers/API';
 
+const parsedZoomApiYaml = parse<object>(zoomApiYaml);
+
 const darkMode = () => boolean('dark mode', false);
 const apiDescriptionUrl = () =>
   text(
@@ -30,17 +32,10 @@ storiesOf('Public/API', module)
       </div>
     );
   })
-  .add('Local API File', () => {
+  .add('API Document Provided Directly', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <API apiDescriptionDocument={zoomApiYaml} />
-      </div>
-    );
-  })
-  .add('Parsed Local API File', () => {
-    return (
-      <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <API apiDescriptionDocument={parse(zoomApiYaml)} />
+        <API apiDescriptionDocument={boolean('API Document as Object', false) ? parsedZoomApiYaml : zoomApiYaml} />
       </div>
     );
   });
