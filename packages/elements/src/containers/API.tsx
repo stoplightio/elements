@@ -36,16 +36,12 @@ export interface CommonAPIProps extends RoutingProps {
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
-  return (props as object).hasOwnProperty('apiDescriptionDocument');
+  return props.hasOwnProperty('apiDescriptionDocument');
 };
 
 const APIImpl = withRouter<APIProps>(function API(props) {
   const { layout, linkComponent, apiDescriptionUrl } = props;
-
-  let apiDescriptionDocument: string | object | undefined;
-  if (propsAreWithDocument(props)) {
-    ({ apiDescriptionDocument } = props);
-  }
+  const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { pathname } = useLocation();
 
