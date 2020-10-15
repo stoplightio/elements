@@ -8,6 +8,7 @@ import * as React from 'react';
 import { InlineRefResolverContext } from '../../../containers/Provider';
 import { useClasses } from '../../../hooks/useClasses';
 import { useClick } from '../../../hooks/useClick';
+import { useStyle } from '../../../hooks/useStyle';
 import { WithIds } from '../../../YAST/YjsifyClassic';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
@@ -94,18 +95,24 @@ export interface IParameterProps {
 }
 
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterType, className }) => {
-  const onParamClick = useClick(parameter);
   const paramClasses = useClasses(parameter);
-  const onNameClick = useClick(parameter, 'name');
+  const paramStyle = useStyle(parameter);
+  const onParamClick = useClick(parameter);
+
   const nameClasses = useClasses(parameter, 'name');
-  const onRequiredClick = useClick(parameter, 'required');
+  const onNameClick = useClick(parameter, 'name');
+
   const requiredClasses = useClasses(parameter, 'required');
-  const onDescriptionClick = useClick(parameter, 'description');
+  const onRequiredClick = useClick(parameter, 'required');
+
   const descriptionClasses = useClasses(parameter, 'description');
-  const onDeprecatedClick = useClick(parameter, 'deprecated');
+  const onDescriptionClick = useClick(parameter, 'description');
+
   const deprecatedClasses = useClasses(parameter, 'deprecated');
-  const onStyleClick = useClick(parameter, 'style');
+  const onDeprecatedClick = useClick(parameter, 'deprecated');
+
   const styleClasses = useClasses(parameter, 'style');
+  const onStyleClick = useClick(parameter, 'style');
 
   if (!parameter) return null;
 
@@ -135,8 +142,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   return (
     <div
       className={cn('HttpOperation__Parameter pl-1', className, paramClasses)}
-      data-type={parameterType}
-      data-name={parameter.name}
+      style={paramStyle}
       onClick={onParamClick}
     >
       <div className="flex items-center">

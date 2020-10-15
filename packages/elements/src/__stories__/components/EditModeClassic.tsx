@@ -1,26 +1,23 @@
 import './EditMode.scss';
 
-import { HttpParamStyles } from '@stoplight/types';
+import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { Button, Checkbox, HTMLSelect, InputGroup } from '@stoplight/ui-kit';
 import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import { throttle } from 'lodash';
 import * as React from 'react';
-import * as Y from 'yjs';
 
 import { getIdMap, resetOperation, ydoc } from '../../__fixtures__/operations/shipengineYjsClassic';
-import { IAny, IOperation } from '../../AST';
-import { leafNodeTypes } from '../../AST/leafs';
 import { HttpOperation } from '../../components/Docs/HttpOperation';
 import { EditModeContext } from '../../containers/EditingProvider';
 import { Provider } from '../../containers/Provider';
 import { useObserveDeep } from '../../hooks/y/useObserveDeep';
 import { useYDoc } from '../../hooks/y/useYDoc';
-import { getId, getParent, TypedYArray, TypedYMap, Yify, Yjsify } from '../../YAST';
+import { TypedYArray, TypedYMap } from '../../YAST';
 import { DeYjsifyClassic } from '../../YAST/DeYjsifyClassic';
 import { resolvePathClassic } from '../../YAST/resolvePathClassic';
-import { YjsifyClassic } from '../../YAST/YjsifyClassic';
+import { WithIds, YjsifyClassic } from '../../YAST/YjsifyClassic';
 import { YQuill } from './YQuill';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
@@ -34,18 +31,19 @@ type IFormite = {
   setSelected: (id: string) => void;
   selections: Set<string>;
   setSelections: (selections: Set<string>) => void;
-  focus?: string;
 };
 
-const Formite = ({ selected, setSelected, selections, setSelections, focus }: IFormite) => {
+const Formite = ({ selected = '', setSelected, selections, setSelections }: IFormite) => {
+  const [nodeId, propName] = selected.split('-');
+
   const knobs = [];
 
   const IdMapYjs = getIdMap();
 
-  const addKnobs = (o: TypedYMap<any>) => {
-    if (!o) return;
+  const o = IdMapYjs.get(nodeId);
+
+  if (o) {
     const nodePath = resolvePathClassic(o, ydoc.doc.getMap('operation-classic'));
-    const fullPath = focus ? `${nodePath}.${focus}` : nodePath;
 
     // We need to prevent setting the value to its current value so as not to trigger infinite update loops.
     const oset = (prop, value) => {
@@ -81,7 +79,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             className="flex-1"
             placeholder="Name"
             autoComplete="off"
-            autoFocus={focus === 'name'}
+            autoFocus={propName === 'name'}
             value={o.get('name')}
             onChange={e => {
               oset('name', e.currentTarget.value);
@@ -102,7 +100,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             defaultValue={'get'}
             checked={o.get('required')}
             label="Required"
-            autoFocus={focus === 'required'}
+            autoFocus={propName === 'required'}
             onChange={async e => {
               oset('required', e.currentTarget.checked);
             }}
@@ -116,7 +114,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             defaultValue={'get'}
             checked={o.get('deprecated')}
             label="Deprecated"
-            autoFocus={focus === 'deprecated'}
+            autoFocus={propName === 'deprecated'}
             onChange={async e => {
               oset('deprecated', e.currentTarget.checked);
             }}
@@ -129,7 +127,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             name="style"
             defaultValue={'get'}
             value={o.get('style')}
-            autoFocus={focus === 'style'}
+            autoFocus={propName === 'style'}
             options={choices}
             onChange={async e => {
               oset('style', e.currentTarget.value);
@@ -164,7 +162,6 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
           </Button>
         </div>,
       );
-      return;
     } else if (nodePath === 'request') {
       const makeOnClick = (prop: string, style: HttpParamStyles) => () => {
         const node = YjsifyClassic({
@@ -235,6 +232,15 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
           </Button>
         </div>,
       );
+    } else if (nodePath === 'request.body') {
+      knobs.push(
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Description</label>
+          <div className="w-full" data-controller-for={`${o.get('id')}-description`}>
+            <YQuill type={o.get('description')} awareness={ydoc.wsProvider.awareness} />
+          </div>
+        </div>,
+      );
     } else if (nodePath === '') {
       const items = ['get', 'put', 'post', 'delete', 'etc'];
       knobs.push(
@@ -245,7 +251,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             defaultValue={'get'}
             value={o.get('method')}
             options={items}
-            autoFocus={focus === 'method'}
+            autoFocus={propName === 'method'}
             onChange={async e => {
               oset('method', e.currentTarget.value);
             }}
@@ -259,7 +265,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             className="w-full"
             placeholder="Path"
             autoComplete="off"
-            autoFocus={focus === 'path'}
+            autoFocus={propName === 'path'}
             value={o.get('path')}
             onChange={e => {
               console.log(e.currentTarget.value);
@@ -281,241 +287,7 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
         </div>,
       );
     }
-
-    //   case 'name': {
-    //     return;
-    //   }
-    //   case 'description': {
-    //     knobs.push(
-    //     );
-    //     return;
-    //   }
-    //   case 'path': {
-    //     knobs.push(
-    //     );
-    //     return;
-    //   }
-    //   case 'httpMethod': {
-    //     return;
-    //   }
-    //   case 'style': {
-    //     const subtype = getParent(getParent(o)).get('type');
-    //     console.log('style.parent.parent.type', subtype);
-    //     knobs.push(
-    //     );
-    //     return;
-    //   }
-    //   case 'httpStatus': {
-    //     knobs.push(
-    //       <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-    //         <label className="bp3-label flex-1">Status Code</label>
-    //         <InputGroup
-    //           name="name"
-    //           placeholder="2xx"
-    //           autoComplete="off"
-    //           autoFocus={focus === 'code'}
-    //           value={o.get('code')}
-    //           onChange={e => {
-    //             oset('code', e.currentTarget.value);
-    //           }}
-    //           data-controller-for={`${o.get('id')}-code`}
-    //         />
-    //       </div>,
-    //     );
-    //     return;
-    //   }
-    //   case 'required': {
-    //     knobs.push(
-    //       <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-    //         <label className="bp3-label flex-1">Required</label>
-    //         <Checkbox
-    //           name="required"
-    //           defaultValue={'get'}
-    //           checked={o.get('required')}
-    //           label="Required"
-    //           autoFocus={focus === 'required'}
-    //           onChange={async e => {
-    //             oset('required', e.currentTarget.checked);
-    //           }}
-    //           data-controller-for={`${o.get('id')}-required`}
-    //         />
-    //       </div>,
-    //     );
-    //     return;
-    //   }
-    //   case 'deprecated': {
-    //     knobs.push(
-    //     );
-    //     return;
-    //   }
-    //   case 'cookieParams':
-    //   case 'headerParams':
-    //   case 'pathParams':
-    //   case 'queryParams': {
-    //     const subtype = {
-    //       cookieParams: 'Cookie',
-    //       headerParams: 'Header',
-    //       pathParams: 'Path',
-    //       queryParams: 'Query',
-    //     }[type];
-    //     knobs.push(
-    //       <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
-    //         <Button
-    //           className="w-full"
-    //           type="submit"
-    //           intent="primary"
-    //           large
-    //           onClick={() => {
-    //             const node = YjsifyClassic({
-    //               id: String(Math.floor(Math.random() * 10000)),
-    //               name: 'untitled',
-    //               description: '',
-    //               style: 'simple',
-    //               required: false,
-    //             });
-    //             // @ts-ignore
-    //             o.get(focus).push([node]);
-
-    //             const id = node.get('id');
-    //             // @ts-ignore
-    //             IdMapYjs.set(id, node);
-    //             selections.clear();
-    //             selections.add(id);
-    //             setSelected(id);
-    //             setSelections(selections);
-    //           }}
-    //         >
-    //           Add {subtype} Parameter
-    //         </Button>
-    //       </div>,
-    //     );
-    //     return;
-    //   }
-    //   case 'request': {
-    //     for (const child of o.get('children')) {
-    //       addKnobs(child);
-    //     }
-
-    //     knobs.push(
-    //       <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-    //         <Button
-    //           className="w-full"
-    //           type="submit"
-    //           intent="primary"
-    //           large
-    //           onClick={() => {
-    //             const node = Yjsify({
-    //               type: 'requestBody',
-    //               children: [
-    //                 {
-    //                   type: 'required',
-    //                   value: false,
-    //                 },
-    //                 {
-    //                   type: 'description',
-    //                   value: '',
-    //                 },
-    //                 {
-    //                   type: 'schema',
-    //                   value: {},
-    //                   children: [],
-    //                 },
-    //               ],
-    //             });
-    //             // @ts-ignore
-    //             o.get('children').push([node]);
-
-    //             // @ts-ignore
-    //             IdMapYjs.set(getId(node), node);
-    //             for (const child of node.get('children')) {
-    //               // @ts-ignore
-    //               IdMapYjs.set(getId(child), child);
-    //             }
-    //             setSelected(getId(node));
-    //           }}
-    //         >
-    //           Add Body
-    //         </Button>
-    //       </div>,
-    //     );
-    //     return;
-    //   }
-    //   case 'requestBody': {
-    //     for (const child of o.get('children')) {
-    //       addKnobs(child);
-    //     }
-    //     return;
-    //   }
-    //   case 'response': {
-    //     for (const child of o.get('children')) {
-    //       addKnobs(child);
-    //     }
-    //     return;
-    //   }
-    //   case 'responses': {
-    //     knobs.push(
-    //       <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-    //         <Button
-    //           className="w-full"
-    //           type="submit"
-    //           intent="primary"
-    //           large
-    //           onClick={() => {
-    //             const node = Yjsify({
-    //               type: 'response',
-    //               children: [
-    //                 {
-    //                   type: 'httpStatus',
-    //                   value: '1xx',
-    //                 },
-    //                 {
-    //                   type: 'description',
-    //                   value: '',
-    //                 },
-    //               ],
-    //             });
-    //             // @ts-ignore
-    //             o.get('children').push([node]);
-
-    //             const id = getId(node);
-    //             // @ts-ignore
-    //             IdMapYjs.set(id, node);
-    //             for (const child of node.get('children')) {
-    //               // @ts-ignore
-    //               IdMapYjs.set(getId(child), child);
-    //             }
-    //             selections.clear();
-    //             selections.add(id);
-    //             setSelected(id);
-    //             setSelections(selections);
-    //           }}
-    //         >
-    //           Add Response
-    //         </Button>
-    //       </div>,
-    //     );
-    //     return;
-    //   }
-    //   case 'operation': {
-    //     for (const child of o.get('children')) {
-    //       addKnobs(child);
-    //     }
-
-    //     knobs.push(
-    //       <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
-    //         <Button className="w-full" type="submit" intent="danger" large onClick={() => resetOperation()}>
-    //           Reset Operation
-    //         </Button>
-    //       </div>,
-    //     );
-    //     return;
-    //   }
-    // }
-  };
-
-  const o = IdMapYjs.get(selected);
-
-  addKnobs(o);
+  }
 
   return (
     <aside
@@ -543,11 +315,10 @@ storiesOf('Internal/Stoplight AST', module)
     const [, forceRender] = React.useReducer(s => s + 1, 0);
 
     const [selections, setSelections] = React.useState(new Set<string>());
-    const [foreignSelections, setForeignSelections] = React.useState(new Set<string>());
     const [selected, setSelected] = React.useState<string>(window.localStorage.selected);
 
-    const [focus, setFocus] = React.useState<string>(selected);
-    const [foreignFocus, setForeignFocus] = React.useState(new Set<string>());
+    const [foreignSelections, setForeignSelections] = React.useState(new Map<string, Set<string>>());
+    const [foreignSelected, setForeignSelected] = React.useState(new Map<string, string>());
 
     useYDoc(ydoc);
     const httpOperationYjs = ydoc.doc.getMap('root').get('operation-classic');
@@ -560,23 +331,20 @@ storiesOf('Internal/Stoplight AST', module)
     const onChange = () => {
       const states = ydoc.wsProvider.awareness.getStates();
       foreignSelections.clear();
-      foreignFocus.clear();
-      console.log('states', states);
+      foreignSelected.clear();
       let needsRender = false;
       for (const [client, state] of states) {
         if (client !== ydoc.doc.clientID) {
-          console.log('selected', state.selected);
-          foreignSelections.add(state.selected);
-          setForeignSelections(foreignSelections);
-          if (state.focus !== state.selected) {
-            console.log('focus', state.focus);
-            foreignFocus.add(state.focus);
-            setForeignFocus(foreignFocus);
-          }
+          foreignSelected.set(String(client), state.selected);
+          foreignSelections.set(String(client), new Set(state.selections));
           needsRender = true;
         }
       }
-      forceRender();
+      if (needsRender) {
+        setForeignSelected(foreignSelected);
+        setForeignSelections(foreignSelections);
+        forceRender();
+      }
     };
     React.useEffect(() => {
       ydoc.wsProvider.awareness.on('change', onChange);
@@ -587,13 +355,10 @@ storiesOf('Internal/Stoplight AST', module)
 
     const enhancer = {
       getStyle: (id: string) => {
-        const states = ydoc.wsProvider.awareness.getStates();
         const names = [];
-        for (const [client, state] of states) {
-          if (client !== ydoc.doc.clientID) {
-            if (id === state.selected) {
-              names.push(client);
-            }
+        for (const [client, selections] of foreignSelections) {
+          if (selections.has(id)) {
+            names.push(client);
           }
         }
         if (names.length > 0) {
@@ -605,13 +370,9 @@ storiesOf('Internal/Stoplight AST', module)
         }
       },
       getClasses: (id: string) => {
-        const [nodeId, propName] = id.split('-');
         const self = selections.has(id);
-        const other = foreignSelections.has(id);
-        // TODO: this has a bug where foreign propNames and foreign nodes get mixed up.
-        const focussed =
-          (propName && selections.has(nodeId) && propName === focus) ||
-          (foreignSelections.has(id) && foreignFocus.has(propName));
+        let other = [...foreignSelections.values()].some(set => set.has(id));
+        const focussed = selected === id || [...foreignSelected.values()].some(_id => _id === id);
         return {
           selected: self || other,
           'selected-self': self,
@@ -630,15 +391,11 @@ storiesOf('Internal/Stoplight AST', module)
             selections.clear();
           }
 
-          setSelected(void 0);
           const [nodeId, propName] = id.split('-');
-          let node = IdMapYjs.get(nodeId);
-          let focus = propName;
           selections.add(nodeId);
-          setSelected(nodeId);
-          setFocus(focus);
-          ydoc.wsProvider.awareness.setLocalStateField('selected', nodeId);
-          ydoc.wsProvider.awareness.setLocalStateField('focus', focus);
+          setSelected(id);
+          ydoc.wsProvider.awareness.setLocalStateField('selections', [...selections]);
+          ydoc.wsProvider.awareness.setLocalStateField('selected', id);
 
           // Best effort to set focus.
           setTimeout(() => {
@@ -673,7 +430,7 @@ storiesOf('Internal/Stoplight AST', module)
       ),
     };
 
-    const transformed = DeYjsifyClassic<IOperation>(httpOperationYjs);
+    const transformed = DeYjsifyClassic<WithIds<IHttpOperation>>(httpOperationYjs);
     console.log('transformed', transformed);
     const el = (
       <div className={cn('p-10 flex overflow-y-auto ', { 'bp3-dark bg-gray-8': dark })}>
@@ -687,7 +444,6 @@ storiesOf('Internal/Stoplight AST', module)
               setSelected={setSelected}
               selections={selections}
               setSelections={setSelections}
-              focus={focus}
             />
           </EditModeContext.Provider>
         </Provider>
