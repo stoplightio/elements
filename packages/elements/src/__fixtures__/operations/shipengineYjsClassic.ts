@@ -389,9 +389,9 @@ const makeOperation: () => YifyClassic<WithIds<IHttpOperation>> = () =>
           id: '18',
           schema: {
             type: 'boolean',
-            description: 'Only return completed',
           },
           name: 'completed',
+          description: 'Only return completed',
           style: HttpParamStyles.Form as const,
         },
       ],
@@ -400,8 +400,8 @@ const makeOperation: () => YifyClassic<WithIds<IHttpOperation>> = () =>
           id: '19',
           schema: {
             type: 'string' as const,
-            description: 'Your Stoplight account id',
           },
+          description: 'Your Stoplight account id',
           name: 'account-id',
           style: HttpParamStyles.Simple as const,
           required: true,
@@ -416,8 +416,10 @@ const makeOperation: () => YifyClassic<WithIds<IHttpOperation>> = () =>
           name: 'todoId',
           style: HttpParamStyles.Simple as const,
           required: true,
+          description: '',
         },
       ],
+      cookie: [],
     },
     tags: [
       {

@@ -5,9 +5,8 @@ import cn from 'classnames';
 import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { EditHandle, editHandle, editHandleClick, editHandleId } from '../../../constants';
-import { EditModeContext } from '../../../containers/EditingProvider';
 import { InlineRefResolverContext } from '../../../containers/Provider';
+import { useClasses } from '../../../hooks/useClasses';
 import { useClick } from '../../../hooks/useClick';
 import { WithIds } from '../../../YAST/YjsifyClassic';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -20,6 +19,7 @@ export interface IParametersProps {
   parameterType: ParameterType;
   parameters?: IHttpParam[];
   className?: string;
+  onClick?: React.MouseEventHandler;
 }
 
 const numberValidationNames = [
@@ -55,13 +55,14 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
   parameterType,
   title,
   className,
+  onClick,
 }) => {
   const resolveRef = React.useContext(InlineRefResolverContext);
   if (!parameters || !parameters.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Parameters', className)} data-type={parameterType} {...editHandle(parameters)}>
-      {title && <SectionTitle title={title} />}
+    <div className={cn('HttpOperation__Parameters', className)} data-type={parameterType}>
+      {title && <SectionTitle title={title} onClick={onClick} />}
 
       {sortBy(parameters, ['required', 'name']).map((parameter, index) => {
         const resolvedSchema =
@@ -94,16 +95,21 @@ export interface IParameterProps {
 
 export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterType, className }) => {
   const onParamClick = useClick(parameter);
+  const paramClasses = useClasses(parameter);
   const onNameClick = useClick(parameter, 'name');
+  const nameClasses = useClasses(parameter, 'name');
   const onRequiredClick = useClick(parameter, 'required');
+  const requiredClasses = useClasses(parameter, 'required');
   const onDescriptionClick = useClick(parameter, 'description');
+  const descriptionClasses = useClasses(parameter, 'description');
   const onDeprecatedClick = useClick(parameter, 'deprecated');
+  const deprecatedClasses = useClasses(parameter, 'deprecated');
   const onStyleClick = useClick(parameter, 'style');
+  const styleClasses = useClasses(parameter, 'style');
 
   if (!parameter) return null;
 
-  // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
-  const description = get(parameter, 'description') || get(parameter, 'schema.description');
+  const description = get(parameter, 'description');
 
   const type = get(parameter, 'schema.type', 'unknown');
 
@@ -128,23 +134,26 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   return (
     <div
-      className={cn('HttpOperation__Parameter pl-1', className)}
+      className={cn('HttpOperation__Parameter pl-1', className, paramClasses)}
       data-type={parameterType}
       data-name={parameter.name}
       onClick={onParamClick}
-      {...editHandle(parameter)}
     >
       <div className="flex items-center">
-        <div className="font-medium font-mono" onClick={onNameClick}>
+        <div className={cn('font-medium font-mono', nameClasses)} onClick={onNameClick}>
           {parameter.name}
         </div>
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>
         {parameterType !== 'path' && (
           <div
-            className={cn('ml-2 text-sm', {
-              'text-danger': parameter.required,
-              'opacity-50': !parameter.required,
-            })}
+            className={cn(
+              'ml-2 text-sm',
+              {
+                'text-danger': parameter.required,
+                'opacity-50': !parameter.required,
+              },
+              requiredClasses,
+            )}
             onClick={onRequiredClick}
           >
             {parameter.required ? 'required' : 'optional'}
@@ -156,7 +165,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       <KeyValueValidations validations={keyValueValidations} />
 
       <MarkdownViewer
-        className="text-gray-7 dark:text-gray-4 mt-1"
+        className={cn('text-gray-7 dark:text-gray-4 mt-1', descriptionClasses)}
         markdown={description || '*No description.*'}
         onClick={onDescriptionClick}
       />
@@ -164,7 +173,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       {deprecated || parameter.style || keys(validations).length ? (
         <div className="flex flex-wrap">
           {deprecated && (
-            <Tag className="mt-2 mr-2" intent="warning" minimal onClick={onDeprecatedClick}>
+            <Tag className={cn('mt-2 mr-2', deprecatedClasses)} intent="warning" minimal onClick={onDeprecatedClick}>
               Deprecated
             </Tag>
           )}
@@ -172,7 +181,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
           <NameValidations validations={booleanValidations} />
 
           {parameter.style && defaultStyle[parameterType] !== parameter.style && (
-            <Tag className="mt-2 mr-2" minimal onClick={onStyleClick}>
+            <Tag className={cn('mt-2 mr-2', styleClasses)} minimal onClick={onStyleClick}>
               {readableStyles[parameter.style] || parameter.style}
             </Tag>
           )}

@@ -29,7 +29,7 @@ export function YjsifyClassic<T>(arg: T): YifyClassic<T> {
         // @ts-ignore
         .map(([key, value]) => [key, YjsifyClassic(value)]),
     );
-    if (o.description) {
+    if (typeof o.description === 'string') {
       o.description = new TypedYText(o.description);
     }
     // @ts-ignore

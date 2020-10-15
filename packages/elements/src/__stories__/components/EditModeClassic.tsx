@@ -1,5 +1,6 @@
 import './EditMode.scss';
 
+import { HttpParamStyles } from '@stoplight/types';
 import { Button, Checkbox, HTMLSelect, InputGroup } from '@stoplight/ui-kit';
 import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
@@ -144,11 +145,19 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             large
             onClick={() => {
               setSelected(void 0);
-              const i = getParent(o)
-                .get('children')
-                .toArray()
-                .findIndex(j => getId(j) === getId(o));
-              getParent(o).get('children').delete(i);
+              const id = o.get('id');
+              const Yarr = o._item.parent as TypedYArray<any>;
+              let i = 0;
+              for (const value of Yarr) {
+                if (value.get('id') === id) {
+                  break;
+                }
+                i++;
+              }
+              if (i < Yarr.length) {
+                Yarr.delete(i);
+                IdMapYjs.delete(id);
+              }
             }}
           >
             Delete Parameter
@@ -156,22 +165,26 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
         </div>,
       );
       return;
-    } else if (
-      fullPath === 'request.cookie' ||
-      fullPath === 'request.headers' ||
-      fullPath === 'request.path' ||
-      fullPath === 'request.query'
-    ) {
-      const subtype =
-        focus === 'cookie'
-          ? 'Cookie'
-          : focus === 'headers'
-          ? 'Header'
-          : focus === 'path'
-          ? 'Path'
-          : focus === 'query'
-          ? 'Query'
-          : '?';
+    } else if (nodePath === 'request') {
+      const makeOnClick = (prop: string, style: HttpParamStyles) => () => {
+        const node = YjsifyClassic({
+          id: String(Math.floor(Math.random() * 10000)),
+          name: 'untitled',
+          description: '',
+          style,
+          required: false,
+        });
+        // @ts-ignore
+        o.get(prop).push([node]);
+
+        const id = node.get('id');
+        // @ts-ignore
+        IdMapYjs.set(id, node);
+        selections.clear();
+        selections.add(id);
+        setSelected(id);
+        setSelections(selections);
+      };
       knobs.push(
         <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
           <Button
@@ -179,27 +192,46 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
             type="submit"
             intent="primary"
             large
-            onClick={() => {
-              const node = YjsifyClassic({
-                id: String(Math.floor(Math.random() * 10000)),
-                name: 'untitled',
-                description: '',
-                style: 'simple',
-                required: false,
-              });
-              // @ts-ignore
-              o.get(focus).push([node]);
-
-              const id = node.get('id');
-              // @ts-ignore
-              IdMapYjs.set(id, node);
-              selections.clear();
-              selections.add(id);
-              setSelected(id);
-              setSelections(selections);
-            }}
+            onClick={makeOnClick('path', HttpParamStyles.Simple)}
+            data-controller-for={`${o.get('id')}-path`}
           >
-            Add {subtype} Parameter
+            Add Path Parameter
+          </Button>
+        </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <Button
+            className="w-full"
+            type="submit"
+            intent="primary"
+            large
+            onClick={makeOnClick('query', HttpParamStyles.Form)}
+            data-controller-for={`${o.get('id')}-query`}
+          >
+            Add Query Parameter
+          </Button>
+        </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <Button
+            className="w-full"
+            type="submit"
+            intent="primary"
+            large
+            onClick={makeOnClick('cookie', HttpParamStyles.Form)}
+            data-controller-for={`${o.get('id')}-cookie`}
+          >
+            Add Cookie Parameter
+          </Button>
+        </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <Button
+            className="w-full"
+            type="submit"
+            intent="primary"
+            large
+            onClick={makeOnClick('headers', HttpParamStyles.Simple)}
+            data-controller-for={`${o.get('id')}-headers`}
+          >
+            Add Header Parameter
           </Button>
         </div>,
       );
@@ -241,6 +273,11 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
           <div className="w-full" data-controller-for={`${o.get('id')}-description`}>
             <YQuill type={o.get('description')} awareness={ydoc.wsProvider.awareness} />
           </div>
+        </div>,
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <Button className="w-full" type="submit" intent="danger" large onClick={() => resetOperation()}>
+            Reset Operation
+          </Button>
         </div>,
       );
     }
@@ -568,9 +605,13 @@ storiesOf('Internal/Stoplight AST', module)
         }
       },
       getClasses: (id: string) => {
+        const [nodeId, propName] = id.split('-');
         const self = selections.has(id);
         const other = foreignSelections.has(id);
-        const focussed = (focus !== selected && id === focus) || foreignFocus.has(id);
+        // TODO: this has a bug where foreign propNames and foreign nodes get mixed up.
+        const focussed =
+          (propName && selections.has(nodeId) && propName === focus) ||
+          (foreignSelections.has(id) && foreignFocus.has(propName));
         return {
           selected: self || other,
           'selected-self': self,
