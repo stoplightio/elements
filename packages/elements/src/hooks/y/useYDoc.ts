@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { YDoc } from '../../YAST/YDoc';
+import type { YDoc } from '../../Y/YDoc';
 
 /**
  * Use this hook to trigger a re-render when the Yjs document is finished syncing and is ready.

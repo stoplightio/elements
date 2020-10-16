@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { useClasses } from '../../../hooks/useClasses';
 import { useClick } from '../../../hooks/useClick';
-import { WithIds } from '../../../YAST/YjsifyClassic';
+import { WithIds } from '../../../Y';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 import { Body } from './Body';
 import { Parameters } from './Parameters';

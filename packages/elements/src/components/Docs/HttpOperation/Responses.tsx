@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useClasses } from '../../../hooks/useClasses';
 import { useClick } from '../../../hooks/useClick';
 import { useStyle } from '../../../hooks/useStyle';
-import { WithIds } from '../../../YAST/YjsifyClassic';
+import { WithIds } from '../../../Y';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
 import { Parameters } from './Parameters';

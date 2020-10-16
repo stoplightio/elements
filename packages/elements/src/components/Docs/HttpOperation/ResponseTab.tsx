@@ -7,7 +7,7 @@ import * as React from 'react';
 import { useClasses } from '../../../hooks/useClasses';
 import { useClick } from '../../../hooks/useClick';
 import { useStyle } from '../../../hooks/useStyle';
-import { WithIds } from '../../../YAST/YjsifyClassic';
+import { WithIds } from '../../../Y';
 
 export const HttpCodeColor = {
   1: 'gray',
