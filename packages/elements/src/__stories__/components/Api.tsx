@@ -14,12 +14,12 @@ const apiDescriptionUrl = () =>
     'apiDescriptionUrl',
     'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
   );
-const selectDocumentType = () => select('Document Type', ['YAML String', 'JSON String', 'JSON Object'], 'YAML String');
 const documentTypeMap: Dictionary<string | object> = {
   'YAML String': zoomApiYaml,
   'JSON String': JSON.stringify(parse(zoomApiYaml)),
-  'JSON Object': parse(zoomApiYaml),
+  'JavaScript Object': parse(zoomApiYaml),
 };
+const selectDocumentType = () => select('Document Type', Object.keys(documentTypeMap), 'YAML String');
 
 storiesOf('Public/API', module)
   .addDecorator(withKnobs())
