@@ -3,14 +3,11 @@ import * as React from 'react';
 
 import { IRequestBody } from '../../../AST/RequestBody';
 import { groupNodes } from '../../../AST/utils';
-import { isJSONSchema } from '../../../utils/guards';
-import { SchemaViewer } from '../../SchemaViewer';
 import { RequestBodyDescription } from './RequestBodyDescription';
 import { SectionTitle } from './SectionTitle';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
 import { useStyle } from './useStyle';
-import { getExamplesObject } from './utils';
 
 export interface IRequestBodyProps {
   data: IRequestBody;

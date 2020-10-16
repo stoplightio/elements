@@ -450,9 +450,9 @@ const Formite = ({ selected, setSelected, selections, setSelections, focus }: IF
   );
 };
 
-storiesOf('Internal/Stoplight AST', module)
+storiesOf('Internal/Editing', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
-  .add('Editing', () => {
+  .add('Using a new AST', () => {
     const dark = darkMode();
     localStorage.darkMode = Number(dark);
 

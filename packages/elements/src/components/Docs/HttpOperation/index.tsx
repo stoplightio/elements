@@ -61,7 +61,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
         onClick={onDescriptionClick}
       />
 
-      <Request request={data.request} security={data.security} />
+      {data.request && <Request request={data.request} security={data.security} />}
 
       {data.responses && <Responses responses={data.responses} />}
     </div>

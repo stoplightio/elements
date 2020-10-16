@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
-import { editHandle } from '../../../constants';
+import { useClasses } from '../../../hooks/useClasses';
 import { useClick } from '../../../hooks/useClick';
 import { WithIds } from '../../../YAST/YjsifyClassic';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
@@ -11,23 +11,23 @@ import { Body } from './Body';
 import { Parameters } from './Parameters';
 
 export interface IRequestProps {
-  request?: WithIds<IHttpOperationRequest>;
+  request: WithIds<IHttpOperationRequest>;
   security?: HttpSecurityScheme[][];
   className?: string;
 }
 
 export const Request: React.FunctionComponent<IRequestProps> = ({ request, security, className }) => {
-  const onClick = useClick(request || {});
+  const onClick = useClick(request);
+  const classes = useClasses(request);
   const onPathClick = useClick(request || {}, 'path');
   const onQueryClick = useClick(request || {}, 'query');
   const onCookieClick = useClick(request || {}, 'cookie');
   const onHeadersClick = useClick(request || {}, 'headers');
-  if (!request || typeof request !== 'object') return null;
 
   const { path, headers, query, cookie, body } = request;
 
   return (
-    <div className={cn('HttpOperation__Request', className)} {...editHandle(request)} onClick={onClick}>
+    <div className={cn('HttpOperation__Request', className, classes)} onClick={onClick}>
       <HttpSecuritySchemes className="mb-10" title="Authorization" securities={flatten(security)} />
 
       <Parameters

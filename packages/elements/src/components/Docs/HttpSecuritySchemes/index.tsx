@@ -10,7 +10,11 @@ import cn from 'classnames';
 import { entries, flatten, isEmpty, map, startCase } from 'lodash';
 import * as React from 'react';
 
-import { editHandle, HttpSecuritySchemeColors } from '../../../constants';
+import { HttpSecuritySchemeColors } from '../../../constants';
+import { useClasses } from '../../../hooks/useClasses';
+import { useClick } from '../../../hooks/useClick';
+import { useStyle } from '../../../hooks/useStyle';
+import { WithIds } from '../../../YAST/YjsifyClassic';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from '../HttpOperation/SectionTitle';
 
@@ -41,19 +45,44 @@ export const HttpSecuritySchemes = ({ securities, title, className }: ISecuritie
 };
 HttpSecuritySchemes.displayName = 'HttpSecuritySchemes';
 
-const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme; className?: string }) => {
+const SecurityScheme = ({ security, className }: { security: WithIds<HttpSecurityScheme>; className?: string }) => {
+  const classes = useClasses(security);
+  const style = useStyle(security);
+  const onClick = useClick(security);
+
+  const keyClasses = useClasses(security, 'key');
+  const onKeyClick = useClick(security, 'key');
+
+  const nameClasses = useClasses(security, 'name');
+  const onNameClick = useClick(security, 'name');
+
+  const descriptionClasses = useClasses(security, 'description');
+  const onDescriptionClick = useClick(security, 'description');
+
+  const typeClasses = useClasses(security, 'type');
+  const onTypeClick = useClick(security, 'type');
+
+  const inClasses = useClasses(security, 'in');
+  const onInClick = useClick(security, 'in');
+
   return (
     <div
-      className={cn(className, 'HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start')}
-      style={{ alignItems: 'start' }}
-      {...editHandle(security)}
+      className={cn(className, 'HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start', classes)}
+      style={{ alignItems: 'start', ...style }}
+      onClick={onClick}
     >
       <div style={{ minWidth: '60px' }}>
-        <div>{security.key}</div>
+        <div className={cn(keyClasses)} onClick={onKeyClick}>
+          {security.key}
+        </div>
         <div
-          className={`text-sm text-${HttpSecuritySchemeColors[security.type]}-7 dark:text-${
-            HttpSecuritySchemeColors[security.type]
-          }-6`}
+          className={cn(
+            'text-sm',
+            `text-${HttpSecuritySchemeColors[security.type]}-7`,
+            `dark:text-${HttpSecuritySchemeColors[security.type]}-6`,
+            typeClasses,
+          )}
+          onClick={onTypeClick}
         >
           {security.type}
         </div>
@@ -61,7 +90,11 @@ const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme;
 
       <div className="flex-1 ml-4">
         {security.description && (
-          <MarkdownViewer className="flex-1 text-darken-7 dark:text-lighten-7" markdown={security.description} />
+          <MarkdownViewer
+            className={cn('flex-1 text-darken-7 dark:text-lighten-7', descriptionClasses)}
+            onClick={onDescriptionClick}
+            markdown={security.description}
+          />
         )}
 
         <div className="flex flex-wrap">
@@ -79,7 +112,12 @@ const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme;
 
           {'in' in security && security.in && (
             <Tag className="mt-2 mr-2" minimal>
-              {startCase(security.in)} parameter name: {security.name}
+              <span className={cn(inClasses)} onClick={onInClick}>
+                {startCase(security.in)} parameter name:
+              </span>{' '}
+              <span className={cn(nameClasses)} onClick={onNameClick}>
+                {security.name}
+              </span>
             </Tag>
           )}
 
@@ -91,7 +129,9 @@ const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme;
         </div>
 
         {security.type === 'oauth2' &&
-          map(security.flows, (flowObject, flow) => <OAuth2Flow key={flow} flow={flow} flowObject={flowObject} />)}
+          map(security.flows, (flowObject, flow) => (
+            <OAuth2Flow key={flow} flow={flow} flowObject={flowObject as any} />
+          ))}
       </div>
     </div>
   );

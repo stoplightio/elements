@@ -1,6 +1,6 @@
 import './EditMode.scss';
 
-import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
+import { HttpParamStyles, IHttpOperation, IHttpOperationResponse } from '@stoplight/types';
 import { Button, Checkbox, HTMLSelect, InputGroup } from '@stoplight/ui-kit';
 import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
@@ -62,16 +62,28 @@ const Formite = ({ selected = '', setSelected, selections, setSelections }: IFor
       nodePath === 'request.path[]' ||
       nodePath === 'request.query[]'
     ) {
-      const choices = nodePath.endsWith('request.cookie[]')
-        ? ['form']
-        : nodePath.endsWith('request.headers[]')
-        ? ['simple']
-        : nodePath.endsWith('request.path[]')
-        ? ['simple', 'matrix', 'label']
-        : nodePath.endsWith('request.query[]')
-        ? ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject']
-        : [];
+      const choices =
+        nodePath === 'request.cookie[]'
+          ? ['form']
+          : nodePath === 'request.headers[]'
+          ? ['simple']
+          : nodePath === 'request.path[]'
+          ? ['simple', 'matrix', 'label']
+          : nodePath === 'request.query[]'
+          ? ['form', 'spaceDelimited', 'pipeDelimited', 'deepObject']
+          : [];
+      const paramType =
+        nodePath === 'request.cookie[]'
+          ? 'Cookie'
+          : nodePath === 'request.headers[]'
+          ? 'Header'
+          : nodePath === 'request.path[]'
+          ? 'Path'
+          : nodePath === 'request.query[]'
+          ? 'Query'
+          : '';
       knobs.push(
+        <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">{paramType} Parameter</h1>,
         <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
           <label className="bp3-label">Name</label>
           <InputGroup
@@ -139,7 +151,7 @@ const Formite = ({ selected = '', setSelected, selections, setSelections }: IFor
           <Button
             className="w-full"
             type="submit"
-            intent="primary"
+            intent="danger"
             large
             onClick={() => {
               setSelected(void 0);
@@ -160,6 +172,72 @@ const Formite = ({ selected = '', setSelected, selections, setSelections }: IFor
           >
             Delete Parameter
           </Button>
+        </div>,
+      );
+    } else if (nodePath === 'security[][]') {
+      knobs.push(
+        <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Security</h1>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Key</label>
+          <InputGroup
+            name="key"
+            className="flex-1"
+            placeholder="Key"
+            autoComplete="off"
+            autoFocus={propName === 'key'}
+            value={o.get('key')}
+            onChange={e => {
+              oset('key', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-key`}
+          />
+        </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label flex-1">Type</label>
+          <HTMLSelect
+            name="type"
+            defaultValue={'get'}
+            value={o.get('type')}
+            autoFocus={propName === 'type'}
+            options={['apiKey', 'http', 'oauth2', 'openIdConnect']}
+            onChange={async e => {
+              oset('type', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-type`}
+          />
+        </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Name</label>
+          <InputGroup
+            name="name"
+            className="flex-1"
+            placeholder="Name"
+            autoComplete="off"
+            autoFocus={propName === 'name'}
+            value={o.get('name')}
+            onChange={e => {
+              oset('name', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-name`}
+          />
+          <label className="bp3-label pl-3">in</label>
+          <HTMLSelect
+            name="in"
+            defaultValue={'get'}
+            value={o.get('in')}
+            autoFocus={propName === 'in'}
+            options={['header', 'query', 'cookie']}
+            onChange={async e => {
+              oset('in', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-in`}
+          />
+        </div>,
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Description</label>
+          <div className="w-full" data-controller-for={`${o.get('id')}-description`}>
+            <YQuill type={o.get('description')} awareness={ydoc.wsProvider.awareness} />
+          </div>
         </div>,
       );
     } else if (nodePath === 'request') {
@@ -183,6 +261,7 @@ const Formite = ({ selected = '', setSelected, selections, setSelections }: IFor
         setSelections(selections);
       };
       knobs.push(
+        <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Request</h1>,
         <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
           <Button
             className="w-full"
@@ -234,6 +313,7 @@ const Formite = ({ selected = '', setSelected, selections, setSelections }: IFor
       );
     } else if (nodePath === 'request.body') {
       knobs.push(
+        <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Request Body</h1>,
         <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
           <label className="bp3-label">Description</label>
           <div className="w-full" data-controller-for={`${o.get('id')}-description`}>
@@ -241,9 +321,60 @@ const Formite = ({ selected = '', setSelected, selections, setSelections }: IFor
           </div>
         </div>,
       );
+    } else if (nodePath === 'responses[]') {
+      knobs.push(
+        <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Response</h1>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label flex-1">Status Code</label>
+          <InputGroup
+            name="name"
+            placeholder="2xx"
+            autoComplete="off"
+            value={o.get('code')}
+            autoFocus={propName === 'code'}
+            onChange={e => {
+              oset('code', e.currentTarget.value);
+            }}
+            data-controller-for={`${o.get('id')}-code`}
+          />
+        </div>,
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <label className="bp3-label">Description</label>
+          <div className="w-full" data-controller-for={`${o.get('id')}-description`}>
+            <YQuill type={o.get('description')} awareness={ydoc.wsProvider.awareness} />
+          </div>
+        </div>,
+        <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
+          <Button
+            className="w-full"
+            type="submit"
+            intent="danger"
+            large
+            onClick={() => {
+              setSelected(void 0);
+              const id = o.get('id');
+              const Yarr = o._item.parent as TypedYArray<any>;
+              let i = 0;
+              for (const value of Yarr) {
+                if (value.get('id') === id) {
+                  break;
+                }
+                i++;
+              }
+              if (i < Yarr.length) {
+                Yarr.delete(i);
+                IdMapYjs.delete(id);
+              }
+            }}
+          >
+            Delete Response
+          </Button>
+        </div>,
+      );
     } else if (nodePath === '') {
       const items = ['get', 'put', 'post', 'delete', 'etc'];
       knobs.push(
+        <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Operation</h1>,
         <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
           <label className="bp3-label flex-1">Method</label>
           <HTMLSelect
@@ -280,6 +411,34 @@ const Formite = ({ selected = '', setSelected, selections, setSelections }: IFor
             <YQuill type={o.get('description')} awareness={ydoc.wsProvider.awareness} />
           </div>
         </div>,
+        <div className="bp3-form-group bp3-inline flex pb-4 border-b border-gray-2 dark:border-gray-6">
+          <Button
+            className="w-full"
+            type="submit"
+            intent="primary"
+            large
+            onClick={() => {
+              const node = YjsifyClassic<WithIds<IHttpOperationResponse>>({
+                id: String(Math.floor(Math.random() * 10000)),
+                code: '100',
+                description: '',
+              });
+              // @ts-ignore
+              o.get('responses').push([node]);
+
+              const id = node.get('id');
+              // @ts-ignore
+              IdMapYjs.set(id, node);
+              selections.clear();
+              selections.add(id);
+              setSelected(`${id}-code`);
+              setSelections(selections);
+            }}
+            data-controller-for={`${o.get('id')}-responses`}
+          >
+            Add Response
+          </Button>
+        </div>,
         <div className="bp3-form-group pb-4 border-b border-gray-2 dark:border-gray-6">
           <Button className="w-full" type="submit" intent="danger" large onClick={() => resetOperation()}>
             Reset Operation
@@ -300,15 +459,14 @@ const Formite = ({ selected = '', setSelected, selections, setSelections }: IFor
       }}
       className="p-6 pt-2 border fixed border-gray-2 dark:border-gray-6 overflow-y-auto"
     >
-      <h1 className="border-b text-center mb-6 border-gray-2 dark:border-gray-6">Formtron II</h1>
       {knobs}
     </aside>
   );
 };
 
-storiesOf('Internal/Stoplight AST', module)
+storiesOf('Internal/Editing', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
-  .add('Classic', () => {
+  .add('Using only `http-spec` + ids', () => {
     const dark = darkMode();
     localStorage.darkMode = Number(dark);
 

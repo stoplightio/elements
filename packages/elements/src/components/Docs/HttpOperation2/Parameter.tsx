@@ -1,6 +1,6 @@
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
 import cn from 'classnames';
-import { get, isEmpty, omit, omitBy } from 'lodash';
+import { get } from 'lodash';
 import * as React from 'react';
 
 import { IParam } from '../../../AST/Param';
@@ -13,17 +13,6 @@ import { ParameterStyle } from './ParameterStyle';
 import { useClasses } from './useClasses';
 import { useClick } from './useClick';
 import { useStyle } from './useStyle';
-
-const numberValidationNames = [
-  'minimum',
-  'maximum',
-  'minLength',
-  'maxLength',
-  'minItems',
-  'maxItems',
-  'exclusiveMinimum',
-  'exclusiveMaximum',
-] as const;
 
 export interface IParameterProps {
   data?: IParam;
@@ -40,15 +29,6 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ data, cont
   const grouped = groupNodes(data.children);
 
   const type = get(grouped.schema?.[0], 'type', 'unknown');
-
-  const validations = omitBy(
-    {
-      ...omit(data, ['name', 'required', 'deprecated', 'description', 'schema', 'style']),
-      ...omit(get(data, 'schema'), ['description', 'type', 'deprecated']),
-    },
-    // Remove empty arrays and objects
-    value => typeof value === 'object' && isEmpty(value),
-  );
 
   // const numberValidations = pick(validations, numberValidationNames);
   // const booleanValidations = omit(
