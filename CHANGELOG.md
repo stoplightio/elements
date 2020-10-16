@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.169](https://github.com/stoplightio/elements/compare/v6.0.0-beta.168...v6.0.0-beta.169) (2020-10-16)
+
+
+### Features
+
+* allow to provide api documentation directly to the React API component ([#625](https://github.com/stoplightio/elements/issues/625)) ([869a67b](https://github.com/stoplightio/elements/commit/869a67bf8ff02d5fe3a1a246b81b3bc219b25658))
+
+
+
+
+
 # [6.0.0-beta.168](https://github.com/stoplightio/elements/compare/v6.0.0-beta.167...v6.0.0-beta.168) (2020-10-15)
 
 
