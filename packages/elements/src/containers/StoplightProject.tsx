@@ -4,30 +4,30 @@ import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import { Row } from '../components/TableOfContents/Row';
+import { defaultPlatformUrl } from '../constants';
 import { withRouter } from '../hoc/withRouter';
 import { useUrqlClient } from '../hooks/useUrqlClient';
 import { withStyles } from '../styled';
 import { ITableOfContentsTree, Item, LinkComponentType, RoutingProps, TableOfContentItem } from '../types';
 import { isOperation } from '../utils/oas';
-import { getWorkspaceSlug } from '../utils/sl/getWorkspaceSlug';
 import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
 import { TryItProvider } from './TryIt';
 
 export interface StoplightProjectProps extends RoutingProps {
-  workspace: string;
-  project: string;
-  branch?: string;
+  workspaceSlug: string;
+  projectSlug: string;
+  platformUrl?: string;
+  branchSlug?: string;
   authToken?: string;
   linkComponent?: LinkComponentType;
 }
 
 const StoplightProjectImpl = withRouter<StoplightProjectProps>(
-  ({ workspace, project, branch, linkComponent: LinkComponent, authToken }) => {
+  ({ workspaceSlug, platformUrl, projectSlug, branchSlug, linkComponent: LinkComponent, authToken }) => {
     const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
-    const workspaceSlug = getWorkspaceSlug(workspace);
-    const client = useUrqlClient(`${workspace}/graphql`, { authToken });
+    const client = useUrqlClient(`${platformUrl ?? defaultPlatformUrl}/graphql`, { authToken });
 
     const showTryIt = isOperation(pathname);
 
@@ -52,9 +52,10 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
     return (
       <div className="StoplightProject flex flex-row">
         <TableOfContents
-          workspaceUrl={workspace}
-          projectSlug={project}
-          branchSlug={branch}
+          workspaceSlug={workspaceSlug}
+          platformUrl={platformUrl}
+          projectSlug={projectSlug}
+          branchSlug={branchSlug}
           rowComponent={Row}
           rowComponentExtraProps={{ pathname, linkComponent: LinkComponent }}
           nodeUri={pathname}
@@ -69,10 +70,10 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
         <div className="flex-grow">
           <div className="flex">
             <DocsProvider
-              host={workspace}
+              host={platformUrl ?? defaultPlatformUrl}
               workspace={workspaceSlug}
-              project={project}
-              branch={branch}
+              project={projectSlug}
+              branch={branchSlug}
               node={pathname}
               components={components}
               urqlClient={client}
@@ -82,10 +83,10 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
               <div className="w-2/5 border-l relative">
                 <div className="absolute inset-0 overflow-auto px-10">
                   <TryItProvider
-                    host={workspace}
+                    host={platformUrl ?? defaultPlatformUrl}
                     workspace={workspaceSlug}
-                    project={project}
-                    branch={branch}
+                    project={projectSlug}
+                    branch={branchSlug}
                     node={pathname}
                     components={components}
                     urqlClient={client}

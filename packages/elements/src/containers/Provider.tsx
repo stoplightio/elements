@@ -1,10 +1,8 @@
-import { pointerToPath } from '@stoplight/json';
-import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
-import { get, isObject } from 'lodash';
 import * as React from 'react';
 import { Client, Provider as UrqlProvider } from 'urql';
 
+import { ComponentsProvider } from '../context/Components';
 import { useUrqlClient } from '../hooks/useUrqlClient';
 import { NodeIconMapping } from '../types';
 
@@ -20,26 +18,6 @@ export interface IActiveInfo {
   branch?: string;
   node?: string;
 }
-
-export const ComponentsContext = createNamedContext<IComponentMapping | undefined>('ComponentsContext', undefined);
-
-export const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(void 0);
-
-interface InlineRefResolverProviderTypes {
-  document: unknown;
-}
-
-/**
- * Populates `InlineRefResolverContext` with a standard inline ref resolver based on `document`.
- */
-export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderTypes> = ({ document, children }) => {
-  const inlineRefResolver = React.useCallback<SchemaTreeRefDereferenceFn>(
-    ({ pointer }, _, schema) =>
-      pointer === null ? null : get(isObject(document) ? document : schema, pointerToPath(pointer)),
-    [document],
-  );
-  return <InlineRefResolverContext.Provider value={inlineRefResolver}>{children}</InlineRefResolverContext.Provider>;
-};
 
 const defaultIcons: NodeIconMapping = {};
 export const IconsContext = createNamedContext<NodeIconMapping>('IconsContext', defaultIcons);
@@ -76,9 +54,9 @@ export const Provider: React.FC<IProvider> = ({
   return (
     <UrqlProvider value={client}>
       <IconsContext.Provider value={defaultIcons}>
-        <ComponentsContext.Provider value={components}>
+        <ComponentsProvider value={components}>
           <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>
-        </ComponentsContext.Provider>
+        </ComponentsProvider>
       </IconsContext.Provider>
     </UrqlProvider>
   );

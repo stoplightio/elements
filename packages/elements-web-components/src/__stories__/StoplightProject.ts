@@ -7,14 +7,16 @@ const Template = createTemplate('elements-stoplight-project');
 export default {
   title: 'Stoplight Project',
   argType: {
-    workspace: { control: 'text' },
-    project: { control: 'text' },
+    workspaceSlug: { control: 'text' },
+    projectSlug: { control: 'text' },
+    platformUrl: { control: 'text' },
   },
 };
 
 export const defaultProject = Template.bind({});
 defaultProject.storyName = "Stoplight's Demo workspace";
 defaultProject.args = {
-  workspace: 'https://demo.stoplight.io',
-  project: 'public-apis',
+  workspaceSlug: 'demo',
+  projectSlug: 'public-apis',
+  platformUrl: 'https://stoplight.io',
 };

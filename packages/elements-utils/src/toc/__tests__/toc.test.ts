@@ -5,10 +5,13 @@ import {
   appendHttpServicesToToC,
   appendModelsToToc,
   generateToC,
+  generateTocSkeleton,
   groupNodesByType,
   injectHttpOperationsAndModels,
+  resolveHttpServices,
   sortArticlesByTypeAndPath,
 } from '../toc';
+import { ITableOfContents } from '../types';
 
 describe('toc', () => {
   describe('mapArticlesToToC()', () => {
@@ -464,6 +467,118 @@ describe('toc', () => {
         {
           name: 'b',
           uri: '/hello/b',
+          type: NodeType.Article,
+          tags: [],
+        },
+      ]);
+    });
+
+    it('moves articles from root and docs directories to the top', () => {
+      const articles = [
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'aa',
+          uri: '/hello/a/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'a',
+          uri: '/hello/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'README',
+          uri: '/README',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'b',
+          uri: '/docs/b',
+        },
+      ];
+
+      expect(sortArticlesByTypeAndPath(articles)).toEqual([
+        {
+          name: 'README',
+          uri: '/README',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'b',
+          uri: '/docs/b',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'a',
+          uri: '/hello/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'aa',
+          uri: '/hello/a/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+      ]);
+    });
+
+    it('sorts articles with uris without leading slash', () => {
+      const articles = [
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'aa',
+          uri: 'hello/a/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'a',
+          uri: 'hello/a',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'README',
+          uri: 'README',
+        },
+        {
+          type: NodeType.Article,
+          tags: [],
+          name: 'b',
+          uri: 'docs/b',
+        },
+      ];
+
+      expect(sortArticlesByTypeAndPath(articles)).toEqual([
+        {
+          name: 'README',
+          uri: 'README',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'b',
+          uri: 'docs/b',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'a',
+          uri: 'hello/a',
+          type: NodeType.Article,
+          tags: [],
+        },
+        {
+          name: 'aa',
+          uri: 'hello/a/a',
           type: NodeType.Article,
           tags: [],
         },
@@ -957,6 +1072,177 @@ describe('toc', () => {
           },
         ]),
       ).toMatchSnapshot();
+    });
+  });
+
+  describe('generateTocSkeleton()', () => {
+    it('generates correct ToC', () => {
+      const toc = generateTocSkeleton([
+        {
+          uri: '/directory/article/hello.md',
+          name: 'Hello',
+          type: NodeType.Article,
+          tags: ['api'],
+        },
+        {
+          uri: '/directory/hey.md',
+          name: 'Hey',
+          type: NodeType.Article,
+          tags: ['api'],
+        },
+        {
+          uri: '/article.md',
+          name: NodeType.Article,
+          type: NodeType.Article,
+          tags: ['api'],
+        },
+        {
+          uri: '/model.yaml',
+          name: 'Standalone model',
+          type: NodeType.Model,
+          tags: ['api'],
+        },
+        {
+          uri: '/openapi.yaml',
+          name: 'The API',
+          type: NodeType.HttpService,
+          tags: ['api'],
+        },
+      ]);
+
+      expect(toc).toEqual({
+        items: [
+          {
+            title: NodeType.Article,
+            type: 'item',
+            uri: '/article.md',
+          },
+          {
+            title: 'directory',
+            type: 'divider',
+          },
+          {
+            title: NodeType.Article,
+            type: 'group',
+            items: [
+              {
+                title: 'Hello',
+                type: 'item',
+                uri: '/directory/article/hello.md',
+              },
+            ],
+          },
+          {
+            title: 'Hey',
+            type: 'item',
+            uri: '/directory/hey.md',
+          },
+          {
+            title: 'The API',
+            type: 'item',
+            uri: '/openapi.yaml',
+          },
+          {
+            title: 'Models',
+            type: 'divider',
+          },
+          {
+            title: 'Standalone model',
+            type: 'item',
+            uri: '/model.yaml',
+          },
+        ],
+      });
+    });
+  });
+
+  describe('resolveHttpServices()', () => {
+    it('resolves ToC correctly', () => {
+      const toc: ITableOfContents = {
+        items: [
+          {
+            title: 'The API',
+            type: 'item',
+            uri: '/openapi.yaml',
+          },
+        ],
+      };
+
+      resolveHttpServices(
+        [
+          {
+            uri: '/openapi.yaml',
+            name: 'The API',
+            type: NodeType.HttpService,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi.yaml/~1apath',
+            name: 'The Op',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi.yaml/~1fpath',
+            name: 'The Op',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi.yaml/~1zpath',
+            name: 'The Op',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi.yaml/~1components~1model',
+            name: 'The Model',
+            type: NodeType.Model,
+            tags: ['api'],
+          },
+        ],
+        toc,
+      );
+
+      expect(toc).toEqual({
+        items: [
+          {
+            title: 'The API',
+            type: 'divider',
+          },
+          {
+            title: 'Overview',
+            type: 'item',
+            uri: '/openapi.yaml',
+          },
+          {
+            items: [
+              {
+                title: 'The Op',
+                type: 'item',
+                uri: '/openapi.yaml/~1apath',
+              },
+              {
+                title: 'The Op',
+                type: 'item',
+                uri: '/openapi.yaml/~1fpath',
+              },
+              {
+                title: 'The Op',
+                type: 'item',
+                uri: '/openapi.yaml/~1zpath',
+              },
+              {
+                title: 'The Model',
+                type: 'item',
+                uri: '/openapi.yaml/~1components~1model',
+              },
+            ],
+            title: 'api',
+            type: 'group',
+          },
+        ],
+      });
     });
   });
 });

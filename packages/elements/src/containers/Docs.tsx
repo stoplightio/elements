@@ -6,9 +6,10 @@ import * as React from 'react';
 import { useQuery } from 'urql';
 
 import { DocsSkeleton, ParsedDocs } from '../components/Docs';
+import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { bundledBranchNode } from '../graphql/BranchNodeBySlug';
 import { useParsedData } from '../hooks/useParsedData';
-import { ActiveInfoContext, InlineRefResolverProvider, IProvider, Provider } from './Provider';
+import { ActiveInfoContext, IProvider, Provider } from './Provider';
 
 export interface IDocsProps {
   className?: string;

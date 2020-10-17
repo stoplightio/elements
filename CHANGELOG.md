@@ -3,6 +3,152 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.169](https://github.com/stoplightio/elements/compare/v6.0.0-beta.168...v6.0.0-beta.169) (2020-10-16)
+
+
+### Features
+
+* allow to provide api documentation directly to the React API component ([#625](https://github.com/stoplightio/elements/issues/625)) ([869a67b](https://github.com/stoplightio/elements/commit/869a67bf8ff02d5fe3a1a246b81b3bc219b25658))
+
+
+
+
+
+# [6.0.0-beta.168](https://github.com/stoplightio/elements/compare/v6.0.0-beta.167...v6.0.0-beta.168) (2020-10-15)
+
+
+### Bug Fixes
+
+* breaking layout on long request param string ([#626](https://github.com/stoplightio/elements/issues/626)) ([aa99697](https://github.com/stoplightio/elements/commit/aa996971da29fa822f933aaecd4e8ddc532b72a0))
+
+
+
+
+
+# [6.0.0-beta.167](https://github.com/stoplightio/elements/compare/v6.0.0-beta.166...v6.0.0-beta.167) (2020-10-14)
+
+
+### Features
+
+* **inline-ref-resolver:** allow passing fully custom resolver functions ([#624](https://github.com/stoplightio/elements/issues/624)) ([291248b](https://github.com/stoplightio/elements/commit/291248b6ddddf9c1e953ab41d04c07adab0f5c6d))
+
+
+
+
+
+# [6.0.0-beta.166](https://github.com/stoplightio/elements/compare/v6.0.0-beta.165...v6.0.0-beta.166) (2020-10-08)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [6.0.0-beta.165](https://github.com/stoplightio/elements/compare/v6.0.0-beta.164...v6.0.0-beta.165) (2020-10-08)
+
+
+### Bug Fixes
+
+* overriding existing svg styling rule ([#616](https://github.com/stoplightio/elements/issues/616)) ([d0c575c](https://github.com/stoplightio/elements/commit/d0c575c9c93fffc4a4b6c0d8b84e12e1a6438e27))
+
+
+
+
+
+# [6.0.0-beta.164](https://github.com/stoplightio/elements/compare/v6.0.0-beta.163...v6.0.0-beta.164) (2020-10-08)
+
+
+### Features
+
+* split workspace(Url) prop into platformUrl+workspaceSlug ([#615](https://github.com/stoplightio/elements/issues/615)) ([32d9ce9](https://github.com/stoplightio/elements/commit/32d9ce9b23460b5b2954355b05ff7e6765605692))
+
+
+### BREAKING CHANGES
+
+* change in props on the public API
+
+* docs: update README.md
+
+* docs: update StoplightProject.md
+
+* fix: update elements-web-components
+
+* chore: update elements-web-components stories
+
+* feat: rename props of StoplightProject
+* two breaking renames
+- project -> projectSlug
+- branch -> branchSlug
+
+* chore: address PR feedback
+
+
+
+
+
+# [6.0.0-beta.163](https://github.com/stoplightio/elements/compare/v6.0.0-beta.162...v6.0.0-beta.163) (2020-10-08)
+
+
+### Bug Fixes
+
+* **elements-utils:** toc articles ([#618](https://github.com/stoplightio/elements/issues/618)) ([feff830](https://github.com/stoplightio/elements/commit/feff830cd58b503537ee77f0d18e840d928ffe31))
+
+
+
+
+
+# [6.0.0-beta.162](https://github.com/stoplightio/elements/compare/v6.0.0-beta.161...v6.0.0-beta.162) (2020-10-07)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [6.0.0-beta.161](https://github.com/stoplightio/elements/compare/v6.0.0-beta.160...v6.0.0-beta.161) (2020-10-05)
+
+
+### Features
+
+* normalize toc nodes uris ([#614](https://github.com/stoplightio/elements/issues/614)) ([43ed11d](https://github.com/stoplightio/elements/commit/43ed11d8df1407368edfd93ce6a75a6060fa9d97))
+
+
+
+
+
+# [6.0.0-beta.160](https://github.com/stoplightio/elements/compare/v6.0.0-beta.159...v6.0.0-beta.160) (2020-10-05)
+
+
+### Features
+
+* **elements-utils:** generate and resolve toc skeleten ([#612](https://github.com/stoplightio/elements/issues/612)) ([9a99cbc](https://github.com/stoplightio/elements/commit/9a99cbc3882536b129159a94e6185dbfc84d40a0))
+
+
+
+
+
+# [6.0.0-beta.159](https://github.com/stoplightio/elements/compare/v6.0.0-beta.158...v6.0.0-beta.159) (2020-10-05)
+
+
+### Bug Fixes
+
+* link handling in markdown documents ([#611](https://github.com/stoplightio/elements/issues/611)) ([f5f379e](https://github.com/stoplightio/elements/commit/f5f379eeabb9760ad5a22227fc258778878bbd13))
+
+
+
+
+
+# [6.0.0-beta.158](https://github.com/stoplightio/elements/compare/v6.0.0-beta.157...v6.0.0-beta.158) (2020-10-05)
+
+
+### Features
+
+* **with-router:** react to basePath changes ([#608](https://github.com/stoplightio/elements/issues/608)) ([a3054c7](https://github.com/stoplightio/elements/commit/a3054c7579eace16dd6023ea9d6b0e9faf19b9b5))
+
+
+
+
+
 # [6.0.0-beta.157](https://github.com/stoplightio/elements/compare/v6.0.0-beta.156...v6.0.0-beta.157) (2020-10-01)
 
 

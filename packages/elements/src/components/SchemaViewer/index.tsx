@@ -13,7 +13,7 @@ import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../../constants';
-import { InlineRefResolverContext } from '../../containers/Provider';
+import { useInlineRefResolver } from '../../context/InlineRefResolver';
 import { MarkdownViewer } from '../MarkdownViewer';
 
 export interface ISchemaViewerProps {
@@ -40,7 +40,7 @@ export const SchemaViewer = ({
 }: ISchemaViewerProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const resolveRef = React.useContext(InlineRefResolverContext);
+  const resolveRef = useInlineRefResolver();
 
   const JSV = ({ jsvClassName }: { jsvClassName?: string }) => {
     return (
@@ -105,7 +105,7 @@ const SchemaTitle = ({ title, errors }: { title?: string; errors?: string[] }) =
   }
 
   return (
-    <div className={cn('flex items-center p-2')} style={{ height: 30 }}>
+    <div className={cn('MV_block_header flex items-center p-2')} style={{ height: 30 }}>
       {title && (
         <div className="flex items-center flex-1">
           <FontAwesomeIcon icon={NodeTypeIconDefs[NodeType.Model]} color={NodeTypeColors[NodeType.Model]} />

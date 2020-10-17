@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.169](https://github.com/stoplightio/elements/compare/v6.0.0-beta.168...v6.0.0-beta.169) (2020-10-16)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.168](https://github.com/stoplightio/elements/compare/v6.0.0-beta.167...v6.0.0-beta.168) (2020-10-15)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.167](https://github.com/stoplightio/elements/compare/v6.0.0-beta.166...v6.0.0-beta.167) (2020-10-14)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.166](https://github.com/stoplightio/elements/compare/v6.0.0-beta.165...v6.0.0-beta.166) (2020-10-08)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.165](https://github.com/stoplightio/elements/compare/v6.0.0-beta.164...v6.0.0-beta.165) (2020-10-08)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.164](https://github.com/stoplightio/elements/compare/v6.0.0-beta.163...v6.0.0-beta.164) (2020-10-08)
+
+
+### Features
+
+* split workspace(Url) prop into platformUrl+workspaceSlug ([#615](https://github.com/stoplightio/elements/issues/615)) ([32d9ce9](https://github.com/stoplightio/elements/commit/32d9ce9b23460b5b2954355b05ff7e6765605692))
+
+
+### BREAKING CHANGES
+
+* change in props on the public API
+
+* docs: update README.md
+
+* docs: update StoplightProject.md
+
+* fix: update elements-web-components
+
+* chore: update elements-web-components stories
+
+* feat: rename props of StoplightProject
+* two breaking renames
+- project -> projectSlug
+- branch -> branchSlug
+
+* chore: address PR feedback
+
+
+
+
+
+# [6.0.0-beta.163](https://github.com/stoplightio/elements/compare/v6.0.0-beta.162...v6.0.0-beta.163) (2020-10-08)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.162](https://github.com/stoplightio/elements/compare/v6.0.0-beta.161...v6.0.0-beta.162) (2020-10-07)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.161](https://github.com/stoplightio/elements/compare/v6.0.0-beta.160...v6.0.0-beta.161) (2020-10-05)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.160](https://github.com/stoplightio/elements/compare/v6.0.0-beta.159...v6.0.0-beta.160) (2020-10-05)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.159](https://github.com/stoplightio/elements/compare/v6.0.0-beta.158...v6.0.0-beta.159) (2020-10-05)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
+# [6.0.0-beta.158](https://github.com/stoplightio/elements/compare/v6.0.0-beta.157...v6.0.0-beta.158) (2020-10-05)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
 # [6.0.0-beta.157](https://github.com/stoplightio/elements/compare/v6.0.0-beta.156...v6.0.0-beta.157) (2020-10-01)
 
 **Note:** Version bump only for package @stoplight/elements-web-components
