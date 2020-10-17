@@ -33,8 +33,23 @@ storiesOf('Internal/Edit Mode', module)
     const [selections, setSelections] = React.useState(new Set<string>());
     const [selected, setSelected] = React.useState<string>(window.localStorage.selected);
 
-    const [foreignSelections, setForeignSelections] = React.useState(new Map<string, Set<string>>());
-    const [foreignSelected, setForeignSelected] = React.useState(new Map<string, string>());
+    const [foreignStateString, setForeignState] = React.useState('{}');
+    const foreignState = JSON.parse(foreignStateString);
+    const foreignSelected = new Set<string>();
+    const foreignSelections = {};
+    for (const id in foreignState) {
+      if (foreignState[id].selected) {
+        foreignSelected.add(foreignState[id].selected);
+      }
+      if (foreignState[id].selections) {
+        for (const sel of foreignState[id].selections) {
+          if (!foreignSelections[sel]) {
+            foreignSelections[sel] = [];
+          }
+          foreignSelections[sel].push(id);
+        }
+      }
+    }
 
     useYDoc(ydoc);
     const httpOperationYjs = ydoc.doc.getMap('root').get('operation-');
@@ -45,28 +60,21 @@ storiesOf('Internal/Edit Mode', module)
     window.IdMapYjs = IdMapYjs;
 
     useAwareness(ydoc.wsProvider.awareness, states => {
-      const foreignSelections = new Map<string, Set<string>>();
-      const foreignSelected = new Map<string, string>();
+      const newState = {};
       for (const [client, state] of states) {
         if (client !== ydoc.doc.clientID) {
-          foreignSelected.set(String(client), state.selected);
-          foreignSelections.set(String(client), new Set(state.selections));
+          const { selected, selections } = state;
+          newState[client] = { selected, selections };
         }
       }
-      setForeignSelected(foreignSelected);
-      setForeignSelections(foreignSelections);
+      setForeignState(JSON.stringify(newState));
     });
 
     if (!httpOperationYjs) return null;
 
     const context = {
       getStyle: (id: string) => {
-        const names = [];
-        for (const [client, selections] of foreignSelections) {
-          if (selections.has(id)) {
-            names.push(client);
-          }
-        }
+        const names = foreignSelections[id] || [];
         if (names.length > 0) {
           return {
             '--username': `'User ${names.join(',')}'`,
@@ -77,7 +85,7 @@ storiesOf('Internal/Edit Mode', module)
       },
       getClasses: (id: string) => {
         const self = selections.has(id);
-        let other = [...foreignSelections.values()].some(set => set.has(id));
+        let other = (foreignSelections[id] || []).length > 0;
         const focussed = selected === id || [...foreignSelected.values()].some(_id => _id === id);
         return {
           selected: self || other,
