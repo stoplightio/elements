@@ -22407,10 +22407,10 @@ y-quill@^0.1.3:
     lib0 "^0.2.31"
     y-protocols "^1.0.0"
 
-y-websocket@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/y-websocket/-/y-websocket-1.3.4.tgz#9d1e2f53ab989f11663a9bcb2d9ead240334a1ec"
-  integrity sha512-6P9GlrB3OEUgU86vjN0fgkjNg0eGX4JqjCfU55ykUv5jCbexlG0OW1prAA5ldTc7XMPeF/8THtMmQt/wPzJcNQ==
+y-websocket@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/y-websocket/-/y-websocket-1.3.5.tgz#71540babe371df5bfae4076d1eeedb453187bf6f"
+  integrity sha512-TTS6bguW53ciLXuuYkgk/YEOEIwsO7Hy8JMej951g2ePBt9Z8j9riGumYQ/79mltig1IE4ZA6DQp6b10woS5Zw==
   dependencies:
     lib0 "^0.2.31"
     lodash.debounce "^4.0.8"
@@ -22617,10 +22617,10 @@ yargs@^8.0.2:
     y18n "^3.2.1"
     yargs-parser "^7.0.0"
 
-yjs@^13.4.0:
-  version "13.4.0"
-  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.4.0.tgz#b8cedabf853897d6061b3efd88ce306ad18621f5"
-  integrity sha512-7Uk28QwLILYoTjfOYL9LwGJpcLL8Nfs52u7pVLrBKiyGkH9D6dj3k+M5/BlRx7g4S4FvuG/yezsGU/UVLuV6Lg==
+yjs@^13.4.1:
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.4.1.tgz#5ef869eb2e64f028eb013952a5f28412a084dc90"
+  integrity sha512-kIh0sprCTzIm2qyr1VsovkvjKzD2GR4WcU/McJpLAEvImCJHA78Q3S6uSLnhZX0i7FQdrLPCRT8DtTPEH73jnw==
   dependencies:
     lib0 "^0.2.33"
 
