@@ -2,27 +2,24 @@ import './EditMode.scss';
 
 import { IHttpOperation } from '@stoplight/types';
 import { Button } from '@stoplight/ui-kit';
-import { boolean, object, select, withKnobs } from '@storybook/addon-knobs';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
 import { throttle } from 'lodash';
 import * as React from 'react';
 
-import { getIdMap, resetOperation, ydoc } from '../../__fixtures__/operations/shipengineYjs';
-import { HttpOperation } from '../../components/Docs/HttpOperation';
-import { FormtronII } from '../../components/Docs/HttpOperation/Forms';
-import { EditModeContext } from '../../containers/EditingProvider';
-import { Provider } from '../../containers/Provider';
-import { useAwareness } from '../../hooks/y/useAwareness';
-import { useObserveDeep } from '../../hooks/y/useObserveDeep';
-import { useYDoc } from '../../hooks/y/useYDoc';
-import { DeYjsify, resolvePath, WithIds } from '../../Y';
-
-const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
+import { HttpOperation } from '../../../components/Docs/HttpOperation';
+import { EditModeContext } from '../../../containers/EditingProvider';
+import { Provider } from '../../../containers/Provider';
+import { WithIds } from '../../../types';
+import { FormtronII } from './FormtronII';
+import { useAwareness } from './hooks/useAwareness';
+import { useObserveDeep } from './hooks/useObserveDeep';
+import { useYDoc } from './hooks/useYDoc';
+import { getIdMap, resetOperation, ydoc } from './shipengineYjs';
+import { DeYjsify, resolvePath } from './Y';
 
 export const darkMode = () => boolean('Dark Mode', Boolean(Number(localStorage.darkMode)));
-export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
-export const nodeData = () => object('nodeData', article);
 
 storiesOf('Internal/Edit Mode', module)
   .addDecorator(withKnobs({ escapeHTML: false }))

@@ -95,3 +95,9 @@ export interface ILinkComponentProps {
   data?: Dictionary<unknown>;
   url: string;
 }
+
+export type WithIds<T> = T extends Array<infer P>
+  ? Array<WithIds<P>>
+  : T extends object
+  ? { [P in keyof T]: WithIds<T[P]> } & { id?: string }
+  : T;

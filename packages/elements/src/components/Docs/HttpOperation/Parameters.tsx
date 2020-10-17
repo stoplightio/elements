@@ -9,7 +9,7 @@ import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useClasses } from '../../../hooks/useClasses';
 import { useClick } from '../../../hooks/useClick';
 import { useStyle } from '../../../hooks/useStyle';
-import { WithIds } from '../../../Y';
+import { WithIds } from '../../../types';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from './SectionTitle';
 

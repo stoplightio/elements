@@ -2,7 +2,8 @@ import { IHttpOperationResponse } from '@stoplight/types';
 import { Button, HTMLSelect, InputGroup } from '@stoplight/ui-kit';
 import * as React from 'react';
 
-import { WithIds, Yjsify } from '../../../../Y';
+import { WithIds } from '../../../../types';
+import { Yjsify } from '../Y';
 import { IFormProps } from './types';
 import { YQuill } from './YQuill';
 

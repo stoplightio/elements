@@ -1,7 +1,8 @@
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import * as Y from 'yjs';
 
-import { resolvePath, WithIds, YDoc, Yify, Yjsify } from '../../Y';
+import { WithIds } from '../../../types';
+import { resolvePath, YDoc, Yify, Yjsify } from './Y';
 
 export const ydoc = new YDoc('shipengine');
 // @ts-ignore

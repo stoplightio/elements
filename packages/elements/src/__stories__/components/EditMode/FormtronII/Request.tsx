@@ -2,7 +2,7 @@ import { HttpParamStyles } from '@stoplight/types';
 import { Button } from '@stoplight/ui-kit';
 import * as React from 'react';
 
-import { Yjsify } from '../../../../Y';
+import { Yjsify } from '../Y';
 import { IFormProps } from './types';
 
 export const FormRequest = ({
