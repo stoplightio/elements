@@ -94,6 +94,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       >
         <div
           className="TreeListItem HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
+          onClick={[Function]}
           style={
             Object {
               "alignItems": "start",
@@ -107,11 +108,15 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               }
             }
           >
-            <div>
+            <div
+              className=""
+              onClick={[Function]}
+            >
               api_key
             </div>
             <div
               className="text-sm text-green-7 dark:text-green-6"
+              onClick={[Function]}
             >
               apiKey
             </div>
@@ -122,6 +127,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             <MarkdownViewer
               className="flex-1 text-darken-7 dark:text-lighten-7"
               markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
+              onClick={[Function]}
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
@@ -131,6 +137,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   }
                 }
                 markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
+                onClick={[Function]}
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
@@ -143,9 +150,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     }
                     markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
+                    onClick={[Function]}
                   >
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                      onClick={[Function]}
                     >
                       <paragraph
                         index={0}
@@ -398,9 +407,20 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                     <span
                       className="bp3-text-overflow-ellipsis bp3-fill"
                     >
-                      Query
-                       parameter name: 
-                      API Key
+                      <span
+                        className=""
+                        onClick={[Function]}
+                      >
+                        Query
+                         parameter name:
+                      </span>
+                       
+                      <span
+                        className=""
+                        onClick={[Function]}
+                      >
+                        API Key
+                      </span>
                     </span>
                   </Blueprint3.Text>
                   <Blueprint3.Icon />
@@ -424,6 +444,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       >
         <div
           className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
+          onClick={[Function]}
           style={
             Object {
               "alignItems": "start",
@@ -437,11 +458,15 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               }
             }
           >
-            <div>
+            <div
+              className=""
+              onClick={[Function]}
+            >
               basicKey
             </div>
             <div
               className="text-sm text-orange-7 dark:text-orange-6"
+              onClick={[Function]}
             >
               http
             </div>
@@ -452,6 +477,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             <MarkdownViewer
               className="flex-1 text-darken-7 dark:text-lighten-7"
               markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+              onClick={[Function]}
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
@@ -461,6 +487,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   }
                 }
                 markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                onClick={[Function]}
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
@@ -473,9 +500,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     }
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    onClick={[Function]}
                   >
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                      onClick={[Function]}
                     >
                       <paragraph
                         index={0}
@@ -623,6 +652,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       >
         <div
           className="TreeListItem HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
+          onClick={[Function]}
           style={
             Object {
               "alignItems": "start",
@@ -636,11 +666,15 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               }
             }
           >
-            <div>
+            <div
+              className=""
+              onClick={[Function]}
+            >
               bearerKey
             </div>
             <div
               className="text-sm text-orange-7 dark:text-orange-6"
+              onClick={[Function]}
             >
               http
             </div>
@@ -651,6 +685,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             <MarkdownViewer
               className="flex-1 text-darken-7 dark:text-lighten-7"
               markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+              onClick={[Function]}
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
@@ -660,6 +695,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   }
                 }
                 markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                onClick={[Function]}
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
@@ -672,9 +708,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     }
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    onClick={[Function]}
                   >
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                      onClick={[Function]}
                     >
                       <paragraph
                         index={0}
@@ -844,6 +882,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       >
         <div
           className="TreeListItem TreeListItem--striped HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
+          onClick={[Function]}
           style={
             Object {
               "alignItems": "start",
@@ -857,11 +896,15 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               }
             }
           >
-            <div>
+            <div
+              className=""
+              onClick={[Function]}
+            >
               openIdConnectKey
             </div>
             <div
               className="text-sm text-blue-7 dark:text-blue-6"
+              onClick={[Function]}
             >
               openIdConnect
             </div>
@@ -872,6 +915,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             <MarkdownViewer
               className="flex-1 text-darken-7 dark:text-lighten-7"
               markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+              onClick={[Function]}
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
@@ -881,6 +925,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   }
                 }
                 markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                onClick={[Function]}
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
@@ -893,9 +938,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     }
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    onClick={[Function]}
                   >
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                      onClick={[Function]}
                     >
                       <paragraph
                         index={0}
@@ -1076,6 +1123,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
       >
         <div
           className="TreeListItem HttpSecuritySchemes__SecurityScheme px-4 py-3 flex items-start"
+          onClick={[Function]}
           style={
             Object {
               "alignItems": "start",
@@ -1089,11 +1137,15 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
               }
             }
           >
-            <div>
+            <div
+              className=""
+              onClick={[Function]}
+            >
               oauth2Key
             </div>
             <div
               className="text-sm text-red-7 dark:text-red-6"
+              onClick={[Function]}
             >
               oauth2
             </div>
@@ -1104,6 +1156,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             <MarkdownViewer
               className="flex-1 text-darken-7 dark:text-lighten-7"
               markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+              onClick={[Function]}
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
@@ -1113,6 +1166,7 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                   }
                 }
                 markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                onClick={[Function]}
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
@@ -1125,9 +1179,11 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     }
                     markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    onClick={[Function]}
                   >
                     <div
                       className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                      onClick={[Function]}
                     >
                       <paragraph
                         index={0}
