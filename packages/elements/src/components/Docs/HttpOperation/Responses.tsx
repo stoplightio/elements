@@ -27,7 +27,7 @@ export const Responses = ({ className, responses }: IResponsesProps) => {
   const [activeResponse, setActiveResponse] = React.useState(0);
   if (!responses || !responses.length) return null;
 
-  const sortedResponses = responses;
+  const sortedResponses = [...responses].sort((a, b) => a.code.localeCompare(b.code));
 
   return (
     <div className={cn('HttpOperation__Responses', className)}>
