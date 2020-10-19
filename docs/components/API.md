@@ -6,9 +6,12 @@ The API component displays API reference documentation for any OpenAPI v2 or v3 
 
 ## Usage
 
-> This component requires an OpenAPI file that is either provided directly to the component (as YAML string, JSON string or JavaScript object) or accessible via URL (in that case the component will fetch it by itself). 
+> This component requires an OpenAPI file that is either provided directly to the component (as YAML string, JSON string or - in React version - also as a JavaScript object) or accessible via URL (in that case the component will fetch it by itself). 
 
 > If you don't already have an OpenAPI document describing your API, you can create one for free using [Stoplight Studio](https://stoplight.io/studio).
+
+
+### React
 
 <!-- title: React Component Loading API Description Via URL -->
 
@@ -36,6 +39,8 @@ const apiDescriptionDocument = /* API description in the form of YAML string, JS
 />
 ```
 
+### Web Component
+
 <!-- title: Web Component -->
 
 ```html
@@ -44,6 +49,23 @@ const apiDescriptionDocument = /* API description in the form of YAML string, JS
   layout="stacked"
   router="hash"
 />
+```
+
+<!-- title: Web Component with API Description Provided Directly -->
+
+```html
+<elements-api
+  layout="stacked"
+  router="hash"
+/>
+
+<script>
+const apiDescriptionDocument = /* API description in the form of YAML string or JSON string */;
+
+document
+  .querySelector('elements-api')
+  .setAttribute('apiDescriptionDocument', apiDescriptionDocument);
+</script>
 ```
 
 ## Properties
