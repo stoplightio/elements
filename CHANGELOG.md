@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.170](https://github.com/stoplightio/elements/compare/v6.0.0-beta.169...v6.0.0-beta.170) (2020-10-19)
+
+
+### Bug Fixes
+
+* **deps:** [security] bump npm-user-validate from 1.0.0 to 1.0.1 ([#630](https://github.com/stoplightio/elements/issues/630)) ([5964268](https://github.com/stoplightio/elements/commit/5964268cbfdeb291e43695f400aafa1abf56df79))
+
+
+### Features
+
+* allow to provide api document string directly in API web component ([#629](https://github.com/stoplightio/elements/issues/629)) ([d78b62d](https://github.com/stoplightio/elements/commit/d78b62d980c56f5572e0e264a46f05219018de4a))
+
+
+
+
+
 # [6.0.0-beta.169](https://github.com/stoplightio/elements/compare/v6.0.0-beta.168...v6.0.0-beta.169) (2020-10-16)
 
 
