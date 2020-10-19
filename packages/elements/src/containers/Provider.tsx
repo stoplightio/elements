@@ -1,14 +1,12 @@
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
-import { Client, Provider as UrqlProvider } from 'urql';
 
 import { ComponentsProvider } from '../context/Components';
-import { useUrqlClient } from '../hooks/useUrqlClient';
 import { NodeIconMapping } from '../types';
 
 export interface IProvider extends IActiveInfo {
-  urqlClient?: Client;
   components?: IComponentMapping;
+  authToken?: string;
 }
 
 export interface IActiveInfo {
@@ -17,6 +15,7 @@ export interface IActiveInfo {
   project: string;
   branch?: string;
   node?: string;
+  authToken?: string;
 }
 
 const defaultIcons: NodeIconMapping = {};
@@ -28,6 +27,7 @@ const defaultInfo = {
   project: '',
   branch: '',
   node: '',
+  authToken: '',
 };
 export const ActiveInfoContext = createNamedContext<IActiveInfo>('ActiveInfoContext', defaultInfo);
 
@@ -37,9 +37,9 @@ export const Provider: React.FC<IProvider> = ({
   project,
   branch,
   node,
-  urqlClient,
   components,
   children,
+  authToken,
 }) => {
   const info = {
     host,
@@ -47,18 +47,15 @@ export const Provider: React.FC<IProvider> = ({
     project,
     branch,
     node,
+    authToken,
   };
 
-  const client = useUrqlClient(`${host}/graphql`, { urqlClient });
-
   return (
-    <UrqlProvider value={client}>
-      <IconsContext.Provider value={defaultIcons}>
-        <ComponentsProvider value={components}>
-          <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>
-        </ComponentsProvider>
-      </IconsContext.Provider>
-    </UrqlProvider>
+    <IconsContext.Provider value={defaultIcons}>
+      <ComponentsProvider value={components}>
+        <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>
+      </ComponentsProvider>
+    </IconsContext.Provider>
   );
 };
 
