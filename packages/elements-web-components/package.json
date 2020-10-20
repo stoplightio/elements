@@ -20,7 +20,8 @@
     "build": "webpack && cp ../elements/dist/styles/elements.min.css ./dist",
     "build.docs": "build-storybook -c .storybook -o docs-auto",
     "storybook": "start-storybook",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "jest"
   },
   "devDependencies": {
     "@stoplight/elements": "beta",

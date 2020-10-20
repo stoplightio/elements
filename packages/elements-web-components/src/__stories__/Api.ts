@@ -31,3 +31,9 @@ APIWithJSONProvidedDirectly.args = {
   apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
 };
 APIWithJSONProvidedDirectly.storyName = 'API With JSON Provided Directly';
+
+export const APIWithJavaScriptObjectProvidedDirectly = Template.bind({});
+APIWithJavaScriptObjectProvidedDirectly.args = {
+  apiDescriptionDocument: parse(zoomApiYaml),
+};
+APIWithJavaScriptObjectProvidedDirectly.storyName = 'API With JavaScript Provided Directly';

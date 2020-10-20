@@ -17,20 +17,45 @@ type TypeNameMap<T> = T extends string
   : 'object';
 
 type PropDescriptor<T> = {
-  type: TypeNameMap<T>;
+  type: TypeNameMap<T> | TypeNameMap<T>[];
+  attributeName?: string;
 } & (T extends undefined ? { defaultValue?: undefined } : { defaultValue: T });
 
 type PropDescriptorMap<P> = {
   [K in keyof P]: PropDescriptor<P[K]>;
 };
 
+export function kebabCase(string: string): string {
+  return (getParts(string, true) || []).join('-').toLowerCase();
+}
+
+export function getParts(string: string, noSpecialChars = false): any[] | null | undefined {
+  const target = string.trim().normalize('NFC');
+  const parts = target.includes(' ') ? target.split(' ').filter(Boolean) : splitOnSpecialChars(target);
+  return noSpecialChars ? parts?.map(part => part.normalize('NFD').replace(/[^a-zA-ZØßø0-9]/g, '')) : parts;
+}
+
+export function splitOnSpecialChars(string: string): any[] | null {
+  return string.match(/^[a-zà-öø-ÿ]+|[A-ZÀ-ÖØ-ß][a-zà-öø-ÿ]+|[a-zà-öø-ÿ]+|[0-9]+|[A-ZÀ-ÖØ-ß]+(?![a-zà-öø-ÿ])/g);
+}
+
 export const createElementClass = <P>(Component: React.ComponentType<P>, propDescriptors: PropDescriptorMap<P>) => {
+  const _propDescriptors = Object.entries<PropDescriptor<any>>(propDescriptors as any).reduce<{
+    [k: string]: PropDescriptor<any> & { originalName: string };
+  }>(
+    (obj, [key, value]) => ({
+      ...obj,
+      [kebabCase(key)]: { ...value, originalName: key },
+    }),
+    {},
+  );
+
   return class extends HTMLElement {
     private _mountPoint: HTMLElement | undefined;
     private readonly _props: Partial<P> = {};
 
     static get observedAttributes() {
-      return Object.keys(propDescriptors);
+      return Object.keys(_propDescriptors);
     }
 
     constructor() {
@@ -57,10 +82,10 @@ export const createElementClass = <P>(Component: React.ComponentType<P>, propDes
     }
 
     attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-      if (propDescriptors[name]) {
+      if (_propDescriptors[name]) {
         const newPropValue = this.safeReadAttribute(name as keyof P & string);
-        if (!isEqual(this._props[name], newPropValue)) {
-          this._props[name] = newPropValue;
+        if (!isEqual(this._props[_propDescriptors[name].originalName], newPropValue)) {
+          this._props[_propDescriptors[name].originalName] = newPropValue;
           this.renderComponent();
         }
       }
@@ -80,11 +105,24 @@ export const createElementClass = <P>(Component: React.ComponentType<P>, propDes
     }
 
     private safeReadAttribute<A extends keyof P & string>(attrName: A): Optional<P[A]> {
-      if (!this.hasAttribute(attrName) || !propDescriptors[attrName]) {
+      if (!this.hasAttribute(attrName) || !_propDescriptors[attrName]) {
         return undefined;
       }
       const attrValue = this.getAttribute(attrName);
-      const type = propDescriptors[attrName].type;
+      const type = _propDescriptors[attrName].type;
+
+      if (Array.isArray(type)) {
+        const typesObject = type.reduce<{ [k: string]: boolean }>((newObject, t) => ({ ...newObject, [t]: true }), {});
+
+        if (typesObject['object']) {
+          try {
+            return JSON.parse(attrValue ?? '');
+          } catch {}
+        }
+
+        return (attrValue ?? undefined) as Optional<P[A]>;
+      }
+
       if (type === 'string') {
         return (attrValue ?? undefined) as Optional<P[A]>;
       }
@@ -102,7 +140,7 @@ export const createElementClass = <P>(Component: React.ComponentType<P>, propDes
     }
 
     private safeWriteAttribute<A extends keyof P & string>(attrName: A, newValue: P[A]) {
-      if (!propDescriptors[attrName]) {
+      if (!_propDescriptors[attrName]) {
         return;
       }
 
@@ -111,10 +149,25 @@ export const createElementClass = <P>(Component: React.ComponentType<P>, propDes
         return;
       }
 
-      const type = propDescriptors[attrName].type;
+      const type = _propDescriptors[attrName].type;
       this.setAttribute(attrName, stringifyValue(newValue));
 
       function stringifyValue(val: P[A]): string {
+        if (Array.isArray(type)) {
+          const typesObject = type.reduce<{ [k: string]: boolean }>(
+            (newObject, t) => ({ ...newObject, [t]: true }),
+            {},
+          );
+
+          if (typesObject['object']) {
+            try {
+              return JSON.stringify(val);
+            } catch {}
+          }
+
+          return String(val);
+        }
+
         if (type === 'string' || type === 'number' || type === 'boolean') {
           return String(val);
         }
