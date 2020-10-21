@@ -298,8 +298,8 @@ export class RequestStore {
     }
 
     try {
-      const snippet = new HTTPSnippet(this.toHAR(), {});
-      return snippet.convert(language, library);
+      const snippet = new HTTPSnippet(this.toHAR());
+      return snippet.convert(language, library) || null;
     } catch (err) {
       console.error(err);
       return null;
