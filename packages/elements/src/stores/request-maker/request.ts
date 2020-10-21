@@ -12,8 +12,7 @@ import { getContentType } from '../../utils/getContentType';
 import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } from '../../utils/params';
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';
 import { Auth, ContentType, HeaderParam, IParam, ParamType, PathParam, QueryParam } from './types';
-
-const HTTPSnippet = require('@stoplight/httpsnippet');
+import HTTPSnippet = require('httpsnippet');
 
 const DEFAULT_EMPTY_JSON = '{\n  \n}';
 const DEFAULT_EMPTY_GQL = 'query {\n  \n}';
