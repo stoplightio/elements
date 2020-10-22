@@ -7,7 +7,19 @@ import { createTemplate } from './util';
 
 const Template = createTemplate('elements-api');
 
-export default { title: 'API' };
+export default {
+  title: 'API',
+  argTypes: {
+    apiDescriptionUrl: {
+      control: 'text',
+    },
+    apiDescriptionDocument: { control: 'text' },
+    layout: {
+      control: { type: 'inline-radio', options: ['sidebar', 'stacked'] },
+      defaultValue: 'sidebar',
+    },
+  },
+};
 
 export const TodosAPI = Template.bind({});
 TodosAPI.args = {
