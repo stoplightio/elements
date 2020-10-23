@@ -1,6 +1,7 @@
 import { boolean, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
+import { size } from 'lodash';
 import * as React from 'react';
 
 import { API } from '../../containers/API';
@@ -18,6 +19,7 @@ storiesOf('Public/API', module)
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <API apiDescriptionUrl={apiDescriptionUrl()} />
+        <div style={{ textAlign: 'center', padding: '40px', border: '4px solid green', fontSize: '24px' }}>hello</div>
       </div>
     );
   })
