@@ -8,6 +8,7 @@ import { DocsSkeleton, ParsedDocs } from '../components/Docs';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { useParsedData } from '../hooks/useParsedData';
 import { usePlatformApi } from '../hooks/usePlatformApi';
+import { BundledBranchNode } from '../types';
 import { ActiveInfoContext, IProvider, Provider } from './Provider';
 
 export interface IDocsProps {
@@ -35,7 +36,7 @@ const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-n
 export const Docs = ({ className, node }: IDocsProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const { data: result, error } = usePlatformApi(bundledNodesUri, {
+  const { data: result, error } = usePlatformApi<BundledBranchNode>(bundledNodesUri, {
     platformUrl: info.host,
     workspaceSlug: info.workspace,
     projectSlug: info.project,
@@ -55,7 +56,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
     );
   }
 
-  if (!error && !result) {
+  if (!result) {
     return <DocsSkeleton />;
   }
 

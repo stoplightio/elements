@@ -27,6 +27,14 @@ export interface IBranchNode {
   };
 }
 
+export type BundledBranchNode = {
+  id: number;
+  data: string;
+  type: NodeType;
+  name: string;
+  uri: string;
+};
+
 export interface TableOfContentsLinkWithId extends ITableOfContentsLink {
   id: number | string;
 }

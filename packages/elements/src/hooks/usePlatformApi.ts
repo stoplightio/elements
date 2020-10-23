@@ -36,7 +36,7 @@ type ActionsApiProps = {
   };
 };
 
-export function usePlatformApi(
+export function usePlatformApi<T>(
   uriTemplate: string,
   { platformUrl, workspaceSlug, projectSlug, nodeUri, authToken }: PlatformApiProps,
 ) {
@@ -45,13 +45,13 @@ export function usePlatformApi(
     .path(template.expand({ workspaceSlug, projectSlug, uri: nodeUri?.substr(1) }).toString())
     .toString();
 
-  return useSwr([url, 'get', authToken], () => fetcher(url, 'get', authToken), {
+  return useSwr<T>([url, 'get', authToken], () => fetcher(url, 'get', authToken), {
     shouldRetryOnError: false,
   });
 }
 
 //TODO: to be removed when GET endpoint for fetching mockUrl will be ready
-export function useActionsApi(
+export function useActionsApi<T>(
   path: string,
   { platformUrl, projectSlug, workspaceSlug, nodeUri, authToken }: PlatformApiProps,
 ) {
@@ -66,5 +66,5 @@ export function useActionsApi(
     }),
     [nodeUri, projectSlug, workspaceSlug],
   );
-  return useSwr([url, 'post', authToken, data], () => fetcher(url, 'post', authToken, data));
+  return useSwr<T>([url, 'post', authToken, data], () => fetcher(url, 'post', authToken, data));
 }

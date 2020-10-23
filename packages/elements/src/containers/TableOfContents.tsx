@@ -30,7 +30,7 @@ export function TableOfContents<E>({
   authToken,
   ...extra
 }: ITableOfContents<E>) {
-  const { data: tocData, error } = usePlatformApi(tocUri, {
+  const { data: tocData, error } = usePlatformApi<ITableOfContentsTree>(tocUri, {
     platformUrl,
     workspaceSlug,
     projectSlug,
@@ -43,7 +43,7 @@ export function TableOfContents<E>({
     }
   }, [onData, tocData]);
 
-  const tree: ITableOfContentsTree = tocData ?? { items: [] };
+  const tree = tocData ?? { items: [] };
 
   const contents: TableOfContentsLinkWithId[] = useTocContents(tree).map(item => {
     return {
