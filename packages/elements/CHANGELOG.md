@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.171](https://github.com/stoplightio/elements/compare/v6.0.0-beta.170...v6.0.0-beta.171) (2020-10-23)
+
+
+### chore
+
+* remove `linkComponent` input from API/StoplightProject ([#665](https://github.com/stoplightio/elements/issues/665)) ([3bc208d](https://github.com/stoplightio/elements/commit/3bc208de413061d7057428e85d1666976832ac0c))
+
+
+### BREAKING CHANGES
+
+* removed prop
+
+* test: add storybook controls to ease testing
+
+
+
+
+
 # [6.0.0-beta.170](https://github.com/stoplightio/elements/compare/v6.0.0-beta.169...v6.0.0-beta.170) (2020-10-19)
 
 **Note:** Version bump only for package @stoplight/elements

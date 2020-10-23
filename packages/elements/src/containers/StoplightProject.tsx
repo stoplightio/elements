@@ -1,5 +1,3 @@
-import { IComponentMapping } from '@stoplight/markdown-viewer';
-import { Optional } from '@stoplight/types';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 
@@ -7,7 +5,7 @@ import { Row } from '../components/TableOfContents/Row';
 import { defaultPlatformUrl } from '../constants';
 import { withRouter } from '../hoc/withRouter';
 import { withStyles } from '../styled';
-import { ITableOfContentsTree, Item, LinkComponentType, RoutingProps, TableOfContentItem } from '../types';
+import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '../types';
 import { isOperation } from '../utils/oas';
 import { DocsProvider } from './Docs';
 import { TableOfContents } from './TableOfContents';
@@ -19,29 +17,14 @@ export interface StoplightProjectProps extends RoutingProps {
   platformUrl?: string;
   branchSlug?: string;
   authToken?: string;
-  linkComponent?: LinkComponentType;
 }
 
 const StoplightProjectImpl = withRouter<StoplightProjectProps>(
-  ({ workspaceSlug, platformUrl, projectSlug, branchSlug, linkComponent: LinkComponent, authToken }) => {
+  ({ workspaceSlug, platformUrl, projectSlug, branchSlug, authToken }) => {
     const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
 
     const showTryIt = isOperation(pathname);
-
-    const components: Optional<IComponentMapping> = React.useMemo(() => {
-      return LinkComponent !== void 0
-        ? {
-            link: ({ node, children }) => {
-              return (
-                <LinkComponent url={node.url} data={node.data}>
-                  {children}
-                </LinkComponent>
-              );
-            },
-          }
-        : void 0;
-    }, [LinkComponent]);
 
     if (pathname === '/' && firstItem) {
       return <Redirect to={firstItem.uri} />;
@@ -55,7 +38,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
           projectSlug={projectSlug}
           branchSlug={branchSlug}
           rowComponent={Row}
-          rowComponentExtraProps={{ pathname, linkComponent: LinkComponent }}
+          rowComponentExtraProps={{ pathname }}
           nodeUri={pathname}
           onData={(tocTree: ITableOfContentsTree) => {
             if (pathname === '/' && tocTree?.items?.length) {
@@ -73,7 +56,6 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
               project={projectSlug}
               branch={branchSlug}
               node={pathname}
-              components={components}
               authToken={authToken}
               className="px-10"
             />
@@ -86,7 +68,6 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
                     project={projectSlug}
                     branch={branchSlug}
                     node={pathname}
-                    components={components}
                     authToken={authToken}
                   />
                 </div>

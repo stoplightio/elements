@@ -15,7 +15,7 @@ import { withRouter } from '../hoc/withRouter';
 import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { withStyles } from '../styled';
-import { LinkComponentType, RoutingProps } from '../types';
+import { RoutingProps } from '../types';
 import { computeNodeData, isOas2, isOas3, IUriMap } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
@@ -31,7 +31,6 @@ export type APIPropsWithDocument = {
 } & CommonAPIProps;
 
 export interface CommonAPIProps extends RoutingProps {
-  linkComponent?: LinkComponentType;
   layout?: 'sidebar' | 'stacked';
 }
 
@@ -40,7 +39,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 const APIImpl = withRouter<APIProps>(function API(props) {
-  const { layout, linkComponent, apiDescriptionUrl } = props;
+  const { layout, apiDescriptionUrl } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { pathname } = useLocation();
@@ -97,7 +96,7 @@ const APIImpl = withRouter<APIProps>(function API(props) {
         {layout === 'stacked' ? (
           <StackedLayout uriMap={uriMap} tree={tree} />
         ) : (
-          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} linkComponent={linkComponent} />
+          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
         )}
       </div>
     </InlineRefResolverProvider>
