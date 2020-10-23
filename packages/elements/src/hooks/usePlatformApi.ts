@@ -1,11 +1,13 @@
+import { Optional } from '@stoplight/types';
 import Axios from 'axios';
+import * as React from 'react';
 import useSwr from 'swr';
 import URI from 'urijs';
 import URITemplate from 'urijs/src/URITemplate';
 
 import { defaultPlatformUrl } from '../constants';
 
-const fetcher = ({ url, method, data, authToken }: FetcherOptions) => {
+const fetcher = (url: string, method: 'get' | 'post', authToken: Optional<string>, data?: ActionsApiProps) => {
   return Axios.request({
     url,
     method,
@@ -16,13 +18,6 @@ const fetcher = ({ url, method, data, authToken }: FetcherOptions) => {
       },
     }),
   }).then(res => res.data);
-};
-
-type FetcherOptions = {
-  url: string;
-  method: 'get' | 'post';
-  data?: ActionsApiProps;
-  authToken?: string;
 };
 
 type PlatformApiProps = {
@@ -50,7 +45,7 @@ export function usePlatformApi(
     .path(template.expand({ workspaceSlug, projectSlug, uri: nodeUri?.substr(1) }).toString())
     .toString();
 
-  return useSwr(url, () => fetcher({ url, method: 'get', authToken }), {
+  return useSwr([url, 'get', authToken], () => fetcher(url, 'get', authToken), {
     shouldRetryOnError: false,
   });
 }
@@ -61,12 +56,15 @@ export function useActionsApi(
   { platformUrl, projectSlug, workspaceSlug, nodeUri, authToken }: PlatformApiProps,
 ) {
   const url = new URI(platformUrl ?? defaultPlatformUrl).path(path).toString();
-  const data: ActionsApiProps = {
-    input: {
-      projectSlug,
-      workspaceSlug,
-      uri: nodeUri,
-    },
-  };
-  return useSwr(url, () => fetcher({ url, method: 'post', data, authToken }));
+  const data: ActionsApiProps = React.useMemo(
+    () => ({
+      input: {
+        projectSlug,
+        workspaceSlug,
+        uri: nodeUri,
+      },
+    }),
+    [nodeUri, projectSlug, workspaceSlug],
+  );
+  return useSwr([url, 'post', authToken, data], () => fetcher(url, 'post', authToken, data));
 }
