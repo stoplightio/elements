@@ -2,7 +2,7 @@ import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
 
 import { useTocContents } from '../../hooks/useTocContents';
-import { ILinkComponentProps, ITableOfContentsTree } from '../../types';
+import { ITableOfContentsTree } from '../../types';
 import { getNodeType, isOperation, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { Row } from '../TableOfContents/Row';
@@ -13,15 +13,9 @@ type SidebarLayoutProps = {
   pathname: string;
   uriMap: IUriMap;
   tree: ITableOfContentsTree;
-  linkComponent?: React.ComponentType<ILinkComponentProps>;
 };
 
-export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
-  pathname,
-  tree,
-  uriMap,
-  linkComponent: LinkComponent,
-}) => {
+export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, uriMap }) => {
   const contents = useTocContents(tree).map(item => ({
     ...item,
     isActive: item.to === pathname,
@@ -34,11 +28,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
 
   return (
     <>
-      <TableOfContents
-        contents={contents}
-        rowComponent={Row}
-        rowComponentExtraProps={{ pathname, linkComponent: LinkComponent }}
-      />
+      <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
       <div className="flex-grow p-5">
         <div className="flex">
           <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
