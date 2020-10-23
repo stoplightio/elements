@@ -45,7 +45,7 @@ export function usePlatformApi<T>(
     .path(template.expand({ workspaceSlug, projectSlug, uri: nodeUri?.substr(1) }).toString())
     .toString();
 
-  return useSwr<T>([url, 'get', authToken], () => fetcher(url, 'get', authToken), {
+  return useSwr<T>([url, 'get', authToken], fetcher, {
     shouldRetryOnError: false,
   });
 }
@@ -66,5 +66,5 @@ export function useActionsApi<T>(
     }),
     [nodeUri, projectSlug, workspaceSlug],
   );
-  return useSwr<T>([url, 'post', authToken, data], () => fetcher(url, 'post', authToken, data));
+  return useSwr<T>([url, 'post', authToken, data], fetcher);
 }
