@@ -27,7 +27,7 @@ describe('useDereferencedData', () => {
     const { result, waitForNextUpdate } = renderHook(() =>
       useDereferencedData(NodeType.HttpOperation, JSON.stringify(input)),
     );
-    await waitForNextUpdate({ timeout: 500 });
+    await waitForNextUpdate({ timeout: 300 });
     expect(result.current).toEqual({ ...input, __dereferenced: true });
   });
 
@@ -45,6 +45,6 @@ describe('useDereferencedData', () => {
 
     // Let's make sure the original dereferencing operation does not override the new input
 
-    await expect(waitForNextUpdate({ timeout: 500 })).rejects.toBeInstanceOf(Error);
+    await expect(waitForNextUpdate({ timeout: 300 })).rejects.toBeInstanceOf(Error);
   });
 });
