@@ -47,6 +47,7 @@ export function usePlatformApi<T>(
 
   return useSwr<T>([url, 'get', authToken], fetcher, {
     shouldRetryOnError: false,
+    revalidateOnFocus: false,
   });
 }
 
@@ -66,5 +67,8 @@ export function useActionsApi<T>(
     }),
     [nodeUri, projectSlug, workspaceSlug],
   );
-  return useSwr<T>([url, 'post', authToken, data], fetcher);
+  return useSwr<T>([url, 'post', authToken, data], fetcher, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  });
 }
