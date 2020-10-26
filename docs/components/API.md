@@ -6,9 +6,14 @@ The API component displays API reference documentation for any OpenAPI v2 or v3 
 
 ## Usage
 
-> This component requires an OpenAPI file that is accessible via URL. If you don't already have an OpenAPI, you can design one for free using [Stoplight Studio](https://stoplight.io/studio).
+> This component requires an OpenAPI file that is either provided directly to the component (as YAML string, JSON string or - in React version - also as a JavaScript object) or accessible via URL (in that case the component will fetch it by itself). 
 
-<!-- title: React Component -->
+> If you don't already have an OpenAPI document describing your API, you can create one for free using [Stoplight Studio](https://stoplight.io/studio).
+
+
+### React
+
+<!-- title: React Component Loading API Description Via URL -->
 
 ```jsx
 import { API } from "@stoplight/elements";
@@ -20,6 +25,22 @@ import { API } from "@stoplight/elements";
 />
 ```
 
+<!-- title: React Component with API Description Provided Directly -->
+
+```jsx
+import { API } from "@stoplight/elements";
+
+const apiDescriptionDocument = /* API description in the form of YAML string, JSON string or JavaScript object */;
+
+<API
+  apiDescriptionDocument={apiDescriptionDocument}
+  layout="traditional"
+  router="history"
+/>
+```
+
+### Web Component
+
 <!-- title: Web Component -->
 
 ```html
@@ -28,6 +49,23 @@ import { API } from "@stoplight/elements";
   layout="stacked"
   router="hash"
 />
+```
+
+<!-- title: Web Component with API Description Provided Directly -->
+
+```html
+<elements-api
+  layout="stacked"
+  router="hash"
+/>
+
+<script>
+const apiDescriptionDocument = /* API description in the form of YAML string or JSON string */;
+
+document
+  .querySelector('elements-api')
+  .setAttribute('apiDescriptionDocument', apiDescriptionDocument);
+</script>
 ```
 
 ## Properties
@@ -49,8 +87,16 @@ import { API } from "@stoplight/elements";
       <td>string</td>
       <td></td>
       <td><a href="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml">https://raw.githubusercontent.com/...</a></td>
-      <td>URL where your OpenAPI document can be retrieved.</td>
+      <td>URL where your OpenAPI document can be retrieved. Required if 'apiDescriptionDocument' paramter is not provided. If 'apiDescriptionDocument' is provided, this parameter becomes optional and serves as the base url for resolving references in the document.</td>
       <td>[x]</td>
+    </tr>
+    <tr>
+      <td>apiDescriptionDocument</td>
+      <td>string | object</td>
+      <td></td>
+      <td></td>
+      <td>OpenAPI document, provided as YAML string, JSON string or JavaScript object.</td>
+      <td></td>
     </tr>
     <tr>
       <td>layout</td>
