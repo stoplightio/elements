@@ -6,10 +6,11 @@ const Template = createTemplate('elements-stoplight-project');
 
 export default {
   title: 'Stoplight Project',
-  argType: {
+  argTypes: {
     workspaceSlug: { control: 'text' },
     projectSlug: { control: 'text' },
     platformUrl: { control: 'text' },
+    router: { control: { type: 'inline-radio', options: ['history', 'hash', 'memory'] }, defaultValue: 'history' },
   },
 };
 

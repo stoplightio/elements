@@ -15,23 +15,37 @@ import { withRouter } from '../hoc/withRouter';
 import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { withStyles } from '../styled';
-import { LinkComponentType, RoutingProps } from '../types';
+import { RoutingProps } from '../types';
 import { computeNodeData, isOas2, isOas3, IUriMap } from '../utils/oas';
 import { computeOas2UriMap } from '../utils/oas/oas2';
 import { computeOas3UriMap } from '../utils/oas/oas3';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
-export interface APIProps extends RoutingProps {
-  apiDescriptionUrl: string;
-  linkComponent?: LinkComponentType;
+export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
+
+export type APIPropsWithUrl = { apiDescriptionUrl: string } & CommonAPIProps;
+export type APIPropsWithDocument = {
+  apiDescriptionDocument: string | object;
+  apiDescriptionUrl?: string;
+} & CommonAPIProps;
+
+export interface CommonAPIProps extends RoutingProps {
   layout?: 'sidebar' | 'stacked';
 }
 
-const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkComponent, layout }) {
+const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
+  return props.hasOwnProperty('apiDescriptionDocument');
+};
+
+const APIImpl = withRouter<APIProps>(function API(props) {
+  const { layout, apiDescriptionUrl } = props;
+  const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
+
   const { pathname } = useLocation();
 
-  const { data, error } = useSwr(apiDescriptionUrl, fetcher);
+  const documentShouldBeFetched = apiDescriptionUrl && !apiDescriptionDocument;
+  const { data: fetchedDocument, error } = useSwr(documentShouldBeFetched ? apiDescriptionUrl! : null, fetcher);
 
   React.useEffect(() => {
     if (error) {
@@ -39,7 +53,7 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
     }
   }, [error]);
 
-  const document = useParsedValue(data);
+  const document = useParsedValue(apiDescriptionDocument || fetchedDocument);
   const bundledDocument = useBundleRefsIntoDocument(document, { baseUrl: apiDescriptionUrl });
 
   const uriMap = React.useMemo(() => {
@@ -82,7 +96,7 @@ const APIImpl = withRouter<APIProps>(function API({ apiDescriptionUrl, linkCompo
         {layout === 'stacked' ? (
           <StackedLayout uriMap={uriMap} tree={tree} />
         ) : (
-          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} linkComponent={linkComponent} />
+          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
         )}
       </div>
     </InlineRefResolverProvider>

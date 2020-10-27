@@ -8,6 +8,8 @@ The StoplightProject component displays a tranditional documentation UI for an e
 
 > This component requires a Stoplight Workspace. You can create one for free [here](https://stoplight.io/welcome).
 
+### React
+
 <!-- title: React Component -->
 
 ```jsx
@@ -19,6 +21,8 @@ import { StoplightProject } from "@stoplight/elements";
   branchSlug="main"
 />
 ```
+
+### Web Component
 
 <!-- title: Web Component -->
 
