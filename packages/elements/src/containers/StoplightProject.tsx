@@ -4,7 +4,6 @@ import { Redirect, useLocation } from 'react-router-dom';
 import { Row } from '../components/TableOfContents/Row';
 import { defaultPlatformUrl } from '../constants';
 import { withRouter } from '../hoc/withRouter';
-import { useUrqlClient } from '../hooks/useUrqlClient';
 import { withStyles } from '../styled';
 import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '../types';
 import { isOperation } from '../utils/oas';
@@ -24,7 +23,6 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
   ({ workspaceSlug, platformUrl, projectSlug, branchSlug, authToken }) => {
     const [firstItem, setFirstItem] = React.useState<Item>();
     const { pathname } = useLocation();
-    const client = useUrqlClient(`${platformUrl ?? defaultPlatformUrl}/graphql`, { authToken });
 
     const showTryIt = isOperation(pathname);
 
@@ -42,13 +40,13 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
           rowComponent={Row}
           rowComponentExtraProps={{ pathname }}
           nodeUri={pathname}
-          urqlClient={client}
           onData={(tocTree: ITableOfContentsTree) => {
             if (pathname === '/' && tocTree?.items?.length) {
               const firstItem = tocTree.items.find(isItem);
               setFirstItem(firstItem);
             }
           }}
+          authToken={authToken}
         />
         <div className="flex-grow">
           <div className="flex">
@@ -58,7 +56,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
               project={projectSlug}
               branch={branchSlug}
               node={pathname}
-              urqlClient={client}
+              authToken={authToken}
               className="px-10"
             />
             {showTryIt && (
@@ -70,7 +68,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
                     project={projectSlug}
                     branch={branchSlug}
                     node={pathname}
-                    urqlClient={client}
+                    authToken={authToken}
                   />
                 </div>
               </div>

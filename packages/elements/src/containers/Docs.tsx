@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NodeType } from '@stoplight/types';
 import { NonIdealState } from '@stoplight/ui-kit';
 import * as React from 'react';
-import { useQuery } from 'urql';
 
 import { DocsSkeleton, ParsedDocs } from '../components/Docs';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
-import { bundledBranchNode } from '../graphql/BranchNodeBySlug';
 import { useParsedData } from '../hooks/useParsedData';
+import { usePlatformApi } from '../hooks/usePlatformApi';
+import { BundledBranchNode } from '../types';
 import { ActiveInfoContext, IProvider, Provider } from './Provider';
 
 export interface IDocsProps {
@@ -31,17 +31,17 @@ const DocsPopup = React.memo<{ nodeType: NodeType; nodeData: unknown; className?
   },
 );
 
+const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-nodes/{uri}';
+
 export const Docs = ({ className, node }: IDocsProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data: result, fetching, error }] = useQuery({
-    query: bundledBranchNode,
-    variables: {
-      workspaceSlug: info.workspace,
-      projectSlug: info.project,
-      branchSlug: info.branch,
-      uri: node,
-    },
+  const { data: result, error } = usePlatformApi<BundledBranchNode>(bundledNodesUri, {
+    platformUrl: info.host,
+    workspaceSlug: info.workspace,
+    projectSlug: info.project,
+    nodeUri: node,
+    authToken: info.authToken,
   });
 
   if (error) {
@@ -56,17 +56,11 @@ export const Docs = ({ className, node }: IDocsProps) => {
     );
   }
 
-  if (fetching || !result) {
+  if (!result) {
     return <DocsSkeleton />;
   }
 
-  return (
-    <DocsPopup
-      nodeType={result.bundledBranchNode.type}
-      nodeData={result.bundledBranchNode.data}
-      className={className}
-    />
-  );
+  return <DocsPopup nodeType={result.type} nodeData={result.data} className={className} />;
 };
 
 export const DocsProvider: React.FC<IDocsProvider> = ({
@@ -76,8 +70,8 @@ export const DocsProvider: React.FC<IDocsProvider> = ({
   branch,
   node,
   components,
-  urqlClient,
   className,
+  authToken,
 }) => {
   return (
     <Provider
@@ -85,9 +79,9 @@ export const DocsProvider: React.FC<IDocsProvider> = ({
       workspace={workspace}
       project={project}
       branch={branch}
-      urqlClient={urqlClient}
       components={components}
       node={node}
+      authToken={authToken}
     >
       <Docs className={className} node={node} />
     </Provider>
