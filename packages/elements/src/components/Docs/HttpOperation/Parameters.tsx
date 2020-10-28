@@ -190,9 +190,11 @@ const NumberValidations = ({ validations, className }: { validations: Dictionary
 
 const KeyValueValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
-    {keys(validations).map(key => {
-      return <KeyValueValidation key={key} name={key} value={validations[key]} className={className} />;
-    })}
+    {keys(validations)
+      .filter(validation => validation !== 'format')
+      .map(key => {
+        return <KeyValueValidation key={key} name={key} value={validations[key]} className={className} />;
+      })}
   </>
 );
 
