@@ -3862,6 +3862,21 @@
     remark-slug "^6.0.0"
     unified "^9.0.0"
 
+"@stoplight/markdown-viewer@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.3.1.tgz#61a2d79f6520d0d73654cf9b8f5848d0ea0daae3"
+  integrity sha512-Nj8shF+USr6oznmly7C1c5n+gCdNkMp+bOI84br5eYfEWD6SfK1GjEHR78Cq+pUrlUhGQn68FjJE8/4dXRKD4w==
+  dependencies:
+    "@stoplight/json" "^3.6"
+    "@stoplight/markdown" "^2.9.1"
+    "@stoplight/react-error-boundary" "^1.0.0"
+    classnames "^2"
+    dompurify "^2.0.11"
+    lodash "^4.17.15"
+    remark-inline-links "^4.0.0"
+    remark-slug "^6.0.0"
+    unified "^9.0.0"
+
 "@stoplight/markdown@^2.9.0", "@stoplight/markdown@^2.9.1":
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.9.1.tgz#971d1d791c03b1b1bf9b12e5ed62dc01e36f064a"
