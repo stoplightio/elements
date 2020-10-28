@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "6.0.0-beta.171",
+  "version": "6.0.0-beta.172",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": false,
@@ -88,6 +88,7 @@
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/react": "^5.3.19",
     "@testing-library/react": "^10.0.2",
+    "@testing-library/react-hooks": "^3.4.2",
     "@types/classnames": "^2.2.10",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
@@ -116,6 +117,8 @@
     "node-sass": "^4.14.1",
     "node-sass-package-importer": "^5.3.2",
     "prettier": "^2.0.4",
+    "react": "^16.8.0",
+    "react-test-renderer": "^16.8.0",
     "ts-jest": "25.3.1"
   },
   "publishConfig": {
