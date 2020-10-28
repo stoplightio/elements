@@ -1,12 +1,12 @@
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
-import { useQuery } from 'urql';
 
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { TryIt as TryItComponent } from '../components/TryIt';
 import { TryItHeader } from '../components/TryIt/header';
-import { bundledBranchNode } from '../graphql/BranchNodeBySlug';
 import { useDereferencedData } from '../hooks/useDereferencedData';
+import { useActionsApi, usePlatformApi } from '../hooks/usePlatformApi';
+import { BundledBranchNode } from '../types';
 import { ActiveInfoContext, IProvider, Provider } from './Provider';
 
 export interface ITryItProps {
@@ -18,45 +18,34 @@ interface ITryItProvider extends IProvider {
   className?: string;
 }
 
-const mockUrlQuery = `
-  query getMockUrl(
-    $workspaceSlug: String!,
-    $projectSlug: String!,
-    $branchSlug: String!,
-    $uri: String!,
-    $version: Int
-  ) {
-    branchNodeMockUrl(workspaceSlug: $workspaceSlug, projectSlug: $projectSlug, branchSlug: $branchSlug, uri: $uri, version: $version) {
-      id
-      servicePath
-    }
-  }`;
+type MockUrlResult = { servicePath: string; operationPath?: string; id: number };
+
+const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-nodes/{uri}';
+const mockActionsUrl = 'api/actions/branchNodeMockUrl';
 
 export const TryIt = ({ className, node }: ITryItProps) => {
   const info = React.useContext(ActiveInfoContext);
 
-  const [{ data: result, fetching, error }] = useQuery({
-    query: bundledBranchNode,
-    variables: {
-      workspaceSlug: info.workspace,
-      projectSlug: info.project,
-      branchSlug: info.branch,
-      uri: node || info.node,
-    },
+  const nodeUri = node || info.node;
+
+  const { data: httpResult, error } = usePlatformApi<BundledBranchNode>(bundledNodesUri, {
+    platformUrl: info.host,
+    workspaceSlug: info.workspace,
+    projectSlug: info.project,
+    nodeUri,
+    authToken: info.authToken,
   });
 
-  const [{ data: mockUrlResult, fetching: mockFetching }] = useQuery({
-    query: mockUrlQuery,
-    variables: {
-      workspaceSlug: info.workspace,
-      projectSlug: info.project,
-      branchSlug: info.branch,
-      uri: node || info.node,
-    },
+  const { data: mockUrlResult } = useActionsApi<MockUrlResult>(mockActionsUrl, {
+    platformUrl: info.host,
+    workspaceSlug: info.workspace,
+    projectSlug: info.project,
+    nodeUri,
+    authToken: info.authToken,
   });
 
-  const nodeType = result?.bundledBranchNode.type;
-  const nodeData = result?.bundledBranchNode.data;
+  const nodeType = httpResult?.type || NodeType.Unknown;
+  const nodeData = httpResult?.data || '';
 
   // dereference data to use in TryIt since prism needs fully dereferenced data to work
   const dereferencedData = useDereferencedData(nodeType, nodeData);
@@ -71,7 +60,7 @@ export const TryIt = ({ className, node }: ITryItProps) => {
     return null;
   }
 
-  if (fetching || mockFetching || !result) {
+  if (!nodeData) {
     return <DocsSkeleton />;
   }
 
@@ -84,7 +73,7 @@ export const TryIt = ({ className, node }: ITryItProps) => {
         className={className}
         nodeType={nodeType}
         nodeData={dereferencedData}
-        mockUrl={mockUrlResult?.branchNodeMockUrl.servicePath}
+        mockUrl={mockUrlResult?.servicePath}
       />
     </>
   );
@@ -97,8 +86,8 @@ export const TryItProvider: React.FC<ITryItProvider> = ({
   branch,
   node,
   components,
-  urqlClient,
   className,
+  authToken,
 }) => {
   return (
     <Provider
@@ -106,9 +95,9 @@ export const TryItProvider: React.FC<ITryItProvider> = ({
       workspace={workspace}
       project={project}
       branch={branch}
-      urqlClient={urqlClient}
       components={components}
       node={node}
+      authToken={authToken}
     >
       <TryIt className={className} node={node} />
     </Provider>

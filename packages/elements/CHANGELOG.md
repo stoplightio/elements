@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.173](https://github.com/stoplightio/elements/compare/v6.0.0-beta.172...v6.0.0-beta.173) (2020-10-28)
+
+
+### Features
+
+* gql to http ([#632](https://github.com/stoplightio/elements/issues/632)) ([3bf9a92](https://github.com/stoplightio/elements/commit/3bf9a926c1eb8938947a9366645ff256deb3fbf2))
+
+
+
+
+
+# [6.0.0-beta.172](https://github.com/stoplightio/elements/compare/v6.0.0-beta.171...v6.0.0-beta.172) (2020-10-27)
+
+
+### Bug Fixes
+
+* eliminate race condition in useDereferencedData ([#621](https://github.com/stoplightio/elements/issues/621)) ([cf0e75e](https://github.com/stoplightio/elements/commit/cf0e75e51860da8cebd417fbf3052785bc748bcb))
+
+
+
+
+
 # [6.0.0-beta.171](https://github.com/stoplightio/elements/compare/v6.0.0-beta.170...v6.0.0-beta.171) (2020-10-23)
 
 

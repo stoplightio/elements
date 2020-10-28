@@ -22,14 +22,21 @@ export function useDereferencedData(type: NodeType, data: string) {
       return;
     }
 
+    let isActive = true;
     $RefParser
       .dereference(parsedData, { continueOnError: true })
-      .then(res => setDereferencedData(res))
+      .then(res => {
+        if (isActive) setDereferencedData(res);
+      })
       .catch(reason => {
         console.error(`Could not dereference operation: ${reason.message}`);
         console.error(reason);
         setDereferencedData(parsedData);
       });
+
+    return () => {
+      isActive = false;
+    };
   }, [parsedData, type]);
 
   return dereferencedData;
