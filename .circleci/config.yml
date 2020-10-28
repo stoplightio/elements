@@ -1,7 +1,17 @@
 version: 2
 
+cypress_defaults: &cypress_defaults
+  docker:
+    # the Docker image with Cypress dependencies
+    - image: cypress/base:12
+      environment:
+        ## this enables colors in the output
+        TERM: xterm
+  requires:
+    - build
+
 jobs:
-  test_node_12:
+  lint-and-check:
     docker:
       - image: circleci/node:12
     steps:
@@ -10,8 +20,48 @@ jobs:
       - run: yarn type-check
       - run: yarn lint
       - run: yarn test.prod
+  build:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: yarn --frozen-lockfile
       - run: yarn build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - packages/elements/dist/**
+            - packages/elements-web-components/dist/**
+  build-docs:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: yarn --frozen-lockfile
       - run: yarn build.docs
+  test-integration-angular:
+    <<: *cypress_defaults
+    steps:
+      - attach_workspace:
+            at: /tmp/workspace
+      - run:
+          name: Checkout Angular example
+          command: git clone https://github.com/stoplightio/elements-starter-angular.git examples/angular
+      - run:
+          name: Install dependencies
+          working_directory: examples/angular
+          command: yarn --frozen-lockfile
+      - run:
+          name: Copy current elements build
+          command: cp -r /tmp/workspace/packages/elements-web-components/dist/* examples/angular/node_modules/@stoplight/elements-web-components/dist
+      - run:
+          name: Create production build
+          working_directory: examples/angular
+          command: yarn build
+      - run:
+          name: Run E2E checks
+          working_directory: examples/angular
+          command: yarn e2e:run
   release:
     docker:
       - image: circleci/node:12
@@ -35,12 +85,16 @@ jobs:
               yarn release --dist-tag alpha --preid alpha
             fi
       - run: yarn release.docs
-
 workflows:
   version: 2
   test_and_release:
     jobs:
-      - test_node_12
+      - lint-and-check
+      - build
+      - build-docs
+      - test-integration-angular:
+          requires:
+            - build
       - release:
           filters:
             branches:
@@ -48,4 +102,5 @@ workflows:
                 - master
                 - beta
           requires:
-            - test_node_12
+            - lint-and-check
+            - build
