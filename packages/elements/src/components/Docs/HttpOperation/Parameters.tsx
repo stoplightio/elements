@@ -96,6 +96,8 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   const type = get(parameter, 'schema.type', 'unknown');
 
+  const format = parameter.schema?.format;
+
   // TODO (JJ): schema.deprecated is used in platform - to be removed once it's updated https://github.com/stoplightio/platform-internal/issues/2267
   const deprecated = get(parameter, 'deprecated') || get(parameter, 'schema.deprecated', false);
 
@@ -119,7 +121,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
     <div className={cn('HttpOperation__Parameter pl-1', className)}>
       <div className="flex items-center">
         <div className="font-medium font-mono">{parameter.name}</div>
-        <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{type}</div>
+        <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{format ? `${type}<${format}>` : type}</div>
         {parameterType !== 'path' && (
           <div
             className={cn('ml-2 text-sm', {
@@ -188,9 +190,11 @@ const NumberValidations = ({ validations, className }: { validations: Dictionary
 
 const KeyValueValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
-    {keys(validations).map(key => {
-      return <KeyValueValidation key={key} name={key} value={validations[key]} className={className} />;
-    })}
+    {keys(validations)
+      .filter(validation => validation !== 'format')
+      .map(key => {
+        return <KeyValueValidation key={key} name={key} value={validations[key]} className={className} />;
+      })}
   </>
 );
 
