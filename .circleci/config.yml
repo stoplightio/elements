@@ -95,7 +95,7 @@ jobs:
             fi
       - run: yarn release.docs
 workflows:
-  test_and_release:
+  test-and-release:
     jobs:
       - lint-and-check
       - build
