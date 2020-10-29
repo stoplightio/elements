@@ -63,11 +63,14 @@ jobs:
           working_directory: examples/angular
           command: yarn e2e:run
       - store_test_results:
+          name: Upload test results
           path: examples/angular/cypress/results
       - store_artifacts:
+          name: Upload Cypress Videos
           path: examples/angular/cypress/results/videos
           destination: videos
       - store_artifacts:
+          name: Upload Cypress Screenshots
           path: examples/angular/cypress/results/screenshots
           destination: screenshots
   release:
