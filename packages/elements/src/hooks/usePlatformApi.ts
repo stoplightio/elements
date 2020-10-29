@@ -24,6 +24,7 @@ type PlatformApiProps = {
   platformUrl?: string;
   workspaceSlug: string;
   projectSlug: string;
+  branchSlug?: string;
   nodeUri?: string;
   authToken?: string;
 };
@@ -32,20 +33,25 @@ type ActionsApiProps = {
   input: {
     workspaceSlug: string;
     projectSlug: string;
+    branchSlug?: string;
     uri?: string;
   };
 };
 
 export function usePlatformApi<T>(
   uriTemplate: string,
-  { platformUrl, workspaceSlug, projectSlug, nodeUri, authToken }: PlatformApiProps,
+  { platformUrl, workspaceSlug, projectSlug, branchSlug, nodeUri, authToken }: PlatformApiProps,
 ) {
   const template = new URITemplate(uriTemplate);
-  const url = new URI(platformUrl ?? defaultPlatformUrl)
-    .path(template.expand({ workspaceSlug, projectSlug, uri: nodeUri?.substr(1) }).toString())
-    .toString();
+  const uri = new URI(platformUrl ?? defaultPlatformUrl).path(
+    template.expand({ workspaceSlug, projectSlug, uri: nodeUri?.substr(1) }).toString(),
+  );
 
-  return useSwr<T>([url, 'get', authToken], fetcher, {
+  if (branchSlug) {
+    uri.setQuery('branch', branchSlug);
+  }
+
+  return useSwr<T>([uri.toString(), 'get', authToken], fetcher, {
     shouldRetryOnError: false,
     revalidateOnFocus: false,
   });
@@ -54,7 +60,7 @@ export function usePlatformApi<T>(
 //TODO: to be removed when GET endpoint for fetching mockUrl will be ready
 export function useActionsApi<T>(
   path: string,
-  { platformUrl, projectSlug, workspaceSlug, nodeUri, authToken }: PlatformApiProps,
+  { platformUrl, projectSlug, workspaceSlug, branchSlug, nodeUri, authToken }: PlatformApiProps,
 ) {
   const url = new URI(platformUrl ?? defaultPlatformUrl).path(path).toString();
   const data: ActionsApiProps = React.useMemo(
@@ -62,10 +68,11 @@ export function useActionsApi<T>(
       input: {
         projectSlug,
         workspaceSlug,
+        branchSlug,
         uri: nodeUri,
       },
     }),
-    [nodeUri, projectSlug, workspaceSlug],
+    [nodeUri, projectSlug, workspaceSlug, branchSlug],
   );
   return useSwr<T>([url, 'post', authToken, data], fetcher, {
     shouldRetryOnError: false,
