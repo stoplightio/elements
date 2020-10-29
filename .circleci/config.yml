@@ -1,14 +1,12 @@
-version: 2
+version: 2.1
 
-cypress_defaults: &cypress_defaults
-  docker:
-    # the Docker image with Cypress dependencies
-    - image: cypress/base:12
-      environment:
-        ## this enables colors in the output
-        TERM: xterm
-  requires:
-    - build
+executors:
+  cypress-default:
+    docker:
+      - image: cypress/base:12
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
 
 jobs:
   lint-and-check:
@@ -40,7 +38,7 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn build.docs
   test-integration-angular:
-    <<: *cypress_defaults
+    executor: cypress-default
     steps:
       - attach_workspace:
             at: /tmp/workspace
@@ -97,7 +95,6 @@ jobs:
             fi
       - run: yarn release.docs
 workflows:
-  version: 2
   test_and_release:
     jobs:
       - lint-and-check
