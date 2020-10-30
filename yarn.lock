@@ -5646,6 +5646,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/har-format@*", "@types/har-format@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@types/har-format/-/har-format-1.2.5.tgz#4f6648814d0fdcb6a510e3364a9db439a753c4b1"
+  integrity sha512-IG8AE1m2pWtPqQ7wXhFhy6Q59bwwnLwO36v5Rit2FrbXCIp8Sk8E2PfUCreyrdo17STwFSKDAkitVuVYbpEHvQ==
+
 "@types/hast@^2.0.0":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@types/hast/-/hast-2.3.1.tgz#b16872f2a6144c7025f296fb9636a667ebb79cd9"
@@ -5662,6 +5667,13 @@
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@types/html-minifier-terser/-/html-minifier-terser-5.1.0.tgz#551a4589b6ee2cc9c1dff08056128aec29b94880"
   integrity sha512-iYCgjm1dGPRuo12+BStjd1HiVQqhlRhWDOQigNxn023HcjnhsiFz9pc6CzJj4HwDCSQca9bxTL4PxJDbkdm3PA==
+
+"@types/httpsnippet@^1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@types/httpsnippet/-/httpsnippet-1.23.0.tgz#83ba34c4ec712a54532caa93e270f66e0285eb4e"
+  integrity sha512-SVkF5LkgI8+7OkWXRyvw2DY2xPjqpCGzySs0vIlzYEvrus6NO0o7EhSbqzUuvkDC7N3mmXiI+x/vfKFo6+RlCw==
+  dependencies:
+    "@types/har-format" "*"
 
 "@types/is-function@^1.0.0":
   version "1.0.0"

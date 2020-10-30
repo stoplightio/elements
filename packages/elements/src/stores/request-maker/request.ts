@@ -3,7 +3,8 @@ import { IHttpRequest as IPrismHttpRequest } from '@stoplight/prism-http';
 import { HttpMethod, HttpNameValue, IHttpRequest, IServer } from '@stoplight/types';
 import { safeStringify as safeStringifyYaml } from '@stoplight/yaml';
 import { AxiosRequestConfig } from 'axios';
-import { isEmpty, mapKeys, pick, set } from 'lodash';
+import { Request } from 'har-format';
+import { isEmpty, mapKeys, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
 import URI from 'urijs';
@@ -233,38 +234,42 @@ export class RequestStore {
 
     if (this.contentType === 'x-www-form-urlencoded') {
       postData = {
-        mimeType: 'application/x-www-form-urlencoded',
-        params: getEnabledParams(this.urlEncodedParams).map(p => pick(p, 'name', 'value')),
+        mimeType: 'application/x-www-form-urlencoded' as const,
+        params: getEnabledParams(this.urlEncodedParams).map(p => ({ name: p.name, value: p.value ?? '' })),
       };
     } else if (this.contentType === 'form-data') {
       postData = {
-        mimeType: 'application/x-www-form-urlencoded',
-        params: getEnabledParams(this.formDataParams).map(p => pick(p, 'name', 'value')),
+        mimeType: 'application/x-www-form-urlencoded' as const,
+        params: getEnabledParams(this.formDataParams).map(p => ({
+          name: p.name,
+          value: p.value instanceof File ? '<file contents>' : p.value,
+        })),
       };
     } else if (this.contentType === 'raw') {
       postData = {
-        mimeType: 'application/json',
-        text: safeStringify(safeParse(this.body), undefined, 0),
+        mimeType: 'application/json' as const,
+        text: safeStringify(safeParse(this.body), undefined, 0) ?? '',
       };
     } else if (this.contentType === 'graphql') {
       postData = {
-        mimeType: 'application/json',
-        text: safeStringify(
-          {
-            query: safeParse(this.graphqlQuery) || this.graphqlQuery,
-            variables: safeParse(this.graphqlVariables) || this.graphqlVariables,
-          },
-          undefined,
-          0,
-        ),
+        mimeType: 'application/json' as const,
+        text:
+          safeStringify(
+            {
+              query: safeParse(this.graphqlQuery) || this.graphqlQuery,
+              variables: safeParse(this.graphqlVariables) || this.graphqlVariables,
+            },
+            undefined,
+            0,
+          ) ?? '',
       };
     } else if (this.contentType === 'binary') {
       postData = {
-        mimeType: 'multipart/form-data',
+        mimeType: 'multipart/form-data' as const,
         params: getEnabledParams(this.formDataParams).map(p => ({
           name: p.name,
           fileName: p.name,
-          value: p.value,
+          value: p.value instanceof File ? '<file contents>' : p.value,
           contentType: p.type,
         })),
       };
@@ -273,9 +278,13 @@ export class RequestStore {
     return {
       method: this.method.toUpperCase(),
       url: this.url,
-      // @ts-ignore: Request is expecting a map, but HTTPSnippet is expecting an array
-      headers: getEnabledParams(this.headerParams).map(p => pick(p, 'name', 'value')),
+      headers: getEnabledParams(this.headerParams).map(p => ({ name: p.name, value: p.value ?? '' })),
       postData,
+      httpVersion: 'HTTP/1.1',
+      headersSize: -1,
+      bodySize: -1,
+      queryString: [],
+      cookies: [],
     };
   }
 
