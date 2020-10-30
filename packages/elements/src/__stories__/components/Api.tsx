@@ -3,6 +3,7 @@ import { parse } from '@stoplight/yaml';
 import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import cn from 'classnames';
+import { unescape } from 'lodash';
 import * as React from 'react';
 
 import { zoomApiYaml } from '../../__fixtures__/api-descriptions/zoomApiYaml';
@@ -14,12 +15,15 @@ const apiDescriptionUrl = () =>
     'apiDescriptionUrl',
     'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
   );
-const documentTypeMap: Dictionary<string | object> = {
-  'YAML String': zoomApiYaml,
-  'JSON String': JSON.stringify(parse(zoomApiYaml)),
-  'JavaScript Object': parse(zoomApiYaml),
+type YamlMapper = (zoomApiYaml: string) => string | object;
+const documentTypeMap: Dictionary<YamlMapper> = {
+  'YAML String': zoomApiYaml => zoomApiYaml,
+  'JSON String': zoomApiYaml => JSON.stringify(parse(zoomApiYaml)),
+  'JavaScript Object': zoomApiYaml => parse(zoomApiYaml),
 };
 const selectDocumentType = () => select('Document Type', Object.keys(documentTypeMap), 'YAML String');
+const stackedLayout = () => boolean('Stacked Layout', false);
+const apiDocument = () => text('document', zoomApiYaml);
 
 storiesOf('Public/API', module)
   .addDecorator(withKnobs())
@@ -37,10 +41,13 @@ storiesOf('Public/API', module)
       </div>
     );
   })
-  .add('API Document Provided Directly', () => {
+  .add('Playground', () => {
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
-        <API apiDescriptionDocument={documentTypeMap[selectDocumentType()]} />
+        <API
+          layout={stackedLayout() ? 'stacked' : 'sidebar'}
+          apiDescriptionDocument={documentTypeMap[selectDocumentType()](unescape(apiDocument()))}
+        />
       </div>
     );
   });

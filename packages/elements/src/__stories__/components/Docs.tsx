@@ -15,6 +15,7 @@ const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
 export const darkMode = () => boolean('Dark Mode', false);
 export const nodeType = () => select('nodeType', ['article', 'http_service', 'http_operation', 'model'], 'article');
 export const nodeData = () => object('nodeData', article);
+export const deprecated = () => boolean('deprecated', false);
 
 storiesOf('Internal/Docs', module)
   .addDecorator(withKnobs({ escapeHTML: false }))
@@ -49,7 +50,7 @@ storiesOf('Internal/Docs', module)
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
-          <Docs nodeType="http_operation" nodeData={JSON.stringify(httpOperation)} />
+          <Docs nodeType="http_operation" nodeData={JSON.stringify({ ...httpOperation, deprecated: deprecated() })} />
         </Provider>
       </div>
     );
