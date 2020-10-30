@@ -4,6 +4,7 @@ import { HttpMethod, HttpNameValue, IHttpRequest, IServer } from '@stoplight/typ
 import { safeStringify as safeStringifyYaml } from '@stoplight/yaml';
 import { AxiosRequestConfig } from 'axios';
 import { Request } from 'har-format';
+import HTTPSnippet from 'httpsnippet';
 import { isEmpty, mapKeys, set } from 'lodash';
 import { action, computed, observable } from 'mobx';
 import * as typeis from 'type-is';
@@ -13,7 +14,6 @@ import { getContentType } from '../../utils/getContentType';
 import { getEnabledParams, getNameValuePairs, getParamArray, getParamValue } from '../../utils/params';
 import { addParamsToPath, extractQueryParams, getParamsFromPath, replaceParamsInPath } from '../../utils/url';
 import { Auth, ContentType, HeaderParam, IParam, ParamType, PathParam, QueryParam } from './types';
-import HTTPSnippet = require('httpsnippet');
 
 const DEFAULT_EMPTY_JSON = '{\n  \n}';
 const DEFAULT_EMPTY_GQL = 'query {\n  \n}';
