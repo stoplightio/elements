@@ -1,6 +1,6 @@
 import { faExclamationCircle, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Tag } from '@stoplight/ui-kit';
+import { Position, Tag, Tooltip } from '@stoplight/ui-kit';
 import cs from 'classnames';
 import React from 'react';
 
@@ -15,7 +15,12 @@ export const Badge: React.FC<{
 );
 
 export const DeprecatedBadge: React.FC = () => (
-  <Badge icon={faExclamationCircle} className="bg-orange-6">
-    Deprecated
-  </Badge>
+  <Tooltip
+    position={Position.BOTTOM_RIGHT}
+    content="This operation has been marked as deprecated, which means it could be removed at some point in the future."
+  >
+    <Badge icon={faExclamationCircle} className="bg-orange-6">
+      Deprecated
+    </Badge>
+  </Tooltip>
 );
