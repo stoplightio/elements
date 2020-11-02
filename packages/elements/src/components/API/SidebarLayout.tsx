@@ -29,7 +29,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   return (
     <>
       <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
-      <div className="flex-grow p-5">
+      <div className="flex-grow p-5 ContentViewer">
         <div className="flex">
           <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
           {showTryIt && (
