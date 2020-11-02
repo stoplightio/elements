@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { HttpMethodColors } from '../../constants';
 import { getNodeType, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
+import { DeprecatedBadge } from '../Docs/HttpOperation/Badges';
 import { TryIt } from '../TryIt';
 
 type StackedLayoutProps = {
@@ -118,7 +119,9 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const [tabId, setTabId] = React.useState<PanelTabId>('docs');
   const color = HttpMethodColors[type] || 'gray';
-  const showTabs = nodeType === NodeType.HttpOperation;
+  const isHttpOperation = nodeType === NodeType.HttpOperation;
+  const showTabs = isHttpOperation;
+  const isDeprecated = isHttpOperation ? !!(data as IHttpOperation).deprecated : false;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -153,6 +156,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
         </div>
 
         <div className="flex-1 font-medium break-all">{title}</div>
+        {isDeprecated && <DeprecatedBadge />}
       </div>
 
       <Collapse isOpen={isExpanded}>

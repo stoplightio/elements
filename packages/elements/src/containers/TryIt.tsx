@@ -32,6 +32,7 @@ export const TryIt = ({ className, node }: ITryItProps) => {
     platformUrl: info.host,
     workspaceSlug: info.workspace,
     projectSlug: info.project,
+    branchSlug: info.branch,
     nodeUri,
     authToken: info.authToken,
   });
@@ -40,6 +41,7 @@ export const TryIt = ({ className, node }: ITryItProps) => {
     platformUrl: info.host,
     workspaceSlug: info.workspace,
     projectSlug: info.project,
+    branchSlug: info.branch,
     nodeUri,
     authToken: info.authToken,
   });

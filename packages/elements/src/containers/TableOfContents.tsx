@@ -34,6 +34,7 @@ export function TableOfContents<E>({
     platformUrl,
     workspaceSlug,
     projectSlug,
+    branchSlug,
     authToken,
   });
 

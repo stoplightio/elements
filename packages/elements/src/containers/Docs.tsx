@@ -40,6 +40,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
     platformUrl: info.host,
     workspaceSlug: info.workspace,
     projectSlug: info.project,
+    branchSlug: info.branch,
     nodeUri: node,
     authToken: info.authToken,
   });
