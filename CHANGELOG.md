@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.177](https://github.com/stoplightio/elements/compare/v6.0.0-beta.176...v6.0.0-beta.177) (2020-11-03)
+
+
+### Bug Fixes
+
+* **request-maker:** try it crash with circular reference in operation ([#702](https://github.com/stoplightio/elements/issues/702)) ([2510511](https://github.com/stoplightio/elements/commit/25105116c1d69e5a363880153db2c1797695bc99))
+
+
+### Features
+
+* add tooltip to deprecated badge ([#684](https://github.com/stoplightio/elements/issues/684)) ([5344c0b](https://github.com/stoplightio/elements/commit/5344c0bc4917623cdc783d8988a8c431fc3dad02))
+* mark deprecated operations with a badge ([#681](https://github.com/stoplightio/elements/issues/681)) ([813a66e](https://github.com/stoplightio/elements/commit/813a66e115dca9b013d722838df1b9b2fa19ce9a))
+
+
+
+
+
 # [6.0.0-beta.176](https://github.com/stoplightio/elements/compare/v6.0.0-beta.175...v6.0.0-beta.176) (2020-10-29)
 
 
