@@ -50,10 +50,10 @@ export class RequestMakerStore {
   @observable.ref
   public response = ResponseStore.createEmpty();
 
-  @observable
+  @observable.ref
   private _originalOperation?: Partial<IHttpOperation>;
 
-  @observable
+  @observable.ref
   private _originalRequest?: Partial<IHttpRequest>;
 
   constructor(options?: IRequestMakerStoreOptions) {
