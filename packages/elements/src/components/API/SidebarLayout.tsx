@@ -29,12 +29,12 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   return (
     <>
       <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
-      <div className="flex-grow p-5">
+      <div className="flex-grow p-5 ContentViewer">
         <div className="flex">
           <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
           {showTryIt && (
             <div className="w-2/5 border-l relative">
-              <div className="absolute inset-0 overflow-auto px-10">
+              <div className="inset-0 overflow-auto px-10">
                 <TryItHeader />
                 <TryIt nodeType={nodeType} nodeData={nodeData} />
               </div>

@@ -48,7 +48,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
           }}
           authToken={authToken}
         />
-        <div className="flex-grow">
+        <div className="flex-grow p-5 ContentViewer">
           <div className="flex">
             <DocsProvider
               host={platformUrl ?? defaultPlatformUrl}
@@ -61,7 +61,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
             />
             {showTryIt && (
               <div className="w-2/5 border-l relative">
-                <div className="absolute inset-0 overflow-auto px-10">
+                <div className="inset-0 overflow-auto px-10">
                   <TryItProvider
                     host={platformUrl ?? defaultPlatformUrl}
                     workspace={workspaceSlug}
