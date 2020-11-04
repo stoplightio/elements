@@ -1,7 +1,7 @@
 import { Classes, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeStringify } from '@stoplight/json';
-import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { JsonSchemaViewer, ViewMode } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES } from '@stoplight/markdown-viewer';
 import { JSONSchema } from '@stoplight/prism-http';
 import { Dictionary, NodeType } from '@stoplight/types';
@@ -25,6 +25,7 @@ export interface ISchemaViewerProps {
   examples?: Dictionary<string>;
   className?: string;
   forceShowTabs?: boolean;
+  viewMode?: ViewMode;
 }
 
 const JSV_MAX_ROWS = 20;
@@ -36,6 +37,7 @@ export const SchemaViewer = ({
   examples,
   errors,
   maxRows = JSV_MAX_ROWS,
+  viewMode,
   forceShowTabs,
 }: ISchemaViewerProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -55,6 +57,7 @@ export const SchemaViewer = ({
           className={jsvClassName}
           schema={schema as JSONSchema4}
           maxRows={maxRows}
+          viewMode={viewMode}
           shouldResolveEagerly
         />
       </>

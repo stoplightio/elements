@@ -30,7 +30,7 @@ export const Body = ({ body, className }: IBodyProps) => {
 
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}
 
-      {isJSONSchema(schema) && <SchemaViewer className="mt-6" schema={schema} examples={examples} />}
+      {isJSONSchema(schema) && <SchemaViewer className="mt-6" schema={schema} examples={examples} viewMode="write" />}
     </div>
   );
 };
