@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.178](https://github.com/stoplightio/elements/compare/v6.0.0-beta.177...v6.0.0-beta.178) (2020-11-04)
+
+
+### Features
+
+* readOnly writeOnly schemas ([#694](https://github.com/stoplightio/elements/issues/694)) ([560df84](https://github.com/stoplightio/elements/commit/560df84dcc3190925455984b62d06f0b918b76dc))
+
+
+
+
+
 # [6.0.0-beta.177](https://github.com/stoplightio/elements/compare/v6.0.0-beta.176...v6.0.0-beta.177) (2020-11-03)
 
 
