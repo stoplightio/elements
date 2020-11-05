@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.179](https://github.com/stoplightio/elements/compare/v6.0.0-beta.178...v6.0.0-beta.179) (2020-11-05)
+
+**Note:** Version bump only for package root
+
+
+
+
+
 # [6.0.0-beta.178](https://github.com/stoplightio/elements/compare/v6.0.0-beta.177...v6.0.0-beta.178) (2020-11-04)
 
 
