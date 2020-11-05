@@ -3846,10 +3846,10 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json-schema-viewer@^3.0.0-beta.32":
-  version "3.0.0-beta.32"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.32.tgz#6404804d3865def7898cdc85c89c888cd29391a2"
-  integrity sha512-4RnHH5FjSq1PgKvNuwfptqGI6cu8I9QNvkck/trCiGMAH7LGZcmEP1O9BYKhM4S9003TNCld7KcEGog1tEGHMQ==
+"@stoplight/json-schema-viewer@^3.0.0-beta.33":
+  version "3.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.33.tgz#e2aadee554aa344498b537e2a466e12d30b381da"
+  integrity sha512-PH2S3w7SXWizKok9AfbHrB8gF/P+WgVQXj+KkC2thGd9BWZ0n9+FMX/CbPE1woILcPsZ8XgWDxhvt2QszCSWzA==
   dependencies:
     "@stoplight/json" "^3.5.1"
     "@stoplight/json-schema-merge-allof" "^0.7.2"
