@@ -25,31 +25,28 @@ interface ComponentsProviderProps {
   value: Partial<IComponentMapping> | undefined;
 }
 
-const CodeComponent = (props: IComponentMappingProps<ICode>) => {
-  const { node } = props;
-  const { annotations } = node;
-  const nodeType = get(annotations, 'type') || node.meta;
-
-  if (['json_schema', 'http'].includes(nodeType)) {
-    return <WrapperComponent {...props} />;
-  }
-
-  const DefaultCode = defaultComponentMapping.code!;
-  return <DefaultCode {...props} />;
-};
-
-const WrapperComponent = ({ node, parent }: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
+const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
+  const { node, parent } = props;
   const { annotations, value } = node;
-
-  // TODO (CL): We need to resolve this value to support $ref's in Markdown
-  const parsedValue = useParsedValue(value);
   const nodeType = get(annotations, 'type') || node.meta;
 
-  if (nodeType === 'json_schema' && isJSONSchema(parsedValue)) {
+  const parsedValue = useParsedValue(value);
+
+  if (nodeType === 'json_schema') {
+    if (!isJSONSchema(parsedValue)) {
+      return null;
+    }
+
     return (
       <SchemaViewer title={annotations?.title} schema={parsedValue} examples={getExamplesFromSchema(parsedValue)} />
     );
-  } else if (nodeType === 'http' && isObject(parsedValue)) {
+  }
+
+  if (nodeType === 'http') {
+    if (!isObject(parsedValue)) {
+      return null;
+    }
+
     return (
       <HttpRequest
         className={cn('my-10', {
@@ -60,7 +57,8 @@ const WrapperComponent = ({ node, parent }: IComponentMappingProps<ICode<ICodeAn
     );
   }
 
-  return null;
+  const DefaultCode = defaultComponentMapping.code!;
+  return <DefaultCode {...props} />;
 };
 
 const defaultComponents: IComponentMapping = {
