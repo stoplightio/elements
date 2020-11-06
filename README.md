@@ -1,3 +1,18 @@
+# ⚠ Stoplight Elements v5 is discontinued.
+
+*Stoplight Elements v5* is **not supported** and is **not compatible with the new Stoplight Platform**.
+
+Stoplight is actively working on a new, updated version 6, that is easier to use and provides greater user experience.
+
+*Stoplight Elements v6* is **currently in beta**. If you would like to try it out now, check out our latest beta release.
+
+[![npm (tag)](https://img.shields.io/npm/v/@stoplight/elements/beta?style=flat-square)](https://www.npmjs.com/package/@stoplight/elements/v/beta)
+[![npm (tag)](https://img.shields.io/npm/v/@stoplight/elements-web-components/beta?style=flat-square)](https://www.npmjs.com/package/@stoplight/elements-web-components/v/beta)
+[![docs site](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)
+
+
+
+
 # @stoplight/elements
 
 [![npm version](https://badge.fury.io/js/%40stoplight%2Felements.svg)](https://badge.fury.io/js/%40stoplight%2Felements) [![Maintainability](https://api.codeclimate.com/v1/badges/ce451f605ca16ec84132/maintainability)](https://codeclimate.com/repos/5e0f5ecaeae96001a100cc3b/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ce451f605ca16ec84132/test_coverage)](https://codeclimate.com/repos/5e0f5ecaeae96001a100cc3b/test_coverage) [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplightio.github.io/elements)
