@@ -18,6 +18,7 @@ jobs:
       - run: yarn type-check
       - run: yarn lint
       - run: yarn test.prod
+      - run: yarn test.clear
   build:
     docker:
       - image: circleci/node:12
