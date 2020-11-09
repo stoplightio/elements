@@ -92,7 +92,7 @@ const APIImpl = withRouter<APIProps>(function API(props) {
 
   return (
     <InlineRefResolverProvider document={document}>
-      <div className="APIComponent flex flex-row">
+      <div data-testid="APIComponent" className="APIComponent flex flex-row">
         {layout === 'stacked' ? (
           <StackedLayout uriMap={uriMap} tree={tree} />
         ) : (
