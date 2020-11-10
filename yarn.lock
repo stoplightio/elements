@@ -5450,7 +5450,7 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@testing-library/dom@^7.26.4":
+"@testing-library/dom@^7.26.4", "@testing-library/dom@^7.26.5":
   version "7.26.5"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.26.5.tgz#804a74fc893bf6da1a7970dbca7b94c2bbfe983d"
   integrity sha512-2v/fv0s4keQjJIcD4bjfJMFtvxz5icartxUWdIZVNJR539WD9oxVrvIAPw+3Ydg4RLgxt0rvQx3L9cAjCci0Kg==
@@ -5493,6 +5493,13 @@
   dependencies:
     "@babel/runtime" "^7.12.1"
     "@testing-library/dom" "^7.26.4"
+
+"@testing-library/user-event@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.2.0.tgz#fbb0710f93d68a28b9407e2380eb152354c944a7"
+  integrity sha512-Vnmm1ZvJ+JSQ7+lGIWMIdGbdLFQBAeWEAZJjw6dZwKWMwVTOBXMFbAxUCewQEVM0xfD4sGrYS/Hxec311WknGw==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
 
 "@tootallnate/once@1":
   version "1.0.0"
