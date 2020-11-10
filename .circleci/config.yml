@@ -17,8 +17,8 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn type-check
       - run: yarn lint
-      - run: yarn test.prod
       - run: yarn test.clear
+      - run: yarn test.prod
   build:
     docker:
       - image: circleci/node:12
