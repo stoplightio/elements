@@ -6,8 +6,8 @@ Stoplight is actively working on a new, updated version 6, that is easier to use
 
 *Stoplight Elements v6* is **currently in beta**. If you would like to try it out now, check out our latest beta release.
 
-[![npm (tag)](https://img.shields.io/npm/v/@stoplight/elements/beta?style=flat-square)](https://www.npmjs.com/package/@stoplight/elements/v/beta)
-[![npm (tag)](https://img.shields.io/npm/v/@stoplight/elements-web-components/beta?style=flat-square)](https://www.npmjs.com/package/@stoplight/elements-web-components/v/beta)
+[![npm (tag)](https://img.shields.io/npm/v/@stoplight/elements/beta?style=flat-square&label=elements)](https://www.npmjs.com/package/@stoplight/elements/v/beta)
+[![npm (tag)](https://img.shields.io/npm/v/@stoplight/elements-web-components/beta?style=flat-square&label=elements-web-components)](https://www.npmjs.com/package/@stoplight/elements-web-components/v/beta)
 [![docs site](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)
 
 
