@@ -50,7 +50,7 @@ export function usePlatformApi<T>(
   { platformUrl, workspaceSlug, projectSlug, branchSlug, nodeUri, authToken }: PlatformApiProps,
 ) {
   const template = new URITemplate(uriTemplate);
-  const uri = new URI(platformUrl || defaultPlatformUrl).path(
+  const uri = new URI(platformUrl ?? defaultPlatformUrl).path(
     template.expand({ workspaceSlug, projectSlug, uri: nodeUri?.substr(1) }).toString(),
   );
 
@@ -69,7 +69,7 @@ export function useActionsApi<T>(
   path: string,
   { platformUrl, projectSlug, workspaceSlug, branchSlug, nodeUri, authToken }: PlatformApiProps,
 ) {
-  const url = new URI(platformUrl || defaultPlatformUrl).path(path).toString();
+  const url = new URI(platformUrl ?? defaultPlatformUrl).path(path).toString();
   const data: ActionsApiProps = React.useMemo(
     () => ({
       input: {
