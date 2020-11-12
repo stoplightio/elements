@@ -10,7 +10,7 @@ export interface IProvider extends IActiveInfo {
 }
 
 export interface IActiveInfo {
-  host?: string | undefined;
+  host?: string;
   workspace: string;
   project: string;
   branch?: string;
