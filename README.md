@@ -1,29 +1,18 @@
-# ⚠ Stoplight Elements v5 is discontinued.
+# Stoplight Elements
+
+UI components for composing beautiful developer documentation
+# ⚠ Elements v5 is discontinued
 
 *Stoplight Elements v5* is **not supported** and is **not compatible with the new Stoplight Platform**.
 
-Stoplight is actively working on a new, updated version 6, that is easier to use and provides greater user experience.
+For a quick fix to work [the latest Stoplight Platform](https://stoplight.io/blog/stoplight-v2-0-0-release/), please upgrade to v6.0. It's also not supported, but will get you very similar looking documentation with minimal change. 
 
-*Stoplight Elements v6* is **currently in beta**. If you would like to try it out now, check out our latest beta release.
-
-[![npm (tag)](https://img.shields.io/npm/v/@stoplight/elements/beta?style=flat-square&label=elements)](https://www.npmjs.com/package/@stoplight/elements/v/beta)
-[![npm (tag)](https://img.shields.io/npm/v/@stoplight/elements-web-components/beta?style=flat-square&label=elements-web-components)](https://www.npmjs.com/package/@stoplight/elements-web-components/v/beta)
-[![docs site](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)
-
-
-
-
-# @stoplight/elements
-
-[![npm version](https://badge.fury.io/js/%40stoplight%2Felements.svg)](https://badge.fury.io/js/%40stoplight%2Felements) [![Maintainability](https://api.codeclimate.com/v1/badges/ce451f605ca16ec84132/maintainability)](https://codeclimate.com/repos/5e0f5ecaeae96001a100cc3b/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ce451f605ca16ec84132/test_coverage)](https://codeclimate.com/repos/5e0f5ecaeae96001a100cc3b/test_coverage) [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplightio.github.io/elements)
-
-UI components for composing beautiful developer documentation
+Go forwards, all development effort is being funneled into v7, which will be the first public OSS release of elements. Thanks for your patience!
 
 ### Installation
 
 ```bash
-# latest stable
-yarn add @stoplight/elements
+yarn add @stoplight/elements@v5
 ```
 
 ### Usage
@@ -81,4 +70,3 @@ import { TryIt } from '@stoplight/elements/components/TryIt';
 7. Commit: `yarn commit`. _NOTE: Commits that don't follow the [conventional](https://github.com/marionebl/commitlint/tree/master/%40commitlint/config-conventional) format will be rejected. `yarn commit` creates this format for you, or you can put it together manually and then do a regular `git commit`._
 8. Push: `git push`.
 9. Open PR targeting the `master` branch.
-
