@@ -1,3 +1,4 @@
+import { Box, Button, Panel } from '@stoplight/mosaic';
 import { object, text, withKnobs } from '@storybook/addon-knobs';
 import { boolean } from '@storybook/addon-knobs/react';
 import { storiesOf } from '@storybook/react';
@@ -6,6 +7,7 @@ import * as React from 'react';
 
 import { httpOperation } from '../../__fixtures__/operations/bundled-parameter';
 import { TryIt } from '../../components/TryIt';
+import { BasicSend } from '../../components/TryIt/BasicSend';
 import { Provider } from '../../containers/Provider';
 
 const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
@@ -23,5 +25,14 @@ storiesOf('Internal/TryIt', module)
           <TryIt nodeType="http_operation" nodeData={nodeData()} mockUrl={mockUrl()} />
         </Provider>
       </div>
+    );
+  })
+  .add('Basic Send', () => {
+    return (
+      <Panel id="collapse-closed" isCollapsible>
+        <Panel.Titlebar>Collapsible - Closed</Panel.Titlebar>
+
+        <Panel.Content>Content</Panel.Content>
+      </Panel>
     );
   });
