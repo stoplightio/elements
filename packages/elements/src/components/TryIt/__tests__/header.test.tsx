@@ -6,29 +6,11 @@ import * as React from 'react';
 
 import { TryItHeader } from '../header';
 
-test('Try It header renders correctly', () => {
-  render(<TryItHeader />);
-  const elem = screen.getByTestId('try-it-header');
-  expect(elem.textContent).toBe(' Try It Out');
-  expect(elem.innerHTML).toContain('data-icon="magic"');
-  expect(elem.innerHTML).toContain('data-icon="question-circle"');
-});
-
 test('When hovered over question circle icon, Try It Out details are displayed', async () => {
   render(<TryItHeader />);
-  const elem = screen.getByTestId('try-it-header');
-  const icon = elem.querySelector('[data-icon="question-circle"]') as Element;
+  const icon = screen.getByTestId('try-it-about');
 
-  userEvent.hover(icon);
+  userEvent.click(icon);
 
-  expect(
-    await screen.findByText(
-      "Send HTTP requests to your API, or one of our mock servers, to see how it's going to respond. View the docs",
-    ),
-  ).toBeInTheDocument();
-
-  expect(await (await screen.findByText('here.')).closest('a')).toHaveAttribute(
-    'href',
-    'https://meta.stoplight.io/docs/studio/docs/Design-and-Modeling/05-request-maker.md',
-  );
+  expect(await screen.findByRole('tooltip')).toBeVisible();
 });
