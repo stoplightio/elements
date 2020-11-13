@@ -31,7 +31,6 @@
     "release.dryRun": "sl-scripts release --dry-run --debug",
     "storybook": "start-storybook -p 9001",
     "test": "jest",
-    "test.clear": "yarn test --clearCache",
     "test.prod": "yarn test --coverage --maxWorkers=2",
     "test.update": "yarn test --updateSnapshot",
     "test.watch": "yarn test --watch",

@@ -19,7 +19,6 @@
   "scripts": {
     "build": "sl-scripts build",
     "test": "jest",
-    "test.clear": "yarn test --clearCache",
     "test.prod": "yarn test --coverage --maxWorkers=2",
     "type-check": "tsc --noEmit"
   },

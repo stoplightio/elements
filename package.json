@@ -42,7 +42,6 @@
     "release": "bash ./release.sh",
     "release.docs": "yarn workspace @stoplight/elements release.docs",
     "type-check": "yarn workspaces run type-check",
-    "test.clear": "yarn workspace @stoplight/elements test.clear && yarn workspace @stoplight/elements-utils test.clear",
     "test.prod": "yarn workspace @stoplight/elements test.prod && yarn workspace @stoplight/elements-utils test.prod",
     "prepublishOnly": "yarn build"
   },
