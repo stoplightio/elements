@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.183](https://github.com/stoplightio/elements/compare/v6.0.0-beta.182...v6.0.0-beta.183) (2020-11-13)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [6.0.0-beta.182](https://github.com/stoplightio/elements/compare/v6.0.0-beta.181...v6.0.0-beta.182) (2020-11-13)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [6.0.0-beta.181](https://github.com/stoplightio/elements/compare/v6.0.0-beta.180...v6.0.0-beta.181) (2020-11-12)
+
+
+### Bug Fixes
+
+* better error handling ([#716](https://github.com/stoplightio/elements/issues/716)) ([fc7621a](https://github.com/stoplightio/elements/commit/fc7621a8c81b27655deb2a902f26fbbc6a0c8a22))
+
+
+
+
+
+# [6.0.0-beta.180](https://github.com/stoplightio/elements/compare/v6.0.0-beta.179...v6.0.0-beta.180) (2020-11-12)
+
+
+### Bug Fixes
+
+* bump markdown-viewer ([#715](https://github.com/stoplightio/elements/issues/715)) ([93bd75f](https://github.com/stoplightio/elements/commit/93bd75f2e1eee75ae5fe67252dc9fa62bd042b2b))
+
+
+
+
+
 # [6.0.0-beta.179](https://github.com/stoplightio/elements/compare/v6.0.0-beta.178...v6.0.0-beta.179) (2020-11-05)
 
 **Note:** Version bump only for package root

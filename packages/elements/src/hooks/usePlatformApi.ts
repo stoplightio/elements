@@ -17,7 +17,14 @@ const fetcher = (url: string, method: 'get' | 'post', authToken: Optional<string
         authorization: `Bearer ${authToken}`,
       },
     }),
-  }).then(res => res.data);
+  })
+    .then(res => res.data)
+    .then(res => {
+      if (typeof res !== 'object') {
+        throw new Error('Invalid response received');
+      }
+      return res;
+    });
 };
 
 type PlatformApiProps = {
