@@ -27,7 +27,6 @@
   },
   "devDependencies": {
     "@stoplight/scripts": "8.2.3",
-    "@stoplight/types": "^11.9.0",
-    "jest": "25.x.x"
+    "@stoplight/types": "^11.9.0"
   }
 }
