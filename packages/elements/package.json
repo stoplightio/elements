@@ -82,7 +82,6 @@
     "urijs": "^1.19.2"
   },
   "devDependencies": {
-    "@stoplight/mosaic": "^1.0.0-beta.2",
     "@stoplight/prism-http": "^4.0.0-beta.26",
     "@stoplight/scripts": "8.2.3",
     "@storybook/addon-knobs": "^5.3.19",
