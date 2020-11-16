@@ -4,10 +4,10 @@ import {
   appendArticlesToToC,
   appendHttpServicesToToC,
   appendModelsToToc,
-  generateToC,
+  generateApiToC,
+  generateProjectToC,
   generateTocSkeleton,
   groupNodesByType,
-  injectHttpOperationsAndModels,
   resolveHttpServices,
   sortArticlesByTypeAndPath,
 } from '../toc';
@@ -134,30 +134,29 @@ describe('toc', () => {
 
         const toc = { items: [] };
 
-        const standaloneModels = appendHttpServicesToToC(toc)({ httpServices, httpOperations, models });
+        const standaloneModels = appendHttpServicesToToC(toc, 'project')({ httpServices, httpOperations, models });
 
         expect(toc).toEqual({
           items: [
-            { type: 'divider', title: 'Service' },
             {
-              type: 'item',
-              title: 'Overview',
+              type: 'group',
+              title: 'Service',
               uri: '/reference/openapi.json',
-            },
-            {
-              type: 'group',
-              items: [{ type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' }],
-              title: 'raz',
-            },
-            {
-              type: 'group',
-              items: [{ type: 'item', title: 'Operation', uri: '/reference/openapi.json/paths/~1test/get' }],
-              title: 'zwei',
-            },
-            {
-              type: 'group',
-              items: [{ type: 'item', title: 'c', uri: '/reference/openapi.json/definitions/c' }],
-              title: 'Others',
+              items: [
+                {
+                  type: 'group',
+                  items: [{ type: 'item', title: 'Operation', uri: '/reference/openapi.json/paths/~1test/get' }],
+                  title: 'zwei',
+                },
+                {
+                  type: 'group',
+                  items: [
+                    { type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' },
+                    { type: 'item', title: 'c', uri: '/reference/openapi.json/definitions/c' },
+                  ],
+                  title: 'Schemas',
+                },
+              ],
             },
           ],
         });
@@ -200,19 +199,22 @@ describe('toc', () => {
 
           const toc = { items: [] };
 
-          appendHttpServicesToToC(toc)({ httpServices, httpOperations, models });
-
+          appendHttpServicesToToC(toc, 'api')({ httpServices, httpOperations, models });
           expect(toc).toEqual({
             items: [
-              { type: 'divider', title: 'Service' },
-              { type: 'item', title: 'Overview', uri: '/reference/openapi.json' },
               {
                 type: 'group',
-                items: [
-                  { type: 'item', title: 'Operation', uri: '/reference/openapi.json/paths/~1test/get' },
-                  { type: 'item', title: 'Model', uri: '/reference/openapi.json/components/a' },
-                ],
+                items: [{ type: 'item', title: 'Operation', uri: '/reference/openapi.json/paths/~1test/get' }],
                 title: 'Einz',
+              },
+              {
+                type: 'divider',
+                title: 'Schemas',
+              },
+              {
+                type: 'item',
+                title: 'Model',
+                uri: '/reference/openapi.json/components/a',
               },
             ],
           });
@@ -220,18 +222,18 @@ describe('toc', () => {
 
         describe('tag is present in httpService tag list', () => {
           it("follows letter case found in HTTP Service node's tags", () => {
-            const models = [
+            const httpOperations = [
               {
-                type: NodeType.Model,
+                type: NodeType.HttpOperation,
                 tags: ['stopLIGHT'],
-                name: 'Model#1',
-                uri: '/reference/openapi.json/components/a',
+                name: 'Operation#1',
+                uri: '/reference/openapi.json/paths/~1test/get',
               },
               {
-                type: NodeType.Model,
+                type: NodeType.HttpOperation,
                 tags: ['STOPlight'],
-                name: 'Model#2',
-                uri: '/reference/openapi.json/components/b',
+                name: 'Operation#2',
+                uri: '/reference/openapi.json/paths/~1test/post',
               },
             ];
             const httpServices = [
@@ -245,19 +247,24 @@ describe('toc', () => {
 
             const toc = { items: [] };
 
-            appendHttpServicesToToC(toc)({ httpServices, httpOperations: [], models });
+            appendHttpServicesToToC(toc, 'project')({ httpServices, httpOperations, models: [] });
 
             expect(toc).toEqual({
               items: [
-                { type: 'divider', title: 'Service' },
-                { type: 'item', title: 'Overview', uri: '/reference/openapi.json' },
                 {
                   type: 'group',
+                  title: 'Service',
+                  uri: '/reference/openapi.json',
                   items: [
-                    { type: 'item', title: 'Model#1', uri: '/reference/openapi.json/components/a' },
-                    { type: 'item', title: 'Model#2', uri: '/reference/openapi.json/components/b' },
+                    {
+                      type: 'group',
+                      items: [
+                        { type: 'item', title: 'Operation#1', uri: '/reference/openapi.json/paths/~1test/get' },
+                        { type: 'item', title: 'Operation#2', uri: '/reference/openapi.json/paths/~1test/post' },
+                      ],
+                      title: 'Stoplight',
+                    },
                   ],
-                  title: 'Stoplight',
                 },
               ],
             });
@@ -266,18 +273,18 @@ describe('toc', () => {
 
         describe('tag is not present in httpService tag list', () => {
           it('chooses letter-case after first occurrence of tag in the list', () => {
-            const models = [
+            const httpOperations = [
               {
-                type: NodeType.Model,
+                type: NodeType.HttpOperation,
                 tags: ['stopLIGHT'],
-                name: 'Model#1',
-                uri: '/reference/openapi.json/components/a',
+                name: 'Operation#1',
+                uri: '/reference/openapi.json/paths/~1test/get',
               },
               {
-                type: NodeType.Model,
+                type: NodeType.HttpOperation,
                 tags: ['STOPlight'],
-                name: 'Model#2',
-                uri: '/reference/openapi.json/components/b',
+                name: 'Operation#2',
+                uri: '/reference/openapi.json/paths/~1test/post',
               },
             ];
             const httpServices = [
@@ -291,19 +298,24 @@ describe('toc', () => {
 
             const toc = { items: [] };
 
-            appendHttpServicesToToC(toc)({ httpServices, httpOperations: [], models });
+            appendHttpServicesToToC(toc, 'project')({ httpServices, httpOperations, models: [] });
 
             expect(toc).toEqual({
               items: [
-                { type: 'divider', title: 'Service' },
-                { type: 'item', title: 'Overview', uri: '/reference/openapi.json' },
                 {
                   type: 'group',
+                  title: 'Service',
+                  uri: '/reference/openapi.json',
                   items: [
-                    { type: 'item', title: 'Model#1', uri: '/reference/openapi.json/components/a' },
-                    { type: 'item', title: 'Model#2', uri: '/reference/openapi.json/components/b' },
+                    {
+                      type: 'group',
+                      items: [
+                        { type: 'item', title: 'Operation#1', uri: '/reference/openapi.json/paths/~1test/get' },
+                        { type: 'item', title: 'Operation#2', uri: '/reference/openapi.json/paths/~1test/post' },
+                      ],
+                      title: 'stopLIGHT',
+                    },
                   ],
-                  title: 'stopLIGHT',
                 },
               ],
             });
@@ -347,21 +359,22 @@ describe('toc', () => {
 
         const toc = { items: [] };
 
-        const standaloneModels = appendHttpServicesToToC(toc)({ httpServices, httpOperations, models });
+        const standaloneModels = appendHttpServicesToToC(toc, 'project')({ httpServices, httpOperations, models });
 
         expect(toc).toEqual({
           items: [
-            { type: 'divider', title: 'Service' },
-            { type: 'item', title: 'Overview', uri: '/reference/openapi.json' },
             {
               type: 'group',
-              items: [{ type: 'item', title: 'Operation', uri: '/reference/openapi.json/paths/~1test/get' }],
-              title: 'Endpoints',
-            },
-            {
-              type: 'group',
-              items: [{ type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' }],
-              title: 'Models',
+              title: 'Service',
+              uri: '/reference/openapi.json',
+              items: [
+                { type: 'item', title: 'Operation', uri: '/reference/openapi.json/paths/~1test/get' },
+                {
+                  type: 'group',
+                  title: 'Schemas',
+                  items: [{ type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' }],
+                },
+              ],
             },
           ],
         });
@@ -407,7 +420,7 @@ describe('toc', () => {
 
       expect(toc).toEqual({
         items: [
-          { type: 'divider', title: 'Models' },
+          { type: 'divider', title: 'Schemas' },
           { type: 'item', title: 'a', uri: '/models/a' },
           { type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' },
           { type: 'item', title: 'c', uri: '/reference/openapi.json/definitions/c' },
@@ -658,7 +671,7 @@ describe('toc', () => {
     });
   });
 
-  describe('injectHttpOperationsAndModels', () => {
+  describe('resolveHttpServices', () => {
     it('injects http operations and models in place of existing http service', () => {
       const toc = {
         items: [
@@ -668,7 +681,7 @@ describe('toc', () => {
         ],
       };
 
-      injectHttpOperationsAndModels(
+      resolveHttpServices(
         [
           {
             uri: '/openapi.yaml',
@@ -701,24 +714,32 @@ describe('toc', () => {
           },
           {
             title: 'an existing api',
-            type: 'item',
+            type: 'group',
             uri: '/openapi.yaml',
-          },
-          {
             items: [
               {
-                title: 'The Op',
-                type: 'item',
-                uri: '/openapi.yaml/~1path',
+                items: [
+                  {
+                    title: 'The Op',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1path',
+                  },
+                ],
+                title: 'api',
+                type: 'group',
               },
               {
-                title: 'The Model',
-                type: 'item',
-                uri: '/openapi.yaml/~1components~1model',
+                title: 'Schemas',
+                type: 'group',
+                items: [
+                  {
+                    title: 'The Model',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1components~1model',
+                  },
+                ],
               },
             ],
-            title: 'api',
-            type: 'group',
           },
           {
             title: 'hey!',
@@ -730,8 +751,87 @@ describe('toc', () => {
   });
 
   describe('generateToC()', () => {
-    it('generates correct ToC', () => {
-      const toc = generateToC([
+    it('generates correct Api ToC', () => {
+      const toc = generateApiToC([
+        {
+          uri: '/openapi.yaml',
+          name: 'The API',
+          type: NodeType.HttpService,
+          tags: ['api'],
+        },
+        {
+          uri: '/openapi.yaml/~1zpath',
+          name: 'The Op',
+          type: NodeType.HttpOperation,
+          tags: ['api'],
+        },
+        {
+          uri: '/openapi.yaml/~1fpath',
+          name: 'The Op',
+          type: NodeType.HttpOperation,
+          tags: ['api'],
+        },
+        {
+          uri: '/openapi.yaml/~1apath',
+          name: 'The Op',
+          type: NodeType.HttpOperation,
+          tags: ['api'],
+        },
+        {
+          uri: '/openapi.yaml/~1components~1model',
+          name: 'The Model',
+          type: NodeType.Model,
+          tags: ['api'],
+        },
+      ]);
+
+      expect(toc).toEqual({
+        items: [
+          {
+            title: 'Overview',
+            type: 'item',
+            uri: '/openapi.yaml',
+          },
+          {
+            title: 'Endpoints',
+            type: 'divider',
+          },
+          {
+            items: [
+              {
+                title: 'The Op',
+                type: 'item',
+                uri: '/openapi.yaml/~1apath',
+              },
+              {
+                title: 'The Op',
+                type: 'item',
+                uri: '/openapi.yaml/~1fpath',
+              },
+              {
+                title: 'The Op',
+                type: 'item',
+                uri: '/openapi.yaml/~1zpath',
+              },
+            ],
+            title: 'api',
+            type: 'group',
+          },
+          {
+            title: 'Schemas',
+            type: 'divider',
+          },
+          {
+            title: 'The Model',
+            type: 'item',
+            uri: '/openapi.yaml/~1components~1model',
+          },
+        ],
+      });
+    });
+
+    it('generates correct Project ToC', () => {
+      const toc = generateProjectToC([
         {
           uri: '/directory/article/hello.md',
           name: 'Hello',
@@ -816,42 +916,50 @@ describe('toc', () => {
             uri: '/directory/hey.md',
           },
           {
-            title: 'The API',
+            title: 'APIS',
             type: 'divider',
           },
           {
-            title: 'Overview',
-            type: 'item',
+            title: 'The API',
+            type: 'group',
             uri: '/openapi.yaml',
-          },
-          {
             items: [
               {
-                title: 'The Op',
-                type: 'item',
-                uri: '/openapi.yaml/~1apath',
+                items: [
+                  {
+                    title: 'The Op',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1apath',
+                  },
+                  {
+                    title: 'The Op',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1fpath',
+                  },
+                  {
+                    title: 'The Op',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1zpath',
+                  },
+                ],
+                title: 'api',
+                type: 'group',
               },
               {
-                title: 'The Op',
-                type: 'item',
-                uri: '/openapi.yaml/~1fpath',
-              },
-              {
-                title: 'The Op',
-                type: 'item',
-                uri: '/openapi.yaml/~1zpath',
-              },
-              {
-                title: 'The Model',
-                type: 'item',
-                uri: '/openapi.yaml/~1components~1model',
+                title: 'Schemas',
+                type: 'group',
+                items: [
+                  {
+                    title: 'The Model',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1components~1model',
+                  },
+                ],
               },
             ],
-            title: 'api',
-            type: 'group',
           },
           {
-            title: 'Models',
+            title: 'Schemas',
             type: 'divider',
           },
           {
@@ -865,7 +973,7 @@ describe('toc', () => {
 
     it('snapshot of platform docs', () => {
       expect(
-        generateToC([
+        generateApiToC([
           {
             name: 'Add Projects',
             type: NodeType.Article,
@@ -1138,12 +1246,16 @@ describe('toc', () => {
             uri: '/directory/hey.md',
           },
           {
+            title: 'APIS',
+            type: 'divider',
+          },
+          {
             title: 'The API',
             type: 'item',
             uri: '/openapi.yaml',
           },
           {
-            title: 'Models',
+            title: 'Schemas',
             type: 'divider',
           },
           {
@@ -1207,39 +1319,43 @@ describe('toc', () => {
       expect(toc).toEqual({
         items: [
           {
+            type: 'group',
             title: 'The API',
-            type: 'divider',
-          },
-          {
-            title: 'Overview',
-            type: 'item',
-            uri: '/openapi.yaml',
-          },
-          {
             items: [
               {
-                title: 'The Op',
-                type: 'item',
-                uri: '/openapi.yaml/~1apath',
+                type: 'group',
+                title: 'api',
+                items: [
+                  {
+                    type: 'item',
+                    title: 'The Op',
+                    uri: '/openapi.yaml/~1apath',
+                  },
+                  {
+                    type: 'item',
+                    title: 'The Op',
+                    uri: '/openapi.yaml/~1fpath',
+                  },
+                  {
+                    type: 'item',
+                    title: 'The Op',
+                    uri: '/openapi.yaml/~1zpath',
+                  },
+                ],
               },
               {
-                title: 'The Op',
-                type: 'item',
-                uri: '/openapi.yaml/~1fpath',
-              },
-              {
-                title: 'The Op',
-                type: 'item',
-                uri: '/openapi.yaml/~1zpath',
-              },
-              {
-                title: 'The Model',
-                type: 'item',
-                uri: '/openapi.yaml/~1components~1model',
+                type: 'group',
+                title: 'Schemas',
+                items: [
+                  {
+                    type: 'item',
+                    title: 'The Model',
+                    uri: '/openapi.yaml/~1components~1model',
+                  },
+                ],
               },
             ],
-            title: 'api',
-            type: 'group',
+            uri: '/openapi.yaml',
           },
         ],
       });
