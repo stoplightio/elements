@@ -7,9 +7,10 @@ import { withRouter } from '../hoc/withRouter';
 import { withStyles } from '../styled';
 import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '../types';
 import { isOperation } from '../utils/oas';
-import { DocsProvider } from './Docs';
+import { Docs } from './Docs';
+import { Provider } from './Provider';
 import { TableOfContents } from './TableOfContents';
-import { TryItProvider } from './TryIt';
+import { TryIt } from './TryIt';
 
 export interface StoplightProjectProps extends RoutingProps {
   workspaceSlug: string;
@@ -50,29 +51,23 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
         />
         <div className="flex-grow p-5 ContentViewer">
           <div className="flex">
-            <DocsProvider
+            <Provider
               host={platformUrl ?? defaultPlatformUrl}
               workspace={workspaceSlug}
               project={projectSlug}
               branch={branchSlug}
               node={pathname}
               authToken={authToken}
-              className="px-10"
-            />
-            {showTryIt && (
-              <div className="w-2/5 border-l relative">
-                <div className="inset-0 overflow-auto px-10">
-                  <TryItProvider
-                    host={platformUrl ?? defaultPlatformUrl}
-                    workspace={workspaceSlug}
-                    project={projectSlug}
-                    branch={branchSlug}
-                    node={pathname}
-                    authToken={authToken}
-                  />
+            >
+              <Docs node={pathname} className="px-10" />
+              {showTryIt && (
+                <div className="w-2/5 border-l relative">
+                  <div className="inset-0 overflow-auto px-10">
+                    <TryIt node={pathname} />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </Provider>
           </div>
         </div>
       </div>
