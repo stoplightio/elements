@@ -1,0 +1,117 @@
+@import './common/utils';
+@import './common/theme';
+@import './common/css-variables';
+
+@import './blueprint';
+@import './components';
+@import './monaco';
+@import './tailwind';
+
+a {
+  color: var(--color-link);
+
+  // simple reset when using link in random places like around a <Card />
+  &.reset {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &.no-underline {
+    text-decoration: none;
+  }
+}
+
+#{ns} a {
+  color: get-color(info, 6);
+}
+
+.#{$ns}-label {
+  font-weight: get-font-weight(semibold);
+}
+
+.#{$ns}-select-popover .#{$ns}-menu {
+  max-width: 400px;
+  max-height: 300px;
+  overflow: auto;
+  padding: 10px;
+}
+
+.#{$ns}-select-popover .#{$ns}-menu .#{$ns}-menu-item-label {
+  font-size: 10px;
+}
+
+// tailwind sets fontsize on headers to base so reset to chrome defaults
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+h3 {
+  font-size: 1.17rem;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+h5 {
+  font-size: 0.83rem;
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 0.67;
+  font-weight: bold;
+}
+
+.select-all {
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}
+
+.bg-gutter {
+  background-color: var(--gutter-bg);
+}
+
+.text-gutter {
+  color: var(--gutter-fg);
+}
+
+.border-sidebar {
+  border-color: var(--sidebar-border);
+}
+
+.bg-sidebar {
+  background-color: var(--sidebar-bg);
+}
+
+.text-sidebar {
+  color: var(--sidebar-fg);
+}
+
+.border-editor {
+  border-color: var(--editor-border);
+}
+
+.bg-editor {
+  background-color: var(--editor-bg);
+}
+
+.text-editor {
+  color: var(--editor-fg);
+}
+
+.text-link {
+  color: var(--color-link);
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

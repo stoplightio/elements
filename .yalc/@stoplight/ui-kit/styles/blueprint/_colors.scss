@@ -1,0 +1,115 @@
+@import '../common/theme';
+
+// Gray scale
+
+$black: #10161a !default;
+
+$dark-gray1: get-color(gray, 9);
+$dark-gray2: get-color(gray, 8);
+$dark-gray3: get-color(gray, 8);
+$dark-gray4: get-color(gray, 7);
+$dark-gray5: get-color(gray, 7);
+
+$gray1: get-color(gray, 7);
+$gray2: get-color(gray, 6);
+$gray3: get-color(gray, 6);
+$gray4: get-color(gray, 5);
+$gray5: get-color(gray, 4);
+
+$light-gray1: get-color(gray, 3);
+$light-gray2: get-color(gray, 2);
+$light-gray3: get-color(gray, 2);
+$light-gray4: get-color(gray, 1);
+$light-gray5: get-color(gray, 1);
+
+$white: #ffffff !default;
+
+// Core colors
+
+$blue1: get-color(blue, 8);
+$blue2: get-color(blue, 7);
+$blue3: get-color(blue, 6);
+$blue4: get-color(blue, 5);
+$blue5: get-color(blue, 4);
+
+$green1: get-color(green, 8);
+$green2: get-color(green, 7);
+$green3: get-color(green, 6);
+$green4: get-color(green, 5);
+$green5: get-color(green, 4);
+
+$orange1: get-color(orange, 8);
+$orange2: get-color(orange, 7);
+$orange3: get-color(orange, 6);
+$orange4: get-color(orange, 5);
+$orange5: get-color(orange, 4);
+
+$red1: get-color(red, 8);
+$red2: get-color(red, 7);
+$red3: get-color(red, 6);
+$red4: get-color(red, 5);
+$red5: get-color(red, 4);
+
+// Extended colors
+
+$vermilion1: #9e2b0e !default;
+$vermilion2: #b83211 !default;
+$vermilion3: #d13913 !default;
+$vermilion4: #eb532d !default;
+$vermilion5: #ff6e4a !default;
+
+$rose1: #a82255 !default;
+$rose2: #c22762 !default;
+$rose3: #db2c6f !default;
+$rose4: #f5498b !default;
+$rose5: #ff66a1 !default;
+
+$violet1: #5c255c !default;
+$violet2: #752f75 !default;
+$violet3: #8f398f !default;
+$violet4: #a854a8 !default;
+$violet5: #c274c2 !default;
+
+$indigo1: get-color(purple, 8);
+$indigo2: get-color(purple, 7);
+$indigo3: get-color(purple, 6);
+$indigo4: get-color(purple, 5);
+$indigo5: get-color(purple, 4);
+
+$cobalt1: #1f4b99 !default;
+$cobalt2: #2458b3 !default;
+$cobalt3: #2965cc !default;
+$cobalt4: #4580e6 !default;
+$cobalt5: #669eff !default;
+
+$turquoise1: #008075 !default;
+$turquoise2: #00998c !default;
+$turquoise3: #00b3a4 !default;
+$turquoise4: #14ccbd !default;
+$turquoise5: #2ee6d6 !default;
+
+$forest1: #1d7324 !default;
+$forest2: #238c2c !default;
+$forest3: #29a634 !default;
+$forest4: #43bf4d !default;
+$forest5: #62d96b !default;
+
+$lime1: #728c23 !default;
+$lime2: #87a629 !default;
+$lime3: #9bbf30 !default;
+$lime4: #b6d94c !default;
+$lime5: #d1f26d !default;
+
+$gold1: #a67908 !default;
+$gold2: #bf8c0a !default;
+$gold3: #d99e0b !default;
+$gold4: #f2b824 !default;
+$gold5: #ffc940 !default;
+
+$sepia1: #63411e !default;
+$sepia2: #7d5125 !default;
+$sepia3: #96622d !default;
+$sepia4: #b07b46 !default;
+$sepia5: #c99765 !default;
+
+@import "color-aliases";

@@ -1,0 +1,58 @@
+/*
+ * HELPER FUNCTIONS
+ * some useful map functions with safe gaurds
+ * https://www.sitepoint.com/extra-map-functions-sass/
+ */
+
+// adds a safe gaurd in case map is not a map
+@function map-safe-get($map: (), $key: '""') {
+  @return if(type-of($map) == map, map-get($map, $key), '');
+}
+
+// loops through and returns the value the key list path or the default
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-safe-get($map, $key);
+  }
+
+  @return $map;
+}
+
+// like merge but is not losey and allows deep merging
+@function map-extend($map, $maps... /*, $deep */) {
+  $last: nth($maps, -1);
+  $deep: $last == true;
+  $max: if($deep, length($maps) - 1, length($maps));
+
+  // Loop through all maps in $maps...
+  @for $i from 1 through $max {
+    // Store current map
+    $current: nth($maps, $i);
+
+    // If not in deep mode, simply merge current map with map
+    @if not $deep {
+      $map: map-merge($map, $current);
+    } @else {
+      // If in deep mode, loop through all tuples in current map
+      @each $key, $value in $current {
+        @if length($value) > 0 {
+          // If value is a nested map and same key from map is a nested map as well
+          @if type-of($value) == 'map' and type-of(map-get($map, $key)) == 'map' {
+            // Recursive extend
+            $value: map-extend(map-get($map, $key), $value, true);
+          }
+
+          // Merge current tuple with map
+          $map: map-merge(
+            $map,
+            (
+              $key: $value,
+            )
+          );
+        }
+      }
+    }
+  }
+
+  @return $map;
+}
