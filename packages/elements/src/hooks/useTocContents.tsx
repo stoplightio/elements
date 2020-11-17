@@ -56,7 +56,7 @@ function computeToc(
         name: tocNode.title,
         depth,
         type: tocNode.type,
-        ...(tocNode.uri && { icon: 'cloud', to: tocNode.uri }),
+        ...(tocNode.uri && { icon: 'cloud', to: tocNode.uri, startExpanded: true }),
       });
 
       if (tocNode.items.length) {
