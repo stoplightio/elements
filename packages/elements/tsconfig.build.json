@@ -4,8 +4,7 @@
     "src"
   ],
   "exclude": [
-    "**/__*__/**",
-    "**/elements-utils/**"
+    "**/__*__/**"
   ],
   "compilerOptions": {
     "baseUrl": "./",
