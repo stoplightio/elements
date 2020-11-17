@@ -8,10 +8,14 @@ interface BasicSendProps {
 
 export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   const sendRequest = () => {
-    alert('Yo! You won!');
+    const server = httpOperation.servers ? httpOperation.servers[0]?.url : null;
+    console.log(server);
+    server
+      ? fetch(server, { method: httpOperation.method }).then(data => console.log(data))
+      : alert('Provide server url');
   };
 
-  return (
+  return httpOperation.servers ? (
     <Card>
       <h2 className="bg-gray-7 text-gray">
         <strong className="text-white">{httpOperation.method}</strong>
@@ -21,5 +25,5 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
         Send
       </Button>
     </Card>
-  );
+  ) : null;
 };
