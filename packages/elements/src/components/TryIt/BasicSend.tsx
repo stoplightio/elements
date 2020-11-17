@@ -7,11 +7,24 @@ interface BasicSendProps {
 }
 
 export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
+  const [response, setResponse] = React.useState<Response | undefined>(undefined);
+  const [responseBody, setResponseBody] = React.useState<unknown | undefined>(undefined);
+
   const sendRequest = () => {
     const server = httpOperation.servers ? httpOperation.servers[0]?.url : null;
-    console.log(server);
     server
-      ? fetch(server, { method: httpOperation.method }).then(data => console.log(data))
+      ? fetch(server + httpOperation.path, {
+          method: httpOperation.method,
+        })
+          .then(data => {
+            setResponse(data);
+            return data.json();
+          })
+          // .then(data => {
+          //   return data.json();
+          // })
+          // .then(data => setResponseBody(data))
+          .then(data => setResponseBody(data))
       : alert('Provide server url');
   };
 
@@ -24,6 +37,8 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
       <Button intent="primary" onClick={sendRequest}>
         Send
       </Button>
+      {response ? <div>{response.status}</div> : null}
+      {responseBody ? <div>{JSON.stringify(responseBody)}</div> : null}
     </Card>
   ) : null;
 };

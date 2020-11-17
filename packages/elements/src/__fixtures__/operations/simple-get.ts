@@ -12,5 +12,5 @@ export const operation: IHttpOperation = {
       description: 'OK',
     },
   ],
-  servers: [{ url: 'https://example.com/' }],
+  servers: [{ url: 'https://todos.stoplight.io' }],
 };
