@@ -3772,11 +3772,6 @@
   dependencies:
     lodash "^4.17.19"
 
-"@stoplight/elements-utils@file:packages/elements-utils":
-  version "6.0.0-beta.183"
-  dependencies:
-    lodash "^4.17.19"
-
 "@stoplight/elements@beta":
   version "6.0.0-beta.175"
   resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-6.0.0-beta.175.tgz#ac1c2715678a64e8ac5a565869903e906ae79d72"
@@ -4103,8 +4098,10 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/ui-kit@^3.0.0-beta.37", "@stoplight/ui-kit@file:.yalc/@stoplight/ui-kit":
-  version "0.0.0-ec35da4f"
+"@stoplight/ui-kit@^3.0.0-beta.37", "@stoplight/ui-kit@^3.0.0-beta.38":
+  version "3.0.0-beta.38"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.38.tgz#f7d71a9961a30c0eba498adca7f00aabb4f7789f"
+  integrity sha512-7cyoCcw8Hb7azFwwAQs554J9olDCWTM29ZCYmffLS/VFeHWkT86K3FAZpO2U+U8nYg7wCoXI7aHU6BJgVIK0Uw==
   dependencies:
     "@blueprintjs/core" "^3.29.0"
     "@blueprintjs/icons" "^3.19.0"

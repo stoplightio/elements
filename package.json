@@ -32,9 +32,6 @@
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.9.6"
   },
-  "resolutions": {
-    "@stoplight/ui-kit": "file:.yalc/@stoplight/ui-kit"
-  },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
     "elements-web-components": "yarn workspace @stoplight/elements-web-components",

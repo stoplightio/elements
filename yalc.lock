@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "@stoplight/ui-kit": {
-      "signature": "ec35da4f26b8c7d3ab61994c006e8fef",
-      "pure": true
-    }
-  }
-}
