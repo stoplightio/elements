@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.186](https://github.com/stoplightio/elements/compare/v6.0.0-beta.185...v6.0.0-beta.186) (2020-11-17)
+
+
+### Bug Fixes
+
+* **elements-web-components:** remove outdated example from README.md ([#720](https://github.com/stoplightio/elements/issues/720)) ([c1b7a50](https://github.com/stoplightio/elements/commit/c1b7a5091d511cd40f015991aa28d0de43339e6e))
+
+
+
+
+
 # [6.0.0-beta.185](https://github.com/stoplightio/elements/compare/v6.0.0-beta.184...v6.0.0-beta.185) (2020-11-16)
 
 **Note:** Version bump only for package @stoplight/elements-web-components
