@@ -5,7 +5,7 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { httpOperation } from '../../__fixtures__/operations/bundled-parameter';
-import { operation } from '../../components/RequestMaker/__fixtures__/http';
+import { operation } from '../../__fixtures__/operations/simple-get';
 import { TryIt } from '../../components/TryIt';
 import { BasicSend } from '../../components/TryIt/BasicSend';
 import { Provider } from '../../containers/Provider';
