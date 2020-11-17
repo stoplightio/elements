@@ -257,7 +257,7 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents, type: TocType) {
     { httpOperations, models }: { httpOperations: NodeData[]; models: NodeData[] },
     serviceTagNames: string[],
   ) => {
-    const { groups, others } = [...httpOperations].reduce<{
+    const { groups, others } = httpOperations.reduce<{
       groups: { [key: string]: Group };
       others: Item[];
     }>(
@@ -287,9 +287,7 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents, type: TocType) {
       { groups: {}, others: [] },
     );
 
-    if (others.length) {
-      others.forEach(item => toc.items.push(item));
-    }
+    others.forEach(item => toc.items.push(item));
 
     const tagNamesLC = serviceTagNames.map(tn => tn.toLowerCase());
 
@@ -360,14 +358,18 @@ export function appendHttpServicesToToC(toc: ITableOfContents, type: TocType) {
 export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType = 'divider') {
   return (models: NodeData[]) => {
     if (models.length) {
-      let items: TableOfContentItem[] = [];
+      const childItems: TableOfContentItem[] = models.map(model => ({
+        type: 'item',
+        title: model.name,
+        uri: model.uri,
+      }));
+
       if (schemaType === 'divider') {
         toc.items.push({ type: 'divider', title: 'Schemas' });
-        items = toc.items;
+        toc.items.push(...childItems);
       } else {
-        toc.items.push({ type: 'group', title: 'Schemas', items });
+        toc.items.push({ type: 'group', title: 'Schemas', items: childItems });
       }
-      models.forEach(model => items.push({ type: 'item', title: model.name, uri: model.uri }));
     }
   };
 }
