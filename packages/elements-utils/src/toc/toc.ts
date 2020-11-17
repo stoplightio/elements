@@ -29,7 +29,9 @@ function generateToC(searchResults: NodeData[], type: TocType) {
       if (type === 'api') {
         if (httpServices.length !== 1) return toc;
         toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
-        toc.items.push({ type: 'divider', title: 'Endpoints' });
+        if (httpOperations.length) {
+          toc.items.push({ type: 'divider', title: 'Endpoints' });
+        }
       } else {
         toc.items.push({ type: 'divider', title: 'APIS' });
       }
