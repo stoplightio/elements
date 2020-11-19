@@ -3841,6 +3841,22 @@
     type-is "^1.6.18"
     urijs "~1.19.2"
 
+"@stoplight/httpsnippet@^1.2.1":
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/httpsnippet/-/httpsnippet-1.21.0.tgz#67f8b03de22a0af3c39187f2bfc94bdebbea4732"
+  integrity sha512-mb86uiXJlEETgkCSfpg2frvWy0wnbnP7UvwxvzHA+sKcB2fTWpgRKwLFrClgxGBbiZrIbiJlMelnx8u4k6oOtQ==
+  dependencies:
+    chalk "^1.1.1"
+    commander "^2.9.0"
+    debug "^2.2.0"
+    event-stream "3.3.4"
+    form-data "^3.0.0"
+    fs-readfile-promise "^2.0.1"
+    fs-writefile-promise "^1.0.3"
+    har-validator "^5.0.0"
+    pinkie-promise "^2.0.0"
+    stringify-object "^3.3.0"
+
 "@stoplight/json-schema-merge-allof@^0.7.1":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.1.tgz#7a2c99da9448c5b6b5cbd9afd9f1fb4957d5cbeb"
@@ -12344,6 +12360,22 @@ https-proxy-agent@^5.0.0:
   dependencies:
     agent-base "6"
     debug "4"
+
+httpsnippet@^1.24.0:
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/httpsnippet/-/httpsnippet-1.24.0.tgz#2983e15a43b7b160e8e31ac792076060a65f1de3"
+  integrity sha512-W2GRlKXPm+alFdkYvts7zS54Y8sjOGN1H4dMfLCcNZZrG2Rg9jY57aN/Fyiov4/Z0paFxCS1vKDbugNYfAhUBg==
+  dependencies:
+    chalk "^1.1.1"
+    commander "^2.9.0"
+    debug "^2.2.0"
+    event-stream "3.3.4"
+    form-data "3.0.0"
+    fs-readfile-promise "^2.0.1"
+    fs-writefile-promise "^1.0.3"
+    har-validator "^5.0.0"
+    pinkie-promise "^2.0.0"
+    stringify-object "^3.3.0"
 
 human-signals@^1.1.1:
   version "1.1.1"
