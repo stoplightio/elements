@@ -532,7 +532,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toHAR()).toEqual({
+      expect(requestStore.toHAR()).toMatchObject({
         method: 'POST',
         url: 'http://mockbin.com/har',
         headers: [
@@ -563,7 +563,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toHAR()).toEqual({
+      expect(requestStore.toHAR()).toMatchObject({
         method: 'POST',
         url: 'http://mockbin.com/har',
         headers: [
@@ -594,7 +594,7 @@ describe('RequestStore', () => {
         foo: 'bar',
       };
 
-      expect(requestStore.toHAR()).toEqual({
+      expect(requestStore.toHAR()).toMatchObject({
         method: 'POST',
         url: 'http://mockbin.com/har',
         headers: [
@@ -624,7 +624,7 @@ describe('RequestStore', () => {
       }`;
       requestStore.graphqlVariables = 'episode: $episode';
 
-      expect(requestStore.toHAR()).toEqual({
+      expect(requestStore.toHAR()).toMatchObject({
         method: 'POST',
         url: 'http://mockbin.com/har',
         headers: [
@@ -662,7 +662,7 @@ describe('RequestStore', () => {
         },
       ];
 
-      expect(requestStore.toHAR()).toEqual({
+      expect(requestStore.toHAR()).toMatchObject({
         method: 'POST',
         url: 'http://mockbin.com/har',
         headers: [
@@ -919,7 +919,12 @@ body:
   "postData": {
     "mimeType": "application/json",
     "text": "{\\"foo\\":\\"bar\\"}"
-  }
+  },
+  "httpVersion": "HTTP/1.1",
+  "headersSize": -1,
+  "bodySize": -1,
+  "queryString": [],
+  "cookies": []
 }`,
       );
     });

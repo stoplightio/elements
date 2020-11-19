@@ -5662,6 +5662,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/har-format@*", "@types/har-format@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@types/har-format/-/har-format-1.2.5.tgz#4f6648814d0fdcb6a510e3364a9db439a753c4b1"
+  integrity sha512-IG8AE1m2pWtPqQ7wXhFhy6Q59bwwnLwO36v5Rit2FrbXCIp8Sk8E2PfUCreyrdo17STwFSKDAkitVuVYbpEHvQ==
+
 "@types/hast@^2.0.0":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@types/hast/-/hast-2.3.1.tgz#b16872f2a6144c7025f296fb9636a667ebb79cd9"
@@ -5678,6 +5683,13 @@
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@types/html-minifier-terser/-/html-minifier-terser-5.1.0.tgz#551a4589b6ee2cc9c1dff08056128aec29b94880"
   integrity sha512-iYCgjm1dGPRuo12+BStjd1HiVQqhlRhWDOQigNxn023HcjnhsiFz9pc6CzJj4HwDCSQca9bxTL4PxJDbkdm3PA==
+
+"@types/httpsnippet@^1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@types/httpsnippet/-/httpsnippet-1.23.0.tgz#83ba34c4ec712a54532caa93e270f66e0285eb4e"
+  integrity sha512-SVkF5LkgI8+7OkWXRyvw2DY2xPjqpCGzySs0vIlzYEvrus6NO0o7EhSbqzUuvkDC7N3mmXiI+x/vfKFo6+RlCw==
+  dependencies:
+    "@types/har-format" "*"
 
 "@types/is-function@^1.0.0":
   version "1.0.0"
@@ -11236,7 +11248,7 @@ fork-ts-checker-webpack-plugin@^4.1.4:
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
 
-form-data@^3.0.0:
+form-data@3.0.0, form-data@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
   integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
@@ -12348,6 +12360,22 @@ https-proxy-agent@^5.0.0:
   dependencies:
     agent-base "6"
     debug "4"
+
+httpsnippet@^1.24.0:
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/httpsnippet/-/httpsnippet-1.24.0.tgz#2983e15a43b7b160e8e31ac792076060a65f1de3"
+  integrity sha512-W2GRlKXPm+alFdkYvts7zS54Y8sjOGN1H4dMfLCcNZZrG2Rg9jY57aN/Fyiov4/Z0paFxCS1vKDbugNYfAhUBg==
+  dependencies:
+    chalk "^1.1.1"
+    commander "^2.9.0"
+    debug "^2.2.0"
+    event-stream "3.3.4"
+    form-data "3.0.0"
+    fs-readfile-promise "^2.0.1"
+    fs-writefile-promise "^1.0.3"
+    har-validator "^5.0.0"
+    pinkie-promise "^2.0.0"
+    stringify-object "^3.3.0"
 
 human-signals@^1.1.1:
   version "1.1.1"
