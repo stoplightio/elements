@@ -1,5 +1,7 @@
+import { safeStringify } from '@stoplight/json';
 import { IHttpOperation } from '@stoplight/types';
-import { Button, Card } from '@stoplight/ui-kit';
+import { Button, Card, CodeViewer } from '@stoplight/ui-kit';
+import { getHttpCodeColor } from 'elements/src/utils/http';
 import * as React from 'react';
 
 interface BasicSendProps {
@@ -20,25 +22,41 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             setResponse(data);
             return data.json();
           })
-          // .then(data => {
-          //   return data.json();
-          // })
-          // .then(data => setResponseBody(data))
-          .then(data => setResponseBody(data))
+          .then(data => {
+            setResponseBody(data);
+          })
       : alert('Provide server url');
   };
 
   return httpOperation.servers ? (
-    <Card>
-      <h2 className="bg-gray-7 text-gray">
-        <strong className="text-white">{httpOperation.method}</strong>
-        {httpOperation.path}
-      </h2>
-      <Button intent="primary" onClick={sendRequest}>
-        Send
-      </Button>
-      {response ? <div>{response.status}</div> : null}
-      {responseBody ? <div>{JSON.stringify(responseBody)}</div> : null}
+    <Card className="w-2/5 p-0">
+      <p className="flex flex-row bg-gray-7 font-mono rounded-t-lg py-2 pl-4">
+        <div className="text-white uppercase pr-2">{httpOperation.method}</div>
+        <div className="text-gray-2">{httpOperation.path}</div>
+      </p>
+      <div className="bg-gray-5 px-4 py-3">
+        <Button className="bp3-small rounded" intent="primary" onClick={sendRequest}>
+          Send
+        </Button>
+      </div>
+      {response ? (
+        <div className="font-sans font-light">
+          <div className="bg-gray-6 text-gray-2 px-4 py-3">Response</div>
+          <div className="bg-gray-5">
+            <div className={`p-4 text-${getHttpCodeColor(response.status)}`}>
+              {`${response.status} ${response.statusText}`}
+            </div>
+            {responseBody ? (
+              <CodeViewer
+                showLineNumbers
+                value={safeStringify(responseBody, undefined, 2) || ''}
+                language="html"
+                className="pl-4 pb-4 text-gray-1 font-sans"
+              ></CodeViewer>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
     </Card>
   ) : null;
 };
