@@ -31,8 +31,11 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
         }
       })
       .catch(reason => {
-        console.error(`Could not bundle: ${reason.message}`);
-        setBundledData(document);
+        if (typeof reason === 'object' && reason !== null && 'files' in reason) {
+          setBundledData(reason.files.schema);
+        } else {
+          console.warn(`Could bundle: ${reason?.message ?? 'Unknown error'}`);
+        }
       });
 
     return () => {

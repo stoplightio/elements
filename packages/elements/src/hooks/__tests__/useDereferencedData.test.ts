@@ -1,4 +1,4 @@
-import { NodeType } from '@stoplight/types';
+import { Dictionary, NodeType } from '@stoplight/types';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { useDereferencedData } from '../useDereferencedData';
@@ -6,10 +6,21 @@ import { useDereferencedData } from '../useDereferencedData';
 jest.mock('@stoplight/json-schema-ref-parser', () => ({
   __esModule: true,
   default: {
-    dereference: (input: any) =>
-      new Promise(resolve => {
+    dereference: (input: Dictionary<unknown>) =>
+      new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve({ ...input, __dereferenced: true });
+          if ('__error' in input) {
+            reject({
+              files: {
+                schema: {
+                  ...input,
+                  __errored: true,
+                },
+              },
+            });
+          } else {
+            resolve({ ...input, __dereferenced: true });
+          }
         }, 100);
       }),
   },
@@ -29,6 +40,15 @@ describe('useDereferencedData', () => {
     );
     await waitForNextUpdate({ timeout: 300 });
     expect(result.current).toEqual({ ...input, __dereferenced: true });
+  });
+
+  it('handles dereferencing errors', async () => {
+    const input = { a: 5, __error: true };
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useDereferencedData(NodeType.HttpOperation, JSON.stringify(input)),
+    );
+    await waitForNextUpdate({ timeout: 300 });
+    expect(result.current).toEqual({ ...input, __errored: true });
   });
 
   it('is not prone to race conditions', async () => {
