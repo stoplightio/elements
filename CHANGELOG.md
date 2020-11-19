@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.187](https://github.com/stoplightio/elements/compare/v6.0.0-beta.186...v6.0.0-beta.187) (2020-11-19)
+
+
+### Features
+
+* **request-maker:** use upstream httpsnippet ([#663](https://github.com/stoplightio/elements/issues/663)) ([5db3159](https://github.com/stoplightio/elements/commit/5db3159d9ab0d877e7c3a08c024a366f15a2eb87))
+
+
+
+
+
 # [6.0.0-beta.186](https://github.com/stoplightio/elements/compare/v6.0.0-beta.185...v6.0.0-beta.186) (2020-11-17)
 
 
