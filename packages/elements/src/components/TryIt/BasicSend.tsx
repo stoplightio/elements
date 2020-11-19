@@ -1,8 +1,9 @@
 import { safeStringify } from '@stoplight/json';
 import { IHttpOperation } from '@stoplight/types';
 import { Button, Card, CodeViewer } from '@stoplight/ui-kit';
-import { getHttpCodeColor } from 'elements/src/utils/http';
 import * as React from 'react';
+
+import { getHttpCodeColor } from '../../utils/http';
 
 interface BasicSendProps {
   httpOperation: IHttpOperation;
