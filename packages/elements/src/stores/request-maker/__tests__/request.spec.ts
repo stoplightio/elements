@@ -919,7 +919,12 @@ body:
   "postData": {
     "mimeType": "application/json",
     "text": "{\\"foo\\":\\"bar\\"}"
-  }
+  },
+  "httpVersion": "HTTP/1.1",
+  "headersSize": -1,
+  "bodySize": -1,
+  "queryString": [],
+  "cookies": []
 }`,
       );
     });
