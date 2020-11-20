@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.188](https://github.com/stoplightio/elements/compare/v6.0.0-beta.187...v6.0.0-beta.188) (2020-11-20)
+
+
+### Bug Fixes
+
+* improve usage of json-schema-ref-parser ([#727](https://github.com/stoplightio/elements/issues/727)) ([e91130c](https://github.com/stoplightio/elements/commit/e91130cb9da0a1e749e948b6c5ed08ad91a8a138))
+
+
+
+
+
 # [6.0.0-beta.187](https://github.com/stoplightio/elements/compare/v6.0.0-beta.186...v6.0.0-beta.187) (2020-11-19)
 
 
