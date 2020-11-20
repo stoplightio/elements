@@ -24,6 +24,7 @@ export type Group = {
   type: 'group';
   title: string;
   items: TableOfContentItem[];
+  uri?: string;
 };
 
 export type Item = {

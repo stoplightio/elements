@@ -3,9 +3,10 @@ import { object, text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
-import { tree } from '../../__fixtures__/table-of-contents/studio';
+import { projectTree, tree } from '../../__fixtures__/table-of-contents/studio';
 import { TableOfContents as TocContainer } from '../../containers/TableOfContents';
 import { useTocContents } from '../../hooks/useTocContents';
+import { ITableOfContentsTree } from '../../types';
 
 const styles = {
   height: '100%',
@@ -19,16 +20,20 @@ const styles = {
 storiesOf('Internal/TableOfContents', module)
   .addDecorator(withKnobs)
   .add('Component', () => {
-    return <TocStory />;
+    const tocTree = object('tree', tree);
+    return <TocStory tree={tocTree} />;
   })
   .add('Container', () => {
     return <TocStoryContainer />;
+  })
+  .add('Project ToC', () => {
+    const tocTree = object('tree', projectTree);
+    return <TocStory tree={tocTree} />;
   });
 
-const TocStory: React.FC = () => {
+const TocStory: React.FC<{ tree: ITableOfContentsTree }> = ({ tree }) => {
   const [node, setNode] = React.useState('');
-  const tocTree = object('tree', tree);
-  const contents = useTocContents(tocTree).map(item => ({
+  const contents = useTocContents(tree).map(item => ({
     ...item,
     onClick: () => {
       setNode(item.to);

@@ -20,7 +20,7 @@ export const isOas3 = (parsed: unknown) =>
 
 export const isOperation = (uri: string) => OPERATION_REGEXP.test(uri);
 
-export const MODEL_REGEXP = /^\/(definitions|components\/schemas)/;
+export const MODEL_REGEXP = /\/(definitions|components\/schemas)/;
 export const OPERATION_REGEXP = /\/paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
 
 export interface IUriMap {

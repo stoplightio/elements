@@ -1,7 +1,11 @@
 import * as React from 'react';
 
+import { HttpMethodColors } from '../constants';
 import { IconsContext } from '../containers/Provider';
 import { ITableOfContentsTree, NodeIconMapping, TableOfContentItem, TableOfContentsLinkWithId } from '../types';
+import { MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
+
+export const MARKDOWN_REGEXP = /\/?\w+\.md$/;
 
 /**
  * Memoized hook that provides Toc contents by parsing a tree
@@ -52,7 +56,7 @@ function computeToc(
         name: tocNode.title,
         depth,
         type: tocNode.type,
-        icon: icons.group,
+        ...(tocNode.uri && { icon: 'cloud', to: tocNode.uri, startExpanded: true }),
       });
 
       if (tocNode.items.length) {
@@ -61,12 +65,26 @@ function computeToc(
     }
 
     if (tocNode.type === 'item') {
+      const match = OPERATION_REGEXP.exec(tocNode.uri);
+      let operation = null;
+      if (match && match.length === 2) {
+        operation = match[1];
+      }
+      const isModel =
+        MODEL_REGEXP.test(tocNode.uri) ||
+        (!MARKDOWN_REGEXP.test(tocNode.uri) && !operation && tocNode.title !== 'Overview');
+
       contents.push({
         id,
         name: tocNode.title,
         depth: depth,
         type: tocNode.type,
-        icon: icons.item,
+        iconPosition: 'right',
+        ...(operation && {
+          textIcon: operation.toUpperCase(),
+          iconColor: HttpMethodColors[operation],
+        }),
+        ...(isModel && { icon: 'cube', iconColor: 'orange' }),
         to: tocNode.uri,
       });
     }

@@ -3766,9 +3766,9 @@
     "@sinonjs/commons" "^1.7.0"
 
 "@stoplight/elements-utils@beta":
-  version "6.0.0-beta.136"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements-utils/-/elements-utils-6.0.0-beta.136.tgz#cddc48ad906e7d2fa657013566e8c361ba55d823"
-  integrity sha512-zXDLxQyFHeS4bZUfr4ZGvObz4QB99zB+BUGUnMiwGRlsN+sEL5Y3p2gIUH1yP4B12TKEzvUbha3ZidsBLPtRlQ==
+  version "6.0.0-beta.183"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements-utils/-/elements-utils-6.0.0-beta.183.tgz#35fc1563c4f193156f6687094adce7b21bd8de7b"
+  integrity sha512-rwXYerfo053BhTST9+TLy2z5hEfRaVOumxmAQI2de8+sKBoN56qc1M1a1wpWqz/b8YFgcp07z3O+2Be8cVNf0g==
   dependencies:
     lodash "^4.17.19"
 
@@ -4099,9 +4099,31 @@
     utility-types "^3.10.0"
 
 "@stoplight/ui-kit@^3.0.0-beta.37":
-  version "3.0.0-beta.37"
-  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.37.tgz#7666f15e7a4b1f719308d3b3878bbb265c748ff2"
-  integrity sha512-xtn7M595JwTCkg/kbUHz2TJqpqFCcLxHfqSC8SM3LS0Jg7S0abWUZbZgNNL5oJQ5cmFg3MGmZ2K29bApSsfuxw==
+  version "3.0.0-beta.38"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.38.tgz#f7d71a9961a30c0eba498adca7f00aabb4f7789f"
+  integrity sha512-7cyoCcw8Hb7azFwwAQs554J9olDCWTM29ZCYmffLS/VFeHWkT86K3FAZpO2U+U8nYg7wCoXI7aHU6BJgVIK0Uw==
+  dependencies:
+    "@blueprintjs/core" "^3.29.0"
+    "@blueprintjs/icons" "^3.19.0"
+    "@blueprintjs/select" "^3.13.4"
+    "@fortawesome/fontawesome-common-types" "^0.2.31"
+    classnames "^2.2.6"
+    prismjs "^1.20.0"
+    react-input-autosize "^2.2.2"
+    react-scrollbars-custom "~4.0.25"
+    react-simple-code-editor "~0.11.0"
+    react-tabs "^3.1.1"
+    react-virtualized-auto-sizer "^1.0.2"
+    react-window "~1.8.5"
+    refractor "^3.0.0"
+    tslib "^1.12.0"
+    use-debounce "^3.4.3"
+    yup "^0.28.3"
+
+"@stoplight/ui-kit@^3.0.0-beta.39":
+  version "3.0.0-beta.39"
+  resolved "https://registry.yarnpkg.com/@stoplight/ui-kit/-/ui-kit-3.0.0-beta.39.tgz#0b6051c023c253470d137695978f20bccd7621e9"
+  integrity sha512-WzAdNZKlpuxHN2qa+YV9aobdUUXpMKtKUYWxND9f3GZGJj6JYlZUXUmdxD066rHoPMJWgtiX2RxEWrkpw50vOw==
   dependencies:
     "@blueprintjs/core" "^3.29.0"
     "@blueprintjs/icons" "^3.19.0"

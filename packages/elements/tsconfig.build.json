@@ -10,6 +10,10 @@
     "baseUrl": "./",
     "outDir": "dist",
     "moduleResolution": "node",
-    "module": "commonjs"
+    "module": "commonjs",
+    "paths": {
+      "@stoplight/elements-utils": ["../elements-utils/dist"]
+    },
+
   }
 }

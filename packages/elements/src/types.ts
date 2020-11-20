@@ -83,6 +83,7 @@ export type Group = {
   title: string;
   type: 'group';
   items: TableOfContentItem[];
+  uri?: string;
 };
 
 export type Item = {
