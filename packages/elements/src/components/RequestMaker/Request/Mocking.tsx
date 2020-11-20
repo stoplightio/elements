@@ -123,53 +123,55 @@ export const Mocking = observer(() => {
                   }}
                 />
 
-                {operationResponses?.filter(r => r.code.toLowerCase() != 'default')?.map(operationResponse => {
-                  const isActive = operationResponse.code === currentCode;
-                  const exampleKeys = operationResponse.contents
-                    ?.flatMap(c => c.examples || [])
-                    .map(example => example.key);
+                {operationResponses
+                  ?.filter(r => r.code.toLowerCase() != 'default')
+                  ?.map(operationResponse => {
+                    const isActive = operationResponse.code === currentCode;
+                    const exampleKeys = operationResponse.contents
+                      ?.flatMap(c => c.examples || [])
+                      .map(example => example.key);
 
-                  const exampleChildren = exampleKeys?.map(exampleKey => (
-                    <MenuItem
-                      active={isActive && exampleKey === currentExample}
-                      text={exampleKey}
-                      key={exampleKey}
-                      onClick={() => {
-                        store.setPrismMockingOption('code', operationResponse.code);
-                        store.setPrismMockingOption('exampleKey', exampleKey);
-                      }}
-                    />
-                  ));
-
-                  if (exampleKeys?.length) {
-                    exampleChildren?.unshift(
+                    const exampleChildren = exampleKeys?.map(exampleKey => (
                       <MenuItem
-                        key="no-example"
-                        active={isActive && !currentExample}
-                        text="No Example"
+                        active={isActive && exampleKey === currentExample}
+                        text={exampleKey}
+                        key={exampleKey}
+                        onClick={() => {
+                          store.setPrismMockingOption('code', operationResponse.code);
+                          store.setPrismMockingOption('exampleKey', exampleKey);
+                        }}
+                      />
+                    ));
+
+                    if (exampleKeys?.length) {
+                      exampleChildren?.unshift(
+                        <MenuItem
+                          key="no-example"
+                          active={isActive && !currentExample}
+                          text="No Example"
+                          onClick={() => {
+                            store.setPrismMockingOption('code', operationResponse.code);
+                            store.setPrismMockingOption('exampleKey', undefined);
+                          }}
+                        />,
+                        <MenuDivider key="divider" />,
+                      );
+                    }
+
+                    return (
+                      <MenuItem
+                        active={isActive}
+                        text={operationResponse.code}
+                        key={operationResponse.code}
                         onClick={() => {
                           store.setPrismMockingOption('code', operationResponse.code);
                           store.setPrismMockingOption('exampleKey', undefined);
                         }}
-                      />,
-                      <MenuDivider key="divider" />,
+                      >
+                        {exampleChildren}
+                      </MenuItem>
                     );
-                  }
-
-                  return (
-                    <MenuItem
-                      active={isActive}
-                      text={operationResponse.code}
-                      key={operationResponse.code}
-                      onClick={() => {
-                        store.setPrismMockingOption('code', operationResponse.code);
-                        store.setPrismMockingOption('exampleKey', undefined);
-                      }}
-                    >
-                      {exampleChildren}
-                    </MenuItem>
-                  );
-                })}
+                  })}
               </Menu>
             }
             position={Position.BOTTOM}
