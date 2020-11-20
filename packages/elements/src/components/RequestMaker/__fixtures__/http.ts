@@ -61,6 +61,11 @@ export const operation: IHttpOperation = {
       contents: [],
       headers: [],
     },
+    {
+      code: 'default',
+      contents: [],
+      headers: [],
+    },
   ],
   servers: [
     {
