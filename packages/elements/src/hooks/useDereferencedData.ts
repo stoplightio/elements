@@ -29,9 +29,11 @@ export function useDereferencedData(type: NodeType, data: string) {
         if (isActive) setDereferencedData(res);
       })
       .catch(reason => {
-        console.error(`Could not dereference operation: ${reason.message}`);
-        console.error(reason);
-        setDereferencedData(parsedData);
+        if (typeof reason === 'object' && reason !== null && 'files' in reason) {
+          setDereferencedData(reason.files.schema);
+        } else {
+          console.warn(`Could not dereference operation: ${reason?.message ?? 'Unknown error'}`);
+        }
       });
 
     return () => {
