@@ -358,11 +358,14 @@ export function appendHttpServicesToToC(toc: ITableOfContents, type: TocType) {
 export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType = 'divider') {
   return (models: NodeData[]) => {
     if (models.length) {
-      const childItems: TableOfContentItem[] = models.map(model => ({
-        type: 'item',
-        title: model.name,
-        uri: model.uri,
-      }));
+      const childItems: TableOfContentItem[] = sortBy(
+        models.map(model => ({
+          type: 'item',
+          title: model.name,
+          uri: model.uri,
+        })),
+        'title',
+      );
 
       if (schemaType === 'divider') {
         toc.items.push({ type: 'divider', title: 'Schemas' });

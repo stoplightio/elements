@@ -527,13 +527,13 @@ export const projectTree: ITableOfContentsTree = {
     },
     {
       type: 'item',
-      title: 'Error',
-      uri: '/reference/common/models/error.v1.yaml',
+      title: 'Category',
+      uri: '/reference/petstore/models/category.v1.yaml',
     },
     {
       type: 'item',
-      title: 'Category',
-      uri: '/reference/petstore/models/category.v1.yaml',
+      title: 'Error',
+      uri: '/reference/common/models/error.v1.yaml',
     },
     {
       type: 'item',
