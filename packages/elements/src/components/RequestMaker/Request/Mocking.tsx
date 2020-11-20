@@ -123,7 +123,7 @@ export const Mocking = observer(() => {
                   }}
                 />
 
-                {operationResponses?.map(operationResponse => {
+                {operationResponses?.filter(r => r.code.toLowerCase() != 'default')?.map(operationResponse => {
                   const isActive = operationResponse.code === currentCode;
                   const exampleKeys = operationResponse.contents
                     ?.flatMap(c => c.examples || [])
