@@ -1,6 +1,5 @@
 import { Button, HTMLSelect, Menu, MenuDivider, MenuItem, Popover, Position, Switch } from '@stoplight/ui-kit';
 import cn from 'classnames';
-import { isNaN } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 
@@ -125,7 +124,7 @@ export const Mocking = observer(() => {
                 />
 
                 {operationResponses
-                  ?.filter(r => !isNaN(r.code) && Number.isInteger(parseFloat(r.code)))
+                  ?.filter(r => !Number.isNaN(r.code) && Number.isInteger(parseFloat(r.code)))
                   ?.map(operationResponse => {
                     const isActive = operationResponse.code === currentCode;
                     const exampleKeys = operationResponse.contents
