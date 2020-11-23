@@ -124,7 +124,7 @@ export const Mocking = observer(() => {
                 />
 
                 {operationResponses
-                  ?.filter(r => !Number.isNaN(r.code) && Number.isInteger(parseFloat(r.code)))
+                  ?.filter(r => Number.isInteger(parseFloat(r.code)))
                   ?.map(operationResponse => {
                     const isActive = operationResponse.code === currentCode;
                     const exampleKeys = operationResponse.contents
