@@ -217,15 +217,7 @@ describe('RequestSend Response Code component', () => {
       );
 
       fireEvent.click(screen.getByText('Not Set'));
-      try {
-        await waitFor(() => screen.getByText('default'));
-
-        //if we get here we've found default in the list when we shouldn't have
-        // intentionally fail the test because we should not have found default in the list
-        expect(true).toEqual(false);
-      } catch (e) {
-        expect(e.message).toMatch(/^Unable to find an element with the text: default./);
-      }
+      expect(screen.queryByText('default')).toBeNull();
     });
   });
 });
