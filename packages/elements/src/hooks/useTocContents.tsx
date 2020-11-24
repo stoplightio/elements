@@ -1,8 +1,7 @@
 import * as React from 'react';
 
 import { HttpMethodColors } from '../constants';
-import { IconsContext } from '../containers/Provider';
-import { ITableOfContentsTree, NodeIconMapping, TableOfContentItem, TableOfContentsLinkWithId } from '../types';
+import { ITableOfContentsTree, TableOfContentItem, TableOfContentsLinkWithId } from '../types';
 import { MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
 
 export const MARKDOWN_REGEXP = /\/?\w+\.md$/;
@@ -10,9 +9,8 @@ export const MARKDOWN_REGEXP = /\/?\w+\.md$/;
 /**
  * Memoized hook that provides Toc contents by parsing a tree
  */
-export function useTocContents(tree: ITableOfContentsTree) {
-  const icons = React.useContext(IconsContext);
-  return React.useMemo(() => computeToc(tree.items, { icons }), [tree, icons]);
+export function useTocContents(tree: ITableOfContentsTree, showIcons?: boolean) {
+  return React.useMemo(() => computeToc(tree.items, { showIcons }), [tree, showIcons]);
 }
 
 /**
@@ -24,11 +22,11 @@ function computeToc(
   {
     parentId,
     depth = 0,
-    icons,
+    showIcons,
   }: {
     parentId?: string;
     depth?: number;
-    icons: NodeIconMapping;
+    showIcons?: boolean;
   },
 ): TableOfContentsLinkWithId[] {
   // There is a chance that we pass an empty array
@@ -56,11 +54,11 @@ function computeToc(
         name: tocNode.title,
         depth,
         type: tocNode.type,
-        ...(tocNode.uri && { icon: 'cloud', to: tocNode.uri, startExpanded: true }),
+        ...(tocNode.uri && showIcons && { icon: 'cloud', to: tocNode.uri, startExpanded: true }),
       });
 
       if (tocNode.items.length) {
-        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1, icons }));
+        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1 }));
       }
     }
 
@@ -80,11 +78,12 @@ function computeToc(
         depth: depth,
         type: tocNode.type,
         iconPosition: 'right',
-        ...(operation && {
-          textIcon: operation.toUpperCase(),
-          iconColor: HttpMethodColors[operation],
-        }),
-        ...(isModel && { icon: 'cube', iconColor: 'orange' }),
+        ...(operation &&
+          showIcons && {
+            textIcon: operation.toUpperCase(),
+            iconColor: HttpMethodColors[operation],
+          }),
+        ...(isModel && showIcons && { icon: 'cube', iconColor: 'orange' }),
         to: tocNode.uri,
       });
     }
