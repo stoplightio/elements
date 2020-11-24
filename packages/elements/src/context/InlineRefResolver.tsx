@@ -22,8 +22,18 @@ export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps>
   const document = 'document' in props ? props.document : undefined;
 
   const documentBasedRefResolver = React.useCallback<SchemaTreeRefDereferenceFn>(
-    ({ pointer }, _, schema) =>
-      pointer === null ? null : get(isObject(document) ? document : schema, pointerToPath(pointer)),
+    ({ pointer }, _, schema) => {
+      const activeSchema = isObject(document) ? document : schema;
+
+      if (pointer === null) {
+        return null;
+      }
+
+      if (pointer === '#') {
+        return activeSchema;
+      }
+      return get(activeSchema, pointerToPath(pointer));
+    },
     [document],
   );
 
