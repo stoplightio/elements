@@ -208,6 +208,17 @@ describe('RequestSend Response Code component', () => {
 
       expect(store.request.headerParams).toHaveLength(0);
     });
+
+    it('should filter out default response code if defined in spec', async () => {
+      render(
+        <RequestMakerProvider value={store}>
+          <Mocking />
+        </RequestMakerProvider>,
+      );
+
+      fireEvent.click(screen.getByText('Not Set'));
+      expect(screen.queryByText('default')).toBeNull();
+    });
   });
 });
 
