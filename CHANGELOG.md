@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-beta.191](https://github.com/stoplightio/elements/compare/v6.0.0-beta.190...v6.0.0-beta.191) (2020-11-24)
+
+
+### Bug Fixes
+
+* filter out default code ([#728](https://github.com/stoplightio/elements/issues/728)) ([bf31958](https://github.com/stoplightio/elements/commit/bf319584d9c2b6ff8e02fa3cc4bc1cc2b11ba652))
+
+
+
+
+
 # [6.0.0-beta.190](https://github.com/stoplightio/elements/compare/v6.0.0-beta.189...v6.0.0-beta.190) (2020-11-24)
 
 
