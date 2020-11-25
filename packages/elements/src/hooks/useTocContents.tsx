@@ -58,7 +58,7 @@ function computeToc(
       });
 
       if (tocNode.items.length) {
-        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1 }));
+        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1, showIcons }));
       }
     }
 
@@ -72,6 +72,7 @@ function computeToc(
         MODEL_REGEXP.test(tocNode.uri) ||
         (!MARKDOWN_REGEXP.test(tocNode.uri) && !operation && tocNode.title !== 'Overview');
 
+      console.log({ tocNode, operation, isModel, showIcons });
       contents.push({
         id,
         name: tocNode.title,
