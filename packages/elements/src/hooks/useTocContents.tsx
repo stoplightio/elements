@@ -72,7 +72,6 @@ function computeToc(
         MODEL_REGEXP.test(tocNode.uri) ||
         (!MARKDOWN_REGEXP.test(tocNode.uri) && !operation && tocNode.title !== 'Overview');
 
-      console.log({ tocNode, operation, isModel, showIcons });
       contents.push({
         id,
         name: tocNode.title,
