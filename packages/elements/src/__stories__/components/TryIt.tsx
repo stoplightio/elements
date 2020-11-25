@@ -27,6 +27,4 @@ storiesOf('Internal/TryIt', module)
       </div>
     );
   })
-  .add('Basic Send', () => {
-    return <BasicSend httpOperation={operation} />;
-  });
+  .add('Basic Send', () => <BasicSend httpOperation={operation} />);
