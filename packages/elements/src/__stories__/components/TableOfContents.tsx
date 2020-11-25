@@ -33,7 +33,7 @@ storiesOf('Internal/TableOfContents', module)
 
 const TocStory: React.FC<{ tree: ITableOfContentsTree }> = ({ tree }) => {
   const [node, setNode] = React.useState('');
-  const contents = useTocContents(tree).map(item => ({
+  const contents = useTocContents(tree, true).map(item => ({
     ...item,
     onClick: () => {
       setNode(item.to);
