@@ -83,16 +83,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
       - run:
           name: release
-          command: |
-            if [[ $CIRCLE_BRANCH == "master" ]]
-            then
-              yarn release --dist-tag latest
-            elif [[ $CIRCLE_BRANCH == "beta" ]]
-            then
-              yarn release --dist-tag beta --preid beta
-            else
-              yarn release --dist-tag alpha --preid alpha
-            fi
+          command: yarn release
       - run: yarn release.docs
 workflows:
   test-and-release:
@@ -108,7 +99,6 @@ workflows:
             branches:
               only:
                 - master
-                - beta
           requires:
             - lint-and-check
             - build
