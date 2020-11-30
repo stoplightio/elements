@@ -32,13 +32,19 @@ export function TableOfContents<E>({
   showIcons,
   ...extra
 }: ITableOfContents<E>) {
-  const { data: tocData, error } = usePlatformApi<ITableOfContentsTree>(tocUri, {
-    platformUrl,
-    workspaceSlug,
-    projectSlug,
-    branchSlug,
-    authToken,
-  });
+  const { data: tocData, error } = usePlatformApi<ITableOfContentsTree>(
+    tocUri,
+    {
+      platformUrl,
+      workspaceSlug,
+      projectSlug,
+      branchSlug,
+      authToken,
+    },
+    {
+      type: 'custom',
+    },
+  );
 
   React.useEffect(() => {
     if (tocData) {
