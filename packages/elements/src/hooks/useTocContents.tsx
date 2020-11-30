@@ -9,8 +9,8 @@ export const MARKDOWN_REGEXP = /\/?\w+\.md$/;
 /**
  * Memoized hook that provides Toc contents by parsing a tree
  */
-export function useTocContents(tree: ITableOfContentsTree, showIcons?: boolean) {
-  return React.useMemo(() => computeToc(tree.items, { showIcons }), [tree, showIcons]);
+export function useTocContents(tree: ITableOfContentsTree) {
+  return React.useMemo(() => computeToc(tree.items, {}), [tree]);
 }
 
 /**
@@ -22,11 +22,9 @@ function computeToc(
   {
     parentId,
     depth = 0,
-    showIcons,
   }: {
     parentId?: string;
     depth?: number;
-    showIcons?: boolean;
   },
 ): TableOfContentsLinkWithId[] {
   // There is a chance that we pass an empty array
@@ -54,11 +52,11 @@ function computeToc(
         name: tocNode.title,
         depth,
         type: tocNode.type,
-        ...(tocNode.uri && showIcons && { icon: 'cloud', to: tocNode.uri, startExpanded: true }),
+        ...(tocNode.uri && { icon: 'cloud', to: tocNode.uri, startExpanded: true }),
       });
 
       if (tocNode.items.length) {
-        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1, showIcons }));
+        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1 }));
       }
     }
 
@@ -78,12 +76,11 @@ function computeToc(
         depth: depth,
         type: tocNode.type,
         iconPosition: 'right',
-        ...(operation &&
-          showIcons && {
-            textIcon: operation.toUpperCase(),
-            iconColor: HttpMethodColors[operation],
-          }),
-        ...(isModel && showIcons && { icon: 'cube', iconColor: 'orange' }),
+        ...(operation && {
+          textIcon: operation.toUpperCase(),
+          iconColor: HttpMethodColors[operation],
+        }),
+        ...(isModel && { icon: 'cube', iconColor: 'orange' }),
         to: tocNode.uri,
       });
     }
