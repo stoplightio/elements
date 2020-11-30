@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.1](https://github.com/stoplightio/elements/compare/v6.0.0...v6.0.1) (2020-11-30)
+
+
+### Bug Fixes
+
+* readme NPM badges ([#731](https://github.com/stoplightio/elements/issues/731)) ([061334c](https://github.com/stoplightio/elements/commit/061334c1f454888fac3f34e00e54da5407226d37))
+
+
+
+
+
 # [6.0.0](https://github.com/stoplightio/elements/compare/v6.0.0-beta.192...v6.0.0) (2020-11-28)
 
 **Note:** Version bump only for package @stoplight/elements
