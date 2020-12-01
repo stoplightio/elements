@@ -15,7 +15,6 @@ export type ITableOfContents<E> = {
   onData?: (tocTree: ITableOfContentsTree) => void;
   className?: string;
   authToken?: string;
-  showIcons?: boolean;
 } & Pick<UiKitITableOfContents<TableOfContentsLinkWithId, E>, 'rowComponent' | 'rowComponentExtraProps'>;
 
 const tocUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/table-of-contents';
@@ -29,16 +28,21 @@ export function TableOfContents<E>({
   onData,
   className,
   authToken,
-  showIcons,
   ...extra
 }: ITableOfContents<E>) {
-  const { data: tocData, error } = usePlatformApi<ITableOfContentsTree>(tocUri, {
-    platformUrl,
-    workspaceSlug,
-    projectSlug,
-    branchSlug,
-    authToken,
-  });
+  const { data: tocData, error } = usePlatformApi<ITableOfContentsTree>(
+    tocUri,
+    {
+      platformUrl,
+      workspaceSlug,
+      projectSlug,
+      branchSlug,
+      authToken,
+    },
+    {
+      type: 'custom',
+    },
+  );
 
   React.useEffect(() => {
     if (tocData) {
@@ -48,7 +52,7 @@ export function TableOfContents<E>({
 
   const tree = tocData ?? { items: [] };
 
-  const contents: TableOfContentsLinkWithId[] = useTocContents(tree, showIcons).map(item => {
+  const contents: TableOfContentsLinkWithId[] = useTocContents(tree).map(item => {
     return {
       ...item,
       isActive: item.type === 'item' && nodeUri !== void 0 ? item.to === nodeUri : false,
