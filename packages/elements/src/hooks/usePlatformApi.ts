@@ -60,9 +60,7 @@ export function usePlatformApi<T>(
   }
 
   if (queryParams) {
-    for (const [name, value] of Object.entries(queryParams)) {
-      uri.setQuery(name, value);
-    }
+    uri.setQuery(queryParams);
   }
 
   return useSwr<T>([uri.toString(), 'get', authToken], fetcher, {
