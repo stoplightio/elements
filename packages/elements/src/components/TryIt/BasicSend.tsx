@@ -52,11 +52,11 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             <Text ml={2}>/todos/todoId</Text>
           </div>
         </Panel.Titlebar>
-        <Panel.Content>
-          <Button appearance="primary" loading={loading} onClick={sendRequest}>
+        <div className="m-4">
+          <Button appearance="primary" loading={loading} disabled={loading} onClick={sendRequest}>
             Send
           </Button>
-        </Panel.Content>
+        </div>
       </Panel>
       {response && !('error' in response) && <BasicSendResponse response={response} />}
       {response && 'error' in response && <BasicSendError state={response} />}
