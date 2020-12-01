@@ -2204,12 +2204,24 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.31.tgz#f15a39e5ab4e5dfda0717733bcacb9580e666ad9"
   integrity sha512-xfnPyH6NN5r/h1/qDYoGB0BlHSID902UkQzxR8QsoKDh55KAPr8ruAoie12WQEEQT8lRE2wtV7LoUllJ1HqCag==
 
+"@fortawesome/fontawesome-common-types@^0.2.32":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.32.tgz#3436795d5684f22742989bfa08f46f50f516f259"
+  integrity sha512-ux2EDjKMpcdHBVLi/eWZynnPxs0BtFVXJkgHIxXRl+9ZFaHPvYamAfCzeeQFqHRjuJtX90wVnMRaMQAAlctz3w==
+
 "@fortawesome/fontawesome-svg-core@^1.2.31":
   version "1.2.31"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.31.tgz#23fff9c521f1b57e79e4c2fd6cce8aa794e9d99e"
   integrity sha512-lqUWRK+ylHQJG5Kiez4XrAZAfc7snxCc+X59quL3xPfMnxzfyf1lt+/hD7X1ZL4KlzAH2KFzMuEVrolo/rAkog==
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.31"
+
+"@fortawesome/fontawesome-svg-core@^1.2.32":
+  version "1.2.32"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.32.tgz#da092bfc7266aa274be8604de610d7115f9ba6cf"
+  integrity sha512-XjqyeLCsR/c/usUpdWcOdVtWFVjPbDFBTQkn2fQRrWhhUoxriQohO2RWDxLyUM8XpD+Zzg5xwJ8gqTYGDLeGaQ==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.32"
 
 "@fortawesome/free-solid-svg-icons@^5.14.0":
   version "5.14.0"
@@ -2218,10 +2230,24 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.30"
 
+"@fortawesome/free-solid-svg-icons@^5.15.1":
+  version "5.15.1"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.15.1.tgz#e1432676ddd43108b41197fee9f86d910ad458ef"
+  integrity sha512-EFMuKtzRMNbvjab/SvJBaOOpaqJfdSap/Nl6hst7CgrJxwfORR1drdTV6q1Ib/JVzq4xObdTDcT6sqTaXMqfdg==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.32"
+
 "@fortawesome/react-fontawesome@^0.1.11":
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.11.tgz#c1a95a2bdb6a18fa97b355a563832e248bf6ef4a"
   integrity sha512-sClfojasRifQKI0OPqTy8Ln8iIhnxR/Pv/hukBhWnBz9kQRmqi6JSH3nghlhAY7SUeIIM7B5/D2G8WjX0iepVg==
+  dependencies:
+    prop-types "^15.7.2"
+
+"@fortawesome/react-fontawesome@^0.1.12":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.13.tgz#ce9654bf4e537108014ec022f2423dbe8114fd62"
+  integrity sha512-/HrLnIft5Ks2511Pz6TxHBIctC9QalVscAC64sufQ4sJH/sXaQlG3uR9LCu6VpEwkBemgcBLrz/QPNP/ddbjDg==
   dependencies:
     prop-types "^15.7.2"
 
@@ -3563,6 +3589,11 @@
     fast-deep-equal "^3.1.3"
     lodash.clonedeep "^4.5.0"
 
+"@popperjs/core@^2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.5.4.tgz#de25b5da9f727985a3757fd59b5d028aba75841a"
+  integrity sha512-ZpKr+WTb8zsajqgDkvCEWgp6d5eJT6Q63Ng2neTbzBO76Lbe91vX/iVIW9dikq+Fs3yEo+ls4cxeXABD2LtcbQ==
+
 "@reach/router@^1.2.1":
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.3.tgz#58162860dce6c9449d49be86b0561b5ef46d80db"
@@ -3962,6 +3993,36 @@
     unified "^9.0.0"
     unist-util-select "^3.0.1"
     unist-util-visit "^2.0.2"
+
+"@stoplight/mosaic-code-viewer@beta":
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.5.tgz#5ca90c87529c78aa033c9ca6fbb0c14d81e689cf"
+  integrity sha512-YyGDA37v8+G/lLT1D3yl1TBr6zD6FcTEohtUnDp79G4ViZdZNvOYGNcqDIwBaxRH7UoShdgz6EIW+vqAKEgkeQ==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.32"
+    "@fortawesome/free-solid-svg-icons" "^5.15.1"
+    "@fortawesome/react-fontawesome" "^0.1.12"
+    "@stoplight/mosaic" "1.0.0-beta.5"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    prism-react-renderer "^1.1.1"
+    reakit "^1.3.0"
+    ts-keycode-enum "^1.0.6"
+    zustand "^3.2.0"
+
+"@stoplight/mosaic@1.0.0-beta.5", "@stoplight/mosaic@beta":
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.5.tgz#ad72d794a16b45013a0444b96e5a326e87b83c12"
+  integrity sha512-yeiq1awqg/06AroDzbjQs86Stx+E/EA3qbBGjE5+m8/U7O5xVnrfddd6ZNC1JGcLhJ9R+u0cI135W2LqgYtlhg==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.32"
+    "@fortawesome/free-solid-svg-icons" "^5.15.1"
+    "@fortawesome/react-fontawesome" "^0.1.12"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    reakit "^1.3.0"
+    ts-keycode-enum "^1.0.6"
+    zustand "^3.2.0"
 
 "@stoplight/ordered-object-literal@^1.0.1":
   version "1.0.1"
@@ -7534,6 +7595,11 @@ body-parser@1.19.0:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
+body-scroll-lock@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/body-scroll-lock/-/body-scroll-lock-3.1.5.tgz#c1392d9217ed2c3e237fee1e910f6cdd80b7aaec"
+  integrity sha512-Yi1Xaml0EvNA0OYWxXiYNqY24AfWkbA6w5vxE7GWxtKfzIbZM+Qw+aSmkgsbWzbHiy/RCSkUZBplVxTA+E4jJg==
+
 boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
@@ -8444,7 +8510,7 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-clsx@^1.1.0:
+clsx@^1.1.0, clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
@@ -17642,6 +17708,11 @@ pretty-hrtime@^1.0.3:
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
+prism-react-renderer@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/prism-react-renderer/-/prism-react-renderer-1.1.1.tgz#1c1be61b1eb9446a146ca7a50b7bcf36f2a70a44"
+  integrity sha512-MgMhSdHuHymNRqD6KM3eGS0PNqgK9q4QF5P0yoQQvpB6jNjeSAi3jcSAz0Sua/t9fa4xDOMar9HJbLa08gl9ug==
+
 prismjs@^1.20.0, prismjs@^1.8.4, prismjs@~1.20.0:
   version "1.20.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.20.0.tgz#9b685fc480a3514ee7198eac6a3bf5024319ff03"
@@ -18637,6 +18708,36 @@ readdirp@~3.4.0:
   integrity sha512-0xe001vZBnJEK+uKcj8qOhyAKPzIT+gStxWr3LCB0DwcXR5NZJ3IaC+yGnHCYzB/S7ov3m3EEbZI2zeNvX+hGQ==
   dependencies:
     picomatch "^2.2.1"
+
+reakit-system@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/reakit-system/-/reakit-system-0.15.0.tgz#888c42a7e3dfae97913f920a23faaddb6a93ee1a"
+  integrity sha512-C7b9Jz9sU4qGpSQS5e1aGKJHoajbT3PBk3qDb5hOoc8BEpHEqkceaCH7THtVZze0I7tQUnOM9XL4DL1tO5xCxg==
+  dependencies:
+    reakit-utils "^0.15.0"
+
+reakit-utils@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/reakit-utils/-/reakit-utils-0.15.0.tgz#41a53e4b768002d282aee76994737f2532be5afc"
+  integrity sha512-c9HWaT9XU8KQWj+dhUG01WD+D4EK5bQHq+wVwRUuTXau0e49i4udNxo/t/4M3lXeOS+WfgJ8aC00/0imgzPLTw==
+
+reakit-warning@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/reakit-warning/-/reakit-warning-0.6.0.tgz#16c5b4f3ce603d28f6c624803f113d5d95816168"
+  integrity sha512-D3vMUQ8fFktZ+drs4PuUlwjLanYsc6bRoYQOma2iGTfQtqwQkhFeNMDKxlBQ79GfdQtZF/ECiCaLLjDUsIseWA==
+  dependencies:
+    reakit-utils "^0.15.0"
+
+reakit@^1.3.0:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/reakit/-/reakit-1.3.1.tgz#a103f8ac082fd41c5654e564b36201f9979389a5"
+  integrity sha512-vduxyQownw4sXdVZALEaoM4mejyjNX7v6oOIiR+acp4qSiP4OZQdTGZSgVhLfeEmri4dhUowPkQ/pt/NOb2qDg==
+  dependencies:
+    "@popperjs/core" "^2.5.4"
+    body-scroll-lock "^3.1.5"
+    reakit-system "^0.15.0"
+    reakit-utils "^0.15.0"
+    reakit-warning "^0.6.0"
 
 realpath-native@^1.1.0:
   version "1.1.0"
@@ -21143,6 +21244,11 @@ ts-jest@^26.4.4:
     semver "7.x"
     yargs-parser "20.x"
 
+ts-keycode-enum@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/ts-keycode-enum/-/ts-keycode-enum-1.0.6.tgz#aeefd1c2fc7b0557f86a0e696e300905bbb4c1c1"
+  integrity sha512-DF8+Cf/FJJnPRxwz8agCoDelQXKZWQOS/gnnwx01nZ106tPJdB3BgJ9QTtLwXgR82D8O+nTjuZzWgf0Rg4vuRA==
+
 ts-loader@^6.2.1:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-6.2.2.tgz#dffa3879b01a1a1e0a4b85e2b8421dc0dfff1c58"
@@ -22648,6 +22754,11 @@ zoom-level@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/zoom-level/-/zoom-level-2.5.0.tgz#286ec16f247b8bb7a900df6612567688eeef498a"
   integrity sha512-7UlRWU4Q3uCMCeDVMOm7eBrIu145OqsIJ3p6zq58l8UsSYwKWxc6zEapC5YA9tIeh0oheb4cT9Kk2Wq353loFg==
+
+zustand@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.2.0.tgz#a718a964440796d44edda3073b69e78b95f4c8f5"
+  integrity sha512-MBYFrnUdgFVi38tdQNSzVN9cPpRDf7w2HhdHGDSgBRHN7vIbUGUR3aBdVQykelXzSFR7iVj3YNBuq7B9ceMI5w==
 
 zwitch@^1.0.0:
   version "1.0.5"
