@@ -26,6 +26,8 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
 
+  if (!server) return null;
+
   const sendRequest = async () => {
     try {
       setLoading(true);
@@ -41,7 +43,6 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
     }
   };
 
-  if (!server) return null;
   return (
     <div>
       <Panel isCollapsible={false} className="p-0">
@@ -57,39 +58,43 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
           </Button>
         </Panel.Content>
       </Panel>
-      {response && !('error' in response) && (
-        <Panel defaultIsOpen>
-          <Panel.Titlebar>Response</Panel.Titlebar>
-          <Panel.Content>
-            <div>
-              <div className={`mb-3 text-${getHttpCodeColor(response.status)}`}>
-                {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
-              </div>
-              {response.bodyText ? (
-                <CodeViewer
-                  showLineNumbers
-                  value={response.bodyText || ''}
-                  language="html"
-                  className="pr-8 pb-4 font-sans whitespace-pre-wrap break-words"
-                />
-              ) : (
-                <p>
-                  <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
-                  No response body returned
-                </p>
-              )}
-            </div>
-          </Panel.Content>
-        </Panel>
-      )}
-      {response && 'error' in response && (
-        <Panel defaultIsOpen>
-          <Panel.Titlebar>Error</Panel.Titlebar>
-          <Panel.Content>
-            <p>{response.error.message}</p>
-          </Panel.Content>
-        </Panel>
-      )}
+      {response && !('error' in response) && <BasicSendResponse response={response} />}
+      {response && 'error' in response && <BasicSendError state={response} />}
     </div>
   );
 };
+
+const BasicSendResponse: React.FC<{ response: ResponseState }> = ({ response }) => (
+  <Panel defaultIsOpen>
+    <Panel.Titlebar>Response</Panel.Titlebar>
+    <Panel.Content>
+      <div>
+        <div className={`mb-3 text-${getHttpCodeColor(response.status)}`}>
+          {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
+        </div>
+        {response.bodyText ? (
+          <CodeViewer
+            showLineNumbers
+            value={response.bodyText || ''}
+            language="html"
+            className="pr-8 pb-4 font-sans whitespace-pre-wrap break-words"
+          />
+        ) : (
+          <p>
+            <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
+            No response body returned
+          </p>
+        )}
+      </div>
+    </Panel.Content>
+  </Panel>
+);
+
+const BasicSendError: React.FC<{ state: ErrorState }> = ({ state }) => (
+  <Panel defaultIsOpen>
+    <Panel.Titlebar>Error</Panel.Titlebar>
+    <Panel.Content>
+      <p>{state.error.message}</p>
+    </Panel.Content>
+  </Panel>
+);
