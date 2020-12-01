@@ -7,8 +7,9 @@ import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
+import { OperationParameters } from './operationParameters';
 
-interface BasicSendProps {
+export interface BasicSendProps {
   httpOperation: IHttpOperation;
 }
 
@@ -25,6 +26,11 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
+  const operationParameters = {
+    path: httpOperation.request?.path,
+    query: httpOperation.request?.query,
+    headers: httpOperation.request?.headers,
+  };
 
   if (!server) return null;
 
@@ -60,6 +66,9 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
       </Panel>
       {response && !('error' in response) && <BasicSendResponse response={response} />}
       {response && 'error' in response && <BasicSendError state={response} />}
+      {Object.values(operationParameters).some(parameter => parameter) && (
+        <OperationParameters operationParameters={operationParameters} />
+      )}
     </div>
   );
 };

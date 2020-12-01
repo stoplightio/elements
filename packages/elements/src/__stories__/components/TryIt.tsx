@@ -5,12 +5,11 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { httpOperation } from '../../__fixtures__/operations/bundled-parameter';
+import putOperation from '../../__fixtures__/operations/put-todos';
 import { operation } from '../../__fixtures__/operations/simple-get';
 import { TryIt } from '../../components/TryIt';
 import { BasicSend } from '../../components/TryIt/BasicSend';
 import { Provider } from '../../containers/Provider';
-
-const article = require('../../__fixtures__/articles/kitchen-sink.md').default;
 
 export const darkMode = () => boolean('dark mode', false);
 export const mockUrl = () => text('mockUrl', '');
@@ -27,4 +26,5 @@ storiesOf('Internal/TryIt', module)
       </div>
     );
   })
-  .add('Basic Send', () => <BasicSend httpOperation={operation} />);
+  .add('Basic Send', () => <BasicSend httpOperation={operation} />)
+  .add('Operation Parameters', () => <BasicSend httpOperation={putOperation} />);
