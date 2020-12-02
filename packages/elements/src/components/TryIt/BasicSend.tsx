@@ -48,8 +48,8 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
       <Panel isCollapsible={false} className="p-0">
         <Panel.Titlebar bg="canvas-300">
           <div role="heading" className="sl-font-bold">
-            <Text color="primary">PUT</Text>
-            <Text ml={2}>/todos/todoId</Text>
+            <Text color="primary">{httpOperation.method.toUpperCase()}</Text>
+            <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
         <div className="m-4">
