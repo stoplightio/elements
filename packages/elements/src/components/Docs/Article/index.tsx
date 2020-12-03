@@ -8,14 +8,21 @@ import { IDocsComponentProps } from '..';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { ArticleHeadings } from './Headings';
 
-export type ArticleProps = IDocsComponentProps<string>;
+export type ArticleProps = IDocsComponentProps<unknown>;
 
 const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
   const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
 
-  const markdown = new Builder();
-  markdown.addMarkdown(data);
-  const tree = processMarkdownTree(markdown.root);
+  let tree;
+  if (typeof data === 'object') {
+    tree = data;
+  } else if (typeof data === 'string') {
+    const markdown = new Builder();
+    markdown.addMarkdown(data);
+    tree = processMarkdownTree(markdown.root);
+  } else {
+    return null;
+  }
 
   return (
     <div className={cn(className, 'flex w-full relative')} ref={setContainer}>
