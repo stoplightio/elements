@@ -1,5 +1,5 @@
+import { Flex, Input, Panel, Text } from '@stoplight/mosaic';
 import { IHttpHeaderParam, IHttpPathParam, IHttpQueryParam } from '@stoplight/types';
-import { Card } from '@stoplight/ui-kit';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
@@ -17,33 +17,65 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({ operat
   const pathParameters =
     operationParameters.path &&
     sortBy(operationParameters.path, ['name']).map(parameter => {
-      return <div key={parameter.name}>{parameter.name}</div>;
+      return (
+        <Flex align="center" key={parameter.name}>
+          <Input appearance="minimal" readOnly value={parameter.name} />
+          <Text mx={3}>:</Text>
+          <Input
+            appearance="minimal"
+            flexGrow
+            placeholder={parameter.schema?.type as string}
+            type={parameter.schema?.type as string}
+            required
+          />
+        </Flex>
+      );
     });
 
   const queryParameters =
     operationParameters.query &&
-    sortBy(operationParameters.query, ['name']).map(queryParameter => {
+    sortBy(operationParameters.query, ['name']).map(parameter => {
       return (
-        <div className="text-white" key={queryParameter.name}>
-          {queryParameter.name}
-        </div>
+        <Flex align="center" key={parameter.name}>
+          <Input appearance="minimal" readOnly value={parameter.name} />
+          <Text mx={3}>:</Text>
+          <Input
+            appearance="minimal"
+            flexGrow
+            placeholder={parameter.schema?.type as string}
+            type={parameter.schema?.type as string}
+            required
+          />
+        </Flex>
       );
     });
 
   const headerParameters =
     operationParameters.headers &&
     sortBy(operationParameters.headers, ['name']).map(parameter => {
-      return <div key={parameter.name}>{parameter.name}</div>;
+      return (
+        <Flex align="center" key={parameter.name}>
+          <Input appearance="minimal" readOnly value={parameter.name} />
+          <Text mx={3}>:</Text>
+          <Input
+            appearance="minimal"
+            flexGrow
+            placeholder={parameter.schema?.type as string}
+            type={parameter.schema?.type as string}
+            required
+          />
+        </Flex>
+      );
     });
 
   return (
-    <Card className="p-0">
-      <p className="flex flex-row bg-gray-7 font-mono text-gray-2 rounded-t-lg py-2 pl-4">Parameters</p>
-      <div className="bg-gray-5 px-4 py-3">
+    <Panel id="collapse-open" defaultIsOpen>
+      <Panel.Titlebar>Parameters</Panel.Titlebar>
+      <Panel.Content>
         {pathParameters}
         {queryParameters}
         {headerParameters}
-      </div>
-    </Card>
+      </Panel.Content>
+    </Panel>
   );
 };
