@@ -3994,15 +3994,15 @@
     unist-util-select "^3.0.1"
     unist-util-visit "^2.0.2"
 
-"@stoplight/mosaic-code-viewer@beta":
-  version "1.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.5.tgz#5ca90c87529c78aa033c9ca6fbb0c14d81e689cf"
-  integrity sha512-YyGDA37v8+G/lLT1D3yl1TBr6zD6FcTEohtUnDp79G4ViZdZNvOYGNcqDIwBaxRH7UoShdgz6EIW+vqAKEgkeQ==
+"@stoplight/mosaic-code-viewer@^1.0.0-beta.8":
+  version "1.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.8.tgz#0ebb24a5cc8f614851891a01637735468f5b88a1"
+  integrity sha512-+xeR7rXyvPnxL3b9tDYYPPG5X+NX9SorYG/qvUF7P4QG5wdphaFhIXYWCmTesHQwImt4k2kz2wvXx0I/xgURuA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
     "@fortawesome/react-fontawesome" "^0.1.12"
-    "@stoplight/mosaic" "1.0.0-beta.5"
+    "@stoplight/mosaic" "1.0.0-beta.8"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     prism-react-renderer "^1.1.1"
@@ -4010,7 +4010,21 @@
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
 
-"@stoplight/mosaic@1.0.0-beta.5", "@stoplight/mosaic@beta":
+"@stoplight/mosaic@1.0.0-beta.8":
+  version "1.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.8.tgz#83ce3b206d2acf3ab77faf73f90c2c2296bc30ca"
+  integrity sha512-ta7WX7bFMkUkXVRb9354zDG6trq7fAwYxZXakmNA5DVyAnMXUVeIok1CrDO3gVXOfyTJxxoksCAG3ObI0yT0dA==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.32"
+    "@fortawesome/free-solid-svg-icons" "^5.15.1"
+    "@fortawesome/react-fontawesome" "^0.1.12"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    reakit "^1.3.0"
+    ts-keycode-enum "^1.0.6"
+    zustand "^3.2.0"
+
+"@stoplight/mosaic@beta":
   version "1.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.5.tgz#ad72d794a16b45013a0444b96e5a326e87b83c12"
   integrity sha512-yeiq1awqg/06AroDzbjQs86Stx+E/EA3qbBGjE5+m8/U7O5xVnrfddd6ZNC1JGcLhJ9R+u0cI135W2LqgYtlhg==
