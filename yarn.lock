@@ -3977,10 +3977,10 @@
     remark-slug "^6.0.0"
     unified "^9.0.0"
 
-"@stoplight/markdown@^2.9.0", "@stoplight/markdown@^2.9.1":
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.9.1.tgz#971d1d791c03b1b1bf9b12e5ed62dc01e36f064a"
-  integrity sha512-T1/8NrVQBg0kj/ntAZ7uIhj53LHKcP22c+hwWwvEeG/zLutAROM9ekCu79czxNA6MTLioHQOCkS4KGAKaQgehw==
+"@stoplight/markdown@^2.10.0", "@stoplight/markdown@^2.9.0", "@stoplight/markdown@^2.9.1":
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-2.10.0.tgz#b8cf098a8c76a0342bf89637a978ea2047576ce4"
+  integrity sha512-UdvFMtcxCY4RoU7e/9Bbhbe4G1ej4vBni/NQl7+cU0UrcI3Bz6jzxeweF9q6vsF7716+cX1u95tduyRk2zVWEQ==
   dependencies:
     "@stoplight/yaml" "^4.0.2"
     lodash "^4.17.15"
