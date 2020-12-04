@@ -13,16 +13,18 @@ export type ArticleProps = IDocsComponentProps<unknown>;
 const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
   const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
 
-  let tree;
-  if (typeof data === 'object') {
-    tree = data;
-  } else if (typeof data === 'string') {
+const tree = React.useMemo(() => {
+  if (typeof data === 'object') return data;
+  if (typeof data === 'string') {
     const markdown = new Builder();
     markdown.addMarkdown(data);
-    tree = processMarkdownTree(markdown.root);
-  } else {
-    return null;
+    return processMarkdownTree(markdown.root);
   }
+  return null;
+}, [data]);
+
+if(tree === null)
+  return null;
 
   return (
     <div className={cn(className, 'flex w-full relative')} ref={setContainer}>
