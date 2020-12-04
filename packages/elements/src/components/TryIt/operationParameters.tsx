@@ -14,67 +14,30 @@ interface OperationParametersProps {
 }
 
 export const OperationParameters: React.FC<OperationParametersProps> = ({ operationParameters }) => {
-  const pathParameters =
-    operationParameters.path &&
-    sortBy(operationParameters.path, ['name']).map(parameter => {
-      return (
-        <Flex align="center" key={parameter.name}>
-          <Input appearance="minimal" readOnly value={parameter.name} />
-          <Text mx={3}>:</Text>
-          <Input
-            appearance="minimal"
-            flexGrow
-            placeholder={parameter.schema?.type as string}
-            type={parameter.schema?.type as string}
-            required
-          />
-        </Flex>
-      );
-    });
-
-  const queryParameters =
-    operationParameters.query &&
-    sortBy(operationParameters.query, ['name']).map(parameter => {
-      return (
-        <Flex align="center" key={parameter.name}>
-          <Input appearance="minimal" readOnly value={parameter.name} />
-          <Text mx={3}>:</Text>
-          <Input
-            appearance="minimal"
-            flexGrow
-            placeholder={parameter.schema?.type as string}
-            type={parameter.schema?.type as string}
-            required
-          />
-        </Flex>
-      );
-    });
-
-  const headerParameters =
-    operationParameters.headers &&
-    sortBy(operationParameters.headers, ['name']).map(parameter => {
-      return (
-        <Flex align="center" key={parameter.name}>
-          <Input appearance="minimal" readOnly value={parameter.name} />
-          <Text mx={3}>:</Text>
-          <Input
-            appearance="minimal"
-            flexGrow
-            placeholder={parameter.schema?.type as string}
-            type={parameter.schema?.type as string}
-            required
-          />
-        </Flex>
-      );
-    });
+  const pathParameters = sortBy(operationParameters.path ?? [], ['name']);
+  const queryParameters = sortBy(operationParameters.query ?? [], ['name']);
+  const headerParameters = sortBy(operationParameters.headers ?? [], ['name']);
+  const parameters = [...pathParameters, ...queryParameters, ...headerParameters];
 
   return (
     <Panel id="collapse-open" defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
       <Panel.Content>
-        {pathParameters}
-        {queryParameters}
-        {headerParameters}
+        {parameters.map(parameter => {
+          return (
+            <Flex align="center" key={parameter.name}>
+              <Input appearance="minimal" readOnly value={parameter.name} />
+              <Text mx={3}>:</Text>
+              <Input
+                appearance="minimal"
+                flexGrow
+                placeholder={parameter.schema?.type as string}
+                type={parameter.schema?.type as string}
+                required
+              />
+            </Flex>
+          );
+        })}
       </Panel.Content>
     </Panel>
   );
