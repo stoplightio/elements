@@ -1,5 +1,5 @@
 import { Flex, Input, Panel, Text } from '@stoplight/mosaic';
-import { IHttpHeaderParam, IHttpPathParam, IHttpQueryParam } from '@stoplight/types';
+import { Dictionary, IHttpHeaderParam, IHttpPathParam, IHttpQueryParam } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
@@ -11,9 +11,15 @@ interface OperationParameters {
 
 interface OperationParametersProps {
   operationParameters: OperationParameters;
+  values: Dictionary<string, string>;
+  onChangeValues: (newValues: Dictionary<string, string>) => void;
 }
 
-export const OperationParameters: React.FC<OperationParametersProps> = ({ operationParameters }) => {
+export const OperationParameters: React.FC<OperationParametersProps> = ({
+  operationParameters,
+  values,
+  onChangeValues,
+}) => {
   const pathParameters = sortBy(operationParameters.path ?? [], ['name']);
   const queryParameters = sortBy(operationParameters.query ?? [], ['name']);
   const headerParameters = sortBy(operationParameters.headers ?? [], ['name']);
@@ -34,6 +40,11 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({ operat
                 placeholder={parameter.schema?.type as string}
                 type={parameter.schema?.type as string}
                 required
+                value={values[parameter.name] ?? ''}
+                onChange={e => {
+                  const newValue = e.currentTarget.value;
+                  onChangeValues({ ...values, [parameter.name]: newValue });
+                }}
               />
             </Flex>
           );

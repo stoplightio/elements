@@ -2,7 +2,7 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { IHttpOperation } from '@stoplight/types';
+import { Dictionary, IHttpOperation } from '@stoplight/types';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
@@ -31,6 +31,8 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
     query: httpOperation.request?.query,
     headers: httpOperation.request?.headers,
   };
+
+  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>({});
 
   if (!server) return null;
 
@@ -67,7 +69,11 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
       {response && !('error' in response) && <BasicSendResponse response={response} />}
       {response && 'error' in response && <BasicSendError state={response} />}
       {Object.values(operationParameters).some(parameter => parameter) && (
-        <OperationParameters operationParameters={operationParameters} />
+        <OperationParameters
+          operationParameters={operationParameters}
+          values={parameterValues}
+          onChangeValues={setParameterValues}
+        />
       )}
     </div>
   );
