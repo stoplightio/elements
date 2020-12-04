@@ -1,17 +1,15 @@
 import { text, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { Request } from 'har-format';
+import { Request as HarFormatRequest } from 'har-format';
 import * as React from 'react';
 
-import { SupportedRequestType } from '../../components/RequestSamples/requestConverters';
 import { RequestSamples } from '../../components/RequestSamples/RequestSamples';
 
 const initialRequest = {
   url: 'https://google.com',
   method: 'post',
-} as Request;
+} as HarFormatRequest;
 
-const requestType = () => text('requestType', 'cURL');
 const request = () => text('httpOperation', JSON.stringify(initialRequest));
 
 storiesOf('Internal/RequestSamples', module)
@@ -19,7 +17,7 @@ storiesOf('Internal/RequestSamples', module)
   .add('Playground', () => {
     return (
       <div className="m-5">
-        <RequestSamples requestType={requestType() as SupportedRequestType} request={JSON.parse(request())} />
+        <RequestSamples request={JSON.parse(request())} />
       </div>
     );
   });

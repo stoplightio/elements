@@ -3,17 +3,20 @@ import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import React from 'react';
 
+import { convertRequestToSample } from './convertRequestToSample';
 import { requestSampleConfigs } from './requestSampleConfigs';
 
 interface RequestSamplesProps {
   request: Request;
 }
 
-export const RequestSamples: React.FC<RequestSamplesProps> = ({ request }) => {
-  const language = 'Shell'; // Tose later will be accessible from dropdown
-  const library = 'cURL'; // so they will never be passed via props.
+export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
+  const language = 'Shell';
+  const library = 'cURL';
 
-  const { requestToSampleConverter, codeViewerLanguage } = requestSampleConfigs[language][library];
+  const { mosaicCodeViewerLanguage, httpSnippet } = requestSampleConfigs[language][library];
+
+  const requestSample = convertRequestToSample(httpSnippet.language, httpSnippet.library, request);
 
   return (
     <Panel isCollapsible={false}>
@@ -21,11 +24,8 @@ export const RequestSamples: React.FC<RequestSamplesProps> = ({ request }) => {
         Request: {language} / {library}
       </Panel.Titlebar>
       <Panel.Content p={0}>
-        <CodeViewer
-          language={codeViewerLanguage}
-          value={requestToSampleConverter(request) || 'Unable to generate code example'}
-        />
+        <CodeViewer language={mosaicCodeViewerLanguage} value={requestSample || 'Unable to generate code example'} />
       </Panel.Content>
     </Panel>
   );
-};
+});
