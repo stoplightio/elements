@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.4](https://github.com/stoplightio/elements/compare/v6.0.3...v6.0.4) (2020-12-04)
+
+
+### Bug Fixes
+
+* article component does not handle mdast trees ([#743](https://github.com/stoplightio/elements/issues/743)) ([#746](https://github.com/stoplightio/elements/issues/746)) ([e65ce35](https://github.com/stoplightio/elements/commit/e65ce35d92763574ac91e931baeb3dd22196dbd2))
+
+
+
+
+
 ## [6.0.3](https://github.com/stoplightio/elements/compare/v6.0.1...v6.0.3) (2020-11-30)
 
 
