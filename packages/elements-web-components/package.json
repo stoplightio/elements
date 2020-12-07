@@ -23,7 +23,7 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@stoplight/elements": "beta",
+    "@stoplight/elements": "^6.0.3",
     "@stoplight/json": "^3.9.0",
     "@stoplight/types": "^11.9.0",
     "@storybook/addon-essentials": "^6.0.21",
