@@ -16,7 +16,7 @@ type SidebarLayoutProps = {
 };
 
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, uriMap }) => {
-  const contents = useTocContents(tree, true).map(item => ({
+  const contents = useTocContents(tree).map(item => ({
     ...item,
     isActive: item.to === pathname,
     isSelected: item.to === pathname,
