@@ -65,7 +65,7 @@ const requestSampleConfigs: RequestSampleConfigs = {
       },
       Axios: {
         httpSnippetLibrary: 'axios',
-      }
+      },
     },
   },
   Python: {
@@ -105,8 +105,8 @@ const requestSampleConfigs: RequestSampleConfigs = {
       },
       RestSharp: {
         httpSnippetLibrary: 'restsharp',
-      }
-    }
+      },
+    },
   },
   Java: {
     mosaicCodeViewerLanguage: 'java' as any,
@@ -123,8 +123,8 @@ const requestSampleConfigs: RequestSampleConfigs = {
       },
       Unirest: {
         httpSnippetLibrary: 'unirest',
-      }
-    }
+      },
+    },
   },
   Http: {
     mosaicCodeViewerLanguage: 'http' as any,
@@ -136,7 +136,7 @@ const requestSampleConfigs: RequestSampleConfigs = {
   },
   Kotlin: {
     mosaicCodeViewerLanguage: 'kotlin' as any,
-    httpSnippetLanguage: 'kotlin'
+    httpSnippetLanguage: 'kotlin',
   },
   PHP: {
     mosaicCodeViewerLanguage: 'php' as any,
@@ -150,8 +150,8 @@ const requestSampleConfigs: RequestSampleConfigs = {
       },
       cURL: {
         httpSnippetLibrary: 'curl',
-      }
-    }
+      },
+    },
   },
   Powershell: {
     mosaicCodeViewerLanguage: 'powershell' as any,
@@ -162,8 +162,8 @@ const requestSampleConfigs: RequestSampleConfigs = {
       },
       RestMethod: {
         httpSnippetLibrary: 'restmethod',
-      }
-    }
+      },
+    },
   },
   R: {
     mosaicCodeViewerLanguage: 'r' as any,
@@ -171,12 +171,12 @@ const requestSampleConfigs: RequestSampleConfigs = {
   },
   Ruby: {
     mosaicCodeViewerLanguage: 'ruby' as any,
-    httpSnippetLanguage: 'ruby'
+    httpSnippetLanguage: 'ruby',
   },
   Swift: {
     mosaicCodeViewerLanguage: 'swift' as any,
     httpSnippetLanguage: 'swift',
-  }
+  },
 };
 
 export const getConfigFor = (language: string, library: string): LanguageConfig & Partial<LibraryConfig> => {
