@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/stoplightio/elements/compare/v6.1.0...v6.1.1) (2020-12-08)
+
+
+### Bug Fixes
+
+* classic toc ([#750](https://github.com/stoplightio/elements/issues/750)) ([3717b78](https://github.com/stoplightio/elements/commit/3717b78b1927ef908781def6f1497f74d5921fed))
+
+
+
+
+
 # [6.1.0](https://github.com/stoplightio/elements/compare/v6.0.3...v6.1.0) (2020-12-07)
 
 
