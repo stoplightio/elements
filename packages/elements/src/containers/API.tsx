@@ -1,6 +1,6 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { generateApiToC } from '@stoplight/elements-utils';
+import { generateToC } from '@stoplight/elements-utils/src/toc/platform';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
 import * as React from 'react';
@@ -71,7 +71,7 @@ const APIImpl = withRouter<APIProps>(function API(props) {
   }, [bundledDocument]);
 
   const nodes = computeNodeData(uriMap);
-  const tree = generateApiToC(nodes);
+  const tree = generateToC(nodes);
   const nodeData = uriMap[pathname] || uriMap['/'];
 
   if (error) {
