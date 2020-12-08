@@ -22,7 +22,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
   const requestSample = convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request);
 
   const handleSelectClick = (event: React.MouseEvent<HTMLSelectElement>) => {
-    const value: string = (event.target as any).value;
+    const value: string = (event.target as HTMLSelectElement).value;
 
     const [language, library] = value.split(' / ');
     setSelectedLanguage(language);
@@ -36,7 +36,10 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
         <Select onClick={handleSelectClick} options={getSelectOptions()} />
       </Panel.Titlebar>
       <Panel.Content p={0}>
-        <CodeViewer language={mosaicCodeViewerLanguage} value={requestSample || 'Unable to generate code example'} />
+        <CodeViewer 
+          language={mosaicCodeViewerLanguage} 
+          value={requestSample || 'Unable to generate code example'} 
+        />
       </Panel.Content>
     </Panel>
   );

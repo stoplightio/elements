@@ -60,6 +60,12 @@ const requestSampleConfigs: RequestSampleConfigs = {
       Unirest: {
         httpSnippetLibrary: 'unirest',
       },
+      Fetch: {
+        httpSnippetLibrary: 'fetch',
+      },
+      Axios: {
+        httpSnippetLibrary: 'axios',
+      }
     },
   },
   Python: {
@@ -90,6 +96,87 @@ const requestSampleConfigs: RequestSampleConfigs = {
     mosaicCodeViewerLanguage: 'ocaml',
     httpSnippetLanguage: 'ocaml',
   },
+  'C#': {
+    mosaicCodeViewerLanguage: 'csharp' as any,
+    httpSnippetLanguage: 'csharp',
+    libraries: {
+      HttpClient: {
+        httpSnippetLibrary: 'httpclient',
+      },
+      RestSharp: {
+        httpSnippetLibrary: 'restsharp',
+      }
+    }
+  },
+  Java: {
+    mosaicCodeViewerLanguage: 'java' as any,
+    httpSnippetLanguage: 'java',
+    libraries: {
+      AsyncHttp: {
+        httpSnippetLibrary: 'asynchttp',
+      },
+      NetHttp: {
+        httpSnippetLibrary: 'nethttp',
+      },
+      OkHttp: {
+        httpSnippetLibrary: 'okhttp',
+      },
+      Unirest: {
+        httpSnippetLibrary: 'unirest',
+      }
+    }
+  },
+  Http: {
+    mosaicCodeViewerLanguage: 'http' as any,
+    httpSnippetLanguage: 'http',
+  },
+  Clojure: {
+    mosaicCodeViewerLanguage: 'clojure' as any,
+    httpSnippetLanguage: 'clojure',
+  },
+  Kotlin: {
+    mosaicCodeViewerLanguage: 'kotlin' as any,
+    httpSnippetLanguage: 'kotlin'
+  },
+  PHP: {
+    mosaicCodeViewerLanguage: 'php' as any,
+    httpSnippetLanguage: 'php',
+    libraries: {
+      'HTTP v1': {
+        httpSnippetLibrary: 'http1',
+      },
+      'HTTP v2': {
+        httpSnippetLibrary: 'http2',
+      },
+      cURL: {
+        httpSnippetLibrary: 'curl',
+      }
+    }
+  },
+  Powershell: {
+    mosaicCodeViewerLanguage: 'powershell' as any,
+    httpSnippetLanguage: 'powershell',
+    libraries: {
+      WebRequest: {
+        httpSnippetLibrary: 'webrequest',
+      },
+      RestMethod: {
+        httpSnippetLibrary: 'restmethod',
+      }
+    }
+  },
+  R: {
+    mosaicCodeViewerLanguage: 'r' as any,
+    httpSnippetLanguage: 'r',
+  },
+  Ruby: {
+    mosaicCodeViewerLanguage: 'ruby' as any,
+    httpSnippetLanguage: 'ruby'
+  },
+  Swift: {
+    mosaicCodeViewerLanguage: 'swift' as any,
+    httpSnippetLanguage: 'swift',
+  }
 };
 
 export const getConfigFor = (language: string, library: string): LanguageConfig & Partial<LibraryConfig> => {
