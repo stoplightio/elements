@@ -1,30 +1,46 @@
-import { Panel } from '@stoplight/mosaic';
+import { Panel, Select } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import React from 'react';
 
 import { convertRequestToSample } from './convertRequestToSample';
-import { requestSampleConfigs } from './requestSampleConfigs';
+import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
 interface RequestSamplesProps {
   request: Request;
 }
 
 export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
-  const language = 'Shell';
-  const library = 'cURL';
+  const [selectedLanguage, setSelectedLanguage] = React.useState('Shell');
+  const [selectedLibrary, setSelectedLibrary] = React.useState('cURL');
 
-  const { mosaicCodeViewerLanguage, httpSnippet } = requestSampleConfigs[language][library];
+  const { httpSnippetLanguage, httpSnippetLibrary, mosaicCodeViewerLanguage } = getConfigFor(
+    selectedLanguage,
+    selectedLibrary,
+  );
 
-  const requestSample = convertRequestToSample(httpSnippet.language, httpSnippet.library, request);
+  const requestSample = convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request);
+
+  const handleSelectClick = (event: React.MouseEvent<HTMLSelectElement>) => {
+    const value = event.currentTarget.value;
+
+    const [language, library] = value.split(' / ');
+    setSelectedLanguage(language);
+    setSelectedLibrary(library);
+  };
 
   return (
-    <Panel isCollapsible={false}>
+    <Panel rounded isCollapsible={false}>
       <Panel.Titlebar>
-        Request: {language} / {library}
+        <span>Request:</span>
+        <Select onChange={handleSelectClick} options={selectOptions} />
       </Panel.Titlebar>
       <Panel.Content p={0}>
-        <CodeViewer language={mosaicCodeViewerLanguage} value={requestSample || 'Unable to generate code example'} />
+        <CodeViewer
+          maxHeight="510"
+          language={mosaicCodeViewerLanguage}
+          value={requestSample || 'Unable to generate code example'}
+        />
       </Panel.Content>
     </Panel>
   );
