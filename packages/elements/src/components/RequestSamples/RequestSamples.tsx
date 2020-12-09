@@ -4,7 +4,7 @@ import { Request } from 'har-format';
 import React from 'react';
 
 import { convertRequestToSample } from './convertRequestToSample';
-import { getConfigFor, getSelectOptions } from './requestSampleConfigs';
+import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
 interface RequestSamplesProps {
   request: Request;
@@ -22,7 +22,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
   const requestSample = convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request);
 
   const handleSelectClick = (event: React.MouseEvent<HTMLSelectElement>) => {
-    const value: string = (event.target as HTMLSelectElement).value;
+    const value = event.currentTarget.value;
 
     const [language, library] = value.split(' / ');
     setSelectedLanguage(language);
@@ -33,7 +33,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar>
         <span>Request:</span>
-        <Select onClick={handleSelectClick} options={getSelectOptions()} />
+        <Select onChange={handleSelectClick} options={selectOptions} />
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer

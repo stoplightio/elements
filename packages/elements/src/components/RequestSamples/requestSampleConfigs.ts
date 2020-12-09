@@ -186,17 +186,10 @@ export const getConfigFor = (language: string, library: string): LanguageConfig 
   return { ...languageConfig, ...libraryConfig };
 };
 
-export const getSelectOptions = (): string[] => {
-  const result: string[] = [];
-  for (let [language, config] of Object.entries(requestSampleConfigs)) {
-    if (config.libraries) {
-      for (let library of Object.keys(config.libraries)) {
-        result.push(`${language} / ${library}`);
-      }
-    } else {
-      result.push(`${language}`);
-    }
+export const selectOptions: string[] = Object.entries(requestSampleConfigs).flatMap(([language, { libraries }]) => {
+  if (!libraries) {
+    return [language];
+  } else {
+    return Object.keys(libraries).map(library => `${language} / ${library}`);
   }
-
-  return result;
-};
+});
