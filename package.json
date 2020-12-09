@@ -65,5 +65,8 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "dependencies": {
+    "@stoplight/mosaic": "1.0.0-beta.12"
   }
 }

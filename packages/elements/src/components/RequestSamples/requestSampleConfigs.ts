@@ -97,7 +97,7 @@ const requestSampleConfigs: RequestSampleConfigs = {
     httpSnippetLanguage: 'ocaml',
   },
   'C#': {
-    mosaicCodeViewerLanguage: 'csharp' as any,
+    mosaicCodeViewerLanguage: 'csharp',
     httpSnippetLanguage: 'csharp',
     libraries: {
       HttpClient: {
@@ -109,7 +109,7 @@ const requestSampleConfigs: RequestSampleConfigs = {
     },
   },
   Java: {
-    mosaicCodeViewerLanguage: 'java' as any,
+    mosaicCodeViewerLanguage: 'java',
     httpSnippetLanguage: 'java',
     libraries: {
       AsyncHttp: {
@@ -127,19 +127,19 @@ const requestSampleConfigs: RequestSampleConfigs = {
     },
   },
   Http: {
-    mosaicCodeViewerLanguage: 'http' as any,
+    mosaicCodeViewerLanguage: 'http',
     httpSnippetLanguage: 'http',
   },
   Clojure: {
-    mosaicCodeViewerLanguage: 'clojure' as any,
+    mosaicCodeViewerLanguage: 'clojure',
     httpSnippetLanguage: 'clojure',
   },
   Kotlin: {
-    mosaicCodeViewerLanguage: 'kotlin' as any,
+    mosaicCodeViewerLanguage: 'kotlin',
     httpSnippetLanguage: 'kotlin',
   },
   PHP: {
-    mosaicCodeViewerLanguage: 'php' as any,
+    mosaicCodeViewerLanguage: 'php',
     httpSnippetLanguage: 'php',
     libraries: {
       'pecl/http 1': {
@@ -154,7 +154,7 @@ const requestSampleConfigs: RequestSampleConfigs = {
     },
   },
   Powershell: {
-    mosaicCodeViewerLanguage: 'powershell' as any,
+    mosaicCodeViewerLanguage: 'powershell',
     httpSnippetLanguage: 'powershell',
     libraries: {
       WebRequest: {
@@ -166,15 +166,15 @@ const requestSampleConfigs: RequestSampleConfigs = {
     },
   },
   R: {
-    mosaicCodeViewerLanguage: 'r' as any,
+    mosaicCodeViewerLanguage: 'r',
     httpSnippetLanguage: 'r',
   },
   Ruby: {
-    mosaicCodeViewerLanguage: 'ruby' as any,
+    mosaicCodeViewerLanguage: 'ruby',
     httpSnippetLanguage: 'ruby',
   },
   Swift: {
-    mosaicCodeViewerLanguage: 'swift' as any,
+    mosaicCodeViewerLanguage: 'swift',
     httpSnippetLanguage: 'swift',
   },
 };
