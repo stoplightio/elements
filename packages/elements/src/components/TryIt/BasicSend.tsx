@@ -39,11 +39,19 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   const sendRequest = async () => {
     try {
       setLoading(true);
-      const expandedPath = uriExpand(httpOperation.path, parameterValues);
       const headers = Object.fromEntries(
         httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
       );
-      const response = await fetch(server + expandedPath, { method: httpOperation.method, headers });
+
+      const queryParams = httpOperation.request?.query
+        ?.map(param => [param.name, parameterValues[param.name] ?? ''])
+        .filter(([_, value]) => value.length > 0);
+
+      const expandedPath = uriExpand(httpOperation.path, parameterValues);
+      const url = new URL(server + expandedPath);
+      url.search = new URLSearchParams(queryParams).toString();
+
+      const response = await fetch(url.toString(), { method: httpOperation.method, headers });
       setResponse({
         status: response.status,
         bodyText: await response.text(),
