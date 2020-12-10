@@ -39,7 +39,8 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   const sendRequest = async () => {
     try {
       setLoading(true);
-      const response = await fetch(server + httpOperation.path, { method: httpOperation.method });
+      const expandedPath = uriExpand(httpOperation.path, parameterValues);
+      const response = await fetch(server + expandedPath, { method: httpOperation.method });
       setResponse({
         status: response.status,
         bodyText: await response.text(),
@@ -88,7 +89,7 @@ const BasicSendResponse: React.FC<{ response: ResponseState }> = ({ response }) 
           {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
         </div>
         {response.bodyText ? (
-          <CodeViewer language="json" value={response.bodyText || ''} />
+          <CodeViewer language="json" value={response.bodyText || ''}></CodeViewer>
         ) : (
           <p>
             <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
@@ -108,3 +109,12 @@ const BasicSendError: React.FC<{ state: ErrorState }> = ({ state }) => (
     </Panel.Content>
   </Panel>
 );
+
+function uriExpand(uri: string, data: Dictionary<string, string>) {
+  if (!data) {
+    return uri;
+  }
+  return uri.replace(/{([^#?]+?)}/g, (match, value) => {
+    return data[value] || match;
+  });
+}
