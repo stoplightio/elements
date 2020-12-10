@@ -1,4 +1,4 @@
-import { Optional } from '@stoplight/types';
+import { Dictionary, Optional } from '@stoplight/types';
 import Axios from 'axios';
 import * as React from 'react';
 import useSwr from 'swr';
@@ -48,6 +48,7 @@ type ActionsApiProps = {
 export function usePlatformApi<T>(
   uriTemplate: string,
   { platformUrl, workspaceSlug, projectSlug, branchSlug, nodeUri, authToken }: PlatformApiProps,
+  queryParams?: Dictionary<string>,
 ) {
   const template = new URITemplate(uriTemplate);
   const uri = new URI(platformUrl ?? defaultPlatformUrl).path(
@@ -56,6 +57,10 @@ export function usePlatformApi<T>(
 
   if (branchSlug) {
     uri.setQuery('branch', branchSlug);
+  }
+
+  if (queryParams) {
+    uri.setQuery(queryParams);
   }
 
   return useSwr<T>([uri.toString(), 'get', authToken], fetcher, {

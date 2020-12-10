@@ -1,4 +1,3 @@
-[![npm](https://img.shields.io/npm/v/@stoplight/elements/beta?style=flat-square)](https://www.npmjs.com/package/@stoplight/elements)
 [![docs](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)
 [![license](https://img.shields.io/npm/l/@stoplight/elements?style=flat-square)](./LICENSE)
 

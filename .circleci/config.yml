@@ -71,29 +71,6 @@ jobs:
           name: Upload Cypress Screenshots
           path: examples/angular/cypress/results/screenshots
           destination: screenshots
-  release:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - run: yarn --frozen-lockfile
-      - run: yarn build.docs
-      - run:
-          name: set npmrc
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
-      - run:
-          name: release
-          command: |
-            if [[ $CIRCLE_BRANCH == "master" ]]
-            then
-              yarn release --dist-tag latest
-            elif [[ $CIRCLE_BRANCH == "beta" ]]
-            then
-              yarn release --dist-tag beta --preid beta
-            else
-              yarn release --dist-tag alpha --preid alpha
-            fi
-      - run: yarn release.docs
 workflows:
   test-and-release:
     jobs:
@@ -102,13 +79,4 @@ workflows:
       - build-docs
       - test-integration-angular:
           requires:
-            - build
-      - release:
-          filters:
-            branches:
-              only:
-                - master
-                - beta
-          requires:
-            - lint-and-check
             - build
