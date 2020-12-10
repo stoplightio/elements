@@ -7,7 +7,7 @@ import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
-import { OperationParameters } from './operationParameters';
+import { OperationParameters } from './OperationParameters';
 
 export interface BasicSendProps {
   httpOperation: IHttpOperation;
@@ -60,21 +60,21 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
-        <div className="m-4">
+        {Object.values(operationParameters).some(parameter => parameter) && (
+          <OperationParameters
+            operationParameters={operationParameters}
+            values={parameterValues}
+            onChangeValues={setParameterValues}
+          />
+        )}
+        <Panel.Content>
           <Button appearance="primary" loading={loading} disabled={loading} onClick={sendRequest}>
             Send
           </Button>
-        </div>
+        </Panel.Content>
       </Panel>
       {response && !('error' in response) && <BasicSendResponse response={response} />}
       {response && 'error' in response && <BasicSendError state={response} />}
-      {Object.values(operationParameters).some(parameter => parameter) && (
-        <OperationParameters
-          operationParameters={operationParameters}
-          values={parameterValues}
-          onChangeValues={setParameterValues}
-        />
-      )}
     </div>
   );
 };

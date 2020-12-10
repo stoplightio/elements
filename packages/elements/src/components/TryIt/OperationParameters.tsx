@@ -31,7 +31,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
       <Panel.Content>
         {parameters.map(parameter => {
           return (
-            <Flex align="center" key={parameter.name}>
+            <Flex key={parameter.name} alignItems="center">
               <Input appearance="minimal" readOnly value={parameter.name} />
               <Text mx={3}>:</Text>
               <Input
