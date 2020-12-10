@@ -40,7 +40,10 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
     try {
       setLoading(true);
       const expandedPath = uriExpand(httpOperation.path, parameterValues);
-      const response = await fetch(server + expandedPath, { method: httpOperation.method });
+      const headers = Object.fromEntries(
+        httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
+      );
+      const response = await fetch(server + expandedPath, { method: httpOperation.method, headers });
       setResponse({
         status: response.status,
         bodyText: await response.text(),
