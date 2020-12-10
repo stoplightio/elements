@@ -1,6 +1,6 @@
-import { pointerToPath } from '@stoplight/json';
+import { resolveInlineRef } from '@stoplight/json';
 import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
-import { get, isObject } from 'lodash';
+import { isPlainObject } from 'lodash';
 import * as React from 'react';
 import { useContext } from 'react';
 
@@ -19,11 +19,11 @@ type InlineRefResolverProviderProps =
  * Populates `InlineRefResolverContext` with either a standard inline ref resolver based on `document`, or a custom resolver function provided by the caller.
  */
 export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps> = ({ children, ...props }) => {
-  const document = 'document' in props ? props.document : undefined;
+  const document = 'document' in props && isPlainObject(props.document) ? Object(props.document) : undefined;
 
   const documentBasedRefResolver = React.useCallback<SchemaTreeRefDereferenceFn>(
     ({ pointer }, _, schema) => {
-      const activeSchema = isObject(document) ? document : schema;
+      const activeSchema = document ?? schema;
 
       if (pointer === null) {
         return null;
@@ -32,7 +32,13 @@ export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps>
       if (pointer === '#') {
         return activeSchema;
       }
-      return get(activeSchema, pointerToPath(pointer));
+
+      const resolved = resolveInlineRef(activeSchema, pointer);
+      if (isPlainObject(resolved)) {
+        return resolved;
+      }
+
+      throw new ReferenceError(`Could not resolve '${pointer}`);
     },
     [document],
   );

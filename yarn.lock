@@ -3888,15 +3888,6 @@
     pinkie-promise "^2.0.0"
     stringify-object "^3.3.0"
 
-"@stoplight/json-schema-merge-allof@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.1.tgz#7a2c99da9448c5b6b5cbd9afd9f1fb4957d5cbeb"
-  integrity sha512-S+pemVEAhqZPb88WstIbRg8yCMoYr6/+MjPS3/ngXPZ/y+hgG/ax26lTr0E8gmFc9kByIIixjF18ZqmC0DlGHg==
-  dependencies:
-    compute-lcm "^1.1.0"
-    json-schema-compare "^0.2.2"
-    lodash "^4.17.4"
-
 "@stoplight/json-schema-merge-allof@^0.7.2":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.2.tgz#a9f4d95b4a95e943afa567c695a1d4a2add9b74a"
@@ -3915,24 +3906,10 @@
     "@stoplight/yaml" "^4.0.2"
     call-me-maybe "^1.0.1"
 
-"@stoplight/json-schema-viewer@^3.0.0-beta.28":
-  version "3.0.0-beta.28"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.28.tgz#0bbb196ee328c0c3cf9db8877f2dcda226231367"
-  integrity sha512-y5/F0wIUB3hk7Am0c+Z85opCp5a9mjIP3Wb9ifG1V8yI+ELn12a5IJOuR4VIl7v5gitn/jIGdLS6AEw5tcB0Sg==
-  dependencies:
-    "@stoplight/json" "^3.5.1"
-    "@stoplight/json-schema-merge-allof" "^0.7.1"
-    "@stoplight/react-error-boundary" "^1.0.0"
-    "@stoplight/tree-list" "^5.0.3"
-    classnames "^2.2.6"
-    lodash "^4.17.15"
-    mobx-react-lite "^1.4.1"
-    pluralize "^8.0.0"
-
-"@stoplight/json-schema-viewer@^3.0.0-beta.33":
-  version "3.0.0-beta.33"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0-beta.33.tgz#e2aadee554aa344498b537e2a466e12d30b381da"
-  integrity sha512-PH2S3w7SXWizKok9AfbHrB8gF/P+WgVQXj+KkC2thGd9BWZ0n9+FMX/CbPE1woILcPsZ8XgWDxhvt2QszCSWzA==
+"@stoplight/json-schema-viewer@^3.0.0", "@stoplight/json-schema-viewer@^3.0.0-beta.28":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0.tgz#36037dd820f6c418ccdecbab20ac18119d59d9dd"
+  integrity sha512-nI71j8NV96uw/AWhZmyc6tVfbtySJ1iV4ixktFTV2ektlbQSZggOVyOOfmaen4kALkcX6RdPUa4bPF8Ec6IQOw==
   dependencies:
     "@stoplight/json" "^3.5.1"
     "@stoplight/json-schema-merge-allof" "^0.7.2"
@@ -3943,10 +3920,10 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1", "@stoplight/json@^3.8.1", "@stoplight/json@^3.9.0":
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.9.0.tgz#ade6c5a75bfc55a464d81e902c53a8862c98b462"
-  integrity sha512-jgEKIPMLbhaU5Nw9yw+VBw2OSfDxm8VQ/k5JNezAuDMjcmqCPz3rOQTVNOROStzi70l4DRxF7eBN9liYJq5Ojw==
+"@stoplight/json@^3.10.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.7.1", "@stoplight/json@^3.8.1", "@stoplight/json@^3.9.0":
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.10.0.tgz#bd1af55081e1a47e0d01552d2a7e756931f46a4b"
+  integrity sha512-Xb1kVQ0t5eqRDF24Y0a2A1o/CEaHjLeVehkBmphqEBkUo6X9L4z5oOUYBMzlAoR/ejhjVgWLzrDBxNOuzBFVDA==
   dependencies:
     "@stoplight/ordered-object-literal" "^1.0.1"
     "@stoplight/types" "^11.9.0"
