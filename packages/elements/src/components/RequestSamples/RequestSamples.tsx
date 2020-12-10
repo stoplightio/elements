@@ -32,14 +32,9 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar>
-        <div className="flex flex-grow justify-between">
-          <div className="flex items-center">
-            <span>Request:</span>
-            <Select onChange={handleSelectClick} options={selectOptions} />
-          </div>
-          <CopyButton size="md" copyValue={requestSample || ''} />
-        </div>
+      <Panel.Titlebar rightComponent={<CopyButton size="md" copyValue={requestSample || ''} />}>
+        <span>Request:</span>
+        <Select onChange={handleSelectClick} options={selectOptions} />
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
