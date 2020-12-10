@@ -72,7 +72,7 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
-        {Object.values(operationParameters).some(parameter => parameter) && (
+        {Object.values(operationParameters).some(parameter => parameter?.length) && (
           <OperationParameters
             operationParameters={operationParameters}
             values={parameterValues}
