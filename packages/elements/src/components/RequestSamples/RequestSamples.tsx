@@ -4,6 +4,7 @@ import { Request } from 'har-format';
 import React from 'react';
 
 import { convertRequestToSample } from './convertRequestToSample';
+import { CopyButton } from './mosaicsFuture';
 import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
 interface RequestSamplesProps {
@@ -32,11 +33,17 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
   return (
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar>
-        <span>Request:</span>
-        <Select onChange={handleSelectClick} options={selectOptions} />
+        <div className="flex flex-grow justify-between">
+          <div className="flex items-center">
+            <span>Request:</span>
+            <Select onChange={handleSelectClick} options={selectOptions} />
+          </div>
+          <CopyButton size="md" copyValue={requestSample || ''} />
+        </div>
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
+          noCopyButton
           maxHeight="510"
           language={mosaicCodeViewerLanguage}
           value={requestSample || 'Unable to generate code example'}
