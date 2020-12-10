@@ -14,3 +14,7 @@ html {
 .svg-inline--fa {
   display: inline-block;
 }
+
+.OperationParametersContent {
+  max-height: 32*4.5+18px; // 4.5 lines plus padding
+}

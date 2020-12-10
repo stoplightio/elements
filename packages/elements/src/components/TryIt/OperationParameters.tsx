@@ -28,7 +28,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
   return (
     <Panel id="collapse-open" defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
-      <Panel.Content>
+      <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
         {parameters.map(parameter => {
           return (
             <Flex key={parameter.name} alignItems="center">
