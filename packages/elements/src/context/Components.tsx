@@ -27,10 +27,10 @@ interface ComponentsProviderProps {
 
 const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
   const { node, parent } = props;
-  const { annotations, value } = node;
+  const { annotations, value, resolved } = node;
   const nodeType = get(annotations, 'type') || node.meta;
 
-  const parsedValue = useParsedValue(value);
+  const parsedValue = useParsedValue(resolved ?? value);
 
   if (nodeType === 'json_schema') {
     if (!isJSONSchema(parsedValue)) {

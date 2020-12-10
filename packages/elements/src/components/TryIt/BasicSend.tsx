@@ -88,7 +88,7 @@ const BasicSendResponse: React.FC<{ response: ResponseState }> = ({ response }) 
           {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
         </div>
         {response.bodyText ? (
-          <CodeViewer className="language-html">{response.bodyText || ''}</CodeViewer>
+          <CodeViewer language="json" value={response.bodyText || ''} />
         ) : (
           <p>
             <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
