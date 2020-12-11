@@ -2,13 +2,14 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { IHttpOperation } from '@stoplight/types';
+import { Dictionary, IHttpOperation } from '@stoplight/types';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
+import { OperationParameters } from './OperationParameters';
 
-interface BasicSendProps {
+export interface BasicSendProps {
   httpOperation: IHttpOperation;
 }
 
@@ -25,13 +26,22 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
+  const operationParameters = {
+    path: httpOperation.request?.path ?? [],
+    query: httpOperation.request?.query ?? [],
+    headers: httpOperation.request?.headers ?? [],
+  };
+  const allParameters = Object.values(operationParameters).flat();
+
+  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>({});
 
   if (!server) return null;
 
-  const sendRequest = async () => {
+  const handleClick = async () => {
     try {
       setLoading(true);
-      const response = await fetch(server + httpOperation.path, { method: httpOperation.method });
+      const request = buildFetchRequest(httpOperation, parameterValues);
+      const response = await fetch(...request);
       setResponse({
         status: response.status,
         bodyText: await response.text(),
@@ -52,11 +62,18 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
-        <div className="m-4">
-          <Button appearance="primary" loading={loading} disabled={loading} onClick={sendRequest}>
+        {allParameters.length > 0 && (
+          <OperationParameters
+            operationParameters={operationParameters}
+            values={parameterValues}
+            onChangeValues={setParameterValues}
+          />
+        )}
+        <Panel.Content>
+          <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
             Send
           </Button>
-        </div>
+        </Panel.Content>
       </Panel>
       {response && !('error' in response) && <BasicSendResponse response={response} />}
       {response && 'error' in response && <BasicSendError state={response} />}
@@ -93,3 +110,30 @@ const BasicSendError: React.FC<{ state: ErrorState }> = ({ state }) => (
     </Panel.Content>
   </Panel>
 );
+
+function buildFetchRequest(httpOperation: IHttpOperation, parameterValues: Dictionary<string, string>) {
+  const server = httpOperation.servers?.[0]?.url;
+
+  const headers = Object.fromEntries(
+    httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
+  );
+
+  const queryParams = httpOperation.request?.query
+    ?.map(param => [param.name, parameterValues[param.name] ?? ''])
+    .filter(([_, value]) => value.length > 0);
+
+  const expandedPath = uriExpand(httpOperation.path, parameterValues);
+  const url = new URL(server + expandedPath);
+  url.search = new URLSearchParams(queryParams).toString();
+
+  return [url.toString(), { method: httpOperation.method, headers }] as const;
+}
+
+function uriExpand(uri: string, data: Dictionary<string, string>) {
+  if (!data) {
+    return uri;
+  }
+  return uri.replace(/{([^#?]+?)}/g, (match, value) => {
+    return data[value] || match;
+  });
+}
