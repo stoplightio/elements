@@ -86,6 +86,11 @@ jobs:
     steps:
       - run-e2e-from-repo:
           repo-url: https://github.com/stoplightio/elements-starter-angular.git
+  test-integration-gatsby:
+    executor: cypress-default
+    steps:
+      - run-e2e-from-repo:
+          repo-url: https://github.com/stoplightio/elements-starter-gatsby.git
 workflows:
   test-and-release:
     jobs:
