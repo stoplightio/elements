@@ -27,10 +27,11 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
   const operationParameters = {
-    path: httpOperation.request?.path,
-    query: httpOperation.request?.query,
-    headers: httpOperation.request?.headers,
+    path: httpOperation.request?.path ?? [],
+    query: httpOperation.request?.query ?? [],
+    headers: httpOperation.request?.headers ?? [],
   };
+  const allParameters = Object.values(operationParameters).flat();
 
   const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>({});
 
@@ -61,7 +62,7 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
-        {Object.values(operationParameters).some(parameter => parameter?.length) && (
+        {allParameters.length > 0 && (
           <OperationParameters
             operationParameters={operationParameters}
             values={parameterValues}
