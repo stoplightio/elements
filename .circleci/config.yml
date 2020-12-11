@@ -27,7 +27,7 @@ commands:
       - run:
           name: Make sure example depends on elements or elements-web-components
           command: |
-            [ -d "node_modules/@stoplight/elements-web-components" ] || [ -d "node_modules/@stoplight/elements-web-components" ]
+            [ -d "node_modules/@stoplight/elements" ] || [ -d "node_modules/@stoplight/elements-web-components" ]
       - run:
           name: Copy current elements build
           command: |
