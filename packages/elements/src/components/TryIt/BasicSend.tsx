@@ -36,22 +36,11 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
 
   if (!server) return null;
 
-  const sendRequest = async () => {
+  const handleClick = async () => {
     try {
       setLoading(true);
-      const headers = Object.fromEntries(
-        httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
-      );
-
-      const queryParams = httpOperation.request?.query
-        ?.map(param => [param.name, parameterValues[param.name] ?? ''])
-        .filter(([_, value]) => value.length > 0);
-
-      const expandedPath = uriExpand(httpOperation.path, parameterValues);
-      const url = new URL(server + expandedPath);
-      url.search = new URLSearchParams(queryParams).toString();
-
-      const response = await fetch(url.toString(), { method: httpOperation.method, headers });
+      const request = buildFetchRequest(httpOperation, parameterValues);
+      const response = await fetch(...request);
       setResponse({
         status: response.status,
         bodyText: await response.text(),
@@ -80,7 +69,7 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
           />
         )}
         <Panel.Content>
-          <Button appearance="primary" loading={loading} disabled={loading} onClick={sendRequest}>
+          <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
             Send
           </Button>
         </Panel.Content>
@@ -100,7 +89,7 @@ const BasicSendResponse: React.FC<{ response: ResponseState }> = ({ response }) 
           {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
         </div>
         {response.bodyText ? (
-          <CodeViewer language="json" value={response.bodyText || ''}></CodeViewer>
+          <CodeViewer language="json" value={response.bodyText || ''} />
         ) : (
           <p>
             <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
@@ -120,6 +109,24 @@ const BasicSendError: React.FC<{ state: ErrorState }> = ({ state }) => (
     </Panel.Content>
   </Panel>
 );
+
+function buildFetchRequest(httpOperation: IHttpOperation, parameterValues: Dictionary<string, string>) {
+  const server = httpOperation.servers?.[0]?.url;
+
+  const headers = Object.fromEntries(
+    httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
+  );
+
+  const queryParams = httpOperation.request?.query
+    ?.map(param => [param.name, parameterValues[param.name] ?? ''])
+    .filter(([_, value]) => value.length > 0);
+
+  const expandedPath = uriExpand(httpOperation.path, parameterValues);
+  const url = new URL(server + expandedPath);
+  url.search = new URLSearchParams(queryParams).toString();
+
+  return [url.toString(), { method: httpOperation.method, headers }] as const;
+}
 
 function uriExpand(uri: string, data: Dictionary<string, string>) {
   if (!data) {
