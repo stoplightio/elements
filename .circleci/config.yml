@@ -101,3 +101,6 @@ workflows:
       - test-integration-angular:
           requires:
             - build
+      - test-integration-gatsby:
+          requires:
+            - build
