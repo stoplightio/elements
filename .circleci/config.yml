@@ -74,6 +74,7 @@ jobs:
           paths:
             - packages/elements/dist/**
             - packages/elements-web-components/dist/**
+            - packages/elements-utils/dist/**
   build-docs:
     docker:
       - image: circleci/node:12
