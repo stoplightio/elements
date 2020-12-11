@@ -1,10 +1,9 @@
-import { Panel, Select } from '@stoplight/mosaic';
+import { CopyButton, Panel, Select } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import React from 'react';
 
 import { convertRequestToSample } from './convertRequestToSample';
-import { CopyButton } from './mosaicsFuture';
 import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
 interface RequestSamplesProps {

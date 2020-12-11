@@ -4014,10 +4014,10 @@
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
 
-"@stoplight/mosaic@1.0.0-beta.11":
-  version "1.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.11.tgz#58c30934ba211a817ac61fb78b198a228950c958"
-  integrity sha512-ORm5iLfxa2XURBKXbsbdzxhxrjRUf6TlnjY0gwOHGH0u8ss/zklhIYjS8G80JuySDAZ8lywj7TLpc0EgNGUgIg==
+"@stoplight/mosaic@1.0.0-beta.12":
+  version "1.0.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.12.tgz#e4a18c9e099d569fd81a22f3937398d70b24df8d"
+  integrity sha512-995Z/4st43UKETBKZB39SpRiN742wLcnf1gJ/qwv9Roc8WdpooYtYAukm7DVPyzaurv2h3YMiGTyaGcJvcx3IA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
@@ -4031,10 +4031,10 @@
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
 
-"@stoplight/mosaic@1.0.0-beta.12":
-  version "1.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.12.tgz#e4a18c9e099d569fd81a22f3937398d70b24df8d"
-  integrity sha512-995Z/4st43UKETBKZB39SpRiN742wLcnf1gJ/qwv9Roc8WdpooYtYAukm7DVPyzaurv2h3YMiGTyaGcJvcx3IA==
+"@stoplight/mosaic@1.0.0-beta.17":
+  version "1.0.0-beta.17"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.17.tgz#c9ad744ba3774727de85dbacdc85d01d108f5f1c"
+  integrity sha512-VAi8csjvEi7ZVa9r5VWGOzibJdgxN31KAhkZ5m+fXtfH71IA9AOJgUiTDPvO98e9ULxuNGZIwrrFVhyHILktJw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
