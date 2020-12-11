@@ -1,4 +1,4 @@
-import { Panel, Select } from '@stoplight/mosaic';
+import { CopyButton, Panel, Select } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import React from 'react';
@@ -31,12 +31,13 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar>
+      <Panel.Titlebar rightComponent={<CopyButton size="md" copyValue={requestSample || ''} />}>
         <span>Request:</span>
         <Select onChange={handleSelectClick} options={selectOptions} />
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
+          noCopyButton
           maxHeight="510"
           language={mosaicCodeViewerLanguage}
           value={requestSample || 'Unable to generate code example'}
