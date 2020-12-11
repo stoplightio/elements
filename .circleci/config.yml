@@ -9,6 +9,44 @@ executors:
           TERM: xterm
     working_directory: ~/project/example
 
+commands:
+  run-e2e-from-repo:
+    parameters:
+      repo-url:
+        type: string
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Checkout Angular example
+          working_directory: ~/project
+          command: git clone "<<parameters.repo-url>>" example
+      - run:
+          name: Install dependencies
+          command: yarn --frozen-lockfile
+      - run:
+          name: Copy current elements build
+          command: |
+            if [ -d "node_modules/@stoplight/elements-web-components" ]; then cp -r /tmp/workspace/packages/elements-web-components/dist/* node_modules/@stoplight/elements-web-components/dist; fi
+            if [ -d "node_modules/@stoplight/elements" ]; then cp -r /tmp/workspace/packages/elements/dist/* node_modules/@stoplight/elements/dist; fi
+      - run:
+          name: Create production build
+          command: yarn build
+      - run:
+          name: Run E2E checks
+          command: yarn e2e:run
+      - store_test_results:
+          name: Upload test results
+          path: cypress/results
+      - store_artifacts:
+          name: Upload Cypress Videos
+          path: cypress/results/videos
+          destination: videos
+      - store_artifacts:
+          name: Upload Cypress Screenshots
+          path: cypress/results/screenshots
+          destination: screenshots
+
 jobs:
   lint-and-check:
     docker:
@@ -41,35 +79,8 @@ jobs:
   test-integration-angular:
     executor: cypress-default
     steps:
-      - attach_workspace:
-            at: /tmp/workspace
-      - run:
-          name: Checkout Angular example
-          working_directory: ~/project
-          command: git clone https://github.com/stoplightio/elements-starter-angular.git example
-      - run:
-          name: Install dependencies
-          command: yarn --frozen-lockfile
-      - run:
-          name: Copy current elements build
-          command: cp -r /tmp/workspace/packages/elements-web-components/dist/* node_modules/@stoplight/elements-web-components/dist
-      - run:
-          name: Create production build
-          command: yarn build
-      - run:
-          name: Run E2E checks
-          command: yarn e2e:run
-      - store_test_results:
-          name: Upload test results
-          path: cypress/results
-      - store_artifacts:
-          name: Upload Cypress Videos
-          path: cypress/results/videos
-          destination: videos
-      - store_artifacts:
-          name: Upload Cypress Screenshots
-          path: cypress/results/screenshots
-          destination: screenshots
+      - run-e2e-from-repo:
+          repo-url: https://github.com/stoplightio/elements-starter-angular.git
 workflows:
   test-and-release:
     jobs:
