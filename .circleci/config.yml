@@ -7,6 +7,7 @@ executors:
         environment:
           ## this enables colors in the output
           TERM: xterm
+    working_directory: ~/project/example
 
 jobs:
   lint-and-check:
@@ -44,32 +45,30 @@ jobs:
             at: /tmp/workspace
       - run:
           name: Checkout Angular example
-          command: git clone https://github.com/stoplightio/elements-starter-angular.git examples/angular
+          working_directory: ~/project
+          command: git clone https://github.com/stoplightio/elements-starter-angular.git example
       - run:
           name: Install dependencies
-          working_directory: examples/angular
           command: yarn --frozen-lockfile
       - run:
           name: Copy current elements build
-          command: cp -r /tmp/workspace/packages/elements-web-components/dist/* examples/angular/node_modules/@stoplight/elements-web-components/dist
+          command: cp -r /tmp/workspace/packages/elements-web-components/dist/* node_modules/@stoplight/elements-web-components/dist
       - run:
           name: Create production build
-          working_directory: examples/angular
           command: yarn build
       - run:
           name: Run E2E checks
-          working_directory: examples/angular
           command: yarn e2e:run
       - store_test_results:
           name: Upload test results
-          path: examples/angular/cypress/results
+          path: cypress/results
       - store_artifacts:
           name: Upload Cypress Videos
-          path: examples/angular/cypress/results/videos
+          path: cypress/results/videos
           destination: videos
       - store_artifacts:
           name: Upload Cypress Screenshots
-          path: examples/angular/cypress/results/screenshots
+          path: cypress/results/screenshots
           destination: screenshots
 workflows:
   test-and-release:
