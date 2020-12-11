@@ -31,9 +31,9 @@ commands:
       - run:
           name: Copy current elements build
           command: |
-            [ -d "node_modules/@stoplight/elements-web-components" ] && cp -r /tmp/workspace/packages/elements-web-components/dist/* node_modules/@stoplight/elements-web-components/dist
-            [ -d "node_modules/@stoplight/elements" ] && cp -r /tmp/workspace/packages/elements/dist/* node_modules/@stoplight/elements
-            [ -d "node_modules/@stoplight/elements-utils" ] && cp -r /tmp/workspace/packages/elements-utils/dist/* node_modules/@stoplight/elements-utils
+            if [ -d "node_modules/@stoplight/elements-web-components" ]; then cp -r /tmp/workspace/packages/elements-web-components/dist/* node_modules/@stoplight/elements-web-components/dist; fi
+            if [ -d "node_modules/@stoplight/elements" ]; then cp -r /tmp/workspace/packages/elements/dist/* node_modules/@stoplight/elements; fi
+            if [ -d "node_modules/@stoplight/elements-utils" ]; then cp -r /tmp/workspace/packages/elements-utils/dist/* node_modules/@stoplight/elements-utils; fi
       - run:
           name: Create production build
           command: yarn build
