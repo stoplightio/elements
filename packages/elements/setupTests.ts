@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 type WindowWithResizeObserver = Window &
   typeof globalThis & {
     ResizeObserver(
