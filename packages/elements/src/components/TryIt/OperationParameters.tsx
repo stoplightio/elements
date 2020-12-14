@@ -35,6 +35,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
               <Input appearance="minimal" readOnly value={parameter.name} />
               <Text mx={3}>:</Text>
               <Input
+                aria-label={parameter.name}
                 appearance="minimal"
                 flexGrow
                 placeholder={parameter.schema?.type as string}
