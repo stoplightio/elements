@@ -2,6 +2,7 @@ import { Flex, Input, Panel, Select, Text } from '@stoplight/mosaic';
 import {
   Dictionary,
   IHttpHeaderParam,
+  IHttpParam,
   IHttpPathParam,
   IHttpQueryParam,
   INodeExample,
@@ -28,6 +29,8 @@ const booleanOptions = [
   { label: 'True', value: 'true' },
 ];
 
+const selectExampleOption = { value: '', label: 'Pick an example' };
+
 export const OperationParameters: React.FC<OperationParametersProps> = ({
   operationParameters,
   values,
@@ -35,13 +38,12 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
 }) => {
   const parameters = flattenParameters(operationParameters);
 
-  const onChange = React.useCallback(
-    parameter => (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.currentTarget.value;
-      onChangeValues({ ...values, [parameter.name]: newValue });
-    },
-    [onChangeValues, values],
-  );
+  const onChange = (parameter: IHttpParam) => (
+    e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newValue = e.currentTarget.value;
+    onChangeValues({ ...values, [parameter.name]: newValue });
+  };
 
   return (
     <Panel id="collapse-open" defaultIsOpen>
@@ -50,6 +52,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
         {parameters.map(parameter => {
           const parameterValueOptions = parameterOptions(parameter);
           const examples = exampleOptions(parameter);
+          const selectedExample = examples?.find(e => e.value === values[parameter.name]) ?? selectExampleOption;
           return (
             <Flex align="center" key={parameter.name}>
               <Input appearance="minimal" readOnly value={parameter.name} />
@@ -73,7 +76,9 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
                     value={values[parameter.name] ?? ''}
                     onChange={onChange(parameter)}
                   />
-                  {examples && <Select flexGrow options={examples} onChange={onChange(parameter)} />}
+                  {examples && (
+                    <Select flexGrow value={selectedExample.value} options={examples} onChange={onChange(parameter)} />
+                  )}
                 </Flex>
               )}
             </Flex>
@@ -93,27 +98,20 @@ function flattenParameters(parameters: OperationParameters) {
 
 export function initialParameterValues(operationParameters: OperationParameters) {
   const parameters = flattenParameters(operationParameters);
-  const enums = parameters
-    .filter(p => p.schema?.enum)
-    .reduce((params, p) => {
-      if (p.schema?.enum?.length) {
-        return { ...params, [p.name]: String(p.schema?.enum[0]) };
-      } else {
-        return { ...params };
-      }
-    }, {});
-  const examples = parameters
-    .filter(p => Array.isArray(p.examples))
-    .reduce((params, p) => {
-      if (p.examples?.length) {
-        return {
-          ...params,
-          [p.name]: exampleValue(p.examples[0]),
-        };
-      } else {
-        return { ...params };
-      }
-    }, {});
+
+  const enums = Object.fromEntries(
+    parameters
+      .map(p => [p.name, p.schema?.enum ?? []] as const)
+      .filter(([, enums]) => enums.length > 0)
+      .map(([name, enums]) => [name, String(enums[0])]),
+  );
+
+  const examples = Object.fromEntries(
+    parameters
+      .map(p => [p.name, p.examples ?? []] as const)
+      .filter(([, examples]) => examples.length > 0)
+      .map(([name, examples]) => [name, exampleValue(examples[0])]),
+  );
 
   return {
     // order matters - enums should be override examples
@@ -122,26 +120,23 @@ export function initialParameterValues(operationParameters: OperationParameters)
   };
 }
 
-function parameterOptions(parameter: IHttpPathParam | IHttpQueryParam) {
+function parameterOptions(parameter: IHttpParam) {
   return parameter.schema?.type === 'boolean'
     ? booleanOptions
     : parameter.schema?.enum !== undefined
-    ? map(parameter.schema.enum, v => {
-        return Number.isNaN(Number(v)) ? String(v) : Number(v);
-      })
+    ? map(parameter.schema.enum, v => (Number.isNaN(Number(v)) ? String(v) : Number(v)))
     : null;
 }
 
-function exampleOptions(parameter: IHttpPathParam | IHttpQueryParam) {
+function exampleOptions(parameter: IHttpParam) {
   return parameter.examples?.length && parameter.examples.length > 1
-    ? parameter.examples.map(example => ({ label: example.key, value: exampleValue(example) }))
+    ? [
+        selectExampleOption,
+        ...parameter.examples.map(example => ({ label: example.key, value: exampleValue(example) })),
+      ]
     : null;
 }
 
 function exampleValue(example: INodeExample | INodeExternalExample) {
-  return 'value' in example
-    ? (example as INodeExample).value
-    : 'externalValue' in example
-    ? (example as INodeExternalExample).externalValue
-    : '';
+  return 'value' in example ? example.value : example.externalValue;
 }
