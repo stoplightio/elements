@@ -801,7 +801,7 @@ describe('toc', () => {
               {
                 title: 'The Op',
                 type: 'item',
-                uri: '/openapi.yaml/~1apath',
+                uri: '/openapi.yaml/~1zpath',
               },
               {
                 title: 'The Op',
@@ -811,7 +811,7 @@ describe('toc', () => {
               {
                 title: 'The Op',
                 type: 'item',
-                uri: '/openapi.yaml/~1zpath',
+                uri: '/openapi.yaml/~1apath',
               },
             ],
             title: 'api',
@@ -929,7 +929,7 @@ describe('toc', () => {
                   {
                     title: 'The Op',
                     type: 'item',
-                    uri: '/openapi.yaml/~1apath',
+                    uri: '/openapi.yaml/~1zpath',
                   },
                   {
                     title: 'The Op',
@@ -939,7 +939,7 @@ describe('toc', () => {
                   {
                     title: 'The Op',
                     type: 'item',
-                    uri: '/openapi.yaml/~1zpath',
+                    uri: '/openapi.yaml/~1apath',
                   },
                 ],
                 title: 'api',

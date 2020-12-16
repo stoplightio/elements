@@ -45,7 +45,7 @@ function generateToC(searchResults: NodeData[], type: TocType) {
           )({
             httpServices,
             models,
-            httpOperations: sortBy(httpOperations, o => o.uri),
+            httpOperations,
           }),
         appendModelsToToc(toc, 'divider'),
       )();
