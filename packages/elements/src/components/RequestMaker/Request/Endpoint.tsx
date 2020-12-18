@@ -9,7 +9,6 @@ import URI from 'urijs';
 import { useRequestMakerStore } from '../../../hooks/useRequestMakerStore';
 import { highlightText } from '../../../utils/highlightText';
 import { RequestMethod } from './Method';
-import { RequestSend } from './Send';
 
 const ServerSuggest = Suggest.ofType<string>();
 
@@ -126,8 +125,6 @@ export const RequestEndpoint = observer<{
         }}
         large
       />
-
-      <RequestSend />
     </div>
   );
 });
