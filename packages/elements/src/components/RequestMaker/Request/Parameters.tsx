@@ -17,6 +17,7 @@ type PropChangeHandler = <T extends keyof IParam>(prop: T, index: number, value:
 
 interface ISuggestRendererOptions {
   name: string;
+  key: string;
   params: IParam[];
   index: number;
   inFocus: InFocus;
@@ -34,6 +35,7 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
   const [inFocus, setInFocus] = React.useState({ prop: 'name', index: -1 });
   const requestStore = useRequestMakerStore('request');
   const parameters: IParam[] = requestStore[`${type}Params`];
+  const operationKey = `${requestStore.method}:${requestStore.url}`;
 
   const handlerPropChange: PropChangeHandler = React.useCallback(
     (prop, index, value) => {
@@ -85,6 +87,7 @@ export const RequestParameters = observer<IRequestParameters>(({ type, className
               {suggestRenderer ? (
                 suggestRenderer({
                   name: param.name,
+                  key: operationKey,
                   params: parameters,
                   index,
                   inFocus,
