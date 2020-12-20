@@ -1,5 +1,7 @@
 import 'whatwg-fetch';
 
+import fetchMock from 'jest-fetch-mock';
+
 type WindowWithResizeObserver = Window &
   typeof globalThis & {
     ResizeObserver(
@@ -34,3 +36,5 @@ window.IntersectionObserver = class implements IntersectionObserver {
   public readonly disconnect = jest.fn();
   public readonly takeRecords = jest.fn();
 };
+
+fetchMock.enableMocks();

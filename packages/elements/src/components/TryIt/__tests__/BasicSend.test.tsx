@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
 import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
@@ -15,17 +16,8 @@ function clickSend() {
 }
 
 describe('TryIt', () => {
-  let originalFetch = globalThis.fetch;
-  // TODO: use library instead
-  let mockFetch = jest.fn();
-
   beforeEach(() => {
-    mockFetch.mockReset();
-    globalThis.fetch = mockFetch;
-  });
-
-  afterEach(() => {
-    globalThis.fetch = originalFetch;
+    fetchMock.resetMocks();
   });
 
   it("Doesn't crash", () => {
@@ -38,15 +30,17 @@ describe('TryIt', () => {
     const button = screen.getByRole('button', { name: /send/i });
     userEvent.click(button);
 
-    expect(mockFetch).toHaveBeenCalled();
-    expect(mockFetch.mock.calls[0][0]).toEqual('https://todos.stoplight.io/todos');
-    expect(mockFetch.mock.calls[0][1]).toMatchObject({
-      method: 'get',
-    });
+    expect(fetchMock).toHaveBeenCalled();
+    expect(fetchMock).toBeCalledWith(
+      'https://todos.stoplight.io/todos',
+      expect.objectContaining({
+        method: 'get',
+      }),
+    );
   });
 
   it('Displays response', async () => {
-    mockFetch.mockResolvedValue(
+    fetchMock.mockResolvedValue(
       new Response('{}', {
         status: 200,
         statusText: 'OK',
@@ -111,14 +105,16 @@ describe('TryIt', () => {
       // click send
       clickSend();
 
-      expect(mockFetch).toHaveBeenCalled();
-      expect(mockFetch.mock.calls[0][0]).toEqual('https://todos.stoplight.io/todos/123?limit=5&type=some-type');
-      expect(mockFetch.mock.calls[0][1]).toMatchObject({
-        method: 'put',
-        headers: {
-          'account-id': '1999',
-        },
-      });
+      expect(fetchMock).toHaveBeenCalled();
+      expect(fetchMock).toBeCalledWith(
+        'https://todos.stoplight.io/todos/123?limit=5&type=some-type',
+        expect.objectContaining({
+          method: 'put',
+          headers: {
+            'account-id': '1999',
+          },
+        }),
+      );
     });
   });
 });
