@@ -1,6 +1,6 @@
 import 'jest-enzyme';
 
-import { InputGroup } from '@stoplight/ui-kit';
+import { Button, ButtonGroup, InputGroup } from '@stoplight/ui-kit';
 import { Suggest } from '@stoplight/ui-kit/Select';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
@@ -9,6 +9,7 @@ import { operation } from '../__fixtures__/http';
 import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
 import { RequestStore } from '../../../stores/request-maker/request';
+import { RequestSend } from '../Request';
 import { RequestEndpoint } from '../Request/Endpoint';
 
 describe('RequestEndpoint component', () => {
@@ -99,5 +100,25 @@ describe('RequestEndpoint component', () => {
 
     expect(store.request.url).toEqual('/test');
     expect(sendSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('runs mock() when isMockEnabled is true', () => {
+    const rmStore = new RequestMakerStore({
+      operation: { method: 'get', path: '/path' },
+    });
+    rmStore.request.shouldMock = true;
+    const spy = jest.spyOn(rmStore, 'mock');
+
+    wrapper = mount(
+      <RequestMakerProvider value={rmStore}>
+        <RequestEndpoint />
+      </RequestMakerProvider>,
+    );
+
+    wrapper.find(RequestSend).find(ButtonGroup).find(Button).first().simulate('click');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    spy.mockRestore();
   });
 });
