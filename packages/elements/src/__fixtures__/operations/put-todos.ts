@@ -250,7 +250,7 @@ export const httpOperation: IHttpOperation = {
   ],
   servers: [
     {
-      url: 'http://todos.stoplight.io',
+      url: 'https://todos.stoplight.io',
     },
   ],
   request: {
