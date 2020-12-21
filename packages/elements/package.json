@@ -122,8 +122,7 @@
     "node-sass-package-importer": "^5.3.2",
     "prettier": "^2.0.4",
     "react": "^16.8.0",
-    "react-test-renderer": "^16.8.0",
-    "whatwg-fetch": "^3.5.0"
+    "react-test-renderer": "^16.8.0"
   },
   "publishConfig": {
     "directory": "dist"

@@ -1,5 +1,3 @@
-import 'whatwg-fetch';
-
 import fetchMock from 'jest-fetch-mock';
 
 type WindowWithResizeObserver = Window &
