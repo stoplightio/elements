@@ -1,15 +1,9 @@
-import { Flex, Input, Panel, Select, Text } from '@stoplight/mosaic';
-import {
-  Dictionary,
-  IHttpHeaderParam,
-  IHttpParam,
-  IHttpPathParam,
-  IHttpQueryParam,
-  INodeExample,
-  INodeExternalExample,
-} from '@stoplight/types';
-import { map, sortBy } from 'lodash';
+import { Panel } from '@stoplight/mosaic';
+import { Dictionary, IHttpHeaderParam, IHttpParam, IHttpPathParam, IHttpQueryParam } from '@stoplight/types';
+import { sortBy } from 'lodash';
 import * as React from 'react';
+
+import { exampleValue, Parameter } from './Parameter';
 
 export interface OperationParameters {
   path?: IHttpPathParam[];
@@ -22,14 +16,6 @@ interface OperationParametersProps {
   values: Dictionary<string, string>;
   onChangeValues: (newValues: Dictionary<string, string>) => void;
 }
-
-const booleanOptions = [
-  { label: 'Not Set', value: '' },
-  { label: 'False', value: 'false' },
-  { label: 'True', value: 'true' },
-];
-
-const selectExampleOption = { value: '', label: 'Pick an example' };
 
 export const OperationParameters: React.FC<OperationParametersProps> = ({
   operationParameters,
@@ -49,41 +35,14 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
     <Panel id="collapse-open" defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
-        {parameters.map(parameter => {
-          const parameterValueOptions = parameterOptions(parameter);
-          const examples = exampleOptions(parameter);
-          const selectedExample = examples?.find(e => e.value === values[parameter.name]) ?? selectExampleOption;
-          return (
-            <Flex align="center" key={parameter.name}>
-              <Input appearance="minimal" readOnly value={parameter.name} />
-              <Text mx={3}>:</Text>
-              {parameterValueOptions ? (
-                <Select
-                  flexGrow
-                  options={parameterValueOptions}
-                  value={values[parameter.name]}
-                  onChange={onChange(parameter)}
-                />
-              ) : (
-                <Flex flexGrow>
-                  <Input
-                    style={{ paddingLeft: 15 }}
-                    appearance="minimal"
-                    flexGrow
-                    placeholder={(parameter.schema?.default ?? parameter.schema?.type) as string}
-                    type={parameter.schema?.type as string}
-                    required
-                    value={values[parameter.name] ?? ''}
-                    onChange={onChange(parameter)}
-                  />
-                  {examples && (
-                    <Select flexGrow value={selectedExample.value} options={examples} onChange={onChange(parameter)} />
-                  )}
-                </Flex>
-              )}
-            </Flex>
-          );
-        })}
+        {parameters.map((parameter, i) => (
+          <Parameter
+            key={parameter.name}
+            parameter={parameter}
+            value={values[parameter.name]}
+            onChange={onChange(parameter)}
+          />
+        ))}
       </Panel.Content>
     </Panel>
   );
@@ -118,25 +77,4 @@ export function initialParameterValues(operationParameters: OperationParameters)
     ...examples,
     ...enums,
   };
-}
-
-function parameterOptions(parameter: IHttpParam) {
-  return parameter.schema?.type === 'boolean'
-    ? booleanOptions
-    : parameter.schema?.enum !== undefined
-    ? map(parameter.schema.enum, v => (Number.isNaN(Number(v)) ? String(v) : Number(v)))
-    : null;
-}
-
-function exampleOptions(parameter: IHttpParam) {
-  return parameter.examples?.length && parameter.examples.length > 1
-    ? [
-        selectExampleOption,
-        ...parameter.examples.map(example => ({ label: example.key, value: exampleValue(example) })),
-      ]
-    : null;
-}
-
-function exampleValue(example: INodeExample | INodeExternalExample) {
-  return 'value' in example ? example.value : example.externalValue;
 }
