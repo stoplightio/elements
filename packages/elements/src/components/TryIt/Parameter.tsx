@@ -27,7 +27,13 @@ export const Parameter: React.FC<ParameterProps> = ({ parameter, value, onChange
       <Input appearance="minimal" readOnly value={parameter.name} />
       <Text mx={3}>:</Text>
       {parameterValueOptions ? (
-        <Select flexGrow options={parameterValueOptions} value={value} onChange={onChange} />
+        <Select
+          flexGrow
+          aria-label={parameter.name}
+          options={parameterValueOptions}
+          value={value}
+          onChange={onChange}
+        />
       ) : (
         <Flex flexGrow>
           <Input
@@ -41,7 +47,15 @@ export const Parameter: React.FC<ParameterProps> = ({ parameter, value, onChange
             value={value ?? ''}
             onChange={onChange}
           />
-          {examples && <Select flexGrow value={selectedExample.value} options={examples} onChange={onChange} />}
+          {examples && (
+            <Select
+              aria-label={`${parameter.name}-select`}
+              flexGrow
+              value={selectedExample.value}
+              options={examples}
+              onChange={onChange}
+            />
+          )}
         </Flex>
       )}
     </Flex>

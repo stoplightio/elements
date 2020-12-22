@@ -369,6 +369,7 @@ export const httpOperation: IHttpOperation = {
         schema: {
           type: 'string',
           description: 'Your Stoplight account id',
+          default: 'account-id-default',
         },
         name: 'account-id',
         style: HttpParamStyles.Simple,
