@@ -7,7 +7,7 @@ import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
-import { OperationParameters } from './OperationParameters';
+import { initialParameterValues, OperationParameters } from './OperationParameters';
 
 export interface BasicSendProps {
   httpOperation: IHttpOperation;
@@ -33,7 +33,9 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   };
   const allParameters = Object.values(operationParameters).flat();
 
-  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>({});
+  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
+    initialParameterValues(operationParameters),
+  );
 
   if (!server) return null;
 

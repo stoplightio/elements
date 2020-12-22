@@ -83,6 +83,33 @@ describe('TryIt', () => {
       expect(todoIdField.placeholder).toMatch(/string/i);
     });
 
+    it('Initializes parameters correctly', () => {
+      render(<BasicSend httpOperation={putOperation} />);
+
+      // path param
+      const completedField = screen.getByLabelText('completed');
+      expect(completedField).toHaveValue('');
+
+      // query params
+      const limitField = screen.getByLabelText('limit');
+      expect(limitField).toHaveValue('0');
+
+      const typeField = screen.getByLabelText('type');
+      expect(typeField).toHaveValue('something');
+
+      const valueField = screen.getByLabelText('value');
+      expect(valueField).toHaveValue('0');
+
+      // header param
+
+      const accountIdField = screen.getByLabelText('account-id') as HTMLInputElement;
+      expect(accountIdField).toHaveValue('example id');
+      expect(accountIdField.placeholder).toMatch(/account-id-default/i);
+
+      const messageIdField = screen.getByLabelText('message-id');
+      expect(messageIdField).toHaveValue('example value');
+    });
+
     it('Passes all parameters to the request', async () => {
       render(<BasicSend httpOperation={putOperation} />);
 
@@ -92,26 +119,30 @@ describe('TryIt', () => {
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      await userEvent.type(limitField, '5');
+      await userEvent.selectOptions(limitField, '3');
 
       const typeField = screen.getByLabelText('type');
-      await userEvent.type(typeField, 'some-type');
+      await userEvent.selectOptions(typeField, 'another');
 
       // header param
 
       const accountIdField = screen.getByLabelText('account-id');
-      await userEvent.type(accountIdField, '1999');
+      await userEvent.type(accountIdField, ' 1999');
+
+      const messageIdField = screen.getByLabelText('message-id-select');
+      await userEvent.selectOptions(messageIdField, 'example 2');
 
       // click send
       clickSend();
 
       expect(fetchMock).toHaveBeenCalled();
       expect(fetchMock).toBeCalledWith(
-        'https://todos.stoplight.io/todos/123?limit=5&type=some-type',
+        'https://todos.stoplight.io/todos/123?limit=3&value=0&type=another',
         expect.objectContaining({
           method: 'put',
           headers: {
-            'account-id': '1999',
+            'account-id': 'example id 1999',
+            'message-id': 'another example',
           },
         }),
       );
