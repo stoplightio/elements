@@ -32,6 +32,7 @@ export const Parameter: React.FC<ParameterProps> = ({ parameter, value, onChange
         <Flex flexGrow>
           <Input
             style={{ paddingLeft: 15 }}
+            aria-label={parameter.name}
             appearance="minimal"
             flexGrow
             placeholder={getPlaceholderForParameter(parameter)}

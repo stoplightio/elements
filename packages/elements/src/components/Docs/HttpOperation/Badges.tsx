@@ -7,13 +7,13 @@ import React from 'react';
 export const Badge: React.FC<{
   icon?: IconDefinition;
   className?: string;
+  children: string;
 }> = ({ icon, className, children }) => (
-  <Tag className={cs('text-md p-1 font-semibold mt-1', className)} round>
+  <Tag role="badge" className={cs('text-md p-1 font-semibold mt-1', className)} round aria-label={children}>
     {icon && <FontAwesomeIcon className="mr-2" icon={icon} />}
     <span>{children}</span>
   </Tag>
 );
-
 export const DeprecatedBadge: React.FC = () => (
   <Tooltip
     position={Position.BOTTOM_RIGHT}
