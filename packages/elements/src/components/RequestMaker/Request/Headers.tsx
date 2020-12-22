@@ -19,9 +19,9 @@ export const RequestHeaders = observer<IRequestHeaders>(({ className }) => {
     <RequestParameters
       type="header"
       className={cn('RequestMaker__RequestHeaders', className)}
-      suggestRenderer={({ name, params, index, inFocus, setInFocus, handlerPropChange, onBlur }) => (
+      suggestRenderer={({ name, key, params, index, inFocus, setInFocus, handlerPropChange, onBlur }) => (
         <HeaderSuggest
-          key={name}
+          key={key}
           inputProps={{
             placeholder: 'Specify header name',
             autoFocus: inFocus.index === index && inFocus.prop === 'name',
