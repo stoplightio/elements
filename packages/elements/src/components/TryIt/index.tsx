@@ -7,7 +7,6 @@ import { OnRequestSent, OnResponseReceived } from '../../stores/request-maker';
 import { createRequestMakerStore } from '../../utils/createRequestMakerStore';
 import { isHttpOperation } from '../../utils/guards';
 import { RequestEditor, RequestEndpoint, RequestMakerProvider, ResponseViewer } from '../RequestMaker';
-import { RequestSend } from '../RequestMaker/Request/Send';
 
 export interface ITryItProps {
   nodeType: string;
@@ -43,7 +42,6 @@ const TryItComponent = React.memo<ITryItProps>(
           <RequestEndpoint className="rounded" />
 
           <RequestEditor className="mt-10 border-t rounded" />
-          <RequestSend className="mt-10" />
 
           <ResponseViewer className="mt-10 border-t rounded" />
         </RequestMakerProvider>

@@ -1,11 +1,13 @@
 import 'jest-enzyme';
 
+import { Button, ButtonGroup } from '@stoplight/ui-kit';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 
 import { RequestMakerProvider } from '../../../hooks/useRequestMakerStore';
 import { RequestMakerStore } from '../../../stores/request-maker';
+import { RequestSend } from '../Request';
 import { RequestEditor } from '../Request/Editor';
 import { TabTitle } from '../TabTitle';
 
@@ -66,5 +68,25 @@ describe('RequestSend component', () => {
     wrapper.update();
 
     expect(wrapper.findWhere(c => c.is(TabTitle) && c.prop('title') === 'Body')).toHaveProp('count', 1);
+  });
+
+  it('runs mock() when isMockEnabled is true', () => {
+    const rmStore = new RequestMakerStore({
+      operation: { method: 'get', path: '/path' },
+    });
+    rmStore.request.shouldMock = true;
+    const spy = jest.spyOn(rmStore, 'mock');
+
+    wrapper = mount(
+      <RequestMakerProvider value={rmStore}>
+        <RequestEditor />
+      </RequestMakerProvider>,
+    );
+
+    wrapper.find(RequestSend).find(ButtonGroup).find(Button).first().simulate('click');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    spy.mockRestore();
   });
 });
