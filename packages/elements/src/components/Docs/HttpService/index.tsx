@@ -13,7 +13,7 @@ import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
-const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, mockUrl }) => {
   return (
     <div className={cn('HttpService MarkdownViewer', className)}>
       {data.name !== void 0 && <h1 className={Classes.HEADING}>{data.name}</h1>}
@@ -72,6 +72,14 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
               </a>
             </div>
           ))}
+          {mockUrl && (
+            <div className="MarkdownViewer flex items-center flex-1 mt-4">
+              <div className="mr-2">Mock Server</div>
+              <a href={mockUrl} target="_blank" rel="noopener noreferrer">
+                {mockUrl}
+              </a>
+            </div>
+          )}
         </div>
       ) : null}
 

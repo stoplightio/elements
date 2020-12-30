@@ -1,5 +1,19 @@
-import { Button, HTMLSelect, Menu, MenuDivider, MenuItem, Popover, Position, Switch } from '@stoplight/ui-kit';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { safeStringify } from '@stoplight/json';
+import {
+  Button,
+  FormInput,
+  HTMLSelect,
+  Menu,
+  MenuDivider,
+  MenuItem,
+  Popover,
+  Position,
+  Switch,
+} from '@stoplight/ui-kit';
 import cn from 'classnames';
+import copy from 'copy-to-clipboard';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 
@@ -57,14 +71,36 @@ export const Mocking = observer(() => {
         title="Mocking"
         description={
           <div>
+            {store.isMockEnabled && (
+              <FormInput
+                className="flex-1 pb-2"
+                readOnly
+                type="text"
+                value={store.request.url}
+                dir="auto"
+                rightElement={
+                  <Popover
+                    content={
+                      <div className="p-3 text-center w-64">
+                        The copied link is the mock URL structure. Fill in your own parameters.
+                      </div>
+                    }
+                  >
+                    <Button
+                      intent="primary"
+                      minimal
+                      onClick={() => {
+                        copy(safeStringify(store.request.url, undefined, 2) || '');
+                      }}
+                      icon={<FontAwesomeIcon icon={faCopy} className="mr-2" />}
+                    />
+                  </Popover>
+                }
+              />
+            )}
             <div>
-              Enable mocking to send requests to a simulated API. You can choose to receive a specific response code and
-              example or have one dynamically generated for you based on this operation's response schema.
-            </div>
-
-            <div className="mt-2">
-              For more information on mocking,{' '}
-              <a href="https://meta.stoplight.io/docs/prism/docs/guides/01-mocking.md">check out the docs</a>
+              Enable mocking to send requests to a simulated API. For more information on mocking,{' '}
+              <a href="https://meta.stoplight.io/docs/prism/docs/guides/01-mocking.md">check out the docs.</a>
             </div>
           </div>
         }
@@ -103,9 +139,8 @@ export const Mocking = observer(() => {
           description={
             <div>
               <div>
-                By default, an appropriate response will be returned based on the request input. If you would like to
-                receive a specific response, you can choose one of the defined codes and examples using the dropdown to
-                the right and a <code>Prefer</code> header will be configured for you.
+                By default, an appropriate response will be returned based on the request input. Use the dropdown to the
+                right to receive specific response.
               </div>
             </div>
           }
@@ -188,9 +223,8 @@ export const Mocking = observer(() => {
           description={
             <div>
               <div>
-                By default, mocked responses are statically generated. If you would like to receive a dynamically
-                generated response, you can choose the <code>dynamic</code> option using the dropdown to the right and a{' '}
-                <code>Prefer</code> headed will be configured for you.
+                By default, mocked responses are statically generated. Choose the <code>dynamic</code> option using the
+                dropdown to the right to receive a dynamically generated response.
               </div>
             </div>
           }

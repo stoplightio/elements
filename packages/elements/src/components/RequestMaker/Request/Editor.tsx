@@ -42,22 +42,23 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
   const shouldRenderCodeGen = tabs.includes(RequestEditorTab.CODE);
   const shouldRenderMocking = tabs.includes(RequestEditorTab.MOCKING) && store.operation;
 
-  let defaultTab = RequestEditorTab.QUERY;
-  if (shouldRenderQuery) {
-    defaultTab = RequestEditorTab.QUERY;
+  let defaultTab = `request-${RequestEditorTab.QUERY}`;
+
+  if (shouldRenderMocking) {
+    defaultTab = `${RequestEditorTab.MOCKING}-editor`;
+  } else if (shouldRenderQuery) {
+    defaultTab = `request-${RequestEditorTab.QUERY}`;
   } else if (shouldRenderHeaders) {
-    defaultTab = RequestEditorTab.HEADERS;
+    defaultTab = `request-${RequestEditorTab.HEADERS}`;
   } else if (shouldRenderBody) {
-    defaultTab = RequestEditorTab.BODY;
+    defaultTab = `request-${RequestEditorTab.BODY}`;
   } else if (shouldRenderPath) {
-    defaultTab = RequestEditorTab.PATH;
+    defaultTab = `request-${RequestEditorTab.PATH}`;
   } else if (shouldRenderCodeGen) {
-    defaultTab = RequestEditorTab.CODE;
-  } else if (shouldRenderMocking) {
-    defaultTab = RequestEditorTab.MOCKING;
+    defaultTab = `${RequestEditorTab.CODE}-editor`;
   }
 
-  const [selectedTabId, setSelectedTabId] = React.useState(`request-${defaultTab}`);
+  const [selectedTabId, setSelectedTabId] = React.useState(defaultTab);
 
   return (
     <div
@@ -125,7 +126,7 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
 
         {shouldRenderMocking && (
           <Tab
-            id="mock-editor"
+            id="mocking-editor"
             title={<TabTitle title="Mocking" />}
             panelClassName={panelClassName}
             panel={<Mocking />}

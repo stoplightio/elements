@@ -15,17 +15,20 @@ interface IBaseDocsProps {
 export interface IDocsProps extends IBaseDocsProps {
   nodeData: unknown;
   headless?: boolean;
+  mockUrl?: string;
 }
 
 export interface IParsedDocsProps<T = unknown> extends IBaseDocsProps {
   nodeData: T;
   headless?: boolean;
+  mockUrl?: string;
 }
 
 export interface IDocsComponentProps<T = unknown> {
   data: T;
   className?: string;
   headless?: boolean;
+  mockUrl?: string;
 }
 
 const UnsupportedNodeType = () => {
@@ -43,18 +46,20 @@ export const NodeTypeComponent: Dictionary<React.ComponentType<IDocsComponentPro
   [NodeType.Unknown]: UnsupportedNodeType,
 };
 
-export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, headless }) => {
+export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, headless, mockUrl }) => {
   const parsedData = useParsedData(nodeType, nodeData);
 
-  return <ParsedDocs className={className} nodeData={parsedData} nodeType={nodeType} headless={headless} />;
+  return (
+    <ParsedDocs className={className} nodeData={parsedData} nodeType={nodeType} headless={headless} mockUrl={mockUrl} />
+  );
 });
 
-export const ParsedDocs: React.FC<IParsedDocsProps> = ({ nodeType, nodeData, className, headless }) => {
+export const ParsedDocs: React.FC<IParsedDocsProps> = ({ nodeType, nodeData, className, headless, mockUrl }) => {
   const Component = NodeTypeComponent[nodeType];
 
   if (!Component) return null;
 
-  return <Component className={className} data={nodeData} headless={headless} />;
+  return <Component className={className} data={nodeData} headless={headless} mockUrl={mockUrl} />;
 };
 
 export { DocsSkeleton } from './Skeleton';
