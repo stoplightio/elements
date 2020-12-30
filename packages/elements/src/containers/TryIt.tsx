@@ -14,7 +14,7 @@ export interface ITryItProps {
   node?: string;
 }
 
-type MockUrlResult = { servicePath: string; operationPath?: string; id: number };
+export type MockUrlResult = { servicePath: string; operationPath?: string; id: number };
 
 const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-nodes/{uri}';
 const mockActionsUrl = 'api/actions/branchNodeMockUrl';
