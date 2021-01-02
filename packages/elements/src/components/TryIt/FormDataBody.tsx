@@ -3,7 +3,7 @@ import { Panel } from '@stoplight/mosaic';
 import { Dictionary, IMediaTypeContent } from '@stoplight/types';
 import * as React from 'react';
 
-import { Parameter } from './Parameter';
+import { ParameterEditor } from './ParameterEditor';
 
 interface FormDataBodyProps {
   specification: IMediaTypeContent;
@@ -30,7 +30,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
       <Panel.Titlebar>Body</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
         {Object.entries(parameters).map(([name, schema]) => (
-          <Parameter
+          <ParameterEditor
             key={name}
             parameter={{ name, schema, examples: schema?.examples }}
             value={values[name]}

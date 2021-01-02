@@ -15,7 +15,7 @@ interface ParameterProps {
   onChange: (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Parameter: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
+export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;

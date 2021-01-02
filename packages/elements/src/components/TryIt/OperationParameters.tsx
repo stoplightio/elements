@@ -3,8 +3,8 @@ import { Dictionary } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
-import { Parameter } from './Parameter';
 import { exampleValue, ParameterSpec } from './parameter-utils';
+import { ParameterEditor } from './ParameterEditor';
 
 export type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[]>;
 
@@ -31,7 +31,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
       <Panel.Titlebar>Parameters</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
         {parameters.map(parameter => (
-          <Parameter
+          <ParameterEditor
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
