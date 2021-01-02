@@ -52,10 +52,10 @@ const requestBodyCreators: Record<string, RequestBodyCreator> = {
 
 export const useBodyParameterState = (httpOperation: IHttpOperation) => {
   const bodySpecification = httpOperation.request?.body?.contents?.[0];
-  const isActive = bodySpecification && isFormDataContent(bodySpecification);
+  const isFormDataBody = bodySpecification && isFormDataContent(bodySpecification);
 
   const initialState = React.useMemo(() => {
-    if (!isActive) {
+    if (!isFormDataBody) {
       return {};
     }
     const properties = bodySpecification?.schema?.properties ?? {};
@@ -65,7 +65,7 @@ export const useBodyParameterState = (httpOperation: IHttpOperation) => {
       examples: value.examples,
     }));
     return initialParameterValues(parameters);
-  }, [isActive, bodySpecification]);
+  }, [isFormDataBody, bodySpecification]);
 
   const [bodyParameterValues, setBodyParameterValues] = React.useState<Record<string, string>>(initialState);
 
@@ -73,5 +73,17 @@ export const useBodyParameterState = (httpOperation: IHttpOperation) => {
     setBodyParameterValues(initialState);
   }, [initialState]);
 
-  return [bodyParameterValues, setBodyParameterValues] as const;
+  if (isFormDataBody) {
+    return [
+      bodyParameterValues,
+      setBodyParameterValues,
+      { isFormDataBody: true, bodySpecification: bodySpecification! },
+    ] as const;
+  } else {
+    return [
+      bodyParameterValues,
+      setBodyParameterValues,
+      { isFormDataBody: false, bodySpecification: undefined },
+    ] as const;
+  }
 };

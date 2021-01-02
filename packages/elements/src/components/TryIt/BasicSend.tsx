@@ -10,7 +10,7 @@ import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
 import { flattenParameters, OperationParameters } from './OperationParameters';
 import { initialParameterValues } from './parameter-utils';
-import { createRequestBody, isFormDataContent, useBodyParameterState } from './request-body-utils';
+import { createRequestBody, useBodyParameterState } from './request-body-utils';
 
 export interface BasicSendProps {
   httpOperation: IHttpOperation;
@@ -40,9 +40,7 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
     initialParameterValues(allParameters),
   );
 
-  const bodySpecification = httpOperation.request?.body?.contents?.[0];
-
-  const [bodyParameterValues, setBodyParameterValues] = useBodyParameterState(httpOperation);
+  const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
   if (!server) return null;
 
@@ -78,9 +76,9 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             onChangeValues={setParameterValues}
           />
         )}
-        {bodySpecification && isFormDataContent(bodySpecification) && (
+        {formDataState.isFormDataBody && (
           <FormDataBody
-            specification={bodySpecification}
+            specification={formDataState.bodySpecification}
             values={bodyParameterValues}
             onChangeValues={setBodyParameterValues}
           />
