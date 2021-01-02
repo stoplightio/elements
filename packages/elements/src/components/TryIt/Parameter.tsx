@@ -4,8 +4,10 @@ import { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types
 import { isObject, map } from 'lodash';
 import * as React from 'react';
 
+type Parameter = Omit<IHttpParam, 'style'>;
+
 interface ParameterProps {
-  parameter: IHttpParam;
+  parameter: Parameter;
   value: string;
   onChange: (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -62,7 +64,7 @@ export const Parameter: React.FC<ParameterProps> = ({ parameter, value, onChange
   );
 };
 
-function parameterOptions(parameter: IHttpParam) {
+function parameterOptions(parameter: Parameter) {
   return parameter.schema?.type === 'boolean'
     ? booleanOptions
     : parameter.schema?.enum !== undefined
@@ -70,7 +72,7 @@ function parameterOptions(parameter: IHttpParam) {
     : null;
 }
 
-function exampleOptions(parameter: IHttpParam) {
+function exampleOptions(parameter: Parameter) {
   return parameter.examples?.length && parameter.examples.length > 1
     ? [
         selectExampleOption,
@@ -83,12 +85,12 @@ export function exampleValue(example: INodeExample | INodeExternalExample) {
   return 'value' in example ? example.value : example.externalValue;
 }
 
-function getPlaceholderForParameter(parameter: IHttpParam) {
+function getPlaceholderForParameter(parameter: Parameter) {
   const defaultOrType = getDefaultForParameter(parameter) ?? parameter.schema?.type;
   return defaultOrType !== undefined ? String(defaultOrType) : undefined;
 }
 
-function getDefaultForParameter(parameter: IHttpParam) {
+function getDefaultForParameter(parameter: Parameter) {
   const defaultValue = parameter.schema?.default;
   return isObject(defaultValue) ? safeStringify(defaultValue) : defaultValue;
 }

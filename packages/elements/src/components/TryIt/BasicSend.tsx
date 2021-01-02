@@ -2,11 +2,12 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { Dictionary, IHttpOperation } from '@stoplight/types';
+import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
+import { FormDataBody } from './FormDataBody';
 import { initialParameterValues, OperationParameters } from './OperationParameters';
 
 export interface BasicSendProps {
@@ -36,6 +37,15 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
   const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
     initialParameterValues(operationParameters),
   );
+
+  const bodySpecification = httpOperation.request?.body?.contents?.[0];
+
+  const [bodyParameterValues, setBodyParameterValues] = React.useState<Dictionary<string, string>>({});
+
+  // Reset body parameters when operation changes
+  React.useEffect(() => {
+    setBodyParameterValues({});
+  }, [httpOperation]);
 
   if (!server) return null;
 
@@ -69,6 +79,13 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             operationParameters={operationParameters}
             values={parameterValues}
             onChangeValues={setParameterValues}
+          />
+        )}
+        {bodySpecification && isFormDataContent(bodySpecification) && (
+          <FormDataBody
+            specification={bodySpecification}
+            values={bodyParameterValues}
+            onChangeValues={setBodyParameterValues}
           />
         )}
         <Panel.Content>
@@ -113,7 +130,10 @@ const BasicSendError: React.FC<{ state: ErrorState }> = ({ state }) => (
   </Panel>
 );
 
-function buildFetchRequest(httpOperation: IHttpOperation, parameterValues: Dictionary<string, string>) {
+function buildFetchRequest(
+  httpOperation: IHttpOperation,
+  parameterValues: Dictionary<string, string>,
+): Parameters<typeof fetch> {
   const server = httpOperation.servers?.[0]?.url;
 
   const headers = Object.fromEntries(
@@ -128,7 +148,7 @@ function buildFetchRequest(httpOperation: IHttpOperation, parameterValues: Dicti
   const url = new URL(server + expandedPath);
   url.search = new URLSearchParams(queryParams).toString();
 
-  return [url.toString(), { method: httpOperation.method, headers }] as const;
+  return [url.toString(), { method: httpOperation.method, headers }];
 }
 
 function uriExpand(uri: string, data: Dictionary<string, string>) {
@@ -138,4 +158,14 @@ function uriExpand(uri: string, data: Dictionary<string, string>) {
   return uri.replace(/{([^#?]+?)}/g, (match, value) => {
     return data[value] || match;
   });
+}
+
+const isFormDataContent = (content: IMediaTypeContent) => isUrlEncodedContent(content) || isMultipartContent(content);
+
+function isUrlEncodedContent(content: IMediaTypeContent) {
+  return content.mediaType.toLowerCase() === 'application/x-www-form-urlencoded';
+}
+
+function isMultipartContent(content: IMediaTypeContent) {
+  return content.mediaType.toLowerCase() === 'multipart/form-data';
 }

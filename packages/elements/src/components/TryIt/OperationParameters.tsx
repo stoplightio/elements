@@ -32,7 +32,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
   };
 
   return (
-    <Panel id="collapse-open" defaultIsOpen>
+    <Panel defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
         {parameters.map((parameter, i) => (

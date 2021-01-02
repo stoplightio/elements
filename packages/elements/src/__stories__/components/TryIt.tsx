@@ -7,6 +7,7 @@ import * as React from 'react';
 import { httpOperation } from '../../__fixtures__/operations/bundled-parameter';
 import putOperation from '../../__fixtures__/operations/put-todos';
 import { operation } from '../../__fixtures__/operations/simple-get';
+import urlEncodedOperation from '../../__fixtures__/operations/urlencoded-post';
 import { TryIt } from '../../components/TryIt';
 import { BasicSend } from '../../components/TryIt/BasicSend';
 import { Provider } from '../../containers/Provider';
@@ -27,4 +28,5 @@ storiesOf('Internal/TryIt', module)
     );
   })
   .add('Basic Send', () => <BasicSend httpOperation={operation} />)
-  .add('Operation Parameters', () => <BasicSend httpOperation={putOperation} />);
+  .add('Operation Parameters', () => <BasicSend httpOperation={putOperation} />)
+  .add('Form data body', () => <BasicSend httpOperation={urlEncodedOperation} />);
