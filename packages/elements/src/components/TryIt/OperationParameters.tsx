@@ -6,7 +6,7 @@ import * as React from 'react';
 import { exampleValue, ParameterSpec } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
 
-export type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[]>;
+type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[]>;
 
 interface OperationParametersProps {
   operationParameters: OperationParameters;
