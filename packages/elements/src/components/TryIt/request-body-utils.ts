@@ -1,4 +1,7 @@
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import * as React from 'react';
+
+import { initialParameterValues } from './parameter-utils';
 
 export const isFormDataContent = (content: IMediaTypeContent) =>
   isUrlEncodedContent(content) || isMultipartContent(content);
@@ -45,4 +48,30 @@ const createRawRequestBody: RequestBodyCreator = ({ rawBodyValue = '' }) => rawB
 const requestBodyCreators: Record<string, RequestBodyCreator> = {
   'application/x-www-form-urlencoded': createUrlEncodedRequestBody,
   'multipart/form-data': createMultipartRequestBody,
+};
+
+export const useBodyParameterState = (httpOperation: IHttpOperation) => {
+  const bodySpecification = httpOperation.request?.body?.contents?.[0];
+  const isActive = bodySpecification && isFormDataContent(bodySpecification);
+
+  const initialState = React.useMemo(() => {
+    if (!isActive) {
+      return {};
+    }
+    const properties = bodySpecification?.schema?.properties ?? {};
+    const parameters = Object.entries(properties).map(([key, value]) => ({
+      name: key,
+      schema: value,
+      examples: value.examples,
+    }));
+    return initialParameterValues(parameters);
+  }, [isActive, bodySpecification]);
+
+  const [bodyParameterValues, setBodyParameterValues] = React.useState<Record<string, string>>(initialState);
+
+  React.useEffect(() => {
+    setBodyParameterValues(initialState);
+  }, [initialState]);
+
+  return [bodyParameterValues, setBodyParameterValues] as const;
 };

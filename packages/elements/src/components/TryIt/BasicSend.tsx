@@ -10,7 +10,7 @@ import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
 import { flattenParameters, OperationParameters } from './OperationParameters';
 import { initialParameterValues } from './parameter-utils';
-import { createRequestBody, isFormDataContent } from './request-body-utils';
+import { createRequestBody, isFormDataContent, useBodyParameterState } from './request-body-utils';
 
 export interface BasicSendProps {
   httpOperation: IHttpOperation;
@@ -42,12 +42,7 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
 
   const bodySpecification = httpOperation.request?.body?.contents?.[0];
 
-  const [bodyParameterValues, setBodyParameterValues] = React.useState<Dictionary<string, string>>({});
-
-  // Reset body parameters when operation changes
-  React.useEffect(() => {
-    setBodyParameterValues({});
-  }, [httpOperation]);
+  const [bodyParameterValues, setBodyParameterValues] = useBodyParameterState(httpOperation);
 
   if (!server) return null;
 
