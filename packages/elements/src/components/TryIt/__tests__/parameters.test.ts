@@ -1,5 +1,6 @@
 import { httpOperation } from '../../../__fixtures__/operations/put-todos';
-import { initialParameterValues } from '../OperationParameters';
+import { flattenParameters } from '../OperationParameters';
+import { initialParameterValues } from '../parameter-utils';
 
 describe('Parameters', () => {
   it('should fill initial parameters', () => {
@@ -9,7 +10,7 @@ describe('Parameters', () => {
       headers: httpOperation.request?.headers,
     };
 
-    const parameters = initialParameterValues(operationParameters);
+    const parameters = initialParameterValues(flattenParameters(operationParameters));
 
     expect(parameters).toMatchObject({
       limit: '0',

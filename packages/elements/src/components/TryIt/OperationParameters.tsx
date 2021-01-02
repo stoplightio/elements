@@ -3,10 +3,10 @@ import { Dictionary } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
-import { exampleValue, ParameterSpec } from './parameter-utils';
+import { ParameterSpec } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
 
-type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[]>;
+type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[] | undefined>;
 
 interface OperationParametersProps {
   operationParameters: OperationParameters;
@@ -48,28 +48,4 @@ export function flattenParameters(parameters: OperationParameters): ParameterSpe
   const queryParameters = sortBy(parameters.query ?? [], ['name']);
   const headerParameters = sortBy(parameters.headers ?? [], ['name']);
   return [...pathParameters, ...queryParameters, ...headerParameters];
-}
-
-export function initialParameterValues(operationParameters: OperationParameters) {
-  const parameters = flattenParameters(operationParameters);
-
-  const enums = Object.fromEntries(
-    parameters
-      .map(p => [p.name, p.schema?.enum ?? []] as const)
-      .filter(([, enums]) => enums.length > 0)
-      .map(([name, enums]) => [name, String(enums[0])]),
-  );
-
-  const examples = Object.fromEntries(
-    parameters
-      .map(p => [p.name, p.examples ?? []] as const)
-      .filter(([, examples]) => examples.length > 0)
-      .map(([name, examples]) => [name, exampleValue(examples[0])]),
-  );
-
-  return {
-    // order matters - enums should be override examples
-    ...examples,
-    ...enums,
-  };
 }

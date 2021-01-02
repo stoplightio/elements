@@ -8,7 +8,8 @@ import * as React from 'react';
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
-import { initialParameterValues, OperationParameters } from './OperationParameters';
+import { flattenParameters, OperationParameters } from './OperationParameters';
+import { initialParameterValues } from './parameter-utils';
 import { createRequestBody, isFormDataContent } from './request-body-utils';
 
 export interface BasicSendProps {
@@ -33,10 +34,10 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
     query: httpOperation.request?.query ?? [],
     headers: httpOperation.request?.headers ?? [],
   };
-  const allParameters = Object.values(operationParameters).flat();
+  const allParameters = flattenParameters(operationParameters);
 
   const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
-    initialParameterValues(operationParameters),
+    initialParameterValues(allParameters),
   );
 
   const bodySpecification = httpOperation.request?.body?.contents?.[0];
