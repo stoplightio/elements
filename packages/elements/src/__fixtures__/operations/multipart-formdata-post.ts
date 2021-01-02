@@ -20,7 +20,7 @@ export const httpOperation: IHttpOperation = {
     body: {
       contents: [
         {
-          mediaType: 'application/x-www-form-urlencoded',
+          mediaType: 'multipart/form-data',
           schema: {
             type: 'object',
             properties: {
