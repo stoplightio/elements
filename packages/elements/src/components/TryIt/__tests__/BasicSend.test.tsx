@@ -182,7 +182,7 @@ describe('TryIt', () => {
       ['multipart/form-data', FormData, multipartFormdataOperation],
     ];
 
-    describe.each(formDataCases)('Builds correct %p request', async (name, prototype, fixture) => {
+    describe.each(formDataCases)('Builds correct %p request', (name, prototype, fixture) => {
       let body: URLSearchParams | FormData;
       beforeAll(async () => {
         render(<BasicSend httpOperation={fixture} />);

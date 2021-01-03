@@ -45,7 +45,7 @@ const createMultipartRequestBody: RequestBodyCreator = ({ bodyParameterValues = 
 
 const createRawRequestBody: RequestBodyCreator = ({ rawBodyValue = '' }) => rawBodyValue;
 
-const requestBodyCreators: Record<string, RequestBodyCreator> = {
+const requestBodyCreators: Record<string, RequestBodyCreator | undefined> = {
   'application/x-www-form-urlencoded': createUrlEncodedRequestBody,
   'multipart/form-data': createMultipartRequestBody,
 };
