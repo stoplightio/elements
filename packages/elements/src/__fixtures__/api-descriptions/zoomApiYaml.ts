@@ -318,10 +318,10 @@ parameters:
     required: true
     type: integer
 tags:
-  - description: Billing operations
-    name: Billing
   - description: Account operations
     name: Accounts
+  - description: Billing operations
+    name: Billing
   - description: User operations
     name: Users
   - description: Meeting operations
