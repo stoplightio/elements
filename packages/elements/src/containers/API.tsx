@@ -56,22 +56,8 @@ const APIImpl = withRouter<APIProps>(function API(props) {
   const document = useParsedValue(apiDescriptionDocument || fetchedDocument);
   const bundledDocument = useBundleRefsIntoDocument(document, { baseUrl: apiDescriptionUrl });
 
-  const uriMap = React.useMemo(() => {
-    let map: IUriMap = {};
-    if (bundledDocument) {
-      if (isOas3(bundledDocument)) {
-        map = computeOas3UriMap(bundledDocument);
-      } else if (isOas2(bundledDocument)) {
-        map = computeOas2UriMap(bundledDocument);
-      } else {
-        console.warn('Document type is unknown');
-      }
-    }
-    return map;
-  }, [bundledDocument]);
+  const { tree, uriMap } = getToCFromOpenApiDocument(bundledDocument);
 
-  const nodes = computeNodeData(uriMap);
-  const tree = generateApiToC(nodes);
   const nodeData = uriMap[pathname] || uriMap['/'];
 
   if (error) {
@@ -104,3 +90,23 @@ const APIImpl = withRouter<APIProps>(function API(props) {
 });
 
 export const API = withStyles(APIImpl);
+
+export function getToCFromOpenApiDocument(apiDescriptionDocument: unknown) {
+  let uriMap: IUriMap = {};
+  let documentTags: string[] | undefined;
+
+  if (isOas3(apiDescriptionDocument)) {
+    uriMap = computeOas3UriMap(apiDescriptionDocument);
+    documentTags = apiDescriptionDocument.tags?.map(tag => tag.name) || [];
+  } else if (isOas2(apiDescriptionDocument)) {
+    uriMap = computeOas2UriMap(apiDescriptionDocument);
+    documentTags = apiDescriptionDocument.tags?.map(tag => tag.name) || [];
+  } else {
+    console.error('Document type is unknown');
+  }
+
+  const nodes = computeNodeData(uriMap, documentTags);
+  const tree = generateApiToC(nodes);
+
+  return { tree, uriMap };
+}
