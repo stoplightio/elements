@@ -84,7 +84,7 @@ function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeM
   }
 }
 
-export const computeNodeData: (uriMap: IUriMap, tags?: string[]) => NodeData[] = (uriMap, tags = []) => {
+export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[] => {
   const nodes: NodeData[] = [];
 
   for (const [uri, node] of Object.entries(uriMap)) {
