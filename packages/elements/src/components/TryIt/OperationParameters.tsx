@@ -1,15 +1,12 @@
 import { Panel } from '@stoplight/mosaic';
-import { Dictionary, IHttpHeaderParam, IHttpParam, IHttpPathParam, IHttpQueryParam } from '@stoplight/types';
+import { Dictionary } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
-import { exampleValue, Parameter } from './Parameter';
+import { ParameterSpec } from './parameter-utils';
+import { ParameterEditor } from './ParameterEditor';
 
-export interface OperationParameters {
-  path?: IHttpPathParam[];
-  query?: IHttpQueryParam[];
-  headers?: IHttpHeaderParam[];
-}
+type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[] | undefined>;
 
 interface OperationParametersProps {
   operationParameters: OperationParameters;
@@ -24,23 +21,21 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
 }) => {
   const parameters = flattenParameters(operationParameters);
 
-  const onChange = (parameter: IHttpParam) => (
-    e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const onChange = (name: string) => (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
-    onChangeValues({ ...values, [parameter.name]: newValue });
+    onChangeValues({ ...values, [name]: newValue });
   };
 
   return (
-    <Panel id="collapse-open" defaultIsOpen>
+    <Panel defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
-        {parameters.map((parameter, i) => (
-          <Parameter
+        {parameters.map(parameter => (
+          <ParameterEditor
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
-            onChange={onChange(parameter)}
+            onChange={onChange(parameter.name)}
           />
         ))}
       </Panel.Content>
@@ -48,33 +43,9 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
   );
 };
 
-function flattenParameters(parameters: OperationParameters) {
+export function flattenParameters(parameters: OperationParameters): ParameterSpec[] {
   const pathParameters = sortBy(parameters.path ?? [], ['name']);
   const queryParameters = sortBy(parameters.query ?? [], ['name']);
   const headerParameters = sortBy(parameters.headers ?? [], ['name']);
   return [...pathParameters, ...queryParameters, ...headerParameters];
-}
-
-export function initialParameterValues(operationParameters: OperationParameters) {
-  const parameters = flattenParameters(operationParameters);
-
-  const enums = Object.fromEntries(
-    parameters
-      .map(p => [p.name, p.schema?.enum ?? []] as const)
-      .filter(([, enums]) => enums.length > 0)
-      .map(([name, enums]) => [name, String(enums[0])]),
-  );
-
-  const examples = Object.fromEntries(
-    parameters
-      .map(p => [p.name, p.examples ?? []] as const)
-      .filter(([, examples]) => examples.length > 0)
-      .map(([name, examples]) => [name, exampleValue(examples[0])]),
-  );
-
-  return {
-    // order matters - enums should be override examples
-    ...examples,
-    ...enums,
-  };
 }

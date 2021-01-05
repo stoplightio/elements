@@ -1,13 +1,16 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import { IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
+import { httpOperation as multipartFormdataOperation } from '../../../__fixtures__/operations/multipart-formdata-post';
 import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
 import { operation as basicOperation } from '../../../__fixtures__/operations/simple-get';
+import { httpOperation as urlEncodedPostOperation } from '../../../__fixtures__/operations/urlencoded-post';
 import { BasicSend } from '../BasicSend';
 
 function clickSend() {
@@ -146,6 +149,67 @@ describe('TryIt', () => {
           },
         }),
       );
+    });
+  });
+
+  describe('Form Data Body', () => {
+    it('Hides panel when there are no parameters', () => {
+      render(<BasicSend httpOperation={basicOperation} />);
+
+      let parametersHeader = screen.queryByText('Body');
+      expect(parametersHeader).not.toBeInTheDocument();
+    });
+
+    it('Shows panel when there are parameters', () => {
+      render(<BasicSend httpOperation={urlEncodedPostOperation} />);
+
+      let parametersHeader = screen.queryByText('Body');
+      expect(parametersHeader).toBeInTheDocument();
+    });
+
+    it('Displays types correctly', () => {
+      render(<BasicSend httpOperation={urlEncodedPostOperation} />);
+
+      const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
+      expect(nameField.placeholder).toMatch(/string/i);
+
+      const completedField = screen.getByRole('combobox', { name: 'completed' });
+      expect(completedField).toBeInTheDocument();
+    });
+
+    const formDataCases: ReadonlyArray<[string, NewableFunction, IHttpOperation]> = [
+      ['application/x-www-form-urlencoded', URLSearchParams, urlEncodedPostOperation],
+      ['multipart/form-data', FormData, multipartFormdataOperation],
+    ];
+
+    describe.each(formDataCases)('Builds correct %p request', (name, prototype, fixture) => {
+      let body: URLSearchParams | FormData;
+      beforeAll(async () => {
+        render(<BasicSend httpOperation={fixture} />);
+
+        // path param
+        const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
+        await userEvent.type(nameField, 'some-name');
+
+        // click send
+        clickSend();
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        body = fetchMock.mock.calls[0][1]!.body as URLSearchParams | FormData;
+        expect(body).toBeInstanceOf(prototype);
+      });
+
+      it('Sends user input', () => {
+        expect(body.get('name')).toBe('some-name');
+      });
+
+      it('Includes untouched fields', () => {
+        expect(body.get('completed')).toBe('');
+      });
+
+      it('Sets untouched enums to their first value', () => {
+        expect(body.get('someEnum')).toBe('a');
+      });
     });
   });
 });
