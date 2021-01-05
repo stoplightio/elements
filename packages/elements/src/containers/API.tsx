@@ -56,7 +56,7 @@ const APIImpl = withRouter<APIProps>(function API(props) {
   const document = useParsedValue(apiDescriptionDocument || fetchedDocument);
   const bundledDocument = useBundleRefsIntoDocument(document, { baseUrl: apiDescriptionUrl });
 
-  const { tree, uriMap } = getToCFromOpenApiDocument(bundledDocument);
+  const { tree, uriMap } = React.useMemo(() => getToCFromOpenApiDocument(bundledDocument), [bundledDocument]);
 
   const nodeData = uriMap[pathname] || uriMap['/'];
 
