@@ -8,12 +8,12 @@ import { Spec } from 'swagger-schema-official';
 
 import { ISourceNodeMap, NodeTypes } from './types';
 
-export const isOas2 = (parsed: unknown) =>
+export const isOas2 = (parsed: unknown): parsed is Spec =>
   isObject(parsed) &&
   'swagger' in parsed &&
   Number.parseInt(String((parsed as Partial<{ swagger: unknown }>).swagger)) === 2;
 
-export const isOas3 = (parsed: unknown) =>
+export const isOas3 = (parsed: unknown): parsed is OpenAPIObject =>
   isObject(parsed) &&
   'openapi' in parsed &&
   Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3;
@@ -84,7 +84,7 @@ function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeM
   }
 }
 
-export const computeNodeData: (uriMap: IUriMap) => NodeData[] = uriMap => {
+export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[] => {
   const nodes: NodeData[] = [];
 
   for (const [uri, node] of Object.entries(uriMap)) {
@@ -104,7 +104,7 @@ export const computeNodeData: (uriMap: IUriMap) => NodeData[] = uriMap => {
             name: node['name'],
             type,
             uri,
-            tags: [],
+            tags,
           });
           break;
         case NodeType.HttpOperation:

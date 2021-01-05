@@ -1,5 +1,5 @@
 import { NodeType } from '@stoplight/types';
-import { escapeRegExp, partial, sortBy } from 'lodash';
+import { escapeRegExp, partial } from 'lodash';
 import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
 
@@ -45,7 +45,7 @@ function generateToC(searchResults: NodeData[], type: TocType) {
           )({
             httpServices,
             models,
-            httpOperations: sortBy(httpOperations, o => o.uri),
+            httpOperations,
           }),
         appendModelsToToc(toc, 'divider'),
       )();
@@ -67,10 +67,10 @@ export function generateTocSkeleton(searchResults: NodeData[]) {
 
       // HTTP Services
       toc.items.push({ type: 'divider', title: 'APIS' });
-      pipe(() => httpServices, sortNodesByUri, appendHttpServicesItemsToToC(toc))();
+      pipe(() => httpServices, appendHttpServicesItemsToToC(toc))();
 
       // Models
-      pipe(() => models, sortNodesByUri, appendModelsToToc(toc))();
+      pipe(() => models, appendModelsToToc(toc))();
 
       return toc;
     },
@@ -216,10 +216,6 @@ export function appendArticlesToToC(toc: ITableOfContents) {
   };
 }
 
-export function sortNodesByUri(httpServices: NodeData[]) {
-  return sortBy(httpServices, ['node', 'uri']);
-}
-
 function filterByUriRegexpAndCheckTags(standaloneModels: NodeData[]) {
   return ({ regexp, httpOperations, models }: { regexp: RegExp; httpOperations: NodeData[]; models: NodeData[] }) => {
     let hasTags = false;
@@ -358,14 +354,11 @@ export function appendHttpServicesToToC(toc: ITableOfContents, type: TocType) {
 export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType = 'divider') {
   return (models: NodeData[]) => {
     if (models.length) {
-      const childItems: TableOfContentItem[] = sortBy(
-        models.map(model => ({
-          type: 'item',
-          title: model.name,
-          uri: model.uri,
-        })),
-        'title',
-      );
+      const childItems: TableOfContentItem[] = models.map(model => ({
+        type: 'item',
+        title: model.name,
+        uri: model.uri,
+      }));
 
       if (schemaType === 'divider') {
         toc.items.push({ type: 'divider', title: 'Schemas' });
