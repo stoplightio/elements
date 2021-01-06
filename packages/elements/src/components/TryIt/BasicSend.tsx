@@ -7,7 +7,10 @@ import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
-import { OperationParameters } from './OperationParameters';
+import { FormDataBody } from './FormDataBody';
+import { flattenParameters, OperationParameters } from './OperationParameters';
+import { initialParameterValues } from './parameter-utils';
+import { createRequestBody, useBodyParameterState } from './request-body-utils';
 
 export interface BasicSendProps {
   httpOperation: IHttpOperation;
@@ -31,16 +34,20 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
     query: httpOperation.request?.query ?? [],
     headers: httpOperation.request?.headers ?? [],
   };
-  const allParameters = Object.values(operationParameters).flat();
+  const allParameters = flattenParameters(operationParameters);
 
-  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>({});
+  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
+    initialParameterValues(allParameters),
+  );
+
+  const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
   if (!server) return null;
 
   const handleClick = async () => {
     try {
       setLoading(true);
-      const request = buildFetchRequest(httpOperation, parameterValues);
+      const request = buildFetchRequest({ httpOperation, parameterValues, bodyParameterValues });
       const response = await fetch(...request);
       setResponse({
         status: response.status,
@@ -67,6 +74,13 @@ export const BasicSend: React.FC<BasicSendProps> = ({ httpOperation }) => {
             operationParameters={operationParameters}
             values={parameterValues}
             onChangeValues={setParameterValues}
+          />
+        )}
+        {formDataState.isFormDataBody && (
+          <FormDataBody
+            specification={formDataState.bodySpecification}
+            values={bodyParameterValues}
+            onChangeValues={setBodyParameterValues}
           />
         )}
         <Panel.Content>
@@ -111,12 +125,18 @@ const BasicSendError: React.FC<{ state: ErrorState }> = ({ state }) => (
   </Panel>
 );
 
-function buildFetchRequest(httpOperation: IHttpOperation, parameterValues: Dictionary<string, string>) {
-  const server = httpOperation.servers?.[0]?.url;
+interface BuildFetchRequestInput {
+  httpOperation: IHttpOperation;
+  parameterValues: Dictionary<string, string>;
+  bodyParameterValues?: Dictionary<string, string>;
+}
 
-  const headers = Object.fromEntries(
-    httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
-  );
+function buildFetchRequest({
+  httpOperation,
+  parameterValues,
+  bodyParameterValues,
+}: BuildFetchRequestInput): Parameters<typeof fetch> {
+  const server = httpOperation.servers?.[0]?.url;
 
   const queryParams = httpOperation.request?.query
     ?.map(param => [param.name, parameterValues[param.name] ?? ''])
@@ -126,7 +146,16 @@ function buildFetchRequest(httpOperation: IHttpOperation, parameterValues: Dicti
   const url = new URL(server + expandedPath);
   url.search = new URLSearchParams(queryParams).toString();
 
-  return [url.toString(), { method: httpOperation.method, headers }] as const;
+  return [
+    url.toString(),
+    {
+      method: httpOperation.method,
+      headers: Object.fromEntries(
+        httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
+      ),
+      body: createRequestBody(httpOperation, bodyParameterValues),
+    },
+  ];
 }
 
 function uriExpand(uri: string, data: Dictionary<string, string>) {

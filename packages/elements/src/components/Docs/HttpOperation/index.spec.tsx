@@ -4,11 +4,13 @@ import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { Tag } from '@stoplight/ui-kit';
+import { render, screen } from '@testing-library/react';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 
-import { HttpOperation } from '../index';
-import { Parameters } from '../Parameters';
+import httpOperation from '../../../__fixtures__/operations/put-todos';
+import { HttpOperation } from './index';
+import { Parameters } from './Parameters';
 
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
@@ -21,6 +23,24 @@ describe('HttpOperation', () => {
 
   afterEach(() => {
     wrapper.unmount();
+  });
+
+  describe('Header', () => {
+    it('should display "Deprecated" badge for deprecated http operation', () => {
+      render(<HttpOperation data={{ ...httpOperation, deprecated: true }} />);
+
+      const badge = getDeprecatedBadge();
+
+      expect(badge).toBeInTheDocument();
+    });
+
+    it('should not display "Deprecated" badge for http operation that is not deprecated', () => {
+      render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
+
+      const deprecatedBadge = getDeprecatedBadge();
+
+      expect(deprecatedBadge).not.toBeInTheDocument();
+    });
   });
 
   describe('Query Parameters', () => {
@@ -275,3 +295,7 @@ describe('HttpOperation', () => {
     });
   });
 });
+
+function getDeprecatedBadge() {
+  return screen.queryByRole('badge', { name: /Deprecated/i });
+}

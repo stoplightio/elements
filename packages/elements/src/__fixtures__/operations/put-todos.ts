@@ -250,7 +250,7 @@ export const httpOperation: IHttpOperation = {
   ],
   servers: [
     {
-      url: 'http://todos.stoplight.io',
+      url: 'https://todos.stoplight.io',
     },
   ],
   request: {
@@ -369,10 +369,40 @@ export const httpOperation: IHttpOperation = {
         schema: {
           type: 'string',
           description: 'Your Stoplight account id',
+          default: 'account-id-default',
         },
         name: 'account-id',
         style: HttpParamStyles.Simple,
         required: true,
+        examples: [
+          {
+            value: 'example id',
+            key: 'example',
+          },
+        ],
+      },
+      {
+        schema: {
+          type: 'string',
+          description: 'Your Stoplight account id',
+        },
+        name: 'message-id',
+        style: HttpParamStyles.Simple,
+        required: true,
+        examples: [
+          {
+            value: 'example value',
+            key: 'example 1',
+          },
+          {
+            value: 'another example',
+            key: 'example 2',
+          },
+          {
+            value: 'something else',
+            key: 'example 3',
+          },
+        ],
       },
     ],
     path: [

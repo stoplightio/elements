@@ -1,13 +1,12 @@
-import { Flex, Input, Panel, Text } from '@stoplight/mosaic';
-import { Dictionary, IHttpHeaderParam, IHttpPathParam, IHttpQueryParam } from '@stoplight/types';
+import { Panel } from '@stoplight/mosaic';
+import { Dictionary } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
-interface OperationParameters {
-  path?: IHttpPathParam[];
-  query?: IHttpQueryParam[];
-  headers?: IHttpHeaderParam[];
-}
+import { ParameterSpec } from './parameter-utils';
+import { ParameterEditor } from './ParameterEditor';
+
+type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[] | undefined>;
 
 interface OperationParametersProps {
   operationParameters: OperationParameters;
@@ -20,36 +19,33 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
   values,
   onChangeValues,
 }) => {
-  const pathParameters = sortBy(operationParameters.path ?? [], ['name']);
-  const queryParameters = sortBy(operationParameters.query ?? [], ['name']);
-  const headerParameters = sortBy(operationParameters.headers ?? [], ['name']);
-  const parameters = [...pathParameters, ...queryParameters, ...headerParameters];
+  const parameters = flattenParameters(operationParameters);
+
+  const onChange = (name: string) => (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+    onChangeValues({ ...values, [name]: newValue });
+  };
 
   return (
-    <Panel id="collapse-open" defaultIsOpen>
+    <Panel defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
-        {parameters.map(parameter => {
-          return (
-            <Flex key={parameter.name} alignItems="center">
-              <Input appearance="minimal" readOnly value={parameter.name} />
-              <Text mx={3}>:</Text>
-              <Input
-                appearance="minimal"
-                flexGrow
-                placeholder={parameter.schema?.type as string}
-                type={parameter.schema?.type as string}
-                required
-                value={values[parameter.name] ?? ''}
-                onChange={e => {
-                  const newValue = e.currentTarget.value;
-                  onChangeValues({ ...values, [parameter.name]: newValue });
-                }}
-              />
-            </Flex>
-          );
-        })}
+        {parameters.map(parameter => (
+          <ParameterEditor
+            key={parameter.name}
+            parameter={parameter}
+            value={values[parameter.name]}
+            onChange={onChange(parameter.name)}
+          />
+        ))}
       </Panel.Content>
     </Panel>
   );
 };
+
+export function flattenParameters(parameters: OperationParameters): ParameterSpec[] {
+  const pathParameters = sortBy(parameters.path ?? [], ['name']);
+  const queryParameters = sortBy(parameters.query ?? [], ['name']);
+  const headerParameters = sortBy(parameters.headers ?? [], ['name']);
+  return [...pathParameters, ...queryParameters, ...headerParameters];
+}
