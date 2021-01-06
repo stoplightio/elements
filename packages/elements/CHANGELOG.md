@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.4](https://github.com/stoplightio/elements/compare/v6.1.3...v6.1.4) (2021-01-06)
+
+
+### Bug Fixes
+
+* **deps:** [security] resolve security updates on master ([#792](https://github.com/stoplightio/elements/issues/792)) ([2a4b082](https://github.com/stoplightio/elements/commit/2a4b0823f69c41721bb644286d16c778f9609c7c))
+
+
+
+
+
 ## [6.1.3](https://github.com/stoplightio/elements/compare/v6.1.2...v6.1.3) (2020-12-22)
 
 
