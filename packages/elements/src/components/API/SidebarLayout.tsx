@@ -1,3 +1,4 @@
+import { IHttpOperation } from '@stoplight/types';
 import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
 
@@ -6,8 +7,7 @@ import { ITableOfContentsTree } from '../../types';
 import { getNodeType, isOperation, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { Row } from '../TableOfContents/Row';
-import { TryIt } from '../TryIt';
-import { TryItHeader } from '../TryIt/header';
+import { BasicSend } from '../TryIt/BasicSend';
 
 type SidebarLayoutProps = {
   pathname: string;
@@ -33,10 +33,9 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
         <div className="flex">
           <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
           {showTryIt && (
-            <div className="w-2/5 border-l relative">
+            <div className="w-2/5 relative">
               <div className="inset-0 overflow-auto px-10">
-                <TryItHeader />
-                <TryIt nodeType={nodeType} nodeData={nodeData} />
+                <BasicSend httpOperation={nodeData as IHttpOperation} />
               </div>
             </div>
           )}

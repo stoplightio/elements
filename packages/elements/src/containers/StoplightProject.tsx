@@ -61,7 +61,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
             >
               <Docs node={pathname} className="px-10" />
               {showTryIt && (
-                <div className="w-2/5 border-l relative">
+                <div className="w-2/5 relative">
                   <div className="inset-0 overflow-auto px-10">
                     <TryIt node={pathname} />
                   </div>
