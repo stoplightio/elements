@@ -1,10 +1,11 @@
-import { Flex, Input, Select, Text } from '@stoplight/mosaic';
+import { Button, Flex, Input, Select, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import {
   exampleOptions,
   getPlaceholderForParameter,
   parameterOptions,
+  parameterSupportsFileUpload,
   ParameterSpec,
   selectExampleOption,
 } from './parameter-utils';
@@ -19,6 +20,10 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
+
+  const supportsFileUpload = parameterSupportsFileUpload(parameter);
+  const [files, setFiles] = React.useState<File[] | null>(null);
+
   return (
     <Flex align="center" key={parameter.name}>
       <Input appearance="minimal" readOnly value={parameter.name} />
@@ -41,8 +46,9 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
             placeholder={getPlaceholderForParameter(parameter)}
             type={parameter.schema?.type === 'number' ? 'number' : 'text'}
             required
-            value={value ?? ''}
+            value={files ? files.map(file => file.name).join(', ') : value ?? ''}
             onChange={onChange}
+            disabled={supportsFileUpload}
           />
           {examples && (
             <Select
@@ -52,6 +58,12 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
               options={examples}
               onChange={onChange}
             />
+          )}
+          {supportsFileUpload && (
+            <div>
+              <label role="button" htmlFor="file-upload">Upload</label>
+              <input onChange={e => setFiles(Array.from(e.currentTarget.files ?? []))} type="file" hidden id="file-upload" />
+            </div>
           )}
         </Flex>
       )}

@@ -34,6 +34,10 @@ export const httpOperation: IHttpOperation = {
                 type: 'string',
                 enum: ['a', 'b', 'c'],
               },
+              someFile: {
+                type: 'string',
+                format: 'binary'
+              },
             },
             required: ['name', 'completed'],
           },

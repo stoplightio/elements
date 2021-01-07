@@ -29,11 +29,19 @@ export function exampleOptions(parameter: ParameterSpec) {
     : null;
 }
 
+export function parameterSupportsFileUpload(parameter: ParameterSpec) {
+  return parameter.schema?.type === 'string' && parameter.schema.format === 'binary';
+}
+
 export function exampleValue(example: INodeExample | INodeExternalExample) {
   return 'value' in example ? String(example.value) : String(example.externalValue);
 }
 
 export function getPlaceholderForParameter(parameter: ParameterSpec) {
+  if(parameterSupportsFileUpload(parameter)) {
+    return 'pick a file';
+  }
+
   const defaultOrType = retrieveDefaultFromSchema(parameter) ?? parameter.schema?.type;
   return defaultOrType !== undefined ? String(defaultOrType) : undefined;
 }
