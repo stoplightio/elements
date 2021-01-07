@@ -2251,6 +2251,13 @@
   dependencies:
     prop-types "^15.7.2"
 
+"@fortawesome/react-fontawesome@^0.1.14":
+  version "0.1.14"
+  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.14.tgz#bf28875c3935b69ce2dc620e1060b217a47f64ca"
+  integrity sha512-4wqNb0gRLVaBm/h+lGe8UfPPivcbuJ6ecI4hIgW0LjI7kzpYB9FkN0L9apbVzg+lsBdcTf0AlBtODjcSX5mmKA==
+  dependencies:
+    prop-types "^15.7.2"
+
 "@iarna/cli@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@iarna/cli/-/cli-1.2.0.tgz#0f7af5e851afe895104583c4ca07377a8094d641"
@@ -4008,20 +4015,20 @@
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
 
-"@stoplight/mosaic@1.0.0-beta.17":
-  version "1.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.17.tgz#c9ad744ba3774727de85dbacdc85d01d108f5f1c"
-  integrity sha512-VAi8csjvEi7ZVa9r5VWGOzibJdgxN31KAhkZ5m+fXtfH71IA9AOJgUiTDPvO98e9ULxuNGZIwrrFVhyHILktJw==
+"@stoplight/mosaic@1.0.0-beta.20":
+  version "1.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.20.tgz#e31e1569296cc4d6fcd3d42d44ba39dbb051fe45"
+  integrity sha512-AJpIZTaHf2RKI5BTb9vSDcSrWAJGK6gzJxgjCR30vRFGfCrhVdixnYEnu4Olj0CvKXtCgqwMaaRwfHvt/dRYiA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
-    "@fortawesome/react-fontawesome" "^0.1.13"
+    "@fortawesome/react-fontawesome" "^0.1.14"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
     lodash.get "^4.4.2"
     polished "^4.0.5"
-    reakit "^1.3.1"
+    reakit "^1.3.3"
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
 
@@ -18726,10 +18733,22 @@ reakit-system@^0.15.0:
   dependencies:
     reakit-utils "^0.15.0"
 
+reakit-system@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/reakit-system/-/reakit-system-0.15.1.tgz#bf5cc7a03f60a817373bc9cbb4a689c1f4100547"
+  integrity sha512-PkqfAyEohtcEu/gUvKriCv42NywDtUgvocEN3147BI45dOFAB89nrT7wRIbIcKJiUT598F+JlPXAZZVLWhc1Kg==
+  dependencies:
+    reakit-utils "^0.15.1"
+
 reakit-utils@^0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/reakit-utils/-/reakit-utils-0.15.0.tgz#41a53e4b768002d282aee76994737f2532be5afc"
   integrity sha512-c9HWaT9XU8KQWj+dhUG01WD+D4EK5bQHq+wVwRUuTXau0e49i4udNxo/t/4M3lXeOS+WfgJ8aC00/0imgzPLTw==
+
+reakit-utils@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/reakit-utils/-/reakit-utils-0.15.1.tgz#797f0a43f6a1dbc22d161224d5d2272e287dbfe3"
+  integrity sha512-6cZgKGvOkAMQgkwU9jdYbHfkuIN1Pr+vwcB19plLvcTfVN0Or10JhIuj9X+JaPZyI7ydqTDFaKNdUcDP69o/+Q==
 
 reakit-warning@^0.6.0:
   version "0.6.0"
@@ -18737,6 +18756,13 @@ reakit-warning@^0.6.0:
   integrity sha512-D3vMUQ8fFktZ+drs4PuUlwjLanYsc6bRoYQOma2iGTfQtqwQkhFeNMDKxlBQ79GfdQtZF/ECiCaLLjDUsIseWA==
   dependencies:
     reakit-utils "^0.15.0"
+
+reakit-warning@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/reakit-warning/-/reakit-warning-0.6.1.tgz#dba33bb8866aebe30e67ac433ead707d16d38a36"
+  integrity sha512-poFUV0EyxB+CcV9uTNBAFmcgsnR2DzAbOTkld4Ul+QOKSeEHZB3b3+MoZQgcYHmbvG19Na1uWaM7ES+/Eyr8tQ==
+  dependencies:
+    reakit-utils "^0.15.1"
 
 reakit@^1.3.1:
   version "1.3.1"
@@ -18748,6 +18774,17 @@ reakit@^1.3.1:
     reakit-system "^0.15.0"
     reakit-utils "^0.15.0"
     reakit-warning "^0.6.0"
+
+reakit@^1.3.3:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/reakit/-/reakit-1.3.4.tgz#1c83614130fbcee624ba510547db79c90b3435a4"
+  integrity sha512-aLR0GBOc9vELTk4PKK/zndBbIs4RSw4B7GSGY6yoMHQ/vna0iLNd5BMhjtXspD/B7hhkYERlT6di8pIyD3HSPw==
+  dependencies:
+    "@popperjs/core" "^2.5.4"
+    body-scroll-lock "^3.1.5"
+    reakit-system "^0.15.1"
+    reakit-utils "^0.15.1"
+    reakit-warning "^0.6.1"
 
 realpath-native@^1.1.0:
   version "1.1.0"
