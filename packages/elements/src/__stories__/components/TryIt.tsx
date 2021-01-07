@@ -9,8 +9,8 @@ import multipartOperation from '../../__fixtures__/operations/multipart-formdata
 import putOperation from '../../__fixtures__/operations/put-todos';
 import { operation } from '../../__fixtures__/operations/simple-get';
 import urlEncodedOperation from '../../__fixtures__/operations/urlencoded-post';
-import { TryIt } from '../../components/TryIt';
-import { BasicSend } from '../../components/TryIt/BasicSend';
+import { TryIt } from '../../components/TryIt/index';
+import { OldTryIt } from '../../components/TryIt/legacy';
 import { Provider } from '../../containers/Provider';
 
 export const darkMode = () => boolean('dark mode', false);
@@ -23,12 +23,12 @@ storiesOf('Internal/TryIt', module)
     return (
       <div className={cn('p-10', { 'bp3-dark bg-gray-8': darkMode() })}>
         <Provider host="http://stoplight-local.com:8080" workspace="chris" project="studio-demo">
-          <TryIt nodeType="http_operation" nodeData={nodeData()} mockUrl={mockUrl()} />
+          <OldTryIt nodeType="http_operation" nodeData={nodeData()} mockUrl={mockUrl()} />
         </Provider>
       </div>
     );
   })
-  .add('Basic Send', () => <BasicSend httpOperation={operation} />)
-  .add('Operation Parameters', () => <BasicSend httpOperation={putOperation} />)
-  .add('Form data body - urlencoded', () => <BasicSend httpOperation={urlEncodedOperation} />)
-  .add('Form data body - multipart', () => <BasicSend httpOperation={multipartOperation} />);
+  .add('Basic Send', () => <TryIt httpOperation={operation} />)
+  .add('Operation Parameters', () => <TryIt httpOperation={putOperation} />)
+  .add('Form data body - urlencoded', () => <TryIt httpOperation={urlEncodedOperation} />)
+  .add('Form data body - multipart', () => <TryIt httpOperation={multipartOperation} />);

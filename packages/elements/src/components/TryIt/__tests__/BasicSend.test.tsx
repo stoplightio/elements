@@ -11,7 +11,7 @@ import { httpOperation as multipartFormdataOperation } from '../../../__fixtures
 import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
 import { operation as basicOperation } from '../../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../../__fixtures__/operations/urlencoded-post';
-import { BasicSend } from '../BasicSend';
+import { TryIt } from '../index';
 
 function clickSend() {
   const button = screen.getByRole('button', { name: /send/i });
@@ -24,11 +24,11 @@ describe('TryIt', () => {
   });
 
   it("Doesn't crash", () => {
-    render(<BasicSend httpOperation={basicOperation} />);
+    render(<TryIt httpOperation={basicOperation} />);
   });
 
   it('Makes the correct basic request', async () => {
-    render(<BasicSend httpOperation={basicOperation} />);
+    render(<TryIt httpOperation={basicOperation} />);
 
     const button = screen.getByRole('button', { name: /send/i });
     userEvent.click(button);
@@ -51,7 +51,7 @@ describe('TryIt', () => {
       }),
     );
 
-    render(<BasicSend httpOperation={basicOperation} />);
+    render(<TryIt httpOperation={basicOperation} />);
 
     let responseHeader = screen.queryByText('Response');
     expect(responseHeader).not.toBeInTheDocument();
@@ -66,28 +66,28 @@ describe('TryIt', () => {
 
   describe('Parameter Handling', () => {
     it('Hides panel when there are no parameters', () => {
-      render(<BasicSend httpOperation={basicOperation} />);
+      render(<TryIt httpOperation={basicOperation} />);
 
       let parametersHeader = screen.queryByText('Parameters');
       expect(parametersHeader).not.toBeInTheDocument();
     });
 
     it('Shows panel when there are parameters', () => {
-      render(<BasicSend httpOperation={putOperation} />);
+      render(<TryIt httpOperation={putOperation} />);
 
       let parametersHeader = screen.queryByText('Parameters');
       expect(parametersHeader).toBeInTheDocument();
     });
 
     it('Displays types correctly', () => {
-      render(<BasicSend httpOperation={putOperation} />);
+      render(<TryIt httpOperation={putOperation} />);
 
       const todoIdField = screen.getByLabelText('todoId') as HTMLInputElement;
       expect(todoIdField.placeholder).toMatch(/string/i);
     });
 
     it('Initializes parameters correctly', () => {
-      render(<BasicSend httpOperation={putOperation} />);
+      render(<TryIt httpOperation={putOperation} />);
 
       // path param
       const completedField = screen.getByLabelText('completed');
@@ -114,7 +114,7 @@ describe('TryIt', () => {
     });
 
     it('Passes all parameters to the request', async () => {
-      render(<BasicSend httpOperation={putOperation} />);
+      render(<TryIt httpOperation={putOperation} />);
 
       // path param
       const todoIdField = screen.getByLabelText('todoId');
@@ -154,21 +154,21 @@ describe('TryIt', () => {
 
   describe('Form Data Body', () => {
     it('Hides panel when there are no parameters', () => {
-      render(<BasicSend httpOperation={basicOperation} />);
+      render(<TryIt httpOperation={basicOperation} />);
 
       let parametersHeader = screen.queryByText('Body');
       expect(parametersHeader).not.toBeInTheDocument();
     });
 
     it('Shows panel when there are parameters', () => {
-      render(<BasicSend httpOperation={urlEncodedPostOperation} />);
+      render(<TryIt httpOperation={urlEncodedPostOperation} />);
 
       let parametersHeader = screen.queryByText('Body');
       expect(parametersHeader).toBeInTheDocument();
     });
 
     it('Displays types correctly', () => {
-      render(<BasicSend httpOperation={urlEncodedPostOperation} />);
+      render(<TryIt httpOperation={urlEncodedPostOperation} />);
 
       const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
       expect(nameField.placeholder).toMatch(/string/i);
@@ -185,7 +185,7 @@ describe('TryIt', () => {
     describe.each(formDataCases)('Builds correct %p request', (name, prototype, fixture) => {
       let body: URLSearchParams | FormData;
       beforeAll(async () => {
-        render(<BasicSend httpOperation={fixture} />);
+        render(<TryIt httpOperation={fixture} />);
 
         // path param
         const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;

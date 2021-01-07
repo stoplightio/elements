@@ -2,7 +2,7 @@ import { IHttpOperation, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { DocsSkeleton } from '../components/Docs';
-import { BasicSend } from '../components/TryIt/BasicSend';
+import { TryIt as TryItComponent } from '../components/TryIt';
 import { useDereferencedData } from '../hooks/useDereferencedData';
 import { usePlatformApi } from '../hooks/usePlatformApi';
 import { BundledBranchNode } from '../types';
@@ -53,7 +53,7 @@ export const TryIt = ({ className, node }: ITryItProps) => {
 
   return (
     <>
-      <BasicSend httpOperation={dereferencedData as IHttpOperation} />
+      <TryItComponent httpOperation={dereferencedData as IHttpOperation} />
     </>
   );
 };
