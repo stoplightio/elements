@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.5](https://github.com/stoplightio/elements/compare/v6.1.4...v6.1.5) (2021-01-07)
+
+
+### Bug Fixes
+
+* **deps:** [security] bump urijs from 1.19.2 to 1.19.4 ([#798](https://github.com/stoplightio/elements/issues/798)) ([d1103ce](https://github.com/stoplightio/elements/commit/d1103ce1f2191d1aeeacdbdf80b0c7c016da79fa))
+
+
+
+
+
 ## [6.1.4](https://github.com/stoplightio/elements/compare/v6.1.3...v6.1.4) (2021-01-06)
 
 
