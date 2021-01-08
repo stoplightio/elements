@@ -22,18 +22,17 @@ commands:
           working_directory: ~/project
           command: git clone "<<parameters.repo-url>>" example
       - run:
+          name: Link to elements-utils
+          command: yarn link --link-folder /tmp/workspace/packages/elements-utils/dist
+      - run:
+          name: Link to elements
+          command: yarn link --link-folder /tmp/workspace/packages/elements/dist
+      - run:
+          name: Link to elements-web-components
+          command: yarn link --link-folder /tmp/workspace/packages/elements-web-components
+      - run:
           name: Install dependencies
           command: yarn --frozen-lockfile
-      - run:
-          name: Make sure example depends on elements or elements-web-components
-          command: |
-            [ -d "node_modules/@stoplight/elements" ] || [ -d "node_modules/@stoplight/elements-web-components" ]
-      - run:
-          name: Copy current elements build
-          command: |
-            if [ -d "node_modules/@stoplight/elements-web-components" ]; then cp -r /tmp/workspace/packages/elements-web-components/dist/* node_modules/@stoplight/elements-web-components/dist; fi
-            if [ -d "node_modules/@stoplight/elements" ]; then cp -r /tmp/workspace/packages/elements/dist/* node_modules/@stoplight/elements; fi
-            if [ -d "node_modules/@stoplight/elements-utils" ]; then cp -r /tmp/workspace/packages/elements-utils/dist/* node_modules/@stoplight/elements-utils; fi
       - run:
           name: Create production build
           command: yarn build
