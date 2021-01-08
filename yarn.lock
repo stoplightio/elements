@@ -2244,10 +2244,10 @@
   dependencies:
     prop-types "^15.7.2"
 
-"@fortawesome/react-fontawesome@^0.1.13":
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.13.tgz#ce9654bf4e537108014ec022f2423dbe8114fd62"
-  integrity sha512-/HrLnIft5Ks2511Pz6TxHBIctC9QalVscAC64sufQ4sJH/sXaQlG3uR9LCu6VpEwkBemgcBLrz/QPNP/ddbjDg==
+"@fortawesome/react-fontawesome@^0.1.14":
+  version "0.1.14"
+  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.14.tgz#bf28875c3935b69ce2dc620e1060b217a47f64ca"
+  integrity sha512-4wqNb0gRLVaBm/h+lGe8UfPPivcbuJ6ecI4hIgW0LjI7kzpYB9FkN0L9apbVzg+lsBdcTf0AlBtODjcSX5mmKA==
   dependencies:
     prop-types "^15.7.2"
 
@@ -3971,57 +3971,40 @@
     unist-util-select "^3.0.1"
     unist-util-visit "^2.0.2"
 
-"@stoplight/mosaic-code-viewer@1.0.0-beta.12":
-  version "1.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.12.tgz#dbbe362a159172cad7d9fdb796249131f991abf0"
-  integrity sha512-Bldv4pCK55uXl9frc2h3bmLZhPxRym5eW/oyzof8PgaO0DSQl1+daajxdsmhrs0lEGgBhEv1q9eOJfNrbpbCMQ==
+"@stoplight/mosaic-code-viewer@1.0.0-beta.20":
+  version "1.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.20.tgz#47bc9e42baa9f4142c1eb002d4f230ff0fa1f7ad"
+  integrity sha512-L/S4BFS9xlffLYzoSTwWN/XUchHzAcAF3szAvEaJS4NhT7vSpflKZIz98lxP+e3M28oT96N3cVZAMMfpOgz/aQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
-    "@fortawesome/react-fontawesome" "^0.1.13"
-    "@stoplight/mosaic" "1.0.0-beta.12"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@stoplight/mosaic" "1.0.0-beta.20"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
     lodash.get "^4.4.2"
     polished "^4.0.5"
     prism-react-renderer "^1.1.1"
-    prismjs "^1.22.0"
-    reakit "^1.3.1"
+    prismjs "^1.23.0"
+    reakit "^1.3.3"
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
 
-"@stoplight/mosaic@1.0.0-beta.12":
-  version "1.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.12.tgz#e4a18c9e099d569fd81a22f3937398d70b24df8d"
-  integrity sha512-995Z/4st43UKETBKZB39SpRiN742wLcnf1gJ/qwv9Roc8WdpooYtYAukm7DVPyzaurv2h3YMiGTyaGcJvcx3IA==
+"@stoplight/mosaic@1.0.0-beta.20":
+  version "1.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.20.tgz#e31e1569296cc4d6fcd3d42d44ba39dbb051fe45"
+  integrity sha512-AJpIZTaHf2RKI5BTb9vSDcSrWAJGK6gzJxgjCR30vRFGfCrhVdixnYEnu4Olj0CvKXtCgqwMaaRwfHvt/dRYiA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
-    "@fortawesome/react-fontawesome" "^0.1.13"
+    "@fortawesome/react-fontawesome" "^0.1.14"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
     lodash.get "^4.4.2"
     polished "^4.0.5"
-    reakit "^1.3.1"
-    ts-keycode-enum "^1.0.6"
-    zustand "^3.2.0"
-
-"@stoplight/mosaic@1.0.0-beta.17":
-  version "1.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.17.tgz#c9ad744ba3774727de85dbacdc85d01d108f5f1c"
-  integrity sha512-VAi8csjvEi7ZVa9r5VWGOzibJdgxN31KAhkZ5m+fXtfH71IA9AOJgUiTDPvO98e9ULxuNGZIwrrFVhyHILktJw==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.32"
-    "@fortawesome/free-solid-svg-icons" "^5.15.1"
-    "@fortawesome/react-fontawesome" "^0.1.13"
-    clsx "^1.1.1"
-    copy-to-clipboard "^3.3.1"
-    deepmerge "^4.2.2"
-    lodash.get "^4.4.2"
-    polished "^4.0.5"
-    reakit "^1.3.1"
+    reakit "^1.3.3"
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
 
@@ -17723,10 +17706,10 @@ prismjs@^1.20.0, prismjs@^1.8.4, prismjs@~1.20.0:
   optionalDependencies:
     clipboard "^2.0.0"
 
-prismjs@^1.22.0:
-  version "1.22.0"
-  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.22.0.tgz#73c3400afc58a823dd7eed023f8e1ce9fd8977fa"
-  integrity sha512-lLJ/Wt9yy0AiSYBf212kK3mM5L8ycwlyTlSxHBAneXLR0nzFMlZ5y7riFPF3E33zXOF2IH95xdY5jIyZbM9z/w==
+prismjs@^1.23.0:
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.23.0.tgz#d3b3967f7d72440690497652a9d40ff046067f33"
+  integrity sha512-c29LVsqOaLbBHuIbsTxaKENh1N2EQBOHaWv7gkHN4dgRbxSREqDnDbtFJYdpPauS4YCplMSNCABQ6Eeor69bAA==
   optionalDependencies:
     clipboard "^2.0.0"
 
@@ -18719,35 +18702,35 @@ readdirp@~3.4.0:
   dependencies:
     picomatch "^2.2.1"
 
-reakit-system@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/reakit-system/-/reakit-system-0.15.0.tgz#888c42a7e3dfae97913f920a23faaddb6a93ee1a"
-  integrity sha512-C7b9Jz9sU4qGpSQS5e1aGKJHoajbT3PBk3qDb5hOoc8BEpHEqkceaCH7THtVZze0I7tQUnOM9XL4DL1tO5xCxg==
+reakit-system@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/reakit-system/-/reakit-system-0.15.1.tgz#bf5cc7a03f60a817373bc9cbb4a689c1f4100547"
+  integrity sha512-PkqfAyEohtcEu/gUvKriCv42NywDtUgvocEN3147BI45dOFAB89nrT7wRIbIcKJiUT598F+JlPXAZZVLWhc1Kg==
   dependencies:
-    reakit-utils "^0.15.0"
+    reakit-utils "^0.15.1"
 
-reakit-utils@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/reakit-utils/-/reakit-utils-0.15.0.tgz#41a53e4b768002d282aee76994737f2532be5afc"
-  integrity sha512-c9HWaT9XU8KQWj+dhUG01WD+D4EK5bQHq+wVwRUuTXau0e49i4udNxo/t/4M3lXeOS+WfgJ8aC00/0imgzPLTw==
+reakit-utils@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/reakit-utils/-/reakit-utils-0.15.1.tgz#797f0a43f6a1dbc22d161224d5d2272e287dbfe3"
+  integrity sha512-6cZgKGvOkAMQgkwU9jdYbHfkuIN1Pr+vwcB19plLvcTfVN0Or10JhIuj9X+JaPZyI7ydqTDFaKNdUcDP69o/+Q==
 
-reakit-warning@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/reakit-warning/-/reakit-warning-0.6.0.tgz#16c5b4f3ce603d28f6c624803f113d5d95816168"
-  integrity sha512-D3vMUQ8fFktZ+drs4PuUlwjLanYsc6bRoYQOma2iGTfQtqwQkhFeNMDKxlBQ79GfdQtZF/ECiCaLLjDUsIseWA==
+reakit-warning@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/reakit-warning/-/reakit-warning-0.6.1.tgz#dba33bb8866aebe30e67ac433ead707d16d38a36"
+  integrity sha512-poFUV0EyxB+CcV9uTNBAFmcgsnR2DzAbOTkld4Ul+QOKSeEHZB3b3+MoZQgcYHmbvG19Na1uWaM7ES+/Eyr8tQ==
   dependencies:
-    reakit-utils "^0.15.0"
+    reakit-utils "^0.15.1"
 
-reakit@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/reakit/-/reakit-1.3.1.tgz#a103f8ac082fd41c5654e564b36201f9979389a5"
-  integrity sha512-vduxyQownw4sXdVZALEaoM4mejyjNX7v6oOIiR+acp4qSiP4OZQdTGZSgVhLfeEmri4dhUowPkQ/pt/NOb2qDg==
+reakit@^1.3.3:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/reakit/-/reakit-1.3.4.tgz#1c83614130fbcee624ba510547db79c90b3435a4"
+  integrity sha512-aLR0GBOc9vELTk4PKK/zndBbIs4RSw4B7GSGY6yoMHQ/vna0iLNd5BMhjtXspD/B7hhkYERlT6di8pIyD3HSPw==
   dependencies:
     "@popperjs/core" "^2.5.4"
     body-scroll-lock "^3.1.5"
-    reakit-system "^0.15.0"
-    reakit-utils "^0.15.0"
-    reakit-warning "^0.6.0"
+    reakit-system "^0.15.1"
+    reakit-utils "^0.15.1"
+    reakit-warning "^0.6.1"
 
 realpath-native@^1.1.0:
   version "1.1.0"

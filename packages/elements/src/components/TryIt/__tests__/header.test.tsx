@@ -4,10 +4,10 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
-import { TryItHeader } from '../header';
+import { OldTryItHeader } from '../legacy/header';
 
 test('When hovered over question circle icon, Try It Out details are displayed', async () => {
-  render(<TryItHeader />);
+  render(<OldTryItHeader />);
   const icon = screen.getByTestId('try-it-about');
 
   userEvent.click(icon);
