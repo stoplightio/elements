@@ -37,8 +37,8 @@ commands:
           command: yarn link
           working_directory: /tmp/workspace/packages/elements-web-components
       - run:
-          name: Link to all elements package
-          command: yarn link elements-utils && yarn link elements && yarn link elements-web-components
+          name: Link to all elements packages
+          command: yarn link @stoplight/elements-utils && yarn link @stoplight/elements && yarn link @stoplight/elements-web-components
       - run:
           name: Create production build
           command: yarn build
