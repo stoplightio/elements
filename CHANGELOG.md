@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.6](https://github.com/stoplightio/elements/compare/v6.1.5...v6.1.6) (2021-01-11)
+
+
+### Bug Fixes
+
+* deep import from src ([#803](https://github.com/stoplightio/elements/issues/803)) ([6f99816](https://github.com/stoplightio/elements/commit/6f9981666a72302a08e81cd737c7c12c9fac213b))
+
+
+
+
+
 ## [6.1.5](https://github.com/stoplightio/elements/compare/v6.1.4...v6.1.5) (2021-01-07)
 
 
