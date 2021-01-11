@@ -26,13 +26,19 @@ commands:
           command: yarn --frozen-lockfile
       - run:
           name: Link to elements-utils
-          command: yarn link --link-folder /tmp/workspace/packages/elements-utils/dist
+          command: yarn link
+          working_directory: /tmp/workspace/packages/elements-utils/dist
       - run:
           name: Link to elements
-          command: yarn link --link-folder /tmp/workspace/packages/elements/dist
+          command: yarn link
+          working_directory: /tmp/workspace/packages/elements/dist
       - run:
           name: Link to elements-web-components
-          command: yarn link --link-folder /tmp/workspace/packages/elements-web-components
+          command: yarn link
+          working_directory: /tmp/workspace/packages/elements-web-components
+      - run:
+          name: Link to all elements packages
+          command: yarn link elements-utils && yarn link elements && yarn link elements-web-components
       - run:
           name: Create production build
           command: yarn build
