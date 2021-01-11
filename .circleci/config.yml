@@ -80,6 +80,15 @@ jobs:
             - packages/elements
             - packages/elements-web-components
             - packages/elements-utils
+      - run:
+          command: mv ./node_modules ./dist/node_modules
+          working_directory: /tmp/workspace/packages/elements-utils
+      - run:
+          command: mv ./node_modules ./dist/node_modules
+          working_directory: /tmp/workspace/packages/elements
+      - run:
+          command: mv ./node_modules ./dist/node_modules
+          working_directory: /tmp/workspace/packages/elements-web-components
   build-docs:
     docker:
       - image: circleci/node:12
