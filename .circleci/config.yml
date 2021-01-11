@@ -22,6 +22,9 @@ commands:
           working_directory: ~/project
           command: git clone "<<parameters.repo-url>>" example
       - run:
+          name: Install dependencies
+          command: yarn --frozen-lockfile
+      - run:
           name: Link to elements-utils
           command: yarn link --link-folder /tmp/workspace/packages/elements-utils/dist
       - run:
@@ -30,9 +33,6 @@ commands:
       - run:
           name: Link to elements-web-components
           command: yarn link --link-folder /tmp/workspace/packages/elements-web-components
-      - run:
-          name: Install dependencies
-          command: yarn --frozen-lockfile
       - run:
           name: Create production build
           command: yarn build
@@ -71,9 +71,9 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - packages/elements/dist/**
-            - packages/elements-web-components/dist/**
-            - packages/elements-utils/dist/**
+            - packages/elements
+            - packages/elements-web-components
+            - packages/elements-utils
   build-docs:
     docker:
       - image: circleci/node:12
