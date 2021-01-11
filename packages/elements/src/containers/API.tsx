@@ -1,6 +1,6 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { generateToC } from '@stoplight/elements-utils/src/toc/platform';
+import { generateClassicToC as generateToC } from '@stoplight/elements-utils';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
 import * as React from 'react';
