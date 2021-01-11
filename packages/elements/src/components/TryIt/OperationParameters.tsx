@@ -11,7 +11,7 @@ type OperationParameters = Record<'path' | 'query' | 'headers', readonly Paramet
 interface OperationParametersProps {
   operationParameters: OperationParameters;
   values: Dictionary<string, string>;
-  onChangeValues: (newValues: Dictionary<string, string>) => void;
+  onChangeValues: (newValues: Dictionary<string | File, string>) => void;
 }
 
 export const OperationParameters: React.FC<OperationParametersProps> = ({
@@ -21,9 +21,8 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
 }) => {
   const parameters = flattenParameters(operationParameters);
 
-  const onChange = (name: string) => (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
-    onChangeValues({ ...values, [name]: newValue });
+  const onChange = (name: string) => (value: string | File) => {
+    onChangeValues({ ...values, [name]: value });
   };
 
   return (

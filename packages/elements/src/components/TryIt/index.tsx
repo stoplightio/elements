@@ -36,7 +36,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
   };
   const allParameters = flattenParameters(operationParameters);
 
-  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
+  const [parameterValues, setParameterValues] = React.useState<Dictionary<string | File, string>>(
     initialParameterValues(allParameters),
   );
 
@@ -127,7 +127,7 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
 
 interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
-  parameterValues: Dictionary<string, string>;
+  parameterValues: Dictionary<string | File, string>;
   bodyParameterValues?: Dictionary<string, string>;
 }
 
@@ -140,7 +140,7 @@ function buildFetchRequest({
 
   const queryParams = httpOperation.request?.query
     ?.map(param => [param.name, parameterValues[param.name] ?? ''])
-    .filter(([_, value]) => value.length > 0);
+    .filter(([_, value]) => typeof value !== 'string' || value.length > 0);
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
   const url = new URL(server + expandedPath);

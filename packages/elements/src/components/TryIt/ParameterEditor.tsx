@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Select, Text } from '@stoplight/mosaic';
+import { Flex, Input, Select, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import {
@@ -12,8 +12,8 @@ import {
 
 interface ParameterProps {
   parameter: ParameterSpec;
-  value: string;
-  onChange: (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => void;
+  value: string | File;
+  onChange: (parameterValue: string | File) => void;
 }
 
 export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
@@ -22,7 +22,14 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
 
   const supportsFileUpload = parameterSupportsFileUpload(parameter);
-  const [files, setFiles] = React.useState<File[] | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files?.[0];
+
+    if (file === undefined) return;
+
+    onChange(file);
+  }
 
   return (
     <Flex align="center" key={parameter.name}>
@@ -33,8 +40,8 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
           flexGrow
           aria-label={parameter.name}
           options={parameterValueOptions}
-          value={value}
-          onChange={onChange}
+          value={typeof value === 'string' ? value : ''}
+          onChange={e => onChange(e.currentTarget.value)}
         />
       ) : (
         <Flex flexGrow>
@@ -46,8 +53,8 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
             placeholder={getPlaceholderForParameter(parameter)}
             type={parameter.schema?.type === 'number' ? 'number' : 'text'}
             required
-            value={files ? files.map(file => file.name).join(', ') : value ?? ''}
-            onChange={onChange}
+            value={typeof value === 'string' ? value : value.name}
+            onChange={e => onChange(e.currentTarget.value)}
             disabled={supportsFileUpload}
           />
           {examples && (
@@ -56,13 +63,13 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
               flexGrow
               value={selectedExample.value}
               options={examples}
-              onChange={onChange}
+              onChange={e => onChange(e.currentTarget.value)}
             />
           )}
           {supportsFileUpload && (
             <div>
               <label role="button" htmlFor="file-upload">Upload</label>
-              <input onChange={e => setFiles(Array.from(e.currentTarget.files ?? []))} type="file" hidden id="file-upload" />
+              <input onChange={handleFileChange} type="file" hidden id="file-upload" />
             </div>
           )}
         </Flex>
