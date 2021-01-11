@@ -35,14 +35,12 @@ This repository is a monorepo that we manage using [Lerna](https://github.com/le
 
 **Installation**
 
-*Elements requires NodeJS >= 12 to properly work.*
-
 ```bash
-npm install -g @stoplight/elements@v7
+npm install -g @stoplight/elements@alpha
 
 # OR
 
-yarn global add @stoplight/elements@v7
+yarn global add @stoplight/elements@alpha
 ```
 
 <!-- For more installation options, see our [installation documentation](./docs/installation.md). -->
