@@ -4,7 +4,7 @@ import * as React from 'react';
 import { DocsSkeleton } from '../components/Docs';
 import { TryIt as TryItComponent } from '../components/TryIt';
 import { useDereferencedData } from '../hooks/useDereferencedData';
-import { usePlatformApi } from '../hooks/usePlatformApi';
+import { useActionsApi, usePlatformApi } from '../hooks/usePlatformApi';
 import { BundledBranchNode } from '../types';
 import { ActiveInfoContext } from './Provider';
 
@@ -13,14 +13,26 @@ export interface ITryItProps {
   node?: string;
 }
 
-const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-nodes/{uri}';
+type MockUrlResult = { servicePath: string; operationPath?: string; id: number };
 
-export const TryIt = ({ className, node }: ITryItProps) => {
+const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-nodes/{uri}';
+const mockActionsUrl = 'api/actions/branchNodeMockUrl';
+
+export const TryIt = ({ node }: ITryItProps) => {
   const info = React.useContext(ActiveInfoContext);
 
   const nodeUri = node || info.node;
 
   const { data: httpResult, error } = usePlatformApi<BundledBranchNode>(bundledNodesUri, {
+    platformUrl: info.host,
+    workspaceSlug: info.workspace,
+    projectSlug: info.project,
+    branchSlug: info.branch,
+    nodeUri,
+    authToken: info.authToken,
+  });
+
+  const { data: mockUrlResult } = useActionsApi<MockUrlResult>(mockActionsUrl, {
     platformUrl: info.host,
     workspaceSlug: info.workspace,
     projectSlug: info.project,
@@ -53,7 +65,11 @@ export const TryIt = ({ className, node }: ITryItProps) => {
 
   return (
     <>
-      <TryItComponent httpOperation={dereferencedData as IHttpOperation} />
+      <TryItComponent
+        httpOperation={dereferencedData as IHttpOperation}
+        showMocking
+        mockUrl={mockUrlResult?.servicePath}
+      />
     </>
   );
 };
