@@ -6,6 +6,7 @@ import * as React from 'react';
 import { useRequestMakerStore } from '../../../hooks/useRequestMakerStore';
 import { getEnabledParams } from '../../../utils/params';
 import { TabTitle } from '../TabTitle';
+import { RequestSend } from '.';
 import { RequestBody } from './Body';
 import { CodeGenerator } from './CodeGenerator';
 import { RequestHeaders } from './Headers';
@@ -134,6 +135,7 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
 
         <Tabs.Expander />
       </Tabs>
+      <RequestSend className="my-3 ml-2" />
     </div>
   );
 });
