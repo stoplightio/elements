@@ -16,7 +16,6 @@ export const MockingButton: React.FC<MockingButtonProps> = ({ operation, isEnabl
   const [code, setCode] = React.useState('');
   const [example, setExample] = React.useState<string | undefined>();
   const [dynamic, setDynamic] = React.useState<boolean | undefined>();
-  const [validate, setValidate] = React.useState(true);
 
   const toggleEnabled = React.useCallback(() => {
     if (isEnabled) {
@@ -24,10 +23,6 @@ export const MockingButton: React.FC<MockingButtonProps> = ({ operation, isEnabl
     }
     setIsEnabled(!isEnabled);
   }, [isEnabled, setIsEnabled, onData]);
-
-  const toggleValidate = React.useCallback(() => {
-    setValidate(!validate);
-  }, [validate, setValidate]);
 
   const operationResponses = operation.responses;
 
@@ -111,13 +106,7 @@ export const MockingButton: React.FC<MockingButtonProps> = ({ operation, isEnabl
                 );
               })}
             <MenuDivider />
-            <MenuItem
-              text="Validate Request Body"
-              icon={validate ? 'tick' : undefined}
-              onClick={toggleValidate}
-              disabled={!isEnabled}
-              shouldDismissPopover={false}
-            />
+            <MenuItem text="Validate Request Body" icon="tick" disabled shouldDismissPopover={false} />
             <MenuDivider />
             <MenuItem
               text="Learn About Mocking"
