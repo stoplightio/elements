@@ -2,6 +2,8 @@ import { safeStringify } from '@stoplight/json';
 import { Panel } from '@stoplight/mosaic';
 import { Dictionary, IMediaTypeContent } from '@stoplight/types';
 import * as React from 'react';
+import { FileUploadParamterEditor } from './FileUploadParameterEditors';
+import { parameterSupportsFileUpload } from './parameter-utils';
 
 import { ParameterEditor } from './ParameterEditor';
 
@@ -29,13 +31,22 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
     <Panel defaultIsOpen>
       <Panel.Titlebar>Body</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
-        {Object.entries(parameters).map(([name, schema]) => (
+        {Object.entries(parameters)
+        .map(([name, schema]) => ({ name, schema, examples: schema?.examples }))
+        .map((parameter) => (
+          parameterSupportsFileUpload(parameter) ?
+          <FileUploadParamterEditor
+            key={parameter.name}
+            parameter={parameter}
+            value={values[parameter.name] as File}
+            onChange={newValue => onChangeValues({ ...values, [parameter.name]: newValue })}
+          />
+          :
           <ParameterEditor
-            withFileUpload
-            key={name}
-            parameter={{ name, schema, examples: schema?.examples }}
-            value={values[name]}
-            onChange={newValue => onChangeValues({ ...values, [name]: newValue })}
+            key={parameter.name}
+            parameter={parameter}
+            value={values[parameter.name] as string}
+            onChange={newValue => onChangeValues({ ...values, [parameter.name]: newValue })}
           />
         ))}
       </Panel.Content>

@@ -38,10 +38,6 @@ export function exampleValue(example: INodeExample | INodeExternalExample) {
 }
 
 export function getPlaceholderForParameter(parameter: ParameterSpec) {
-  if(parameterSupportsFileUpload(parameter)) {
-    return 'pick a file';
-  }
-
   const defaultOrType = retrieveDefaultFromSchema(parameter) ?? parameter.schema?.type;
   return defaultOrType !== undefined ? String(defaultOrType) : undefined;
 }
