@@ -3,6 +3,8 @@ import * as React from 'react';
 
 import { initialParameterValues } from './parameter-utils';
 
+export type BodyParameterValues = Record<string, string | File>;
+
 export const isFormDataContent = (content: IMediaTypeContent) =>
   isUrlEncodedContent(content) || isMultipartContent(content);
 
@@ -16,7 +18,7 @@ function isMultipartContent(content: IMediaTypeContent) {
 
 export function createRequestBody(
   httpOperation: IHttpOperation,
-  bodyParameterValues: Record<string, string> | undefined,
+  bodyParameterValues: Record<string, string | File> | undefined,
 ) {
   const bodySpecification = httpOperation.request?.body?.contents?.[0];
   if (!bodySpecification) return undefined;
@@ -27,12 +29,12 @@ export function createRequestBody(
 
 type RequestBodyCreator = (options: {
   httpOperation: IHttpOperation;
-  bodyParameterValues?: Record<string, string>;
+  bodyParameterValues?: Record<string, string | File>;
   rawBodyValue?: string;
 }) => BodyInit;
 
 const createUrlEncodedRequestBody: RequestBodyCreator = ({ bodyParameterValues = {} }) => {
-  return new URLSearchParams(bodyParameterValues);
+  return new URLSearchParams(bodyParameterValues as any /* TODO: change!!!! */);
 };
 
 const createMultipartRequestBody: RequestBodyCreator = ({ bodyParameterValues = {} }) => {
@@ -67,7 +69,7 @@ export const useBodyParameterState = (httpOperation: IHttpOperation) => {
     return initialParameterValues(parameters);
   }, [isFormDataBody, bodySpecification]);
 
-  const [bodyParameterValues, setBodyParameterValues] = React.useState<Record<string, string>>(initialState);
+  const [bodyParameterValues, setBodyParameterValues] = React.useState<Record<string, string | File>>(initialState);
 
   React.useEffect(() => {
     setBodyParameterValues(initialState);

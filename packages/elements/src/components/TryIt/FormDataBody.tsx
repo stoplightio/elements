@@ -7,8 +7,8 @@ import { ParameterEditor } from './ParameterEditor';
 
 interface FormDataBodyProps {
   specification: IMediaTypeContent;
-  values: Dictionary<string, string>;
-  onChangeValues: (newValues: Dictionary<string, string>) => void;
+  values: Dictionary<string | File, string>;
+  onChangeValues: (newValues: Dictionary<string | File, string>) => void;
 }
 
 export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, values, onChangeValues }) => {
@@ -31,10 +31,11 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
         {Object.entries(parameters).map(([name, schema]) => (
           <ParameterEditor
+            withFileUpload
             key={name}
             parameter={{ name, schema, examples: schema?.examples }}
             value={values[name]}
-            onChange={e => onChangeValues({ ...values, [name]: e.currentTarget.value })}
+            onChange={newValue => onChangeValues({ ...values, [name]: newValue })}
           />
         ))}
       </Panel.Content>

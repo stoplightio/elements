@@ -10,7 +10,7 @@ import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
 import { flattenParameters, OperationParameters } from './OperationParameters';
 import { initialParameterValues } from './parameter-utils';
-import { createRequestBody, useBodyParameterState } from './request-body-utils';
+import { BodyParameterValues, createRequestBody, useBodyParameterState } from './request-body-utils';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -36,7 +36,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
   };
   const allParameters = flattenParameters(operationParameters);
 
-  const [parameterValues, setParameterValues] = React.useState<Dictionary<string | File, string>>(
+  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
     initialParameterValues(allParameters),
   );
 
@@ -127,8 +127,8 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
 
 interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
-  parameterValues: Dictionary<string | File, string>;
-  bodyParameterValues?: Dictionary<string, string>;
+  parameterValues: Dictionary<string, string>;
+  bodyParameterValues?: BodyParameterValues;
 }
 
 function buildFetchRequest({

@@ -10,20 +10,38 @@ import {
   selectExampleOption,
 } from './parameter-utils';
 
-interface ParameterProps {
+type ParameterProps = ParameterPropsWithFileUpload | ParameterPropsWithoutFileUpload;
+
+interface ParameterPropsWithoutFileUpload {
+  withFileUpload?: false;
+  parameter: ParameterSpec;
+  value: string;
+  onChange: (parameterValue: string) => void;
+}
+
+interface ParameterPropsWithFileUpload {
+  withFileUpload: true;
   parameter: ParameterSpec;
   value: string | File;
   onChange: (parameterValue: string | File) => void;
 }
 
-export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
+export const supportsFileUpload = (props: ParameterProps): props is ParameterPropsWithFileUpload => {
+  return props.withFileUpload ?? false;
+}
+
+export const ParameterEditor: React.FC<ParameterProps> = (props) => {
+  const parameterSupportsFileUpload = supportsFileUpload(props);
+  const { parameter, value, onChange } = props;
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
 
-  const supportsFileUpload = parameterSupportsFileUpload(parameter);
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!supportsFileUpload(props)) return;
+
+    const onChange = props.onChange;
+
     const file = event.currentTarget.files?.[0];
 
     if (file === undefined) return;
@@ -55,7 +73,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
             required
             value={typeof value === 'string' ? value : value.name}
             onChange={e => onChange(e.currentTarget.value)}
-            disabled={supportsFileUpload}
+            disabled={parameterSupportsFileUpload}
           />
           {examples && (
             <Select
