@@ -21,8 +21,9 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
 }) => {
   const parameters = flattenParameters(operationParameters);
 
-  const onChange = (name: string) => (value: string) => {
-    onChangeValues({ ...values, [name]: value });
+  const onChange = (name: string) => (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+    onChangeValues({ ...values, [name]: newValue });
   };
 
   return (

@@ -140,7 +140,7 @@ function buildFetchRequest({
 
   const queryParams = httpOperation.request?.query
     ?.map(param => [param.name, parameterValues[param.name] ?? ''])
-    .filter(([_, value]) => typeof value !== 'string' || value.length > 0);
+    .filter(([_, value]) => value.length > 0);
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
   const url = new URL(server + expandedPath);

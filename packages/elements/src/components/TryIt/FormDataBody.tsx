@@ -1,16 +1,17 @@
 import { safeStringify } from '@stoplight/json';
 import { Panel } from '@stoplight/mosaic';
-import { Dictionary, IMediaTypeContent } from '@stoplight/types';
+import { IMediaTypeContent } from '@stoplight/types';
 import * as React from 'react';
+
 import { FileUploadParamterEditor } from './FileUploadParameterEditors';
 import { parameterSupportsFileUpload } from './parameter-utils';
-
 import { ParameterEditor } from './ParameterEditor';
+import { BodyParameterValues } from './request-body-utils';
 
 interface FormDataBodyProps {
   specification: IMediaTypeContent;
-  values: Dictionary<string | File, string>;
-  onChangeValues: (newValues: Dictionary<string | File, string>) => void;
+  values: BodyParameterValues;
+  onChangeValues: (newValues: BodyParameterValues) => void;
 }
 
 export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, values, onChangeValues }) => {
@@ -32,23 +33,24 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
       <Panel.Titlebar>Body</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
         {Object.entries(parameters)
-        .map(([name, schema]) => ({ name, schema, examples: schema?.examples }))
-        .map((parameter) => (
-          parameterSupportsFileUpload(parameter) ?
-          <FileUploadParamterEditor
-            key={parameter.name}
-            parameter={parameter}
-            value={values[parameter.name] as File}
-            onChange={newValue => onChangeValues({ ...values, [parameter.name]: newValue })}
-          />
-          :
-          <ParameterEditor
-            key={parameter.name}
-            parameter={parameter}
-            value={values[parameter.name] as string}
-            onChange={newValue => onChangeValues({ ...values, [parameter.name]: newValue })}
-          />
-        ))}
+          .map(([name, schema]) => ({ name, schema, examples: schema?.examples }))
+          .map(parameter =>
+            parameterSupportsFileUpload(parameter) ? (
+              <FileUploadParamterEditor
+                key={parameter.name}
+                parameter={parameter}
+                value={values[parameter.name] as File}
+                onChange={newValue => onChangeValues({ ...values, [parameter.name]: newValue })}
+              />
+            ) : (
+              <ParameterEditor
+                key={parameter.name}
+                parameter={parameter}
+                value={values[parameter.name] as string}
+                onChange={e => onChangeValues({ ...values, [parameter.name]: e.currentTarget.value })}
+              />
+            ),
+          )}
       </Panel.Content>
     </Panel>
   );

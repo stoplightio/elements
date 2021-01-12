@@ -8,18 +8,17 @@ import {
   ParameterSpec,
   selectExampleOption,
 } from './parameter-utils';
+
 interface ParameterProps {
   parameter: ParameterSpec;
   value: string;
-  onChange: (parameterValue: string) => void;
+  onChange: (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const ParameterEditor: React.FC<ParameterProps> = (props) => {
-  const { parameter, value, onChange } = props;
+export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
-
   return (
     <Flex align="center" key={parameter.name}>
       <Input appearance="minimal" readOnly value={parameter.name} />
@@ -29,8 +28,8 @@ export const ParameterEditor: React.FC<ParameterProps> = (props) => {
           flexGrow
           aria-label={parameter.name}
           options={parameterValueOptions}
-          value={typeof value === 'string' ? value : ''}
-          onChange={e => onChange(e.currentTarget.value)}
+          value={value}
+          onChange={onChange}
         />
       ) : (
         <Flex flexGrow>
@@ -43,7 +42,7 @@ export const ParameterEditor: React.FC<ParameterProps> = (props) => {
             type={parameter.schema?.type === 'number' ? 'number' : 'text'}
             required
             value={value}
-            onChange={e => onChange(e.currentTarget.value)}
+            onChange={onChange}
           />
           {examples && (
             <Select
@@ -51,7 +50,7 @@ export const ParameterEditor: React.FC<ParameterProps> = (props) => {
               flexGrow
               value={selectedExample.value}
               options={examples}
-              onChange={e => onChange(e.currentTarget.value)}
+              onChange={onChange}
             />
           )}
         </Flex>
