@@ -40,7 +40,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
   return props.hasOwnProperty('apiDescriptionDocument');
 };
 
-const APIImpl = withRouter<APIProps>(function API(props) {
+const APIImpl: React.FC<APIProps> = props => {
   const { layout, apiDescriptionUrl } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
@@ -89,9 +89,9 @@ const APIImpl = withRouter<APIProps>(function API(props) {
       </div>
     </InlineRefResolverProvider>
   );
-});
+};
 
-export const API = pipe(withStyles, withPersistenceBoundary)(APIImpl);
+export const API = pipe(withRouter, withStyles, withPersistenceBoundary)(APIImpl);
 
 export function getToCFromOpenApiDocument(apiDescriptionDocument: unknown) {
   let uriMap: IUriMap = {};
