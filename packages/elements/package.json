@@ -68,6 +68,7 @@
     "fp-ts": "^2.5.3",
     "graphql": "^14",
     "httpsnippet": "^1.24.0",
+    "jotai": "^0.12.4",
     "lodash": "^4.17.19",
     "mobx-react-lite": "^1.5.2",
     "object-hash": "^2.0.3",

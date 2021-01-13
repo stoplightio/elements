@@ -1,8 +1,10 @@
+import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import { Row } from '../components/TableOfContents/Row';
 import { defaultPlatformUrl } from '../constants';
+import { withPersistenceBoundary } from '../context/Persistence';
 import { withRouter } from '../hoc/withRouter';
 import { withStyles } from '../styled';
 import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '../types';
@@ -75,6 +77,6 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
   },
 );
 
-export const StoplightProject = withStyles(StoplightProjectImpl);
+export const StoplightProject = pipe(withStyles, withPersistenceBoundary)(StoplightProjectImpl);
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';

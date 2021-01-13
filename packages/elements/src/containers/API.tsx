@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generateApiToC } from '@stoplight/elements-utils';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
+import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import useSwr from 'swr';
@@ -11,6 +12,7 @@ import { SidebarLayout } from '../components/API/SidebarLayout';
 import { StackedLayout } from '../components/API/StackedLayout';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
+import { withPersistenceBoundary } from '../context/Persistence';
 import { withRouter } from '../hoc/withRouter';
 import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
@@ -89,7 +91,7 @@ const APIImpl = withRouter<APIProps>(function API(props) {
   );
 });
 
-export const API = withStyles(APIImpl);
+export const API = pipe(withStyles, withPersistenceBoundary)(APIImpl);
 
 export function getToCFromOpenApiDocument(apiDescriptionDocument: unknown) {
   let uriMap: IUriMap = {};

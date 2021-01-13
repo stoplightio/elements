@@ -8027,12 +8027,7 @@ can-use-dom@^0.1.0:
   resolved "https://registry.yarnpkg.com/can-use-dom/-/can-use-dom-0.1.0.tgz#22cc4a34a0abc43950f42c6411024a3f6366b45a"
   integrity sha1-IsxKNKCrxDlQ9CxkEQJKP2NmtFo=
 
-caniuse-lite@^1.0.30000989, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001036:
-  version "1.0.30001173"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001173.tgz"
-  integrity sha512-R3aqmjrICdGCTAnSXtNyvWYMK3YtV5jwudbq0T7nN9k4kmE4CBuwPqyJ+KBzepSTh0huivV2gLbSMEzTTmfeYw==
-
-caniuse-lite@^1.0.30001125:
+caniuse-lite@^1.0.30000989, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001036, caniuse-lite@^1.0.30001125:
   version "1.0.30001173"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001173.tgz"
   integrity sha512-R3aqmjrICdGCTAnSXtNyvWYMK3YtV5jwudbq0T7nN9k4kmE4CBuwPqyJ+KBzepSTh0huivV2gLbSMEzTTmfeYw==
@@ -14037,6 +14032,13 @@ jest@^26.6.3:
     "@jest/core" "^26.6.3"
     import-local "^3.0.2"
     jest-cli "^26.6.3"
+
+jotai@^0.12.4:
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-0.12.4.tgz#edcbd8d0d7089f18ad24df56ecd3b87972a6115e"
+  integrity sha512-5cv1TpO7f/3GCyH5hREIevPQbQEYjoMcmlJetcv8kyN1bve4vb+NiWxlel866GsC8Y7cnk1+/Ut73QLlFGBcHA==
+  dependencies:
+    use-context-selector "1.3.5"
 
 js-base64@^2.1.8:
   version "2.5.2"
@@ -21791,6 +21793,11 @@ use-composed-ref@^1.0.0:
   integrity sha512-RVqY3NFNjZa0xrmK3bIMWNmQ01QjKPDc7DeWR3xa/N8aliVppuutOE5bZzPkQfvL+5NRWMMp0DJ99Trd974FIw==
   dependencies:
     ts-essentials "^2.0.3"
+
+use-context-selector@1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/use-context-selector/-/use-context-selector-1.3.5.tgz#ae1acc14fd504d93c42cbebd4636bf282480aea4"
+  integrity sha512-pYHLEuY3VzboKmHVpT2AABUbzhgKvKUVr7HpDtsRZ9BOJo0dF2U/AS2IEySl6cEKL5RFZP99Fp825dl0SBeqHA==
 
 use-debounce@^3.4.3:
   version "3.4.3"
