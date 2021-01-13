@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer, ViewMode } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES } from '@stoplight/markdown-viewer';
-import { JSONSchema } from '@stoplight/prism-http';
 import { Dictionary, NodeType } from '@stoplight/types';
 import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
@@ -14,6 +13,7 @@ import * as React from 'react';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../../constants';
 import { useInlineRefResolver } from '../../context/InlineRefResolver';
+import { JSONSchema } from '../../types';
 import { MarkdownViewer } from '../MarkdownViewer';
 
 export interface ISchemaViewerProps {
