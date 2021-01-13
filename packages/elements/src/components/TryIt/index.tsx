@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Dictionary, IHttpOperation } from '@stoplight/types';
+import { atom, useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
@@ -25,7 +26,11 @@ interface ErrorState {
   error: Error;
 }
 
+const persistedParameterValuesAtom = atom({});
+
 export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
+  const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
+
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
@@ -36,9 +41,14 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
   };
   const allParameters = flattenParameters(operationParameters);
 
-  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
-    initialParameterValues(allParameters),
-  );
+  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>({
+    ...initialParameterValues(allParameters),
+    ...persistedParameterValues,
+  });
+
+  React.useEffect(() => {
+    setPersistedParameterValues(prev => ({ ...prev, ...parameterValues }));
+  }, [parameterValues, setPersistedParameterValues]);
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
