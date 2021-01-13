@@ -101,3 +101,9 @@ export interface ILinkComponentProps {
   data?: Dictionary<unknown>;
   url: string;
 }
+
+export type ParamField = {
+  name: string;
+  description: string;
+  example: string;
+};
