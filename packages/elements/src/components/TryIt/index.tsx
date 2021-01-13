@@ -8,7 +8,7 @@ import * as React from 'react';
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
-import { buildPreferHeader } from './mocking-utils';
+import { getMockData, MockingOptions } from './mocking-utils';
 import { MockingButton } from './MockingButton';
 import { flattenParameters, OperationParameters } from './OperationParameters';
 import { initialParameterValues } from './parameter-utils';
@@ -44,8 +44,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     initialParameterValues(allParameters),
   );
 
-  const [isMockingEnabled, setIsMockingEnabled] = React.useState(false);
-  const [mockHeader, setMockHeader] = React.useState<Record<'Prefer', string> | undefined>();
+  const [mockingOptions, setMockingOptions] = React.useState<MockingOptions>({ isEnabled: false });
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
@@ -54,7 +53,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const handleClick = async () => {
     try {
       setLoading(true);
-      const mockData = isMockingEnabled && mockUrl ? { url: mockUrl, header: mockHeader } : undefined;
+      const mockData = getMockData(mockUrl, mockingOptions);
       const request = buildFetchRequest({
         httpOperation,
         parameterValues,
@@ -102,14 +101,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
               Send
             </Button>
             {showMocking && (
-              <MockingButton
-                isEnabled={isMockingEnabled}
-                setIsEnabled={setIsMockingEnabled}
-                onData={mockingOptions => {
-                  setMockHeader(mockingOptions ? buildPreferHeader(mockingOptions) : undefined);
-                }}
-                operation={httpOperation}
-              />
+              <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
             )}
           </Flex>
         </Panel.Content>
@@ -150,7 +142,7 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
   </Panel>
 );
 
-interface BuildFetchRequestInput {
+export interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
   bodyParameterValues?: Dictionary<string, string>;

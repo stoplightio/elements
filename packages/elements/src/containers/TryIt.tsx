@@ -64,12 +64,10 @@ export const TryIt = ({ node }: ITryItProps) => {
   if (nodeType !== NodeType.HttpOperation) return null;
 
   return (
-    <>
-      <TryItComponent
-        httpOperation={dereferencedData as IHttpOperation}
-        showMocking
-        mockUrl={mockUrlResult?.servicePath}
-      />
-    </>
+    <TryItComponent
+      httpOperation={dereferencedData as IHttpOperation}
+      showMocking
+      mockUrl={mockUrlResult?.servicePath}
+    />
   );
 };

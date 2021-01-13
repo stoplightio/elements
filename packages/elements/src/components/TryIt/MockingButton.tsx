@@ -7,34 +7,24 @@ import { MockingOptions } from './mocking-utils';
 
 interface MockingButtonProps {
   operation: IHttpOperation;
-  isEnabled: boolean;
-  setIsEnabled: (isEnabled: boolean) => void;
-  onData: (data: MockingOptions | undefined) => void;
+  options: MockingOptions;
+  onOptionsChange: (data: MockingOptions) => void;
 }
 
-export const MockingButton: React.FC<MockingButtonProps> = ({ operation, isEnabled, setIsEnabled, onData }) => {
-  const [code, setCode] = React.useState('');
-  const [example, setExample] = React.useState<string | undefined>();
-  const [dynamic, setDynamic] = React.useState<boolean | undefined>();
-
+export const MockingButton: React.FC<MockingButtonProps> = ({
+  operation,
+  options: { isEnabled, code, example, dynamic },
+  onOptionsChange,
+}) => {
   const toggleEnabled = React.useCallback(() => {
-    if (isEnabled) {
-      onData(undefined);
-    }
-    setIsEnabled(!isEnabled);
-  }, [isEnabled, setIsEnabled, onData]);
+    onOptionsChange({ isEnabled: !isEnabled });
+  }, [isEnabled, onOptionsChange]);
 
   const operationResponses = operation.responses;
 
-  const setMockingOptions = React.useCallback(
-    ({ code, example, dynamic }: MockingOptions) => {
-      setCode(code);
-      setExample(example);
-      setDynamic(dynamic);
-      onData({ code, example, dynamic });
-    },
-    [setCode, setExample, setDynamic, onData],
-  );
+  const setMockingOptions = ({ code, example, dynamic }: Omit<MockingOptions, 'isEnabled'>) => {
+    onOptionsChange({ isEnabled, code, example, dynamic });
+  };
 
   return (
     <Box>
@@ -106,12 +96,10 @@ export const MockingButton: React.FC<MockingButtonProps> = ({ operation, isEnabl
                 );
               })}
             <MenuDivider />
-            <MenuItem text="Validate Request Body" icon="tick" disabled shouldDismissPopover={false} />
-            <MenuDivider />
             <MenuItem
               text="Learn About Mocking"
               labelElement={<Icon icon="share" />}
-              href="https://meta.stoplight.io/docs/prism/docs/guides/01-mocking.md"
+              href="https://stoplight.io/api-mocking/"
               target="_blank"
               textClassName="TryIt__MockMenuText"
             />
