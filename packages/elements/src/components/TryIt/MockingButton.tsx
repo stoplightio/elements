@@ -1,6 +1,7 @@
 import { Box, Button } from '@stoplight/mosaic';
 import { IHttpOperation } from '@stoplight/types';
 import { Icon, Menu, MenuDivider, MenuItem, Popover, Position } from '@stoplight/ui-kit';
+import { uniq } from 'lodash';
 import * as React from 'react';
 
 import { MockingOptions } from './mocking-utils';
@@ -42,9 +43,9 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
               ?.filter(r => Number.isInteger(parseFloat(r.code)))
               ?.map(operationResponse => {
                 const isActive = operationResponse.code === code;
-                const exampleKeys = operationResponse.contents
-                  ?.flatMap(c => c.examples || [])
-                  .map(example => example.key);
+                const exampleKeys = uniq(
+                  operationResponse.contents?.flatMap(c => c.examples || []).map(example => example.key),
+                );
 
                 const exampleChildren = exampleKeys?.map(exampleKey => (
                   <MenuItem
@@ -87,7 +88,7 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
                     key={operationResponse.code}
                     shouldDismissPopover={false}
                     onClick={() => {
-                      setMockingOptions({ code: operationResponse.code });
+                      setMockingOptions({ code: operationResponse.code, dynamic: false });
                     }}
                   >
                     {generationModeItems}
