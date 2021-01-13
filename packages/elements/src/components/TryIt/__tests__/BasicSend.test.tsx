@@ -211,5 +211,36 @@ describe('TryIt', () => {
         expect(body.get('someEnum')).toBe('a');
       });
     });
+
+    it('displays the name of the imported file in the string input', () => {
+      render(<TryIt httpOperation={multipartFormdataOperation} />);
+
+      userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+      expect(screen.getByLabelText('someFile')).toHaveValue('some-file');
+    });
+
+    it('allows to remove file after importing it', () => {
+      render(<TryIt httpOperation={multipartFormdataOperation} />);
+
+      userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+      userEvent.click(screen.getByLabelText('Remove file'));
+
+      expect(screen.getByLabelText('someFile')).not.toHaveValue();
+    });
+
+    it('allows to upload file in multipart request', async () => {
+      render(<TryIt httpOperation={multipartFormdataOperation} />);
+
+      userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+      clickSend();
+
+      const body = fetchMock.mock.calls[0][1]!.body as URLSearchParams | FormData;
+
+      expect(body.get('someFile')).toBeInstanceOf(File);
+      expect((body.get('someFile') as File).name).toBe('some-file');
+    });
   });
 });

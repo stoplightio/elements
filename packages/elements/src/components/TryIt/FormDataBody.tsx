@@ -1,6 +1,7 @@
 import { safeStringify } from '@stoplight/json';
 import { Panel } from '@stoplight/mosaic';
 import { IMediaTypeContent } from '@stoplight/types';
+import { omit } from 'lodash';
 import * as React from 'react';
 
 import { FileUploadParamterEditor } from './FileUploadParameterEditors';
@@ -40,7 +41,11 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
                 key={parameter.name}
                 parameter={parameter}
                 value={values[parameter.name] as File}
-                onChange={newValue => onChangeValues({ ...values, [parameter.name]: newValue })}
+                onChange={newValue =>
+                  newValue
+                    ? onChangeValues({ ...values, [parameter.name]: newValue })
+                    : onChangeValues(omit(values, parameter.name))
+                }
               />
             ) : (
               <ParameterEditor
