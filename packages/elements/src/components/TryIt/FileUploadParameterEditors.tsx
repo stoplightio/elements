@@ -1,7 +1,7 @@
-import { Flex, Input, Text } from '@stoplight/mosaic';
+import { Flex, Icon, Input, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { getPlaceholderForParameter, ParameterSpec } from './parameter-utils';
+import { ParameterSpec } from './parameter-utils';
 
 interface FileUploadParamterEditorProps {
   parameter: ParameterSpec;
@@ -32,15 +32,15 @@ export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> =
           aria-label={parameter.name}
           appearance="minimal"
           flexGrow
-          placeholder={getPlaceholderForParameter(parameter)}
+          placeholder="pick a file"
           type="text"
           required
           value={value?.name ?? ''}
           disabled
         />
         {value && (
-          <button aria-label="Remove file" onClick={clearFile}>
-            X
+          <button className="mr-3 p-2" aria-label="Remove file" onClick={clearFile}>
+            <Icon icon="times" />
           </button>
         )}
         <div>
