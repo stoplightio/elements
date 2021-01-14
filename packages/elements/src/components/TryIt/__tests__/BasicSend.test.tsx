@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import { IHttpOperation } from '@stoplight/types';
+import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,7 +11,7 @@ import { httpOperation as multipartFormdataOperation } from '../../../__fixtures
 import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
 import { operation as basicOperation } from '../../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../../__fixtures__/operations/urlencoded-post';
-import { withPersistenceBoundary } from '../../../context/Persistence';
+import { PersistenceContextProvider, withPersistenceBoundary } from '../../../context/Persistence';
 import { TryIt } from '../index';
 
 function clickSend() {
@@ -167,6 +167,60 @@ describe('TryIt', () => {
           },
         }),
       );
+    });
+
+    it('Persists parameter values between operations', async () => {
+      const { rerender } = render(
+        <PersistenceContextProvider>
+          <TryIt httpOperation={putOperation} />
+        </PersistenceContextProvider>,
+      );
+
+      // fill path param
+      const todoIdField = screen.getByLabelText('todoId');
+      await userEvent.type(todoIdField, '123');
+
+      // unmount (to make sure parameters are not simply stored in component state)
+      rerender(
+        <PersistenceContextProvider>
+          <div />
+        </PersistenceContextProvider>,
+      );
+
+      // mount a different instance
+
+      const alternativeSchema: IHttpOperation = {
+        id: 'patch',
+        method: 'patch',
+        path: '/todos/{todoId}',
+        responses: [],
+        servers: [
+          {
+            url: 'https://todos.stoplight.io',
+          },
+        ],
+        request: {
+          path: [
+            {
+              schema: {
+                type: 'string',
+              },
+              name: 'todoId',
+              style: HttpParamStyles.Simple,
+              required: true,
+            },
+          ],
+        },
+      };
+
+      rerender(
+        <PersistenceContextProvider>
+          <TryIt httpOperation={alternativeSchema} />
+        </PersistenceContextProvider>,
+      );
+
+      screen.debug(screen.getByLabelText('todoId'));
+      expect(screen.getByLabelText('todoId')).toHaveValue('123');
     });
   });
 
