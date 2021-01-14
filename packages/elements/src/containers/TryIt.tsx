@@ -58,7 +58,7 @@ export const TryIt = ({ className, node }: ITryItProps) => {
     return null;
   }
 
-  if (!nodeData) {
+  if (!nodeData || !mockUrlResult) {
     return <DocsSkeleton />;
   }
 
