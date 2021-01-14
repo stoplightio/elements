@@ -65,7 +65,22 @@ describe('TryIt', () => {
     expect(responseHeader).toBeVisible();
   });
 
-  it('Handles error', () => {});
+  it('Handles error', async () => {
+    fetchMock.mockReject(new Error('sample error'));
+
+    render(<TryItWithoutPersistence httpOperation={basicOperation} />);
+
+    let errorHeader = screen.queryByText('Error');
+    expect(errorHeader).not.toBeInTheDocument();
+
+    clickSend();
+
+    errorHeader = await screen.findByText('Error');
+    expect(errorHeader).toBeVisible();
+
+    const responseHeader = screen.queryByText('Response');
+    expect(responseHeader).not.toBeInTheDocument();
+  });
 
   describe('Parameter Handling', () => {
     it('Hides panel when there are no parameters', () => {
