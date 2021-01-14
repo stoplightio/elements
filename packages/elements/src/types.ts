@@ -109,4 +109,4 @@ export type ParamField = {
   example: string;
 };
 
-export declare type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
+export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;

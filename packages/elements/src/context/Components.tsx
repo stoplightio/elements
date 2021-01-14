@@ -23,9 +23,10 @@ interface ComponentsProviderProps {
 }
 
 const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
-  const { node } = props;
-  const { annotations, value, resolved } = node;
-  const nodeType = get(annotations, 'type') || node.meta;
+  const {
+    node: { annotations, value, resolved, meta },
+  } = props;
+  const nodeType = get(annotations, 'type') || meta;
 
   const parsedValue = useParsedValue(resolved ?? value);
 
