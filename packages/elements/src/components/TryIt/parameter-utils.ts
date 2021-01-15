@@ -1,11 +1,9 @@
 import { safeStringify } from '@stoplight/json';
 import { IHttpOperation, IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { isObject, map } from 'lodash';
+import { isObject, map, sortBy, uniqBy } from 'lodash';
 import { keyBy, mapValues, pipe } from 'lodash/fp';
 import * as React from 'react';
-
-import { flattenParameters } from './OperationParameters';
 
 export type ParameterSpec = Pick<IHttpParam, 'name' | 'examples' | 'schema' | 'required'>;
 const booleanOptions = [
@@ -19,15 +17,7 @@ const persistedParameterValuesAtom = atom({});
 export const useRequestParameters = (httpOperation: IHttpOperation) => {
   const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
 
-  const groupedParameters = React.useMemo(
-    () => ({
-      path: httpOperation.request?.path ?? [],
-      query: httpOperation.request?.query ?? [],
-      headers: httpOperation.request?.headers ?? [],
-    }),
-    [httpOperation.request],
-  );
-  const allParameters = React.useMemo(() => flattenParameters(groupedParameters), [groupedParameters]);
+  const allParameters = React.useMemo(() => flattenParameters(httpOperation.request), [httpOperation.request]);
   const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
 
   const updateParameterValue = (name: string, value: string) => {
@@ -56,11 +46,17 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
 
   return {
     allParameters,
-    groupedParameters,
     parameterValuesWithDefaults,
     updateParameterValue,
   };
 };
+
+function flattenParameters(request: IHttpOperation['request']): ParameterSpec[] {
+  const pathParameters = sortBy(request?.path ?? [], ['name']);
+  const queryParameters = sortBy(request?.query ?? [], ['name']);
+  const headerParameters = sortBy(request?.headers ?? [], ['name']);
+  return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
+}
 
 export function parameterOptions(parameter: ParameterSpec) {
   return parameter.schema?.type === 'boolean'

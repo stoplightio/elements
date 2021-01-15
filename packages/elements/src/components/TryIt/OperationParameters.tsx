@@ -1,25 +1,16 @@
 import { Panel } from '@stoplight/mosaic';
-import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { ParameterSpec } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
 
-type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[] | undefined>;
-
 interface OperationParametersProps<P extends keyof any = string> {
-  operationParameters: OperationParameters;
+  parameters: readonly ParameterSpec[];
   values: Record<P, string>;
   onChangeValue: (parameterName: P, newValue: string) => void;
 }
 
-export const OperationParameters: React.FC<OperationParametersProps> = ({
-  operationParameters,
-  values,
-  onChangeValue,
-}) => {
-  const parameters = flattenParameters(operationParameters);
-
+export const OperationParameters: React.FC<OperationParametersProps> = ({ parameters, values, onChangeValue }) => {
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
@@ -36,10 +27,3 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
     </Panel>
   );
 };
-
-export function flattenParameters(parameters: OperationParameters): ParameterSpec[] {
-  const pathParameters = sortBy(parameters.path ?? [], ['name']);
-  const queryParameters = sortBy(parameters.query ?? [], ['name']);
-  const headerParameters = sortBy(parameters.headers ?? [], ['name']);
-  return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
-}

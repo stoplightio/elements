@@ -34,9 +34,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
 
-  const { allParameters, groupedParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(
-    httpOperation,
-  );
+  const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
@@ -73,7 +71,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
         </Panel.Titlebar>
         {allParameters.length > 0 && (
           <OperationParameters
-            operationParameters={groupedParameters}
+            parameters={allParameters}
             values={parameterValuesWithDefaults}
             onChangeValue={updateParameterValue}
           />
