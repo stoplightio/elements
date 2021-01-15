@@ -1,7 +1,7 @@
 import { safeStringify } from '@stoplight/json';
 import { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { isObject, map } from 'lodash';
-import { keyBy, mapValues, pipe } from 'lodash/fp';
+import { includes, keyBy, mapValues, pipe } from 'lodash/fp';
 
 export type ParameterSpec = Pick<IHttpParam, 'name' | 'examples' | 'schema' | 'required'>;
 const booleanOptions = [
@@ -29,8 +29,8 @@ export function exampleOptions(parameter: ParameterSpec) {
     : null;
 }
 
-export function parameterSupportsFileUpload(parameter: ParameterSpec) {
-  return parameter.schema?.type === 'string' && parameter.schema.format === 'binary';
+export function parameterSupportsFileUpload(parameter: Pick<ParameterSpec, 'schema'>) {
+  return parameter.schema?.type === 'string' && includes(parameter.schema.format, ['binary', 'base64']);
 }
 
 function exampleValue(example: INodeExample | INodeExternalExample) {
