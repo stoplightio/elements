@@ -1,10 +1,10 @@
-import { JSONSchema } from '@stoplight/prism-http';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
+import { JSONSchema } from '../../../types';
 import { SchemaViewer } from '../../SchemaViewer';
 import { getExamplesFromSchema } from '../HttpOperation/utils';
 

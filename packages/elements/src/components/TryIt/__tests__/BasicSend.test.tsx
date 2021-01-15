@@ -284,4 +284,56 @@ describe('TryIt', () => {
       });
     });
   });
+
+  describe('Mocking', () => {
+    it('Shows mock button', () => {
+      render(<TryIt httpOperation={basicOperation} showMocking />);
+
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+      expect(mockingButton).toBeInTheDocument();
+    });
+
+    it('Invokes request with mocked data', () => {
+      render(<TryIt httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />);
+
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+
+      userEvent.click(mockingButton);
+
+      const enableItem = screen.getByText('Enabled');
+      const responseCodeItem = screen.getByText('200');
+
+      expect(enableItem).toBeInTheDocument();
+      expect(responseCodeItem).toBeInTheDocument();
+
+      // enable mocking, set response code and send
+      userEvent.click(enableItem);
+      userEvent.click(responseCodeItem);
+      clickSend();
+
+      // disable mocking and send
+      userEvent.click(enableItem);
+      clickSend();
+
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock.mock.calls).toEqual([
+        [
+          'https://mock-todos.stoplight.io/todos',
+          expect.objectContaining({
+            method: 'get',
+            headers: {
+              Prefer: 'code=200',
+            },
+          }),
+        ],
+        [
+          'https://todos.stoplight.io/todos',
+          expect.objectContaining({
+            method: 'get',
+            headers: {},
+          }),
+        ],
+      ]);
+    });
+  });
 });
