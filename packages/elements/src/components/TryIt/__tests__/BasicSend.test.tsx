@@ -287,14 +287,16 @@ describe('TryIt', () => {
 
   describe('Mocking', () => {
     it('Shows mock button', () => {
-      render(<TryIt httpOperation={basicOperation} showMocking />);
+      render(<TryItWithPersistence httpOperation={basicOperation} showMocking />);
 
       const mockingButton = screen.getByRole('button', { name: /mocking/i });
       expect(mockingButton).toBeInTheDocument();
     });
 
     it('Invokes request with mocked data', () => {
-      render(<TryIt httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />);
+      render(
+        <TryItWithPersistence httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />,
+      );
 
       const mockingButton = screen.getByRole('button', { name: /mocking/i });
 
