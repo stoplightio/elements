@@ -1,5 +1,4 @@
-import { ParamField } from '../stores/request-maker/types';
-
+import { ParamField } from '../types';
 /**
  * Formats a multi-value header's value, based on https://tools.ietf.org/html/rfc7230#section-7
  * If an argument is a string, or a tuple where the second argument is '', only the key will be serialized.
