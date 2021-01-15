@@ -1,4 +1,5 @@
 import { Flex, Icon, Input, Text } from '@stoplight/mosaic';
+import { nanoid } from 'nanoid';
 import * as React from 'react';
 
 import { ParameterSpec } from './parameter-utils';
@@ -12,7 +13,6 @@ interface FileUploadParamterEditorProps {
 export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> = ({ parameter, value, onChange }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.currentTarget.files?.[0];
-
     if (file === undefined) return;
 
     onChange(file);
@@ -21,6 +21,8 @@ export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> =
   const clearFile = () => {
     onChange(undefined);
   };
+
+  const fileUploadInputId = React.useRef(`file-upload-${nanoid()}`);
 
   return (
     <Flex align="center" key={parameter.name}>
@@ -44,10 +46,10 @@ export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> =
           </button>
         )}
         <div>
-          <label role="button" htmlFor="file-upload">
+          <label role="button" htmlFor={fileUploadInputId.current}>
             Upload
           </label>
-          <input onChange={handleFileChange} type="file" hidden id="file-upload" />
+          <input onChange={handleFileChange} type="file" hidden id={fileUploadInputId.current} />
         </div>
       </Flex>
     </Flex>

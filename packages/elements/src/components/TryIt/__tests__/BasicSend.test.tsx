@@ -238,7 +238,7 @@ describe('TryIt', () => {
 
         clickSend();
 
-        const body = fetchMock.mock.calls[0][1]!.body as URLSearchParams | FormData;
+        const body = fetchMock.mock.calls[0][1]!.body as FormData;
 
         expect(body.get('someFile')).toBeInstanceOf(File);
         expect((body.get('someFile') as File).name).toBe('some-file');

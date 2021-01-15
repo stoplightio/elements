@@ -11,7 +11,7 @@ import {
 
 interface ParameterProps {
   parameter: ParameterSpec;
-  value: string;
+  value?: string;
   onChange: (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => void;
 }
 

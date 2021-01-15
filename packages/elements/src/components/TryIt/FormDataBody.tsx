@@ -35,27 +35,34 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
         {Object.entries(parameters)
           .map(([name, schema]) => ({ name, schema, examples: schema?.examples }))
-          .map(parameter =>
-            parameterSupportsFileUpload(parameter) ? (
-              <FileUploadParamterEditor
-                key={parameter.name}
-                parameter={parameter}
-                value={values[parameter.name] as File}
-                onChange={newValue =>
-                  newValue
-                    ? onChangeValues({ ...values, [parameter.name]: newValue })
-                    : onChangeValues(omit(values, parameter.name))
-                }
-              />
-            ) : (
+          .map(parameter => {
+            const supportsFileUpload = parameterSupportsFileUpload(parameter);
+            const value = values[parameter.name];
+
+            if (supportsFileUpload) {
+              return (
+                <FileUploadParamterEditor
+                  key={parameter.name}
+                  parameter={parameter}
+                  value={value instanceof File ? value : undefined}
+                  onChange={newValue =>
+                    newValue
+                      ? onChangeValues({ ...values, [parameter.name]: newValue })
+                      : onChangeValues(omit(values, parameter.name))
+                  }
+                />
+              );
+            }
+
+            return (
               <ParameterEditor
                 key={parameter.name}
                 parameter={parameter}
-                value={values[parameter.name] as string}
+                value={typeof value === 'string' ? value : undefined}
                 onChange={e => onChangeValues({ ...values, [parameter.name]: e.currentTarget.value })}
               />
-            ),
-          )}
+            );
+          })}
       </Panel.Content>
     </Panel>
   );

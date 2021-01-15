@@ -1,5 +1,5 @@
-import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
-import { pickBy } from 'lodash';
+import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { isString, pickBy } from 'lodash';
 import * as React from 'react';
 
 import { initialParameterValues } from './parameter-utils';
@@ -32,7 +32,7 @@ type RequestBodyCreator = (options: {
 }) => BodyInit;
 
 const createUrlEncodedRequestBody: RequestBodyCreator = ({ bodyParameterValues = {} }) => {
-  const filteredValues = pickBy(bodyParameterValues, value => typeof value === 'string') as Dictionary<string>;
+  const filteredValues = pickBy(bodyParameterValues, isString);
 
   return new URLSearchParams(filteredValues);
 };
