@@ -38,21 +38,40 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
-  const operationParameters = {
-    path: httpOperation.request?.path ?? [],
-    query: httpOperation.request?.query ?? [],
-    headers: httpOperation.request?.headers ?? [],
+  const operationParameters = React.useMemo(
+    () => ({
+      path: httpOperation.request?.path ?? [],
+      query: httpOperation.request?.query ?? [],
+      headers: httpOperation.request?.headers ?? [],
+    }),
+    [httpOperation.request],
+  );
+  const allParameters = React.useMemo(() => flattenParameters(operationParameters), [operationParameters]);
+  const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
+
+  const updateParameterValue = (name: string, value: string) => {
+    const defaultValue = parameterDefaultValues[name];
+    setPersistedParameterValues(prevState => {
+      // if the user set it to default, let's just unset it instead
+      const valueToSave = value === defaultValue ? undefined : value;
+      // only save if changed
+      if (prevState[name] !== valueToSave) {
+        return { ...prevState, [name]: valueToSave };
+      }
+      return prevState;
+    });
   };
-  const allParameters = flattenParameters(operationParameters);
 
-  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>({
-    ...initialParameterValues(allParameters),
-    ...persistedParameterValues,
-  });
-
-  React.useEffect(() => {
-    setPersistedParameterValues(prev => ({ ...prev, ...parameterValues }));
-  }, [parameterValues, setPersistedParameterValues]);
+  const parameterValuesWithDefaults = React.useMemo(
+    () =>
+      Object.fromEntries(
+        allParameters.map(parameter => [
+          parameter.name,
+          persistedParameterValues[parameter.name] ?? parameterDefaultValues[parameter.name],
+        ]),
+      ),
+    [allParameters, persistedParameterValues, parameterDefaultValues],
+  );
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
@@ -61,7 +80,11 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
   const handleClick = async () => {
     try {
       setLoading(true);
-      const request = buildFetchRequest({ httpOperation, parameterValues, bodyParameterValues });
+      const request = buildFetchRequest({
+        httpOperation,
+        parameterValues: parameterValuesWithDefaults,
+        bodyParameterValues,
+      });
       const response = await fetch(...request);
       setResponse({
         status: response.status,
@@ -86,8 +109,8 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
         {allParameters.length > 0 && (
           <OperationParameters
             operationParameters={operationParameters}
-            values={parameterValues}
-            onChangeValues={setParameterValues}
+            values={parameterValuesWithDefaults}
+            onChangeValue={updateParameterValue}
           />
         )}
         {formDataState.isFormDataBody && (

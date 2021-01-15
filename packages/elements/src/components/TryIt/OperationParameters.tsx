@@ -1,6 +1,5 @@
 import { Panel } from '@stoplight/mosaic';
-import { Dictionary } from '@stoplight/types';
-import { sortBy } from 'lodash';
+import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { ParameterSpec } from './parameter-utils';
@@ -8,23 +7,18 @@ import { ParameterEditor } from './ParameterEditor';
 
 type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[] | undefined>;
 
-interface OperationParametersProps {
+interface OperationParametersProps<P extends keyof any = string> {
   operationParameters: OperationParameters;
-  values: Dictionary<string, string>;
-  onChangeValues: (newValues: Dictionary<string, string>) => void;
+  values: Record<P, string>;
+  onChangeValue: (parameterName: P, newValue: string) => void;
 }
 
 export const OperationParameters: React.FC<OperationParametersProps> = ({
   operationParameters,
   values,
-  onChangeValues,
+  onChangeValue,
 }) => {
   const parameters = flattenParameters(operationParameters);
-
-  const onChange = (name: string) => (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
-    onChangeValues({ ...values, [name]: newValue });
-  };
 
   return (
     <Panel defaultIsOpen>
@@ -35,7 +29,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
-            onChange={onChange(parameter.name)}
+            onChange={e => onChangeValue(parameter.name, e.currentTarget.value)}
           />
         ))}
       </Panel.Content>
@@ -47,5 +41,5 @@ export function flattenParameters(parameters: OperationParameters): ParameterSpe
   const pathParameters = sortBy(parameters.path ?? [], ['name']);
   const queryParameters = sortBy(parameters.query ?? [], ['name']);
   const headerParameters = sortBy(parameters.headers ?? [], ['name']);
-  return [...pathParameters, ...queryParameters, ...headerParameters];
+  return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
 }
