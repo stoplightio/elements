@@ -1,4 +1,5 @@
-import { Button, ButtonGroup, Menu, MenuDivider, MenuItem, Popover, Position } from '@stoplight/ui-kit';
+import { Button, ButtonGroup, FAIcon, Menu, MenuDivider, MenuItem, Popover, Position } from '@stoplight/ui-kit';
+import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 
@@ -50,137 +51,135 @@ export const MockButton = observer<IMockButton>(({ className }) => {
 
   return (
     <ButtonGroup>
-      <Button large className={className}>
-        Mock
-      </Button>
-      <Popover minimal position={Position.RIGHT}>
-        <Button small icon="caret-down" />
+      <Button large className={cn(className)} text="Mock" />
 
-        <Menu>
-          <MenuItem
-            className="pb-2"
-            text="Enable Mocking"
-            icon={requestStore.shouldMock ? 'tick' : undefined}
-            onClick={() => (requestStore.shouldMock = !requestStore.shouldMock)}
-            shouldDismissPopover={false}
-          />
-          {requestStore.shouldMock && (
-            <>
-              <Popover
-                autoFocus={false}
-                content={
-                  <Menu>
-                    <MenuItem
-                      active={!currentCode}
-                      text="Not Set"
-                      onClick={() => {
-                        store.setPrismMockingOption('code', undefined);
-                        store.setPrismMockingOption('exampleKey', undefined);
-                      }}
-                    />
-
-                    {operationResponses
-                      ?.filter(r => Number.isInteger(parseFloat(r.code)))
-                      ?.map(operationResponse => {
-                        const isActive = operationResponse.code === currentCode;
-                        const exampleKeys = operationResponse.contents
-                          ?.flatMap(c => c.examples || [])
-                          .map(example => example.key);
-
-                        const exampleChildren = exampleKeys?.map(exampleKey => (
-                          <MenuItem
-                            active={isActive && exampleKey === currentExample}
-                            text={exampleKey}
-                            key={exampleKey}
-                            onClick={() => {
-                              store.setPrismMockingOption('code', operationResponse.code);
-                              store.setPrismMockingOption('exampleKey', exampleKey);
-                            }}
-                          />
-                        ));
-
-                        if (exampleKeys?.length) {
-                          exampleChildren?.unshift(
-                            <MenuItem
-                              key="no-example"
-                              active={isActive && !currentExample}
-                              text="No Example"
-                              onClick={() => {
-                                store.setPrismMockingOption('code', operationResponse.code);
-                                store.setPrismMockingOption('exampleKey', undefined);
-                              }}
-                            />,
-                            <MenuDivider key="divider" />,
-                          );
-                        }
-
-                        return (
-                          <MenuItem
-                            active={isActive}
-                            text={operationResponse.code}
-                            key={operationResponse.code}
-                            onClick={() => {
-                              store.setPrismMockingOption('code', operationResponse.code);
-                              store.setPrismMockingOption('exampleKey', undefined);
-                            }}
-                          >
-                            {exampleChildren}
-                          </MenuItem>
-                        );
-                      })}
-                  </Menu>
-                }
-                position={Position.RIGHT}
-                boundary="window"
-                minimal
-              >
-                <Button
-                  minimal
-                  rightIcon="double-caret-vertical"
-                  disabled={!store.isMockEnabled}
-                  text={`Response Code: ${responseText}`}
-                />
-              </Popover>
-
+      <Popover
+        minimal
+        position={Position.RIGHT}
+        content={
+          <Menu>
+            <MenuItem
+              className="pb-2"
+              text="Enable Mocking"
+              icon={requestStore.shouldMock ? 'tick' : undefined}
+              onClick={() => (requestStore.shouldMock = !requestStore.shouldMock)}
+              shouldDismissPopover={false}
+            />
+            {requestStore.shouldMock && (
               <div className="flex flex-col">
+                <div>
+                  <Popover
+                    fill
+                    autoFocus={false}
+                    content={
+                      <Menu>
+                        <MenuItem
+                          active={!currentCode}
+                          text="Not Set"
+                          onClick={() => {
+                            store.setPrismMockingOption('code', undefined);
+                            store.setPrismMockingOption('exampleKey', undefined);
+                          }}
+                        />
+
+                        {operationResponses
+                          ?.filter(r => Number.isInteger(parseFloat(r.code)))
+                          ?.map(operationResponse => {
+                            const isActive = operationResponse.code === currentCode;
+                            const exampleKeys = operationResponse.contents
+                              ?.flatMap(c => c.examples || [])
+                              .map(example => example.key);
+
+                            const exampleChildren = exampleKeys?.map(exampleKey => (
+                              <MenuItem
+                                active={isActive && exampleKey === currentExample}
+                                text={exampleKey}
+                                key={exampleKey}
+                                onClick={() => {
+                                  store.setPrismMockingOption('code', operationResponse.code);
+                                  store.setPrismMockingOption('exampleKey', exampleKey);
+                                }}
+                              />
+                            ));
+
+                            if (exampleKeys?.length) {
+                              exampleChildren?.unshift(
+                                <MenuItem
+                                  key="no-example"
+                                  active={isActive && !currentExample}
+                                  text="No Example"
+                                  onClick={() => {
+                                    store.setPrismMockingOption('code', operationResponse.code);
+                                    store.setPrismMockingOption('exampleKey', undefined);
+                                  }}
+                                />,
+                                <MenuDivider key="divider" />,
+                              );
+                            }
+
+                            return (
+                              <MenuItem
+                                active={isActive}
+                                text={operationResponse.code}
+                                key={operationResponse.code}
+                                onClick={() => {
+                                  store.setPrismMockingOption('code', operationResponse.code);
+                                  store.setPrismMockingOption('exampleKey', undefined);
+                                }}
+                              >
+                                {exampleChildren}
+                              </MenuItem>
+                            );
+                          })}
+                      </Menu>
+                    }
+                    position={Position.RIGHT}
+                    boundary="window"
+                    minimal
+                    interactionKind="hover"
+                  >
+                    <MenuItem text={`Response Code: ${responseText}`}>
+                      <FAIcon icon="caret-right" />
+                    </MenuItem>
+                  </Popover>
+                </div>
                 <Popover
                   content={
-                    <>
-                      <Menu>
-                        {dynamicOptions &&
-                          dynamicOptions.map(option => (
-                            <MenuItem
-                              active={currentDynamicSetting === option.label}
-                              text={option.label}
-                              key={option.value}
-                              onClick={() => {
-                                store.setPrismMockingOption('dynamic', option.label === 'Dynamic');
-                              }}
-                            />
-                          ))}
-                      </Menu>
-                    </>
+                    <Menu>
+                      {dynamicOptions &&
+                        dynamicOptions.map(option => (
+                          <MenuItem
+                            active={currentDynamicSetting === option.label}
+                            text={option.label}
+                            key={option.value}
+                            onClick={() => {
+                              store.setPrismMockingOption('dynamic', option.label === 'Dynamic');
+                            }}
+                          />
+                        ))}
+                    </Menu>
                   }
                   position={Position.RIGHT}
                   minimal
                   boundary={'window'}
+                  interactionKind="hover"
                 >
-                  <Button
-                    minimal
-                    rightIcon="double-caret-vertical"
-                    text={`Response Generation: ${currentDynamicSetting}`}
-                  />
+                  <MenuItem text={`Response Generation: ${currentDynamicSetting}`}>
+                    <FAIcon icon="caret-right" />
+                  </MenuItem>
                 </Popover>
               </div>
-            </>
-          )}
-          <MenuItem
-            text="Learn About Mocking"
-            icon="share"
-            href="https://meta.stoplight.io/docs/prism/docs/guides/01-mocking.md"
-            target="_blank"
-          />
-        </Menu>
+            )}
+            <MenuItem
+              text="Learn About Mocking"
+              icon="share"
+              href="https://meta.stoplight.io/docs/prism/docs/guides/01-mocking.md"
+              target="_blank"
+            />
+          </Menu>
+        }
+      >
+        <Button small icon="caret-down" />
       </Popover>
     </ButtonGroup>
   );
