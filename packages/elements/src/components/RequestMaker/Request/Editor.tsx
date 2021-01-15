@@ -10,7 +10,7 @@ import { RequestSend } from '.';
 import { RequestBody } from './Body';
 import { CodeGenerator } from './CodeGenerator';
 import { RequestHeaders } from './Headers';
-import { Mocking } from './Mocking';
+import { MockButton } from './MockButton';
 import { RequestParameters } from './Parameters';
 
 const panelClassName = 'bg-white dark:bg-transparent border-t';
@@ -21,7 +21,6 @@ export enum RequestEditorTab {
   QUERY = 'query',
   PATH = 'path',
   CODE = 'code',
-  MOCKING = 'mocking',
 }
 
 export type RequestEditorProps = {
@@ -41,7 +40,7 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
   const shouldRenderBody = tabs.includes(RequestEditorTab.BODY);
   const shouldRenderPath = tabs.includes(RequestEditorTab.PATH);
   const shouldRenderCodeGen = tabs.includes(RequestEditorTab.CODE);
-  const shouldRenderMocking = tabs.includes(RequestEditorTab.MOCKING) && store.operation;
+  const shouldRenderMocking = store.operation;
 
   let defaultTab = RequestEditorTab.QUERY;
   if (shouldRenderQuery) {
@@ -54,8 +53,6 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
     defaultTab = RequestEditorTab.PATH;
   } else if (shouldRenderCodeGen) {
     defaultTab = RequestEditorTab.CODE;
-  } else if (shouldRenderMocking) {
-    defaultTab = RequestEditorTab.MOCKING;
   }
 
   const [selectedTabId, setSelectedTabId] = React.useState(`request-${defaultTab}`);
@@ -124,18 +121,12 @@ export const RequestEditor = observer<RequestEditorProps>(({ tabs = defaultAvail
           />
         )}
 
-        {shouldRenderMocking && (
-          <Tab
-            id="mock-editor"
-            title={<TabTitle title="Mocking" />}
-            panelClassName={panelClassName}
-            panel={<Mocking />}
-          />
-        )}
-
         <Tabs.Expander />
       </Tabs>
-      <RequestSend className="my-3 ml-2" />
+      <div className="flex items-center">
+        <RequestSend className="my-3 ml-2" />
+        {shouldRenderMocking && <MockButton className="ml-2" />}
+      </div>
     </div>
   );
 });
