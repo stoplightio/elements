@@ -1,9 +1,7 @@
 import { safeStringify } from '@stoplight/json';
-import { IHttpOperation, IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
-import { atom, useAtom } from 'jotai';
-import { isObject, map, sortBy, uniqBy } from 'lodash';
+import { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
+import { isObject, map } from 'lodash';
 import { keyBy, mapValues, pipe } from 'lodash/fp';
-import * as React from 'react';
 
 export type ParameterSpec = Pick<IHttpParam, 'name' | 'examples' | 'schema' | 'required'>;
 const booleanOptions = [
@@ -11,52 +9,6 @@ const booleanOptions = [
   { label: 'False', value: 'false' },
   { label: 'True', value: 'true' },
 ];
-
-const persistedParameterValuesAtom = atom({});
-
-export const useRequestParameters = (httpOperation: IHttpOperation) => {
-  const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
-
-  const allParameters = React.useMemo(() => flattenParameters(httpOperation.request), [httpOperation.request]);
-  const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
-
-  const updateParameterValue = (name: string, value: string) => {
-    const defaultValue = parameterDefaultValues[name];
-    setPersistedParameterValues(prevState => {
-      // if the user set it to default, let's just unset it instead
-      const valueToSave = value === defaultValue ? undefined : value;
-      // only save if changed
-      if (prevState[name] !== valueToSave) {
-        return { ...prevState, [name]: valueToSave };
-      }
-      return prevState;
-    });
-  };
-
-  const parameterValuesWithDefaults = React.useMemo(
-    () =>
-      Object.fromEntries(
-        allParameters.map(parameter => [
-          parameter.name,
-          persistedParameterValues[parameter.name] ?? parameterDefaultValues[parameter.name],
-        ]),
-      ),
-    [allParameters, persistedParameterValues, parameterDefaultValues],
-  );
-
-  return {
-    allParameters,
-    parameterValuesWithDefaults,
-    updateParameterValue,
-  };
-};
-
-function flattenParameters(request: IHttpOperation['request']): ParameterSpec[] {
-  const pathParameters = sortBy(request?.path ?? [], ['name']);
-  const queryParameters = sortBy(request?.query ?? [], ['name']);
-  const headerParameters = sortBy(request?.headers ?? [], ['name']);
-  return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
-}
 
 export function parameterOptions(parameter: ParameterSpec) {
   return parameter.schema?.type === 'boolean'

@@ -9,8 +9,8 @@ import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
 import { OperationParameters } from './OperationParameters';
-import { useRequestParameters } from './parameter-utils';
 import { createRequestBody, useBodyParameterState } from './request-body-utils';
+import { useRequestParameters } from './useOperationParameters';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
