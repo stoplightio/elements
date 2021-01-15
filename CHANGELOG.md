@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.8](https://github.com/stoplightio/elements/compare/v6.1.7...v6.1.8) (2021-01-15)
+
+
+### Bug Fixes
+
+* disappearing tryit response ([#811](https://github.com/stoplightio/elements/issues/811)) ([51d13dd](https://github.com/stoplightio/elements/commit/51d13dd78dc989dfa2ff81a3340b074ad06a9a16))
+
+
+
+
+
 ## [6.1.7](https://github.com/stoplightio/elements/compare/v6.1.6...v6.1.7) (2021-01-11)
 
 **Note:** Version bump only for package root
