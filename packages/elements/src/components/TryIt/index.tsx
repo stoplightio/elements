@@ -1,6 +1,6 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Panel, Text } from '@stoplight/mosaic';
+import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Dictionary, IHttpOperation } from '@stoplight/types';
 import * as React from 'react';
@@ -8,12 +8,16 @@ import * as React from 'react';
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
+import { getMockData, MockingOptions } from './mocking-utils';
+import { MockingButton } from './MockingButton';
 import { flattenParameters, OperationParameters } from './OperationParameters';
 import { initialParameterValues } from './parameter-utils';
 import { createRequestBody, useBodyParameterState } from './request-body-utils';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
+  showMocking?: boolean;
+  mockUrl?: string;
 }
 
 interface ResponseState {
@@ -25,7 +29,7 @@ interface ErrorState {
   error: Error;
 }
 
-export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
+export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUrl }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
@@ -40,6 +44,8 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
     initialParameterValues(allParameters),
   );
 
+  const [mockingOptions, setMockingOptions] = React.useState<MockingOptions>({ isEnabled: false });
+
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
   if (!server) return null;
@@ -47,7 +53,13 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
   const handleClick = async () => {
     try {
       setLoading(true);
-      const request = buildFetchRequest({ httpOperation, parameterValues, bodyParameterValues });
+      const mockData = getMockData(mockUrl, mockingOptions);
+      const request = buildFetchRequest({
+        httpOperation,
+        parameterValues,
+        bodyParameterValues,
+        mockData,
+      });
       const response = await fetch(...request);
       setResponse({
         status: response.status,
@@ -84,9 +96,14 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
           />
         )}
         <Panel.Content>
-          <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
-            Send
-          </Button>
+          <Flex>
+            <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
+              Send
+            </Button>
+            {showMocking && (
+              <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
+            )}
+          </Flex>
         </Panel.Content>
       </Panel>
       {response && !('error' in response) && <TryItResponse response={response} />}
@@ -125,18 +142,23 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
   </Panel>
 );
 
-interface BuildFetchRequestInput {
+export interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
   bodyParameterValues?: Dictionary<string, string>;
+  mockData?: {
+    url: string;
+    header?: Record<'Prefer', string>;
+  };
 }
 
 function buildFetchRequest({
   httpOperation,
   parameterValues,
   bodyParameterValues,
+  mockData,
 }: BuildFetchRequestInput): Parameters<typeof fetch> {
-  const server = httpOperation.servers?.[0]?.url;
+  const server = mockData?.url || httpOperation.servers?.[0]?.url;
 
   const queryParams = httpOperation.request?.query
     ?.map(param => [param.name, parameterValues[param.name] ?? ''])
@@ -150,9 +172,12 @@ function buildFetchRequest({
     url.toString(),
     {
       method: httpOperation.method,
-      headers: Object.fromEntries(
-        httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
-      ),
+      headers: {
+        ...Object.fromEntries(
+          httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
+        ),
+        ...mockData?.header,
+      },
       body: createRequestBody(httpOperation, bodyParameterValues),
     },
   ];
