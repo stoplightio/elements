@@ -3,14 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Dictionary, IHttpOperation } from '@stoplight/types';
-import { atom, useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
-import { flattenParameters, OperationParameters } from './OperationParameters';
-import { initialParameterValues } from './parameter-utils';
+import { OperationParameters } from './OperationParameters';
+import { useRequestParameters } from './parameter-utils';
 import { createRequestBody, useBodyParameterState } from './request-body-utils';
 
 export interface TryItProps {
@@ -26,51 +25,17 @@ interface ErrorState {
   error: Error;
 }
 
-const persistedParameterValuesAtom = atom({});
-
 /**
  * Displays the TryIt component for a given IHttpOperation.
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
 export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
-  const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
-
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
-  const operationParameters = React.useMemo(
-    () => ({
-      path: httpOperation.request?.path ?? [],
-      query: httpOperation.request?.query ?? [],
-      headers: httpOperation.request?.headers ?? [],
-    }),
-    [httpOperation.request],
-  );
-  const allParameters = React.useMemo(() => flattenParameters(operationParameters), [operationParameters]);
-  const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
 
-  const updateParameterValue = (name: string, value: string) => {
-    const defaultValue = parameterDefaultValues[name];
-    setPersistedParameterValues(prevState => {
-      // if the user set it to default, let's just unset it instead
-      const valueToSave = value === defaultValue ? undefined : value;
-      // only save if changed
-      if (prevState[name] !== valueToSave) {
-        return { ...prevState, [name]: valueToSave };
-      }
-      return prevState;
-    });
-  };
-
-  const parameterValuesWithDefaults = React.useMemo(
-    () =>
-      Object.fromEntries(
-        allParameters.map(parameter => [
-          parameter.name,
-          persistedParameterValues[parameter.name] ?? parameterDefaultValues[parameter.name],
-        ]),
-      ),
-    [allParameters, persistedParameterValues, parameterDefaultValues],
+  const { allParameters, groupedParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(
+    httpOperation,
   );
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
@@ -108,7 +73,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
         </Panel.Titlebar>
         {allParameters.length > 0 && (
           <OperationParameters
-            operationParameters={operationParameters}
+            operationParameters={groupedParameters}
             values={parameterValuesWithDefaults}
             onChangeValue={updateParameterValue}
           />
