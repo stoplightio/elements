@@ -19,7 +19,7 @@ function clickSend() {
   userEvent.click(button);
 }
 
-const TryItWithoutPersistence = withPersistenceBoundary(TryIt);
+const TryItWithPersistence = withPersistenceBoundary(TryIt);
 
 describe('TryIt', () => {
   beforeEach(() => {
@@ -27,11 +27,11 @@ describe('TryIt', () => {
   });
 
   it("Doesn't crash", () => {
-    render(<TryItWithoutPersistence httpOperation={basicOperation} />);
+    render(<TryItWithPersistence httpOperation={basicOperation} />);
   });
 
   it('Makes the correct basic request', async () => {
-    render(<TryItWithoutPersistence httpOperation={basicOperation} />);
+    render(<TryItWithPersistence httpOperation={basicOperation} />);
 
     const button = screen.getByRole('button', { name: /send/i });
     userEvent.click(button);
@@ -54,7 +54,7 @@ describe('TryIt', () => {
       }),
     );
 
-    render(<TryItWithoutPersistence httpOperation={basicOperation} />);
+    render(<TryItWithPersistence httpOperation={basicOperation} />);
 
     let responseHeader = screen.queryByText('Response');
     expect(responseHeader).not.toBeInTheDocument();
@@ -68,7 +68,7 @@ describe('TryIt', () => {
   it('Handles error', async () => {
     fetchMock.mockReject(new Error('sample error'));
 
-    render(<TryItWithoutPersistence httpOperation={basicOperation} />);
+    render(<TryItWithPersistence httpOperation={basicOperation} />);
 
     let errorHeader = screen.queryByText('Error');
     expect(errorHeader).not.toBeInTheDocument();
@@ -84,28 +84,28 @@ describe('TryIt', () => {
 
   describe('Parameter Handling', () => {
     it('Hides panel when there are no parameters', () => {
-      render(<TryItWithoutPersistence httpOperation={basicOperation} />);
+      render(<TryItWithPersistence httpOperation={basicOperation} />);
 
       let parametersHeader = screen.queryByText('Parameters');
       expect(parametersHeader).not.toBeInTheDocument();
     });
 
     it('Shows panel when there are parameters', () => {
-      render(<TryItWithoutPersistence httpOperation={putOperation} />);
+      render(<TryItWithPersistence httpOperation={putOperation} />);
 
       let parametersHeader = screen.queryByText('Parameters');
       expect(parametersHeader).toBeInTheDocument();
     });
 
     it('Displays types correctly', () => {
-      render(<TryItWithoutPersistence httpOperation={putOperation} />);
+      render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const todoIdField = screen.getByLabelText('todoId') as HTMLInputElement;
       expect(todoIdField.placeholder).toMatch(/string/i);
     });
 
     it('Initializes parameters correctly', () => {
-      render(<TryItWithoutPersistence httpOperation={putOperation} />);
+      render(<TryItWithPersistence httpOperation={putOperation} />);
 
       // path param
       const completedField = screen.getByLabelText('completed');
@@ -132,7 +132,7 @@ describe('TryIt', () => {
     });
 
     it('Passes all parameters to the request', async () => {
-      render(<TryItWithoutPersistence httpOperation={putOperation} />);
+      render(<TryItWithPersistence httpOperation={putOperation} />);
 
       // path param
       const todoIdField = screen.getByLabelText('todoId');
@@ -226,21 +226,21 @@ describe('TryIt', () => {
 
   describe('Form Data Body', () => {
     it('Hides panel when there are no parameters', () => {
-      render(<TryItWithoutPersistence httpOperation={basicOperation} />);
+      render(<TryItWithPersistence httpOperation={basicOperation} />);
 
       let parametersHeader = screen.queryByText('Body');
       expect(parametersHeader).not.toBeInTheDocument();
     });
 
     it('Shows panel when there are parameters', () => {
-      render(<TryItWithoutPersistence httpOperation={urlEncodedPostOperation} />);
+      render(<TryItWithPersistence httpOperation={urlEncodedPostOperation} />);
 
       let parametersHeader = screen.queryByText('Body');
       expect(parametersHeader).toBeInTheDocument();
     });
 
     it('Displays types correctly', () => {
-      render(<TryItWithoutPersistence httpOperation={urlEncodedPostOperation} />);
+      render(<TryItWithPersistence httpOperation={urlEncodedPostOperation} />);
 
       const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
       expect(nameField.placeholder).toMatch(/string/i);
@@ -257,7 +257,7 @@ describe('TryIt', () => {
     describe.each(formDataCases)('Builds correct %p request', (name, prototype, fixture) => {
       let body: URLSearchParams | FormData;
       beforeAll(async () => {
-        render(<TryItWithoutPersistence httpOperation={fixture} />);
+        render(<TryItWithPersistence httpOperation={fixture} />);
 
         // path param
         const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
