@@ -64,6 +64,7 @@
     "classnames": "^2.2.6",
     "fast-text-encoding": "^1.0.1",
     "httpsnippet": "^1.24.0",
+    "jotai": "^0.12.4",
     "lodash": "^4.17.19",
     "prop-types": "^15.7.2",
     "react-router-dom": "^5.2.0",

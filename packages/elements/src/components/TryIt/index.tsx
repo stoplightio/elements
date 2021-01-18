@@ -10,9 +10,9 @@ import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
 import { getMockData, MockingOptions } from './mocking-utils';
 import { MockingButton } from './MockingButton';
-import { flattenParameters, OperationParameters } from './OperationParameters';
-import { initialParameterValues } from './parameter-utils';
+import { OperationParameters } from './OperationParameters';
 import { createRequestBody, useBodyParameterState } from './request-body-utils';
+import { useRequestParameters } from './useOperationParameters';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -29,20 +29,16 @@ interface ErrorState {
   error: Error;
 }
 
+/**
+ * Displays the TryIt component for a given IHttpOperation.
+ * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
+ */
 export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUrl }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
-  const operationParameters = {
-    path: httpOperation.request?.path ?? [],
-    query: httpOperation.request?.query ?? [],
-    headers: httpOperation.request?.headers ?? [],
-  };
-  const allParameters = flattenParameters(operationParameters);
 
-  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
-    initialParameterValues(allParameters),
-  );
+  const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
 
   const [mockingOptions, setMockingOptions] = React.useState<MockingOptions>({ isEnabled: false });
 
@@ -56,7 +52,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
       const mockData = getMockData(mockUrl, mockingOptions);
       const request = buildFetchRequest({
         httpOperation,
-        parameterValues,
+        parameterValues: parameterValuesWithDefaults,
         bodyParameterValues,
         mockData,
       });
@@ -83,9 +79,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
         </Panel.Titlebar>
         {allParameters.length > 0 && (
           <OperationParameters
-            operationParameters={operationParameters}
-            values={parameterValues}
-            onChangeValues={setParameterValues}
+            parameters={allParameters}
+            values={parameterValuesWithDefaults}
+            onChangeValue={updateParameterValue}
           />
         )}
         {formDataState.isFormDataBody && (

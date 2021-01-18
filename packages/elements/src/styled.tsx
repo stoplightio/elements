@@ -22,7 +22,7 @@ export class Styled extends React.Component {
   }
 }
 
-export function withStyles<T>(Component: React.ComponentType<T>): React.ComponentType<T> {
+export function withStyles<T>(Component: React.ComponentType<T>): React.FC<T> {
   const Inner: React.FC<T> = props => {
     return (
       <Styled>

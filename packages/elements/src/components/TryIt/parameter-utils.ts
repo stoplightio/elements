@@ -29,7 +29,7 @@ export function exampleOptions(parameter: ParameterSpec) {
     : null;
 }
 
-export function exampleValue(example: INodeExample | INodeExternalExample) {
+function exampleValue(example: INodeExample | INodeExternalExample) {
   return 'value' in example ? String(example.value) : String(example.externalValue);
 }
 
@@ -43,7 +43,7 @@ function retrieveDefaultFromSchema(parameter: ParameterSpec) {
   return isObject(defaultValue) ? safeStringify(defaultValue) : defaultValue;
 }
 
-export const getInitialValueForParameter = (parameter: ParameterSpec) => {
+const getInitialValueForParameter = (parameter: ParameterSpec) => {
   const enums = parameter.schema?.enum ?? [];
   if (enums.length > 0) return String(enums[0]);
 
