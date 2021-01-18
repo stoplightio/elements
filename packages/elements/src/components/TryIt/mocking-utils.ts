@@ -1,15 +1,19 @@
 import { compact } from 'lodash';
 
 import { formatMultiValueHeader } from '../../utils/headers';
-import { BuildFetchRequestInput } from '.';
 
 export type MockingOptions = { isEnabled: boolean; code?: string; example?: string; dynamic?: boolean };
 type PreferHeaderProps = { code: string; example?: string; dynamic?: boolean };
 
+export type MockData = {
+  url: string;
+  header?: Record<'Prefer', string>;
+};
+
 export function getMockData(
   url: string | undefined,
   { isEnabled, code, dynamic, example }: MockingOptions,
-): BuildFetchRequestInput['mockData'] {
+): MockData | undefined {
   return isEnabled && code && url ? { url, header: buildPreferHeader({ code, dynamic, example }) } : undefined;
 }
 

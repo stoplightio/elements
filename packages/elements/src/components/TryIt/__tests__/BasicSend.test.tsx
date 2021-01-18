@@ -286,7 +286,7 @@ describe('TryIt', () => {
 
     describe('File Upload', () => {
       it('displays the name of the imported file in the string input', () => {
-        render(<TryIt httpOperation={multipartFormdataOperation} />);
+        render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
 
         userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
 
@@ -294,7 +294,7 @@ describe('TryIt', () => {
       });
 
       it('allows to remove file after importing it', () => {
-        render(<TryIt httpOperation={multipartFormdataOperation} />);
+        render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
 
         userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
 
@@ -304,7 +304,7 @@ describe('TryIt', () => {
       });
 
       it('allows to upload file in multipart request', async () => {
-        render(<TryIt httpOperation={multipartFormdataOperation} />);
+        render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
 
         userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
 

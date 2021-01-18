@@ -8,7 +8,7 @@ import * as React from 'react';
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
-import { getMockData, MockingOptions } from './mocking-utils';
+import { getMockData, MockData, MockingOptions } from './mocking-utils';
 import { MockingButton } from './MockingButton';
 import { OperationParameters } from './OperationParameters';
 import { BodyParameterValues, createRequestBody, useBodyParameterState } from './request-body-utils';
@@ -142,10 +142,7 @@ interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
   bodyParameterValues?: BodyParameterValues;
-  mockData?: {
-    url: string;
-    header?: Record<'Prefer', string>;
-  };
+  mockData?: MockData;
 }
 
 function buildFetchRequest({
