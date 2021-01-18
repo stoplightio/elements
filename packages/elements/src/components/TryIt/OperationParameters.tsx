@@ -1,31 +1,16 @@
 import { Panel } from '@stoplight/mosaic';
-import { Dictionary } from '@stoplight/types';
-import { sortBy } from 'lodash';
 import * as React from 'react';
 
 import { ParameterSpec } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
 
-type OperationParameters = Record<'path' | 'query' | 'headers', readonly ParameterSpec[] | undefined>;
-
-interface OperationParametersProps {
-  operationParameters: OperationParameters;
-  values: Dictionary<string, string>;
-  onChangeValues: (newValues: Dictionary<string, string>) => void;
+interface OperationParametersProps<P extends keyof any = string> {
+  parameters: readonly ParameterSpec[];
+  values: Record<P, string>;
+  onChangeValue: (parameterName: P, newValue: string) => void;
 }
 
-export const OperationParameters: React.FC<OperationParametersProps> = ({
-  operationParameters,
-  values,
-  onChangeValues,
-}) => {
-  const parameters = flattenParameters(operationParameters);
-
-  const onChange = (name: string) => (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
-    onChangeValues({ ...values, [name]: newValue });
-  };
-
+export const OperationParameters: React.FC<OperationParametersProps> = ({ parameters, values, onChangeValue }) => {
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
@@ -35,17 +20,10 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
-            onChange={onChange(parameter.name)}
+            onChange={e => onChangeValue(parameter.name, e.currentTarget.value)}
           />
         ))}
       </Panel.Content>
     </Panel>
   );
 };
-
-export function flattenParameters(parameters: OperationParameters): ParameterSpec[] {
-  const pathParameters = sortBy(parameters.path ?? [], ['name']);
-  const queryParameters = sortBy(parameters.query ?? [], ['name']);
-  const headerParameters = sortBy(parameters.headers ?? [], ['name']);
-  return [...pathParameters, ...queryParameters, ...headerParameters];
-}

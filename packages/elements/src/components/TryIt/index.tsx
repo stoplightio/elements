@@ -1,6 +1,6 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Panel, Text } from '@stoplight/mosaic';
+import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Dictionary, IHttpOperation } from '@stoplight/types';
 import * as React from 'react';
@@ -8,12 +8,16 @@ import * as React from 'react';
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
-import { flattenParameters, OperationParameters } from './OperationParameters';
-import { initialParameterValues } from './parameter-utils';
+import { getMockData, MockingOptions } from './mocking-utils';
+import { MockingButton } from './MockingButton';
+import { OperationParameters } from './OperationParameters';
 import { BodyParameterValues, createRequestBody, useBodyParameterState } from './request-body-utils';
+import { useRequestParameters } from './useOperationParameters';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
+  showMocking?: boolean;
+  mockUrl?: string;
 }
 
 interface ResponseState {
@@ -25,20 +29,18 @@ interface ErrorState {
   error: Error;
 }
 
-export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
+/**
+ * Displays the TryIt component for a given IHttpOperation.
+ * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
+ */
+export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUrl }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
-  const operationParameters = {
-    path: httpOperation.request?.path ?? [],
-    query: httpOperation.request?.query ?? [],
-    headers: httpOperation.request?.headers ?? [],
-  };
-  const allParameters = flattenParameters(operationParameters);
 
-  const [parameterValues, setParameterValues] = React.useState<Dictionary<string, string>>(
-    initialParameterValues(allParameters),
-  );
+  const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
+
+  const [mockingOptions, setMockingOptions] = React.useState<MockingOptions>({ isEnabled: false });
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
@@ -47,7 +49,13 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
   const handleClick = async () => {
     try {
       setLoading(true);
-      const request = buildFetchRequest({ httpOperation, parameterValues, bodyParameterValues });
+      const mockData = getMockData(mockUrl, mockingOptions);
+      const request = buildFetchRequest({
+        httpOperation,
+        parameterValues: parameterValuesWithDefaults,
+        bodyParameterValues,
+        mockData,
+      });
       const response = await fetch(...request);
       setResponse({
         status: response.status,
@@ -71,9 +79,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
         </Panel.Titlebar>
         {allParameters.length > 0 && (
           <OperationParameters
-            operationParameters={operationParameters}
-            values={parameterValues}
-            onChangeValues={setParameterValues}
+            parameters={allParameters}
+            values={parameterValuesWithDefaults}
+            onChangeValue={updateParameterValue}
           />
         )}
         {formDataState.isFormDataBody && (
@@ -84,9 +92,14 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation }) => {
           />
         )}
         <Panel.Content>
-          <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
-            Send
-          </Button>
+          <Flex>
+            <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
+              Send
+            </Button>
+            {showMocking && (
+              <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
+            )}
+          </Flex>
         </Panel.Content>
       </Panel>
       {response && !('error' in response) && <TryItResponse response={response} />}
@@ -129,14 +142,19 @@ interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
   bodyParameterValues?: BodyParameterValues;
+  mockData?: {
+    url: string;
+    header?: Record<'Prefer', string>;
+  };
 }
 
 function buildFetchRequest({
   httpOperation,
   parameterValues,
   bodyParameterValues,
+  mockData,
 }: BuildFetchRequestInput): Parameters<typeof fetch> {
-  const server = httpOperation.servers?.[0]?.url;
+  const server = mockData?.url || httpOperation.servers?.[0]?.url;
 
   const queryParams = httpOperation.request?.query
     ?.map(param => [param.name, parameterValues[param.name] ?? ''])
@@ -150,9 +168,12 @@ function buildFetchRequest({
     url.toString(),
     {
       method: httpOperation.method,
-      headers: Object.fromEntries(
-        httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
-      ),
+      headers: {
+        ...Object.fromEntries(
+          httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
+        ),
+        ...mockData?.header,
+      },
       body: createRequestBody(httpOperation, bodyParameterValues),
     },
   ];

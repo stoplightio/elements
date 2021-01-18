@@ -9,7 +9,7 @@ import { HttpMethodColors } from '../../constants';
 import { getNodeType, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { DeprecatedBadge } from '../Docs/HttpOperation/Badges';
-import { OldTryIt } from '../TryIt/legacy';
+import { TryIt } from '../TryIt';
 
 type StackedLayoutProps = {
   uriMap: IUriMap;
@@ -168,7 +168,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
             renderActiveTabPanelOnly
           >
             <Tab id="docs" title="Docs" className="p-4" panel={<Docs nodeType={nodeType} nodeData={data} headless />} />
-            <Tab id="tryit" title="Try It" className="p-4" panel={<OldTryIt nodeType={nodeType} nodeData={data} />} />
+            <Tab id="tryit" title="Try It" className="p-4" panel={<TryIt httpOperation={data as IHttpOperation} />} />
           </Tabs>
         ) : (
           <Docs className="mx-auto p-4" nodeType={nodeType} nodeData={data} headless />

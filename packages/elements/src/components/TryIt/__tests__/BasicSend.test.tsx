@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import { IHttpOperation } from '@stoplight/types';
+import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,6 +11,7 @@ import { httpOperation as multipartFormdataOperation } from '../../../__fixtures
 import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
 import { operation as basicOperation } from '../../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../../__fixtures__/operations/urlencoded-post';
+import { PersistenceContextProvider, withPersistenceBoundary } from '../../../context/Persistence';
 import { TryIt } from '../index';
 
 function clickSend() {
@@ -18,17 +19,19 @@ function clickSend() {
   userEvent.click(button);
 }
 
+const TryItWithPersistence = withPersistenceBoundary(TryIt);
+
 describe('TryIt', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
   });
 
   it("Doesn't crash", () => {
-    render(<TryIt httpOperation={basicOperation} />);
+    render(<TryItWithPersistence httpOperation={basicOperation} />);
   });
 
   it('Makes the correct basic request', async () => {
-    render(<TryIt httpOperation={basicOperation} />);
+    render(<TryItWithPersistence httpOperation={basicOperation} />);
 
     const button = screen.getByRole('button', { name: /send/i });
     userEvent.click(button);
@@ -51,7 +54,7 @@ describe('TryIt', () => {
       }),
     );
 
-    render(<TryIt httpOperation={basicOperation} />);
+    render(<TryItWithPersistence httpOperation={basicOperation} />);
 
     let responseHeader = screen.queryByText('Response');
     expect(responseHeader).not.toBeInTheDocument();
@@ -62,32 +65,47 @@ describe('TryIt', () => {
     expect(responseHeader).toBeVisible();
   });
 
-  it('Handles error', () => {});
+  it('Handles error', async () => {
+    fetchMock.mockReject(new Error('sample error'));
+
+    render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+    let errorHeader = screen.queryByText('Error');
+    expect(errorHeader).not.toBeInTheDocument();
+
+    clickSend();
+
+    errorHeader = await screen.findByText('Error');
+    expect(errorHeader).toBeVisible();
+
+    const responseHeader = screen.queryByText('Response');
+    expect(responseHeader).not.toBeInTheDocument();
+  });
 
   describe('Parameter Handling', () => {
     it('Hides panel when there are no parameters', () => {
-      render(<TryIt httpOperation={basicOperation} />);
+      render(<TryItWithPersistence httpOperation={basicOperation} />);
 
       let parametersHeader = screen.queryByText('Parameters');
       expect(parametersHeader).not.toBeInTheDocument();
     });
 
     it('Shows panel when there are parameters', () => {
-      render(<TryIt httpOperation={putOperation} />);
+      render(<TryItWithPersistence httpOperation={putOperation} />);
 
       let parametersHeader = screen.queryByText('Parameters');
       expect(parametersHeader).toBeInTheDocument();
     });
 
     it('Displays types correctly', () => {
-      render(<TryIt httpOperation={putOperation} />);
+      render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const todoIdField = screen.getByLabelText('todoId') as HTMLInputElement;
       expect(todoIdField.placeholder).toMatch(/string/i);
     });
 
     it('Initializes parameters correctly', () => {
-      render(<TryIt httpOperation={putOperation} />);
+      render(<TryItWithPersistence httpOperation={putOperation} />);
 
       // path param
       const completedField = screen.getByLabelText('completed');
@@ -114,7 +132,7 @@ describe('TryIt', () => {
     });
 
     it('Passes all parameters to the request', async () => {
-      render(<TryIt httpOperation={putOperation} />);
+      render(<TryItWithPersistence httpOperation={putOperation} />);
 
       // path param
       const todoIdField = screen.getByLabelText('todoId');
@@ -150,25 +168,79 @@ describe('TryIt', () => {
         }),
       );
     });
+
+    it('Persists parameter values between operations', async () => {
+      const { rerender } = render(
+        <PersistenceContextProvider>
+          <TryIt httpOperation={putOperation} />
+        </PersistenceContextProvider>,
+      );
+
+      // fill path param
+      const todoIdField = screen.getByLabelText('todoId');
+      await userEvent.type(todoIdField, '123');
+
+      // unmount (to make sure parameters are not simply stored in component state)
+      rerender(
+        <PersistenceContextProvider>
+          <div />
+        </PersistenceContextProvider>,
+      );
+
+      // mount a different instance
+
+      const alternativeSchema: IHttpOperation = {
+        id: 'patch',
+        method: 'patch',
+        path: '/todos/{todoId}',
+        responses: [],
+        servers: [
+          {
+            url: 'https://todos.stoplight.io',
+          },
+        ],
+        request: {
+          path: [
+            {
+              schema: {
+                type: 'string',
+              },
+              name: 'todoId',
+              style: HttpParamStyles.Simple,
+              required: true,
+            },
+          ],
+        },
+      };
+
+      rerender(
+        <PersistenceContextProvider>
+          <TryIt httpOperation={alternativeSchema} />
+        </PersistenceContextProvider>,
+      );
+
+      screen.debug(screen.getByLabelText('todoId'));
+      expect(screen.getByLabelText('todoId')).toHaveValue('123');
+    });
   });
 
   describe('Form Data Body', () => {
     it('Hides panel when there are no parameters', () => {
-      render(<TryIt httpOperation={basicOperation} />);
+      render(<TryItWithPersistence httpOperation={basicOperation} />);
 
       let parametersHeader = screen.queryByText('Body');
       expect(parametersHeader).not.toBeInTheDocument();
     });
 
     it('Shows panel when there are parameters', () => {
-      render(<TryIt httpOperation={urlEncodedPostOperation} />);
+      render(<TryItWithPersistence httpOperation={urlEncodedPostOperation} />);
 
       let parametersHeader = screen.queryByText('Body');
       expect(parametersHeader).toBeInTheDocument();
     });
 
     it('Displays types correctly', () => {
-      render(<TryIt httpOperation={urlEncodedPostOperation} />);
+      render(<TryItWithPersistence httpOperation={urlEncodedPostOperation} />);
 
       const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
       expect(nameField.placeholder).toMatch(/string/i);
@@ -185,7 +257,7 @@ describe('TryIt', () => {
     describe.each(formDataCases)('Builds correct %p request', (name, prototype, fixture) => {
       let body: URLSearchParams | FormData;
       beforeAll(async () => {
-        render(<TryIt httpOperation={fixture} />);
+        render(<TryItWithPersistence httpOperation={fixture} />);
 
         // path param
         const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
@@ -243,6 +315,60 @@ describe('TryIt', () => {
         expect(body.get('someFile')).toBeInstanceOf(File);
         expect((body.get('someFile') as File).name).toBe('some-file');
       });
+    });
+  });
+
+  describe('Mocking', () => {
+    it('Shows mock button', () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} showMocking />);
+
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+      expect(mockingButton).toBeInTheDocument();
+    });
+
+    it('Invokes request with mocked data', () => {
+      render(
+        <TryItWithPersistence httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />,
+      );
+
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+
+      userEvent.click(mockingButton);
+
+      const enableItem = screen.getByText('Enabled');
+      const responseCodeItem = screen.getByText('200');
+
+      expect(enableItem).toBeInTheDocument();
+      expect(responseCodeItem).toBeInTheDocument();
+
+      // enable mocking, set response code and send
+      userEvent.click(enableItem);
+      userEvent.click(responseCodeItem);
+      clickSend();
+
+      // disable mocking and send
+      userEvent.click(enableItem);
+      clickSend();
+
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock.mock.calls).toEqual([
+        [
+          'https://mock-todos.stoplight.io/todos',
+          expect.objectContaining({
+            method: 'get',
+            headers: {
+              Prefer: 'code=200',
+            },
+          }),
+        ],
+        [
+          'https://todos.stoplight.io/todos',
+          expect.objectContaining({
+            method: 'get',
+            headers: {},
+          }),
+        ],
+      ]);
     });
   });
 });

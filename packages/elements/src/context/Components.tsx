@@ -1,20 +1,17 @@
 import {
-  CLASSNAMES,
   defaultComponentMapping,
   ICodeAnnotations,
   IComponentMapping,
   IComponentMappingProps,
 } from '@stoplight/markdown-viewer';
 import { ICode } from '@stoplight/markdown/ast-types/smdast';
-import cn from 'classnames';
-import { defaults, get, isObject } from 'lodash';
+import { defaults, get } from 'lodash';
 import * as React from 'react';
 
 import { getExamplesFromSchema } from '../components/Docs/HttpOperation/utils';
-import { HttpRequest } from '../components/Docs/HttpRequest';
 import { SchemaViewer } from '../components/SchemaViewer';
 import { useParsedValue } from '../hooks/useParsedValue';
-import { isHttpRequest, isJSONSchema } from '../utils/guards';
+import { isJSONSchema } from '../utils/guards';
 
 const ComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
 ComponentsContext.displayName = 'ComponentsContext';
@@ -26,9 +23,10 @@ interface ComponentsProviderProps {
 }
 
 const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
-  const { node, parent } = props;
-  const { annotations, value, resolved } = node;
-  const nodeType = get(annotations, 'type') || node.meta;
+  const {
+    node: { annotations, value, resolved, meta },
+  } = props;
+  const nodeType = get(annotations, 'type') || meta;
 
   const parsedValue = useParsedValue(resolved ?? value);
 
@@ -39,21 +37,6 @@ const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) =
 
     return (
       <SchemaViewer title={annotations?.title} schema={parsedValue} examples={getExamplesFromSchema(parsedValue)} />
-    );
-  }
-
-  if (nodeType === 'http') {
-    if (!isObject(parsedValue)) {
-      return null;
-    }
-
-    return (
-      <HttpRequest
-        className={cn('my-10', {
-          [CLASSNAMES.block]: !parent || parent.type !== 'tab',
-        })}
-        data={isHttpRequest(parsedValue) ? parsedValue : { method: 'get', ...parsedValue }}
-      />
     );
   }
 
