@@ -1,18 +1,35 @@
 import * as React from 'react';
-import {
-  Title,
-  Subtitle,
-  Description,
-  Primary,
-  ArgsTable,
-  PRIMARY_STORY,
-} from '@storybook/addon-docs/blocks';
+import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 
 import '../src/styles/elements.scss';
 
 import { injectStyles } from '@stoplight/mosaic';
+import cn from 'classnames';
 
 injectStyles();
+
+export const globalTypes = {
+  theme: {
+    name: 'Theme',
+    description: 'Global theme for components',
+    defaultValue: 'light',
+    toolbar: {
+      icon: 'circlehollow',
+      items: ['light', 'dark'],
+    },
+  },
+};
+
+const ThemeProvider = (Story, context) => {
+  const theme = context.globals.theme;
+  return (
+    <div className={cn('p-10', { 'bp3-dark bg-gray-8': theme === 'dark' })}>
+      <Story {...context} />
+    </div>
+  );
+};
+
+export const decorators = [ThemeProvider];
 
 export const parameters = {
   docs: {
@@ -28,7 +45,7 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Public', 'Internal']
-    }
-  }
+      order: ['Public', 'Internal'],
+    },
+  },
 };
