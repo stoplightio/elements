@@ -14,7 +14,7 @@ export default create({
   appContentBg: 'white',
   appBorderColor: '#ced9e0',
   appBorderRadius: 0,
-  colorSecondary: '#0b6fcc',
+  colorSecondary: '#008eff',
 
   // Typography
   fontBase: '-apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', system-ui, sans-serif, \'Apple Color Emoji\', \'Segoe UI Emoji\', \'Segoe UI Symbol\', \'Noto Color Emoji\'',
