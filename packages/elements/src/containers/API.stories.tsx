@@ -9,15 +9,14 @@ export default {
   title: 'Public/API',
   component: API,
   argTypes: {
-    apiDescriptionDocument: { control: 'text', type: { required: false } },
-    apiDescriptionUrl: { control: 'text' },
+    apiDescriptionDocument: { control: 'text', type: { required: false }, table: { category: 'Input' } },
+    apiDescriptionUrl: { control: 'text', table: { category: 'Input' } },
     layout: {
       control: { type: 'inline-radio' },
+      table: { category: 'UI' },
     },
-  },
-  args: {
-    layout: 'sidebar',
-    router: 'hash',
+    basePath: { table: { category: 'Routing' } },
+    router: { table: { category: 'Routing' } },
   },
 };
 
