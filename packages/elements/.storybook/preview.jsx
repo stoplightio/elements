@@ -26,4 +26,9 @@ export const parameters = {
       </>
     ),
   },
+  options: {
+    storySort: {
+      order: ['Public', 'Internal']
+    }
+  }
 };
