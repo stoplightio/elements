@@ -23,7 +23,7 @@ export const globalTypes = {
 const ThemeProvider = (Story, context) => {
   const theme = context.globals.theme;
   return (
-    <div className={cn('p-10', { 'bp3-dark bg-gray-8': theme === 'dark' })}>
+    <div className={cn({ 'bp3-dark bg-gray-8': theme === 'dark' })}>
       <Story {...context} />
     </div>
   );

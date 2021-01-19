@@ -18,6 +18,9 @@ export default {
     basePath: { table: { category: 'Routing' } },
     router: { table: { category: 'Routing' } },
   },
+  args: {
+    router: 'memory',
+  },
 };
 
 const Template: Story<APIProps> = args => <API {...args} />;

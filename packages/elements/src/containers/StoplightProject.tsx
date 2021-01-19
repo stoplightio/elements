@@ -15,10 +15,28 @@ import { TableOfContents } from './TableOfContents';
 import { TryIt } from './TryIt';
 
 export interface StoplightProjectProps extends RoutingProps {
+  /**
+   * The slug of your Stoplight Workspace.
+   * (Usually you can find this as part of your Stoplight URL: https://[workspaceSlug].stoplight.io)
+   */
   workspaceSlug: string;
+  /**
+   * The slug of the Stoplight Project.
+   * @example "elements"
+   */
   projectSlug: string;
+  /**
+   * If your company runs an on-premise deployment of Stoplight,
+   * set this prop to point the StoplightProject component at the URL of that instance.
+   */
   platformUrl?: string;
+  /**
+   * The name of a specific branch of the project to show. If no branch is provided, the default branch will be shown.
+   */
   branchSlug?: string;
+  /**
+   * *TBD*
+   */
   authToken?: string;
 }
 
