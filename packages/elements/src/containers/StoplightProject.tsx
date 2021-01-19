@@ -99,6 +99,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   );
 };
 
+/**
+ * The StoplightProject component displays a traditional documentation UI for an existing Stoplight Project.
+ */
 export const StoplightProject = pipe(withRouter, withStyles, withPersistenceBoundary)(StoplightProjectImpl);
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
