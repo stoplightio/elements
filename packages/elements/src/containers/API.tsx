@@ -33,6 +33,12 @@ export type APIPropsWithDocument = {
 } & CommonAPIProps;
 
 export interface CommonAPIProps extends RoutingProps {
+  /**
+   * The API component supports two layout options.
+   *
+   * - Sidebar: Navigation on the left side, resembles Stoplight Platform.
+   * - Stacked: No sidebar, resembles the structure of Swagger UI.
+   */
   layout?: 'sidebar' | 'stacked';
 }
 
