@@ -80,6 +80,7 @@
     "@storybook/addon-docs": "^6.1.14",
     "@storybook/addon-essentials": "^6.1.14",
     "@storybook/react": "^6.1.14",
+    "@storybook/theming": "^6.1.14",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",

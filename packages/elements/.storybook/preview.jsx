@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
+import customTheme from './theme';
 
 import '../src/styles/elements.scss';
 
@@ -42,6 +43,7 @@ export const parameters = {
         <ArgsTable story={PRIMARY_STORY} />
       </>
     ),
+    theme: customTheme,
   },
   options: {
     storySort: {
