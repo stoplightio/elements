@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, FAIcon, Menu, MenuDivider, MenuItem, Popover, Position } from '@stoplight/ui-kit';
+import { Button, ButtonGroup, Menu, MenuDivider, MenuItem, Popover, Position } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
@@ -10,10 +10,7 @@ export interface IMockButton {
 }
 const notSetOption = { value: '', label: 'Not Set' };
 
-const dynamicOptions = [
-  { value: 'dynamic', label: 'Dynamic' },
-  { value: 'static', label: 'Static' },
-];
+const dynamicOptions = ['Dynamic', 'Static'];
 
 export const MockButton = observer<IMockButton>(({ className }) => {
   const store = useRequestMakerStore();
@@ -56,6 +53,7 @@ export const MockButton = observer<IMockButton>(({ className }) => {
       <Popover
         minimal
         position={Position.RIGHT}
+        autoFocus={false}
         content={
           <Menu>
             <MenuItem
@@ -71,9 +69,14 @@ export const MockButton = observer<IMockButton>(({ className }) => {
                   <Popover
                     fill
                     autoFocus={false}
+                    position={Position.RIGHT}
+                    boundary="window"
+                    minimal
+                    interactionKind="hover"
                     content={
                       <Menu>
                         <MenuItem
+                          shouldDismissPopover={false}
                           active={!currentCode}
                           text="Not Set"
                           onClick={() => {
@@ -92,6 +95,7 @@ export const MockButton = observer<IMockButton>(({ className }) => {
 
                             const exampleChildren = exampleKeys?.map(exampleKey => (
                               <MenuItem
+                                shouldDismissPopover={false}
                                 active={isActive && exampleKey === currentExample}
                                 text={exampleKey}
                                 key={exampleKey}
@@ -105,6 +109,7 @@ export const MockButton = observer<IMockButton>(({ className }) => {
                             if (exampleKeys?.length) {
                               exampleChildren?.unshift(
                                 <MenuItem
+                                  shouldDismissPopover={false}
                                   key="no-example"
                                   active={isActive && !currentExample}
                                   text="No Example"
@@ -119,6 +124,7 @@ export const MockButton = observer<IMockButton>(({ className }) => {
 
                             return (
                               <MenuItem
+                                shouldDismissPopover={false}
                                 active={isActive}
                                 text={operationResponse.code}
                                 key={operationResponse.code}
@@ -133,40 +139,35 @@ export const MockButton = observer<IMockButton>(({ className }) => {
                           })}
                       </Menu>
                     }
-                    position={Position.RIGHT}
-                    boundary="window"
-                    minimal
-                    interactionKind="hover"
                   >
-                    <MenuItem text={`Response Code: ${responseText}`}>
-                      <FAIcon icon="caret-right" />
-                    </MenuItem>
+                    <MenuItem text={`Response Code: ${responseText}`} icon="edit" />
                   </Popover>
                 </div>
                 <Popover
+                  fill
+                  position={Position.RIGHT}
+                  minimal
+                  boundary={'window'}
+                  interactionKind="hover"
+                  autoFocus={false}
                   content={
                     <Menu>
                       {dynamicOptions &&
                         dynamicOptions.map(option => (
                           <MenuItem
-                            active={currentDynamicSetting === option.label}
-                            text={option.label}
-                            key={option.value}
+                            shouldDismissPopover={false}
+                            active={currentDynamicSetting === option}
+                            text={option}
+                            key={option}
                             onClick={() => {
-                              store.setPrismMockingOption('dynamic', option.label === 'Dynamic');
+                              store.setPrismMockingOption('dynamic', option === 'Dynamic');
                             }}
                           />
                         ))}
                     </Menu>
                   }
-                  position={Position.RIGHT}
-                  minimal
-                  boundary={'window'}
-                  interactionKind="hover"
                 >
-                  <MenuItem text={`Response Generation: ${currentDynamicSetting}`}>
-                    <FAIcon icon="caret-right" />
-                  </MenuItem>
+                  <MenuItem text={`Response Generation: ${currentDynamicSetting}`} icon="edit" />
                 </Popover>
               </div>
             )}
