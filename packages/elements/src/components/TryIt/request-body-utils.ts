@@ -1,7 +1,10 @@
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { isString, pickBy } from 'lodash';
 import * as React from 'react';
 
 import { initialParameterValues } from './parameter-utils';
+
+export type BodyParameterValues = Record<string, string | File>;
 
 export const isFormDataContent = (content: IMediaTypeContent) =>
   isUrlEncodedContent(content) || isMultipartContent(content);
@@ -14,10 +17,7 @@ function isMultipartContent(content: IMediaTypeContent) {
   return content.mediaType.toLowerCase() === 'multipart/form-data';
 }
 
-export function createRequestBody(
-  httpOperation: IHttpOperation,
-  bodyParameterValues: Record<string, string> | undefined,
-) {
+export function createRequestBody(httpOperation: IHttpOperation, bodyParameterValues: BodyParameterValues | undefined) {
   const bodySpecification = httpOperation.request?.body?.contents?.[0];
   if (!bodySpecification) return undefined;
 
@@ -27,12 +27,14 @@ export function createRequestBody(
 
 type RequestBodyCreator = (options: {
   httpOperation: IHttpOperation;
-  bodyParameterValues?: Record<string, string>;
+  bodyParameterValues?: BodyParameterValues;
   rawBodyValue?: string;
 }) => BodyInit;
 
 const createUrlEncodedRequestBody: RequestBodyCreator = ({ bodyParameterValues = {} }) => {
-  return new URLSearchParams(bodyParameterValues);
+  const filteredValues = pickBy(bodyParameterValues, isString);
+
+  return new URLSearchParams(filteredValues);
 };
 
 const createMultipartRequestBody: RequestBodyCreator = ({ bodyParameterValues = {} }) => {
@@ -67,7 +69,7 @@ export const useBodyParameterState = (httpOperation: IHttpOperation) => {
     return initialParameterValues(parameters);
   }, [isFormDataBody, bodySpecification]);
 
-  const [bodyParameterValues, setBodyParameterValues] = React.useState<Record<string, string>>(initialState);
+  const [bodyParameterValues, setBodyParameterValues] = React.useState<BodyParameterValues>(initialState);
 
   React.useEffect(() => {
     setBodyParameterValues(initialState);

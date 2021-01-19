@@ -1,14 +1,18 @@
 import { safeStringify } from '@stoplight/json';
 import { Panel } from '@stoplight/mosaic';
-import { Dictionary, IMediaTypeContent } from '@stoplight/types';
+import { IMediaTypeContent } from '@stoplight/types';
+import { omit } from 'lodash';
 import * as React from 'react';
 
+import { FileUploadParamterEditor } from './FileUploadParameterEditors';
+import { parameterSupportsFileUpload } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
+import { BodyParameterValues } from './request-body-utils';
 
 interface FormDataBodyProps {
   specification: IMediaTypeContent;
-  values: Dictionary<string, string>;
-  onChangeValues: (newValues: Dictionary<string, string>) => void;
+  values: BodyParameterValues;
+  onChangeValues: (newValues: BodyParameterValues) => void;
 }
 
 export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, values, onChangeValues }) => {
@@ -29,14 +33,36 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
     <Panel defaultIsOpen>
       <Panel.Titlebar>Body</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
-        {Object.entries(parameters).map(([name, schema]) => (
-          <ParameterEditor
-            key={name}
-            parameter={{ name, schema, examples: schema?.examples }}
-            value={values[name]}
-            onChange={e => onChangeValues({ ...values, [name]: e.currentTarget.value })}
-          />
-        ))}
+        {Object.entries(parameters)
+          .map(([name, schema]) => ({ name, schema, examples: schema?.examples }))
+          .map(parameter => {
+            const supportsFileUpload = parameterSupportsFileUpload(parameter);
+            const value = values[parameter.name];
+
+            if (supportsFileUpload) {
+              return (
+                <FileUploadParamterEditor
+                  key={parameter.name}
+                  parameter={parameter}
+                  value={value instanceof File ? value : undefined}
+                  onChange={newValue =>
+                    newValue
+                      ? onChangeValues({ ...values, [parameter.name]: newValue })
+                      : onChangeValues(omit(values, parameter.name))
+                  }
+                />
+              );
+            }
+
+            return (
+              <ParameterEditor
+                key={parameter.name}
+                parameter={parameter}
+                value={typeof value === 'string' ? value : undefined}
+                onChange={e => onChangeValues({ ...values, [parameter.name]: e.currentTarget.value })}
+              />
+            );
+          })}
       </Panel.Content>
     </Panel>
   );
