@@ -48,8 +48,12 @@ const createMultipartRequestBody: RequestBodyCreator = async ({ httpOperation, b
 
     if (typeof schema !== 'object') continue;
 
-    if (parameterSupportsFileUpload({ schema }) && schema.format === 'base64') {
-      formData.append(key, value instanceof File ? await fileToBase64(value) : btoa(value));
+    if (parameterSupportsFileUpload({ schema }) && schema.format === 'base64' && value instanceof File) {
+      try {
+        formData.append(key, await fileToBase64(value));
+      } catch {
+        continue;
+      }
     } else {
       formData.append(key, value);
     }

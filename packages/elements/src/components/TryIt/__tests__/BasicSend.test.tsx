@@ -329,7 +329,7 @@ describe('TryIt', () => {
         const body = fetchMock.mock.calls[0][1]!.body as FormData;
 
         // c29tZXRoaW5n is "something" encoded as base64
-        expect(body.get('someFile')).toBe('data:application/octet-stream;base64,c29tZXRoaW5n');
+        expect(body.get('someFile')).toBe('c29tZXRoaW5n');
       });
     });
   });
@@ -342,7 +342,7 @@ describe('TryIt', () => {
       expect(mockingButton).toBeInTheDocument();
     });
 
-    it('Invokes request with mocked data', () => {
+    it('Invokes request with mocked data', async () => {
       render(
         <TryItWithPersistence httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />,
       );
@@ -365,6 +365,7 @@ describe('TryIt', () => {
       // disable mocking and send
       userEvent.click(enableItem);
       clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(fetchMock.mock.calls).toEqual([
