@@ -3,6 +3,7 @@ import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import React from 'react';
 
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { convertRequestToSample } from './convertRequestToSample';
 import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
@@ -11,8 +12,8 @@ interface RequestSamplesProps {
 }
 
 export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
-  const [selectedLanguage, setSelectedLanguage] = React.useState('Shell');
-  const [selectedLibrary, setSelectedLibrary] = React.useState('cURL');
+  const [selectedLanguage, setSelectedLanguage] = useLocalStorage('RequestSamples_selectedLanguage', 'Shell');
+  const [selectedLibrary, setSelectedLibrary] = useLocalStorage('RequestSamples_selectedLibrary', 'cURL');
 
   const { httpSnippetLanguage, httpSnippetLibrary, mosaicCodeViewerLanguage } = getConfigFor(
     selectedLanguage,
@@ -33,7 +34,11 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar rightComponent={<CopyButton size="md" copyValue={requestSample || ''} />}>
         <span>Request:</span>
-        <Select onChange={handleSelectClick} options={selectOptions} />
+        <Select
+          onChange={handleSelectClick}
+          options={selectOptions}
+          value={`${selectedLanguage} / ${selectedLibrary}`}
+        />
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer

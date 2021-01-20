@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
 import { screen } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
@@ -41,5 +41,19 @@ describe('RequestSend', () => {
     expect(container).toHaveTextContent('POST');
     expect(container).toHaveTextContent('https://google.com');
     expect(container).toHaveTextContent('max-age=0');
+  });
+
+  it('preserves language and library between renders', () => {
+    render(<RequestSamples request={sampleRequest} />);
+    const langSelector = screen.getByRole('combobox');
+    const axiosOption = screen.getByRole('option', { name: /javascript.+axios/i });
+    userEvent.selectOptions(langSelector, axiosOption);
+
+    cleanup();
+
+    const { container } = render(<RequestSamples request={sampleRequest} />);
+    const secondLangSelector = screen.getByRole('combobox');
+    expect(secondLangSelector).toHaveValue('JavaScript / Axios');
+    expect(container).toHaveTextContent('axios');
   });
 });
