@@ -1,0 +1,21 @@
+.Header {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding: 0 16px 0;
+}
+
+.Header__link {
+  margin-right: 16px;
+  text-decoration: none;
+  color: #182026;
+}
+
+.Header__link > img {
+  height: 30px;
+}
+
+.Header__link--active {
+  color: #0b6fcc;
+}
