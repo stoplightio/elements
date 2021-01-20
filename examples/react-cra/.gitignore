@@ -1,19 +1,15 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-
 # dependencies
-node_modules
+/node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
-packages/*/coverage
 
 # production
-build
-dist
-docs-auto
+/build
 
 # misc
 .DS_Store
@@ -21,17 +17,7 @@ docs-auto
 .env.development.local
 .env.test.local
 .env.production.local
-.vscode
-.idea
-.nyc_output
-.DS_Store
-.awcache
-.cache-loader
-.cache
-.rpt2_cache
-.eslintcache
 
-# logs
-*.log*
-*-debug.log*
-*-error.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
