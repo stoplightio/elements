@@ -24,22 +24,11 @@ export const httpOperation: IHttpOperation = {
           schema: {
             type: 'object',
             properties: {
-              name: {
-                type: 'string',
-              },
-              completed: {
-                type: 'boolean',
-              },
-              someEnum: {
-                type: 'string',
-                enum: ['a', 'b', 'c'],
-              },
               someFile: {
                 type: 'string',
-                format: 'binary',
+                format: 'base64',
               },
             },
-            required: ['name', 'completed'],
           },
         },
       ],

@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
-import { screen } from '@testing-library/dom';
+import { screen, waitFor } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
+import { httpOperation as base64FileUpload } from '../../../__fixtures__/operations/base64-file-upload';
 import { httpOperation as multipartFormdataOperation } from '../../../__fixtures__/operations/multipart-formdata-post';
 import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
 import { operation as basicOperation } from '../../../__fixtures__/operations/simple-get';
@@ -36,7 +37,7 @@ describe('TryIt', () => {
     const button = screen.getByRole('button', { name: /send/i });
     userEvent.click(button);
 
-    expect(fetchMock).toHaveBeenCalled();
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     expect(fetchMock).toBeCalledWith(
       'https://todos.stoplight.io/todos',
       expect.objectContaining({
@@ -156,7 +157,7 @@ describe('TryIt', () => {
       // click send
       clickSend();
 
-      expect(fetchMock).toHaveBeenCalled();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
       expect(fetchMock).toBeCalledWith(
         'https://todos.stoplight.io/todos/123?limit=3&value=0&type=another',
         expect.objectContaining({
@@ -266,6 +267,7 @@ describe('TryIt', () => {
         // click send
         clickSend();
 
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(fetchMock).toHaveBeenCalledTimes(1);
         body = fetchMock.mock.calls[0][1]!.body as URLSearchParams | FormData;
         expect(body).toBeInstanceOf(prototype);
@@ -283,6 +285,53 @@ describe('TryIt', () => {
         expect(body.get('someEnum')).toBe('a');
       });
     });
+
+    describe('File Upload', () => {
+      it('displays the name of the imported file in the string input', () => {
+        render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
+
+        userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+        expect(screen.getByLabelText('someFile')).toHaveValue('some-file');
+      });
+
+      it('allows to remove file after importing it', () => {
+        render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
+
+        userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+        userEvent.click(screen.getByLabelText('Remove file'));
+
+        expect(screen.getByLabelText('someFile')).not.toHaveValue();
+      });
+
+      it('allows to upload file in multipart request', async () => {
+        render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
+
+        userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+        clickSend();
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const body = fetchMock.mock.calls[0][1]!.body as FormData;
+
+        expect(body.get('someFile')).toBeInstanceOf(File);
+        expect((body.get('someFile') as File).name).toBe('some-file');
+      });
+
+      it('allows to upload file in base64 format in multipart request', async () => {
+        render(<TryItWithPersistence httpOperation={base64FileUpload} />);
+
+        userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+        clickSend();
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+        const body = fetchMock.mock.calls[0][1]!.body as FormData;
+
+        // c29tZXRoaW5n is "something" encoded as base64
+        expect(body.get('someFile')).toBe('c29tZXRoaW5n');
+      });
+    });
   });
 
   describe('Mocking', () => {
@@ -293,7 +342,7 @@ describe('TryIt', () => {
       expect(mockingButton).toBeInTheDocument();
     });
 
-    it('Invokes request with mocked data', () => {
+    it('Invokes request with mocked data', async () => {
       render(
         <TryItWithPersistence httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />,
       );
@@ -316,6 +365,7 @@ describe('TryIt', () => {
       // disable mocking and send
       userEvent.click(enableItem);
       clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(fetchMock.mock.calls).toEqual([

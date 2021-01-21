@@ -29,6 +29,14 @@ export function exampleOptions(parameter: ParameterSpec) {
     : null;
 }
 
+export function parameterSupportsFileUpload(parameter: Pick<ParameterSpec, 'schema'>) {
+  return (
+    parameter.schema?.type === 'string' &&
+    parameter.schema.format !== undefined &&
+    ['binary', 'base64'].includes(parameter.schema.format)
+  );
+}
+
 function exampleValue(example: INodeExample | INodeExternalExample) {
   return 'value' in example ? String(example.value) : String(example.externalValue);
 }

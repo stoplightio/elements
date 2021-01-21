@@ -11,7 +11,7 @@ import {
 
 interface ParameterProps {
   parameter: ParameterSpec;
-  value: string;
+  value?: string;
   onChange: (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -41,7 +41,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
             placeholder={getPlaceholderForParameter(parameter)}
             type={parameter.schema?.type === 'number' ? 'number' : 'text'}
             required
-            value={value ?? ''}
+            value={value}
             onChange={onChange}
           />
           {examples && (

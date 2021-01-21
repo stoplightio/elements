@@ -8,10 +8,10 @@ import * as React from 'react';
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
-import { getMockData } from './mocking-utils';
+import { getMockData, MockData } from './mocking-utils';
 import { MockingButton } from './MockingButton';
 import { OperationParameters } from './OperationParameters';
-import { createRequestBody, useBodyParameterState } from './request-body-utils';
+import { BodyParameterValues, createRequestBody, useBodyParameterState } from './request-body-utils';
 import { useMockingOptions } from './useMockingOptions';
 import { useRequestParameters } from './useOperationParameters';
 
@@ -50,7 +50,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     try {
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
-      const request = buildFetchRequest({
+      const request = await buildFetchRequest({
         httpOperation,
         parameterValues: parameterValuesWithDefaults,
         bodyParameterValues,
@@ -138,22 +138,19 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
   </Panel>
 );
 
-export interface BuildFetchRequestInput {
+interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
-  bodyParameterValues?: Dictionary<string, string>;
-  mockData?: {
-    url: string;
-    header?: Record<'Prefer', string>;
-  };
+  bodyParameterValues?: BodyParameterValues;
+  mockData?: MockData;
 }
 
-function buildFetchRequest({
+async function buildFetchRequest({
   httpOperation,
   parameterValues,
   bodyParameterValues,
   mockData,
-}: BuildFetchRequestInput): Parameters<typeof fetch> {
+}: BuildFetchRequestInput): Promise<Parameters<typeof fetch>> {
   const server = mockData?.url || httpOperation.servers?.[0]?.url;
 
   const queryParams = httpOperation.request?.query
@@ -174,7 +171,7 @@ function buildFetchRequest({
         ),
         ...mockData?.header,
       },
-      body: createRequestBody(httpOperation, bodyParameterValues),
+      body: await createRequestBody(httpOperation, bodyParameterValues),
     },
   ];
 }
