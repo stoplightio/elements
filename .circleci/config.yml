@@ -9,48 +9,6 @@ executors:
           TERM: xterm
     working_directory: ~/project/example
 
-commands:
-  run-e2e-from-repo:
-    parameters:
-      repo-url:
-        type: string
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Clone Example repo
-          working_directory: ~/project
-          command: git clone "<<parameters.repo-url>>" example
-      - run:
-          name: Link to elements-utils
-          command: yarn link --link-folder /tmp/workspace/packages/elements-utils/dist
-      - run:
-          name: Link to elements
-          command: yarn link --link-folder /tmp/workspace/packages/elements/dist
-      - run:
-          name: Link to elements-web-components
-          command: yarn link --link-folder /tmp/workspace/packages/elements-web-components
-      - run:
-          name: Install dependencies
-          command: yarn --frozen-lockfile
-      - run:
-          name: Create production build
-          command: yarn build
-      - run:
-          name: Run E2E checks
-          command: yarn e2e:run
-      - store_test_results:
-          name: Upload test results
-          path: cypress/results
-      - store_artifacts:
-          name: Upload Cypress Videos
-          path: cypress/results/videos
-          destination: videos
-      - store_artifacts:
-          name: Upload Cypress Screenshots
-          path: cypress/results/screenshots
-          destination: screenshots
-
 jobs:
   lint-and-check:
     docker:
@@ -81,25 +39,53 @@ jobs:
       - checkout
       - run: yarn --frozen-lockfile
       - run: yarn build.docs
-  test-integration-angular:
+  run-e2e-tests:
     executor: cypress-default
+    parameters:
+      example-name:
+        type: string
     steps:
-      - run-e2e-from-repo:
-          repo-url: https://github.com/stoplightio/elements-starter-angular.git
-  test-integration-gatsby:
-    executor: cypress-default
-    steps:
-      - run-e2e-from-repo:
-          repo-url: https://github.com/stoplightio/elements-starter-gatsby.git
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Copy build artifacts
+          command: cp /tmp/workspace/* -r ~/project
+      - run:
+          name: Example - Install dependencies
+          working_directory: ~/project/examples/<<parameters.example-name>>
+          command: yarn install --frozen-lockfile
+      - run:
+          name: Example - Build
+          working_directory: ~/project/examples/<<parameters.example-name>>
+          command: yarn build
+      - run:
+          name: Run E2E checks
+          command: yarn e2e:run:<<parameters.example-name>>
+      - store_test_results:
+          name: Upload test results
+          path: cypress/results
+      - store_artifacts:
+          name: Upload Cypress Videos
+          path: cypress/results/videos
+          destination: videos
+      - store_artifacts:
+          name: Upload Cypress Screenshots
+          path: cypress/results/screenshots
+          destination: screenshots
 workflows:
   test-and-release:
     jobs:
       - lint-and-check
       - build
       - build-docs
-      - test-integration-angular:
+      - run-e2e-tests:
+          name: e2e-react-cra
+          example-name: react-cra
           requires:
             - build
-      - test-integration-gatsby:
+      - run-e2e-tests:
+          name: e2e-react-gatsby
+          example-name: react-gatsby
           requires:
             - build
