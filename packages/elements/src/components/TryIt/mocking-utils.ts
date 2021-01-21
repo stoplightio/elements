@@ -1,3 +1,4 @@
+import { IHttpOperation } from '@stoplight/types';
 import { compact } from 'lodash';
 
 import { formatMultiValueHeader } from '../../utils/headers';
@@ -8,9 +9,12 @@ type PreferHeaderProps = { code: string; example?: string; dynamic?: boolean };
 
 export function getMockData(
   url: string | undefined,
+  httpOperation: IHttpOperation,
   { isEnabled, code, dynamic, example }: MockingOptions,
 ): BuildFetchRequestInput['mockData'] {
-  return isEnabled && code && url ? { url, header: buildPreferHeader({ code, dynamic, example }) } : undefined;
+  return isEnabled && url && code && supportsResponseCode(httpOperation, code)
+    ? { url, header: buildPreferHeader({ code, dynamic, example }) }
+    : undefined;
 }
 
 export function buildPreferHeader({ code, example, dynamic }: PreferHeaderProps): Record<'Prefer', string> {
@@ -24,4 +28,8 @@ export function buildPreferHeader({ code, example, dynamic }: PreferHeaderProps)
   return {
     Prefer: headerValue,
   };
+}
+
+function supportsResponseCode(httpOperation: IHttpOperation, code: string) {
+  return httpOperation.responses?.find(response => response.code === code) !== undefined;
 }

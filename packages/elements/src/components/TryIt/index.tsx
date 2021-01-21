@@ -8,10 +8,11 @@ import * as React from 'react';
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { FormDataBody } from './FormDataBody';
-import { getMockData, MockingOptions } from './mocking-utils';
+import { getMockData } from './mocking-utils';
 import { MockingButton } from './MockingButton';
 import { OperationParameters } from './OperationParameters';
 import { createRequestBody, useBodyParameterState } from './request-body-utils';
+import { useMockingOptions } from './useMockingOptions';
 import { useRequestParameters } from './useOperationParameters';
 
 export interface TryItProps {
@@ -39,8 +40,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const server = httpOperation.servers?.[0]?.url;
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
-
-  const [mockingOptions, setMockingOptions] = React.useState<MockingOptions>({ isEnabled: false });
+  const [mockingOptions, setMockingOptions] = useMockingOptions();
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
@@ -49,7 +49,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const handleClick = async () => {
     try {
       setLoading(true);
-      const mockData = getMockData(mockUrl, mockingOptions);
+      const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
       const request = buildFetchRequest({
         httpOperation,
         parameterValues: parameterValuesWithDefaults,
