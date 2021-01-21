@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type ValueSetter<T> = (value: T | ((val: T) => T)) => void;
 
@@ -9,10 +9,22 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, ValueSette
 
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       return initialValue;
     }
+  });
+
+  const storageListener = (event: StorageEvent) => {
+    if (event.key === key && event.newValue !== null) {
+      setStoredValue(JSON.parse(event.newValue));
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('storage', storageListener);
+
+    return () => window.removeEventListener('storage', storageListener);
   });
 
   const setValue: ValueSetter<T> = value => {
@@ -23,7 +35,7 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, ValueSette
 
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
