@@ -45,6 +45,7 @@ jobs:
         type: string
     steps:
       - checkout
+      - run: yarn --frozen-lockfile
       - attach_workspace:
           at: /tmp/workspace
       - run:
