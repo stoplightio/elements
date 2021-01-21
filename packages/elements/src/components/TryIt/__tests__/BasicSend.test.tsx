@@ -337,5 +337,51 @@ describe('TryIt', () => {
         ],
       ]);
     });
+
+    it('Persists mocking options between operations', async () => {
+      const { rerender } = render(
+        <PersistenceContextProvider>
+          <TryIt httpOperation={putOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />
+        </PersistenceContextProvider>,
+      );
+
+      // enable mocking
+      let mockingButton = screen.getByRole('button', { name: /mocking/i });
+      userEvent.click(mockingButton);
+
+      let enableItem = screen.getByText('Enabled');
+      let responseCodeItem = screen.getByText('200');
+      userEvent.click(enableItem);
+      userEvent.click(responseCodeItem);
+
+      // unmount (to make sure parameters are not simply stored in component state)
+      rerender(
+        <PersistenceContextProvider>
+          <div />
+        </PersistenceContextProvider>,
+      );
+
+      // mount a different instance
+
+      rerender(
+        <PersistenceContextProvider>
+          <TryIt httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />
+        </PersistenceContextProvider>,
+      );
+
+      mockingButton = screen.getByRole('button', { name: /mocking/i });
+      userEvent.click(mockingButton);
+      enableItem = screen.getByText('Enabled');
+      responseCodeItem = screen.getByText('200');
+
+      const enabledIcon = enableItem.previousSibling;
+      const responseCodeIcon = responseCodeItem.previousSibling;
+
+      expect(enabledIcon).toBeInTheDocument();
+      expect(responseCodeIcon).toBeInTheDocument();
+
+      expect(enabledIcon).toHaveAttribute('icon', 'tick');
+      expect(responseCodeIcon).toHaveAttribute('icon', 'tick');
+    });
   });
 });
