@@ -7,7 +7,6 @@ executors:
         environment:
           ## this enables colors in the output
           TERM: xterm
-    working_directory: ~/project/example
 
 jobs:
   lint-and-check:
