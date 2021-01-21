@@ -27,6 +27,10 @@
     "e2e:open": "cypress open",
     "e2e:run": "start-server-and-test serve http://localhost:4200 e2e:execute"
   },
+  "resolutions": {
+    "@stoplight/elements": "file:../../packages/elements/dist",
+    "@stoplight/elements-utils": "file:../../packages/elements-utils/dist"
+  },
   "dependencies": {
     "@stoplight/elements": "file:../../packages/elements/dist",
     "@stoplight/prism-http": "^4.0.1",

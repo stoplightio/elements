@@ -1859,10 +1859,8 @@
     escape-string-regexp "^2.0.0"
     lodash.deburr "^4.1.0"
 
-"@stoplight/elements-utils@beta":
-  version "6.0.0-beta.192"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements-utils/-/elements-utils-6.0.0-beta.192.tgz#8313d3257a3e083f96b464cdd5927c6dc73daac3"
-  integrity sha512-Pnvrg9lUFf9RC6hX8t9xuQlud46q/PdvV/T57taHJCl8D5CvNnxmgo1UklXXU4orX2cQX2KIHQJzcHKFT5e+OQ==
+"@stoplight/elements-utils@beta", "@stoplight/elements-utils@file:../../packages/elements-utils/dist":
+  version "7.0.0-alpha.1"
   dependencies:
     lodash "^4.17.19"
 
