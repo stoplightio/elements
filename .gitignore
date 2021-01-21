@@ -9,6 +9,7 @@ node_modules
 # testing
 /coverage
 packages/*/coverage
+cypress/results
 
 # production
 build
