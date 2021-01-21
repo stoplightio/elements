@@ -1,9 +1,10 @@
 import { CopyButton, Panel, Select } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
+import { atom, useAtom } from 'jotai';
 import React from 'react';
 
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
 import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
@@ -11,9 +12,12 @@ interface RequestSamplesProps {
   request: Request;
 }
 
+const selectedLanguageAtom = persistAtom('RequestSamples_selectedLanguage', atom('Shell'));
+const selectedLibraryAtom = persistAtom('RequestSamples_selectedLibrary', atom('cURL'));
+
 export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
-  const [selectedLanguage, setSelectedLanguage] = useLocalStorage('RequestSamples_selectedLanguage', 'Shell');
-  const [selectedLibrary, setSelectedLibrary] = useLocalStorage('RequestSamples_selectedLibrary', 'cURL');
+  const [selectedLanguage, setSelectedLanguage] = useAtom(selectedLanguageAtom);
+  const [selectedLibrary, setSelectedLibrary] = useAtom(selectedLibraryAtom);
 
   const { httpSnippetLanguage, httpSnippetLibrary, mosaicCodeViewerLanguage } = getConfigFor(
     selectedLanguage,

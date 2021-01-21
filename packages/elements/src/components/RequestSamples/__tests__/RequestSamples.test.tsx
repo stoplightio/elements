@@ -5,7 +5,10 @@ import { cleanup, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
-import { RequestSamples } from '../RequestSamples';
+import { withPersistenceBoundary } from '../../../context/Persistence';
+import { RequestSamples as RequestSamplesWithoutPersistence } from '../RequestSamples';
+
+const RequestSamples = withPersistenceBoundary(RequestSamplesWithoutPersistence);
 
 const sampleRequest = {
   method: 'POST',
@@ -55,5 +58,22 @@ describe('RequestSend', () => {
     const secondLangSelector = screen.getByRole('combobox');
     expect(secondLangSelector).toHaveValue('JavaScript / Axios');
     expect(container).toHaveTextContent('axios');
+  });
+
+  it('allows to change lang/lib after rerender', () => {
+    render(<RequestSamples request={sampleRequest} />);
+    const langSelector = screen.getByRole('combobox');
+    const axiosOption = screen.getByRole('option', { name: /javascript.+axios/i });
+    userEvent.selectOptions(langSelector, axiosOption);
+
+    cleanup();
+
+    render(<RequestSamples request={sampleRequest} />);
+    const secondLangSelector = screen.getByRole('combobox');
+    const secondAxiosOption = screen.getByRole('option', { name: /javascript.+fetch/i });
+
+    userEvent.selectOptions(secondLangSelector, secondAxiosOption);
+
+    expect(secondLangSelector).toHaveValue('JavaScript / Fetch');
   });
 });
