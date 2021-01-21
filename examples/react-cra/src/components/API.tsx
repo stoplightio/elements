@@ -7,7 +7,7 @@ export const StoplightAPI: React.FC = () => {
   return (
     <div className="stoplight-container">
       <API
-        basePath="stoplight-api"
+        basePath="zoom-api"
         apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
       />
     </div>

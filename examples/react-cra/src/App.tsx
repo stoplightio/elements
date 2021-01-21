@@ -11,15 +11,19 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Navigation />
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/stoplight-project" />
-            </Route>
-            <Route path="/stoplight-api" component={StoplightAPI} />
-            <Route path="/stoplight-project" component={StoplightProjectDocs} />
-            <Route component={NotFound} />
-          </Switch>
+          <header>
+            <Navigation />
+          </header>
+          <main>
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/stoplight-project" />
+              </Route>
+              <Route path="/zoom-api" component={StoplightAPI} />
+              <Route path="/stoplight-project" component={StoplightProjectDocs} />
+              <Route component={NotFound} />
+            </Switch>
+          </main>
         </div>
       </BrowserRouter>
     );
