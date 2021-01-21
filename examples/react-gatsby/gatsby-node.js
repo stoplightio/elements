@@ -1,13 +1,7 @@
 const path = require('path');
 
-exports.onCreateWebpackConfig = ({
-  stage,
-  rules,
-  loaders,
-  plugins,
-  actions,
-}) => {
-  if (stage === "build-html") {
+exports.onCreateWebpackConfig = ({ stage, rules, loaders, plugins, actions }) => {
+  if (stage === 'build-html') {
     actions.setWebpackConfig({
       resolve: {
         alias: {
@@ -17,7 +11,7 @@ exports.onCreateWebpackConfig = ({
       },
       node: {
         // Needed for node_modules/@stoplight/prism-http/dist/getHttpOperations.js
-        fs: "empty",
+        fs: 'empty',
       },
       module: {
         rules: [
@@ -26,8 +20,8 @@ exports.onCreateWebpackConfig = ({
             use: loaders.null(),
           },
         ],
-      }
-    })
+      },
+    });
   }
 };
 
@@ -36,7 +30,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
-  const match = page.path.match(/^\/(elements|zoom-api)/);
+  const match = page.path.match(/^\/(stoplight-project|zoom-api)/);
   if (match) {
     page.matchPath = `${match[0]}/*`;
 

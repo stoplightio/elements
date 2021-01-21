@@ -6,7 +6,7 @@ import SEO from '../components/seo';
 
 const IndexPage = () => {
   React.useEffect(() => {
-    navigate('/elements');
+    navigate('/stoplight-project');
   });
 
   return (

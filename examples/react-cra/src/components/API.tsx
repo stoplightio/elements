@@ -8,8 +8,8 @@ export const StoplightAPI: React.FC = () => {
     <div className="stoplight-container">
       <API
         basePath="stoplight-api"
-        apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json"
-      ></API>
+        apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
+      />
     </div>
   );
 };

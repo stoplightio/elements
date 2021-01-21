@@ -10,8 +10,8 @@ const Header = () => {
         <img src="https://s3.amazonaws.com/totem_production/assets/logos/10719/original/logo_light_bg.png?1501094221" />
       </Link>
 
-      <Link to="/elements" className="Header__link" activeClassName="Header__link--active">
-        Docs
+      <Link to="/stoplight-project" className="Header__link" activeClassName="Header__link--active">
+        Stoplight Project demo
       </Link>
 
       <Link to="/zoom-api/" className="Header__link" activeClassName="Header__link--active">
