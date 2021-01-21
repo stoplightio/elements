@@ -296,7 +296,9 @@ export class RequestStore {
       let markdown;
       if (library === 'yaml') {
         markdown =
-          '```yaml http\n' + `${safeStringifyYaml(this.toPartialHttpRequest(), { indent: 2, noRefs: true })}` + '\n```';
+          '```yaml http\n' +
+          `${safeStringifyYaml(this.toPartialHttpRequest(), { indent: 2, noRefs: true, skipInvalid: true })}` +
+          '\n```';
       } else {
         markdown = '```json http\n' + `${safeStringify(this.toPartialHttpRequest(), undefined, 2)}` + '\n```';
       }

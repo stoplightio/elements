@@ -896,6 +896,27 @@ body:
       );
     });
 
+    it('should skip undefined values for markdown - yaml', () => {
+      requestStore.method = 'post';
+      requestStore.url = 'https://test.com/test?queryName=queryValue';
+      requestStore.headers = {
+        'content-type': 'application/json',
+      };
+      requestStore.body = undefined;
+
+      expect(requestStore.generateCode('markdown', 'yaml')).toBe(
+        `\`\`\`yaml http
+method: post
+url: 'https://test.com/test'
+query:
+  queryName: queryValue
+headers:
+  content-type: application/json
+
+\`\`\``,
+      );
+    });
+
     it('should return correct snippet for har', () => {
       requestStore.method = 'post';
       requestStore.url = 'https://test.com/test?queryName=queryValue';
