@@ -5,8 +5,12 @@
   "description": "Basic React app with embedded Stoplight Elements",
   "author": "Stoplight <support@stoplight.io>",
   "license": "Unlicense",
+  "resolutions": {
+    "@stoplight/elements": "file:../../packages/elements/dist",
+    "@stoplight/elements-utils": "file:../../packages/elements-utils/dist"
+  },
   "dependencies": {
-    "@stoplight/elements": "beta",
+    "@stoplight/elements": "file:../../packages/elements/dist",
     "react": "^16.13.1"
   },
   "devDependencies": {
