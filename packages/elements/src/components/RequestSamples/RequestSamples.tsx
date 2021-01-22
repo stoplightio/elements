@@ -1,8 +1,10 @@
 import { CopyButton, Panel, Select } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
+import { atom, useAtom } from 'jotai';
 import React from 'react';
 
+import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
 import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
@@ -10,9 +12,12 @@ interface RequestSamplesProps {
   request: Request;
 }
 
+const selectedLanguageAtom = persistAtom('RequestSamples_selectedLanguage', atom('Shell'));
+const selectedLibraryAtom = persistAtom('RequestSamples_selectedLibrary', atom('cURL'));
+
 export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
-  const [selectedLanguage, setSelectedLanguage] = React.useState('Shell');
-  const [selectedLibrary, setSelectedLibrary] = React.useState('cURL');
+  const [selectedLanguage, setSelectedLanguage] = useAtom(selectedLanguageAtom);
+  const [selectedLibrary, setSelectedLibrary] = useAtom(selectedLibraryAtom);
 
   const { httpSnippetLanguage, httpSnippetLibrary, mosaicCodeViewerLanguage } = getConfigFor(
     selectedLanguage,
@@ -33,7 +38,11 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar rightComponent={<CopyButton size="md" copyValue={requestSample || ''} />}>
         <span>Request:</span>
-        <Select onChange={handleSelectClick} options={selectOptions} />
+        <Select
+          onChange={handleSelectClick}
+          options={selectOptions}
+          value={`${selectedLanguage} / ${selectedLibrary}`}
+        />
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
