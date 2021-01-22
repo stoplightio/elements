@@ -12,6 +12,7 @@ import { getMockData, MockData, MockingOptions } from './mocking-utils';
 import { MockingButton } from './MockingButton';
 import { OperationParameters } from './OperationParameters';
 import { BodyParameterValues, createRequestBody, useBodyParameterState } from './request-body-utils';
+import { RequestBody } from './RequestBody';
 import { useRequestParameters } from './useOperationParameters';
 
 export interface TryItProps {
@@ -91,6 +92,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             onChangeValues={setBodyParameterValues}
           />
         )}
+        {httpOperation.request?.body && <RequestBody httpOperation={httpOperation} />}
         <Panel.Content>
           <Flex>
             <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
