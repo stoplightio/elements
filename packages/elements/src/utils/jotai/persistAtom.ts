@@ -1,7 +1,7 @@
 import { atom, WritableAtom } from 'jotai';
 
 export const persistAtom = (key: string, atomInstance: WritableAtom<string, string>) => {
-  if (!window.localStorage) {
+  if (typeof window === 'undefined' || window.localStorage === undefined) {
     return atomInstance;
   }
 
@@ -13,7 +13,12 @@ export const persistAtom = (key: string, atomInstance: WritableAtom<string, stri
       return localStorageValue !== null ? localStorageValue : atomValue;
     },
     (_, set, update) => {
-      window.localStorage.setItem(key, update);
+      try {
+        /* setItem can throw when storage is full */
+        window.localStorage.setItem(key, update);
+      } catch (error) {
+        console.error(error);
+      }
       set(atomInstance, update);
     },
   );
