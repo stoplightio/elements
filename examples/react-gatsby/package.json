@@ -16,8 +16,7 @@
     "reinstall": "rm -rf node_modules && yarn install",
     "start": "gatsby develop",
     "serve": "gatsby serve -p 4200",
-    "build": "gatsby build",
-    "e2e:execute": "cypress run"
+    "build": "gatsby build"
   },
   "resolutions": {
     "@stoplight/elements": "file:../../packages/elements/dist",
@@ -25,7 +24,6 @@
   },
   "dependencies": {
     "@stoplight/elements": "file:../../packages/elements/dist",
-    "@stoplight/prism-http": "^4.0.1",
     "classnames": "^2.2.6",
     "gatsby": "^2.28.1",
     "gatsby-image": "^2.7.0",

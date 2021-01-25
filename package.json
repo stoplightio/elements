@@ -47,12 +47,16 @@
     "type-check": "yarn workspaces run type-check",
     "test.prod": "yarn workspace @stoplight/elements-utils test.prod && yarn workspace @stoplight/elements test.prod",
     "prepublishOnly": "yarn build",
+    "/// examples ///": "",
+    "build:react-gatsby": "(cd ./examples/react-gatsby && yarn reinstall && yarn build)",
+    "serve:react-gatsby": "(cd ./examples/react-gatsby && yarn serve)",
+    "build:react-cra": "(cd ./examples/react-cra && yarn reinstall && yarn build)",
+    "serve:react-cra": "(cd ./examples/react-cra && yarn serve)",
+    "/// e2e ///": "",
     "e2e:open": "cypress open",
     "e2e:execute": "cypress run",
-    "e2e:serve:react-gatsby": "(cd ./examples/react-gatsby && yarn serve)",
-    "e2e:run:react-gatsby": "start-server-and-test e2e:serve:react-gatsby http://localhost:4200 e2e:execute",
-    "e2e:serve:react-cra": "(cd ./examples/react-cra && yarn serve)",
-    "e2e:run:react-cra": "start-server-and-test e2e:serve:react-cra http://localhost:4200 e2e:execute"
+    "e2e:run:react-gatsby": "start-server-and-test serve:react-gatsby http://localhost:4200 e2e:execute",
+    "e2e:run:react-cra": "start-server-and-test serve:react-cra http://localhost:4200 e2e:execute"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

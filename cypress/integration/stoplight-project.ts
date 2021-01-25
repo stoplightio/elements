@@ -1,9 +1,3 @@
-function loadMainPage() {
-  cy.visit('/');
-  cy.findByRole('link', { name: /Stoplight Project/i }).click();
-  cy.findByRole('heading', { name: 'Introduction' }).should('exist');
-}
-
 describe('Stoplight component', () => {
   it('loads correctly', () => {
     loadMainPage();
@@ -16,8 +10,14 @@ describe('Stoplight component', () => {
     cy.findByRole('heading', { name: /POST \/pets/i }).should('exist');
   });
 
-  it('navigates via url', () => {
+  it('opens via url', () => {
     cy.visit('/stoplight-project/reference/todos/models/todo-full.v1.json');
     cy.findByRole('heading', { name: /Todo Full/i }).should('exist');
   });
 });
+
+function loadMainPage() {
+  cy.visit('/');
+  cy.findByRole('link', { name: /Stoplight Project/i }).click();
+  cy.findByRole('heading', { name: 'Introduction' }).should('exist');
+}

@@ -31,24 +31,25 @@ This repository is a monorepo that we manage using [Lerna](https://github.com/le
 | [`elements-web-components`](/packages/elements-web-components)       | Not released yet       | [![](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)       | Web component build of Elements                                                      |
 | [`elements-utils`](/packages/elements-utils)       | Not released yet       | [![](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)       | Utilities functions                                                     |
 
-## 🧰 Installation and Usage
-
-**Installation**
-
-```bash
-npm install -g @stoplight/elements@alpha
-
-# OR
-
-yarn global add @stoplight/elements@alpha
-```
-
-<!-- For more installation options, see our [installation documentation](./docs/installation.md). -->
-
 ## 📖 Documentation and Community
 
 - [Documentation](https://meta.stoplight.io/docs/elements)
 - [Community](https://github.com/stoplightio/elements/discussions)
+
+## 👁️🗨 ️️Examples
+
+Stoplight Elements comes with a few example integration projects, showing you how to utilize Elements with different frameworks.
+- [x] **[react-cra](./examples/react-cra)** An example app built Create React App utilizing Stoplight Elements
+- [x] **[react-gatsby](./examples/react-gatsby)** An example Gatsby site utilizing Stoplight Elements
+- [ ] **angular** An angular app utilizing the Web Components distribution of Elements
+- [ ] **static-html** A single HTML page utilizing the Web Components distribution via a global script tag.
+
+To run these examples yourself:
+1. Clone this repo and open a command line in the repo's directory.
+2. Run `yarn` to install all dependencies.
+3. Run `yarn build` to build Elements itself.
+4. Run `yarn build:react-cra` to build the *react-cra* example site. An analogous command is available for all examples.
+5. Run `yarn serve:react-cra` (or equivalent) to serve the example project on `http://localhost:4200`.
 
 ## 🚧 Roadmap
 

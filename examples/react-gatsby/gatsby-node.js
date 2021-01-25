@@ -1,18 +1,6 @@
-const path = require('path');
-
-exports.onCreateWebpackConfig = ({ stage, rules, loaders, plugins, actions }) => {
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   if (stage === 'build-html') {
     actions.setWebpackConfig({
-      resolve: {
-        alias: {
-          'json-schema-faker': path.resolve(__dirname, 'node_modules/json-schema-faker/dist/main.cjs.js'),
-          'decimal.js': path.resolve(__dirname, 'node_modules/decimal.js/decimal.js'),
-        },
-      },
-      node: {
-        // Needed for node_modules/@stoplight/prism-http/dist/getHttpOperations.js
-        fs: 'empty',
-      },
       module: {
         rules: [
           {
