@@ -1,6 +1,21 @@
 # Contributing to Stoplight Elements
 
-Intro TBD
+## Table Of Contents
+
+* [Intro](#intro)
+* [Testing](#testing)
+    + [Guiding principles](#guiding-principles)
+    + [Unit tests](#unit-tests)
+        - [Running unit-tests](#running-unit-tests)
+    + [Framework Integration / E2E](#framework-integration)
+        - [Run tests as the CI would](#run-tests-as-the-ci-would)
+        - [Run the tests manually](#run-the-tests-manually)
+        - [Edit the tests](#edit-the-tests)
+        - [Inspecting test results](#inspecting-test-results)
+        
+## Intro
+
+TBD
 
 ## Testing
 
@@ -51,7 +66,7 @@ Unit testing stack:
 Unit tests are currently located in a directory `__tests__` close to the component being tested, but this is soon to change:
 In the future, tests will be located right next to the components under test, with a `.spec.ts` extension.
   
-#### Running unit-tests:
+#### Running unit-tests
 
 Assuming you work on the `elements` package, you can run `jest` on it using the shorthand
 ```shell
@@ -72,7 +87,7 @@ yarn elements test --watch
 yarn elements test -t Test\ Name
 ```
 
-### Framework Integration (a.k.a. end-to-end)
+### Framework Integration
 
 Framework Integration tests are set up **to make sure *Elements* builds and loads correctly using any of the supported frameworks**.
 Even though these tests are not "end to end" per se, we usually refer to them as end-to-end (e2e) tests, 
