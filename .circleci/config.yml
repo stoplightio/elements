@@ -27,18 +27,7 @@ jobs:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
     steps:
       - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-root-{{ checksum "yarn.lock" }}
-            - yarn-root
       - run: yarn --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-root-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-            - /mnt/ramdisk/project/node_modules
       - run: yarn build
       - persist_to_workspace:
           root: /mnt/ramdisk/
@@ -64,21 +53,10 @@ jobs:
     steps:
       - attach_workspace:
           at: /mnt/ramdisk/
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-<<parameters.example-name>>-{{ checksum "/mnt/ramdisk/project/examples/<<parameters.example-name>>/yarn.lock" }}
-            - yarn-<<parameters.example-name>>
       - run:
           name: Example - Install dependencies
           working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
           command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-<<parameters.example-name>>-{{ checksum "/mnt/ramdisk/project/examples/<<parameters.example-name>>/yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-            - /mnt/ramdisk/project/examples/<<parameters.example-name>>/node_modules
       - run:
           name: Example - Build
           working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
