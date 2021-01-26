@@ -30,12 +30,12 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-elements-{{ checksum "yarn.lock" }}
-            - yarn-elements
+            - yarn-root-{{ checksum "yarn.lock" }}
+            - yarn-root
       - run: yarn --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-elements-{{ checksum "yarn.lock" }}
+          key: yarn-root-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - /mnt/ramdisk/project/node_modules
