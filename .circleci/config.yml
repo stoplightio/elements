@@ -19,14 +19,18 @@ jobs:
       - run: yarn lint
       - run: yarn test.prod
   build:
+    working_directory: /mnt/ramdisk/project
     docker:
       - image: circleci/node:12
+    resource_class: large
+    environment:
+      CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
     steps:
       - checkout
       - run: yarn --frozen-lockfile
       - run: yarn build
       - persist_to_workspace:
-          root: ~/
+          root: /mnt/ramdisk/
           paths:
             - project
             - .cache/Cypress
@@ -39,19 +43,23 @@ jobs:
       - run: yarn build.docs
   run-e2e-tests:
     executor: cypress-default
+    resource_class: large
+    working_directory: /mnt/ramdisk/project
+    environment:
+      CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
     parameters:
       example-name:
         type: string
     steps:
       - attach_workspace:
-          at: ~/
+          at: /mnt/ramdisk/
       - run:
           name: Example - Install dependencies
-          working_directory: ~/project/examples/<<parameters.example-name>>
+          working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
           command: yarn install --frozen-lockfile
       - run:
           name: Example - Build
-          working_directory: ~/project/examples/<<parameters.example-name>>
+          working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
           command: yarn build
       - run:
           name: Run E2E checks
