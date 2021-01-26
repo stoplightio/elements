@@ -92,7 +92,10 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             onChangeValues={setBodyParameterValues}
           />
         )}
-        {httpOperation.request?.body && <RequestBody httpOperation={httpOperation} />}
+        {(httpOperation.request?.body?.contents?.[0].examples?.length ||
+          httpOperation.request?.body?.contents?.[0].schema) && (
+          <RequestBody contents={httpOperation.request.body.contents} />
+        )}
         <Panel.Content>
           <Flex>
             <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
