@@ -29,6 +29,7 @@ jobs:
           root: ~/
           paths:
             - project
+            - .cache
   build-docs:
     docker:
       - image: circleci/node:12
@@ -42,7 +43,6 @@ jobs:
       example-name:
         type: string
     steps:
-      - checkout
       - attach_workspace:
           at: ~/
       - run:
