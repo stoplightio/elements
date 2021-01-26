@@ -29,7 +29,7 @@ jobs:
           root: ~/
           paths:
             - project
-            - .cache
+            - .cache/Cypress
   build-docs:
     docker:
       - image: circleci/node:12
