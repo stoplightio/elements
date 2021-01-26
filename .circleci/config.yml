@@ -26,11 +26,9 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn build
       - persist_to_workspace:
-          root: .
+          root: ~/
           paths:
-            - packages/elements/dist/**
-            - packages/elements-web-components/dist/**
-            - packages/elements-utils/dist/**
+            - project
   build-docs:
     docker:
       - image: circleci/node:12
@@ -45,12 +43,8 @@ jobs:
         type: string
     steps:
       - checkout
-      - run: yarn --frozen-lockfile
       - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Copy build artifacts
-          command: cp /tmp/workspace/* -r ~/project
+          at: ~/
       - run:
           name: Example - Install dependencies
           working_directory: ~/project/examples/<<parameters.example-name>>
