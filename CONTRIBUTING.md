@@ -137,7 +137,7 @@ yarn serve:react-cra
 yarn e2e:open
 ```
 
-With the console open, click on any test suite to run it visually.
+With the console open, click on any test suite to run it visually. Check [Cypress Docs](https://docs.cypress.io/guides/core-concepts/test-runner.html) for more details about the Test Runner.
 
 Don't forget that while *Cypress* hot-reloads on test code change, it needs a complete rebuild for *Elements* changes.
 There is unfortunately no way around this for now. You likely won't hit this limitation often, but in case you do, one trick that may speed things up a bit is:

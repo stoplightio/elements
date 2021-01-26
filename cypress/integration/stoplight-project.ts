@@ -1,10 +1,10 @@
 describe('Stoplight component', () => {
   it('loads correctly', () => {
-    loadMainPage();
+    loadStoplightProjectPage();
   });
 
   it('navigates via table of contents', () => {
-    loadMainPage();
+    loadStoplightProjectPage();
     cy.findByText('pets').click();
     cy.findByText('Create a pet').click();
     cy.findByRole('heading', { name: /POST \/pets/i }).should('exist');
@@ -16,7 +16,7 @@ describe('Stoplight component', () => {
   });
 });
 
-function loadMainPage() {
+function loadStoplightProjectPage() {
   cy.visit('/');
   cy.findByRole('link', { name: /Stoplight Project/i }).click();
   cy.findByRole('heading', { name: 'Introduction' }).should('exist');

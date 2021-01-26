@@ -27,7 +27,7 @@ In this example, we connect the `API` component directly to [Zoom API](https://r
 
 ## Trying the example
 
-For instructions on how to run this example, please refer to the [root README file](../../README.md)
+For instructions on how to run this example, please refer to the [root README file](../../README.md#-examples)
 
 ### Usage
 
