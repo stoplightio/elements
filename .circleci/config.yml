@@ -38,6 +38,7 @@ jobs:
           key: yarn-elements-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+            - /mnt/ramdisk/project/node_modules
       - run: yarn build
       - persist_to_workspace:
           root: /mnt/ramdisk/
@@ -66,7 +67,7 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-<<parameters.example-name>>-{{ checksum "yarn.lock" }}
+            - yarn-<<parameters.example-name>>-{{ checksum "/mnt/ramdisk/project/examples/<<parameters.example-name>>/yarn.lock" }}
             - yarn-<<parameters.example-name>>
       - run:
           name: Example - Install dependencies
@@ -74,9 +75,10 @@ jobs:
           command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-<<parameters.example-name>>-{{ checksum "yarn.lock" }}
+          key: yarn-<<parameters.example-name>>-{{ checksum "/mnt/ramdisk/project/examples/<<parameters.example-name>>/yarn.lock" }}
           paths:
             - ~/.cache/yarn
+            - /mnt/ramdisk/project/examples/<<parameters.example-name>>/node_modules
       - run:
           name: Example - Build
           working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
