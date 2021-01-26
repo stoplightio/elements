@@ -25,6 +25,7 @@ jobs:
     resource_class: large
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
+      YARN_CACHE_FOLDER: /mnt/ramdisk/.cache/yarn
     steps:
       - checkout
       - run: yarn --frozen-lockfile
@@ -47,6 +48,7 @@ jobs:
     working_directory: /mnt/ramdisk/project
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
+      YARN_CACHE_FOLDER: /mnt/ramdisk/.cache/yarn
     parameters:
       example-name:
         type: string
