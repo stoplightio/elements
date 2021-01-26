@@ -396,11 +396,11 @@ describe('TryIt', () => {
       );
 
       // enable mocking
-      let mockingButton = screen.getByRole('button', { name: /mocking/i });
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
       userEvent.click(mockingButton);
 
-      let enableItem = screen.getByText('Enabled');
-      let responseCodeItem = screen.getByText('200');
+      const enableItem = screen.getByText('Enabled');
+      const responseCodeItem = screen.getByText('200');
       userEvent.click(enableItem);
       userEvent.click(responseCodeItem);
 
@@ -419,19 +419,19 @@ describe('TryIt', () => {
         </PersistenceContextProvider>,
       );
 
-      mockingButton = screen.getByRole('button', { name: /mocking/i });
-      userEvent.click(mockingButton);
-      enableItem = screen.getByText('Enabled');
-      responseCodeItem = screen.getByText('200');
+      clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
-      const enabledIcon = enableItem.previousSibling;
-      const responseCodeIcon = responseCodeItem.previousSibling;
-
-      expect(enabledIcon).toBeInTheDocument();
-      expect(responseCodeIcon).toBeInTheDocument();
-
-      expect(enabledIcon).toHaveAttribute('icon', 'tick');
-      expect(responseCodeIcon).toHaveAttribute('icon', 'tick');
+      expect(fetchMock).toHaveBeenCalled();
+      expect(fetchMock).toBeCalledWith(
+        'https://mock-todos.stoplight.io/todos',
+        expect.objectContaining({
+          method: 'get',
+          headers: {
+            Prefer: 'code=200',
+          },
+        }),
+      );
     });
   });
 });
