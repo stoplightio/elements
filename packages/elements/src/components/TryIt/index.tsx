@@ -50,7 +50,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     try {
       setLoading(true);
       const mockData = getMockData(mockUrl, mockingOptions);
-      const request = buildFetchRequest({
+      const request = await buildFetchRequest({
         httpOperation,
         parameterValues: parameterValuesWithDefaults,
         bodyParameterValues,
@@ -145,12 +145,12 @@ interface BuildFetchRequestInput {
   mockData?: MockData;
 }
 
-function buildFetchRequest({
+async function buildFetchRequest({
   httpOperation,
   parameterValues,
   bodyParameterValues,
   mockData,
-}: BuildFetchRequestInput): Parameters<typeof fetch> {
+}: BuildFetchRequestInput): Promise<Parameters<typeof fetch>> {
   const server = mockData?.url || httpOperation.servers?.[0]?.url;
 
   const queryParams = httpOperation.request?.query
@@ -171,7 +171,7 @@ function buildFetchRequest({
         ),
         ...mockData?.header,
       },
-      body: createRequestBody(httpOperation, bodyParameterValues),
+      body: await createRequestBody(httpOperation, bodyParameterValues),
     },
   ];
 }

@@ -1,0 +1,46 @@
+{
+  "name": "@stoplight/elements-starter-react",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Basic React app with embedded Stoplight Elements",
+  "author": "Stoplight <support@stoplight.io>",
+  "license": "Unlicense",
+  "resolutions": {
+    "@stoplight/elements": "file:../../packages/elements/dist",
+    "@stoplight/elements-utils": "file:../../packages/elements-utils/dist"
+  },
+  "dependencies": {
+    "@stoplight/elements": "file:../../packages/elements/dist",
+    "mobx": "^6.0.4",
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-router-dom": "^5.1.5",
+    "node-sass": "^4.14.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.3",
+    "serve": "^11.3.2",
+    "typescript": "^4.0.2"
+  },
+  "scripts": {
+    "reinstall": "rm -rf node_modules && yarn install",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "serve": "serve -s -l 4200 build"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es6",
+    "module": "esnext",
+    "lib": ["es2019", "dom"],
+    "sourceMap": true,
+    "declaration": false,
+    "jsx": "react",
+    "esModuleInterop": true,
+  }
+}
