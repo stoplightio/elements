@@ -3,11 +3,10 @@ const PackageImporter = require('node-sass-package-importer');
 const inliner = require('sass-inline-svg');
 const path = require('path');
 
-
 module.exports = {
   stories: ['../src/**/*.stories.{js,jsx,ts,tsx}'],
   addons: ['@storybook/addon-essentials'],
-  webpackFinal: (config) => {
+  webpackFinal: config => {
     config.resolve.plugins.push(new TsconfigPathsPlugin());
     let svgIconFunc;
     try {
@@ -36,17 +35,6 @@ module.exports = {
             importLoaders: 2,
           },
         },
-        {
-          loader: require.resolve('postcss-loader'),
-          options: {
-            plugins: [
-              require('postcss-import'),
-              require('autoprefixer')({
-                env: 'last 2 Chrome versions, last 2 Firefox versions, last 1 Safari version',
-              }),
-            ],
-          },
-        },
         'resolve-url-loader',
         {
           loader: require.resolve('sass-loader'),
@@ -63,5 +51,5 @@ module.exports = {
     });
 
     return config;
-  }
+  },
 };

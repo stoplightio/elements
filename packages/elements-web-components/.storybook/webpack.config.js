@@ -93,17 +93,6 @@ module.exports = ({ config }) => {
           importLoaders: 2,
         },
       },
-      {
-        loader: require.resolve('postcss-loader'),
-        options: {
-          plugins: [
-            require('postcss-import'),
-            require('autoprefixer')({
-              env: 'last 2 Chrome versions, last 2 Firefox versions, last 1 Safari version',
-            }),
-          ],
-        },
-      },
       'resolve-url-loader',
       {
         loader: require.resolve('sass-loader'),
