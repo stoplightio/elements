@@ -8,7 +8,7 @@ import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
 import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
-interface RequestSamplesProps {
+export interface RequestSamplesProps {
   request: Request;
 }
 

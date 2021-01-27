@@ -7,6 +7,7 @@ import '../src/styles/elements.scss';
 import { injectStyles } from '@stoplight/mosaic';
 import cn from 'classnames';
 import { Provider } from '../src/containers/Provider';
+import { PersistenceContextProvider } from '../src/context/Persistence';
 
 injectStyles();
 
@@ -37,7 +38,11 @@ const ProviderDecorator = (Story) => (
   </Provider>
 );
 
-export const decorators = [ThemeProvider, ProviderDecorator];
+const PersistenceBoundaryDecorator = (Story) => (
+  <PersistenceContextProvider><Story /></PersistenceContextProvider>
+);
+
+export const decorators = [ThemeProvider, ProviderDecorator, PersistenceBoundaryDecorator];
 
 export const parameters = {
   docs: {
