@@ -19,5 +19,4 @@ export default create({
   // Typography
   fontBase: '-apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', system-ui, sans-serif, \'Apple Color Emoji\', \'Segoe UI Emoji\', \'Segoe UI Symbol\', \'Noto Color Emoji\'',
   fontCode: 'Inconsolata, Monaco, Consolas, \'Courier New\', Courier, monospace',
-
 });
