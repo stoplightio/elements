@@ -17,7 +17,20 @@ import { useRequestParameters } from './useOperationParameters';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
+  /**
+   * Presents an option for the user to redirect traffic to a prism-based mock server, such as Stoplight Platform's Hosted Mocking feature.
+   *
+   * When using this feature, make sure to specify the base URL of the mock server using the `mockUrl` prop.
+   * @default false
+   */
   showMocking?: boolean;
+  /**
+   * The base URL of the prism mock server to redirect traffic to.
+   *
+   * While non-prism based mocks may work to some limited extent, they might not understand the Prefer header as prism does.
+   *
+   * Only applies when `showMocking` is enabled
+   */
   mockUrl?: string;
 }
 
