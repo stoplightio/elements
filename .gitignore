@@ -15,6 +15,7 @@ cypress/results
 build
 dist
 docs-auto
+dist-storybook
 
 # misc
 .DS_Store
