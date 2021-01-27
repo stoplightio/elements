@@ -83,6 +83,7 @@ module.exports = ({ config }) => {
 
   config.module.rules.push({
     test: /\.scss$/,
+    sideEffects: true,
     use: [
       {
         loader: require.resolve('style-loader'),
