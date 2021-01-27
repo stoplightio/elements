@@ -6,6 +6,7 @@ import '../src/styles/elements.scss';
 
 import { injectStyles } from '@stoplight/mosaic';
 import cn from 'classnames';
+import { Provider } from '../src/containers/Provider';
 
 injectStyles();
 
@@ -30,7 +31,13 @@ const ThemeProvider = (Story, context) => {
   );
 };
 
-export const decorators = [ThemeProvider];
+const ProviderDecorator = (Story) => (
+  <Provider host="http://stoplight-local.com:8080" workspace="elements" project="public-apis">
+    <Story />
+  </Provider>
+);
+
+export const decorators = [ThemeProvider, ProviderDecorator];
 
 export const parameters = {
   docs: {
