@@ -7,7 +7,7 @@ export default create({
   // brand
   brandTitle: 'Stoplight Elements',
   brandUrl: 'https://stoplight.io',
-  brandImage: 'https://stoplight.io/images/home/stoplight_logo.png',
+  brandImage: 'https://stoplight.io/images/home/logo-blue-black.png',
 
   // UI
   appBg: 'white',
