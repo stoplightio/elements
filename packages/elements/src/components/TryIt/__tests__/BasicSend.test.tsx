@@ -422,7 +422,6 @@ describe('TryIt', () => {
       clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
-      expect(fetchMock).toHaveBeenCalled();
       expect(fetchMock).toBeCalledWith(
         'https://mock-todos.stoplight.io/todos',
         expect.objectContaining({
