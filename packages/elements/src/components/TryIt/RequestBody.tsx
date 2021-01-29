@@ -2,36 +2,17 @@ import { safeStringify } from '@stoplight/json';
 import { Button, Menu, MenuItem, Panel } from '@stoplight/mosaic';
 import { CodeEditor } from '@stoplight/mosaic-code-editor';
 import { INodeExample, INodeExternalExample } from '@stoplight/types';
-import * as Sampler from 'openapi-sampler';
 import * as React from 'react';
-
-import { JSONSchema } from '../../types';
 
 interface RequestBodyProps {
   examples: Array<INodeExample | INodeExternalExample>;
-  schema?: JSONSchema;
+  requestBody: string;
+  onChange: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const RequestBody: React.FC<RequestBodyProps> = ({ examples, schema }) => {
-  const initialRequestBodyValue = React.useMemo(() => {
-    try {
-      if (examples.length) {
-        return safeStringify(examples[0]);
-      } else if (schema) {
-        return safeStringify(Sampler.sample(schema, { skipReadOnly: true }));
-      } else {
-        return '';
-      }
-    } catch (e) {
-      console.error(e);
-      return '';
-    }
-  }, [examples, schema]);
-
-  const [requestBody, setRequestBody] = React.useState<string>(initialRequestBodyValue ?? '');
-
+export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody, onChange }) => {
   const handleClick = (example: INodeExample | INodeExternalExample) => {
-    setRequestBody(safeStringify(example) ?? requestBody);
+    onChange(safeStringify(example['value']) ?? requestBody);
   };
 
   return (
@@ -50,7 +31,7 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, schema }) =>
         Body
       </Panel.Titlebar>
       <Panel.Content>
-        <CodeEditor onChange={setRequestBody} language="json" value={requestBody} showLineNumbers />
+        <CodeEditor onChange={onChange} language="json" value={requestBody} showLineNumbers />
       </Panel.Content>
     </Panel>
   );

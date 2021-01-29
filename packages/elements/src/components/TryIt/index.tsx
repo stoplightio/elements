@@ -1,8 +1,10 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { safeStringify } from '@stoplight/json';
 import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Dictionary, IHttpOperation } from '@stoplight/types';
+import * as Sampler from 'openapi-sampler';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
@@ -38,6 +40,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
+  const requestBodyContents = httpOperation.request?.body?.contents?.[0];
+  const requestBodySchema = requestBodyContents?.schema;
+  const requestBodyExamples = requestBodyContents?.examples;
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
 
@@ -45,7 +50,22 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
-  const requestBodyContents = httpOperation.request?.body?.contents?.[0];
+  const initialRequestBodyValue = React.useMemo(() => {
+    try {
+      if (requestBodyExamples?.length) {
+        return safeStringify(requestBodyExamples?.[0]['value']);
+      } else if (requestBodySchema) {
+        return safeStringify(Sampler.sample(requestBodySchema, { skipReadOnly: true }));
+      } else {
+        return '';
+      }
+    } catch (e) {
+      console.error(e);
+      return '';
+    }
+  }, [requestBodyExamples, requestBodySchema]);
+
+  const [requestBody, setRequestBody] = React.useState<string>(initialRequestBodyValue ?? '');
 
   if (!server) return null;
 
@@ -94,7 +114,11 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             onChangeValues={setBodyParameterValues}
           />
         ) : requestBodyContents ? (
-          <RequestBody examples={requestBodyContents.examples ?? []} schema={requestBodyContents.schema} />
+          <RequestBody
+            examples={requestBodyContents.examples ?? []}
+            requestBody={requestBody}
+            onChange={setRequestBody}
+          />
         ) : null}
         {}
         <Panel.Content>
