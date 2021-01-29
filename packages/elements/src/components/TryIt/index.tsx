@@ -40,9 +40,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
-  const requestBodyContents = httpOperation.request?.body?.contents?.[0];
-  const requestBodySchema = requestBodyContents?.schema;
-  const requestBodyExamples = requestBodyContents?.examples;
+  const textRequestBodyContents = httpOperation.request?.body?.contents?.[0];
+  const textRequestBodySchema = textRequestBodyContents?.schema;
+  const textRequestBodyExamples = textRequestBodyContents?.examples;
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
 
@@ -52,10 +52,10 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
 
   const initialRequestBodyValue = React.useMemo(() => {
     try {
-      if (requestBodyExamples?.length) {
-        return safeStringify(requestBodyExamples?.[0]['value']);
-      } else if (requestBodySchema) {
-        return safeStringify(Sampler.sample(requestBodySchema, { skipReadOnly: true }));
+      if (textRequestBodyExamples?.length) {
+        return safeStringify(textRequestBodyExamples?.[0]['value']);
+      } else if (textRequestBodySchema) {
+        return safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true }));
       } else {
         return '';
       }
@@ -63,9 +63,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
       console.error(e);
       return '';
     }
-  }, [requestBodyExamples, requestBodySchema]);
+  }, [textRequestBodyExamples, textRequestBodySchema]);
 
-  const [requestBody, setRequestBody] = React.useState<string>(initialRequestBodyValue ?? '');
+  const [textRequestBody, setTextRequestBody] = React.useState<string>(initialRequestBodyValue ?? '');
 
   if (!server) return null;
 
@@ -77,6 +77,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
         httpOperation,
         parameterValues: parameterValuesWithDefaults,
         bodyParameterValues,
+        textBodyValues: textRequestBody,
         mockData,
       });
       const response = await fetch(...request);
@@ -113,11 +114,11 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             values={bodyParameterValues}
             onChangeValues={setBodyParameterValues}
           />
-        ) : requestBodyContents ? (
+        ) : textRequestBodyContents ? (
           <RequestBody
-            examples={requestBodyContents.examples ?? []}
-            requestBody={requestBody}
-            onChange={setRequestBody}
+            examples={textRequestBodyContents.examples ?? []}
+            requestBody={textRequestBody}
+            onChange={setTextRequestBody}
           />
         ) : null}
         {}
@@ -172,6 +173,7 @@ interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
   bodyParameterValues?: BodyParameterValues;
+  textBodyValues?: string;
   mockData?: MockData;
 }
 
@@ -179,6 +181,7 @@ async function buildFetchRequest({
   httpOperation,
   parameterValues,
   bodyParameterValues,
+  textBodyValues,
   mockData,
 }: BuildFetchRequestInput): Promise<Parameters<typeof fetch>> {
   const server = mockData?.url || httpOperation.servers?.[0]?.url;
@@ -191,6 +194,14 @@ async function buildFetchRequest({
   const url = new URL(server + expandedPath);
   url.search = new URLSearchParams(queryParams).toString();
 
+  const requestBody = async () => {
+    if (bodyParameterValues) {
+      return await createRequestBody(httpOperation, bodyParameterValues);
+    } else if (textBodyValues) {
+      return textBodyValues;
+    } else return '';
+  };
+
   return [
     url.toString(),
     {
@@ -201,7 +212,7 @@ async function buildFetchRequest({
         ),
         ...mockData?.header,
       },
-      body: await createRequestBody(httpOperation, bodyParameterValues),
+      body: await requestBody(),
     },
   ];
 }
