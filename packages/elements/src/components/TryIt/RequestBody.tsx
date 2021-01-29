@@ -20,7 +20,14 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody,
       <Panel.Titlebar
         rightComponent={
           examples.length > 0 && (
-            <Menu label="Examples" trigger={<Button iconRight="caret-down">Examples</Button>}>
+            <Menu
+              label="Examples"
+              trigger={
+                <Button appearance="minimal" iconRight="caret-down">
+                  Examples
+                </Button>
+              }
+            >
               {examples.map(example => (
                 <MenuItem key={example.key} text={example.key} onClick={() => handleClick(example)} />
               ))}
