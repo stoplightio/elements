@@ -45,6 +45,8 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
+  const requestBodyContents = httpOperation.request?.body?.contents?.[0];
+
   if (!server) return null;
 
   const handleClick = async () => {
@@ -85,17 +87,16 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             onChangeValue={updateParameterValue}
           />
         )}
-        {formDataState.isFormDataBody && (
+        {formDataState.isFormDataBody ? (
           <FormDataBody
             specification={formDataState.bodySpecification}
             values={bodyParameterValues}
             onChangeValues={setBodyParameterValues}
           />
-        )}
-        {(httpOperation.request?.body?.contents?.[0].examples?.length ||
-          httpOperation.request?.body?.contents?.[0].schema) && (
-          <RequestBody contents={httpOperation.request.body.contents} />
-        )}
+        ) : requestBodyContents ? (
+          <RequestBody examples={requestBodyContents.examples ?? []} schema={requestBodyContents.schema} />
+        ) : null}
+        {}
         <Panel.Content>
           <Flex>
             <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>

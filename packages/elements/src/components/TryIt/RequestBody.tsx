@@ -1,17 +1,47 @@
+import { safeStringify } from '@stoplight/json';
 import { Button, Menu, MenuItem, Panel } from '@stoplight/mosaic';
-import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { IHttpOperationRequestBody } from '@stoplight/types';
+import { CodeEditor } from '@stoplight/mosaic-code-editor';
+import { INodeExample, INodeExternalExample } from '@stoplight/types';
+import * as Sampler from 'openapi-sampler';
 import * as React from 'react';
 
-export const RequestBody: React.FC<IHttpOperationRequestBody> = ({ contents }) => {
+import { JSONSchema } from '../../types';
+
+interface RequestBodyProps {
+  examples: Array<INodeExample | INodeExternalExample>;
+  schema?: JSONSchema;
+}
+
+export const RequestBody: React.FC<RequestBodyProps> = ({ examples, schema }) => {
+  const initialRequestBodyValue = React.useMemo(() => {
+    try {
+      if (examples.length) {
+        return safeStringify(examples[0]);
+      } else if (schema) {
+        return safeStringify(Sampler.sample(schema, { skipReadOnly: true }));
+      } else {
+        return '';
+      }
+    } catch (e) {
+      console.error(e);
+      return '';
+    }
+  }, [examples, schema]);
+
+  const [requestBody, setRequestBody] = React.useState<string>(initialRequestBodyValue ?? '');
+
+  const handleClick = (example: INodeExample | INodeExternalExample) => {
+    setRequestBody(safeStringify(example) ?? requestBody);
+  };
+
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar
         rightComponent={
-          contents?.[0].examples && (
+          examples.length > 0 && (
             <Menu label="Examples" trigger={<Button iconRight="caret-down">Examples</Button>}>
-              {contents[0].examples.map(asd => (
-                <MenuItem text={asd.key} />
+              {examples.map(example => (
+                <MenuItem key={example.key} text={example.key} onClick={() => handleClick(example)} />
               ))}
             </Menu>
           )
@@ -20,14 +50,7 @@ export const RequestBody: React.FC<IHttpOperationRequestBody> = ({ contents }) =
         Body
       </Panel.Titlebar>
       <Panel.Content>
-        <CodeViewer
-          language="json"
-          value={
-            contents?.[0].examples?.length
-              ? JSON.stringify(contents[0].examples[0])
-              : JSON.stringify(contents?.[0].schema)
-          }
-        />
+        <CodeEditor onChange={setRequestBody} language="json" value={requestBody} showLineNumbers />
       </Panel.Content>
     </Panel>
   );
