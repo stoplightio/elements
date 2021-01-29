@@ -14,7 +14,7 @@ examplelessRequestBody.request.body.contents[0].examples = [
     },
   },
   {
-    key: 'example-2',
+    key: 'named example',
     value: {
       name: 'Jane',
       age: 36,

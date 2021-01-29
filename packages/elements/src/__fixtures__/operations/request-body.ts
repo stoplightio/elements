@@ -32,6 +32,7 @@ export const requestBody: IHttpOperation = {
               },
               trial: {
                 type: 'boolean',
+                readOnly: true,
               },
             },
           },
