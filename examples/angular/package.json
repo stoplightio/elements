@@ -10,6 +10,7 @@
     "url": "git+https://github.com/stoplightio/elements-starter-angular.git"
   },
   "scripts": {
+    "reinstall": "rm -rf node_modules && yarn install",
     "start": "ng serve",
     "build": "ng build --prod --base-href '/elements-starter-angular'",
     "postinstall": "ngcc --tsconfig './tsconfig.app.json'",
@@ -17,6 +18,9 @@
   },
   "bugs": {
     "url": "https://github.com/stoplightio/elements-starter-angular/issues"
+  },
+  "resolutions": {
+    "@stoplight/elements-web-components": "file:../../packages/elements-web-components"
   },
   "dependencies": {
     "@angular/animations": "^11.1.1",
@@ -27,7 +31,7 @@
     "@angular/platform-browser": "^11.1.1",
     "@angular/platform-browser-dynamic": "^11.1.1",
     "@angular/router": "^11.1.1",
-    "@stoplight/elements-web-components": "^6.1.1",
+    "@stoplight/elements-web-components": "file:../../packages/elements-web-components",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
