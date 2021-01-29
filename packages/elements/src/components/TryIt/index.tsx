@@ -40,6 +40,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
+
   const textRequestBodyContents = httpOperation.request?.body?.contents?.[0];
   const textRequestBodySchema = textRequestBodyContents?.schema;
   const textRequestBodyExamples = textRequestBodyContents?.examples;
@@ -65,7 +66,11 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     }
   }, [textRequestBodyExamples, textRequestBodySchema]);
 
-  const [textRequestBody, setTextRequestBody] = React.useState<string>(initialRequestBodyValue ?? '');
+  React.useEffect(() => {
+    setTextRequestBody(initialRequestBodyValue ?? '');
+  }, [initialRequestBodyValue]);
+
+  const [textRequestBody, setTextRequestBody] = React.useState<string>('');
 
   if (!server) return null;
 
