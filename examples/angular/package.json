@@ -12,7 +12,7 @@
   "scripts": {
     "reinstall": "rm -rf node_modules && yarn install",
     "start": "ng serve",
-    "build": "ng build --prod --base-href '/elements-starter-angular'",
+    "build": "ng build --prod",
     "postinstall": "ngcc --tsconfig './tsconfig.app.json'",
     "serve": "angular-http-server --path ./dist/angular -p 4200"
   },
