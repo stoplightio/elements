@@ -4,11 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ApiComponent } from './api/api.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DocsComponent } from './docs/docs.component';
 import { HomeComponent } from './home/home.component';
+import { StoplightProjectComponent } from './stoplight-project/stoplight-project.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, DocsComponent, ApiComponent],
+  declarations: [AppComponent, HomeComponent, StoplightProjectComponent, ApiComponent],
   imports: [BrowserModule, AppRoutingModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

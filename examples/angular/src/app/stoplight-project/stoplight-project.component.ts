@@ -4,10 +4,10 @@ import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-docs',
-  templateUrl: './docs.component.html',
+  templateUrl: './stoplight-project.component.html',
 })
-export class DocsComponent {
+export class StoplightProjectComponent {
   workspaceSlug = 'elements';
   projectSlug = 'studio-demo';
-  basePath = environment.basePath ? `${environment.basePath}/docs` : 'docs';
+  basePath = environment.basePath ? `${environment.basePath}/stoplight-project` : 'stoplight-project';
 }
