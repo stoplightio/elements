@@ -4053,6 +4053,28 @@
     unist-util-select "^3.0.1"
     unist-util-visit "^2.0.2"
 
+"@stoplight/mosaic-code-editor@1.0.0-beta.22":
+  version "1.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.0.0-beta.22.tgz#9b0329319b46b523dff66e746d81ff66f2261939"
+  integrity sha512-SChwhlj0WOeU2kT1fWky3DZj58chxktfyZLzNzaL5W9rrv2qCA/+7AA01g8CpsLE+C9cI7VZ677fs3O5n6D5cA==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.34"
+    "@fortawesome/free-solid-svg-icons" "^5.15.2"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@stoplight/mosaic" "1.0.0-beta.22"
+    "@stoplight/mosaic-code-viewer" "1.0.0-beta.22"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.0.5"
+    prism-react-renderer "^1.1.1"
+    prismjs "^1.23.0"
+    react-simple-code-editor "^0.11.0"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    zustand "^3.3.1"
+
 "@stoplight/mosaic-code-viewer@1.0.0-beta.20":
   version "1.0.0-beta.20"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.20.tgz#47bc9e42baa9f4142c1eb002d4f230ff0fa1f7ad"
@@ -4072,6 +4094,26 @@
     reakit "^1.3.3"
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
+
+"@stoplight/mosaic-code-viewer@1.0.0-beta.22":
+  version "1.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.22.tgz#5b6ff5386b9f6f3f33b11380fbfe8a912c6bf706"
+  integrity sha512-oHPJpwpQn2IyYz6n1ZkpM7PNBmHEkfi4v9Oi0lU1R6zqw7Oh734tN39qblbttl9cNQtnK8pY1DWPjOum2o5Zmw==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.34"
+    "@fortawesome/free-solid-svg-icons" "^5.15.2"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@stoplight/mosaic" "1.0.0-beta.22"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.0.5"
+    prism-react-renderer "^1.1.1"
+    prismjs "^1.23.0"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    zustand "^3.3.1"
 
 "@stoplight/mosaic@1.0.0-beta.20":
   version "1.0.0-beta.20"
@@ -5960,6 +6002,11 @@
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@types/npmlog/-/npmlog-4.1.2.tgz#d070fe6a6b78755d1092a3dc492d34c3d8f871c4"
   integrity sha512-4QQmOF5KlwfxJ5IGXFIudkeLCdMABz03RcUXu+LCb24zmln8QW6aDjuGl4d4XPVLf2j+FnjelHTP7dvceAFbhA==
+
+"@types/openapi-sampler@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/openapi-sampler/-/openapi-sampler-1.0.0.tgz#0975f342e82a83b79bb529895fe3e465be8b7f1c"
+  integrity sha512-u2AojBhWiatFxI/ACLKmJBSXDoVLSky7UTkeV0ZTre2CszA0R+XDzON/OaRK31nbbWLpcQFsm++bwT2LmNVsgA==
 
 "@types/overlayscrollbars@^1.9.0":
   version "1.12.0"
@@ -16802,6 +16849,13 @@ openapi-sampler@^1.0.0-beta.16:
   dependencies:
     json-pointer "^0.6.0"
 
+openapi-sampler@^1.0.0-beta.18:
+  version "1.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/openapi-sampler/-/openapi-sampler-1.0.0-beta.18.tgz#9e0845616a669e048860625ea5c10d0f554f1b53"
+  integrity sha512-nG/0kvvSY5FbrU5A+Dbp1xTQN++7pKIh87/atryZlxrzDuok5Y6TCbpxO1jYqpUKLycE4ReKGHCywezngG6xtQ==
+  dependencies:
+    json-pointer "^0.6.0"
+
 openapi3-ts@~1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-1.4.0.tgz#679d5a24be0efc36f5de4fc2c4b8513663e16f65"
@@ -18515,7 +18569,7 @@ react-select@^3.0.8:
     react-input-autosize "^2.2.2"
     react-transition-group "^4.3.0"
 
-react-simple-code-editor@~0.11.0:
+react-simple-code-editor@^0.11.0, react-simple-code-editor@~0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-simple-code-editor/-/react-simple-code-editor-0.11.0.tgz#bb57c7c29b570f2ab229872599eac184f5bc673c"
   integrity sha512-xGfX7wAzspl113ocfKQAR8lWPhavGWHL3xSzNLeseDRHysT+jzRBi/ExdUqevSMos+7ZtdfeuBOXtgk9HTwsrw==
