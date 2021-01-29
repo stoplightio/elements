@@ -83,6 +83,7 @@ module.exports = ({ config }) => {
 
   config.module.rules.push({
     test: /\.scss$/,
+    sideEffects: true,
     use: [
       {
         loader: require.resolve('style-loader'),
@@ -91,17 +92,6 @@ module.exports = ({ config }) => {
         loader: require.resolve('css-loader'),
         options: {
           importLoaders: 2,
-        },
-      },
-      {
-        loader: require.resolve('postcss-loader'),
-        options: {
-          plugins: [
-            require('postcss-import'),
-            require('autoprefixer')({
-              env: 'last 2 Chrome versions, last 2 Firefox versions, last 1 Safari version',
-            }),
-          ],
         },
       },
       'resolve-url-loader',

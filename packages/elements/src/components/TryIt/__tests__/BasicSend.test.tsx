@@ -387,5 +387,50 @@ describe('TryIt', () => {
         ],
       ]);
     });
+
+    it('Persists mocking options between operations', async () => {
+      const { rerender } = render(
+        <PersistenceContextProvider>
+          <TryIt httpOperation={putOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />
+        </PersistenceContextProvider>,
+      );
+
+      // enable mocking
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+      userEvent.click(mockingButton);
+
+      const enableItem = screen.getByText('Enabled');
+      const responseCodeItem = screen.getByText('200');
+      userEvent.click(enableItem);
+      userEvent.click(responseCodeItem);
+
+      // unmount (to make sure parameters are not simply stored in component state)
+      rerender(
+        <PersistenceContextProvider>
+          <div />
+        </PersistenceContextProvider>,
+      );
+
+      // mount a different instance
+
+      rerender(
+        <PersistenceContextProvider>
+          <TryIt httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />
+        </PersistenceContextProvider>,
+      );
+
+      clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock).toBeCalledWith(
+        'https://mock-todos.stoplight.io/todos',
+        expect.objectContaining({
+          method: 'get',
+          headers: {
+            Prefer: 'code=200',
+          },
+        }),
+      );
+    });
   });
 });

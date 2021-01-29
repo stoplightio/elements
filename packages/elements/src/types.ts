@@ -94,7 +94,24 @@ export type Item = {
 };
 
 export interface RoutingProps {
+  /**
+   * Only applies when using `history`-based routing. (See the `router` prop.) Specifies the base path under which
+   * all API component controlled pages are located. The host must route any location under this path to the API component.
+   */
   basePath?: string;
+  /**
+   * Which routing solution to use when the user navigates using the table of contents.
+   * Only applies when using the *sidebar* layout.
+   *
+   * - **`history`** - The table of contents pushes entries onto the navigation stack, e.g. `location.pushState`.
+   *   This requires that the host routes any location under `basePath` (see `basePath` prop) to the API component.
+   * - **`hash`** - Navigation happens using hash-fragments (`/some/page#these-fragments-here`).
+   *   This still allows the user to link to individual pages without requiring the more complex routing setup `history` needs.
+   * - **`memory`** - Internal navigation does not change the host `location` at all.
+   *   This works in every scenario, but it lacks the important feature of being able to link to individual pages.
+   *
+   *   @default "history"
+   */
   router?: 'history' | 'hash' | 'memory';
 }
 

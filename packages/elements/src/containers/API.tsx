@@ -26,13 +26,33 @@ const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 
-export type APIPropsWithUrl = { apiDescriptionUrl: string } & CommonAPIProps;
+export type APIPropsWithUrl = {
+  /**
+   * Specify the URL of the input OAS2/3 document here.
+   *
+   * Mutually exclusive with `apiDescriptionDocument`.
+   */
+  apiDescriptionUrl: string;
+} & CommonAPIProps;
 export type APIPropsWithDocument = {
+  /**
+   * You can specify the input OAS2/3 document here directly in JSON or YAML format.
+   *
+   * Mutually exclusive with `apiDescriptionUrl`.
+   */
   apiDescriptionDocument: string | object;
   apiDescriptionUrl?: string;
 } & CommonAPIProps;
 
 export interface CommonAPIProps extends RoutingProps {
+  /**
+   * The API component supports two layout options.
+   *
+   * - Sidebar: Navigation on the left side, resembles Stoplight Platform.
+   * - Stacked: No sidebar, resembles the structure of Swagger UI.
+   *
+   * @default "sidebar"
+   */
   layout?: 'sidebar' | 'stacked';
 }
 
