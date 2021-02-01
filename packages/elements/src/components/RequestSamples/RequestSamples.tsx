@@ -8,13 +8,21 @@ import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
 import { getConfigFor, selectOptions } from './requestSampleConfigs';
 
-interface RequestSamplesProps {
+export interface RequestSamplesProps {
+  /**
+   * The HTTP request to generate code for.
+   */
   request: Request;
 }
 
 const selectedLanguageAtom = persistAtom('RequestSamples_selectedLanguage', atom('Shell'));
 const selectedLibraryAtom = persistAtom('RequestSamples_selectedLibrary', atom('cURL'));
 
+/**
+ * Generates program code that makes the HTTP call specified by `request`.
+ *
+ * The programming language can be selected by the user and is remembered across instances and remounts.
+ */
 export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
   const [selectedLanguage, setSelectedLanguage] = useAtom(selectedLanguageAtom);
   const [selectedLibrary, setSelectedLibrary] = useAtom(selectedLibraryAtom);

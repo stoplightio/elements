@@ -23,8 +23,18 @@ export interface IParsedDocsProps<T = unknown> extends IBaseDocsProps {
 }
 
 export interface IDocsComponentProps<T = unknown> {
+  /**
+   * The input data for the component to display.
+   */
   data: T;
+  /**
+   * CSS class to add to the root container.
+   */
   className?: string;
+  /**
+   * If true, the component will hide its title.
+   * @default false
+   */
   headless?: boolean;
 }
 
