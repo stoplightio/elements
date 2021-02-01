@@ -8,8 +8,10 @@ import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
 import { httpOperation as base64FileUpload } from '../../../__fixtures__/operations/base64-file-upload';
+import { examplesRequestBody } from '../../../__fixtures__/operations/examples-request-body';
 import { httpOperation as multipartFormdataOperation } from '../../../__fixtures__/operations/multipart-formdata-post';
 import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
+import { requestBody } from '../../../__fixtures__/operations/request-body';
 import { operation as basicOperation } from '../../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../../__fixtures__/operations/urlencoded-post';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../../context/Persistence';
@@ -330,6 +332,44 @@ describe('TryIt', () => {
 
         // c29tZXRoaW5n is "something" encoded as base64
         expect(body.get('someFile')).toBe('c29tZXRoaW5n');
+      });
+    });
+  });
+
+  describe('Text Request Body', () => {
+    describe('when no request body examples', () => {
+      it('hides panel when there is no schema for request body', () => {
+        render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+        let bodyHeader = screen.queryByText('Body');
+        expect(bodyHeader).not.toBeInTheDocument();
+      });
+
+      it('statically generates request body basing on request body schema', () => {
+        render(<TryItWithPersistence httpOperation={requestBody} />);
+
+        let bodyHeader = screen.queryByText('Body');
+        expect(bodyHeader).toBeInTheDocument();
+
+        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"string","age":0}');
+      });
+    });
+
+    describe('when there are request body examples', () => {
+      let examplesItems = ['example-1', 'named-example', 'example-3'];
+
+      it("is populated to first example if there's one", () => {
+        render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+      });
+
+      it('allows users to choose request body examples from spec using dropdown menu', () => {
+        render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+        let examplesButton = screen.getByRole('button', { name: /Examples/ });
+        userEvent.click(examplesButton);
+
+        let examples = screen.getAllByRole('menuitem').map(el => el.textContent);
+        expect(examples).toEqual(examplesItems);
       });
     });
   });
