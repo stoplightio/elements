@@ -93,3 +93,8 @@ workflows:
           example-name: react-gatsby
           requires:
             - build
+      - run-e2e-tests:
+          name: e2e-angular
+          example-name: angular
+          requires:
+            - build

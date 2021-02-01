@@ -39,9 +39,9 @@ This repository is a monorepo that we manage using [Lerna](https://github.com/le
 ## 👁️🗨 ️️Examples
 
 Stoplight Elements comes with a few example integration projects, showing you how to utilize Elements with different frameworks.
-- [x] **[react-cra](./examples/react-cra)** An example app built Create React App utilizing Stoplight Elements
-- [x] **[react-gatsby](./examples/react-gatsby)** An example Gatsby site utilizing Stoplight Elements
-- [ ] **angular** An angular app utilizing the Web Components distribution of Elements
+- [x] **[react-cra](./examples/react-cra)** An example app built Create React App utilizing Stoplight Elements.
+- [x] **[react-gatsby](./examples/react-gatsby)** An example Gatsby site utilizing Stoplight Elements.
+- [x] **[angular](./examples/angular)** An angular app utilizing the Web Components distribution of Elements.
 - [ ] **static-html** A single HTML page utilizing the Web Components distribution via a global script tag.
 
 To run these examples yourself:
