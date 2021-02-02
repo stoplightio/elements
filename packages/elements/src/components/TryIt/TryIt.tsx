@@ -1,8 +1,10 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { safeStringify } from '@stoplight/json';
 import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Dictionary, IHttpOperation } from '@stoplight/types';
+import * as Sampler from 'openapi-sampler';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
@@ -12,6 +14,7 @@ import { getMockData, MockData } from './mocking-utils';
 import { MockingButton } from './MockingButton';
 import { OperationParameters } from './OperationParameters';
 import { BodyParameterValues, createRequestBody, useBodyParameterState } from './request-body-utils';
+import { RequestBody } from './RequestBody';
 import { useMockingOptions } from './useMockingOptions';
 import { useRequestParameters } from './useOperationParameters';
 
@@ -52,10 +55,32 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
 
+  const textRequestBodyContents = httpOperation.request?.body?.contents?.[0];
+
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
+
+  React.useEffect(() => {
+    const textRequestBodySchema = httpOperation.request?.body?.contents?.[0]?.schema;
+    const textRequestBodyExamples = httpOperation.request?.body?.contents?.[0]?.examples;
+
+    let initialRequestBody = '';
+    try {
+      if (textRequestBodyExamples?.length) {
+        initialRequestBody = safeStringify(textRequestBodyExamples?.[0]['value']) ?? '';
+      } else if (textRequestBodySchema) {
+        initialRequestBody = safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true })) ?? '';
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    setTextRequestBody(initialRequestBody);
+  }, [httpOperation]);
+
+  const [textRequestBody, setTextRequestBody] = React.useState<string>('');
 
   if (!server) return null;
 
@@ -64,9 +89,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
       const request = await buildFetchRequest({
-        httpOperation,
         parameterValues: parameterValuesWithDefaults,
-        bodyParameterValues,
+        httpOperation,
+        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         mockData,
       });
       const response = await fetch(...request);
@@ -97,13 +122,19 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             onChangeValue={updateParameterValue}
           />
         )}
-        {formDataState.isFormDataBody && (
+        {formDataState.isFormDataBody ? (
           <FormDataBody
             specification={formDataState.bodySpecification}
             values={bodyParameterValues}
             onChangeValues={setBodyParameterValues}
           />
-        )}
+        ) : textRequestBodyContents ? (
+          <RequestBody
+            examples={textRequestBodyContents.examples ?? []}
+            requestBody={textRequestBody}
+            onChange={setTextRequestBody}
+          />
+        ) : null}
         <Panel.Content>
           <Flex>
             <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
@@ -154,14 +185,14 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
 interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
-  bodyParameterValues?: BodyParameterValues;
+  bodyInput: BodyParameterValues | string;
   mockData?: MockData;
 }
 
 async function buildFetchRequest({
   httpOperation,
+  bodyInput,
   parameterValues,
-  bodyParameterValues,
   mockData,
 }: BuildFetchRequestInput): Promise<Parameters<typeof fetch>> {
   const server = mockData?.url || httpOperation.servers?.[0]?.url;
@@ -184,7 +215,7 @@ async function buildFetchRequest({
         ),
         ...mockData?.header,
       },
-      body: await createRequestBody(httpOperation, bodyParameterValues),
+      body: typeof bodyInput === 'object' ? await createRequestBody(httpOperation, bodyInput) : bodyInput,
     },
   ];
 }

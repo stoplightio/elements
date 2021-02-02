@@ -1763,6 +1763,11 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.32.tgz#3436795d5684f22742989bfa08f46f50f516f259"
   integrity sha512-ux2EDjKMpcdHBVLi/eWZynnPxs0BtFVXJkgHIxXRl+9ZFaHPvYamAfCzeeQFqHRjuJtX90wVnMRaMQAAlctz3w==
 
+"@fortawesome/fontawesome-common-types@^0.2.34":
+  version "0.2.34"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.34.tgz#0a8c348bb23b7b760030f5b1d912e582be4ec915"
+  integrity sha512-XcIn3iYbTEzGIxD0/dY5+4f019jIcEIWBiHc3KrmK/ROahwxmZ/s+tdj97p/5K0klz4zZUiMfUlYP0ajhSJjmA==
+
 "@fortawesome/fontawesome-svg-core@^1.2.31":
   version "1.2.31"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.31.tgz#23fff9c521f1b57e79e4c2fd6cce8aa794e9d99e"
@@ -1777,6 +1782,13 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.32"
 
+"@fortawesome/fontawesome-svg-core@^1.2.34":
+  version "1.2.34"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.34.tgz#1d1a7c92537cbc2b8a83eef6b6d824b4b5b46b26"
+  integrity sha512-0KNN0nc5eIzaJxlv43QcDmTkDY1CqeN6J7OCGSs+fwGPdtv0yOQqRjieopBCmw+yd7uD3N2HeNL3Zm5isDleLg==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.34"
+
 "@fortawesome/free-solid-svg-icons@^5.14.0":
   version "5.14.0"
   resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.14.0.tgz#970453f5e8c4915ad57856c3a0252ac63f6fec18"
@@ -1790,6 +1802,13 @@
   integrity sha512-EFMuKtzRMNbvjab/SvJBaOOpaqJfdSap/Nl6hst7CgrJxwfORR1drdTV6q1Ib/JVzq4xObdTDcT6sqTaXMqfdg==
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.32"
+
+"@fortawesome/free-solid-svg-icons@^5.15.2":
+  version "5.15.2"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.15.2.tgz#25bb035de57cf85aee8072965732368ccc8e8943"
+  integrity sha512-ZfCU+QjaFsdNZmOGmfqEWhzI3JOe37x5dF4kz9GeXvKn/sTxhqMtZ7mh3lBf76SvcYY5/GKFuyG7p1r4iWMQqw==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.34"
 
 "@fortawesome/react-fontawesome@^0.1.11":
   version "0.1.11"
@@ -3546,6 +3565,28 @@
     unist-util-select "^3.0.1"
     unist-util-visit "^2.0.2"
 
+"@stoplight/mosaic-code-editor@1.0.0-beta.22":
+  version "1.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.0.0-beta.22.tgz#9b0329319b46b523dff66e746d81ff66f2261939"
+  integrity sha512-SChwhlj0WOeU2kT1fWky3DZj58chxktfyZLzNzaL5W9rrv2qCA/+7AA01g8CpsLE+C9cI7VZ677fs3O5n6D5cA==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.34"
+    "@fortawesome/free-solid-svg-icons" "^5.15.2"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@stoplight/mosaic" "1.0.0-beta.22"
+    "@stoplight/mosaic-code-viewer" "1.0.0-beta.22"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.0.5"
+    prism-react-renderer "^1.1.1"
+    prismjs "^1.23.0"
+    react-simple-code-editor "^0.11.0"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    zustand "^3.3.1"
+
 "@stoplight/mosaic-code-viewer@1.0.0-beta.20":
   version "1.0.0-beta.20"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.20.tgz#47bc9e42baa9f4142c1eb002d4f230ff0fa1f7ad"
@@ -3566,6 +3607,26 @@
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
 
+"@stoplight/mosaic-code-viewer@1.0.0-beta.22":
+  version "1.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.22.tgz#5b6ff5386b9f6f3f33b11380fbfe8a912c6bf706"
+  integrity sha512-oHPJpwpQn2IyYz6n1ZkpM7PNBmHEkfi4v9Oi0lU1R6zqw7Oh734tN39qblbttl9cNQtnK8pY1DWPjOum2o5Zmw==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.34"
+    "@fortawesome/free-solid-svg-icons" "^5.15.2"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@stoplight/mosaic" "1.0.0-beta.22"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.0.5"
+    prism-react-renderer "^1.1.1"
+    prismjs "^1.23.0"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    zustand "^3.3.1"
+
 "@stoplight/mosaic@1.0.0-beta.20":
   version "1.0.0-beta.20"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.20.tgz#e31e1569296cc4d6fcd3d42d44ba39dbb051fe45"
@@ -3582,6 +3643,23 @@
     reakit "^1.3.3"
     ts-keycode-enum "^1.0.6"
     zustand "^3.2.0"
+
+"@stoplight/mosaic@1.0.0-beta.22":
+  version "1.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.22.tgz#f06f94c3ef00eccf4564b30f926041d8d61cef61"
+  integrity sha512-HMABhZjQbk6QoZVyfk5JQYShKm+V4Kz7xOBzuGCbSu3KPVTRzW/A7voR0kjq0JZ2qjCypUBpWU6KZU/fOYmiNQ==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.34"
+    "@fortawesome/free-solid-svg-icons" "^5.15.2"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.0.5"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    zustand "^3.3.1"
 
 "@stoplight/ordered-object-literal@^1.0.1":
   version "1.0.1"
@@ -4615,6 +4693,11 @@
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@types/npmlog/-/npmlog-4.1.2.tgz#d070fe6a6b78755d1092a3dc492d34c3d8f871c4"
   integrity sha512-4QQmOF5KlwfxJ5IGXFIudkeLCdMABz03RcUXu+LCb24zmln8QW6aDjuGl4d4XPVLf2j+FnjelHTP7dvceAFbhA==
+
+"@types/openapi-sampler@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/openapi-sampler/-/openapi-sampler-1.0.0.tgz#0975f342e82a83b79bb529895fe3e465be8b7f1c"
+  integrity sha512-u2AojBhWiatFxI/ACLKmJBSXDoVLSky7UTkeV0ZTre2CszA0R+XDzON/OaRK31nbbWLpcQFsm++bwT2LmNVsgA==
 
 "@types/overlayscrollbars@^1.9.0":
   version "1.12.0"
@@ -15275,6 +15358,13 @@ openapi-sampler@^1.0.0-beta.16:
   dependencies:
     json-pointer "^0.6.0"
 
+openapi-sampler@^1.0.0-beta.18:
+  version "1.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/openapi-sampler/-/openapi-sampler-1.0.0-beta.18.tgz#9e0845616a669e048860625ea5c10d0f554f1b53"
+  integrity sha512-nG/0kvvSY5FbrU5A+Dbp1xTQN++7pKIh87/atryZlxrzDuok5Y6TCbpxO1jYqpUKLycE4ReKGHCywezngG6xtQ==
+  dependencies:
+    json-pointer "^0.6.0"
+
 openapi3-ts@~1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-1.4.0.tgz#679d5a24be0efc36f5de4fc2c4b8513663e16f65"
@@ -16920,7 +17010,7 @@ react-scrollbars-custom@~4.0.25:
     react-draggable "^4.4.2"
     zoom-level "^2.5.0"
 
-react-simple-code-editor@~0.11.0:
+react-simple-code-editor@^0.11.0, react-simple-code-editor@~0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-simple-code-editor/-/react-simple-code-editor-0.11.0.tgz#bb57c7c29b570f2ab229872599eac184f5bc673c"
   integrity sha512-xGfX7wAzspl113ocfKQAR8lWPhavGWHL3xSzNLeseDRHysT+jzRBi/ExdUqevSMos+7ZtdfeuBOXtgk9HTwsrw==
@@ -17220,6 +17310,17 @@ reakit@^1.3.3:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/reakit/-/reakit-1.3.4.tgz#1c83614130fbcee624ba510547db79c90b3435a4"
   integrity sha512-aLR0GBOc9vELTk4PKK/zndBbIs4RSw4B7GSGY6yoMHQ/vna0iLNd5BMhjtXspD/B7hhkYERlT6di8pIyD3HSPw==
+  dependencies:
+    "@popperjs/core" "^2.5.4"
+    body-scroll-lock "^3.1.5"
+    reakit-system "^0.15.1"
+    reakit-utils "^0.15.1"
+    reakit-warning "^0.6.1"
+
+"reakit@npm:@stoplight/reakit@~1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/reakit/-/reakit-1.3.5.tgz#0c1a1ae89a92de98413d3723b993c05d943bd56b"
+  integrity sha512-/Con1m4eSaztckgnEPckNPMkAIcOCYku60mANTGScevY9wYk56V2L6vpv6HR4r8gsFCl4S/CVoNCVMxkxi/pGw==
   dependencies:
     "@popperjs/core" "^2.5.4"
     body-scroll-lock "^3.1.5"
@@ -21111,6 +21212,11 @@ zustand@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.2.0.tgz#a718a964440796d44edda3073b69e78b95f4c8f5"
   integrity sha512-MBYFrnUdgFVi38tdQNSzVN9cPpRDf7w2HhdHGDSgBRHN7vIbUGUR3aBdVQykelXzSFR7iVj3YNBuq7B9ceMI5w==
+
+zustand@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.3.1.tgz#de5c4b51112b84e0f819d8b3f336fbfbc087d758"
+  integrity sha512-o0rgrBsi29nCkPHdhtkAHisCIlmRUoXOV+1AmDMeCgkGG0i5edFSpGU0KiZYBvFmBYycnck4Z07JsLYDjSET9g==
 
 zwitch@^1.0.0:
   version "1.0.5"

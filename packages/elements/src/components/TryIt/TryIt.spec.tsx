@@ -7,13 +7,15 @@ import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
-import { httpOperation as base64FileUpload } from '../../../__fixtures__/operations/base64-file-upload';
-import { httpOperation as multipartFormdataOperation } from '../../../__fixtures__/operations/multipart-formdata-post';
-import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
-import { operation as basicOperation } from '../../../__fixtures__/operations/simple-get';
-import { httpOperation as urlEncodedPostOperation } from '../../../__fixtures__/operations/urlencoded-post';
-import { PersistenceContextProvider, withPersistenceBoundary } from '../../../context/Persistence';
-import { TryIt } from '../index';
+import { httpOperation as base64FileUpload } from '../../__fixtures__/operations/base64-file-upload';
+import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
+import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
+import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
+import { requestBody } from '../../__fixtures__/operations/request-body';
+import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
+import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
+import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
+import { TryIt } from './index';
 
 function clickSend() {
   const button = screen.getByRole('button', { name: /send/i });
@@ -330,6 +332,88 @@ describe('TryIt', () => {
 
         // c29tZXRoaW5n is "something" encoded as base64
         expect(body.get('someFile')).toBe('c29tZXRoaW5n');
+      });
+    });
+  });
+
+  describe('Text Request Body', () => {
+    describe('when no request body examples', () => {
+      it('hides panel when there is no schema for request body', () => {
+        render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+        let bodyHeader = screen.queryByText('Body');
+        expect(bodyHeader).not.toBeInTheDocument();
+      });
+
+      it('statically generates request body basing on request body schema', () => {
+        render(<TryItWithPersistence httpOperation={requestBody} />);
+
+        let bodyHeader = screen.queryByText('Body');
+        expect(bodyHeader).toBeInTheDocument();
+
+        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"string","age":0}');
+      });
+    });
+
+    describe('when there are request body examples', () => {
+      let examplesItems = ['example-1', 'named example', 'example-3'];
+
+      it("is populated to first example if there's one", () => {
+        render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+      });
+
+      it('resets the textbox after httpOperation change', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+        const textbox = screen.getByRole('textbox');
+        userEvent.type(textbox, 'asd');
+        rerender(<TryItWithPersistence httpOperation={requestBody} />);
+        waitFor(() => expect(textbox).toHaveTextContent('{"name":"string","age":0}'));
+      });
+
+      it('allows users to choose request body examples from spec using dropdown menu', () => {
+        render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+        let examplesButton = screen.getByRole('button', { name: 'Examples' });
+        userEvent.click(examplesButton);
+
+        let examples = screen.getAllByRole('menuitem').map(el => el.textContent);
+        expect(examples).toEqual(examplesItems);
+
+        userEvent.click(screen.getByRole('menuitem', { name: 'named example' }));
+        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Jane","age":36,"trial":false}');
+      });
+
+      it('restarts modified example in CodeEditor to initial value after choosing it again', () => {
+        render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+        let examplesButton = screen.getByRole('button', { name: 'Examples' });
+
+        const bodyTextBox = screen.getByRole('textbox');
+
+        userEvent.type(bodyTextBox, 'I broke the test. Oh noooo... :(');
+        expect(bodyTextBox).toHaveTextContent('I broke the test. Oh noooo... :(');
+
+        userEvent.click(examplesButton);
+        userEvent.click(screen.getByRole('menuitem', { name: 'example-1' }));
+        expect(bodyTextBox).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+      });
+
+      it('sends a request with request body from example', async () => {
+        render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+
+        let bodyHeader = screen.queryByText('Body');
+        expect(bodyHeader).toBeInTheDocument();
+        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+        expect(fetchMock).toBeCalledWith(
+          'https://todos.stoplight.io/users',
+          expect.objectContaining({
+            method: 'post',
+            body: JSON.stringify({ name: 'Andrew', age: 19, trial: true }),
+          }),
+        );
       });
     });
   });
