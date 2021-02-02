@@ -5,14 +5,14 @@ import { INodeExample, INodeExternalExample } from '@stoplight/types';
 import * as React from 'react';
 
 interface RequestBodyProps {
-  examples: Array<INodeExample | INodeExternalExample>;
+  examples: ReadonlyArray<INodeExample | INodeExternalExample>;
   requestBody: string;
-  onChange: React.Dispatch<React.SetStateAction<string>>;
+  onChange: (newRequestBody: string) => void;
 }
 
 export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody, onChange }) => {
   const handleClick = (example: INodeExample | INodeExternalExample) => {
-    onChange(safeStringify(example['value']) ?? requestBody);
+    onChange(safeStringify('value' in example ? example.value : example.externalValue) ?? requestBody);
   };
 
   return (
