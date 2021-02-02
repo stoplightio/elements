@@ -356,7 +356,7 @@ describe('TryIt', () => {
     });
 
     describe('when there are request body examples', () => {
-      let examplesItems = ['example-1', 'named-example', 'example-3'];
+      let examplesItems = ['example-1', 'named example', 'example-3'];
 
       it("is populated to first example if there's one", () => {
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
@@ -365,11 +365,28 @@ describe('TryIt', () => {
 
       it('allows users to choose request body examples from spec using dropdown menu', () => {
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
-        let examplesButton = screen.getByRole('button', { name: /Examples/ });
+        let examplesButton = screen.getByRole('button', { name: 'Examples' });
         userEvent.click(examplesButton);
 
         let examples = screen.getAllByRole('menuitem').map(el => el.textContent);
         expect(examples).toEqual(examplesItems);
+
+        userEvent.click(screen.getByRole('menuitem', { name: 'named example' }));
+        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Jane","age":36,"trial":false}');
+      });
+
+      it('restarts modified example in CodeEditor to initial value after choosing it again', () => {
+        render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+        let examplesButton = screen.getByRole('button', { name: 'Examples' });
+
+        const bodyTextBox = screen.getByRole('textbox');
+
+        userEvent.type(bodyTextBox, 'I broke the test. Oh noooo... :(');
+        expect(bodyTextBox).toHaveTextContent('I broke the test. Oh noooo... :(');
+
+        userEvent.click(examplesButton);
+        userEvent.click(screen.getByRole('menuitem', { name: 'example-1' }));
+        expect(bodyTextBox).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
       });
     });
   });

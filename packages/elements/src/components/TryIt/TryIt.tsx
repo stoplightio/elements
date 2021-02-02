@@ -139,7 +139,6 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             onChange={setTextRequestBody}
           />
         ) : null}
-        {}
         <Panel.Content>
           <Flex>
             <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
