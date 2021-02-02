@@ -363,6 +363,14 @@ describe('TryIt', () => {
         expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
       });
 
+      it('resets the textbox after httpOperation change', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
+        const textbox = screen.getByRole('textbox');
+        userEvent.type(textbox, 'asd');
+        rerender(<TryItWithPersistence httpOperation={requestBody} />);
+        waitFor(() => expect(textbox).toHaveTextContent('{"name":"string","age":0}'));
+      });
+
       it('allows users to choose request body examples from spec using dropdown menu', () => {
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
         let examplesButton = screen.getByRole('button', { name: 'Examples' });
