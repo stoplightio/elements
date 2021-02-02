@@ -402,8 +402,8 @@ describe('TryIt', () => {
         expect(fetchMock).toBeCalledWith(
           'https://todos.stoplight.io/users',
           expect.objectContaining({
-            method: 'put',
-            body: { name: 'Andrew', age: 19, trial: true },
+            method: 'post',
+            body: JSON.stringify({ name: 'Andrew', age: 19, trial: true }),
           }),
         );
       });

@@ -56,32 +56,29 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const server = httpOperation.servers?.[0]?.url;
 
   const textRequestBodyContents = httpOperation.request?.body?.contents?.[0];
-  const textRequestBodySchema = textRequestBodyContents?.schema;
-  const textRequestBodyExamples = textRequestBodyContents?.examples;
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
-  const initialRequestBodyValue = React.useMemo(() => {
+  React.useEffect(() => {
+    const textRequestBodySchema = httpOperation.request?.body?.contents?.[0]?.schema;
+    const textRequestBodyExamples = httpOperation.request?.body?.contents?.[0]?.examples;
+
+    let initialRequestBody = '';
     try {
       if (textRequestBodyExamples?.length) {
-        return safeStringify(textRequestBodyExamples?.[0]['value']);
+        initialRequestBody = safeStringify(textRequestBodyExamples?.[0]['value']) ?? '';
       } else if (textRequestBodySchema) {
-        return safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true }));
-      } else {
-        return '';
+        initialRequestBody = safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true })) ?? '';
       }
     } catch (e) {
       console.error(e);
-      return '';
     }
-  }, [textRequestBodyExamples, textRequestBodySchema]);
 
-  React.useEffect(() => {
-    setTextRequestBody(initialRequestBodyValue ?? '');
-  }, [initialRequestBodyValue]);
+    setTextRequestBody(initialRequestBody);
+  }, [httpOperation]);
 
   const [textRequestBody, setTextRequestBody] = React.useState<string>('');
 
@@ -92,10 +89,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
       const request = await buildFetchRequest({
-        httpOperation,
         parameterValues: parameterValuesWithDefaults,
-        bodyParameterValues,
-        textBodyValues: textRequestBody,
+        httpOperation,
+        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         mockData,
       });
       const response = await fetch(...request);
@@ -189,16 +185,14 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
 interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
-  bodyParameterValues?: BodyParameterValues;
-  textBodyValues?: string;
+  bodyInput: BodyParameterValues | string;
   mockData?: MockData;
 }
 
 async function buildFetchRequest({
   httpOperation,
+  bodyInput,
   parameterValues,
-  bodyParameterValues,
-  textBodyValues,
   mockData,
 }: BuildFetchRequestInput): Promise<Parameters<typeof fetch>> {
   const server = mockData?.url || httpOperation.servers?.[0]?.url;
@@ -211,14 +205,6 @@ async function buildFetchRequest({
   const url = new URL(server + expandedPath);
   url.search = new URLSearchParams(queryParams).toString();
 
-  const requestBody = async () => {
-    if (bodyParameterValues) {
-      return await createRequestBody(httpOperation, bodyParameterValues);
-    } else if (textBodyValues) {
-      return textBodyValues;
-    } else return '';
-  };
-
   return [
     url.toString(),
     {
@@ -229,7 +215,7 @@ async function buildFetchRequest({
         ),
         ...mockData?.header,
       },
-      body: await requestBody(),
+      body: typeof bodyInput === 'object' ? await createRequestBody(httpOperation, bodyInput) : bodyInput,
     },
   ];
 }
