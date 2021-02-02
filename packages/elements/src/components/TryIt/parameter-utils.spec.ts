@@ -1,5 +1,5 @@
-import { httpOperation } from '../../../__fixtures__/operations/put-todos';
-import { initialParameterValues } from '../parameter-utils';
+import { httpOperation } from '../../__fixtures__/operations/put-todos';
+import { initialParameterValues } from './parameter-utils';
 
 describe('Parameter Utils', () => {
   describe(initialParameterValues.name, () => {

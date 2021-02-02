@@ -7,15 +7,15 @@ import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
-import { httpOperation as base64FileUpload } from '../../../__fixtures__/operations/base64-file-upload';
-import { examplesRequestBody } from '../../../__fixtures__/operations/examples-request-body';
-import { httpOperation as multipartFormdataOperation } from '../../../__fixtures__/operations/multipart-formdata-post';
-import { httpOperation as putOperation } from '../../../__fixtures__/operations/put-todos';
-import { requestBody } from '../../../__fixtures__/operations/request-body';
-import { operation as basicOperation } from '../../../__fixtures__/operations/simple-get';
-import { httpOperation as urlEncodedPostOperation } from '../../../__fixtures__/operations/urlencoded-post';
-import { PersistenceContextProvider, withPersistenceBoundary } from '../../../context/Persistence';
-import { TryIt } from '../index';
+import { httpOperation as base64FileUpload } from '../../__fixtures__/operations/base64-file-upload';
+import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
+import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
+import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
+import { requestBody } from '../../__fixtures__/operations/request-body';
+import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
+import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
+import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
+import { TryIt } from './index';
 
 function clickSend() {
   const button = screen.getByRole('button', { name: /send/i });
