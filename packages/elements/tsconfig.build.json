@@ -13,8 +13,6 @@
     "module": "commonjs",
     "paths": {
       "@stoplight/elements-utils": ["../elements-utils/dist"]
-    },
-    "noErrorTruncation": true
-
+    }
   }
 }

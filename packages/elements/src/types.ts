@@ -37,16 +37,6 @@ export type BundledBranchNode = {
   uri: string;
 };
 
-export type NodeTypeToDataTypeMap<NT> = NT extends 'article'
-  ? string | SMDAST.IRoot
-  : NT extends 'http_operation'
-  ? Partial<IHttpOperation>
-  : NT extends 'http_service'
-  ? Partial<IHttpService>
-  : NT extends 'model'
-  ? JSONSchema
-  : unknown;
-
 export type ParsedNode =
   | {
       type: 'article';
