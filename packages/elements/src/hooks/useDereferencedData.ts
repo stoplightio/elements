@@ -1,6 +1,5 @@
 import $RefParser from '@stoplight/json-schema-ref-parser';
 import { NodeType } from '@stoplight/types';
-import { isObject } from 'lodash';
 import * as React from 'react';
 
 import { useParsedData } from './useParsedData';
@@ -17,20 +16,20 @@ export function useDereferencedData(type: NodeType, data: string) {
 
   React.useEffect(() => {
     // Only dereference HTTP Operations
-    if (!isObject(parsedData) || type !== NodeType.HttpOperation) {
+    if (parsedData?.type !== NodeType.HttpOperation) {
       setDereferencedData(parsedData);
       return;
     }
 
     let isActive = true;
     $RefParser
-      .dereference(parsedData, { continueOnError: true })
+      .dereference(parsedData.data, { continueOnError: true })
       .then(res => {
-        if (isActive) setDereferencedData(res);
+        if (isActive) setDereferencedData({ type: parsedData.type, data: res });
       })
       .catch(reason => {
         if (typeof reason === 'object' && reason !== null && 'files' in reason) {
-          setDereferencedData(reason.files.schema);
+          setDereferencedData({ type: parsedData.type, data: reason.files.schema });
         } else {
           console.warn(`Could not dereference operation: ${reason?.message ?? 'Unknown error'}`);
         }

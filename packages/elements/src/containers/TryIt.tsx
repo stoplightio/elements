@@ -61,11 +61,11 @@ export const TryIt = ({ node }: ITryItProps) => {
     return <DocsSkeleton />;
   }
 
-  if (nodeType !== NodeType.HttpOperation) return null;
+  if (dereferencedData?.type !== NodeType.HttpOperation) return null;
 
   return (
     <TryItComponent
-      httpOperation={dereferencedData as IHttpOperation}
+      httpOperation={dereferencedData.data as IHttpOperation}
       showMocking
       mockUrl={mockUrlResult?.servicePath}
     />

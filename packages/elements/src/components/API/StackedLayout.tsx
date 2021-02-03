@@ -6,8 +6,9 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { HttpMethodColors } from '../../constants';
+import { useParsedData } from '../../hooks/useParsedData';
 import { getNodeType, IUriMap } from '../../utils/oas';
-import { Docs } from '../Docs';
+import { Docs, ParsedDocs } from '../Docs';
 import { DeprecatedBadge } from '../Docs/HttpOperation/Badges';
 import { TryIt } from '../TryIt';
 
@@ -33,7 +34,7 @@ export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) =>
   return (
     <div className="w-full flex flex-col m-auto max-w-4xl">
       <div className="w-full border-b dark:border-gray-6">
-        <Docs className="mx-auto" nodeData={uriMap['/']} nodeType={NodeType.HttpService} />
+        <Docs className="mx-auto" nodeData={uriMap['/'] as any} nodeType={NodeType.HttpService} />
       </div>
       {groups.map(group => (
         <Group key={group.title} group={group} uriMap={uriMap} />
@@ -114,14 +115,15 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
 type PanelTabId = 'docs' | 'tryit';
 
 const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
-  const [isExpanded, setIsExpanded] = React.useState(false);
+  const parsedNode = useParsedData(nodeType, data);
+
   const { hash } = useLocation();
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const [tabId, setTabId] = React.useState<PanelTabId>('docs');
   const color = HttpMethodColors[type] || 'gray';
-  const isHttpOperation = nodeType === NodeType.HttpOperation;
-  const showTabs = isHttpOperation;
-  const isDeprecated = isHttpOperation ? !!(data as IHttpOperation).deprecated : false;
+  const showTabs = parsedNode?.type === 'http_operation';
+  const isDeprecated = parsedNode?.type === 'http_operation' ? !!parsedNode.data.deprecated : false;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -159,21 +161,23 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
         {isDeprecated && <DeprecatedBadge />}
       </div>
 
-      <Collapse isOpen={isExpanded}>
-        {showTabs ? (
-          <Tabs
-            className="PreviewTabs mx-auto"
-            selectedTabId={tabId}
-            onChange={(tabId: PanelTabId) => setTabId(tabId)}
-            renderActiveTabPanelOnly
-          >
-            <Tab id="docs" title="Docs" className="p-4" panel={<Docs nodeType={nodeType} nodeData={data} headless />} />
-            <Tab id="tryit" title="Try It" className="p-4" panel={<TryIt httpOperation={data as IHttpOperation} />} />
-          </Tabs>
-        ) : (
-          <Docs className="mx-auto p-4" nodeType={nodeType} nodeData={data} headless />
-        )}
-      </Collapse>
+      {parsedNode && (
+        <Collapse isOpen={isExpanded}>
+          {showTabs ? (
+            <Tabs
+              className="PreviewTabs mx-auto"
+              selectedTabId={tabId}
+              onChange={(tabId: PanelTabId) => setTabId(tabId)}
+              renderActiveTabPanelOnly
+            >
+              <Tab id="docs" title="Docs" className="p-4" panel={<ParsedDocs node={parsedNode} headless />} />
+              <Tab id="tryit" title="Try It" className="p-4" panel={<TryIt httpOperation={data as IHttpOperation} />} />
+            </Tabs>
+          ) : (
+            <ParsedDocs className="mx-auto p-4" node={parsedNode} headless />
+          )}
+        </Collapse>
+      )}
     </div>
   );
 };
