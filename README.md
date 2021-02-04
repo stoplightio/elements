@@ -1,6 +1,6 @@
 # Elements
 
-[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplightio.github.io/elements)
+[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplight-elements.netlify.app)
 [![CircleCI][circle_ci_image]][circle_ci]
 [![NPM Downloads][circle_ci_image]][npm]
 [![Buy us a tree][ecologi_image]][ecologi]
