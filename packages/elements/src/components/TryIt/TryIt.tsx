@@ -88,10 +88,15 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     try {
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
+      const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
       const request = await buildFetchRequest({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
-        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+        bodyInput: shouldIncludeBody
+          ? formDataState.isFormDataBody
+            ? bodyParameterValues
+            : textRequestBody
+          : undefined,
         mockData,
       });
       const response = await fetch(...request);
@@ -185,7 +190,7 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
 interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
   parameterValues: Dictionary<string, string>;
-  bodyInput: BodyParameterValues | string;
+  bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
 }
 
