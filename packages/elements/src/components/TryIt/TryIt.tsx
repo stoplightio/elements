@@ -88,15 +88,14 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     try {
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
+      const hasRequestBody =
+        httpOperation.method.toUpperCase() === 'PUT' ||
+        httpOperation.method.toUpperCase() === 'POST' ||
+        httpOperation.method.toUpperCase() === 'PATCH';
       const request = await buildFetchRequest({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
-        bodyInput:
-          httpOperation.method === ('PUT' || 'POST' || 'PATCH')
-            ? formDataState.isFormDataBody
-              ? bodyParameterValues
-              : textRequestBody
-            : undefined,
+        bodyInput: hasRequestBody ? (formDataState.isFormDataBody ? bodyParameterValues : textRequestBody) : undefined,
         mockData,
       });
       const response = await fetch(...request);
