@@ -4,12 +4,9 @@ import customTheme from './theme';
 
 import '../src/styles/elements.scss';
 
-import { injectStyles } from '@stoplight/mosaic';
 import cn from 'classnames';
 import { Provider } from '../src/containers/Provider';
 import { PersistenceContextProvider } from '../src/context/Persistence';
-
-injectStyles();
 
 export const globalTypes = {
   theme: {
