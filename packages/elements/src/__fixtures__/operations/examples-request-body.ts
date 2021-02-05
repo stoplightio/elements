@@ -2,10 +2,10 @@ import { IHttpOperation } from '@stoplight/types';
 
 export const examplesRequestBody: IHttpOperation = {
   id: '?http-operation-id?',
-  iid: 'POST_USERS',
-  method: 'post',
+  iid: 'PUT_USERS',
+  method: 'put',
   path: '/users',
-  summary: 'Post Users',
+  summary: 'Put Users',
   responses: [
     {
       code: '200',
