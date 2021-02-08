@@ -5,9 +5,9 @@ UI components for composing beautiful developer documentation
 
 *Stoplight Elements v5* is **not supported** and is **not compatible with the new Stoplight Platform**.
 
-For a quick fix to work [the latest Stoplight Platform](https://stoplight.io/blog/stoplight-v2-0-0-release/), please upgrade to v6.0. It's also not supported, but will get you very similar looking documentation with minimal change. 
+For a quick fix to work [the latest Stoplight Platform](https://stoplight.io/blog/stoplight-v2-0-0-release/), please upgrade to v6, but please know that is always unsupported. This was a limited release for a select group of customers.
 
-Go forwards, all development effort is being funneled into v7, which will be the first public OSS release of elements. Thanks for your patience!
+We are working on an awesome new open-source version of Elements which will be generally available. Sign up for [early-access here](https://stoplight.io/open-source/elements/)!
 
 ### Installation
 
