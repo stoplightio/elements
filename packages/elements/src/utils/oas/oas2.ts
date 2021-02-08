@@ -1,6 +1,7 @@
 import { transformOas2Operation, transformOas2Service } from '@stoplight/http-spec/oas2';
+import { Spec } from 'swagger-schema-official';
 
-import { computeUriMap } from './';
+import { computeUriMap, IUriMap } from './';
 import { ISourceNodeMap, NodeTypes } from './types';
 
 export const oas2SourceMap: ISourceNodeMap[] = [
@@ -33,7 +34,7 @@ export const oas2SourceMap: ISourceNodeMap[] = [
   },
 ];
 
-export const computeOas2UriMap = (document: any) => ({
+export const computeOas2UriMap = (document: Spec): IUriMap => ({
   '/': transformOas2Service({ document }),
   ...computeUriMap({
     document,
