@@ -8,16 +8,13 @@ import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
 import { httpOperation as base64FileUpload } from '../../__fixtures__/operations/base64-file-upload';
-import { connectWithRequestBody } from '../../__fixtures__/operations/connect-todos';
 import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
 import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
 import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
-import { optionsWithRequestBody } from '../../__fixtures__/operations/options-todos';
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { requestBody } from '../../__fixtures__/operations/request-body';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
-import { traceWithRequestBody } from '../../__fixtures__/operations/trace-todos';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
 import { TryIt } from './index';
@@ -371,51 +368,6 @@ describe('TryIt', () => {
           'https://todos.stoplight.io/users',
           expect.objectContaining({
             method: 'head',
-            body: undefined,
-          }),
-        );
-      });
-
-      it('to operation with CONNECT method', async () => {
-        render(<TryItWithPersistence httpOperation={connectWithRequestBody} />);
-
-        clickSend();
-
-        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock).toBeCalledWith(
-          'https://todos.stoplight.io/users',
-          expect.objectContaining({
-            method: 'connect',
-            body: undefined,
-          }),
-        );
-      });
-
-      it('to operation with OPTIONS method', async () => {
-        render(<TryItWithPersistence httpOperation={optionsWithRequestBody} />);
-
-        clickSend();
-
-        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock).toBeCalledWith(
-          'https://todos.stoplight.io/users',
-          expect.objectContaining({
-            method: 'options',
-            body: undefined,
-          }),
-        );
-      });
-
-      it('to operation with TRACE method', async () => {
-        render(<TryItWithPersistence httpOperation={traceWithRequestBody} />);
-
-        clickSend();
-
-        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock).toBeCalledWith(
-          'https://todos.stoplight.io/users',
-          expect.objectContaining({
-            method: 'trace',
             body: undefined,
           }),
         );
