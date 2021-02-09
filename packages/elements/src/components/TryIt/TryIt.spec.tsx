@@ -45,6 +45,9 @@ describe('TryIt', () => {
       expect.objectContaining({
         method: 'get',
         body: undefined,
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }),
     );
   });
@@ -166,6 +169,7 @@ describe('TryIt', () => {
         expect.objectContaining({
           method: 'put',
           headers: {
+            'Content-Type': 'application/json',
             'account-id': 'example id 1999',
             'message-id': 'another example',
           },
@@ -257,8 +261,9 @@ describe('TryIt', () => {
       ['multipart/form-data', FormData, multipartFormdataOperation],
     ];
 
-    describe.each(formDataCases)('Builds correct %p request', (name, prototype, fixture) => {
+    describe.each(formDataCases)('Builds correct %p request', (mimeType, prototype, fixture) => {
       let body: URLSearchParams | FormData;
+      let headers: Headers;
       beforeAll(async () => {
         render(<TryItWithPersistence httpOperation={fixture} />);
 
@@ -272,7 +277,12 @@ describe('TryIt', () => {
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(fetchMock).toHaveBeenCalledTimes(1);
         body = fetchMock.mock.calls[0][1]!.body as URLSearchParams | FormData;
+        headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
         expect(body).toBeInstanceOf(prototype);
+      });
+
+      it('Sets correct content type', () => {
+        expect(headers.get('Content-Type')).toBe(mimeType);
       });
 
       it('Sends user input', () => {
@@ -490,6 +500,7 @@ describe('TryIt', () => {
           expect.objectContaining({
             method: 'get',
             headers: {
+              'Content-Type': 'application/json',
               Prefer: 'code=200',
             },
           }),
@@ -498,7 +509,9 @@ describe('TryIt', () => {
           'https://todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'get',
-            headers: {},
+            headers: {
+              'Content-Type': 'application/json',
+            },
           }),
         ],
       ]);
@@ -543,6 +556,7 @@ describe('TryIt', () => {
         expect.objectContaining({
           method: 'get',
           headers: {
+            'Content-Type': 'application/json',
             Prefer: 'code=200',
           },
         }),
