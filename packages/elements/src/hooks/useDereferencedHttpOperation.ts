@@ -1,5 +1,5 @@
 import $RefParser from '@stoplight/json-schema-ref-parser';
-import { NodeType } from '@stoplight/types';
+import { IHttpOperation, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { ParsedNode } from '../types';
@@ -21,7 +21,7 @@ export function useDereferencedHttpOperation(parsedData: ParsedNode) {
     $RefParser
       .dereference(parsedData.data, { continueOnError: true })
       .then(res => {
-        if (isActive) setDereferencedData({ type: parsedData.type, data: res });
+        if (isActive) setDereferencedData({ type: parsedData.type, data: res as IHttpOperation });
       })
       .catch(reason => {
         if (typeof reason === 'object' && reason !== null && 'files' in reason) {
