@@ -1,7 +1,9 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Box, Flex, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
 import cn from 'classnames';
+import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -25,53 +27,41 @@ export interface IResponseProps {
 
 export interface IResponsesProps {
   responses: IHttpOperationResponse[];
-  className?: string;
 }
 
-export const Responses = ({ className, responses }: IResponsesProps) => {
-  const [activeResponse, setActiveResponse] = React.useState(0);
-  if (!responses || !responses.length) return null;
+export const Responses = ({ responses: unsortedResponses }: IResponsesProps) => {
+  const responses = sortBy(
+    uniqBy(unsortedResponses, r => r.code),
+    r => r.code,
+  );
+  const [activeResponseId, setActiveResponseId] = React.useState(responses[0]?.code ?? '');
 
-  const sortedResponses = [...responses].sort();
+  if (!responses.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Responses', className)}>
-      <SectionTitle title="Responses" />
-
-      <div className="flex">
-        <div>
-          {sortedResponses.map((response, index) => {
-            if (!response.code) return null;
-
-            const isActive = activeResponse === index;
-
-            return (
-              <div
-                key={response.code}
-                className={cn('py-3 pr-12 hover:bg-gray-1 dark-hover:bg-gray-7', {
-                  'border-t border-gray-2 dark:border-gray-7': index > 0,
-                  'cursor-pointer': !isActive,
-                  'bg-gray-1 dark:bg-gray-7': isActive,
-                })}
-                onClick={() => setActiveResponse(index)}
-              >
-                <FontAwesomeIcon
-                  icon={faCircle}
-                  className="ml-4 mr-3"
-                  color={HttpCodeColor[String(response.code)[0]]}
-                />
-
-                {response.code}
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="flex-1 border-l dark:border-gray-6">
-          <Response response={sortedResponses[activeResponse]} />
-        </div>
-      </div>
-    </div>
+    <Tabs selectedId={activeResponseId} onChange={setActiveResponseId}>
+      <Box borderB borderColor="light" pb={3}>
+        <Flex>
+          <Text size="xl" fontWeight="bold" mr={4}>
+            Responses
+          </Text>
+          <TabList>
+            {responses.map(({ code }) => (
+              <Tab key={code} id={code}>
+                <Text color={code === activeResponseId ? 'primary' : 'muted'}>{code}</Text>
+              </Tab>
+            ))}
+          </TabList>
+        </Flex>
+        <Box mt={4}>
+          {responses.map(response => (
+            <TabPanel key={response.code} tabId={response.code}>
+              <Response response={response} />
+            </TabPanel>
+          ))}
+        </Box>
+      </Box>
+    </Tabs>
   );
 };
 Responses.displayName = 'HttpOperation.Responses';
