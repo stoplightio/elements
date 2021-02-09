@@ -2,16 +2,12 @@ import $RefParser from '@stoplight/json-schema-ref-parser';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
-import { useParsedData } from './useParsedData';
+import { ParsedNode } from '../types';
 
 /**
  * Parses the branch node data and ONLY dereferences if it's an HTTP Operation
- * @param type branch node snapshot type
- * @param data branch node snapshot data
  */
-export function useDereferencedData(type: NodeType, data: string) {
-  const parsedData = useParsedData(type, data);
-
+export function useDereferencedHttpOperation(parsedData: ParsedNode) {
   const [dereferencedData, setDereferencedData] = React.useState(parsedData);
 
   React.useEffect(() => {
@@ -38,7 +34,7 @@ export function useDereferencedData(type: NodeType, data: string) {
     return () => {
       isActive = false;
     };
-  }, [parsedData, type]);
+  }, [parsedData]);
 
   return dereferencedData;
 }

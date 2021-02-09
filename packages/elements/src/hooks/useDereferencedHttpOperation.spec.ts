@@ -1,7 +1,8 @@
-import { Dictionary, IHttpOperation, NodeType } from '@stoplight/types';
+import { Dictionary, IHttpOperation } from '@stoplight/types';
 import { renderHook } from '@testing-library/react-hooks';
 
-import { useDereferencedData } from '../useDereferencedData';
+import { ParsedNode } from '../types';
+import { useDereferencedHttpOperation } from './useDereferencedHttpOperation';
 
 jest.mock('@stoplight/json-schema-ref-parser', () => ({
   __esModule: true,
@@ -27,39 +28,35 @@ jest.mock('@stoplight/json-schema-ref-parser', () => ({
 }));
 
 const simpleHttpOperation: IHttpOperation = { method: 'get', path: '/', id: 'abc', responses: [] };
+const simpleParsedNode: ParsedNode = { type: 'http_operation', data: simpleHttpOperation };
 
 describe('useDereferencedData', () => {
   it('provides the input value before dereferencing happens', () => {
-    const input: IHttpOperation = simpleHttpOperation;
-    const { result } = renderHook(() => useDereferencedData(NodeType.HttpOperation, JSON.stringify(input)));
+    const input = simpleParsedNode;
+    const { result } = renderHook(() => useDereferencedHttpOperation(input));
     expect(result.current?.data).toEqual(input);
   });
 
   it('uses ref parser correctly', async () => {
-    const input: IHttpOperation = simpleHttpOperation;
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useDereferencedData(NodeType.HttpOperation, JSON.stringify(input)),
-    );
+    const input = simpleParsedNode;
+    const { result, waitForNextUpdate } = renderHook(() => useDereferencedHttpOperation(simpleParsedNode));
     await waitForNextUpdate({ timeout: 300 });
     expect(result.current?.data).toEqual({ ...input, __dereferenced: true });
   });
 
   it('handles dereferencing errors', async () => {
-    const input = { ...simpleHttpOperation, __error: true };
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useDereferencedData(NodeType.HttpOperation, JSON.stringify(input)),
-    );
+    const input: ParsedNode = { type: 'http_operation', data: { ...simpleHttpOperation, __error: true } as any };
+    const { result, waitForNextUpdate } = renderHook(() => useDereferencedHttpOperation(input));
     await waitForNextUpdate({ timeout: 300 });
     expect(result.current?.data).toEqual({ ...input, __errored: true });
   });
 
   it('is not prone to race conditions', async () => {
-    const input = simpleHttpOperation;
-    let type = NodeType.HttpOperation;
+    let input: ParsedNode = simpleParsedNode;
 
-    const { result, waitForNextUpdate, rerender } = renderHook(() => useDereferencedData(type, JSON.stringify(input)));
+    const { result, waitForNextUpdate, rerender } = renderHook(() => useDereferencedHttpOperation(input));
 
-    type = NodeType.Article;
+    input = { type: 'article', data: 'Some **markdown**' };
     rerender();
 
     expect(result.current).toMatchObject({ type: 'article' });
