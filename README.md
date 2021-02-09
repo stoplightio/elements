@@ -1,10 +1,13 @@
-# Elements
+# Stoplight Elements
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplightio.github.io/elements)
 
-UI components for composing beautiful developer documentation
+Create beautiful documentation from OpenAPI and Markdown, and integrate them with your existing website and documentation, wherever that lives.
 
-## Docs
+# ⚠ Elements v6 is discontinued
+
+*Stoplight Elements v6* is **not supported** and is in maintenance mode only. This was a limited release for a select group of customers, but we're working on an awesome new open-source version which will be out soon. Sign up for [early-access here](https://stoplight.io/open-source/elements/)!
+## Documentation
 
 **[View the docs here](https://meta.stoplight.io/docs/elements)**
 
