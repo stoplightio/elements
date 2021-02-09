@@ -1,4 +1,4 @@
-import { IHttpOperation, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { DocsSkeleton } from '../components/Docs';
@@ -62,11 +62,5 @@ export const TryIt = ({ node }: ITryItProps) => {
 
   if (parsedData?.type !== NodeType.HttpOperation) return null;
 
-  return (
-    <TryItComponent
-      httpOperation={parsedData.data as IHttpOperation}
-      showMocking
-      mockUrl={mockUrlResult?.servicePath}
-    />
-  );
+  return <TryItComponent httpOperation={parsedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />;
 };

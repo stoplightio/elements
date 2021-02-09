@@ -122,7 +122,6 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const [tabId, setTabId] = React.useState<PanelTabId>('docs');
   const color = HttpMethodColors[type] || 'gray';
-  const showTabs = parsedNode?.type === 'http_operation';
   const isDeprecated = parsedNode?.type === 'http_operation' ? !!parsedNode.data.deprecated : false;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
@@ -163,7 +162,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
 
       {parsedNode && (
         <Collapse isOpen={isExpanded}>
-          {showTabs ? (
+          {parsedNode?.type === 'http_operation' ? (
             <Tabs
               className="PreviewTabs mx-auto"
               selectedTabId={tabId}
@@ -171,7 +170,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
               renderActiveTabPanelOnly
             >
               <Tab id="docs" title="Docs" className="p-4" panel={<ParsedDocs node={parsedNode} headless />} />
-              <Tab id="tryit" title="Try It" className="p-4" panel={<TryIt httpOperation={data as IHttpOperation} />} />
+              <Tab id="tryit" title="Try It" className="p-4" panel={<TryIt httpOperation={parsedNode.data} />} />
             </Tabs>
           ) : (
             <ParsedDocs className="mx-auto p-4" node={parsedNode} headless />

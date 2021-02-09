@@ -44,11 +44,11 @@ export type ParsedNode =
     }
   | {
       type: 'http_operation';
-      data: Partial<IHttpOperation>;
+      data: IHttpOperation;
     }
   | {
       type: 'http_service';
-      data: Partial<IHttpService>;
+      data: IHttpService;
     }
   | {
       type: 'model';

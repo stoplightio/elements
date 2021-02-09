@@ -1,5 +1,5 @@
 import { processMarkdown } from '@stoplight/markdown-viewer';
-import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import { parse as parseYaml } from '@stoplight/yaml';
 import * as React from 'react';
 
@@ -44,7 +44,7 @@ function parseHttpOperation(rawData: unknown): ParsedNode | undefined {
   if (isHttpOperation(data)) {
     return {
       type: 'http_operation',
-      data: data as Partial<IHttpOperation>,
+      data: data,
     };
   }
   return undefined;
@@ -55,7 +55,7 @@ function parseHttpService(rawData: unknown): ParsedNode | undefined {
   if (isHttpService(data)) {
     return {
       type: 'http_service',
-      data: data as Partial<IHttpService>,
+      data: data,
     };
   }
   return undefined;
