@@ -220,7 +220,6 @@ describe('TryIt', () => {
         </PersistenceContextProvider>,
       );
 
-      screen.debug(screen.getByLabelText('todoId'));
       expect(screen.getByLabelText('todoId')).toHaveValue('123');
     });
   });
