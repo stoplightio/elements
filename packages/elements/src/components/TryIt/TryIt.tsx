@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeStringify } from '@stoplight/json';
 import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { Dictionary, IHttpOperation } from '@stoplight/types';
+import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import * as Sampler from 'openapi-sampler';
 import * as React from 'react';
 
@@ -55,7 +55,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
 
-  const textRequestBodyContents = httpOperation.request?.body?.contents?.[0];
+  const mediaTypeContent = httpOperation.request?.body?.contents?.[0];
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
@@ -63,8 +63,8 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
   React.useEffect(() => {
-    const textRequestBodySchema = httpOperation.request?.body?.contents?.[0]?.schema;
-    const textRequestBodyExamples = httpOperation.request?.body?.contents?.[0]?.examples;
+    const textRequestBodySchema = mediaTypeContent?.schema;
+    const textRequestBodyExamples = mediaTypeContent?.examples;
 
     let initialRequestBody = '';
     try {
@@ -78,7 +78,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     }
 
     setTextRequestBody(initialRequestBody);
-  }, [httpOperation]);
+  }, [mediaTypeContent]);
 
   const [textRequestBody, setTextRequestBody] = React.useState<string>('');
 
@@ -92,6 +92,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
       const request = await buildFetchRequest({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
+        mediaTypeContent,
         bodyInput: shouldIncludeBody
           ? formDataState.isFormDataBody
             ? bodyParameterValues
@@ -133,9 +134,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             values={bodyParameterValues}
             onChangeValues={setBodyParameterValues}
           />
-        ) : textRequestBodyContents ? (
+        ) : mediaTypeContent ? (
           <RequestBody
-            examples={textRequestBodyContents.examples ?? []}
+            examples={mediaTypeContent.examples ?? []}
             requestBody={textRequestBody}
             onChange={setTextRequestBody}
           />
@@ -189,6 +190,7 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
 
 interface BuildFetchRequestInput {
   httpOperation: IHttpOperation;
+  mediaTypeContent: IMediaTypeContent | undefined;
   parameterValues: Dictionary<string, string>;
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
@@ -196,6 +198,7 @@ interface BuildFetchRequestInput {
 
 async function buildFetchRequest({
   httpOperation,
+  mediaTypeContent,
   bodyInput,
   parameterValues,
   mockData,
@@ -215,6 +218,7 @@ async function buildFetchRequest({
     {
       method: httpOperation.method,
       headers: {
+        'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
         ...Object.fromEntries(
           httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
         ),
