@@ -22,7 +22,7 @@ describe('HttpOperation', () => {
   let wrapper: ReactWrapper;
 
   afterEach(() => {
-    wrapper.unmount();
+    wrapper?.unmount();
   });
 
   describe('Header', () => {
