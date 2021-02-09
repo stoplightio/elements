@@ -9,7 +9,9 @@ import * as React from 'react';
 
 import { httpOperation as base64FileUpload } from '../../__fixtures__/operations/base64-file-upload';
 import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
+import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
 import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
+import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { requestBody } from '../../__fixtures__/operations/request-body';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
@@ -44,6 +46,7 @@ describe('TryIt', () => {
       'https://todos.stoplight.io/todos',
       expect.objectContaining({
         method: 'get',
+        body: undefined,
       }),
     );
   });
@@ -337,6 +340,40 @@ describe('TryIt', () => {
   });
 
   describe('Text Request Body', () => {
+    describe('is attached', () => {
+      it('to operation with PATCH method', async () => {
+        render(<TryItWithPersistence httpOperation={patchWithRequestBody} />);
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+        expect(fetchMock).toBeCalledWith(
+          'https://todos.stoplight.io/users',
+          expect.objectContaining({
+            method: 'patch',
+            body: JSON.stringify({ name: 'Andrew', age: 19, trial: true }),
+          }),
+        );
+      });
+    });
+
+    describe('is not attached', () => {
+      it('to operation with HEAD method', async () => {
+        render(<TryItWithPersistence httpOperation={headWithRequestBody} />);
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+        expect(fetchMock).toBeCalledWith(
+          'https://todos.stoplight.io/users',
+          expect.objectContaining({
+            method: 'head',
+            body: undefined,
+          }),
+        );
+      });
+    });
+
     describe('when no request body examples', () => {
       it('hides panel when there is no schema for request body', () => {
         render(<TryItWithPersistence httpOperation={basicOperation} />);
@@ -400,8 +437,6 @@ describe('TryIt', () => {
       it('sends a request with request body from example', async () => {
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
 
-        let bodyHeader = screen.queryByText('Body');
-        expect(bodyHeader).toBeInTheDocument();
         expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
 
         clickSend();
