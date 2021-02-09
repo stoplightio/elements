@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "webpack && cp ../elements/dist/styles/elements.min.css ./dist",
-    "build.docs": "build-storybook -c .storybook -o docs-auto",
+    "build.docs": "build-storybook -c .storybook -o dist-storybook",
     "storybook": "start-storybook",
     "type-check": "tsc --noEmit"
   },
