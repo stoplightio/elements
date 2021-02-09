@@ -2,9 +2,9 @@
 [![docs](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)
 [![license](https://img.shields.io/npm/l/@stoplight/elements?style=flat-square)](./LICENSE)
 
-# @stoplight/elements
+# ⚠ Elements v6 is discontinued
 
-Elements is a collection of UI components for displaying beautiful developer documentation using an OpenAPI document or a Stoplight project.
+*Stoplight Elements v6* is **not supported** and is in maintenance mode only. This was a limited release for a select group of customers, but we're working on an awesome new open-source version which will be out soon. Sign up for [early-access here](https://stoplight.io/open-source/elements/)!
 
 ## Documentation
 
