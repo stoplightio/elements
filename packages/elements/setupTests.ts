@@ -1,3 +1,5 @@
+import '@testing-library/jest-dom';
+
 import fetchMock from 'jest-fetch-mock';
 
 type WindowWithResizeObserver = Window &

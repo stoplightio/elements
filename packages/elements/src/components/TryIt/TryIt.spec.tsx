@@ -1,5 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
-
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen, waitFor } from '@testing-library/dom';
 import { render } from '@testing-library/react';
@@ -225,7 +223,6 @@ describe('TryIt', () => {
         </PersistenceContextProvider>,
       );
 
-      screen.debug(screen.getByLabelText('todoId'));
       expect(screen.getByLabelText('todoId')).toHaveValue('123');
     });
   });
