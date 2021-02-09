@@ -6,10 +6,6 @@
 
 *Stoplight Elements v6* is **not supported** and is in maintenance mode only. This was a limited release for a select group of customers, but we're working on an awesome new open-source version which will be out soon. Sign up for [early-access here](https://stoplight.io/open-source/elements/)!
 
-## Documentation
-
-Visit our **[Documentation Site](https://meta.stoplight.io/docs/elements)** for guides and documentation.
-
 ## Examples
 
 - [Gatsby Starter](https://github.com/stoplightio/elements-starter-gatsby)
