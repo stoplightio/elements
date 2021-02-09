@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.10](https://github.com/stoplightio/elements/compare/v6.1.9...v6.1.10) (2021-02-09)
+
+**Note:** Version bump only for package @stoplight/elements-utils
+
+
+
+
+
 ## [6.1.9](https://github.com/stoplightio/elements/compare/v6.1.8...v6.1.9) (2021-01-21)
 
 **Note:** Version bump only for package @stoplight/elements-utils
