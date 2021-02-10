@@ -65,7 +65,8 @@ jobs:
           name: Upload Cypress Screenshots
           path: examples/angular/cypress/results/screenshots
           destination: screenshots
-  release:
+  
+  update-storybook:
     docker:
       - image: circleci/node:12
     steps:
@@ -74,6 +75,13 @@ jobs:
       - run:
           name: deploy storybook
           command: yarn elements run chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --exit-once-uploaded
+
+  release:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: yarn --frozen-lockfile
       - run:
           name: set npmrc
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
@@ -86,6 +94,13 @@ workflows:
       - lint-and-check
       - build
       - test-integration-angular:
+          requires:
+            - build
+      - update-storybook:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - build
       - release:
