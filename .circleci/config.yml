@@ -77,14 +77,22 @@ jobs:
     steps:
       - checkout
       - run: yarn --frozen-lockfile
-      - run: yarn build.docs
+      - run:
+          name: deploy storybook (react)
+          command: |
+            yarn workspace @stoplight/elements build-storybook
+            npx chromatic --project-token=$CHROMATIC_V6_REACT_TOKEN
+      - run:
+          name: deploy storybook (web components)
+          command: |
+            yarn workspace @stoplight/elements-web-components build-storybook
+            npx chromatic --project-token=$CHROMATIC_V6_WC_TOKEN
       - run:
           name: set npmrc
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
       - run:
           name: release
           command: yarn release
-      - run: yarn release.docs
 workflows:
   test-and-release:
     jobs:
