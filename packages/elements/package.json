@@ -28,7 +28,6 @@
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
     "release.dryRun": "sl-scripts release --dry-run --debug",
-    "build-storybook": "build-storybook -c .storybook",
     "storybook": "start-storybook -p 9001",
     "test": "jest",
     "test.prod": "yarn test --coverage --maxWorkers=2",

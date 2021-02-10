@@ -78,15 +78,13 @@ jobs:
       - checkout
       - run: yarn --frozen-lockfile
       - run:
-          name: deploy storybook (react)
+          name: deploy storybook
           command: |
-            yarn workspace @stoplight/elements build-storybook
-            npx chromatic --project-token=$CHROMATIC_V6_REACT_TOKEN
-      - run:
-          name: deploy storybook (web components)
-          command: |
-            yarn workspace @stoplight/elements-web-components build-storybook
-            npx chromatic --project-token=$CHROMATIC_V6_WC_TOKEN
+            if yarn lerna changed
+            then
+              yarn elements run chromatic --project-token=$CHROMATIC_V6_REACT_TOKEN;
+              yarn elements-web-components run chromatic --project-token=$CHROMATIC_V6_WC_TOKEN
+            fi
       - run:
           name: set npmrc
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
@@ -98,7 +96,6 @@ workflows:
     jobs:
       - lint-and-check
       - build
-      - build-docs
       - test-integration-angular:
           requires:
             - build
