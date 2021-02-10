@@ -30,13 +30,7 @@ jobs:
           paths:
             - packages/elements/dist/**
             - packages/elements-web-components/dist/**
-  build-docs:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - run: yarn --frozen-lockfile
-      - run: yarn build.docs
+
   test-integration-angular:
     executor: cypress-default
     steps:
@@ -79,12 +73,7 @@ jobs:
       - run: yarn --frozen-lockfile
       - run:
           name: deploy storybook
-          command: |
-            if yarn lerna changed
-            then
-              yarn elements run chromatic --project-token=$CHROMATIC_V6_REACT_TOKEN;
-              yarn elements-web-components run chromatic --project-token=$CHROMATIC_V6_WC_TOKEN
-            fi
+          command: yarn elements run chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --exit-once-uploaded
       - run:
           name: set npmrc
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
