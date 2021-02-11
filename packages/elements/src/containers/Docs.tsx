@@ -18,10 +18,11 @@ export interface IDocsProps {
 
 const DocsPopup = React.memo<{ nodeType: NodeType; nodeData: unknown; className?: string }>(
   ({ nodeType, nodeData, className }) => {
-    const document = useParsedData(nodeType, nodeData);
+    const parsedNode = useParsedData(nodeType, nodeData);
+    if (!parsedNode) return null;
     return (
       <InlineRefResolverProvider document={document}>
-        <ParsedDocs className={className} nodeType={nodeType} nodeData={document} />
+        <ParsedDocs className={className} node={parsedNode} />
       </InlineRefResolverProvider>
     );
   },

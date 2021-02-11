@@ -24,6 +24,6 @@ export default {
 export const DocsStory: Story<IDocsProps> = args => <Docs {...args} />;
 DocsStory.args = {
   nodeData: model,
-  nodeType: 'model',
+  nodeType: NodeType.Model,
 };
 DocsStory.storyName = 'Docs Playground';

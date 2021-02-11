@@ -11,10 +11,10 @@ import { DeprecatedBadge } from './Badges';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-export type HttpOperationProps = IDocsComponentProps<Partial<IHttpOperation>>;
+export type HttpOperationProps = IDocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless }) => {
-  const color = HttpMethodColors[data.method!] || 'gray';
+  const color = HttpMethodColors[data.method] ?? 'gray';
 
   const isDeprecated = !!data.deprecated;
 

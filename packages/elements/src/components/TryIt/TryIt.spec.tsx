@@ -354,13 +354,7 @@ describe('TryIt', () => {
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock).toBeCalledWith(
-          'https://todos.stoplight.io/users',
-          expect.objectContaining({
-            method: 'patch',
-            body: JSON.stringify({ name: 'Andrew', age: 19, trial: true }),
-          }),
-        );
+        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/));
       });
     });
 
@@ -371,13 +365,7 @@ describe('TryIt', () => {
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock).toBeCalledWith(
-          'https://todos.stoplight.io/users',
-          expect.objectContaining({
-            method: 'head',
-            body: undefined,
-          }),
-        );
+        expect(typeof fetchMock.mock.calls[0]![1]!.body).not.toBe('string');
       });
     });
 
@@ -442,20 +430,16 @@ describe('TryIt', () => {
       });
 
       it('sends a request with request body from example', async () => {
+        const jsonString = '{"name":"Andrew","age":19,"trial":true}';
+
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
 
-        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+        expect(screen.getByRole('textbox')).toHaveTextContent(jsonString);
 
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock).toBeCalledWith(
-          'https://todos.stoplight.io/users',
-          expect.objectContaining({
-            method: 'post',
-            body: JSON.stringify({ name: 'Andrew', age: 19, trial: true }),
-          }),
-        );
+        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(jsonString);
       });
     });
   });

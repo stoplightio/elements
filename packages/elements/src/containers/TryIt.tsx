@@ -1,9 +1,9 @@
-import { IHttpOperation, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { DocsSkeleton } from '../components/Docs';
 import { TryIt as TryItComponent } from '../components/TryIt';
-import { useDereferencedData } from '../hooks/useDereferencedData';
+import { useParsedData } from '../hooks/useParsedData';
 import { useActionsApi, usePlatformApi } from '../hooks/usePlatformApi';
 import { BundledBranchNode } from '../types';
 import { ActiveInfoContext } from './Provider';
@@ -44,8 +44,7 @@ export const TryIt = ({ node }: ITryItProps) => {
   const nodeType = httpResult?.type || NodeType.Unknown;
   const nodeData = httpResult?.data || '';
 
-  // dereference data to use in TryIt since prism needs fully dereferenced data to work
-  const dereferencedData = useDereferencedData(nodeType, nodeData);
+  const parsedData = useParsedData(nodeType, nodeData);
 
   React.useEffect(() => {
     if (error) {
@@ -61,13 +60,7 @@ export const TryIt = ({ node }: ITryItProps) => {
     return <DocsSkeleton />;
   }
 
-  if (nodeType !== NodeType.HttpOperation) return null;
+  if (parsedData?.type !== NodeType.HttpOperation) return null;
 
-  return (
-    <TryItComponent
-      httpOperation={dereferencedData as IHttpOperation}
-      showMocking
-      mockUrl={mockUrlResult?.servicePath}
-    />
-  );
+  return <TryItComponent httpOperation={parsedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />;
 };
