@@ -40,16 +40,11 @@ describe('TryIt', () => {
     userEvent.click(button);
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-    expect(fetchMock).toBeCalledWith(
-      'https://todos.stoplight.io/todos',
-      expect.objectContaining({
-        method: 'get',
-        body: undefined,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }),
-    );
+    expect(fetchMock.mock.calls[0][0]).toBe('https://todos.stoplight.io/todos');
+    const requestInit = fetchMock.mock.calls[0][1]!;
+    expect(requestInit.method).toMatch(/^get$/i);
+    const headers = new Headers(requestInit.headers);
+    expect(headers.get('Content-Type')).toBe('application/json');
   });
 
   it('Displays response', async () => {
@@ -164,17 +159,19 @@ describe('TryIt', () => {
       clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-      expect(fetchMock).toBeCalledWith(
-        'https://todos.stoplight.io/todos/123?limit=3&value=0&type=another',
-        expect.objectContaining({
-          method: 'put',
-          headers: {
-            'Content-Type': 'application/json',
-            'account-id': 'example id 1999',
-            'message-id': 'another example',
-          },
-        }),
-      );
+      const url = new URL(fetchMock.mock.calls[0][0] as string);
+      // assert that path params are passed
+      expect(url.pathname.endsWith('123'));
+      const queryParams = url.searchParams;
+      // assert that query params are passed
+      expect(queryParams.get('limit')).toBe('3');
+      expect(queryParams.get('value')).toBe('0');
+      expect(queryParams.get('type')).toBe('another');
+      // assert that headers are passed
+      const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+      expect(headers.get('Content-Type')).toBe('application/json');
+      expect(headers.get('account-id')).toBe('example id 1999');
+      expect(headers.get('message-id')).toBe('another example');
     });
 
     it('Persists parameter values between operations', async () => {
