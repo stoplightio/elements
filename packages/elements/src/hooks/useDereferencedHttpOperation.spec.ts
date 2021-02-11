@@ -34,21 +34,21 @@ describe('useDereferencedData', () => {
   it('provides the input value before dereferencing happens', () => {
     const input = simpleParsedNode;
     const { result } = renderHook(() => useDereferencedHttpOperation(input));
-    expect(result.current?.data).toEqual(input);
+    expect(result.current?.data).toEqual(input.data);
   });
 
   it('uses ref parser correctly', async () => {
     const input = simpleParsedNode;
     const { result, waitForNextUpdate } = renderHook(() => useDereferencedHttpOperation(simpleParsedNode));
     await waitForNextUpdate({ timeout: 300 });
-    expect(result.current?.data).toEqual({ ...input, __dereferenced: true });
+    expect(result.current?.data).toEqual({ ...input.data, __dereferenced: true });
   });
 
   it('handles dereferencing errors', async () => {
     const input: ParsedNode = { type: 'http_operation', data: { ...simpleHttpOperation, __error: true } as any };
     const { result, waitForNextUpdate } = renderHook(() => useDereferencedHttpOperation(input));
     await waitForNextUpdate({ timeout: 300 });
-    expect(result.current?.data).toEqual({ ...input, __errored: true });
+    expect(result.current?.data).toEqual({ ...input.data, __errored: true });
   });
 
   it('is not prone to race conditions', async () => {
