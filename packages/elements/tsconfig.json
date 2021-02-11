@@ -6,6 +6,6 @@
   "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
 
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "commonjs"
   }
 }

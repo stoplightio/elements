@@ -1,36 +1,31 @@
 import $RefParser from '@stoplight/json-schema-ref-parser';
-import { NodeType } from '@stoplight/types';
-import { isObject } from 'lodash';
+import { IHttpOperation, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
-import { useParsedData } from './useParsedData';
+import { ParsedNode } from '../types';
 
 /**
  * Parses the branch node data and ONLY dereferences if it's an HTTP Operation
- * @param type branch node snapshot type
- * @param data branch node snapshot data
  */
-export function useDereferencedData(type: NodeType, data: string) {
-  const parsedData = useParsedData(type, data);
-
+export function useDereferencedHttpOperation(parsedData: ParsedNode) {
   const [dereferencedData, setDereferencedData] = React.useState(parsedData);
 
   React.useEffect(() => {
     // Only dereference HTTP Operations
-    if (!isObject(parsedData) || type !== NodeType.HttpOperation) {
+    if (parsedData?.type !== NodeType.HttpOperation) {
       setDereferencedData(parsedData);
       return;
     }
 
     let isActive = true;
     $RefParser
-      .dereference(parsedData, { continueOnError: true })
+      .dereference(parsedData.data, { continueOnError: true })
       .then(res => {
-        if (isActive) setDereferencedData(res);
+        if (isActive) setDereferencedData({ type: parsedData.type, data: res as IHttpOperation });
       })
       .catch(reason => {
         if (typeof reason === 'object' && reason !== null && 'files' in reason) {
-          setDereferencedData(reason.files.schema);
+          setDereferencedData({ type: parsedData.type, data: reason.files.schema });
         } else {
           console.warn(`Could not dereference operation: ${reason?.message ?? 'Unknown error'}`);
         }
@@ -39,7 +34,7 @@ export function useDereferencedData(type: NodeType, data: string) {
     return () => {
       isActive = false;
     };
-  }, [parsedData, type]);
+  }, [parsedData]);
 
   return dereferencedData;
 }

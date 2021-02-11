@@ -1,24 +1,25 @@
-import { Dictionary, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { useParsedData } from '../../hooks/useParsedData';
+import { ParsedNode } from '../../types';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
 import { Model } from './Model';
 
 interface IBaseDocsProps {
-  nodeType: string;
   className?: string;
 }
 
 export interface IDocsProps extends IBaseDocsProps {
   nodeData: unknown;
+  nodeType: NodeType;
   headless?: boolean;
 }
 
-export interface IParsedDocsProps<T = unknown> extends IBaseDocsProps {
-  nodeData: T;
+export interface IParsedDocsProps extends IBaseDocsProps {
+  node: ParsedNode;
   headless?: boolean;
 }
 
@@ -38,33 +39,30 @@ export interface IDocsComponentProps<T = unknown> {
   headless?: boolean;
 }
 
-const UnsupportedNodeType = () => {
-  return null;
-};
-
-export const NodeTypeComponent: Dictionary<React.ComponentType<IDocsComponentProps<any>>, NodeType> = {
-  [NodeType.Article]: Article,
-  [NodeType.HttpOperation]: HttpOperation,
-  [NodeType.HttpService]: HttpService,
-  [NodeType.Model]: Model,
-  [NodeType.HttpServer]: UnsupportedNodeType,
-  [NodeType.Generic]: UnsupportedNodeType,
-  [NodeType.TableOfContents]: UnsupportedNodeType,
-  [NodeType.Unknown]: UnsupportedNodeType,
-};
-
 export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, headless }) => {
-  const parsedData = useParsedData(nodeType, nodeData);
+  const parsedNode = useParsedData(nodeType, nodeData);
 
-  return <ParsedDocs className={className} nodeData={parsedData} nodeType={nodeType} headless={headless} />;
+  if (!parsedNode) {
+    // TODO: maybe report failure
+    return null;
+  }
+
+  return <ParsedDocs className={className} node={parsedNode} headless={headless} />;
 });
 
-export const ParsedDocs: React.FC<IParsedDocsProps> = ({ nodeType, nodeData, className, headless }) => {
-  const Component = NodeTypeComponent[nodeType];
-
-  if (!Component) return null;
-
-  return <Component className={className} data={nodeData} headless={headless} />;
+export const ParsedDocs = ({ node, ...commonProps }: IParsedDocsProps) => {
+  switch (node.type) {
+    case 'article':
+      return <Article data={node.data} {...commonProps} />;
+    case 'http_operation':
+      return <HttpOperation data={node.data} {...commonProps} />;
+    case 'http_service':
+      return <HttpService data={node.data} {...commonProps} />;
+    case 'model':
+      return <Model data={node.data} {...commonProps} />;
+    default:
+      return null;
+  }
 };
 
 export { DocsSkeleton } from './Skeleton';

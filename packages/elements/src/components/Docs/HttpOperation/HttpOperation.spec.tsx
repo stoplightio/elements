@@ -197,6 +197,9 @@ describe('HttpOperation', () => {
       wrapper = mount(
         <HttpOperation
           data={{
+            path: '/',
+            id: 'some_id',
+            method: 'get',
             responses: [
               {
                 code: '200',
@@ -252,6 +255,9 @@ describe('HttpOperation', () => {
       wrapper = mount(
         <HttpOperation
           data={{
+            path: '/',
+            id: 'some_id',
+            method: 'get',
             responses: [
               {
                 code: '200',

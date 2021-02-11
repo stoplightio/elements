@@ -1,5 +1,5 @@
-import { processMarkdownTree } from '@stoplight/markdown-viewer';
-import { Builder } from '@stoplight/markdown/builder';
+import { IRoot as MarkdownAstRoot } from '@stoplight/markdown';
+import { processMarkdown } from '@stoplight/markdown-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import * as React from 'react';
@@ -8,20 +8,12 @@ import { IDocsComponentProps } from '..';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { ArticleHeadings } from './Headings';
 
-export type ArticleProps = IDocsComponentProps<unknown>;
+export type ArticleProps = IDocsComponentProps<string | MarkdownAstRoot>;
 
 const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
   const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
 
-  const tree = React.useMemo(() => {
-    if (typeof data === 'object') return data;
-    if (typeof data === 'string') {
-      const markdown = new Builder();
-      markdown.addMarkdown(data);
-      return processMarkdownTree(markdown.root);
-    }
-    return null;
-  }, [data]);
+  const tree = React.useMemo(() => (typeof data === 'object' ? data : processMarkdown(data)), [data]);
 
   if (tree === null) return null;
 
