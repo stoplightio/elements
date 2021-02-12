@@ -1,12 +1,12 @@
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
-import { DocsSkeleton } from '../components/Docs';
-import { TryIt as TryItComponent } from '../components/TryIt';
-import { useParsedData } from '../hooks/useParsedData';
-import { useActionsApi, usePlatformApi } from '../hooks/usePlatformApi';
-import { BundledBranchNode } from '../types';
-import { ActiveInfoContext } from './Provider';
+import { ActiveInfoContext } from '../../containers/Provider';
+import { useParsedData } from '../../hooks/useParsedData';
+import { useActionsApi, usePlatformApi } from '../../hooks/usePlatformApi';
+import { BundledBranchNode } from '../../types';
+import { DocsSkeleton } from '../Docs';
+import { TryItWithRequestSamples } from './TryItWithRequestSamples';
 
 export interface ITryItProps {
   className?: string;
@@ -18,7 +18,7 @@ type MockUrlResult = { servicePath: string; operationPath?: string; id: number }
 const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-nodes/{uri}';
 const mockActionsUrl = 'api/actions/branchNodeMockUrl';
 
-export const TryIt = ({ node }: ITryItProps) => {
+export const TryItContainer = ({ node }: ITryItProps) => {
   const info = React.useContext(ActiveInfoContext);
 
   const nodeUri = node || info.node;
@@ -62,5 +62,5 @@ export const TryIt = ({ node }: ITryItProps) => {
 
   if (parsedData?.type !== NodeType.HttpOperation) return null;
 
-  return <TryItComponent httpOperation={parsedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />;
+  return <TryItWithRequestSamples httpOperation={parsedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />;
 };
