@@ -40,13 +40,11 @@ describe('TryIt', () => {
     userEvent.click(button);
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-    expect(fetchMock).toBeCalledWith(
-      'https://todos.stoplight.io/todos',
-      expect.objectContaining({
-        method: 'get',
-        body: undefined,
-      }),
-    );
+    expect(fetchMock.mock.calls[0][0]).toBe('https://todos.stoplight.io/todos');
+    const requestInit = fetchMock.mock.calls[0][1]!;
+    expect(requestInit.method).toMatch(/^get$/i);
+    const headers = new Headers(requestInit.headers);
+    expect(headers.get('Content-Type')).toBe('application/json');
   });
 
   it('Displays response', async () => {
@@ -161,16 +159,19 @@ describe('TryIt', () => {
       clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-      expect(fetchMock).toBeCalledWith(
-        'https://todos.stoplight.io/todos/123?limit=3&value=0&type=another',
-        expect.objectContaining({
-          method: 'put',
-          headers: {
-            'account-id': 'example id 1999',
-            'message-id': 'another example',
-          },
-        }),
-      );
+      const url = new URL(fetchMock.mock.calls[0][0] as string);
+      // assert that path params are passed
+      expect(url.pathname.endsWith('123'));
+      const queryParams = url.searchParams;
+      // assert that query params are passed
+      expect(queryParams.get('limit')).toBe('3');
+      expect(queryParams.get('value')).toBe('0');
+      expect(queryParams.get('type')).toBe('another');
+      // assert that headers are passed
+      const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+      expect(headers.get('Content-Type')).toBe('application/json');
+      expect(headers.get('account-id')).toBe('example id 1999');
+      expect(headers.get('message-id')).toBe('another example');
     });
 
     it('Persists parameter values between operations', async () => {
@@ -257,8 +258,9 @@ describe('TryIt', () => {
       ['multipart/form-data', FormData, multipartFormdataOperation],
     ];
 
-    describe.each(formDataCases)('Builds correct %p request', (name, prototype, fixture) => {
+    describe.each(formDataCases)('Builds correct %p request', (mimeType, prototype, fixture) => {
       let body: URLSearchParams | FormData;
+      let headers: Headers;
       beforeAll(async () => {
         render(<TryItWithPersistence httpOperation={fixture} />);
 
@@ -272,7 +274,12 @@ describe('TryIt', () => {
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(fetchMock).toHaveBeenCalledTimes(1);
         body = fetchMock.mock.calls[0][1]!.body as URLSearchParams | FormData;
+        headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
         expect(body).toBeInstanceOf(prototype);
+      });
+
+      it('Sets correct content type', () => {
+        expect(headers.get('Content-Type')).toBe(mimeType);
       });
 
       it('Sends user input', () => {
@@ -474,6 +481,7 @@ describe('TryIt', () => {
           expect.objectContaining({
             method: 'get',
             headers: {
+              'Content-Type': 'application/json',
               Prefer: 'code=200',
             },
           }),
@@ -482,7 +490,9 @@ describe('TryIt', () => {
           'https://todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'get',
-            headers: {},
+            headers: {
+              'Content-Type': 'application/json',
+            },
           }),
         ],
       ]);
@@ -527,6 +537,7 @@ describe('TryIt', () => {
         expect.objectContaining({
           method: 'get',
           headers: {
+            'Content-Type': 'application/json',
             Prefer: 'code=200',
           },
         }),
