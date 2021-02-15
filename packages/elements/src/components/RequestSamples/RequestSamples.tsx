@@ -18,6 +18,8 @@ export interface RequestSamplesProps {
 const selectedLanguageAtom = persistAtom('RequestSamples_selectedLanguage', atom('Shell'));
 const selectedLibraryAtom = persistAtom('RequestSamples_selectedLibrary', atom('cURL'));
 
+const fallbackText = 'Unable to generate code example';
+
 /**
  * Generates program code that makes the HTTP call specified by `request`.
  *
@@ -45,7 +47,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
   return (
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar rightComponent={<CopyButton size="md" copyValue={requestSample || ''} />}>
-        <span>Request:</span>
+        <span role="heading">Request:</span>
         <Select
           onChange={handleSelectClick}
           options={selectOptions}
@@ -54,10 +56,11 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
+          aria-label={requestSample ?? fallbackText}
           noCopyButton
           maxHeight="510"
           language={mosaicCodeViewerLanguage}
-          value={requestSample || 'Unable to generate code example'}
+          value={requestSample || fallbackText}
         />
       </Panel.Content>
     </Panel>
