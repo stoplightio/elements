@@ -1,11 +1,9 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { safeStringify } from '@stoplight/json';
 import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
-import * as Sampler from 'openapi-sampler';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
@@ -18,6 +16,7 @@ import { BodyParameterValues, createRequestBody, useBodyParameterState } from '.
 import { RequestBody } from './RequestBody';
 import { useMockingOptions } from './useMockingOptions';
 import { useRequestParameters } from './useOperationParameters';
+import { useTextRequestBodyState } from './useTextRequestBodyState';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -69,25 +68,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
-  React.useEffect(() => {
-    const textRequestBodySchema = mediaTypeContent?.schema;
-    const textRequestBodyExamples = mediaTypeContent?.examples;
-
-    let initialRequestBody = '';
-    try {
-      if (textRequestBodyExamples?.length) {
-        initialRequestBody = safeStringify(textRequestBodyExamples?.[0]['value']) ?? '';
-      } else if (textRequestBodySchema) {
-        initialRequestBody = safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true })) ?? '';
-      }
-    } catch (e) {
-      console.error(e);
-    }
-
-    setTextRequestBody(initialRequestBody);
-  }, [mediaTypeContent]);
-
-  const [textRequestBody, setTextRequestBody] = React.useState<string>('');
+  const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
   React.useEffect(() => {
     let isActive = true;
