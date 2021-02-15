@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import { Row } from '../components/TableOfContents/Row';
+import { TryItContainer } from '../components/TryIt';
 import { defaultPlatformUrl } from '../constants';
 import { withPersistenceBoundary } from '../context/Persistence';
 import { withRouter } from '../hoc/withRouter';
@@ -12,7 +13,6 @@ import { isOperation } from '../utils/oas';
 import { Docs } from './Docs';
 import { Provider } from './Provider';
 import { TableOfContents } from './TableOfContents';
-import { TryIt } from './TryIt';
 
 export interface StoplightProjectProps extends RoutingProps {
   /**
@@ -88,7 +88,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
             {showTryIt && (
               <div className="w-2/5 relative">
                 <div className="inset-0 overflow-auto px-10">
-                  <TryIt node={pathname} />
+                  <TryItContainer node={pathname} />
                 </div>
               </div>
             )}

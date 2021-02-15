@@ -7,7 +7,7 @@ import { ITableOfContentsTree } from '../../types';
 import { getNodeType, isOperation, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { Row } from '../TableOfContents/Row';
-import { TryIt } from '../TryIt/index';
+import { TryItWithRequestSamples } from '../TryIt';
 
 type SidebarLayoutProps = {
   pathname: string;
@@ -35,7 +35,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
           {showTryIt && (
             <div className="w-2/5 relative">
               <div className="inset-0 overflow-auto px-10">
-                <TryIt httpOperation={nodeData as IHttpOperation} />
+                <TryItWithRequestSamples httpOperation={nodeData as IHttpOperation} />
               </div>
             </div>
           )}

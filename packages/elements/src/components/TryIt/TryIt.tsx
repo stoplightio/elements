@@ -1,22 +1,23 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { safeStringify } from '@stoplight/json';
 import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
-import * as Sampler from 'openapi-sampler';
+import { IHttpOperation } from '@stoplight/types';
+import { Request as HarRequest } from 'har-format';
 import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
+import { buildFetchRequest, buildHarRequest } from './build-request';
 import { FormDataBody } from './FormDataBody';
-import { getMockData, MockData } from './mocking-utils';
+import { getMockData } from './mocking-utils';
 import { MockingButton } from './MockingButton';
 import { OperationParameters } from './OperationParameters';
-import { BodyParameterValues, createRequestBody, useBodyParameterState } from './request-body-utils';
+import { useBodyParameterState } from './request-body-utils';
 import { RequestBody } from './RequestBody';
 import { useMockingOptions } from './useMockingOptions';
 import { useRequestParameters } from './useOperationParameters';
+import { useTextRequestBodyState } from './useTextRequestBodyState';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -35,6 +36,12 @@ export interface TryItProps {
    * Only applies when `showMocking` is enabled
    */
   mockUrl?: string;
+
+  /**
+   * Callback to retrieve the current request in a HAR format.
+   * Called whenever the request was changed in any way. Changing `httpOperation`, user entering parameter values, etc.
+   */
+  onRequestChange?: (currentRequest: HarRequest) => void;
 }
 
 interface ResponseState {
@@ -50,7 +57,7 @@ interface ErrorState {
  * Displays the TryIt component for a given IHttpOperation.
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
-export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUrl }) => {
+export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUrl, onRequestChange }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const server = httpOperation.servers?.[0]?.url;
@@ -62,25 +69,26 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
+  const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
+
   React.useEffect(() => {
-    const textRequestBodySchema = mediaTypeContent?.schema;
-    const textRequestBodyExamples = mediaTypeContent?.examples;
-
-    let initialRequestBody = '';
-    try {
-      if (textRequestBodyExamples?.length) {
-        initialRequestBody = safeStringify(textRequestBodyExamples?.[0]['value']) ?? '';
-      } else if (textRequestBodySchema) {
-        initialRequestBody = safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true })) ?? '';
-      }
-    } catch (e) {
-      console.error(e);
+    let isActive = true;
+    if (onRequestChange) {
+      buildHarRequest({
+        mediaTypeContent,
+        parameterValues: parameterValuesWithDefaults,
+        httpOperation,
+        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+      }).then(request => {
+        if (isActive) onRequestChange(request);
+      });
     }
-
-    setTextRequestBody(initialRequestBody);
-  }, [mediaTypeContent]);
-
-  const [textRequestBody, setTextRequestBody] = React.useState<string>('');
+    return () => {
+      isActive = false;
+    };
+    // disabling because we don't want to react on `onRequestChange` change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [httpOperation, parameterValuesWithDefaults, formDataState.isFormDataBody, bodyParameterValues, textRequestBody]);
 
   if (!server) return null;
 
@@ -88,16 +96,11 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     try {
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
-      const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
       const request = await buildFetchRequest({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
         mediaTypeContent,
-        bodyInput: shouldIncludeBody
-          ? formDataState.isFormDataBody
-            ? bodyParameterValues
-            : textRequestBody
-          : undefined,
+        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         mockData,
       });
       const response = await fetch(...request);
@@ -187,53 +190,3 @@ const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
     </Panel.Content>
   </Panel>
 );
-
-interface BuildFetchRequestInput {
-  httpOperation: IHttpOperation;
-  mediaTypeContent: IMediaTypeContent | undefined;
-  parameterValues: Dictionary<string, string>;
-  bodyInput?: BodyParameterValues | string;
-  mockData?: MockData;
-}
-
-async function buildFetchRequest({
-  httpOperation,
-  mediaTypeContent,
-  bodyInput,
-  parameterValues,
-  mockData,
-}: BuildFetchRequestInput): Promise<Parameters<typeof fetch>> {
-  const server = mockData?.url || httpOperation.servers?.[0]?.url;
-
-  const queryParams = httpOperation.request?.query
-    ?.map(param => [param.name, parameterValues[param.name] ?? ''])
-    .filter(([_, value]) => value.length > 0);
-
-  const expandedPath = uriExpand(httpOperation.path, parameterValues);
-  const url = new URL(server + expandedPath);
-  url.search = new URLSearchParams(queryParams).toString();
-
-  return [
-    url.toString(),
-    {
-      method: httpOperation.method,
-      headers: {
-        'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
-        ...Object.fromEntries(
-          httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
-        ),
-        ...mockData?.header,
-      },
-      body: typeof bodyInput === 'object' ? await createRequestBody(httpOperation, bodyInput) : bodyInput,
-    },
-  ];
-}
-
-function uriExpand(uri: string, data: Dictionary<string, string>) {
-  if (!data) {
-    return uri;
-  }
-  return uri.replace(/{([^#?]+?)}/g, (match, value) => {
-    return data[value] || match;
-  });
-}

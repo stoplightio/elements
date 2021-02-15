@@ -10,7 +10,7 @@ import { useParsedData } from '../../hooks/useParsedData';
 import { getNodeType, IUriMap } from '../../utils/oas';
 import { Docs, ParsedDocs } from '../Docs';
 import { DeprecatedBadge } from '../Docs/HttpOperation/Badges';
-import { TryIt } from '../TryIt';
+import { TryItWithRequestSamples } from '../TryIt';
 
 type StackedLayoutProps = {
   uriMap: IUriMap;
@@ -170,7 +170,12 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
               renderActiveTabPanelOnly
             >
               <Tab id="docs" title="Docs" className="p-4" panel={<ParsedDocs node={parsedNode} headless />} />
-              <Tab id="tryit" title="Try It" className="p-4" panel={<TryIt httpOperation={parsedNode.data} />} />
+              <Tab
+                id="tryit"
+                title="Try It"
+                className="p-4"
+                panel={<TryItWithRequestSamples httpOperation={parsedNode.data} />}
+              />
             </Tabs>
           ) : (
             <ParsedDocs className="mx-auto p-4" node={parsedNode} headless />
