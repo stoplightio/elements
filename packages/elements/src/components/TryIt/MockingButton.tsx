@@ -1,6 +1,5 @@
-import { Box, Button } from '@stoplight/mosaic';
+import { Box, Button, Menu, MenuDivider, MenuItem } from '@stoplight/mosaic';
 import { IHttpOperation } from '@stoplight/types';
-import { Icon, Menu, MenuDivider, MenuItem, Popover, Position } from '@stoplight/ui-kit';
 import { uniq } from 'lodash';
 import * as React from 'react';
 
@@ -29,89 +28,75 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
 
   return (
     <Box>
-      <Popover
-        content={
-          <Menu className="TryIt__MockMenu">
-            <MenuItem
-              text="Enabled"
-              icon={isEnabled ? 'tick' : undefined}
-              onClick={toggleEnabled}
-              shouldDismissPopover={false}
-            />
-            <MenuDivider />
-            {operationResponses
-              ?.filter(r => Number.isInteger(parseFloat(r.code)))
-              ?.map(operationResponse => {
-                const isActive = operationResponse.code === code;
-                const exampleKeys = uniq(
-                  operationResponse.contents?.flatMap(c => c.examples || []).map(example => example.key),
-                );
-
-                const exampleChildren = exampleKeys?.map(exampleKey => (
-                  <MenuItem
-                    icon={isActive && exampleKey === example ? 'tick' : undefined}
-                    text={exampleKey}
-                    key={exampleKey}
-                    shouldDismissPopover={false}
-                    onClick={() => {
-                      setMockingOptions({ code: operationResponse.code, example: exampleKey });
-                    }}
-                  />
-                ));
-
-                const generationModeItems = (
-                  <>
-                    <MenuItem
-                      text="Statically Generated"
-                      icon={isActive && dynamic === false ? 'tick' : undefined}
-                      shouldDismissPopover={false}
-                      onClick={() => {
-                        setMockingOptions({ code: operationResponse.code, dynamic: false });
-                      }}
-                    />
-                    <MenuItem
-                      text="Dynamically Generated"
-                      icon={isActive && dynamic === true ? 'tick' : undefined}
-                      shouldDismissPopover={false}
-                      onClick={() => {
-                        setMockingOptions({ code: operationResponse.code, dynamic: true });
-                      }}
-                    />
-                  </>
-                );
-
-                return (
-                  <MenuItem
-                    disabled={!isEnabled}
-                    icon={isActive ? 'tick' : undefined}
-                    text={operationResponse.code}
-                    key={operationResponse.code}
-                    shouldDismissPopover={false}
-                    onClick={() => {
-                      setMockingOptions({ code: operationResponse.code, dynamic: false });
-                    }}
-                  >
-                    {generationModeItems}
-                    {exampleChildren}
-                  </MenuItem>
-                );
-              })}
-            <MenuDivider />
-            <MenuItem
-              text="Learn About Mocking"
-              labelElement={<Icon icon="share" />}
-              href="https://stoplight.io/api-mocking/"
-              target="_blank"
-              textClassName="TryIt__MockMenuText"
-            />
-          </Menu>
+      <Menu
+        trigger={
+          <Button iconRight="caret-down" appearance={isEnabled ? 'primary' : 'minimal'} ml={3}>
+            Mocking
+          </Button>
         }
-        position={Position.BOTTOM}
       >
-        <Button iconRight="caret-down" appearance={isEnabled ? 'primary' : 'minimal'} ml={3}>
-          Mocking
-        </Button>
-      </Popover>
+        <MenuItem indent text="Enabled" checked={isEnabled} onClick={toggleEnabled} />
+        <MenuDivider />
+        {operationResponses
+          ?.filter(r => Number.isInteger(parseFloat(r.code)))
+          ?.map(operationResponse => {
+            const isActive = operationResponse.code === code;
+            const exampleKeys = uniq(
+              operationResponse.contents?.flatMap(c => c.examples || []).map(example => example.key),
+            );
+
+            const exampleChildren = exampleKeys?.map(exampleKey => (
+              <MenuItem
+                checked={isActive && exampleKey === example}
+                indent
+                text={exampleKey}
+                key={exampleKey}
+                onClick={() => {
+                  setMockingOptions({ code: operationResponse.code, example: exampleKey });
+                }}
+              />
+            ));
+
+            const generationModeItems = (
+              <>
+                <MenuItem
+                  text="Statically Generated"
+                  checked={isActive && dynamic === false}
+                  indent
+                  onClick={() => {
+                    setMockingOptions({ code: operationResponse.code, dynamic: false });
+                  }}
+                />
+                <MenuItem
+                  text="Dynamically Generated"
+                  checked={isActive && dynamic === true}
+                  indent
+                  onClick={() => {
+                    setMockingOptions({ code: operationResponse.code, dynamic: true });
+                  }}
+                />
+              </>
+            );
+
+            return (
+              <MenuItem
+                disabled={!isEnabled}
+                checked={isActive}
+                indent
+                text={operationResponse.code}
+                key={operationResponse.code}
+                onClick={() => {
+                  setMockingOptions({ code: operationResponse.code, dynamic: false });
+                }}
+              >
+                {generationModeItems}
+                {exampleChildren}
+              </MenuItem>
+            );
+          })}
+        <MenuDivider />
+        <MenuItem indent text="Learn About Mocking" href="https://stoplight.io/api-mocking/" />
+      </Menu>
     </Box>
   );
 };
