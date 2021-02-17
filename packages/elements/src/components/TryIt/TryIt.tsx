@@ -125,7 +125,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
-        {httpOperation.security && <TryItAuth operationAuth={httpOperation.security} />}
+        {httpOperation.security?.length ? <TryItAuth operationAuth={httpOperation.security} /> : null}
         {allParameters.length > 0 && (
           <OperationParameters
             parameters={allParameters}

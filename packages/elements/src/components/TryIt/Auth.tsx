@@ -11,7 +11,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
     <Panel defaultIsOpen>
       <Panel.Titlebar
         rightComponent={
-          operationAuth.length > 0 && (
+          operationAuth.length > 1 && (
             <Menu
               label="security-schemes"
               trigger={
@@ -29,7 +29,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
       >
         Auth
       </Panel.Titlebar>
-      <Panel.Content>Comming Soon</Panel.Content>
+      <Panel.Content>Coming Soon</Panel.Content>
     </Panel>
   );
 };
