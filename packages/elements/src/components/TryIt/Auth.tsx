@@ -7,6 +7,17 @@ interface TryItAuthProps {
 }
 
 export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
+  const securityTypeComponent = (scheme: HttpSecurityScheme) => {
+    switch (scheme.type) {
+      case 'apiKey':
+        // this is a placeholder for a future component
+        return genericMessage(scheme.type);
+      default:
+        return genericMessage(scheme.type);
+    }
+  };
+  const [securityScheme, setSecurityScheme] = React.useState<HttpSecurityScheme>(operationAuth[0][0]);
+
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar
@@ -21,7 +32,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
               }
             >
               {operationAuth.map(auth => (
-                <MenuItem key={auth[0].key} text={auth[0].key} />
+                <MenuItem key={auth[0].key} text={auth[0].key} onClick={() => setSecurityScheme(auth[0])} />
               ))}
             </Menu>
           )
@@ -29,7 +40,13 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
       >
         Auth
       </Panel.Titlebar>
-      <Panel.Content>Coming Soon</Panel.Content>
+      {securityTypeComponent(securityScheme)}
     </Panel>
   );
+};
+
+const genericMessage: React.FC<'apiKey' | 'http' | 'oauth2' | 'openIdConnect'> = (
+  securityType: 'apiKey' | 'http' | 'oauth2' | 'openIdConnect',
+) => {
+  return <Panel.Content>Coming Soon: {securityType}</Panel.Content>;
 };
