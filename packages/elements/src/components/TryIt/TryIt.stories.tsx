@@ -54,4 +54,4 @@ export const TryItAuth = Template.bind({});
 TryItAuth.args = {
   httpOperation: putTodosOperation,
 };
-RequestBodyExamples.storyName = 'TryIt authentication panel';
+TryItAuth.storyName = 'TryIt Auth';
