@@ -12,6 +12,7 @@ import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { requestBody } from '../../__fixtures__/operations/request-body';
+import { singleSecurityOperation } from '../../__fixtures__/operations/securedOperation';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
@@ -542,6 +543,35 @@ describe('TryIt', () => {
           },
         }),
       );
+    });
+  });
+
+  describe('Authentication', () => {
+    describe('Panel', () => {
+      it('is displayed when if operation has a security', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let authPanel = screen.getByText('Auth');
+        expect(authPanel).toBeInTheDocument();
+      });
+
+      it("does not show up the Security Schemes select if there's only one schema", () => {
+        render(<TryItWithPersistence httpOperation={singleSecurityOperation} />);
+
+        let securitySchemesMenu = screen.queryByText('Security Schemes');
+        expect(securitySchemesMenu).not.toBeInTheDocument();
+      });
+
+      it('allows to select a security schemes from dropdown menu', () => {
+        const securitySchemesItems = ['api_key', 'basicKey', 'bearerKey', 'openIdConnectKey', 'oauth2Key'];
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByRole('button', { name: 'Security Schemes' });
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getAllByRole('menuitem').map(el => el.textContent);
+        expect(securitySchemes).toEqual(securitySchemesItems);
+      });
     });
   });
 });
