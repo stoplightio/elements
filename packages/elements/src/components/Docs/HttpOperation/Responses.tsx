@@ -1,6 +1,4 @@
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Box, Flex, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
+import { Box, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
 import cn from 'classnames';
 import { sortBy, uniqBy } from 'lodash';
@@ -40,11 +38,8 @@ export const Responses = ({ responses: unsortedResponses }: IResponsesProps) => 
 
   return (
     <Tabs selectedId={activeResponseId} onChange={setActiveResponseId}>
-      <Box borderB borderColor="light" pb={3}>
-        <Flex>
-          <Text size="xl" fontWeight="bold" mr={4}>
-            Responses
-          </Text>
+      <Box>
+        <SectionTitle title="Responses">
           <TabList>
             {responses.map(({ code }) => (
               <Tab key={code} id={code}>
@@ -52,7 +47,7 @@ export const Responses = ({ responses: unsortedResponses }: IResponsesProps) => 
               </Tab>
             ))}
           </TabList>
-        </Flex>
+        </SectionTitle>
         <Box mt={4}>
           {responses.map(response => (
             <TabPanel key={response.code} tabId={response.code}>
