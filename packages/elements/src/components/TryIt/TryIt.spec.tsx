@@ -458,7 +458,7 @@ describe('TryIt', () => {
 
       userEvent.click(mockingButton);
 
-      const enableItem = screen.getByText('Enabled');
+      const enableItem = await screen.findByText('Enabled');
       const responseCodeItem = screen.getByText('200');
 
       expect(enableItem).toBeInTheDocument();
