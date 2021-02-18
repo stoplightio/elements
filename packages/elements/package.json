@@ -28,7 +28,6 @@
     "commit": "git-cz",
     "publish.storybook": "chromatic --build-script-name=build.storybook --project-token=$CHROMATIC_PROJECT_TOKEN --exit-once-uploaded",
     "release": "sl-scripts release",
-    "release.docs": "sl-scripts release:docs",
     "release.dryRun": "sl-scripts release --dry-run --debug",
     "storybook": "start-storybook -p 9001",
     "test": "jest",
