@@ -17,6 +17,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
     }
   };
   const [securityScheme, setSecurityScheme] = React.useState<HttpSecurityScheme>(operationAuth[0][0]);
+  const [menuName, setMenuName] = React.useState<string>(securityReadableNames[operationAuth[0][0].type]);
 
   return (
     <Panel defaultIsOpen>
@@ -27,12 +28,19 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
               label="security-schemes"
               trigger={
                 <Button appearance="minimal" iconRight="caret-down">
-                  Security Schemes
+                  {menuName}
                 </Button>
               }
             >
               {operationAuth.map(auth => (
-                <MenuItem key={auth[0].key} text={auth[0].key} onClick={() => setSecurityScheme(auth[0])} />
+                <MenuItem
+                  key={auth[0].key}
+                  text={securityReadableNames[auth[0].type]}
+                  onClick={() => {
+                    setSecurityScheme(auth[0]);
+                    setMenuName(securityReadableNames[auth[0].type]);
+                  }}
+                />
               ))}
             </Menu>
           )
@@ -48,5 +56,12 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
 const genericMessage: React.FC<'apiKey' | 'http' | 'oauth2' | 'openIdConnect'> = (
   securityType: 'apiKey' | 'http' | 'oauth2' | 'openIdConnect',
 ) => {
-  return <Panel.Content>Coming Soon: {securityType}</Panel.Content>;
+  return <Panel.Content>Coming Soon: {securityReadableNames[securityType]}</Panel.Content>;
+};
+
+const securityReadableNames = {
+  apiKey: 'API Key',
+  http: 'HTTP',
+  oauth2: 'OAuth 2.0',
+  openIdConnect: 'OpenID Connect',
 };
