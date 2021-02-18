@@ -548,7 +548,7 @@ describe('TryIt', () => {
 
   describe('Authentication', () => {
     describe('Panel', () => {
-      it('is displayed when if operation has a security', () => {
+      it('is displayed if operation has a security', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let authPanel = screen.getByText('Auth');
