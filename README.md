@@ -1,6 +1,6 @@
 # Stoplight Elements
 
-[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplight-elements-v6.netlify.app)
+[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://master--6023bc0bfd68380023b58963.chromatic.com)
 
 Create beautiful documentation from OpenAPI and Markdown, and integrate them with your existing website and documentation, wherever that lives.
 

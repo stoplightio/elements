@@ -15,9 +15,6 @@ packages/*/coverage
 # production
 build
 dist
-dist-storybook
-# old github deploy
-docs-auto
 
 # misc
 .DS_Store
@@ -34,6 +31,7 @@ docs-auto
 .cache
 .rpt2_cache
 .eslintcache
+storybook-static
 
 # logs
 *.log*

@@ -30,13 +30,7 @@ jobs:
           paths:
             - packages/elements/dist/**
             - packages/elements-web-components/dist/**
-  build-docs:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - run: yarn --frozen-lockfile
-      - run: yarn build.docs
+
   test-integration-angular:
     executor: cypress-default
     steps:
@@ -71,27 +65,40 @@ jobs:
           name: Upload Cypress Screenshots
           path: examples/angular/cypress/results/screenshots
           destination: screenshots
+  
+  publish-storybook:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: yarn --frozen-lockfile
+      - run: yarn elements publish.storybook
+
   release:
     docker:
       - image: circleci/node:12
     steps:
       - checkout
       - run: yarn --frozen-lockfile
-      - run: yarn build.docs
       - run:
           name: set npmrc
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
       - run:
           name: release
           command: yarn release
-      - run: yarn release.docs
 workflows:
   test-and-release:
     jobs:
       - lint-and-check
       - build
-      - build-docs
       - test-integration-angular:
+          requires:
+            - build
+      - publish-storybook:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - build
       - release:
