@@ -12,7 +12,7 @@ import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { requestBody } from '../../__fixtures__/operations/request-body';
-import { singleSecurityOperation } from '../../__fixtures__/operations/securedOperation';
+import { emptySecurityOperation, singleSecurityOperation } from '../../__fixtures__/operations/securedOperation';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
@@ -553,6 +553,13 @@ describe('TryIt', () => {
 
         let authPanel = screen.getByText('Auth');
         expect(authPanel).toBeInTheDocument();
+      });
+
+      it('does not crash when operation security section is an empty array', () => {
+        render(<TryItWithPersistence httpOperation={emptySecurityOperation} />);
+
+        let authPanel = screen.queryByText('Auth');
+        expect(authPanel).not.toBeInTheDocument();
       });
 
       it("does not show up the Security Schemes select if there's only one schema", () => {
