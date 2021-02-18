@@ -66,15 +66,13 @@ jobs:
           path: examples/angular/cypress/results/screenshots
           destination: screenshots
   
-  update-storybook:
+  publish-storybook:
     docker:
       - image: circleci/node:12
     steps:
       - checkout
       - run: yarn --frozen-lockfile
-      - run:
-          name: deploy storybook
-          command: yarn elements run chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --exit-once-uploaded
+      - run: yarn elements publish.storybook
 
   release:
     docker:
@@ -96,7 +94,7 @@ workflows:
       - test-integration-angular:
           requires:
             - build
-      - update-storybook:
+      - publish-storybook:
           filters:
             branches:
               only:
