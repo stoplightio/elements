@@ -43,7 +43,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
         <MarkdownViewer className="HttpOperation__Description mb-10 ml-1" markdown={data.description} />
       )}
 
-      <Request request={data.request} security={data.security} />
+      <Request operation={data} />
 
       {data.responses && <Responses responses={data.responses} />}
     </div>

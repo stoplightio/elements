@@ -1,4 +1,5 @@
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
+import { Box } from '@stoplight/mosaic';
 import { Dictionary, HttpParamStyles, IHttpParam, Primitive } from '@stoplight/types';
 import { Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
@@ -7,15 +8,12 @@ import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { SectionTitle } from './SectionTitle';
 
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';
 
-export interface IParametersProps {
-  title: string;
+export interface ParametersProps {
   parameterType: ParameterType;
   parameters?: IHttpParam[];
-  className?: string;
 }
 
 const numberValidationNames = [
@@ -46,19 +44,12 @@ const defaultStyle = {
   cookie: HttpParamStyles.Form,
 } as const;
 
-export const Parameters: React.FunctionComponent<IParametersProps> = ({
-  parameters,
-  parameterType,
-  title,
-  className,
-}) => {
+export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
   const resolveRef = useInlineRefResolver();
   if (!parameters || !parameters.length) return null;
 
   return (
-    <div className={cn('HttpOperation__Parameters', className)}>
-      {title && <SectionTitle title={title} />}
-
+    <Box>
       {sortBy(parameters, ['required', 'name']).map((parameter, index) => {
         const resolvedSchema =
           parameter.schema?.$ref && resolveRef
@@ -77,7 +68,7 @@ export const Parameters: React.FunctionComponent<IParametersProps> = ({
           />
         );
       })}
-    </div>
+    </Box>
   );
 };
 Parameters.displayName = 'HttpOperation.Parameters';

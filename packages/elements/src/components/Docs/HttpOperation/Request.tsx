@@ -1,34 +1,80 @@
-import { HttpSecurityScheme, IHttpOperationRequest } from '@stoplight/types';
-import cn from 'classnames';
-import { flatten } from 'lodash';
+import { Box, Panel, Text } from '@stoplight/mosaic';
+import { IHttpOperation } from '@stoplight/types';
 import * as React from 'react';
 
-import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
 import { Body } from './Body';
 import { Parameters } from './Parameters';
+import { SectionTitle } from './SectionTitle';
 
 export interface IRequestProps {
-  request?: IHttpOperationRequest;
-  security?: HttpSecurityScheme[][];
-  className?: string;
+  operation: IHttpOperation;
 }
 
-export const Request: React.FunctionComponent<IRequestProps> = ({ request, security, className }) => {
+export const Request: React.FunctionComponent<IRequestProps> = ({
+  operation: {
+    path,
+    method,
+    request,
+    request: {
+      path: pathParams = [],
+      headers: headerParams = [],
+      cookie: cookieParams = [],
+      body,
+      query: queryParams = [],
+    } = {},
+    security,
+  },
+}) => {
   if (!request || typeof request !== 'object') return null;
 
-  const { path, headers, query, cookie, body } = request;
+  const pathParamBlock = (
+    <>
+      <Text textTransform="uppercase">{method}</Text> {path}
+    </>
+  );
 
   return (
-    <div className={cn('HttpOperation__Request', className)}>
-      <HttpSecuritySchemes className="mb-10" title="Authorization" securities={flatten(security)} />
+    <Box>
+      <SectionTitle title="Request" />
+      <SectionPanel title={pathParamBlock} isCollapsible={pathParams.length > 0}>
+        <Parameters parameterType="path" parameters={pathParams} />
+      </SectionPanel>
+      {queryParams.length > 0 && (
+        <SectionPanel title="Query">
+          <Parameters parameterType="query" parameters={queryParams} />
+        </SectionPanel>
+      )}
+      {headerParams.length > 0 && (
+        <SectionPanel title="Headers">
+          <Parameters parameterType="header" parameters={headerParams} />
+        </SectionPanel>
+      )}
+      {cookieParams.length > 0 && (
+        <SectionPanel title="Cookie">
+          <Parameters parameterType="cookie" parameters={cookieParams} />
+        </SectionPanel>
+      )}
 
-      <Parameters className="mb-10" title="Path Parameters" parameterType="path" parameters={path} />
-      <Parameters className="mb-10" title="Query Parameters" parameterType="query" parameters={query} />
-      <Parameters className="mb-10" title="Cookie Parameters" parameterType="cookie" parameters={cookie} />
-      <Parameters className="mb-10" title="Header Parameters" parameterType="header" parameters={headers} />
-
-      {body && <Body className="mb-10" body={body} />}
-    </div>
+      {body && (
+        <SectionPanel title="Body">
+          <Body className="mb-10" body={body} />
+        </SectionPanel>
+      )}
+    </Box>
   );
 };
 Request.displayName = 'HttpOperation.Request';
+
+type SectionPanelProps = { title: React.ReactNode; isCollapsible?: boolean };
+const SectionPanel: React.FC<SectionPanelProps> = ({ title, children, isCollapsible }) => {
+  return (
+    <Panel appearance="minimal" mb={3} isCollapsible={isCollapsible}>
+      <Panel.Titlebar fontWeight="medium" color="muted">
+        {title}
+      </Panel.Titlebar>
+      <Panel.Content pl={5} pr={3}>
+        {children}
+      </Panel.Content>
+    </Panel>
+  );
+};

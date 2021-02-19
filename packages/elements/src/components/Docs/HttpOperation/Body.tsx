@@ -5,7 +5,6 @@ import * as React from 'react';
 import { isJSONSchema } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
-import { SectionTitle } from './SectionTitle';
 import { getExamplesObject } from './utils';
 
 export interface IBodyProps {
@@ -26,8 +25,6 @@ export const Body = ({ body, className }: IBodyProps) => {
 
   return (
     <div className={cn('HttpOperation__Body', className)}>
-      <SectionTitle title="Request Body" />
-
       {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}
 
       {isJSONSchema(schema) && <SchemaViewer className="mt-6" schema={schema} examples={examples} viewMode="write" />}
