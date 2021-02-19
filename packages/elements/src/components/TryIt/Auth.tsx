@@ -1,6 +1,6 @@
 import { Button, Menu, MenuItem, Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
-import { flattenDeep } from 'lodash';
+import { flatten, head } from 'lodash';
 import * as React from 'react';
 
 interface TryItAuthProps {
@@ -8,15 +8,17 @@ interface TryItAuthProps {
 }
 
 export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
-  const operationSecurityArray = flattenDeep(operationAuth);
+  const operationSecurityArray = flatten(operationAuth);
   const filteredSecurityItems = operationSecurityArray.filter(scheme =>
     Object.keys(securityReadableNames).includes(scheme?.type),
   );
 
-  const [securityScheme, setSecurityScheme] = React.useState<HttpSecurityScheme>(filteredSecurityItems[0]);
-  const [menuName, setMenuName] = React.useState<string>(
-    filteredSecurityItems.length ? securityReadableNames[filteredSecurityItems[0].type] : '',
+  const [securityScheme, setSecurityScheme] = React.useState<HttpSecurityScheme | undefined>(
+    head(filteredSecurityItems),
   );
+  const menuName = securityScheme ? securityReadableNames[securityScheme?.type] : 'Security Scheme';
+
+  const SchemeComponent = securityScheme && securitySchemeToComponent[securityScheme.type];
 
   if (filteredSecurityItems.length === 0) return null;
 
@@ -39,7 +41,6 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
                   text={securityReadableNames[auth.type]}
                   onClick={() => {
                     setSecurityScheme(auth);
-                    setMenuName(securityReadableNames[auth.type]);
                   }}
                 />
               ))}
@@ -49,28 +50,25 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth }) => {
       >
         Auth
       </Panel.Titlebar>
-      {displaySecurityTypeComponent(securityScheme)}
+      {SchemeComponent && securityScheme && <SchemeComponent scheme={securityScheme} />}
     </Panel>
   );
 };
 
-const genericMessageContainer = (securityType: 'apiKey' | 'http' | 'oauth2' | 'openIdConnect') => (
-  <Panel.Content>Coming Soon: {securityReadableNames[securityType]}</Panel.Content>
-);
+const GenericMessageContainer: React.FC<{ scheme: HttpSecurityScheme }> = ({ scheme }) => {
+  return <Panel.Content>Coming Soon: {securityReadableNames[scheme.type]}</Panel.Content>;
+};
+
+const securitySchemeToComponent: Record<string, React.FC<{ scheme: HttpSecurityScheme }> | undefined> = {
+  apiKey: GenericMessageContainer,
+  http: GenericMessageContainer,
+  oauth2: GenericMessageContainer,
+  openIdConnect: GenericMessageContainer,
+};
 
 const securityReadableNames = {
   apiKey: 'API Key',
   http: 'HTTP',
   oauth2: 'OAuth 2.0',
   openIdConnect: 'OpenID Connect',
-};
-
-const displaySecurityTypeComponent = (scheme: HttpSecurityScheme) => {
-  switch (scheme.type) {
-    case 'apiKey':
-      // this is a placeholder for a future component
-      return genericMessageContainer(scheme.type);
-    default:
-      return genericMessageContainer(scheme.type);
-  }
 };
