@@ -570,14 +570,16 @@ describe('TryIt', () => {
       });
 
       it('allows to select a security schemes from dropdown menu', () => {
-        const securitySchemesItems = ['API Key', 'HTTP', 'HTTP', 'OpenID Connect', 'OAuth 2.0'];
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
         userEvent.click(securitySchemesButton);
 
-        let securitySchemes = screen.getAllByRole('menuitem').map(el => el.textContent);
-        expect(securitySchemes).toEqual(securitySchemesItems);
+        let securitySchemes = screen.getByRole('menuitem', { name: 'HTTP' });
+        userEvent.click(securitySchemes);
+
+        securitySchemesButton = screen.queryByRole('button', { name: 'HTTP' });
+        expect(securitySchemesButton).toBeInTheDocument();
       });
     });
   });
