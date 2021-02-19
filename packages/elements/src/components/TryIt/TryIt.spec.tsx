@@ -572,14 +572,14 @@ describe('TryIt', () => {
       it('allows to select a security schemes from dropdown menu', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        let securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
         userEvent.click(securitySchemesButton);
 
-        let securitySchemes = screen.getByRole('menuitem', { name: 'HTTP' });
+        const securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
         userEvent.click(securitySchemes);
 
-        securitySchemesButton = screen.queryByRole('button', { name: 'HTTP' });
-        expect(securitySchemesButton).toBeInTheDocument();
+        const HttpSchemesButton = screen.queryByRole('button', { name: 'OAuth 2.0' });
+        expect(HttpSchemesButton).toBeInTheDocument();
       });
     });
   });
