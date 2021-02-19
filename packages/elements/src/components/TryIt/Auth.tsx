@@ -3,6 +3,8 @@ import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten, head } from 'lodash';
 import * as React from 'react';
 
+import { APIKeyAuth } from './APIKeyAuth';
+
 interface TryItAuthProps {
   operationAuth: HttpSecurityScheme[][];
 }
