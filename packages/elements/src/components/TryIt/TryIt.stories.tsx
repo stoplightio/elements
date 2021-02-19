@@ -49,3 +49,9 @@ RequestBodyExamples.args = {
   httpOperation: examplesRequestBody,
 };
 RequestBodyExamples.storyName = 'Request Body from Examples';
+
+export const TryItAuth = Template.bind({});
+TryItAuth.args = {
+  httpOperation: putTodosOperation,
+};
+TryItAuth.storyName = 'TryIt Auth';

@@ -8,6 +8,7 @@ import * as React from 'react';
 
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
+import { TryItAuth } from './Auth';
 import { buildFetchRequest, buildHarRequest } from './build-request';
 import { FormDataBody } from './FormDataBody';
 import { getMockData } from './mocking-utils';
@@ -124,6 +125,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
+        <TryItAuth operationAuth={httpOperation.security ?? []} />
         {allParameters.length > 0 && (
           <OperationParameters
             parameters={allParameters}
