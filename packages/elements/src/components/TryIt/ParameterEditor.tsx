@@ -23,7 +23,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
 
   return (
     <>
-      <Input appearance="minimal" className="inline" readOnly value={parameterDisplayName} />
+      <Input appearance="minimal" readOnly value={parameterDisplayName} />
       <Text mx={3}>:</Text>
       <div>
         {parameterValueOptions ? (
