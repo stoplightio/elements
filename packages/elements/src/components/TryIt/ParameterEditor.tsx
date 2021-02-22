@@ -20,41 +20,43 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
   return (
-    <Flex align="center" key={parameter.name}>
-      <Input appearance="minimal" readOnly value={parameter.name} />
+    <>
+      <Input appearance="minimal" className="inline" readOnly value={parameter.name} />
       <Text mx={3}>:</Text>
-      {parameterValueOptions ? (
-        <Select
-          flexGrow
-          aria-label={parameter.name}
-          options={parameterValueOptions}
-          value={value}
-          onChange={onChange}
-        />
-      ) : (
-        <Flex flexGrow>
-          <Input
-            style={{ paddingLeft: 15 }}
-            aria-label={parameter.name}
-            appearance="minimal"
+      <div>
+        {parameterValueOptions ? (
+          <Select
             flexGrow
-            placeholder={getPlaceholderForParameter(parameter)}
-            type={parameter.schema?.type === 'number' ? 'number' : 'text'}
-            required
+            aria-label={parameter.name}
+            options={parameterValueOptions}
             value={value}
             onChange={onChange}
           />
-          {examples && (
-            <Select
-              aria-label={`${parameter.name}-select`}
+        ) : (
+          <Flex flexGrow>
+            <Input
+              style={{ paddingLeft: 15 }}
+              aria-label={parameter.name}
+              appearance="minimal"
               flexGrow
-              value={selectedExample.value}
-              options={examples}
+              placeholder={getPlaceholderForParameter(parameter)}
+              type={parameter.schema?.type === 'number' ? 'number' : 'text'}
+              required
+              value={value}
               onChange={onChange}
             />
-          )}
-        </Flex>
-      )}
-    </Flex>
+            {examples && (
+              <Select
+                aria-label={`${parameter.name}-select`}
+                flexGrow
+                value={selectedExample.value}
+                options={examples}
+                onChange={onChange}
+              />
+            )}
+          </Flex>
+        )}
+      </div>
+    </>
   );
 };

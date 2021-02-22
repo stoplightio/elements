@@ -25,7 +25,7 @@ export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> =
   const fileUploadInputId = React.useRef(`file-upload-${nanoid()}`);
 
   return (
-    <Flex align="center" key={parameter.name}>
+    <>
       <Input appearance="minimal" readOnly value={parameter.name} />
       <Text mx={3}>:</Text>
       <Flex flexGrow alignItems="center">
@@ -52,6 +52,6 @@ export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> =
           <input onChange={handleFileChange} type="file" hidden id={fileUploadInputId.current} />
         </div>
       </Flex>
-    </Flex>
+    </>
   );
 };

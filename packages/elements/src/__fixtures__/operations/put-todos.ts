@@ -363,6 +363,13 @@ export const httpOperation: IHttpOperation = {
         name: 'type',
         style: HttpParamStyles.SpaceDelimited,
       },
+      {
+        name: 'super_duper_long_parameter_name_with_unnecessary_text',
+        schema: {
+          type: 'string',
+        },
+        style: HttpParamStyles.Form,
+      },
     ],
     headers: [
       {
