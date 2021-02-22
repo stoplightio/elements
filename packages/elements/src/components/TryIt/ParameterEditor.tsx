@@ -19,9 +19,11 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
+  const parameterDisplayName = `${parameter.name}${parameter.required ? '*' : ''}`;
+
   return (
     <>
-      <Input appearance="minimal" className="inline" readOnly value={parameter.name} />
+      <Input appearance="minimal" className="inline" readOnly value={parameterDisplayName} />
       <Text mx={3}>:</Text>
       <div>
         {parameterValueOptions ? (

@@ -11,6 +11,7 @@ interface FileUploadParamterEditorProps {
 }
 
 export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> = ({ parameter, value, onChange }) => {
+  const parameterDisplayName = `${parameter.name}${parameter.required ? '*' : ''}`;
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.currentTarget.files?.[0];
     if (file === undefined) return;
@@ -26,7 +27,7 @@ export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> =
 
   return (
     <>
-      <Input appearance="minimal" readOnly value={parameter.name} />
+      <Input appearance="minimal" readOnly value={parameterDisplayName} />
       <Text mx={3}>:</Text>
       <Flex flexGrow alignItems="center">
         <Input
