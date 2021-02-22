@@ -121,6 +121,10 @@ describe('TryIt', () => {
       const typeField = screen.getByLabelText('type');
       expect(typeField).toHaveValue('something');
 
+      const optionalWithDefaultField = screen.getByLabelText('optional_value_with_default') as HTMLInputElement;
+      expect(optionalWithDefaultField).toHaveValue('');
+      expect(optionalWithDefaultField.placeholder).toBe('example: some default value');
+
       const valueField = screen.getByLabelText('value');
       expect(valueField).toHaveValue('0');
 
@@ -128,7 +132,7 @@ describe('TryIt', () => {
 
       const accountIdField = screen.getByLabelText('account-id') as HTMLInputElement;
       expect(accountIdField).toHaveValue('example id');
-      expect(accountIdField.placeholder).toMatch(/account-id-default/i);
+      expect(accountIdField.placeholder).toBe('example: example id');
 
       const messageIdField = screen.getByLabelText('message-id');
       expect(messageIdField).toHaveValue('example value');

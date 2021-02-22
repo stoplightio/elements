@@ -367,6 +367,15 @@ export const httpOperation: IHttpOperation = {
         name: 'super_duper_long_parameter_name_with_unnecessary_text',
         schema: {
           type: 'string',
+          default: 'some interesting string with interesting content, but still pretty long',
+        },
+        style: HttpParamStyles.Form,
+      },
+      {
+        name: 'optional_value_with_default',
+        schema: {
+          type: 'string',
+          default: 'some default value',
         },
         style: HttpParamStyles.Form,
       },

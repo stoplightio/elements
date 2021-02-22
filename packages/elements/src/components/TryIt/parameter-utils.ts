@@ -42,8 +42,11 @@ function exampleValue(example: INodeExample | INodeExternalExample) {
 }
 
 export function getPlaceholderForParameter(parameter: ParameterSpec) {
-  const defaultOrType = retrieveDefaultFromSchema(parameter) ?? parameter.schema?.type;
-  return defaultOrType !== undefined ? String(defaultOrType) : undefined;
+  const parameterValue = getValueForParameter(parameter);
+
+  if (parameterValue) return `example: ${parameterValue}`;
+
+  return parameterValue || String(parameter.schema?.type ?? '');
 }
 
 function retrieveDefaultFromSchema(parameter: ParameterSpec) {
@@ -51,14 +54,26 @@ function retrieveDefaultFromSchema(parameter: ParameterSpec) {
   return isObject(defaultValue) ? safeStringify(defaultValue) : defaultValue;
 }
 
-const getInitialValueForParameter = (parameter: ParameterSpec) => {
+const getValueForParameter = (parameter: ParameterSpec) => {
   const enums = parameter.schema?.enum ?? [];
   if (enums.length > 0) return String(enums[0]);
 
   const examples = parameter.examples ?? [];
   if (examples.length > 0) return exampleValue(examples[0]);
 
+  const defaultValue = retrieveDefaultFromSchema(parameter);
+  if (defaultValue) return String(defaultValue);
+
   return '';
+};
+
+const getInitialValueForParameter = (parameter: ParameterSpec) => {
+  const isRequired = !!parameter.required;
+  const isEnum = !!parameter.schema?.enum;
+
+  if (!isEnum && !isRequired) return '';
+
+  return getValueForParameter(parameter);
 };
 
 export const initialParameterValues: (params: readonly ParameterSpec[]) => Record<string, string> = pipe(
