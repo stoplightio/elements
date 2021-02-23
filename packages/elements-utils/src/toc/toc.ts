@@ -4,7 +4,6 @@ import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
 
 import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, TableOfContentItem } from './types';
-import { cleanToc } from './utils';
 
 type SchemaType = 'divider' | 'group';
 type TocType = 'api' | 'project';
@@ -96,6 +95,15 @@ function modifyEach(
       modifyEach(item.items, apply, shouldReplace);
     }
   }
+}
+
+function cleanDividers(group: Group) {
+  group.items = group.items.filter(item => !isDivider(item));
+  group.items.filter(isGroup).forEach(cleanDividers);
+}
+
+function cleanToc(toc: ITableOfContents) {
+  toc.items.filter(isGroup).forEach(cleanDividers);
 }
 
 export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfContents) {
