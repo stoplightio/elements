@@ -1244,5 +1244,217 @@ describe('toc', () => {
         ],
       });
     });
+
+    it('resolves ToC with grouped services', () => {
+      const toc: ITableOfContents = {
+        items: [
+          {
+            title: 'Group',
+            type: 'group',
+            items: [
+              {
+                title: 'The API 1',
+                type: 'item',
+                uri: '/openapi-1.yaml',
+              },
+              {
+                title: 'The API 2',
+                type: 'item',
+                uri: '/openapi-2.yaml',
+              },
+            ],
+          },
+        ],
+      };
+
+      resolveHttpServices(
+        [
+          {
+            uri: '/openapi-1.yaml',
+            name: 'The API 1',
+            type: NodeType.HttpService,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi-1.yaml/~1path',
+            name: 'The Op 1',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi-1.yaml/~1components~1model',
+            name: 'The Model 1',
+            type: NodeType.Model,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi-2.yaml',
+            name: 'The API 2',
+            type: NodeType.HttpService,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi-2.yaml/~1path',
+            name: 'The Op 2',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi-2.yaml/~1components~1model',
+            name: 'The Model 2',
+            type: NodeType.Model,
+            tags: ['api'],
+          },
+        ],
+        toc,
+      );
+
+      expect(toc).toEqual({
+        items: [
+          {
+            title: 'Group',
+            type: 'group',
+            items: [
+              {
+                title: 'The API 1',
+                type: 'divider',
+              },
+              {
+                title: 'Overview',
+                type: 'item',
+                uri: '/openapi-1.yaml',
+              },
+              {
+                items: [
+                  {
+                    title: 'The Op 1',
+                    type: 'item',
+                    uri: '/openapi-1.yaml/~1path',
+                  },
+                  {
+                    title: 'The Model 1',
+                    type: 'item',
+                    uri: '/openapi-1.yaml/~1components~1model',
+                  },
+                ],
+                title: 'api',
+                type: 'group',
+              },
+              {
+                title: 'The API 2',
+                type: 'divider',
+              },
+              {
+                title: 'Overview',
+                type: 'item',
+                uri: '/openapi-2.yaml',
+              },
+              {
+                items: [
+                  {
+                    title: 'The Op 2',
+                    type: 'item',
+                    uri: '/openapi-2.yaml/~1path',
+                  },
+                  {
+                    title: 'The Model 2',
+                    type: 'item',
+                    uri: '/openapi-2.yaml/~1components~1model',
+                  },
+                ],
+                title: 'api',
+                type: 'group',
+              },
+            ],
+          },
+        ],
+      });
+    });
+
+    it('removes dividers from groups', () => {
+      const toc: ITableOfContents = {
+        items: [
+          {
+            title: 'Group',
+            type: 'group',
+            items: [
+              {
+                title: 'The API',
+                type: 'divider',
+              },
+              {
+                title: 'The API',
+                type: 'item',
+                uri: '/openapi.yaml',
+              },
+              {
+                title: 'Footer',
+                type: 'divider',
+              },
+            ],
+          },
+        ],
+      };
+
+      resolveHttpServices(
+        [
+          {
+            uri: '/openapi.yaml',
+            name: 'The API',
+            type: NodeType.HttpService,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi.yaml/~1path',
+            name: 'The Op',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
+          },
+          {
+            uri: '/openapi.yaml/~1components~1model',
+            name: 'The Model',
+            type: NodeType.Model,
+            tags: ['api'],
+          },
+        ],
+        toc,
+      );
+
+      expect(toc).toEqual({
+        items: [
+          {
+            title: 'Group',
+            type: 'group',
+            items: [
+              {
+                title: 'The API',
+                type: 'divider',
+              },
+              {
+                title: 'Overview',
+                type: 'item',
+                uri: '/openapi.yaml',
+              },
+              {
+                items: [
+                  {
+                    title: 'The Op',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1path',
+                  },
+                  {
+                    title: 'The Model',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1components~1model',
+                  },
+                ],
+                title: 'api',
+                type: 'group',
+              },
+            ],
+          },
+        ],
+      });
+    });
   });
 });

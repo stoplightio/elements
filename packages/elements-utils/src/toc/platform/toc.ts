@@ -4,6 +4,7 @@ import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
 
 import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, TableOfContentItem } from '../types';
+import { cleanToc } from '../utils';
 
 export function generateToC(searchResults: NodeData[]) {
   return pipe(
@@ -72,7 +73,7 @@ function modifyEach(
       }
     }
     if (isGroup(item)) {
-      modifyEach(item.items, apply);
+      modifyEach(item.items, apply, shouldReplace);
     }
   }
 }
@@ -106,6 +107,7 @@ export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: IT
 }
 
 export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfContents) {
+  cleanToc(toc);
   pipe(
     () => searchResults,
     groupNodesByType,
