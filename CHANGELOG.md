@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.14](https://github.com/stoplightio/elements/compare/v6.1.13...v6.1.14) (2021-02-23)
+
+
+### Bug Fixes
+
+* toc group resolving ([#875](https://github.com/stoplightio/elements/issues/875)) ([128d507](https://github.com/stoplightio/elements/commit/128d507eb8e069a427ca585161016665113edc54))
+
+
+
+
+
 ## [6.1.13](https://github.com/stoplightio/elements/compare/v6.1.12...v6.1.13) (2021-02-18)
 
 **Note:** Version bump only for package root
