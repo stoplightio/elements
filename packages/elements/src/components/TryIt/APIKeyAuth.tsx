@@ -1,26 +1,36 @@
 import { Flex, Input, Panel, Text } from '@stoplight/mosaic';
-import { IApiKeySecurityScheme } from '@stoplight/types';
+import { HttpSecurityScheme, IApiKeySecurityScheme } from '@stoplight/types';
+import { isObject } from 'lodash';
 import * as React from 'react';
 
-interface APIKeyProps {
-  scheme: IApiKeySecurityScheme;
+interface APIKeyAuthPros {
+  scheme: HttpSecurityScheme;
+  onChange: (apiKey: any) => void;
 }
 
-export const APIKeyAuth: React.FC<APIKeyProps> = ({ scheme }) => {
+export const APIKeyAuth: React.FC<APIKeyAuthPros> = ({ scheme, onChange }) => {
+  const isIApiKeySecurityScheme = (maybeIApiKey: HttpSecurityScheme): maybeIApiKey is IApiKeySecurityScheme =>
+    isObject(maybeIApiKey) && maybeIApiKey.type === 'apiKey';
+
+  const ApiKeyScheme = isIApiKeySecurityScheme(scheme) && scheme;
+
+  if (!ApiKeyScheme) return null;
+
   return (
     <Panel.Content>
-      <Flex align="center" key={scheme.name}>
-        <Input appearance="minimal" readOnly value={scheme.name} />
+      <Flex align="center" key={ApiKeyScheme.name}>
+        <Input appearance="minimal" readOnly value={ApiKeyScheme.name} />
         <Text mx={3}>:</Text>
         <Flex flexGrow>
           <Input
             style={{ paddingLeft: 15 }}
-            aria-label={scheme.name}
+            aria-label={ApiKeyScheme.name}
             appearance="minimal"
             flexGrow
             placeholder="123"
             type="text"
             required
+            onChange={e => onChange({ ...ApiKeyScheme, value: e.target.value })}
           />
         </Flex>
       </Flex>
