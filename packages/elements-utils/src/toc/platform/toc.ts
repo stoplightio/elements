@@ -77,6 +77,26 @@ function modifyEach(
   }
 }
 
+function cleanDividers(group: Group) {
+  for (let i = group.items.length - 1; i > -1; i--) {
+    const item = group.items[i];
+    if (isDivider(item)) {
+      group.items.splice(i, 1);
+    }
+    if (isGroup(item)) {
+      cleanDividers(item);
+    }
+  }
+}
+
+function cleanToc(toc: ITableOfContents) {
+  for (let item of toc.items) {
+    if (isGroup(item)) {
+      cleanDividers(item);
+    }
+  }
+}
+
 export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: ITableOfContents) {
   pipe(
     () => searchResults,
@@ -106,6 +126,7 @@ export function injectHttpOperationsAndModels(searchResults: NodeData[], toc: IT
 }
 
 export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfContents) {
+  cleanToc(toc);
   pipe(
     () => searchResults,
     groupNodesByType,
