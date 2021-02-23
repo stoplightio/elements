@@ -92,7 +92,7 @@ function modifyEach(
       }
     }
     if (isGroup(item)) {
-      modifyEach(item.items, apply);
+      modifyEach(item.items, apply, shouldReplace);
     }
   }
 }
