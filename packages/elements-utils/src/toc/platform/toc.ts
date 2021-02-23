@@ -4,6 +4,7 @@ import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
 
 import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, TableOfContentItem } from '../types';
+import { cleanToc } from '../utils';
 
 export function generateToC(searchResults: NodeData[]) {
   return pipe(
@@ -73,26 +74,6 @@ function modifyEach(
     }
     if (isGroup(item)) {
       modifyEach(item.items, apply, shouldReplace);
-    }
-  }
-}
-
-function cleanDividers(group: Group) {
-  for (let i = group.items.length - 1; i > -1; i--) {
-    const item = group.items[i];
-    if (isDivider(item)) {
-      group.items.splice(i, 1);
-    }
-    if (isGroup(item)) {
-      cleanDividers(item);
-    }
-  }
-}
-
-function cleanToc(toc: ITableOfContents) {
-  for (let item of toc.items) {
-    if (isGroup(item)) {
-      cleanDividers(item);
     }
   }
 }
