@@ -70,7 +70,7 @@ export const Response = ({ className, response }: IResponseProps) => {
 
   return (
     <div className={cn('HttpOperation__Response pt-6 pl-8', className)}>
-      <MarkdownViewer className="ml-1 mb-6" markdown={response.description || '*No description.*'} />
+      {response.description && <MarkdownViewer className="ml-1 mb-6" markdown={response.description} />}
 
       <Parameters className="mb-6" title="Headers" parameterType="header" parameters={response.headers} />
 
