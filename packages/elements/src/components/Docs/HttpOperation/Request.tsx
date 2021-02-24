@@ -2,6 +2,7 @@ import { Box, Panel, Text } from '@stoplight/mosaic';
 import { IHttpOperation } from '@stoplight/types';
 import * as React from 'react';
 
+import { HttpMethodColors } from '../../../constants';
 import { Body } from './Body';
 import { Parameters } from './Parameters';
 import { SectionTitle } from './SectionTitle';
@@ -29,7 +30,10 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
 
   const pathParamBlock = (
     <>
-      <Text textTransform="uppercase">{method}</Text> {path}
+      <Text textTransform="uppercase" mr={1} color={HttpMethodColors[method]}>
+        {method}
+      </Text>{' '}
+      {path}
     </>
   );
 
@@ -69,9 +73,7 @@ type SectionPanelProps = { title: React.ReactNode; hasContent?: boolean };
 const SectionPanel: React.FC<SectionPanelProps> = ({ title, children, hasContent }) => {
   return (
     <Panel appearance="minimal" mb={3} isCollapsible={hasContent}>
-      <Panel.Titlebar fontWeight="medium" color="muted">
-        {title}
-      </Panel.Titlebar>
+      <Panel.Titlebar fontWeight="medium">{title}</Panel.Titlebar>
       {hasContent !== false && (
         <Panel.Content pl={5} pr={3}>
           {children}
