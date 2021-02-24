@@ -38,7 +38,7 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
         <MenuItem indent text="Enabled" checked={isEnabled} onClick={toggleEnabled} />
         <MenuDivider />
         {operationResponses
-          ?.filter(r => Number.isInteger(parseFloat(r.code)))
+          ?.filter(operationResponse => Number.isInteger(parseFloat(operationResponse.code)))
           ?.map(operationResponse => {
             const isActive = operationResponse.code === code;
             const exampleKeys = uniq(
