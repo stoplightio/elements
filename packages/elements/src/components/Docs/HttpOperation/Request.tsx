@@ -36,7 +36,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
   return (
     <Box>
       <SectionTitle title="Request" />
-      <SectionPanel title={pathParamBlock} isCollapsible={pathParams.length > 0}>
+      <SectionPanel title={pathParamBlock} hasContent={pathParams.length > 0}>
         <Parameters parameterType="path" parameters={pathParams} />
       </SectionPanel>
       {queryParams.length > 0 && (
@@ -65,16 +65,18 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
 };
 Request.displayName = 'HttpOperation.Request';
 
-type SectionPanelProps = { title: React.ReactNode; isCollapsible?: boolean };
-const SectionPanel: React.FC<SectionPanelProps> = ({ title, children, isCollapsible }) => {
+type SectionPanelProps = { title: React.ReactNode; hasContent?: boolean };
+const SectionPanel: React.FC<SectionPanelProps> = ({ title, children, hasContent }) => {
   return (
-    <Panel appearance="minimal" mb={3} isCollapsible={isCollapsible}>
+    <Panel appearance="minimal" mb={3} isCollapsible={hasContent}>
       <Panel.Titlebar fontWeight="medium" color="muted">
         {title}
       </Panel.Titlebar>
-      <Panel.Content pl={5} pr={3}>
-        {children}
-      </Panel.Content>
+      {hasContent !== false && (
+        <Panel.Content pl={5} pr={3}>
+          {children}
+        </Panel.Content>
+      )}
     </Panel>
   );
 };

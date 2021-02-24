@@ -1,5 +1,5 @@
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
-import { Box } from '@stoplight/mosaic';
+import { VStack } from '@stoplight/mosaic';
 import { Dictionary, HttpParamStyles, IHttpParam, Primitive } from '@stoplight/types';
 import { Tag } from '@stoplight/ui-kit';
 import cn from 'classnames';
@@ -49,7 +49,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
   if (!parameters || !parameters.length) return null;
 
   return (
-    <Box>
+    <VStack spacing={4} divider>
       {sortBy(parameters, ['required', 'name']).map((parameter, index) => {
         const resolvedSchema =
           parameter.schema?.$ref && resolveRef
@@ -61,14 +61,10 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
             key={parameter.name}
             parameter={resolvedSchema ? { ...parameter, schema: resolvedSchema } : parameter}
             parameterType={parameterType}
-            className={cn('pt-4', {
-              'pb-4': parameters.length - 1 !== index,
-              'border-t border-gray-2 dark:border-gray-6': index > 0,
-            })}
           />
         );
       })}
-    </Box>
+    </VStack>
   );
 };
 Parameters.displayName = 'HttpOperation.Parameters';
@@ -76,10 +72,9 @@ Parameters.displayName = 'HttpOperation.Parameters';
 export interface IParameterProps {
   parameter: IHttpParam;
   parameterType: ParameterType;
-  className?: string;
 }
 
-export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterType, className }) => {
+export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter, parameterType }) => {
   if (!parameter) return null;
 
   // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
@@ -109,7 +104,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   const keyValueValidations = omit(validations, [...keys(numberValidations), ...keys(booleanValidations)]);
 
   return (
-    <div className={cn('HttpOperation__Parameter pl-1', className)}>
+    <div className="HttpOperation__Parameters">
       <div className="flex items-center">
         <div className="font-medium font-mono">{parameter.name}</div>
         <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{format ? `${type}<${format}>` : type}</div>
