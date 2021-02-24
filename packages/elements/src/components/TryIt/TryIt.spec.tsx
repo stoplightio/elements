@@ -116,7 +116,7 @@ describe('TryIt', () => {
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      expect(limitField).toHaveValue('0');
+      expect(limitField).toHaveValue('1');
 
       const typeField = screen.getByLabelText('type');
       expect(typeField).toHaveValue('something');
@@ -126,7 +126,7 @@ describe('TryIt', () => {
       expect(optionalWithDefaultField.placeholder).toBe('example: some default value');
 
       const valueField = screen.getByLabelText('value');
-      expect(valueField).toHaveValue('0');
+      expect(valueField).toHaveValue('1');
 
       // header param
 
@@ -170,7 +170,7 @@ describe('TryIt', () => {
       const queryParams = url.searchParams;
       // assert that query params are passed
       expect(queryParams.get('limit')).toBe('3');
-      expect(queryParams.get('value')).toBe('0');
+      expect(queryParams.get('value')).toBe('1');
       expect(queryParams.get('type')).toBe('another');
       // assert that headers are passed
       const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);

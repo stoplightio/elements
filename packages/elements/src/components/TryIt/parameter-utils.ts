@@ -55,14 +55,14 @@ function retrieveDefaultFromSchema(parameter: ParameterSpec) {
 }
 
 const getValueForParameter = (parameter: ParameterSpec) => {
-  const enums = parameter.schema?.enum ?? [];
-  if (enums.length > 0) return String(enums[0]);
-
   const examples = parameter.examples ?? [];
   if (examples.length > 0) return exampleValue(examples[0]);
 
   const defaultValue = retrieveDefaultFromSchema(parameter);
   if (defaultValue) return String(defaultValue);
+
+  const enums = parameter.schema?.enum ?? [];
+  if (enums.length > 0) return String(enums[0]);
 
   return '';
 };

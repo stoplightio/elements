@@ -13,9 +13,9 @@ describe('Parameter Utils', () => {
       const parameters = initialParameterValues(allParameters);
 
       expect(parameters).toMatchObject({
-        limit: '0',
+        limit: '1',
         type: 'something',
-        value: '0',
+        value: '1',
         'account-id': 'example id',
         'message-id': 'example value',
       });
