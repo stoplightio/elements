@@ -37,7 +37,6 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
         ) : (
           <Flex flexGrow>
             <Input
-              style={{ paddingLeft: 15 }}
               aria-label={parameter.name}
               appearance="minimal"
               flexGrow
