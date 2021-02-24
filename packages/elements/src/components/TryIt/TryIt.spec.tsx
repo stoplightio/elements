@@ -459,7 +459,7 @@ describe('TryIt', () => {
 
       userEvent.click(mockingButton);
 
-      const enableItem = screen.getByText('Enabled');
+      let enableItem = await screen.findByText('Enabled');
       const responseCodeItem = screen.getByText('200');
 
       expect(enableItem).toBeInTheDocument();
@@ -470,10 +470,17 @@ describe('TryIt', () => {
       userEvent.click(responseCodeItem);
       clickSend();
 
+      await waitFor(() => expect(screen.getByRole('button', { name: /send/i })).toBeEnabled());
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
       // disable mocking and send
+      userEvent.click(mockingButton);
+      enableItem = await screen.findByRole('menuitem', { name: /enabled/i });
       userEvent.click(enableItem);
+
       clickSend();
-      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
 
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(fetchMock.mock.calls).toEqual([

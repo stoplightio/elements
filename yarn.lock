@@ -1243,6 +1243,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.6.2":
+  version "7.12.13"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.13.tgz#0a21452352b02542db0ffb928ac2d3ca7cb6d66d"
+  integrity sha512-8+3UMPBrjFa/6TtKi/7sehPKqfAm4g6K+YQjyyFOLUTxzOngcRZTlAVY8sc2CORJYqdHQY8gRPHmn+qo15rCBw==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.10.4", "@babel/template@^7.3.3", "@babel/template@^7.7.0":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.10.4.tgz#3251996c4200ebc71d1a8fc405fba940f36ba278"
@@ -1758,11 +1765,6 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.31.tgz#f15a39e5ab4e5dfda0717733bcacb9580e666ad9"
   integrity sha512-xfnPyH6NN5r/h1/qDYoGB0BlHSID902UkQzxR8QsoKDh55KAPr8ruAoie12WQEEQT8lRE2wtV7LoUllJ1HqCag==
 
-"@fortawesome/fontawesome-common-types@^0.2.32":
-  version "0.2.32"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.32.tgz#3436795d5684f22742989bfa08f46f50f516f259"
-  integrity sha512-ux2EDjKMpcdHBVLi/eWZynnPxs0BtFVXJkgHIxXRl+9ZFaHPvYamAfCzeeQFqHRjuJtX90wVnMRaMQAAlctz3w==
-
 "@fortawesome/fontawesome-common-types@^0.2.34":
   version "0.2.34"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.34.tgz#0a8c348bb23b7b760030f5b1d912e582be4ec915"
@@ -1774,13 +1776,6 @@
   integrity sha512-lqUWRK+ylHQJG5Kiez4XrAZAfc7snxCc+X59quL3xPfMnxzfyf1lt+/hD7X1ZL4KlzAH2KFzMuEVrolo/rAkog==
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.31"
-
-"@fortawesome/fontawesome-svg-core@^1.2.32":
-  version "1.2.32"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.32.tgz#da092bfc7266aa274be8604de610d7115f9ba6cf"
-  integrity sha512-XjqyeLCsR/c/usUpdWcOdVtWFVjPbDFBTQkn2fQRrWhhUoxriQohO2RWDxLyUM8XpD+Zzg5xwJ8gqTYGDLeGaQ==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.32"
 
 "@fortawesome/fontawesome-svg-core@^1.2.34":
   version "1.2.34"
@@ -1795,13 +1790,6 @@
   integrity sha512-M933RDM8cecaKMWDSk3FRYdnzWGW7kBBlGNGfvqLVwcwhUPNj9gcw+xZMrqBdRqxnSXdl3zWzTCNNGEtFUq67Q==
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.30"
-
-"@fortawesome/free-solid-svg-icons@^5.15.1":
-  version "5.15.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.15.1.tgz#e1432676ddd43108b41197fee9f86d910ad458ef"
-  integrity sha512-EFMuKtzRMNbvjab/SvJBaOOpaqJfdSap/Nl6hst7CgrJxwfORR1drdTV6q1Ib/JVzq4xObdTDcT6sqTaXMqfdg==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.32"
 
 "@fortawesome/free-solid-svg-icons@^5.15.2":
   version "5.15.2"
@@ -3191,6 +3179,263 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
+"@react-aria/button@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/button/-/button-3.3.0.tgz#f3e8f75224fa61f57a2e43f7375d60f8e2994c8c"
+  integrity sha512-98UAx7/VUj/P2rC7X/upLftxWGRdpr+OUQd6Mrh6klo5bJ61ZbJV6YxV2nocLk52bgOCAMZPQXcRTxyulLY7XA==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/focus" "^3.2.2"
+    "@react-aria/i18n" "^3.2.0"
+    "@react-aria/interactions" "^3.3.2"
+    "@react-aria/utils" "^3.4.1"
+    "@react-stately/toggle" "^3.2.1"
+    "@react-types/button" "^3.3.0"
+
+"@react-aria/dialog@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@react-aria/dialog/-/dialog-3.1.2.tgz#868970e7fdaa6ddb91a0d8d5b492778607d417fd"
+  integrity sha512-CUHzLdcKxnQ1IpbJOJ3BIDe762QoTOFXZfDAheNiTi24ym85w7KkW7dnfJDK2+J5RY15c5KWooOZvTaBmIJ7Xw==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/focus" "^3.2.2"
+    "@react-aria/utils" "^3.3.0"
+    "@react-stately/overlays" "^3.1.1"
+    "@react-types/dialog" "^3.3.0"
+
+"@react-aria/focus@^3.2.2", "@react-aria/focus@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@react-aria/focus/-/focus-3.2.3.tgz#3e4137498a7fb5235d056c30fd94ab4a82e73aea"
+  integrity sha512-+OWmJMivrq3f8ApWihH1KJYqYj3rZV34YJORacBohcAsF1Qd1V1/P+w3dMkf24kV0wqAiWePCF1FwgnrL/rYzQ==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/interactions" "^3.3.0"
+    "@react-aria/utils" "^3.4.0"
+    "@react-types/shared" "^3.3.0"
+    clsx "^1.1.1"
+
+"@react-aria/i18n@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/i18n/-/i18n-3.2.0.tgz#d49f4990fe3f125545686121edc129007bcd9233"
+  integrity sha512-D6Ent8R6iFMz04kQAuJ6uAV/3Q9YCvPB06/jJfXvDbtvtsRkxvVi2MEDbNXeCacbsRFaoStH9XOmOYD5mZWyzQ==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/ssr" "^3.0.1"
+    "@react-types/shared" "^3.3.0"
+    intl-messageformat "^2.2.0"
+
+"@react-aria/interactions@^3.2.1", "@react-aria/interactions@^3.3.0", "@react-aria/interactions@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@react-aria/interactions/-/interactions-3.3.2.tgz#2ac1950a73152563b298f1b88d0a946f7e42933f"
+  integrity sha512-CYCxeix1UBMLIARZO4xv/ZNvgAp+Y6ahY1Z693uXpYPLc33B0RiygoTumcu0yJo7jwZ8Ovv64q0saDaNoSG0Aw==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/utils" "^3.4.1"
+    "@react-types/shared" "^3.3.0"
+
+"@react-aria/overlays@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/overlays/-/overlays-3.6.0.tgz#f226f3ce2fcf6db614dde0719f47fd98da931fb8"
+  integrity sha512-AO56gSBr6g2hn9Cp3lz+aXDskW/2qY2OD1GFF9R6/y8xiheo5KSI/p5LI5517jmAxH2JeTYSV8aioczVhpslPg==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/i18n" "^3.2.0"
+    "@react-aria/interactions" "^3.3.2"
+    "@react-aria/utils" "^3.4.1"
+    "@react-aria/visually-hidden" "^3.2.1"
+    "@react-stately/overlays" "^3.1.1"
+    "@react-types/button" "^3.3.0"
+    "@react-types/overlays" "^3.4.0"
+    dom-helpers "^3.3.1"
+
+"@react-aria/ssr@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.0.1.tgz#5f7c111f9ecd184b8f6140139703c1ee552dca30"
+  integrity sha512-rweMNcSkUO4YkcmgFIoZFvgPyHN2P9DOjq3VOHnZ8SG3Y4TTvSY6Iv90KgzeEfmWCUqqt65FYH4JgrpGNToEMw==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+
+"@react-aria/tooltip@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/tooltip/-/tooltip-3.1.0.tgz#4433715b6c80979b5126e525414076f52a37dc04"
+  integrity sha512-CZ9Hz0dyUqbfL+y68e3Z0dWH+rf+lrGOR4kXI2I0CMBqg2/18bbhNpuSA9smkbzzDL+j3bDyFdpaL+vZ6HxmuQ==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/focus" "^3.2.3"
+    "@react-aria/interactions" "^3.3.2"
+    "@react-aria/overlays" "^3.6.0"
+    "@react-aria/utils" "^3.4.1"
+    "@react-stately/tooltip" "^3.0.1"
+    "@react-types/shared" "^3.3.0"
+    "@react-types/tooltip" "^3.1.0"
+
+"@react-aria/utils@^3.3.0", "@react-aria/utils@^3.4.0", "@react-aria/utils@^3.4.1":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.5.0.tgz#b377461591f5c8e2157b1635e28ed03cd58e2a22"
+  integrity sha512-HjeqT4//N2Jz2WNg3qAg1MpxAjcP+aPR1fq8yXm812za2/bA5rUSZqN0EXHZ9/+NdQhnZoRPNyXN/BJMZJe+Ig==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/ssr" "^3.0.1"
+    "@react-types/shared" "^3.3.0"
+    clsx "^1.1.1"
+
+"@react-aria/visually-hidden@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@react-aria/visually-hidden/-/visually-hidden-3.2.1.tgz#c022c562346140a473242448045add59269a74fd"
+  integrity sha512-ba7bQD09MuzUghtPyrQoXHgQnRRfOu039roVKPz2em9gHD0Wy4ap2UPwlzx35KzNq6FdCzMDZeSZHSnUWlzKnw==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/interactions" "^3.2.1"
+    "@react-aria/utils" "^3.3.0"
+    clsx "^1.1.1"
+
+"@react-hook/debounce@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@react-hook/debounce/-/debounce-3.0.0.tgz#9eea8b5d81d4cb67cd72dd8657b3ff724afc7cad"
+  integrity sha512-ir/kPrSfAzY12Gre0sOHkZ2rkEmM4fS5M5zFxCi4BnCeXh2nvx9Ujd+U4IGpKCuPA+EQD0pg1eK2NGLvfWejag==
+  dependencies:
+    "@react-hook/latest" "^1.0.2"
+
+"@react-hook/event@^1.2.1":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@react-hook/event/-/event-1.2.3.tgz#cfe86d5cf36f53e85b367ff619990d001b5c82ae"
+  integrity sha512-WMBwLnYY2rubLeecsi4skl1imfx0oiXTgazV/1ByPT6WkmLvxUao3hC+mxps5D/+JK4Fq3uG9OWU/dn5jMtXyg==
+  dependencies:
+    "@react-hook/passive-layout-effect" "^1.2.0"
+
+"@react-hook/latest@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@react-hook/latest/-/latest-1.0.3.tgz#c2d1d0b0af8b69ec6e2b3a2412ba0768ac82db80"
+  integrity sha512-dy6duzl+JnAZcDbNTfmaP3xHiKtbXYOaz3G51MGVljh548Y8MWzTr+PHLOfvpypEVW9zwvl+VyKjbWKEVbV1Rg==
+
+"@react-hook/passive-layout-effect@^1.2.0":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@react-hook/passive-layout-effect/-/passive-layout-effect-1.2.1.tgz#c06dac2d011f36d61259aa1c6df4f0d5e28bc55e"
+  integrity sha512-IwEphTD75liO8g+6taS+4oqz+nnroocNfWVHWz7j+N+ZO2vYrc6PV1q7GQhuahL0IOR7JccFTsFKQ/mb6iZWAg==
+
+"@react-hook/resize-observer@^1.1.0":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@react-hook/resize-observer/-/resize-observer-1.1.2.tgz#b9620d634269a22f644115be3ddb71f9342d4cbe"
+  integrity sha512-mqQ2okG8z+1D277sXuLtzu9HrOzrNFqs+vZPP9G3UCaM9Wlqs7NSZKPZNqe/4zJq0rSjFxfmlmB6YzVzisJE5A==
+  dependencies:
+    "@react-hook/latest" "^1.0.2"
+    "@react-hook/passive-layout-effect" "^1.2.0"
+    resize-observer-polyfill "^1.5.1"
+
+"@react-hook/size@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@react-hook/size/-/size-2.1.1.tgz#10d3fb5bc61e128f0d7924714a925a04c992ed1f"
+  integrity sha512-QtHDsrvz8p4cai2UKxBpzk0r/uM63UyhmozTVChaDHJsVpN5/7A2yu8wuGyNhExdeCYMclLM21QjY1dyqpGbuQ==
+  dependencies:
+    "@react-hook/passive-layout-effect" "^1.2.0"
+    "@react-hook/resize-observer" "^1.1.0"
+
+"@react-hook/throttle@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@react-hook/throttle/-/throttle-2.2.0.tgz#d0402714a06e1ba0bc1da1fdf5c3c5cd0e08d45a"
+  integrity sha512-LJ5eg+yMV8lXtqK3lR+OtOZ2WH/EfWvuiEEu0M3bhR7dZRfTyEJKxH1oK9uyBxiXPtWXiQggWbZirMCXam51tg==
+  dependencies:
+    "@react-hook/latest" "^1.0.2"
+
+"@react-hook/window-size@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@react-hook/window-size/-/window-size-3.0.7.tgz#00d176e7a8eb55814e161eae34aae20afbcbe35d"
+  integrity sha512-bK5ed/jN+cxy0s1jt2CelCnUt7jZRseUvPQ22ZJkUl/QDOsD+7CA/6wcqC3c0QweM/fPBRP6uI56TJ48SnlVww==
+  dependencies:
+    "@react-hook/debounce" "^3.0.0"
+    "@react-hook/event" "^1.2.1"
+    "@react-hook/throttle" "^2.2.0"
+
+"@react-spectrum/utils@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@react-spectrum/utils/-/utils-3.5.0.tgz#d68f1d965ff17618b3f4aee3c4485949872cc1c5"
+  integrity sha512-H4T2Gfnka2fZO4edotVF4oPe115cTQkEJvRpU+cR1IEUgH/g3mS9vdWrB7KhgvJQh9xgabrljarwa4Rb367kfw==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/i18n" "^3.2.0"
+    "@react-aria/ssr" "^3.0.1"
+    "@react-aria/utils" "^3.4.1"
+    "@react-types/shared" "^3.3.0"
+    clsx "^1.1.1"
+
+"@react-stately/overlays@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@react-stately/overlays/-/overlays-3.1.1.tgz#6c1a393b77148184f7b1df22ece832d694d5a8b4"
+  integrity sha512-79YYXvmWKflezNPhc4fvXA1rDZurZvvEJcmbStNlR5Ryrnk/sQiOQCoVWooi2M4glSMT3UOTvD7YEnXxARcuIQ==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-stately/utils" "^3.1.1"
+    "@react-types/overlays" "^3.2.1"
+
+"@react-stately/toggle@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@react-stately/toggle/-/toggle-3.2.1.tgz#8b10b5eb99c3c4df2c36d17a5f23b77773ed7722"
+  integrity sha512-gZVuJ8OYoATUoXzdprsyx6O1w3wCrN+J0KnjhrjjKTrBG68n3pZH0p6dM0XpsaCzlSv0UgNa4fhHS3dYfr/ovw==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-stately/utils" "^3.1.1"
+    "@react-types/checkbox" "^3.2.1"
+    "@react-types/shared" "^3.2.1"
+
+"@react-stately/tooltip@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@react-stately/tooltip/-/tooltip-3.0.1.tgz#a0b739fe2eecd74ab20d79de58266dc99b5de639"
+  integrity sha512-a7udtrEn2XdkcRtY8oAN5OpwlQDaUU4DFoZfBBFIk6Lox5aFC1W5+YqxMjhg/uqoyqVlx7MKeBiXu5nTIm4Dxg==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-stately/overlays" "^3.1.1"
+    "@react-stately/utils" "^3.1.1"
+    "@react-types/tooltip" "^3.1.0"
+
+"@react-stately/utils@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@react-stately/utils/-/utils-3.1.1.tgz#e2f2c3ef81cfc6850a3418cb0f050c33d123620a"
+  integrity sha512-htG4TicI4SKxfD5sEKYGxlMeQ5/+TuWPtnhRMbRqdmqnfkVxO/PoaQeEF+xUMWM9VCZc69ZFH6Qen1eZ/JfFcQ==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+
+"@react-types/button@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@react-types/button/-/button-3.3.0.tgz#69b90b048948300342aba7546b6b5add7ee401f8"
+  integrity sha512-eOyxbilcs/jiYdpssqkDS44K7++oqWXEO0iqjYphu+dnErVDihdK5FQKivI95sgEwamu/PL23ANuoJlTGCMNVA==
+  dependencies:
+    "@react-types/shared" "^3.2.1"
+
+"@react-types/checkbox@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@react-types/checkbox/-/checkbox-3.2.1.tgz#971dfd8428e43ce34b063388d1c742bbba0a8dc6"
+  integrity sha512-nm/j8JQWAayFEvs5Hicf9/DBrdnc/CwbXQtN3dC+ehERFu9BtxP6Bt6p7qmhvAJtuUnTh85+zY148BITiyQYtQ==
+  dependencies:
+    "@react-types/shared" "^3.2.1"
+
+"@react-types/dialog@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@react-types/dialog/-/dialog-3.3.0.tgz#60a2b53f250ee082b53aef9340c80f1afe654bc7"
+  integrity sha512-63Vsr/UOZiaajlNDQUgWDi6v3EMenV1f8Cwh+L4lcyIJnbC6WeC2VEV3ld/TYVC0U58SQ0k7u2EIyHkWjc5kdQ==
+  dependencies:
+    "@react-types/overlays" "^3.2.1"
+    "@react-types/shared" "^3.2.1"
+
+"@react-types/overlays@^3.2.1", "@react-types/overlays@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@react-types/overlays/-/overlays-3.4.0.tgz#3c4619906bb12e3697e770b59c2090bb18da25bd"
+  integrity sha512-ddiMB6JXR7acQnRFEL2/6SSdBropmNrcAFk3qFCfovuVZh6STYhPmoAgj06mJFDoAD63pxayysfPG2EvLl2yAw==
+  dependencies:
+    "@react-types/shared" "^3.3.0"
+
+"@react-types/shared@^3.2.1", "@react-types/shared@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@react-types/shared/-/shared-3.3.0.tgz#4f959df32f3ae94fcc910546088489144fc8d753"
+  integrity sha512-i/OJplVPIHVok0Bu2Hn9pmz6eyULq2ao6pG/Is8YoDzp33SzumOtXxumgYcaXMJ7wBd2RgPd532m3+RnOY0ndg==
+
+"@react-types/tooltip@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@react-types/tooltip/-/tooltip-3.1.0.tgz#2aad502ebf7c0fe864c72d7169d8f4f8338d9a3b"
+  integrity sha512-RtBThDFP3mh4M3iY2ZVsTSwDJZDbRRCrsAzScscEesCZ2krvwIWpcNUbcNMnCv7wqqrXyWIGaVb+veHU2pxcxg==
+  dependencies:
+    "@react-types/overlays" "^3.4.0"
+    "@react-types/shared" "^3.2.1"
+
 "@rollup/plugin-typescript@^3.0.0":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-typescript/-/plugin-typescript-3.1.1.tgz#a39175a552ed82a3e424862e6bb403bf9da451ee"
@@ -3549,16 +3794,27 @@
     unist-util-select "^3.0.1"
     unist-util-visit "^2.0.2"
 
-"@stoplight/mosaic-code-editor@1.0.0-beta.22":
-  version "1.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.0.0-beta.22.tgz#9b0329319b46b523dff66e746d81ff66f2261939"
-  integrity sha512-SChwhlj0WOeU2kT1fWky3DZj58chxktfyZLzNzaL5W9rrv2qCA/+7AA01g8CpsLE+C9cI7VZ677fs3O5n6D5cA==
+"@stoplight/mosaic-code-editor@1.0.0-beta.33":
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.0.0-beta.33.tgz#2fd7e60a9e3e8170e335d83fe71b6ef3e952acbb"
+  integrity sha512-VCYk19K+XKw0kZ1CoNmTJVJo0joelxsxNcANhtPxWk73cRMIC9dIVXtX5cqKj/89KOhJZ7IY0KqT1Ne7YAG8Mg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.34"
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@fortawesome/react-fontawesome" "^0.1.14"
-    "@stoplight/mosaic" "1.0.0-beta.22"
-    "@stoplight/mosaic-code-viewer" "1.0.0-beta.22"
+    "@react-aria/button" "^3.3.0"
+    "@react-aria/dialog" "^3.1.2"
+    "@react-aria/focus" "^3.2.3"
+    "@react-aria/interactions" "^3.3.2"
+    "@react-aria/overlays" "^3.6.0"
+    "@react-aria/ssr" "^3.0.1"
+    "@react-aria/tooltip" "^3.1.0"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@react-spectrum/utils" "^3.5.0"
+    "@react-stately/tooltip" "^3.0.1"
+    "@stoplight/mosaic" "1.0.0-beta.33"
+    "@stoplight/mosaic-code-viewer" "1.0.0-beta.33"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
@@ -3571,35 +3827,26 @@
     ts-keycode-enum "^1.0.6"
     zustand "^3.3.1"
 
-"@stoplight/mosaic-code-viewer@1.0.0-beta.20":
-  version "1.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.20.tgz#47bc9e42baa9f4142c1eb002d4f230ff0fa1f7ad"
-  integrity sha512-L/S4BFS9xlffLYzoSTwWN/XUchHzAcAF3szAvEaJS4NhT7vSpflKZIz98lxP+e3M28oT96N3cVZAMMfpOgz/aQ==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.32"
-    "@fortawesome/free-solid-svg-icons" "^5.15.1"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    "@stoplight/mosaic" "1.0.0-beta.20"
-    clsx "^1.1.1"
-    copy-to-clipboard "^3.3.1"
-    deepmerge "^4.2.2"
-    lodash.get "^4.4.2"
-    polished "^4.0.5"
-    prism-react-renderer "^1.1.1"
-    prismjs "^1.23.0"
-    reakit "^1.3.3"
-    ts-keycode-enum "^1.0.6"
-    zustand "^3.2.0"
-
-"@stoplight/mosaic-code-viewer@1.0.0-beta.22":
-  version "1.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.22.tgz#5b6ff5386b9f6f3f33b11380fbfe8a912c6bf706"
-  integrity sha512-oHPJpwpQn2IyYz6n1ZkpM7PNBmHEkfi4v9Oi0lU1R6zqw7Oh734tN39qblbttl9cNQtnK8pY1DWPjOum2o5Zmw==
+"@stoplight/mosaic-code-viewer@1.0.0-beta.33":
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.33.tgz#57f92d2e3b68b5bc1e9f423277db79bceac92d67"
+  integrity sha512-kXRYNWch/8yGVL8VlboM9jIm9Gbgno2Ym/wzg7GIShppWn5szeeg8lRfw8WCTgoAJMXrpAkbRTOuAJM4d5yxDQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.34"
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@fortawesome/react-fontawesome" "^0.1.14"
-    "@stoplight/mosaic" "1.0.0-beta.22"
+    "@react-aria/button" "^3.3.0"
+    "@react-aria/dialog" "^3.1.2"
+    "@react-aria/focus" "^3.2.3"
+    "@react-aria/interactions" "^3.3.2"
+    "@react-aria/overlays" "^3.6.0"
+    "@react-aria/ssr" "^3.0.1"
+    "@react-aria/tooltip" "^3.1.0"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@react-spectrum/utils" "^3.5.0"
+    "@react-stately/tooltip" "^3.0.1"
+    "@stoplight/mosaic" "1.0.0-beta.33"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
@@ -3611,31 +3858,25 @@
     ts-keycode-enum "^1.0.6"
     zustand "^3.3.1"
 
-"@stoplight/mosaic@1.0.0-beta.20":
-  version "1.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.20.tgz#e31e1569296cc4d6fcd3d42d44ba39dbb051fe45"
-  integrity sha512-AJpIZTaHf2RKI5BTb9vSDcSrWAJGK6gzJxgjCR30vRFGfCrhVdixnYEnu4Olj0CvKXtCgqwMaaRwfHvt/dRYiA==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.32"
-    "@fortawesome/free-solid-svg-icons" "^5.15.1"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    clsx "^1.1.1"
-    copy-to-clipboard "^3.3.1"
-    deepmerge "^4.2.2"
-    lodash.get "^4.4.2"
-    polished "^4.0.5"
-    reakit "^1.3.3"
-    ts-keycode-enum "^1.0.6"
-    zustand "^3.2.0"
-
-"@stoplight/mosaic@1.0.0-beta.22":
-  version "1.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.22.tgz#f06f94c3ef00eccf4564b30f926041d8d61cef61"
-  integrity sha512-HMABhZjQbk6QoZVyfk5JQYShKm+V4Kz7xOBzuGCbSu3KPVTRzW/A7voR0kjq0JZ2qjCypUBpWU6KZU/fOYmiNQ==
+"@stoplight/mosaic@1.0.0-beta.33":
+  version "1.0.0-beta.33"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.33.tgz#4075486900403d5ffc808a705009f573a2862581"
+  integrity sha512-Te5Q439vDdp7LMgYZcpvnUwFm969V6xu4Xoq0vkKTnI5RBoUNkJMJVjjbqjlHhYU9/jR3fckYeMX73BRBcsDmw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.34"
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@fortawesome/react-fontawesome" "^0.1.14"
+    "@react-aria/button" "^3.3.0"
+    "@react-aria/dialog" "^3.1.2"
+    "@react-aria/focus" "^3.2.3"
+    "@react-aria/interactions" "^3.3.2"
+    "@react-aria/overlays" "^3.6.0"
+    "@react-aria/ssr" "^3.0.1"
+    "@react-aria/tooltip" "^3.1.0"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@react-spectrum/utils" "^3.5.0"
+    "@react-stately/tooltip" "^3.0.1"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
@@ -8540,7 +8781,7 @@ dom-converter@^0.2:
   dependencies:
     utila "~0.4"
 
-dom-helpers@^3.4.0:
+dom-helpers@^3.3.1, dom-helpers@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
   integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
@@ -11536,6 +11777,18 @@ interpret@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-2.0.0.tgz#b783ffac0b8371503e9ab39561df223286aa5433"
   integrity sha512-e0/LknJ8wpMMhTiWcjivB+ESwIuvHnBSlBbmP/pSb8CQJldoj1p2qv7xGZ/+BtbTziYRFSz8OsvdbiX45LtYQA==
+
+intl-messageformat-parser@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.4.0.tgz#b43d45a97468cadbe44331d74bb1e8dea44fc075"
+  integrity sha1-tD1FqXRoytvkQzHXS7Ho3qRPwHU=
+
+intl-messageformat@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-2.2.0.tgz#345bcd46de630b7683330c2e52177ff5eab484fc"
+  integrity sha1-NFvNRt5jC3aDMwwuUhd/9eq0hPw=
+  dependencies:
+    intl-messageformat-parser "1.4.0"
 
 into-stream@^5.0.0:
   version "5.1.1"
@@ -17261,17 +17514,6 @@ reakit-warning@^0.6.1:
   dependencies:
     reakit-utils "^0.15.1"
 
-reakit@^1.3.3:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/reakit/-/reakit-1.3.4.tgz#1c83614130fbcee624ba510547db79c90b3435a4"
-  integrity sha512-aLR0GBOc9vELTk4PKK/zndBbIs4RSw4B7GSGY6yoMHQ/vna0iLNd5BMhjtXspD/B7hhkYERlT6di8pIyD3HSPw==
-  dependencies:
-    "@popperjs/core" "^2.5.4"
-    body-scroll-lock "^3.1.5"
-    reakit-system "^0.15.1"
-    reakit-utils "^0.15.1"
-    reakit-warning "^0.6.1"
-
 "reakit@npm:@stoplight/reakit@~1.3.5":
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/@stoplight/reakit/-/reakit-1.3.5.tgz#0c1a1ae89a92de98413d3723b993c05d943bd56b"
@@ -21167,11 +21409,6 @@ zoom-level@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/zoom-level/-/zoom-level-2.5.0.tgz#286ec16f247b8bb7a900df6612567688eeef498a"
   integrity sha512-7UlRWU4Q3uCMCeDVMOm7eBrIu145OqsIJ3p6zq58l8UsSYwKWxc6zEapC5YA9tIeh0oheb4cT9Kk2Wq353loFg==
-
-zustand@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.2.0.tgz#a718a964440796d44edda3073b69e78b95f4c8f5"
-  integrity sha512-MBYFrnUdgFVi38tdQNSzVN9cPpRDf7w2HhdHGDSgBRHN7vIbUGUR3aBdVQykelXzSFR7iVj3YNBuq7B9ceMI5w==
 
 zustand@^3.3.1:
   version "3.3.1"

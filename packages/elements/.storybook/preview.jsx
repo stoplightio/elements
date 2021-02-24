@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Provider as MosaicProvider} from '@stoplight/mosaic';
 import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';
 
@@ -39,7 +40,11 @@ const PersistenceBoundaryDecorator = (Story) => (
   <PersistenceContextProvider><Story /></PersistenceContextProvider>
 );
 
-export const decorators = [ThemeProvider, ProviderDecorator, PersistenceBoundaryDecorator];
+const MosaicProviderDecorator = (Story) => (
+  <MosaicProvider><Story/></MosaicProvider>
+)
+
+export const decorators = [ThemeProvider, ProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator];
 
 export const parameters = {
   docs: {
