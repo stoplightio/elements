@@ -92,12 +92,22 @@ function modifyEach(
       }
     }
     if (isGroup(item)) {
-      modifyEach(item.items, apply);
+      modifyEach(item.items, apply, shouldReplace);
     }
   }
 }
 
+function cleanDividers(group: Group) {
+  group.items = group.items.filter(item => !isDivider(item));
+  group.items.filter(isGroup).forEach(cleanDividers);
+}
+
+function cleanToc(toc: ITableOfContents) {
+  toc.items.filter(isGroup).forEach(cleanDividers);
+}
+
 export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfContents) {
+  cleanToc(toc);
   pipe(
     () => searchResults,
     groupNodesByType,
