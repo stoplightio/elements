@@ -20,7 +20,7 @@ export const SectionTitle: React.FC<ISectionTitle> = ({ title, className, childr
       )}
       aria-label={title}
     >
-      <Text size="xl" fontWeight="bold" mr={4}>
+      <Text size="xl" fontWeight="bold" mr={5}>
         {title}
       </Text>
       {children}
