@@ -59,11 +59,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
         </SubSectionPanel>
       )}
 
-      {body && (
-        <SubSectionPanel title="Body">
-          <Body className="mb-10" body={body} />
-        </SubSectionPanel>
-      )}
+      {body && <Body body={body} />}
     </Box>
   );
 };
