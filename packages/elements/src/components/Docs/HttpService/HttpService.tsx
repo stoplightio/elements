@@ -8,8 +8,8 @@ import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { SectionTitle } from '../HttpOperation/SectionTitle';
 import { HttpSecuritySchemes } from '../HttpSecuritySchemes';
+import { SectionTitle } from '../Sections';
 
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 

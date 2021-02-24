@@ -6,8 +6,8 @@ import * as React from 'react';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
+import { SectionTitle } from '../Sections';
 import { Parameters } from './Parameters';
-import { SectionTitle } from './SectionTitle';
 import { getExamplesObject } from './utils';
 
 export const HttpCodeColor = {
