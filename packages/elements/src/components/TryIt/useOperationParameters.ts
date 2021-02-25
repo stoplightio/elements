@@ -7,7 +7,6 @@ import {
   IOauth2SecurityScheme,
   IOpenIdConnectSecurityScheme,
 } from '@stoplight/types';
-import httpOperation from 'elements/src/__fixtures__/operations/put-todos';
 import { atom, useAtom } from 'jotai';
 import { flatten, sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
@@ -18,7 +17,7 @@ const persistedParameterValuesAtom = atom({});
 export const useRequestParameters = (httpOperation: IHttpOperation) => {
   const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
 
-  const allParameters = React.useMemo(() => extractAllParameters(httpOperation.request), [httpOperation.request]);
+  const allParameters = React.useMemo(() => extractAllParameters(httpOperation), [httpOperation]);
   const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
 
   const updateParameterValue = (name: string, value: string) => {
@@ -52,12 +51,12 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
   };
 };
 
-function extractAllParameters(request: IHttpOperation['request']): ParameterSpec[] {
-  const pathParameters = sortBy(request?.path ?? [], ['name']);
-  const queryParameters = sortBy(request?.query ?? [], ['name']).filter(
+function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
+  const pathParameters = sortBy(httpOperation.request?.path ?? [], ['name']);
+  const queryParameters = sortBy(httpOperation.request?.query ?? [], ['name']).filter(
     qparam => !flatten(httpOperation.security).some(sec => (sec as IApiKeySecurityScheme).name === qparam.name),
   );
-  const headerParameters = sortBy(request?.headers ?? [], ['name']).filter(
+  const headerParameters = sortBy(httpOperation.request?.headers ?? [], ['name']).filter(
     hparam =>
       !flatten(httpOperation.security).some(
         sec =>
