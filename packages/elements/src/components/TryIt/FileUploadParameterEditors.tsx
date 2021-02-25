@@ -4,13 +4,14 @@ import * as React from 'react';
 
 import { ParameterSpec } from './parameter-utils';
 
-interface FileUploadParamterEditorProps {
+interface FileUploadParameterEditorProps {
   parameter: ParameterSpec;
   value?: File;
   onChange: (parameterValue: File | undefined) => void;
 }
 
-export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> = ({ parameter, value, onChange }) => {
+export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps> = ({ parameter, value, onChange }) => {
+  const parameterDisplayName = `${parameter.name}${parameter.required ? '*' : ''}`;
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.currentTarget.files?.[0];
     if (file === undefined) return;
@@ -25,8 +26,8 @@ export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> =
   const fileUploadInputId = React.useRef(`file-upload-${nanoid()}`);
 
   return (
-    <Flex align="center" key={parameter.name}>
-      <Input appearance="minimal" readOnly value={parameter.name} />
+    <>
+      <Input appearance="minimal" readOnly value={parameterDisplayName} />
       <Text mx={3}>:</Text>
       <Flex flexGrow alignItems="center">
         <Input
@@ -52,6 +53,6 @@ export const FileUploadParamterEditor: React.FC<FileUploadParamterEditorProps> =
           <input onChange={handleFileChange} type="file" hidden id={fileUploadInputId.current} />
         </div>
       </Flex>
-    </Flex>
+    </>
   );
 };

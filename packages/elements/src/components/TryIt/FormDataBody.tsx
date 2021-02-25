@@ -4,7 +4,7 @@ import { IMediaTypeContent } from '@stoplight/types';
 import { omit } from 'lodash';
 import * as React from 'react';
 
-import { FileUploadParamterEditor } from './FileUploadParameterEditors';
+import { FileUploadParameterEditor } from './FileUploadParameterEditors';
 import { parameterSupportsFileUpload } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
 import { BodyParameterValues } from './request-body-utils';
@@ -41,7 +41,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
 
             if (supportsFileUpload) {
               return (
-                <FileUploadParamterEditor
+                <FileUploadParameterEditor
                   key={parameter.name}
                   parameter={parameter}
                   value={value instanceof File ? value : undefined}
