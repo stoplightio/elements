@@ -58,12 +58,13 @@ function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
   );
   const headerParameters = sortBy(httpOperation.request?.headers ?? [], ['name']).filter(
     hparam =>
-      !flatten(httpOperation.security).some(
-        sec =>
+      !flatten(httpOperation.security).some(sec =>
+        new RegExp(hparam.name, 'i').test(
           (sec as Exclude<
             HttpSecurityScheme,
             IBearerSecurityScheme | IBasicSecurityScheme | IOauth2SecurityScheme | IOpenIdConnectSecurityScheme
-          >).name === hparam.name,
+          >).name,
+        ),
       ),
   );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
