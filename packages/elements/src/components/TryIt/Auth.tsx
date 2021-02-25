@@ -1,13 +1,14 @@
 import { Button, Menu, MenuItem, Panel } from '@stoplight/mosaic';
-import { Dictionary, HttpSecurityScheme } from '@stoplight/types';
+import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten, head } from 'lodash';
 import * as React from 'react';
 
 import { APIKeyAuth } from './APIKeyAuth';
+import { HttpSecuritySchemeWithValues } from './authentication-utils';
 
 interface TryItAuthProps {
   operationAuth: HttpSecurityScheme[][];
-  handleChange: (authObject: Dictionary<string | number, string>) => void;
+  handleChange: (authObject: HttpSecuritySchemeWithValues) => void;
 }
 
 export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth, handleChange }) => {

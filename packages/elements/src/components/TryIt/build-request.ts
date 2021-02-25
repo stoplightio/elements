@@ -1,6 +1,8 @@
-import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { Dictionary, IApiKeySecurityScheme, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { safeStringify } from '@stoplight/yaml';
 import { Request as HarRequest } from 'har-format';
 
+import { HttpSecuritySchemeWithValues, isIApiKeySecurityScheme } from './authentication-utils';
 import { MockData } from './mocking-utils';
 import { BodyParameterValues, createRequestBody } from './request-body-utils';
 
@@ -10,6 +12,7 @@ interface BuildRequestInput {
   parameterValues: Dictionary<string, string>;
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
+  authValue?: HttpSecuritySchemeWithValues;
 }
 
 export async function buildFetchRequest({
@@ -18,13 +21,20 @@ export async function buildFetchRequest({
   bodyInput,
   parameterValues,
   mockData,
+  authValue,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
   const server = mockData?.url || httpOperation.servers?.[0]?.url;
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
-  const queryParams = httpOperation.request?.query
+  let queryParams = httpOperation.request?.query
     ?.map(param => [param.name, parameterValues[param.name] ?? ''])
     .filter(([_, value]) => value.length > 0);
+
+  queryParams
+    ? authValue && isIApiKeySecurityScheme(authValue) && queryParams.push(['api_key', safeStringify(authValue.value)])
+    : authValue &&
+      isIApiKeySecurityScheme(authValue) &&
+      (queryParams = [[authValue.name, safeStringify(authValue.value)]]);
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
   const url = new URL(server + expandedPath);
@@ -39,6 +49,9 @@ export async function buildFetchRequest({
       method: httpOperation.method,
       headers: {
         'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
+        ...((authValue as IApiKeySecurityScheme)?.in === 'header' && {
+          [(authValue as IApiKeySecurityScheme).name]: authValue?.value,
+        }),
         ...Object.fromEntries(
           httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
         ),

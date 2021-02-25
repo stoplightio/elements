@@ -1,6 +1,15 @@
-import { IHttpOperation } from '@stoplight/types';
+import {
+  HttpSecurityScheme,
+  IApiKeySecurityScheme,
+  IBasicSecurityScheme,
+  IBearerSecurityScheme,
+  IHttpOperation,
+  IOauth2SecurityScheme,
+  IOpenIdConnectSecurityScheme,
+} from '@stoplight/types';
+import httpOperation from 'elements/src/__fixtures__/operations/put-todos';
 import { atom, useAtom } from 'jotai';
-import { sortBy, uniqBy } from 'lodash';
+import { flatten, sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
@@ -45,7 +54,18 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
 
 function extractAllParameters(request: IHttpOperation['request']): ParameterSpec[] {
   const pathParameters = sortBy(request?.path ?? [], ['name']);
-  const queryParameters = sortBy(request?.query ?? [], ['name']);
-  const headerParameters = sortBy(request?.headers ?? [], ['name']);
+  const queryParameters = sortBy(request?.query ?? [], ['name']).filter(
+    qparam => !flatten(httpOperation.security).some(sec => (sec as IApiKeySecurityScheme).name === qparam.name),
+  );
+  const headerParameters = sortBy(request?.headers ?? [], ['name']).filter(
+    hparam =>
+      !flatten(httpOperation.security).some(
+        sec =>
+          (sec as Exclude<
+            HttpSecurityScheme,
+            IBearerSecurityScheme | IBasicSecurityScheme | IOauth2SecurityScheme | IOpenIdConnectSecurityScheme
+          >).name === hparam.name,
+      ),
+  );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
 }

@@ -9,6 +9,7 @@ import * as React from 'react';
 import { HttpCodeDescriptions } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { TryItAuth } from './Auth';
+import { HttpSecuritySchemeWithValues } from './authentication-utils';
 import { buildFetchRequest, buildHarRequest } from './build-request';
 import { FormDataBody } from './FormDataBody';
 import { getMockData } from './mocking-utils';
@@ -72,7 +73,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
-  const [authValue, setAuthValue] = React.useState<any>();
+  const [authValue, setAuthValue] = React.useState<HttpSecuritySchemeWithValues>();
 
   React.useEffect(() => {
     let isActive = true;
@@ -82,7 +83,6 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
-        authValue: authValue,
       }).then(request => {
         if (isActive) onRequestChange(request);
       });
