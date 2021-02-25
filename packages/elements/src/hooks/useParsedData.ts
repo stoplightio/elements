@@ -1,9 +1,10 @@
+import { ParsedNode } from '@stoplight/elements-utils';
 import { processMarkdown } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import { parse as parseYaml } from '@stoplight/yaml';
 import * as React from 'react';
 
-import { JSONSchema, ParsedNode } from '../types';
+import { JSONSchema } from '../types';
 import { isHttpOperation, isHttpService, isJSONSchema, isSMDASTRoot } from '../utils/guards';
 
 export function useParsedData(nodeType: string, data: unknown): ParsedNode | undefined {
