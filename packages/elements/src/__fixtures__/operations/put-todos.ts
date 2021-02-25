@@ -296,7 +296,7 @@ export const httpOperation: IHttpOperation = {
       {
         schema: {
           type: 'number',
-          default: 300,
+          default: 1,
           enum: [0, 1, 3],
           exclusiveMinimum: 0,
           exclusiveMaximum: 10,
@@ -311,7 +311,7 @@ export const httpOperation: IHttpOperation = {
       {
         schema: {
           type: 'string',
-          default: '300',
+          default: '1',
           enum: ['0', '1', '3'],
           minLength: 0,
           maxLength: 10,
@@ -323,20 +323,6 @@ export const httpOperation: IHttpOperation = {
         description: 'How many string todos to limit?',
         name: 'value',
         style: HttpParamStyles.Form,
-        examples: [
-          {
-            value: 'example value',
-            key: 'example',
-          },
-          {
-            value: 'another example',
-            key: 'example',
-          },
-          {
-            value: 'something else',
-            key: 'example',
-          },
-        ],
       },
       {
         schema: {
@@ -362,6 +348,22 @@ export const httpOperation: IHttpOperation = {
         },
         name: 'type',
         style: HttpParamStyles.SpaceDelimited,
+      },
+      {
+        name: 'super_duper_long_parameter_name_with_unnecessary_text',
+        schema: {
+          type: 'string',
+          default: 'some interesting string with interesting content, but still pretty long',
+        },
+        style: HttpParamStyles.Form,
+      },
+      {
+        name: 'optional_value_with_default',
+        schema: {
+          type: 'string',
+          default: 'some default value',
+        },
+        style: HttpParamStyles.Form,
       },
     ],
     headers: [

@@ -6,3 +6,9 @@
     min-width: 200px;
   }
 }
+
+.OperationParametersContent {
+  display: grid;
+  grid-template-columns: fit-content(120px) 20px auto;
+  align-items: center;
+}
