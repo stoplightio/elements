@@ -128,7 +128,7 @@ export function getToCFromOpenApiDocument(apiDescriptionDocument: unknown) {
   }
 
   const nodes = computeNodeData(uriMap, documentTags);
-  const tree = generateApiToC(nodes, uriMap);
+  const tree = generateApiToC(nodes);
 
   return { tree, uriMap };
 }

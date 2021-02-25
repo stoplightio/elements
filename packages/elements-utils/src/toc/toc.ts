@@ -1,5 +1,4 @@
-import { IUriMap } from '@stoplight/elements/src/utils/oas';
-import { IHttpService, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import { escapeRegExp, partial } from 'lodash';
 import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
@@ -9,15 +8,15 @@ import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, Ta
 type SchemaType = 'divider' | 'group';
 type TocType = 'api' | 'project';
 
-export function generateApiToC(searchResults: NodeData[], uriMap?: IUriMap) {
-  return generateToC(searchResults, 'api', uriMap);
+export function generateApiToC(searchResults: NodeData[]) {
+  return generateToC(searchResults, 'api');
 }
 
 export function generateProjectToC(searchResults: NodeData[]) {
   return generateToC(searchResults, 'project');
 }
 
-function generateToC(searchResults: NodeData[], type: TocType, uriMap?: IUriMap) {
+function generateToC(searchResults: NodeData[], type: TocType) {
   return pipe(
     () => searchResults,
     groupNodesByType,
@@ -29,13 +28,9 @@ function generateToC(searchResults: NodeData[], type: TocType, uriMap?: IUriMap)
 
       if (type === 'api') {
         if (httpServices.length !== 1) return toc;
-        if (uriMap) {
-          const httpService = uriMap[httpServices[0].uri] as IHttpService;
+        const httpService = httpServices[0].data;
 
-          if (httpService.description) {
-            toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
-          }
-        } else {
+        if (httpService.description) {
           toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
         }
 
@@ -153,10 +148,10 @@ function matchesUri(uri: string) {
 
 export function groupNodesByType(searchResults: NodeData[]) {
   return searchResults.reduce<{
-    articles: NodeData[];
-    models: NodeData[];
-    httpServices: NodeData[];
-    httpOperations: NodeData[];
+    articles: Array<Extract<NodeData, { type: 'article' }>>;
+    models: Array<Extract<NodeData, { type: 'model' }>>;
+    httpServices: Array<Extract<NodeData, { type: 'http_service' }>>;
+    httpOperations: Array<Extract<NodeData, { type: 'http_operation' }>>;
   }>(
     (results, searchResult) => {
       switch (searchResult.type) {
