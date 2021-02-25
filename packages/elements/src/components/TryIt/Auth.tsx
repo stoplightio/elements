@@ -7,11 +7,11 @@ import { APIKeyAuth } from './APIKeyAuth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';
 
 interface TryItAuthProps {
-  operationAuth: HttpSecurityScheme[][];
+  operationSecurityScheme: HttpSecurityScheme[][];
   handleChange: (authObject: HttpSecuritySchemeWithValues) => void;
 }
 
-export const TryItAuth: React.FC<TryItAuthProps> = ({ operationAuth, handleChange }) => {
+export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: operationAuth, handleChange }) => {
   const operationSecurityArray = flatten(operationAuth);
   const filteredSecurityItems = operationSecurityArray.filter(scheme =>
     Object.keys(securityReadableNames).includes(scheme?.type),
