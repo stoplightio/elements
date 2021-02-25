@@ -2,6 +2,7 @@ import { parse } from '@stoplight/yaml';
 import { Story } from '@storybook/react';
 import * as React from 'react';
 
+import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
 
@@ -42,3 +43,10 @@ APIWithJSONProvidedDirectly.args = {
   apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
 };
 APIWithJSONProvidedDirectly.storyName = 'Direct JSON Input';
+
+export const APIWithoutDescription = Template.bind({});
+APIWithoutDescription.args = {
+  apiDescriptionDocument: simpleApiWithoutDescription,
+};
+
+APIWithoutDescription.storyName = 'API Without Description';

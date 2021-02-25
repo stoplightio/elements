@@ -9,6 +9,7 @@ describe('API Table of Contents', () => {
       info: {
         title: 'some api',
         version: '1.0.0',
+        description: 'some description',
       },
       tags: [
         {
@@ -48,6 +49,7 @@ describe('API Table of Contents', () => {
       info: {
         title: 'some api',
         version: '1.0.0',
+        description: 'some description',
       },
       tags: [
         {
@@ -99,6 +101,7 @@ describe('API Table of Contents', () => {
       info: {
         title: 'some api',
         version: '1.0.0',
+        description: 'some description',
       },
       tags: [
         {
@@ -148,6 +151,7 @@ describe('API Table of Contents', () => {
       info: {
         title: 'some api',
         version: '1.0.0',
+        description: 'some description',
       },
       paths: {},
       components: {

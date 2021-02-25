@@ -1,4 +1,5 @@
-import { NodeType } from '@stoplight/types';
+import { IUriMap } from '@stoplight/elements/src/utils/oas';
+import { IHttpService, NodeType } from '@stoplight/types';
 import { escapeRegExp, partial } from 'lodash';
 import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
@@ -8,15 +9,15 @@ import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, Ta
 type SchemaType = 'divider' | 'group';
 type TocType = 'api' | 'project';
 
-export function generateApiToC(searchResults: NodeData[]) {
-  return generateToC(searchResults, 'api');
+export function generateApiToC(searchResults: NodeData[], uriMap?: IUriMap) {
+  return generateToC(searchResults, 'api', uriMap);
 }
 
 export function generateProjectToC(searchResults: NodeData[]) {
   return generateToC(searchResults, 'project');
 }
 
-function generateToC(searchResults: NodeData[], type: TocType) {
+function generateToC(searchResults: NodeData[], type: TocType, uriMap?: IUriMap) {
   return pipe(
     () => searchResults,
     groupNodesByType,
@@ -28,7 +29,16 @@ function generateToC(searchResults: NodeData[], type: TocType) {
 
       if (type === 'api') {
         if (httpServices.length !== 1) return toc;
-        toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
+        if (uriMap) {
+          const httpService = uriMap[httpServices[0].uri] as IHttpService;
+
+          if (httpService.description) {
+            toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
+          }
+        } else {
+          toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
+        }
+
         if (httpOperations.length) {
           toc.items.push({ type: 'divider', title: 'Endpoints' });
         }
