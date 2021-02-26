@@ -54,7 +54,10 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
 function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
   const pathParameters = sortBy(httpOperation.request?.path ?? [], ['name']);
   const queryParameters = sortBy(httpOperation.request?.query ?? [], ['name']).filter(
-    qparam => !flatten(httpOperation.security).some(sec => (sec as IApiKeySecurityScheme).name === qparam.name),
+    qparam =>
+      !flatten(httpOperation.security).some(sec =>
+        new RegExp(qparam.name, 'i').test((sec as IApiKeySecurityScheme).name),
+      ),
   );
   const headerParameters = sortBy(httpOperation.request?.headers ?? [], ['name']).filter(
     hparam =>
