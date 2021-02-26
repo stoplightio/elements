@@ -17,7 +17,7 @@ export const APIKeyAuth: React.FC<APIKeyAuthPros> = ({ scheme, onChange }) => {
   return (
     <Panel.Content>
       <Flex align="center" key={ApiKeyScheme.name}>
-        <Input appearance="minimal" readOnly value={ApiKeyScheme.name} />
+        <Input role={ApiKeyScheme.type} appearance="minimal" readOnly value={ApiKeyScheme.name} />
         <Text mx={3}>:</Text>
         <Flex flexGrow>
           <Input
