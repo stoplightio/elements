@@ -1,6 +1,17 @@
-import { Dictionary, IApiKeySecurityScheme, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import {
+  Dictionary,
+  HttpSecurityScheme,
+  IApiKeySecurityScheme,
+  IBasicSecurityScheme,
+  IBearerSecurityScheme,
+  IHttpOperation,
+  IMediaTypeContent,
+  IOauth2SecurityScheme,
+  IOpenIdConnectSecurityScheme,
+} from '@stoplight/types';
 import { safeStringify } from '@stoplight/yaml';
 import { Request as HarRequest } from 'har-format';
+import { flatten } from 'lodash';
 
 import { HttpSecuritySchemeWithValues, isIApiKeySecurityScheme } from './authentication-utils';
 import { MockData } from './mocking-utils';
@@ -31,7 +42,10 @@ export async function buildFetchRequest({
     .filter(([_, value]) => value.length > 0);
 
   queryParams
-    ? authValue && isIApiKeySecurityScheme(authValue) && queryParams.push(['api_key', safeStringify(authValue.value)])
+    ? authValue &&
+      isIApiKeySecurityScheme(authValue) &&
+      authValue.in === 'query' &&
+      queryParams.push(['api_key', safeStringify(authValue.value)])
     : authValue &&
       isIApiKeySecurityScheme(authValue) &&
       (queryParams = [[authValue.name, safeStringify(authValue.value)]]);
@@ -53,7 +67,22 @@ export async function buildFetchRequest({
           [(authValue as IApiKeySecurityScheme).name]: authValue?.value,
         }),
         ...Object.fromEntries(
-          httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
+          httpOperation.request?.headers
+            ?.filter(
+              hparam =>
+                !flatten(httpOperation.security).some(sec =>
+                  new RegExp(hparam.name, 'i').test(
+                    (sec as Exclude<
+                      HttpSecurityScheme,
+                      | IBearerSecurityScheme
+                      | IBasicSecurityScheme
+                      | IOauth2SecurityScheme
+                      | IOpenIdConnectSecurityScheme
+                    >).name,
+                  ),
+                ),
+            )
+            .map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
         ),
         ...mockData?.header,
       },
