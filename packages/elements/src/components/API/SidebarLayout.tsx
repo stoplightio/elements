@@ -1,6 +1,7 @@
-import { IHttpOperation } from '@stoplight/types';
+import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import { useTocContents } from '../../hooks/useTocContents';
 import { ITableOfContentsTree } from '../../types';
@@ -25,6 +26,16 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   const nodeType = getNodeType(pathname);
   const nodeData = uriMap[pathname] || uriMap['/'];
   const showTryIt = isOperation(pathname);
+
+  if (nodeType === NodeType.HttpService) {
+    if (!(nodeData as IHttpService).description) {
+      const item = contents.find(content => content.type === 'item');
+
+      if (item && item.to) {
+        return <Redirect to={item.to} />;
+      }
+    }
+  }
 
   return (
     <>
