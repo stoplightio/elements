@@ -19,7 +19,9 @@ type SubSectionPanelProps = { title: React.ReactNode; hasContent?: boolean };
 export const SubSectionPanel: React.FC<SubSectionPanelProps> = ({ title, children, hasContent }) => {
   return (
     <Panel appearance="minimal" mb={3} isCollapsible={hasContent} defaultIsOpen>
-      <Panel.Titlebar fontWeight="medium">{title}</Panel.Titlebar>
+      <Panel.Titlebar role={hasContent ? 'button' : 'heading'} fontWeight="medium">
+        {title}
+      </Panel.Titlebar>
       {hasContent !== false && (
         <Panel.Content pl={5} pr={3}>
           {children}

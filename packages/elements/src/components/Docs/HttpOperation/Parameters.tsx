@@ -128,7 +128,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       {deprecated || parameter.style || keys(validations).length ? (
         <div className="flex flex-wrap">
           {deprecated && (
-            <Tag className="mt-2 mr-2" intent="warning" minimal>
+            <Tag role="note" className="mt-2 mr-2" intent="warning" minimal aria-label="Deprecated">
               Deprecated
             </Tag>
           )}
@@ -136,7 +136,12 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
           <NameValidations validations={booleanValidations} />
 
           {parameter.style && defaultStyle[parameterType] !== parameter.style && (
-            <Tag className="mt-2 mr-2" minimal>
+            <Tag
+              className="mt-2 mr-2"
+              minimal
+              role="note"
+              aria-label={readableStyles[parameter.style] || parameter.style}
+            >
               {readableStyles[parameter.style] || parameter.style}
             </Tag>
           )}

@@ -1,9 +1,7 @@
 import 'jest-enzyme';
 
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
-import { Tag } from '@stoplight/ui-kit';
 import { render, screen } from '@testing-library/react';
 import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
@@ -19,10 +17,11 @@ jest.mock('@stoplight/json-schema-viewer', () => ({
 }));
 
 describe('HttpOperation', () => {
-  let wrapper: ReactWrapper;
+  let wrapper: ReactWrapper | undefined;
 
   afterEach(() => {
     wrapper?.unmount();
+    wrapper = undefined;
   });
 
   describe('Header', () => {
@@ -45,7 +44,7 @@ describe('HttpOperation', () => {
 
   describe('Query Parameters', () => {
     it('should render correct validations', () => {
-      const operationData = {
+      const data = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -75,12 +74,15 @@ describe('HttpOperation', () => {
         },
       };
 
-      wrapper = mount(<HttpOperation data={operationData} />);
-      const queryParameterElement = wrapper.findWhere(
-        w => w.type() === Parameters && w.props().title === 'Query Parameters',
-      );
-      expect(queryParameterElement.props().parameters).toEqual(operationData.request.query);
-      expect(queryParameterElement.find(Tag).length).toEqual(4);
+      render(<HttpOperation data={data} />);
+
+      const headersPanel = screen.queryByRole('button', { name: 'Query' });
+      expect(headersPanel).toBeInTheDocument();
+      expect(headersPanel).toBeVisible();
+      expect(headersPanel).toBeEnabled();
+
+      expect(screen.queryByText(/parameter name/)).toBeInTheDocument();
+      expect(screen.getByRole('note', { name: /deprecated/i })).toBeInTheDocument();
     });
 
     it('should not render default styles', () => {
@@ -108,16 +110,15 @@ describe('HttpOperation', () => {
           ],
         },
       };
-      wrapper = mount(<HttpOperation data={operationData} />);
-      const queryParameterElement = wrapper.findWhere(
-        w => w.type() === Parameters && w.props().title === 'Query Parameters',
-      );
-      expect(queryParameterElement.find(Tag).length).toEqual(1);
+      render(<HttpOperation data={operationData} />);
+
+      expect(screen.getByRole('note', { name: /space/i })).toBeInTheDocument();
+      expect(screen.queryByRole('note', { name: /form/i })).not.toBeInTheDocument();
     });
   });
 
   describe('Header Parameters', () => {
-    it('should render correct validations', () => {
+    it('should render panel when there are header parameters', () => {
       const data = {
         id: 'get',
         method: 'get',
@@ -146,11 +147,31 @@ describe('HttpOperation', () => {
         },
       };
 
-      wrapper = mount(<HttpOperation data={data} />);
-      const headerParameterElement = wrapper.findWhere(
-        w => w.type() === Parameters && w.props().title === 'Header Parameters',
-      );
-      expect(headerParameterElement.props().parameters).toEqual(data.request.headers);
+      render(<HttpOperation data={data} />);
+
+      const headersPanel = screen.queryByRole('button', { name: 'Headers' });
+      expect(headersPanel).toBeInTheDocument();
+      expect(headersPanel).toBeVisible();
+      expect(headersPanel).toBeEnabled();
+
+      expect(screen.queryByText(/parameter name/)).toBeInTheDocument();
+    });
+
+    it('should not render panel when there are no header parameters', () => {
+      const data = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {
+          headers: [],
+        },
+      };
+
+      render(<HttpOperation data={data} />);
+
+      const headersPanel = screen.queryByRole('button', { name: 'Headers' });
+      expect(headersPanel).not.toBeInTheDocument();
     });
   });
 
@@ -184,17 +205,37 @@ describe('HttpOperation', () => {
         },
       };
 
-      wrapper = mount(<HttpOperation data={data} />);
-      const pathParameterElement = wrapper.findWhere(
-        w => w.type() === Parameters && w.props().title === 'Path Parameters',
-      );
-      expect(pathParameterElement.props().parameters).toEqual(data.request.path);
+      render(<HttpOperation data={data} />);
+
+      const pathParametersPanel = screen.queryByRole('button', { name: /GET.*\/path/i });
+      expect(pathParametersPanel).toBeInTheDocument();
+      expect(pathParametersPanel).toBeVisible();
+      expect(pathParametersPanel).toBeEnabled();
+
+      expect(screen.queryByText(/parameter name/)).toBeInTheDocument();
+    });
+
+    it('should still show path parameters panel when there are no parameters', () => {
+      const data = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {},
+      };
+
+      render(<HttpOperation data={data} />);
+
+      const pathParametersPanel = screen.queryByRole('heading', { name: /GET.*\/path/i });
+      expect(pathParametersPanel).toBeInTheDocument();
+      expect(pathParametersPanel).toBeVisible();
+      expect(pathParametersPanel).toBeEnabled();
     });
   });
 
   describe('Response', () => {
-    it('should render the MarkdownViewer with description', () => {
-      wrapper = mount(
+    it('should render the MarkdownViewer with description', async () => {
+      render(
         <HttpOperation
           data={{
             path: '/',
@@ -209,8 +250,7 @@ describe('HttpOperation', () => {
           }}
         />,
       );
-
-      expect(wrapper.find('.HttpOperation__Response').find(MarkdownViewer)).toHaveProp('markdown', 'Hello world!');
+      expect(await screen.findByText('Hello world!')).toBeInTheDocument();
     });
 
     it('should render Parameters with headers', () => {

@@ -29,12 +29,12 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
   if (!request || typeof request !== 'object') return null;
 
   const pathParamBlock = (
-    <>
+    <div>
       <Text textTransform="uppercase" mr={1} color={HttpMethodColors[method]}>
         {method}
       </Text>{' '}
       {path}
-    </>
+    </div>
   );
 
   return (
