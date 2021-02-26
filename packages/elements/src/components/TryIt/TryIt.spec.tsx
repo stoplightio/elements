@@ -12,7 +12,11 @@ import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { requestBody } from '../../__fixtures__/operations/request-body';
-import { emptySecurityOperation, singleSecurityOperation } from '../../__fixtures__/operations/securedOperation';
+import {
+  duplicatedSecurityScheme,
+  emptySecurityOperation,
+  singleSecurityOperation,
+} from '../../__fixtures__/operations/securedOperation';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
@@ -591,6 +595,69 @@ describe('TryIt', () => {
 
         const HttpSchemesButton = screen.queryByRole('button', { name: 'OAuth 2.0' });
         expect(HttpSchemesButton).toBeInTheDocument();
+      });
+    });
+    describe('API Key component', () => {
+      it('is displayed for security of that type', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const APIKeyName = screen.getByRole('apiKey');
+        expect(APIKeyName).toHaveValue('API Key');
+      });
+      it('removes duplicated parameters', () => {
+        render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
+
+        const APIKeyName = screen.getByRole('apiKey');
+        expect(APIKeyName).toHaveValue('API-Key');
+
+        // check if query param with the same name as security is removed from OperationParameters (case insensitive)
+        const queryParam = screen.queryByText('api-key');
+        expect(queryParam).not.toBeInTheDocument();
+
+        // check if header with the same name as security is removed from OperationParameters (case insensitive)
+        const header = screen.queryByText('Api-KeY');
+        expect(header).not.toBeInTheDocument();
+      });
+
+      it('attaches auth token as a query parameter', async () => {
+        render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
+
+        const APIKeyName = screen.getByRole('apiKey');
+        expect(APIKeyName).toHaveValue('API-Key');
+
+        const APIKeyField = screen.getByLabelText('API-Key');
+        await userEvent.type(APIKeyField, '123');
+
+        // click send
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const url = new URL(fetchMock.mock.calls[0][0] as string);
+        const queryParams = url.searchParams;
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+
+        // assert that query params are passed
+        expect(queryParams.get('api_key')).toBe('123');
+
+        // make sure we don't attach security duplicated in Operation Parameters
+        expect(queryParams.get('api-key')).not.toBeInTheDocument();
+        expect(headers.get('Api-KeY')).not.toBeInTheDocument();
+      });
+
+      it('attaches auth token as a header', async () => {
+        render(<TryItWithPersistence httpOperation={singleSecurityOperation} />);
+
+        const APIKeyField = screen.getByLabelText('API-Key');
+        await userEvent.type(APIKeyField, '123');
+
+        // click send
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('API-Key')).toBe('123');
       });
     });
   });
