@@ -2,6 +2,7 @@ import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { ActiveInfoContext } from '../../containers/Provider';
+import { useDereferencedHttpOperation } from '../../hooks/useDereferencedHttpOperation';
 import { useParsedData } from '../../hooks/useParsedData';
 import { useActionsApi, usePlatformApi } from '../../hooks/usePlatformApi';
 import { BundledBranchNode } from '../../types';
@@ -45,6 +46,7 @@ export const TryItContainer = ({ node }: ITryItProps) => {
   const nodeData = httpResult?.data || '';
 
   const parsedData = useParsedData(nodeType, nodeData);
+  const dereferencedData = useDereferencedHttpOperation(parsedData);
 
   React.useEffect(() => {
     if (error) {
@@ -60,7 +62,9 @@ export const TryItContainer = ({ node }: ITryItProps) => {
     return <DocsSkeleton />;
   }
 
-  if (parsedData?.type !== NodeType.HttpOperation) return null;
+  if (dereferencedData?.type !== NodeType.HttpOperation) return null;
 
-  return <TryItWithRequestSamples httpOperation={parsedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />;
+  return (
+    <TryItWithRequestSamples httpOperation={dereferencedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />
+  );
 };

@@ -3,6 +3,8 @@ import { IMediaTypeContent } from '@stoplight/types';
 import * as Sampler from 'openapi-sampler';
 import * as React from 'react';
 
+import { useInlineRefResolver } from '../../context/InlineRefResolver';
+
 /**
  * Manages the state of the request body text editor.
  *
@@ -11,9 +13,14 @@ import * as React from 'react';
 export const useTextRequestBodyState = (
   mediaTypeContent: IMediaTypeContent | undefined,
 ): [string, React.Dispatch<React.SetStateAction<string>>] => {
+  const resolveRef = useInlineRefResolver();
   const initialRequestBody = React.useMemo(() => {
-    const textRequestBodySchema = mediaTypeContent?.schema;
     const textRequestBodyExamples = mediaTypeContent?.examples;
+
+    const textRequestBodySchema =
+      mediaTypeContent?.schema?.$ref && resolveRef
+        ? resolveRef({ pointer: mediaTypeContent?.schema.$ref, source: null }, null, {})
+        : mediaTypeContent?.schema;
 
     try {
       if (textRequestBodyExamples?.length) {
@@ -25,7 +32,7 @@ export const useTextRequestBodyState = (
       console.warn(e);
     }
     return '';
-  }, [mediaTypeContent]);
+  }, [mediaTypeContent, resolveRef]);
 
   const [textRequestBody, setTextRequestBody] = React.useState<string>(initialRequestBody);
 

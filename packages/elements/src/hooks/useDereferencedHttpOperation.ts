@@ -7,7 +7,7 @@ import { ParsedNode } from '../types';
 /**
  * Parses the branch node data and ONLY dereferences if it's an HTTP Operation
  */
-export function useDereferencedHttpOperation(parsedData: ParsedNode) {
+export function useDereferencedHttpOperation(parsedData: ParsedNode | undefined) {
   const [dereferencedData, setDereferencedData] = React.useState(parsedData);
 
   React.useEffect(() => {
