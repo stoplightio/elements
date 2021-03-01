@@ -22,8 +22,6 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
   );
   const menuName = securityScheme ? securityReadableNames[securityScheme?.type] : 'Security Scheme';
 
-  const SchemeComponent = securityScheme && securitySchemeToComponent[securityScheme.type];
-
   if (filteredSecurityItems.length === 0) return null;
 
   return (
@@ -54,7 +52,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
       >
         Auth
       </Panel.Titlebar>
-      {SchemeComponent && securityScheme && <SchemeComponent scheme={securityScheme} onChange={handleChange} />}
+      {securityScheme && <SecuritySchemeComponent scheme={securityScheme} onChange={handleChange} />}
     </Panel>
   );
 };
@@ -63,14 +61,16 @@ const GenericMessageContainer: React.FC<{ scheme: HttpSecurityScheme }> = ({ sch
   return <Panel.Content>Coming Soon: {securityReadableNames[scheme.type]}</Panel.Content>;
 };
 
-const securitySchemeToComponent: Record<
-  string,
-  React.FC<{ scheme: HttpSecurityScheme; onChange: (AuthObject: any) => void }> | undefined
-> = {
-  apiKey: APIKeyAuth,
-  http: GenericMessageContainer,
-  oauth2: GenericMessageContainer,
-  openIdConnect: GenericMessageContainer,
+const SecuritySchemeComponent: React.FC<{ scheme: HttpSecurityScheme; onChange: (AuthObject: any) => void }> = ({
+  scheme,
+  ...rest
+}) => {
+  switch (scheme.type) {
+    case 'apiKey':
+      return <APIKeyAuth scheme={scheme} {...rest} />;
+    default:
+      return <GenericMessageContainer scheme={scheme} {...rest} />;
+  }
 };
 
 const securityReadableNames = {
