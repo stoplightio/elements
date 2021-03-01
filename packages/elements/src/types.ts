@@ -1,6 +1,7 @@
 import type { Dictionary, NodeType } from '@stoplight/types';
 import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
-import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
+
+export { JSONSchema } from '@stoplight/elements-utils';
 
 export interface INodeFilter {
   nodeUri?: string;
@@ -125,5 +126,3 @@ export type ParamField = {
   description: string;
   example: string;
 };
-
-export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;

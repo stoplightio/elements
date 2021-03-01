@@ -1,7 +1,6 @@
 import * as SMDAST from '@stoplight/markdown/ast-types/smdast';
 import { IHttpOperation, IHttpService } from '@stoplight/types';
-
-import { JSONSchema } from '../../elements/src/types';
+import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 
 export type ParsedNode =
   | {
@@ -36,3 +35,5 @@ export type ParsedNode =
       type: 'unknown';
       data: unknown;
     };
+
+export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
