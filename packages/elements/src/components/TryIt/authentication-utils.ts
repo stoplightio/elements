@@ -5,7 +5,7 @@ export type HttpSecuritySchemeWithValues = HttpSecurityScheme & {
   value: string;
 };
 
-export const isIApiKeySecurityScheme = (
+export const isApiKeySecurityScheme = (
   maybeIApiKey: HttpSecurityScheme | HttpSecuritySchemeWithValues,
 ): maybeIApiKey is IApiKeySecurityScheme | (IApiKeySecurityScheme & { value: string }) =>
   isObject(maybeIApiKey) && maybeIApiKey.type === 'apiKey';

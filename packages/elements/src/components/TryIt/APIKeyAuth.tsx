@@ -2,7 +2,7 @@ import { Flex, Input, Panel, Text } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import * as React from 'react';
 
-import { HttpSecuritySchemeWithValues, isIApiKeySecurityScheme } from './authentication-utils';
+import { HttpSecuritySchemeWithValues, isApiKeySecurityScheme } from './authentication-utils';
 
 interface APIKeyAuthProps {
   scheme: HttpSecurityScheme;
@@ -10,7 +10,7 @@ interface APIKeyAuthProps {
 }
 
 export const APIKeyAuth: React.FC<APIKeyAuthProps> = ({ scheme, onChange }) => {
-  const ApiKeyScheme = isIApiKeySecurityScheme(scheme) && scheme;
+  const ApiKeyScheme = isApiKeySecurityScheme(scheme) && scheme;
 
   if (!ApiKeyScheme) return null;
 

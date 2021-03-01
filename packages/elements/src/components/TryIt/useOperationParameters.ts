@@ -3,7 +3,7 @@ import { atom, useAtom } from 'jotai';
 import { flatten, sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
-import { isIApiKeySecurityScheme } from './authentication-utils';
+import { isApiKeySecurityScheme } from './authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
 const persistedParameterValuesAtom = atom({});
@@ -48,14 +48,14 @@ function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
   const pathParameters = sortBy(httpOperation.request?.path ?? [], ['name']);
   const queryParameters = sortBy(httpOperation.request?.query ?? [], ['name']).filter(
     qparam =>
-      !flatten(httpOperation.security).some(sec =>
-        new RegExp(qparam.name, 'i').test(isIApiKeySecurityScheme(sec) ? sec.name : ''),
+      !flatten(httpOperation.security).some(
+        sec => !isApiKeySecurityScheme(sec) || sec.name.toUpperCase() === qparam.name.toUpperCase(),
       ),
   );
   const headerParameters = sortBy(httpOperation.request?.headers ?? [], ['name']).filter(
     hparam =>
-      !flatten(httpOperation.security).some(sec =>
-        new RegExp(hparam.name, 'i').test(isIApiKeySecurityScheme(sec) ? sec.name : ''),
+      !flatten(httpOperation.security).some(
+        sec => !isApiKeySecurityScheme(sec) || sec.name.toUpperCase() === hparam.name.toUpperCase(),
       ),
   );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);

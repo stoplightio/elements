@@ -3,7 +3,7 @@ import { safeStringify } from '@stoplight/yaml';
 import { Request as HarRequest } from 'har-format';
 import { flatten } from 'lodash';
 
-import { HttpSecuritySchemeWithValues, isIApiKeySecurityScheme } from './authentication-utils';
+import { HttpSecuritySchemeWithValues, isApiKeySecurityScheme } from './authentication-utils';
 import { MockData } from './mocking-utils';
 import { BodyParameterValues, createRequestBody } from './request-body-utils';
 
@@ -32,9 +32,7 @@ export async function buildFetchRequest({
       ?.map(param => [param.name, parameterValues[param.name] ?? ''])
       .filter(([_, value]) => value.length > 0) ?? [];
 
-  if (queryParams[0] && authValue && isIApiKeySecurityScheme(authValue) && authValue.in === 'query') {
-    queryParams.push([authValue.name, safeStringify(authValue.value)]);
-  } else if (authValue && isIApiKeySecurityScheme(authValue)) {
+  if (authValue && isApiKeySecurityScheme(authValue) && authValue.in === 'query') {
     queryParams.push([authValue.name, safeStringify(authValue.value)]);
   }
 
@@ -52,7 +50,7 @@ export async function buildFetchRequest({
       headers: {
         'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
         ...(authValue &&
-          isIApiKeySecurityScheme(authValue) &&
+          isApiKeySecurityScheme(authValue) &&
           authValue.in === 'header' && {
             [authValue.name]: authValue?.value,
           }),
@@ -60,8 +58,8 @@ export async function buildFetchRequest({
           httpOperation.request?.headers
             ?.filter(
               hparam =>
-                !flatten(httpOperation.security).some(sec =>
-                  new RegExp(hparam.name, 'i').test(isIApiKeySecurityScheme(sec) ? sec.name : ''),
+                !flatten(httpOperation.security).some(
+                  sec => !isApiKeySecurityScheme(sec) || sec.name.toUpperCase() === hparam.name.toUpperCase(),
                 ),
             )
             .map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
