@@ -1,16 +1,9 @@
-import {
-  HttpSecurityScheme,
-  IApiKeySecurityScheme,
-  IBasicSecurityScheme,
-  IBearerSecurityScheme,
-  IHttpOperation,
-  IOauth2SecurityScheme,
-  IOpenIdConnectSecurityScheme,
-} from '@stoplight/types';
+import { IHttpOperation } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
 import { flatten, sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
+import { isIApiKeySecurityScheme } from './authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
 const persistedParameterValuesAtom = atom({});
@@ -56,18 +49,13 @@ function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
   const queryParameters = sortBy(httpOperation.request?.query ?? [], ['name']).filter(
     qparam =>
       !flatten(httpOperation.security).some(sec =>
-        new RegExp(qparam.name, 'i').test((sec as IApiKeySecurityScheme).name),
+        new RegExp(qparam.name, 'i').test(isIApiKeySecurityScheme(sec) ? sec.name : ''),
       ),
   );
   const headerParameters = sortBy(httpOperation.request?.headers ?? [], ['name']).filter(
     hparam =>
       !flatten(httpOperation.security).some(sec =>
-        new RegExp(hparam.name, 'i').test(
-          (sec as Exclude<
-            HttpSecurityScheme,
-            IBearerSecurityScheme | IBasicSecurityScheme | IOauth2SecurityScheme | IOpenIdConnectSecurityScheme
-          >).name,
-        ),
+        new RegExp(hparam.name, 'i').test(isIApiKeySecurityScheme(sec) ? sec.name : ''),
       ),
   );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);

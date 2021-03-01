@@ -1,14 +1,4 @@
-import {
-  Dictionary,
-  HttpSecurityScheme,
-  IApiKeySecurityScheme,
-  IBasicSecurityScheme,
-  IBearerSecurityScheme,
-  IHttpOperation,
-  IMediaTypeContent,
-  IOauth2SecurityScheme,
-  IOpenIdConnectSecurityScheme,
-} from '@stoplight/types';
+import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import { safeStringify } from '@stoplight/yaml';
 import { Request as HarRequest } from 'har-format';
 import { flatten } from 'lodash';
@@ -37,18 +27,16 @@ export async function buildFetchRequest({
   const server = mockData?.url || httpOperation.servers?.[0]?.url;
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
-  let queryParams = httpOperation.request?.query
-    ?.map(param => [param.name, parameterValues[param.name] ?? ''])
-    .filter(([_, value]) => value.length > 0);
+  const queryParams =
+    httpOperation.request?.query
+      ?.map(param => [param.name, parameterValues[param.name] ?? ''])
+      .filter(([_, value]) => value.length > 0) ?? [];
 
-  queryParams
-    ? authValue &&
-      isIApiKeySecurityScheme(authValue) &&
-      authValue.in === 'query' &&
-      queryParams.push(['api_key', safeStringify(authValue.value)])
-    : authValue &&
-      isIApiKeySecurityScheme(authValue) &&
-      (queryParams = [[authValue.name, safeStringify(authValue.value)]]);
+  if (queryParams[0] && authValue && isIApiKeySecurityScheme(authValue) && authValue.in === 'query') {
+    queryParams.push([authValue.name, safeStringify(authValue.value)]);
+  } else if (authValue && isIApiKeySecurityScheme(authValue)) {
+    queryParams.push([authValue.name, safeStringify(authValue.value)]);
+  }
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
   const url = new URL(server + expandedPath);
@@ -63,23 +51,17 @@ export async function buildFetchRequest({
       method: httpOperation.method,
       headers: {
         'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
-        ...((authValue as IApiKeySecurityScheme)?.in === 'header' && {
-          [(authValue as IApiKeySecurityScheme).name]: authValue?.value,
-        }),
+        ...(authValue &&
+          isIApiKeySecurityScheme(authValue) &&
+          authValue.in === 'header' && {
+            [authValue.name]: authValue?.value,
+          }),
         ...Object.fromEntries(
           httpOperation.request?.headers
             ?.filter(
               hparam =>
                 !flatten(httpOperation.security).some(sec =>
-                  new RegExp(hparam.name, 'i').test(
-                    (sec as Exclude<
-                      HttpSecurityScheme,
-                      | IBearerSecurityScheme
-                      | IBasicSecurityScheme
-                      | IOauth2SecurityScheme
-                      | IOpenIdConnectSecurityScheme
-                    >).name,
-                  ),
+                  new RegExp(hparam.name, 'i').test(isIApiKeySecurityScheme(sec) ? sec.name : ''),
                 ),
             )
             .map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
