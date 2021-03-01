@@ -3,7 +3,7 @@ import { IMediaTypeContent } from '@stoplight/types';
 import * as Sampler from 'openapi-sampler';
 import * as React from 'react';
 
-import { useInlineRefResolver } from '../../context/InlineRefResolver';
+import { useDocument } from '../../context/InlineRefResolver';
 
 /**
  * Manages the state of the request body text editor.
@@ -13,26 +13,22 @@ import { useInlineRefResolver } from '../../context/InlineRefResolver';
 export const useTextRequestBodyState = (
   mediaTypeContent: IMediaTypeContent | undefined,
 ): [string, React.Dispatch<React.SetStateAction<string>>] => {
-  const resolveRef = useInlineRefResolver();
+  const document = useDocument();
   const initialRequestBody = React.useMemo(() => {
+    const textRequestBodySchema = mediaTypeContent?.schema;
     const textRequestBodyExamples = mediaTypeContent?.examples;
-
-    const textRequestBodySchema =
-      mediaTypeContent?.schema?.$ref && resolveRef
-        ? resolveRef({ pointer: mediaTypeContent?.schema.$ref, source: null }, null, {})
-        : mediaTypeContent?.schema;
 
     try {
       if (textRequestBodyExamples?.length) {
         return safeStringify(textRequestBodyExamples?.[0]['value']) ?? '';
       } else if (textRequestBodySchema) {
-        return safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true })) ?? '';
+        return safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true }, document)) ?? '';
       }
     } catch (e) {
       console.warn(e);
     }
     return '';
-  }, [mediaTypeContent, resolveRef]);
+  }, [mediaTypeContent, document]);
 
   const [textRequestBody, setTextRequestBody] = React.useState<string>(initialRequestBody);
 
