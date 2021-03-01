@@ -358,7 +358,7 @@ describe('TryIt', () => {
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/));
+        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/s));
       });
     });
 
@@ -387,7 +387,7 @@ describe('TryIt', () => {
         let bodyHeader = screen.queryByText('Body');
         expect(bodyHeader).toBeInTheDocument();
 
-        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"string","age":0}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({ name: 'string', age: 0 });
       });
     });
 
@@ -607,10 +607,8 @@ describe('TryIt', () => {
 
       clickSend();
 
-      const jsonString = '{"name":"string","completed":null}';
-
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-      expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(jsonString));
+      expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual({ name: 'string', completed: null });
     });
   });
 });

@@ -2,7 +2,7 @@ import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { ActiveInfoContext } from '../../containers/Provider';
-import { useDereferencedHttpOperation } from '../../hooks/useDereferencedHttpOperation';
+import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { useParsedData } from '../../hooks/useParsedData';
 import { useActionsApi, usePlatformApi } from '../../hooks/usePlatformApi';
 import { BundledBranchNode } from '../../types';
@@ -46,7 +46,6 @@ export const TryItContainer = ({ node }: ITryItProps) => {
   const nodeData = httpResult?.data || '';
 
   const parsedData = useParsedData(nodeType, nodeData);
-  const dereferencedData = useDereferencedHttpOperation(parsedData);
 
   React.useEffect(() => {
     if (error) {
@@ -62,9 +61,11 @@ export const TryItContainer = ({ node }: ITryItProps) => {
     return <DocsSkeleton />;
   }
 
-  if (dereferencedData?.type !== NodeType.HttpOperation) return null;
+  if (parsedData?.type !== NodeType.HttpOperation) return null;
 
   return (
-    <TryItWithRequestSamples httpOperation={dereferencedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />
+    <InlineRefResolverProvider document={parsedData.data}>
+      <TryItWithRequestSamples httpOperation={parsedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />
+    </InlineRefResolverProvider>
   );
 };
