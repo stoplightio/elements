@@ -396,7 +396,11 @@ describe('TryIt', () => {
 
       it("is populated to first example if there's one", () => {
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
-        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Andrew',
+          age: 19,
+          trial: true,
+        });
       });
 
       it('resets the textbox after httpOperation change', () => {
@@ -434,16 +438,20 @@ describe('TryIt', () => {
       });
 
       it('sends a request with request body from example', async () => {
-        const jsonString = '{"name":"Andrew","age":19,"trial":true}';
+        const json = {
+          name: 'Andrew',
+          age: 19,
+          trial: true,
+        };
 
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
 
-        expect(screen.getByRole('textbox')).toHaveTextContent(jsonString);
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual(json);
 
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(jsonString);
+        expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual(json);
       });
     });
   });

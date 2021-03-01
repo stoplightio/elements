@@ -20,7 +20,7 @@ export const useTextRequestBodyState = (
 
     try {
       if (textRequestBodyExamples?.length) {
-        return safeStringify(textRequestBodyExamples?.[0]['value']) ?? '';
+        return safeStringify(textRequestBodyExamples?.[0]['value'], undefined, 2) ?? '';
       } else if (textRequestBodySchema) {
         return (
           safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true }, document), undefined, 2) ?? ''
