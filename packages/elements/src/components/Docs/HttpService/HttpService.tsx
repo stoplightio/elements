@@ -19,14 +19,16 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
   return (
     <div className={className}>
       {data.name && (
-        <Heading className="mb-5" size={1}>
+        <Heading className="mb-5" fontWeight="medium" size={1}>
           {data.name}
         </Heading>
       )}
 
-      <div className="mb-12">{data.version && <Badge>{enhanceVersionString(data.version)}</Badge>}</div>
+      <div className="mb-12">
+        {data.version && <Badge className="bg-gray-6">{enhanceVersionString(data.version)}</Badge>}
+      </div>
 
-      {data.description && <MarkdownViewer markdown={data.description} />}
+      {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
     </div>
   );
 });
