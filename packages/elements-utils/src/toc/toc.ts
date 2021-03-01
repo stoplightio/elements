@@ -148,10 +148,10 @@ function matchesUri(uri: string) {
 
 export function groupNodesByType(searchResults: NodeData[]) {
   return searchResults.reduce<{
-    articles: Array<Extract<NodeData, { type: 'article' }>>;
-    models: Array<Extract<NodeData, { type: 'model' }>>;
-    httpServices: Array<Extract<NodeData, { type: 'http_service' }>>;
-    httpOperations: Array<Extract<NodeData, { type: 'http_operation' }>>;
+    articles: Array<Extract<NodeData, { type: NodeType.Article }>>;
+    models: Array<Extract<NodeData, { type: NodeType.Model }>>;
+    httpServices: Array<Extract<NodeData, { type: NodeType.HttpService }>>;
+    httpOperations: Array<Extract<NodeData, { type: NodeType.HttpOperation }>>;
   }>(
     (results, searchResult) => {
       switch (searchResult.type) {

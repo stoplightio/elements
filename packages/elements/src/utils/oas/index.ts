@@ -101,12 +101,10 @@ export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[
 
       switch (type) {
         case NodeType.HttpService:
-          const data = node as IHttpService;
-
           nodes.push({
             name: node['name'],
             type,
-            data,
+            data: node as IHttpService,
             uri,
             tags,
           });

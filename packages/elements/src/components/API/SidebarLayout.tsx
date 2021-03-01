@@ -27,13 +27,11 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   const nodeData = uriMap[pathname] || uriMap['/'];
   const showTryIt = isOperation(pathname);
 
-  if (nodeType === NodeType.HttpService) {
-    if (!(nodeData as IHttpService).description) {
-      const item = contents.find(content => content.type === 'item');
+  if (nodeType === NodeType.HttpService && !(nodeData as IHttpService).description) {
+    const item = contents.find(content => content.type === 'item');
 
-      if (item && item.to) {
-        return <Redirect to={item.to} />;
-      }
+    if (item && item.to) {
+      return <Redirect to={item.to} />;
     }
   }
 

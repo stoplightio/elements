@@ -1,38 +1,38 @@
 import * as SMDAST from '@stoplight/markdown/ast-types/smdast';
-import { IHttpOperation, IHttpService } from '@stoplight/types';
+import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 
 export type ParsedNode =
   | {
-      type: 'article';
+      type: NodeType.Article;
       data: string | SMDAST.IRoot;
     }
   | {
-      type: 'http_operation';
+      type: NodeType.HttpOperation;
       data: IHttpOperation;
     }
   | {
-      type: 'http_service';
+      type: NodeType.HttpService;
       data: IHttpService;
     }
   | {
-      type: 'model';
+      type: NodeType.Model;
       data: JSONSchema;
     }
   | {
-      type: 'http_server';
+      type: NodeType.HttpServer;
       data: unknown;
     }
   | {
-      type: 'table_of_contents';
+      type: NodeType.Unknown;
       data: unknown;
     }
   | {
-      type: 'generic';
+      type: NodeType.TableOfContents;
       data: unknown;
     }
   | {
-      type: 'unknown';
+      type: NodeType.Generic;
       data: unknown;
     };
 
