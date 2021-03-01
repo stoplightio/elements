@@ -1,11 +1,12 @@
 import { NodeData } from '@stoplight/elements-utils';
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
-import { NodeType } from '@stoplight/types';
+import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import { get, isObject, last, map } from 'lodash';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
+import { JSONSchema } from '../../types';
 import { ISourceNodeMap, NodeTypes } from './types';
 
 export const isOas2 = (parsed: unknown): parsed is Spec =>
@@ -103,6 +104,7 @@ export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[
           nodes.push({
             name: node['name'],
             type,
+            data: node as IHttpService,
             uri,
             tags,
           });
@@ -111,6 +113,7 @@ export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[
           nodes.push({
             name: node['summary'] || node['path'],
             type,
+            data: node as IHttpOperation,
             uri,
             tags: map(node['tags'], tag => tag['name']),
           });
@@ -119,6 +122,7 @@ export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[
           nodes.push({
             name: node['title'] || last(uri.split('/')) || '',
             type,
+            data: node as JSONSchema,
             uri,
             tags: node['x-tags'],
           });

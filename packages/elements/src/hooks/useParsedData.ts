@@ -1,9 +1,10 @@
+import { ParsedNode } from '@stoplight/elements-utils';
 import { processMarkdown } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import { parse as parseYaml } from '@stoplight/yaml';
 import * as React from 'react';
 
-import { JSONSchema, ParsedNode } from '../types';
+import { JSONSchema } from '../types';
 import { isHttpOperation, isHttpService, isJSONSchema, isSMDASTRoot } from '../utils/guards';
 
 export function useParsedData(nodeType: string, data: unknown): ParsedNode | undefined {
@@ -26,13 +27,13 @@ const parserMap: Record<NodeType, Parser> = {
 function parseArticleData(rawData: unknown): ParsedNode | undefined {
   if (typeof rawData === 'string') {
     return {
-      type: 'article',
+      type: NodeType.Article,
       data: processMarkdown(rawData),
     };
   }
   if (isSMDASTRoot(rawData)) {
     return {
-      type: 'article',
+      type: NodeType.Article,
       data: rawData,
     };
   }
@@ -43,7 +44,7 @@ function parseHttpOperation(rawData: unknown): ParsedNode | undefined {
   const data = tryParseYamlOrObject(rawData);
   if (isHttpOperation(data)) {
     return {
-      type: 'http_operation',
+      type: NodeType.HttpOperation,
       data: data,
     };
   }
@@ -54,7 +55,7 @@ function parseHttpService(rawData: unknown): ParsedNode | undefined {
   const data = tryParseYamlOrObject(rawData);
   if (isHttpService(data)) {
     return {
-      type: 'http_service',
+      type: NodeType.HttpService,
       data: data,
     };
   }
@@ -65,7 +66,7 @@ function parseModel(rawData: unknown): ParsedNode | undefined {
   const data = tryParseYamlOrObject(rawData);
   if (isJSONSchema(data)) {
     return {
-      type: 'model',
+      type: NodeType.Model,
       data: data as JSONSchema,
     };
   }
