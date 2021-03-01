@@ -638,7 +638,7 @@ describe('TryIt', () => {
         const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
 
         // assert that query params are passed
-        expect(queryParams.get('api_key')).toBe('123');
+        expect(queryParams.get('API-Key')).toBe('123');
 
         // make sure we don't attach security duplicated in Operation Parameters
         expect(queryParams.get('api-key')).not.toBeInTheDocument();
