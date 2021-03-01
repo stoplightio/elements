@@ -1,8 +1,7 @@
-import { NodeType } from '@stoplight/types';
+import { ParsedNode } from '../types';
 
-export type NodeData = {
+export type NodeData = ParsedNode & {
   name: string;
-  type: NodeType;
   tags: string[];
   uri: string;
 };
