@@ -4,8 +4,10 @@ import { isPlainObject } from 'lodash';
 import * as React from 'react';
 import { useContext } from 'react';
 
-const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(void 0);
+const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(undefined);
 InlineRefResolverContext.displayName = 'InlineRefResolverContext';
+
+export const DocumentContext = React.createContext<unknown>(undefined);
 
 type InlineRefResolverProviderProps =
   | {
@@ -45,9 +47,11 @@ export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps>
 
   return (
     <InlineRefResolverContext.Provider value={'resolver' in props ? props.resolver : documentBasedRefResolver}>
-      {children}
+      <DocumentContext.Provider value={document}>{children}</DocumentContext.Provider>
     </InlineRefResolverContext.Provider>
   );
 };
 
 export const useInlineRefResolver = () => useContext(InlineRefResolverContext);
+
+export const useDocument = () => useContext(DocumentContext);
