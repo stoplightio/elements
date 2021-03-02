@@ -252,9 +252,6 @@ describe('HttpOperation', () => {
         />,
       );
 
-      const responseBodyPanel = screen.getByRole('heading', { name: /body/i });
-      userEvent.click(responseBodyPanel);
-
       expect(await screen.findByText('Hello world!')).toBeInTheDocument();
     });
   });
