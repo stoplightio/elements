@@ -7,12 +7,12 @@ describe('API component', () => {
     loadZoomApiPage();
     cy.findByText('Groups').click();
     cy.findByText('Create a group').click();
-    cy.findByRole('heading', { name: /POST \/groups/i }).should('exist');
+    cy.findByRole('heading', { name: /Create a group/i }).should('exist');
   });
 
   it('opens via url', () => {
     cy.visit('/zoom-api/paths/~1groups/post');
-    cy.findByRole('heading', { name: /POST \/groups/i }).should('exist');
+    cy.findByRole('heading', { name: /Create a group/i }).should('exist');
   });
 });
 

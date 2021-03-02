@@ -7,7 +7,7 @@ describe('Stoplight component', () => {
     loadStoplightProjectPage();
     cy.findByText('pets').click();
     cy.findByText('Create a pet').click();
-    cy.findByRole('heading', { name: /POST \/pets/i }).should('exist');
+    cy.findByRole('heading', { name: /Create a pet/i }).should('exist');
   });
 
   it('opens via url', () => {

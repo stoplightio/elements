@@ -46,26 +46,3 @@ $PageHeadings: 200px;
     }
   }
 }
-
-.MarkdownViewer {
-  .RequestMaker__RequestEditor,
-  .RequestMaker__ResponseViewer {
-    .CodeEditor {
-      margin: 1.25rem;
-      padding: 0;
-      background: transparent !important;
-      @include lightCodeTheme;
-
-      .#{$ns}-dark & {
-        @include darkCodeTheme;
-      }
-    }
-  }
-
-  .RequestMaker__RequestBody--raw,
-  .RequestMaker__RequestBody--graphql,
-  .RequestMaker__RequestViewer,
-  .RequestMaker__RawViewer {
-    display: flex;
-  }
-}

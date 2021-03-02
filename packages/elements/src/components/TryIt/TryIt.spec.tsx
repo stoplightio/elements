@@ -11,10 +11,12 @@ import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
 import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
+import { httpOperation as referencedBody } from '../../__fixtures__/operations/referenced-body';
 import { requestBody } from '../../__fixtures__/operations/request-body';
 import { emptySecurityOperation, singleSecurityOperation } from '../../__fixtures__/operations/securedOperation';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
+import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
 import { TryIt } from './index';
 
@@ -356,7 +358,7 @@ describe('TryIt', () => {
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/));
+        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/s));
       });
     });
 
@@ -385,7 +387,7 @@ describe('TryIt', () => {
         let bodyHeader = screen.queryByText('Body');
         expect(bodyHeader).toBeInTheDocument();
 
-        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"string","age":0}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({ name: 'string', age: 0 });
       });
     });
 
@@ -394,7 +396,11 @@ describe('TryIt', () => {
 
       it("is populated to first example if there's one", () => {
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
-        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Andrew',
+          age: 19,
+          trial: true,
+        });
       });
 
       it('resets the textbox after httpOperation change', () => {
@@ -432,16 +438,20 @@ describe('TryIt', () => {
       });
 
       it('sends a request with request body from example', async () => {
-        const jsonString = '{"name":"Andrew","age":19,"trial":true}';
+        const json = {
+          name: 'Andrew',
+          age: 19,
+          trial: true,
+        };
 
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
 
-        expect(screen.getByRole('textbox')).toHaveTextContent(jsonString);
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual(json);
 
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(jsonString);
+        expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual(json);
       });
     });
   });
@@ -592,6 +602,21 @@ describe('TryIt', () => {
         const HttpSchemesButton = screen.queryByRole('button', { name: 'OAuth 2.0' });
         expect(HttpSchemesButton).toBeInTheDocument();
       });
+    });
+  });
+
+  describe('Ref resolving', () => {
+    it('generates sample body from refed parameter', async () => {
+      render(
+        <InlineRefResolverProvider document={referencedBody}>
+          <TryItWithPersistence httpOperation={referencedBody} />
+        </InlineRefResolverProvider>,
+      );
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual({ name: 'string', completed: null });
     });
   });
 });
