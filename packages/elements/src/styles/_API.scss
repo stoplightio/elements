@@ -20,7 +20,7 @@
   }
 
   .ContentViewer {
-    width: calc(100% - 300px);
+    overflow: hidden;
   }
 }
 
