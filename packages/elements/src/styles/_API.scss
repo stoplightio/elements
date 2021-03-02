@@ -20,7 +20,7 @@
   }
 
   .ContentViewer {
-    width: min-content;
+    width: calc(100% - 300px);
   }
 }
 
