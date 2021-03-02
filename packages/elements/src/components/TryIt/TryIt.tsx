@@ -148,7 +148,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
         ) : null}
         <Panel.Content>
           <Flex>
-            <Button appearance="primary" loading={loading} disabled={loading} onClick={handleClick}>
+            <Button appearance="primary" loading={loading} disabled={loading} onPress={handleClick}>
               Send
             </Button>
             {showMocking && (

@@ -2,14 +2,9 @@
 
 .HttpSecuritySchemes,
 .HttpOperation__Parameters {
-  .TreeList {
-    .#{$ns}-dark & {
-      background-color: get-color(darkgray, 4);
-    }
-  }
 
   .MarkdownViewer p {
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.5em;
   }
 }

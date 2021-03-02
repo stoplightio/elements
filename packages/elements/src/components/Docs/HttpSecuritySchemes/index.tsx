@@ -12,7 +12,7 @@ import * as React from 'react';
 
 import { HttpSecuritySchemeColors } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { SectionTitle } from '../HttpOperation/SectionTitle';
+import { SectionTitle } from '../Sections';
 
 export interface ISecuritiesProps {
   securities?: HttpSecurityScheme[];
