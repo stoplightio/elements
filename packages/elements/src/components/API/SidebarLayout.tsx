@@ -42,8 +42,8 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
         <div className="flex">
           <Docs className="px-10" nodeData={nodeData} nodeType={nodeType} />
           {showTryIt && (
-            <div className="w-2/5 relative">
-              <div className="inset-0 overflow-auto px-10">
+            <div className="w-2/5 relative ml-10">
+              <div className="inset-0 overflow-auto">
                 <TryItWithRequestSamples httpOperation={nodeData as IHttpOperation} />
               </div>
             </div>
