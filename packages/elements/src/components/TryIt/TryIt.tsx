@@ -6,7 +6,7 @@ import { IHttpOperation } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import * as React from 'react';
 
-import { HttpCodeDescriptions } from '../../constants';
+import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { TryItAuth } from './Auth';
 import { buildFetchRequest, buildHarRequest } from './build-request';
@@ -121,7 +121,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
       <Panel isCollapsible={false} className="p-0">
         <Panel.Titlebar bg="canvas-300">
           <div role="heading" className="sl-font-bold">
-            <Text color="primary">{httpOperation.method.toUpperCase()}</Text>
+            <Text color={HttpMethodColors[httpOperation.method]}>{httpOperation.method.toUpperCase()}</Text>
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
