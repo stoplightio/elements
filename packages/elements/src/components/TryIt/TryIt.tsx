@@ -73,7 +73,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
-  const [operationAuthValue, setOperationAuthValue] = React.useState<HttpSecuritySchemeWithValues>();
+  const [operationAuthValue, setOperationAuthValue] = React.useState<HttpSecuritySchemeWithValues | undefined>();
 
   React.useEffect(() => {
     let isActive = true;
@@ -106,7 +106,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
         mediaTypeContent,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         mockData,
-        authValue: operationAuthValue,
+        auth: operationAuthValue,
       });
       const response = await fetch(...request);
       setResponse({
@@ -129,7 +129,11 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
-        <TryItAuth handleChange={setOperationAuthValue} operationSecurityScheme={httpOperation.security ?? []} />
+        <TryItAuth
+          onChange={setOperationAuthValue}
+          operationSecurityScheme={httpOperation.security ?? []}
+          value={operationAuthValue}
+        />
         {allParameters.length > 0 && (
           <OperationParameters
             parameters={allParameters}

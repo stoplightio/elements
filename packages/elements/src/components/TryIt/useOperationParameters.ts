@@ -48,15 +48,15 @@ function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
   const pathParameters = sortBy(httpOperation.request?.path ?? [], ['name']);
   const queryParameters = sortBy(httpOperation.request?.query ?? [], ['name']).filter(
     qparam =>
-      !flatten(httpOperation.security).some(
-        sec => !isApiKeySecurityScheme(sec) || sec.name.toUpperCase() === qparam.name.toUpperCase(),
-      ),
+      !flatten(httpOperation.security)
+        .filter(isApiKeySecurityScheme)
+        .some(sec => sec.name.toUpperCase() === qparam.name.toUpperCase()),
   );
   const headerParameters = sortBy(httpOperation.request?.headers ?? [], ['name']).filter(
     hparam =>
-      !flatten(httpOperation.security).some(
-        sec => !isApiKeySecurityScheme(sec) || sec.name.toUpperCase() === hparam.name.toUpperCase(),
-      ),
+      !flatten(httpOperation.security)
+        .filter(isApiKeySecurityScheme)
+        .some(sec => sec.name.toUpperCase() === hparam.name.toUpperCase()),
   );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
 }

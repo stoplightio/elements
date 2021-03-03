@@ -601,29 +601,23 @@ describe('TryIt', () => {
       it('is displayed for security of that type', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const APIKeyName = screen.getByRole('apiKey');
-        expect(APIKeyName).toHaveValue('API Key');
+        const APIKeyName = screen.getByDisplayValue('API Key');
+        expect(APIKeyName).toBeInTheDocument();
       });
       it('removes duplicated parameters', () => {
         render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
 
-        const APIKeyName = screen.getByRole('apiKey');
-        expect(APIKeyName).toHaveValue('API-Key');
-
         // check if query param with the same name as security is removed from OperationParameters (case insensitive)
-        const queryParam = screen.queryByText('api-key');
+        const queryParam = screen.queryByLabelText('api-key');
         expect(queryParam).not.toBeInTheDocument();
 
         // check if header with the same name as security is removed from OperationParameters (case insensitive)
-        const header = screen.queryByText('Api-KeY');
+        const header = screen.queryByLabelText('Api-KeY');
         expect(header).not.toBeInTheDocument();
       });
 
       it('attaches auth token as a query parameter', async () => {
         render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
-
-        const APIKeyName = screen.getByRole('apiKey');
-        expect(APIKeyName).toHaveValue('API-Key');
 
         const APIKeyField = screen.getByLabelText('API-Key');
         await userEvent.type(APIKeyField, '123');

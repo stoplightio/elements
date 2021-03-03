@@ -2,14 +2,13 @@ import { Flex, Input, Panel, Text } from '@stoplight/mosaic';
 import { IApiKeySecurityScheme } from '@stoplight/types';
 import * as React from 'react';
 
-import { HttpSecuritySchemeWithValues } from './authentication-utils';
-
 interface APIKeyAuthProps {
   scheme: IApiKeySecurityScheme;
-  onChange: (apiKey: HttpSecuritySchemeWithValues) => void;
+  onChange: (apiKey: string) => void;
+  value: string;
 }
 
-export const APIKeyAuth: React.FC<APIKeyAuthProps> = ({ scheme, onChange }) => {
+export const APIKeyAuth: React.FC<APIKeyAuthProps> = ({ scheme, onChange, value }) => {
   return (
     <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
       <Input role={scheme.type} appearance="minimal" readOnly value={scheme.name} />
@@ -21,9 +20,10 @@ export const APIKeyAuth: React.FC<APIKeyAuthProps> = ({ scheme, onChange }) => {
           appearance="minimal"
           flexGrow
           placeholder="123"
+          value={value}
           type="text"
           required
-          onChange={e => onChange({ ...scheme, value: e.target.value })}
+          onChange={e => onChange(e.currentTarget.value)}
         />
       </Flex>
     </Panel.Content>

@@ -13,7 +13,7 @@ interface BuildRequestInput {
   parameterValues: Dictionary<string, string>;
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
-  authValue?: HttpSecuritySchemeWithValues;
+  auth?: HttpSecuritySchemeWithValues;
 }
 
 export async function buildFetchRequest({
@@ -22,7 +22,7 @@ export async function buildFetchRequest({
   bodyInput,
   parameterValues,
   mockData,
-  authValue,
+  auth,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
   const server = mockData?.url || httpOperation.servers?.[0]?.url;
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
@@ -32,8 +32,8 @@ export async function buildFetchRequest({
       ?.map(param => [param.name, parameterValues[param.name] ?? ''])
       .filter(([_, value]) => value.length > 0) ?? [];
 
-  if (authValue && isApiKeySecurityScheme(authValue) && authValue.in === 'query') {
-    queryParams.push([authValue.name, safeStringify(authValue.value)]);
+  if (auth && isApiKeySecurityScheme(auth.scheme) && auth.scheme.in === 'query') {
+    queryParams.push([auth.scheme.name, safeStringify(auth.authValue)]);
   }
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
@@ -49,18 +49,18 @@ export async function buildFetchRequest({
       method: httpOperation.method,
       headers: {
         'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
-        ...(authValue &&
-          isApiKeySecurityScheme(authValue) &&
-          authValue.in === 'header' && {
-            [authValue.name]: authValue?.value,
+        ...(auth &&
+          isApiKeySecurityScheme(auth.scheme) &&
+          auth.scheme.in === 'header' && {
+            [auth.scheme.name]: auth?.authValue,
           }),
         ...Object.fromEntries(
           httpOperation.request?.headers
             ?.filter(
               hparam =>
-                !flatten(httpOperation.security).some(
-                  sec => !isApiKeySecurityScheme(sec) || sec.name.toUpperCase() === hparam.name.toUpperCase(),
-                ),
+                !flatten(httpOperation.security)
+                  .filter(isApiKeySecurityScheme)
+                  .some(sec => sec.name.toUpperCase() === hparam.name.toUpperCase()),
             )
             .map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
         ),
