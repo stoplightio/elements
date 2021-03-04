@@ -79,7 +79,6 @@ export const Response = ({ response: { contents = [], headers = [], description 
       {contents.length > 0 && (
         <SubSectionPanel
           title="Body"
-          aria-label="Response Body Section"
           rightComponent={
             <Select
               aria-label="Choose Response Body Content Type"

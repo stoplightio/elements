@@ -297,7 +297,7 @@ describe('HttpOperation', () => {
     it('should display description even if there are no contents', async () => {
       render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
 
-      const body = screen.getAllByRole('heading', { name: 'Body' })[0];
+      const body = screen.getByRole('heading', { name: 'Body' });
       userEvent.click(body);
 
       expect(await screen.findByText('Some body description')).toBeInTheDocument();
@@ -306,7 +306,7 @@ describe('HttpOperation', () => {
     it('should display schema for content type', async () => {
       render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
 
-      const body = screen.getAllByRole('heading', { name: 'Body' })[0];
+      const body = screen.getByRole('heading', { name: 'Body' });
       userEvent.click(body);
 
       expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
@@ -318,7 +318,7 @@ describe('HttpOperation', () => {
       const select = screen.getByLabelText('Choose Request Body Content Type');
       userEvent.selectOptions(select, 'application/xml');
 
-      const body = screen.getAllByRole('heading', { name: 'Body' })[0];
+      const body = screen.getByRole('heading', { name: 'Body' });
       userEvent.click(body);
 
       expect(await screen.findByText('No schema was provided for this content type.')).toBeInTheDocument();
@@ -326,65 +326,46 @@ describe('HttpOperation', () => {
   });
 
   describe('Response', () => {
+    const httpOperationWithResponseBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
+        },
+      ],
+    };
+
+    const httpOperationWithoutResponseBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
     it('should render the MarkdownViewer with description', async () => {
-      render(
-        <HttpOperation
-          data={{
-            path: '/',
-            id: 'some_id',
-            method: 'get',
-            responses: [
-              {
-                code: '200',
-                description: 'Hello world!',
-              },
-            ],
-          }}
-        />,
-      );
+      render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
 
       expect(await screen.findByText('Hello world!')).toBeInTheDocument();
     });
 
     it('should render select for content types', async () => {
-      render(
-        <HttpOperation
-          data={{
-            path: '/',
-            id: 'some_id',
-            method: 'get',
-            responses: [
-              {
-                code: '200',
-                description: 'Hello world!',
-                contents: [{ mediaType: 'application/json' }, { mediaType: 'application/xml' }],
-              },
-            ],
-          }}
-        />,
-      );
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
       const select = screen.queryByLabelText('Choose Response Body Content Type');
       expect(select).not.toBeNull();
     });
 
     it('should allow changing content type', async () => {
-      render(
-        <HttpOperation
-          data={{
-            path: '/',
-            id: 'some_id',
-            method: 'get',
-            responses: [
-              {
-                code: '200',
-                description: 'Hello world!',
-                contents: [{ mediaType: 'application/json' }, { mediaType: 'application/xml' }],
-              },
-            ],
-          }}
-        />,
-      );
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
       const select = screen.getByLabelText('Choose Response Body Content Type');
 
@@ -396,25 +377,31 @@ describe('HttpOperation', () => {
     });
 
     it('should not render select when there are no contents', async () => {
-      render(
-        <HttpOperation
-          data={{
-            path: '/',
-            id: 'some_id',
-            method: 'get',
-            responses: [
-              {
-                code: '200',
-                description: 'Hello world!',
-                contents: [],
-              },
-            ],
-          }}
-        />,
-      );
+      render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
 
       const select = screen.queryByLabelText('Choose Response Body Content Type');
       expect(select).toBeNull();
+    });
+
+    it('should display schema for chosen content type', async () => {
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+
+      const body = screen.getByRole('heading', { name: 'Body' });
+      userEvent.click(body);
+
+      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
+    });
+
+    it('should display message for content type without a schema', async () => {
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+
+      const select = screen.getByLabelText('Choose Response Body Content Type');
+      userEvent.selectOptions(select, 'application/xml');
+
+      const body = screen.getByRole('heading', { name: 'Body' });
+      userEvent.click(body);
+
+      expect(await screen.findByText('No schema was provided for this content type.')).toBeInTheDocument();
     });
   });
 });

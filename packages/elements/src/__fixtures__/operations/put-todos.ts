@@ -9,7 +9,7 @@ export const httpOperation: IHttpOperation = {
   responses: [
     {
       code: '200',
-      description: '',
+      description: 'It worked!',
       headers: [
         {
           schema: {
