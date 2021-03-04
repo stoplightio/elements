@@ -1,5 +1,3 @@
-import 'jest-enzyme';
-
 import { HttpParamStyles } from '@stoplight/types';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -234,6 +232,68 @@ describe('HttpOperation', () => {
     });
   });
 
+  describe('Request Body', () => {
+    const httpOperationWithRequestBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      request: {
+        body: {
+          contents: [{ mediaType: 'application/json' }, { mediaType: 'application/xml' }],
+        },
+      },
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
+    const httpOperationWithoutRequestBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      request: {
+        body: {
+          contents: [],
+        },
+      },
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
+    it('should render select for content type', () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Request Body Content Type');
+      expect(select).not.toBeNull();
+    });
+
+    it('should allow to select different content type', () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const select = screen.getByLabelText('Choose Request Body Content Type');
+
+      expect(select).toHaveDisplayValue('application/json');
+
+      userEvent.selectOptions(select, 'application/xml');
+
+      expect(select).toHaveDisplayValue('application/xml');
+    });
+
+    it('should not render select if there are no contents', () => {
+      render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Request Body Content Type');
+      expect(select).toBeNull();
+    });
+  });
+
   describe('Response', () => {
     it('should render the MarkdownViewer with description', async () => {
       render(
@@ -253,6 +313,77 @@ describe('HttpOperation', () => {
       );
 
       expect(await screen.findByText('Hello world!')).toBeInTheDocument();
+    });
+
+    it('should render select for content types', async () => {
+      render(
+        <HttpOperation
+          data={{
+            path: '/',
+            id: 'some_id',
+            method: 'get',
+            responses: [
+              {
+                code: '200',
+                description: 'Hello world!',
+                contents: [{ mediaType: 'application/json' }, { mediaType: 'application/xml' }],
+              },
+            ],
+          }}
+        />,
+      );
+
+      const select = screen.queryByLabelText('Choose Response Body Content Type');
+      expect(select).not.toBeNull();
+    });
+
+    it('should allow changing content type', async () => {
+      render(
+        <HttpOperation
+          data={{
+            path: '/',
+            id: 'some_id',
+            method: 'get',
+            responses: [
+              {
+                code: '200',
+                description: 'Hello world!',
+                contents: [{ mediaType: 'application/json' }, { mediaType: 'application/xml' }],
+              },
+            ],
+          }}
+        />,
+      );
+
+      const select = screen.getByLabelText('Choose Response Body Content Type');
+
+      expect(select).toHaveDisplayValue('application/json');
+
+      userEvent.selectOptions(select, 'application/xml');
+
+      expect(select).toHaveDisplayValue('application/xml');
+    });
+
+    it('should not render select when there are no contents', async () => {
+      render(
+        <HttpOperation
+          data={{
+            path: '/',
+            id: 'some_id',
+            method: 'get',
+            responses: [
+              {
+                code: '200',
+                description: 'Hello world!',
+                contents: [],
+              },
+            ],
+          }}
+        />,
+      );
+
+      const select = screen.queryByLabelText('Choose Response Body Content Type');
+      expect(select).toBeNull();
     });
   });
 });

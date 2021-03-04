@@ -89,6 +89,22 @@ export const httpOperation: IHttpOperation = {
             'x-tags': ['Todos'],
           },
         },
+        {
+          mediaType: 'application/xml',
+        },
+        {
+          mediaType: 'application/yaml',
+          schema: {
+            properties: {
+              some_number: {
+                type: 'number',
+              },
+              some_string: {
+                type: 'string',
+              },
+            },
+          },
+        },
       ],
     },
     {
@@ -289,6 +305,9 @@ export const httpOperation: IHttpOperation = {
               },
             },
           ],
+        },
+        {
+          mediaType: 'application/xml',
         },
       ],
     },
