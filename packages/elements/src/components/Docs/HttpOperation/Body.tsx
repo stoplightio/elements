@@ -15,7 +15,7 @@ export interface BodyProps {
 export const Body = ({ body: { contents = [], description } }: BodyProps) => {
   const [chosenContent, setChosenContent] = React.useState(0);
 
-  if (contents.length === 0) return null;
+  if (contents.length === 0 && !description) return null;
 
   const schema = contents[chosenContent]?.schema;
   const examples = getExamplesObject(contents[chosenContent]?.examples || []);
@@ -24,19 +24,21 @@ export const Body = ({ body: { contents = [], description } }: BodyProps) => {
     <SubSectionPanel
       title="Body"
       rightComponent={
-        <Select
-          aria-label="Choose Request Body Content Type"
-          onChange={e => setChosenContent(parseInt(e.currentTarget.value, 10))}
-          options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
-        />
+        contents.length > 0 && (
+          <Select
+            aria-label="Choose Request Body Content Type"
+            onChange={e => setChosenContent(parseInt(e.currentTarget.value, 10))}
+            options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
+          />
+        )
       }
     >
-      {description && <MarkdownViewer className="mt-6" markdown={description} />}
+      {description && <MarkdownViewer className="mb-6" markdown={description} />}
 
       {isJSONSchema(schema) ? (
         <SchemaViewer className="mt-6" schema={schema} examples={examples} viewMode="write" />
       ) : (
-        <Text>No schema was provided for this content type.</Text>
+        contents.length > 0 && <Text>No schema was provided for this content type.</Text>
       )}
     </SubSectionPanel>
   );

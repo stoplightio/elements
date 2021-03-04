@@ -271,6 +271,7 @@ export const httpOperation: IHttpOperation = {
   ],
   request: {
     body: {
+      description: 'Some body description',
       contents: [
         {
           mediaType: 'application/json',

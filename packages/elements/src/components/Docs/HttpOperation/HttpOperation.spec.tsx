@@ -9,7 +9,7 @@ import { HttpOperation } from './index';
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
   PropertyTypeColors: {},
-  JsonSchemaViewer: () => <div />,
+  JsonSchemaViewer: () => <div>This is JsonSchemaViewer</div>,
 }));
 
 describe('HttpOperation', () => {
@@ -239,7 +239,7 @@ describe('HttpOperation', () => {
       method: 'get',
       request: {
         body: {
-          contents: [{ mediaType: 'application/json' }, { mediaType: 'application/xml' }],
+          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
         },
       },
       responses: [
@@ -256,6 +256,7 @@ describe('HttpOperation', () => {
       method: 'get',
       request: {
         body: {
+          description: 'Some body description',
           contents: [],
         },
       },
@@ -291,6 +292,36 @@ describe('HttpOperation', () => {
 
       const select = screen.queryByLabelText('Choose Request Body Content Type');
       expect(select).toBeNull();
+    });
+
+    it('should display description even if there are no contents', async () => {
+      render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
+
+      const body = screen.getAllByRole('heading', { name: 'Body' })[0];
+      userEvent.click(body);
+
+      expect(await screen.findByText('Some body description')).toBeInTheDocument();
+    });
+
+    it('should display schema for content type', async () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const body = screen.getAllByRole('heading', { name: 'Body' })[0];
+      userEvent.click(body);
+
+      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
+    });
+
+    it('should display message for content type without a schema', async () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const select = screen.getByLabelText('Choose Request Body Content Type');
+      userEvent.selectOptions(select, 'application/xml');
+
+      const body = screen.getAllByRole('heading', { name: 'Body' })[0];
+      userEvent.click(body);
+
+      expect(await screen.findByText('No schema was provided for this content type.')).toBeInTheDocument();
     });
   });
 
