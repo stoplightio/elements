@@ -13,6 +13,7 @@ import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos'
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { httpOperation as referencedBody } from '../../__fixtures__/operations/referenced-body';
 import { requestBody } from '../../__fixtures__/operations/request-body';
+import { requestBodyEmptySchema } from '../../__fixtures__/operations/request-body-empty-schema';
 import { emptySecurityOperation, singleSecurityOperation } from '../../__fixtures__/operations/securedOperation';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
@@ -388,6 +389,15 @@ describe('TryIt', () => {
         expect(bodyHeader).toBeInTheDocument();
 
         expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({ name: 'string', age: 0 });
+      });
+
+      it('does not generate request body from schema when schema is empty', () => {
+        render(<TryItWithPersistence httpOperation={requestBodyEmptySchema} />);
+
+        let bodyHeader = screen.queryByText('Body');
+        expect(bodyHeader).toBeInTheDocument();
+
+        expect(screen.getByRole('textbox').textContent).toBe('');
       });
     });
 
