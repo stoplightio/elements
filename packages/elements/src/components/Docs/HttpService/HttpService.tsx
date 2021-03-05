@@ -1,4 +1,4 @@
-import { Heading } from '@stoplight/mosaic';
+import { Heading, Panel, Text } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
@@ -17,18 +17,30 @@ export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
   return (
-    <div className={className}>
-      {data.name && (
-        <Heading className="mb-5" fontWeight="medium" size={1}>
-          {data.name}
-        </Heading>
-      )}
+    <div className={'flex flex-row items-start'}>
+      <div>
+        {data.name && (
+          <Heading className="mb-5" fontWeight="medium" size={1}>
+            {data.name}
+          </Heading>
+        )}
 
-      <div className="mb-12">
-        {data.version && <Badge className="bg-gray-6">{enhanceVersionString(data.version)}</Badge>}
+        <div className="mb-12">
+          {data.version && <Badge className="bg-gray-6">{enhanceVersionString(data.version)}</Badge>}
+        </div>
+
+        {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
       </div>
-
-      {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
+      <div className="flex flex-col items-start">
+        {data.servers?.length && (
+          <Panel isCollapsible={false}>
+            <Panel.Titlebar>API Base URL</Panel.Titlebar>
+            <Panel.Content>
+              <Text>{`Production: ${data.servers[0].url}`}</Text>
+            </Panel.Content>
+          </Panel>
+        )}
+      </div>
     </div>
   );
 });
