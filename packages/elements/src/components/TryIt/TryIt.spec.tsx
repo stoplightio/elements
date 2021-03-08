@@ -644,6 +644,7 @@ describe('TryIt', () => {
         expect(HttpSchemesButton).toBeInTheDocument();
       });
     });
+
     describe('API Key component', () => {
       it('is displayed for security of that type', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
@@ -682,8 +683,8 @@ describe('TryIt', () => {
         expect(queryParams.get('API-Key')).toBe('123');
 
         // make sure we don't attach security duplicated in Operation Parameters
-        expect(queryParams.get('api-key')).not.toBeInTheDocument();
-        expect(headers.get('Api-KeY')).not.toBeInTheDocument();
+        expect(queryParams.get('api-key')).toBeNull();
+        expect(headers.get('Api-KeY')).toBeNull();
       });
 
       it('attaches auth token as a header', async () => {

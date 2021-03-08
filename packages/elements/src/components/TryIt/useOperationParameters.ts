@@ -1,9 +1,9 @@
 import { IHttpOperation } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { flatten, orderBy, uniqBy } from 'lodash';
+import { orderBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
-import { isApiKeySecurityScheme } from './authentication-utils';
+import { filterOutAuthorizationParams } from './authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
 const persistedParameterValuesAtom = atom({});
@@ -46,17 +46,13 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
 
 function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
   const pathParameters = orderBy(httpOperation.request?.path ?? [], ['required', 'name'], ['desc', 'asc']);
-  const queryParameters = orderBy(httpOperation.request?.query ?? [], ['required', 'name'], ['asc', 'asc']).filter(
-    qparam =>
-      !flatten(httpOperation.security)
-        .filter(isApiKeySecurityScheme)
-        .some(sec => sec.name.toUpperCase() === qparam.name.toUpperCase()),
+  const queryParameters = filterOutAuthorizationParams(
+    orderBy(httpOperation.request?.query ?? [], ['required', 'name'], ['desc', 'asc']),
+    httpOperation.security,
   );
-  const headerParameters = orderBy(httpOperation.request?.headers ?? [], ['required', 'name'], ['desc', 'asc']).filter(
-    hparam =>
-      !flatten(httpOperation.security)
-        .filter(isApiKeySecurityScheme)
-        .some(sec => sec.name.toUpperCase() === hparam.name.toUpperCase()),
+  const headerParameters = filterOutAuthorizationParams(
+    orderBy(httpOperation.request?.headers ?? [], ['required', 'name'], ['desc', 'asc']),
+    httpOperation.security,
   );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
 }

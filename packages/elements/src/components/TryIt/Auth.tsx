@@ -5,6 +5,7 @@ import * as React from 'react';
 
 import { APIKeyAuth } from './APIKeyAuth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';
+import { OAuth2Auth } from './OAuth2Auth';
 
 interface TryItAuthProps {
   operationSecurityScheme: HttpSecurityScheme[][];
@@ -81,6 +82,8 @@ const SecuritySchemeComponent: React.FC<SecuritySchemeComponentProps> = ({ schem
   switch (scheme.type) {
     case 'apiKey':
       return <APIKeyAuth scheme={scheme} {...rest} />;
+    case 'oauth2':
+      return <OAuth2Auth scheme={scheme} {...rest} />;
     default:
       return <GenericMessageContainer scheme={scheme} {...rest} />;
   }
