@@ -1,37 +1,42 @@
+import { Select } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
-import cn from 'classnames';
 import * as React from 'react';
 
 import { isJSONSchema } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
-import { SectionTitle } from './SectionTitle';
+import { SubSectionPanel } from '../Sections';
 import { getExamplesObject } from './utils';
 
-export interface IBodyProps {
+export interface BodyProps {
   body: IHttpOperationRequestBody;
-  className?: string;
 }
 
-export const Body = ({ body, className }: IBodyProps) => {
-  if (typeof body !== 'object' || !body.contents) return null;
+export const Body = ({ body: { contents = [], description } }: BodyProps) => {
+  const [chosenContent, setChosenContent] = React.useState(0);
 
-  // TODO (CL): Support multiple bodies?
-  const content = body.contents && body.contents[0];
-  const schema = content?.schema;
-  const examples = getExamplesObject(content?.examples || []);
+  if (contents.length === 0 && !description) return null;
 
-  // If we have nothing to show then don't render this section
-  if (!content || (!body.description && !schema && !examples)) return null;
+  const schema = contents[chosenContent]?.schema;
+  const examples = getExamplesObject(contents[chosenContent]?.examples || []);
 
   return (
-    <div className={cn('HttpOperation__Body', className)}>
-      <SectionTitle title="Request Body" />
-
-      {body.description && <MarkdownViewer className="mt-6" markdown={body.description} />}
+    <SubSectionPanel
+      title="Body"
+      rightComponent={
+        contents.length > 0 && (
+          <Select
+            aria-label="Choose Request Body Content Type"
+            onChange={e => setChosenContent(parseInt(e.currentTarget.value, 10))}
+            options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
+          />
+        )
+      }
+    >
+      {description && <MarkdownViewer className="mb-6" markdown={description} />}
 
       {isJSONSchema(schema) && <SchemaViewer className="mt-6" schema={schema} examples={examples} viewMode="write" />}
-    </div>
+    </SubSectionPanel>
   );
 };
 Body.displayName = 'HttpOperation.Body';

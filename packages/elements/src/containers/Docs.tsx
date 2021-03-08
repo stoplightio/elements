@@ -21,7 +21,7 @@ const DocsPopup = React.memo<{ nodeType: NodeType; nodeData: unknown; className?
     const parsedNode = useParsedData(nodeType, nodeData);
     if (!parsedNode) return null;
     return (
-      <InlineRefResolverProvider document={document}>
+      <InlineRefResolverProvider document={parsedNode.data}>
         <ParsedDocs className={className} node={parsedNode} />
       </InlineRefResolverProvider>
     );

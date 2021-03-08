@@ -51,13 +51,13 @@ export const HttpSecuritySchemeColors: Dictionary<string, HttpSecurityScheme['ty
   openIdConnect: 'blue',
 };
 
-export const HttpMethodColors: { [method: string]: string } = {
+export const HttpMethodColors = {
   get: 'success',
   post: 'primary',
   put: 'warning',
   patch: 'warning',
   delete: 'danger',
-};
+} as const;
 
 export const HttpCodeColor = {
   0: 'red',

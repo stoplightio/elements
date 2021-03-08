@@ -1,30 +1,18 @@
-import 'jest-enzyme';
-
-import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { MarkdownViewer } from '@stoplight/markdown-viewer';
-import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
-import { Tag } from '@stoplight/ui-kit';
+import { HttpParamStyles } from '@stoplight/types';
 import { render, screen } from '@testing-library/react';
-import { mount, ReactWrapper } from 'enzyme';
+import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import { HttpOperation } from './index';
-import { Parameters } from './Parameters';
 
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
   PropertyTypeColors: {},
-  JsonSchemaViewer: () => <div />,
+  JsonSchemaViewer: () => <div>This is JsonSchemaViewer</div>,
 }));
 
 describe('HttpOperation', () => {
-  let wrapper: ReactWrapper;
-
-  afterEach(() => {
-    wrapper?.unmount();
-  });
-
   describe('Header', () => {
     it('should display "Deprecated" badge for deprecated http operation', () => {
       render(<HttpOperation data={{ ...httpOperation, deprecated: true }} />);
@@ -44,8 +32,8 @@ describe('HttpOperation', () => {
   });
 
   describe('Query Parameters', () => {
-    it('should render correct validations', () => {
-      const operationData = {
+    it('should render correct validations', async () => {
+      const data = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -75,12 +63,17 @@ describe('HttpOperation', () => {
         },
       };
 
-      wrapper = mount(<HttpOperation data={operationData} />);
-      const queryParameterElement = wrapper.findWhere(
-        w => w.type() === Parameters && w.props().title === 'Query Parameters',
-      );
-      expect(queryParameterElement.props().parameters).toEqual(operationData.request.query);
-      expect(queryParameterElement.find(Tag).length).toEqual(4);
+      render(<HttpOperation data={data} />);
+
+      const queryParametersPanel = screen.queryByRole('heading', { name: 'Query' });
+      expect(queryParametersPanel).toBeInTheDocument();
+      expect(queryParametersPanel).toBeVisible();
+      expect(queryParametersPanel).toBeEnabled();
+
+      userEvent.click(queryParametersPanel!);
+
+      expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
+      expect(screen.getByRole('note', { name: /deprecated/i })).toBeInTheDocument();
     });
 
     it('should not render default styles', () => {
@@ -108,16 +101,18 @@ describe('HttpOperation', () => {
           ],
         },
       };
-      wrapper = mount(<HttpOperation data={operationData} />);
-      const queryParameterElement = wrapper.findWhere(
-        w => w.type() === Parameters && w.props().title === 'Query Parameters',
-      );
-      expect(queryParameterElement.find(Tag).length).toEqual(1);
+      render(<HttpOperation data={operationData} />);
+
+      const queryParametersPanel = screen.queryByRole('heading', { name: 'Query' });
+      userEvent.click(queryParametersPanel!);
+
+      expect(screen.getByRole('note', { name: /space/i })).toBeInTheDocument();
+      expect(screen.queryByRole('note', { name: /form/i })).not.toBeInTheDocument();
     });
   });
 
   describe('Header Parameters', () => {
-    it('should render correct validations', () => {
+    it('should render panel when there are header parameters', () => {
       const data = {
         id: 'get',
         method: 'get',
@@ -146,20 +141,43 @@ describe('HttpOperation', () => {
         },
       };
 
-      wrapper = mount(<HttpOperation data={data} />);
-      const headerParameterElement = wrapper.findWhere(
-        w => w.type() === Parameters && w.props().title === 'Header Parameters',
-      );
-      expect(headerParameterElement.props().parameters).toEqual(data.request.headers);
-    });
-  });
+      render(<HttpOperation data={data} />);
 
-  describe('Path Parameters', () => {
-    it('should render correct validations', () => {
+      const headersPanel = screen.queryByRole('heading', { name: 'Headers' });
+      expect(headersPanel).toBeInTheDocument();
+      expect(headersPanel).toBeVisible();
+      expect(headersPanel).toBeEnabled();
+
+      userEvent.click(headersPanel!);
+
+      expect(screen.queryByText(/parameter name/)).toBeInTheDocument();
+    });
+
+    it('should not render panel when there are no header parameters', () => {
       const data = {
         id: 'get',
         method: 'get',
         path: '/path',
+        responses: [],
+        request: {
+          headers: [],
+        },
+      };
+
+      render(<HttpOperation data={data} />);
+
+      const headersPanel = screen.queryByRole('heading', { name: 'Headers' });
+      expect(headersPanel).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Path Parameters', () => {
+    it('should render correct validations', async () => {
+      const data = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        summary: 'Some endpoint',
         responses: [],
         request: {
           path: [
@@ -184,120 +202,182 @@ describe('HttpOperation', () => {
         },
       };
 
-      wrapper = mount(<HttpOperation data={data} />);
-      const pathParameterElement = wrapper.findWhere(
-        w => w.type() === Parameters && w.props().title === 'Path Parameters',
-      );
-      expect(pathParameterElement.props().parameters).toEqual(data.request.path);
+      render(<HttpOperation data={data} />);
+
+      const pathParametersPanel = screen.queryByRole('heading', { name: /GET.*\/path/i });
+      expect(pathParametersPanel).toBeInTheDocument();
+      expect(pathParametersPanel).toBeVisible();
+      expect(pathParametersPanel).toBeEnabled();
+
+      userEvent.click(pathParametersPanel!);
+
+      expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
+    });
+
+    it('should still show path parameters panel when there are no parameters', () => {
+      const data = {
+        id: 'get',
+        summary: 'Some endpoint',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {},
+      };
+
+      render(<HttpOperation data={data} />);
+
+      const pathParametersPanel = screen.queryByRole('heading', { name: /GET.*\/path/i });
+      expect(pathParametersPanel).toBeInTheDocument();
+      expect(pathParametersPanel).toBeVisible();
+    });
+  });
+
+  describe('Request Body', () => {
+    const httpOperationWithRequestBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      request: {
+        body: {
+          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
+        },
+      },
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
+    const httpOperationWithoutRequestBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      request: {
+        body: {
+          description: 'Some body description',
+          contents: [],
+        },
+      },
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
+    it('should render select for content type', () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Request Body Content Type');
+      expect(select).not.toBeNull();
+    });
+
+    it('should allow to select different content type', () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const select = screen.getByLabelText('Choose Request Body Content Type');
+
+      expect(select).toHaveDisplayValue('application/json');
+
+      userEvent.selectOptions(select, 'application/xml');
+
+      expect(select).toHaveDisplayValue('application/xml');
+    });
+
+    it('should not render select if there are no contents', () => {
+      render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Request Body Content Type');
+      expect(select).toBeNull();
+    });
+
+    it('should display description even if there are no contents', async () => {
+      render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
+
+      const body = screen.getByRole('heading', { name: 'Body' });
+      userEvent.click(body);
+
+      expect(await screen.findByText('Some body description')).toBeInTheDocument();
+    });
+
+    it('should display schema for content type', async () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const body = screen.getByRole('heading', { name: 'Body' });
+      userEvent.click(body);
+
+      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
     });
   });
 
   describe('Response', () => {
-    it('should render the MarkdownViewer with description', () => {
-      wrapper = mount(
-        <HttpOperation
-          data={{
-            path: '/',
-            id: 'some_id',
-            method: 'get',
-            responses: [
-              {
-                code: '200',
-                description: 'Hello world!',
-              },
-            ],
-          }}
-        />,
-      );
-
-      expect(wrapper.find('.HttpOperation__Response').find(MarkdownViewer)).toHaveProp('markdown', 'Hello world!');
-    });
-
-    it('should render Parameters with headers', () => {
-      const data: IHttpOperation = {
-        id: 'get',
-        method: 'get',
-        path: '/path',
-        responses: [
-          {
-            code: '200',
-            headers: [
-              {
-                schema: {
-                  type: 'string',
-                },
-                description: 'header-description',
-                name: 'header-name',
-                style: HttpParamStyles.Simple,
-                required: true,
-              },
-            ],
-          },
-        ],
-      };
-
-      wrapper = mount(<HttpOperation data={data} />);
-
-      expect(wrapper.find(Parameters)).toHaveProp('parameters', [
+    const httpOperationWithResponseBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      responses: [
         {
-          schema: {
-            type: 'string',
-          },
-          description: 'header-description',
-          name: 'header-name',
-          style: 'simple',
-          required: true,
+          code: '200',
+          description: 'Hello world!',
+          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
         },
-      ]);
+      ],
+    };
+
+    const httpOperationWithoutResponseBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
+    it('should render the MarkdownViewer with description', async () => {
+      render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
+
+      expect(await screen.findByText('Hello world!')).toBeInTheDocument();
     });
 
-    it('should render JSV with schema', () => {
-      wrapper = mount(
-        <HttpOperation
-          data={{
-            path: '/',
-            id: 'some_id',
-            method: 'get',
-            responses: [
-              {
-                code: '200',
-                contents: [
-                  {
-                    mediaType: 'application/json',
-                    schema: {
-                      $schema: 'http://json-schema.org/draft-04/schema#',
-                      title: 'Todo',
-                      properties: {
-                        name: {
-                          type: 'string',
-                        },
-                        completed: {
-                          type: ['boolean', 'null'],
-                        },
-                      },
-                      required: ['name', 'completed'],
-                    },
-                  },
-                ],
-              },
-            ],
-          }}
-        />,
-      );
+    it('should render select for content types', async () => {
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
-      expect(wrapper.find(JsonSchemaViewer)).toHaveProp('schema', {
-        $schema: 'http://json-schema.org/draft-04/schema#',
-        title: 'Todo',
-        properties: {
-          name: {
-            type: 'string',
-          },
-          completed: {
-            type: ['boolean', 'null'],
-          },
-        },
-        required: ['name', 'completed'],
-      });
+      const select = screen.queryByLabelText('Choose Response Body Content Type');
+      expect(select).not.toBeNull();
+    });
+
+    it('should allow changing content type', async () => {
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+
+      const select = screen.getByLabelText('Choose Response Body Content Type');
+
+      expect(select).toHaveDisplayValue('application/json');
+
+      userEvent.selectOptions(select, 'application/xml');
+
+      expect(select).toHaveDisplayValue('application/xml');
+    });
+
+    it('should not render select when there are no contents', async () => {
+      render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Response Body Content Type');
+      expect(select).toBeNull();
+    });
+
+    it('should display schema for chosen content type', async () => {
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+
+      const body = screen.getByRole('heading', { name: 'Body' });
+      userEvent.click(body);
+
+      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
     });
   });
 });

@@ -28,7 +28,12 @@ function generateToC(searchResults: NodeData[], type: TocType) {
 
       if (type === 'api') {
         if (httpServices.length !== 1) return toc;
-        toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
+        const httpService = httpServices[0].data;
+
+        if (httpService.description) {
+          toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
+        }
+
         if (httpOperations.length) {
           toc.items.push({ type: 'divider', title: 'Endpoints' });
         }
@@ -143,10 +148,10 @@ function matchesUri(uri: string) {
 
 export function groupNodesByType(searchResults: NodeData[]) {
   return searchResults.reduce<{
-    articles: NodeData[];
-    models: NodeData[];
-    httpServices: NodeData[];
-    httpOperations: NodeData[];
+    articles: Array<Extract<NodeData, { type: NodeType.Article }>>;
+    models: Array<Extract<NodeData, { type: NodeType.Model }>>;
+    httpServices: Array<Extract<NodeData, { type: NodeType.HttpService }>>;
+    httpOperations: Array<Extract<NodeData, { type: NodeType.HttpOperation }>>;
   }>(
     (results, searchResult) => {
       switch (searchResult.type) {

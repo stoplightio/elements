@@ -1,13 +1,12 @@
+import { ParsedNode } from '@stoplight/elements-utils';
 import $RefParser from '@stoplight/json-schema-ref-parser';
 import { IHttpOperation, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
-import { ParsedNode } from '../types';
-
 /**
  * Parses the branch node data and ONLY dereferences if it's an HTTP Operation
  */
-export function useDereferencedHttpOperation(parsedData: ParsedNode) {
+export function useDereferencedHttpOperation(parsedData: ParsedNode | undefined) {
   const [dereferencedData, setDereferencedData] = React.useState(parsedData);
 
   React.useEffect(() => {

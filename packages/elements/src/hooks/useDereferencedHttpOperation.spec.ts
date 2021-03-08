@@ -1,7 +1,7 @@
-import { Dictionary, IHttpOperation } from '@stoplight/types';
+import { ParsedNode } from '@stoplight/elements-utils';
+import { Dictionary, IHttpOperation, NodeType } from '@stoplight/types';
 import { renderHook } from '@testing-library/react-hooks';
 
-import { ParsedNode } from '../types';
 import { useDereferencedHttpOperation } from './useDereferencedHttpOperation';
 
 jest.mock('@stoplight/json-schema-ref-parser', () => ({
@@ -28,7 +28,7 @@ jest.mock('@stoplight/json-schema-ref-parser', () => ({
 }));
 
 const simpleHttpOperation: IHttpOperation = { method: 'get', path: '/', id: 'abc', responses: [] };
-const simpleParsedNode: ParsedNode = { type: 'http_operation', data: simpleHttpOperation };
+const simpleParsedNode: ParsedNode = { type: NodeType.HttpOperation, data: simpleHttpOperation };
 
 describe('useDereferencedData', () => {
   it('provides the input value before dereferencing happens', () => {
@@ -45,7 +45,7 @@ describe('useDereferencedData', () => {
   });
 
   it('handles dereferencing errors', async () => {
-    const input: ParsedNode = { type: 'http_operation', data: { ...simpleHttpOperation, __error: true } as any };
+    const input: ParsedNode = { type: NodeType.HttpOperation, data: { ...simpleHttpOperation, __error: true } as any };
     const { result, waitForNextUpdate } = renderHook(() => useDereferencedHttpOperation(input));
     await waitForNextUpdate({ timeout: 300 });
     expect(result.current?.data).toEqual({ ...input.data, __errored: true });
@@ -56,7 +56,7 @@ describe('useDereferencedData', () => {
 
     const { result, waitForNextUpdate, rerender } = renderHook(() => useDereferencedHttpOperation(input));
 
-    input = { type: 'article', data: 'Some **markdown**' };
+    input = { type: NodeType.Article, data: 'Some **markdown**' };
     rerender();
 
     expect(result.current).toMatchObject({ type: 'article' });

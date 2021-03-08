@@ -1,13 +1,12 @@
-import { Box, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
+import { Box, Select, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
-import cn from 'classnames';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
+import { SectionTitle, SubSectionPanel } from '../Sections';
 import { Parameters } from './Parameters';
-import { SectionTitle } from './SectionTitle';
 import { getExamplesObject } from './utils';
 
 export const HttpCodeColor = {
@@ -18,24 +17,21 @@ export const HttpCodeColor = {
   5: 'red',
 };
 
-export interface IResponseProps {
-  className?: string;
+export interface ResponseProps {
   response: IHttpOperationResponse;
 }
 
-export interface IResponsesProps {
+export interface ResponsesProps {
   responses: IHttpOperationResponse[];
 }
 
-export const Responses = ({ responses: unsortedResponses }: IResponsesProps) => {
+export const Responses = ({ responses: unsortedResponses }: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
     r => r.code,
   );
-  const firstResponseCode = responses[0]?.code ?? '';
 
-  const [activeResponseId, setActiveResponseId] = React.useState(firstResponseCode);
-  React.useEffect(() => setActiveResponseId(firstResponseCode), [firstResponseCode]);
+  const [activeResponseId, setActiveResponseId] = React.useState(responses[0]?.code ?? '');
 
   if (!responses.length) return null;
 
@@ -64,21 +60,37 @@ export const Responses = ({ responses: unsortedResponses }: IResponsesProps) => 
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-export const Response = ({ className, response }: IResponseProps) => {
-  if (!response || typeof response !== 'object') return null;
+export const Response = ({ response: { contents = [], headers = [], description } }: ResponseProps) => {
+  const [chosenContent, setChosenContent] = React.useState(0);
 
-  const content = response.contents && response.contents[0];
-
-  const examples = getExamplesObject(content?.examples || []);
+  const schema = contents[chosenContent]?.schema;
+  const examples = getExamplesObject(contents[chosenContent]?.examples || []);
 
   return (
-    <div className={cn('HttpOperation__Response pt-6 pl-8', className)}>
-      {response.description && <MarkdownViewer className="ml-1 mb-6" markdown={response.description} />}
+    <Box>
+      {description && <MarkdownViewer className="ml-1 mb-6" markdown={description} />}
 
-      <Parameters className="mb-6" title="Headers" parameterType="header" parameters={response.headers} />
+      {headers.length > 0 && (
+        <SubSectionPanel title="Headers">
+          <Parameters parameterType="header" parameters={headers} />
+        </SubSectionPanel>
+      )}
 
-      {content?.schema && <SchemaViewer schema={content.schema} examples={examples} viewMode="read" forceShowTabs />}
-    </div>
+      {contents.length > 0 && (
+        <SubSectionPanel
+          title="Body"
+          rightComponent={
+            <Select
+              aria-label="Choose Response Body Content Type"
+              onChange={e => setChosenContent(parseInt(e.currentTarget.value, 10))}
+              options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
+            />
+          }
+        >
+          {schema && <SchemaViewer schema={schema} examples={examples} viewMode="read" forceShowTabs />}
+        </SubSectionPanel>
+      )}
+    </Box>
   );
 };
 Response.displayName = 'HttpOperation.Response';

@@ -2,6 +2,7 @@ import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { ActiveInfoContext } from '../../containers/Provider';
+import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { useParsedData } from '../../hooks/useParsedData';
 import { useActionsApi, usePlatformApi } from '../../hooks/usePlatformApi';
 import { BundledBranchNode } from '../../types';
@@ -62,5 +63,9 @@ export const TryItContainer = ({ node }: ITryItProps) => {
 
   if (parsedData?.type !== NodeType.HttpOperation) return null;
 
-  return <TryItWithRequestSamples httpOperation={parsedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />;
+  return (
+    <InlineRefResolverProvider document={parsedData.data}>
+      <TryItWithRequestSamples httpOperation={parsedData.data} showMocking mockUrl={mockUrlResult?.servicePath} />
+    </InlineRefResolverProvider>
+  );
 };
