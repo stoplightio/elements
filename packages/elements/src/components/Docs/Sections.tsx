@@ -15,11 +15,16 @@ export const SectionTitle: React.FC<ISectionTitle> = ({ title, children }) => {
     </Flex>
   );
 };
-type SubSectionPanelProps = { title: React.ReactNode; hasContent?: boolean };
-export const SubSectionPanel: React.FC<SubSectionPanelProps> = ({ title, children, hasContent }) => {
+interface SubSectionPanelProps {
+  title: React.ReactNode;
+  hasContent?: boolean;
+  rightComponent?: React.ReactNode;
+}
+
+export const SubSectionPanel: React.FC<SubSectionPanelProps> = ({ title, children, hasContent, rightComponent }) => {
   return (
     <Panel appearance="minimal" mb={3} isCollapsible={hasContent}>
-      <Panel.Titlebar fontWeight="medium">
+      <Panel.Titlebar fontWeight="medium" rightComponent={rightComponent}>
         <div role="heading">{title}</div>
       </Panel.Titlebar>
       {hasContent !== false && (
