@@ -1,15 +1,16 @@
 import { IHttpOperation } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { sortBy, uniqBy } from 'lodash';
+import { flatten, sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
+import { isApiKeySecurityScheme } from './authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
 const persistedParameterValuesAtom = atom({});
 export const useRequestParameters = (httpOperation: IHttpOperation) => {
   const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
 
-  const allParameters = React.useMemo(() => extractAllParameters(httpOperation.request), [httpOperation.request]);
+  const allParameters = React.useMemo(() => extractAllParameters(httpOperation), [httpOperation]);
   const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
 
   const updateParameterValue = (name: string, value: string) => {
@@ -43,9 +44,19 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
   };
 };
 
-function extractAllParameters(request: IHttpOperation['request']): ParameterSpec[] {
-  const pathParameters = sortBy(request?.path ?? [], ['name']);
-  const queryParameters = sortBy(request?.query ?? [], ['name']);
-  const headerParameters = sortBy(request?.headers ?? [], ['name']);
+function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
+  const pathParameters = sortBy(httpOperation.request?.path ?? [], ['name']);
+  const queryParameters = sortBy(httpOperation.request?.query ?? [], ['name']).filter(
+    qparam =>
+      !flatten(httpOperation.security)
+        .filter(isApiKeySecurityScheme)
+        .some(sec => sec.name.toUpperCase() === qparam.name.toUpperCase()),
+  );
+  const headerParameters = sortBy(httpOperation.request?.headers ?? [], ['name']).filter(
+    hparam =>
+      !flatten(httpOperation.security)
+        .filter(isApiKeySecurityScheme)
+        .some(sec => sec.name.toUpperCase() === hparam.name.toUpperCase()),
+  );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
 }
