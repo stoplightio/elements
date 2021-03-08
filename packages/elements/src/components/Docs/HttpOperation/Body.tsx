@@ -1,4 +1,4 @@
-import { Select, Text } from '@stoplight/mosaic';
+import { Select } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
 
@@ -35,11 +35,7 @@ export const Body = ({ body: { contents = [], description } }: BodyProps) => {
     >
       {description && <MarkdownViewer className="mb-6" markdown={description} />}
 
-      {isJSONSchema(schema) ? (
-        <SchemaViewer className="mt-6" schema={schema} examples={examples} viewMode="write" />
-      ) : (
-        contents.length > 0 && <Text>No schema was provided for this content type.</Text>
-      )}
+      {isJSONSchema(schema) && <SchemaViewer className="mt-6" schema={schema} examples={examples} viewMode="write" />}
     </SubSectionPanel>
   );
 };

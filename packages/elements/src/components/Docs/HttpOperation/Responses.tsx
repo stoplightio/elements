@@ -87,11 +87,7 @@ export const Response = ({ response: { contents = [], headers = [], description 
             />
           }
         >
-          {schema ? (
-            <SchemaViewer schema={schema} examples={examples} viewMode="read" forceShowTabs />
-          ) : (
-            <Text>No schema was provided for this content type.</Text>
-          )}
+          {schema && <SchemaViewer schema={schema} examples={examples} viewMode="read" forceShowTabs />}
         </SubSectionPanel>
       )}
     </Box>

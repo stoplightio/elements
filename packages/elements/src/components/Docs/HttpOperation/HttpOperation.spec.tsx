@@ -311,18 +311,6 @@ describe('HttpOperation', () => {
 
       expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
     });
-
-    it('should display message for content type without a schema', async () => {
-      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
-
-      const select = screen.getByLabelText('Choose Request Body Content Type');
-      userEvent.selectOptions(select, 'application/xml');
-
-      const body = screen.getByRole('heading', { name: 'Body' });
-      userEvent.click(body);
-
-      expect(await screen.findByText('No schema was provided for this content type.')).toBeInTheDocument();
-    });
   });
 
   describe('Response', () => {
@@ -390,18 +378,6 @@ describe('HttpOperation', () => {
       userEvent.click(body);
 
       expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
-    });
-
-    it('should display message for content type without a schema', async () => {
-      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
-
-      const select = screen.getByLabelText('Choose Response Body Content Type');
-      userEvent.selectOptions(select, 'application/xml');
-
-      const body = screen.getByRole('heading', { name: 'Body' });
-      userEvent.click(body);
-
-      expect(await screen.findByText('No schema was provided for this content type.')).toBeInTheDocument();
     });
   });
 });
