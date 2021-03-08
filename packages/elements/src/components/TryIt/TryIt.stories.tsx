@@ -1,11 +1,11 @@
 import { Meta, Story } from '@storybook/react';
-import { duplicatedSecurityScheme } from 'elements/src/__fixtures__/operations/securedOperation';
 import * as React from 'react';
 
 import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
 import { httpOperation as multipartOperation } from '../../__fixtures__/operations/multipart-formdata-post';
 import { httpOperation as putTodosOperation } from '../../__fixtures__/operations/put-todos';
 import { requestBody } from '../../__fixtures__/operations/request-body';
+import { duplicatedSecurityScheme } from '../../__fixtures__/operations/securedOperation';
 import { operation as simpleGetOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { TryIt, TryItProps } from './TryIt';
