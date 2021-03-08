@@ -30,10 +30,8 @@ export const Responses = ({ responses: unsortedResponses }: ResponsesProps) => {
     uniqBy(unsortedResponses, r => r.code),
     r => r.code,
   );
-  const firstResponseCode = responses[0]?.code ?? '';
 
-  const [activeResponseId, setActiveResponseId] = React.useState(firstResponseCode);
-  React.useEffect(() => setActiveResponseId(firstResponseCode), [firstResponseCode]);
+  const [activeResponseId, setActiveResponseId] = React.useState(responses[0]?.code ?? '');
 
   if (!responses.length) return null;
 
