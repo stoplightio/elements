@@ -397,7 +397,7 @@ describe('TryIt', () => {
         let bodyHeader = screen.queryByText('Body');
         expect(bodyHeader).toBeInTheDocument();
 
-        expect(screen.getByRole('textbox').textContent).toBe('');
+        expect(screen.getByRole('textbox')).toHaveTextContent('');
       });
     });
 
