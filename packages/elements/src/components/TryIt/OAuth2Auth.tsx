@@ -16,7 +16,7 @@ export const OAuth2Auth: React.FC<OAuth2AuthProps> = ({ scheme, onChange, value 
       <Flex flexGrow>
         <Input
           style={{ paddingLeft: 15 }}
-          aria-label="Authentication Header"
+          aria-label="Authorization Token"
           appearance="minimal"
           flexGrow
           placeholder="123"

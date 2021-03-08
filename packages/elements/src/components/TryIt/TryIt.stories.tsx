@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react';
+import { duplicatedSecurityScheme } from 'elements/src/__fixtures__/operations/securedOperation';
 import * as React from 'react';
 
 import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
@@ -55,3 +56,9 @@ TryItAuth.args = {
   httpOperation: putTodosOperation,
 };
 TryItAuth.storyName = 'TryIt Auth';
+
+export const TryItAuthDuplicated = Template.bind({});
+TryItAuthDuplicated.args = {
+  httpOperation: duplicatedSecurityScheme,
+};
+TryItAuthDuplicated.storyName = 'TryIt Auth (Duplicated Parameters)';

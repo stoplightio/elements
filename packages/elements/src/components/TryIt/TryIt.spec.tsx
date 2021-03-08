@@ -702,6 +702,36 @@ describe('TryIt', () => {
         expect(headers.get('API-Key')).toBe('123');
       });
     });
+
+    describe('OAuth2 Component', () => {
+      it('allows to send a OAuth2 request', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        userEvent.click(securitySchemesButton);
+
+        const securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
+        userEvent.click(securitySchemes);
+
+        const tokenInput = screen.getByLabelText('Authorization Token');
+
+        await userEvent.type(tokenInput, '0a1b2c');
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('Authorization')).toBe('Bearer 0a1b2c');
+      });
+
+      it('does not include header parameters conflicting with OAuth2 scheme', async () => {
+        render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
+
+        const header = screen.queryByLabelText('authorization');
+        expect(header).not.toBeInTheDocument();
+      });
+    });
   });
 
   describe('Ref resolving', () => {

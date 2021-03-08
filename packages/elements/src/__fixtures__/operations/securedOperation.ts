@@ -64,6 +64,11 @@ export const duplicatedSecurityScheme: IHttpOperation = {
         in: 'query',
         description: "Use `?apikey=123` to authenticate requests. It's super secure.",
       },
+      {
+        type: 'oauth2',
+        key: 'oauth2',
+        flows: {},
+      },
     ],
   ],
   request: {
@@ -100,6 +105,13 @@ export const duplicatedSecurityScheme: IHttpOperation = {
             key: 'example',
           },
         ],
+      },
+      {
+        name: 'authorization',
+        style: HttpParamStyles.Simple,
+        schema: {
+          type: 'string',
+        },
       },
     ],
   },
