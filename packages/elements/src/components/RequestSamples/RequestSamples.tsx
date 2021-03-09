@@ -41,7 +41,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
 
     const [language, library] = value.split(' / ');
     setSelectedLanguage(language);
-    setSelectedLibrary(library);
+    setSelectedLibrary(library || '');
   };
 
   return (
@@ -51,7 +51,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
         <Select
           onChange={handleSelectClick}
           options={selectOptions}
-          value={`${selectedLanguage} / ${selectedLibrary}`}
+          value={selectedLibrary ? `${selectedLanguage} / ${selectedLibrary}` : selectedLanguage}
         />
       </Panel.Titlebar>
       <Panel.Content p={0}>
