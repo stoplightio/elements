@@ -19,7 +19,7 @@ export const OAuth2Auth: React.FC<OAuth2AuthProps> = ({ scheme, onChange, value 
           aria-label="Authorization Token"
           appearance="minimal"
           flexGrow
-          placeholder="123"
+          placeholder="Bearer 123"
           value={value}
           type="text"
           required

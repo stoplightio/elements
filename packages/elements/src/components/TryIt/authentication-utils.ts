@@ -7,7 +7,7 @@ import {
 } from '@stoplight/types';
 import { flatten, isObject } from 'lodash';
 
-import { caseInsesitivelyEquals } from '../../utils/string';
+import { caseInsensitivelyEquals } from '../../utils/string';
 
 export type HttpSecuritySchemeWithValues = {
   scheme: HttpSecurityScheme;
@@ -35,7 +35,7 @@ export function filterOutAuthorizationParams(
   const flattenedSecuritySchemes = flatten(securitySchemes);
   const securitySchemeNames = getSecuritySchemeNames(flattenedSecuritySchemes);
 
-  return queryParams.filter(queryParam => !securitySchemeNames.some(caseInsesitivelyEquals(queryParam.name)));
+  return queryParams.filter(queryParam => !securitySchemeNames.some(caseInsensitivelyEquals(queryParam.name)));
 }
 
 const getSecuritySchemeNames = (securitySchemes: HttpSecurityScheme[]): string[] =>
