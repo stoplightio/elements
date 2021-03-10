@@ -1178,24 +1178,28 @@ describe('toc', () => {
           name: 'Hello',
           type: NodeType.Article,
           tags: ['api'],
+          data: '',
         },
         {
           uri: '/directory/hey.md',
           name: 'Hey',
           type: NodeType.Article,
           tags: ['api'],
+          data: '',
         },
         {
           uri: '/article.md',
           name: NodeType.Article,
           type: NodeType.Article,
           tags: ['api'],
+          data: '',
         },
         {
           uri: '/model.yaml',
           name: 'Standalone model',
           type: NodeType.Model,
           tags: ['api'],
+          data: {},
         },
       ]);
 
