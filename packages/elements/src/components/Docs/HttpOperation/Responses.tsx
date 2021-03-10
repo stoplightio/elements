@@ -1,4 +1,4 @@
-import { Box, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
+import { Box, Select, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
@@ -30,10 +30,8 @@ export const Responses = ({ responses: unsortedResponses }: ResponsesProps) => {
     uniqBy(unsortedResponses, r => r.code),
     r => r.code,
   );
-  const firstResponseCode = responses[0]?.code ?? '';
 
-  const [activeResponseId, setActiveResponseId] = React.useState(firstResponseCode);
-  React.useEffect(() => setActiveResponseId(firstResponseCode), [firstResponseCode]);
+  const [activeResponseId, setActiveResponseId] = React.useState(responses[0]?.code ?? '');
 
   if (!responses.length) return null;
 
@@ -62,8 +60,11 @@ export const Responses = ({ responses: unsortedResponses }: ResponsesProps) => {
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-export const Response = ({ response: { contents: [content] = [], headers = [], description } }: ResponseProps) => {
-  const examples = getExamplesObject(content?.examples || []);
+export const Response = ({ response: { contents = [], headers = [], description } }: ResponseProps) => {
+  const [chosenContent, setChosenContent] = React.useState(0);
+
+  const schema = contents[chosenContent]?.schema;
+  const examples = getExamplesObject(contents[chosenContent]?.examples || []);
 
   return (
     <Box>
@@ -75,9 +76,18 @@ export const Response = ({ response: { contents: [content] = [], headers = [], d
         </SubSectionPanel>
       )}
 
-      {content?.schema && (
-        <SubSectionPanel title="Body">
-          <SchemaViewer schema={content.schema} examples={examples} viewMode="read" forceShowTabs />
+      {contents.length > 0 && (
+        <SubSectionPanel
+          title="Body"
+          rightComponent={
+            <Select
+              aria-label="Choose Response Body Content Type"
+              onChange={e => setChosenContent(parseInt(e.currentTarget.value, 10))}
+              options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
+            />
+          }
+        >
+          {schema && <SchemaViewer schema={schema} examples={examples} viewMode="read" forceShowTabs />}
         </SubSectionPanel>
       )}
     </Box>

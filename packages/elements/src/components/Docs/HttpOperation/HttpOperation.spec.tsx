@@ -1,5 +1,3 @@
-import 'jest-enzyme';
-
 import { HttpParamStyles } from '@stoplight/types';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,7 +9,7 @@ import { HttpOperation } from './index';
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
   PropertyTypeColors: {},
-  JsonSchemaViewer: () => <div />,
+  JsonSchemaViewer: () => <div>This is JsonSchemaViewer</div>,
 }));
 
 describe('HttpOperation', () => {
@@ -234,25 +232,152 @@ describe('HttpOperation', () => {
     });
   });
 
+  describe('Request Body', () => {
+    const httpOperationWithRequestBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      request: {
+        body: {
+          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
+        },
+      },
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
+    const httpOperationWithoutRequestBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      request: {
+        body: {
+          description: 'Some body description',
+          contents: [],
+        },
+      },
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
+    it('should render select for content type', () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Request Body Content Type');
+      expect(select).not.toBeNull();
+    });
+
+    it('should allow to select different content type', () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const select = screen.getByLabelText('Choose Request Body Content Type');
+
+      expect(select).toHaveDisplayValue('application/json');
+
+      userEvent.selectOptions(select, 'application/xml');
+
+      expect(select).toHaveDisplayValue('application/xml');
+    });
+
+    it('should not render select if there are no contents', () => {
+      render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Request Body Content Type');
+      expect(select).toBeNull();
+    });
+
+    it('should display description even if there are no contents', async () => {
+      render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
+
+      const body = screen.getByRole('heading', { name: 'Body' });
+      userEvent.click(body);
+
+      expect(await screen.findByText('Some body description')).toBeInTheDocument();
+    });
+
+    it('should display schema for content type', async () => {
+      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+
+      const body = screen.getByRole('heading', { name: 'Body' });
+      userEvent.click(body);
+
+      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
+    });
+  });
+
   describe('Response', () => {
+    const httpOperationWithResponseBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
+        },
+      ],
+    };
+
+    const httpOperationWithoutResponseBodyContents = {
+      path: '/',
+      id: 'some_id',
+      method: 'get',
+      responses: [
+        {
+          code: '200',
+          description: 'Hello world!',
+        },
+      ],
+    };
+
     it('should render the MarkdownViewer with description', async () => {
-      render(
-        <HttpOperation
-          data={{
-            path: '/',
-            id: 'some_id',
-            method: 'get',
-            responses: [
-              {
-                code: '200',
-                description: 'Hello world!',
-              },
-            ],
-          }}
-        />,
-      );
+      render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
 
       expect(await screen.findByText('Hello world!')).toBeInTheDocument();
+    });
+
+    it('should render select for content types', async () => {
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Response Body Content Type');
+      expect(select).not.toBeNull();
+    });
+
+    it('should allow changing content type', async () => {
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+
+      const select = screen.getByLabelText('Choose Response Body Content Type');
+
+      expect(select).toHaveDisplayValue('application/json');
+
+      userEvent.selectOptions(select, 'application/xml');
+
+      expect(select).toHaveDisplayValue('application/xml');
+    });
+
+    it('should not render select when there are no contents', async () => {
+      render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
+
+      const select = screen.queryByLabelText('Choose Response Body Content Type');
+      expect(select).toBeNull();
+    });
+
+    it('should display schema for chosen content type', async () => {
+      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+
+      const body = screen.getByRole('heading', { name: 'Body' });
+      userEvent.click(body);
+
+      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
     });
   });
 });
