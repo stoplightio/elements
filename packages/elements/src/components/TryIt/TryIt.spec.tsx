@@ -9,6 +9,7 @@ import { httpOperation as base64FileUpload } from '../../__fixtures__/operations
 import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
 import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
 import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
+import { httpOperation as sortedParameters } from '../../__fixtures__/operations/operation-parameters';
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { httpOperation as referencedBody } from '../../__fixtures__/operations/referenced-body';
@@ -100,6 +101,32 @@ describe('TryIt', () => {
 
       let parametersHeader = screen.queryByText('Parameters');
       expect(parametersHeader).toBeInTheDocument();
+    });
+
+    describe('Sorts parameters alphabetically', () => {
+      it('by type and put required one on top for each type', () => {
+        const names = [
+          'todoId*',
+          'anotherId',
+          'limit*',
+          'super_duper_long_parameter_name_with_unnecessary_text*',
+          'completed',
+          'items',
+          'optional_value_with_default',
+          'type',
+          'value',
+          'message-id*',
+          'account-id',
+        ];
+        render(<TryItWithPersistence httpOperation={sortedParameters} />);
+
+        const params = screen
+          .queryAllByRole('textbox')
+          .filter(param => param.hasAttribute('readonly'))
+          .map(param => param['value']);
+
+        expect(params).toEqual(names);
+      });
     });
 
     it('Displays types correctly', () => {
