@@ -22,9 +22,8 @@ export const useTextRequestBodyState = (
       if (textRequestBodyExamples?.length) {
         return safeStringify(textRequestBodyExamples?.[0]['value'], undefined, 2) ?? '';
       } else if (textRequestBodySchema) {
-        return (
-          safeStringify(Sampler.sample(textRequestBodySchema, { skipReadOnly: true }, document), undefined, 2) ?? ''
-        );
+        const generated = Sampler.sample(textRequestBodySchema, { skipReadOnly: true }, document);
+        return generated !== null ? safeStringify(generated, undefined, 2) ?? '' : '';
       }
     } catch (e) {
       console.warn(e);

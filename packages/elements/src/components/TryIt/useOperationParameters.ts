@@ -1,15 +1,16 @@
 import { IHttpOperation } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { orderBy, uniqBy } from 'lodash';
+import { flatten, orderBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
+import { isApiKeySecurityScheme } from './authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
 const persistedParameterValuesAtom = atom({});
 export const useRequestParameters = (httpOperation: IHttpOperation) => {
   const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
 
-  const allParameters = React.useMemo(() => extractAllParameters(httpOperation.request), [httpOperation.request]);
+  const allParameters = React.useMemo(() => extractAllParameters(httpOperation), [httpOperation]);
   const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
 
   const updateParameterValue = (name: string, value: string) => {
@@ -43,9 +44,19 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
   };
 };
 
-function extractAllParameters(request: IHttpOperation['request']): ParameterSpec[] {
-  const pathParameters = orderBy(request?.path ?? [], ['required', 'name'], ['desc', 'asc']);
-  const queryParameters = orderBy(request?.query ?? [], ['required', 'name'], ['asc', 'asc']);
-  const headerParameters = orderBy(request?.headers ?? [], ['required', 'name'], ['desc', 'asc']);
+function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
+  const pathParameters = orderBy(httpOperation.request?.path ?? [], ['required', 'name'], ['desc', 'asc']);
+  const queryParameters = orderBy(httpOperation.request?.query ?? [], ['required', 'name'], ['asc', 'asc']).filter(
+    qparam =>
+      !flatten(httpOperation.security)
+        .filter(isApiKeySecurityScheme)
+        .some(sec => sec.name.toUpperCase() === qparam.name.toUpperCase()),
+  );
+  const headerParameters = orderBy(httpOperation.request?.headers ?? [], ['required', 'name'], ['desc', 'asc']).filter(
+    hparam =>
+      !flatten(httpOperation.security)
+        .filter(isApiKeySecurityScheme)
+        .some(sec => sec.name.toUpperCase() === hparam.name.toUpperCase()),
+  );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
 }
