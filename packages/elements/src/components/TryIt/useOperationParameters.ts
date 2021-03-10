@@ -1,6 +1,6 @@
 import { IHttpOperation } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { orderBy, sortBy, uniqBy } from 'lodash';
+import { orderBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
@@ -44,8 +44,8 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
 };
 
 function extractAllParameters(request: IHttpOperation['request']): ParameterSpec[] {
-  const pathParameters = orderBy(sortBy(request?.path ?? [], ['name']), ['required'], ['desc']);
-  const queryParameters = orderBy(sortBy(request?.query ?? [], ['name']), ['required'], ['desc']);
-  const headerParameters = orderBy(sortBy(request?.headers ?? [], ['name']), ['required'], ['desc']);
+  const pathParameters = orderBy(request?.path ?? [], ['required', 'name'], ['desc', 'asc']);
+  const queryParameters = orderBy(request?.query ?? [], ['required', 'name'], ['asc', 'asc']);
+  const headerParameters = orderBy(request?.headers ?? [], ['required', 'name'], ['desc', 'asc']);
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
 }
