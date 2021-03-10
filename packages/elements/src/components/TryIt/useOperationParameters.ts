@@ -1,6 +1,6 @@
 import { IHttpOperation } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { flatten, sortBy, uniqBy } from 'lodash';
+import { flatten, orderBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { isApiKeySecurityScheme } from './authentication-utils';
@@ -45,14 +45,14 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
 };
 
 function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
-  const pathParameters = sortBy(httpOperation.request?.path ?? [], ['name']);
-  const queryParameters = sortBy(httpOperation.request?.query ?? [], ['name']).filter(
+  const pathParameters = orderBy(httpOperation.request?.path ?? [], ['required', 'name'], ['desc', 'asc']);
+  const queryParameters = orderBy(httpOperation.request?.query ?? [], ['required', 'name'], ['asc', 'asc']).filter(
     qparam =>
       !flatten(httpOperation.security)
         .filter(isApiKeySecurityScheme)
         .some(sec => sec.name.toUpperCase() === qparam.name.toUpperCase()),
   );
-  const headerParameters = sortBy(httpOperation.request?.headers ?? [], ['name']).filter(
+  const headerParameters = orderBy(httpOperation.request?.headers ?? [], ['required', 'name'], ['desc', 'asc']).filter(
     hparam =>
       !flatten(httpOperation.security)
         .filter(isApiKeySecurityScheme)
