@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.16](https://github.com/stoplightio/elements/compare/v6.1.15...v6.1.16) (2021-03-10)
+
+
+### Bug Fixes
+
+* do not inlclude api divider needlessly ([#929](https://github.com/stoplightio/elements/issues/929)) ([b996e32](https://github.com/stoplightio/elements/commit/b996e32be24d00ee51f72d09c0dcde63a98b0bd0))
+
+
+
+
+
 ## [6.1.15](https://github.com/stoplightio/elements/compare/v6.1.14...v6.1.15) (2021-03-02)
 
 **Note:** Version bump only for package @stoplight/elements-utils
