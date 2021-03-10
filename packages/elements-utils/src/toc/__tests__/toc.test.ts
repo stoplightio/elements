@@ -971,6 +971,74 @@ describe('toc', () => {
       });
     });
 
+    it('does not include API divider if there are no APIs', () => {
+      const toc = generateProjectToC([
+        {
+          uri: '/directory/article/hello.md',
+          name: 'Hello',
+          type: NodeType.Article,
+          tags: ['api'],
+        },
+        {
+          uri: '/directory/hey.md',
+          name: 'Hey',
+          type: NodeType.Article,
+          tags: ['api'],
+        },
+        {
+          uri: '/article.md',
+          name: NodeType.Article,
+          type: NodeType.Article,
+          tags: ['api'],
+        },
+        {
+          uri: '/model.yaml',
+          name: 'Standalone model',
+          type: NodeType.Model,
+          tags: ['api'],
+        },
+      ]);
+
+      expect(toc).toEqual({
+        items: [
+          {
+            title: NodeType.Article,
+            type: 'item',
+            uri: '/article.md',
+          },
+          {
+            title: 'directory',
+            type: 'divider',
+          },
+          {
+            title: NodeType.Article,
+            type: 'group',
+            items: [
+              {
+                title: 'Hello',
+                type: 'item',
+                uri: '/directory/article/hello.md',
+              },
+            ],
+          },
+          {
+            title: 'Hey',
+            type: 'item',
+            uri: '/directory/hey.md',
+          },
+          {
+            title: 'Schemas',
+            type: 'divider',
+          },
+          {
+            title: 'Standalone model',
+            type: 'item',
+            uri: '/model.yaml',
+          },
+        ],
+      });
+    });
+
     it('snapshot of platform docs', () => {
       expect(
         generateApiToC([
