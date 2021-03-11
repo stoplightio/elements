@@ -47,7 +47,7 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
 function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
   const pathParameters = orderBy(httpOperation.request?.path ?? [], ['required', 'name'], ['desc', 'asc']);
   const queryParameters = filterOutAuthorizationParams(
-    orderBy(httpOperation.request?.query ?? [], ['required', 'name'], ['desc', 'asc']),
+    orderBy(httpOperation.request?.query ?? [], ['required', 'name'], ['asc', 'asc']),
     httpOperation.security,
   );
   const headerParameters = filterOutAuthorizationParams(
