@@ -34,10 +34,10 @@ describe('HttpOperation', () => {
     it('should display auth badges for operation security schemas', () => {
       render(<HttpOperation data={{ ...httpOperation }} />);
 
-      const apikeyBadge = getSecurityBadge(/Api Key/i);
+      const apikeyBadge = getSecurityBadge(/API Key/i);
       const basicBadge = getSecurityBadge(/Basic Auth/i);
       const bearerBadge = getSecurityBadge(/Bearer Auth/i);
-      const oidcBadge = getSecurityBadge(/OpenId Connect/i);
+      const oidcBadge = getSecurityBadge(/OpenID Connect/i);
       const oauthBadge = getSecurityBadge(/OAuth 2 \(write:pets, read:pets\)/i);
 
       expect(apikeyBadge).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('HttpOperation', () => {
           <HttpOperation data={{ ...httpOperation }} uri="/reference/todos/openapi.v1.json/paths/~1todos/post" />
         </Router>,
       );
-      const apikeyBadge = getSecurityBadge(/Api Key/i);
+      const apikeyBadge = getSecurityBadge(/API Key/i);
       expect(apikeyBadge?.closest('a')).toHaveAttribute('href', '/reference/todos/openapi.v1.json');
     });
   });

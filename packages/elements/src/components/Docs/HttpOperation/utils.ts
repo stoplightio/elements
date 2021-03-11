@@ -27,7 +27,7 @@ export function getExamplesFromSchema(data: unknown) {
 export function getReadableSecurityName(securityScheme: HttpSecurityScheme) {
   switch (securityScheme.type) {
     case 'apiKey':
-      return 'Api Key';
+      return 'API Key';
     case 'http':
       return `${capitalize(securityScheme.scheme)} Auth`;
     case 'oauth2':
