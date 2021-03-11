@@ -1,8 +1,12 @@
-import { faExclamationCircle, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faLock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { HttpSecurityScheme } from '@stoplight/types';
 import { Position, Tag, Tooltip } from '@stoplight/ui-kit';
 import cs from 'classnames';
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { getReadableSecurityName } from './utils';
 
 export const Badge: React.FC<{
   icon?: IconDefinition;
@@ -24,3 +28,22 @@ export const DeprecatedBadge: React.FC = () => (
     </Badge>
   </Tooltip>
 );
+
+export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUri?: string }> = ({
+  scheme,
+  httpServiceUri,
+}) => {
+  const badge = (
+    <Badge icon={faLock} className="bg-gray-6 mx-1 max-w-xs truncate">
+      {getReadableSecurityName(scheme)}
+    </Badge>
+  );
+
+  return httpServiceUri ? (
+    <Link to={httpServiceUri} className="no-underline block">
+      {badge}
+    </Link>
+  ) : (
+    badge
+  );
+};

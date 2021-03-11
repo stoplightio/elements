@@ -2,18 +2,24 @@ import { Heading } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
+import { flatten } from 'lodash';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { DeprecatedBadge } from './Badges';
+import { DeprecatedBadge, SecurityBadge } from './Badges';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
 export type HttpOperationProps = IDocsComponentProps<IHttpOperation>;
 
-const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless }) => {
+const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless, uri }) => {
   const isDeprecated = !!data.deprecated;
+
+  const match = uri?.match(/(.*)\/paths/);
+  const httpServiceUri = match && match.length > 1 ? match[1] || '/' : undefined;
+
+  const securitySchemes = flatten(data.security);
 
   return (
     <div className={cn('HttpOperation', className)}>
@@ -22,7 +28,12 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
           <Heading size={1} fontWeight="semibold" fontSize="5xl">
             {data.summary || `${data.method} ${data.path}`}
           </Heading>
-          {isDeprecated && <DeprecatedBadge />}
+          <div className="flex flex-wrap mt-1">
+            {isDeprecated && <DeprecatedBadge />}
+            {securitySchemes.map((scheme, i) => (
+              <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
+            ))}
+          </div>
         </div>
       )}
 
