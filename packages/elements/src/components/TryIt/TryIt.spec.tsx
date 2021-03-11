@@ -644,6 +644,7 @@ describe('TryIt', () => {
         expect(HttpSchemesButton).toBeInTheDocument();
       });
     });
+
     describe('API Key component', () => {
       it('is displayed for security of that type', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
@@ -682,8 +683,8 @@ describe('TryIt', () => {
         expect(queryParams.get('API-Key')).toBe('123');
 
         // make sure we don't attach security duplicated in Operation Parameters
-        expect(queryParams.get('api-key')).not.toBeInTheDocument();
-        expect(headers.get('Api-KeY')).not.toBeInTheDocument();
+        expect(queryParams.get('api-key')).toBeNull();
+        expect(headers.get('Api-KeY')).toBeNull();
       });
 
       it('attaches auth token as a header', async () => {
@@ -699,6 +700,36 @@ describe('TryIt', () => {
 
         const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
         expect(headers.get('API-Key')).toBe('123');
+      });
+    });
+
+    describe('OAuth2 Component', () => {
+      it('allows to send a OAuth2 request', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        userEvent.click(securitySchemesButton);
+
+        const securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
+        userEvent.click(securitySchemes);
+
+        const tokenInput = screen.getByLabelText('Authorization Token');
+
+        await userEvent.type(tokenInput, 'Bearer 0a1b2c');
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('Authorization')).toBe('Bearer 0a1b2c');
+      });
+
+      it('does not include header parameters conflicting with OAuth2 scheme', async () => {
+        render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
+
+        const header = screen.queryByLabelText('authorization');
+        expect(header).not.toBeInTheDocument();
       });
     });
   });

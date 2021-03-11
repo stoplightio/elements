@@ -1,9 +1,13 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import { safeStringify } from '@stoplight/yaml';
 import { Request as HarRequest } from 'har-format';
-import { flatten } from 'lodash';
 
-import { HttpSecuritySchemeWithValues, isApiKeySecurityScheme } from './authentication-utils';
+import {
+  filterOutAuthorizationParams,
+  HttpSecuritySchemeWithValues,
+  isApiKeySecurityScheme,
+  isOAuth2SecurityScheme,
+} from './authentication-utils';
 import { MockData } from './mocking-utils';
 import { BodyParameterValues, createRequestBody } from './request-body-utils';
 
@@ -32,44 +36,64 @@ export async function buildFetchRequest({
       ?.map(param => [param.name, parameterValues[param.name] ?? ''])
       .filter(([_, value]) => value.length > 0) ?? [];
 
-  if (auth && isApiKeySecurityScheme(auth.scheme) && auth.scheme.in === 'query') {
-    queryParams.push([auth.scheme.name, safeStringify(auth.authValue)]);
-  }
+  const rawHeaders = Object.fromEntries(
+    filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security).map(header => [
+      header.name,
+      parameterValues[header.name] ?? '',
+    ]),
+  );
+
+  const [queryParamsWithAuth, headersWithAuth] = auth
+    ? runAuthRequestEhancements(auth, queryParams, rawHeaders)
+    : [queryParams, rawHeaders];
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
   const url = new URL(server + expandedPath);
-  url.search = new URLSearchParams(queryParams).toString();
+  url.search = new URLSearchParams(queryParamsWithAuth).toString();
 
   const body = typeof bodyInput === 'object' ? await createRequestBody(httpOperation, bodyInput) : bodyInput;
+
+  const headers = {
+    'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
+    ...headersWithAuth,
+    ...mockData?.header,
+  };
 
   return [
     url.toString(),
     {
       credentials: 'omit',
       method: httpOperation.method,
-      headers: {
-        'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
-        ...(auth &&
-          isApiKeySecurityScheme(auth.scheme) &&
-          auth.scheme.in === 'header' && {
-            [auth.scheme.name]: auth?.authValue,
-          }),
-        ...Object.fromEntries(
-          httpOperation.request?.headers
-            ?.filter(
-              hparam =>
-                !flatten(httpOperation.security)
-                  .filter(isApiKeySecurityScheme)
-                  .some(sec => sec.name.toUpperCase() === hparam.name.toUpperCase()),
-            )
-            .map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
-        ),
-        ...mockData?.header,
-      },
+      headers,
       body: shouldIncludeBody ? body : undefined,
     },
   ];
 }
+
+const runAuthRequestEhancements = (
+  auth: HttpSecuritySchemeWithValues,
+  queryParams: string[][],
+  headers: HeadersInit,
+): [string[][], HeadersInit] => {
+  const newQueryParams: string[][] = [...queryParams];
+  const newHeaders: HeadersInit = { ...headers };
+
+  if (isApiKeySecurityScheme(auth.scheme)) {
+    if (auth.scheme.in === 'query') {
+      newQueryParams.push([auth.scheme.name, safeStringify(auth.authValue)]);
+    }
+
+    if (auth.scheme.in === 'header') {
+      newHeaders[auth.scheme.name] = auth.authValue;
+    }
+  }
+
+  if (isOAuth2SecurityScheme(auth.scheme)) {
+    newHeaders['Authorization'] = auth.authValue;
+  }
+
+  return [newQueryParams, newHeaders];
+};
 
 export async function buildHarRequest({
   httpOperation,
