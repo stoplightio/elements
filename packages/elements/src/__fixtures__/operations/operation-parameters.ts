@@ -146,6 +146,7 @@ export const httpOperation: IHttpOperation = {
           description: 'Only return completed',
         },
         name: 'completed',
+        required: false,
         style: HttpParamStyles.Form,
       },
       {
@@ -175,6 +176,21 @@ export const httpOperation: IHttpOperation = {
       },
     ],
     headers: [
+      {
+        schema: {
+          type: 'string',
+          description: 'Your Stoplight account id',
+          default: 'account-id-default',
+        },
+        name: 'b-account-id',
+        style: HttpParamStyles.Simple,
+        examples: [
+          {
+            value: 'example id',
+            key: 'example',
+          },
+        ],
+      },
       {
         schema: {
           type: 'string',
@@ -223,6 +239,13 @@ export const httpOperation: IHttpOperation = {
         name: 'todoId',
         style: HttpParamStyles.Simple,
         required: true,
+      },
+      {
+        schema: {
+          type: 'string',
+        },
+        name: 'bAnotherId',
+        style: HttpParamStyles.Simple,
       },
       {
         schema: {

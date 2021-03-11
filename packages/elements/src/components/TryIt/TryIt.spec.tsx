@@ -124,6 +124,7 @@ describe('TryIt', () => {
         const names = [
           'todoId*',
           'anotherId',
+          'bAnotherId',
           'limit*',
           'super_duper_long_parameter_name_with_unnecessary_text*',
           'completed',
@@ -133,6 +134,7 @@ describe('TryIt', () => {
           'value',
           'message-id*',
           'account-id',
+          'b-account-id',
         ];
         render(<TryItWithPersistence httpOperation={sortedParameters} />);
 
