@@ -20,9 +20,16 @@ export default {
   },
 };
 
-export const Playground: Story<StoplightProjectProps> = args => <StoplightProject {...args} />;
-Playground.storyName = 'StoplightProject';
-Playground.args = {
+const Template: Story<StoplightProjectProps> = args => <StoplightProject {...args} />;
+
+export const StudioDemo = Template.bind({});
+StudioDemo.args = {
   workspaceSlug: 'elements',
   projectSlug: 'studio-demo',
+};
+
+export const PublicApis = Template.bind({});
+PublicApis.args = {
+  workspaceSlug: 'elements',
+  projectSlug: 'public-apis',
 };
