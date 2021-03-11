@@ -1,3 +1,4 @@
+import { Box } from '@stoplight/mosaic';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
@@ -74,29 +75,25 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
         }}
         authToken={authToken}
       />
-      <div className="flex-grow p-5 ContentViewer">
-        <div className="flex">
-          {pathname !== '/' && (
-            <Provider
-              host={platformUrl ?? defaultPlatformUrl}
-              workspace={workspaceSlug}
-              project={projectSlug}
-              branch={branchSlug}
-              node={pathname}
-              authToken={authToken}
-            >
-              <Docs node={pathname} className="px-10" />
-              {showTryIt && (
-                <div className="w-2/5 relative">
-                  <div className="inset-0 overflow-auto px-10">
-                    <TryItContainer node={pathname} />
-                  </div>
-                </div>
-              )}
-            </Provider>
+      {pathname !== '/' && (
+        <Provider
+          host={platformUrl ?? defaultPlatformUrl}
+          workspace={workspaceSlug}
+          project={projectSlug}
+          branch={branchSlug}
+          node={pathname}
+          authToken={authToken}
+        >
+          <Box p={5} overflowX="hidden" style={{ flexGrow: 3, flexBasis: 0, overflowWrap: 'anywhere' }}>
+            <Docs node={pathname} className="px-10" />
+          </Box>
+          {showTryIt && (
+            <Box p={5} overflowX="hidden" style={{ flexGrow: 2, flexBasis: 0, overflowWrap: 'anywhere' }}>
+              <TryItContainer node={pathname} />
+            </Box>
           )}
-        </div>
-      </div>
+        </Provider>
+      )}
     </div>
   );
 };
