@@ -472,7 +472,11 @@ describe('TryIt', () => {
         expect(examples).toEqual(examplesItems);
 
         userEvent.click(screen.getByRole('menuitem', { name: 'named example' }));
-        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Jane","age":36,"trial":false}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Jane',
+          age: 36,
+          trial: false,
+        });
       });
 
       it('restarts modified example in CodeEditor to initial value after choosing it again', () => {
@@ -486,7 +490,11 @@ describe('TryIt', () => {
 
         userEvent.click(examplesButton);
         userEvent.click(screen.getByRole('menuitem', { name: 'example-1' }));
-        expect(bodyTextBox).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Andrew',
+          age: 19,
+          trial: true,
+        });
       });
 
       it('sends a request with request body from example', async () => {

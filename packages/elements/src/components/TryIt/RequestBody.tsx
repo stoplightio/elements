@@ -12,7 +12,7 @@ interface RequestBodyProps {
 
 export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody, onChange }) => {
   const handleClick = (example: INodeExample | INodeExternalExample) => {
-    onChange(safeStringify('value' in example ? example.value : example.externalValue) ?? requestBody);
+    onChange(safeStringify('value' in example ? example.value : example.externalValue, undefined, 2) ?? requestBody);
   };
 
   return (
