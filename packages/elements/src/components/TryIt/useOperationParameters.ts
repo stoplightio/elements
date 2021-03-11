@@ -45,13 +45,15 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
 };
 
 function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
-  const pathParameters = orderBy(httpOperation.request?.path ?? [], ['required', 'name'], ['desc', 'asc']);
+  const getRequired = (obj: { required?: boolean }) => obj.required ?? false;
+
+  const pathParameters = orderBy(httpOperation.request?.path ?? [], [getRequired, 'name'], ['desc', 'asc']);
   const queryParameters = filterOutAuthorizationParams(
-    orderBy(httpOperation.request?.query ?? [], ['required', 'name'], ['asc', 'asc']),
+    orderBy(httpOperation.request?.query ?? [], [getRequired, 'name'], ['desc', 'asc']),
     httpOperation.security,
   );
   const headerParameters = filterOutAuthorizationParams(
-    orderBy(httpOperation.request?.headers ?? [], ['required', 'name'], ['desc', 'asc']),
+    orderBy(httpOperation.request?.headers ?? [], [getRequired, 'name'], ['desc', 'asc']),
     httpOperation.security,
   );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
