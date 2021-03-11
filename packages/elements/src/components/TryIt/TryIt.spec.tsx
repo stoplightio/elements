@@ -10,6 +10,7 @@ import { examplesRequestBody } from '../../__fixtures__/operations/examples-requ
 import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
 import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
 import { httpOperation as sortedParameters } from '../../__fixtures__/operations/operation-parameters';
+import { operation as operationWithoutServers } from '../../__fixtures__/operations/operation-without-servers';
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { httpOperation as referencedBody } from '../../__fixtures__/operations/referenced-body';
@@ -54,6 +55,16 @@ describe('TryIt', () => {
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
     expect(headers.get('Content-Type')).toBe('application/json');
+  });
+
+  it('makes request to origin URL if there is no URL in the document', async () => {
+    render(<TryItWithPersistence httpOperation={operationWithoutServers} />);
+
+    const button = screen.getByRole('button', { name: /send/i });
+    userEvent.click(button);
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+    expect(fetchMock.mock.calls[0][0]).toBe('http://localhost/todos');
   });
 
   it('Displays response', async () => {
