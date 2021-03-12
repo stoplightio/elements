@@ -9,7 +9,7 @@ export const httpOperation: IHttpOperation = {
   responses: [
     {
       code: '200',
-      description: '',
+      description: 'It worked!',
       headers: [
         {
           schema: {
@@ -87,6 +87,22 @@ export const httpOperation: IHttpOperation = {
               },
             ],
             'x-tags': ['Todos'],
+          },
+        },
+        {
+          mediaType: 'application/xml',
+        },
+        {
+          mediaType: 'application/yaml',
+          schema: {
+            properties: {
+              some_number: {
+                type: 'number',
+              },
+              some_string: {
+                type: 'string',
+              },
+            },
           },
         },
       ],
@@ -255,6 +271,7 @@ export const httpOperation: IHttpOperation = {
   ],
   request: {
     body: {
+      description: 'Some body description',
       contents: [
         {
           mediaType: 'application/json',
@@ -289,6 +306,9 @@ export const httpOperation: IHttpOperation = {
               },
             },
           ],
+        },
+        {
+          mediaType: 'application/xml',
         },
       ],
     },

@@ -5,6 +5,7 @@ import { examplesRequestBody } from '../../__fixtures__/operations/examples-requ
 import { httpOperation as multipartOperation } from '../../__fixtures__/operations/multipart-formdata-post';
 import { httpOperation as putTodosOperation } from '../../__fixtures__/operations/put-todos';
 import { requestBody } from '../../__fixtures__/operations/request-body';
+import { duplicatedSecurityScheme } from '../../__fixtures__/operations/securedOperation';
 import { operation as simpleGetOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { TryIt, TryItProps } from './TryIt';
@@ -55,3 +56,9 @@ TryItAuth.args = {
   httpOperation: putTodosOperation,
 };
 TryItAuth.storyName = 'TryIt Auth';
+
+export const TryItAuthDuplicated = Template.bind({});
+TryItAuthDuplicated.args = {
+  httpOperation: duplicatedSecurityScheme,
+};
+TryItAuthDuplicated.storyName = 'TryIt Auth (Duplicated Parameters)';

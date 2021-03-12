@@ -38,7 +38,9 @@ function generateToC(searchResults: NodeData[], type: TocType) {
           toc.items.push({ type: 'divider', title: 'Endpoints' });
         }
       } else {
-        toc.items.push({ type: 'divider', title: 'APIS' });
+        if (httpServices.length > 0) {
+          toc.items.push({ type: 'divider', title: 'APIS' });
+        }
       }
 
       pipe(

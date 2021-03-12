@@ -76,24 +76,26 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
       />
       <div className="flex-grow p-5 ContentViewer">
         <div className="flex">
-          <Provider
-            host={platformUrl ?? defaultPlatformUrl}
-            workspace={workspaceSlug}
-            project={projectSlug}
-            branch={branchSlug}
-            node={pathname}
-            authToken={authToken}
-            isStoplightProjectComponent
-          >
-            <Docs node={pathname} className="px-10" />
-            {showTryIt && (
-              <div className="w-2/5 relative">
-                <div className="inset-0 overflow-auto px-10">
-                  <TryItContainer node={pathname} />
+          {pathname !== '/' && (
+            <Provider
+              host={platformUrl ?? defaultPlatformUrl}
+              workspace={workspaceSlug}
+              project={projectSlug}
+              branch={branchSlug}
+              node={pathname}
+              authToken={authToken}
+              isStoplightProjectComponent
+            >
+              <Docs node={pathname} className="px-10" />
+              {showTryIt && (
+                <div className="w-2/5 relative">
+                  <div className="inset-0 overflow-auto px-10">
+                    <TryItContainer node={pathname} />
+                  </div>
                 </div>
-              </div>
-            )}
-          </Provider>
+              )}
+            </Provider>
+          )}
         </div>
       </div>
     </div>

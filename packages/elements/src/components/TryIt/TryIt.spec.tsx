@@ -9,11 +9,18 @@ import { httpOperation as base64FileUpload } from '../../__fixtures__/operations
 import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
 import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
 import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
+import { httpOperation as sortedParameters } from '../../__fixtures__/operations/operation-parameters';
+import { operation as operationWithoutServers } from '../../__fixtures__/operations/operation-without-servers';
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { httpOperation as referencedBody } from '../../__fixtures__/operations/referenced-body';
 import { requestBody } from '../../__fixtures__/operations/request-body';
-import { emptySecurityOperation, singleSecurityOperation } from '../../__fixtures__/operations/securedOperation';
+import { requestBodyEmptySchema } from '../../__fixtures__/operations/request-body-empty-schema';
+import {
+  duplicatedSecurityScheme,
+  emptySecurityOperation,
+  singleSecurityOperation,
+} from '../../__fixtures__/operations/securedOperation';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
@@ -48,6 +55,16 @@ describe('TryIt', () => {
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
     expect(headers.get('Content-Type')).toBe('application/json');
+  });
+
+  it('makes request to origin URL if there is no URL in the document', async () => {
+    render(<TryItWithPersistence httpOperation={operationWithoutServers} />);
+
+    const button = screen.getByRole('button', { name: /send/i });
+    userEvent.click(button);
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+    expect(fetchMock.mock.calls[0][0]).toBe('http://localhost/todos');
   });
 
   it('Displays response', async () => {
@@ -100,6 +117,34 @@ describe('TryIt', () => {
 
       let parametersHeader = screen.queryByText('Parameters');
       expect(parametersHeader).toBeInTheDocument();
+    });
+
+    describe('Sorts parameters alphabetically', () => {
+      it('by type and put required one on top for each type', () => {
+        const names = [
+          'todoId*',
+          'anotherId',
+          'bAnotherId',
+          'limit*',
+          'super_duper_long_parameter_name_with_unnecessary_text*',
+          'completed',
+          'items',
+          'optional_value_with_default',
+          'type',
+          'value',
+          'message-id*',
+          'account-id',
+          'b-account-id',
+        ];
+        render(<TryItWithPersistence httpOperation={sortedParameters} />);
+
+        const params = screen
+          .queryAllByRole('textbox')
+          .filter(param => param.hasAttribute('readonly'))
+          .map(param => param['value']);
+
+        expect(params).toEqual(names);
+      });
     });
 
     it('Displays types correctly', () => {
@@ -389,6 +434,15 @@ describe('TryIt', () => {
 
         expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({ name: 'string', age: 0 });
       });
+
+      it('does not generate request body from schema when schema is empty', () => {
+        render(<TryItWithPersistence httpOperation={requestBodyEmptySchema} />);
+
+        let bodyHeader = screen.queryByText('Body');
+        expect(bodyHeader).toBeInTheDocument();
+
+        expect(screen.getByRole('textbox')).toHaveTextContent('');
+      });
     });
 
     describe('when there are request body examples', () => {
@@ -420,7 +474,11 @@ describe('TryIt', () => {
         expect(examples).toEqual(examplesItems);
 
         userEvent.click(screen.getByRole('menuitem', { name: 'named example' }));
-        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Jane","age":36,"trial":false}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Jane',
+          age: 36,
+          trial: false,
+        });
       });
 
       it('restarts modified example in CodeEditor to initial value after choosing it again', () => {
@@ -434,7 +492,11 @@ describe('TryIt', () => {
 
         userEvent.click(examplesButton);
         userEvent.click(screen.getByRole('menuitem', { name: 'example-1' }));
-        expect(bodyTextBox).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Andrew',
+          age: 19,
+          trial: true,
+        });
       });
 
       it('sends a request with request body from example', async () => {
@@ -601,6 +663,94 @@ describe('TryIt', () => {
 
         const HttpSchemesButton = screen.queryByRole('button', { name: 'OAuth 2.0' });
         expect(HttpSchemesButton).toBeInTheDocument();
+      });
+    });
+
+    describe('API Key component', () => {
+      it('is displayed for security of that type', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const APIKeyName = screen.getByDisplayValue('API Key');
+        expect(APIKeyName).toBeInTheDocument();
+      });
+      it('removes duplicated parameters', () => {
+        render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
+
+        // check if query param with the same name as security is removed from OperationParameters (case insensitive)
+        const queryParam = screen.queryByLabelText('api-key');
+        expect(queryParam).not.toBeInTheDocument();
+
+        // check if header with the same name as security is removed from OperationParameters (case insensitive)
+        const header = screen.queryByLabelText('Api-KeY');
+        expect(header).not.toBeInTheDocument();
+      });
+
+      it('attaches auth token as a query parameter', async () => {
+        render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
+
+        const APIKeyField = screen.getByLabelText('API-Key');
+        await userEvent.type(APIKeyField, '123');
+
+        // click send
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const url = new URL(fetchMock.mock.calls[0][0] as string);
+        const queryParams = url.searchParams;
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+
+        // assert that query params are passed
+        expect(queryParams.get('API-Key')).toBe('123');
+
+        // make sure we don't attach security duplicated in Operation Parameters
+        expect(queryParams.get('api-key')).toBeNull();
+        expect(headers.get('Api-KeY')).toBeNull();
+      });
+
+      it('attaches auth token as a header', async () => {
+        render(<TryItWithPersistence httpOperation={singleSecurityOperation} />);
+
+        const APIKeyField = screen.getByLabelText('API-Key');
+        await userEvent.type(APIKeyField, '123');
+
+        // click send
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('API-Key')).toBe('123');
+      });
+    });
+
+    describe('OAuth2 Component', () => {
+      it('allows to send a OAuth2 request', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        userEvent.click(securitySchemesButton);
+
+        const securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
+        userEvent.click(securitySchemes);
+
+        const tokenInput = screen.getByLabelText('Authorization Token');
+
+        await userEvent.type(tokenInput, 'Bearer 0a1b2c');
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('Authorization')).toBe('Bearer 0a1b2c');
+      });
+
+      it('does not include header parameters conflicting with OAuth2 scheme', async () => {
+        render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
+
+        const header = screen.queryByLabelText('authorization');
+        expect(header).not.toBeInTheDocument();
       });
     });
   });

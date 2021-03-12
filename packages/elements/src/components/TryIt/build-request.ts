@@ -1,6 +1,13 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { safeStringify } from '@stoplight/yaml';
 import { Request as HarRequest } from 'har-format';
 
+import {
+  filterOutAuthorizationParams,
+  HttpSecuritySchemeWithValues,
+  isApiKeySecurityScheme,
+  isOAuth2SecurityScheme,
+} from './authentication-utils';
 import { MockData } from './mocking-utils';
 import { BodyParameterValues, createRequestBody } from './request-body-utils';
 
@@ -10,6 +17,7 @@ interface BuildRequestInput {
   parameterValues: Dictionary<string, string>;
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
+  auth?: HttpSecuritySchemeWithValues;
 }
 
 export async function buildFetchRequest({
@@ -18,36 +26,74 @@ export async function buildFetchRequest({
   bodyInput,
   parameterValues,
   mockData,
+  auth,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
-  const server = mockData?.url || httpOperation.servers?.[0]?.url;
+  const serverUrl = mockData?.url || httpOperation.servers?.[0]?.url || window.location.origin;
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
-  const queryParams = httpOperation.request?.query
-    ?.map(param => [param.name, parameterValues[param.name] ?? ''])
-    .filter(([_, value]) => value.length > 0);
+  const queryParams =
+    httpOperation.request?.query
+      ?.map(param => [param.name, parameterValues[param.name] ?? ''])
+      .filter(([_, value]) => value.length > 0) ?? [];
+
+  const rawHeaders = Object.fromEntries(
+    filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security).map(header => [
+      header.name,
+      parameterValues[header.name] ?? '',
+    ]),
+  );
+
+  const [queryParamsWithAuth, headersWithAuth] = auth
+    ? runAuthRequestEhancements(auth, queryParams, rawHeaders)
+    : [queryParams, rawHeaders];
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
-  const url = new URL(server + expandedPath);
-  url.search = new URLSearchParams(queryParams).toString();
+  const url = new URL(serverUrl + expandedPath);
+  url.search = new URLSearchParams(queryParamsWithAuth).toString();
 
   const body = typeof bodyInput === 'object' ? await createRequestBody(httpOperation, bodyInput) : bodyInput;
+
+  const headers = {
+    'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
+    ...headersWithAuth,
+    ...mockData?.header,
+  };
 
   return [
     url.toString(),
     {
       credentials: 'omit',
       method: httpOperation.method,
-      headers: {
-        'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
-        ...Object.fromEntries(
-          httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [],
-        ),
-        ...mockData?.header,
-      },
+      headers,
       body: shouldIncludeBody ? body : undefined,
     },
   ];
 }
+
+const runAuthRequestEhancements = (
+  auth: HttpSecuritySchemeWithValues,
+  queryParams: string[][],
+  headers: HeadersInit,
+): [string[][], HeadersInit] => {
+  const newQueryParams: string[][] = [...queryParams];
+  const newHeaders: HeadersInit = { ...headers };
+
+  if (isApiKeySecurityScheme(auth.scheme)) {
+    if (auth.scheme.in === 'query') {
+      newQueryParams.push([auth.scheme.name, safeStringify(auth.authValue)]);
+    }
+
+    if (auth.scheme.in === 'header') {
+      newHeaders[auth.scheme.name] = auth.authValue;
+    }
+  }
+
+  if (isOAuth2SecurityScheme(auth.scheme)) {
+    newHeaders['Authorization'] = auth.authValue;
+  }
+
+  return [newQueryParams, newHeaders];
+};
 
 export async function buildHarRequest({
   httpOperation,
@@ -55,7 +101,7 @@ export async function buildHarRequest({
   parameterValues,
   mediaTypeContent,
 }: BuildRequestInput): Promise<HarRequest> {
-  const server = httpOperation.servers?.[0]?.url;
+  const serverUrl = httpOperation.servers?.[0]?.url || window.location.origin;
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
@@ -88,7 +134,7 @@ export async function buildHarRequest({
 
   return {
     method: httpOperation.method.toUpperCase(),
-    url: server + uriExpand(httpOperation.path, parameterValues),
+    url: serverUrl + uriExpand(httpOperation.path, parameterValues),
     httpVersion: 'HTTP/1.1',
     cookies: [],
     headers: [

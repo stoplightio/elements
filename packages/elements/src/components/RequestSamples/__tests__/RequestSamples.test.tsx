@@ -76,4 +76,14 @@ describe('RequestSend', () => {
 
     expect(secondLangSelector).toHaveValue('JavaScript / Fetch');
   });
+
+  it('switches to language with no library', () => {
+    const { container } = render(<RequestSamples request={sampleRequest} />);
+    const langSelector = screen.getByRole('combobox');
+    const objcOption = screen.getByRole('option', { name: /obj-c/i });
+    userEvent.selectOptions(langSelector, objcOption);
+
+    expect(langSelector).toHaveValue('Obj-C');
+    expect(container).toHaveTextContent('#import <Foundation/Foundation.h>');
+  });
 });

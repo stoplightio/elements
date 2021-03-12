@@ -6,9 +6,10 @@ import { IHttpOperation } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import * as React from 'react';
 
-import { HttpCodeDescriptions } from '../../constants';
+import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { TryItAuth } from './Auth';
+import { HttpSecuritySchemeWithValues } from './authentication-utils';
 import { buildFetchRequest, buildHarRequest } from './build-request';
 import { FormDataBody } from './FormDataBody';
 import { getMockData } from './mocking-utils';
@@ -61,7 +62,6 @@ interface ErrorState {
 export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUrl, onRequestChange }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
-  const server = httpOperation.servers?.[0]?.url;
 
   const mediaTypeContent = httpOperation.request?.body?.contents?.[0];
 
@@ -71,6 +71,8 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
+
+  const [operationAuthValue, setOperationAuthValue] = React.useState<HttpSecuritySchemeWithValues | undefined>();
 
   React.useEffect(() => {
     let isActive = true;
@@ -91,8 +93,6 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [httpOperation, parameterValuesWithDefaults, formDataState.isFormDataBody, bodyParameterValues, textRequestBody]);
 
-  if (!server) return null;
-
   const handleClick = async () => {
     try {
       setLoading(true);
@@ -103,6 +103,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
         mediaTypeContent,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         mockData,
+        auth: operationAuthValue,
       });
       const response = await fetch(...request);
       setResponse({
@@ -121,11 +122,15 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
       <Panel isCollapsible={false} className="p-0">
         <Panel.Titlebar bg="canvas-300">
           <div role="heading" className="sl-font-bold">
-            <Text color="primary">{httpOperation.method.toUpperCase()}</Text>
+            <Text color={HttpMethodColors[httpOperation.method]}>{httpOperation.method.toUpperCase()}</Text>
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
-        <TryItAuth operationAuth={httpOperation.security ?? []} />
+        <TryItAuth
+          onChange={setOperationAuthValue}
+          operationSecurityScheme={httpOperation.security ?? []}
+          value={operationAuthValue}
+        />
         {allParameters.length > 0 && (
           <OperationParameters
             parameters={allParameters}

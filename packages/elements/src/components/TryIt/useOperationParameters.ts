@@ -1,15 +1,16 @@
 import { IHttpOperation } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { sortBy, uniqBy } from 'lodash';
+import { orderBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
+import { filterOutAuthorizationParams } from './authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
 const persistedParameterValuesAtom = atom({});
 export const useRequestParameters = (httpOperation: IHttpOperation) => {
   const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
 
-  const allParameters = React.useMemo(() => extractAllParameters(httpOperation.request), [httpOperation.request]);
+  const allParameters = React.useMemo(() => extractAllParameters(httpOperation), [httpOperation]);
   const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
 
   const updateParameterValue = (name: string, value: string) => {
@@ -43,9 +44,17 @@ export const useRequestParameters = (httpOperation: IHttpOperation) => {
   };
 };
 
-function extractAllParameters(request: IHttpOperation['request']): ParameterSpec[] {
-  const pathParameters = sortBy(request?.path ?? [], ['name']);
-  const queryParameters = sortBy(request?.query ?? [], ['name']);
-  const headerParameters = sortBy(request?.headers ?? [], ['name']);
+function extractAllParameters(httpOperation: IHttpOperation): ParameterSpec[] {
+  const getRequired = (obj: { required?: boolean }) => obj.required ?? false;
+
+  const pathParameters = orderBy(httpOperation.request?.path ?? [], [getRequired, 'name'], ['desc', 'asc']);
+  const queryParameters = filterOutAuthorizationParams(
+    orderBy(httpOperation.request?.query ?? [], [getRequired, 'name'], ['desc', 'asc']),
+    httpOperation.security,
+  );
+  const headerParameters = filterOutAuthorizationParams(
+    orderBy(httpOperation.request?.headers ?? [], [getRequired, 'name'], ['desc', 'asc']),
+    httpOperation.security,
+  );
   return uniqBy([...pathParameters, ...queryParameters, ...headerParameters], p => p.name);
 }
