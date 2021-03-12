@@ -19,8 +19,16 @@ export const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = p
     to: props.item.to ?? '',
   };
 
+  const handleClick = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <Link to={item.to} className="no-underline block">
+    <Link onClick={handleClick} to={item.to} className="no-underline block">
       <DefaultRow {...props} item={item} />
     </Link>
   );
