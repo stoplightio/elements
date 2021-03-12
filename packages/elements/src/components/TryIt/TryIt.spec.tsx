@@ -6,7 +6,7 @@ import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
 import { httpOperation as base64FileUpload } from '../../__fixtures__/operations/base64-file-upload';
-import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
+import { examplesRequestBody, singleExampleRequestBody } from '../../__fixtures__/operations/examples-request-body';
 import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
 import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
 import { httpOperation as sortedParameters } from '../../__fixtures__/operations/operation-parameters';
@@ -514,6 +514,25 @@ describe('TryIt', () => {
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual(json);
+      });
+    });
+
+    describe('when there is only one example provided', () => {
+      it('displays that only example body', () => {
+        render(<TryItWithPersistence httpOperation={singleExampleRequestBody} />);
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Andrew',
+          age: 19,
+          trial: true,
+        });
+      });
+
+      it('does not display select to choose examples', () => {
+        render(<TryItWithPersistence httpOperation={singleExampleRequestBody} />);
+
+        let examplesButton = screen.queryByRole('button', { name: 'Examples' });
+
+        expect(examplesButton).not.toBeInTheDocument();
       });
     });
   });

@@ -19,7 +19,7 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody,
     <Panel defaultIsOpen>
       <Panel.Titlebar
         rightComponent={
-          examples.length > 0 && (
+          examples.length > 1 && (
             <Menu
               label="Examples"
               trigger={
