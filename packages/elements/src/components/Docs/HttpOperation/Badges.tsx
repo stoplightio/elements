@@ -35,7 +35,7 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
 }) => {
   const badge = (
     <Badge icon={faLock} className="bg-gray-6 mx-1 max-w-xs truncate">
-      {getReadableSecurityName(scheme)}
+      {getReadableSecurityName(scheme, true)}
     </Badge>
   );
 

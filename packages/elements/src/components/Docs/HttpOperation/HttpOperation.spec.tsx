@@ -38,7 +38,7 @@ describe('HttpOperation', () => {
       const basicBadge = getSecurityBadge(/Basic Auth/i);
       const bearerBadge = getSecurityBadge(/Bearer Auth/i);
       const oidcBadge = getSecurityBadge(/OpenID Connect/i);
-      const oauthBadge = getSecurityBadge(/OAuth 2 \(write:pets, read:pets\)/i);
+      const oauthBadge = getSecurityBadge(/OAuth 2.0 \(write:pets, read:pets\)/i);
 
       expect(apikeyBadge).toBeInTheDocument();
       expect(basicBadge).toBeInTheDocument();

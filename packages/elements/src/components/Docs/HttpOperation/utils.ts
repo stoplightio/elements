@@ -24,15 +24,17 @@ export function getExamplesFromSchema(data: unknown) {
     : void 0;
 }
 
-export function getReadableSecurityName(securityScheme: HttpSecurityScheme) {
+export function getReadableSecurityName(securityScheme: HttpSecurityScheme, includeScope: boolean = false) {
   switch (securityScheme.type) {
     case 'apiKey':
       return 'API Key';
     case 'http':
       return `${capitalize(securityScheme.scheme)} Auth`;
     case 'oauth2':
+      if (!includeScope) return 'OAuth 2.0';
+
       const scopes = uniq(flatMap(keys(securityScheme.flows), getOauthScopeMapper(securityScheme)));
-      return `OAuth 2 (${scopes.join(', ')})`;
+      return `OAuth 2.0 (${scopes.join(', ')})`;
     case 'openIdConnect':
       return 'OpenID Connect';
   }

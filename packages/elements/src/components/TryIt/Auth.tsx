@@ -3,6 +3,7 @@ import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
+import { getReadableSecurityName } from '../Docs/HttpOperation/utils';
 import { APIKeyAuth } from './APIKeyAuth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';
 import { OAuth2Auth } from './OAuth2Auth';
@@ -15,13 +16,11 @@ interface TryItAuthProps {
 
 export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: operationAuth, onChange, value }) => {
   const operationSecurityArray = flatten(operationAuth);
-  const filteredSecurityItems = operationSecurityArray.filter(scheme =>
-    Object.keys(securityReadableNames).includes(scheme?.type),
-  );
+  const filteredSecurityItems = operationSecurityArray.filter(scheme => securitySchemeKeys.includes(scheme?.type));
 
   const securityScheme = value ? value.scheme : filteredSecurityItems[0];
 
-  const menuName = securityScheme ? securityReadableNames[securityScheme?.type] : 'Security Scheme';
+  const menuName = securityScheme ? getReadableSecurityName(securityScheme) : 'Security Scheme';
 
   if (filteredSecurityItems.length === 0) return null;
 
@@ -45,7 +44,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
               {filteredSecurityItems.map(auth => (
                 <MenuItem
                   key={auth.key}
-                  text={securityReadableNames[auth.type]}
+                  text={getReadableSecurityName(auth)}
                   onClick={() => {
                     onChange({ scheme: auth, authValue: '' });
                   }}
@@ -69,7 +68,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
 };
 
 const GenericMessageContainer: React.FC<{ scheme: HttpSecurityScheme }> = ({ scheme }) => {
-  return <Panel.Content>Coming Soon: {securityReadableNames[scheme.type]}</Panel.Content>;
+  return <Panel.Content>Coming Soon: {getReadableSecurityName(scheme)}</Panel.Content>;
 };
 
 interface SecuritySchemeComponentProps {
@@ -89,9 +88,4 @@ const SecuritySchemeComponent: React.FC<SecuritySchemeComponentProps> = ({ schem
   }
 };
 
-const securityReadableNames = {
-  apiKey: 'API Key',
-  http: 'HTTP',
-  oauth2: 'OAuth 2.0',
-  openIdConnect: 'OpenID Connect',
-};
+const securitySchemeKeys: Array<HttpSecurityScheme['type']> = ['apiKey', 'http', 'oauth2', 'openIdConnect'];
