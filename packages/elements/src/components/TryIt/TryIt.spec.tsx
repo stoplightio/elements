@@ -10,6 +10,7 @@ import { examplesRequestBody } from '../../__fixtures__/operations/examples-requ
 import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
 import { httpOperation as multipartFormdataOperation } from '../../__fixtures__/operations/multipart-formdata-post';
 import { httpOperation as sortedParameters } from '../../__fixtures__/operations/operation-parameters';
+import { operation as operationWithoutServers } from '../../__fixtures__/operations/operation-without-servers';
 import { patchWithRequestBody } from '../../__fixtures__/operations/patch-todos';
 import { httpOperation as putOperation } from '../../__fixtures__/operations/put-todos';
 import { httpOperation as referencedBody } from '../../__fixtures__/operations/referenced-body';
@@ -54,6 +55,16 @@ describe('TryIt', () => {
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
     expect(headers.get('Content-Type')).toBe('application/json');
+  });
+
+  it('makes request to origin URL if there is no URL in the document', async () => {
+    render(<TryItWithPersistence httpOperation={operationWithoutServers} />);
+
+    const button = screen.getByRole('button', { name: /send/i });
+    userEvent.click(button);
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+    expect(fetchMock.mock.calls[0][0]).toBe('http://localhost/todos');
   });
 
   it('Displays response', async () => {
@@ -113,6 +124,7 @@ describe('TryIt', () => {
         const names = [
           'todoId*',
           'anotherId',
+          'bAnotherId',
           'limit*',
           'super_duper_long_parameter_name_with_unnecessary_text*',
           'completed',
@@ -122,6 +134,7 @@ describe('TryIt', () => {
           'value',
           'message-id*',
           'account-id',
+          'b-account-id',
         ];
         render(<TryItWithPersistence httpOperation={sortedParameters} />);
 
@@ -461,7 +474,11 @@ describe('TryIt', () => {
         expect(examples).toEqual(examplesItems);
 
         userEvent.click(screen.getByRole('menuitem', { name: 'named example' }));
-        expect(screen.getByRole('textbox')).toHaveTextContent('{"name":"Jane","age":36,"trial":false}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Jane',
+          age: 36,
+          trial: false,
+        });
       });
 
       it('restarts modified example in CodeEditor to initial value after choosing it again', () => {
@@ -475,7 +492,11 @@ describe('TryIt', () => {
 
         userEvent.click(examplesButton);
         userEvent.click(screen.getByRole('menuitem', { name: 'example-1' }));
-        expect(bodyTextBox).toHaveTextContent('{"name":"Andrew","age":19,"trial":true}');
+        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+          name: 'Andrew',
+          age: 19,
+          trial: true,
+        });
       });
 
       it('sends a request with request body from example', async () => {
