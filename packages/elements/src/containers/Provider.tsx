@@ -7,6 +7,7 @@ import { NodeIconMapping } from '../types';
 export interface IProvider extends IActiveInfo {
   components?: IComponentMapping;
   authToken?: string;
+  isStoplightProjectComponent?: boolean;
 }
 
 export interface IActiveInfo {
@@ -16,6 +17,7 @@ export interface IActiveInfo {
   branch?: string;
   node?: string;
   authToken?: string;
+  isStoplightProjectComponent?: boolean;
 }
 
 const defaultIcons: NodeIconMapping = {};
@@ -28,6 +30,7 @@ const defaultInfo = {
   branch: '',
   node: '',
   authToken: '',
+  isStoplightProjectComponent: false,
 };
 export const ActiveInfoContext = createNamedContext<IActiveInfo>('ActiveInfoContext', defaultInfo);
 
@@ -40,6 +43,7 @@ export const Provider: React.FC<IProvider> = ({
   components,
   children,
   authToken,
+  isStoplightProjectComponent,
 }) => {
   const info = {
     host,
@@ -48,6 +52,7 @@ export const Provider: React.FC<IProvider> = ({
     branch,
     node,
     authToken,
+    isStoplightProjectComponent,
   };
 
   return (

@@ -83,6 +83,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
             branch={branchSlug}
             node={pathname}
             authToken={authToken}
+            isStoplightProjectComponent
           >
             <Docs node={pathname} className="px-10" />
             {showTryIt && (
