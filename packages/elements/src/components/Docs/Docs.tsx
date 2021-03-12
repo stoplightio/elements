@@ -16,11 +16,13 @@ export interface IDocsProps extends IBaseDocsProps {
   nodeData: unknown;
   nodeType: NodeType;
   headless?: boolean;
+  uri?: string;
 }
 
 export interface IParsedDocsProps extends IBaseDocsProps {
   node: ParsedNode;
   headless?: boolean;
+  uri?: string;
 }
 
 export interface IDocsComponentProps<T = unknown> {
@@ -37,9 +39,14 @@ export interface IDocsComponentProps<T = unknown> {
    * @default false
    */
   headless?: boolean;
+
+  /**
+   * URI of the document
+   */
+  uri?: string;
 }
 
-export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, headless }) => {
+export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, headless, uri }) => {
   const parsedNode = useParsedData(nodeType, nodeData);
 
   if (!parsedNode) {
@@ -47,7 +54,7 @@ export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, hea
     return null;
   }
 
-  return <ParsedDocs className={className} node={parsedNode} headless={headless} />;
+  return <ParsedDocs className={className} node={parsedNode} headless={headless} uri={uri} />;
 });
 
 export const ParsedDocs = ({ node, ...commonProps }: IParsedDocsProps) => {
