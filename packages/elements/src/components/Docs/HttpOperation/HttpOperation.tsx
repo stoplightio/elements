@@ -6,6 +6,7 @@ import { flatten } from 'lodash';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
+import { getServiceUriFromOperation } from '../../../utils/oas';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DeprecatedBadge, SecurityBadge } from './Badges';
 import { Request } from './Request';
@@ -16,8 +17,7 @@ export type HttpOperationProps = IDocsComponentProps<IHttpOperation>;
 const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless, uri }) => {
   const isDeprecated = !!data.deprecated;
 
-  const match = uri?.match(/(.*)\/paths/);
-  const httpServiceUri = match && match.length > 1 ? match[1] || '/' : undefined;
+  const httpServiceUri = uri && getServiceUriFromOperation(uri);
 
   const securitySchemes = flatten(data.security);
 

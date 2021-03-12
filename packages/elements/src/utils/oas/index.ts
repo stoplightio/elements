@@ -1,8 +1,8 @@
 import { NodeData } from '@stoplight/elements-utils';
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
-import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
-import { get, isObject, last, map } from 'lodash';
+import { HttpSecurityScheme, IHttpOperation, IHttpService, IOauth2SecurityScheme, NodeType } from '@stoplight/types';
+import { capitalize, flatMap, get, isObject, keys, last, map, uniq } from 'lodash';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
@@ -133,3 +133,29 @@ export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[
 
   return nodes;
 };
+
+export function getReadableSecurityName(securityScheme: HttpSecurityScheme, includeScope: boolean = false) {
+  switch (securityScheme.type) {
+    case 'apiKey':
+      return 'API Key';
+    case 'http':
+      return `${capitalize(securityScheme.scheme)} Auth`;
+    case 'oauth2':
+      if (!includeScope) return 'OAuth 2.0';
+
+      const scopes = uniq(flatMap(keys(securityScheme.flows), getOauthScopeMapper(securityScheme)));
+      return `OAuth 2.0 (${scopes.join(', ')})`;
+    case 'openIdConnect':
+      return 'OpenID Connect';
+  }
+}
+
+const getOauthScopeMapper = (securityScheme: IOauth2SecurityScheme) => (flow: string) => {
+  if (!['implicit', 'password', 'clientCredentials', 'authorizationCode'].includes(flow)) return [];
+  return keys(securityScheme.flows[flow]?.scopes);
+};
+
+export function getServiceUriFromOperation(uri: string) {
+  const match = uri?.match(/(.*)\/paths/);
+  return match && match.length > 1 ? match[1] || '/' : undefined;
+}

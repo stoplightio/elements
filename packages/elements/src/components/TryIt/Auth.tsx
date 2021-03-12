@@ -3,7 +3,7 @@ import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
-import { getReadableSecurityName } from '../Docs/HttpOperation/utils';
+import { getReadableSecurityName } from '../../utils/oas';
 import { APIKeyAuth } from './APIKeyAuth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';
 import { OAuth2Auth } from './OAuth2Auth';

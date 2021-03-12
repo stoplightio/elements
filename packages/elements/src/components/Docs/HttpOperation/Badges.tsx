@@ -6,7 +6,7 @@ import cs from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { getReadableSecurityName } from './utils';
+import { getReadableSecurityName } from '../../../utils/oas';
 
 export const Badge: React.FC<{
   icon?: IconDefinition;
