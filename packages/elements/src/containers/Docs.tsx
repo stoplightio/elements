@@ -5,6 +5,7 @@ import { NonIdealState } from '@stoplight/ui-kit';
 import * as React from 'react';
 
 import { DocsSkeleton, ParsedDocs } from '../components/Docs';
+import { useMockUrl } from '../components/TryIt/mocking-utils';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { useParsedData } from '../hooks/useParsedData';
 import { usePlatformApi } from '../hooks/usePlatformApi';
@@ -16,17 +17,20 @@ export interface IDocsProps {
   node?: string;
 }
 
-const DocsPopup = React.memo<{ nodeType: NodeType; nodeData: unknown; className?: string }>(
-  ({ nodeType, nodeData, className }) => {
-    const parsedNode = useParsedData(nodeType, nodeData);
-    if (!parsedNode) return null;
-    return (
-      <InlineRefResolverProvider document={parsedNode.data}>
-        <ParsedDocs className={className} node={parsedNode} />
-      </InlineRefResolverProvider>
-    );
-  },
-);
+const DocsPopup = React.memo<{
+  nodeType: NodeType;
+  nodeData: unknown;
+  className?: string;
+  mockUrl: string | undefined;
+}>(({ nodeType, nodeData, className, mockUrl }) => {
+  const parsedNode = useParsedData(nodeType, nodeData);
+  if (!parsedNode) return null;
+  return (
+    <InlineRefResolverProvider document={parsedNode.data}>
+      <ParsedDocs className={className} node={parsedNode} mockUrl={mockUrl} />
+    </InlineRefResolverProvider>
+  );
+});
 
 const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-nodes/{uri}';
 
@@ -41,6 +45,9 @@ export const Docs = ({ className, node }: IDocsProps) => {
     nodeUri: node,
     authToken: info.authToken,
   });
+
+  const nodeUri = node || info.node;
+  const mockUrlResult = useMockUrl(info, nodeUri);
 
   if (error) {
     return (
@@ -58,5 +65,12 @@ export const Docs = ({ className, node }: IDocsProps) => {
     return <DocsSkeleton />;
   }
 
-  return <DocsPopup nodeType={result.type} nodeData={result.data} className={className} />;
+  return (
+    <DocsPopup
+      nodeType={result.type}
+      nodeData={result.data}
+      className={className}
+      mockUrl={mockUrlResult?.servicePath}
+    />
+  );
 };
