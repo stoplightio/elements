@@ -21,6 +21,7 @@ export interface IDocsProps extends IBaseDocsProps {
 export interface IParsedDocsProps extends IBaseDocsProps {
   node: ParsedNode;
   headless?: boolean;
+  mockUrl?: string;
 }
 
 export interface IDocsComponentProps<T = unknown> {
@@ -37,6 +38,7 @@ export interface IDocsComponentProps<T = unknown> {
    * @default false
    */
   headless?: boolean;
+  mockUrl?: string;
 }
 
 export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, headless }) => {

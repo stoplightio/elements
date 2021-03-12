@@ -1,4 +1,6 @@
 import { IHttpOperation } from '@stoplight/types';
+import { IActiveInfo } from 'elements/src/containers/Provider';
+import { useActionsApi } from 'elements/src/hooks/usePlatformApi';
 import { compact, uniq } from 'lodash';
 
 import { formatMultiValueHeader } from '../../utils/headers';
@@ -10,6 +12,8 @@ export type MockData = {
   url: string;
   header?: Record<'Prefer', string>;
 };
+
+export type MockUrlResult = { servicePath: string; operationPath?: string; id: number };
 
 export function getMockData(
   url: string | undefined,
@@ -50,4 +54,17 @@ function supportsExample(httpOperation: IHttpOperation, code?: string, exampleKe
 
   const exampleKeys = uniq(response.contents?.flatMap(c => c.examples || []).map(example => example.key));
   return exampleKeys.includes(exampleKey);
+}
+
+export function useMockUrl(info: IActiveInfo, nodeUri: string | undefined) {
+  const mockActionsUrl = 'api/actions/branchNodeMockUrl';
+  const { data: mockUrlResult } = useActionsApi<MockUrlResult>(mockActionsUrl, {
+    platformUrl: info.host,
+    workspaceSlug: info.workspace,
+    projectSlug: info.project,
+    branchSlug: info.branch,
+    nodeUri,
+    authToken: info.authToken,
+  });
+  return mockUrlResult;
 }
