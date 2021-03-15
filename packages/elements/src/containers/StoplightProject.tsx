@@ -84,11 +84,11 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           node={pathname}
           authToken={authToken}
         >
-          <Box p={5} overflowX="hidden" style={{ flexGrow: 3, flexBasis: 0, overflowWrap: 'anywhere' }}>
+          <Box p={5} overflowX="hidden" style={{ flexGrow: 3, flexBasis: 600, overflowWrap: 'anywhere' }}>
             <Docs node={pathname} className="px-10" />
           </Box>
           {showTryIt && (
-            <Box p={5} overflowX="hidden" style={{ flexGrow: 2, flexBasis: 0, overflowWrap: 'anywhere' }}>
+            <Box p={5} overflowX="hidden" style={{ flexGrow: 2, flexBasis: 400, overflowWrap: 'anywhere' }}>
               <TryItContainer node={pathname} />
             </Box>
           )}

@@ -39,11 +39,11 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   return (
     <Flex>
       <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
-      <Box p={5} overflowX="hidden" style={{ flexGrow: 3, flexBasis: 0, overflowWrap: 'anywhere' }}>
+      <Box p={5} overflowX="hidden" style={{ flexGrow: 3, flexBasis: 600, overflowWrap: 'anywhere' }}>
         <Docs key={pathname} className="px-10" nodeData={nodeData} nodeType={nodeType} />
       </Box>
       {showTryIt && (
-        <Box p={5} overflowX="hidden" style={{ flexGrow: 2, flexBasis: 0, overflowWrap: 'anywhere' }}>
+        <Box p={5} overflowX="hidden" style={{ flexGrow: 2, flexBasis: 400, overflowWrap: 'anywhere' }}>
           <TryItWithRequestSamples key={pathname} httpOperation={nodeData as IHttpOperation} />
         </Box>
       )}
