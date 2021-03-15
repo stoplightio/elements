@@ -100,7 +100,7 @@ const APIImpl: React.FC<APIProps> = props => {
 
   return (
     <InlineRefResolverProvider document={document}>
-      <div className="APIComponent flex flex-row">
+      <div className="APIComponent">
         {layout === 'stacked' ? (
           <StackedLayout uriMap={uriMap} tree={tree} />
         ) : (

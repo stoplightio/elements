@@ -1,3 +1,4 @@
+import { Box, Flex } from '@stoplight/mosaic';
 import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
@@ -36,20 +37,16 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   }
 
   return (
-    <>
+    <Flex>
       <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
-      <div className="flex-grow p-5 ContentViewer">
-        <div className="flex">
-          <Docs key={pathname} className="px-10" nodeData={nodeData} nodeType={nodeType} />
-          {showTryIt && (
-            <div className="w-2/5 relative ml-10">
-              <div className="inset-0 overflow-auto">
-                <TryItWithRequestSamples key={pathname} httpOperation={nodeData as IHttpOperation} />
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
+      <Box p={5} overflowX="hidden" style={{ flexGrow: 3, flexBasis: 0, overflowWrap: 'anywhere' }}>
+        <Docs key={pathname} className="px-10" nodeData={nodeData} nodeType={nodeType} />
+      </Box>
+      {showTryIt && (
+        <Box p={5} overflowX="hidden" style={{ flexGrow: 2, flexBasis: 0, overflowWrap: 'anywhere' }}>
+          <TryItWithRequestSamples key={pathname} httpOperation={nodeData as IHttpOperation} />
+        </Box>
+      )}
+    </Flex>
   );
 };
