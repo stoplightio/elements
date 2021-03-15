@@ -2,6 +2,7 @@ import { HttpParamStyles } from '@stoplight/types';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import { HttpOperation } from './index';
@@ -28,6 +29,32 @@ describe('HttpOperation', () => {
       const deprecatedBadge = getDeprecatedBadge();
 
       expect(deprecatedBadge).not.toBeInTheDocument();
+    });
+
+    it('should display auth badges for operation security schemas', () => {
+      render(<HttpOperation data={{ ...httpOperation }} />);
+
+      const apikeyBadge = getSecurityBadge(/API Key/i);
+      const basicBadge = getSecurityBadge(/Basic Auth/i);
+      const bearerBadge = getSecurityBadge(/Bearer Auth/i);
+      const oidcBadge = getSecurityBadge(/OpenID Connect/i);
+      const oauthBadge = getSecurityBadge(/OAuth 2.0 \(write:pets, read:pets\)/i);
+
+      expect(apikeyBadge).toBeInTheDocument();
+      expect(basicBadge).toBeInTheDocument();
+      expect(bearerBadge).toBeInTheDocument();
+      expect(oidcBadge).toBeInTheDocument();
+      expect(oauthBadge).toBeInTheDocument();
+    });
+
+    it('should contain link to Overview for operation with uri', () => {
+      render(
+        <Router>
+          <HttpOperation data={{ ...httpOperation }} uri="/reference/todos/openapi.v1.json/paths/~1todos/post" />
+        </Router>,
+      );
+      const apikeyBadge = getSecurityBadge(/API Key/i);
+      expect(apikeyBadge?.closest('a')).toHaveAttribute('href', '/reference/todos/openapi.v1.json');
     });
   });
 
@@ -384,4 +411,8 @@ describe('HttpOperation', () => {
 
 function getDeprecatedBadge() {
   return screen.queryByRole('badge', { name: /Deprecated/i });
+}
+
+function getSecurityBadge(re: RegExp) {
+  return screen.queryByRole('badge', { name: re });
 }

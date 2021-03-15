@@ -28,6 +28,8 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   const nodeData = uriMap[pathname] || uriMap['/'];
   const showTryIt = isOperation(pathname);
 
+  const hasOverview = !!contents.find(item => item.to === '/');
+
   if (nodeType === NodeType.HttpService && !(nodeData as IHttpService).description) {
     const item = contents.find(content => content.type === 'item');
 
@@ -40,7 +42,13 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
     <Flex>
       <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
       <div className="docs-column">
-        <Docs key={pathname} className="px-10" nodeData={nodeData} nodeType={nodeType} />
+        <Docs
+          key={pathname}
+          uri={hasOverview ? pathname : undefined}
+          className="px-10"
+          nodeData={nodeData}
+          nodeType={nodeType}
+        />
       </div>
       {showTryIt && (
         <div className="tryit-column">

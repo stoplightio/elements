@@ -62,7 +62,6 @@ interface ErrorState {
 export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUrl, onRequestChange }) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
-  const server = httpOperation.servers?.[0]?.url;
 
   const mediaTypeContent = httpOperation.request?.body?.contents?.[0];
 
@@ -93,8 +92,6 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
     // disabling because we don't want to react on `onRequestChange` change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [httpOperation, parameterValuesWithDefaults, formDataState.isFormDataBody, bodyParameterValues, textRequestBody]);
-
-  if (!server) return null;
 
   const handleClick = async () => {
     try {

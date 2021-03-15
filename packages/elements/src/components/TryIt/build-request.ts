@@ -28,7 +28,7 @@ export async function buildFetchRequest({
   mockData,
   auth,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
-  const server = mockData?.url || httpOperation.servers?.[0]?.url;
+  const serverUrl = mockData?.url || httpOperation.servers?.[0]?.url || window.location.origin;
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
   const queryParams =
@@ -48,7 +48,7 @@ export async function buildFetchRequest({
     : [queryParams, rawHeaders];
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
-  const url = new URL(server + expandedPath);
+  const url = new URL(serverUrl + expandedPath);
   url.search = new URLSearchParams(queryParamsWithAuth).toString();
 
   const body = typeof bodyInput === 'object' ? await createRequestBody(httpOperation, bodyInput) : bodyInput;
@@ -101,7 +101,7 @@ export async function buildHarRequest({
   parameterValues,
   mediaTypeContent,
 }: BuildRequestInput): Promise<HarRequest> {
-  const server = httpOperation.servers?.[0]?.url;
+  const serverUrl = httpOperation.servers?.[0]?.url || window.location.origin;
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
@@ -134,7 +134,7 @@ export async function buildHarRequest({
 
   return {
     method: httpOperation.method.toUpperCase(),
-    url: server + uriExpand(httpOperation.path, parameterValues),
+    url: serverUrl + uriExpand(httpOperation.path, parameterValues),
     httpVersion: 'HTTP/1.1',
     cookies: [],
     headers: [
