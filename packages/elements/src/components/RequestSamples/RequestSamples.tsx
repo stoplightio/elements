@@ -46,7 +46,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar rightComponent={<CopyButton size="md" copyValue={requestSample || ''} />}>
+      <Panel.Titlebar rightComponent={<CopyButton size="md" copyValue={requestSample || ''} />} overflowY="hidden">
         <span role="heading">Request:</span>
         <Select
           onChange={handleSelectClick}
