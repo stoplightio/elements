@@ -19,6 +19,22 @@
     width: 300px;
     min-width: 220px;
   }
+
+  .docs-column, .tryit-column {
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-wrap: anywhere;
+  }
+
+  .docs-column {
+    flex-grow: 3;
+    flex-basis: 600px;
+  }
+
+  .tryit-column {
+    flex-grow: 2;
+    flex-basis: 400px;
+  }
 }
 
 .PreviewTabs {

@@ -1,4 +1,3 @@
-import { Box } from '@stoplight/mosaic';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
@@ -84,13 +83,13 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           node={pathname}
           authToken={authToken}
         >
-          <Box p={5} overflowX="hidden" style={{ flexGrow: 3, flexBasis: 600, overflowWrap: 'anywhere' }}>
+          <div className="docs-column">
             <Docs node={pathname} className="px-10" />
-          </Box>
+          </div>
           {showTryIt && (
-            <Box p={5} overflowX="hidden" style={{ flexGrow: 2, flexBasis: 400, overflowWrap: 'anywhere' }}>
+            <div className="tryit-column">
               <TryItContainer node={pathname} />
-            </Box>
+            </div>
           )}
         </Provider>
       )}
