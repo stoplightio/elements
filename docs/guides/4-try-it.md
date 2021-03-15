@@ -1,0 +1,6 @@
+- Mocking
+  - uses examples
+  - request validation
+  - response generation strategies (overview link to prism)
+- Cors https://swagger.io/docs/open-source-tools/swagger-ui/usage/cors/
+- Security Schemes

@@ -1,0 +1,3 @@
+- Automatic Examples
+- Manual Examples
+- Random Examples with Faker
