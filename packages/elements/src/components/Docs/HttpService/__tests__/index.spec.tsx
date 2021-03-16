@@ -4,22 +4,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 
 import httpService from '../../../../__fixtures__/services/petstore';
+import { Provider } from '../../../../containers/Provider';
 import { HttpService } from '../index';
 import { ServerInfo } from '../ServerInfo';
-
-const APIComponentContext = {
-  host: 'https://stoplight.io',
-  isStoplightComponent: false,
-  project: 'studio-demo',
-  workspace: 'elements',
-};
-
-const StoplightComponentContext = {
-  host: 'https://stoplight.io',
-  isStoplightComponent: true,
-  project: 'studio-demo',
-  workspace: 'elements',
-};
 
 describe('HttpService', () => {
   it('Should render correctly', () => {
@@ -29,13 +16,7 @@ describe('HttpService', () => {
   });
 
   it('displays first server url', () => {
-    render(
-      <ServerInfo
-        serverUrl={httpService.servers}
-        mockUrl="https://foo.stoplight.io/prism/123"
-        activeContextInfo={APIComponentContext}
-      />,
-    );
+    render(<ServerInfo serverUrl={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />);
 
     const serverUrl = screen.getByLabelText('production-server');
     expect(serverUrl).toHaveTextContent('https://api.stoplight.io');
@@ -48,11 +29,9 @@ describe('HttpService', () => {
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
     render(
-      <ServerInfo
-        serverUrl={httpService.servers}
-        mockUrl="https://foo.stoplight.io/prism/123"
-        activeContextInfo={StoplightComponentContext}
-      />,
+      <Provider host="https://stoplight.io" isStoplightProjectComponent project="studio-demo" workspace="elements">
+        <ServerInfo serverUrl={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />
+      </Provider>,
     );
 
     const mockServer = screen.queryByLabelText('mock-server');
