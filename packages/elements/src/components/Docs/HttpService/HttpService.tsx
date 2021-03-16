@@ -29,11 +29,13 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, mo
       </div>
       <div className="flex flex-rows">
         {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
-        <div className="w-2/5 relative ml-10">
-          <div className="inset-0 overflow-auto">
-            <ServerInfo serverUrl={data.servers} mockUrl={mockUrl} />
+        {(data.servers ?? mockUrl) && (
+          <div className="w-2/5 relative ml-10">
+            <div className="inset-0 overflow-auto">
+              <ServerInfo serverUrl={data.servers} mockUrl={mockUrl} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Box>
   );
