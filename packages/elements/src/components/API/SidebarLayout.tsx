@@ -27,6 +27,8 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   const nodeData = uriMap[pathname] || uriMap['/'];
   const showTryIt = isOperation(pathname);
 
+  const hasOverview = !!contents.find(item => item.to === '/');
+
   if (nodeType === NodeType.HttpService && !(nodeData as IHttpService).description) {
     const item = contents.find(content => content.type === 'item');
 
@@ -40,7 +42,13 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
       <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
       <div className="flex-grow p-5 ContentViewer">
         <div className="flex">
-          <Docs key={pathname} className="px-10" nodeData={nodeData} nodeType={nodeType} />
+          <Docs
+            key={pathname}
+            uri={hasOverview ? pathname : undefined}
+            className="px-10"
+            nodeData={nodeData}
+            nodeType={nodeType}
+          />
           {showTryIt && (
             <div className="w-2/5 relative ml-10">
               <div className="inset-0 overflow-auto">

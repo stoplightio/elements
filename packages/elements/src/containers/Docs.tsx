@@ -20,14 +20,15 @@ export interface IDocsProps {
 const DocsPopup = React.memo<{
   nodeType: NodeType;
   nodeData: unknown;
+  uri?: string;
   className?: string;
   mockUrl: string | undefined;
-}>(({ nodeType, nodeData, className, mockUrl }) => {
+}>(({ nodeType, nodeData, uri, mockUrl, className }) => {
   const parsedNode = useParsedData(nodeType, nodeData);
   if (!parsedNode) return null;
   return (
     <InlineRefResolverProvider document={parsedNode.data}>
-      <ParsedDocs className={className} node={parsedNode} mockUrl={mockUrl} />
+      <ParsedDocs className={className} node={parsedNode} uri={uri} mockUrl={mockUrl} />
     </InlineRefResolverProvider>
   );
 });
@@ -69,8 +70,9 @@ export const Docs = ({ className, node }: IDocsProps) => {
     <DocsPopup
       nodeType={result.type}
       nodeData={result.data}
-      className={className}
+      uri={node}
       mockUrl={mockUrlResult?.servicePath}
+      className={className}
     />
   );
 };
