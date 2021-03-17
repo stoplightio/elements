@@ -1,9 +1,9 @@
 import { InvertTheme, Panel, Text } from '@stoplight/mosaic';
 import { IServer } from '@stoplight/types';
-import { isProperUrl } from 'elements/src/utils/guards';
 import * as React from 'react';
 
 import { ActiveInfoContext } from '../../../containers/Provider';
+import { isProperUrl } from '../../../utils/guards';
 
 interface ServerInfoProps {
   serverUrl: IServer[] | undefined;

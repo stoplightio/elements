@@ -1,6 +1,8 @@
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 
+import { ParsedNode } from '../../../elements-utils/src/types';
+import { MockUrlResult } from '../components/TryIt/mocking-utils';
 import { ComponentsProvider } from '../context/Components';
 import { NodeIconMapping } from '../types';
 
@@ -64,7 +66,20 @@ export const Provider: React.FC<IProvider> = ({
   );
 };
 
-function createNamedContext<T>(name: string, defaultValue: T): React.Context<T> {
+export const StoplightProjectContext = createNamedContext<{
+  mockUrl: MockUrlResult | undefined;
+  parsedData: ParsedNode | undefined;
+}>('mockUrlValue', { mockUrl: undefined, parsedData: undefined });
+
+export const StoplightComponentProvider: React.FC<{
+  mockUrl: MockUrlResult | undefined;
+  parsedData: ParsedNode | undefined;
+}> = ({ mockUrl, children, parsedData }) => {
+  const info = { mockUrl, parsedData };
+  return <StoplightProjectContext.Provider value={info}>{children}</StoplightProjectContext.Provider>;
+};
+
+export function createNamedContext<T>(name: string, defaultValue: T): React.Context<T> {
   const context = React.createContext(defaultValue);
   context.displayName = name;
   return context;

@@ -10,7 +10,7 @@ import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { useParsedData } from '../hooks/useParsedData';
 import { usePlatformApi } from '../hooks/usePlatformApi';
 import { BundledBranchNode } from '../types';
-import { ActiveInfoContext } from './Provider';
+import { ActiveInfoContext, StoplightComponentProvider } from './Provider';
 
 export interface IDocsProps {
   className?: string;
@@ -22,13 +22,12 @@ const DocsPopup = React.memo<{
   nodeData: unknown;
   uri?: string;
   className?: string;
-  mockUrl: string | undefined;
-}>(({ nodeType, nodeData, uri, mockUrl, className }) => {
+}>(({ nodeType, nodeData, uri, className }) => {
   const parsedNode = useParsedData(nodeType, nodeData);
   if (!parsedNode) return null;
   return (
     <InlineRefResolverProvider document={parsedNode.data}>
-      <ParsedDocs className={className} node={parsedNode} uri={uri} mockUrl={mockUrl} />
+      <ParsedDocs className={className} node={parsedNode} uri={uri} />
     </InlineRefResolverProvider>
   );
 });
@@ -46,6 +45,11 @@ export const Docs = ({ className, node }: IDocsProps) => {
     nodeUri: node,
     authToken: info.authToken,
   });
+
+  const nodeType = result?.type || NodeType.Unknown;
+  const nodeData = result?.data || '';
+
+  const parsedData = useParsedData(nodeType, nodeData);
 
   const nodeUri = node || info.node;
   const mockUrlResult = useMockUrl(info, nodeUri);
@@ -67,12 +71,8 @@ export const Docs = ({ className, node }: IDocsProps) => {
   }
 
   return (
-    <DocsPopup
-      nodeType={result.type}
-      nodeData={result.data}
-      uri={node}
-      mockUrl={mockUrlResult?.servicePath}
-      className={className}
-    />
+    <StoplightComponentProvider mockUrl={mockUrlResult} parsedData={parsedData}>
+      <DocsPopup nodeType={result.type} nodeData={result.data} uri={node} className={className} />
+    </StoplightComponentProvider>
   );
 };

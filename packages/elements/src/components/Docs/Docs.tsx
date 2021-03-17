@@ -22,7 +22,6 @@ export interface IDocsProps extends IBaseDocsProps {
 export interface IParsedDocsProps extends IBaseDocsProps {
   node: ParsedNode;
   headless?: boolean;
-  mockUrl?: string;
   uri?: string;
 }
 
@@ -40,7 +39,6 @@ export interface IDocsComponentProps<T = unknown> {
    * @default false
    */
   headless?: boolean;
-  mockUrl?: string;
 
   /**
    * URI of the document

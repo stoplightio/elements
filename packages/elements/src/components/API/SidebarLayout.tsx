@@ -1,14 +1,13 @@
-import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
+import { IHttpService, NodeType } from '@stoplight/types';
 import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { useTocContents } from '../../hooks/useTocContents';
 import { ITableOfContentsTree } from '../../types';
-import { getNodeType, isOperation, IUriMap } from '../../utils/oas';
+import { getNodeType, IUriMap } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { Row } from '../TableOfContents/Row';
-import { TryItWithRequestSamples } from '../TryIt';
 
 type SidebarLayoutProps = {
   pathname: string;
@@ -25,7 +24,6 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
 
   const nodeType = getNodeType(pathname);
   const nodeData = uriMap[pathname] || uriMap['/'];
-  const showTryIt = isOperation(pathname);
 
   const hasOverview = !!contents.find(item => item.to === '/');
 
@@ -49,13 +47,6 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
             nodeData={nodeData}
             nodeType={nodeType}
           />
-          {showTryIt && (
-            <div className="w-2/5 relative ml-10">
-              <div className="inset-0 overflow-auto">
-                <TryItWithRequestSamples key={pathname} httpOperation={nodeData as IHttpOperation} />
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </>

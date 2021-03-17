@@ -4,6 +4,7 @@ import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
+import { StoplightProjectContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { Badge } from '../HttpOperation/Badges';
 import { ServerInfo } from './ServerInfo';
@@ -16,7 +17,7 @@ const enhanceVersionString = (version: string): string => {
 
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
-const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, mockUrl }) => {
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
   return (
     <Box className={className} bg="transparent" w="full">
       {data.name && (
@@ -29,13 +30,17 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, mo
       </div>
       <div className="flex flex-rows">
         {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
-        {(data.servers ?? mockUrl) && (
-          <div className="w-2/5 relative ml-10">
-            <div className="inset-0 overflow-auto">
-              <ServerInfo serverUrl={data.servers} mockUrl={mockUrl} />
-            </div>
-          </div>
-        )}
+        <StoplightProjectContext.Consumer>
+          {value =>
+            (data.servers ?? value.mockUrl?.servicePath) && (
+              <div className="w-2/5 relative ml-10">
+                <div className="inset-0 overflow-auto">
+                  <ServerInfo serverUrl={data.servers} mockUrl={value.mockUrl?.servicePath} />
+                </div>
+              </div>
+            )
+          }
+        </StoplightProjectContext.Consumer>
       </div>
     </Box>
   );
