@@ -39,6 +39,20 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      code: '202',
+      contents: [
+        {
+          mediaType: 'application/json',
+          examples: [
+            {
+              key: 'Only one example',
+              value: { this: 'is an example' },
+            },
+          ],
+        },
+      ],
+    },
+    {
       code: '404',
       contents: [
         {

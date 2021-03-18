@@ -44,4 +44,15 @@ describe('Response Examples', () => {
 
     expect(container).toBeEmptyDOMElement();
   });
+
+  it('does not show select (but shows name) if there is only one example present', () => {
+    const { container } = render(
+      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="202" />,
+    );
+
+    const select = screen.queryByRole('combobox');
+
+    expect(select).not.toBeInTheDocument();
+    expect(container).toHaveTextContent('Only one example');
+  });
 });

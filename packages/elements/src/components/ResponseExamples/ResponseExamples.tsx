@@ -27,16 +27,23 @@ export const ResponseExamples = ({
 
   if (!responseContents || !responseExample) return null;
 
-  const examplesSelect = responseContents.examples && responseContents.examples.length > 1 && (
-    <Select
-      options={responseContents.examples.map((example, index) => ({ value: index, label: example.key }))}
-      onChange={e => setChosenExampleIndex(parseInt(e.currentTarget.value, 10))}
-    />
-  );
+  const examplesSelect =
+    responseContents.examples &&
+    (responseContents.examples.length > 1 ? (
+      <Select
+        options={responseContents.examples.map((example, index) => ({ value: index, label: example.key }))}
+        onChange={e => setChosenExampleIndex(parseInt(e.currentTarget.value, 10))}
+      />
+    ) : (
+      responseContents.examples[0].key
+    ));
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar rightComponent={examplesSelect}>Response Example</Panel.Titlebar>
+      <Panel.Titlebar>
+        Response Example{examplesSelect ? ': ' : ''}
+        {examplesSelect}
+      </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
           aria-label={responseExample}
