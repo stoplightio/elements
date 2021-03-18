@@ -1,46 +1,47 @@
-import { IHttpOperation } from '@stoplight/types';
 import '@testing-library/jest-dom';
 
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
+
+import { httpOperation } from '../../__fixtures__/operations/operation-with-examples';
 import { ResponseExamples } from './ResponseExamples';
 
-const httpOperation: IHttpOperation = {
-    method: 'GET',
-    path: 'some/path',
-    id: 'some-id',
-    responses: [
-        {
-            code: '200',
-            contents: [
-                {
-                    mediaType: 'application/json',
-                    examples: [
-                        {
-                            key: 'First Example',
-                            value: { some: 'example' }
-                        },
-                        {
-                            key: 'Second Example',
-                            value: '{ "another": "example" }'
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-}
-
 describe('Response Examples', () => {
-    it('displays first provided example by default', () => {
-        render(<ResponseExamples 
-            httpOperation={httpOperation} 
-            chosenMediaType="application/json" 
-            chosenStatusCode="200" />
-        );
+  it('displays first provided example by default', () => {
+    const { container } = render(
+      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="200" />,
+    );
 
-        expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
-            some: 'example'
-        });
-    })
+    expect(container).toHaveTextContent('some');
+    expect(container).toHaveTextContent('example');
+  });
+
+  it('allows to choose second example with select', () => {
+    const { container } = render(
+      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="200" />,
+    );
+
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Second Example');
+
+    expect(container).toHaveTextContent('another');
+    expect(container).toHaveTextContent('example');
+  });
+
+  it('generates example based on schema if necessary', () => {
+    const { container } = render(
+      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="201" />,
+    );
+
+    expect(container).toHaveTextContent('someParameter');
+    expect(container).toHaveTextContent('string');
+  });
+
+  it('does not show component if there are no examples and no schemas', () => {
+    const { container } = render(
+      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="404" />,
+    );
+
+    expect(container).toBeEmptyDOMElement();
+  });
 });
