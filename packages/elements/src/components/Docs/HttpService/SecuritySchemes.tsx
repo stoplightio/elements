@@ -54,8 +54,9 @@ function getDefaultDescription(scheme: HttpSecurityScheme) {
           return getBasicAuthDescription();
         case 'bearer':
           return getBearerAuthDescription();
+        case 'digest':
+          return getDigestAuthDescription();
       }
-      return '';
     case 'oauth2':
       return getOAuthDescription(scheme);
   }
@@ -81,6 +82,12 @@ function getBearerAuthDescription() {
   return `Provide your bearer token in the Authorization header when making requests to protected resources.
 
   Example: \`Authorization: Bearer 123\``;
+}
+
+function getDigestAuthDescription() {
+  return `Provide your encrypted digest scheme data in the Authorization header when making requests to protected resources.
+
+  Example: \`Authorization: Digest username=guest, realm="test", nonce="2", uri="/uri", response="123"\``;
 }
 
 function getOAuthDescription(scheme: IOauth2SecurityScheme) {
