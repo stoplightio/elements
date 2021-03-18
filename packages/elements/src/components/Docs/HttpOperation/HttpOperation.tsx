@@ -6,7 +6,7 @@ import { flatten } from 'lodash';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
-import { getServiceUriFromOperation } from '../../../utils/oas';
+import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DeprecatedBadge, SecurityBadge } from './Badges';
 import { Request } from './Request';
