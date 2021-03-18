@@ -5,7 +5,10 @@ import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
-import { HttpOperation } from './index';
+import { withPersistenceBoundary } from '../../../context/Persistence';
+import { HttpOperation as HttpOperationWithoutPersistence } from './index';
+
+const HttpOperation = withPersistenceBoundary(HttpOperationWithoutPersistence);
 
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
