@@ -1,7 +1,6 @@
-import { Heading } from '@stoplight/mosaic';
+import { Box, Flex, Heading } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
-import cn from 'classnames';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
@@ -19,25 +18,21 @@ export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
   return (
-    <div className={cn('w-full', className)}>
+    <Box w="full" className={className}>
       {data.name && (
-        <Heading className="mb-5" fontWeight="medium" size={1}>
+        <Heading mb={5} fontWeight="medium" size={1}>
           {data.name}
         </Heading>
       )}
-      <div className="flex justify-between">
-        <div className="mr-2">
-          <div className="mb-12">
-            {data.version && <Badge className="bg-gray-6">{enhanceVersionString(data.version)}</Badge>}
-          </div>
+      <Flex justifyContent="between">
+        <Box mr={2}>
+          <Box mb={12}>{data.version && <Badge className="bg-gray-6">{enhanceVersionString(data.version)}</Badge>}</Box>
 
           {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
-        </div>
-        <div className="w-1/3">
-          {data.securitySchemes?.length && <SecuritySchemes schemes={data.securitySchemes} />}
-        </div>
-      </div>
-    </div>
+        </Box>
+        <Box w="1/3">{data.securitySchemes?.length && <SecuritySchemes schemes={data.securitySchemes} />}</Box>
+      </Flex>
+    </Box>
   );
 });
 HttpServiceComponent.displayName = 'HttpService.Component';
