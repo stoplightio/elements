@@ -69,7 +69,13 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
       <Request operation={data} />
 
+<<<<<<< HEAD
       {data.responses && <Responses responses={data.responses} />}
+=======
+      {data.responses && (
+        <Responses responses={data.responses} onMediaTypeChange={setMediaType} onStatusCodeChange={setStatusCode} />
+      )}
+>>>>>>> 5640a1c... chore: lint fixes
     </div>
   );
 });

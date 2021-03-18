@@ -38,7 +38,7 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
 
   React.useEffect(() => {
     onStatusCodeChange(activeResponseId);
-  }, [activeResponseId]);
+  }, [activeResponseId, onStatusCodeChange]);
 
   if (!responses.length) return null;
 
@@ -67,7 +67,10 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-export const Response = ({ response: { contents = [], headers = [], description }, onMediaTypeChange }: ResponseProps) => {
+export const Response = ({
+  response: { contents = [], headers = [], description },
+  onMediaTypeChange,
+}: ResponseProps) => {
   const [chosenContent, setChosenContent] = React.useState(0);
 
   const responseContent = contents[chosenContent];
@@ -76,7 +79,7 @@ export const Response = ({ response: { contents = [], headers = [], description 
 
   React.useEffect(() => {
     responseContent && onMediaTypeChange(responseContent.mediaType);
-  }, [responseContent]);
+  }, [responseContent, onMediaTypeChange]);
 
   return (
     <Box>
