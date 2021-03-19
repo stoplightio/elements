@@ -104,13 +104,15 @@ describe('HttpService', () => {
 
         const description = getOAuthFlowDescription('Implicit', flow);
 
-        expect(description).toEqual(`**Implicit OAuth Flow**
+        expect(description).toMatchInlineSnapshot(`
+          "**Implicit OAuth Flow**
 
-Authorize URL: http://authorizationURL
+          Authorize URL: http://authorizationURL
 
-Scopes:
-- \`scope:implicit\` - implicit scope description
-- \`scope:read\` - read scope description`);
+          Scopes:
+          - \`scope:implicit\` - implicit scope description
+          - \`scope:read\` - read scope description"
+        `);
       });
     });
 
@@ -124,16 +126,18 @@ Scopes:
 
       const description = getOAuthFlowDescription('Authorization Code', flow);
 
-      expect(description).toEqual(`**Authorization Code OAuth Flow**
+      expect(description).toMatchInlineSnapshot(`
+        "**Authorization Code OAuth Flow**
 
-Authorize URL: http://authorizationURL
+        Authorize URL: http://authorizationURL
 
-Token URL: http://tokenURL
+        Token URL: http://tokenURL
 
-Refresh URL: http://refreshURL
+        Refresh URL: http://refreshURL
 
-Scopes:
-- \`scope:authorizationCode\` - authorizationCode scope description`);
+        Scopes:
+        - \`scope:authorizationCode\` - authorizationCode scope description"
+      `);
     });
 
     it('should handle client credentials flow', () => {
@@ -144,12 +148,14 @@ Scopes:
 
       const description = getOAuthFlowDescription('Client Credentials', flow);
 
-      expect(description).toEqual(`**Client Credentials OAuth Flow**
+      expect(description).toMatchInlineSnapshot(`
+        "**Client Credentials OAuth Flow**
 
-Token URL: http://tokenURL
+        Token URL: http://tokenURL
 
-Scopes:
-- \`scope:clientCredentials\` - clientCredentials scope description`);
+        Scopes:
+        - \`scope:clientCredentials\` - clientCredentials scope description"
+      `);
     });
 
     it('should handle password flow', () => {
@@ -160,12 +166,14 @@ Scopes:
 
       const description = getOAuthFlowDescription('Password', flow);
 
-      expect(description).toEqual(`**Password OAuth Flow**
+      expect(description).toMatchInlineSnapshot(`
+        "**Password OAuth Flow**
 
-Token URL: http://tokenURL
+        Token URL: http://tokenURL
 
-Scopes:
-- \`scope:password\` - password scope description`);
+        Scopes:
+        - \`scope:password\` - password scope description"
+      `);
     });
   });
 });
