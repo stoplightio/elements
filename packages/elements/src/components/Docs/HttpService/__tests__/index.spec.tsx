@@ -9,6 +9,7 @@ import {
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { apiKey, oauth } from '../../../../__fixtures__/security-schemes';
 import httpService from '../../../../__fixtures__/services/petstore';
@@ -17,7 +18,11 @@ import { getOAuthFlowDescription, SecuritySchemes } from '../SecuritySchemes';
 
 describe('HttpService', () => {
   it('Should render correctly', () => {
-    const wrapper = render(<HttpService data={httpService} />);
+    const wrapper = render(
+      <Router>
+        <HttpService data={httpService} />
+      </Router>,
+    );
 
     expect(wrapper.getByText(httpService.name).tagName.toLowerCase()).toBe('h1');
   });
@@ -34,7 +39,11 @@ describe('HttpService', () => {
     });
 
     it('should not render if no security schemes provided', () => {
-      render(<HttpService data={{ ...httpService, securitySchemes: [] }} />);
+      render(
+        <Router>
+          <HttpService data={{ ...httpService, securitySchemes: [] }} />
+        </Router>,
+      );
 
       const security = screen.queryByRole('heading', { name: 'Security' });
       expect(security).not.toBeInTheDocument();
