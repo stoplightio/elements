@@ -18,6 +18,7 @@ export type HttpOperationProps = IDocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless, uri }) => {
   const info = React.useContext(ActiveInfoContext);
+  const context = React.useContext(StoplightProjectContext);
   const isDeprecated = !!data.deprecated;
 
   const httpServiceUri = uri && getServiceUriFromOperation(uri);
@@ -50,19 +51,17 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
           <div className="w-2/5 relative ml-10">
             <div className="inset-0 overflow-auto">
               {info.isStoplightProjectComponent ? (
-                <StoplightProjectContext.Consumer>
-                  {value => {
-                    if (value.parsedData?.type !== NodeType.HttpOperation) return null;
+                () => {
+                  if (context.parsedData?.type !== NodeType.HttpOperation) return null;
 
-                    return (
-                      <TryItWithRequestSamples
-                        httpOperation={value.parsedData?.data}
-                        showMocking
-                        mockUrl={value.mockUrl?.servicePath}
-                      />
-                    );
-                  }}
-                </StoplightProjectContext.Consumer>
+                  return (
+                    <TryItWithRequestSamples
+                      httpOperation={context.parsedData?.data}
+                      showMocking
+                      mockUrl={context.mockUrl?.servicePath}
+                    />
+                  );
+                }
               ) : (
                 <TryItWithRequestSamples httpOperation={data} />
               )}

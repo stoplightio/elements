@@ -18,6 +18,7 @@ const enhanceVersionString = (version: string): string => {
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
+  const context = React.useContext(StoplightProjectContext);
   return (
     <Box className={className} bg="transparent" w="full">
       {data.name && (
@@ -31,28 +32,20 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       {!headless ? (
         <div className="flex flex-rows">
           {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
-          <StoplightProjectContext.Consumer>
-            {value =>
-              (data.servers ?? value.mockUrl?.servicePath) && (
-                <div className="w-2/5 relative ml-10">
-                  <div className="inset-0 overflow-auto">
-                    <ServerInfo servers={data.servers} mockUrl={value.mockUrl?.servicePath} />
-                  </div>
-                </div>
-              )
-            }
-          </StoplightProjectContext.Consumer>
+          {(data.servers ?? context.mockUrl?.servicePath) && (
+            <div className="w-2/5 relative ml-10">
+              <div className="inset-0 overflow-auto">
+                <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="mb-10">
           {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
-          <StoplightProjectContext.Consumer>
-            {value =>
-              (data.servers ?? value.mockUrl?.servicePath) && (
-                <ServerInfo servers={data.servers} mockUrl={value.mockUrl?.servicePath} />
-              )
-            }
-          </StoplightProjectContext.Consumer>
+          {(data.servers ?? context.mockUrl?.servicePath) && (
+            <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
+          )}
         </div>
       )}
     </Box>
