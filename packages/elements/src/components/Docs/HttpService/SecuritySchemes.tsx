@@ -1,6 +1,6 @@
 import { Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IOauth2Flow, IOauth2SecurityScheme, IOauthFlowObjects } from '@stoplight/types';
-import { entries, keys } from 'lodash';
+import { entries, keys, sortBy } from 'lodash';
 import React from 'react';
 
 import {
@@ -30,7 +30,7 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({ schemes, defau
         <span role="heading">Security</span>
       </Panel.Titlebar>
       <Panel.Content p={0}>
-        {schemes.map((scheme, i) => (
+        {sortBy(schemes, 'type').map((scheme, i) => (
           <Panel
             key={i}
             defaultIsOpen={defaultScheme ? scheme.key === defaultScheme : i === 0}
