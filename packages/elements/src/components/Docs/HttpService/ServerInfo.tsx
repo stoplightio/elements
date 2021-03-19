@@ -22,10 +22,12 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
           <Panel.Content w="max" className="flex flex-col">
             {productionUrl && isProperUrl(productionUrl) && (
               <div className="whitespace-nowrap">
-                <Text fontWeight="bold">Production:</Text>
-                <Text aria-label="production-server" pl={2}>
-                  {productionUrl}
-                </Text>
+                {info.isStoplightProjectComponent && (
+                  <Text pr={2} fontWeight="bold">
+                    Production:
+                  </Text>
+                )}
+                <Text aria-label="production-server">{productionUrl}</Text>
               </div>
             )}
             {info.isStoplightProjectComponent && mockUrl && isProperUrl(mockUrl) && (

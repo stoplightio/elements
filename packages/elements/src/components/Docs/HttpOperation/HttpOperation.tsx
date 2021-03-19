@@ -32,7 +32,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
         </Heading>
         <div className="flex flex-rows mt-3">
           <div className="flex-grow">
-            <div className="mb-10">
+            <div className="flex flex-wrap mb-10">
               {isDeprecated && <DeprecatedBadge />}
               {securitySchemes.map((scheme, i) => (
                 <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
