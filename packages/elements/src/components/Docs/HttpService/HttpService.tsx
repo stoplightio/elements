@@ -26,9 +26,11 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
       )}
       <Flex justifyContent="between">
         <Box mr={2}>
-          <Box mb={12}>{data.version && <Badge className="bg-gray-6">{enhanceVersionString(data.version)}</Badge>}</Box>
+          <Box mb={12}>
+            {data.version && <Badge className="sl-bg-gray-6">{enhanceVersionString(data.version)}</Badge>}
+          </Box>
 
-          {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
+          {data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />}
         </Box>
         <Box w="1/3">{data.securitySchemes?.length && <SecuritySchemes schemes={data.securitySchemes} />}</Box>
       </Flex>
