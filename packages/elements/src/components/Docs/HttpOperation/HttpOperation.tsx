@@ -2,7 +2,7 @@ import { Heading } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
-import { flatten } from 'lodash';
+import { flatten, sortBy } from 'lodash';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
@@ -30,7 +30,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
           </Heading>
           <div className="flex flex-wrap mt-1">
             {isDeprecated && <DeprecatedBadge />}
-            {securitySchemes.map((scheme, i) => (
+            {sortBy(securitySchemes, 'type').map((scheme, i) => (
               <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
             ))}
           </div>
