@@ -1,7 +1,7 @@
+import { ParsedNode } from '@stoplight/elements-utils';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 
-import { ParsedNode } from '../../../elements-utils/src/types';
 import { MockUrlResult } from '../components/TryIt/mocking-utils';
 import { ComponentsProvider } from '../context/Components';
 import { IActiveInfo, NodeIconMapping } from '../types';
