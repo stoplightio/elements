@@ -2,6 +2,8 @@ import { Box, Flex, Heading } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
+import URI from 'urijs';
 
 import { IDocsComponentProps } from '..';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -17,6 +19,9 @@ const enhanceVersionString = (version: string): string => {
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
+  const { search } = useLocation();
+  const query = new URI(search).search(true);
+
   return (
     <Box w="full" className={className}>
       {data.name && (
@@ -32,7 +37,11 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
 
           {data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />}
         </Box>
-        <Box w="1/3">{data.securitySchemes?.length && <SecuritySchemes schemes={data.securitySchemes} />}</Box>
+        <Box w="1/3">
+          {data.securitySchemes?.length && (
+            <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query?.security} />
+          )}
+        </Box>
       </Flex>
     </Box>
   );

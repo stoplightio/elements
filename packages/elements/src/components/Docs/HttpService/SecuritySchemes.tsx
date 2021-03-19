@@ -13,6 +13,7 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 
 export interface SecuritySchemesProps {
   schemes: HttpSecurityScheme[];
+  defaultScheme?: string;
 }
 
 const oauthFlowNames: Record<keyof IOauthFlowObjects, string> = {
@@ -22,7 +23,7 @@ const oauthFlowNames: Record<keyof IOauthFlowObjects, string> = {
   password: 'Password',
 };
 
-export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({ schemes }) => {
+export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({ schemes, defaultScheme }) => {
   return (
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar bg="canvas-300">
@@ -30,7 +31,11 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({ schemes }) => 
       </Panel.Titlebar>
       <Panel.Content p={0}>
         {schemes.map((scheme, i) => (
-          <Panel key={i} defaultIsOpen={i === 0} isCollapsible={schemes.length > 1}>
+          <Panel
+            key={i}
+            defaultIsOpen={defaultScheme ? scheme.key === defaultScheme : i === 0}
+            isCollapsible={schemes.length > 1}
+          >
             <Panel.Titlebar>
               <span role="heading">{getReadableSecurityName(scheme)}</span>
             </Panel.Titlebar>

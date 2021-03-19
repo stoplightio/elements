@@ -40,7 +40,7 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
   );
 
   return httpServiceUri ? (
-    <Link to={httpServiceUri} className="no-underline block">
+    <Link to={`${httpServiceUri}?security=${scheme.key}`} className="no-underline block">
       {badge}
     </Link>
   ) : (
