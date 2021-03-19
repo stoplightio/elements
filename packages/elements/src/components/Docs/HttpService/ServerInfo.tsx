@@ -6,13 +6,13 @@ import { ActiveInfoContext } from '../../../containers/Provider';
 import { isProperUrl } from '../../../utils/guards';
 
 interface ServerInfoProps {
-  serverUrl: IServer[] | undefined;
+  servers: IServer[] | undefined;
   mockUrl: string | undefined;
 }
 
-export const ServerInfo: React.FC<ServerInfoProps> = ({ serverUrl, mockUrl }) => {
+export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   const info = React.useContext(ActiveInfoContext);
-  const productionUrl = serverUrl?.[0].url;
+  const productionUrl = servers?.[0].url;
 
   return (
     <InvertTheme>

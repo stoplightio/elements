@@ -35,7 +35,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
             (data.servers ?? value.mockUrl?.servicePath) && (
               <div className="w-2/5 relative ml-10">
                 <div className="inset-0 overflow-auto">
-                  <ServerInfo serverUrl={data.servers} mockUrl={value.mockUrl?.servicePath} />
+                  <ServerInfo servers={data.servers} mockUrl={value.mockUrl?.servicePath} />
                 </div>
               </div>
             )

@@ -16,7 +16,7 @@ describe('HttpService', () => {
   });
 
   it('displays first server url', () => {
-    render(<ServerInfo serverUrl={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />);
+    render(<ServerInfo servers={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />);
 
     const serverUrl = screen.getByLabelText('production-server');
     expect(serverUrl).toHaveTextContent('https://api.stoplight.io');
@@ -30,7 +30,7 @@ describe('HttpService', () => {
   it('displays mock server url when embedded in Stoplight Project', async () => {
     render(
       <Provider host="https://stoplight.io" isStoplightProjectComponent project="studio-demo" workspace="elements">
-        <ServerInfo serverUrl={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />
+        <ServerInfo servers={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />
       </Provider>,
     );
 
