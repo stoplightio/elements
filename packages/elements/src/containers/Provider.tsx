@@ -4,20 +4,10 @@ import * as React from 'react';
 import { ParsedNode } from '../../../elements-utils/src/types';
 import { MockUrlResult } from '../components/TryIt/mocking-utils';
 import { ComponentsProvider } from '../context/Components';
-import { NodeIconMapping } from '../types';
+import { IActiveInfo, NodeIconMapping } from '../types';
 
 export interface IProvider extends IActiveInfo {
   components?: IComponentMapping;
-  authToken?: string;
-  isStoplightProjectComponent?: boolean;
-}
-
-export interface IActiveInfo {
-  host: string;
-  workspace: string;
-  project: string;
-  branch?: string;
-  node?: string;
   authToken?: string;
   isStoplightProjectComponent?: boolean;
 }

@@ -2,7 +2,7 @@ import { IHeading, IRoot, ITextNode } from '@stoplight/markdown';
 import * as React from 'react';
 import { Parent } from 'unist';
 
-import { IArticleHeading } from '../components/Docs/Article/Headings';
+import { IArticleHeading } from '../types';
 
 const selectAll = require('unist-util-select').selectAll;
 

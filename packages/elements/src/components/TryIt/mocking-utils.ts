@@ -1,8 +1,8 @@
 import { IHttpOperation } from '@stoplight/types';
 import { compact, uniq } from 'lodash';
 
-import { IActiveInfo } from '../../containers/Provider';
 import { useActionsApi } from '../../hooks/usePlatformApi';
+import { IActiveInfo } from '../../types';
 import { formatMultiValueHeader } from '../../utils/headers';
 
 export type MockingOptions = { isEnabled: boolean; code?: string; example?: string; dynamic?: boolean };
