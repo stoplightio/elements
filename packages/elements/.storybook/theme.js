@@ -1,8 +1,5 @@
 
-import { subscribeTheme } from '@stoplight/mosaic';
 import { create } from '@storybook/theming/create';
-
-subscribeTheme({ mode: 'light' });
 
 export default create({
   base: 'light',

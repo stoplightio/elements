@@ -17,7 +17,7 @@ const enhanceVersionString = (version: string): string => {
 
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
-const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
   return (
     <Box className={className} bg="transparent" w="full">
       {data.name && (
@@ -28,20 +28,33 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) 
       <div className="mb-12">
         {data.version && <Badge className="bg-gray-6">{enhanceVersionString(data.version)}</Badge>}
       </div>
-      <div className="flex flex-rows">
-        {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
-        <StoplightProjectContext.Consumer>
-          {value =>
-            (data.servers ?? value.mockUrl?.servicePath) && (
-              <div className="w-2/5 relative ml-10">
-                <div className="inset-0 overflow-auto">
-                  <ServerInfo servers={data.servers} mockUrl={value.mockUrl?.servicePath} />
+      {!headless ? (
+        <div className="flex flex-rows">
+          {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
+          <StoplightProjectContext.Consumer>
+            {value =>
+              (data.servers ?? value.mockUrl?.servicePath) && (
+                <div className="w-2/5 relative ml-10">
+                  <div className="inset-0 overflow-auto">
+                    <ServerInfo servers={data.servers} mockUrl={value.mockUrl?.servicePath} />
+                  </div>
                 </div>
-              </div>
-            )
-          }
-        </StoplightProjectContext.Consumer>
-      </div>
+              )
+            }
+          </StoplightProjectContext.Consumer>
+        </div>
+      ) : (
+        <div className="mb-10">
+          {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
+          <StoplightProjectContext.Consumer>
+            {value =>
+              (data.servers ?? value.mockUrl?.servicePath) && (
+                <ServerInfo servers={data.servers} mockUrl={value.mockUrl?.servicePath} />
+              )
+            }
+          </StoplightProjectContext.Consumer>
+        </div>
+      )}
     </Box>
   );
 });
