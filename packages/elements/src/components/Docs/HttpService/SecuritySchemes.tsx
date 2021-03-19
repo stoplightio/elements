@@ -95,21 +95,25 @@ function getOAuthDescription(scheme: IOauth2SecurityScheme) {
   return flows.map(flow => getOAuthFlowDescription(oauthFlowNames[flow], scheme.flows[flow])).join('\n\n');
 }
 
-function getOAuthFlowDescription(title: string, flow: IOauth2Flow) {
-  return `**${title} OAuth Flow**
+export function getOAuthFlowDescription(title: string, flow: IOauth2Flow) {
+  let description = `**${title} OAuth Flow**`;
 
-  ${isOAuth2ImplicitFlow(flow) || isOauth2AuthorizationCodeFlow(flow) ? `Authorize URL: ${flow.authorizationUrl}` : ''}
+  description +=
+    isOAuth2ImplicitFlow(flow) || isOauth2AuthorizationCodeFlow(flow)
+      ? `\n\nAuthorize URL: ${flow.authorizationUrl}`
+      : '';
 
-  ${
+  description +=
     isOauth2AuthorizationCodeFlow(flow) || isOauth2ClientCredentialsOrPasswordFlow(flow)
-      ? `Token URL: ${flow.tokenUrl}`
-      : ''
-  }
+      ? `\n\nToken URL: ${flow.tokenUrl}`
+      : '';
 
-  ${flow.refreshUrl ? `Refresh URL: ${flow.refreshUrl}` : ''}
+  description += flow.refreshUrl ? `\n\nRefresh URL: ${flow.refreshUrl}` : '';
 
-  Scopes:
-  ${entries(flow.scopes)
-    .map(([key, value]) => `- \`${key}\` - ${value}`)
-    .join('\n')}`;
+  description += `\n\nScopes:
+${entries(flow.scopes)
+  .map(([key, value]) => `- \`${key}\` - ${value}`)
+  .join('\n')}`;
+
+  return description;
 }
