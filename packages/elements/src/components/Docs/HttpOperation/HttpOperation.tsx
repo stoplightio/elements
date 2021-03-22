@@ -1,6 +1,6 @@
 import { Box, Heading } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
-import { IHttpOperation, NodeType } from '@stoplight/types';
+import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
 import { flatten } from 'lodash';
 import * as React from 'react';

@@ -1,4 +1,3 @@
-import { ParsedNode } from '@stoplight/elements-utils';
 import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 
