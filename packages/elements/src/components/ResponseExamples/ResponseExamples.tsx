@@ -49,7 +49,7 @@ export const ResponseExamples = ({
         <CodeViewer
           aria-label={responseExample}
           noCopyButton
-          maxHeight="510"
+          maxHeight="400px"
           language="json"
           value={responseExample}
           showLineNumbers
