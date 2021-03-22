@@ -6,9 +6,11 @@ import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 
 import { IDocsComponentProps } from '..';
+import { StoplightProjectContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { Badge } from '../HttpOperation/Badges';
 import { SecuritySchemes } from './SecuritySchemes';
+import { ServerInfo } from './ServerInfo';
 
 const enhanceVersionString = (version: string): string => {
   if (version[0] === 'v') return version;
@@ -18,31 +20,45 @@ const enhanceVersionString = (version: string): string => {
 
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
-const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data }) => {
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
+  const context = React.useContext(StoplightProjectContext);
   const { search } = useLocation();
   const query = new URI(search).search(true);
 
+  const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
+
+  const rightPanel = (
+    <>
+      {(data.servers ?? context.mockUrl?.servicePath) && (
+        <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
+      )}
+      <Box mt={4}>
+        {data.securitySchemes?.length && (
+          <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query?.security} />
+        )}
+      </Box>
+    </>
+  );
+
   return (
-    <Box w="full" className={className}>
+    <Box className={className} bg="transparent" w="full">
       {data.name && (
         <Heading mb={5} fontWeight="medium" size={1}>
           {data.name}
         </Heading>
       )}
-      <Flex justifyContent="between">
-        <Box mr={2}>
-          <Box mb={12}>
-            {data.version && <Badge className="sl-bg-gray-6">{enhanceVersionString(data.version)}</Badge>}
-          </Box>
-
-          {data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />}
+      <Box mb={12}>{data.version && <Badge className="sl-bg-gray-6">{enhanceVersionString(data.version)}</Badge>}</Box>
+      {!headless ? (
+        <Flex justifyContent="between">
+          <Box mr={2}>{description}</Box>
+          <Box w="1/3">{rightPanel}</Box>
+        </Flex>
+      ) : (
+        <Box mb={10}>
+          {description}
+          {rightPanel}
         </Box>
-        <Box w="1/3">
-          {data.securitySchemes?.length && (
-            <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query?.security} />
-          )}
-        </Box>
-      </Flex>
+      )}
     </Box>
   );
 });

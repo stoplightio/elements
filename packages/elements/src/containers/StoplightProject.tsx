@@ -3,13 +3,11 @@ import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import { Row } from '../components/TableOfContents/Row';
-import { TryItContainer } from '../components/TryIt';
 import { defaultPlatformUrl } from '../constants';
 import { withPersistenceBoundary } from '../context/Persistence';
 import { withRouter } from '../hoc/withRouter';
 import { withStyles } from '../styled';
 import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '../types';
-import { isOperation } from '../utils/oas';
 import { Docs } from './Docs';
 import { Provider } from './Provider';
 import { TableOfContents } from './TableOfContents';
@@ -50,8 +48,6 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   const [firstItem, setFirstItem] = React.useState<Item>();
   const { pathname } = useLocation();
 
-  const showTryIt = isOperation(pathname);
-
   if (pathname === '/' && firstItem) {
     return <Redirect to={firstItem.uri} />;
   }
@@ -84,15 +80,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
               branch={branchSlug}
               node={pathname}
               authToken={authToken}
+              isStoplightProjectComponent
             >
               <Docs node={pathname} className="px-10" />
-              {showTryIt && (
-                <div className="w-2/5 relative">
-                  <div className="inset-0 overflow-auto px-10">
-                    <TryItContainer node={pathname} />
-                  </div>
-                </div>
-              )}
             </Provider>
           )}
         </div>

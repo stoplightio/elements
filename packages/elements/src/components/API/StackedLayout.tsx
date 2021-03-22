@@ -34,7 +34,7 @@ export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) =>
   return (
     <div className="w-full flex flex-col m-auto max-w-4xl">
       <div className="w-full border-b dark:border-gray-6">
-        <Docs className="mx-auto" nodeData={uriMap['/'] as any} nodeType={NodeType.HttpService} />
+        <Docs className="mx-auto" nodeData={uriMap['/'] as any} nodeType={NodeType.HttpService} headless />
       </div>
       {groups.map(group => (
         <Group key={group.title} group={group} uriMap={uriMap} />

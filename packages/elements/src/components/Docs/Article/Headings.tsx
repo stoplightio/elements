@@ -8,19 +8,7 @@ import * as React from 'react';
 import { useComponentSize } from '../../../hooks/useComponentSize';
 import { useComputeMarkdownHeadings } from '../../../hooks/useComputeMarkdownHeadings';
 import { useLocationHash } from '../../../hooks/useLocationHash';
-
-export interface IArticleHeadings {
-  headings: IArticleHeading[];
-  title?: string;
-  className?: string;
-  minimal?: boolean;
-}
-
-export interface IArticleHeading {
-  id: string;
-  title: string;
-  depth: number;
-}
+import { IArticleHeading, IArticleHeadings } from '../../../types';
 
 export const ArticleHeadings = ({ tree, container }: { tree: IRoot; container: HTMLDivElement | null }) => {
   const { width } = useComponentSize(container);

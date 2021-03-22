@@ -1,11 +1,15 @@
 import { HttpParamStyles } from '@stoplight/types';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/dom';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
-import { HttpOperation } from './index';
+import { withPersistenceBoundary } from '../../../context/Persistence';
+import { HttpOperation as HttpOperationWithoutPersistence } from './index';
+
+const HttpOperation = withPersistenceBoundary(HttpOperationWithoutPersistence);
 
 jest.mock('@stoplight/json-schema-viewer', () => ({
   __esModule: true,
@@ -231,12 +235,12 @@ describe('HttpOperation', () => {
 
       render(<HttpOperation data={data} />);
 
-      const pathParametersPanel = screen.queryByRole('heading', { name: /GET.*\/path/i });
+      const pathParametersPanel = screen.getByRole('button', { name: /GET.*\/path/i });
       expect(pathParametersPanel).toBeInTheDocument();
       expect(pathParametersPanel).toBeVisible();
       expect(pathParametersPanel).toBeEnabled();
 
-      userEvent.click(pathParametersPanel!);
+      userEvent.click(pathParametersPanel!.children[0]);
 
       expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
     });
@@ -253,9 +257,10 @@ describe('HttpOperation', () => {
 
       render(<HttpOperation data={data} />);
 
-      const pathParametersPanel = screen.queryByRole('heading', { name: /GET.*\/path/i });
-      expect(pathParametersPanel).toBeInTheDocument();
-      expect(pathParametersPanel).toBeVisible();
+      const pathParametersPanel = screen.queryAllByRole('heading', { name: /GET.*\/path/i });
+      expect(pathParametersPanel).toHaveLength(2);
+      expect(pathParametersPanel[0]).toBeVisible();
+      expect(pathParametersPanel[1]).toBeVisible();
     });
   });
 

@@ -126,3 +126,26 @@ export type ParamField = {
   description: string;
   example: string;
 };
+
+export interface IActiveInfo {
+  host: string;
+  workspace: string;
+  project: string;
+  branch?: string;
+  node?: string;
+  authToken?: string;
+  isStoplightProjectComponent?: boolean;
+}
+
+export interface IArticleHeading {
+  id: string;
+  title: string;
+  depth: number;
+}
+
+export interface IArticleHeadings {
+  headings: IArticleHeading[];
+  title?: string;
+  className?: string;
+  minimal?: boolean;
+}
