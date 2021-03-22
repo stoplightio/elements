@@ -58,14 +58,12 @@ export const Provider: React.FC<IProvider> = ({
 
 export const StoplightProjectContext = createNamedContext<{
   mockUrl: MockUrlResult | undefined;
-  parsedData: ParsedNode | undefined;
-}>('mockUrlValue', { mockUrl: undefined, parsedData: undefined });
+}>('mockUrlValue', { mockUrl: undefined });
 
 export const StoplightComponentProvider: React.FC<{
   mockUrl: MockUrlResult | undefined;
-  parsedData: ParsedNode | undefined;
-}> = ({ mockUrl, children, parsedData }) => {
-  const info = { mockUrl, parsedData };
+}> = ({ mockUrl, children }) => {
+  const info = { mockUrl };
   return <StoplightProjectContext.Provider value={info}>{children}</StoplightProjectContext.Provider>;
 };
 

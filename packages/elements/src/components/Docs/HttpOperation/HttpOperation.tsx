@@ -51,13 +51,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
           <div className="w-2/5 relative ml-10">
             <div className="inset-0 overflow-auto">
               {info.isStoplightProjectComponent ? (
-                context.parsedData?.type === NodeType.HttpOperation && (
-                  <TryItWithRequestSamples
-                    httpOperation={context.parsedData?.data}
-                    showMocking
-                    mockUrl={context.mockUrl?.servicePath}
-                  />
-                )
+                <TryItWithRequestSamples httpOperation={data} showMocking mockUrl={context.mockUrl?.servicePath} />
               ) : (
                 <TryItWithRequestSamples httpOperation={data} />
               )}

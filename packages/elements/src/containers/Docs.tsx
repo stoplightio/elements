@@ -46,11 +46,6 @@ export const Docs = ({ className, node }: IDocsProps) => {
     authToken: info.authToken,
   });
 
-  const nodeType = result?.type || NodeType.Unknown;
-  const nodeData = result?.data || '';
-
-  const parsedData = useParsedData(nodeType, nodeData);
-
   const nodeUri = node || info.node;
   const mockUrlResult = useMockUrl(info, nodeUri);
 
@@ -71,7 +66,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
   }
 
   return (
-    <StoplightComponentProvider mockUrl={mockUrlResult} parsedData={parsedData}>
+    <StoplightComponentProvider mockUrl={mockUrlResult}>
       <DocsPopup nodeType={result.type} nodeData={result.data} uri={node} className={className} />
     </StoplightComponentProvider>
   );
