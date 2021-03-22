@@ -21,6 +21,9 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
   const context = React.useContext(StoplightProjectContext);
   const isDeprecated = !!data.deprecated;
 
+  const [, setMediaType] = React.useState('');
+  const [, setStatusCode] = React.useState('');
+
   const httpServiceUri = uri && getServiceUriFromOperation(uri);
 
   const securitySchemes = flatten(data.security);
@@ -45,7 +48,13 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
             <Request operation={data} />
 
-            {data.responses && <Responses responses={data.responses} />}
+            {data.responses && (
+              <Responses
+                responses={data.responses}
+                onMediaTypeChange={setMediaType}
+                onStatusCodeChange={setStatusCode}
+              />
+            )}
           </div>
 
           <div className="w-2/5 relative ml-10">
@@ -69,13 +78,9 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
       <Request operation={data} />
 
-<<<<<<< HEAD
-      {data.responses && <Responses responses={data.responses} />}
-=======
       {data.responses && (
         <Responses responses={data.responses} onMediaTypeChange={setMediaType} onStatusCodeChange={setStatusCode} />
       )}
->>>>>>> 5640a1c... chore: lint fixes
     </div>
   );
 });
