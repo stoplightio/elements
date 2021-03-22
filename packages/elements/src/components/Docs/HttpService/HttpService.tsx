@@ -3,7 +3,6 @@ import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
-import URI from 'urijs';
 
 import { IDocsComponentProps } from '..';
 import { StoplightProjectContext } from '../../../containers/Provider';
@@ -23,7 +22,7 @@ export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
   const context = React.useContext(StoplightProjectContext);
   const { search } = useLocation();
-  const query = new URI(search).search(true);
+  const query = new URLSearchParams(search);
 
   const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
 
@@ -34,7 +33,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       )}
       <Box mt={4}>
         {data.securitySchemes?.length && (
-          <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query?.security} />
+          <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />
         )}
       </Box>
     </>
