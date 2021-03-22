@@ -29,6 +29,7 @@ export const ResponseExamples = ({
 
   const examplesSelect =
     responseContents.examples &&
+    responseContents.examples.length > 0 &&
     (responseContents.examples.length > 1 ? (
       <Select
         options={responseContents.examples.map((example, index) => ({ value: index, label: example.key }))}

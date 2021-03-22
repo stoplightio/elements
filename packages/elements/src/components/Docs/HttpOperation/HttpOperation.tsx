@@ -21,8 +21,8 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
   const context = React.useContext(StoplightProjectContext);
   const isDeprecated = !!data.deprecated;
 
-  const [, setMediaType] = React.useState('');
-  const [, setStatusCode] = React.useState('');
+  const [mediaType, setMediaType] = React.useState('');
+  const [statusCode, setStatusCode] = React.useState('');
 
   const httpServiceUri = uri && getServiceUriFromOperation(uri);
 
@@ -60,9 +60,19 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
           <div className="w-2/5 relative ml-10">
             <div className="inset-0 overflow-auto">
               {info.isStoplightProjectComponent ? (
-                <TryItWithRequestSamples httpOperation={data} showMocking mockUrl={context.mockUrl?.servicePath} />
+                <TryItWithRequestSamples
+                  httpOperation={data}
+                  chosenMediaType={mediaType}
+                  chosenStatusCode={statusCode}
+                  showMocking
+                  mockUrl={context.mockUrl?.servicePath}
+                />
               ) : (
-                <TryItWithRequestSamples httpOperation={data} />
+                <TryItWithRequestSamples
+                  httpOperation={data}
+                  chosenMediaType={mediaType}
+                  chosenStatusCode={statusCode}
+                />
               )}
             </div>
           </div>
