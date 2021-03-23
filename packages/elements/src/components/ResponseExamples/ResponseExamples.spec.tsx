@@ -10,7 +10,7 @@ import { ResponseExamples } from './ResponseExamples';
 describe('Response Examples', () => {
   it('displays first provided example by default', () => {
     const { container } = render(
-      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="200" />,
+      <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="200" />,
     );
 
     expect(container).toHaveTextContent('some');
@@ -19,7 +19,7 @@ describe('Response Examples', () => {
 
   it('allows to choose second example with select', () => {
     const { container } = render(
-      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="200" />,
+      <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="200" />,
     );
 
     userEvent.selectOptions(screen.getByRole('combobox'), 'Second Example');
@@ -30,7 +30,7 @@ describe('Response Examples', () => {
 
   it('generates example based on schema if necessary', () => {
     const { container } = render(
-      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="201" />,
+      <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="201" />,
     );
 
     expect(container).toHaveTextContent('someParameter');
@@ -39,7 +39,7 @@ describe('Response Examples', () => {
 
   it('does not show component if there are no examples and no schemas', () => {
     const { container } = render(
-      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="404" />,
+      <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="404" />,
     );
 
     expect(container).toBeEmptyDOMElement();
@@ -47,7 +47,7 @@ describe('Response Examples', () => {
 
   it('does not show select (but shows name) if there is only one example present', () => {
     const { container } = render(
-      <ResponseExamples httpOperation={httpOperation} chosenMediaType="application/json" chosenStatusCode="202" />,
+      <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="202" />,
     );
 
     const select = screen.queryByRole('combobox');

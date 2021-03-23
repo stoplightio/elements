@@ -21,8 +21,8 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
   const context = React.useContext(StoplightProjectContext);
   const isDeprecated = !!data.deprecated;
 
-  const [mediaType, setMediaType] = React.useState('');
-  const [statusCode, setStatusCode] = React.useState('');
+  const [responseMediaType, setResponseMediaType] = React.useState('');
+  const [responseStatusCode, setResponseStatusCode] = React.useState('');
 
   const httpServiceUri = uri && getServiceUriFromOperation(uri);
 
@@ -51,8 +51,8 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
             {data.responses && (
               <Responses
                 responses={data.responses}
-                onMediaTypeChange={setMediaType}
-                onStatusCodeChange={setStatusCode}
+                onMediaTypeChange={setResponseMediaType}
+                onStatusCodeChange={setResponseStatusCode}
               />
             )}
           </div>
@@ -62,16 +62,16 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
               {info.isStoplightProjectComponent ? (
                 <TryItWithRequestSamples
                   httpOperation={data}
-                  chosenMediaType={mediaType}
-                  chosenStatusCode={statusCode}
+                  responseMediaType={responseMediaType}
+                  responseStatusCode={responseStatusCode}
                   showMocking
                   mockUrl={context.mockUrl?.servicePath}
                 />
               ) : (
                 <TryItWithRequestSamples
                   httpOperation={data}
-                  chosenMediaType={mediaType}
-                  chosenStatusCode={statusCode}
+                  responseMediaType={responseMediaType}
+                  responseStatusCode={responseStatusCode}
                 />
               )}
             </div>
@@ -89,7 +89,11 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
       <Request operation={data} />
 
       {data.responses && (
-        <Responses responses={data.responses} onMediaTypeChange={setMediaType} onStatusCodeChange={setStatusCode} />
+        <Responses
+          responses={data.responses}
+          onMediaTypeChange={setResponseMediaType}
+          onStatusCodeChange={setResponseStatusCode}
+        />
       )}
     </div>
   );

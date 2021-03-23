@@ -8,18 +8,13 @@ import { generateExampleFromMediaTypeContent } from '../../utils/exampleGenerati
 
 export interface ResponseExamplesProps {
   httpOperation: IHttpOperation;
-  chosenStatusCode?: string;
-  chosenMediaType?: string;
+  responseStatusCode?: string;
+  responseMediaType?: string;
 }
 
-export const ResponseExamples = ({
-  httpOperation,
-  chosenMediaType = 'application/json',
-  chosenStatusCode = '200',
-}: ResponseExamplesProps) => {
-  const responses = httpOperation.responses || [];
-  const response = responses.find(response => response.code === chosenStatusCode);
-  const responseContents = response?.contents?.find(content => content.mediaType === chosenMediaType);
+export const ResponseExamples = ({ httpOperation, responseMediaType, responseStatusCode }: ResponseExamplesProps) => {
+  const response = httpOperation.responses.find(response => response.code === responseStatusCode);
+  const responseContents = response?.contents?.find(content => content.mediaType === responseMediaType);
 
   const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
   const document = useDocument();

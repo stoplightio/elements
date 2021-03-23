@@ -15,7 +15,7 @@ export const HoistedStory = Template.bind({});
 
 HoistedStory.args = {
   httpOperation,
-  chosenStatusCode: '200',
-  chosenMediaType: 'application/json',
+  responseStatusCode: '200',
+  responseMediaType: 'application/json',
 };
 HoistedStory.storyName = 'ResponseExamples';
