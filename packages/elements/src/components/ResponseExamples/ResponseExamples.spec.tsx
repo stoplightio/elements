@@ -37,6 +37,14 @@ describe('Response Examples', () => {
     expect(container).toHaveTextContent('string');
   });
 
+  it('does not generate examples for media types other than application/json', () => {
+    const { container } = render(
+      <ResponseExamples httpOperation={httpOperation} responseMediaType="application/xml" responseStatusCode="203" />,
+    );
+
+    expect(container).toBeEmptyDOMElement();
+  });
+
   it('does not show component if there are no examples and no schemas', () => {
     const { container } = render(
       <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="404" />,
@@ -45,14 +53,13 @@ describe('Response Examples', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('does not show select (but shows name) if there is only one example present', () => {
-    const { container } = render(
+  it('does not show select if there is only one example present', () => {
+    render(
       <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="202" />,
     );
 
     const select = screen.queryByRole('combobox');
 
     expect(select).not.toBeInTheDocument();
-    expect(container).toHaveTextContent('Only one example');
   });
 });

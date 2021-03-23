@@ -53,6 +53,21 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      code: '203',
+      contents: [
+        {
+          mediaType: 'application/xml',
+          schema: {
+            properties: {
+              someParameter: {
+                type: 'string',
+              },
+            },
+          },
+        },
+      ],
+    },
+    {
       code: '404',
       contents: [
         {
