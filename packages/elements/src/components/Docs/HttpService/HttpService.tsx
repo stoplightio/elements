@@ -26,7 +26,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
 
   const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
 
-  const rightPanel = (
+  const dataPanel = (
     <>
       {(data.servers ?? context.mockUrl?.servicePath) && (
         <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
@@ -50,12 +50,12 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       {!headless ? (
         <Flex justifyContent="between">
           <Box mr={2}>{description}</Box>
-          <Box w="1/3">{rightPanel}</Box>
+          <Box w="1/3">{dataPanel}</Box>
         </Flex>
       ) : (
         <Box mb={10}>
           {description}
-          {rightPanel}
+          {dataPanel}
         </Box>
       )}
     </Box>
