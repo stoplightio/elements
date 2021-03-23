@@ -2,12 +2,12 @@ import { Box, Heading } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
-import { flatten } from 'lodash';
+import { flatten, sortBy } from 'lodash';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
 import { ActiveInfoContext, StoplightProjectContext } from '../../../containers/Provider';
-import { getServiceUriFromOperation } from '../../../utils/oas';
+import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
 import { DeprecatedBadge, SecurityBadge } from './Badges';
@@ -35,7 +35,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
           <div className="flex-grow">
             <div className="flex flex-wrap mb-10">
               {isDeprecated && <DeprecatedBadge />}
-              {securitySchemes.map((scheme, i) => (
+              {sortBy(securitySchemes, 'type').map((scheme, i) => (
                 <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
               ))}
             </div>
