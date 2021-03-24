@@ -1,8 +1,10 @@
 import { Select } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
+import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { isJSONSchema } from '../../../utils/guards';
+import { requestBodyAtom } from '../../../utils/jotai/requestBodyAtom';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
 import { SubSectionPanel } from '../Sections';
@@ -13,7 +15,7 @@ export interface BodyProps {
 }
 
 export const Body = ({ body: { contents = [], description } }: BodyProps) => {
-  const [chosenContent, setChosenContent] = React.useState(0);
+  const [chosenContent, setChosenContent] = useAtom(requestBodyAtom);
 
   if (contents.length === 0 && !description) return null;
 

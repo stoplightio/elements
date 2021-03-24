@@ -68,22 +68,21 @@ const requestBodyCreators: Record<string, RequestBodyCreator | undefined> = {
   'multipart/form-data': createMultipartRequestBody,
 };
 
-export const useBodyParameterState = (httpOperation: IHttpOperation) => {
-  const bodySpecification = httpOperation.request?.body?.contents?.[0];
-  const isFormDataBody = bodySpecification && isFormDataContent(bodySpecification);
+export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | undefined) => {
+  const isFormDataBody = mediaTypeContent && isFormDataContent(mediaTypeContent);
 
   const initialState = React.useMemo(() => {
     if (!isFormDataBody) {
       return {};
     }
-    const properties = bodySpecification?.schema?.properties ?? {};
+    const properties = mediaTypeContent?.schema?.properties ?? {};
     const parameters = Object.entries(properties).map(([key, value]) => ({
       name: key,
       schema: value,
       examples: value.examples,
     }));
     return initialParameterValues(parameters);
-  }, [isFormDataBody, bodySpecification]);
+  }, [isFormDataBody, mediaTypeContent]);
 
   const [bodyParameterValues, setBodyParameterValues] = React.useState<BodyParameterValues>(initialState);
 
@@ -95,7 +94,7 @@ export const useBodyParameterState = (httpOperation: IHttpOperation) => {
     return [
       bodyParameterValues,
       setBodyParameterValues,
-      { isFormDataBody: true, bodySpecification: bodySpecification! },
+      { isFormDataBody: true, bodySpecification: mediaTypeContent! },
     ] as const;
   } else {
     return [

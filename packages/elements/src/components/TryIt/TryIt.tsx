@@ -4,10 +4,12 @@ import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
+import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
+import { requestBodyAtom } from '../../utils/jotai/requestBodyAtom';
 import { TryItAuth } from './Auth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';
 import { buildFetchRequest, buildHarRequest } from './build-request';
@@ -63,12 +65,14 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const mediaTypeContent = httpOperation.request?.body?.contents?.[0];
+  const [contentTypeIndex] = useAtom(requestBodyAtom);
+
+  const mediaTypeContent = httpOperation.request?.body?.contents?.[contentTypeIndex];
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
 
-  const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
+  const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(mediaTypeContent);
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
