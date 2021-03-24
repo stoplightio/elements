@@ -6,6 +6,7 @@ import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
+import requestBody from '../../../__fixtures__/operations/request-body';
 import { withPersistenceBoundary } from '../../../context/Persistence';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
@@ -342,6 +343,19 @@ describe('HttpOperation', () => {
       userEvent.click(body);
 
       expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
+    });
+
+    it('request body selection in Docs should update TryIt', () => {
+      render(<HttpOperation data={requestBody} />);
+
+      const body = screen.getByRole('textbox');
+      expect(body).toHaveTextContent('{ "name": "string", "age": 0 }');
+
+      const select = screen.getByLabelText('Choose Request Body Content Type');
+
+      userEvent.selectOptions(select, 'application/x-www-form-urlencoded');
+
+      expect(screen.getByLabelText('someEnum')).toBeInTheDocument();
     });
   });
 
