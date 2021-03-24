@@ -38,7 +38,8 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
 
   React.useEffect(() => {
     onStatusCodeChange(activeResponseId);
-  }, [activeResponseId, onStatusCodeChange]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeResponseId]);
 
   if (!responses.length) return null;
 
@@ -79,7 +80,8 @@ export const Response = ({
 
   React.useEffect(() => {
     responseContent && onMediaTypeChange(responseContent.mediaType);
-  }, [responseContent, onMediaTypeChange]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseContent]);
 
   return (
     <Box>
