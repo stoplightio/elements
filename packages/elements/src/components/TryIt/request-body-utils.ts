@@ -1,4 +1,4 @@
-import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { IMediaTypeContent } from '@stoplight/types';
 import { isString, pickBy } from 'lodash';
 import * as React from 'react';
 
@@ -19,18 +19,18 @@ function isMultipartContent(content: IMediaTypeContent) {
 }
 
 export async function createRequestBody(
-  httpOperation: IHttpOperation,
+  mediaTypeContent: IMediaTypeContent | undefined,
   bodyParameterValues: BodyParameterValues | undefined,
 ) {
-  const bodySpecification = httpOperation.request?.body?.contents?.[0];
+  const bodySpecification = mediaTypeContent;
   if (!bodySpecification) return undefined;
 
   const creator = (await requestBodyCreators[bodySpecification.mediaType.toLowerCase()]) ?? createRawRequestBody;
-  return creator({ httpOperation, bodyParameterValues, rawBodyValue: '' });
+  return creator({ mediaTypeContent, bodyParameterValues, rawBodyValue: '' });
 }
 
 type RequestBodyCreator = (options: {
-  httpOperation: IHttpOperation;
+  mediaTypeContent: IMediaTypeContent | undefined;
   bodyParameterValues?: BodyParameterValues;
   rawBodyValue?: string;
 }) => Promise<BodyInit>;
@@ -41,10 +41,10 @@ const createUrlEncodedRequestBody: RequestBodyCreator = async ({ bodyParameterVa
   return new URLSearchParams(filteredValues);
 };
 
-const createMultipartRequestBody: RequestBodyCreator = async ({ httpOperation, bodyParameterValues = {} }) => {
+const createMultipartRequestBody: RequestBodyCreator = async ({ mediaTypeContent, bodyParameterValues = {} }) => {
   const formData = new FormData();
   for (const [key, value] of Object.entries(bodyParameterValues)) {
-    const schema = httpOperation.request?.body?.contents?.[0].schema?.properties?.[key];
+    const schema = mediaTypeContent?.schema?.properties?.[key];
 
     if (typeof schema !== 'object') continue;
 
