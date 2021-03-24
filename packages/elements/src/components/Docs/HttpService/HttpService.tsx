@@ -1,12 +1,14 @@
-import { Box, Heading } from '@stoplight/mosaic';
+import { Box, Flex, Heading } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { IDocsComponentProps } from '..';
 import { StoplightProjectContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { Badge } from '../HttpOperation/Badges';
+import { SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
 
 const enhanceVersionString = (version: string): string => {
@@ -19,34 +21,42 @@ export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
   const context = React.useContext(StoplightProjectContext);
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
+
+  const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
+
+  const dataPanel = (
+    <>
+      {(data.servers ?? context.mockUrl?.servicePath) && (
+        <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
+      )}
+      <Box mt={4}>
+        {data.securitySchemes?.length && (
+          <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />
+        )}
+      </Box>
+    </>
+  );
+
   return (
     <Box className={className} bg="transparent" w="full">
       {data.name && (
-        <Heading className="mb-5" fontWeight="medium" size={1}>
+        <Heading mb={5} fontWeight="medium" size={1}>
           {data.name}
         </Heading>
       )}
-      <div className="mb-12">
-        {data.version && <Badge className="bg-gray-6">{enhanceVersionString(data.version)}</Badge>}
-      </div>
+      <Box mb={12}>{data.version && <Badge className="sl-bg-gray-6">{enhanceVersionString(data.version)}</Badge>}</Box>
       {!headless ? (
-        <div className="flex flex-rows">
-          {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
-          {(data.servers ?? context.mockUrl?.servicePath) && (
-            <div className="w-2/5 relative ml-10">
-              <div className="inset-0 overflow-auto">
-                <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
-              </div>
-            </div>
-          )}
-        </div>
+        <Flex justifyContent="between">
+          <Box mr={2}>{description}</Box>
+          <Box w="1/3">{dataPanel}</Box>
+        </Flex>
       ) : (
-        <div className="mb-10">
-          {data.description && <MarkdownViewer className="mb-10" markdown={data.description} />}
-          {(data.servers ?? context.mockUrl?.servicePath) && (
-            <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
-          )}
-        </div>
+        <Box mb={10}>
+          {description}
+          {dataPanel}
+        </Box>
       )}
     </Box>
   );

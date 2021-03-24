@@ -3,9 +3,10 @@ import { Request as HarRequest } from 'har-format';
 import * as React from 'react';
 
 import { RequestSamples } from '../RequestSamples';
+import { ResponseExamples, ResponseExamplesProps } from '../ResponseExamples/ResponseExamples';
 import { TryIt, TryItProps } from './TryIt';
 
-export type TryItWithRequestSamplesProps = Omit<TryItProps, 'onRequestChange'>;
+export type TryItWithRequestSamplesProps = Omit<TryItProps, 'onRequestChange'> & ResponseExamplesProps;
 
 export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = props => {
   const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
@@ -20,6 +21,7 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = p
           <RequestSamples request={requestData} />
         </Box>
       )}
+      <ResponseExamples {...props} />
     </div>
   );
 };

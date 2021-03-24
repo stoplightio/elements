@@ -2,12 +2,12 @@ import { Box, Heading } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
-import { flatten } from 'lodash';
+import { flatten, sortBy } from 'lodash';
 import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
 import { ActiveInfoContext, StoplightProjectContext } from '../../../containers/Provider';
-import { getServiceUriFromOperation } from '../../../utils/oas';
+import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
 import { DeprecatedBadge, SecurityBadge } from './Badges';
@@ -20,6 +20,9 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
   const info = React.useContext(ActiveInfoContext);
   const context = React.useContext(StoplightProjectContext);
   const isDeprecated = !!data.deprecated;
+
+  const [responseMediaType, setResponseMediaType] = React.useState('');
+  const [responseStatusCode, setResponseStatusCode] = React.useState('');
 
   const httpServiceUri = uri && getServiceUriFromOperation(uri);
 
@@ -35,7 +38,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
           <div className="flex-grow">
             <div className="flex flex-wrap mb-10">
               {isDeprecated && <DeprecatedBadge />}
-              {securitySchemes.map((scheme, i) => (
+              {sortBy(securitySchemes, 'type').map((scheme, i) => (
                 <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
               ))}
             </div>
@@ -45,15 +48,31 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
             <Request operation={data} />
 
-            {data.responses && <Responses responses={data.responses} />}
+            {data.responses && (
+              <Responses
+                responses={data.responses}
+                onMediaTypeChange={setResponseMediaType}
+                onStatusCodeChange={setResponseStatusCode}
+              />
+            )}
           </div>
 
           <div className="w-2/5 relative ml-10">
             <div className="inset-0 overflow-auto">
               {info.isStoplightProjectComponent ? (
-                <TryItWithRequestSamples httpOperation={data} showMocking mockUrl={context.mockUrl?.servicePath} />
+                <TryItWithRequestSamples
+                  httpOperation={data}
+                  responseMediaType={responseMediaType}
+                  responseStatusCode={responseStatusCode}
+                  showMocking
+                  mockUrl={context.mockUrl?.servicePath}
+                />
               ) : (
-                <TryItWithRequestSamples httpOperation={data} />
+                <TryItWithRequestSamples
+                  httpOperation={data}
+                  responseMediaType={responseMediaType}
+                  responseStatusCode={responseStatusCode}
+                />
               )}
             </div>
           </div>
@@ -69,7 +88,13 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
       <Request operation={data} />
 
-      {data.responses && <Responses responses={data.responses} />}
+      {data.responses && (
+        <Responses
+          responses={data.responses}
+          onMediaTypeChange={setResponseMediaType}
+          onStatusCodeChange={setResponseStatusCode}
+        />
+      )}
     </div>
   );
 });
