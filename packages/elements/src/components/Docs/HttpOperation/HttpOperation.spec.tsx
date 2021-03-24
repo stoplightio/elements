@@ -59,7 +59,7 @@ describe('HttpOperation', () => {
         </Router>,
       );
       const apikeyBadge = getSecurityBadge(/API Key/i);
-      expect(apikeyBadge?.closest('a')).toHaveAttribute('href', '/reference/todos/openapi.v1.json');
+      expect(apikeyBadge?.closest('a')).toHaveAttribute('href', '/reference/todos/openapi.v1.json?security=api_key');
     });
   });
 

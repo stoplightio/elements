@@ -19,19 +19,27 @@ export const HttpCodeColor = {
 
 export interface ResponseProps {
   response: IHttpOperationResponse;
+  onMediaTypeChange(mediaType: string): void;
 }
 
 export interface ResponsesProps {
   responses: IHttpOperationResponse[];
+  onMediaTypeChange(mediaType: string): void;
+  onStatusCodeChange(statusCode: string): void;
 }
 
-export const Responses = ({ responses: unsortedResponses }: ResponsesProps) => {
+export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, onMediaTypeChange }: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
     r => r.code,
   );
 
   const [activeResponseId, setActiveResponseId] = React.useState(responses[0]?.code ?? '');
+
+  React.useEffect(() => {
+    onStatusCodeChange(activeResponseId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeResponseId]);
 
   if (!responses.length) return null;
 
@@ -50,7 +58,7 @@ export const Responses = ({ responses: unsortedResponses }: ResponsesProps) => {
         <Box mt={4}>
           {responses.map(response => (
             <TabPanel key={response.code} tabId={response.code}>
-              <Response response={response} />
+              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
             </TabPanel>
           ))}
         </Box>
@@ -60,11 +68,20 @@ export const Responses = ({ responses: unsortedResponses }: ResponsesProps) => {
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-export const Response = ({ response: { contents = [], headers = [], description } }: ResponseProps) => {
+export const Response = ({
+  response: { contents = [], headers = [], description },
+  onMediaTypeChange,
+}: ResponseProps) => {
   const [chosenContent, setChosenContent] = React.useState(0);
 
-  const schema = contents[chosenContent]?.schema;
-  const examples = getExamplesObject(contents[chosenContent]?.examples || []);
+  const responseContent = contents[chosenContent];
+  const schema = responseContent?.schema;
+  const examples = getExamplesObject(responseContent?.examples || []);
+
+  React.useEffect(() => {
+    responseContent && onMediaTypeChange(responseContent.mediaType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseContent]);
 
   return (
     <Box>
