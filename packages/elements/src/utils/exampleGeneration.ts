@@ -1,6 +1,21 @@
 import { safeStringify } from '@stoplight/json';
 import { IMediaTypeContent } from '@stoplight/types';
 import * as Sampler from 'openapi-sampler';
+import React from 'react';
+
+import { useDocument } from '../context/InlineRefResolver';
+
+export const useGenerateExampleFromMediaTypeContent = (
+  mediaTypeContent: IMediaTypeContent | undefined,
+  chosenExampleIndex?: number,
+) => {
+  const document = useDocument();
+  return React.useMemo(() => generateExampleFromMediaTypeContent(mediaTypeContent, document, chosenExampleIndex), [
+    mediaTypeContent,
+    document,
+    chosenExampleIndex,
+  ]);
+};
 
 export const generateExampleFromMediaTypeContent = (
   mediaTypeContent: IMediaTypeContent | undefined,

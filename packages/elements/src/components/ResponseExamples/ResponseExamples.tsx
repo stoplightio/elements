@@ -3,8 +3,7 @@ import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import React from 'react';
 
-import { useDocument } from '../../context/InlineRefResolver';
-import { generateExampleFromMediaTypeContent } from '../../utils/exampleGeneration';
+import { useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration';
 
 export interface ResponseExamplesProps {
   httpOperation: IHttpOperation;
@@ -14,7 +13,6 @@ export interface ResponseExamplesProps {
 
 export const ResponseExamples = ({ httpOperation, responseMediaType, responseStatusCode }: ResponseExamplesProps) => {
   const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
-  const document = useDocument();
 
   const response = httpOperation.responses.find(response => response.code === responseStatusCode);
   const responseContents = response?.contents?.find(content => content.mediaType === responseMediaType);
@@ -23,9 +21,9 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
     userDefinedExamples = responseContents?.examples;
   }
 
-  if (!userDefinedExamples && responseMediaType !== 'application/json') return null;
+  const responseExample = useGenerateExampleFromMediaTypeContent(responseContents, chosenExampleIndex);
 
-  const responseExample = generateExampleFromMediaTypeContent(responseContents, document, chosenExampleIndex);
+  if (!userDefinedExamples && responseMediaType !== 'application/json') return null;
 
   if (!responseExample) return null;
 

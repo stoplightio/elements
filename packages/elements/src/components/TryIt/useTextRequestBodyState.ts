@@ -1,8 +1,7 @@
 import { IMediaTypeContent } from '@stoplight/types';
 import * as React from 'react';
 
-import { useDocument } from '../../context/InlineRefResolver';
-import { generateExampleFromMediaTypeContent } from '../../utils/exampleGeneration';
+import { useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration';
 
 /**
  * Manages the state of the request body text editor.
@@ -13,11 +12,7 @@ import { generateExampleFromMediaTypeContent } from '../../utils/exampleGenerati
 export const useTextRequestBodyState = (
   mediaTypeContent: IMediaTypeContent | undefined,
 ): [string, React.Dispatch<React.SetStateAction<string>>] => {
-  const document = useDocument();
-  const initialRequestBody = React.useMemo(() => generateExampleFromMediaTypeContent(mediaTypeContent, document), [
-    mediaTypeContent,
-    document,
-  ]);
+  const initialRequestBody = useGenerateExampleFromMediaTypeContent(mediaTypeContent);
 
   const [textRequestBody, setTextRequestBody] = React.useState<string>(initialRequestBody);
 
