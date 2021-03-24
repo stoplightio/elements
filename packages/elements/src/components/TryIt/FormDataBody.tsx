@@ -4,7 +4,6 @@ import { IMediaTypeContent } from '@stoplight/types';
 import { omit } from 'lodash';
 import * as React from 'react';
 
-import { useInlineRefResolver } from '../../context/InlineRefResolver';
 import { FileUploadParameterEditor } from './FileUploadParameterEditors';
 import { parameterSupportsFileUpload } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
@@ -17,17 +16,14 @@ interface FormDataBodyProps {
 }
 
 export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, values, onChangeValues }) => {
-  const resolveRef = useInlineRefResolver();
   const schema = specification.schema;
-  const resolvedSchema =
-    schema?.$ref && resolveRef ? resolveRef({ pointer: schema.$ref, source: null }, null, {}) : schema;
-  const parameters = resolvedSchema?.properties;
+  const parameters = schema?.properties;
 
   React.useEffect(() => {
     if (parameters === undefined) {
-      console.warn(`Invalid schema in form data spec: ${safeStringify(resolvedSchema)}`);
+      console.warn(`Invalid schema in form data spec: ${safeStringify(schema)}`);
     }
-  }, [parameters, resolvedSchema]);
+  }, [parameters, schema]);
 
   if (parameters === undefined) {
     return null;
