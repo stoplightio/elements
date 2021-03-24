@@ -65,7 +65,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const [contentTypeIndex] = useAtom(requestBodyAtom);
+  const [contentTypeIndex, setContentTypeIndex] = useAtom(requestBodyAtom);
 
   const mediaTypeContent = httpOperation.request?.body?.contents?.[contentTypeIndex];
 
@@ -77,6 +77,10 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUr
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
   const [operationAuthValue, setOperationAuthValue] = React.useState<HttpSecuritySchemeWithValues | undefined>();
+
+  React.useEffect(() => {
+    setContentTypeIndex(0);
+  }, [httpOperation, setContentTypeIndex]);
 
   React.useEffect(() => {
     let isActive = true;
