@@ -2,16 +2,18 @@
 
 ## Table Of Contents
 
-* [Intro](#intro)
-* [Testing](#testing)
-    + [Guiding principles](#guiding-principles)
-    + [Unit tests](#unit-tests)
-        - [Running unit-tests](#running-unit-tests)
-    + [Framework Integration / E2E](#framework-integration)
-        - [Run tests as the CI would](#run-tests-as-the-ci-would)
-        - [Run the tests manually](#run-the-tests-manually)
-        - [Edit the tests](#edit-the-tests)
-        - [Inspecting test results](#inspecting-test-results)
+- [Contributing to Stoplight Elements](#contributing-to-stoplight-elements)
+  - [Table Of Contents](#table-of-contents)
+  - [Intro](#intro)
+  - [Testing](#testing)
+    - [Guiding principles](#guiding-principles)
+    - [Unit tests](#unit-tests)
+      - [Running unit-tests](#running-unit-tests)
+    - [Framework Integration](#framework-integration)
+      - [Run tests as the CI would](#run-tests-as-the-ci-would)
+      - [Run the tests manually](#run-the-tests-manually)
+      - [Edit the tests](#edit-the-tests)
+      - [Inspecting test results](#inspecting-test-results)
         
 ## Intro
 

@@ -14,7 +14,7 @@ Available as React Components, or Web Components, you can use Elements all toget
 - [Overview](#overview)
   - [📦 Packages](#-packages)
   - [📖 Documentation and Community](#-documentation-and-community)
-  - [👁️🗨 ️️Examples](#-examples)
+  - [👁️🗨 ️️Examples](#️-️️examples)
   - [🚧 Roadmap](#-roadmap)
   - [⚙️ Integrations](#️-integrations)
   - [🏁 Help Others Utilize Elements](#-help-others-utilize-elements)
@@ -57,13 +57,13 @@ To run these examples yourself:
 - [ ] `StoplightProject` Component
 - [x] Try it
 - [ ] Try it Authentication
-  - [ ] API Key
+  - [x] API Key
   - [ ] HTTP Basic
   - [ ] HTTP Digest
   - [ ] HTTP Bearer
   - [ ] OAuth 2.0
   - [ ] OpenID
-- [ ] Automatic Examples 🥳
+- [x] Automatic Examples 🥳
 - [ ] OpenAPI v3.0 Callbacks
 - [ ] OpenAPI v3.1 Webhooks
 
@@ -85,8 +85,8 @@ If you are interested in contributing to Elements itself, check out our [contrib
 Elements is built on top of lots of excellent packages, and here are a few we'd like to say a special thanks to.
 
 - [axios](https://www.npmjs.com/package/axios)
-- [httpsnippet](https://www.npmjs.com/package/httpsnippet)
-- [openapi-sampler](https://www.npmjs.com/package/openapi-sampler)
+- [httpsnippet](https://www.npmjs.com/package/httpsnippet) by [Kong](https://github.com/Kong).
+- [openapi-sampler](https://www.npmjs.com/package/openapi-sampler) by [ReDocly](https://redoc.ly/).
 
 Check these projects out!
 
