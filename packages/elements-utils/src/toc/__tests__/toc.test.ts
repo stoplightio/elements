@@ -1171,6 +1171,137 @@ describe('toc', () => {
       });
     });
 
+    it('sorts APIs (but not operations) by title', () => {
+      const toc = generateProjectToC([
+        {
+          uri: '/openapi-b.yaml',
+          name: 'The API B',
+          type: NodeType.HttpService,
+          tags: ['api'],
+          data: {
+            name: 'Service',
+            id: 'some-id',
+            version: '1.0.0',
+          },
+        },
+        {
+          uri: '/openapi-a.yaml',
+          name: 'The API A',
+          type: NodeType.HttpService,
+          tags: ['api'],
+          data: {
+            name: 'Service',
+            id: 'some-id',
+            version: '1.0.0',
+          },
+        },
+        {
+          uri: '/openapi-a.yaml/~1zpath',
+          name: 'The Op',
+          type: NodeType.HttpOperation,
+          tags: ['api'],
+          data: {
+            method: 'post',
+            id: 'some-id',
+            path: '/some/path',
+            responses: [],
+          },
+        },
+        {
+          uri: '/openapi-b.yaml/~1fpath',
+          name: 'The Op',
+          type: NodeType.HttpOperation,
+          tags: ['api'],
+          data: {
+            method: 'post',
+            id: 'some-id',
+            path: '/some/path',
+            responses: [],
+          },
+        },
+        {
+          uri: '/openapi-b.yaml/~1apath',
+          name: 'The Op',
+          type: NodeType.HttpOperation,
+          tags: ['api'],
+          data: {
+            method: 'post',
+            id: 'some-id',
+            path: '/some/path',
+            responses: [],
+          },
+        },
+        {
+          uri: '/openapi-a.yaml/~1components~1model',
+          name: 'The Model',
+          type: NodeType.Model,
+          tags: ['api'],
+          data: {},
+        },
+      ]);
+
+      expect(toc).toEqual({
+        items: [
+          {
+            title: 'APIS',
+            type: 'divider',
+          },
+          {
+            title: 'The API A',
+            type: 'group',
+            uri: '/openapi-a.yaml',
+            items: [
+              {
+                items: [
+                  {
+                    title: 'The Op',
+                    type: 'item',
+                    uri: '/openapi-a.yaml/~1zpath',
+                  },
+                ],
+                title: 'api',
+                type: 'group',
+              },
+              {
+                title: 'Schemas',
+                type: 'group',
+                items: [
+                  {
+                    title: 'The Model',
+                    type: 'item',
+                    uri: '/openapi-a.yaml/~1components~1model',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            title: 'The API B',
+            type: 'group',
+            uri: '/openapi-b.yaml',
+            items: [
+              {
+                items: [
+                  {
+                    title: 'The Op',
+                    type: 'item',
+                    uri: '/openapi-b.yaml/~1fpath',
+                  },
+                  {
+                    title: 'The Op',
+                    type: 'item',
+                    uri: '/openapi-b.yaml/~1apath',
+                  },
+                ],
+                title: 'api',
+                type: 'group',
+              },
+            ],
+          },
+        ],
+      });
+    });
+
     it('does not include API divider if there are no APIs', () => {
       const toc = generateProjectToC([
         {
