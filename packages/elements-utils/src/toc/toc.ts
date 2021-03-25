@@ -1,5 +1,5 @@
 import { NodeType } from '@stoplight/types';
-import { escapeRegExp, partial } from 'lodash';
+import { escapeRegExp, partial, sortBy } from 'lodash';
 import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
 
@@ -346,7 +346,7 @@ export function appendHttpServicesToToC(toc: ITableOfContents, type: TocType) {
     models: NodeData[];
   }) => {
     const standaloneModels = models.slice();
-    httpServices.forEach(httpService => {
+    sortBy(httpServices, 'name').forEach(httpService => {
       let tocNode: ITableOfContents | Group;
       if (type === 'api') {
         tocNode = toc;
