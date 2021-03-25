@@ -67,7 +67,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
 
   return (
     <StoplightComponentProvider mockUrl={mockUrlResult}>
-      <DocsPopup nodeType={result.type} nodeData={result.data} uri={node} className={className} />
+      <DocsPopup key={nodeUri} nodeType={result.type} nodeData={result.data} uri={node} className={className} />
     </StoplightComponentProvider>
   );
 };
