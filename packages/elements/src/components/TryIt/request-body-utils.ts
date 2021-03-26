@@ -22,15 +22,14 @@ export async function createRequestBody(
   mediaTypeContent: IMediaTypeContent | undefined,
   bodyParameterValues: BodyParameterValues | undefined,
 ) {
-  const bodySpecification = mediaTypeContent;
-  if (!bodySpecification) return undefined;
+  if (!mediaTypeContent) return undefined;
 
-  const creator = (await requestBodyCreators[bodySpecification.mediaType.toLowerCase()]) ?? createRawRequestBody;
+  const creator = (await requestBodyCreators[mediaTypeContent.mediaType.toLowerCase()]) ?? createRawRequestBody;
   return creator({ mediaTypeContent, bodyParameterValues, rawBodyValue: '' });
 }
 
 type RequestBodyCreator = (options: {
-  mediaTypeContent: IMediaTypeContent | undefined;
+  mediaTypeContent: IMediaTypeContent;
   bodyParameterValues?: BodyParameterValues;
   rawBodyValue?: string;
 }) => Promise<BodyInit>;
@@ -44,7 +43,7 @@ const createUrlEncodedRequestBody: RequestBodyCreator = async ({ bodyParameterVa
 const createMultipartRequestBody: RequestBodyCreator = async ({ mediaTypeContent, bodyParameterValues = {} }) => {
   const formData = new FormData();
   for (const [key, value] of Object.entries(bodyParameterValues)) {
-    const schema = mediaTypeContent?.schema?.properties?.[key];
+    const schema = mediaTypeContent.schema?.properties?.[key];
 
     if (typeof schema !== 'object') continue;
 

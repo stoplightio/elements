@@ -1,10 +1,8 @@
 import { Select } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
-import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { isJSONSchema } from '../../../utils/guards';
-import { requestBodyAtom } from '../../../utils/jotai/requestBodyAtom';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SchemaViewer } from '../../SchemaViewer';
 import { SubSectionPanel } from '../Sections';
@@ -12,10 +10,17 @@ import { getExamplesObject } from './utils';
 
 export interface BodyProps {
   body: IHttpOperationRequestBody;
+  onChange: (requestBodyIndex: number) => void;
 }
 
-export const Body = ({ body: { contents = [], description } }: BodyProps) => {
-  const [chosenContent, setChosenContent] = useAtom(requestBodyAtom);
+export const Body = ({ body: { contents = [], description }, onChange }: BodyProps) => {
+  const [chosenContent, setChosenContent] = React.useState(0);
+
+  React.useEffect(() => {
+    onChange(chosenContent);
+    // disabling because we don't want to react on `onChange` change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chosenContent]);
 
   if (contents.length === 0 && !description) return null;
 
