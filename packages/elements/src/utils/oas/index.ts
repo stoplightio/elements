@@ -2,7 +2,8 @@ import { NodeData } from '@stoplight/elements-utils';
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
 import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
-import { get, isObject, last, map } from 'lodash';
+import { entries, get, isObject, last, map } from 'lodash';
+import { filter, keyBy, mapValues, pipe } from 'lodash/fp';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
@@ -94,6 +95,17 @@ function slugify(name: string) {
     .replace(/-{2,}/, '-')
     .replace(/^-/, '')
     .replace(/-$/, '');
+}
+
+export function mapUriToOperation(uriMap: IUriMap) {
+  return pipe(
+    () => entries(uriMap),
+    filter(([uri]) => OPERATION_REGEXP.test(uri)),
+    keyBy(([uri]) => uri),
+    mapValues(([, node]) => {
+      return node && isObject(node) ? node['method'] : undefined;
+    }),
+  )();
 }
 
 function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeMap | void {

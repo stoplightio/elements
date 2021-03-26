@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import { useTocContents } from '../../hooks/useTocContents';
 import { ITableOfContentsTree } from '../../types';
-import { getNodeType, IUriMap } from '../../utils/oas';
+import { getNodeType, IUriMap, mapUriToOperation } from '../../utils/oas';
 import { Docs } from '../Docs';
 import { Row } from '../TableOfContents/Row';
 
@@ -16,7 +16,8 @@ type SidebarLayoutProps = {
 };
 
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, uriMap }) => {
-  const contents = useTocContents(tree).map(item => ({
+  const operationMap = mapUriToOperation(uriMap);
+  const contents = useTocContents(tree, operationMap).map(item => ({
     ...item,
     isActive: item.to === pathname,
     isSelected: item.to === pathname,
