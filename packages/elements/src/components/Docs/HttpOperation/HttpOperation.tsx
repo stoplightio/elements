@@ -23,6 +23,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
   const [responseMediaType, setResponseMediaType] = React.useState('');
   const [responseStatusCode, setResponseStatusCode] = React.useState('');
+  const [requestBodyIndex, setTextRequestBodyIndex] = React.useState(0);
 
   const httpServiceUri = uri && getServiceUriFromOperation(uri);
 
@@ -46,7 +47,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
               <MarkdownViewer className="HttpOperation__Description mb-10 ml-1" markdown={data.description} />
             )}
 
-            <Request operation={data} />
+            <Request onChange={setTextRequestBodyIndex} operation={data} />
 
             {data.responses && (
               <Responses
@@ -66,12 +67,14 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
                   responseStatusCode={responseStatusCode}
                   showMocking
                   mockUrl={context.mockUrl?.servicePath}
+                  requestBodyIndex={requestBodyIndex}
                 />
               ) : (
                 <TryItWithRequestSamples
                   httpOperation={data}
                   responseMediaType={responseMediaType}
                   responseStatusCode={responseStatusCode}
+                  requestBodyIndex={requestBodyIndex}
                 />
               )}
             </div>
@@ -86,7 +89,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
         <MarkdownViewer className="HttpOperation__Description mb-10 ml-1" markdown={data.description} />
       )}
 
-      <Request operation={data} />
+      <Request onChange={setTextRequestBodyIndex} operation={data} />
 
       {data.responses && (
         <Responses

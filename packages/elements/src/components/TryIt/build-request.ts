@@ -51,7 +51,7 @@ export async function buildFetchRequest({
   const url = new URL(serverUrl + expandedPath);
   url.search = new URLSearchParams(queryParamsWithAuth).toString();
 
-  const body = typeof bodyInput === 'object' ? await createRequestBody(httpOperation, bodyInput) : bodyInput;
+  const body = typeof bodyInput === 'object' ? await createRequestBody(mediaTypeContent, bodyInput) : bodyInput;
 
   const headers = {
     'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
