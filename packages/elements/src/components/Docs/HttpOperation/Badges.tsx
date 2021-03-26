@@ -13,7 +13,7 @@ export const Badge: React.FC<{
   className?: string;
   children: string;
 }> = ({ icon, className, children }) => (
-  <Tag role="badge" className={cs('text-md p-1 font-semibold mt-1', className)} round aria-label={children}>
+  <Tag role="badge" className={cs('text-md p-1 font-semibold mt-1 mx-1', className)} round aria-label={children}>
     {icon && <FontAwesomeIcon className="mr-2" icon={icon} />}
     <span>{children}</span>
   </Tag>
@@ -34,7 +34,7 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
   httpServiceUri,
 }) => {
   const badge = (
-    <Badge icon={faLock} className="bg-gray-6 mx-1 max-w-xs truncate">
+    <Badge icon={faLock} className="bg-gray-6 max-w-xs truncate">
       {getReadableSecurityName(scheme, true)}
     </Badge>
   );
