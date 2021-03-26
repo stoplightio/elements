@@ -40,9 +40,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
         }
 
         const nodeDestinationUri = node.url;
-        // resolve will produce an absolute uri that starts with `/`, prefix with a `.` so that reach router
-        // navigates relative to base location in app
-        const resolvedUri = `.${resolve(dirname(pathname), nodeDestinationUri)}`;
+        const resolvedUri = resolve(dirname(pathname), nodeDestinationUri);
 
         return <Link to={resolvedUri}>{children}</Link>;
       },
