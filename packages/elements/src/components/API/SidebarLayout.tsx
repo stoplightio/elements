@@ -16,7 +16,7 @@ type SidebarLayoutProps = {
 };
 
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, uriMap }) => {
-  const operationMap = mapUriToOperation(uriMap);
+  const operationMap = React.useMemo(() => mapUriToOperation(uriMap), [uriMap]);
   const contents = useTocContents(tree, operationMap).map(item => ({
     ...item,
     isActive: item.to === pathname,
