@@ -44,6 +44,7 @@ export interface TryItProps {
    * Called whenever the request was changed in any way. Changing `httpOperation`, user entering parameter values, etc.
    */
   onRequestChange?: (currentRequest: HarRequest) => void;
+  requestBodyIndex?: number;
 }
 
 interface ResponseState {
@@ -59,16 +60,22 @@ interface ErrorState {
  * Displays the TryIt component for a given IHttpOperation.
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
-export const TryIt: React.FC<TryItProps> = ({ httpOperation, showMocking, mockUrl, onRequestChange }) => {
+export const TryIt: React.FC<TryItProps> = ({
+  httpOperation,
+  showMocking,
+  mockUrl,
+  onRequestChange,
+  requestBodyIndex,
+}) => {
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const mediaTypeContent = httpOperation.request?.body?.contents?.[0];
+  const mediaTypeContent = httpOperation.request?.body?.contents?.[requestBodyIndex ?? 0];
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
 
-  const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(httpOperation);
+  const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(mediaTypeContent);
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 

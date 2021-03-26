@@ -37,6 +37,18 @@ export const requestBody: IHttpOperation = {
             },
           },
         },
+        {
+          mediaType: 'application/x-www-form-urlencoded',
+          schema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              completed: { type: 'boolean' },
+              someEnum: { type: 'string', enum: ['a', 'b', 'c'] },
+            },
+            required: ['name', 'completed'],
+          },
+        },
       ],
     },
   },
