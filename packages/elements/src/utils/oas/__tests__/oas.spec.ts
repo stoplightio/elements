@@ -1,5 +1,6 @@
 import { Schema } from 'swagger-schema-official';
 
+import { mapUriToOperation } from '../index';
 import { computeOas2UriMap } from '../oas2';
 import { computeOas3UriMap } from '../oas3';
 
@@ -85,6 +86,34 @@ describe('computeUriMap', () => {
 
     expect(uriMap).toMatchObject({
       '/schemas/User': expect.objectContaining({}),
+    });
+  });
+
+  it('translates uriMap to operationMap', () => {
+    const uriMap = computeOas3UriMap({
+      ...oas3Header,
+      paths: {
+        '/users': {
+          post: {},
+        },
+        '/users/{userId}': {
+          get: {
+            operationId: 'get-user',
+          },
+        },
+      },
+      components: {
+        schemas: {
+          User: schema,
+        },
+      },
+    });
+
+    const operationMap = mapUriToOperation(uriMap);
+
+    expect(operationMap).toEqual({
+      '/paths/users/post': 'post',
+      '/operations/get-user': 'get',
     });
   });
 });
