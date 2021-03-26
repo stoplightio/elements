@@ -1,5 +1,7 @@
+import { IComponentMapping } from '@stoplight/markdown-viewer';
+import { dirname, resolve } from '@stoplight/path';
 import * as React from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { Row } from '../components/TableOfContents/Row';
 import { defaultPlatformUrl } from '../constants';
@@ -26,6 +28,26 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
     const { pathname } = useLocation();
 
     const showTryIt = isOperation(pathname);
+
+    const link: IComponentMapping['link'] = React.useMemo(
+      () => ({ node, children }) => {
+        if (/^(http|#|mailto)/.test(node.url)) {
+          return (
+            <a href={node.url} target={node.url.startsWith('#') ? undefined : '_blank'} rel="noreferrer noopener">
+              {children}
+            </a>
+          );
+        }
+
+        const nodeDestinationUri = node.url;
+        // resolve will produce an absolute uri that starts with `/`, prefix with a `.` so that reach router
+        // navigates relative to base location in app
+        const resolvedUri = `.${resolve(dirname(pathname), nodeDestinationUri)}`;
+
+        return <Link to={resolvedUri}>{children}</Link>;
+      },
+      [pathname],
+    );
 
     if (pathname === '/' && firstItem) {
       return <Redirect to={firstItem.uri} />;
@@ -58,6 +80,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
               branch={branchSlug}
               node={pathname}
               authToken={authToken}
+              components={{ link }}
             >
               <Docs node={pathname} className="px-10" />
               {showTryIt && (
