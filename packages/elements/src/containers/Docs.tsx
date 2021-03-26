@@ -5,9 +5,9 @@ import { NonIdealState } from '@stoplight/ui-kit';
 import * as React from 'react';
 
 import { DocsSkeleton, ParsedDocs } from '../components/Docs';
-import { createResolvedMarkdownImage } from '../components/MarkdownViewer/ResolvedMarkdownImage';
+import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
+import { createResolvedImageComponent } from '../components/MarkdownViewer/CustomComponents/ResolvedImage';
 import { useMockUrl } from '../components/TryIt/mocking-utils';
-import { ComponentsProvider } from '../context/Components';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { useParsedData } from '../hooks/useParsedData';
 import { usePlatformApi } from '../hooks/usePlatformApi';
@@ -69,9 +69,9 @@ export const Docs = ({ className, node }: IDocsProps) => {
 
   return (
     <StoplightComponentProvider mockUrl={mockUrlResult}>
-      <ComponentsProvider value={{ image: createResolvedMarkdownImage(result) }}>
+      <MarkdownComponentsProvider value={{ image: createResolvedImageComponent(result) }}>
         <DocsPopup key={nodeUri} nodeType={result.type} nodeData={result.data} uri={node} className={className} />
-      </ComponentsProvider>
+      </MarkdownComponentsProvider>
     </StoplightComponentProvider>
   );
 };

@@ -3,14 +3,14 @@ import { dirname, resolve } from '@stoplight/path';
 import React from 'react';
 import URI from 'urijs';
 
-import { BundledBranchNode, IntegrationKind } from '../../types';
+import { BundledBranchNode, IntegrationKind } from '../../../types';
 
-type ResolvedMarkdownImageProps = {
+type ResolvedImageProps = {
   node: IImage;
 };
 
-export const createResolvedMarkdownImage = (branchNode: BundledBranchNode) =>
-  React.memo(({ node: { url, title, alt } }: ResolvedMarkdownImageProps) => {
+export const createResolvedImageComponent = (branchNode: BundledBranchNode) =>
+  React.memo(({ node: { url, title, alt } }: ResolvedImageProps) => {
     return <img src={resolveImageUrlHandler(url, branchNode)} title={title} alt={alt} />;
   });
 
