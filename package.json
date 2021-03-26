@@ -32,7 +32,7 @@
     "start-server-and-test": "^1.11.6",
     "ts-jest": "^26.4.4",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "typescript": "^3.9.6"
+    "typescript": "^4.0.2"
   },
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
@@ -80,5 +80,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  }
+  },
+  "dependencies": {}
 }

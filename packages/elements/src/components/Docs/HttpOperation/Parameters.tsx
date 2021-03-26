@@ -123,7 +123,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
       <KeyValueValidations validations={keyValueValidations} />
 
-      <MarkdownViewer className="text-gray-7 dark:text-gray-4 mt-1" markdown={description || '*No description.*'} />
+      {description && <MarkdownViewer className="text-gray-7 dark:text-gray-4 mt-1" markdown={description} />}
 
       {deprecated || parameter.style || keys(validations).length ? (
         <div className="flex flex-wrap">
