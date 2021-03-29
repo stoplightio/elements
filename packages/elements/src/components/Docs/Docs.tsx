@@ -1,8 +1,8 @@
-import { ParsedNode } from '@stoplight/elements-utils';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { useParsedData } from '../../hooks/useParsedData';
+import { ParsedNode } from '../../types';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';

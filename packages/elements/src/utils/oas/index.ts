@@ -1,12 +1,12 @@
 import { NodeData } from '@stoplight/elements-utils';
 import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
-import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
-import { get, isObject, last, map } from 'lodash';
+import { NodeType } from '@stoplight/types';
+import { entries, get, isObject, last, map } from 'lodash';
+import { filter, keyBy, mapValues, pipe } from 'lodash/fp';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
-import { JSONSchema } from '../../types';
 import { ISourceNodeMap, NodeTypes } from './types';
 
 export const isOas2 = (parsed: unknown): parsed is Spec =>
@@ -21,8 +21,9 @@ export const isOas3 = (parsed: unknown): parsed is OpenAPIObject =>
 
 export const isOperation = (uri: string) => OPERATION_REGEXP.test(uri);
 
-export const MODEL_REGEXP = /\/(definitions|components\/schemas)/;
-export const OPERATION_REGEXP = /\/paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
+export const OAS_MODEL_REGEXP = /((definitions|components)\/?(schemas)?)\//;
+export const MODEL_REGEXP = /schemas\//;
+export const OPERATION_REGEXP = /\/operations\/.+|paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
 
 export interface IUriMap {
   [uri: string]: unknown;
@@ -58,9 +59,20 @@ export function computeUriMap({ document, data, map, transformer, parentUri }: I
         if (match.type === NodeTypes.Operation && jsonPath.length === 3) {
           const path = String(jsonPath[1]);
           const method = String(jsonPath[2]);
-          uriMap[uri] = transformer({ document, path, method });
+          const operationDocument = transformer({ document, path, method });
+          let parsedUri;
+          const encodedPath = String(encodePointerFragment(path));
+
+          if (operationDocument.iid) {
+            parsedUri = uri.replace(`paths/${encodedPath}/${method}`, `operations/${operationDocument.iid}`);
+          } else {
+            parsedUri = uri.replace(encodedPath, slugify(path));
+          }
+          uriMap[parsedUri] = operationDocument;
         } else if (match.type === NodeTypes.Model) {
-          uriMap[uri] = get(document, jsonPath);
+          const schemaDocument = get(document, jsonPath);
+          const parsedUri = uri.replace(OAS_MODEL_REGEXP, 'schemas/');
+          uriMap[parsedUri] = schemaDocument;
         }
 
         if (match.children) {
@@ -74,6 +86,25 @@ export function computeUriMap({ document, data, map, transformer, parentUri }: I
   }
 
   return uriMap;
+}
+
+function slugify(name: string) {
+  return name
+    .replace(/\/|{|}|\s/g, '-')
+    .replace(/-{2,}/, '-')
+    .replace(/^-/, '')
+    .replace(/-$/, '');
+}
+
+export function mapUriToOperation(uriMap: IUriMap) {
+  return pipe(
+    () => entries(uriMap),
+    filter(([uri]) => OPERATION_REGEXP.test(uri)),
+    keyBy(([uri]) => uri),
+    mapValues(([, node]) => {
+      return node && isObject(node) ? node['method'] : undefined;
+    }),
+  )();
 }
 
 function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeMap | void {
@@ -104,7 +135,6 @@ export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[
           nodes.push({
             name: node['name'],
             type,
-            data: node as IHttpService,
             uri,
             tags,
           });
@@ -113,7 +143,6 @@ export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[
           nodes.push({
             name: node['summary'] || node['path'],
             type,
-            data: node as IHttpOperation,
             uri,
             tags: map(node['tags'], tag => tag['name']),
           });
@@ -122,7 +151,6 @@ export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[
           nodes.push({
             name: node['title'] || last(uri.split('/')) || '',
             type,
-            data: node as JSONSchema,
             uri,
             tags: node['x-tags'],
           });

@@ -38,8 +38,8 @@ describe('API Table of Contents', () => {
     expect(tree.items).toEqual([
       { type: 'item', title: 'Overview', uri: '/' },
       { type: 'divider', title: 'Endpoints' },
-      { type: 'group', title: 'beta', items: [{ type: 'item', title: '/b', uri: '/paths/~1b/get' }] },
-      { type: 'group', title: 'alpha', items: [{ type: 'item', title: '/a', uri: '/paths/~1a/get' }] },
+      { type: 'group', title: 'beta', items: [{ type: 'item', title: '/b', uri: '/paths/b/get' }] },
+      { type: 'group', title: 'alpha', items: [{ type: 'item', title: '/a', uri: '/paths/a/get' }] },
     ]);
   });
 
@@ -87,11 +87,11 @@ describe('API Table of Contents', () => {
         type: 'group',
         title: 'beta',
         items: [
-          { type: 'item', title: '/c', uri: '/paths/~1c/get' },
-          { type: 'item', title: '/b', uri: '/paths/~1b/get' },
+          { type: 'item', title: '/c', uri: '/paths/c/get' },
+          { type: 'item', title: '/b', uri: '/paths/b/get' },
         ],
       },
-      { type: 'group', title: 'alpha', items: [{ type: 'item', title: '/a', uri: '/paths/~1a/get' }] },
+      { type: 'group', title: 'alpha', items: [{ type: 'item', title: '/a', uri: '/paths/a/get' }] },
     ]);
   });
 
@@ -137,11 +137,11 @@ describe('API Table of Contents', () => {
         type: 'group',
         title: 'beta',
         items: [
-          { type: 'item', title: '/b', uri: '/paths/~1b/get' },
-          { type: 'item', title: '/b', uri: '/paths/~1b/delete' },
+          { type: 'item', title: '/b', uri: '/paths/b/get' },
+          { type: 'item', title: '/b', uri: '/paths/b/delete' },
         ],
       },
-      { type: 'group', title: 'alpha', items: [{ type: 'item', title: '/a', uri: '/paths/~1a/get' }] },
+      { type: 'group', title: 'alpha', items: [{ type: 'item', title: '/a', uri: '/paths/a/get' }] },
     ]);
   });
 
@@ -171,8 +171,8 @@ describe('API Table of Contents', () => {
     expect(tree.items).toEqual([
       { type: 'item', title: 'Overview', uri: '/' },
       { type: 'divider', title: 'Schemas' },
-      { type: 'item', title: 'B Schema', uri: '/components/schemas/b schema' },
-      { type: 'item', title: 'A Schema', uri: '/components/schemas/a schema' },
+      { type: 'item', title: 'B Schema', uri: '/schemas/b schema' },
+      { type: 'item', title: 'A Schema', uri: '/schemas/a schema' },
     ]);
   });
 });
