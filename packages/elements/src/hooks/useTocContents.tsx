@@ -6,11 +6,13 @@ import { MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
 
 export const MARKDOWN_REGEXP = /\/?\w+\.md$/;
 
+type OperationMap = Record<string, string | undefined>;
+
 /**
  * Memoized hook that provides Toc contents by parsing a tree
  */
-export function useTocContents(tree: ITableOfContentsTree) {
-  return React.useMemo(() => computeToc(tree.items, {}), [tree]);
+export function useTocContents(tree: ITableOfContentsTree, operationMap?: OperationMap) {
+  return React.useMemo(() => computeToc(tree.items, { operationMap }), [tree, operationMap]);
 }
 
 /**
@@ -20,9 +22,11 @@ export function useTocContents(tree: ITableOfContentsTree) {
 function computeToc(
   items: TableOfContentItem[],
   {
+    operationMap,
     parentId,
     depth = 0,
   }: {
+    operationMap?: OperationMap;
     parentId?: string;
     depth?: number;
   },
@@ -56,16 +60,12 @@ function computeToc(
       });
 
       if (tocNode.items.length) {
-        contents.push(...computeToc(tocNode.items, { parentId: id, depth: depth + 1 }));
+        contents.push(...computeToc(tocNode.items, { operationMap, parentId: id, depth: depth + 1 }));
       }
     }
 
     if (tocNode.type === 'item') {
-      const match = OPERATION_REGEXP.exec(tocNode.uri);
-      let operation = null;
-      if (match && match.length === 2) {
-        operation = match[1];
-      }
+      const operation = getOperationForUri(tocNode.uri, operationMap);
       const isModel =
         MODEL_REGEXP.test(tocNode.uri) ||
         (!MARKDOWN_REGEXP.test(tocNode.uri) && !operation && tocNode.title !== 'Overview');
@@ -87,4 +87,13 @@ function computeToc(
   }
 
   return contents;
+}
+
+function getOperationForUri(uri: string, operationMap?: OperationMap) {
+  if (operationMap) {
+    return operationMap[uri];
+  } else {
+    const match = OPERATION_REGEXP.exec(uri);
+    return match && match.length === 2 ? match[1] : undefined;
+  }
 }

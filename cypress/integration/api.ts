@@ -11,7 +11,7 @@ describe('API component', () => {
   });
 
   it('opens via url', () => {
-    cy.visit('/zoom-api/paths/~1groups/post');
+    cy.visit('/zoom-api/operations/groupCreate');
     cy.findByRole('heading', { name: /Create a group/i }).should('exist');
   });
 });
