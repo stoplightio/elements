@@ -21,14 +21,12 @@ export interface ISchemaViewerProps {
   title?: string;
   description?: string;
   errors?: string[];
-  maxRows?: number;
   examples?: Dictionary<string>;
   className?: string;
   forceShowTabs?: boolean;
   viewMode?: ViewMode;
 }
 
-const JSV_MAX_ROWS = 20;
 export const SchemaViewer = ({
   className,
   title,
@@ -36,7 +34,6 @@ export const SchemaViewer = ({
   schema,
   examples,
   errors,
-  maxRows = JSV_MAX_ROWS,
   viewMode,
   forceShowTabs,
 }: ISchemaViewerProps) => {
@@ -52,13 +49,10 @@ export const SchemaViewer = ({
         {description && <MarkdownViewer markdown={description} />}
 
         <JsonSchemaViewer
-          mergeAllOf
           resolveRef={resolveRef}
           className={jsvClassName}
           schema={schema as JSONSchema4}
-          maxRows={maxRows}
           viewMode={viewMode}
-          shouldResolveEagerly
         />
       </>
     );
