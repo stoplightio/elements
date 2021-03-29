@@ -29,24 +29,6 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
 
     const showTryIt = isOperation(pathname);
 
-    const link: IComponentMapping['link'] = React.useMemo(
-      () => ({ node, children }) => {
-        if (/^(http|#|mailto)/.test(node.url)) {
-          return (
-            <a href={node.url} target={node.url.startsWith('#') ? undefined : '_blank'} rel="noreferrer noopener">
-              {children}
-            </a>
-          );
-        }
-
-        const nodeDestinationUri = node.url;
-        const resolvedUri = resolve(dirname(pathname), nodeDestinationUri);
-
-        return <Link to={resolvedUri}>{children}</Link>;
-      },
-      [pathname],
-    );
-
     if (pathname === '/' && firstItem) {
       return <Redirect to={firstItem.uri} />;
     }
@@ -78,7 +60,7 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
               branch={branchSlug}
               node={pathname}
               authToken={authToken}
-              components={{ link }}
+              components={{ link: renderLink(pathname) }}
             >
               <Docs node={pathname} className="px-10" />
               {showTryIt && (
@@ -97,5 +79,22 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
 );
 
 export const StoplightProject = withStyles(StoplightProjectImpl);
+
+function renderLink(pathname: string): IComponentMapping['link'] {
+  return ({ node, children }) => {
+    if (/^(http|#|mailto)/.test(node.url)) {
+      return (
+        <a href={node.url} target={node.url.startsWith('#') ? undefined : '_blank'} rel="noreferrer noopener">
+          {children}
+        </a>
+      );
+    }
+
+    const nodeDestinationUri = node.url;
+    const resolvedUri = resolve(dirname(pathname), nodeDestinationUri);
+
+    return <Link to={resolvedUri}>{children}</Link>;
+  };
+}
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
