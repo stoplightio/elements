@@ -102,8 +102,6 @@ describe('HttpOperation', () => {
       expect(queryParametersPanel).toBeVisible();
       expect(queryParametersPanel).toBeEnabled();
 
-      userEvent.click(queryParametersPanel!);
-
       expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
       expect(screen.getByRole('note', { name: /deprecated/i })).toBeInTheDocument();
     });
@@ -134,9 +132,6 @@ describe('HttpOperation', () => {
         },
       };
       render(<HttpOperation data={operationData} />);
-
-      const queryParametersPanel = screen.queryByRole('heading', { name: 'Query' });
-      userEvent.click(queryParametersPanel!);
 
       expect(screen.getByRole('note', { name: /space/i })).toBeInTheDocument();
       expect(screen.queryByRole('note', { name: /form/i })).not.toBeInTheDocument();
@@ -179,8 +174,6 @@ describe('HttpOperation', () => {
       expect(headersPanel).toBeInTheDocument();
       expect(headersPanel).toBeVisible();
       expect(headersPanel).toBeEnabled();
-
-      userEvent.click(headersPanel!);
 
       expect(screen.queryByText(/parameter name/)).toBeInTheDocument();
     });
@@ -240,8 +233,6 @@ describe('HttpOperation', () => {
       expect(pathParametersPanel).toBeInTheDocument();
       expect(pathParametersPanel).toBeVisible();
       expect(pathParametersPanel).toBeEnabled();
-
-      userEvent.click(pathParametersPanel!.children[0]);
 
       expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
     });
@@ -330,17 +321,11 @@ describe('HttpOperation', () => {
     it('should display description even if there are no contents', async () => {
       render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
 
-      const body = screen.getByRole('heading', { name: 'Body' });
-      userEvent.click(body);
-
       expect(await screen.findByText('Some body description')).toBeInTheDocument();
     });
 
     it('should display schema for content type', async () => {
       render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
-
-      const body = screen.getByRole('heading', { name: 'Body' });
-      userEvent.click(body);
 
       expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
     });
@@ -427,9 +412,6 @@ describe('HttpOperation', () => {
 
     it('should display schema for chosen content type', async () => {
       render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
-
-      const body = screen.getByRole('heading', { name: 'Body' });
-      userEvent.click(body);
 
       expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
     });
