@@ -15,7 +15,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => 
     <div className={cn('Model MarkdownViewer', className)}>
       {!headless && data.title !== void 0 && <h1 className={Classes.HEADING}>{data.title}</h1>}
 
-      <SchemaViewer schema={data} description={data.description} examples={getExamplesFromSchema(data)} maxRows={50} />
+      <SchemaViewer schema={data} description={data.description} examples={getExamplesFromSchema(data)} />
     </div>
   );
 };
