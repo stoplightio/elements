@@ -9,6 +9,7 @@ import { Parameters } from './Parameters';
 
 export interface IRequestProps {
   operation: IHttpOperation;
+  onChange: (requestBodyIndex: number) => void;
 }
 
 export const Request: React.FunctionComponent<IRequestProps> = ({
@@ -25,6 +26,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     } = {},
     security,
   },
+  onChange,
 }) => {
   if (!request || typeof request !== 'object') return null;
 
@@ -59,7 +61,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
         </SubSectionPanel>
       )}
 
-      {body && <Body body={body} />}
+      {body && <Body onChange={onChange} body={body} />}
     </Box>
   );
 };

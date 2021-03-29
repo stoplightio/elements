@@ -1,7 +1,7 @@
-import { ParsedNode } from '@stoplight/elements-utils';
 import { Dictionary, IHttpOperation, NodeType } from '@stoplight/types';
 import { renderHook } from '@testing-library/react-hooks';
 
+import { ParsedNode } from '../types';
 import { useDereferencedHttpOperation } from './useDereferencedHttpOperation';
 
 jest.mock('@stoplight/json-schema-ref-parser', () => ({
