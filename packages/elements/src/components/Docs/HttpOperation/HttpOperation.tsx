@@ -88,7 +88,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
     );
 
   return (
-    <div className={cn('HttpOperation', className)}>
+    <div className={cn('HttpOperation px-5', className)}>
       {data.description && (
         <MarkdownViewer className="HttpOperation__Description mb-10 ml-1" markdown={data.description} />
       )}
