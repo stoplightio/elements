@@ -7,7 +7,7 @@ export interface ISectionTitle {
 
 export const SectionTitle: React.FC<ISectionTitle> = ({ title, children }) => {
   return (
-    <Flex role="heading" borderB borderColor="light" mt={5} mb={3} pb={3} aria-label={title}>
+    <Flex role="heading" borderB borderColor="light" mb={3} pb={3} aria-label={title}>
       <Text size="xl" fontWeight="bold" mr={5}>
         {title}
       </Text>
