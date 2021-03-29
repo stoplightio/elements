@@ -17,6 +17,8 @@ interface Options {
 export function useBundleRefsIntoDocument(document: unknown, options?: Options) {
   const [bundledData, setBundledData] = React.useState(document);
 
+  const baseUrl = options?.baseUrl;
+
   React.useEffect(() => {
     if (!isObject(document)) {
       setBundledData(document);
@@ -24,7 +26,7 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
     }
 
     let isActive = true;
-    doBundle(document, options?.baseUrl)
+    doBundle(document, baseUrl)
       .then(res => {
         if (isActive) {
           setBundledData({ ...res }); // this hmm....library mutates document so a shallow copy is required to force a rerender in all cases
@@ -41,7 +43,7 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
     return () => {
       isActive = false;
     };
-  }, [document, options?.baseUrl]);
+  }, [document, baseUrl]);
 
   return bundledData;
 }
