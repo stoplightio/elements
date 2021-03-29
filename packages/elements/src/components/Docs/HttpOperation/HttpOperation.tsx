@@ -29,7 +29,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
   const securitySchemes = flatten(data.security);
 
-  const hasBadges = isDeprecated || (securitySchemes.length > 0);
+  const hasBadges = isDeprecated || securitySchemes.length > 0;
 
   if (!headless)
     return (
