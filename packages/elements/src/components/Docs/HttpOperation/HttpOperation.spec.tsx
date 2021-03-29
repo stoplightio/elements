@@ -1,4 +1,4 @@
-import { HttpParamStyles } from '@stoplight/types';
+import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -59,7 +59,7 @@ describe('HttpOperation', () => {
 
   describe('Query Parameters', () => {
     it('should render correct validations', async () => {
-      const data = {
+      const data: IHttpOperation = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -70,14 +70,14 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
               allowEmptyValue: true,
               allowReserved: true,
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Form as const,
+              style: HttpParamStyles.Form,
               examples: [
                 {
                   value: 'example value',
@@ -103,7 +103,7 @@ describe('HttpOperation', () => {
     });
 
     it('should not render default styles', () => {
-      const operationData = {
+      const operationData: IHttpOperation = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -113,16 +113,16 @@ describe('HttpOperation', () => {
             {
               name: 'default style param',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
-              style: HttpParamStyles.Form as const,
+              style: HttpParamStyles.Form,
             },
             {
               name: 'different style param',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
-              style: HttpParamStyles.SpaceDelimited as const,
+              style: HttpParamStyles.SpaceDelimited,
             },
           ],
         },
@@ -139,7 +139,7 @@ describe('HttpOperation', () => {
 
   describe('Header Parameters', () => {
     it('should render panel when there are header parameters', () => {
-      const data = {
+      const data: IHttpOperation = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -150,12 +150,12 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Simple as const,
+              style: HttpParamStyles.Simple,
               examples: [
                 {
                   key: 'example',
@@ -199,7 +199,7 @@ describe('HttpOperation', () => {
 
   describe('Path Parameters', () => {
     it('should render correct validations', async () => {
-      const data = {
+      const data: IHttpOperation = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -211,12 +211,12 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Simple as const,
+              style: HttpParamStyles.Simple,
               examples: [
                 {
                   key: 'example',
@@ -260,7 +260,7 @@ describe('HttpOperation', () => {
   });
 
   describe('Request Body', () => {
-    const httpOperationWithRequestBodyContents = {
+    const httpOperationWithRequestBodyContents: IHttpOperation = {
       path: '/',
       id: 'some_id',
       method: 'get',
@@ -270,9 +270,9 @@ describe('HttpOperation', () => {
             {
               mediaType: 'application/json',
               schema: {
-                type: 'object' as const,
+                type: 'object',
                 properties: {
-                  some_property: { type: 'string' as const },
+                  some_property: { type: 'string' },
                 },
               },
             },
@@ -373,7 +373,7 @@ describe('HttpOperation', () => {
   });
 
   describe('Response', () => {
-    const httpOperationWithResponseBodyContents = {
+    const httpOperationWithResponseBodyContents: IHttpOperation = {
       path: '/',
       id: 'some_id',
       method: 'get',
@@ -385,9 +385,9 @@ describe('HttpOperation', () => {
             {
               mediaType: 'application/json',
               schema: {
-                type: 'object' as const,
+                type: 'object',
                 properties: {
-                  some_property: { type: 'string' as const },
+                  some_property: { type: 'string' },
                 },
               },
             },
@@ -397,7 +397,7 @@ describe('HttpOperation', () => {
       ],
     };
 
-    const httpOperationWithoutResponseBodyContents = {
+    const httpOperationWithoutResponseBodyContents: IHttpOperation = {
       path: '/',
       id: 'some_id',
       method: 'get',
