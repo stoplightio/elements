@@ -12,12 +12,6 @@ import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
 const HttpOperation = withPersistenceBoundary(HttpOperationWithoutPersistence);
 
-jest.mock('@stoplight/json-schema-viewer', () => ({
-  __esModule: true,
-  PropertyTypeColors: {},
-  JsonSchemaViewer: () => <div>This is JsonSchemaViewer</div>,
-}));
-
 describe('HttpOperation', () => {
   describe('Header', () => {
     it('should display "Deprecated" badge for deprecated http operation', () => {
@@ -272,7 +266,18 @@ describe('HttpOperation', () => {
       method: 'get',
       request: {
         body: {
-          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
+          contents: [
+            {
+              mediaType: 'application/json',
+              schema: {
+                type: 'object' as const,
+                properties: {
+                  some_property: { type: 'string' as const },
+                },
+              },
+            },
+            { mediaType: 'application/xml' },
+          ],
         },
       },
       responses: [
@@ -342,7 +347,7 @@ describe('HttpOperation', () => {
       const body = screen.getByRole('heading', { name: 'Body' });
       userEvent.click(body);
 
-      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
+      expect(await screen.findByText('some_property')).toBeInTheDocument();
     });
 
     it('request body selection in Docs should update TryIt', async () => {
@@ -376,7 +381,18 @@ describe('HttpOperation', () => {
         {
           code: '200',
           description: 'Hello world!',
-          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
+          contents: [
+            {
+              mediaType: 'application/json',
+              schema: {
+                type: 'object' as const,
+                properties: {
+                  some_property: { type: 'string' as const },
+                },
+              },
+            },
+            { mediaType: 'application/xml' },
+          ],
         },
       ],
     };
@@ -431,7 +447,14 @@ describe('HttpOperation', () => {
       const body = screen.getByRole('heading', { name: 'Body' });
       userEvent.click(body);
 
-      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
+      const property = await screen.findByText('some_property');
+      expect(property).toBeInTheDocument();
+
+      const select = screen.getByLabelText('Choose Response Body Content Type');
+
+      userEvent.selectOptions(select, 'application/xml');
+
+      expect(screen.queryByText('some_property')).not.toBeInTheDocument();
     });
   });
 });
