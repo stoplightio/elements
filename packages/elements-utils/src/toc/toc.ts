@@ -1,4 +1,4 @@
-import { NodeType } from '@stoplight/types';
+import { IHttpService, NodeType } from '@stoplight/types';
 import { escapeRegExp, partial, sortBy } from 'lodash';
 import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
@@ -8,8 +8,12 @@ import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, Ta
 type SchemaType = 'divider' | 'group';
 type TocType = 'api' | 'project';
 
-export function generateApiToC(searchResults: NodeData[]) {
-  return generateToC(searchResults, 'api');
+export function generateApiToC(searchResults: NodeData[], httpServiceData: IHttpService) {
+  const toc = generateToC(searchResults, 'api');
+
+  prependOverviewOfHttpService(toc, searchResults, httpServiceData);
+
+  return toc;
 }
 
 export function generateProjectToC(searchResults: NodeData[]) {
@@ -28,11 +32,6 @@ function generateToC(searchResults: NodeData[], type: TocType) {
 
       if (type === 'api') {
         if (httpServices.length !== 1) return toc;
-        const httpService = httpServices[0].data;
-
-        if (httpService.description) {
-          toc.items.push({ type: 'item', title: 'Overview', uri: httpServices[0].uri });
-        }
 
         if (httpOperations.length) {
           toc.items.push({ type: 'divider', title: 'Endpoints' });
@@ -150,10 +149,10 @@ function matchesUri(uri: string) {
 
 export function groupNodesByType(searchResults: NodeData[]) {
   return searchResults.reduce<{
-    articles: Array<Extract<NodeData, { type: NodeType.Article }>>;
-    models: Array<Extract<NodeData, { type: NodeType.Model }>>;
-    httpServices: Array<Extract<NodeData, { type: NodeType.HttpService }>>;
-    httpOperations: Array<Extract<NodeData, { type: NodeType.HttpOperation }>>;
+    articles: Array<NodeData>;
+    models: Array<NodeData>;
+    httpServices: Array<NodeData>;
+    httpOperations: Array<NodeData>;
   }>(
     (results, searchResult) => {
       switch (searchResult.type) {
@@ -386,6 +385,17 @@ export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType 
     }
   };
 }
+
+const prependOverviewOfHttpService = (
+  toc: ITableOfContents,
+  searchResults: NodeData[],
+  httpServiceData: IHttpService,
+) => {
+  const httpService = searchResults.find(element => element.type === NodeType.HttpService);
+  if (httpService && httpServiceData.description) {
+    toc.items = [{ type: 'item', title: 'Overview', uri: httpService.uri }, ...toc.items];
+  }
+};
 
 function getDirsFromUri(uri: string) {
   const strippedUri = uri.replace(/^\/?(?:docs\/)?/, '');

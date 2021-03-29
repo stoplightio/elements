@@ -1,6 +1,7 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generateApiToC } from '@stoplight/elements-utils';
+import { IHttpService } from '@stoplight/types';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
 import { pipe } from 'lodash/fp';
@@ -128,7 +129,7 @@ export function getToCFromOpenApiDocument(apiDescriptionDocument: unknown) {
   }
 
   const nodes = computeNodeData(uriMap, documentTags);
-  const tree = generateApiToC(nodes);
+  const tree = generateApiToC(nodes, uriMap['/'] as IHttpService);
 
   return { tree, uriMap };
 }
