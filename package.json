@@ -15,8 +15,8 @@
   "devDependencies": {
     "@stoplight/eslint-config": "^2.0.0",
     "@testing-library/cypress": "^7.0.3",
-    "@typescript-eslint/eslint-plugin": "^3.7.0",
-    "@typescript-eslint/parser": "^3.7.0",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
     "cypress": "^6.3.0",
     "eslint": "^7.22.0",
     "eslint-plugin-import": "^2.22.0",
