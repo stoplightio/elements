@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "7.0.0-alpha.4",
+  "version": "7.0.0-alpha.5",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": false,

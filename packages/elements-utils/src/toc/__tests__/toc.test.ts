@@ -24,21 +24,18 @@ describe('toc', () => {
           type: NodeType.Article,
           name: 'a',
           uri: '/docs/a',
-          data: '',
         },
         {
           tags: [],
           type: NodeType.Article,
           name: 'aa',
           uri: '/docs/a/a',
-          data: '',
         },
         {
           tags: [],
           type: NodeType.Article,
           name: 'aaa',
           uri: '/docs/a/a/a',
-          data: '',
         },
       ]);
 
@@ -65,21 +62,18 @@ describe('toc', () => {
           type: NodeType.Article,
           name: 'a',
           uri: '/a',
-          data: '',
         },
         {
           tags: [],
           type: NodeType.Article,
           name: 'aa',
           uri: '/a/a',
-          data: '',
         },
         {
           tags: [],
           type: NodeType.Article,
           name: 'aaa',
           uri: '/a/a/a',
-          data: '',
         },
       ]);
 
@@ -107,21 +101,18 @@ describe('toc', () => {
             tags: ['einz', 'zwei'],
             name: 'a',
             uri: '/models/a',
-            data: {},
           },
           {
             type: NodeType.Model,
             tags: ['raz', 'dwa'],
             name: 'b',
             uri: '/reference/openapi.json/definitions/b',
-            data: {},
           },
           {
             type: NodeType.Model,
             tags: [],
             name: 'c',
             uri: '/reference/openapi.json/definitions/c',
-            data: {},
           },
         ];
         const httpServices: NodeData[] = [
@@ -130,11 +121,6 @@ describe('toc', () => {
             tags: ['raz', 'dwa', 'einz', 'zwei'],
             name: 'Service',
             uri: '/reference/openapi.json',
-            data: {
-              name: 'Service',
-              id: 'some-id',
-              version: '1.0.0',
-            },
           },
         ];
         const httpOperations: NodeData[] = [
@@ -143,12 +129,6 @@ describe('toc', () => {
             tags: ['zwei'],
             name: 'Operation',
             uri: '/reference/openapi.json/paths/~1test/get',
-            data: {
-              method: 'get',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
         ];
 
@@ -186,7 +166,6 @@ describe('toc', () => {
             uri: '/models/a',
             tags: ['einz', 'zwei'],
             type: 'model',
-            data: {},
           },
         ]);
       });
@@ -199,7 +178,6 @@ describe('toc', () => {
               tags: ['einz'],
               name: 'Model',
               uri: '/reference/openapi.json/components/a',
-              data: {},
             },
           ];
           const httpServices: NodeData[] = [
@@ -208,11 +186,6 @@ describe('toc', () => {
               tags: ['Einz'],
               name: 'Service',
               uri: '/reference/openapi.json',
-              data: {
-                name: 'Service',
-                id: 'some-id',
-                version: '1.0.0',
-              },
             },
           ];
           const httpOperations: NodeData[] = [
@@ -221,12 +194,6 @@ describe('toc', () => {
               tags: ['Einz'],
               name: 'Operation',
               uri: '/reference/openapi.json/paths/~1test/get',
-              data: {
-                method: 'get',
-                id: 'some-id',
-                path: '/some/path',
-                responses: [],
-              },
             },
           ];
 
@@ -261,24 +228,12 @@ describe('toc', () => {
                 tags: ['stopLIGHT'],
                 name: 'Operation#1',
                 uri: '/reference/openapi.json/paths/~1test/get',
-                data: {
-                  method: 'get',
-                  id: 'some-id',
-                  path: '/some/path',
-                  responses: [],
-                },
               },
               {
                 type: NodeType.HttpOperation,
                 tags: ['STOPlight'],
                 name: 'Operation#2',
                 uri: '/reference/openapi.json/paths/~1test/post',
-                data: {
-                  method: 'post',
-                  id: 'some-id',
-                  path: '/some/path',
-                  responses: [],
-                },
               },
             ];
             const httpServices: NodeData[] = [
@@ -287,11 +242,6 @@ describe('toc', () => {
                 tags: ['Stoplight'],
                 name: 'Service',
                 uri: '/reference/openapi.json',
-                data: {
-                  name: 'Service',
-                  id: 'some-id',
-                  version: '1.0.0',
-                },
               },
             ];
 
@@ -329,24 +279,12 @@ describe('toc', () => {
                 tags: ['stopLIGHT'],
                 name: 'Operation#1',
                 uri: '/reference/openapi.json/paths/~1test/get',
-                data: {
-                  method: 'hry',
-                  id: 'some-id',
-                  path: '/some/path',
-                  responses: [],
-                },
               },
               {
                 type: NodeType.HttpOperation,
                 tags: ['STOPlight'],
                 name: 'Operation#2',
                 uri: '/reference/openapi.json/paths/~1test/post',
-                data: {
-                  method: 'post',
-                  id: 'some-id',
-                  path: '/some/path',
-                  responses: [],
-                },
               },
             ];
             const httpServices: NodeData[] = [
@@ -355,11 +293,6 @@ describe('toc', () => {
                 name: 'Service',
                 tags: [],
                 uri: '/reference/openapi.json',
-                data: {
-                  name: 'Service',
-                  id: 'some-id',
-                  version: '1.0.0',
-                },
               },
             ];
 
@@ -399,14 +332,12 @@ describe('toc', () => {
             tags: [],
             name: 'a',
             uri: '/models/a',
-            data: {},
           },
           {
             type: NodeType.Model,
             tags: [],
             name: 'b',
             uri: '/reference/openapi.json/definitions/b',
-            data: {},
           },
         ];
         const httpServices: NodeData[] = [
@@ -415,11 +346,6 @@ describe('toc', () => {
             name: 'Service',
             tags: [],
             uri: '/reference/openapi.json',
-            data: {
-              name: 'Service',
-              id: 'some-id',
-              version: '1.0.0',
-            },
           },
         ];
         const httpOperations: NodeData[] = [
@@ -428,12 +354,6 @@ describe('toc', () => {
             tags: [],
             name: 'Operation',
             uri: '/reference/openapi.json/paths/~1test/get',
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
         ];
 
@@ -465,7 +385,6 @@ describe('toc', () => {
             uri: '/models/a',
             type: 'model',
             tags: [],
-            data: {},
           },
         ]);
       });
@@ -480,21 +399,18 @@ describe('toc', () => {
           tags: ['einz', 'zwei'],
           name: 'a',
           uri: '/models/a',
-          data: {},
         },
         {
           type: NodeType.Model,
           tags: ['raz', 'dwa'],
           name: 'b',
           uri: '/reference/openapi.json/definitions/b',
-          data: {},
         },
         {
           type: NodeType.Model,
           tags: [],
           name: 'c',
           uri: '/reference/openapi.json/definitions/c',
-          data: {},
         },
       ];
 
@@ -521,28 +437,24 @@ describe('toc', () => {
           tags: [],
           name: 'aa',
           uri: '/hello/a/a',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'a',
           uri: '/hello/a',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'c',
           uri: '/c',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'b',
           uri: '/hello/b',
-          data: '',
         },
       ];
 
@@ -552,28 +464,24 @@ describe('toc', () => {
           uri: '/c',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'a',
           uri: '/hello/a',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'aa',
           uri: '/hello/a/a',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'b',
           uri: '/hello/b',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
       ]);
     });
@@ -585,28 +493,24 @@ describe('toc', () => {
           tags: [],
           name: 'aa',
           uri: '/hello/a/a',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'a',
           uri: '/hello/a',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'README',
           uri: '/README',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'b',
           uri: '/docs/b',
-          data: '',
         },
       ];
 
@@ -616,28 +520,24 @@ describe('toc', () => {
           uri: '/README',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'b',
           uri: '/docs/b',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'a',
           uri: '/hello/a',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'aa',
           uri: '/hello/a/a',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
       ]);
     });
@@ -649,28 +549,24 @@ describe('toc', () => {
           tags: [],
           name: 'aa',
           uri: 'hello/a/a',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'a',
           uri: 'hello/a',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'README',
           uri: 'README',
-          data: '',
         },
         {
           type: NodeType.Article,
           tags: [],
           name: 'b',
           uri: 'docs/b',
-          data: '',
         },
       ];
 
@@ -680,28 +576,24 @@ describe('toc', () => {
           uri: 'README',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'b',
           uri: 'docs/b',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'a',
           uri: 'hello/a',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
         {
           name: 'aa',
           uri: 'hello/a/a',
           type: NodeType.Article,
           tags: [],
-          data: '',
         },
       ]);
     });
@@ -715,44 +607,30 @@ describe('toc', () => {
           name: 'a',
           uri: '/a',
           tags: [],
-          data: '',
         },
         {
           tags: [],
           type: NodeType.HttpService,
           name: 'b',
           uri: '/b',
-          data: {
-            name: 'Service',
-            id: 'some-id',
-            version: '1.0.0',
-          },
         },
         {
           tags: [],
           type: NodeType.HttpOperation,
           name: 'c',
           uri: '/c',
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
-          },
         },
         {
           tags: [],
           type: NodeType.Model,
           name: 'd',
           uri: '/d',
-          data: {},
         },
         {
           tags: [],
           type: NodeType.HttpServer,
           name: 'e',
           uri: '/e',
-          data: {},
         },
       ];
 
@@ -763,7 +641,6 @@ describe('toc', () => {
             uri: '/a',
             type: NodeType.Article,
             tags: [],
-            data: '',
           },
         ],
         httpOperations: [
@@ -772,12 +649,6 @@ describe('toc', () => {
             uri: '/c',
             type: 'http_operation',
             tags: [],
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
         ],
         httpServices: [
@@ -786,11 +657,6 @@ describe('toc', () => {
             uri: '/b',
             type: 'http_service',
             tags: [],
-            data: {
-              name: 'Service',
-              id: 'some-id',
-              version: '1.0.0',
-            },
           },
         ],
         models: [
@@ -799,7 +665,6 @@ describe('toc', () => {
             uri: '/d',
             type: 'model',
             tags: [],
-            data: {},
           },
         ],
       });
@@ -823,30 +688,18 @@ describe('toc', () => {
             name: 'The API',
             type: NodeType.HttpService,
             tags: ['api'],
-            data: {
-              name: 'Service',
-              id: 'some-id',
-              version: '1.0.0',
-            },
           },
           {
             uri: '/openapi.yaml/~1path',
             name: 'The Op',
             type: NodeType.HttpOperation,
             tags: ['api'],
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
           {
             uri: '/openapi.yaml/~1components~1model',
             name: 'The Model',
             type: NodeType.Model,
             tags: ['api'],
-            data: {},
           },
         ],
         toc,
@@ -899,63 +752,46 @@ describe('toc', () => {
 
   describe('generateToC()', () => {
     it('generates correct Api ToC', () => {
-      const toc = generateApiToC([
-        {
-          uri: '/openapi.yaml',
-          name: 'The API',
-          type: NodeType.HttpService,
-          tags: ['api'],
-          data: {
-            name: 'Service',
-            id: 'some-id',
-            version: '1.0.0',
-            description: 'some description',
+      const toc = generateApiToC(
+        [
+          {
+            uri: '/openapi.yaml',
+            name: 'The API',
+            type: NodeType.HttpService,
+            tags: ['api'],
           },
-        },
-        {
-          uri: '/openapi.yaml/~1zpath',
-          name: 'The Op',
-          type: NodeType.HttpOperation,
-          tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
+          {
+            uri: '/openapi.yaml/~1zpath',
+            name: 'The Op',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
           },
-        },
-        {
-          uri: '/openapi.yaml/~1fpath',
-          name: 'The Op',
-          type: NodeType.HttpOperation,
-          tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
+          {
+            uri: '/openapi.yaml/~1fpath',
+            name: 'The Op',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
           },
-        },
-        {
-          uri: '/openapi.yaml/~1apath',
-          name: 'The Op',
-          type: NodeType.HttpOperation,
-          tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
+          {
+            uri: '/openapi.yaml/~1apath',
+            name: 'The Op',
+            type: NodeType.HttpOperation,
+            tags: ['api'],
           },
-        },
+          {
+            uri: '/openapi.yaml/~1components~1model',
+            name: 'The Model',
+            type: NodeType.Model,
+            tags: ['api'],
+          },
+        ],
         {
-          uri: '/openapi.yaml/~1components~1model',
-          name: 'The Model',
-          type: NodeType.Model,
-          tags: ['api'],
-          data: {},
+          name: 'Service',
+          id: 'some-id',
+          version: '1.0.0',
+          description: 'some description',
         },
-      ]);
+      );
 
       expect(toc).toEqual({
         items: [
@@ -1009,82 +845,54 @@ describe('toc', () => {
           name: 'Hello',
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/directory/hey.md',
           name: 'Hey',
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/article.md',
           name: NodeType.Article,
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/model.yaml',
           name: 'Standalone model',
           type: NodeType.Model,
           tags: ['api'],
-          data: {},
         },
         {
           uri: '/openapi.yaml',
           name: 'The API',
           type: NodeType.HttpService,
           tags: ['api'],
-          data: {
-            name: 'Service',
-            id: 'some-id',
-            version: '1.0.0',
-          },
         },
         {
           uri: '/openapi.yaml/~1zpath',
           name: 'The Op',
           type: NodeType.HttpOperation,
           tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
-          },
         },
         {
           uri: '/openapi.yaml/~1fpath',
           name: 'The Op',
           type: NodeType.HttpOperation,
           tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
-          },
         },
         {
           uri: '/openapi.yaml/~1apath',
           name: 'The Op',
           type: NodeType.HttpOperation,
           tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
-          },
         },
         {
           uri: '/openapi.yaml/~1components~1model',
           name: 'The Model',
           type: NodeType.Model,
           tags: ['api'],
-          data: {},
         },
       ]);
 
@@ -1178,65 +986,36 @@ describe('toc', () => {
           name: 'The API B',
           type: NodeType.HttpService,
           tags: ['api'],
-          data: {
-            name: 'Service',
-            id: 'some-id',
-            version: '1.0.0',
-          },
         },
         {
           uri: '/openapi-a.yaml',
           name: 'The API A',
           type: NodeType.HttpService,
           tags: ['api'],
-          data: {
-            name: 'Service',
-            id: 'some-id',
-            version: '1.0.0',
-          },
         },
         {
           uri: '/openapi-a.yaml/~1zpath',
           name: 'The Op',
           type: NodeType.HttpOperation,
           tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
-          },
         },
         {
           uri: '/openapi-b.yaml/~1fpath',
           name: 'The Op',
           type: NodeType.HttpOperation,
           tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
-          },
         },
         {
           uri: '/openapi-b.yaml/~1apath',
           name: 'The Op',
           type: NodeType.HttpOperation,
           tags: ['api'],
-          data: {
-            method: 'post',
-            id: 'some-id',
-            path: '/some/path',
-            responses: [],
-          },
         },
         {
           uri: '/openapi-a.yaml/~1components~1model',
           name: 'The Model',
           type: NodeType.Model,
           tags: ['api'],
-          data: {},
         },
       ]);
 
@@ -1309,28 +1088,24 @@ describe('toc', () => {
           name: 'Hello',
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/directory/hey.md',
           name: 'Hey',
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/article.md',
           name: NodeType.Article,
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/model.yaml',
           name: 'Standalone model',
           type: NodeType.Model,
           tags: ['api'],
-          data: {},
         },
       ]);
 
@@ -1376,246 +1151,220 @@ describe('toc', () => {
 
     it('snapshot of platform docs', () => {
       expect(
-        generateApiToC([
+        generateApiToC(
+          [
+            {
+              name: 'Add Projects',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/1.-quickstarts/add-projects-quickstart.md',
+            },
+            {
+              name: 'Gitea',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/configure-git/f.gitea.md',
+            },
+            {
+              name: 'Troubleshooting',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/c.troubleshooting.md',
+            },
+            {
+              name: 'Branch Management',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/h.branch-management.md',
+            },
+            {
+              name: 'Migrating from Postman',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/6.-migrations/postman.md',
+            },
+            {
+              name: 'Introduction to Stoplight Platform',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/b.overview.md',
+            },
+            {
+              name: 'GitHub Enterprise',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/configure-git/d.github-enterprise.md',
+            },
+            {
+              name: 'Bitbucket Server',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/configure-git/c.bitbucket-server.md',
+            },
+            {
+              name: 'GitLab',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/configure-git/e.gitlab.md',
+            },
+            {
+              name: 'Types of Documentation',
+              type: NodeType.Article,
+              tags: ['Documentation'],
+              uri: '/4.-documentation/b.types-of-documentation.md',
+            },
+            {
+              name: 'Single Sign-On',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/e.configuring-authentication.md',
+            },
+            {
+              name: 'Exploring your API projects',
+              type: NodeType.Article,
+              tags: ['Governance'],
+              uri: '/5.-governance/bb.exploring-your-api-projects.md',
+            },
+            {
+              name: 'Start a new API design',
+              type: NodeType.Article,
+              tags: ['Design'],
+              uri: '/3.-design/b.starting-a-new-api-design.md',
+            },
+            {
+              name: 'Welcome to the Stoplight Docs!',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/a.introduction.md',
+            },
+            {
+              name: 'Overview',
+              type: NodeType.Article,
+              tags: ['Documentation'],
+              uri: '/4.-documentation/a.overview.md',
+            },
+            {
+              name: 'Bitbucket Cloud',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/configure-git/b.bitbucket-cloud.md',
+            },
+            {
+              name: 'Creating a workspace',
+              type: NodeType.Article,
+              tags: ['Workspaces'],
+              uri: '/2.-workspaces/a.creating-a-workspace.md',
+            },
+            {
+              name: 'Add Projects',
+              type: NodeType.Article,
+              tags: ['Workspaces'],
+              uri: '/2.-workspaces/b.adding-projects.md',
+            },
+            {
+              name: 'Overview',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/configure-git/a.configuring-git.md',
+            },
+            {
+              name: 'Style Guides',
+              type: NodeType.Article,
+              tags: ['Governance'],
+              uri: '/5.-governance/d.style-guides.md',
+            },
+            {
+              name: 'Review API Designs',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/3.-design/c.reviewing-your-api-design.md',
+            },
+            {
+              name: 'Work with Local Projects',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/f.working-with-local-projects.md',
+            },
+            {
+              name: 'Configure Projects',
+              type: NodeType.Article,
+              tags: ['Workspaces'],
+              uri: '/2.-workspaces/c.config.md',
+            },
+            {
+              name: 'Migrating from NEXT',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/6.-migrations/next.md',
+            },
+            {
+              name: 'Get Started with API Governance',
+              type: NodeType.Article,
+              tags: ['governance'],
+              uri: '/5.-governance/b.getting-started-with-api-governance.md',
+            },
+            {
+              name: 'Integrate Behind the Firewall',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/i.allowlisting-ips.md',
+            },
+            {
+              name: 'Publishing',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/2.-workspaces/g.automating-publishing.md',
+            },
+            {
+              name: 'Creating a Design Library',
+              type: NodeType.Article,
+              tags: ['Governance'],
+              uri: '/5.-governance/c.creating-a-design-library.md',
+            },
+            {
+              name: 'Quality API Reference Documentation',
+              type: NodeType.Article,
+              tags: ['Documentation'],
+              uri: '/4.-documentation/c.quality-api-reference-docs.md',
+            },
+            {
+              name: 'Working with Mock Servers',
+              type: NodeType.Article,
+              tags: ['Design'],
+              uri: '/3.-design/d.setting-up-a-mock-server.md',
+            },
+            {
+              name: 'Organize Your Team',
+              type: NodeType.Article,
+              tags: ['Workspaces'],
+              uri: '/2.-workspaces/d.inviting-your-team.md',
+            },
+            {
+              name: 'Overview',
+              type: NodeType.Article,
+              tags: ['Governance'],
+              uri: '/5.-governance/a.overview.md',
+            },
+            {
+              name: 'Share Documentation',
+              type: NodeType.Article,
+              tags: [],
+              uri: '/1.-quickstarts/share-documentation-quickstart.md',
+            },
+            {
+              name: 'Overview',
+              type: NodeType.Article,
+              tags: ['Design'],
+              uri: '/3.-design/a.overview.md',
+            },
+          ],
           {
-            name: 'Add Projects',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/1.-quickstarts/add-projects-quickstart.md',
-            data: '',
+            name: 'Service',
+            id: 'some-id',
+            version: '1.0.0',
+            description: 'some description',
           },
-          {
-            name: 'Gitea',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/configure-git/f.gitea.md',
-            data: '',
-          },
-          {
-            name: 'Troubleshooting',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/c.troubleshooting.md',
-            data: '',
-          },
-          {
-            name: 'Branch Management',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/h.branch-management.md',
-            data: '',
-          },
-          {
-            name: 'Migrating from Postman',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/6.-migrations/postman.md',
-            data: '',
-          },
-          {
-            name: 'Introduction to Stoplight Platform',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/b.overview.md',
-            data: '',
-          },
-          {
-            name: 'GitHub Enterprise',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/configure-git/d.github-enterprise.md',
-            data: '',
-          },
-          {
-            name: 'Bitbucket Server',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/configure-git/c.bitbucket-server.md',
-            data: '',
-          },
-          {
-            name: 'GitLab',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/configure-git/e.gitlab.md',
-            data: '',
-          },
-          {
-            name: 'Types of Documentation',
-            type: NodeType.Article,
-            tags: ['Documentation'],
-            uri: '/4.-documentation/b.types-of-documentation.md',
-            data: '',
-          },
-          {
-            name: 'Single Sign-On',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/e.configuring-authentication.md',
-            data: '',
-          },
-          {
-            name: 'Exploring your API projects',
-            type: NodeType.Article,
-            tags: ['Governance'],
-            uri: '/5.-governance/bb.exploring-your-api-projects.md',
-            data: '',
-          },
-          {
-            name: 'Start a new API design',
-            type: NodeType.Article,
-            tags: ['Design'],
-            uri: '/3.-design/b.starting-a-new-api-design.md',
-            data: '',
-          },
-          {
-            name: 'Welcome to the Stoplight Docs!',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/a.introduction.md',
-            data: '',
-          },
-          {
-            name: 'Overview',
-            type: NodeType.Article,
-            tags: ['Documentation'],
-            uri: '/4.-documentation/a.overview.md',
-            data: '',
-          },
-          {
-            name: 'Bitbucket Cloud',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/configure-git/b.bitbucket-cloud.md',
-            data: '',
-          },
-          {
-            name: 'Creating a workspace',
-            type: NodeType.Article,
-            tags: ['Workspaces'],
-            uri: '/2.-workspaces/a.creating-a-workspace.md',
-            data: '',
-          },
-          {
-            name: 'Add Projects',
-            type: NodeType.Article,
-            tags: ['Workspaces'],
-            uri: '/2.-workspaces/b.adding-projects.md',
-            data: '',
-          },
-          {
-            name: 'Overview',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/configure-git/a.configuring-git.md',
-            data: '',
-          },
-          {
-            name: 'Style Guides',
-            type: NodeType.Article,
-            tags: ['Governance'],
-            uri: '/5.-governance/d.style-guides.md',
-            data: '',
-          },
-          {
-            name: 'Review API Designs',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/3.-design/c.reviewing-your-api-design.md',
-            data: '',
-          },
-          {
-            name: 'Work with Local Projects',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/f.working-with-local-projects.md',
-            data: '',
-          },
-          {
-            name: 'Configure Projects',
-            type: NodeType.Article,
-            tags: ['Workspaces'],
-            uri: '/2.-workspaces/c.config.md',
-            data: '',
-          },
-          {
-            name: 'Migrating from NEXT',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/6.-migrations/next.md',
-            data: '',
-          },
-          {
-            name: 'Get Started with API Governance',
-            type: NodeType.Article,
-            tags: ['governance'],
-            uri: '/5.-governance/b.getting-started-with-api-governance.md',
-            data: '',
-          },
-          {
-            name: 'Integrate Behind the Firewall',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/i.allowlisting-ips.md',
-            data: '',
-          },
-          {
-            name: 'Publishing',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/2.-workspaces/g.automating-publishing.md',
-            data: '',
-          },
-          {
-            name: 'Creating a Design Library',
-            type: NodeType.Article,
-            tags: ['Governance'],
-            uri: '/5.-governance/c.creating-a-design-library.md',
-            data: '',
-          },
-          {
-            name: 'Quality API Reference Documentation',
-            type: NodeType.Article,
-            tags: ['Documentation'],
-            uri: '/4.-documentation/c.quality-api-reference-docs.md',
-            data: '',
-          },
-          {
-            name: 'Working with Mock Servers',
-            type: NodeType.Article,
-            tags: ['Design'],
-            uri: '/3.-design/d.setting-up-a-mock-server.md',
-            data: '',
-          },
-          {
-            name: 'Organize Your Team',
-            type: NodeType.Article,
-            tags: ['Workspaces'],
-            uri: '/2.-workspaces/d.inviting-your-team.md',
-            data: '',
-          },
-          {
-            name: 'Overview',
-            type: NodeType.Article,
-            tags: ['Governance'],
-            uri: '/5.-governance/a.overview.md',
-            data: '',
-          },
-          {
-            name: 'Share Documentation',
-            type: NodeType.Article,
-            tags: [],
-            uri: '/1.-quickstarts/share-documentation-quickstart.md',
-            data: '',
-          },
-          {
-            name: 'Overview',
-            type: NodeType.Article,
-            tags: ['Design'],
-            uri: '/3.-design/a.overview.md',
-            data: '',
-          },
-        ]),
+        ),
       ).toMatchSnapshot();
     });
   });
@@ -1628,39 +1377,30 @@ describe('toc', () => {
           name: 'Hello',
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/directory/hey.md',
           name: 'Hey',
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/article.md',
           name: NodeType.Article,
           type: NodeType.Article,
           tags: ['api'],
-          data: '',
         },
         {
           uri: '/model.yaml',
           name: 'Standalone model',
           type: NodeType.Model,
           tags: ['api'],
-          data: {},
         },
         {
           uri: '/openapi.yaml',
           name: 'The API',
           type: NodeType.HttpService,
           tags: ['api'],
-          data: {
-            name: 'Service',
-            id: 'some-id',
-            version: '1.0.0',
-          },
         },
       ]);
 
@@ -1733,54 +1473,30 @@ describe('toc', () => {
             name: 'The API',
             type: NodeType.HttpService,
             tags: ['api'],
-            data: {
-              name: 'Service',
-              id: 'some-id',
-              version: '1.0.0',
-            },
           },
           {
             uri: '/openapi.yaml/~1apath',
             name: 'The Op',
             type: NodeType.HttpOperation,
             tags: ['api'],
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
           {
             uri: '/openapi.yaml/~1fpath',
             name: 'The Op',
             type: NodeType.HttpOperation,
             tags: ['api'],
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
           {
             uri: '/openapi.yaml/~1zpath',
             name: 'The Op',
             type: NodeType.HttpOperation,
             tags: ['api'],
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
           {
             uri: '/openapi.yaml/~1components~1model',
             name: 'The Model',
             type: NodeType.Model,
             tags: ['api'],
-            data: {},
           },
         ],
         toc,
@@ -1860,60 +1576,36 @@ describe('toc', () => {
             name: 'The API 1',
             type: NodeType.HttpService,
             tags: ['api'],
-            data: {
-              name: 'Service',
-              id: 'some-id',
-              version: '1.0.0',
-            },
           },
           {
             uri: '/openapi-1.yaml/~1path',
             name: 'The Op 1',
             type: NodeType.HttpOperation,
             tags: ['api'],
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
           {
             uri: '/openapi-1.yaml/~1components~1model',
             name: 'The Model 1',
             type: NodeType.Model,
             tags: ['api'],
-            data: {},
           },
           {
             uri: '/openapi-2.yaml',
             name: 'The API 2',
             type: NodeType.HttpService,
             tags: ['api'],
-            data: {
-              name: 'Service',
-              id: 'some-id',
-              version: '1.0.0',
-            },
           },
           {
             uri: '/openapi-2.yaml/~1path',
             name: 'The Op 2',
             type: NodeType.HttpOperation,
             tags: ['api'],
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
           {
             uri: '/openapi-2.yaml/~1components~1model',
             name: 'The Model 2',
             type: NodeType.Model,
             tags: ['api'],
-            data: {},
           },
         ],
         toc,
@@ -2021,30 +1713,18 @@ describe('toc', () => {
             name: 'The API',
             type: NodeType.HttpService,
             tags: ['api'],
-            data: {
-              name: 'Service',
-              id: 'some-id',
-              version: '1.0.0',
-            },
           },
           {
             uri: '/openapi.yaml/~1path',
             name: 'The Op',
             type: NodeType.HttpOperation,
             tags: ['api'],
-            data: {
-              method: 'post',
-              id: 'some-id',
-              path: '/some/path',
-              responses: [],
-            },
           },
           {
             uri: '/openapi.yaml/~1components~1model',
             name: 'The Model',
             type: NodeType.Model,
             tags: ['api'],
-            data: {},
           },
         ],
         toc,
