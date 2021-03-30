@@ -20,7 +20,7 @@ export const AuthTokenInput: React.FC<AuthTokenInputProps> = ({ type, name, valu
           aria-label="Authorization Input"
           appearance="minimal"
           flexGrow
-          placeholder="123"
+          placeholder={type === 'oauth2' ? 'Bearer 123' : '123'}
           value={value}
           type="text"
           required

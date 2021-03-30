@@ -755,7 +755,7 @@ describe('TryIt', () => {
 
         const tokenInput = screen.getByLabelText('Authorization Input');
 
-        await userEvent.type(tokenInput, '0a1b2c');
+        await userEvent.type(tokenInput, 'Bearer 0a1b2c');
 
         clickSend();
 
