@@ -5,11 +5,11 @@ import cn from 'classnames';
 import { flatten, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { IDocsComponentProps } from '..';
 import { ActiveInfoContext, StoplightProjectContext } from '../../../containers/Provider';
 import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
+import { IDocsComponentProps } from '..';
 import { DeprecatedBadge, SecurityBadge } from './Badges';
 import { Request } from './Request';
 import { Responses } from './Responses';
