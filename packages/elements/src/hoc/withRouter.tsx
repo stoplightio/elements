@@ -1,7 +1,8 @@
 import { ILink } from '@stoplight/markdown';
 import { MarkdownComponent } from '@stoplight/markdown-viewer';
+import { dirname, resolve } from '@stoplight/path';
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Link, Route, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 import { ComponentsProvider } from '../context/Components';
@@ -31,20 +32,36 @@ export function withRouter<T>(
   return WithRouter;
 }
 
-const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
+const externalLinkRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
+const hashLinkRegex = new RegExp('^#');
 
 const ReactRouterMarkdownLink: MarkdownComponent<ILink> = ({ node: { url, title }, children }) => {
-  const isExternal = externalRegex.test(url);
-  if (isExternal) {
+  const location = useLocation();
+
+  const isHashLink = hashLinkRegex.test(url);
+  if (isHashLink) {
+    return (
+      <HashLink to={url} title={title}>
+        {children}
+      </HashLink>
+    );
+  }
+
+  const isExternalLink = externalLinkRegex.test(url);
+  if (isExternalLink) {
     return (
       <a target="_blank" rel="noreferrer noopener" href={url} title={title}>
         {children}
       </a>
     );
   }
+
+  // Resolve relative node uris
+  const resolvedUri = resolve(dirname(location.pathname), url);
+
   return (
-    <HashLink to={url} title={title}>
+    <Link to={resolvedUri} title={title}>
       {children}
-    </HashLink>
+    </Link>
   );
 };
