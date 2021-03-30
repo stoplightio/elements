@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.17](https://github.com/stoplightio/elements/compare/v6.1.16...v6.1.17) (2021-03-30)
+
+
+### Bug Fixes
+
+* **deps:** [security] bump y18n from 3.2.1 to 3.2.2 ([#980](https://github.com/stoplightio/elements/issues/980)) ([1f37724](https://github.com/stoplightio/elements/commit/1f37724023c2a88eb42003a7d65e719a2d8c1361))
+* **deps:** [security] bump yargs-parser from 5.0.0 to 5.0.1 ([#931](https://github.com/stoplightio/elements/issues/931)) ([f05846c](https://github.com/stoplightio/elements/commit/f05846c30ec51b266f5a5ac20c5299113bd1f445))
+* **StoplightProject:** resolve relative links in markdown ([#974](https://github.com/stoplightio/elements/issues/974)) ([9518586](https://github.com/stoplightio/elements/commit/9518586c8a634bec53fc6f6f60043d4bc165a24e))
+
+
+
+
+
 ## [6.1.16](https://github.com/stoplightio/elements/compare/v6.1.15...v6.1.16) (2021-03-10)
 
 
