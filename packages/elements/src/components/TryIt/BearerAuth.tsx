@@ -1,19 +1,19 @@
 import { Panel } from '@stoplight/mosaic';
-import { IOauth2SecurityScheme } from '@stoplight/types';
+import { IBearerSecurityScheme } from '@stoplight/types';
 import * as React from 'react';
 
 import { AuthTokenInput } from './AuthTokenInput';
 
-interface OAuth2AuthProps {
-  scheme: IOauth2SecurityScheme;
+interface BearerAuthProps {
+  scheme: IBearerSecurityScheme;
   onChange: (value: string) => void;
   value: string;
 }
 
-export const OAuth2Auth: React.FC<OAuth2AuthProps> = ({ value, onChange }) => {
+export const BearerAuth: React.FC<BearerAuthProps> = ({ value, onChange }) => {
   return (
     <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
-      <AuthTokenInput type="oauth2" name="Token" value={value} onChange={onChange} />
+      <AuthTokenInput type="http" name="Token" value={value} onChange={onChange} />
     </Panel.Content>
   );
 };

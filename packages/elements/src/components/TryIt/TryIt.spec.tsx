@@ -753,7 +753,7 @@ describe('TryIt', () => {
         const securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
         userEvent.click(securitySchemes);
 
-        const tokenInput = screen.getByLabelText('Authorization Token');
+        const tokenInput = screen.getByLabelText('Token');
 
         await userEvent.type(tokenInput, 'Bearer 0a1b2c');
 
@@ -770,6 +770,29 @@ describe('TryIt', () => {
 
         const header = screen.queryByLabelText('authorization');
         expect(header).not.toBeInTheDocument();
+      });
+    });
+
+    describe('Bearer Auth Component', () => {
+      it('allows to send a Bearer Auth request', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        userEvent.click(securitySchemesButton);
+
+        const securitySchemes = screen.getByRole('menuitem', { name: 'Bearer Auth' });
+        userEvent.click(securitySchemes);
+
+        const tokenInput = screen.getByLabelText('Token');
+
+        await userEvent.type(tokenInput, '0a1b2c');
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('Authorization')).toBe('Bearer 0a1b2c');
       });
     });
   });

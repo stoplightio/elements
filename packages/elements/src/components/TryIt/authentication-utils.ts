@@ -1,6 +1,7 @@
 import {
   HttpSecurityScheme,
   IApiKeySecurityScheme,
+  IBearerSecurityScheme,
   IHttpHeaderParam,
   IHttpQueryParam,
   IOauth2SecurityScheme,
@@ -19,6 +20,9 @@ export const isApiKeySecurityScheme = (maybeIApiKey: HttpSecurityScheme): maybeI
 
 export const isOAuth2SecurityScheme = (maybeIOAuth2: HttpSecurityScheme): maybeIOAuth2 is IOauth2SecurityScheme =>
   isObject(maybeIOAuth2) && maybeIOAuth2.type === 'oauth2';
+
+export const isBearerSecurityScheme = (maybeIBearer: HttpSecurityScheme): maybeIBearer is IBearerSecurityScheme =>
+  isObject(maybeIBearer) && maybeIBearer.type === 'http' && maybeIBearer.scheme === 'bearer';
 
 export function filterOutAuthorizationParams(
   queryParams: IHttpQueryParam[],
