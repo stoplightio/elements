@@ -6,6 +6,7 @@ import {
   filterOutAuthorizationParams,
   HttpSecuritySchemeWithValues,
   isApiKeySecurityScheme,
+  isBearerSecurityScheme,
   isOAuth2SecurityScheme,
 } from './authentication-utils';
 import { MockData } from './mocking-utils';
@@ -88,8 +89,8 @@ const runAuthRequestEhancements = (
     }
   }
 
-  if (isOAuth2SecurityScheme(auth.scheme)) {
-    newHeaders['Authorization'] = auth.authValue;
+  if (isOAuth2SecurityScheme(auth.scheme) || isBearerSecurityScheme(auth.scheme)) {
+    newHeaders['Authorization'] = `Bearer ${auth.authValue}`;
   }
 
   return [newQueryParams, newHeaders];
