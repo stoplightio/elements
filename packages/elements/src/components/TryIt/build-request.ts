@@ -90,7 +90,7 @@ const runAuthRequestEhancements = (
   }
 
   if (isOAuth2SecurityScheme(auth.scheme)) {
-    newHeaders['Authorization'] = `${auth.authValue}`;
+    newHeaders['Authorization'] = auth.authValue;
   }
   if (isBearerSecurityScheme(auth.scheme)) {
     newHeaders['Authorization'] = `Bearer ${auth.authValue}`;

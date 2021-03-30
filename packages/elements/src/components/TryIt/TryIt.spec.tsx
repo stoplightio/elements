@@ -707,7 +707,7 @@ describe('TryIt', () => {
       it('attaches auth token as a query parameter', async () => {
         render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
 
-        const APIKeyField = screen.getByLabelText('Authorization Input');
+        const APIKeyField = screen.getByLabelText('API-Key');
         await userEvent.type(APIKeyField, '123');
 
         // click send
@@ -730,7 +730,7 @@ describe('TryIt', () => {
       it('attaches auth token as a header', async () => {
         render(<TryItWithPersistence httpOperation={singleSecurityOperation} />);
 
-        const APIKeyField = screen.getByLabelText('Authorization Input');
+        const APIKeyField = screen.getByLabelText('API-Key');
         await userEvent.type(APIKeyField, '123');
 
         // click send
@@ -753,7 +753,7 @@ describe('TryIt', () => {
         const securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
         userEvent.click(securitySchemes);
 
-        const tokenInput = screen.getByLabelText('Authorization Input');
+        const tokenInput = screen.getByLabelText('Token');
 
         await userEvent.type(tokenInput, 'Bearer 0a1b2c');
 
@@ -783,7 +783,7 @@ describe('TryIt', () => {
         const securitySchemes = screen.getByRole('menuitem', { name: 'Bearer Auth' });
         userEvent.click(securitySchemes);
 
-        const tokenInput = screen.getByLabelText('Authorization Input');
+        const tokenInput = screen.getByLabelText('Token');
 
         await userEvent.type(tokenInput, '0a1b2c');
 
