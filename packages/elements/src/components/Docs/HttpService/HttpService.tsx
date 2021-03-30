@@ -4,9 +4,9 @@ import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { IDocsComponentProps } from '..';
 import { StoplightProjectContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { IDocsComponentProps } from '..';
 import { Badge } from '../HttpOperation/Badges';
 import { SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';

@@ -4,8 +4,8 @@ import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { MarkdownViewer } from '../../MarkdownViewer';
 import { IDocsComponentProps } from '..';
+import { MarkdownViewer } from '../../MarkdownViewer';
 import { ArticleHeadings } from './Headings';
 
 export type ArticleProps = IDocsComponentProps<string | MarkdownAstRoot>;
