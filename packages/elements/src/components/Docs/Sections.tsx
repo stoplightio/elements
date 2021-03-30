@@ -7,7 +7,7 @@ export interface ISectionTitle {
 
 export const SectionTitle: React.FC<ISectionTitle> = ({ title, children }) => {
   return (
-    <Flex role="heading" borderB borderColor="light" mt={5} mb={3} pb={3} aria-label={title}>
+    <Flex role="heading" borderB borderColor="light" mb={3} pb={3} aria-label={title}>
       <Text size="xl" fontWeight="bold" mr={5}>
         {title}
       </Text>
@@ -23,7 +23,7 @@ interface SubSectionPanelProps {
 
 export const SubSectionPanel: React.FC<SubSectionPanelProps> = ({ title, children, hasContent, rightComponent }) => {
   return (
-    <Panel appearance="minimal" mb={3} isCollapsible={hasContent}>
+    <Panel appearance="minimal" mb={3} isCollapsible={hasContent} defaultIsOpen>
       <Panel.Titlebar fontWeight="medium" rightComponent={rightComponent}>
         <div role="heading">{title}</div>
       </Panel.Titlebar>
