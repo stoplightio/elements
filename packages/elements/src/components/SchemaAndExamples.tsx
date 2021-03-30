@@ -11,32 +11,29 @@ import { JSONSchema4 } from 'json-schema';
 import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
-import { NodeTypeColors, NodeTypeIconDefs } from '../../constants';
-import { useInlineRefResolver } from '../../context/InlineRefResolver';
-import { JSONSchema } from '../../types';
-import { MarkdownViewer } from '../MarkdownViewer';
+import { NodeTypeColors, NodeTypeIconDefs } from '../constants';
+import { useInlineRefResolver } from '../context/InlineRefResolver';
+import { JSONSchema } from '../types';
+import { MarkdownViewer } from './MarkdownViewer';
 
 export interface ISchemaViewerProps {
   schema: JSONSchema;
   title?: string;
   description?: string;
   errors?: string[];
-  maxRows?: number;
   examples?: Dictionary<string>;
   className?: string;
   forceShowTabs?: boolean;
   viewMode?: ViewMode;
 }
 
-const JSV_MAX_ROWS = 20;
-export const SchemaViewer = ({
+export const SchemaAndExamples = ({
   className,
   title,
   description,
   schema,
   examples,
   errors,
-  maxRows = JSV_MAX_ROWS,
   viewMode,
   forceShowTabs,
 }: ISchemaViewerProps) => {
@@ -52,13 +49,10 @@ export const SchemaViewer = ({
         {description && <MarkdownViewer markdown={description} />}
 
         <JsonSchemaViewer
-          mergeAllOf
           resolveRef={resolveRef}
           className={jsvClassName}
           schema={schema as JSONSchema4}
-          maxRows={maxRows}
           viewMode={viewMode}
-          shouldResolveEagerly
         />
       </>
     );

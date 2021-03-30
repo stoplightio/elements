@@ -6,8 +6,8 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName } from '../../constants';
-import { useComponents } from '../../context/Components';
 import { IBranchNode } from '../../types';
+import { useMarkdownComponents } from '../MarkdownViewer/CustomComponents/Provider';
 
 export const NodeList: React.FC<{
   nodes?: IBranchNode[];
@@ -70,7 +70,7 @@ const NodeListItem: React.FC<{
   onReset?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onClose?: () => void;
 }> = ({ isLoading, item, onReset, onClose }) => {
-  const components = useComponents();
+  const components = useMarkdownComponents();
   const { orgSlug, projectSlug } = deserializeSrn(item.node.uri);
   const onClick = React.useCallback(
     e => {

@@ -1,4 +1,3 @@
-import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
 import { VStack } from '@stoplight/mosaic';
 import { Dictionary, HttpParamStyles, IHttpParam, Primitive } from '@stoplight/types';
 import { Tag } from '@stoplight/ui-kit';
@@ -50,7 +49,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
 
   return (
     <VStack spacing={4} divider>
-      {sortBy(parameters, ['required', 'name']).map((parameter, index) => {
+      {sortBy(parameters, ['required', 'name']).map(parameter => {
         const resolvedSchema =
           parameter.schema?.$ref && resolveRef
             ? resolveRef({ pointer: parameter.schema.$ref, source: null }, null, {})
@@ -107,7 +106,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
     <div className="HttpOperation__Parameters">
       <div className="flex items-center">
         <div className="font-medium font-mono">{parameter.name}</div>
-        <div className={cn('ml-2 text-sm', PropertyTypeColors[type])}>{format ? `${type}<${format}>` : type}</div>
+        <div className={'ml-2 text-sm'}>{format ? `${type}<${format}>` : type}</div>
         {parameterType !== 'path' && (
           <div
             className={cn('ml-2 text-sm', {
