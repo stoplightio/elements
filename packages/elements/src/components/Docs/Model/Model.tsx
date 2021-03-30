@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { IDocsComponentProps } from '..';
 import { JSONSchema } from '../../../types';
-import { SchemaViewer } from '../../SchemaViewer';
+import { SchemaAndExamples } from '../../SchemaAndExamples';
 import { getExamplesFromSchema } from '../HttpOperation/utils';
 
 export type ModelProps = IDocsComponentProps<JSONSchema>;
@@ -15,7 +15,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => 
     <div className={cn('Model MarkdownViewer', className)}>
       {!headless && data.title !== void 0 && <h1 className={Classes.HEADING}>{data.title}</h1>}
 
-      <SchemaViewer schema={data} description={data.description} examples={getExamplesFromSchema(data)} />
+      <SchemaAndExamples schema={data} description={data.description} examples={getExamplesFromSchema(data)} />
     </div>
   );
 };

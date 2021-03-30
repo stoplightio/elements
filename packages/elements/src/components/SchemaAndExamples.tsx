@@ -11,10 +11,10 @@ import { JSONSchema4 } from 'json-schema';
 import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
-import { NodeTypeColors, NodeTypeIconDefs } from '../../constants';
-import { useInlineRefResolver } from '../../context/InlineRefResolver';
-import { JSONSchema } from '../../types';
-import { MarkdownViewer } from '../MarkdownViewer';
+import { NodeTypeColors, NodeTypeIconDefs } from '../constants';
+import { useInlineRefResolver } from '../context/InlineRefResolver';
+import { JSONSchema } from '../types';
+import { MarkdownViewer } from './MarkdownViewer';
 
 export interface ISchemaViewerProps {
   schema: JSONSchema;
@@ -27,7 +27,7 @@ export interface ISchemaViewerProps {
   viewMode?: ViewMode;
 }
 
-export const SchemaViewer = ({
+export const SchemaAndExamples = ({
   className,
   title,
   description,

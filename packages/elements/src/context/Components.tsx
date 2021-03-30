@@ -9,7 +9,7 @@ import { defaults, get } from 'lodash';
 import * as React from 'react';
 
 import { getExamplesFromSchema } from '../components/Docs/HttpOperation/utils';
-import { SchemaViewer } from '../components/SchemaViewer';
+import { SchemaAndExamples } from '../components/SchemaAndExamples';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { isJSONSchema } from '../utils/guards';
 
@@ -36,7 +36,11 @@ const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) =
     }
 
     return (
-      <SchemaViewer title={annotations?.title} schema={parsedValue} examples={getExamplesFromSchema(parsedValue)} />
+      <SchemaAndExamples
+        title={annotations?.title}
+        schema={parsedValue}
+        examples={getExamplesFromSchema(parsedValue)}
+      />
     );
   }
 
