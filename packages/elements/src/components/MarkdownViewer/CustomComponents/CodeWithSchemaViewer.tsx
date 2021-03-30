@@ -1,5 +1,5 @@
-import { defaultComponentMapping, ICodeAnnotations, IComponentMappingProps } from '@stoplight/markdown-viewer';
 import { ICode } from '@stoplight/markdown/ast-types/smdast';
+import { defaultComponentMapping, ICodeAnnotations, IComponentMappingProps } from '@stoplight/markdown-viewer';
 import { get } from 'lodash';
 import React from 'react';
 
