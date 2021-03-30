@@ -29,20 +29,24 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
 
   const securitySchemes = flatten(data.security);
 
+  const hasBadges = isDeprecated || securitySchemes.length > 0;
+
   if (!headless)
     return (
       <Box bg="transparent" className={cn('HttpOperation', className)} w="full">
-        <Heading size={1} fontWeight="semibold" fontSize="5xl">
+        <Heading mb={5} size={1} fontWeight="semibold" fontSize="5xl">
           {data.summary || `${data.method} ${data.path}`}
         </Heading>
-        <div className="flex flex-rows mt-3">
+        <div className="flex flex-rows">
           <div className="flex-grow">
-            <div className="flex flex-wrap mb-10">
-              {isDeprecated && <DeprecatedBadge />}
-              {sortBy(securitySchemes, 'type').map((scheme, i) => (
-                <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
-              ))}
-            </div>
+            {hasBadges && (
+              <div className="flex flex-wrap mb-10">
+                {isDeprecated && <DeprecatedBadge />}
+                {sortBy(securitySchemes, 'type').map((scheme, i) => (
+                  <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
+                ))}
+              </div>
+            )}
             {data.description && (
               <MarkdownViewer className="HttpOperation__Description mb-10 ml-1" markdown={data.description} />
             )}

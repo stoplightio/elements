@@ -126,7 +126,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
   return (
     <div>
-      <Panel isCollapsible={false} className="p-0">
+      <Panel rounded isCollapsible={false} className="p-0">
         <Panel.Titlebar bg="canvas-300">
           <div role="heading" className="sl-font-bold">
             <Text color={HttpMethodColors[httpOperation.method]}>{httpOperation.method.toUpperCase()}</Text>
