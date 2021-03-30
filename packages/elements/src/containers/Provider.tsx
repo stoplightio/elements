@@ -1,12 +1,9 @@
-import { IComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 
 import { MockUrlResult } from '../components/TryIt/mocking-utils';
-import { ComponentsProvider } from '../context/Components';
 import { IActiveInfo, NodeIconMapping } from '../types';
 
 export interface IProvider extends IActiveInfo {
-  components?: IComponentMapping;
   authToken?: string;
   isStoplightProjectComponent?: boolean;
 }
@@ -31,7 +28,6 @@ export const Provider: React.FC<IProvider> = ({
   project,
   branch,
   node,
-  components,
   children,
   authToken,
   isStoplightProjectComponent,
@@ -48,9 +44,7 @@ export const Provider: React.FC<IProvider> = ({
 
   return (
     <IconsContext.Provider value={defaultIcons}>
-      <ComponentsProvider value={components}>
-        <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>
-      </ComponentsProvider>
+      <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>
     </IconsContext.Provider>
   );
 };
