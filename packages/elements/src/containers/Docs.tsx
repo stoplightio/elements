@@ -51,6 +51,8 @@ export const Docs = ({ className, node }: IDocsProps) => {
   const nodeUri = node || info.node;
   const mockUrlResult = useMockUrl(info, nodeUri);
 
+  const image = React.useMemo(() => result && createResolvedImageComponent(result), [result]);
+
   if (error) {
     return (
       <div className="flex min-h-screen justify-center items-center w-full">
@@ -69,7 +71,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
 
   return (
     <StoplightComponentProvider mockUrl={mockUrlResult}>
-      <MarkdownComponentsProvider value={{ image: createResolvedImageComponent(result) }}>
+      <MarkdownComponentsProvider value={{ image }}>
         <DocsPopup key={nodeUri} nodeType={result.type} nodeData={result.data} uri={node} className={className} />
       </MarkdownComponentsProvider>
     </StoplightComponentProvider>
