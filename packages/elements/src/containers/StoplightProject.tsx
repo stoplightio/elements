@@ -1,7 +1,5 @@
-import { IComponentMapping } from '@stoplight/markdown-viewer';
-import { dirname, resolve } from '@stoplight/path';
 import * as React from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 
 import { Row } from '../components/TableOfContents/Row';
 import { defaultPlatformUrl } from '../constants';
@@ -60,7 +58,6 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
               branch={branchSlug}
               node={pathname}
               authToken={authToken}
-              components={{ link: renderLink(pathname) }}
             >
               <Docs node={pathname} className="px-10" />
               {showTryIt && (
@@ -79,22 +76,5 @@ const StoplightProjectImpl = withRouter<StoplightProjectProps>(
 );
 
 export const StoplightProject = withStyles(StoplightProjectImpl);
-
-function renderLink(pathname: string): IComponentMapping['link'] {
-  return ({ node, children }) => {
-    if (/^(http|#|mailto)/.test(node.url)) {
-      return (
-        <a href={node.url} target={node.url.startsWith('#') ? undefined : '_blank'} rel="noreferrer noopener">
-          {children}
-        </a>
-      );
-    }
-
-    const nodeDestinationUri = node.url;
-    const resolvedUri = resolve(dirname(pathname), nodeDestinationUri);
-
-    return <Link to={resolvedUri}>{children}</Link>;
-  };
-}
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
