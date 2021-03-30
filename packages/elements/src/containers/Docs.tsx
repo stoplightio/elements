@@ -5,6 +5,8 @@ import { NonIdealState } from '@stoplight/ui-kit';
 import * as React from 'react';
 
 import { DocsSkeleton, ParsedDocs } from '../components/Docs';
+import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
+import { createResolvedImageComponent } from '../components/MarkdownViewer/CustomComponents/ResolvedImage';
 import { useMockUrl } from '../components/TryIt/mocking-utils';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { useParsedData } from '../hooks/useParsedData';
@@ -49,6 +51,8 @@ export const Docs = ({ className, node }: IDocsProps) => {
   const nodeUri = node || info.node;
   const mockUrlResult = useMockUrl(info, nodeUri);
 
+  const image = React.useMemo(() => result && createResolvedImageComponent(result), [result]);
+
   if (error) {
     return (
       <div className="flex min-h-screen justify-center items-center w-full">
@@ -67,7 +71,9 @@ export const Docs = ({ className, node }: IDocsProps) => {
 
   return (
     <StoplightComponentProvider mockUrl={mockUrlResult}>
-      <DocsPopup key={nodeUri} nodeType={result.type} nodeData={result.data} uri={node} className={className} />
+      <MarkdownComponentsProvider value={{ image }}>
+        <DocsPopup key={nodeUri} nodeType={result.type} nodeData={result.data} uri={node} className={className} />
+      </MarkdownComponentsProvider>
     </StoplightComponentProvider>
   );
 };

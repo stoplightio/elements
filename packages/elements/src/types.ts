@@ -64,12 +64,33 @@ export interface IBranchNode {
   };
 }
 
+export enum IntegrationKind {
+  AzureDevopsServer = 'azure_devops_server',
+  BitbucketCloud = 'bitbucket_cloud',
+  BitbucketServer = 'bitbucket_server',
+  Builtin = 'builtin',
+  Gitea = 'gitea',
+  Github = 'github',
+  Gitlab = 'gitlab',
+  Ldap = 'ldap',
+  Saml = 'saml',
+}
+
 export type BundledBranchNode = {
   id: number;
   data: string;
   type: NodeType;
   name: string;
   uri: string;
+  summary: string;
+  branchSlug: string;
+  workspaceIntegration: {
+    kind: IntegrationKind;
+    apiUrl: string;
+    hostUrl: string;
+  };
+  externalOrgSlug: string;
+  externalSlug: string;
 };
 
 export interface TableOfContentsLinkWithId extends ITableOfContentsLink {
