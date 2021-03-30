@@ -1,13 +1,14 @@
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Select, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
+import { JSONSchema4 } from 'json-schema';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
+import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { SchemaViewer } from '../../SchemaViewer';
 import { SectionTitle, SubSectionPanel } from '../Sections';
 import { Parameters } from './Parameters';
-import { getExamplesObject } from './utils';
 
 export const HttpCodeColor = {
   1: 'gray',
@@ -73,10 +74,10 @@ export const Response = ({
   onMediaTypeChange,
 }: ResponseProps) => {
   const [chosenContent, setChosenContent] = React.useState(0);
+  const refResolver = useInlineRefResolver();
 
   const responseContent = contents[chosenContent];
   const schema = responseContent?.schema;
-  const examples = getExamplesObject(responseContent?.examples || []);
 
   React.useEffect(() => {
     responseContent && onMediaTypeChange(responseContent.mediaType);
@@ -104,7 +105,11 @@ export const Response = ({
             />
           }
         >
-          {schema && <SchemaViewer schema={schema} examples={examples} viewMode="read" forceShowTabs />}
+          {schema && (
+            <Box ml={-9}>
+              <JsonSchemaViewer schema={schema as JSONSchema4} resolveRef={refResolver} viewMode="read" />
+            </Box>
+          )}
         </SubSectionPanel>
       )}
     </Box>

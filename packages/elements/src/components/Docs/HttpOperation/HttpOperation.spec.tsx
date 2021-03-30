@@ -1,4 +1,4 @@
-import { HttpParamStyles } from '@stoplight/types';
+import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,12 +11,6 @@ import { withPersistenceBoundary } from '../../../context/Persistence';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
 const HttpOperation = withPersistenceBoundary(HttpOperationWithoutPersistence);
-
-jest.mock('@stoplight/json-schema-viewer', () => ({
-  __esModule: true,
-  PropertyTypeColors: {},
-  JsonSchemaViewer: () => <div>This is JsonSchemaViewer</div>,
-}));
 
 describe('HttpOperation', () => {
   describe('Header', () => {
@@ -65,7 +59,7 @@ describe('HttpOperation', () => {
 
   describe('Query Parameters', () => {
     it('should render correct validations', async () => {
-      const data = {
+      const data: IHttpOperation = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -76,14 +70,14 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
               allowEmptyValue: true,
               allowReserved: true,
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Form as const,
+              style: HttpParamStyles.Form,
               examples: [
                 {
                   value: 'example value',
@@ -107,7 +101,7 @@ describe('HttpOperation', () => {
     });
 
     it('should not render default styles', () => {
-      const operationData = {
+      const operationData: IHttpOperation = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -117,16 +111,16 @@ describe('HttpOperation', () => {
             {
               name: 'default style param',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
-              style: HttpParamStyles.Form as const,
+              style: HttpParamStyles.Form,
             },
             {
               name: 'different style param',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
-              style: HttpParamStyles.SpaceDelimited as const,
+              style: HttpParamStyles.SpaceDelimited,
             },
           ],
         },
@@ -140,7 +134,7 @@ describe('HttpOperation', () => {
 
   describe('Header Parameters', () => {
     it('should render panel when there are header parameters', () => {
-      const data = {
+      const data: IHttpOperation = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -151,12 +145,12 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Simple as const,
+              style: HttpParamStyles.Simple,
               examples: [
                 {
                   key: 'example',
@@ -198,7 +192,7 @@ describe('HttpOperation', () => {
 
   describe('Path Parameters', () => {
     it('should render correct validations', async () => {
-      const data = {
+      const data: IHttpOperation = {
         id: 'get',
         method: 'get',
         path: '/path',
@@ -210,12 +204,12 @@ describe('HttpOperation', () => {
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
-                type: 'string' as const,
+                type: 'string',
               },
               deprecated: true,
               explode: true,
               required: true,
-              style: HttpParamStyles.Simple as const,
+              style: HttpParamStyles.Simple,
               examples: [
                 {
                   key: 'example',
@@ -257,13 +251,24 @@ describe('HttpOperation', () => {
   });
 
   describe('Request Body', () => {
-    const httpOperationWithRequestBodyContents = {
+    const httpOperationWithRequestBodyContents: IHttpOperation = {
       path: '/',
       id: 'some_id',
       method: 'get',
       request: {
         body: {
-          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
+          contents: [
+            {
+              mediaType: 'application/json',
+              schema: {
+                type: 'object',
+                properties: {
+                  some_property: { type: 'string' },
+                },
+              },
+            },
+            { mediaType: 'application/xml' },
+          ],
         },
       },
       responses: [
@@ -327,7 +332,7 @@ describe('HttpOperation', () => {
     it('should display schema for content type', async () => {
       render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
 
-      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
+      expect(await screen.findByText('some_property')).toBeInTheDocument();
     });
 
     it('request body selection in Docs should update TryIt', async () => {
@@ -353,7 +358,7 @@ describe('HttpOperation', () => {
   });
 
   describe('Response', () => {
-    const httpOperationWithResponseBodyContents = {
+    const httpOperationWithResponseBodyContents: IHttpOperation = {
       path: '/',
       id: 'some_id',
       method: 'get',
@@ -361,12 +366,23 @@ describe('HttpOperation', () => {
         {
           code: '200',
           description: 'Hello world!',
-          contents: [{ mediaType: 'application/json', schema: {} }, { mediaType: 'application/xml' }],
+          contents: [
+            {
+              mediaType: 'application/json',
+              schema: {
+                type: 'object',
+                properties: {
+                  some_property: { type: 'string' },
+                },
+              },
+            },
+            { mediaType: 'application/xml' },
+          ],
         },
       ],
     };
 
-    const httpOperationWithoutResponseBodyContents = {
+    const httpOperationWithoutResponseBodyContents: IHttpOperation = {
       path: '/',
       id: 'some_id',
       method: 'get',
@@ -413,7 +429,14 @@ describe('HttpOperation', () => {
     it('should display schema for chosen content type', async () => {
       render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
-      expect(await screen.findByText('This is JsonSchemaViewer')).toBeInTheDocument();
+      const property = await screen.findByText('some_property');
+      expect(property).toBeInTheDocument();
+
+      const select = screen.getByLabelText('Choose Response Body Content Type');
+
+      userEvent.selectOptions(select, 'application/xml');
+
+      expect(screen.queryByText('some_property')).not.toBeInTheDocument();
     });
   });
 });

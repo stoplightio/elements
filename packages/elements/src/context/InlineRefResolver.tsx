@@ -1,5 +1,5 @@
 import { resolveInlineRef } from '@stoplight/json';
-import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
+import type { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-tree';
 import { isPlainObject } from 'lodash';
 import * as React from 'react';
 import { useContext } from 'react';

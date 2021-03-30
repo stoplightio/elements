@@ -1,12 +1,12 @@
-import { Select } from '@stoplight/mosaic';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { Box, Select } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
+import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
 
 import { isJSONSchema } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { SchemaViewer } from '../../SchemaViewer';
 import { SubSectionPanel } from '../Sections';
-import { getExamplesObject } from './utils';
 
 export interface BodyProps {
   body: IHttpOperationRequestBody;
@@ -25,7 +25,6 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
   if (contents.length === 0 && !description) return null;
 
   const schema = contents[chosenContent]?.schema;
-  const examples = getExamplesObject(contents[chosenContent]?.examples || []);
 
   return (
     <SubSectionPanel
@@ -42,7 +41,11 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
     >
       {description && <MarkdownViewer className="mb-6" markdown={description} />}
 
-      {isJSONSchema(schema) && <SchemaViewer className="mt-6" schema={schema} examples={examples} viewMode="write" />}
+      {isJSONSchema(schema) && (
+        <Box ml={-9}>
+          <JsonSchemaViewer schema={schema as JSONSchema4} viewMode="write" />
+        </Box>
+      )}
     </SubSectionPanel>
   );
 };
