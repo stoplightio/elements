@@ -110,17 +110,17 @@ export const TryIt: React.FC<TryItProps> = ({
   ]);
 
   const handleClick = async () => {
-    setLoading(true);
-    const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
-    const request = await buildFetchRequest({
-      parameterValues: parameterValuesWithDefaults,
-      httpOperation,
-      mediaTypeContent,
-      bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
-      mockData,
-      auth: operationAuthValue,
-    });
     try {
+      setLoading(true);
+      const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
+      const request = await buildFetchRequest({
+        parameterValues: parameterValuesWithDefaults,
+        httpOperation,
+        mediaTypeContent,
+        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+        mockData,
+        auth: operationAuthValue,
+      });
       let response: Response | undefined;
       try {
         response = await fetch(...request);
