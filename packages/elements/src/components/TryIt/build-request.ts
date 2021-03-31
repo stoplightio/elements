@@ -37,16 +37,12 @@ export async function buildFetchRequest({
       ?.map(param => [param.name, parameterValues[param.name] ?? ''])
       .filter(([_, value]) => value.length > 0) ?? [];
 
-  const rawHeaders = Object.fromEntries(
-    filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security).map(header => [
-      header.name,
-      parameterValues[header.name] ?? '',
-    ]),
-  );
+  const rawHeaders = filterOutAuthorizationParams(
+    httpOperation.request?.headers ?? [],
+    httpOperation.security,
+  ).map(header => [header.name, parameterValues[header.name] ?? '']);
 
-  const [queryParamsWithAuth, headersWithAuth] = auth
-    ? runAuthRequestEhancements(auth, queryParams, rawHeaders)
-    : [queryParams, rawHeaders];
+  const [queryParamsWithAuth, headersWithAuth] = runAuthRequestEhancements(auth, queryParams, rawHeaders);
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
   const url = new URL(serverUrl + expandedPath);
@@ -56,7 +52,7 @@ export async function buildFetchRequest({
 
   const headers = {
     'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
-    ...headersWithAuth,
+    ...Object.fromEntries(headersWithAuth),
     ...mockData?.header,
   };
 
@@ -72,12 +68,14 @@ export async function buildFetchRequest({
 }
 
 const runAuthRequestEhancements = (
-  auth: HttpSecuritySchemeWithValues,
+  auth: HttpSecuritySchemeWithValues | undefined,
   queryParams: string[][],
-  headers: HeadersInit,
-): [string[][], HeadersInit] => {
+  headers: string[][],
+): [string[][], string[][]] => {
+  if (!auth) return [queryParams, headers];
+
   const newQueryParams: string[][] = [...queryParams];
-  const newHeaders: HeadersInit = { ...headers };
+  const newHeaders: string[][] = [...headers];
 
   if (isApiKeySecurityScheme(auth.scheme)) {
     if (auth.scheme.in === 'query') {
@@ -85,33 +83,48 @@ const runAuthRequestEhancements = (
     }
 
     if (auth.scheme.in === 'header') {
-      newHeaders[auth.scheme.name] = auth.authValue;
+      newHeaders.push([auth.scheme.name, auth.authValue]);
     }
   }
 
   if (isOAuth2SecurityScheme(auth.scheme)) {
-    newHeaders['Authorization'] = auth.authValue;
+    newHeaders.push(['Authorization', auth.authValue]);
   }
+
   if (isBearerSecurityScheme(auth.scheme)) {
-    newHeaders['Authorization'] = `Bearer ${auth.authValue}`;
+    newHeaders.push(['Authorization', `Bearer ${auth.authValue}`]);
   }
 
   return [newQueryParams, newHeaders];
 };
+
+type NameAndValue = {
+  name: string;
+  value: string;
+};
+
+const arrayToNameAndValueObject = ([name, value]: string[]): NameAndValue => ({ name, value });
 
 export async function buildHarRequest({
   httpOperation,
   bodyInput,
   parameterValues,
   mediaTypeContent,
+  auth,
 }: BuildRequestInput): Promise<HarRequest> {
   const serverUrl = httpOperation.servers?.[0]?.url || window.location.origin;
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
-  const queryParams = httpOperation.request?.query
-    ?.map(param => ({ name: param.name, value: parameterValues[param.name] ?? '' }))
-    .filter(({ value }) => value.length > 0);
+  const queryParams =
+    httpOperation.request?.query
+      ?.map(param => [param.name, parameterValues[param.name] ?? ''])
+      .filter(([, value]) => value.length > 0) ?? [];
+
+  const headerParams =
+    httpOperation.request?.headers?.map(header => [header.name, parameterValues[header.name] ?? '']) ?? [];
+
+  const [queryParamsWithAuth, headerParamsWithAuth] = runAuthRequestEhancements(auth, queryParams, headerParams);
 
   let postData: HarRequest['postData'] = undefined;
   if (shouldIncludeBody && typeof bodyInput === 'string') {
@@ -141,14 +154,8 @@ export async function buildHarRequest({
     url: serverUrl + uriExpand(httpOperation.path, parameterValues),
     httpVersion: 'HTTP/1.1',
     cookies: [],
-    headers: [
-      { name: 'Content-Type', value: mimeType },
-      ...(httpOperation.request?.headers?.map(header => ({
-        name: header.name,
-        value: parameterValues[header.name] ?? '',
-      })) ?? []),
-    ],
-    queryString: queryParams ?? [],
+    headers: [{ name: 'Content-Type', value: mimeType }, ...headerParamsWithAuth.map(arrayToNameAndValueObject)],
+    queryString: queryParamsWithAuth.map(arrayToNameAndValueObject),
     postData: postData,
     headersSize: -1,
     bodySize: -1,
