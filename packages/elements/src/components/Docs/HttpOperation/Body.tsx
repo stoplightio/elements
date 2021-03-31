@@ -4,6 +4,7 @@ import { IHttpOperationRequestBody } from '@stoplight/types';
 import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
 
+import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { isJSONSchema } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SubSectionPanel } from '../Sections';
@@ -14,6 +15,7 @@ export interface BodyProps {
 }
 
 export const Body = ({ body: { contents = [], description }, onChange }: BodyProps) => {
+  const refResolver = useInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
 
   React.useEffect(() => {
@@ -43,7 +45,7 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
 
       {isJSONSchema(schema) && (
         <Box ml={-9}>
-          <JsonSchemaViewer schema={schema as JSONSchema4} viewMode="write" />
+          <JsonSchemaViewer resolveRef={refResolver} schema={schema as JSONSchema4} viewMode="write" />
         </Box>
       )}
     </SubSectionPanel>
