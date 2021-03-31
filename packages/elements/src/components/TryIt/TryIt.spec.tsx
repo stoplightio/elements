@@ -773,6 +773,31 @@ describe('TryIt', () => {
       });
     });
 
+    describe('Basic Auth Component', () => {
+      it('allows to send a Basic Auth request', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        userEvent.click(securitySchemesButton);
+
+        const securitySchemes = screen.getByRole('menuitem', { name: 'Basic Auth' });
+        userEvent.click(securitySchemes);
+
+        const usernameInput = screen.getByLabelText('Username');
+        const passwordInput = screen.getByLabelText('Password');
+
+        await userEvent.type(usernameInput, 'user');
+        await userEvent.type(passwordInput, 'password');
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('Authorization')).toBe('Basic dXNlcjpwYXNzd29yZA==');
+      });
+    });
+
     describe('Bearer Auth Component', () => {
       it('allows to send a Bearer Auth request', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);

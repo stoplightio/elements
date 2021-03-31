@@ -6,6 +6,7 @@ import * as React from 'react';
 import { getReadableSecurityName } from '../../utils/oas/security';
 import { APIKeyAuth } from './APIKeyAuth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';
+import { BasicAuth } from './BasicAuth';
 import { BearerAuth } from './BearerAuth';
 import { OAuth2Auth } from './OAuth2Auth';
 
@@ -86,6 +87,8 @@ const SecuritySchemeComponent: React.FC<SecuritySchemeComponentProps> = ({ schem
       return <OAuth2Auth scheme={scheme} {...rest} />;
     case 'http':
       switch (scheme.scheme) {
+        case 'basic':
+          return <BasicAuth {...rest} />;
         case 'bearer':
           return <BearerAuth scheme={scheme} {...rest} />;
         default:
