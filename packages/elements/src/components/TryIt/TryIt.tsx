@@ -89,6 +89,7 @@ export const TryIt: React.FC<TryItProps> = ({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+        auth: operationAuthValue,
       }).then(request => {
         if (isActive) onRequestChange(request);
       });
@@ -98,7 +99,14 @@ export const TryIt: React.FC<TryItProps> = ({
     };
     // disabling because we don't want to react on `onRequestChange` change
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [httpOperation, parameterValuesWithDefaults, formDataState.isFormDataBody, bodyParameterValues, textRequestBody]);
+  }, [
+    httpOperation,
+    parameterValuesWithDefaults,
+    formDataState.isFormDataBody,
+    bodyParameterValues,
+    textRequestBody,
+    operationAuthValue,
+  ]);
 
   const handleClick = async () => {
     try {

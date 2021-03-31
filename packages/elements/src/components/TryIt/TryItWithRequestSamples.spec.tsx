@@ -26,4 +26,12 @@ describe('TryItWithRequestSamples', () => {
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/123456789/));
   });
+
+  it('includes authentication data in request sample', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+    const apiKeyField = await screen.findByLabelText('API Key');
+    userEvent.type(apiKeyField, '123456789');
+    const codeViewer = await screen.findByLabelText(/curl/);
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/123456789/));
+  });
 });
