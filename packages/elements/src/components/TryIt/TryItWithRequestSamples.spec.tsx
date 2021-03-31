@@ -29,8 +29,8 @@ describe('TryItWithRequestSamples', () => {
 
   it('includes authentication data in request sample', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
-    const todoIdField = await screen.findByLabelText('API Key');
-    userEvent.type(todoIdField, '123456789');
+    const apiKeyField = await screen.findByLabelText('API Key');
+    userEvent.type(apiKeyField, '123456789');
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/123456789/));
   });
