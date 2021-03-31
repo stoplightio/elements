@@ -28,7 +28,7 @@ const Template: Story<APIProps> = args => <API {...args} />;
 
 export const TodosAPI = Template.bind({});
 TodosAPI.args = {
-  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json',
+  apiDescriptionUrl: 'https://petstore.swagger.io/v2/swagger.json',
 };
 TodosAPI.storyName = 'Simple API from URL';
 
