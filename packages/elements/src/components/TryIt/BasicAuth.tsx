@@ -9,12 +9,9 @@ interface BasicAuthProps {
 export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
   const [username = '', password = ''] = decode(value).split(':');
 
-  const onCredentialsChange = React.useCallback(
-    (username: string, password: string) => {
-      onChange(encode(`${username}:${password}`));
-    },
-    [onChange],
-  );
+  const onCredentialsChange = (username: string, password: string) => {
+    onChange(encode(`${username}:${password}`));
+  };
 
   return (
     <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
