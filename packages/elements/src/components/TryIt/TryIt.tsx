@@ -60,6 +60,7 @@ interface ErrorState {
  * Displays the TryIt component for a given IHttpOperation.
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
+
 export const TryIt: React.FC<TryItProps> = ({
   httpOperation,
   showMocking,
@@ -109,22 +110,28 @@ export const TryIt: React.FC<TryItProps> = ({
   ]);
 
   const handleClick = async () => {
+    setLoading(true);
+    const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
+    const request = await buildFetchRequest({
+      parameterValues: parameterValuesWithDefaults,
+      httpOperation,
+      mediaTypeContent,
+      bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+      mockData,
+      auth: operationAuthValue,
+    });
     try {
-      setLoading(true);
-      const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
-      const request = await buildFetchRequest({
-        parameterValues: parameterValuesWithDefaults,
-        httpOperation,
-        mediaTypeContent,
-        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
-        mockData,
-        auth: operationAuthValue,
-      });
-      const response = await fetch(...request);
-      setResponse({
-        status: response.status,
-        bodyText: await response.text(),
-      });
+      let response: Response | undefined;
+      try {
+        response = await fetch(...request);
+      } catch (e) {
+        setResponse({ error: new NetworkError(e.message) });
+      }
+      response &&
+        setResponse({
+          status: response.status,
+          bodyText: await response.text(),
+        });
     } catch (e) {
       setResponse({ error: e });
     } finally {
@@ -236,4 +243,6 @@ const NetworkErrorMessage = () => (
   </>
 );
 
-const isNetworkError = (error: Error) => error.message.includes('NetworkError');
+class NetworkError extends Error {}
+
+const isNetworkError = (error: Error) => error instanceof NetworkError;
