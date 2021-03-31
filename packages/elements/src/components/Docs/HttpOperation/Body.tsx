@@ -1,10 +1,10 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Select } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
-import { useInlineRefResolver } from 'elements/src/context/InlineRefResolver';
 import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
 
+import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { isJSONSchema } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SubSectionPanel } from '../Sections';
