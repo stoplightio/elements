@@ -1,5 +1,4 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
-import { safeStringify } from '@stoplight/yaml';
 import { Request as HarRequest } from 'har-format';
 
 import {
@@ -89,7 +88,7 @@ const runAuthRequestEhancements = (
     if (auth.scheme.in === 'query') {
       newQueryParams.push({
         name: auth.scheme.name,
-        value: safeStringify(auth.authValue),
+        value: auth.authValue ?? '',
       });
     }
 

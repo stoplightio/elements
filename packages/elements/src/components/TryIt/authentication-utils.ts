@@ -12,6 +12,7 @@ import { atom, useAtom } from 'jotai';
 import { flatten, isObject } from 'lodash';
 import React from 'react';
 
+import { persistAtom } from '../../utils/jotai/persistAtom';
 import { caseInsensitivelyEquals } from '../../utils/string';
 
 export type HttpSecuritySchemeWithValues = {
@@ -64,7 +65,7 @@ const getSecuritySchemeNames = (securitySchemes: HttpSecurityScheme[]): string[]
 
 type SecuritySchemeValues = Dictionary<string>;
 
-const securitySchemeValuesAtom = atom<SecuritySchemeValues>({});
+const securitySchemeValuesAtom = persistAtom('TryIt_securitySchemeValues', atom<SecuritySchemeValues>({}));
 export const usePersistedSecuritySchemeWithValues = (): [
   HttpSecuritySchemeWithValues | undefined,
   React.Dispatch<HttpSecuritySchemeWithValues | undefined>,
@@ -88,18 +89,18 @@ export const usePersistedSecuritySchemeWithValues = (): [
     }
   };
 
-  if (!currentScheme) {
-    return [undefined, setPersistedAuthenticationSettings];
-  }
+  const persistedSecuritySchemeValue = currentScheme && securitySchemeValues[currentScheme.scheme.key];
 
-  if (currentScheme.authValue) {
-    return [currentScheme, setPersistedAuthenticationSettings];
-  }
+  const schemeWithPersistedValue = React.useMemo(() => {
+    if (!currentScheme) return undefined;
 
-  const schemeWithPersistedValue = {
-    ...currentScheme,
-    authValue: securitySchemeValues[currentScheme.scheme.key] || '',
-  };
+    if (currentScheme.authValue) return currentScheme;
+
+    return {
+      ...currentScheme,
+      authValue: persistedSecuritySchemeValue,
+    };
+  }, [currentScheme, persistedSecuritySchemeValue]);
 
   return [schemeWithPersistedValue, setPersistedAuthenticationSettings];
 };

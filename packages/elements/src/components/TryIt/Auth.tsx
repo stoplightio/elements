@@ -24,11 +24,16 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
 
   const menuName = securityScheme ? getReadableSecurityName(securityScheme) : 'Security Scheme';
 
-  if (filteredSecurityItems.length === 0) return null;
-
-  const handleChange = (authValue: string) => {
+  const handleChange = (authValue?: string) => {
     onChange(securityScheme && { scheme: securityScheme, authValue: authValue });
   };
+
+  React.useEffect(() => {
+    handleChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (filteredSecurityItems.length === 0) return null;
 
   return (
     <Panel defaultIsOpen>
