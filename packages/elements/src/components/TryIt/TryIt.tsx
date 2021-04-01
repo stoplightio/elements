@@ -60,7 +60,6 @@ interface ErrorState {
  * Displays the TryIt component for a given IHttpOperation.
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
-
 export const TryIt: React.FC<TryItProps> = ({
   httpOperation,
   showMocking,
