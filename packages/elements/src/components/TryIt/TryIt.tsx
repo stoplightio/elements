@@ -120,11 +120,17 @@ export const TryIt: React.FC<TryItProps> = ({
         mockData,
         auth: operationAuthValue,
       });
-      const response = await fetch(...request);
-      setResponse({
-        status: response.status,
-        bodyText: await response.text(),
-      });
+      let response: Response | undefined;
+      try {
+        response = await fetch(...request);
+      } catch (e) {
+        setResponse({ error: new NetworkError(e.message) });
+      }
+      response &&
+        setResponse({
+          status: response.status,
+          bodyText: await response.text(),
+        });
     } catch (e) {
       setResponse({ error: e });
     } finally {
@@ -204,11 +210,38 @@ const TryItResponse: React.FC<{ response: ResponseState }> = ({ response }) => (
   </Panel>
 );
 
-const ResponseError: React.FC<{ state: ErrorState }> = ({ state }) => (
+const ResponseError: React.FC<{ state: ErrorState }> = ({ state: { error } }) => (
   <Panel defaultIsOpen>
     <Panel.Titlebar>Error</Panel.Titlebar>
-    <Panel.Content>
-      <p>{state.error.message}</p>
-    </Panel.Content>
+    <Panel.Content>{isNetworkError(error) ? <NetworkErrorMessage /> : <p>{error.message}</p>}</Panel.Content>
   </Panel>
 );
+
+const NetworkErrorMessage = () => (
+  <>
+    <p className="sl-pb-2">
+      <strong>Network Error occured.</strong>
+    </p>
+
+    <p className="sl-pb-2">1. Double check that your computer is connected to the internet.</p>
+
+    <p className="sl-pb-2">2. Make sure the API is actually running and available under the specified URL.</p>
+
+    <p>
+      3. If you've checked all of the above and still experiencing issues, check if the API supports{' '}
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-semibold text-darken-7 dark:text-gray-6"
+        href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"
+      >
+        CORS
+      </a>
+      .
+    </p>
+  </>
+);
+
+class NetworkError extends Error {}
+
+const isNetworkError = (error: Error) => error instanceof NetworkError;
