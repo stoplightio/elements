@@ -96,7 +96,7 @@ const runAuthRequestEhancements = (
     if (auth.scheme.in === 'header') {
       newHeaders.push({
         name: auth.scheme.name,
-        value: auth.authValue,
+        value: auth.authValue ?? '',
       });
     }
   }
@@ -104,7 +104,7 @@ const runAuthRequestEhancements = (
   if (isOAuth2SecurityScheme(auth.scheme)) {
     newHeaders.push({
       name: 'Authorization',
-      value: auth.authValue,
+      value: auth.authValue ?? '',
     });
   }
 

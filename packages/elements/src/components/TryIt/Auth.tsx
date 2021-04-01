@@ -48,7 +48,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
                   key={auth.key}
                   text={getReadableSecurityName(auth)}
                   onClick={() => {
-                    onChange({ scheme: auth, authValue: '' });
+                    onChange({ scheme: auth, authValue: undefined });
                   }}
                 />
               ))}
@@ -62,7 +62,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
         <SecuritySchemeComponent
           scheme={value ? value.scheme : filteredSecurityItems[0]}
           onChange={handleChange}
-          value={value ? value.authValue : ''}
+          value={(value && value.authValue) ?? ''}
         />
       }
     </Panel>

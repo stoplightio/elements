@@ -1,4 +1,5 @@
 import {
+  Dictionary,
   HttpSecurityScheme,
   IApiKeySecurityScheme,
   IBasicSecurityScheme,
@@ -7,13 +8,15 @@ import {
   IHttpQueryParam,
   IOauth2SecurityScheme,
 } from '@stoplight/types';
+import { atom, useAtom } from 'jotai';
 import { flatten, isObject } from 'lodash';
+import React from 'react';
 
 import { caseInsensitivelyEquals } from '../../utils/string';
 
 export type HttpSecuritySchemeWithValues = {
   scheme: HttpSecurityScheme;
-  authValue: string;
+  authValue: string | undefined;
 };
 
 export const isApiKeySecurityScheme = (maybeIApiKey: HttpSecurityScheme): maybeIApiKey is IApiKeySecurityScheme =>
@@ -58,3 +61,45 @@ const getSecuritySchemeNames = (securitySchemes: HttpSecurityScheme[]): string[]
 
     return [];
   });
+
+type SecuritySchemeValues = Dictionary<string>;
+
+const securitySchemeValuesAtom = atom<SecuritySchemeValues>({});
+export const usePersistedSecuritySchemeWithValues = (): [
+  HttpSecuritySchemeWithValues | undefined,
+  React.Dispatch<HttpSecuritySchemeWithValues | undefined>,
+] => {
+  const [currentScheme, setCurrentScheme] = React.useState<HttpSecuritySchemeWithValues | undefined>();
+  const [securitySchemeValues, setSecuritySchemeValues] = useAtom(securitySchemeValuesAtom);
+
+  const setPersistedAuthenticationSettings = (securitySchemeWithValues: HttpSecuritySchemeWithValues | undefined) => {
+    setCurrentScheme(securitySchemeWithValues);
+
+    if (securitySchemeWithValues) {
+      const key = securitySchemeWithValues.scheme.key;
+      const value = securitySchemeWithValues.authValue;
+
+      if (value !== undefined) {
+        setSecuritySchemeValues({
+          ...securitySchemeValues,
+          [key]: value,
+        });
+      }
+    }
+  };
+
+  if (!currentScheme) {
+    return [undefined, setPersistedAuthenticationSettings];
+  }
+
+  if (currentScheme.authValue) {
+    return [currentScheme, setPersistedAuthenticationSettings];
+  }
+
+  const schemeWithPersistedValue = {
+    ...currentScheme,
+    authValue: securitySchemeValues[currentScheme.scheme.key] || '',
+  };
+
+  return [schemeWithPersistedValue, setPersistedAuthenticationSettings];
+};
