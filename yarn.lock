@@ -4061,6 +4061,15 @@
     json-schema-compare "^0.2.2"
     lodash "^4.17.4"
 
+"@stoplight/json-schema-merge-allof@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.5.tgz#f844c41f8ae19dbf8e64578372ccb581cc8b97db"
+  integrity sha512-pbi/sfVKyezFhSTVzSQkDN3WanpoZFSjisYhTbpWMgTFoZz/pUPLLLZvBGUme4IfzQjFZweiKT3nl29h8Elsnw==
+  dependencies:
+    compute-lcm "^1.1.0"
+    json-schema-compare "^0.2.2"
+    lodash "^4.17.4"
+
 "@stoplight/json-schema-ref-parser@^9.0.5":
   version "9.0.5"
   resolved "https://registry.yarnpkg.com/@stoplight/json-schema-ref-parser/-/json-schema-ref-parser-9.0.5.tgz#e023489810acdf78a30b6a168ba3e10ddaf68869"
@@ -4071,12 +4080,12 @@
     call-me-maybe "^1.0.1"
 
 "@stoplight/json-schema-tree@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-1.1.0.tgz#574889869c17ed79ace933b2197869ee097b4d28"
-  integrity sha512-LOJAcljx1atU0F3KoF7C34I8e66hYi8v0Yr3uUXbWzsrTnuFzYWQgVgUWYJWKQnwoWKS2rBYn8u2up2w8cEF2Q==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-1.1.2.tgz#c781de4322f286b296fe82233dd4b895cedb10a7"
+  integrity sha512-GgEJApU2/JKVd3XwjPP52gI9EGCi1nFz4fPUTw1gafpAnEqQcjVF14RFlJ+YjMx15ggwsUPCDEZIypDEoYvdoA==
   dependencies:
     "@stoplight/json" "^3.10.0"
-    "@stoplight/json-schema-merge-allof" "^0.7.2"
+    "@stoplight/json-schema-merge-allof" "^0.7.5"
     "@stoplight/lifecycle" "^2.3.2"
     magic-error "^0.0.0"
 
