@@ -1,6 +1,7 @@
 import {
   HttpSecurityScheme,
   IApiKeySecurityScheme,
+  IBasicSecurityScheme,
   IBearerSecurityScheme,
   IHttpHeaderParam,
   IHttpQueryParam,
@@ -20,6 +21,9 @@ export const isApiKeySecurityScheme = (maybeIApiKey: HttpSecurityScheme): maybeI
 
 export const isOAuth2SecurityScheme = (maybeIOAuth2: HttpSecurityScheme): maybeIOAuth2 is IOauth2SecurityScheme =>
   isObject(maybeIOAuth2) && maybeIOAuth2.type === 'oauth2';
+
+export const isBasicSecurityScheme = (maybeIBasic: HttpSecurityScheme): maybeIBasic is IBasicSecurityScheme =>
+  isObject(maybeIBasic) && maybeIBasic.type === 'http' && maybeIBasic.scheme === 'basic';
 
 export const isBearerSecurityScheme = (maybeIBearer: HttpSecurityScheme): maybeIBearer is IBearerSecurityScheme =>
   isObject(maybeIBearer) && maybeIBearer.type === 'http' && maybeIBearer.scheme === 'bearer';

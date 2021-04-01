@@ -6,6 +6,7 @@ import {
   filterOutAuthorizationParams,
   HttpSecuritySchemeWithValues,
   isApiKeySecurityScheme,
+  isBasicSecurityScheme,
   isBearerSecurityScheme,
   isOAuth2SecurityScheme,
 } from './authentication-utils';
@@ -111,6 +112,13 @@ const runAuthRequestEhancements = (
     newHeaders.push({
       name: 'Authorization',
       value: `Bearer ${auth.authValue}`,
+    });
+  }
+
+  if (isBasicSecurityScheme(auth.scheme)) {
+    newHeaders.push({
+      name: 'Authorization',
+      value: `Basic ${auth.authValue}`,
     });
   }
 
