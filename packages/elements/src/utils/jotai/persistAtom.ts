@@ -1,12 +1,12 @@
 import { safeParse } from '@stoplight/json';
 import { atom, WritableAtom } from 'jotai';
 
-export const persistAtom = <O extends Object>(key: string, atomInstance: WritableAtom<O, O>) => {
+export const persistAtom = <T extends Object>(key: string, atomInstance: WritableAtom<T, T>) => {
   if (typeof window === 'undefined' || window.localStorage === undefined) {
     return atomInstance;
   }
 
-  return atom<O, O>(
+  return atom<T, T>(
     get => {
       const localStorageValue = window.localStorage.getItem(key);
       const atomValue = get(atomInstance);
