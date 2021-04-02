@@ -1,5 +1,3 @@
-import './index.css';
-
 import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
 import React from 'react';
 import ReactDOM from 'react-dom';
