@@ -1,5 +1,5 @@
 {
-  "name": "@stoplight/elements-demo3",
+  "name": "@stoplight/elements-demo",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@stoplight/elements": "*",
-    "@stoplight/mosaic": "1.0.0-beta.37",
+    "@stoplight/mosaic": "1.0.0-beta.39",
     "history": "^5.0.0",
     "react": "~16.13",
     "react-dom": "~16.13",
