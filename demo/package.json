@@ -11,12 +11,11 @@
   },
   "dependencies": {
     "@stoplight/elements": "*",
-    "@stoplight/mosaic": "1.0.0-beta.39",
+    "@stoplight/mosaic": "1.0.0-beta.41",
     "history": "^5.0.0",
     "react": "~16.13",
     "react-dom": "~16.13",
-    "react-router-dom": "6.0.0-beta.0",
-    "tslib": "^2.1.0"
+    "react-router-dom": "6.0.0-beta.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
