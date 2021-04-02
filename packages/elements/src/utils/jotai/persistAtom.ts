@@ -11,7 +11,7 @@ export const persistAtom = <T extends Object>(key: string, atomInstance: Writabl
       const localStorageValue = window.localStorage.getItem(key);
       const atomValue = get(atomInstance);
 
-      return localStorageValue !== null ? safeParse(localStorageValue) ?? localStorageValue : atomValue;
+      return localStorageValue !== null ? safeParse(localStorageValue) : atomValue;
     },
     (_, set, update) => {
       try {
