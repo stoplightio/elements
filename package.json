@@ -10,8 +10,13 @@
   },
   "license": "Apache-2.0",
   "workspaces": [
+    "demo",
     "packages/*"
   ],
+  "resolutions": {
+    "tslib": "^2.1.0"
+  },
+  "dependencies": {},
   "devDependencies": {
     "@stoplight/eslint-config": "^2.0.0",
     "@testing-library/cypress": "^7.0.3",
@@ -80,6 +85,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "dependencies": {}
+  }
 }
