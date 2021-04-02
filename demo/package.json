@@ -6,7 +6,8 @@
     "build": "yarn run clean-dist && webpack --config=webpack/prod.js",
     "clean-dist": "rimraf dist/*",
     "lint": "eslint './src/**/*.{js,ts,tsx}' --quiet",
-    "start": "webpack serve --config=webpack/dev.js"
+    "start": "webpack serve --config=webpack/dev.js",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@stoplight/elements": "*",
