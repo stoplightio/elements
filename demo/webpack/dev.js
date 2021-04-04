@@ -4,6 +4,9 @@ const commonConfig = require('./common');
 
 module.exports = merge(commonConfig, {
   mode: 'development',
+  output: {
+    publicPath: '/',
+  },
   entry: [
     // 'react-hot-loader/patch', // activate HMR for React
     'webpack-dev-server/client?http://localhost:4025', // bundle the client for webpack-dev-server and connect to the provided endpoint
@@ -13,6 +16,10 @@ module.exports = merge(commonConfig, {
   devServer: {
     hot: true, // enable HMR on the server
     port: 4025,
+    historyApiFallback: {
+      publicPath: '/',
+      disableDotRule: true,
+    },
   },
   devtool: 'cheap-module-source-map',
   plugins: [
