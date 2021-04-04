@@ -1,18 +1,17 @@
-import * as React from 'react';
-
 export function useLocationHash() {
-  const isBrowser = typeof window !== undefined;
-  const [locationHash, setLocationHash] = React.useState(isBrowser && window.location.hash);
+  const currentHash = typeof window !== 'undefined' ? window.location.hash : '';
 
-  React.useEffect(() => {
-    if (!isBrowser) return;
+  // indicates we're using HashRouter
+  if (currentHash.startsWith('#/')) {
+    const routeParts = currentHash.split('#');
 
-    const hashChange = () => setLocationHash(window.location.hash);
+    // In this case, only have a location hash if there is a 2nd segment e.g. #/page/path#hash
+    if (routeParts[2]) {
+      return currentHash.slice(1);
+    }
 
-    window.addEventListener('hashchange', hashChange, false);
+    return '';
+  }
 
-    return () => window.removeEventListener('hashchange', hashChange);
-  }, [isBrowser]);
-
-  return locationHash;
+  return currentHash.slice(1);
 }
