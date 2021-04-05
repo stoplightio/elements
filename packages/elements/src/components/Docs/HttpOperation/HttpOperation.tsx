@@ -37,6 +37,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
         <Heading mb={5} size={1} fontWeight="semibold" fontSize="5xl">
           {data.summary || `${data.method} ${data.path}`}
         </Heading>
+
         <div className="flex flex-rows">
           <div className="flex-grow">
             {hasBadges && (
@@ -62,27 +63,18 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
             )}
           </div>
 
-          <div className="w-2/5 relative ml-10">
-            <div className="inset-0 overflow-auto">
-              {info.isStoplightProjectComponent ? (
-                <TryItWithRequestSamples
-                  httpOperation={data}
-                  responseMediaType={responseMediaType}
-                  responseStatusCode={responseStatusCode}
-                  showMocking
-                  mockUrl={context.mockUrl?.servicePath}
-                  requestBodyIndex={requestBodyIndex}
-                />
-              ) : (
-                <TryItWithRequestSamples
-                  httpOperation={data}
-                  responseMediaType={responseMediaType}
-                  responseStatusCode={responseStatusCode}
-                  requestBodyIndex={requestBodyIndex}
-                />
-              )}
+          <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
+            <div className="HttpOperation__gutter inset-0 overflow-auto">
+              <TryItWithRequestSamples
+                httpOperation={data}
+                responseMediaType={responseMediaType}
+                responseStatusCode={responseStatusCode}
+                requestBodyIndex={requestBodyIndex}
+                showMocking={info.isStoplightProjectComponent}
+                mockUrl={info.isStoplightProjectComponent ? context.mockUrl?.servicePath : undefined}
+              />
             </div>
-          </div>
+          </Box>
         </div>
       </Box>
     );
