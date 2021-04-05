@@ -1,3 +1,4 @@
+import { Box, Flex } from '@stoplight/mosaic';
 import { IHttpService, NodeType } from '@stoplight/types';
 import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
@@ -14,6 +15,9 @@ type SidebarLayoutProps = {
   uriMap: IUriMap;
   tree: ITableOfContentsTree;
 };
+
+const MAX_CONTENT_WIDTH = 1800;
+const SIDEBAR_WIDTH = 300;
 
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, uriMap }) => {
   const operationMap = React.useMemo(() => mapUriToOperation(uriMap), [uriMap]);
@@ -37,19 +41,37 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   }
 
   return (
-    <>
-      <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
-      <div className="flex-grow p-5 ContentViewer">
-        <div className="flex">
+    <Flex flexGrow className="sl-elements-api">
+      <Flex
+        bg="canvas-100"
+        borderR
+        pt={5}
+        style={{
+          width: `calc((100% - ${MAX_CONTENT_WIDTH}px) / 2 + ${SIDEBAR_WIDTH}px)`,
+          paddingLeft: `calc((100% - ${MAX_CONTENT_WIDTH}px) / 2)`,
+          minWidth: `${SIDEBAR_WIDTH}px`,
+        }}
+      >
+        <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
+      </Flex>
+
+      <Flex flexGrow>
+        <Box
+          px={24}
+          style={{
+            width: '100%',
+            maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px`,
+          }}
+        >
           <Docs
             key={pathname}
             uri={hasOverview ? pathname : undefined}
-            className="px-10"
+            className="sl-pt-16 sl-pb-24"
             nodeData={nodeData}
             nodeType={nodeType}
           />
-        </div>
-      </div>
-    </>
+        </Box>
+      </Flex>
+    </Flex>
   );
 };
