@@ -3962,10 +3962,10 @@
     strict-event-emitter-types "^2.0.0"
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.3.3.tgz#57e65b6599057d37b21689a45f7cc107217c2189"
-  integrity sha512-+xrz9YYdYrzlcTF9oyp2Jw4n5bt4GxoDRKI2BeWib8hcBddnhW8q7YhU2RKZhkLLCKyi2Pk4YKE28nMgvery+w==
+"@stoplight/markdown-viewer@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-4.3.4.tgz#9b5e04ff7b90fb7d1e172c07c140d5466763a7d1"
+  integrity sha512-yIhjUckgHhsKGs2bLeQvYo1KgU4hbGfIYmwSwzSu648DSn3kxq5igAlujUf+K5ntK4kXpab3MjrbOojmb5OsIA==
   dependencies:
     "@stoplight/json" "^3.6"
     "@stoplight/markdown" "^2.11.0"
