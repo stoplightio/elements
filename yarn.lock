@@ -5188,10 +5188,10 @@
     ts-keycode-enum "^1.0.6"
     zustand "^3.3.1"
 
-"@stoplight/mosaic@1.0.0-beta.41":
-  version "1.0.0-beta.41"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.41.tgz#0c2a16cc293a51547f8180579d2141130e1ce096"
-  integrity sha512-HxBPPpkNw7/bXVZA6TSzzjMgnkIQ/lVyd4NMCwWnyStDD5brDwFEmJF++EviTiaTF4jkkfYEpAnhsHbryG5bkg==
+"@stoplight/mosaic@1.0.0-beta.42":
+  version "1.0.0-beta.42"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.42.tgz#9384cf43f335a226af70bd4d6e2df95fb8975a80"
+  integrity sha512-mYRRHN7LLZICOoNzmfI6BUOt/SFdFMOSHTqyE4/AedpXOBnoETLODJrF6B5MrmiYJ359BeMSXIZHVLqxTrFeVg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
