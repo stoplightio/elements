@@ -1,4 +1,4 @@
-import { Flex } from '@stoplight/mosaic';
+import { Box } from '@stoplight/mosaic';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
@@ -19,11 +19,7 @@ export class Styled extends React.Component {
   }
 
   render() {
-    return (
-      <Flex className="sl-elements" flexGrow flexDirection="col">
-        {this.props.children}
-      </Flex>
-    );
+    return <Box className="sl-elements">{this.props.children}</Box>;
   }
 }
 

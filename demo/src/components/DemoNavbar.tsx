@@ -19,7 +19,7 @@ export const DemoNavbar = () => {
   return (
     <>
       <InvertTheme>
-        <Flex h="2xl" px={5} alignItems="center" bg="canvas-pure" pos="fixed" pinX style={{ zIndex: 5 }}>
+        <Flex h="2xl" px={5} alignItems="center" bg="canvas-pure">
           <HStack w="1/3" alignItems="center" spacing={4}>
             <Text fontSize="lg" fontWeight="semibold" lineHeight="none">
               Stoplight Elements Demo
@@ -43,7 +43,7 @@ export const DemoNavbar = () => {
             <SpecUrlInput />
           </Flex>
 
-          <HStack w="1/3" flexGrow justifyContent="end">
+          <HStack w="1/3" flex={1} justifyContent="end">
             <Button as="a" appearance="minimal" target="__blank" href="https://stoplight.io">
               Stoplight
             </Button>
@@ -51,9 +51,6 @@ export const DemoNavbar = () => {
           </HStack>
         </Flex>
       </InvertTheme>
-
-      {/* spacer */}
-      <Box h="2xl" />
     </>
   );
 };
@@ -67,11 +64,11 @@ const SpecUrlInput = () => {
   }, [apiDescriptionUrl]);
 
   return (
-    <HStack spacing={2} flexGrow>
+    <HStack spacing={2} flex={1}>
       <Input
         appearance="minimal"
         placeholder="URL to an OpenAPI spec to try..."
-        flexGrow
+        flex={1}
         bg="canvas-100"
         rounded
         value={value}

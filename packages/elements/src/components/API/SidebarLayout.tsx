@@ -41,11 +41,14 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   }
 
   return (
-    <Flex flexGrow className="sl-elements-api">
-      <Flex
+    <Flex className="sl-elements-api" pos="absolute" pin overflowY="scroll">
+      <Box
         bg="canvas-100"
         borderR
         pt={5}
+        pos="sticky"
+        pinY
+        overflowY="auto"
         style={{
           width: `calc((100% - ${MAX_CONTENT_WIDTH}px) / 2 + ${SIDEBAR_WIDTH}px)`,
           paddingLeft: `calc((100% - ${MAX_CONTENT_WIDTH}px) / 2)`,
@@ -53,25 +56,24 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
         }}
       >
         <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
-      </Flex>
+      </Box>
 
-      <Flex flexGrow>
-        <Box
-          px={24}
-          style={{
-            width: '100%',
-            maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px`,
-          }}
-        >
-          <Docs
-            key={pathname}
-            uri={hasOverview ? pathname : undefined}
-            className="sl-pt-16 sl-pb-24"
-            nodeData={nodeData}
-            nodeType={nodeType}
-          />
-        </Box>
-      </Flex>
+      <Box
+        px={24}
+        flex={1}
+        style={{
+          width: '100%',
+          maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px`,
+        }}
+      >
+        <Docs
+          key={pathname}
+          uri={hasOverview ? pathname : undefined}
+          className="sl-pt-16 sl-pb-24"
+          nodeData={nodeData}
+          nodeType={nodeType}
+        />
+      </Box>
     </Flex>
   );
 };

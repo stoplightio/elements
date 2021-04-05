@@ -12,7 +12,7 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = p
   const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
 
   return (
-    <VStack spacing={8}>
+    <VStack spacing={6}>
       <InvertTheme>
         <Box>
           <TryIt {...props} onRequestChange={setRequestData} />

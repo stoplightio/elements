@@ -20,10 +20,10 @@ export const Badge: React.FC<{
 );
 export const DeprecatedBadge: React.FC = () => (
   <Tooltip
-    position={Position.BOTTOM_RIGHT}
+    position={Position.BOTTOM_LEFT}
     content="This operation has been marked as deprecated, which means it could be removed at some point in the future."
   >
-    <Badge icon={faExclamationCircle} className="bg-orange-6">
+    <Badge icon={faExclamationCircle} className="sl-bg-warning sl-ml-0">
       Deprecated
     </Badge>
   </Tooltip>

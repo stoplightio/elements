@@ -42,7 +42,7 @@ export function App() {
       <Flex
         direction="col"
         bg="canvas"
-        minH="screen"
+        h="screen"
         fontFamily="ui"
         fontSize="base"
         color="body"

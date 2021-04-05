@@ -35,11 +35,11 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
             onChange={onChange}
           />
         ) : (
-          <Flex flexGrow>
+          <Flex flex={1}>
             <Input
               aria-label={parameter.name}
               appearance="minimal"
-              flexGrow
+              flex={1}
               placeholder={getPlaceholderForParameter(parameter)}
               type={parameter.schema?.type === 'number' ? 'number' : 'text'}
               required
