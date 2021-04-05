@@ -39,14 +39,12 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
         </Heading>
 
         {hasBadges && (
-          <Box mt={3}>
-            <HStack spacing={2}>
-              {isDeprecated && <DeprecatedBadge />}
-              {sortBy(securitySchemes, 'type').map((scheme, i) => (
-                <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
-              ))}
-            </HStack>
-          </Box>
+          <HStack spacing={2} mt={3}>
+            {isDeprecated && <DeprecatedBadge />}
+            {sortBy(securitySchemes, 'type').map((scheme, i) => (
+              <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
+            ))}
+          </HStack>
         )}
 
         <Flex mt={12}>

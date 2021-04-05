@@ -39,15 +39,7 @@ export function App() {
 
   return (
     <GlobalContext.Provider value={globalState}>
-      <Flex
-        direction="col"
-        bg="canvas"
-        h="screen"
-        fontFamily="ui"
-        fontSize="base"
-        color="body"
-        className="sl-antialiased"
-      >
+      <Flex direction="col" bg="canvas" h="screen">
         <DemoNavbar />
         <ElementsAPI />
       </Flex>
