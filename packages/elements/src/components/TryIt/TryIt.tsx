@@ -1,6 +1,6 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Flex, Panel, Text } from '@stoplight/mosaic';
+import { Box, Button, Flex, Panel, Text, useThemeIsDark } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -67,6 +67,8 @@ export const TryIt: React.FC<TryItProps> = ({
   onRequestChange,
   requestBodyIndex,
 }) => {
+  const isDark = useThemeIsDark();
+
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -139,11 +141,13 @@ export const TryIt: React.FC<TryItProps> = ({
   };
 
   return (
-    <div>
+    <Box>
       <Panel rounded isCollapsible={false} className="p-0">
         <Panel.Titlebar bg="canvas-300">
           <div role="heading" className="sl-font-bold">
-            <Text color={HttpMethodColors[httpOperation.method]}>{httpOperation.method.toUpperCase()}</Text>
+            <Text color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
+              {httpOperation.method.toUpperCase()}
+            </Text>
             <Text ml={2}>{httpOperation.path}</Text>
           </div>
         </Panel.Titlebar>
@@ -174,9 +178,10 @@ export const TryIt: React.FC<TryItProps> = ({
         ) : null}
         <Panel.Content>
           <Flex>
-            <Button appearance="primary" loading={loading} disabled={loading} onPress={handleClick}>
-              Send
+            <Button appearance="primary" loading={loading} disabled={loading} onPress={handleClick} size="sm">
+              Send Request
             </Button>
+
             {showMocking && (
               <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
             )}
@@ -185,7 +190,7 @@ export const TryIt: React.FC<TryItProps> = ({
       </Panel>
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}
-    </div>
+    </Box>
   );
 };
 
