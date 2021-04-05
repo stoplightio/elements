@@ -29,7 +29,8 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
 
   const examplesSelect = userDefinedExamples && userDefinedExamples.length > 1 && (
     <Select
-      value={chosenExampleIndex}
+      aria-label="Response Example"
+      value={String(chosenExampleIndex)}
       options={userDefinedExamples.map((example, index) => ({ value: index, label: example.key }))}
       onChange={value => setChosenExampleIndex(parseInt(String(value), 10))}
       size="sm"

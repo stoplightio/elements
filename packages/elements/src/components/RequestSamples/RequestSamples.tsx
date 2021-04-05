@@ -47,6 +47,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
       <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
         <Box ml={-2}>
           <Select
+            aria-label="Request Sample Language"
             onChange={handleSelectClick}
             options={selectOptions}
             value={selectedLibrary ? `${selectedLanguage} / ${selectedLibrary}` : selectedLanguage}
