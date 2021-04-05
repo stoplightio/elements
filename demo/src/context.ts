@@ -1,7 +1,6 @@
 import { createContext } from 'React';
 
-export const DEFAULT_API_URL =
-  'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml';
+import { DEFAULT_API_URL } from './constants';
 
 export type GlobalContext = {
   apiDescriptionUrl: string;

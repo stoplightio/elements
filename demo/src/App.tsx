@@ -1,11 +1,14 @@
 import { Flex, useIconStore } from '@stoplight/mosaic';
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { DemoNavbar } from './components/DemoNavbar';
 import { ElementsAPI } from './components/ElementsAPI';
-import { DEFAULT_API_URL, GlobalContext } from './context';
+import { DEFAULT_API_URL } from './constants';
+import { GlobalContext } from './context';
 
 export function App() {
+  const [searchParams] = useSearchParams();
   const setDefaultStyle = useIconStore(state => state.setDefaultStyle);
 
   React.useEffect(() => {
@@ -14,12 +17,23 @@ export function App() {
   }, []);
 
   const [globalState, setGlobalState] = useState<GlobalContext>({
-    apiDescriptionUrl: DEFAULT_API_URL,
-    setDescriptionUrl: value => {
-      setGlobalState({
-        ...globalState,
-        apiDescriptionUrl: value,
-      });
+    apiDescriptionUrl: searchParams.get('spec') || DEFAULT_API_URL,
+    setDescriptionUrl: _value => {
+      const value = _value.trim() || DEFAULT_API_URL;
+
+      let nextUrl = '/';
+      if (value && value !== DEFAULT_API_URL) {
+        nextUrl = `?spec=${value}`;
+      }
+
+      window.history.pushState(undefined, '', nextUrl);
+
+      setTimeout(() => {
+        setGlobalState({
+          ...globalState,
+          apiDescriptionUrl: value,
+        });
+      }, 0);
     },
   });
 
