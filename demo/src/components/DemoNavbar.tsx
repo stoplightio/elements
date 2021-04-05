@@ -21,7 +21,7 @@ export const DemoNavbar = () => {
       <InvertTheme>
         <Flex h="2xl" px={5} alignItems="center" bg="canvas-pure" pos="fixed" pinX style={{ zIndex: 5 }}>
           <HStack w="1/3" alignItems="center" spacing={4}>
-            <Text fontSize="lg" fontWeight="semibold">
+            <Text fontSize="lg" fontWeight="semibold" lineHeight="none">
               Stoplight Elements Demo
             </Text>
 

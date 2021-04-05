@@ -47,7 +47,6 @@ export function App() {
         fontSize="base"
         color="body"
         className="sl-antialiased"
-        lineHeight="none"
       >
         <DemoNavbar />
         <ElementsAPI />
