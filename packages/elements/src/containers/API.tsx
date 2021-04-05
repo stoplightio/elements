@@ -1,6 +1,7 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generateApiToC } from '@stoplight/elements-utils';
+import { Flex } from '@stoplight/mosaic';
 import { IHttpService } from '@stoplight/types';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
@@ -101,13 +102,13 @@ const APIImpl: React.FC<APIProps> = props => {
 
   return (
     <InlineRefResolverProvider document={document}>
-      <div className="APIComponent flex flex-row">
+      <Flex className="APIComponent" flexGrow>
         {layout === 'stacked' ? (
           <StackedLayout uriMap={uriMap} tree={tree} />
         ) : (
           <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
         )}
-      </div>
+      </Flex>
     </InlineRefResolverProvider>
   );
 };
