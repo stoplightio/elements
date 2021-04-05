@@ -99,9 +99,10 @@ export const Response = ({
           title="Body"
           rightComponent={
             <Select
-              aria-label="Choose Response Body Content Type"
-              onChange={e => setChosenContent(parseInt(e.currentTarget.value, 10))}
+              aria-label="Response Body Content Type"
+              onChange={value => setChosenContent(parseInt(String(value), 10))}
               options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
+              size="sm"
             />
           }
         >

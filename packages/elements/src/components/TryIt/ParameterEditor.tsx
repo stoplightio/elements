@@ -1,4 +1,4 @@
-import { Flex, Input, Select, Text } from '@stoplight/mosaic';
+import { Flex, Input, Select, SelectProps, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import {
@@ -12,7 +12,7 @@ import {
 interface ParameterProps {
   parameter: ParameterSpec;
   value?: string;
-  onChange: (e: React.FormEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: SelectProps['onChange'];
 }
 
 export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
@@ -44,7 +44,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
               type={parameter.schema?.type === 'number' ? 'number' : 'text'}
               required
               value={value}
-              onChange={onChange}
+              onChange={e => onChange && onChange(e.currentTarget.value)}
             />
             {examples && (
               <Select
