@@ -28,11 +28,11 @@ export const DemoNavbar = () => {
             <Box style={{ height: 28 }}>
               <a
                 className="github-button"
-                href="https://github.com/ntkme/github-buttons"
+                href="https://github.com/stoplightio/elements"
                 data-color-scheme="no-preference: light; light: light; dark: light;"
                 data-size="large"
                 data-show-count="true"
-                aria-label="Star ntkme/github-buttons on GitHub"
+                aria-label="Star stoplightio/elements on GitHub"
               >
                 Star
               </a>
