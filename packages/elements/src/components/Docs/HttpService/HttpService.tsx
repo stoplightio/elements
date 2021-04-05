@@ -1,4 +1,4 @@
-import { Box, Flex, Heading } from '@stoplight/mosaic';
+import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
@@ -27,16 +27,16 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
   const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
 
   const dataPanel = (
-    <>
+    <VStack spacing={8}>
       {(data.servers ?? context.mockUrl?.servicePath) && (
         <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
       )}
-      <Box mt={4}>
+      <Box>
         {data.securitySchemes?.length && (
           <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />
         )}
       </Box>
-    </>
+    </VStack>
   );
 
   return (
