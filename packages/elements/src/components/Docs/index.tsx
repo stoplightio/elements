@@ -2,6 +2,7 @@ import { Dictionary, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { useParsedData } from '../../hooks/useParsedData';
+import { getLocationHash, scrollToAnchor } from '../../utils/url';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
@@ -51,6 +52,12 @@ export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, hea
 
 export const ParsedDocs: React.FC<IParsedDocsProps> = ({ nodeType, nodeData, className, headless }) => {
   const Component = NodeTypeComponent[nodeType];
+
+  const locationHash = getLocationHash();
+
+  React.useEffect(() => {
+    scrollToAnchor(locationHash);
+  }, [locationHash]);
 
   if (!Component) return null;
 

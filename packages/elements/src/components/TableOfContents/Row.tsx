@@ -9,14 +9,19 @@ type ToCExtraProps = {
 };
 
 export const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props => {
-  if (!props.item.to) {
+  let navTo = props.item.to;
+  if (!navTo) {
     return <DefaultRow {...props} />;
+  }
+
+  if (!navTo.startsWith('http') && !navTo.startsWith('/')) {
+    navTo = `/${navTo}`;
   }
 
   const item = {
     ...props.item,
-    isSelected: props.item.to === props.extra.pathname,
-    to: props.item.to ?? '',
+    isSelected: navTo === props.extra.pathname,
+    to: navTo,
   };
 
   return (
