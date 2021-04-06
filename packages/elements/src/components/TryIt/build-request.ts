@@ -1,5 +1,4 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
-import { safeStringify } from '@stoplight/yaml';
 import { Request as HarRequest } from 'har-format';
 
 import {
@@ -89,14 +88,14 @@ const runAuthRequestEhancements = (
     if (auth.scheme.in === 'query') {
       newQueryParams.push({
         name: auth.scheme.name,
-        value: safeStringify(auth.authValue),
+        value: auth.authValue ?? '',
       });
     }
 
     if (auth.scheme.in === 'header') {
       newHeaders.push({
         name: auth.scheme.name,
-        value: auth.authValue,
+        value: auth.authValue ?? '',
       });
     }
   }
@@ -104,7 +103,7 @@ const runAuthRequestEhancements = (
   if (isOAuth2SecurityScheme(auth.scheme)) {
     newHeaders.push({
       name: 'Authorization',
-      value: auth.authValue,
+      value: auth.authValue ?? '',
     });
   }
 

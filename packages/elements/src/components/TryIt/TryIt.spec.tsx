@@ -1,7 +1,9 @@
+import '@testing-library/jest-dom';
+
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen, waitFor } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import userEvent, { TargetElement } from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
@@ -49,6 +51,7 @@ const TryItWithPersistence = (props: TryItProps) => (
 describe('TryIt', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
+    localStorage.clear();
   });
 
   it("Doesn't crash", () => {
@@ -694,6 +697,44 @@ describe('TryIt', () => {
 
         const HttpSchemesButton = screen.queryByRole('button', { name: 'OAuth 2.0' });
         expect(HttpSchemesButton).toBeInTheDocument();
+      });
+
+      it('preserves state when changing schemes', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let APIKeyField = screen.getByLabelText('API Key');
+        await userEvent.type(APIKeyField, '123');
+
+        // switch to OAuth
+        let securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
+        userEvent.click(securitySchemes);
+
+        // switch back to API Key
+        securitySchemesButton = screen.getByRole('button', { name: 'OAuth 2.0' });
+        userEvent.click(securitySchemesButton);
+
+        securitySchemes = screen.getByRole('menuitem', { name: 'API Key' });
+        userEvent.click(securitySchemes);
+
+        APIKeyField = screen.getByLabelText('API Key');
+        expect(APIKeyField).toHaveValue('123');
+      });
+
+      it('preserves the state when rerendering component', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let APIKeyField = screen.getByLabelText('API Key');
+        await userEvent.type(APIKeyField, '123');
+
+        cleanup();
+
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        APIKeyField = screen.getByLabelText('API Key');
+        expect(APIKeyField).toHaveValue('123');
       });
     });
 

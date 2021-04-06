@@ -9,7 +9,7 @@ import * as React from 'react';
 import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { TryItAuth } from './Auth';
-import { HttpSecuritySchemeWithValues } from './authentication-utils';
+import { usePersistedSecuritySchemeWithValues } from './authentication-utils';
 import { buildFetchRequest, buildHarRequest } from './build-request';
 import { FormDataBody } from './FormDataBody';
 import { getMockData } from './mocking-utils';
@@ -81,7 +81,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
-  const [operationAuthValue, setOperationAuthValue] = React.useState<HttpSecuritySchemeWithValues | undefined>();
+  const [operationAuthValue, setOperationAuthValue] = usePersistedSecuritySchemeWithValues();
 
   React.useEffect(() => {
     let isActive = true;

@@ -24,11 +24,16 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
 
   const menuName = securityScheme ? getReadableSecurityName(securityScheme) : 'Security Scheme';
 
-  if (filteredSecurityItems.length === 0) return null;
-
-  const handleChange = (authValue: string) => {
+  const handleChange = (authValue?: string) => {
     onChange(securityScheme && { scheme: securityScheme, authValue: authValue });
   };
+
+  React.useEffect(() => {
+    handleChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (filteredSecurityItems.length === 0) return null;
 
   return (
     <Panel defaultIsOpen>
@@ -48,7 +53,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
                   key={auth.key}
                   text={getReadableSecurityName(auth)}
                   onClick={() => {
-                    onChange({ scheme: auth, authValue: '' });
+                    onChange({ scheme: auth, authValue: undefined });
                   }}
                 />
               ))}
@@ -62,7 +67,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
         <SecuritySchemeComponent
           scheme={value ? value.scheme : filteredSecurityItems[0]}
           onChange={handleChange}
-          value={value ? value.authValue : ''}
+          value={(value && value.authValue) ?? ''}
         />
       }
     </Panel>
