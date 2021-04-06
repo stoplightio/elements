@@ -34,9 +34,11 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
       rightComponent={
         contents.length > 0 && (
           <Select
-            aria-label="Choose Request Body Content Type"
-            onChange={e => setChosenContent(parseInt(e.currentTarget.value, 10))}
+            aria-label="Request Body Content Type"
+            value={String(chosenContent)}
+            onChange={value => setChosenContent(parseInt(String(value), 10))}
             options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
+            size="sm"
           />
         )
       }

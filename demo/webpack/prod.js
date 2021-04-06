@@ -1,5 +1,6 @@
 const { merge } = require('webpack-merge');
 const { resolve } = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const commonConfig = require('./common');
 
@@ -12,5 +13,32 @@ module.exports = merge(commonConfig, {
     publicPath: '/',
   },
   devtool: 'source-map',
-  plugins: [],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].[contenthash].css',
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.(scss|sass)$/,
+        sideEffects: true,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+            },
+          },
+          'sass-loader',
+        ],
+      },
+    ],
+  },
 });

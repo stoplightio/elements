@@ -29,12 +29,12 @@ export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps>
     <>
       <Input appearance="minimal" readOnly value={parameterDisplayName} />
       <Text mx={3}>:</Text>
-      <Flex flexGrow alignItems="center">
+      <Flex flex={1} alignItems="center">
         <Input
           style={{ paddingLeft: 15 }}
           aria-label={parameter.name}
           appearance="minimal"
-          flexGrow
+          flex={1}
           placeholder="pick a file"
           type="text"
           required

@@ -1,3 +1,4 @@
+import { Box } from '@stoplight/mosaic';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
@@ -18,7 +19,11 @@ export class Styled extends React.Component {
   }
 
   render() {
-    return <div className="sl-elements">{this.props.children}</div>;
+    return (
+      <Box className="sl-elements sl-antialiased" fontFamily="ui" fontSize="base" color="body">
+        {this.props.children}
+      </Box>
+    );
   }
 }
 

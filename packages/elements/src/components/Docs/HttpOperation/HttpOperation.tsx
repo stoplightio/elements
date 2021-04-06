@@ -1,4 +1,4 @@
-import { Box, Heading } from '@stoplight/mosaic';
+import { Box, Flex, Heading, HStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
@@ -34,21 +34,23 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
   if (!headless)
     return (
       <Box bg="transparent" className={cn('HttpOperation', className)} w="full">
-        <Heading mb={5} size={1} fontWeight="semibold" fontSize="5xl">
-          {data.summary || `${data.method} ${data.path}`}
+        <Heading size={1} fontWeight="semibold">
+          {data.summary || data.iid || `${data.method} ${data.path}`}
         </Heading>
-        <div className="flex flex-rows">
-          <div className="flex-grow">
-            {hasBadges && (
-              <div className="flex flex-wrap mb-10">
-                {isDeprecated && <DeprecatedBadge />}
-                {sortBy(securitySchemes, 'type').map((scheme, i) => (
-                  <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
-                ))}
-              </div>
-            )}
+
+        {hasBadges && (
+          <HStack spacing={2} mt={3}>
+            {isDeprecated && <DeprecatedBadge />}
+            {sortBy(securitySchemes, 'type').map((scheme, i) => (
+              <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
+            ))}
+          </HStack>
+        )}
+
+        <Flex mt={12}>
+          <Box flex={1}>
             {data.description && (
-              <MarkdownViewer className="HttpOperation__Description mb-10 ml-1" markdown={data.description} />
+              <MarkdownViewer className="HttpOperation__Description mb-10" markdown={data.description} />
             )}
 
             <Request onChange={setTextRequestBodyIndex} operation={data} />
@@ -60,30 +62,21 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
                 onStatusCodeChange={setResponseStatusCode}
               />
             )}
-          </div>
+          </Box>
 
-          <div className="w-2/5 relative ml-10">
-            <div className="inset-0 overflow-auto">
-              {info.isStoplightProjectComponent ? (
-                <TryItWithRequestSamples
-                  httpOperation={data}
-                  responseMediaType={responseMediaType}
-                  responseStatusCode={responseStatusCode}
-                  showMocking
-                  mockUrl={context.mockUrl?.servicePath}
-                  requestBodyIndex={requestBodyIndex}
-                />
-              ) : (
-                <TryItWithRequestSamples
-                  httpOperation={data}
-                  responseMediaType={responseMediaType}
-                  responseStatusCode={responseStatusCode}
-                  requestBodyIndex={requestBodyIndex}
-                />
-              )}
-            </div>
-          </div>
-        </div>
+          <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
+            <Box className="HttpOperation__gutter">
+              <TryItWithRequestSamples
+                httpOperation={data}
+                responseMediaType={responseMediaType}
+                responseStatusCode={responseStatusCode}
+                requestBodyIndex={requestBodyIndex}
+                showMocking={info.isStoplightProjectComponent}
+                mockUrl={info.isStoplightProjectComponent ? context.mockUrl?.servicePath : undefined}
+              />
+            </Box>
+          </Box>
+        </Flex>
       </Box>
     );
 
