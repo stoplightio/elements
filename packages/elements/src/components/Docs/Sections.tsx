@@ -23,12 +23,12 @@ interface SubSectionPanelProps {
 
 export const SubSectionPanel: React.FC<SubSectionPanelProps> = ({ title, children, hasContent, rightComponent }) => {
   return (
-    <Panel appearance="minimal" mb={3} isCollapsible={hasContent} defaultIsOpen>
+    <Panel appearance="minimal" isCollapsible={hasContent} defaultIsOpen>
       <Panel.Titlebar fontWeight="medium" rightComponent={rightComponent}>
         <div role="heading">{title}</div>
       </Panel.Titlebar>
       {hasContent !== false && (
-        <Panel.Content pl={5} pr={3}>
+        <Panel.Content pl={5} pr={3} className="sl-py-0">
           {children}
         </Panel.Content>
       )}
