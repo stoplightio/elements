@@ -1,12 +1,9 @@
 import { VStack } from '@stoplight/mosaic';
-import { Dictionary, HttpParamStyles, IHttpParam, Primitive } from '@stoplight/types';
-import { Tag } from '@stoplight/ui-kit';
-import cn from 'classnames';
-import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy } from 'lodash';
+import { Dictionary, HttpParamStyles, IHttpParam } from '@stoplight/types';
+import { capitalize, get, isEmpty, keys, omit, omitBy, pick, pickBy, sortBy, uniq } from 'lodash';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
-import { MarkdownViewer } from '../../MarkdownViewer';
 
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';
 
@@ -43,12 +40,56 @@ const defaultStyle = {
   cookie: HttpParamStyles.Form,
 } as const;
 
+type ValidationFormat = {
+  name: string;
+  values: string[];
+};
+
+const createStringFormatter = (nowrap: boolean | undefined) => (value: unknown) => {
+  return nowrap && typeof value === 'string' ? value : JSON.stringify(value);
+};
+
+const createValidationsFormatter = (name: string, options?: { exact?: boolean; nowrap?: boolean }) => (
+  value: unknown[] | unknown,
+): ValidationFormat | null => {
+  const values = Array.isArray(value) ? value : [value];
+  if (values.length) {
+    return {
+      name: options?.exact ? name : values.length > 1 ? `${name} values` : `${name} value`,
+      values: values.map(createStringFormatter(options?.nowrap)),
+    };
+  }
+  return null;
+};
+
+const validationFormatters: Record<string, (value: unknown) => ValidationFormat | null> = {
+  ['const']: createValidationsFormatter('Allowed'),
+  enum: createValidationsFormatter('Allowed'),
+  examples: createValidationsFormatter('Example'),
+  example: createValidationsFormatter('Example'),
+  ['x-example']: createValidationsFormatter('Example'),
+  multipleOf: createValidationsFormatter('Multiple of', { exact: true }),
+  pattern: createValidationsFormatter('Match pattern', { exact: true, nowrap: true }),
+  default: createValidationsFormatter('Default'),
+};
+
+const numberValidationFormatters: Record<string, (value: unknown) => string> = {
+  minimum: value => `>= ${value}`,
+  exclusiveMinimum: value => `> ${value}`,
+  minItems: value => `>= ${value} items`,
+  minLength: value => `>= ${value} characters`,
+  maximum: value => `<= ${value}`,
+  exclusiveMaximum: value => `< ${value}`,
+  maxItems: value => `<= ${value} items`,
+  maxLength: value => `<= ${value} characters`,
+};
+
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
   const resolveRef = useInlineRefResolver();
   if (!parameters || !parameters.length) return null;
 
   return (
-    <VStack spacing={4} divider>
+    <VStack spacing={2} divider>
       {sortBy(parameters, ['required', 'name']).map(parameter => {
         const resolvedSchema =
           parameter.schema?.$ref && resolveRef
@@ -104,139 +145,99 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   return (
     <div className="HttpOperation__Parameters">
-      <div className="flex items-center">
-        <div className="font-medium font-mono">{parameter.name}</div>
-        <div className={'ml-2 text-sm'}>{format ? `${type}<${format}>` : type}</div>
-        {parameterType !== 'path' && (
-          <div
-            className={cn('ml-2 text-sm', {
-              'text-danger': parameter.required,
-              'opacity-50': !parameter.required,
-            })}
-          >
-            {parameter.required ? 'required' : 'optional'}
-          </div>
-        )}
-        <NumberValidations validations={numberValidations} />
+      <div className="sl-flex sl-items-center sl-my-2">
+        <div className="flex items-center sl-text-base sl-flex-1">
+          <div className="font-mono sl-font-bold">{parameter.name}</div>
+          <div className={'ml-2 sl-text-muted'}>{format ? `${type}<${format}>` : type}</div>
+        </div>
+        <div className="sl-text-sm sl-text-warning">
+          {deprecated && <span className="sl-ml-2">deprecated</span>}
+          {parameter.required && <span className="sl-ml-2">required</span>}
+        </div>
       </div>
 
+      {description && <div className="sl-truncate sl-w-full sl-text-muted sl-text-sm sl-my-2">{description}</div>}
+
+      <NumberValidations validations={numberValidations} />
       <KeyValueValidations validations={keyValueValidations} />
+      <NameValidations validations={booleanValidations} />
 
-      {description && <MarkdownViewer className="text-gray-7 dark:text-gray-4 mt-1" markdown={description} />}
-
-      {deprecated || parameter.style || keys(validations).length ? (
-        <div className="flex flex-wrap">
-          {deprecated && (
-            <Tag role="note" className="mt-2 mr-2" intent="warning" minimal aria-label="Deprecated">
-              Deprecated
-            </Tag>
-          )}
-
-          <NameValidations validations={booleanValidations} />
-
-          {parameter.style && defaultStyle[parameterType] !== parameter.style && (
-            <Tag
-              className="mt-2 mr-2"
-              minimal
-              role="note"
-              aria-label={readableStyles[parameter.style] || parameter.style}
-            >
-              {readableStyles[parameter.style] || parameter.style}
-            </Tag>
-          )}
+      {parameter.style && defaultStyle[parameterType] !== parameter.style && (
+        <div className="sl-flex sl-my-2">
+          <NameValidation name={readableStyles[parameter.style] || parameter.style} />
         </div>
-      ) : null}
+      )}
     </div>
   );
 };
 Parameter.displayName = 'HttpOperation.Parameter';
 
-const NumberValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
-  <>
-    {keys(omit(validations, ['exclusiveMinimum', 'exclusiveMaximum'])).map(key => {
-      let suffix;
-      if (key.includes('Length')) {
-        suffix = ' characters';
-      } else if (key.includes('Items')) {
-        suffix = ' items';
-      } else {
-        suffix = '';
-      }
-
-      const exclusive =
-        (key === 'minimum' && validations.exclusiveMinimum) || (key === 'maximum' && validations.exclusiveMaximum)
-          ? true
-          : false;
-      const sign = `${key.includes('min') ? '>' : '<'}${exclusive ? '' : '='}`;
-
-      return (
-        <div key={key} className={cn('ml-2 text-sm bp3-running-text break-all', className)}>
-          <code>{`${sign} ${validations[key]}${suffix}`}</code>
-        </div>
-      );
-    })}
-  </>
-);
-
-const KeyValueValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
-  <>
-    {keys(validations)
-      .filter(validation => validation !== 'format')
-      .map(key => {
-        return <KeyValueValidation key={key} name={key} value={validations[key]} className={className} />;
-      })}
-  </>
-);
-
-const KeyValueValidation = ({
-  className,
-  name,
-  value,
+const NumberValidations = ({
+  validations,
 }: {
-  className?: string;
-  name: string;
-  value: Dictionary<unknown> | unknown[] | unknown;
+  validations: Partial<Record<typeof numberValidationNames[number], unknown>>;
 }) => {
-  if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
-    return (
-      <>
-        {keys(value).map(key => (
-          <KeyValueValidation key={key} className={className} name={`${name}.${key}`} value={value[key]} />
-        ))}
-      </>
-    );
+  const entries = Object.entries(validations);
+  if (!entries.length) {
+    return null;
   }
-  const validation = Array.isArray(value) ? value : [value];
   return (
-    <div className={cn('text-sm mt-2 bp3-running-text break-all flex flex-wrap', className)}>
-      {capitalize(name)}:
-      {validation
-        .filter(
-          (v): v is Exclude<Primitive, null> | { value: string } =>
-            typeof v !== 'object' || (typeof v === 'object' && v !== null && 'value' in v),
-        )
-        .map(v => {
-          const value = typeof v === 'object' ? v.value : String(v);
-          return (
-            <code className="ml-1" key={value}>
-              {value}
-            </code>
-          );
-        })}
+    <div className="sl-flex sl-my-2 sl-text-muted sl-text-sm">
+      {entries
+        .map(([key, value]) => numberValidationFormatters[key](value))
+        .map((value, i) => (
+          <span key={i} className="sl-mr-2 sl-px-1 sl-font-mono sl-border sl-rounded-lg">
+            {value}
+          </span>
+        ))}
     </div>
   );
 };
 
-const NameValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
+const KeyValueValidations = ({ validations }: { validations: Dictionary<unknown> }) => (
   <>
     {keys(validations)
-      .filter(key => validations[key])
+      .filter(key => Object.keys(validationFormatters).includes(key))
       .map(key => {
-        return (
-          <Tag key={key} className={cn('mt-2 mr-2 capitalize', className)} minimal>
-            {key}
-          </Tag>
-        );
+        const validation = validationFormatters[key](validations[key]);
+        if (validation) {
+          return <KeyValueValidation key={key} name={validation.name} values={validation.values} />;
+        } else {
+          return null;
+        }
       })}
   </>
+);
+
+const KeyValueValidation = ({ name, values }: { name: string; values: string[] }) => {
+  return (
+    <div className="sl-flex sl-flex-wrap sl-text-muted sl-text-sm sl-my-2">
+      <span className="sl-text-light">{capitalize(name)}:</span>
+      {uniq(values).map(value => (
+        <span key={value} className="sl-ml-2 sl-px-1 sl-font-mono sl-border sl-rounded-lg">
+          {value}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+const NameValidations = ({ validations }: { validations: Dictionary<unknown> }) => (
+  <>
+    {keys(validations).length ? (
+      <div className="sl-flex sl-flex-wrap sl-my-2">
+        {keys(validations)
+          .filter(key => validations[key])
+          .map(key => (
+            <NameValidation key={key} name={key} />
+          ))}
+      </div>
+    ) : null}
+  </>
+);
+
+const NameValidation = ({ name }: { name: string }) => (
+  <span className="sl-mr-2 sl-px-1 sl-text-muted sl-font-mono sl-border sl-rounded-lg sl-text-sm sl-capitalize">
+    {name}
+  </span>
 );

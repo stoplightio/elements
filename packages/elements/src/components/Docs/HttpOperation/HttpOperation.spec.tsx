@@ -97,7 +97,8 @@ describe('HttpOperation', () => {
       expect(queryParametersPanel).toBeEnabled();
 
       expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
-      expect(screen.getByRole('note', { name: /deprecated/i })).toBeInTheDocument();
+      expect(await screen.findByText(/required/)).toBeInTheDocument();
+      expect(await screen.findByText(/deprecated/)).toBeInTheDocument();
     });
 
     it('should not render default styles', () => {
@@ -127,8 +128,8 @@ describe('HttpOperation', () => {
       };
       render(<HttpOperation data={operationData} />);
 
-      expect(screen.getByRole('note', { name: /space/i })).toBeInTheDocument();
-      expect(screen.queryByRole('note', { name: /form/i })).not.toBeInTheDocument();
+      expect(screen.queryByText(/Space separated values/)).toBeInTheDocument();
+      expect(screen.queryByText(/Form style values/)).not.toBeInTheDocument();
     });
   });
 
