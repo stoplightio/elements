@@ -7,8 +7,7 @@ import * as React from 'react';
 
 import { useComponentSize } from '../../../hooks/useComponentSize';
 import { useComputeMarkdownHeadings } from '../../../hooks/useComputeMarkdownHeadings';
-import { useLocalAnchorPath } from '../../../hooks/useLocalAnchorPath';
-import { useLocationHash } from '../../../hooks/useLocationHash';
+import { getLocalAnchorPath, getLocationHash } from '../../../utils/url';
 
 export interface IArticleHeadings {
   headings: IArticleHeading[];
@@ -33,7 +32,7 @@ export const ArticleHeadings = ({ tree, container }: { tree: IRoot; container: H
 };
 
 const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On This Page', minimal }) => {
-  const locationHash = useLocationHash();
+  const locationHash = getLocationHash();
 
   if (!headings || !headings.length) return null;
 
@@ -76,7 +75,7 @@ const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On
 };
 
 const Heading: React.FC<{ item: IArticleHeading; isSelected: boolean }> = ({ item, isSelected }) => {
-  const anchorPath = useLocalAnchorPath(item.id);
+  const anchorPath = getLocalAnchorPath(item.id);
 
   return (
     <a

@@ -137,3 +137,40 @@ export function extractQueryParams(query: string, queryParams: readonly QueryPar
 
   return newParams;
 }
+
+export function getLocalAnchorPath(id: string) {
+  const currentHash = typeof window !== 'undefined' ? window.location.hash : '';
+
+  // indicates we're using HashRouter
+  if (currentHash.startsWith('#/')) {
+    // just grab the "path", make sure not to include a hash if there is already one on the current url
+    const routePath = currentHash.split('#')[1];
+    return `#${routePath}#${id}`;
+  }
+
+  return `#${id}`;
+}
+
+export function getLocationHash() {
+  const currentHash = typeof window !== 'undefined' ? window.location.hash : '';
+
+  // indicates we're using HashRouter
+  if (currentHash.startsWith('#/')) {
+    const routeParts = currentHash.split('#');
+
+    // In this case, only have a location hash if there is a 2nd segment e.g. #/page/path#hash
+    if (routeParts[2]) {
+      return currentHash.slice(1);
+    }
+
+    return '';
+  }
+
+  return currentHash.slice(1);
+}
+
+export const scrollToAnchor = (hash: string) => {
+  if (hash && typeof document !== undefined) {
+    window.requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView(true));
+  }
+};
