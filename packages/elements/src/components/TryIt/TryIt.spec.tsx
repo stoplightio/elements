@@ -1,10 +1,9 @@
 import '@testing-library/jest-dom';
 
-import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen, waitFor } from '@testing-library/dom';
 import { cleanup, render } from '@testing-library/react';
-import userEvent, { TargetElement } from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
@@ -28,25 +27,16 @@ import { operation as basicOperation } from '../../__fixtures__/operations/simpl
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
-import { TryIt, TryItProps } from './index';
+import { withMosaicProvider } from '../../hoc/withMosaicProvider';
+import { chooseOption } from '../../utils/tests/chooseOption';
+import { TryIt } from './index';
 
 function clickSend() {
   const button = screen.getByRole('button', { name: /send/i });
   userEvent.click(button);
 }
 
-async function chooseOption(select: TargetElement, option: string) {
-  userEvent.click(select);
-  await userEvent.selectOptions(screen.getByRole('listbox'), screen.getByRole('option', { name: option }));
-}
-
-const TryItWithPersistence_ = withPersistenceBoundary(TryIt);
-
-const TryItWithPersistence = (props: TryItProps) => (
-  <MosaicProvider>
-    <TryItWithPersistence_ {...props} />
-  </MosaicProvider>
-);
+const TryItWithPersistence = withMosaicProvider(withPersistenceBoundary(TryIt));
 
 describe('TryIt', () => {
   beforeEach(() => {

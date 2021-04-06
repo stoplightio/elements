@@ -1,21 +1,15 @@
 import '@testing-library/jest-dom';
 
-import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { screen } from '@testing-library/dom';
 import { cleanup, render } from '@testing-library/react';
-import userEvent, { TargetElement } from '@testing-library/user-event';
 import * as React from 'react';
 
 import { withPersistenceBoundary } from '../../../context/Persistence';
-import { RequestSamples as RequestSamplesWithoutPersistence, RequestSamplesProps } from '../RequestSamples';
+import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
+import { chooseOption } from '../../../utils/tests/chooseOption';
+import { RequestSamples as RequestSamplesWithoutPersistence } from '../RequestSamples';
 
-const RequestSamples_ = withPersistenceBoundary(RequestSamplesWithoutPersistence);
-
-const RequestSamples = (props: RequestSamplesProps) => (
-  <MosaicProvider>
-    <RequestSamples_ {...props} />
-  </MosaicProvider>
-);
+const RequestSamples = withMosaicProvider(withPersistenceBoundary(RequestSamplesWithoutPersistence));
 
 const sampleRequest = {
   method: 'POST',
@@ -32,11 +26,6 @@ const sampleRequest = {
   headersSize: 678,
   bodySize: 0,
 };
-
-async function chooseOption(select: TargetElement, option: string) {
-  userEvent.click(select);
-  await userEvent.selectOptions(screen.getByRole('listbox'), screen.getByRole('option', { name: option }));
-}
 
 describe('RequestSend', () => {
   beforeEach(() => {

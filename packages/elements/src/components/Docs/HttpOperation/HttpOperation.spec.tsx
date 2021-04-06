@@ -1,29 +1,17 @@
-import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
-import userEvent, { TargetElement } from '@testing-library/user-event';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import requestBody from '../../../__fixtures__/operations/request-body';
 import { withPersistenceBoundary } from '../../../context/Persistence';
-import { HttpOperationProps } from './HttpOperation';
+import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
+import { chooseOption } from '../../../utils/tests/chooseOption';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
-const HttpOperation_ = withPersistenceBoundary(HttpOperationWithoutPersistence);
-
-const HttpOperation = (props: HttpOperationProps) => (
-  <MosaicProvider>
-    <HttpOperation_ {...props} />
-  </MosaicProvider>
-);
-
-async function chooseOption(select: TargetElement, option: string) {
-  userEvent.click(select);
-  await userEvent.selectOptions(screen.getByRole('listbox'), screen.getByRole('option', { name: option }));
-}
+const HttpOperation = withMosaicProvider(withPersistenceBoundary(HttpOperationWithoutPersistence));
 
 describe('HttpOperation', () => {
   describe('Header', () => {

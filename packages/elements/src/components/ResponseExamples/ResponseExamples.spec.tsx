@@ -1,23 +1,14 @@
 import '@testing-library/jest-dom';
 
-import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { render, screen } from '@testing-library/react';
-import userEvent, { TargetElement } from '@testing-library/user-event';
 import React from 'react';
 
 import { httpOperation } from '../../__fixtures__/operations/operation-with-examples';
-import { ResponseExamples as ResponseExamples_, ResponseExamplesProps } from './ResponseExamples';
+import { withMosaicProvider } from '../../hoc/withMosaicProvider';
+import { chooseOption } from '../../utils/tests/chooseOption';
+import { ResponseExamples as RawResponseExamples } from './ResponseExamples';
 
-async function chooseOption(select: TargetElement, option: string) {
-  userEvent.click(select);
-  await userEvent.selectOptions(screen.getByRole('listbox'), screen.getByRole('option', { name: option }));
-}
-
-const ResponseExamples = (props: ResponseExamplesProps) => (
-  <MosaicProvider>
-    <ResponseExamples_ {...props} />
-  </MosaicProvider>
-);
+const ResponseExamples = withMosaicProvider(RawResponseExamples);
 
 describe('Response Examples', () => {
   it('displays first provided example by default', () => {
