@@ -1,4 +1,4 @@
-import { Box, Flex } from '@stoplight/mosaic';
+import { Box, Flex, Heading } from '@stoplight/mosaic';
 import { IHttpService, NodeType } from '@stoplight/types';
 import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
@@ -29,6 +29,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
 
   const nodeType = getNodeType(pathname);
   const nodeData = uriMap[pathname] || uriMap['/'];
+  const httpService = uriMap['/'] as IHttpService;
 
   const hasOverview = !!contents.find(item => item.to === '/');
 
@@ -55,6 +56,9 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
           minWidth: `${SIDEBAR_WIDTH}px`,
         }}
       >
+        <Heading ml={5} mb={5} size={4}>
+          {httpService.name}
+        </Heading>
         <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
       </Box>
 
