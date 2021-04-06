@@ -17,12 +17,12 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
     <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
       <Input role="username" appearance="minimal" readOnly value="Username" />
       <Text mx={3}>:</Text>
-      <Flex flexGrow>
+      <Flex flex={1}>
         <Input
           style={{ paddingLeft: 15 }}
           aria-label="Username"
           appearance="minimal"
-          flexGrow
+          flex={1}
           placeholder="username"
           value={username}
           type="text"
@@ -32,12 +32,12 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
       </Flex>
       <Input role="password" appearance="minimal" readOnly value="Password" />
       <Text mx={3}>:</Text>
-      <Flex flexGrow>
+      <Flex flex={1}>
         <Input
           style={{ paddingLeft: 15 }}
           aria-label="Password"
           appearance="minimal"
-          flexGrow
+          flex={1}
           placeholder="password"
           value={password}
           type="password"

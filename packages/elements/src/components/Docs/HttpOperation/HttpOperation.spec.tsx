@@ -1,16 +1,17 @@
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import requestBody from '../../../__fixtures__/operations/request-body';
 import { withPersistenceBoundary } from '../../../context/Persistence';
+import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
+import { chooseOption } from '../../../utils/tests/chooseOption';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
-const HttpOperation = withPersistenceBoundary(HttpOperationWithoutPersistence);
+const HttpOperation = withMosaicProvider(withPersistenceBoundary(HttpOperationWithoutPersistence));
 
 describe('HttpOperation', () => {
   describe('Header', () => {
@@ -301,26 +302,26 @@ describe('HttpOperation', () => {
     it('should render select for content type', () => {
       render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
 
-      const select = screen.queryByLabelText('Choose Request Body Content Type');
+      const select = screen.queryByLabelText('Request Body Content Type');
       expect(select).not.toBeNull();
     });
 
-    it('should allow to select different content type', () => {
+    it('should allow to select different content type', async () => {
       render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
 
-      const select = screen.getByLabelText('Choose Request Body Content Type');
+      const select = screen.getByLabelText('Request Body Content Type');
 
-      expect(select).toHaveDisplayValue('application/json');
+      expect(select).toHaveTextContent('application/json');
 
-      userEvent.selectOptions(select, 'application/xml');
+      await chooseOption(select, 'application/xml');
 
-      expect(select).toHaveDisplayValue('application/xml');
+      expect(select).toHaveTextContent('application/xml');
     });
 
     it('should not render select if there are no contents', () => {
       render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
 
-      const select = screen.queryByLabelText('Choose Request Body Content Type');
+      const select = screen.queryByLabelText('Request Body Content Type');
       expect(select).toBeNull();
     });
 
@@ -347,8 +348,8 @@ describe('HttpOperation', () => {
       expect(body).toHaveTextContent('{ "name": "string", "age": 0 }');
       expect(requestSample).toBeInTheDocument();
 
-      const select = screen.getByLabelText('Choose Request Body Content Type');
-      userEvent.selectOptions(select, 'application/x-www-form-urlencoded');
+      const select = screen.getByLabelText('Request Body Content Type');
+      await chooseOption(select, 'application/x-www-form-urlencoded');
       const secondRequestSample = await screen.findByLabelText(
         "curl --request POST \\ --url https://todos.stoplight.io/users \\ --header 'Content-Type: application/x-www-form-urlencoded' \\ --data name= \\ --data completed= \\ --data someEnum=a",
       );
@@ -404,26 +405,26 @@ describe('HttpOperation', () => {
     it('should render select for content types', async () => {
       render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
-      const select = screen.queryByLabelText('Choose Response Body Content Type');
+      const select = screen.queryByLabelText('Response Body Content Type');
       expect(select).not.toBeNull();
     });
 
     it('should allow changing content type', async () => {
       render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
-      const select = screen.getByLabelText('Choose Response Body Content Type');
+      const select = screen.getByLabelText('Response Body Content Type');
 
-      expect(select).toHaveDisplayValue('application/json');
+      expect(select).toHaveTextContent('application/json');
 
-      userEvent.selectOptions(select, 'application/xml');
+      await chooseOption(select, 'application/xml');
 
-      expect(select).toHaveDisplayValue('application/xml');
+      expect(select).toHaveTextContent('application/xml');
     });
 
     it('should not render select when there are no contents', async () => {
       render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
 
-      const select = screen.queryByLabelText('Choose Response Body Content Type');
+      const select = screen.queryByLabelText('Response Body Content Type');
       expect(select).toBeNull();
     });
 
@@ -433,9 +434,9 @@ describe('HttpOperation', () => {
       const property = await screen.findByText('some_property');
       expect(property).toBeInTheDocument();
 
-      const select = screen.getByLabelText('Choose Response Body Content Type');
+      const select = screen.getByLabelText('Response Body Content Type');
 
-      userEvent.selectOptions(select, 'application/xml');
+      await chooseOption(select, 'application/xml');
 
       expect(screen.queryByText('some_property')).not.toBeInTheDocument();
     });

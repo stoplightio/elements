@@ -2,13 +2,14 @@ import '@testing-library/jest-dom';
 
 import { screen } from '@testing-library/dom';
 import { cleanup, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
 import { withPersistenceBoundary } from '../../../context/Persistence';
+import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
+import { chooseOption } from '../../../utils/tests/chooseOption';
 import { RequestSamples as RequestSamplesWithoutPersistence } from '../RequestSamples';
 
-const RequestSamples = withPersistenceBoundary(RequestSamplesWithoutPersistence);
+const RequestSamples = withMosaicProvider(withPersistenceBoundary(RequestSamplesWithoutPersistence));
 
 const sampleRequest = {
   method: 'POST',
@@ -25,7 +26,12 @@ const sampleRequest = {
   headersSize: 678,
   bodySize: 0,
 };
+
 describe('RequestSend', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it('Displays basic CURL request', () => {
     const { container } = render(<RequestSamples request={sampleRequest} />);
 
@@ -35,55 +41,50 @@ describe('RequestSend', () => {
     expect(container).toHaveTextContent('max-age=0');
   });
 
-  it('Allows language switching', () => {
+  it('Allows language switching', async () => {
     const { container } = render(<RequestSamples request={sampleRequest} />);
-    const langSelector = screen.getByRole('combobox');
-    const axiosOption = screen.getByRole('option', { name: /javascript.+axios/i });
-    userEvent.selectOptions(langSelector, axiosOption);
+    const langSelector = screen.getByText('Request Sample: Shell / cURL');
+    await chooseOption(langSelector, 'JavaScript / Axios');
+
     expect(container).toHaveTextContent('axios');
     expect(container).toHaveTextContent('POST');
     expect(container).toHaveTextContent('https://google.com');
     expect(container).toHaveTextContent('max-age=0');
   });
 
-  it('preserves language and library between renders', () => {
+  it('preserves language and library between renders', async () => {
     render(<RequestSamples request={sampleRequest} />);
-    const langSelector = screen.getByRole('combobox');
-    const axiosOption = screen.getByRole('option', { name: /javascript.+axios/i });
-    userEvent.selectOptions(langSelector, axiosOption);
+    const langSelector = screen.getByText('Request Sample: Shell / cURL');
+    await chooseOption(langSelector, 'JavaScript / Axios');
 
     cleanup();
 
     const { container } = render(<RequestSamples request={sampleRequest} />);
-    const secondLangSelector = screen.getByRole('combobox');
-    expect(secondLangSelector).toHaveValue('JavaScript / Axios');
+    const secondLangSelector = screen.getByText('Request Sample: JavaScript / Axios');
+    expect(secondLangSelector).toBeInTheDocument();
     expect(container).toHaveTextContent('axios');
   });
 
-  it('allows to change lang/lib after rerender', () => {
+  it('allows to change lang/lib after rerender', async () => {
     render(<RequestSamples request={sampleRequest} />);
-    const langSelector = screen.getByRole('combobox');
-    const axiosOption = screen.getByRole('option', { name: /javascript.+axios/i });
-    userEvent.selectOptions(langSelector, axiosOption);
+    const langSelector = screen.getByText('Request Sample: Shell / cURL');
+    await chooseOption(langSelector, 'JavaScript / Axios');
 
     cleanup();
 
     render(<RequestSamples request={sampleRequest} />);
-    const secondLangSelector = screen.getByRole('combobox');
-    const secondAxiosOption = screen.getByRole('option', { name: /javascript.+fetch/i });
+    const secondLangSelector = screen.getByText('Request Sample: JavaScript / Axios');
+    await chooseOption(secondLangSelector, 'JavaScript / Fetch');
 
-    userEvent.selectOptions(secondLangSelector, secondAxiosOption);
-
-    expect(secondLangSelector).toHaveValue('JavaScript / Fetch');
+    expect(secondLangSelector).toHaveTextContent('Request Sample: JavaScript / Fetch');
   });
 
-  it('switches to language with no library', () => {
+  it('switches to language with no library', async () => {
     const { container } = render(<RequestSamples request={sampleRequest} />);
-    const langSelector = screen.getByRole('combobox');
-    const objcOption = screen.getByRole('option', { name: /obj-c/i });
-    userEvent.selectOptions(langSelector, objcOption);
+    const langSelector = screen.getByText('Request Sample: Shell / cURL');
+    await chooseOption(langSelector, 'Obj-C');
 
-    expect(langSelector).toHaveValue('Obj-C');
+    expect(langSelector).toHaveTextContent('Request Sample: Obj-C');
     expect(container).toHaveTextContent('#import <Foundation/Foundation.h>');
   });
 });

@@ -101,13 +101,11 @@ const APIImpl: React.FC<APIProps> = props => {
 
   return (
     <InlineRefResolverProvider document={document}>
-      <div className="APIComponent flex flex-row">
-        {layout === 'stacked' ? (
-          <StackedLayout uriMap={uriMap} tree={tree} />
-        ) : (
-          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
-        )}
-      </div>
+      {layout === 'stacked' ? (
+        <StackedLayout uriMap={uriMap} tree={tree} />
+      ) : (
+        <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
+      )}
     </InlineRefResolverProvider>
   );
 };

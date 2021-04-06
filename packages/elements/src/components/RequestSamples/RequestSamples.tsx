@@ -1,4 +1,4 @@
-import { CopyButton, Panel, Select } from '@stoplight/mosaic';
+import { Box, CopyButton, Panel, Select, SelectProps } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import { atom, useAtom } from 'jotai';
@@ -36,23 +36,25 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
 
   const requestSample = convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request);
 
-  const handleSelectClick = (event: React.MouseEvent<HTMLSelectElement>) => {
-    const value = event.currentTarget.value;
-
-    const [language, library] = value.split(' / ');
+  const handleSelectClick: SelectProps['onChange'] = value => {
+    const [language, library] = String(value).split(' / ');
     setSelectedLanguage(language);
     setSelectedLibrary(library || '');
   };
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar rightComponent={<CopyButton size="md" copyValue={requestSample || ''} />}>
-        <span role="heading">Request:</span>
-        <Select
-          onChange={handleSelectClick}
-          options={selectOptions}
-          value={selectedLibrary ? `${selectedLanguage} / ${selectedLibrary}` : selectedLanguage}
-        />
+      <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
+        <Box ml={-2}>
+          <Select
+            aria-label="Request Sample Language"
+            onChange={handleSelectClick}
+            options={selectOptions}
+            value={selectedLibrary ? `${selectedLanguage} / ${selectedLibrary}` : selectedLanguage}
+            triggerTextPrefix="Request Sample: "
+            size="sm"
+          />
+        </Box>
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
