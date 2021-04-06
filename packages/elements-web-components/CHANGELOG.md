@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.18](https://github.com/stoplightio/elements/compare/v6.1.17...v6.1.18) (2021-04-06)
+
+**Note:** Version bump only for package @stoplight/elements-web-components
+
+
+
+
+
 ## [6.1.17](https://github.com/stoplightio/elements/compare/v6.1.16...v6.1.17) (2021-03-30)
 
 **Note:** Version bump only for package @stoplight/elements-web-components
