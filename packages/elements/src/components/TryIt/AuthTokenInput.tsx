@@ -16,7 +16,6 @@ export const AuthTokenInput: React.FC<AuthTokenInputProps> = ({ type, name, valu
       <Text mx={3}>:</Text>
       <Flex flex={1}>
         <Input
-          style={{ paddingLeft: 15 }}
           aria-label={name}
           appearance="minimal"
           flex={1}
