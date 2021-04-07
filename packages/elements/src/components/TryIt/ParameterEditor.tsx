@@ -1,5 +1,4 @@
 import { Flex, Input, Select, SelectProps, Text } from '@stoplight/mosaic';
-import { nanoid } from 'nanoid';
 import * as React from 'react';
 
 import {
@@ -17,7 +16,6 @@ interface ParameterProps {
 }
 
 export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
-  const uniqueId = React.useRef(nanoid()).current;
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
@@ -25,13 +23,13 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
 
   return (
     <>
-      <div id={`param_name_${uniqueId}`}>{parameterDisplayName}</div>
+      <div>{parameterDisplayName}</div>
       <Text mx={3}>:</Text>
       <div>
         {parameterValueOptions ? (
           <Select
             flex={1}
-            aria-labelledby={`param_name_${uniqueId}`}
+            aria-label={parameter.name}
             options={parameterValueOptions}
             value={value}
             onChange={onChange}
