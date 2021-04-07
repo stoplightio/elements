@@ -40,7 +40,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
   );
 
   return (
-    <Box>
+    <Box mb={10}>
       <SectionTitle title="Request" />
       <SubSectionPanel title={pathParamBlock} hasContent={pathParams.length > 0}>
         <Parameters parameterType="path" parameters={pathParams} />

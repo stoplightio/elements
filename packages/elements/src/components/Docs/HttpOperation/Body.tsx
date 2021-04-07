@@ -46,7 +46,7 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
       {description && <MarkdownViewer className="mb-6" markdown={description} />}
 
       {isJSONSchema(schema) && (
-        <Box ml={-9}>
+        <Box>
           <JsonSchemaViewer resolveRef={refResolver} schema={schema as JSONSchema4} viewMode="write" />
         </Box>
       )}

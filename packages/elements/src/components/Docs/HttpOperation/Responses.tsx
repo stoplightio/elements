@@ -108,7 +108,7 @@ export const Response = ({
           }
         >
           {schema && (
-            <Box ml={-9}>
+            <Box>
               <JsonSchemaViewer schema={schema as JSONSchema4} resolveRef={refResolver} viewMode="read" />
             </Box>
           )}
