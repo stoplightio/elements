@@ -4912,10 +4912,10 @@
     "@stoplight/yaml" "^4.0.2"
     call-me-maybe "^1.0.1"
 
-"@stoplight/json-schema-tree@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-1.1.2.tgz#c781de4322f286b296fe82233dd4b895cedb10a7"
-  integrity sha512-GgEJApU2/JKVd3XwjPP52gI9EGCi1nFz4fPUTw1gafpAnEqQcjVF14RFlJ+YjMx15ggwsUPCDEZIypDEoYvdoA==
+"@stoplight/json-schema-tree@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-1.1.3.tgz#c2aafa1b10c506e7ebec7a4904ff3bd325f7102f"
+  integrity sha512-n/mmhLEu4qrZO/UxQBYyPNid2v4Zq6fuzUK9pBMpNxQtxXmmge62lFWDnc3Q8nzXwRio0OPuMmZS9RO0Q0hmOg==
   dependencies:
     "@stoplight/json" "^3.10.0"
     "@stoplight/json-schema-merge-allof" "^0.7.5"
@@ -4936,14 +4936,14 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json-schema-viewer@^4.0.0-beta.8":
-  version "4.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.8.tgz#14509c8d0bb70aa9b3f6a767acdba4d335b9b58c"
-  integrity sha512-wUCu7GMTpTCyI9IJeAFRVZNR/jsQVk3M8eHtavkgPLLB6IziynpfGnQmyOtOIxv8dLnnQCHf0J/y2BgEEntvgg==
+"@stoplight/json-schema-viewer@^4.0.0-beta.9":
+  version "4.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.9.tgz#777bedcaabed70c1900cc3a920eb956bfc06a60d"
+  integrity sha512-DEuaAW+ivwnhJFyruLqHMEG9YZU4+h+k6DmSKhpR6Jz+WlrN863CDFSqUPt3aJk34gJzZXX4WUO3eldKmgidWA==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.10.0"
-    "@stoplight/json-schema-tree" "^1.1.2"
+    "@stoplight/json-schema-tree" "^1.1.3"
     "@stoplight/mosaic" "^1.0.0-beta.36"
     "@stoplight/react-error-boundary" "^1.0.0"
     classnames "^2.2.6"
