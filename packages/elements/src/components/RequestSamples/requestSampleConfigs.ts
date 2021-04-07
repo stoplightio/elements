@@ -1,3 +1,4 @@
+import { SelectProps } from '@stoplight/mosaic';
 import { CodeViewerLanguage } from '@stoplight/mosaic-code-viewer';
 import { Dictionary } from '@stoplight/types';
 
@@ -186,10 +187,14 @@ export const getConfigFor = (language: string, library: string): LanguageConfig 
   return { ...languageConfig, ...libraryConfig };
 };
 
-export const selectOptions: string[] = Object.entries(requestSampleConfigs).flatMap(([language, { libraries }]) => {
-  if (!libraries) {
-    return [language];
-  } else {
-    return Object.keys(libraries).map(library => `${language} / ${library}`);
-  }
-});
+export const selectOptions: SelectProps['options'] = Object.entries(requestSampleConfigs).flatMap(
+  ([language, { libraries }]) => {
+    if (!libraries) {
+      return [{ value: language }];
+    } else {
+      return Object.keys(libraries).map(library => ({
+        value: `${language} / ${library}`,
+      }));
+    }
+  },
+);

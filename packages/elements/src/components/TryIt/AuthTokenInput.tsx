@@ -14,12 +14,12 @@ export const AuthTokenInput: React.FC<AuthTokenInputProps> = ({ type, name, valu
     <>
       <Input role={type} appearance="minimal" readOnly value={name} />
       <Text mx={3}>:</Text>
-      <Flex flexGrow>
+      <Flex flex={1}>
         <Input
           style={{ paddingLeft: 15 }}
           aria-label={name}
           appearance="minimal"
-          flexGrow
+          flex={1}
           placeholder={type === 'oauth2' ? 'Bearer 123' : '123'}
           value={value}
           type="text"

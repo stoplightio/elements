@@ -1,3 +1,4 @@
+import { Box, Flex, Heading } from '@stoplight/mosaic';
 import { IHttpService, NodeType } from '@stoplight/types';
 import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
@@ -15,6 +16,9 @@ type SidebarLayoutProps = {
   tree: ITableOfContentsTree;
 };
 
+const MAX_CONTENT_WIDTH = 1800;
+const SIDEBAR_WIDTH = 300;
+
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, uriMap }) => {
   const operationMap = React.useMemo(() => mapUriToOperation(uriMap), [uriMap]);
   const contents = useTocContents(tree, operationMap).map(item => ({
@@ -25,6 +29,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
 
   const nodeType = getNodeType(pathname);
   const nodeData = uriMap[pathname] || uriMap['/'];
+  const httpService = uriMap['/'] as IHttpService;
 
   const hasOverview = !!contents.find(item => item.to === '/');
 
@@ -37,19 +42,42 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   }
 
   return (
-    <>
-      <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
-      <div className="flex-grow p-5 ContentViewer">
-        <div className="flex">
-          <Docs
-            key={pathname}
-            uri={hasOverview ? pathname : undefined}
-            className="px-10"
-            nodeData={nodeData}
-            nodeType={nodeType}
-          />
-        </div>
-      </div>
-    </>
+    <Flex className="sl-elements-api" pos="absolute" pin overflowY="scroll">
+      <Box
+        bg="canvas-100"
+        borderR
+        pt={5}
+        pos="sticky"
+        pinY
+        overflowY="auto"
+        style={{
+          width: `calc((100% - ${MAX_CONTENT_WIDTH}px) / 2 + ${SIDEBAR_WIDTH}px)`,
+          paddingLeft: `calc((100% - ${MAX_CONTENT_WIDTH}px) / 2)`,
+          minWidth: `${SIDEBAR_WIDTH}px`,
+        }}
+      >
+        <Heading ml={5} mb={5} size={4}>
+          {httpService.name}
+        </Heading>
+        <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
+      </Box>
+
+      <Box
+        px={24}
+        flex={1}
+        style={{
+          width: '100%',
+          maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px`,
+        }}
+      >
+        <Docs
+          key={pathname}
+          uri={hasOverview ? pathname : undefined}
+          className="sl-pt-16 sl-pb-24"
+          nodeData={nodeData}
+          nodeType={nodeType}
+        />
+      </Box>
+    </Flex>
   );
 };

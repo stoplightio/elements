@@ -14,7 +14,7 @@ export function parameterOptions(parameter: ParameterSpec) {
   return parameter.schema?.type === 'boolean'
     ? booleanOptions
     : parameter.schema?.enum !== undefined
-    ? map(parameter.schema.enum, v => (Number.isNaN(Number(v)) ? String(v) : Number(v)))
+    ? map(parameter.schema.enum, v => ({ value: Number.isNaN(Number(v)) ? String(v) : Number(v) }))
     : null;
 }
 

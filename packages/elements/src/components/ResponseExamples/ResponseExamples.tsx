@@ -1,4 +1,4 @@
-import { Panel, Select } from '@stoplight/mosaic';
+import { Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import React from 'react';
@@ -29,17 +29,18 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
 
   const examplesSelect = userDefinedExamples && userDefinedExamples.length > 1 && (
     <Select
+      aria-label="Response Example"
+      value={String(chosenExampleIndex)}
       options={userDefinedExamples.map((example, index) => ({ value: index, label: example.key }))}
-      onChange={e => setChosenExampleIndex(parseInt(e.currentTarget.value, 10))}
+      onChange={value => setChosenExampleIndex(parseInt(String(value), 10))}
+      size="sm"
+      triggerTextPrefix="Response Example: "
     />
   );
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar>
-        Response Example{examplesSelect ? ': ' : ''}
-        {examplesSelect}
-      </Panel.Titlebar>
+      <Panel.Titlebar>{examplesSelect || <Text color="body">Response Example</Text>}</Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
           aria-label={responseExample}

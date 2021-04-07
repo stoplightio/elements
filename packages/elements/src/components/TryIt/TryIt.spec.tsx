@@ -27,6 +27,8 @@ import { operation as basicOperation } from '../../__fixtures__/operations/simpl
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
+import { withMosaicProvider } from '../../hoc/withMosaicProvider';
+import { chooseOption } from '../../utils/tests/chooseOption';
 import { TryIt } from './index';
 
 function clickSend() {
@@ -34,7 +36,7 @@ function clickSend() {
   userEvent.click(button);
 }
 
-const TryItWithPersistence = withPersistenceBoundary(TryIt);
+const TryItWithPersistence = withMosaicProvider(withPersistenceBoundary(TryIt));
 
 describe('TryIt', () => {
   beforeEach(() => {
@@ -166,17 +168,17 @@ describe('TryIt', () => {
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      expect(limitField).toHaveValue('1');
+      expect(limitField).toHaveTextContent('1');
 
       const typeField = screen.getByLabelText('type');
-      expect(typeField).toHaveValue('something');
+      expect(typeField).toHaveTextContent('something');
 
       const optionalWithDefaultField = screen.getByLabelText('optional_value_with_default') as HTMLInputElement;
       expect(optionalWithDefaultField).toHaveValue('');
       expect(optionalWithDefaultField.placeholder).toBe('example: some default value');
 
       const valueField = screen.getByLabelText('value');
-      expect(valueField).toHaveValue('1');
+      expect(valueField).toHaveTextContent('1');
 
       // header param
 
@@ -197,10 +199,10 @@ describe('TryIt', () => {
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      await userEvent.selectOptions(limitField, '3');
+      await chooseOption(limitField, '3');
 
       const typeField = screen.getByLabelText('type');
-      await userEvent.selectOptions(typeField, 'another');
+      await chooseOption(typeField, 'another');
 
       // header param
 
@@ -208,7 +210,7 @@ describe('TryIt', () => {
       await userEvent.type(accountIdField, ' 1999');
 
       const messageIdField = screen.getByLabelText('message-id-select');
-      await userEvent.selectOptions(messageIdField, 'example 2');
+      await chooseOption(messageIdField, 'example 2');
 
       // click send
       clickSend();
@@ -304,7 +306,7 @@ describe('TryIt', () => {
       const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
       expect(nameField.placeholder).toMatch(/string/i);
 
-      const completedField = screen.getByRole('combobox', { name: 'completed' });
+      const completedField = screen.getByLabelText('completed');
       expect(completedField).toBeInTheDocument();
     });
 

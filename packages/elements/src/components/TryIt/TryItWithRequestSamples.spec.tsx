@@ -12,7 +12,7 @@ describe('TryItWithRequestSamples', () => {
   it('displays RequestSamples', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
-    expect(await screen.findByRole('heading', { name: /^request/i })).toBeVisible();
+    expect(await screen.findByText('Request Sample: Shell / cURL')).toBeVisible();
 
     const codeViewer = await screen.findByLabelText(/curl/);
 
