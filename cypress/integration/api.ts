@@ -19,5 +19,5 @@ describe('API component', () => {
 function loadZoomApiPage() {
   cy.visit('/');
   cy.findByRole('link', { name: /Zoom Api/i }).click();
-  cy.findAllByRole('heading', { name: 'Zoom' }).should('have.length', 2);
+  cy.findByRole('heading', { name: 'Zoom', level: 1 }).should('exist');
 }
