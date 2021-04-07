@@ -14,7 +14,7 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
   };
 
   return (
-    <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
+    <Panel.Content className="ParameterGrid">
       <div>Username</div>
       <Text mx={3}>:</Text>
       <Flex flex={1}>

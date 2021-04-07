@@ -12,7 +12,7 @@ interface BearerAuthProps {
 
 export const BearerAuth: React.FC<BearerAuthProps> = ({ value, onChange }) => {
   return (
-    <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
+    <Panel.Content className="ParameterGrid">
       <AuthTokenInput type="http" name="Token" value={value} onChange={onChange} />
     </Panel.Content>
   );
