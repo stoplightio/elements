@@ -75,7 +75,8 @@
     "swr": "^0.3.0",
     "tslib": "^2.1.0",
     "unist-util-select": "^3.0.1",
-    "urijs": "^1.19.6"
+    "urijs": "^1.19.6",
+    "zustand": "3.3.3"
   },
   "devDependencies": {
     "@stoplight/scripts": "8.2.3",
