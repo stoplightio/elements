@@ -27,7 +27,7 @@ export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps>
 
   return (
     <>
-      <Input appearance="minimal" readOnly value={parameterDisplayName} />
+      <div>{parameterDisplayName}</div>
       <Text mx={3}>:</Text>
       <Flex flex={1} alignItems="center">
         <Input
