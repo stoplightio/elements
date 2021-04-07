@@ -37,7 +37,7 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody,
       >
         Body
       </Panel.Titlebar>
-      <Panel.Content>
+      <Panel.Content className="TextRequestBody">
         <CodeEditor onChange={onChange} language="json" value={requestBody} showLineNumbers padding={0} />
       </Panel.Content>
     </Panel>
