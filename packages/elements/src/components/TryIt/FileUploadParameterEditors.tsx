@@ -27,7 +27,9 @@ export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps>
 
   return (
     <>
-      <div>{parameterDisplayName}</div>
+      <div aria-hidden="true" data-testid="param-label">
+        {parameterDisplayName}
+      </div>
       <Text mx={3}>:</Text>
       <Flex flex={1} alignItems="center">
         <Input

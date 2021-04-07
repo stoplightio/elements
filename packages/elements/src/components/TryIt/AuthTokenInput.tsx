@@ -12,7 +12,7 @@ interface AuthTokenInputProps {
 export const AuthTokenInput: React.FC<AuthTokenInputProps> = ({ type, name, value, onChange }) => {
   return (
     <>
-      <div>{name}</div>
+      <div aria-hidden="true">{name}</div>
       <Text mx={3}>:</Text>
       <Flex flex={1}>
         <Input

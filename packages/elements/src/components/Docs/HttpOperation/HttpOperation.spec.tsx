@@ -97,7 +97,7 @@ describe('HttpOperation', () => {
       expect(queryParametersPanel).toBeVisible();
       expect(queryParametersPanel).toBeEnabled();
 
-      expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
+      expect(await screen.findByText('parameter name')).toBeInTheDocument();
       expect(screen.getByRole('note', { name: /deprecated/i })).toBeInTheDocument();
     });
 
@@ -170,7 +170,7 @@ describe('HttpOperation', () => {
       expect(headersPanel).toBeVisible();
       expect(headersPanel).toBeEnabled();
 
-      expect(screen.queryByText(/parameter name/)).toBeInTheDocument();
+      expect(screen.queryByText('parameter name')).toBeInTheDocument();
     });
 
     it('should not render panel when there are no header parameters', () => {
@@ -229,7 +229,7 @@ describe('HttpOperation', () => {
       expect(pathParametersPanel).toBeVisible();
       expect(pathParametersPanel).toBeEnabled();
 
-      expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
+      expect(await screen.findByText('parameter name')).toBeInTheDocument();
     });
 
     it('should still show path parameters panel when there are no parameters', () => {
