@@ -4,15 +4,17 @@ import * as React from 'react';
 
 import { ActiveInfoContext } from '../../../containers/Provider';
 import { isProperUrl } from '../../../utils/guards';
+import { getServerUrlWithDefaultValues } from '../../../utils/http-spec/IServer';
 
 interface ServerInfoProps {
-  servers: IServer[] | undefined;
-  mockUrl: string | undefined;
+  servers?: IServer[];
+  mockUrl?: string;
 }
 
 export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   const info = React.useContext(ActiveInfoContext);
-  const productionUrl = servers?.[0].url;
+  const productionServer = servers?.[0];
+  const productionUrl = productionServer && getServerUrlWithDefaultValues(productionServer);
 
   return (
     <InvertTheme>

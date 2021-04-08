@@ -13,6 +13,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { apiKey, oauth } from '../../../../__fixtures__/security-schemes';
 import httpService from '../../../../__fixtures__/services/petstore';
+import { httpServiceWithUrlVariables } from '../../../../__fixtures__/services/with-url-variables';
 import { Provider } from '../../../../containers/Provider';
 import { HttpService } from '../index';
 import { getOAuthFlowDescription, SecuritySchemes } from '../SecuritySchemes';
@@ -39,6 +40,13 @@ describe('HttpService', () => {
     expect(secondServer).not.toBeInTheDocument();
 
     expect(screen.queryByLabelText('mock-server')).not.toBeInTheDocument();
+  });
+
+  it('replaces url variables with default values in displayed url', () => {
+    render(<ServerInfo servers={httpServiceWithUrlVariables.servers} />);
+
+    const serverUrl = screen.getByLabelText('production-server');
+    expect(serverUrl).toHaveTextContent('ftp://default-namespace.stoplight.io');
   });
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
