@@ -4885,7 +4885,34 @@
     type-is "^1.6.18"
     urijs "~1.19.2"
 
-"@stoplight/json-schema-merge-allof@^0.7.2", "@stoplight/json-schema-merge-allof@^0.7.5":
+"@stoplight/http-spec@^3.2.6":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-3.4.0.tgz#88ab5ae0ff4985119697de5a1413bd9b1d672ab6"
+  integrity sha512-BC2dXnjrKK5DuRicjLzhWrWg/wWrEwh9RFV+uMnjEC8lJAPby11HDndEWRZh/cOJqg8YvB4HpA2+oAyE4XADJg==
+  dependencies:
+    "@stoplight/json" "^3.10.2"
+    "@stoplight/types" "^11.10.0"
+    "@types/swagger-schema-official" "~2.0.21"
+    "@types/to-json-schema" "^0.2.0"
+    "@types/type-is" "^1.6.3"
+    "@types/urijs" "~1.19.9"
+    json-schema-generator "^2.0.6"
+    lodash "^4.17.15"
+    openapi3-ts "^2.0.1"
+    postman-collection "^3.6.2"
+    type-is "^1.6.18"
+    urijs "~1.19.2"
+
+"@stoplight/json-schema-merge-allof@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.2.tgz#a9f4d95b4a95e943afa567c695a1d4a2add9b74a"
+  integrity sha512-fVS5GqYBlxZfX1fA9+ULiny8VaCR3O62p3BHYd7+30rf378pVW6UPPydeB5AXs5U621LJKYdrGyndpOdTJ5dFA==
+  dependencies:
+    compute-lcm "^1.1.0"
+    json-schema-compare "^0.2.2"
+    lodash "^4.17.4"
+
+"@stoplight/json-schema-merge-allof@^0.7.5":
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.5.tgz#f844c41f8ae19dbf8e64578372ccb581cc8b97db"
   integrity sha512-pbi/sfVKyezFhSTVzSQkDN3WanpoZFSjisYhTbpWMgTFoZz/pUPLLLZvBGUme4IfzQjFZweiKT3nl29h8Elsnw==
@@ -4951,7 +4978,7 @@
     lodash "^4.17.15"
     safe-stable-stringify "^1.1"
 
-"@stoplight/json@^3.5.1":
+"@stoplight/json@^3.10.2", "@stoplight/json@^3.5.1":
   version "3.11.2"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.11.2.tgz#6bd5f60f81a59e79f5ab884ab50c1d1013f54b1c"
   integrity sha512-6ePZkRBrcy/SVvnXH+Yi+sIBkKH4Nu4acG8dgaAi/pV8322lvnylyfZ21KLWEKYKON+Ll+NOZeIcaZNj5M0O9g==
@@ -5210,6 +5237,14 @@
     classnames "^2.2.6"
     mobx-react-lite "^1.5.2"
     strict-event-emitter-types "^2.0.0"
+
+"@stoplight/types@^11.10.0":
+  version "11.10.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.10.0.tgz#60bbee770526f4de9cd1c613c7ab84c4e4674126"
+  integrity sha512-ffHD9i4UHS8Gsg7Ar8pKjI9B4kq7MRekE7tCROFGcFDzQhfRx9T92AduoLAtP/010XNYq23yDKpLBRPIEk8+xg==
+  dependencies:
+    "@types/json-schema" "^7.0.4"
+    utility-types "^3.10.0"
 
 "@stoplight/types@^11.9.0":
   version "11.9.0"
@@ -18323,6 +18358,13 @@ openapi-sampler@^1.0.0-beta.16, openapi-sampler@^1.0.0-beta.18:
   dependencies:
     json-pointer "^0.6.0"
 
+openapi3-ts@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-2.0.1.tgz#b270aecea09e924f1886bc02a72608fca5a98d85"
+  integrity sha512-v6X3iwddhi276siej96jHGIqTx3wzVfMTmpGJEQDt7GPI7pI6sywItURLzpEci21SBRpPN/aOWSF5mVfFVNmcg==
+  dependencies:
+    yaml "^1.10.0"
+
 openapi3-ts@~1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-1.4.0.tgz#679d5a24be0efc36f5de4fc2c4b8513663e16f65"
@@ -24575,6 +24617,11 @@ yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
+
+yaml@^1.10.0:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
+  integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
 yaml@^1.7.2:
   version "1.8.3"
