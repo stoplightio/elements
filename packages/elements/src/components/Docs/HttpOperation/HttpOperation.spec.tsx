@@ -97,7 +97,7 @@ describe('HttpOperation', () => {
       expect(queryParametersPanel).toBeVisible();
       expect(queryParametersPanel).toBeEnabled();
 
-      expect(await screen.findByText(/parameter name/)).toBeInTheDocument();
+      expect(await screen.findByText(/parameter name$/)).toBeInTheDocument();
       expect(await screen.findByText(/required/)).toBeInTheDocument();
       expect(await screen.findByText(/deprecated/)).toBeInTheDocument();
     });
