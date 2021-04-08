@@ -1,6 +1,7 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 
+import { getServerUrlWithDefaultValues } from '../../utils/http-spec/IServer';
 import {
   filterOutAuthorizationParams,
   HttpSecuritySchemeWithValues,
@@ -36,7 +37,9 @@ export async function buildFetchRequest({
   mockData,
   auth,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
-  const serverUrl = mockData?.url || httpOperation.servers?.[0]?.url || window.location.origin;
+  const firstServer = httpOperation.servers?.[0];
+  const firstServerUrl = firstServer && getServerUrlWithDefaultValues(firstServer);
+  const serverUrl = mockData?.url || firstServerUrl || window.location.origin;
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
   const queryParams =
@@ -131,7 +134,9 @@ export async function buildHarRequest({
   mediaTypeContent,
   auth,
 }: BuildRequestInput): Promise<HarRequest> {
-  const serverUrl = httpOperation.servers?.[0]?.url || window.location.origin;
+  const firstServer = httpOperation.servers?.[0];
+  const firstServerUrl = firstServer && getServerUrlWithDefaultValues(firstServer);
+  const serverUrl = firstServerUrl || window.location.origin;
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 

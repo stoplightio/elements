@@ -25,6 +25,7 @@ import {
 } from '../../__fixtures__/operations/securedOperation';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
+import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
@@ -60,6 +61,16 @@ describe('TryIt', () => {
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
     expect(headers.get('Content-Type')).toBe('application/json');
+  });
+
+  it('replaces url variables with default values when making request', async () => {
+    render(<TryItWithPersistence httpOperation={operationWithUrlVariables} />);
+
+    const button = screen.getByRole('button', { name: /send/i });
+    userEvent.click(button);
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+    expect(fetchMock.mock.calls[0][0]).toBe('ftp://default-namespace.stoplight.io/todos');
   });
 
   it('makes request to origin URL if there is no URL in the document', async () => {
