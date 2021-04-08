@@ -1,5 +1,5 @@
 import { Validations } from '@stoplight/json-schema-viewer';
-import { VStack } from '@stoplight/mosaic';
+import { Box, VStack } from '@stoplight/mosaic';
 import { Dictionary, HttpParamStyles, IHttpParam } from '@stoplight/types';
 import { get, isEmpty, omit, omitBy, sortBy } from 'lodash';
 import * as React from 'react';
@@ -35,7 +35,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
   if (!parameters || !parameters.length) return null;
 
   return (
-    <VStack spacing={2} divider>
+    <VStack spacing={2} divider={<Box borderT borderColor="light" w="full"></Box>}>
       {sortBy(parameters, ['required', 'name']).map(parameter => {
         const resolvedSchema =
           parameter.schema?.$ref && resolveRef
@@ -103,7 +103,10 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
       {parameter.style && defaultStyle[parameterType] !== parameter.style && (
         <div className="sl-flex sl-my-2">
-          <span className="sl-px-1 sl-text-muted sl-font-mono sl-border sl-rounded-lg sl-text-sm sl-capitalize">
+          <span
+            className="sl-px-1 sl-text-muted sl-font-mono sl-border sl-rounded-lg sl-text-sm sl-capitalize"
+            style={{ backgroundColor: '#EDF2F7' }}
+          >
             {readableStyles[parameter.style] || parameter.style}
           </span>
         </div>
