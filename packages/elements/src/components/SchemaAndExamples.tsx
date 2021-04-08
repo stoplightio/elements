@@ -1,14 +1,10 @@
 import { Classes, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer, ViewMode } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES } from '@stoplight/markdown-viewer';
-import { Dictionary, NodeType } from '@stoplight/types';
-import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
-import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
+import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import { JSONSchema4 } from 'json-schema';
-import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../constants';
@@ -21,77 +17,31 @@ export interface ISchemaViewerProps {
   title?: string;
   description?: string;
   errors?: string[];
-  examples?: Dictionary<string>;
   className?: string;
-  forceShowTabs?: boolean;
   viewMode?: ViewMode;
 }
 
-export const SchemaAndExamples = ({
-  className,
-  title,
-  description,
-  schema,
-  examples,
-  errors,
-  viewMode,
-  forceShowTabs,
-}: ISchemaViewerProps) => {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-
+export const SchemaAndExamples = ({ className, title, description, schema, errors, viewMode }: ISchemaViewerProps) => {
   const resolveRef = useInlineRefResolver();
-
-  const JSV = ({ jsvClassName }: { jsvClassName?: string }) => {
-    return (
-      <>
-        <SchemaTitle title={title} errors={errors} />
-
-        {description && <MarkdownViewer markdown={description} />}
-
-        <JsonSchemaViewer
-          resolveRef={resolveRef}
-          className={jsvClassName}
-          schema={schema as JSONSchema4}
-          viewMode={viewMode}
-        />
-      </>
-    );
-  };
-
-  if (isEmpty(examples) && !forceShowTabs) {
-    return <JSV jsvClassName={cn(className, 'dark:border-gray-9', CLASSNAMES.bordered, CLASSNAMES.block)} />;
-  }
-
   return (
-    <SimpleTabs
-      className={cn('SchemaViewer', className)}
-      selectedIndex={selectedIndex}
-      onSelect={setSelectedIndex}
-      forceRenderTabPanel
-    >
-      <SimpleTabList>
-        <SimpleTab>Schema</SimpleTab>
+    <>
+      <SchemaTitle title={title} errors={errors} />
 
-        {map(examples, (_, key) => (
-          <SimpleTab key={key}>{key === 'default' ? 'Example' : key}</SimpleTab>
-        ))}
-      </SimpleTabList>
+      {description && <MarkdownViewer markdown={description} />}
 
-      <SimpleTabPanel className="p-0">{<JSV />}</SimpleTabPanel>
-
-      {map(examples, (example, key) => {
-        return (
-          <SimpleTabPanel key={key} className="p-0">
-            <CodeViewer
-              language="json"
-              showLineNumbers
-              className="py-4 px-4 overflow-auto max-h-400px"
-              value={safeStringify(example, undefined, 2) || ''}
-            />
-          </SimpleTabPanel>
-        );
-      })}
-    </SimpleTabs>
+      <JsonSchemaViewer
+        resolveRef={resolveRef}
+        className={cn(className, CLASSNAMES.block)}
+        schema={
+          {
+            ...schema,
+            title: undefined,
+            description: undefined,
+          } as JSONSchema4
+        }
+        viewMode={viewMode}
+      />
+    </>
   );
 };
 
