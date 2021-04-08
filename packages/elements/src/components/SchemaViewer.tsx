@@ -21,7 +21,7 @@ export interface ISchemaViewerProps {
   viewMode?: ViewMode;
 }
 
-export const SchemaAndExamples = ({ className, title, description, schema, errors, viewMode }: ISchemaViewerProps) => {
+export const SchemaViewer = ({ className, title, description, schema, errors, viewMode }: ISchemaViewerProps) => {
   const resolveRef = useInlineRefResolver();
   return (
     <>
