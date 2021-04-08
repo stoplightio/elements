@@ -85,7 +85,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   return (
     <div className="HttpOperation__Parameters">
       <div className="sl-flex sl-items-center sl-my-2">
-        <div className="sl-flex sl-items-center sl-text-base sl-flex-1">
+        <div className="sl-flex sl-items-baseline sl-text-base sl-flex-1">
           <div className="sl-font-mono sl-font-bold">{parameter.name}</div>
           <div className={'ml-2 sl-text-muted'}>{format ? `${type}<${format}>` : type}</div>
         </div>
