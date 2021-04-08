@@ -32,7 +32,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar>Body</Panel.Titlebar>
-      <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent FormDataBody">
+      <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent">
         {Object.entries(parameters)
           .map(([name, schema]) => ({ name, schema, examples: schema?.examples }))
           .map(parameter => {
