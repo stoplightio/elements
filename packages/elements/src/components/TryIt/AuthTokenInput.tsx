@@ -2,6 +2,8 @@ import { Flex, Input, Text } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import * as React from 'react';
 
+import { useUniqueId } from '../../hooks/useUniqueId';
+
 interface AuthTokenInputProps {
   onChange: (value: string) => void;
   type: HttpSecurityScheme['type'];
@@ -10,13 +12,16 @@ interface AuthTokenInputProps {
 }
 
 export const AuthTokenInput: React.FC<AuthTokenInputProps> = ({ type, name, value, onChange }) => {
+  const inputId = useUniqueId(`id_auth_${name}_`);
   return (
     <>
-      <Input role={type} appearance="minimal" readOnly value={name} />
+      <label aria-hidden="true" htmlFor={inputId}>
+        {name}
+      </label>
       <Text mx={3}>:</Text>
       <Flex flex={1}>
         <Input
-          style={{ paddingLeft: 15 }}
+          id={inputId}
           aria-label={name}
           appearance="minimal"
           flex={1}

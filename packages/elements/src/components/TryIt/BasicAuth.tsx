@@ -14,8 +14,8 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
   };
 
   return (
-    <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
-      <Input role="username" appearance="minimal" readOnly value="Username" />
+    <Panel.Content className="ParameterGrid">
+      <div>Username</div>
       <Text mx={3}>:</Text>
       <Flex flex={1}>
         <Input
@@ -30,7 +30,7 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
           onChange={e => onCredentialsChange(e.currentTarget.value, password)}
         />
       </Flex>
-      <Input role="password" appearance="minimal" readOnly value="Password" />
+      <div>Password</div>
       <Text mx={3}>:</Text>
       <Flex flex={1}>
         <Input

@@ -154,11 +154,7 @@ describe('TryIt', () => {
         ];
         render(<TryItWithPersistence httpOperation={sortedParameters} />);
 
-        const params = screen
-          .queryAllByRole('textbox')
-          .filter(param => param.hasAttribute('readonly'))
-          .map(param => param['value']);
-
+        const params = screen.queryAllByTestId('param-label').map(element => element.textContent);
         expect(params).toEqual(names);
       });
     });
@@ -743,7 +739,7 @@ describe('TryIt', () => {
       it('is displayed for security of that type', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const APIKeyName = screen.getByDisplayValue('API Key');
+        const APIKeyName = screen.getByLabelText('API Key');
         expect(APIKeyName).toBeInTheDocument();
       });
       it('removes duplicated parameters', () => {

@@ -1,6 +1,7 @@
 import { Flex, Input, Select, SelectProps, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
+import { useUniqueId } from '../../hooks/useUniqueId';
 import {
   exampleOptions,
   getPlaceholderForParameter,
@@ -16,6 +17,7 @@ interface ParameterProps {
 }
 
 export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
+  const inputId = useUniqueId(`id_${parameter.name}_`);
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
@@ -23,7 +25,9 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
 
   return (
     <>
-      <Input appearance="minimal" readOnly value={parameterDisplayName} />
+      <label aria-hidden="true" data-testid="param-label" htmlFor={inputId}>
+        {parameterDisplayName}
+      </label>
       <Text mx={3}>:</Text>
       <div>
         {parameterValueOptions ? (
@@ -37,6 +41,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
         ) : (
           <Flex flex={1}>
             <Input
+              id={inputId}
               aria-label={parameter.name}
               appearance="minimal"
               flex={1}
