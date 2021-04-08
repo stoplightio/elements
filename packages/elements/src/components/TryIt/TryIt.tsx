@@ -141,8 +141,8 @@ export const TryIt: React.FC<TryItProps> = ({
   };
 
   return (
-    <Box>
-      <Panel rounded isCollapsible={false} className="p-0">
+    <Box rounded="lg" overflowY="hidden">
+      <Panel isCollapsible={false} className="p-0 TryItPanel">
         <Panel.Titlebar bg="canvas-300">
           <div role="heading" className="sl-font-bold">
             <Text color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
@@ -176,7 +176,7 @@ export const TryIt: React.FC<TryItProps> = ({
             onChange={setTextRequestBody}
           />
         ) : null}
-        <Panel.Content>
+        <Panel.Content className="SendButtonHolder">
           <Flex>
             <Button appearance="primary" loading={loading} disabled={loading} onPress={handleClick} size="sm">
               Send Request

@@ -12,7 +12,7 @@ interface APIKeyAuthProps {
 
 export const APIKeyAuth: React.FC<APIKeyAuthProps> = ({ scheme, onChange, value }) => {
   return (
-    <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
+    <Panel.Content className="ParameterGrid">
       <AuthTokenInput type="apiKey" name={scheme.name} value={value} onChange={onChange} />
     </Panel.Content>
   );

@@ -12,7 +12,7 @@ interface OAuth2AuthProps {
 
 export const OAuth2Auth: React.FC<OAuth2AuthProps> = ({ value, onChange }) => {
   return (
-    <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
+    <Panel.Content className="ParameterGrid">
       <AuthTokenInput type="oauth2" name="Token" value={value} onChange={onChange} />
     </Panel.Content>
   );

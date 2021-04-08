@@ -14,7 +14,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({ parame
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
-      <Panel.Content className="sl-overflow-y-auto OperationParametersContent">
+      <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent">
         {parameters.map(parameter => (
           <ParameterEditor
             key={parameter.name}

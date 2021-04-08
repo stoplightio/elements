@@ -1,7 +1,7 @@
 import { Flex, Icon, Input, Text } from '@stoplight/mosaic';
-import { nanoid } from 'nanoid';
 import * as React from 'react';
 
+import { useUniqueId } from '../../hooks/useUniqueId';
 import { ParameterSpec } from './parameter-utils';
 
 interface FileUploadParameterEditorProps {
@@ -23,14 +23,18 @@ export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps>
     onChange(undefined);
   };
 
-  const fileUploadInputId = React.useRef(`file-upload-${nanoid()}`);
+  const parameterInputId = useUniqueId(`id_${parameter.name}_`);
+  const fileUploadInputId = `${parameterInputId}-file-input`;
 
   return (
     <>
-      <Input appearance="minimal" readOnly value={parameterDisplayName} />
+      <label aria-hidden="true" data-testid="param-label" htmlFor={parameterInputId}>
+        {parameterDisplayName}
+      </label>
       <Text mx={3}>:</Text>
       <Flex flex={1} alignItems="center">
         <Input
+          id={parameterInputId}
           style={{ paddingLeft: 15 }}
           aria-label={parameter.name}
           appearance="minimal"
@@ -47,10 +51,10 @@ export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps>
           </button>
         )}
         <div>
-          <label role="button" htmlFor={fileUploadInputId.current}>
+          <label role="button" htmlFor={fileUploadInputId}>
             Upload
           </label>
-          <input onChange={handleFileChange} type="file" hidden id={fileUploadInputId.current} />
+          <input onChange={handleFileChange} type="file" hidden id={fileUploadInputId} />
         </div>
       </Flex>
     </>
