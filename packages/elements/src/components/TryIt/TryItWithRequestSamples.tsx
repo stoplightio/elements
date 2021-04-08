@@ -10,7 +10,6 @@ export type TryItWithRequestSamplesProps = Omit<TryItProps, 'onRequestChange'> &
 
 export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = props => {
   const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
-
   return (
     <VStack spacing={6}>
       <InvertTheme>
