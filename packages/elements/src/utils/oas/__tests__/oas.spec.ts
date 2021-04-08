@@ -1,5 +1,3 @@
-import { Schema } from 'swagger-schema-official';
-
 import { mapUriToOperation } from '../index';
 import { computeOas2UriMap } from '../oas2';
 import { computeOas3UriMap } from '../oas3';
@@ -20,7 +18,7 @@ const schema = {
       type: 'string',
     },
   },
-};
+} as const;
 
 describe('computeUriMap', () => {
   it('should compute uris for operation with operationId', () => {
@@ -64,7 +62,7 @@ describe('computeUriMap', () => {
       },
       paths: {},
       definitions: {
-        User: schema as Schema,
+        User: schema,
       },
     });
 
