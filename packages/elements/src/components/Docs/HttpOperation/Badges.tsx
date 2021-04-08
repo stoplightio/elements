@@ -13,7 +13,12 @@ export const Badge: React.FC<{
   className?: string;
   children: string;
 }> = ({ icon, className, children }) => (
-  <Tag role="badge" className={cs('text-md p-1 font-semibold mt-1 mx-1', className)} round aria-label={children}>
+  <Tag
+    role="badge"
+    className={cs('sl-text-md p-1 sl-font-semibold sl-mt-1 sl-mr-1', className)}
+    round
+    aria-label={children}
+  >
     {icon && <FontAwesomeIcon className="mr-2" icon={icon} />}
     <span>{children}</span>
   </Tag>
@@ -34,13 +39,13 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
   httpServiceUri,
 }) => {
   const badge = (
-    <Badge icon={faLock} className="bg-gray-6 max-w-xs truncate">
+    <Badge icon={faLock} className="sl-bg-gray-6 sl-max-w-xs sl-truncate">
       {getReadableSecurityName(scheme, true)}
     </Badge>
   );
 
   return httpServiceUri ? (
-    <Link to={`${httpServiceUri}?security=${scheme.key}`} className="no-underline block">
+    <Link to={`${httpServiceUri}?security=${scheme.key}`} className="sl-no-underline sl-block">
       {badge}
     </Link>
   ) : (

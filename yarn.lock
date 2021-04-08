@@ -4941,9 +4941,9 @@
     magic-error "^0.0.0"
 
 "@stoplight/json-schema-viewer@^3.0.0-beta.33":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.0.tgz#36037dd820f6c418ccdecbab20ac18119d59d9dd"
-  integrity sha512-nI71j8NV96uw/AWhZmyc6tVfbtySJ1iV4ixktFTV2ektlbQSZggOVyOOfmaen4kALkcX6RdPUa4bPF8Ec6IQOw==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-3.0.1.tgz#d41206b9eb131c70091bda51b47128fc707a5b9f"
+  integrity sha512-nGiYzT/IguyNWwJozITsDT4rqoESL//Z1MI++I+b7rYawmeJbaHiqdEZYB02qxNDCo1C/Ux9JhZ2G3j9ead+wg==
   dependencies:
     "@stoplight/json" "^3.5.1"
     "@stoplight/json-schema-merge-allof" "^0.7.2"
@@ -4954,10 +4954,10 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json-schema-viewer@^4.0.0-beta.9":
-  version "4.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.9.tgz#777bedcaabed70c1900cc3a920eb956bfc06a60d"
-  integrity sha512-DEuaAW+ivwnhJFyruLqHMEG9YZU4+h+k6DmSKhpR6Jz+WlrN863CDFSqUPt3aJk34gJzZXX4WUO3eldKmgidWA==
+"@stoplight/json-schema-viewer@^4.0.0-beta.10":
+  version "4.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.10.tgz#dfb6655691fd8e2a048eb1a76374e4db7828778d"
+  integrity sha512-PNzRVAbNOn4BkXGYrabklkW0rwLPRgqGlq6R+OkOoraJOt0sppu9API0mfco76m+jG3Go2W1FpjGFh651nrzBw==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.10.0"
@@ -4967,7 +4967,7 @@
     classnames "^2.2.6"
     lodash "^4.17.19"
 
-"@stoplight/json@^3.10.0", "@stoplight/json@^3.5.1", "@stoplight/json@^3.6", "@stoplight/json@^3.8.1", "@stoplight/json@^3.9.0":
+"@stoplight/json@^3.10.0", "@stoplight/json@^3.6", "@stoplight/json@^3.8.1", "@stoplight/json@^3.9.0":
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.10.0.tgz#bd1af55081e1a47e0d01552d2a7e756931f46a4b"
   integrity sha512-Xb1kVQ0t5eqRDF24Y0a2A1o/CEaHjLeVehkBmphqEBkUo6X9L4z5oOUYBMzlAoR/ejhjVgWLzrDBxNOuzBFVDA==
@@ -4978,7 +4978,7 @@
     lodash "^4.17.15"
     safe-stable-stringify "^1.1"
 
-"@stoplight/json@^3.10.2":
+"@stoplight/json@^3.10.2", "@stoplight/json@^3.5.1":
   version "3.11.2"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.11.2.tgz#6bd5f60f81a59e79f5ab884ab50c1d1013f54b1c"
   integrity sha512-6ePZkRBrcy/SVvnXH+Yi+sIBkKH4Nu4acG8dgaAi/pV8322lvnylyfZ21KLWEKYKON+Ll+NOZeIcaZNj5M0O9g==
