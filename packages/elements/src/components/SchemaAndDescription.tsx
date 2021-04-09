@@ -12,7 +12,7 @@ import { useInlineRefResolver } from '../context/InlineRefResolver';
 import { JSONSchema } from '../types';
 import { MarkdownViewer } from './MarkdownViewer';
 
-export interface ISchemaViewerProps {
+export interface ISchemaAndDescriptionProps {
   schema: JSONSchema;
   title?: string;
   description?: string;
@@ -21,7 +21,14 @@ export interface ISchemaViewerProps {
   viewMode?: ViewMode;
 }
 
-export const SchemaViewer = ({ className, title, description, schema, errors, viewMode }: ISchemaViewerProps) => {
+export const SchemaAndDescription = ({
+  className,
+  title,
+  description,
+  schema,
+  errors,
+  viewMode,
+}: ISchemaAndDescriptionProps) => {
   const resolveRef = useInlineRefResolver();
   return (
     <>

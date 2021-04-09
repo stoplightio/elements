@@ -5,7 +5,7 @@ import React from 'react';
 
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { isJSONSchema } from '../../../utils/guards';
-import { SchemaViewer } from '../../SchemaViewer';
+import { SchemaAndDescription } from '../../SchemaAndDescription';
 
 export const CodeWithSchemaViewer = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
   const {
@@ -20,7 +20,7 @@ export const CodeWithSchemaViewer = (props: IComponentMappingProps<ICode<ICodeAn
       return null;
     }
 
-    return <SchemaViewer title={annotations?.title} schema={parsedValue} />;
+    return <SchemaAndDescription title={annotations?.title} schema={parsedValue} />;
   }
 
   const DefaultCode = defaultComponentMapping.code!;
