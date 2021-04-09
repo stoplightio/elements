@@ -34,4 +34,10 @@ describe('TryItWithRequestSamples', () => {
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/123456789/));
   });
+
+  it('displays parameter name for empty path parameter', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+    const codeViewer = await screen.findByLabelText(/curl/);
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/todoId/));
+  });
 });
