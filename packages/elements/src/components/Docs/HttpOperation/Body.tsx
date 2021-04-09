@@ -43,7 +43,7 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
         )
       }
     >
-      {description && <MarkdownViewer className="mb-6" markdown={description} />}
+      {description && <MarkdownViewer className="sl-my-2" markdown={description} />}
 
       {isJSONSchema(schema) && (
         <Box>
