@@ -95,17 +95,9 @@ workflows:
           requires:
             - build
       - publish-storybook:
-          filters:
-            branches:
-              only:
-                - master
           requires:
             - build
       - release:
-          filters:
-            branches:
-              only:
-                - master
           requires:
             - lint-and-check
             - build
