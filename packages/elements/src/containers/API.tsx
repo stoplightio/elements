@@ -1,6 +1,7 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generateApiToC } from '@stoplight/elements-utils';
+import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { IHttpService } from '@stoplight/types';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
@@ -100,13 +101,15 @@ const APIImpl: React.FC<APIProps> = props => {
   }
 
   return (
-    <InlineRefResolverProvider document={document}>
-      {layout === 'stacked' ? (
-        <StackedLayout uriMap={uriMap} tree={tree} />
-      ) : (
-        <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
-      )}
-    </InlineRefResolverProvider>
+    <MosaicProvider>
+      <InlineRefResolverProvider document={document}>
+        {layout === 'stacked' ? (
+          <StackedLayout uriMap={uriMap} tree={tree} />
+        ) : (
+          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
+        )}
+      </InlineRefResolverProvider>
+    </MosaicProvider>
   );
 };
 

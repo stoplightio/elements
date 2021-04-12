@@ -1,4 +1,4 @@
-import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
+import { subscribeTheme } from '@stoplight/mosaic';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -9,11 +9,9 @@ subscribeTheme();
 
 ReactDOM.render(
   <React.StrictMode>
-    <MosaicProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </MosaicProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),
 );

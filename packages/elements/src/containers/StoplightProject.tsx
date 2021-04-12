@@ -1,3 +1,4 @@
+import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
@@ -53,41 +54,43 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   }
 
   return (
-    <div className="StoplightProject flex flex-row">
-      <TableOfContents
-        workspaceSlug={workspaceSlug}
-        platformUrl={platformUrl}
-        projectSlug={projectSlug}
-        branchSlug={branchSlug}
-        rowComponent={Row}
-        rowComponentExtraProps={{ pathname }}
-        nodeUri={pathname}
-        onData={(tocTree: ITableOfContentsTree) => {
-          if (pathname === '/' && tocTree?.items?.length) {
-            const firstItem = tocTree.items.find(isItem);
-            setFirstItem(firstItem);
-          }
-        }}
-        authToken={authToken}
-      />
-      <div className="flex-grow p-5 ContentViewer">
-        <div className="flex">
-          {pathname !== '/' && (
-            <Provider
-              host={platformUrl ?? defaultPlatformUrl}
-              workspace={workspaceSlug}
-              project={projectSlug}
-              branch={branchSlug}
-              node={pathname}
-              authToken={authToken}
-              isStoplightProjectComponent
-            >
-              <Docs node={pathname} className="px-10" />
-            </Provider>
-          )}
+    <MosaicProvider>
+      <div className="StoplightProject flex flex-row">
+        <TableOfContents
+          workspaceSlug={workspaceSlug}
+          platformUrl={platformUrl}
+          projectSlug={projectSlug}
+          branchSlug={branchSlug}
+          rowComponent={Row}
+          rowComponentExtraProps={{ pathname }}
+          nodeUri={pathname}
+          onData={(tocTree: ITableOfContentsTree) => {
+            if (pathname === '/' && tocTree?.items?.length) {
+              const firstItem = tocTree.items.find(isItem);
+              setFirstItem(firstItem);
+            }
+          }}
+          authToken={authToken}
+        />
+        <div className="flex-grow p-5 ContentViewer">
+          <div className="flex">
+            {pathname !== '/' && (
+              <Provider
+                host={platformUrl ?? defaultPlatformUrl}
+                workspace={workspaceSlug}
+                project={projectSlug}
+                branch={branchSlug}
+                node={pathname}
+                authToken={authToken}
+                isStoplightProjectComponent
+              >
+                <Docs node={pathname} className="px-10" />
+              </Provider>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </MosaicProvider>
   );
 };
 
