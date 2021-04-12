@@ -20,6 +20,8 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
   const baseUrl = options?.baseUrl;
 
   React.useEffect(() => {
+    setBundledData(null);
+
     if (!isObject(document)) {
       setBundledData(document);
       return;
@@ -37,6 +39,7 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
           setBundledData(reason.files.schema);
         } else {
           console.warn(`Could bundle: ${reason?.message ?? 'Unknown error'}`);
+          setBundledData(document);
         }
       });
 

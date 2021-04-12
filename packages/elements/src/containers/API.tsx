@@ -95,7 +95,7 @@ const APIImpl: React.FC<APIProps> = props => {
     );
   }
 
-  if (!nodeData) {
+  if (!nodeData || !bundledDocument) {
     return <DocsSkeleton />;
   }
 
@@ -118,10 +118,10 @@ export function getToCFromOpenApiDocument(apiDescriptionDocument: unknown) {
 
   if (isOas3(apiDescriptionDocument)) {
     uriMap = computeOas3UriMap(apiDescriptionDocument);
-    documentTags = apiDescriptionDocument.tags?.map(tag => tag.name) || [];
+    documentTags = apiDescriptionDocument.tags?.map?.(tag => tag.name) || [];
   } else if (isOas2(apiDescriptionDocument)) {
     uriMap = computeOas2UriMap(apiDescriptionDocument);
-    documentTags = apiDescriptionDocument.tags?.map(tag => tag.name) || [];
+    documentTags = apiDescriptionDocument.tags?.map?.(tag => tag.name) || [];
   } else {
     console.error('Document type is unknown');
   }
