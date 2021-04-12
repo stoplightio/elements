@@ -1,5 +1,5 @@
 import { Validations } from '@stoplight/json-schema-viewer';
-import { VStack } from '@stoplight/mosaic';
+import { Box, VStack } from '@stoplight/mosaic';
 import { Dictionary, HttpParamStyles, IHttpParam } from '@stoplight/types';
 import { get, isEmpty, omit, omitBy, sortBy } from 'lodash';
 import * as React from 'react';
@@ -35,7 +35,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
   if (!parameters || !parameters.length) return null;
 
   return (
-    <VStack spacing={2} divider>
+    <VStack spacing={2} divider={<Box borderT borderColor="light" w="full"></Box>}>
       {sortBy(parameters, ['required', 'name']).map(parameter => {
         const resolvedSchema =
           parameter.schema?.$ref && resolveRef
@@ -85,7 +85,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   return (
     <div className="HttpOperation__Parameters">
       <div className="sl-flex sl-items-center sl-my-2">
-        <div className="sl-flex sl-items-center sl-text-base sl-flex-1">
+        <div className="sl-flex sl-items-baseline sl-text-base sl-flex-1">
           <div className="sl-font-mono sl-font-bold">{parameter.name}</div>
           <div className={'ml-2 sl-text-muted'}>{format ? `${type}<${format}>` : type}</div>
         </div>
@@ -95,7 +95,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
         </div>
       </div>
 
-      {description && <div className="sl-truncate sl-w-full sl-text-muted sl-text-sm sl-my-2">{description}</div>}
+      {description && <div className="sl-w-full sl-text-muted sl-text-sm sl-my-2">{description}</div>}
 
       <div className="sl-text-sm">
         <Validations validations={validations} />
@@ -103,7 +103,10 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
       {parameter.style && defaultStyle[parameterType] !== parameter.style && (
         <div className="sl-flex sl-my-2">
-          <span className="sl-px-1 sl-text-muted sl-font-mono sl-border sl-rounded-lg sl-text-sm sl-capitalize">
+          <span
+            className="sl-px-1 sl-text-muted sl-font-mono sl-border sl-rounded-lg sl-text-sm sl-capitalize"
+            style={{ backgroundColor: '#EDF2F7' }}
+          >
             {readableStyles[parameter.style] || parameter.style}
           </span>
         </div>
