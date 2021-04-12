@@ -95,7 +95,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
         </div>
       </div>
 
-      {description && <div className="sl-truncate sl-w-full sl-text-muted sl-text-sm sl-my-2">{description}</div>}
+      {description && <div className="sl-w-full sl-text-muted sl-text-sm sl-my-2">{description}</div>}
 
       <div className="sl-text-sm">
         <Validations validations={validations} />
