@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-demo",
-  "version": "0.0.0",
+  "version": "7.0.0-alpha.7",
   "private": true,
   "scripts": {
     "build": "yarn run clean-dist && webpack --config=webpack/prod.js",
