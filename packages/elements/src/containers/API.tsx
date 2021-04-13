@@ -1,7 +1,6 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generateApiToC } from '@stoplight/elements-utils';
-import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { IHttpService } from '@stoplight/types';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
@@ -15,6 +14,7 @@ import { StackedLayout } from '../components/API/StackedLayout';
 import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { withPersistenceBoundary } from '../context/Persistence';
+import { withMosaicProvider } from '../hoc/withMosaicProvider';
 import { withRouter } from '../hoc/withRouter';
 import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
@@ -101,19 +101,17 @@ const APIImpl: React.FC<APIProps> = props => {
   }
 
   return (
-    <MosaicProvider>
-      <InlineRefResolverProvider document={document}>
-        {layout === 'stacked' ? (
-          <StackedLayout uriMap={uriMap} tree={tree} />
-        ) : (
-          <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
-        )}
-      </InlineRefResolverProvider>
-    </MosaicProvider>
+    <InlineRefResolverProvider document={document}>
+      {layout === 'stacked' ? (
+        <StackedLayout uriMap={uriMap} tree={tree} />
+      ) : (
+        <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
+      )}
+    </InlineRefResolverProvider>
   );
 };
 
-export const API = pipe(withRouter, withStyles, withPersistenceBoundary)(APIImpl);
+export const API = pipe(withRouter, withStyles, withPersistenceBoundary, withMosaicProvider)(APIImpl);
 
 export function getToCFromOpenApiDocument(apiDescriptionDocument: unknown) {
   let uriMap: IUriMap = {};
