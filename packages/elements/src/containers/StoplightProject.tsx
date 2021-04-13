@@ -5,6 +5,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import { Row } from '../components/TableOfContents/Row';
 import { defaultPlatformUrl } from '../constants';
 import { withPersistenceBoundary } from '../context/Persistence';
+import { withMosaicProvider } from '../hoc/withMosaicProvider';
 import { withRouter } from '../hoc/withRouter';
 import { withStyles } from '../styled';
 import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '../types';
@@ -94,6 +95,11 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
 /**
  * The StoplightProject component displays a traditional documentation UI for an existing Stoplight Project.
  */
-export const StoplightProject = pipe(withRouter, withStyles, withPersistenceBoundary)(StoplightProjectImpl);
+export const StoplightProject = pipe(
+  withRouter,
+  withStyles,
+  withPersistenceBoundary,
+  withMosaicProvider,
+)(StoplightProjectImpl);
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';
