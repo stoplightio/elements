@@ -2,10 +2,17 @@ import '../index';
 
 import { zoomApiYaml } from '@stoplight/elements/src/__fixtures__/api-descriptions/zoomApiYaml';
 import { parse } from '@stoplight/yaml';
+import React from 'react';
 
-import { createTemplate } from './util';
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'elements-api': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    }
+  }
+}
 
-const Template = createTemplate('elements-api');
+const Template = (props: any) => <elements-api {...props} />;
 
 export default {
   title: 'web-components/API',

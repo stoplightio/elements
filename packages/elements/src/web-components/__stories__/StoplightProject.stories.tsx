@@ -1,8 +1,16 @@
 import '../index';
 
-import { createTemplate } from './util';
+import React from 'react';
 
-const Template = createTemplate('elements-stoplight-project');
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'elements-stoplight-project': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    }
+  }
+}
+
+const Template = (props: any) => <elements-stoplight-project {...props} />;
 
 export default {
   title: 'web-components/StoplightProject',
