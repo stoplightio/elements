@@ -20,10 +20,11 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "yarn build.components",
+    "build": "yarn build.code && yarn build.webcomponents",
     "postbuild": "yarn build.styles",
-    "build.components": "sl-scripts build",
+    "build.code": "sl-scripts build",
     "build.styles": "node build-styles.js",
+    "build.webcomponents": "webpack -c ./webcomponents.config.js",
     "build.docs": "build-storybook -c .storybook -o dist-storybook",
     "commit": "git-cz",
     "release": "sl-scripts release",
