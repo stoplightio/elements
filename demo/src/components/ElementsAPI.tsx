@@ -10,7 +10,7 @@ export const ElementsAPI: React.FC = () => {
   const state = useContext(GlobalContext);
 
   return (
-    <Box flex={1} pos="relative">
+    <Box flex={1}>
       <API apiDescriptionUrl={state.apiDescriptionUrl} router="hash" />
     </Box>
   );
