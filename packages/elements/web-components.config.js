@@ -9,7 +9,7 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin()],
   },
   output: {
-    filename: 'elements-web-components.min.js',
+    filename: 'web-components.min.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -24,7 +24,7 @@ module.exports = {
         loader: 'ts-loader',
         exclude: /node_modules/,
         options: {
-          configFile: 'webcomponents.tsconfig.json',
+          configFile: 'web-components.tsconfig.json',
         }
       },
     ],

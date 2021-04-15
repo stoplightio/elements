@@ -28,7 +28,7 @@
               "node_modules/@stoplight/elements/styles/elements.min.css"
             ],
             "scripts": [
-              "node_modules/@stoplight/elements/elements-web-components.min.js"
+              "node_modules/@stoplight/elements/web-components.min.js"
             ]
           },
           "configurations": {
