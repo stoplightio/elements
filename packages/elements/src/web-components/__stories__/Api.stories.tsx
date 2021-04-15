@@ -30,7 +30,7 @@ export default {
 
 export const TodosAPI = Template.bind({});
 TodosAPI.args = {
-  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/openapi.v1.json',
+  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml',
 };
 
 export const ZoomApi = Template.bind({});
