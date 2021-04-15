@@ -175,4 +175,23 @@ describe('API Table of Contents', () => {
       { type: 'item', title: 'A Schema', uri: '/schemas/a schema' },
     ]);
   });
+
+  it("doesn't throw with incorrect tags value", () => {
+    const apiDocument = {
+      openapi: '3.0.0',
+      info: {
+        title: 'some api',
+        version: '1.0.0',
+        description: 'some description',
+      },
+      paths: {},
+      tags: {
+        $ref: './tags',
+      },
+    };
+
+    const { tree } = getToCFromOpenApiDocument(apiDocument);
+
+    expect(tree.items).toEqual([]);
+  });
 });
