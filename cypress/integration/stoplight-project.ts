@@ -11,8 +11,8 @@ describe('Stoplight component', () => {
   });
 
   it('opens via url', () => {
-    cy.visit('/stoplight-project/reference/todos/models/todo-full.v1.json');
-    cy.findByRole('heading', { name: /Todo Full/i }).should('exist');
+    cy.visit('/stoplight-project/reference/todos/todo.v1.yaml/components/schemas/Todos');
+    cy.findByRole('heading', { name: /Todo/i }).should('exist');
   });
 });
 

@@ -1,4 +1,13 @@
 describe('API component', () => {
+  beforeEach(() => {
+    cy.intercept('https://fixtures/*', async req => {
+      req.reply({
+        fixture: req.url.replace('https://fixtures/', ''),
+        statusCode: 200,
+      });
+    });
+  });
+
   it('loads correctly', () => {
     loadZoomApiPage();
   });
