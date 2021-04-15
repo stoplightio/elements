@@ -4,5 +4,9 @@ import { StoplightProject } from '@stoplight/elements';
 import React from 'react';
 
 export const StoplightProjectDocs: React.FC = () => {
-  return <StoplightProject basePath="stoplight-project" workspaceSlug="elements" projectSlug="studio-demo" />;
+  return (
+    <div className="stoplight-container">
+      <StoplightProject basePath="stoplight-project" workspaceSlug="elements" projectSlug="studio-demo" />
+    </div>
+  );
 };

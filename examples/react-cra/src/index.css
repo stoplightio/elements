@@ -32,3 +32,7 @@ code {
   background-color: #ddd;
   color: black;
 }
+
+.stoplight-container {
+  padding: 30px;
+}
