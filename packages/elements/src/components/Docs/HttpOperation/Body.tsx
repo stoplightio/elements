@@ -47,7 +47,7 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
 
       {isJSONSchema(schema) && (
         <Box>
-          <JsonSchemaViewer resolveRef={refResolver} schema={schema as JSONSchema4} viewMode="write" />
+          <JsonSchemaViewer resolveRef={refResolver} schema={schema as JSONSchema4} viewMode="write" hideExamples />
         </Box>
       )}
     </SubSectionPanel>
