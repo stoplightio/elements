@@ -42,7 +42,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   }
 
   return (
-    <Flex className="sl-elements-api" pin overflowY="scroll">
+    <Flex className="sl-elements-api" pos="absolute" pin overflowY="scroll">
       <Box
         bg="canvas-100"
         borderR

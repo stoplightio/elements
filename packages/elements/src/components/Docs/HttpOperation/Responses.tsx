@@ -109,7 +109,7 @@ export const Response = ({
         >
           {schema && (
             <Box>
-              <JsonSchemaViewer schema={schema as JSONSchema4} resolveRef={refResolver} viewMode="read" />
+              <JsonSchemaViewer schema={schema as JSONSchema4} resolveRef={refResolver} viewMode="read" hideExamples />
             </Box>
           )}
         </SubSectionPanel>
