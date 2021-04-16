@@ -27,6 +27,10 @@ export const EXAMPLE_SPECS = [
     value: 'https://api.apis.guru/v2/specs/netlify.com/2.2.0/swagger.yaml',
   },
   {
+    text: 'NY Times Article Search',
+    value: 'https://api.apis.guru/v2/specs/nytimes.com/article_search/1.0.0/openapi.yaml',
+  },
+  {
     text: 'Plaid',
     value: 'https://api.apis.guru/v2/specs/plaid.com/2020-09-14_1.8.0/openapi.yaml',
   },
