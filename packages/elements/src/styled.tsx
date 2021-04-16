@@ -20,7 +20,7 @@ export class Styled extends React.Component {
 
   render() {
     return (
-      <Box className="sl-elements sl-antialiased" fontFamily="ui" fontSize="base" color="body">
+      <Box className="sl-elements sl-antialiased" fontFamily="ui" fontSize="base" color="body" h="full">
         {this.props.children}
       </Box>
     );
