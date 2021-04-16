@@ -12,12 +12,14 @@ import { ISourceNodeMap, NodeTypes } from './types';
 export const isOas2 = (parsed: unknown): parsed is Spec =>
   isObject(parsed) &&
   'swagger' in parsed &&
-  Number.parseInt(String((parsed as Partial<{ swagger: unknown }>).swagger)) === 2;
+  Number.parseInt(String((parsed as Partial<{ swagger: unknown }>).swagger)) === 2 &&
+  Array.isArray((parsed as Partial<{ tags: unknown }>).tags || []);
 
 export const isOas3 = (parsed: unknown): parsed is OpenAPIObject =>
   isObject(parsed) &&
   'openapi' in parsed &&
-  Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3;
+  Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3 &&
+  Array.isArray((parsed as Partial<{ tags: unknown }>).tags || []);
 
 export const isOperation = (uri: string) => OPERATION_REGEXP.test(uri);
 

@@ -34,7 +34,7 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
       })
       .catch(reason => {
         if (typeof reason === 'object' && reason !== null && 'files' in reason) {
-          setBundledData(reason.files.schema);
+          setBundledData({ ...reason.files.schema });
         } else {
           console.warn(`Could bundle: ${reason?.message ?? 'Unknown error'}`);
         }
