@@ -1470,12 +1470,12 @@
   integrity sha512-cPqjjzuFWNK3BSKLm0abspP0sp/IGOli4p5I5fKFAzdS8fvjdOwDCfZqAaIiXd9lPkOWi3SUUfZof3hEb7J/uw==
 
 "@stoplight/elements-utils@beta", "@stoplight/elements-utils@file:../../packages/elements-utils/dist":
-  version "7.0.0-alpha.7"
+  version "7.0.0-alpha.6"
   dependencies:
     lodash "^4.17.19"
 
 "@stoplight/elements@file:../../packages/elements/dist":
-  version "7.0.0-alpha.7"
+  version "7.0.0-alpha.6"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.31"
     "@fortawesome/free-solid-svg-icons" "^5.14.0"
@@ -1509,6 +1509,7 @@
     tslib "^1.12.0"
     unist-util-select "^3.0.1"
     urijs "^1.19.6"
+    zustand "3.3.3"
 
 "@stoplight/http-spec@^3.1.1":
   version "3.2.2"
@@ -13116,6 +13117,11 @@ zoom-level@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/zoom-level/-/zoom-level-2.5.0.tgz#286ec16f247b8bb7a900df6612567688eeef498a"
   integrity sha512-7UlRWU4Q3uCMCeDVMOm7eBrIu145OqsIJ3p6zq58l8UsSYwKWxc6zEapC5YA9tIeh0oheb4cT9Kk2Wq353loFg==
+
+zustand@3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.3.3.tgz#88b930a873d0f13e406f96958c1409645ea8b370"
+  integrity sha512-KTN/O76rVc9muDoprsCDe/LQjbuq+GHYt5JdYahuXaGZ+8Gyk44SepzTFeQTF5J+b8+/Q+o90BaSEQ3WImKPog==
 
 zustand@^3.3.3:
   version "3.4.1"
