@@ -60,7 +60,11 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
         <Heading ml={5} mb={5} size={4}>
           {httpService.name}
         </Heading>
-        <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname, scrollRef }} />
+        <TableOfContents
+          contents={contents}
+          rowComponent={Row}
+          rowComponentExtraProps={{ pathname, scrollElement: scrollRef.current }}
+        />
       </Box>
 
       <Box
