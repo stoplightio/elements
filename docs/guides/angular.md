@@ -14,12 +14,12 @@ npx @angular/cli new elements-starter-angular
 cd elements-starter-angular
 ```
 
-## Install Elements Web Components
+## Install Elements
 
-Next, install the Elements Web Components library.
+Next, install the Elements library.
 
 ```bash
-yarn add @stoplight/elements-web-components
+yarn add @stoplight/elements
 ```
 
 Add the Elements CSS and JavaScript bundles to your Angular config.
@@ -37,11 +37,11 @@ Add the Elements CSS and JavaScript bundles to your Angular config.
             // ...
             "styles": [
               // ...
-              "node_modules/@stoplight/elements-web-components/dist/elements.min.css"
+              "node_modules/@stoplight/elements/styles/elements.min.css"
             ],
             "scripts": [
               // ...
-              "node_modules/@stoplight/elements-web-components/dist/elements.min.js"
+              "node_modules/@stoplight/elements/web-components.min.js"
             ]
           }
         }
