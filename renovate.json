@@ -2,11 +2,14 @@
   "npm": {
     "enabled": false
   },
+  "circleci": {
+    "enabled": false
+  },
+  "html": {
+    "enabled": false
+  },
   "lockFileMaintenance": {
-    "enabled": true,
-    "extends": [
-      "schedule:weekly"
-    ]
+    "enabled": true
   },
   "automerge": false,
   "hostRules": [
@@ -16,5 +19,7 @@
         "token": "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"
       }
     }
-  ]
+  ],
+  "repositories": ["stoplightio/elements"],
+  "baseBranches": ["renovate/configure"]
 }
