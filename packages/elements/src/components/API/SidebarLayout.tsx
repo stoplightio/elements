@@ -65,6 +65,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
       <Box
         px={24}
         flex={1}
+        overflowY="auto"
         style={{
           width: '100%',
           maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px`,
