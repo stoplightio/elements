@@ -42,7 +42,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   }
 
   return (
-    <Flex className="sl-elements-api" pos="absolute" pin overflowY="scroll">
+    <Flex className="sl-elements-api" pin h="full">
       <Box
         bg="canvas-100"
         borderR
@@ -65,6 +65,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
       <Box
         px={24}
         flex={1}
+        overflowY="auto"
         style={{
           width: '100%',
           maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px`,
