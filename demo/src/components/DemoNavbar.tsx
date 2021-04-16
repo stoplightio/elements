@@ -19,7 +19,7 @@ export const DemoNavbar = () => {
   return (
     <>
       <InvertTheme>
-        <Flex h="2xl" px={5} alignItems="center" bg="canvas-pure">
+        <Flex h="2xl" shrink={0} px={5} alignItems="center" bg="canvas-pure">
           <HStack w="1/3" alignItems="center" spacing={4}>
             <Text fontSize="lg" fontWeight="semibold" lineHeight="none">
               Stoplight Elements Demo
@@ -67,7 +67,7 @@ const SpecUrlInput = () => {
     <HStack spacing={2} flex={1}>
       <Input
         appearance="minimal"
-        placeholder="URL to an OpenAPI spec to try..."
+        placeholder="URL to an OpenAPI document..."
         flex={1}
         bg="canvas-100"
         rounded
