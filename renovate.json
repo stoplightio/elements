@@ -8,5 +8,13 @@
       "schedule:weekly"
     ]
   },
-  "automerge": false
+  "automerge": false,
+  "hostRules": [
+    {
+      "domainName": "github.com",
+      "encrypted": {
+        "token": "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"
+      }
+    }
+  ]
 }
