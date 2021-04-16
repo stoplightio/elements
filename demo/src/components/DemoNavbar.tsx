@@ -67,7 +67,7 @@ const SpecUrlInput = () => {
     <HStack spacing={2} flex={1}>
       <Input
         appearance="minimal"
-        placeholder="URL to an OpenAPI spec to try..."
+        placeholder="URL to an OpenAPI document..."
         flex={1}
         bg="canvas-100"
         rounded
