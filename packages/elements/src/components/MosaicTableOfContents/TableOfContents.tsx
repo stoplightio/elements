@@ -38,7 +38,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeI
 
   return (
     <Box w="full">
-      <Box my={6}>
+      <Box my={3}>
         <LinkContext.Provider value={Link}>
           <ActiveIdContext.Provider value={activeId}>
             {tree.map((item, key) => {
