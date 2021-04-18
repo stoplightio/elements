@@ -174,7 +174,7 @@ const Item = React.memo<{
       bg={{ default: isActive ? 'primary-tint' : 'canvas-100', hover: 'canvas-200' }}
       cursor="pointer"
       // @ts-expect-error
-      pl={4 + depth * 6}
+      pl={4 + depth * 4}
       pr={4}
       h="md"
       align="center"
