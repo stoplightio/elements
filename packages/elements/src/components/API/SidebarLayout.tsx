@@ -48,7 +48,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode, child
           minWidth: `${SIDEBAR_WIDTH}px`,
         }}
       >
-        <Heading ml={5} mb={5} size={4}>
+        <Heading ml={4} size={4}>
           {serviceNode.name}
         </Heading>
 
