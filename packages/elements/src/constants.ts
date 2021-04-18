@@ -49,6 +49,7 @@ export const HttpSecuritySchemeColors: Dictionary<string, HttpSecurityScheme['ty
   http: 'orange',
   oauth2: 'red',
   openIdConnect: 'blue',
+  mutualTLS: 'blue',
 };
 
 export const HttpMethodColors = {

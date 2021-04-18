@@ -1,49 +1,42 @@
-import { Group as GroupItem, isGroup, isItem, ITableOfContents, Item } from '@stoplight/elements-utils';
-import { IHttpOperation, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import { Collapse, Icon, Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { HttpMethodColors } from '../../constants';
-import { useParsedData } from '../../hooks/useParsedData';
-import { getNodeType, IUriMap } from '../../utils/oas';
+import { OperationNode, ServiceChildNode, ServiceNode } from '../../utils/oas';
 import { Docs, ParsedDocs } from '../Docs';
 import { DeprecatedBadge } from '../Docs/HttpOperation/Badges';
 import { TryItWithRequestSamples } from '../TryIt';
+import { computeTagGroups, TagGroup } from './utils';
 
 type StackedLayoutProps = {
-  uriMap: IUriMap;
-  tree: ITableOfContents;
+  serviceNode: ServiceNode;
+  childNodes: ServiceChildNode[];
 };
 
-type ItemRowProps = {
-  data: unknown;
-  nodeType: NodeType;
-  type: string;
-  title: string;
+const itemMatchesHash = (hash: string, item: OperationNode) => {
+  return hash.substr(1) === `${item.name}-${item.data.method}`;
 };
 
-const itemMatchesHash = (hash: string, item: Pick<ItemRowProps, 'title' | 'type'>) => {
-  return hash.substr(1) === `${item.title}-${item.type}`;
-};
-
-export const StackedLayout: React.FC<StackedLayoutProps> = ({ uriMap, tree }) => {
-  const groups = tree.items.filter(isGroup);
+export const StackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode, childNodes }) => {
+  const { groups } = computeTagGroups(serviceNode, childNodes);
 
   return (
     <div className="w-full flex flex-col m-auto max-w-4xl">
       <div className="w-full border-b dark:border-gray-6">
-        <Docs className="mx-auto" nodeData={uriMap['/'] as any} nodeType={NodeType.HttpService} headless />
+        <Docs className="mx-auto" nodeData={serviceNode.data} nodeType={NodeType.HttpService} headless />
       </div>
+
       {groups.map(group => (
-        <Group key={group.title} group={group} uriMap={uriMap} />
+        <Group key={group.title} group={group} />
       ))}
     </div>
   );
 };
 
-const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap }) => {
+const Group = React.memo<{ group: TagGroup }>(({ group }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const { hash } = useLocation();
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
@@ -51,33 +44,9 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
-  const mapItems = React.useCallback(
-    (item: Item) => {
-      const nodeData = uriMap[item.uri];
-      const nodeType = getNodeType(item.uri);
-      const type = nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).method : 'model';
-      const title = nodeType === NodeType.HttpOperation ? (nodeData as IHttpOperation).path : item.title;
-
-      return {
-        nodeData,
-        nodeType,
-        type,
-        title,
-        uri: item.uri,
-      };
-    },
-    [uriMap],
-  );
-
   const shouldExpand = React.useMemo(() => {
-    return (
-      urlHashMatches ||
-      group.items
-        .filter(isItem)
-        .map(mapItems)
-        .some(item => itemMatchesHash(hash, item))
-    );
-  }, [group, hash, urlHashMatches, mapItems]);
+    return urlHashMatches || group.items.some(item => itemMatchesHash(hash, item));
+  }, [group, hash, urlHashMatches]);
 
   React.useEffect(() => {
     if (shouldExpand) {
@@ -101,39 +70,34 @@ const Group: React.FC<{ group: GroupItem; uriMap: IUriMap }> = ({ group, uriMap 
       </div>
 
       <Collapse isOpen={isExpanded}>
-        {group.items
-          .filter(isItem)
-          .map(mapItems)
-          .map(({ nodeData, nodeType, type, title, uri }) => {
-            return <ItemRow key={uri} data={nodeData} nodeType={nodeType} type={type} title={title} />;
-          })}
+        {group.items.map(item => {
+          return <Item key={item.uri} item={item} />;
+        })}
       </Collapse>
     </div>
   );
-};
+});
 
 type PanelTabId = 'docs' | 'tryit';
 
-const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
-  const parsedNode = useParsedData(nodeType, data);
-
+const Item = React.memo<{ item: OperationNode }>(({ item }) => {
   const { hash } = useLocation();
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const [tabId, setTabId] = React.useState<PanelTabId>('docs');
-  const color = HttpMethodColors[type] || 'gray';
-  const isDeprecated = parsedNode?.type === 'http_operation' ? !!parsedNode.data.deprecated : false;
+  const color = HttpMethodColors[item.data.method] || 'gray';
+  const isDeprecated = !!item.data.deprecated;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
   React.useEffect(() => {
-    if (itemMatchesHash(hash, { title, type })) {
+    if (itemMatchesHash(hash, item)) {
       setIsExpanded(true);
       if (scrollRef?.current?.offsetTop) {
         window.scrollTo(0, scrollRef.current.offsetTop);
       }
     }
-  }, [hash, title, type]);
+  }, [hash, item]);
 
   return (
     <div
@@ -153,35 +117,29 @@ const ItemRow: React.FC<ItemRowProps> = ({ data, nodeType, type, title }) => {
             `border-${color}`,
           )}
         >
-          {type || 'UNKNOWN'}
+          {item.data.method || 'UNKNOWN'}
         </div>
 
-        <div className="flex-1 font-medium break-all">{title}</div>
+        <div className="flex-1 font-medium break-all">{item.name}</div>
         {isDeprecated && <DeprecatedBadge />}
       </div>
 
-      {parsedNode && (
-        <Collapse isOpen={isExpanded}>
-          {parsedNode?.type === 'http_operation' ? (
-            <Tabs
-              className="PreviewTabs mx-auto"
-              selectedTabId={tabId}
-              onChange={(tabId: PanelTabId) => setTabId(tabId)}
-              renderActiveTabPanelOnly
-            >
-              <Tab id="docs" title="Docs" className="p-4" panel={<ParsedDocs node={parsedNode} headless />} />
-              <Tab
-                id="tryit"
-                title="Try It"
-                className="p-4"
-                panel={<TryItWithRequestSamples httpOperation={parsedNode.data} />}
-              />
-            </Tabs>
-          ) : (
-            <ParsedDocs className="mx-auto p-4" node={parsedNode} headless />
-          )}
-        </Collapse>
-      )}
+      <Collapse isOpen={isExpanded}>
+        <Tabs
+          className="PreviewTabs mx-auto"
+          selectedTabId={tabId}
+          onChange={(tabId: PanelTabId) => setTabId(tabId)}
+          renderActiveTabPanelOnly
+        >
+          <Tab id="docs" title="Docs" className="p-4" panel={<ParsedDocs node={item} headless />} />
+          <Tab
+            id="tryit"
+            title="Try It"
+            className="p-4"
+            panel={<TryItWithRequestSamples httpOperation={item.data} />}
+          />
+        </Tabs>
+      </Collapse>
     </div>
   );
-};
+});
