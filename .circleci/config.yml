@@ -77,6 +77,12 @@ jobs:
           name: Upload Cypress Screenshots
           path: cypress/results/screenshots
           destination: screenshots
+  lockfile-maintenance:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: yarn test.prod
 workflows:
   test-and-release:
     jobs:
@@ -98,3 +104,11 @@ workflows:
           example-name: angular
           requires:
             - build
+  perform-lockfile-maintenance:
+    jobs:
+      - lockfile-maintenance:
+          filters:
+              branches:
+                only:
+                  - main
+  
