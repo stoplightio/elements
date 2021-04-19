@@ -106,7 +106,7 @@ const APIImpl: React.FC<APIProps> = props => {
   }
 
   return (
-    <InlineRefResolverProvider document={document}>
+    <InlineRefResolverProvider document={parsedDocument}>
       {layout === 'stacked' ? (
         <StackedLayout serviceNode={oasNodes.serviceNode} childNodes={oasNodes.childNodes} />
       ) : (
