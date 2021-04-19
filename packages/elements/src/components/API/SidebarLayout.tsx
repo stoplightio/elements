@@ -68,7 +68,6 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
       </Box>
 
       <Box
-        ref={scrollRef}
         px={24}
         flex={1}
         overflowY="auto"
@@ -77,13 +76,15 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
           maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px`,
         }}
       >
-        <Docs
-          key={pathname}
-          uri={hasOverview ? pathname : undefined}
-          className="sl-pt-16 sl-pb-24"
-          nodeData={nodeData}
-          nodeType={nodeType}
-        />
+        <Box ref={scrollRef}>
+          <Docs
+            key={pathname}
+            uri={hasOverview ? pathname : undefined}
+            className="sl-pt-16 sl-pb-24"
+            nodeData={nodeData}
+            nodeType={nodeType}
+          />
+        </Box>
       </Box>
     </Flex>
   );
