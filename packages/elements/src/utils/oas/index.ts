@@ -133,7 +133,7 @@ function computeChildNodes(
           type: NodeType.HttpOperation,
           uri: parsedUri,
           data: operationDocument,
-          name: operationDocument.summary || operationDocument.path,
+          name: operationDocument.summary || operationDocument.iid || operationDocument.path,
           tags: operationDocument.tags?.map(tag => tag.name) || [],
         });
       } else if (match.type === NodeTypes.Model) {

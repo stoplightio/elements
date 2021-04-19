@@ -198,4 +198,48 @@ describe('computeOasNodes', () => {
       ],
     });
   });
+
+  it('should fallback to operationId if no summary', () => {
+    expect(
+      computeOasNodes({
+        openapi: '3.0.0',
+        paths: {
+          '/todos': {
+            get: {
+              operationId: 'get-todos-operationId',
+              tags: ['operation-tag'],
+            },
+          },
+        },
+      })?.childNodes[0],
+    ).toEqual({
+      type: 'http_operation',
+      uri: '/operations/get-todos-operationId',
+      data: {
+        id: '?http-operation-id?',
+        iid: 'get-todos-operationId',
+        method: 'get',
+        path: '/todos',
+        responses: [],
+        servers: [],
+        request: {
+          body: {
+            contents: [],
+          },
+          headers: [],
+          query: [],
+          cookie: [],
+          path: [],
+        },
+        tags: [
+          {
+            name: 'operation-tag',
+          },
+        ],
+        security: [],
+      },
+      name: 'get-todos-operationId',
+      tags: ['operation-tag'],
+    });
+  });
 });
