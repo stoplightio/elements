@@ -1,0 +1,29 @@
+{
+  "npm": {
+    "enabled": false
+  },
+  "circleci": {
+    "enabled": false
+  },
+  "html": {
+    "enabled": false
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": [
+      "before 11am"
+    ],
+    "timezone": "Europe/Warsaw"
+  },
+  "automerge": false,
+  "hostRules": [
+    {
+      "domainName": "github.com",
+      "encrypted": {
+        "token": "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"
+      }
+    }
+  ],
+  "repositories": ["stoplightio/elements"],
+  "baseBranches": ["feat/renovate-test-run"]
+}
