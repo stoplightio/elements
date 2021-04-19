@@ -1,9 +1,17 @@
 export const DEFAULT_API_URL =
-  'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml';
+  'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml';
 
 export const EXAMPLE_SPECS = [
   {
-    text: 'Digital Ocean (default example)',
+    text: 'Todo API (default example)',
+    value: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml',
+  },
+  {
+    text: 'Zoom',
+    value: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
+  },
+  {
+    text: 'Digital Ocean',
     value: 'https://raw.githubusercontent.com/digitalocean/openapi/main/specification/DigitalOcean-public.v2.yaml',
   },
   {
