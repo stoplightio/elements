@@ -82,6 +82,7 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
+      - run: git checkout main
       - run: yarn test.prod
 workflows:
   version: 2
@@ -106,5 +107,12 @@ workflows:
           requires:
             - build
   perform-lockfile-maintenance:
+    triggers:
+      - schedule:
+          cron: "5,10,15,20 5 * * 1"
+          filters:
+            branches:
+              only:
+                - main
     jobs:
       - lockfile-maintenance
