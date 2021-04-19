@@ -84,6 +84,7 @@ jobs:
       - checkout
       - run: yarn test.prod
 workflows:
+  version: 2
   test-and-release:
     jobs:
       - lint-and-check
