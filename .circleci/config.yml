@@ -107,9 +107,4 @@ workflows:
             - build
   perform-lockfile-maintenance:
     jobs:
-      - lockfile-maintenance:
-          filters:
-            branches:
-              only:
-                - main
-  
+      - lockfile-maintenance
