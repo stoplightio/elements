@@ -108,7 +108,7 @@ workflows:
     jobs:
       - lockfile-maintenance:
           filters:
-              branches:
-                only:
-                  - main
+            branches:
+              only:
+                - main
   
