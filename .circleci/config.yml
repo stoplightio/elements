@@ -109,7 +109,7 @@ workflows:
   perform-lockfile-maintenance:
     triggers:
       - schedule:
-          cron: "5,10,15,20 5 * * 1"
+          cron: "5,10,15,20,25,30 15 * * 1"
           filters:
             branches:
               only:
