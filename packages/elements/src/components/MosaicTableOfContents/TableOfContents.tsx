@@ -171,7 +171,7 @@ const Item = React.memo<{
   return (
     <Flex
       id={id}
-      bg={{ default: isActive ? 'primary-tint' : 'canvas-100', hover: 'canvas-200' }}
+      bg={{ default: isActive ? 'primary-tint' : 'canvas-100', hover: isActive ? undefined : 'canvas-200' }}
       cursor="pointer"
       // @ts-expect-error
       pl={4 + depth * 4}
