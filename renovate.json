@@ -9,7 +9,11 @@
     "enabled": false
   },
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": true,
+    "schedule": [
+      "before 11am"
+    ],
+    "timezone": "Europe/Warsaw"
   },
   "automerge": false,
   "hostRules": [
