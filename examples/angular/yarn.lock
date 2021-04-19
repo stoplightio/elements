@@ -1956,7 +1956,7 @@
     "@stoplight/http-spec" "^3.2.6"
     "@stoplight/json" "^3.10.0"
     "@stoplight/json-schema-ref-parser" "^9.0.5"
-    "@stoplight/json-schema-viewer" "^4.0.0-beta.11"
+    "@stoplight/json-schema-viewer" "^4.0.0-beta.13"
     "@stoplight/markdown" "^2.10.0"
     "@stoplight/markdown-viewer" "^4.3.3"
     "@stoplight/mosaic" "1.0.0-beta.46"
@@ -1983,7 +1983,6 @@
     tslib "^2.1.0"
     unist-util-select "^3.0.1"
     urijs "^1.19.6"
-    zustand "3.3.3"
 
 "@stoplight/http-spec@^3.2.6":
   version "3.5.0"
@@ -2035,10 +2034,10 @@
     "@stoplight/lifecycle" "^2.3.2"
     magic-error "^0.0.0"
 
-"@stoplight/json-schema-viewer@^4.0.0-beta.11":
-  version "4.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.12.tgz#eede2701fc5e8a2846e8add4d2de305e82af2f67"
-  integrity sha512-/qtmNFF538yPQYTACD7QwlCvoSBxF3zWt8b0KTy51mIr6D4PNsqBBx99x08O49c4aaKtWkzH0XLb1WnXNpRx1w==
+"@stoplight/json-schema-viewer@^4.0.0-beta.13":
+  version "4.0.0-beta.13"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.13.tgz#1039be8bbe6bd1e69f1c0a1a1d92d48498c647c4"
+  integrity sha512-FtOotWyMF4TUW2OeTxLtu1Zr7Apn46ef78FtJtlk9i4ITyj6Ladn90p1I8WU8frawR3NBDiEy4lcXdEVm180vQ==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.10.0"
@@ -10845,11 +10844,6 @@ zoom-level@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/zoom-level/-/zoom-level-2.5.0.tgz#286ec16f247b8bb7a900df6612567688eeef498a"
   integrity sha512-7UlRWU4Q3uCMCeDVMOm7eBrIu145OqsIJ3p6zq58l8UsSYwKWxc6zEapC5YA9tIeh0oheb4cT9Kk2Wq353loFg==
-
-zustand@3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.3.3.tgz#88b930a873d0f13e406f96958c1409645ea8b370"
-  integrity sha512-KTN/O76rVc9muDoprsCDe/LQjbuq+GHYt5JdYahuXaGZ+8Gyk44SepzTFeQTF5J+b8+/Q+o90BaSEQ3WImKPog==
 
 zustand@^3.3.3:
   version "3.4.1"
