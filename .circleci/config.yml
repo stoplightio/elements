@@ -88,7 +88,7 @@ jobs:
       - run: 'git add yarn.lock && git commit -m "chore: weekly lockfile maintenance"'
       - run: export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") && git push --set-upstream origin $BRANCH_NAME
       # - run: export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") && curl -X POST -H "Accept:application/vnd.github.v3+json" -u $GIT_AUTHOR_NAME:$GH_TOKEN https://api.github.com/repos/stoplightio/elements/pulls -d '{"head":$BRANCH_NAME,"base":"main", "title":"Weekly lockfile maintenance"}'
-      - run: export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") &&  export BODY='{"head":''"'${BRANCH_NAME}'"'',"base":"main","title":"Weekly lockfile maintenance"}' && curl -X POST -H "Accept:application/vnd.github.v3+json" -u $GIT_AUTHOR_NAME:$GH_TOKEN https://api.github.com/repos/stoplightio/elements/pulls -d $BODY
+      - run: export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") && export BODY='{"head":''"'${BRANCH_NAME}'"' ',"base":"main","title":"Weekly lockfile maintenance"}' && curl -X POST -H "Accept:application/vnd.github.v3+json" -u $GIT_AUTHOR_NAME:$GH_TOKEN https://api.github.com/repos/stoplightio/elements/pulls -d $BODY
 workflows:
   version: 2
   test-and-release:
