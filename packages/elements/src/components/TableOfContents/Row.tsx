@@ -6,7 +6,7 @@ import { TableOfContentsLinkWithId } from '../../types';
 
 type ToCExtraProps = {
   pathname: string;
-  scrollElement?: HTMLDivElement | null;
+  scrollRef?: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 export const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = props => {
@@ -21,7 +21,7 @@ export const Row: RowComponentType<TableOfContentsLinkWithId, ToCExtraProps> = p
   };
 
   const handleClick = () => {
-    props.extra.scrollElement?.scrollIntoView({
+    props.extra.scrollRef?.current?.scrollIntoView({
       behavior: 'smooth',
     });
   };
