@@ -1,4 +1,4 @@
-[![Elements - OpenAPI Powered API Documentation](./examples/readme-header.svg)][elements_landing_page]
+[![Elements - OpenAPI Powered API Documentation](docs/images/readme-header.svg)][elements_landing_page]
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplight-elements.netlify.app)
 [![CircleCI][circle_ci_image]][circle_ci]
