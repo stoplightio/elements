@@ -85,7 +85,7 @@ jobs:
       - run: git checkout main
       - run: git checkout -b feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y")
       - run: yarn upgrade
-      - run: git push --set-upstream origin feat/lockfile-maintenance-ci-job
+      - run: git push --set-upstream origin feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y")
       - run: curl -X POST -H "Accept:application/vnd.github.v3+json" -u $GIT_AUTHOR_NAME:$GH_TOKEN https://api.github.com/repos/stoplightio/elements/pulls -d '{"head":"feat/lockfile-maintenance-ci-job","base":"main", "title":"Weekly lockfile maintenance"}'
 workflows:
   version: 2
