@@ -83,7 +83,11 @@ jobs:
     steps:
       - checkout
       - run: git checkout main
-      - run: yarn test.prod
+      - run: git checkout -b feat/lockfile-maintenance-ci-job
+      - run: rm yarn.lock && yarn upgrade
+      - run: yarn && yarn test.prod
+      - run: git push --set-upstream origin feat/lockfile-maintenance-ci-job
+      - run: curl -X POST -H "Accept:application/vnd.github.v3+json" -u $GIT_AUTHOR_NAME:$GH_TOKEN https://api.github.com/repos/stoplightio/elements/pulls -d '{"head":"feat/lockfile-maintenance-ci-job","base":"main", "title":"Weekly lockfile maintenance"}'
 workflows:
   version: 2
   test-and-release:
@@ -107,12 +111,5 @@ workflows:
           requires:
             - build
   perform-lockfile-maintenance:
-    triggers:
-      - schedule:
-          cron: "35,40,45,50 15 * * 1"
-          filters:
-            branches:
-              only:
-                - feat/lockfile-maintenance-ci-job
     jobs:
       - lockfile-maintenance
