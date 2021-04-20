@@ -1,4 +1,4 @@
-# Elements
+[![Elements - OpenAPI Powered API Documentation](./examples/readme-header.svg)][elements_landing_page]
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplight-elements.netlify.app)
 [![CircleCI][circle_ci_image]][circle_ci]
@@ -92,7 +92,7 @@ Check these projects out!
 [code_of_conduct]: CODE_OF_CONDUCT.md
 [contributing]: CONTRIBUTING.md
 [download-release]: https://github.com/stoplightio/elements/releases/latest
-[mocking_landing_page]: https://stoplight.io/api-mocking?utm_source=github&utm_medium=elements&utm_campaign=readme
+[elements_landing_page]: https://elements-demo.stoplight.io?utm_source=github&utm_medium=elements&utm_campaign=readme
 [circle_ci]: https://circleci.com/gh/stoplightio/elements
 [circle_ci_image]: https://img.shields.io/circleci/build/github/stoplightio/elements/main
 [npm]: https://www.npmjs.com/package/@stoplight/elements
