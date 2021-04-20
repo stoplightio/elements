@@ -83,7 +83,7 @@ jobs:
     steps:
       - checkout
       - run: git checkout main
-      - run: git checkout -b feat/lockfile-maintenance-ci-job-${$(date +"%m-%d-%Y")}
+      - run: git checkout -b feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y")
       - run: rm yarn.lock && yarn
       - run: yarn test.prod
       - run: git push --set-upstream origin feat/lockfile-maintenance-ci-job
