@@ -84,12 +84,6 @@ jobs:
       - checkout
       - run:
           command: | 
-            sudo apt-get install software-properties-common
-            sudo apt-get update
-            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-            sudo apt-add-repository https://cli.github.com/packages
-            sudo apt update
-            sudo apt install gh
             gh auth login --with-token $GH_TOKEN
             export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") && git checkout -b $BRANCH_NAME
             yarn upgrade
