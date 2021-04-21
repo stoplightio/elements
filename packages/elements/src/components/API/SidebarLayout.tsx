@@ -21,6 +21,7 @@ const SIDEBAR_WIDTH = 300;
 
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, uriMap }) => {
   const operationMap = React.useMemo(() => mapUriToOperation(uriMap), [uriMap]);
+  const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const contents = useTocContents(tree, operationMap).map(item => ({
     ...item,
     isActive: item.to === pathname,
@@ -59,25 +60,27 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
         <Heading ml={5} mb={5} size={4}>
           {httpService.name}
         </Heading>
-        <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname }} />
+        <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname, scrollRef }} />
       </Box>
 
       <Box
         px={24}
         flex={1}
         overflowY="auto"
+        overflowX="hidden"
         style={{
           width: '100%',
-          maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px`,
         }}
       >
-        <Docs
-          key={pathname}
-          uri={hasOverview ? pathname : undefined}
-          className="sl-pt-16 sl-pb-24"
-          nodeData={nodeData}
-          nodeType={nodeType}
-        />
+        <Box ref={scrollRef} style={{ maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px` }}>
+          <Docs
+            key={pathname}
+            uri={hasOverview ? pathname : undefined}
+            className="sl-pt-16 sl-pb-24"
+            nodeData={nodeData}
+            nodeType={nodeType}
+          />
+        </Box>
       </Box>
     </Flex>
   );
