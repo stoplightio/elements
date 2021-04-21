@@ -1,6 +1,7 @@
 import { NodeType } from '@stoplight/types';
 
 import { OperationNode, ServiceNode } from '../../utils/oas/types';
+import { TableOfContentsItem } from '../MosaicTableOfContents/types';
 
 export type TagGroup = { title: string; items: OperationNode[] };
 
@@ -48,4 +49,90 @@ export const computeTagGroups = (serviceNode: ServiceNode) => {
     .map(([, tagGroup]) => tagGroup);
 
   return { groups: orderedTagGroups, ungrouped };
+};
+
+export const computeAPITree = (serviceNode: ServiceNode) => {
+  const tree: TableOfContentsItem[] = [];
+
+  // Only show overview if service node has a description
+  if (serviceNode.data.description) {
+    tree.push({
+      id: '/',
+      slug: '/',
+      title: 'Overview',
+      type: 'overview',
+      meta: '',
+    });
+  }
+
+  const operationNodes = serviceNode.children.filter(node => node.type === NodeType.HttpOperation);
+  if (operationNodes.length) {
+    tree.push({
+      title: 'Endpoints',
+    });
+
+    const { groups, ungrouped } = computeTagGroups(serviceNode);
+
+    // Show ungroupped operations above tag groups
+    ungrouped.forEach(operationNode => {
+      tree.push({
+        id: operationNode.uri,
+        slug: operationNode.uri,
+        title: operationNode.name,
+        type: operationNode.type,
+        meta: operationNode.data.method,
+      });
+    });
+
+    groups.forEach(group => {
+      tree.push({
+        title: group.title,
+        items: group.items.map(operationNode => {
+          return {
+            id: operationNode.uri,
+            slug: operationNode.uri,
+            title: operationNode.name,
+            type: operationNode.type,
+            meta: operationNode.data.method,
+          };
+        }),
+      });
+    });
+  }
+
+  const schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
+  if (schemaNodes.length) {
+    tree.push({
+      title: 'Schemas',
+    });
+
+    schemaNodes.forEach(node => {
+      tree.push({
+        id: node.uri,
+        slug: node.uri,
+        title: node.name,
+        type: node.type,
+        meta: '',
+      });
+    });
+  }
+
+  return tree;
+};
+
+export const findFirstNodeSlug = (tree: TableOfContentsItem[]): string | void => {
+  for (const item of tree) {
+    if ('slug' in item) {
+      return item.slug;
+    }
+
+    if ('items' in item) {
+      const slug = findFirstNodeSlug(item.items);
+      if (slug) {
+        return slug;
+      }
+    }
+  }
+
+  return;
 };
