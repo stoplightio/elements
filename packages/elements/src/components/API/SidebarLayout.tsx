@@ -17,6 +17,13 @@ const SIDEBAR_WIDTH = 300;
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const tree = React.useMemo(() => computeAPITree(serviceNode), [serviceNode]);
+  const { pathname } = useLocation();
+  
+  React.useEffect(() => {
+    // Scroll to top on page change
+    scrollRef.current?.scrollTo(0, 0);
+  }, [pathname]);
+
   const uriMap = React.useMemo(
     () =>
       serviceNode.children.reduce((prev, current) => {
@@ -26,16 +33,9 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
     [serviceNode.children],
   );
 
-  const { pathname } = useLocation();
-  React.useEffect(() => {
-    // Scroll to top on page change
-    scrollRef.current?.scrollTo(0, 0);
-  }, [pathname]);
-
   const hasOverview = !!serviceNode.data.description;
   const isOverview = !pathname || pathname === '/';
   const node = isOverview ? serviceNode : uriMap[pathname];
-
   if ((isOverview && !hasOverview) || !node) {
     // Redirect to the first child if service node has no description or node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
