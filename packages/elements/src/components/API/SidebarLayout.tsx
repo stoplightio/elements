@@ -20,6 +20,7 @@ const SIDEBAR_WIDTH = 300;
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const { pathname } = useLocation();
+  
   const uriMap = React.useMemo(
     () =>
       serviceNode.children.reduce((prev, current) => {
