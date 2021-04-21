@@ -18,7 +18,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const tree = React.useMemo(() => computeAPITree(serviceNode), [serviceNode]);
   const { pathname } = useLocation();
-  
+
   React.useEffect(() => {
     // Scroll to top on page change
     scrollRef.current?.scrollTo(0, 0);
