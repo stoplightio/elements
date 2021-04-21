@@ -4041,14 +4041,6 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@openapi-contrib/openapi-schema-to-json-schema@^3.0.2":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@openapi-contrib/openapi-schema-to-json-schema/-/openapi-schema-to-json-schema-3.0.3.tgz#c626eab186938f2751ee54ec68b345133bc0065c"
-  integrity sha512-/WX/Jos8n7CxvtWPmhlKl9qCAAW0I+VR+V4yXfQxCmB8wmjiz6lPLTGjNk5zD15qi2MGv58++hQLLdow89KdkA==
-  dependencies:
-    fast-deep-equal "^3.1.3"
-    lodash.clonedeep "^4.5.0"
-
 "@pmmmwh/react-refresh-webpack-plugin@^0.4.2":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"
@@ -4823,29 +4815,10 @@
   dependencies:
     eslint-config-prettier "^7.1.0"
 
-"@stoplight/http-spec@^3.1.1":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-3.1.2.tgz#4cc09ae6e77f6a4d6ec3145c14081684680702b4"
-  integrity sha512-pXHuaqT+jkqJY6n26OQjvGMOj0oJNVkrtluxvZRcJHTE4xnGtnf8KfvwHsAT1VipSg/fXCABwxRe8bIdlg/NBg==
-  dependencies:
-    "@openapi-contrib/openapi-schema-to-json-schema" "^3.0.2"
-    "@stoplight/json" "^3.8.1"
-    "@stoplight/types" "^11.9.0"
-    "@types/swagger-schema-official" "~2.0.21"
-    "@types/to-json-schema" "^0.2.0"
-    "@types/type-is" "^1.6.3"
-    "@types/urijs" "~1.19.9"
-    json-schema-generator "^2.0.6"
-    lodash "^4.17.15"
-    openapi3-ts "~1.4.0"
-    postman-collection "^3.6.2"
-    type-is "^1.6.18"
-    urijs "~1.19.2"
-
-"@stoplight/http-spec@^3.2.6":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-3.4.0.tgz#88ab5ae0ff4985119697de5a1413bd9b1d672ab6"
-  integrity sha512-BC2dXnjrKK5DuRicjLzhWrWg/wWrEwh9RFV+uMnjEC8lJAPby11HDndEWRZh/cOJqg8YvB4HpA2+oAyE4XADJg==
+"@stoplight/http-spec@^3.1.1", "@stoplight/http-spec@^3.2.6":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-3.5.0.tgz#5ca42e076fc0975ed4d9cece2956619b5254f711"
+  integrity sha512-4fsMBFcXf4M3Z00A6ver/TwDnv/F1qGudr7eAxCD/bi0SGzZiiT7X93BDso92nwwcJ3dXAH9/nML9cbfKiPouQ==
   dependencies:
     "@stoplight/json" "^3.10.2"
     "@stoplight/types" "^11.10.0"
@@ -4924,7 +4897,7 @@
     classnames "^2.2.6"
     lodash "^4.17.19"
 
-"@stoplight/json@^3.10.0", "@stoplight/json@^3.6", "@stoplight/json@^3.8.1", "@stoplight/json@^3.9.0":
+"@stoplight/json@^3.10.0", "@stoplight/json@^3.6", "@stoplight/json@^3.9.0":
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.10.0.tgz#bd1af55081e1a47e0d01552d2a7e756931f46a4b"
   integrity sha512-Xb1kVQ0t5eqRDF24Y0a2A1o/CEaHjLeVehkBmphqEBkUo6X9L4z5oOUYBMzlAoR/ejhjVgWLzrDBxNOuzBFVDA==
@@ -5229,18 +5202,10 @@
     mobx-react-lite "^1.5.2"
     strict-event-emitter-types "^2.0.0"
 
-"@stoplight/types@^11.10.0":
+"@stoplight/types@^11.10.0", "@stoplight/types@^11.9.0":
   version "11.10.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.10.0.tgz#60bbee770526f4de9cd1c613c7ab84c4e4674126"
   integrity sha512-ffHD9i4UHS8Gsg7Ar8pKjI9B4kq7MRekE7tCROFGcFDzQhfRx9T92AduoLAtP/010XNYq23yDKpLBRPIEk8+xg==
-  dependencies:
-    "@types/json-schema" "^7.0.4"
-    utility-types "^3.10.0"
-
-"@stoplight/types@^11.9.0":
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.9.0.tgz#ced7de2dd53439d2409a3cb390bf7d5b76382ac6"
-  integrity sha512-4bzPpWZobt0e+d0OtALCJyl1HGzKo6ur21qxnId9dTl8v3yeD+5HJKZ2h1mv7e94debH5QDtimMU80V6jbXM8Q==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
@@ -11815,7 +11780,7 @@ fast-deep-equal@2.0.1:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
 
-fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
+fast-deep-equal@^3.1.1:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
@@ -18257,11 +18222,6 @@ openapi3-ts@^2.0.1:
   integrity sha512-v6X3iwddhi276siej96jHGIqTx3wzVfMTmpGJEQDt7GPI7pI6sywItURLzpEci21SBRpPN/aOWSF5mVfFVNmcg==
   dependencies:
     yaml "^1.10.0"
-
-openapi3-ts@~1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/openapi3-ts/-/openapi3-ts-1.4.0.tgz#679d5a24be0efc36f5de4fc2c4b8513663e16f65"
-  integrity sha512-8DmE2oKayvSkIR3XSZ4+pRliBsx19bSNeIzkTPswY8r4wvjX86bMxsORdqwAwMxE8PefOcSAT2auvi/0TZe9yA==
 
 opencollective-postinstall@^2.0.2:
   version "2.0.2"
