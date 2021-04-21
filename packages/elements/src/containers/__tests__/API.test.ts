@@ -190,8 +190,13 @@ describe('API Table of Contents', () => {
       },
     };
 
+    let originalError = console.error;
+    console.error = jest.fn(() => {});
+
     const { tree } = getToCFromOpenApiDocument(apiDocument);
 
     expect(tree.items).toEqual([]);
+
+    console.error = originalError;
   });
 });

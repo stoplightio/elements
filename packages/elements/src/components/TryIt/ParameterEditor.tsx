@@ -35,7 +35,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
             flex={1}
             aria-label={parameter.name}
             options={parameterValueOptions}
-            value={value}
+            value={value || ''}
             onChange={onChange}
           />
         ) : (
@@ -48,7 +48,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
               placeholder={getPlaceholderForParameter(parameter)}
               type={parameter.schema?.type === 'number' ? 'number' : 'text'}
               required
-              value={value}
+              value={value || ''}
               onChange={e => onChange && onChange(e.currentTarget.value)}
             />
             {examples && (
