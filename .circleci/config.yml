@@ -86,7 +86,8 @@ jobs:
           command: | 
             export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") && git checkout -b $BRANCH_NAME
             yarn upgrade
-            'git add yarn.lock && git commit -m "chore: weekly lockfile maintenance"'
+            git add yarn.lock
+            git commit -m "chore: weekly lockfile maintenance"
             git push --set-upstream origin $BRANCH_NAME
             sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
             sudo apt-add-repository https://cli.github.com/packages
