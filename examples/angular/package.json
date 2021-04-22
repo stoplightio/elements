@@ -20,7 +20,8 @@
     "url": "https://github.com/stoplightio/elements-starter-angular/issues"
   },
   "resolutions": {
-    "@stoplight/elements": "file:../../packages/elements/dist"
+    "@stoplight/elements": "file:../../packages/elements/dist",
+    "@stoplight/elements-utils": "file:../../packages/elements-utils/dist"
   },
   "dependencies": {
     "@angular/animations": "^11.1.1",
