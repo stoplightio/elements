@@ -44,7 +44,7 @@ export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
   table_of_contents: faQuestionCircle,
 };
 
-export const HttpSecuritySchemeColors: Dictionary<string, HttpSecurityScheme['type']> = {
+export const HttpSecuritySchemeColors: Partial<Record<HttpSecurityScheme['type'], string>> = {
   apiKey: 'green',
   http: 'orange',
   oauth2: 'red',
