@@ -20,12 +20,12 @@ describe('Response Examples', () => {
     expect(container).toHaveTextContent('example');
   });
 
-  it('allows to choose second example with select', async () => {
+  it('allows to choose second example with select', () => {
     const { container } = render(
       <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="200" />,
     );
 
-    await chooseOption(screen.getByText('Response Example: First Example'), 'Second Example');
+    chooseOption(screen.getByText('Response Example: First Example'), 'Second Example');
 
     expect(container).toHaveTextContent('another');
     expect(container).toHaveTextContent('example');
