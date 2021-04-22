@@ -1,5 +1,6 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { safeParse, safeStringify } from '@stoplight/json';
 import { Box, Button, Flex, Panel, Text, useThemeIsDark } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation } from '@stoplight/types';
@@ -203,7 +204,10 @@ const TryItResponse: React.FC<{ response: ResponseState }> = ({ response }) => (
           {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
         </div>
         {response.bodyText ? (
-          <CodeViewer language="json" value={response.bodyText || ''} />
+          <CodeViewer
+            language="json"
+            value={safeStringify(safeParse(response.bodyText), undefined, 2) || response.bodyText}
+          />
         ) : (
           <p>
             <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />

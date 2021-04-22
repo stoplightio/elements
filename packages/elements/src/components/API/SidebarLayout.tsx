@@ -33,10 +33,14 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
   const httpService = uriMap['/'] as IHttpService;
 
   const hasOverview = !!contents.find(item => item.to === '/');
+  const unknownPath = nodeType !== NodeType.HttpService && !contents.find(item => item.to === pathname);
+
+  if (unknownPath) {
+    return <Redirect to="/" />;
+  }
 
   if (nodeType === NodeType.HttpService && !(nodeData as IHttpService).description) {
     const item = contents.find(content => content.type === 'item');
-
     if (item && item.to) {
       return <Redirect to={item.to} />;
     }

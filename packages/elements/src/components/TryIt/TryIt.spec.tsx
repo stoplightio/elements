@@ -103,6 +103,24 @@ describe('TryIt', () => {
     expect(responseHeader).toBeVisible();
   });
 
+  it('displays raw text response', async () => {
+    fetchMock.mockResolvedValue(
+      new Response('awesome response, but hardly a json one', {
+        status: 200,
+        statusText: 'OK',
+        headers: [],
+      }),
+    );
+
+    const { container } = render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+    clickSend();
+
+    await screen.findByText('Response');
+
+    expect(container).toHaveTextContent('awesome response, but hardly a json one');
+  });
+
   it('Handles error', async () => {
     fetchMock.mockReject(new Error('sample error'));
 
@@ -206,10 +224,10 @@ describe('TryIt', () => {
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      await chooseOption(limitField, '3');
+      chooseOption(limitField, '3');
 
       const typeField = screen.getByLabelText('type');
-      await chooseOption(typeField, 'another');
+      chooseOption(typeField, 'another');
 
       // header param
 
@@ -217,7 +235,7 @@ describe('TryIt', () => {
       await userEvent.type(accountIdField, ' 1999');
 
       const messageIdField = screen.getByLabelText('message-id-select');
-      await chooseOption(messageIdField, 'example 2');
+      chooseOption(messageIdField, 'example 2');
 
       // click send
       clickSend();
