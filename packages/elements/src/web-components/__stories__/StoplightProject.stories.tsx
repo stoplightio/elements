@@ -1,5 +1,6 @@
 import '../index';
 
+import { Story } from '@storybook/react';
 import React from 'react';
 
 declare global {
@@ -10,7 +11,7 @@ declare global {
   }
 }
 
-const Template = (props: any) => <elements-stoplight-project {...props} />;
+const Template: Story = (props: any) => <elements-stoplight-project {...props} />;
 
 export default {
   title: 'web-components/StoplightProject',
