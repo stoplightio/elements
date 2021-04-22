@@ -13,26 +13,47 @@ import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
 const HttpOperation = withMosaicProvider(withPersistenceBoundary(HttpOperationWithoutPersistence));
 
+/*
+
+Wondering what this `unmount()` thingy in some of the tests is all about?
+
+The reason is that an asynchronous action in TryIt component - resolving
+a Promise coming from `buildHarRequest()` call - causes an async update to
+React state, which then causes an `act(...)` warning in the tests which are 
+synchronous.
+
+If you see an unwarranted `act(...)` warning when writing a synchronous test, 
+use the same method to mitigate the issue. Don't do it mindlessly though!
+Sometimes `act(...)` warning is warranted.
+
+If `buildHarRequest` is no longer asynchronous, or it dissapeared from the codebase,
+you can attempt to remove manual `unmount()` calls.
+*/
+
 describe('HttpOperation', () => {
   describe('Header', () => {
     it('should display "Deprecated" badge for deprecated http operation', () => {
-      render(<HttpOperation data={{ ...httpOperation, deprecated: true }} />);
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: true }} />);
 
       const badge = getDeprecatedBadge();
 
       expect(badge).toBeInTheDocument();
+
+      unmount();
     });
 
     it('should not display "Deprecated" badge for http operation that is not deprecated', () => {
-      render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
 
       const deprecatedBadge = getDeprecatedBadge();
 
       expect(deprecatedBadge).not.toBeInTheDocument();
+
+      unmount();
     });
 
     it('should display auth badges for operation security schemas', () => {
-      render(<HttpOperation data={{ ...httpOperation }} />);
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
 
       const apikeyBadge = getSecurityBadge(/API Key/i);
       const basicBadge = getSecurityBadge(/Basic Auth/i);
@@ -45,16 +66,20 @@ describe('HttpOperation', () => {
       expect(bearerBadge).toBeInTheDocument();
       expect(oidcBadge).toBeInTheDocument();
       expect(oauthBadge).toBeInTheDocument();
+
+      unmount();
     });
 
     it('should contain link to Overview for operation with uri', () => {
-      render(
+      const { unmount } = render(
         <Router>
           <HttpOperation data={{ ...httpOperation }} uri="/reference/todos/openapi.v1.json/paths/~1todos/post" />
         </Router>,
       );
       const apikeyBadge = getSecurityBadge(/API Key/i);
       expect(apikeyBadge?.closest('a')).toHaveAttribute('href', '/reference/todos/openapi.v1.json?security=api_key');
+
+      unmount();
     });
   });
 
@@ -127,10 +152,12 @@ describe('HttpOperation', () => {
           ],
         },
       };
-      render(<HttpOperation data={operationData} />);
+      const { unmount } = render(<HttpOperation data={operationData} />);
 
       expect(screen.queryByText(/Space separated values/)).toBeInTheDocument();
       expect(screen.queryByText(/Form style values/)).not.toBeInTheDocument();
+
+      unmount();
     });
   });
 
@@ -164,7 +191,7 @@ describe('HttpOperation', () => {
         },
       };
 
-      render(<HttpOperation data={data} />);
+      const { unmount } = render(<HttpOperation data={data} />);
 
       const headersPanel = screen.queryByRole('heading', { name: 'Headers' });
       expect(headersPanel).toBeInTheDocument();
@@ -172,6 +199,8 @@ describe('HttpOperation', () => {
       expect(headersPanel).toBeEnabled();
 
       expect(screen.queryByText('parameter name')).toBeInTheDocument();
+
+      unmount();
     });
 
     it('should not render panel when there are no header parameters', () => {
@@ -185,10 +214,12 @@ describe('HttpOperation', () => {
         },
       };
 
-      render(<HttpOperation data={data} />);
+      const { unmount } = render(<HttpOperation data={data} />);
 
       const headersPanel = screen.queryByRole('heading', { name: 'Headers' });
       expect(headersPanel).not.toBeInTheDocument();
+
+      unmount();
     });
   });
 
@@ -243,12 +274,14 @@ describe('HttpOperation', () => {
         request: {},
       };
 
-      render(<HttpOperation data={data} />);
+      const { unmount } = render(<HttpOperation data={data} />);
 
       const pathParametersPanel = screen.queryAllByRole('heading', { name: /GET.*\/path/i });
       expect(pathParametersPanel).toHaveLength(2);
       expect(pathParametersPanel[0]).toBeVisible();
       expect(pathParametersPanel[1]).toBeVisible();
+
+      unmount();
     });
   });
 
@@ -300,29 +333,35 @@ describe('HttpOperation', () => {
     };
 
     it('should render select for content type', () => {
-      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+      const { unmount } = render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
 
       const select = screen.queryByLabelText('Request Body Content Type');
       expect(select).not.toBeNull();
+
+      unmount();
     });
 
-    it('should allow to select different content type', async () => {
-      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+    it('should allow to select different content type', () => {
+      const { unmount } = render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
 
       const select = screen.getByLabelText('Request Body Content Type');
 
       expect(select).toHaveTextContent('application/json');
 
-      await chooseOption(select, 'application/xml');
+      chooseOption(select, 'application/xml');
 
       expect(select).toHaveTextContent('application/xml');
+
+      unmount();
     });
 
     it('should not render select if there are no contents', () => {
-      render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
+      const { unmount } = render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
 
       const select = screen.queryByLabelText('Request Body Content Type');
       expect(select).toBeNull();
+
+      unmount();
     });
 
     it('should display description even if there are no contents', async () => {
@@ -349,7 +388,7 @@ describe('HttpOperation', () => {
       expect(requestSample).toBeInTheDocument();
 
       const select = screen.getByLabelText('Request Body Content Type');
-      await chooseOption(select, 'application/x-www-form-urlencoded');
+      chooseOption(select, 'application/x-www-form-urlencoded');
       const secondRequestSample = await screen.findByLabelText(
         "curl --request POST \\ --url https://todos.stoplight.io/users \\ --header 'Content-Type: application/x-www-form-urlencoded' \\ --data name= \\ --data completed= \\ --data someEnum=a",
       );
@@ -402,30 +441,36 @@ describe('HttpOperation', () => {
       expect(await screen.findByText('Hello world!')).toBeInTheDocument();
     });
 
-    it('should render select for content types', async () => {
-      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+    it('should render select for content types', () => {
+      const { unmount } = render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
       const select = screen.queryByLabelText('Response Body Content Type');
       expect(select).not.toBeNull();
+
+      unmount();
     });
 
-    it('should allow changing content type', async () => {
-      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+    it('should allow changing content type', () => {
+      const { unmount } = render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
       const select = screen.getByLabelText('Response Body Content Type');
 
       expect(select).toHaveTextContent('application/json');
 
-      await chooseOption(select, 'application/xml');
+      chooseOption(select, 'application/xml');
 
       expect(select).toHaveTextContent('application/xml');
+
+      unmount();
     });
 
-    it('should not render select when there are no contents', async () => {
-      render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
+    it('should not render select when there are no contents', () => {
+      const { unmount } = render(<HttpOperation data={httpOperationWithoutResponseBodyContents} />);
 
       const select = screen.queryByLabelText('Response Body Content Type');
       expect(select).toBeNull();
+
+      unmount();
     });
 
     it('should display schema for chosen content type', async () => {
@@ -436,7 +481,7 @@ describe('HttpOperation', () => {
 
       const select = screen.getByLabelText('Response Body Content Type');
 
-      await chooseOption(select, 'application/xml');
+      chooseOption(select, 'application/xml');
 
       expect(screen.queryByText('some_property')).not.toBeInTheDocument();
     });
