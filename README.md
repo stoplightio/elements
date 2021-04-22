@@ -8,63 +8,116 @@
 Beautiful API documentation powered by OpenAPI and Markdown. Use these UI components to create API reference documentation, or more complete documentation with Markdown articles covering tutorials, how-to guides, etc. 
 
 Available as React Components, or Web Components, you can use Elements all together to build beautiful three-column "Stripe-esque" documentation, or stacked documentation thats easier for integrating into existing Content Management Systems with their own navigation.
+
 # Overview
 
-- [Elements](#elements)
 - [Overview](#overview)
-  - [📦 Packages](#-packages)
-  - [📖 Documentation and Community](#-documentation-and-community)
+  - [📖 Community](#-community)
   - [👁️🗨 ️️Examples](#️-️️examples)
+  - [🏁 Usage](#-usage)
+    - [React Component](#react-component)
+    - [Web Component](#web-component)
+  - [🪛 Configuration](#-configuration)
   - [🚧 Roadmap](#-roadmap)
   - [⚙️ Integrations](#️-integrations)
   - [🏁 Help Others Utilize Elements](#-help-others-utilize-elements)
   - [👏 Contributing](#-contributing)
   - [🎉 Thanks](#-thanks)
 
-## 📦 Packages
+## 📖 Community
 
-This repository is a monorepo that we manage using [Lerna](https://github.com/lerna/lerna). That means that we actually publish [several packages](/packages) to npm from the same codebase, including:
-
-| Package                                                | Version                                                                                                                             | Docs                                                                                                                                                                                                                                                                          | Description                                                                        |
-| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [`elements`](/packages/elements)               | Not released yet               | [![](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)  | React and Web Components for a single API.                                                           |                                                  |
-| [`elements-utils`](/packages/elements-utils)       | Not released yet       | [![](https://img.shields.io/badge/API%20Docs-site-green.svg?style=flat-square)](https://meta.stoplight.io/docs/elements)       | Utilities functions                                                     |
-
-## 📖 Documentation and Community
-
-- [Documentation](https://meta.stoplight.io/docs/elements)
-- [Community](https://github.com/stoplightio/elements/discussions)
+Let's chat about features, ideas, what you're doing with Elements, on [GitHub Discussions](https://github.com/stoplightio/elements/discussions).
 
 ## 👁️🗨 ️️Examples
 
 Stoplight Elements comes with a few example integration projects, showing you how to utilize Elements with different frameworks.
-- [x] **[react-cra](./examples/react-cra)** An example app built Create React App utilizing Stoplight Elements.
-- [x] **[react-gatsby](./examples/react-gatsby)** An example Gatsby site utilizing Stoplight Elements.
-- [x] **[angular](./examples/angular)** An angular app utilizing the Web Components distribution of Elements.
-- [ ] **static-html** A single HTML page utilizing the Web Components distribution via a global script tag.
+- **[react-cra](./examples/react-cra)** - An example app built Create React App utilizing Stoplight Elements.
+- **[react-gatsby](./examples/react-gatsby)** - An example Gatsby site utilizing Stoplight Elements.
+- **[angular](./examples/angular)** - An angular app utilizing the Web Components distribution of Elements.
+- **[bootstrap](./examples/bootstrap)** - A single HTML page utilizing the Web Components distribution via a global script tag.
 
 To run these examples yourself:
 1. Clone this repo and open a command line in the repo's directory.
 2. Run `yarn` to install all dependencies.
 3. Run `yarn build` to build Elements itself.
-4. Run `yarn build:react-cra` to build the *react-cra* example site. An analogous command is available for all examples.
+4. Run `yarn build:react-cra` to build the *react-cra* example site. An analogous command is available for *react-gatsby* and *angular*, but is not required for **bootstrap**.
 5. Run `yarn serve:react-cra` (or equivalent) to serve the example project on `http://localhost:4200`.
+
+## 🏁 Usage
+
+The examples will hopefully help show Elements working in close to real world situations, but the most bare bones examples of Elements can be found below. 
+
+### React Component
+
+```bash
+$ npm install @stoplight/elements@beta
+```
+
+```js
+import { API } from "@stoplight/elements";
+
+<API
+  apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
+  layout="traditional"
+  router="history"
+/>
+```
+
+### Web Component
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Elements in HTML</title>
+    <!-- Embed elements Elements via Web Component -->
+    <script src="https://unpkg.com/@stoplight/elements@beta/web-components.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements@beta/styles/elements.min.css">
+  </head>
+  <body>
+
+    <elements-api
+      apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
+      router="hash"
+      layout="sidebar"
+    />
+
+  </body>
+</html>
+```
+
+Load this page up in your browser and you should see the [GitHub REST API](https://docs.github.com/en/rest) documented in Stoplight Elements.
+
+## 🪛 Configuration
+
+The React and Web Components both have the following configuration options.
+
+- `apiDescriptionUrl` - OpenAPI document URL, supporting `http://`, `https://`, and documents containing `$ref` to other http(s) documents.
+- `apiDescriptionDocument` - OpenAPI document, provided as YAML string, JSON string or JavaScript object.
+- `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
+- `layout` - There are two layouts for Elements:
+  - `sidebar` - (default) Three-column design.
+  - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
+- `router` -  Determines how navigation should work:
+  - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
+  - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
+  - `memory` - keeps the history of your “URL” in memory (does not read or write to the address bar)
 
 ## 🚧 Roadmap
 
-- [x] `API` Component
-- [ ] `StoplightProject` Component
-- [x] Try it
-- [ ] Try it Authentication
-  - [x] API Key
-  - [ ] HTTP Basic
-  - [ ] HTTP Digest
-  - [ ] HTTP Bearer
-  - [ ] OAuth 2.0
-  - [ ] OpenID
-- [x] Automatic Examples 🥳
-- [ ] OpenAPI v3.0 Callbacks
-- [ ] OpenAPI v3.1 Webhooks
+- [x] API Console (a.k.a "Try it!")
+- [x] Automatic Code Samples
+- [x] Automatic Examples! 🥳
+- [x] React & Web Component Support
+- [ ] OpenAPI Support
+  - [x] OpenAPI v2.0
+  - [x] OpenAPI v3.0
+  - [ ] OpenAPI v3.1
+  - [ ] Callbacks
+  - [ ] Webhooks
+- [ ] Multiple APIs (a.k.a "Dev Portal")
 
 ## ⚙️ Integrations
 
@@ -83,7 +136,6 @@ If you are interested in contributing to Elements itself, check out our [contrib
 
 Elements is built on top of lots of excellent packages, and here are a few we'd like to say a special thanks to.
 
-- [axios](https://www.npmjs.com/package/axios)
 - [httpsnippet](https://www.npmjs.com/package/httpsnippet) by [Kong](https://github.com/Kong).
 - [openapi-sampler](https://www.npmjs.com/package/openapi-sampler) by [ReDocly](https://redoc.ly/).
 
