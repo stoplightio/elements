@@ -22,6 +22,8 @@ export function getReadableSecurityName(securityScheme: HttpSecurityScheme, incl
       return `OAuth 2.0 (${scopes.join(', ')})`;
     case 'openIdConnect':
       return 'OpenID Connect';
+    default:
+      return securityScheme.type;
   }
 }
 
