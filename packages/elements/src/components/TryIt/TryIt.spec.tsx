@@ -103,6 +103,24 @@ describe('TryIt', () => {
     expect(responseHeader).toBeVisible();
   });
 
+  it('displays raw text response', async () => {
+    fetchMock.mockResolvedValue(
+      new Response('awesome response, but hardly a json one', {
+        status: 200,
+        statusText: 'OK',
+        headers: [],
+      }),
+    );
+
+    const { container } = render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+    clickSend();
+
+    await screen.findByText('Response');
+
+    expect(container).toHaveTextContent('awesome response, but hardly a json one');
+  });
+
   it('Handles error', async () => {
     fetchMock.mockReject(new Error('sample error'));
 
