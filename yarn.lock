@@ -4911,10 +4911,10 @@
     mobx-react-lite "^1.4.1"
     pluralize "^8.0.0"
 
-"@stoplight/json-schema-viewer@^4.0.0-beta.13":
-  version "4.0.0-beta.13"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.13.tgz#1039be8bbe6bd1e69f1c0a1a1d92d48498c647c4"
-  integrity sha512-FtOotWyMF4TUW2OeTxLtu1Zr7Apn46ef78FtJtlk9i4ITyj6Ladn90p1I8WU8frawR3NBDiEy4lcXdEVm180vQ==
+"@stoplight/json-schema-viewer@^4.0.0-beta.14":
+  version "4.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.14.tgz#f6f6ec3cccd94d04ee86269c86ab2ae35553c3ce"
+  integrity sha512-Qq1H3k+thwmDf/yM/KG/3jit/w0+S6kY0NAvXDTB6Rcd/i+OvJtSeSB08jirLWnHu1u35/1Qc36/Z8JO615yTw==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.10.0"
