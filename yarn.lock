@@ -3720,13 +3720,6 @@
   dependencies:
     lodash "^4.17.19"
 
-"@stoplight/elements-utils@beta":
-  version "6.0.0-beta.183"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements-utils/-/elements-utils-6.0.0-beta.183.tgz#35fc1563c4f193156f6687094adce7b21bd8de7b"
-  integrity sha512-rwXYerfo053BhTST9+TLy2z5hEfRaVOumxmAQI2de8+sKBoN56qc1M1a1wpWqz/b8YFgcp07z3O+2Be8cVNf0g==
-  dependencies:
-    lodash "^4.17.19"
-
 "@stoplight/elements@*":
   version "6.1.17"
   resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-6.1.17.tgz#42aad8b6813f3684cb56b4ba0166b0a7410acbaa"
