@@ -34,9 +34,9 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
   );
 
   const hasOverview = !!serviceNode.data.description;
-  const isOverview = !pathname || pathname === '/';
-  const node = isOverview ? serviceNode : uriMap[pathname];
-  if ((isOverview && !hasOverview) || !node) {
+  const isRootPath = !pathname || pathname === '/';
+  const node = isRootPath ? serviceNode : uriMap[pathname];
+  if ((isRootPath && !hasOverview) || !node) {
     // Redirect to the first child if service node has no description or node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
 
