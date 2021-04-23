@@ -49,6 +49,7 @@ export const HttpSecuritySchemeColors: Partial<Record<HttpSecurityScheme['type']
   http: 'orange',
   oauth2: 'red',
   openIdConnect: 'blue',
+  mutualTLS: 'blue',
 };
 
 export const HttpMethodColors = {

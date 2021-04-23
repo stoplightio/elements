@@ -1,28 +1,22 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { generateApiToC } from '@stoplight/elements-utils';
-import { IHttpService } from '@stoplight/types';
+import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 import useSwr from 'swr';
 
 import { SidebarLayout } from '../components/API/SidebarLayout';
 import { StackedLayout } from '../components/API/StackedLayout';
-import { DocsSkeleton } from '../components/Docs/Skeleton';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { withPersistenceBoundary } from '../context/Persistence';
-import { withMosaicProvider } from '../hoc/withMosaicProvider';
 import { withRouter } from '../hoc/withRouter';
 import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
 import { withStyles } from '../styled';
 import { RoutingProps } from '../types';
-import { computeNodeData, isOas2, isOas3, IUriMap } from '../utils/oas';
-import { computeOas2UriMap } from '../utils/oas/oas2';
-import { computeOas3UriMap } from '../utils/oas/oas3';
+import { transformOasToServiceNode } from '../utils/oas';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
@@ -66,8 +60,6 @@ const APIImpl: React.FC<APIProps> = props => {
   const { layout, apiDescriptionUrl } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
-  const { pathname } = useLocation();
-
   const documentShouldBeFetched = apiDescriptionUrl && !apiDescriptionDocument;
   const { data: fetchedDocument, error } = useSwr(documentShouldBeFetched ? apiDescriptionUrl! : null, fetcher);
 
@@ -77,58 +69,47 @@ const APIImpl: React.FC<APIProps> = props => {
     }
   }, [error]);
 
-  const document = useParsedValue(apiDescriptionDocument || fetchedDocument);
-  const bundledDocument = useBundleRefsIntoDocument(document, { baseUrl: apiDescriptionUrl });
-
-  const { tree, uriMap } = React.useMemo(() => getToCFromOpenApiDocument(bundledDocument), [bundledDocument]);
-
-  const nodeData = uriMap[pathname] || uriMap['/'];
+  const parsedDocument = useParsedValue(apiDescriptionDocument || fetchedDocument);
+  const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl });
+  const serviceNode = React.useMemo(() => transformOasToServiceNode(bundledDocument), [bundledDocument]);
 
   if (error) {
     return (
-      <div className="flex min-h-screen justify-center items-center w-full">
+      <Flex justify="center" alignItems="center" w="full" minH="screen">
         <NonIdealState
           title="Something went wrong"
           description={error.message}
           icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
         />
-      </div>
+      </Flex>
     );
   }
 
-  if (!nodeData) {
-    return <DocsSkeleton />;
+  if (!bundledDocument) {
+    return (
+      <Flex justify="center" alignItems="center" w="full" minH="screen" color="light">
+        <Box as={Icon} icon={['fal', 'circle-notch']} size="3x" spin />
+      </Flex>
+    );
+  }
+
+  if (!serviceNode) {
+    return (
+      <Flex justify="center" alignItems="center" w="full" minH="screen">
+        <NonIdealState
+          title="Failed to parse OpenAPI file"
+          description="Please make sure your OpenAPI file is valid and try again"
+          icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
+        />
+      </Flex>
+    );
   }
 
   return (
-    <InlineRefResolverProvider document={document}>
-      {layout === 'stacked' ? (
-        <StackedLayout uriMap={uriMap} tree={tree} />
-      ) : (
-        <SidebarLayout pathname={pathname} tree={tree} uriMap={uriMap} />
-      )}
+    <InlineRefResolverProvider document={parsedDocument}>
+      {layout === 'stacked' ? <StackedLayout serviceNode={serviceNode} /> : <SidebarLayout serviceNode={serviceNode} />}
     </InlineRefResolverProvider>
   );
 };
 
-export const API = pipe(withRouter, withStyles, withPersistenceBoundary, withMosaicProvider)(APIImpl);
-
-export function getToCFromOpenApiDocument(apiDescriptionDocument: unknown) {
-  let uriMap: IUriMap = {};
-  let documentTags: string[] | undefined;
-
-  if (isOas3(apiDescriptionDocument)) {
-    uriMap = computeOas3UriMap(apiDescriptionDocument);
-    documentTags = apiDescriptionDocument.tags?.map(tag => tag.name) || [];
-  } else if (isOas2(apiDescriptionDocument)) {
-    uriMap = computeOas2UriMap(apiDescriptionDocument);
-    documentTags = apiDescriptionDocument.tags?.map(tag => tag.name) || [];
-  } else {
-    console.error('Document type is unknown');
-  }
-
-  const nodes = computeNodeData(uriMap, documentTags);
-  const tree = generateApiToC(nodes, uriMap['/'] as IHttpService);
-
-  return { tree, uriMap };
-}
+export const API = pipe(withRouter, withStyles, withPersistenceBoundary)(APIImpl);

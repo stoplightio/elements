@@ -1,93 +1,122 @@
-import { NodeData } from '@stoplight/elements-utils';
-import { Oas2HttpOperationTransformer, Oas3HttpOperationTransformer } from '@stoplight/http-spec/oas/types';
+import {
+  Oas2HttpOperationTransformer,
+  Oas2HttpServiceTransformer,
+  Oas3HttpOperationTransformer,
+  Oas3HttpServiceTransformer,
+} from '@stoplight/http-spec/oas/types';
+import { transformOas2Operation, transformOas2Service } from '@stoplight/http-spec/oas2';
+import { transformOas3Operation, transformOas3Service } from '@stoplight/http-spec/oas3';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
 import { NodeType } from '@stoplight/types';
-import { entries, get, isObject, last, map } from 'lodash';
-import { filter, keyBy, mapValues, pipe } from 'lodash/fp';
+import { get, isObject, last } from 'lodash';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
-import { ISourceNodeMap, NodeTypes } from './types';
+import { oas2SourceMap } from './oas2';
+import { oas3SourceMap } from './oas3';
+import { ISourceNodeMap, NodeTypes, ServiceChildNode, ServiceNode } from './types';
 
-export const isOas2 = (parsed: unknown): parsed is Spec =>
+const isOas2 = (parsed: unknown): parsed is Spec =>
   isObject(parsed) &&
   'swagger' in parsed &&
-  Number.parseInt(String((parsed as Partial<{ swagger: unknown }>).swagger)) === 2 &&
-  Array.isArray((parsed as Partial<{ tags: unknown }>).tags || []);
+  Number.parseInt(String((parsed as Partial<{ swagger: unknown }>).swagger)) === 2;
 
-export const isOas3 = (parsed: unknown): parsed is OpenAPIObject =>
+const isOas3 = (parsed: unknown): parsed is OpenAPIObject =>
   isObject(parsed) &&
   'openapi' in parsed &&
-  Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3 &&
-  Array.isArray((parsed as Partial<{ tags: unknown }>).tags || []);
+  Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3;
 
-export const isOperation = (uri: string) => OPERATION_REGEXP.test(uri);
-
-export const OAS_MODEL_REGEXP = /((definitions|components)\/?(schemas)?)\//;
+const OAS_MODEL_REGEXP = /((definitions|components)\/?(schemas)?)\//;
 export const MODEL_REGEXP = /schemas\//;
 export const OPERATION_REGEXP = /\/operations\/.+|paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
 
-export interface IUriMap {
-  [uri: string]: unknown;
+export function transformOasToServiceNode(apiDescriptionDocument: unknown) {
+  if (isOas3(apiDescriptionDocument)) {
+    return computeServiceNode(apiDescriptionDocument, oas3SourceMap, transformOas3Service, transformOas3Operation);
+  } else if (isOas2(apiDescriptionDocument)) {
+    return computeServiceNode(apiDescriptionDocument, oas2SourceMap, transformOas2Service, transformOas2Operation);
+  }
+
+  return null;
 }
 
-interface IComputeUriMapProps {
-  document: Spec | OpenAPIObject;
-  data: unknown;
-  map: ISourceNodeMap[];
-  transformer: Oas2HttpOperationTransformer | Oas3HttpOperationTransformer;
-  parentUri?: string;
+function computeServiceNode(
+  document: Spec | OpenAPIObject,
+  map: ISourceNodeMap[],
+  transformService: Oas2HttpServiceTransformer | Oas3HttpServiceTransformer,
+  transformOperation: Oas2HttpOperationTransformer | Oas3HttpOperationTransformer,
+) {
+  const serviceDocument = transformService({ document });
+  const serviceNode: ServiceNode = {
+    type: NodeType.HttpService,
+    uri: '/',
+    name: serviceDocument.name,
+    data: serviceDocument,
+    tags: serviceDocument.tags?.map(tag => tag.name) || [],
+    children: computeChildNodes(document, document, map, transformOperation),
+  };
+
+  return serviceNode;
 }
 
-export function getNodeType(uri: string): NodeType {
-  return MODEL_REGEXP.test(uri)
-    ? NodeType.Model
-    : OPERATION_REGEXP.test(uri)
-    ? NodeType.HttpOperation
-    : NodeType.HttpService;
-}
+function computeChildNodes(
+  document: Spec | OpenAPIObject,
+  data: unknown,
+  map: ISourceNodeMap[],
+  transformer: Oas2HttpOperationTransformer | Oas3HttpOperationTransformer,
+  parentUri: string = '',
+) {
+  const nodes: ServiceChildNode[] = [];
 
-export function computeUriMap({ document, data, map, transformer, parentUri }: IComputeUriMapProps): IUriMap {
-  const uriMap: IUriMap = {};
+  if (!isObject(data)) return nodes;
 
-  if (isObject(data)) {
-    for (const key of Object.keys(data)) {
-      const sanitizedKey = encodePointerFragment(key);
-      const match = findMapMatch(sanitizedKey, map);
-      if (match) {
-        const uri = `${parentUri || ''}/${sanitizedKey}`;
+  for (const key of Object.keys(data)) {
+    const sanitizedKey = encodePointerFragment(key);
+    const match = findMapMatch(sanitizedKey, map);
+    if (match) {
+      const uri = `${parentUri}/${sanitizedKey}`;
 
-        const jsonPath = pointerToPath(`#${uri}`);
-        if (match.type === NodeTypes.Operation && jsonPath.length === 3) {
-          const path = String(jsonPath[1]);
-          const method = String(jsonPath[2]);
-          const operationDocument = transformer({ document, path, method });
-          let parsedUri;
-          const encodedPath = String(encodePointerFragment(path));
+      const jsonPath = pointerToPath(`#${uri}`);
+      if (match.type === NodeTypes.Operation && jsonPath.length === 3) {
+        const path = String(jsonPath[1]);
+        const method = String(jsonPath[2]);
+        const operationDocument = transformer({ document, path, method });
+        let parsedUri;
+        const encodedPath = String(encodePointerFragment(path));
 
-          if (operationDocument.iid) {
-            parsedUri = uri.replace(`paths/${encodedPath}/${method}`, `operations/${operationDocument.iid}`);
-          } else {
-            parsedUri = uri.replace(encodedPath, slugify(path));
-          }
-          uriMap[parsedUri] = operationDocument;
-        } else if (match.type === NodeTypes.Model) {
-          const schemaDocument = get(document, jsonPath);
-          const parsedUri = uri.replace(OAS_MODEL_REGEXP, 'schemas/');
-          uriMap[parsedUri] = schemaDocument;
+        if (operationDocument.iid) {
+          parsedUri = `/operations/${operationDocument.iid}`;
+        } else {
+          parsedUri = uri.replace(encodedPath, slugify(path));
         }
 
-        if (match.children) {
-          Object.assign(
-            uriMap,
-            computeUriMap({ map: match.children, document, data: data[key], parentUri: uri, transformer }),
-          );
-        }
+        nodes.push({
+          type: NodeType.HttpOperation,
+          uri: parsedUri,
+          data: operationDocument,
+          name: operationDocument.summary || operationDocument.path,
+          tags: operationDocument.tags?.map(tag => tag.name) || [],
+        });
+      } else if (match.type === NodeTypes.Model) {
+        const schemaDocument = get(document, jsonPath);
+        const parsedUri = uri.replace(OAS_MODEL_REGEXP, 'schemas/');
+
+        nodes.push({
+          type: NodeType.Model,
+          uri: parsedUri,
+          data: schemaDocument,
+          name: schemaDocument.title || last(uri.split('/')) || '',
+          tags: schemaDocument['x-tags'] || [],
+        });
+      }
+
+      if (match.children) {
+        nodes.push(...computeChildNodes(document, data[key], match.children, transformer, uri));
       }
     }
   }
 
-  return uriMap;
+  return nodes;
 }
 
 function slugify(name: string) {
@@ -98,17 +127,6 @@ function slugify(name: string) {
     .replace(/-$/, '');
 }
 
-export function mapUriToOperation(uriMap: IUriMap) {
-  return pipe(
-    () => entries(uriMap),
-    filter(([uri]) => OPERATION_REGEXP.test(uri)),
-    keyBy(([uri]) => uri),
-    mapValues(([, node]) => {
-      return node && isObject(node) ? node['method'] : undefined;
-    }),
-  )();
-}
-
 function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeMap | void {
   if (typeof key === 'number') return;
   for (const entry of map) {
@@ -117,49 +135,3 @@ function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeM
     }
   }
 }
-
-export const computeNodeData = (uriMap: IUriMap, tags: string[] = []): NodeData[] => {
-  const nodes: NodeData[] = [];
-
-  for (const [uri, node] of Object.entries(uriMap)) {
-    if (node && isObject(node)) {
-      const type =
-        uri === '/'
-          ? NodeType.HttpService
-          : OPERATION_REGEXP.test(uri)
-          ? NodeType.HttpOperation
-          : MODEL_REGEXP.test(uri)
-          ? NodeType.Model
-          : NodeType.Unknown;
-
-      switch (type) {
-        case NodeType.HttpService:
-          nodes.push({
-            name: node['name'],
-            type,
-            uri,
-            tags,
-          });
-          break;
-        case NodeType.HttpOperation:
-          nodes.push({
-            name: node['summary'] || node['path'],
-            type,
-            uri,
-            tags: map(node['tags'], tag => tag['name']),
-          });
-          break;
-        case NodeType.Model:
-          nodes.push({
-            name: node['title'] || last(uri.split('/')) || '',
-            type,
-            uri,
-            tags: node['x-tags'],
-          });
-          break;
-      }
-    }
-  }
-
-  return nodes;
-};
