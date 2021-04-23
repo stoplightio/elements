@@ -36,7 +36,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
 
   const requestSample = convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request);
 
-  const handleSelectClick: SelectProps['onChange'] = value => {
+  const handleSelectClick: SelectProps['onChange'] = (value: string | number) => {
     const [language, library] = String(value).split(' / ');
     setSelectedLanguage(language);
     setSelectedLibrary(library || '');

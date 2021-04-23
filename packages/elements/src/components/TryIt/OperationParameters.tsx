@@ -20,7 +20,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({ parame
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
-            onChange={value => onChangeValue(parameter.name, String(value))}
+            onChange={(value: string | number) => onChangeValue(parameter.name, String(value))}
           />
         ))}
       </Panel.Content>
