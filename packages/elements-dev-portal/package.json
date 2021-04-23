@@ -1,0 +1,98 @@
+{
+  "name": "@stoplight/elements-dev-portal",
+  "version": "1.0.0-alpha.1",
+  "description": "UI components for composing beautiful developer documentation.",
+  "keywords": [],
+  "sideEffects": [
+    "web-components.min.js",
+    "src/web-components/**"
+  ],
+  "homepage": "https://github.com/stoplightio/elements",
+  "bugs": "https://github.com/stoplightio/elements/issues",
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/elements"
+  },
+  "license": "Apache-2.0",
+  "main": "",
+  "files": [
+    "**/*"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "yarn build.react && yarn build.webcomponents",
+    "build.react": "sl-scripts build",
+    "build.webcomponents": "webpack -c ./web-components.config.js",
+    "build.docs": "build-storybook -c .storybook -o dist-storybook",
+    "commit": "git-cz",
+    "release": "sl-scripts release",
+    "release.docs": "sl-scripts release:docs",
+    "release.dryRun": "sl-scripts release --dry-run --debug",
+    "storybook": "start-storybook -p 9001",
+    "test": "jest",
+    "test.prod": "yarn test --coverage --maxWorkers=2",
+    "test.update": "yarn test --updateSnapshot",
+    "test.watch": "yarn test --watch",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "mobx": ">=5",
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "dependencies": {
+    "@stoplight/elements": "^7.0.0-beta.1",
+    "lodash": "^4.17.19",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@stoplight/scripts": "8.2.3",
+    "@storybook/addon-docs": "^6.2.8",
+    "@storybook/addon-essentials": "^6.2.8",
+    "@storybook/react": "^6.2.8",
+    "@storybook/theming": "^6.2.8",
+    "@testing-library/dom": "^7.26.5",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.1",
+    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/user-event": "^12.2.0",
+    "@types/classnames": "^2.2.10",
+    "@types/enzyme": "3.x.x",
+    "@types/enzyme-adapter-react-16": "1.x.x",
+    "@types/har-format": "^1.2.5",
+    "@types/httpsnippet": "^1.23.0",
+    "@types/lodash": "^4.14.149",
+    "@types/openapi-sampler": "^1.0.0",
+    "@types/prop-types": "^15.7.3",
+    "@types/react": "16.9.56",
+    "@types/react-dom": "16.9.12",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/react-router-hash-link": "^1.2.1",
+    "@types/urijs": "^1.19.8",
+    "enzyme": "3.x.x",
+    "enzyme-adapter-react-16": "1.x.x",
+    "enzyme-to-json": "3.x.x",
+    "jest-enzyme": "^7.1.2",
+    "jest-fetch-mock": "^3.0.3",
+    "mobx": "^5.13.0",
+    "ncp": "^2.0.0",
+    "node-sass": "^4.14.1",
+    "node-sass-package-importer": "^5.3.2",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "react-test-renderer": "^16.8.0",
+    "resolve-url-loader": "^3.1.2",
+    "sass-inline-svg": "^1.2.3",
+    "sass-loader": "^10.1.1",
+    "style-loader": "^2.0.0"
+  },
+  "publishConfig": {
+    "directory": "dist"
+  },
+  "release": {
+    "extends": "@stoplight/scripts/release"
+  }
+}

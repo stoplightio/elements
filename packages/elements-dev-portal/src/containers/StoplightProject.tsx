@@ -1,17 +1,16 @@
+import { Row } from '@stoplight/elements/dist/components/TableOfContents/Row';
+import { defaultPlatformUrl } from '@stoplight/elements/dist/constants';
+import { Docs } from '@stoplight/elements/dist/containers/Docs';
+import { Provider } from '@stoplight/elements/dist/containers/Provider';
+import { TableOfContents } from '@stoplight/elements/dist/containers/TableOfContents';
+import { withPersistenceBoundary } from '@stoplight/elements/dist/context/Persistence';
+import { withMosaicProvider } from '@stoplight/elements/dist/hoc/withMosaicProvider';
+import { withRouter } from '@stoplight/elements/dist/hoc/withRouter';
+import { withStyles } from '@stoplight/elements/dist/styled';
+import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '@stoplight/elements/dist/types';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
-
-import { Row } from '../components/TableOfContents/Row';
-import { defaultPlatformUrl } from '../constants';
-import { withPersistenceBoundary } from '../context/Persistence';
-import { withMosaicProvider } from '../hoc/withMosaicProvider';
-import { withRouter } from '../hoc/withRouter';
-import { withStyles } from '../styled';
-import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '../types';
-import { Docs } from './Docs';
-import { Provider } from './Provider';
-import { TableOfContents } from './TableOfContents';
 
 export interface StoplightProjectProps extends RoutingProps {
   /**
