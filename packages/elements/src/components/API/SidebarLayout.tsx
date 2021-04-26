@@ -1,45 +1,59 @@
+import { generateApiToC } from '@stoplight/elements-utils';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
-import { IHttpService, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 
 import { useTocContents } from '../../hooks/useTocContents';
-import { ITableOfContentsTree } from '../../types';
-import { getNodeType, IUriMap, mapUriToOperation } from '../../utils/oas';
-import { Docs } from '../Docs';
+import { ServiceNode } from '../../utils/oas/types';
+import { ParsedDocs } from '../Docs';
 import { Row } from '../TableOfContents/Row';
 
 type SidebarLayoutProps = {
-  pathname: string;
-  uriMap: IUriMap;
-  tree: ITableOfContentsTree;
+  serviceNode: ServiceNode;
 };
 
 const MAX_CONTENT_WIDTH = 1800;
 const SIDEBAR_WIDTH = 300;
 
-export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, uriMap }) => {
-  const operationMap = React.useMemo(() => mapUriToOperation(uriMap), [uriMap]);
+export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
+  const { pathname } = useLocation();
+
+  const uriMap = React.useMemo(
+    () =>
+      serviceNode.children.reduce((prev, current) => {
+        prev[current.uri] = current;
+        return prev;
+      }, {}),
+    [serviceNode.children],
+  );
+  const operationMap = React.useMemo(
+    () =>
+      serviceNode.children.reduce((prev, current) => {
+        if (current.type === NodeType.HttpOperation) {
+          prev[current.uri] = current.data.method;
+        }
+
+        return prev;
+      }, {}),
+    [serviceNode.children],
+  );
+  const tree = React.useMemo(() => generateApiToC([serviceNode, ...serviceNode.children], serviceNode.data), [
+    serviceNode,
+  ]);
   const contents = useTocContents(tree, operationMap).map(item => ({
     ...item,
     isActive: item.to === pathname,
     isSelected: item.to === pathname,
   }));
 
-  const nodeType = getNodeType(pathname);
-  const nodeData = uriMap[pathname] || uriMap['/'];
-  const httpService = uriMap['/'] as IHttpService;
-
-  const hasOverview = !!contents.find(item => item.to === '/');
-  const unknownPath = nodeType !== NodeType.HttpService && !contents.find(item => item.to === pathname);
-
-  if (unknownPath) {
-    return <Redirect to="/" />;
-  }
-
-  if (nodeType === NodeType.HttpService && !(nodeData as IHttpService).description) {
+  const hasOverview = !!serviceNode.data.description;
+  const isRootPath = !pathname || pathname === '/';
+  const node = isRootPath ? serviceNode : uriMap[pathname];
+  if ((isRootPath && !hasOverview) || !node) {
+    // Redirect to the first child if service node has no description or node doesn't exist
     const item = contents.find(content => content.type === 'item');
     if (item && item.to) {
       return <Redirect to={item.to} />;
@@ -62,28 +76,22 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ pathname, tree, ur
         }}
       >
         <Heading ml={5} mb={5} size={4}>
-          {httpService.name}
+          {serviceNode.name}
         </Heading>
+
         <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname, scrollRef }} />
       </Box>
 
-      <Box
-        px={24}
-        flex={1}
-        overflowY="auto"
-        overflowX="hidden"
-        style={{
-          width: '100%',
-        }}
-      >
+      <Box px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
         <Box ref={scrollRef} style={{ maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px` }}>
-          <Docs
-            key={pathname}
-            uri={hasOverview ? pathname : undefined}
-            className="sl-pt-16 sl-pb-24"
-            nodeData={nodeData}
-            nodeType={nodeType}
-          />
+          {node && (
+            <ParsedDocs
+              className="sl-pt-16 sl-pb-24"
+              key={pathname}
+              uri={hasOverview ? pathname : undefined}
+              node={node}
+            />
+          )}
         </Box>
       </Box>
     </Flex>

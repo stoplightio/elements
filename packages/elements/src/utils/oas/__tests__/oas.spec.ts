@@ -1,117 +1,197 @@
-import { mapUriToOperation } from '../index';
-import { computeOas2UriMap } from '../oas2';
-import { computeOas3UriMap } from '../oas3';
+import { transformOasToServiceNode } from '../';
 
-const oas3Header = {
+const oas3Document = {
   openapi: '3.0.0',
   info: {
-    title: 'test',
+    title: 'oas3',
     version: '1.0.0',
+  },
+  tags: [{ name: 'operation-tag' }, { name: 'model-tag' }],
+  paths: {
+    '/todos': {
+      get: {
+        summary: 'Get Todos',
+        tags: ['operation-tag'],
+      },
+    },
+  },
+  components: {
+    schemas: {
+      Todo: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'integer',
+          },
+        },
+        title: 'Todo',
+        'x-tags': ['model-tag'],
+      },
+    },
   },
 };
 
-const schema = {
-  title: 'User',
-  type: 'object',
-  properties: {
-    id: {
-      type: 'string',
+const oas2Document = {
+  swagger: '2.0.0',
+  info: {
+    title: 'oas2',
+    version: '1.0.0',
+  },
+  tags: [{ name: 'operation-tag' }, { name: 'model-tag' }],
+  paths: {
+    '/todos': {
+      get: {
+        summary: 'Get Todos',
+        tags: ['operation-tag'],
+      },
     },
   },
-} as const;
+  definitions: {
+    Todo: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+      },
+      title: 'Todo',
+      'x-tags': ['model-tag'],
+    },
+  },
+};
 
-describe('computeUriMap', () => {
-  it('should compute uris for operation with operationId', () => {
-    const uriMap = computeOas3UriMap({
-      ...oas3Header,
-      paths: {
-        '/users/{userId}': {
-          get: {
-            operationId: 'get-user',
+describe('computeOasNodes', () => {
+  it('should return null for invalid document', () => {
+    expect(transformOasToServiceNode({})).toBeNull();
+  });
+
+  it('should return oas nodes for oas3 document', () => {
+    expect(transformOasToServiceNode(oas3Document)).toEqual({
+      type: 'http_service',
+      uri: '/',
+      name: 'oas3',
+      data: {
+        id: '?http-service-id?',
+        version: '1.0.0',
+        name: 'oas3',
+        tags: [
+          {
+            name: 'operation-tag',
           },
-        },
+          {
+            name: 'model-tag',
+          },
+        ],
       },
-    });
-
-    expect(uriMap).toMatchObject({
-      '/operations/get-user': expect.objectContaining({}),
+      tags: ['operation-tag', 'model-tag'],
+      children: [
+        {
+          type: 'http_operation',
+          uri: '/paths/todos/get',
+          data: {
+            id: '?http-operation-id?',
+            method: 'get',
+            path: '/todos',
+            summary: 'Get Todos',
+            responses: [],
+            servers: [],
+            request: {
+              body: {
+                contents: [],
+              },
+              headers: [],
+              query: [],
+              cookie: [],
+              path: [],
+            },
+            tags: [
+              {
+                name: 'operation-tag',
+              },
+            ],
+            security: [],
+          },
+          name: 'Get Todos',
+          tags: ['operation-tag'],
+        },
+        {
+          type: 'model',
+          uri: '/schemas/Todo',
+          data: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'integer',
+              },
+            },
+            title: 'Todo',
+            'x-tags': ['model-tag'],
+          },
+          name: 'Todo',
+          tags: ['model-tag'],
+        },
+      ],
     });
   });
 
-  it('should compute uris for operation without operationId', () => {
-    const uriMap = computeOas3UriMap({
-      ...oas3Header,
-      paths: {
-        '/users/{userId}': {
-          get: {},
-        },
-      },
-    });
-
-    expect(uriMap).toMatchObject({
-      '/paths/users-userId/get': expect.objectContaining({}),
-    });
-  });
-
-  it('should compute oas2 models', () => {
-    const uriMap = computeOas2UriMap({
-      swagger: '2.0',
-      info: {
-        title: 'test',
+  it('should return oas nodes for oas2 document', () => {
+    expect(transformOasToServiceNode(oas2Document)).toEqual({
+      type: 'http_service',
+      uri: '/',
+      name: 'oas2',
+      data: {
+        id: '?http-service-id?',
+        name: 'oas2',
+        tags: [
+          {
+            name: 'operation-tag',
+          },
+          {
+            name: 'model-tag',
+          },
+        ],
         version: '1.0.0',
       },
-      paths: {},
-      definitions: {
-        User: schema,
-      },
-    });
-
-    expect(uriMap).toMatchObject({
-      '/schemas/User': expect.objectContaining({}),
-    });
-  });
-
-  it('should compute oas3 models', () => {
-    const uriMap = computeOas3UriMap({
-      ...oas3Header,
-      paths: {},
-      components: {
-        schemas: {
-          User: schema,
-        },
-      },
-    });
-
-    expect(uriMap).toMatchObject({
-      '/schemas/User': expect.objectContaining({}),
-    });
-  });
-
-  it('translates uriMap to operationMap', () => {
-    const uriMap = computeOas3UriMap({
-      ...oas3Header,
-      paths: {
-        '/users': {
-          post: {},
-        },
-        '/users/{userId}': {
-          get: {
-            operationId: 'get-user',
+      tags: ['operation-tag', 'model-tag'],
+      children: [
+        {
+          type: 'http_operation',
+          uri: '/paths/todos/get',
+          data: {
+            id: '?http-operation-id?',
+            method: 'get',
+            path: '/todos',
+            summary: 'Get Todos',
+            responses: [],
+            servers: [],
+            request: {},
+            tags: [
+              {
+                name: 'operation-tag',
+              },
+            ],
+            security: [],
           },
+          name: 'Get Todos',
+          tags: ['operation-tag'],
         },
-      },
-      components: {
-        schemas: {
-          User: schema,
+        {
+          type: 'model',
+          uri: '/schemas/Todo',
+          data: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'integer',
+              },
+            },
+            title: 'Todo',
+            'x-tags': ['model-tag'],
+          },
+          name: 'Todo',
+          tags: ['model-tag'],
         },
-      },
-    });
-
-    const operationMap = mapUriToOperation(uriMap);
-
-    expect(operationMap).toEqual({
-      '/paths/users/post': 'post',
-      '/operations/get-user': 'get',
+      ],
     });
   });
 });

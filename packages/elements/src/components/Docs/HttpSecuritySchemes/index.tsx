@@ -51,7 +51,7 @@ const SecurityScheme = ({ security, className }: { security: HttpSecurityScheme;
         <div>{security.key}</div>
         <div
           className={`text-sm text-${HttpSecuritySchemeColors[security.type]}-7 dark:text-${
-            HttpSecuritySchemeColors[security.type]
+            HttpSecuritySchemeColors[security.type] ?? 'gray'
           }-6`}
         >
           {security.type}
