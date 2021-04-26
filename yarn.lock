@@ -4011,10 +4011,10 @@
     unist-util-select "^3.0.1"
     unist-util-visit "^2.0.2"
 
-"@stoplight/mosaic-code-editor@1.0.0-beta.46":
-  version "1.0.0-beta.46"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.0.0-beta.46.tgz#2bd793a6d3445a985484196dfddec4ea2a81d9ce"
-  integrity sha512-EpChxVMKrJ6/gNFPIgAXJ4n0pqZtgsG5TuiT21V+a4n5rAbPxU9gpqxN7fi7IfRYzwoXdxNiJDkVfLUPqfd05Q==
+"@stoplight/mosaic-code-editor@1.0.0-beta.47":
+  version "1.0.0-beta.47"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.0.0-beta.47.tgz#da18b5f2d69c66fadf4ff873e79816194a2e7d2c"
+  integrity sha512-q2XaqVW6oq8b6Y4PNAbMY4p2jvUyaGXbFy2viVg5u2+cc1ctgcpyZC0xPG1XvW2oSBZMrOBds5XoaZeIWyLYyQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -4035,8 +4035,8 @@
     "@react-spectrum/utils" "~3.5.1"
     "@react-stately/select" "~3.1.1"
     "@react-stately/tooltip" "~3.0.3"
-    "@stoplight/mosaic" "1.0.0-beta.46"
-    "@stoplight/mosaic-code-viewer" "1.0.0-beta.46"
+    "@stoplight/mosaic" "1.0.0-beta.47"
+    "@stoplight/mosaic-code-viewer" "1.0.0-beta.47"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
@@ -4050,10 +4050,10 @@
     tslib "^2.1.0"
     zustand "^3.3.3"
 
-"@stoplight/mosaic-code-viewer@1.0.0-beta.46":
-  version "1.0.0-beta.46"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.46.tgz#df8a92d1c39bec71a361655becfd70eefb8d1d33"
-  integrity sha512-JN8CxmSINwSOs6RBiVPDEtfGPmsUFAosARa3fvyW+gEv8Nxx9h/eD/AEXSCoLsS0mh1g6dI2VK0sbYc6p8E4GQ==
+"@stoplight/mosaic-code-viewer@1.0.0-beta.47":
+  version "1.0.0-beta.47"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.47.tgz#596a355dfcd897407200f109db330134ede3656c"
+  integrity sha512-O+iXzpgd4WP1JwuOVOECA5JRkT34alaroQUgbrSFaQbGH5FXgrAvSRLJVVquqy99+SqhxY3JNJQWin0Hr9YZRA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -4074,7 +4074,7 @@
     "@react-spectrum/utils" "~3.5.1"
     "@react-stately/select" "~3.1.1"
     "@react-stately/tooltip" "~3.0.3"
-    "@stoplight/mosaic" "1.0.0-beta.46"
+    "@stoplight/mosaic" "1.0.0-beta.47"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
@@ -4087,10 +4087,10 @@
     tslib "^2.1.0"
     zustand "^3.3.3"
 
-"@stoplight/mosaic@1.0.0-beta.43", "@stoplight/mosaic@^1.0.0-beta.36":
-  version "1.0.0-beta.43"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.43.tgz#f61d2ac3aeff0f8d2bb248992aa59c4c495cc8c2"
-  integrity sha512-oTpxp9+vHEjQcqI+P43M7Ui7z/1dBHfB0RQ0my7aBOcTf/akjp0rwN49krMNkg8pH7uhJ9xrSLYqH/SGtGG4Hw==
+"@stoplight/mosaic@1.0.0-beta.47":
+  version "1.0.0-beta.47"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.47.tgz#6b212163af3ab7fb981dee75785f1b967299171e"
+  integrity sha512-Rp6aXslPB0X2hqj8MFmbYSWUvSjo/ResDFNQoMHD1BCBGw0nTmlcPZaQDKQApUFQrDBzih+OGRKTk0mGxrTP3A==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -4121,10 +4121,10 @@
     tslib "^2.1.0"
     zustand "^3.3.3"
 
-"@stoplight/mosaic@1.0.0-beta.46":
-  version "1.0.0-beta.46"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.46.tgz#35fa3c9aebdb3c3535d1d8dd53cc52f1b2b1f5db"
-  integrity sha512-GlGLb2RzvzS7CQpq006c6eZhe7tIgRvDIt/nYqx+FXJEh0M045I2EObstdbyQt/sL7Zw5lae3uxiQ/1j8FqkRA==
+"@stoplight/mosaic@^1.0.0-beta.36":
+  version "1.0.0-beta.43"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.43.tgz#f61d2ac3aeff0f8d2bb248992aa59c4c495cc8c2"
+  integrity sha512-oTpxp9+vHEjQcqI+P43M7Ui7z/1dBHfB0RQ0my7aBOcTf/akjp0rwN49krMNkg8pH7uhJ9xrSLYqH/SGtGG4Hw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
