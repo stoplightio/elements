@@ -10,7 +10,7 @@ import { isHttpOperation, isHttpRequest, isJSONSchema } from '../../../utils/gua
 import { SchemaAndDescription } from '../../SchemaAndDescription';
 import { TryIt } from '../../TryIt';
 
-export const CodeWithSchemaViewer = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
+export const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
   const {
     node: { annotations, value, resolved, meta },
   } = props;

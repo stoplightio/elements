@@ -1,6 +1,6 @@
 import { HttpParamStyles, IHttpRequest } from '@stoplight/types';
 
-import { parseHttpRequest } from './CodeWithSchemaViewer';
+import { parseHttpRequest } from './CodeComponent';
 
 describe('CodeComponent', () => {
   describe('parseHttpRequest', () => {
