@@ -44,12 +44,6 @@ APIWithoutDescription.args = {
 };
 APIWithoutDescription.storyName = 'API Without Description';
 
-export const Petstore = Template.bind({});
-Petstore.args = {
-  apiDescriptionUrl: 'https://petstore.swagger.io/v2/swagger.json',
-};
-Petstore.storyName = 'Swagger Petstore v2';
-
 export const StackedLayout = Template.bind({});
 StackedLayout.args = {
   apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
