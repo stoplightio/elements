@@ -12,6 +12,7 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "paths": {
+      "@stoplight/elements": ["../elements/dist"],
       "@stoplight/elements-utils": ["../elements-utils/dist"]
     }
   }
