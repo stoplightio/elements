@@ -20,7 +20,10 @@ describe('CodeComponent', () => {
         method: 'get',
         path: '/todos',
         servers: [{ url: 'http://test' }],
-        request: {},
+        request: {
+          headers: [],
+          query: [],
+        },
         responses: [],
       });
     });
@@ -41,7 +44,10 @@ describe('CodeComponent', () => {
         method: 'get',
         path: '/todos',
         servers: [{ url: 'http://test' }],
-        request: {},
+        request: {
+          headers: [],
+          query: [],
+        },
         responses: [],
       });
     });

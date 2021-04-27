@@ -6,9 +6,21 @@ import React from 'react';
 import URI from 'urijs';
 
 import { useParsedValue } from '../../../hooks/useParsedValue';
-import { isHttpOperation, isHttpRequest, isJSONSchema } from '../../../utils/guards';
+import { isHttpOperation, isJSONSchema } from '../../../utils/guards';
 import { SchemaAndDescription } from '../../SchemaAndDescription';
 import { TryIt } from '../../TryIt';
+
+type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRequest>;
+
+function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is PartialHttpRequest {
+  return (
+    isObject(maybeHttpRequest) &&
+    'method' in maybeHttpRequest &&
+    typeof maybeHttpRequest['method'] === 'string' &&
+    'url' in maybeHttpRequest &&
+    typeof maybeHttpRequest['url'] === 'string'
+  );
+}
 
 export const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
   const {
@@ -27,7 +39,7 @@ export const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotatio
   }
 
   if (nodeType === 'http') {
-    if (!isObject(parsedValue) || (!isHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
+    if (!isObject(parsedValue) || (!isPartialHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
       return null;
     }
 
@@ -38,32 +50,24 @@ export const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotatio
   return <DefaultCode {...props} />;
 };
 
-export function parseHttpRequest(data: IHttpRequest): IHttpOperation {
+export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
   const uri = URI(data.url);
   return {
     id: '?http-operation-id?',
     method: data.method,
     path: uri.is('absolute') ? uri.path() : data.url,
-    servers: [{ url: uri.is('absolute') ? uri.origin() : data.baseUrl }],
+    servers: [{ url: uri.is('absolute') ? uri.origin() : data.baseUrl || '' }],
     request: {
-      ...(data.query && Object.keys(data.query).length
-        ? {
-            query: Object.entries(data.query).map(([key, value]) => ({
-              name: key,
-              style: HttpParamStyles.Form,
-              schema: { default: Array.isArray(value) && value.length > 0 ? value[0] : value },
-            })),
-          }
-        : null),
-      ...(data.headers && Object.keys(data.headers).length
-        ? {
-            headers: Object.entries(data.headers).map(([key, value]) => ({
-              name: key,
-              style: HttpParamStyles.Simple,
-              schema: { default: value },
-            })),
-          }
-        : null),
+      query: Object.entries(data.query || {}).map(([key, value]) => ({
+        name: key,
+        style: HttpParamStyles.Form,
+        schema: { default: Array.isArray(value) && value.length > 0 ? value[0] : value },
+      })),
+      headers: Object.entries(data.headers || {}).map(([key, value]) => ({
+        name: key,
+        style: HttpParamStyles.Simple,
+        schema: { default: value },
+      })),
       ...(data.body
         ? { body: { contents: [{ mediaType: 'application/json', schema: { default: data.body } }] } }
         : null),
