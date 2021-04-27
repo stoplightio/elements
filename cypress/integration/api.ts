@@ -14,6 +14,13 @@ describe('API component', () => {
     cy.visit('/zoom-api/operations/groupCreate');
     cy.findByRole('heading', { name: /Create a group/i }).should('exist');
   });
+
+  it('does not break on select dropdown', () => {
+    loadZoomApiPage();
+    cy.visit('/zoom-api/operations/groups');
+    cy.get(`button[aria-label="Request Sample Language"]`).click();
+    cy.findByText('Shell / Wget').should('exist');
+  });
 });
 
 function loadZoomApiPage() {
