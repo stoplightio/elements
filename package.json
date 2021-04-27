@@ -43,6 +43,7 @@
   "scripts": {
     "elements": "yarn workspace @stoplight/elements",
     "elements-utils": "yarn workspace @stoplight/elements-utils",
+    "elements-dev-portal": "yarn workspace @stoplight/elements-dev-portal",
     "build": "yarn workspace @stoplight/elements-utils build && yarn workspace @stoplight/elements build",
     "build.docs": "yarn workspace @stoplight/elements build.docs",
     "lint": "eslint '{packages,examples}/*/src/**/*.{ts,tsx}'",
