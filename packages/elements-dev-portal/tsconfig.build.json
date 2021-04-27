@@ -13,7 +13,9 @@
     "module": "commonjs",
     "paths": {
       "@stoplight/elements": ["../elements/dist"],
-      "@stoplight/elements-utils": ["../elements-utils/dist"]
+      "@stoplight/elements-utils": ["../elements-utils/dist"],
+      "@stoplight/elements/*": ["../elements/dist/*"],
+      "@stoplight/elements-utils/*": ["../elements-utils/dist/*"]
     }
   }
 }
