@@ -14,6 +14,13 @@ describe('Stoplight component', () => {
     cy.visit('/stoplight-project/reference/todos/todo.v1.yaml/components/schemas/Todos');
     cy.findByRole('heading', { name: /Todo/i }).should('exist');
   });
+
+  it('does not break on select dropdown', () => {
+    loadStoplightProjectPage();
+    cy.findByText('Create Todo').click();
+    cy.get(`button[aria-label="Request Sample Language"]`).click();
+    cy.findByText('Shell / Wget').should('exist');
+  });
 });
 
 function loadStoplightProjectPage() {

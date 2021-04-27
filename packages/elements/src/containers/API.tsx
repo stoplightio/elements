@@ -11,6 +11,7 @@ import { SidebarLayout } from '../components/API/SidebarLayout';
 import { StackedLayout } from '../components/API/StackedLayout';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { withPersistenceBoundary } from '../context/Persistence';
+import { withMosaicProvider } from '../hoc/withMosaicProvider';
 import { withRouter } from '../hoc/withRouter';
 import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
 import { useParsedValue } from '../hooks/useParsedValue';
@@ -112,4 +113,4 @@ const APIImpl: React.FC<APIProps> = props => {
   );
 };
 
-export const API = pipe(withRouter, withStyles, withPersistenceBoundary)(APIImpl);
+export const API = pipe(withRouter, withStyles, withPersistenceBoundary, withMosaicProvider)(APIImpl);
