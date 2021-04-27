@@ -3,12 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeStringify } from '@stoplight/json';
 import { JsonSchemaViewer, ViewMode } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES } from '@stoplight/markdown-viewer';
-import { JSONSchema } from '@stoplight/prism-http';
 import { Dictionary, NodeType } from '@stoplight/types';
 import { CodeViewer } from '@stoplight/ui-kit/CodeViewer';
 import { SimpleTab, SimpleTabList, SimpleTabPanel, SimpleTabs } from '@stoplight/ui-kit/SimpleTabs';
 import cn from 'classnames';
-import { JSONSchema4 } from 'json-schema';
+import { JSONSchema7 } from 'json-schema';
 import { isEmpty, map } from 'lodash';
 import * as React from 'react';
 
@@ -17,7 +16,7 @@ import { useInlineRefResolver } from '../../context/InlineRefResolver';
 import { MarkdownViewer } from '../MarkdownViewer';
 
 export interface ISchemaViewerProps {
-  schema: JSONSchema;
+  schema: JSONSchema7;
   title?: string;
   description?: string;
   errors?: string[];
@@ -55,7 +54,7 @@ export const SchemaViewer = ({
           mergeAllOf
           resolveRef={resolveRef}
           className={jsvClassName}
-          schema={schema as JSONSchema4}
+          schema={schema}
           maxRows={maxRows}
           viewMode={viewMode}
           shouldResolveEagerly

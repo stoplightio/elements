@@ -20,12 +20,12 @@ export const Mocking = observer(() => {
 
   const operationResponses = store.operation.responses;
 
-  const currentCode = (store.prismConfig.mock && store.prismConfig.mock.code) || '';
+  const currentCode = store.prismConfig.mock && store.prismConfig.mock.code;
 
   const currentExample = (store.prismConfig.mock && store.prismConfig.mock.exampleKey) || '';
 
   const exampleOptions = React.useMemo(() => {
-    const response = operationResponses?.find(r => r.code === currentCode);
+    const response = operationResponses?.find(r => Number(r.code) === currentCode);
     if (!response || !response.contents) {
       return [notSetOption];
     }
@@ -44,7 +44,7 @@ export const Mocking = observer(() => {
 
   let responseText = 'Not Set';
   if (currentCode) {
-    responseText = currentCode;
+    responseText = String(currentCode);
 
     if (currentExample) {
       responseText = `${currentCode} - ${currentExample}`;
@@ -126,7 +126,8 @@ export const Mocking = observer(() => {
                 {operationResponses
                   ?.filter(r => Number.isInteger(parseFloat(r.code)))
                   ?.map(operationResponse => {
-                    const isActive = operationResponse.code === currentCode;
+                    const operationResponseCode = Number(operationResponse.code);
+                    const isActive = operationResponseCode === currentCode;
                     const exampleKeys = operationResponse.contents
                       ?.flatMap(c => c.examples || [])
                       .map(example => example.key);
@@ -137,7 +138,7 @@ export const Mocking = observer(() => {
                         text={exampleKey}
                         key={exampleKey}
                         onClick={() => {
-                          store.setPrismMockingOption('code', operationResponse.code);
+                          store.setPrismMockingOption('code', operationResponseCode);
                           store.setPrismMockingOption('exampleKey', exampleKey);
                         }}
                       />
@@ -150,7 +151,7 @@ export const Mocking = observer(() => {
                           active={isActive && !currentExample}
                           text="No Example"
                           onClick={() => {
-                            store.setPrismMockingOption('code', operationResponse.code);
+                            store.setPrismMockingOption('code', operationResponseCode);
                             store.setPrismMockingOption('exampleKey', undefined);
                           }}
                         />,
@@ -164,7 +165,7 @@ export const Mocking = observer(() => {
                         text={operationResponse.code}
                         key={operationResponse.code}
                         onClick={() => {
-                          store.setPrismMockingOption('code', operationResponse.code);
+                          store.setPrismMockingOption('code', operationResponseCode);
                           store.setPrismMockingOption('exampleKey', undefined);
                         }}
                       >

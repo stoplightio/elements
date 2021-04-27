@@ -132,7 +132,7 @@ export class RequestMakerStore {
     return {
       mock: {
         dynamic: parseOptionalBoolean(mergedPreferences.dynamic) ?? defaultPrismConfig.mock.dynamic,
-        code: mergedPreferences.code,
+        code: mergedPreferences.code ? Number(mergedPreferences.code) : undefined,
         exampleKey: mergedPreferences.example,
       },
       checkSecurity: parseOptionalBoolean(mergedPreferences['check-security']) ?? defaultPrismConfig.checkSecurity,

@@ -1,8 +1,8 @@
 import { IHttpOperation, IHttpRequest, IHttpService } from '@stoplight/types';
-import { JSONSchema4 } from 'json-schema';
+import { JSONSchema7 } from 'json-schema';
 import { isObject } from 'lodash';
 
-export function isJSONSchema(maybeSchema: unknown): maybeSchema is JSONSchema4 {
+export function isJSONSchema(maybeSchema: unknown): maybeSchema is JSONSchema7 {
   // TODO (CL): Do we actually need a more specific guard?
   return isObject(maybeSchema);
 }

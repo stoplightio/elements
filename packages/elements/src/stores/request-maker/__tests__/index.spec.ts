@@ -322,7 +322,7 @@ describe('RequestMakerStore', () => {
         {
           ...defaultPrismConfig,
           mock: {
-            code: '201',
+            code: 201,
             exampleKey: 'named_example',
             dynamic: true,
           },
@@ -336,7 +336,7 @@ describe('RequestMakerStore', () => {
           validateResponse: false,
           mock: {
             dynamic: true,
-            code: '201',
+            code: 201,
           },
           checkSecurity: false,
         },

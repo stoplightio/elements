@@ -1,8 +1,8 @@
 import { stringify } from '@stoplight/json';
+import { sample } from '@stoplight/json-schema-sampler';
 import { JSONSchema } from '@stoplight/prism-http';
 import { HttpMethod, IHttpOperation, IHttpParam } from '@stoplight/types';
 import { filter, flatten, get, has } from 'lodash';
-import { sample } from 'openapi-sampler';
 
 import { RequestStore } from '../stores/request-maker/request';
 
