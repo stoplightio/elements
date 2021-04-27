@@ -4,8 +4,10 @@ import { NodeType } from '@stoplight/types';
 import { render, screen } from '@testing-library/react';
 import * as React from 'react';
 
+import { withPersistenceBoundary } from '../../context/Persistence';
 import { IntegrationKind } from '../../types';
 import { MarkdownViewer } from '.';
+import { CodeComponent } from './CustomComponents/CodeComponent';
 import { MarkdownComponentsProvider } from './CustomComponents/Provider';
 import { createResolvedImageComponent } from './CustomComponents/ResolvedImage';
 
@@ -103,6 +105,39 @@ describe('MarkdownViewer', () => {
       const image = screen.getByTitle('Logo Title Text 1');
 
       expect(image).toHaveAttribute('src', expectedUrl);
+    });
+  });
+
+  describe('CodeComponent', () => {
+    it('Should render TryIt correctly', () => {
+      const MarkdownViewerWithTryIt = withPersistenceBoundary(MarkdownViewer);
+      const markdown = `### Raw Http Request
+
+<!-- type: http -->
+
+\`\`\`json
+{
+  "method": "get",
+  "url": "/gifs/search",
+  "baseUrl": "http://api.giphy.com/v1",
+  "headers": {},
+  "query": {
+    "api_key": ["dc6zaTOxFJmzC"],
+    "limit": ["1"],
+    "q": ["cats"]
+  }
+}
+\`\`\`
+`;
+
+      render(
+        <MarkdownComponentsProvider value={{ code: CodeComponent }}>
+          <MarkdownViewerWithTryIt markdown={markdown} />
+        </MarkdownComponentsProvider>,
+      );
+
+      expect(screen.getByRole('heading', { name: 'GET /gifs/search' })).toBeInTheDocument();
+      expect(screen.getByText('api_key')).toBeInTheDocument();
     });
   });
 });
