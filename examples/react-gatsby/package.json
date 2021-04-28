@@ -20,10 +20,12 @@
   },
   "resolutions": {
     "@stoplight/elements": "file:../../packages/elements/dist",
+    "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
     "@stoplight/elements-utils": "file:../../packages/elements-utils/dist"
   },
   "dependencies": {
     "@stoplight/elements": "file:../../packages/elements/dist",
+    "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
     "classnames": "^2.2.6",
     "gatsby": "^2.28.1",
     "gatsby-image": "^2.7.0",

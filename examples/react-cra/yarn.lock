@@ -1923,22 +1923,29 @@
     "@react-types/overlays" "^3.4.0"
     "@react-types/shared" "^3.4.0"
 
-"@stoplight/elements-utils@beta", "@stoplight/elements-utils@file:../../packages/elements-utils/dist":
-  version "7.0.0-alpha.7"
+"@stoplight/elements-dev-portal@file:../../packages/elements-dev-portal/dist":
+  version "1.0.0-alpha.1"
+  dependencies:
+    "@stoplight/elements" "^7.0.0-beta.1"
+    lodash "^4.17.19"
+    react-router-dom "^5.2.0"
+
+"@stoplight/elements-utils@^7.0.0-beta.1", "@stoplight/elements-utils@file:../../packages/elements-utils/dist":
+  version "7.0.0-beta.1"
   dependencies:
     lodash "^4.17.19"
 
-"@stoplight/elements@file:../../packages/elements/dist":
-  version "7.0.0-alpha.7"
+"@stoplight/elements@^7.0.0-beta.1", "@stoplight/elements@file:../../packages/elements/dist":
+  version "7.0.0-beta.1"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.31"
     "@fortawesome/free-solid-svg-icons" "^5.14.0"
     "@fortawesome/react-fontawesome" "^0.1.11"
-    "@stoplight/elements-utils" beta
+    "@stoplight/elements-utils" "^7.0.0-beta.1"
     "@stoplight/http-spec" "^3.2.6"
     "@stoplight/json" "^3.10.0"
     "@stoplight/json-schema-ref-parser" "^9.0.5"
-    "@stoplight/json-schema-viewer" "^4.0.0-beta.13"
+    "@stoplight/json-schema-viewer" "^4.0.0-beta.14"
     "@stoplight/markdown" "^2.10.0"
     "@stoplight/markdown-viewer" "^4.3.3"
     "@stoplight/mosaic" "1.0.0-beta.46"
@@ -1947,7 +1954,7 @@
     "@stoplight/path" "^1.3.2"
     "@stoplight/react-error-boundary" "^1.1.0"
     "@stoplight/tree-list" "^5.0.3"
-    "@stoplight/types" "^11.9.0"
+    "@stoplight/types" "^11.10.0"
     "@stoplight/ui-kit" "^3.0.0-beta.39"
     "@stoplight/yaml" "^4.2.1"
     axios "^0.21.1"
@@ -2012,15 +2019,15 @@
     "@stoplight/lifecycle" "^2.3.2"
     magic-error "^0.0.0"
 
-"@stoplight/json-schema-viewer@^4.0.0-beta.13":
-  version "4.0.0-beta.13"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.13.tgz#1039be8bbe6bd1e69f1c0a1a1d92d48498c647c4"
-  integrity sha512-FtOotWyMF4TUW2OeTxLtu1Zr7Apn46ef78FtJtlk9i4ITyj6Ladn90p1I8WU8frawR3NBDiEy4lcXdEVm180vQ==
+"@stoplight/json-schema-viewer@^4.0.0-beta.14":
+  version "4.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.15.tgz#9c4c753c03596d3275273dc7b09068940a1f3e9a"
+  integrity sha512-5JMVyBv9TGEhufCTO5CyUDdbm/f+ZNsXDlRvRUwGCahilsv8tB7dZorKCcXcEq4nt8XPAeEDuszWdCJkM2r54g==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.10.0"
     "@stoplight/json-schema-tree" "^1.1.3"
-    "@stoplight/mosaic" "^1.0.0-beta.36"
+    "@stoplight/mosaic" "1.0.0-beta.46"
     "@stoplight/react-error-boundary" "^1.0.0"
     classnames "^2.2.6"
     lodash "^4.17.19"
@@ -2194,40 +2201,6 @@
   version "1.0.0-beta.46"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.46.tgz#35fa3c9aebdb3c3535d1d8dd53cc52f1b2b1f5db"
   integrity sha512-GlGLb2RzvzS7CQpq006c6eZhe7tIgRvDIt/nYqx+FXJEh0M045I2EObstdbyQt/sL7Zw5lae3uxiQ/1j8FqkRA==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.35"
-    "@fortawesome/free-solid-svg-icons" "^5.15.3"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    "@react-aria/button" "~3.3.1"
-    "@react-aria/dialog" "~3.1.2"
-    "@react-aria/focus" "~3.2.4"
-    "@react-aria/interactions" "~3.3.4"
-    "@react-aria/listbox" "~3.2.4"
-    "@react-aria/overlays" "~3.6.2"
-    "@react-aria/select" "~3.3.1"
-    "@react-aria/separator" "~3.1.1"
-    "@react-aria/ssr" "~3.0.1"
-    "@react-aria/tooltip" "~3.1.1"
-    "@react-aria/utils" "~3.7.0"
-    "@react-hook/size" "^2.1.1"
-    "@react-hook/window-size" "^3.0.7"
-    "@react-spectrum/utils" "~3.5.1"
-    "@react-stately/select" "~3.1.1"
-    "@react-stately/tooltip" "~3.0.3"
-    clsx "^1.1.1"
-    copy-to-clipboard "^3.3.1"
-    deepmerge "^4.2.2"
-    lodash.get "^4.4.2"
-    polished "^4.1.1"
-    reakit "npm:@stoplight/reakit@~1.3.5"
-    ts-keycode-enum "^1.0.6"
-    tslib "^2.1.0"
-    zustand "^3.3.3"
-
-"@stoplight/mosaic@^1.0.0-beta.36":
-  version "1.0.0-beta.43"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.43.tgz#f61d2ac3aeff0f8d2bb248992aa59c4c495cc8c2"
-  integrity sha512-oTpxp9+vHEjQcqI+P43M7Ui7z/1dBHfB0RQ0my7aBOcTf/akjp0rwN49krMNkg8pH7uhJ9xrSLYqH/SGtGG4Hw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
