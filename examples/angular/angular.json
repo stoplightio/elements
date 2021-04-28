@@ -28,7 +28,8 @@
               "node_modules/@stoplight/elements/styles/elements.min.css"
             ],
             "scripts": [
-              "node_modules/@stoplight/elements/web-components.min.js"
+              "node_modules/@stoplight/elements/web-components.min.js",
+              "node_modules/@stoplight/elements-dev-portal/web-components.min.js"
             ]
           },
           "configurations": {
@@ -50,7 +51,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "6mb"
+                  "maximumError": "9mb"
                 },
                 {
                   "type": "anyComponentStyle",
