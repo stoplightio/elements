@@ -1,8 +1,17 @@
 import { pointerToPath } from '@stoplight/json';
-import { SchemaTreeRefDereferenceFn } from '@stoplight/json-schema-viewer';
+import { JSONSchema } from '@stoplight/json-schema-viewer';
+import { SchemaTreeRefInfo } from '@stoplight/json-schema-viewer/tree/tree';
+import { JsonPath } from '@stoplight/types';
+import { JSONSchema7 } from 'json-schema';
 import { get, isObject } from 'lodash';
 import * as React from 'react';
 import { useContext } from 'react';
+
+export type SchemaTreeRefDereferenceFn = (
+  ref: SchemaTreeRefInfo,
+  propertyPath: JsonPath | null,
+  schema: JSONSchema,
+) => JSONSchema7;
 
 const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(void 0);
 InlineRefResolverContext.displayName = 'InlineRefResolverContext';

@@ -192,7 +192,7 @@ describe('RequestSend Response Code component', () => {
     });
 
     it('should remove example when Not Set is selected', async () => {
-      store.setPrismMockingOption('code', '200');
+      store.setPrismMockingOption('code', 200);
       store.setPrismMockingOption('exampleKey', 'first-example');
 
       render(
