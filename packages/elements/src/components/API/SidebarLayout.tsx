@@ -1,3 +1,5 @@
+import { faBolt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generateApiToC } from '@stoplight/elements-utils';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
@@ -78,8 +80,8 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
         <Heading ml={5} mb={5} size={4}>
           {serviceNode.name}
         </Heading>
-
         <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname, scrollRef }} />
+        <PoweredByLink />
       </Box>
 
       <Box px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
@@ -95,5 +97,21 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
         </Box>
       </Box>
     </Flex>
+  );
+};
+
+const PoweredByLink = () => {
+  return (
+    <a
+      className="border-t flex items-center px-5 py-3 reset"
+      href="https://stoplight.io/?utm_source=elements&utm_medium=api&utm_campaign=powered_by&utm_content=/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FontAwesomeIcon icon={faBolt} className="mr-3 fa-fw" style={{ color: 'rgba(144, 97, 249, 1)' }} />
+      <div>
+        powered by&nbsp;<strong>Stoplight</strong>
+      </div>
+    </a>
   );
 };
