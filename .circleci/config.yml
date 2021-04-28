@@ -97,13 +97,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install lerna
+          name: install dependencies
           command: yarn --frozen-lockfile
       - run:
           name: run release script
-          command: |
-            yarn lerna publish --from-package --no-push \
-              --dist-tag beta
+          command: yarn lerna publish --from-package --dist-tag beta --yes
 workflows:
   version: 2
   test-and-release:
@@ -126,6 +124,18 @@ workflows:
           example-name: angular
           requires:
             - build
+      - release:
+          requires:
+            - lint-and-check
+            - build
+            - build-docs
+            - e2e-react-cra
+            - e2e-react-gatsby
+            - e2e-angular
+          filters:
+            branches:
+              only: 
+                - main
   perform-lockfile-maintenance:
     triggers:
         - schedule:
