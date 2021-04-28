@@ -2,7 +2,7 @@ import { IComponentMapping } from '@stoplight/markdown-viewer';
 import { defaults } from 'lodash';
 import * as React from 'react';
 
-import { CodeWithSchemaViewer } from './CodeWithSchemaViewer';
+import { CodeComponent } from './CodeComponent';
 
 const MarkdownComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
 MarkdownComponentsContext.displayName = 'MarkdownComponentsContext';
@@ -14,7 +14,7 @@ interface MarkdownComponentsProviderProps {
 }
 
 const defaultComponents: IComponentMapping = {
-  code: CodeWithSchemaViewer,
+  code: CodeComponent,
 };
 
 /**

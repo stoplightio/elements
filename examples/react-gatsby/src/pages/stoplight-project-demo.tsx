@@ -1,4 +1,4 @@
-import { StoplightProject } from '@stoplight/elements';
+import { StoplightProject } from '@stoplight/elements-dev-portal';
 import React from 'react';
 
 import Layout from '../components/layout';
