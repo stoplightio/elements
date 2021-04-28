@@ -104,7 +104,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   const validations = omitBy(
     {
       ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style']),
-      ...omit(get(parameter, 'schema'), ['description', 'type', 'deprecated']),
+      ...omit(get(parameter, 'schema'), ['description', 'type', 'deprecated', '$schema']),
     },
     // Remove empty arrays and objects
     value => typeof value === 'object' && isEmpty(value),
@@ -163,28 +163,27 @@ Parameter.displayName = 'HttpOperation.Parameter';
 
 const NumberValidations = ({ validations, className }: { validations: Dictionary<unknown>; className?: string }) => (
   <>
-    {keys(omit(validations, ['exclusiveMinimum', 'exclusiveMaximum'])).map(key => {
-      let suffix;
-      if (key.includes('Length')) {
-        suffix = ' characters';
-      } else if (key.includes('Items')) {
-        suffix = ' items';
-      } else {
-        suffix = '';
-      }
+    {keys(validations)
+      .filter(key => typeof validations[key] === 'number')
+      .map(key => {
+        let suffix;
+        if (key.includes('Length')) {
+          suffix = ' characters';
+        } else if (key.includes('Items')) {
+          suffix = ' items';
+        } else {
+          suffix = '';
+        }
 
-      const exclusive =
-        (key === 'minimum' && validations.exclusiveMinimum) || (key === 'maximum' && validations.exclusiveMaximum)
-          ? true
-          : false;
-      const sign = `${key.includes('min') ? '>' : '<'}${exclusive ? '' : '='}`;
+        const exclusive = key.startsWith('exclusive');
+        const sign = `${key.includes('min') ? '>' : '<'}${exclusive ? '' : '='}`;
 
-      return (
-        <div key={key} className={cn('ml-2 text-sm bp3-running-text break-all', className)}>
-          <code>{`${sign} ${validations[key]}${suffix}`}</code>
-        </div>
-      );
-    })}
+        return (
+          <div key={key} className={cn('ml-2 text-sm bp3-running-text break-all', className)}>
+            <code>{`${sign} ${validations[key]}${suffix}`}</code>
+          </div>
+        );
+      })}
   </>
 );
 
