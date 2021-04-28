@@ -37,7 +37,7 @@
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "@stoplight/prism-http": "^4.2.0",
+    "@stoplight/prism-http": "^4.2.1",
     "mobx": ">=5",
     "react": ">=16.8",
     "react-dom": ">=16.8"
@@ -82,7 +82,7 @@
     "urijs": "^1.19.6"
   },
   "devDependencies": {
-    "@stoplight/prism-http": "^4.2.0",
+    "@stoplight/prism-http": "^4.2.1",
     "@stoplight/scripts": "8.2.3",
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/react": "^5.3.19",

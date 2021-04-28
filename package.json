@@ -12,9 +12,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "resolutions": {
-    "@stoplight/json-schema-sampler": "0.2.0"
-  },
   "devDependencies": {
     "@stoplight/eslint-config": "^1.1.0",
     "@stoplight/storybook-config": "^2.0.6",
