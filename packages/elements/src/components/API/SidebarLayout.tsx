@@ -81,10 +81,10 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
         <Heading ml={5} mb={5} size={4}>
           {serviceNode.name}
         </Heading>
-        <Flex direction="col" justifyContent="between" flexGrow>
+        <Flex flexGrow flexShrink overflowY="auto" direction="col">
           <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname, scrollRef }} />
-          <PoweredByLink />
         </Flex>
+        <PoweredByLink />
       </Flex>
 
       <Box px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
