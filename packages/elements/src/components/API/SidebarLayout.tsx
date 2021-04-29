@@ -64,7 +64,8 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
 
   return (
     <Flex className="sl-elements-api" pin h="full">
-      <Box
+      <Flex
+        direction="col"
         bg="canvas-100"
         borderR
         pt={5}
@@ -80,9 +81,11 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
         <Heading ml={5} mb={5} size={4}>
           {serviceNode.name}
         </Heading>
-        <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname, scrollRef }} />
-        <PoweredByLink />
-      </Box>
+        <Flex direction="col" justifyContent="between" flexGrow>
+          <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname, scrollRef }} />
+          <PoweredByLink />
+        </Flex>
+      </Flex>
 
       <Box px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
         <Box ref={scrollRef} style={{ maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px` }}>
