@@ -65,7 +65,7 @@ jobs:
           name: Upload Cypress Screenshots
           path: examples/angular/cypress/results/screenshots
           destination: screenshots
-  
+
   publish-storybook:
     docker:
       - image: circleci/node:12
@@ -95,9 +95,17 @@ workflows:
           requires:
             - build
       - publish-storybook:
+          filters:
+            branches:
+              only:
+                - v6
           requires:
             - build
       - release:
+          filters:
+            branches:
+              only:
+                - v6
           requires:
             - lint-and-check
             - build
