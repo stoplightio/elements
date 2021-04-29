@@ -194,4 +194,60 @@ describe('computeOasNodes', () => {
       ],
     });
   });
+
+  it('should fallback to operationId', () => {
+    expect(
+      transformOasToServiceNode({
+        openapi: '3.0.0',
+        info: {
+          title: 'oas3',
+          version: '1.0.0',
+        },
+        paths: {
+          '/todos': {
+            get: {
+              operationId: 'get-todos',
+            },
+          },
+        },
+      }),
+    ).toEqual({
+      type: 'http_service',
+      uri: '/',
+      name: 'oas3',
+      tags: [],
+      data: {
+        id: '?http-service-id?',
+        version: '1.0.0',
+        name: 'oas3',
+      },
+      children: [
+        {
+          type: 'http_operation',
+          uri: '/operations/get-todos',
+          data: {
+            id: '?http-operation-id?',
+            iid: 'get-todos',
+            method: 'get',
+            path: '/todos',
+            responses: [],
+            servers: [],
+            request: {
+              body: {
+                contents: [],
+              },
+              headers: [],
+              query: [],
+              cookie: [],
+              path: [],
+            },
+            tags: [],
+            security: [],
+          },
+          tags: [],
+          name: 'get-todos',
+        },
+      ],
+    });
+  });
 });
