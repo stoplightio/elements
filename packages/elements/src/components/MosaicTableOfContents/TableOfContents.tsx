@@ -1,7 +1,7 @@
-import { Box, Flex, Icon } from '@stoplight/mosaic';
+import { Box, Flex, Icon, IIconProps } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { NODE_META_COLOR, NODE_TYPE_ICON_COLOR, NODE_TYPE_META_ICON, NODE_TYPE_TITLE_ICON } from './constants';
+import { NODE_META_COLOR, NODE_TYPE_ICON_COLOR } from './constants';
 import {
   CustomLinkComponent,
   TableOfContentsDivider,
@@ -23,6 +23,14 @@ import {
 
 const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
+
+const NODE_TYPE_META_ICON: { [nodeType: string]: IIconProps['icon'] } = {
+  model: ['fas', 'cube'],
+};
+
+export const NODE_TYPE_TITLE_ICON: { [nodeType: string]: IIconProps['icon'] } = {
+  http_service: ['fas', 'cloud'],
+};
 
 export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeId, Link }) => {
   React.useEffect(() => {
@@ -81,7 +89,7 @@ const GroupItem = React.memo<{
   if (isExternalLink(item)) {
     return (
       <Box as="a" href={item.url} target="_blank" rel="noopener noreferrer" display="block">
-        <Item depth={depth} title={item.title} meta={<Box as={Icon} icon={['fal', 'external-link']} />} />
+        <Item depth={depth} title={item.title} meta={<Box as={Icon} icon={['fas', 'external-link']} />} />
       </Box>
     );
   } else if (isGroup(item) || isNodeGroup(item)) {
@@ -126,7 +134,7 @@ const Group = React.memo<{
   const meta = (
     <Box
       as={Icon}
-      icon={['fal', isOpen ? 'chevron-down' : 'chevron-right']}
+      icon={['fas', isOpen ? 'chevron-down' : 'chevron-right']}
       color="muted"
       fixedWidth
       onClick={(e: React.MouseEvent) => {
