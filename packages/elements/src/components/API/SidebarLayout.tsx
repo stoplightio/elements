@@ -1,14 +1,11 @@
-import { generateApiToC } from '@stoplight/elements-utils';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
-import { NodeType } from '@stoplight/types';
-import { TableOfContents } from '@stoplight/ui-kit';
 import * as React from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
-import { useTocContents } from '../../hooks/useTocContents';
 import { ServiceNode } from '../../utils/oas/types';
 import { ParsedDocs } from '../Docs';
-import { Row } from '../TableOfContents/Row';
+import { TableOfContents } from '../MosaicTableOfContents';
+import { computeAPITree, findFirstNodeSlug } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
@@ -19,7 +16,13 @@ const SIDEBAR_WIDTH = 300;
 
 export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
+  const tree = React.useMemo(() => computeAPITree(serviceNode), [serviceNode]);
   const { pathname } = useLocation();
+
+  React.useEffect(() => {
+    // Scroll to top on page change
+    scrollRef.current?.scrollTo(0, 0);
+  }, [pathname]);
 
   const uriMap = React.useMemo(
     () =>
@@ -29,34 +32,16 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
       }, {}),
     [serviceNode.children],
   );
-  const operationMap = React.useMemo(
-    () =>
-      serviceNode.children.reduce((prev, current) => {
-        if (current.type === NodeType.HttpOperation) {
-          prev[current.uri] = current.data.method;
-        }
-
-        return prev;
-      }, {}),
-    [serviceNode.children],
-  );
-  const tree = React.useMemo(() => generateApiToC([serviceNode, ...serviceNode.children], serviceNode.data), [
-    serviceNode,
-  ]);
-  const contents = useTocContents(tree, operationMap).map(item => ({
-    ...item,
-    isActive: item.to === pathname,
-    isSelected: item.to === pathname,
-  }));
 
   const hasOverview = !!serviceNode.data.description;
   const isRootPath = !pathname || pathname === '/';
   const node = isRootPath ? serviceNode : uriMap[pathname];
   if ((isRootPath && !hasOverview) || !node) {
     // Redirect to the first child if service node has no description or node doesn't exist
-    const item = contents.find(content => content.type === 'item');
-    if (item && item.to) {
-      return <Redirect to={item.to} />;
+    const firstSlug = findFirstNodeSlug(tree);
+
+    if (firstSlug) {
+      return <Redirect to={firstSlug} />;
     }
   }
 
@@ -75,22 +60,17 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
           minWidth: `${SIDEBAR_WIDTH}px`,
         }}
       >
-        <Heading ml={5} mb={5} size={4}>
+        <Heading ml={4} mb={5} size={4}>
           {serviceNode.name}
         </Heading>
 
-        <TableOfContents contents={contents} rowComponent={Row} rowComponentExtraProps={{ pathname, scrollRef }} />
+        <TableOfContents tree={tree} activeId={pathname} Link={Link} />
       </Box>
 
-      <Box px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
-        <Box ref={scrollRef} style={{ maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px` }}>
+      <Box ref={scrollRef} px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
+        <Box style={{ maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px` }}>
           {node && (
-            <ParsedDocs
-              className="sl-pt-16 sl-pb-24"
-              key={pathname}
-              uri={hasOverview ? pathname : undefined}
-              node={node}
-            />
+            <Box as={ParsedDocs} pt={4} pb={8} key={pathname} uri={hasOverview ? pathname : undefined} node={node} />
           )}
         </Box>
       </Box>
