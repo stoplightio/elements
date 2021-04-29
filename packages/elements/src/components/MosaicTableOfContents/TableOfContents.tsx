@@ -28,7 +28,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeI
   React.useEffect(() => {
     if (activeId && typeof window !== 'undefined') {
       const elem = window.document.getElementById(getHtmlIdFromItemId(activeId));
-      if (elem) {
+      if (elem && 'scrollIntoView' in elem) {
         elem.scrollIntoView({ block: 'center' });
       }
     }
