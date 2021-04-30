@@ -5,7 +5,7 @@ import { omit } from 'lodash';
 import * as React from 'react';
 
 import { FileUploadParameterEditor } from './FileUploadParameterEditors';
-import { parameterSupportsFileUpload } from './parameter-utils';
+import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
 import { BodyParameterValues } from './request-body-utils';
 
@@ -33,38 +33,36 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
     <Panel defaultIsOpen>
       <Panel.Titlebar>Body</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent">
-        {Object.entries(parameters)
-          .map(([name, schema]) => ({ name, schema, examples: schema?.examples }))
-          .map(parameter => {
-            const supportsFileUpload = parameterSupportsFileUpload(parameter);
-            const value = values[parameter.name];
+        {mapSchemaPropertiesToParameters(parameters).map(parameter => {
+          const supportsFileUpload = parameterSupportsFileUpload(parameter);
+          const value = values[parameter.name];
 
-            if (supportsFileUpload) {
-              return (
-                <FileUploadParameterEditor
-                  key={parameter.name}
-                  parameter={parameter}
-                  value={value instanceof File ? value : undefined}
-                  onChange={newValue =>
-                    newValue
-                      ? onChangeValues({ ...values, [parameter.name]: newValue })
-                      : onChangeValues(omit(values, parameter.name))
-                  }
-                />
-              );
-            }
-
+          if (supportsFileUpload) {
             return (
-              <ParameterEditor
+              <FileUploadParameterEditor
                 key={parameter.name}
                 parameter={parameter}
-                value={typeof value === 'string' ? value : undefined}
-                onChange={(value: string | number) =>
-                  onChangeValues({ ...values, [parameter.name]: typeof value === 'number' ? String(value) : value })
+                value={value instanceof File ? value : undefined}
+                onChange={newValue =>
+                  newValue
+                    ? onChangeValues({ ...values, [parameter.name]: newValue })
+                    : onChangeValues(omit(values, parameter.name))
                 }
               />
             );
-          })}
+          }
+
+          return (
+            <ParameterEditor
+              key={parameter.name}
+              parameter={parameter}
+              value={typeof value === 'string' ? value : undefined}
+              onChange={(value: string | number) =>
+                onChangeValues({ ...values, [parameter.name]: typeof value === 'number' ? String(value) : value })
+              }
+            />
+          );
+        })}
       </Panel.Content>
     </Panel>
   );

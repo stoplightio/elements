@@ -901,7 +901,7 @@ describe('TryIt', () => {
       clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-      expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual({ name: 'string', completed: null });
+      expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual({ name: 'string', completed: true });
     });
   });
 });
