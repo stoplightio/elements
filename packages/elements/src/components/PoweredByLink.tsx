@@ -2,13 +2,20 @@ import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 
-export const PoweredByLink: React.FC<{ headless?: boolean }> = ({ headless }) => {
+export const PoweredByLink: React.FC<{
+  headless?: boolean;
+  source: string;
+  pathname: string;
+  isStoplightProject?: boolean;
+}> = ({ headless, source, pathname, isStoplightProject }) => {
   return (
     <a
       className={
         !headless ? 'border-t flex items-center px-5 py-3 reset' : 'flex items-center px-1 py-3 reset justify-end'
       }
-      href="https://stoplight.io/?utm_source=elements&utm_medium=api&utm_campaign=powered_by&utm_content=/"
+      href={`https://stoplight.io/?utm_source=elements${
+        isStoplightProject && '-dev-portal'
+      }&utm_medium=${source}&utm_campaign=powered_by&utm_content=${pathname}`}
       target="_blank"
       rel="noopener noreferrer"
     >

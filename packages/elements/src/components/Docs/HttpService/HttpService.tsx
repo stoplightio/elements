@@ -22,7 +22,7 @@ export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
   const context = React.useContext(StoplightProjectContext);
-  const { search } = useLocation();
+  const { search, pathname } = useLocation();
   const query = new URLSearchParams(search);
 
   const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
@@ -64,7 +64,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       ) : (
         <Box mb={10}>
           {description}
-          <PoweredByLink headless />
+          <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} headless />
           {dataPanel}
         </Box>
       )}

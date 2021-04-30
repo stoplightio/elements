@@ -68,7 +68,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
         <Flex flexGrow flexShrink overflowY="auto" direction="col">
           <TableOfContents tree={tree} activeId={pathname} Link={Link} />
         </Flex>
-        <PoweredByLink />
+        <PoweredByLink source={serviceNode.name} pathname={pathname} />
       </Flex>
 
       <Box ref={scrollRef} px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
