@@ -1,7 +1,6 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Select, Tab, TabList, TabPanel, Tabs, Text } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
-import { JSONSchema4 } from 'json-schema';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
@@ -109,7 +108,7 @@ export const Response = ({
         >
           {schema && (
             <Box>
-              <JsonSchemaViewer schema={schema as JSONSchema4} resolveRef={refResolver} viewMode="read" hideExamples />
+              <JsonSchemaViewer schema={schema} resolveRef={refResolver} viewMode="read" hideExamples />
             </Box>
           )}
         </SubSectionPanel>
