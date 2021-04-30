@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 import { StoplightProjectContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
+import { PoweredByLink } from '../../PoweredByLink';
 import { IDocsComponentProps } from '..';
 import { Badge } from '../HttpOperation/Badges';
 import { SecuritySchemes } from './SecuritySchemes';
@@ -63,6 +64,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       ) : (
         <Box mb={10}>
           {description}
+          <PoweredByLink headless />
           {dataPanel}
         </Box>
       )}

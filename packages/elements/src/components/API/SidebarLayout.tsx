@@ -1,5 +1,3 @@
-import { faBolt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
@@ -7,6 +5,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 import { ServiceNode } from '../../utils/oas/types';
 import { ParsedDocs } from '../Docs';
 import { TableOfContents } from '../MosaicTableOfContents';
+import { PoweredByLink } from '../PoweredByLink';
 import { computeAPITree, findFirstNodeSlug } from './utils';
 
 type SidebarLayoutProps = {
@@ -80,21 +79,5 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
         </Box>
       </Box>
     </Flex>
-  );
-};
-
-const PoweredByLink = () => {
-  return (
-    <a
-      className="border-t flex items-center px-5 py-3 reset"
-      href="https://stoplight.io/?utm_source=elements&utm_medium=api&utm_campaign=powered_by&utm_content=/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <FontAwesomeIcon icon={faBolt} className="mr-3 fa-fw" style={{ color: 'rgba(144, 97, 249, 1)' }} />
-      <div>
-        powered by&nbsp;<strong>Stoplight</strong>
-      </div>
-    </a>
   );
 };
