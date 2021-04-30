@@ -91,6 +91,17 @@ jobs:
             git commit -m "chore: weekly lockfile maintenance"
             git push --set-upstream origin $BRANCH_NAME
             BODY='{"head":''"'${BRANCH_NAME}'"'',"base":"main","title":"Weekly lockfile maintenance"}' && curl -X POST -H "Accept:application/vnd.github.v3+json" -u $GIT_AUTHOR_NAME:$GH_TOKEN https://api.github.com/repos/stoplightio/elements/pulls -d "$BODY"
+  release:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: yarn --frozen-lockfile
+      - run:
+          name: run release script
+          command: yarn lerna publish from-package --dist-tag beta --yes
 workflows:
   version: 2
   test-and-release:
@@ -113,6 +124,18 @@ workflows:
           example-name: angular
           requires:
             - build
+      - release:
+          requires:
+            - lint-and-check
+            - build
+            - build-docs
+            - e2e-react-cra
+            - e2e-react-gatsby
+            - e2e-angular
+          filters:
+            branches:
+              only: 
+                - main
   perform-lockfile-maintenance:
     triggers:
         - schedule:
