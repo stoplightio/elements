@@ -20,6 +20,7 @@ const parserMap: Record<NodeType, Parser> = {
   [NodeType.HttpServer]: parseUnknown,
   [NodeType.Generic]: parseUnknown,
   [NodeType.TableOfContents]: parseUnknown,
+  [NodeType.SpectralRuleset]: parseUnknown,
   [NodeType.Unknown]: parseUnknown,
 };
 
