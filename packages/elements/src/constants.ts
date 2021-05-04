@@ -20,6 +20,7 @@ export const NodeTypeColors: Dictionary<string, NodeType> = {
   generic: '',
   unknown: '',
   table_of_contents: '',
+  spectral_ruleset: '',
 };
 
 export const NodeTypePrettyName: Dictionary<string, NodeType> = {
@@ -31,6 +32,7 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   generic: '',
   unknown: '',
   table_of_contents: '',
+  spectral_ruleset: '',
 };
 
 export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
@@ -42,6 +44,7 @@ export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
   unknown: faQuestionCircle,
   generic: faQuestionCircle,
   table_of_contents: faQuestionCircle,
+  spectral_ruleset: faQuestionCircle,
 };
 
 export const HttpSecuritySchemeColors: Partial<Record<HttpSecurityScheme['type'], string>> = {
