@@ -49,13 +49,12 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
             }
           >
             {Object.entries(requestSampleConfigs).map(([language, config]) => (
-              <MenuItem key={language} indent text={language} checked={selectedLanguage === language}>
+              <MenuItem key={language} indent text={language}>
                 {Object.keys(config.libraries ?? {}).map(library => (
                   <MenuItem
                     key={library}
                     text={library}
                     indent
-                    checked={selectedLanguage === language && selectedLibrary === library}
                     onClick={() => {
                       setSelectedLanguage(language);
                       setSelectedLibrary(library);
