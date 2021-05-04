@@ -2,12 +2,12 @@ import { IIconProps } from '@stoplight/mosaic';
 
 // Icons appear left of the node title
 export const NODE_TYPE_TITLE_ICON: { [nodeType: string]: IIconProps['icon'] } = {
-  http_service: ['fal', 'cloud'],
+  http_service: ['fas', 'cloud'],
 };
 
 // Icons appear in the right meta
 export const NODE_TYPE_META_ICON: { [nodeType: string]: IIconProps['icon'] } = {
-  model: ['fal', 'cube'],
+  model: ['fas', 'cube'],
 };
 
 export const NODE_TYPE_ICON_COLOR = {
