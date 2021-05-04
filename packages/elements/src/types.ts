@@ -191,7 +191,7 @@ export interface IActiveInfo {
   branch?: string;
   node?: string;
   authToken?: string;
-  isStoplightProjectComponent?: boolean;
+  showMocking?: boolean;
 }
 
 export interface IArticleHeading {

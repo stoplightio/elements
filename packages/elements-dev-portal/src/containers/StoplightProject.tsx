@@ -1,3 +1,4 @@
+import { PoweredByLink } from '@stoplight/elements/components/PoweredByLink';
 import { Row } from '@stoplight/elements/components/TableOfContents/Row';
 import { defaultPlatformUrl } from '@stoplight/elements/constants';
 import { Docs } from '@stoplight/elements/containers/Docs';
@@ -54,22 +55,29 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
 
   return (
     <div className="StoplightProject flex flex-row">
-      <TableOfContents
-        workspaceSlug={workspaceSlug}
-        platformUrl={platformUrl}
-        projectSlug={projectSlug}
-        branchSlug={branchSlug}
-        rowComponent={Row}
-        rowComponentExtraProps={{ pathname }}
-        nodeUri={pathname}
-        onData={(tocTree: ITableOfContentsTree) => {
-          if (pathname === '/' && tocTree?.items?.length) {
-            const firstItem = tocTree.items.find(isItem);
-            setFirstItem(firstItem);
-          }
-        }}
-        authToken={authToken}
-      />
+      <div>
+        <TableOfContents
+          workspaceSlug={workspaceSlug}
+          platformUrl={platformUrl}
+          projectSlug={projectSlug}
+          branchSlug={branchSlug}
+          rowComponent={Row}
+          rowComponentExtraProps={{ pathname }}
+          nodeUri={pathname}
+          onData={(tocTree: ITableOfContentsTree) => {
+            if (pathname === '/' && tocTree?.items?.length) {
+              const firstItem = tocTree.items.find(isItem);
+              setFirstItem(firstItem);
+            }
+          }}
+          authToken={authToken}
+        />
+        <PoweredByLink
+          source={`${workspaceSlug}/${projectSlug}`}
+          pathname={pathname}
+          packageType="elements-dev-portal"
+        />
+      </div>
       <div className="flex-grow p-5 ContentViewer">
         <div className="flex">
           {pathname !== '/' && (
@@ -80,7 +88,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
               branch={branchSlug}
               node={pathname}
               authToken={authToken}
-              isStoplightProjectComponent
+              showMocking
             >
               <Docs node={pathname} className="px-10" />
             </Provider>
