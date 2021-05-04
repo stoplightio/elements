@@ -4,7 +4,7 @@ import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { StoplightProjectContext } from '../../../containers/Provider';
+import { MockingContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { IDocsComponentProps } from '..';
@@ -21,16 +21,16 @@ const enhanceVersionString = (version: string): string => {
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
-  const context = React.useContext(StoplightProjectContext);
   const { search, pathname } = useLocation();
+  const mocking = React.useContext(MockingContext);
   const query = new URLSearchParams(search);
 
   const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
 
   const dataPanel = (
     <VStack spacing={6}>
-      {(data.servers ?? context.mockUrl?.servicePath) && (
-        <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
+      {(data.servers ?? mocking.mockUrl?.servicePath) && (
+        <ServerInfo servers={data.servers} mockUrl={mocking.mockUrl?.servicePath} />
       )}
       <Box>
         {data.securitySchemes?.length && (
