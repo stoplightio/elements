@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 import { MockingContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
+import { PoweredByLink } from '../../PoweredByLink';
 import { IDocsComponentProps } from '..';
 import { Badge } from '../HttpOperation/Badges';
 import { SecuritySchemes } from './SecuritySchemes';
@@ -20,8 +21,8 @@ const enhanceVersionString = (version: string): string => {
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
+  const { search, pathname } = useLocation();
   const mocking = React.useContext(MockingContext);
-  const { search } = useLocation();
   const query = new URLSearchParams(search);
 
   const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
@@ -63,6 +64,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       ) : (
         <Box mb={10}>
           {description}
+          <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />
           {dataPanel}
         </Box>
       )}
