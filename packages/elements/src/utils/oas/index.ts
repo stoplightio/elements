@@ -37,8 +37,12 @@ export const OPERATION_REGEXP = /\/operations\/.+|paths\/.+\/(get|post|put|patch
 
 export function transformOasToServiceNode(apiDescriptionDocument: unknown) {
   if (isOas31(apiDescriptionDocument)) {
-    apiDescriptionDocument.jsonSchemaDialect = 'http://json-schema.org/draft-07/schema#';
-    return computeServiceNode(apiDescriptionDocument, oas3SourceMap, transformOas3Service, transformOas3Operation);
+    return computeServiceNode(
+      { ...apiDescriptionDocument, jsonSchemaDialect: 'http://json-schema.org/draft-07/schema#' },
+      oas3SourceMap,
+      transformOas3Service,
+      transformOas3Operation,
+    );
   }
   if (isOas3(apiDescriptionDocument)) {
     return computeServiceNode(apiDescriptionDocument, oas3SourceMap, transformOas3Service, transformOas3Operation);
