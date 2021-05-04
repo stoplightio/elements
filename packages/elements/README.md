@@ -9,12 +9,6 @@ Elements is a collection of UI components for displaying beautiful developer doc
 
 Visit our **[Documentation Site](https://meta.stoplight.io/docs/elements)** for guides and documentation.
 
-
-## Examples
-
-- [Gatsby Starter](https://github.com/stoplightio/elements-starter-gatsby)
-- [Create React App Starter](https://github.com/stoplightio/elements-starter-react)
-
 ## About
 
 Elements is developed and maintained by [Stoplight](https://stoplight.io).
