@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { flatten, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { ActiveInfoContext, StoplightProjectContext } from '../../../containers/Provider';
+import { ActiveInfoContext, MockingContext } from '../../../containers/Provider';
 import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
@@ -18,7 +18,7 @@ export type HttpOperationProps = IDocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless, uri }) => {
   const info = React.useContext(ActiveInfoContext);
-  const context = React.useContext(StoplightProjectContext);
+  const mocking = React.useContext(MockingContext);
   const isDeprecated = !!data.deprecated;
 
   const [responseMediaType, setResponseMediaType] = React.useState('');
@@ -71,8 +71,8 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
                 responseMediaType={responseMediaType}
                 responseStatusCode={responseStatusCode}
                 requestBodyIndex={requestBodyIndex}
-                showMocking={info.isStoplightProjectComponent}
-                mockUrl={info.isStoplightProjectComponent ? context.mockUrl?.servicePath : undefined}
+                showMocking={info.showMocking}
+                mockUrl={info.showMocking ? mocking.mockUrl?.servicePath : undefined}
               />
             </Box>
           </Box>

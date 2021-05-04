@@ -4,7 +4,7 @@ import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { StoplightProjectContext } from '../../../containers/Provider';
+import { MockingContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { IDocsComponentProps } from '..';
 import { Badge } from '../HttpOperation/Badges';
@@ -20,7 +20,7 @@ const enhanceVersionString = (version: string): string => {
 export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
-  const context = React.useContext(StoplightProjectContext);
+  const mocking = React.useContext(MockingContext);
   const { search } = useLocation();
   const query = new URLSearchParams(search);
 
@@ -28,8 +28,8 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
 
   const dataPanel = (
     <VStack spacing={6}>
-      {(data.servers ?? context.mockUrl?.servicePath) && (
-        <ServerInfo servers={data.servers} mockUrl={context.mockUrl?.servicePath} />
+      {(data.servers ?? mocking.mockUrl?.servicePath) && (
+        <ServerInfo servers={data.servers} mockUrl={mocking.mockUrl?.servicePath} />
       )}
       <Box>
         {data.securitySchemes?.length && (
