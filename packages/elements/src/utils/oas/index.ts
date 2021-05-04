@@ -26,11 +26,20 @@ const isOas3 = (parsed: unknown): parsed is OpenAPIObject =>
   'openapi' in parsed &&
   Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) >= 3;
 
+const isOas31 = (parsed: unknown): parsed is OpenAPIObject =>
+  isObject(parsed) &&
+  'openapi' in parsed &&
+  Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) === 3.1;
+
 const OAS_MODEL_REGEXP = /((definitions|components)\/?(schemas)?)\//;
 export const MODEL_REGEXP = /schemas\//;
 export const OPERATION_REGEXP = /\/operations\/.+|paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
 
 export function transformOasToServiceNode(apiDescriptionDocument: unknown) {
+  if (isOas31(apiDescriptionDocument)) {
+    apiDescriptionDocument.jsonSchemaDialect = 'http://json-schema.org/draft-07/schema#';
+    return computeServiceNode(apiDescriptionDocument, oas3SourceMap, transformOas3Service, transformOas3Operation);
+  }
   if (isOas3(apiDescriptionDocument)) {
     return computeServiceNode(apiDescriptionDocument, oas3SourceMap, transformOas3Service, transformOas3Operation);
   } else if (isOas2(apiDescriptionDocument)) {
