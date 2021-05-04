@@ -72,7 +72,11 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           }}
           authToken={authToken}
         />
-        <PoweredByLink source={`${workspaceSlug}/${projectSlug}`} pathname={pathname} isStoplightProject />
+        <PoweredByLink
+          source={`${workspaceSlug}/${projectSlug}`}
+          pathname={pathname}
+          packageType="elements-dev-portal"
+        />
       </div>
       <div className="flex-grow p-5 ContentViewer">
         <div className="flex">

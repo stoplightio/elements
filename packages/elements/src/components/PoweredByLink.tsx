@@ -6,15 +6,15 @@ export const PoweredByLink: React.FC<{
   headless?: boolean;
   source: string;
   pathname: string;
-  isStoplightProject?: boolean;
-}> = ({ headless, source, pathname, isStoplightProject }) => {
+  packageType: 'elements' | 'elements-dev-portal';
+}> = ({ headless, source, pathname, packageType }) => {
   return (
     <a
       className={
         !headless ? 'border-t flex items-center px-5 py-3 reset' : 'flex items-center px-1 py-3 reset justify-end'
       }
       href={`https://stoplight.io/?utm_source=elements${
-        isStoplightProject && '-dev-portal'
+        packageType === 'elements-dev-portal' ? '-dev-portal' : ''
       }&utm_medium=${source}&utm_campaign=powered_by&utm_content=${pathname}`}
       target="_blank"
       rel="noopener noreferrer"

@@ -64,7 +64,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       ) : (
         <Box mb={10}>
           {description}
-          <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} headless />
+          <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />
           {dataPanel}
         </Box>
       )}
