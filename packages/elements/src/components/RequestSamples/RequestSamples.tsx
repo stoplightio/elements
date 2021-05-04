@@ -44,27 +44,41 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
             label="Request Sample Language"
             trigger={
               <Button size="sm" iconRight="caret-down">
-                Request Sample: {selectedLanguage} / {selectedLibrary}
+                Request Sample: {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
               </Button>
             }
           >
-            {Object.entries(requestSampleConfigs).map(([language, config]) => (
-              <MenuItem key={language} indent text={language}>
-                {config.libraries &&
-                  Object.keys(config.libraries).length > 0 &&
-                  Object.keys(config.libraries).map(library => (
-                    <MenuItem
-                      key={library}
-                      text={library}
-                      indent
-                      onClick={() => {
-                        setSelectedLanguage(language);
-                        setSelectedLibrary(library);
-                      }}
-                    />
-                  ))}
-              </MenuItem>
-            ))}
+            {Object.entries(requestSampleConfigs).map(([language, config]) => {
+              const hasLibraries = config.libraries && Object.keys(config.libraries).length > 0;
+              return (
+                <MenuItem
+                  key={language}
+                  indent
+                  text={language}
+                  onClick={
+                    hasLibraries
+                      ? undefined
+                      : () => {
+                          setSelectedLanguage(language);
+                          setSelectedLibrary('');
+                        }
+                  }
+                >
+                  {hasLibraries &&
+                    Object.keys(config.libraries!).map(library => (
+                      <MenuItem
+                        key={library}
+                        text={library}
+                        indent
+                        onClick={() => {
+                          setSelectedLanguage(language);
+                          setSelectedLibrary(library);
+                        }}
+                      />
+                    ))}
+                </MenuItem>
+              );
+            })}
           </Menu>
         </Box>
       </Panel.Titlebar>
