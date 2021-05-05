@@ -8,6 +8,7 @@ import { withPersistenceBoundary } from '@stoplight/elements/context/Persistence
 import { withMosaicProvider } from '@stoplight/elements/hoc/withMosaicProvider';
 import { withRouter } from '@stoplight/elements/hoc/withRouter';
 import { withStyles } from '@stoplight/elements/styled';
+import { SidebarLayout } from '@stoplight/elements/components/Layout/SidebarLayout'
 import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '@stoplight/elements/types';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
@@ -53,10 +54,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     return <Redirect to={firstItem.uri} />;
   }
 
-  return (
-    <div className="StoplightProject flex flex-row">
-      <div>
-        <TableOfContents
+  const sidebar = (
+    <>
+      <TableOfContents
           workspaceSlug={workspaceSlug}
           platformUrl={platformUrl}
           projectSlug={projectSlug}
@@ -77,26 +77,26 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           pathname={pathname}
           packageType="elements-dev-portal"
         />
-      </div>
-      <div className="flex-grow p-5 ContentViewer">
-        <div className="flex">
-          {pathname !== '/' && (
-            <Provider
-              host={platformUrl ?? defaultPlatformUrl}
-              workspace={workspaceSlug}
-              project={projectSlug}
-              branch={branchSlug}
-              node={pathname}
-              authToken={authToken}
-              showMocking
-            >
-              <Docs node={pathname} className="px-10" />
-            </Provider>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+    </>
+  )
+
+  return (
+    <SidebarLayout sidebar={sidebar}>
+      {pathname !== '/' && (
+        <Provider
+          host={platformUrl ?? defaultPlatformUrl}
+          workspace={workspaceSlug}
+          project={projectSlug}
+          branch={branchSlug}
+          node={pathname}
+          authToken={authToken}
+          showMocking
+        >
+          <Docs node={pathname} className="px-10" />
+        </Provider>
+      )}
+    </SidebarLayout>
+  )
 };
 
 /**
