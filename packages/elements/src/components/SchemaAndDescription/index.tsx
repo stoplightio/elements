@@ -4,13 +4,12 @@ import { JsonSchemaViewer, ViewMode } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
-import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
 
-import { NodeTypeColors, NodeTypeIconDefs } from '../constants';
-import { useInlineRefResolver } from '../context/InlineRefResolver';
-import { JSONSchema } from '../types';
-import { MarkdownViewer } from './MarkdownViewer';
+import { NodeTypeColors, NodeTypeIconDefs } from '../../constants';
+import { useInlineRefResolver } from '../../context/InlineRefResolver';
+import { JSONSchema } from '../../types';
+import { MarkdownViewer } from '../MarkdownViewer';
 
 export interface ISchemaAndDescriptionProps {
   schema: JSONSchema;
@@ -39,13 +38,7 @@ export const SchemaAndDescription = ({
       <JsonSchemaViewer
         resolveRef={resolveRef}
         className={cn(className, CLASSNAMES.block)}
-        schema={
-          {
-            ...schema,
-            title: undefined,
-            description: undefined,
-          } as JSONSchema4
-        }
+        schema={schema}
         viewMode={viewMode}
       />
     </>
