@@ -51,7 +51,7 @@ describe('HttpService', () => {
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
     render(
-      <Provider host="https://stoplight.io" isStoplightProjectComponent project="studio-demo" workspace="elements">
+      <Provider host="https://stoplight.io" showMocking project="studio-demo" workspace="elements">
         <ServerInfo servers={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />
       </Provider>,
     );

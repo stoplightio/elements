@@ -5,6 +5,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 import { ServiceNode } from '../../utils/oas/types';
 import { ParsedDocs } from '../Docs';
 import { TableOfContents } from '../MosaicTableOfContents';
+import { PoweredByLink } from '../PoweredByLink';
 import { computeAPITree, findFirstNodeSlug } from './utils';
 
 type SidebarLayoutProps = {
@@ -47,7 +48,8 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
 
   return (
     <Flex className="sl-elements-api" pin h="full">
-      <Box
+      <Flex
+        direction="col"
         bg="canvas-100"
         borderR
         pt={5}
@@ -63,9 +65,11 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => 
         <Heading ml={4} mb={5} size={4}>
           {serviceNode.name}
         </Heading>
-
-        <TableOfContents tree={tree} activeId={pathname} Link={Link} />
-      </Box>
+        <Flex flexGrow flexShrink overflowY="auto" direction="col">
+          <TableOfContents tree={tree} activeId={pathname} Link={Link} />
+        </Flex>
+        <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
+      </Flex>
 
       <Box ref={scrollRef} px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
         <Box style={{ maxWidth: `${MAX_CONTENT_WIDTH - SIDEBAR_WIDTH}px` }}>

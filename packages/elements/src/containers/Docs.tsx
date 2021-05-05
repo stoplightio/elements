@@ -12,7 +12,7 @@ import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { useParsedData } from '../hooks/useParsedData';
 import { usePlatformApi } from '../hooks/usePlatformApi';
 import { BundledBranchNode } from '../types';
-import { ActiveInfoContext, StoplightComponentProvider } from './Provider';
+import { ActiveInfoContext, MockingProvider } from './Provider';
 
 export interface IDocsProps {
   className?: string;
@@ -70,10 +70,10 @@ export const Docs = ({ className, node }: IDocsProps) => {
   }
 
   return (
-    <StoplightComponentProvider mockUrl={mockUrlResult}>
+    <MockingProvider mockUrl={mockUrlResult}>
       <MarkdownComponentsProvider value={{ image }}>
         <DocsPopup key={nodeUri} nodeType={result.type} nodeData={result.data} uri={node} className={className} />
       </MarkdownComponentsProvider>
-    </StoplightComponentProvider>
+    </MockingProvider>
   );
 };

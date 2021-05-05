@@ -1,7 +1,6 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Select } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
-import { JSONSchema4 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
@@ -47,7 +46,7 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
 
       {isJSONSchema(schema) && (
         <Box>
-          <JsonSchemaViewer resolveRef={refResolver} schema={schema as JSONSchema4} viewMode="write" hideExamples />
+          <JsonSchemaViewer resolveRef={refResolver} schema={schema} viewMode="write" hideExamples />
         </Box>
       )}
     </SubSectionPanel>

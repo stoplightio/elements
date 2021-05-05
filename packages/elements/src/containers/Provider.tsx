@@ -1,15 +1,9 @@
 import * as React from 'react';
 
 import { MockUrlResult } from '../components/TryIt/mocking-utils';
-import { IActiveInfo, NodeIconMapping } from '../types';
+import { IActiveInfo } from '../types';
 
-export interface IProvider extends IActiveInfo {
-  authToken?: string;
-  isStoplightProjectComponent?: boolean;
-}
-
-const defaultIcons: NodeIconMapping = {};
-export const IconsContext = createNamedContext<NodeIconMapping>('IconsContext', defaultIcons);
+export interface IProvider extends IActiveInfo {}
 
 const defaultInfo = {
   host: '',
@@ -18,7 +12,7 @@ const defaultInfo = {
   branch: '',
   node: '',
   authToken: '',
-  isStoplightProjectComponent: false,
+  showMocking: false,
 };
 export const ActiveInfoContext = createNamedContext<IActiveInfo>('ActiveInfoContext', defaultInfo);
 
@@ -30,7 +24,7 @@ export const Provider: React.FC<IProvider> = ({
   node,
   children,
   authToken,
-  isStoplightProjectComponent,
+  showMocking,
 }) => {
   const info = {
     host,
@@ -39,25 +33,21 @@ export const Provider: React.FC<IProvider> = ({
     branch,
     node,
     authToken,
-    isStoplightProjectComponent,
+    showMocking,
   };
 
-  return (
-    <IconsContext.Provider value={defaultIcons}>
-      <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>
-    </IconsContext.Provider>
-  );
+  return <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>;
 };
 
-export const StoplightProjectContext = createNamedContext<{
+export const MockingContext = createNamedContext<{
   mockUrl: MockUrlResult | undefined;
-}>('mockUrlValue', { mockUrl: undefined });
+}>('MockingContext', { mockUrl: undefined });
 
-export const StoplightComponentProvider: React.FC<{
+export const MockingProvider: React.FC<{
   mockUrl: MockUrlResult | undefined;
 }> = ({ mockUrl, children }) => {
   const info = { mockUrl };
-  return <StoplightProjectContext.Provider value={info}>{children}</StoplightProjectContext.Provider>;
+  return <MockingContext.Provider value={info}>{children}</MockingContext.Provider>;
 };
 
 export function createNamedContext<T>(name: string, defaultValue: T): React.Context<T> {

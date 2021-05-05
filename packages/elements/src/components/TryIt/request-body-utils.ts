@@ -3,7 +3,11 @@ import { isString, pickBy } from 'lodash';
 import * as React from 'react';
 
 import { fileToBase64 } from '../../utils/fileToBase64';
-import { initialParameterValues, parameterSupportsFileUpload } from './parameter-utils';
+import {
+  initialParameterValues,
+  mapSchemaPropertiesToParameters,
+  parameterSupportsFileUpload,
+} from './parameter-utils';
 
 export type BodyParameterValues = Record<string, string | File>;
 
@@ -75,11 +79,7 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
       return {};
     }
     const properties = mediaTypeContent?.schema?.properties ?? {};
-    const parameters = Object.entries(properties).map(([key, value]) => ({
-      name: key,
-      schema: value,
-      examples: value.examples,
-    }));
+    const parameters = mapSchemaPropertiesToParameters(properties);
     return initialParameterValues(parameters);
   }, [isFormDataBody, mediaTypeContent]);
 

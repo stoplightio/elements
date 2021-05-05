@@ -41,7 +41,6 @@ export const httpOperation: IHttpOperation = {
                   },
                 },
                 required: ['name', 'completed'],
-                'x-tags': ['Todos'],
               },
               {
                 type: 'object',
@@ -79,14 +78,12 @@ export const httpOperation: IHttpOperation = {
                       },
                     },
                     required: ['name', 'age'],
-                    'x-tags': ['Todos'],
                     description: 'Here lies the user model',
                   },
                 },
                 required: ['id', 'user'],
               },
             ],
-            'x-tags': ['Todos'],
           },
         },
         {
@@ -118,7 +115,6 @@ export const httpOperation: IHttpOperation = {
             $schema: 'http://json-schema.org/draft-04/schema#',
             title: 'Error',
             description: 'A standard error object.',
-            'x-tags': ['Common'],
             anyOf: [
               {
                 type: 'object',
@@ -143,7 +139,6 @@ export const httpOperation: IHttpOperation = {
                   },
                 },
                 required: ['name'],
-                'x-tags': ['Pets'],
               },
             ],
           },
@@ -170,7 +165,6 @@ export const httpOperation: IHttpOperation = {
             $schema: 'http://json-schema.org/draft-04/schema#',
             title: 'Error',
             description: 'A standard error object.',
-            'x-tags': ['Common'],
             anyOf: [
               {
                 type: 'object',
@@ -195,7 +189,6 @@ export const httpOperation: IHttpOperation = {
                   },
                 },
                 required: ['name'],
-                'x-tags': ['Pets'],
               },
             ],
           },
@@ -222,7 +215,6 @@ export const httpOperation: IHttpOperation = {
             $schema: 'http://json-schema.org/draft-04/schema#',
             title: 'Error',
             description: 'A standard error object.',
-            'x-tags': ['Common'],
             anyOf: [
               {
                 type: 'object',
@@ -247,7 +239,6 @@ export const httpOperation: IHttpOperation = {
                   },
                 },
                 required: ['name'],
-                'x-tags': ['Pets'],
               },
             ],
           },
@@ -288,7 +279,6 @@ export const httpOperation: IHttpOperation = {
               },
             },
             required: ['name', 'completed'],
-            'x-tags': ['Todos'],
           },
           examples: [
             {
@@ -335,9 +325,6 @@ export const httpOperation: IHttpOperation = {
           enum: ['0', '1', '3'],
           minLength: 0,
           maxLength: 10,
-          explode: true,
-          allowEmptyValues: true,
-          allowReserved: true,
         },
         deprecated: true,
         description: 'How many string todos to limit?',

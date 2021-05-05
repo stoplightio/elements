@@ -1,5 +1,6 @@
 import { safeStringify } from '@stoplight/json';
 import { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
+import { JSONSchema7Definition } from 'json-schema';
 import { isObject, map } from 'lodash';
 import { keyBy, mapValues, pipe } from 'lodash/fp';
 
@@ -80,3 +81,11 @@ export const initialParameterValues: (params: readonly ParameterSpec[]) => Recor
   keyBy((param: ParameterSpec) => param.name),
   mapValues(getInitialValueForParameter),
 );
+
+export function mapSchemaPropertiesToParameters(properties: { [key: string]: JSONSchema7Definition }) {
+  return Object.entries(properties).map(([name, schema]) => ({
+    name,
+    schema: typeof schema !== 'boolean' ? schema : undefined,
+    examples: typeof schema !== 'boolean' && schema.examples ? [{ key: 'example', value: schema.examples }] : undefined,
+  }));
+}
