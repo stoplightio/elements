@@ -33,7 +33,7 @@ const getOauthScopeMapper = (securityScheme: IOauth2SecurityScheme) => (flow: st
 };
 
 export function getServiceUriFromOperation(uri: string) {
-  const match = uri?.match(/(.*)\/paths/);
+  const match = uri?.match(/(.*)\/(paths|operations)/);
   return match && match.length > 1 ? match[1] || '/' : undefined;
 }
 
