@@ -24,9 +24,11 @@
   },
   "scripts": {
     "build": "yarn build.react && yarn build.webcomponents",
+    "postbuild": "yarn build.styles",
     "build.react": "sl-scripts build",
     "build.webcomponents": "webpack -c ./web-components.config.js",
     "build.docs": "build-storybook -c .storybook -o dist-storybook",
+    "build.styles": "node ../../scripts/build-styles.js elements-dev-portal",
     "commit": "git-cz",
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",

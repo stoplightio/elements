@@ -1,3 +1,5 @@
+import { SidebarLayout } from '@stoplight/elements/components/Layout/SidebarLayout';
+import { PoweredByLink } from '@stoplight/elements/components/PoweredByLink';
 import { Row } from '@stoplight/elements/components/TableOfContents/Row';
 import { defaultPlatformUrl } from '@stoplight/elements/constants';
 import { Docs } from '@stoplight/elements/containers/Docs';
@@ -52,8 +54,8 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     return <Redirect to={firstItem.uri} />;
   }
 
-  return (
-    <div className="StoplightProject flex flex-row">
+  const sidebar = (
+    <>
       <TableOfContents
         workspaceSlug={workspaceSlug}
         platformUrl={platformUrl}
@@ -70,24 +72,26 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
         }}
         authToken={authToken}
       />
-      <div className="flex-grow p-5 ContentViewer">
-        <div className="flex">
-          {pathname !== '/' && (
-            <Provider
-              host={platformUrl ?? defaultPlatformUrl}
-              workspace={workspaceSlug}
-              project={projectSlug}
-              branch={branchSlug}
-              node={pathname}
-              authToken={authToken}
-              isStoplightProjectComponent
-            >
-              <Docs node={pathname} className="px-10" />
-            </Provider>
-          )}
-        </div>
-      </div>
-    </div>
+      <PoweredByLink source={`${workspaceSlug}/${projectSlug}`} pathname={pathname} packageType="elements-dev-portal" />
+    </>
+  );
+
+  return (
+    <SidebarLayout sidebar={sidebar}>
+      {pathname !== '/' && (
+        <Provider
+          host={platformUrl ?? defaultPlatformUrl}
+          workspace={workspaceSlug}
+          project={projectSlug}
+          branch={branchSlug}
+          node={pathname}
+          authToken={authToken}
+          showMocking
+        >
+          <Docs node={pathname} />
+        </Provider>
+      )}
+    </SidebarLayout>
   );
 };
 

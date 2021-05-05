@@ -20,7 +20,6 @@ export const httpOperation: IHttpOperation & { __bundled__: unknown } = {
             type: 'object',
             properties: { name: { type: 'string' }, completed: { type: ['boolean', 'null'] } },
             required: ['name', 'completed'],
-            'x-tags': ['Todos'],
           },
         },
       ],
@@ -46,7 +45,6 @@ export const httpOperation: IHttpOperation & { __bundled__: unknown } = {
       type: 'object',
       properties: { name: { type: 'string' }, completed: { type: ['boolean', 'null'] } },
       required: ['name', 'completed'],
-      'x-tags': ['Todos'],
     },
   },
 };

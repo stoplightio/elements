@@ -5,8 +5,14 @@ const ncp = require('ncp');
 
 const packageImporter = require('node-sass-package-importer');
 
+const packageName = process.argv[2];
+const inputFileName = `${packageName}-scoped.scss`;
+const outputFileName = `${packageName}.min.css`;
+
+const packagePath = resolve(__dirname, '..', 'packages', packageName);
+
 console.log('Copying SCSS files...');
-ncp(resolve(__dirname, 'src', 'styles'), resolve(__dirname, 'dist', 'styles'), err => {
+ncp(resolve(packagePath, 'src', 'styles'), resolve(packagePath, 'dist', 'styles'), err => {
   if (err) {
     return console.error(err);
   }
@@ -15,11 +21,10 @@ ncp(resolve(__dirname, 'src', 'styles'), resolve(__dirname, 'dist', 'styles'), e
 
 console.log('Compiling SCSS...');
 
-const outFileName = 'elements.min.css';
-const outFile = resolve(__dirname, 'dist', 'styles', outFileName);
+const outFile = resolve(packagePath, 'dist', 'styles', outputFileName);
 render(
   {
-    file: resolve(__dirname, 'src', 'styles', 'elements-scoped.scss'),
+    file: resolve(packagePath, 'src', 'styles', inputFileName),
     outFile: outFile,
     importer: packageImporter(),
     outputStyle: 'compressed',
@@ -29,7 +34,7 @@ render(
       return console.error(err);
     }
     writeFile(outFile, result.css, () => {
-      console.log(`Done compiling \`${outFileName}\`.`);
+      console.log(`Done compiling \`${outputFileName}\`.`);
     });
   },
 );

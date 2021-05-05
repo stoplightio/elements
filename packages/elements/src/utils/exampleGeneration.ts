@@ -1,6 +1,6 @@
 import { safeStringify } from '@stoplight/json';
+import * as Sampler from '@stoplight/json-schema-sampler';
 import { IMediaTypeContent } from '@stoplight/types';
-import * as Sampler from 'openapi-sampler';
 import React from 'react';
 
 import { useDocument } from '../context/InlineRefResolver';
