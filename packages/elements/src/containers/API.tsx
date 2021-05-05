@@ -7,8 +7,8 @@ import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import useSwr from 'swr';
 
-import { SidebarLayout } from '../components/API/SidebarLayout';
-import { StackedLayout } from '../components/API/StackedLayout';
+import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
+import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
 import { InlineRefResolverProvider } from '../context/InlineRefResolver';
 import { withPersistenceBoundary } from '../context/Persistence';
 import { withMosaicProvider } from '../hoc/withMosaicProvider';
@@ -108,7 +108,11 @@ const APIImpl: React.FC<APIProps> = props => {
 
   return (
     <InlineRefResolverProvider document={parsedDocument}>
-      {layout === 'stacked' ? <StackedLayout serviceNode={serviceNode} /> : <SidebarLayout serviceNode={serviceNode} />}
+      {layout === 'stacked' ? (
+        <APIWithStackedLayout serviceNode={serviceNode} />
+      ) : (
+        <APIWithSidebarLayout serviceNode={serviceNode} />
+      )}
     </InlineRefResolverProvider>
   );
 };
