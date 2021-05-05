@@ -19,7 +19,7 @@ const itemMatchesHash = (hash: string, item: OperationNode) => {
   return hash.substr(1) === `${item.name}-${item.data.method}`;
 };
 
-export const StackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode }) => {
+export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode }) => {
   const { groups } = computeTagGroups(serviceNode);
 
   return (
