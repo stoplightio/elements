@@ -108,7 +108,11 @@ const APIImpl: React.FC<APIProps> = props => {
 
   return (
     <InlineRefResolverProvider document={parsedDocument}>
-      {layout === 'stacked' ? <APIWithStackedLayout serviceNode={serviceNode} /> : <APIWithSidebarLayout serviceNode={serviceNode} />}
+      {layout === 'stacked' ? (
+        <APIWithStackedLayout serviceNode={serviceNode} />
+      ) : (
+        <APIWithSidebarLayout serviceNode={serviceNode} />
+      )}
     </InlineRefResolverProvider>
   );
 };

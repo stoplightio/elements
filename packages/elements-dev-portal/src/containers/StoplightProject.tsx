@@ -1,3 +1,4 @@
+import { SidebarLayout } from '@stoplight/elements/components/Layout/SidebarLayout';
 import { PoweredByLink } from '@stoplight/elements/components/PoweredByLink';
 import { Row } from '@stoplight/elements/components/TableOfContents/Row';
 import { defaultPlatformUrl } from '@stoplight/elements/constants';
@@ -8,7 +9,6 @@ import { withPersistenceBoundary } from '@stoplight/elements/context/Persistence
 import { withMosaicProvider } from '@stoplight/elements/hoc/withMosaicProvider';
 import { withRouter } from '@stoplight/elements/hoc/withRouter';
 import { withStyles } from '@stoplight/elements/styled';
-import { SidebarLayout } from '@stoplight/elements/components/Layout/SidebarLayout'
 import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '@stoplight/elements/types';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
@@ -57,28 +57,24 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   const sidebar = (
     <>
       <TableOfContents
-          workspaceSlug={workspaceSlug}
-          platformUrl={platformUrl}
-          projectSlug={projectSlug}
-          branchSlug={branchSlug}
-          rowComponent={Row}
-          rowComponentExtraProps={{ pathname }}
-          nodeUri={pathname}
-          onData={(tocTree: ITableOfContentsTree) => {
-            if (pathname === '/' && tocTree?.items?.length) {
-              const firstItem = tocTree.items.find(isItem);
-              setFirstItem(firstItem);
-            }
-          }}
-          authToken={authToken}
-        />
-        <PoweredByLink
-          source={`${workspaceSlug}/${projectSlug}`}
-          pathname={pathname}
-          packageType="elements-dev-portal"
-        />
+        workspaceSlug={workspaceSlug}
+        platformUrl={platformUrl}
+        projectSlug={projectSlug}
+        branchSlug={branchSlug}
+        rowComponent={Row}
+        rowComponentExtraProps={{ pathname }}
+        nodeUri={pathname}
+        onData={(tocTree: ITableOfContentsTree) => {
+          if (pathname === '/' && tocTree?.items?.length) {
+            const firstItem = tocTree.items.find(isItem);
+            setFirstItem(firstItem);
+          }
+        }}
+        authToken={authToken}
+      />
+      <PoweredByLink source={`${workspaceSlug}/${projectSlug}`} pathname={pathname} packageType="elements-dev-portal" />
     </>
-  )
+  );
 
   return (
     <SidebarLayout sidebar={sidebar}>
@@ -96,7 +92,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
         </Provider>
       )}
     </SidebarLayout>
-  )
+  );
 };
 
 /**

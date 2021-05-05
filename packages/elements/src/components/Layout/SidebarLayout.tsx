@@ -11,7 +11,12 @@ type SidebarLayoutProps = {
 const MAX_CONTENT_WIDTH = 1800;
 const SIDEBAR_WIDTH = 300;
 
-export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_WIDTH }) => {
+export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
+  sidebar,
+  children,
+  maxContentWidth = MAX_CONTENT_WIDTH,
+  sidebarWidth = SIDEBAR_WIDTH,
+}) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const { pathname } = useLocation();
 
@@ -41,7 +46,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({ sidebar, children,
 
       <Box ref={scrollRef} px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
         <Box style={{ maxWidth: `${maxContentWidth - sidebarWidth}px` }} pt={4} pb={8}>
-            {children}
+          {children}
         </Box>
       </Box>
     </Flex>
