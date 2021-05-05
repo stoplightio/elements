@@ -92,7 +92,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           authToken={authToken}
           showMocking
         >
-          <Docs node={pathname} className="px-10" />
+          <Docs node={pathname} />
         </Provider>
       )}
     </SidebarLayout>
