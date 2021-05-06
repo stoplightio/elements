@@ -81,7 +81,7 @@ const GroupItem = React.memo<{
   if (isExternalLink(item)) {
     return (
       <Box as="a" href={item.url} target="_blank" rel="noopener noreferrer" display="block">
-        <Item depth={depth} title={item.title} meta={<Box as={Icon} icon={['fal', 'external-link']} />} />
+        <Item depth={depth} title={item.title} meta={<Box as={Icon} icon={['fas', 'external-link']} />} />
       </Box>
     );
   } else if (isGroup(item) || isNodeGroup(item)) {
@@ -126,7 +126,7 @@ const Group = React.memo<{
   const meta = (
     <Box
       as={Icon}
-      icon={['fal', isOpen ? 'chevron-down' : 'chevron-right']}
+      icon={['fas', isOpen ? 'chevron-down' : 'chevron-right']}
       color="muted"
       fixedWidth
       onClick={(e: React.MouseEvent) => {
