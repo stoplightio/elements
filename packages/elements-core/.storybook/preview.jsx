@@ -3,11 +3,11 @@ import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';
 
-import '../src/styles/elements-scoped.scss';
+import '../src/styles/elements-core-scoped.scss';
 
 import cn from 'classnames';
-import { Provider } from '@stoplight/elements-core/containers/Provider';
-import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
+import { Provider } from '../src/containers/Provider';
+import { PersistenceContextProvider } from '../src/context/Persistence';
 
 export const globalTypes = {
   theme: {

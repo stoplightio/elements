@@ -6,8 +6,8 @@ import customTheme from './theme';
 import '../src/styles/elements-dev-portal-scoped.scss';
 
 import cn from 'classnames';
-import { Provider } from '@stoplight/elements/containers/Provider';
-import { PersistenceContextProvider } from '@stoplight/elements/context/Persistence';
+import { Provider } from '@stoplight/elements-core/containers/Provider';
+import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
 
 export const globalTypes = {
   theme: {
