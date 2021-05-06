@@ -18,6 +18,7 @@ import { Provider } from '../../../../containers/Provider';
 import { HttpService } from '../index';
 import { getOAuthFlowDescription, SecuritySchemes } from '../SecuritySchemes';
 import { ServerInfo } from '../ServerInfo';
+import { httpServiceWithoutOrigin } from '../../../../__fixtures__/services/without-origin';
 
 describe('HttpService', () => {
   it('Should render correctly', () => {
@@ -47,6 +48,13 @@ describe('HttpService', () => {
 
     const serverUrl = screen.getByLabelText('production-server');
     expect(serverUrl).toHaveTextContent('ftp://default-namespace.stoplight.io');
+  });
+
+  it('prepends origin to urls without origin', () => {
+    render(<ServerInfo servers={httpServiceWithoutOrigin.servers} />);
+
+    const serverUrl = screen.getByLabelText('production-server');
+    expect(serverUrl).toHaveTextContent('http://localhost/api');
   });
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
