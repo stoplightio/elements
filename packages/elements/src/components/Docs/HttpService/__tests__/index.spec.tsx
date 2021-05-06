@@ -14,11 +14,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { apiKey, oauth } from '../../../../__fixtures__/security-schemes';
 import httpService from '../../../../__fixtures__/services/petstore';
 import { httpServiceWithUrlVariables } from '../../../../__fixtures__/services/with-url-variables';
+import { httpServiceWithoutOrigin } from '../../../../__fixtures__/services/without-origin';
 import { Provider } from '../../../../containers/Provider';
 import { HttpService } from '../index';
 import { getOAuthFlowDescription, SecuritySchemes } from '../SecuritySchemes';
 import { ServerInfo } from '../ServerInfo';
-import { httpServiceWithoutOrigin } from '../../../../__fixtures__/services/without-origin';
 
 describe('HttpService', () => {
   it('Should render correctly', () => {
