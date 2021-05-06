@@ -43,7 +43,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
           <Menu
             label="Request Sample Language"
             trigger={
-              <Button size="sm" iconRight="caret-down">
+              <Button size="sm" iconRight="caret-down" appearance="minimal">
                 Request Sample: {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
               </Button>
             }
