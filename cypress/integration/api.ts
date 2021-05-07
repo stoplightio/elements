@@ -18,7 +18,7 @@ describe('API component', () => {
   it('does not break on select dropdown', () => {
     loadZoomApiPage();
     cy.visit('/zoom-api/operations/groups');
-    cy.get(`button[aria-label="Request Sample Language"]`).click();
+    cy.findByRole('button', { name: /request sample/i }).click();
     cy.findByText('Obj-C').should('exist');
   });
 });
