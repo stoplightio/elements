@@ -1,17 +1,19 @@
 import { IServer } from '@stoplight/types';
+import URI from 'urijs';
 
 export const getServerUrlWithDefaultValues = (server: IServer): string => {
-  let url = server.url;
-
-  if (url[0] === '/' && typeof window !== 'undefined') {
-    url = `${window.location.origin}${url}`;
-  }
+  let urlString = server.url;
 
   const variables = Object.entries(server.variables ?? {});
-
   variables.forEach(([variableName, variableInfo]) => {
-    url = url.replace(`{${variableName}}`, variableInfo.default);
+    urlString = urlString.replace(`{${variableName}}`, variableInfo.default);
   });
 
-  return url;
+  let url = URI(urlString);
+
+  if (url.is('relative') && typeof window !== 'undefined') {
+    url = url.absoluteTo(window.location.origin);
+  }
+
+  return url.toString();
 };
