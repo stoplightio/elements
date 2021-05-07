@@ -1,5 +1,6 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
+import URI from 'urijs';
 
 import { getServerUrlWithDefaultValues } from '../../utils/http-spec/IServer';
 import {
@@ -12,7 +13,6 @@ import {
 } from './authentication-utils';
 import { MockData } from './mocking-utils';
 import { BodyParameterValues, createRequestBody } from './request-body-utils';
-import URI from 'urijs';
 
 type NameAndValue = {
   name: string;
