@@ -8,4 +8,5 @@ module.exports = {
   moduleNameMapper: {
     '^@stoplight/elements-utils$': '<rootDir>/../elements-utils/src',
   },
+  testTimeout: 10000,
 };
