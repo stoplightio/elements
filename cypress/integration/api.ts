@@ -19,7 +19,7 @@ describe('API component', () => {
     loadZoomApiPage();
     cy.visit('/zoom-api/operations/groups');
     cy.get(`button[aria-label="Request Sample Language"]`).click();
-    cy.findByText('Shell / Wget').should('exist');
+    cy.findByText('Obj-C').should('exist');
   });
 });
 

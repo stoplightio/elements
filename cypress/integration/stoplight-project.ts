@@ -19,7 +19,7 @@ describe('Stoplight component', () => {
     loadStoplightProjectPage();
     cy.findByText('Create Todo').click();
     cy.findByRole('button', { name: /request sample/i }).click();
-    cy.findByText('Shell / Wget').should('exist');
+    cy.findByText('Obj-C').should('exist');
   });
 });
 
