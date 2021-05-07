@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';
@@ -44,7 +45,11 @@ const MosaicProviderDecorator = (Story) => (
   <MosaicProvider><Story/></MosaicProvider>
 );
 
-export const decorators = [ThemeProvider, ProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator];
+const RouterProviderDecorator = (Story) => (
+  <BrowserRouter><Story/></BrowserRouter>
+);
+
+export const decorators = [ThemeProvider, ProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, RouterProviderDecorator];
 
 export const parameters = {
   docs: {
