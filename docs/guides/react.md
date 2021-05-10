@@ -32,7 +32,7 @@ Now you can replace the existing App component's contents with the API component
 <!-- title: App.js -->
 ```jsx
 <API 
-  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
 />
 ```
 
@@ -52,7 +52,7 @@ function App() {
   return (
     <div className="App">
       <API
-        apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
+        apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
       />
     </div>
   );
