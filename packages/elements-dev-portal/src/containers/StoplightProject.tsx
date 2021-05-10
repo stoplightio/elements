@@ -69,7 +69,11 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId }) =>
             branchSlug={branchSlug || ''}
             branches={branches || []}
             onChange={(branch: Branch) => {
-              history.push(`/branches/${branch.slug}/${nodeSlug}`);
+              if (branch.is_default) {
+                history.push(`/${nodeSlug}`);
+              } else {
+                history.push(`/branches/${branch.slug}/${nodeSlug}`);
+              }
             }}
           />
         ) : null
