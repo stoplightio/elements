@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react';
-import { useGetBranches } from 'elements-dev-portal/src/hooks/useGetBranches';
 import * as React from 'react';
 
+import { useGetBranches } from '../../hooks/useGetBranches';
 import { useGetTableOfContents } from '../../hooks/useGetTableOfContents';
 import { Loading } from '../Loading';
 import { TableOfContents } from './';
