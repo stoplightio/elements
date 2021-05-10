@@ -178,7 +178,7 @@ export const TryIt: React.FC<TryItProps> = ({
           />
         ) : null}
         <Panel.Content className="SendButtonHolder">
-          <Flex>
+          <Flex alignItems="center">
             <Button appearance="primary" loading={loading} disabled={loading} onPress={handleClick} size="sm">
               Send Request
             </Button>

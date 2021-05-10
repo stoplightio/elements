@@ -1,4 +1,4 @@
-import { Box, CopyButton, Panel, Select, SelectProps } from '@stoplight/mosaic';
+import { Box, Button, CopyButton, Menu, MenuItem, Panel } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import { atom, useAtom } from 'jotai';
@@ -6,7 +6,7 @@ import React from 'react';
 
 import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
-import { getConfigFor, selectOptions } from './requestSampleConfigs';
+import { getConfigFor, requestSampleConfigs } from './requestSampleConfigs';
 
 export interface RequestSamplesProps {
   /**
@@ -36,24 +36,50 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
 
   const requestSample = convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request);
 
-  const handleSelectClick: SelectProps['onChange'] = (value: string | number) => {
-    const [language, library] = String(value).split(' / ');
-    setSelectedLanguage(language);
-    setSelectedLibrary(library || '');
-  };
-
   return (
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
         <Box ml={-2}>
-          <Select
-            aria-label="Request Sample Language"
-            onChange={handleSelectClick}
-            options={selectOptions}
-            value={selectedLibrary ? `${selectedLanguage} / ${selectedLibrary}` : selectedLanguage}
-            triggerTextPrefix="Request Sample: "
-            size="sm"
-          />
+          <Menu
+            label="Request Sample Language"
+            trigger={
+              <Button size="sm" iconRight="caret-down" appearance="minimal">
+                Request Sample: {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
+              </Button>
+            }
+          >
+            {Object.entries(requestSampleConfigs).map(([language, config]) => {
+              const hasLibraries = config.libraries && Object.keys(config.libraries).length > 0;
+              return (
+                <MenuItem
+                  key={language}
+                  indent
+                  text={language}
+                  onClick={
+                    hasLibraries
+                      ? undefined
+                      : () => {
+                          setSelectedLanguage(language);
+                          setSelectedLibrary('');
+                        }
+                  }
+                >
+                  {hasLibraries &&
+                    Object.keys(config.libraries!).map(library => (
+                      <MenuItem
+                        key={library}
+                        text={library}
+                        indent
+                        onClick={() => {
+                          setSelectedLanguage(language);
+                          setSelectedLibrary(library);
+                        }}
+                      />
+                    ))}
+                </MenuItem>
+              );
+            })}
+          </Menu>
         </Box>
       </Panel.Titlebar>
       <Panel.Content p={0}>

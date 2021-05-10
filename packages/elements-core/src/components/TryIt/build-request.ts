@@ -1,5 +1,6 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
+import URI from 'urijs';
 
 import { getServerUrlWithDefaultValues } from '../../utils/http-spec/IServer';
 import {
@@ -55,7 +56,7 @@ export async function buildFetchRequest({
   const [queryParamsWithAuth, headersWithAuth] = runAuthRequestEhancements(auth, queryParams, rawHeaders);
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
-  const url = new URL(serverUrl + expandedPath);
+  const url = new URL(URI(expandedPath).absoluteTo(serverUrl).toString());
   url.search = new URLSearchParams(queryParamsWithAuth.map(nameAndValueObjectToPair)).toString();
 
   const body = typeof bodyInput === 'object' ? await createRequestBody(mediaTypeContent, bodyInput) : bodyInput;
@@ -176,7 +177,7 @@ export async function buildHarRequest({
 
   return {
     method: httpOperation.method.toUpperCase(),
-    url: serverUrl + uriExpand(httpOperation.path, parameterValues),
+    url: URI(uriExpand(httpOperation.path, parameterValues)).absoluteTo(serverUrl).toString(),
     httpVersion: 'HTTP/1.1',
     cookies: [],
     headers: [{ name: 'Content-Type', value: mimeType }, ...headerParamsWithAuth],
