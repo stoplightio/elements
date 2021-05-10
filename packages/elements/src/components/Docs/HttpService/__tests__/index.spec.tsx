@@ -14,6 +14,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { apiKey, oauth } from '../../../../__fixtures__/security-schemes';
 import httpService from '../../../../__fixtures__/services/petstore';
 import { httpServiceWithUrlVariables } from '../../../../__fixtures__/services/with-url-variables';
+import { httpServiceWithoutOrigin } from '../../../../__fixtures__/services/without-origin';
 import { Provider } from '../../../../containers/Provider';
 import { HttpService } from '../index';
 import { getOAuthFlowDescription, SecuritySchemes } from '../SecuritySchemes';
@@ -47,6 +48,13 @@ describe('HttpService', () => {
 
     const serverUrl = screen.getByLabelText('production-server');
     expect(serverUrl).toHaveTextContent('ftp://default-namespace.stoplight.io');
+  });
+
+  it('prepends origin to urls without origin', () => {
+    render(<ServerInfo servers={httpServiceWithoutOrigin.servers} />);
+
+    const serverUrl = screen.getByLabelText('production-server');
+    expect(serverUrl).toHaveTextContent('http://localhost/api');
   });
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
