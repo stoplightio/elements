@@ -3,7 +3,7 @@
 
 # @stoplight/elements
 
-Elements is a collection of UI components for displaying beautiful developer documentation using an OpenAPI document or a Stoplight project.
+Elements is a collection of UI components for displaying beautiful developer documentation from any OpenAPI document.
 
 ## Documentation
 

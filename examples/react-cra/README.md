@@ -23,7 +23,7 @@ This component allows embedding documentation that is connected to a Stoplight w
 ### Stoplight API
 
 Stoplight API component allows embedding documentation with no limitations to the file location, it can be anywhere on the web.
-In this example, we connect the `API` component directly to [Zoom API](https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml) OAS3 YAML file hosted on GitHub.
+In this example, we connect the `API` component directly to [Zoom API](https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml) OAS3 YAML file hosted on GitHub.
 
 ## Trying the example
 
