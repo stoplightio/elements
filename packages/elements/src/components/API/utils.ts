@@ -1,7 +1,7 @@
+import { TableOfContentsItem } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
 import { NodeType } from '@stoplight/types';
 
 import { OperationNode, ServiceNode } from '../../utils/oas/types';
-import { TableOfContentsItem } from '../MosaicTableOfContents/types';
 
 export type TagGroup = { title: string; items: OperationNode[] };
 
