@@ -3871,13 +3871,13 @@
   dependencies:
     eslint-config-prettier "^7.1.0"
 
-"@stoplight/http-spec@^4.0.1":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-4.1.0.tgz#9af81c973fb20462fd292c7e1a0c994a22003a3b"
-  integrity sha512-01cjtYFth5yaiQMB/xnpwithXKpNU5m9p55qnrRQE7jGVn/BYL9CzTBRcOw1iE7xOh0Atylkm63K6lf4EOfskA==
+"@stoplight/http-spec@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-4.2.0.tgz#b453ccc04a9bde80a51283f3297f8996d142ede2"
+  integrity sha512-wQiv+9404niXkJUEA5tTM8AQBjREZB4s0RXg9PU5xCSWLYpLq20OqwIioXvT6kZTvYsgL6r2ywacMwvDnMTTQQ==
   dependencies:
     "@stoplight/json" "^3.10.2"
-    "@stoplight/types" "^12.2.0"
+    "@stoplight/types" "^12.3.0"
     "@types/swagger-schema-official" "~2.0.21"
     "@types/to-json-schema" "^0.2.0"
     "@types/type-is" "^1.6.3"
@@ -4206,10 +4206,18 @@
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
 
-"@stoplight/types@^12.0.0", "@stoplight/types@^12.2.0":
+"@stoplight/types@^12.0.0":
   version "12.2.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-12.2.0.tgz#258c9f1bbc6682aa5ca1a4161d5e75979ffe4a3f"
   integrity sha512-k1VPgSIpP+wLzGJ14lxhwtSyzYG5az+qby7fzYpc2fGWYFe5apmDm26vf/6N4mMQi2UQ7KxgGfNRSjdu6Msslg==
+  dependencies:
+    "@types/json-schema" "^7.0.4"
+    utility-types "^3.10.0"
+
+"@stoplight/types@^12.3.0":
+  version "12.3.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-12.3.0.tgz#ac71d295319f26abb279e3d89d1c1774857d20b4"
+  integrity sha512-hgzUR1z5BlYvIzUeFK5pjs5JXSvEutA9Pww31+dVicBlunsG1iXopDx/cvfBY7rHOrgtZDuvyeK4seqkwAZ6Cg==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"

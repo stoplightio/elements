@@ -5,15 +5,22 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 import { ServiceNode } from '../../utils/oas/types';
 import { ParsedDocs } from '../Docs';
 import { SidebarLayout } from '../Layout/SidebarLayout';
+import { Logo } from '../Logo';
 import { TableOfContents } from '../MosaicTableOfContents';
 import { PoweredByLink } from '../PoweredByLink';
 import { computeAPITree, findFirstNodeSlug } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
+  logo?: {
+    url: string;
+    backgroundColor?: string;
+    altText?: string;
+    href?: string;
+  };
 };
 
-export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => {
+export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode, logo }) => {
   const tree = React.useMemo(() => computeAPITree(serviceNode), [serviceNode]);
   const { pathname } = useLocation();
 
@@ -31,9 +38,14 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode
 
   const sidebar = (
     <>
-      <Heading ml={4} mb={5} size={4}>
-        {serviceNode.name}
-      </Heading>
+      <Flex ml={4} mb={5} alignItems="center">
+        {logo ? (
+          <Logo logo={{ ...logo, altText: logo.altText ?? 'logo' }} />
+        ) : (
+          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
+        )}
+        <Heading size={4}>{serviceNode.name}</Heading>
+      </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} />
       </Flex>

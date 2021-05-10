@@ -51,6 +51,12 @@ export interface CommonAPIProps extends RoutingProps {
    * @default "sidebar"
    */
   layout?: 'sidebar' | 'stacked';
+  logo?: {
+    url: string;
+    backgroundColor?: string;
+    altText?: string;
+    href?: string;
+  };
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -58,7 +64,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl } = props;
+  const { layout, apiDescriptionUrl, logo } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const documentShouldBeFetched = apiDescriptionUrl && !apiDescriptionDocument;
@@ -111,7 +117,7 @@ const APIImpl: React.FC<APIProps> = props => {
       {layout === 'stacked' ? (
         <APIWithStackedLayout serviceNode={serviceNode} />
       ) : (
-        <APIWithSidebarLayout serviceNode={serviceNode} />
+        <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} />
       )}
     </InlineRefResolverProvider>
   );
