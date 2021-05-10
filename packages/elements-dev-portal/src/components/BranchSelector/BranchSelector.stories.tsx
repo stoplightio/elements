@@ -1,12 +1,12 @@
 import { Story } from '@storybook/react';
-import { useBranches } from 'elements-dev-portal/src/hooks/useBranches';
 import * as React from 'react';
 
+import { useGetBranches } from '../../hooks/useGetBranches';
 import { BranchSelector } from './';
 
 // Wrapper to show how to use the node content hook
 const BranchSelectorWrapper = ({ projectId }: { projectId: string; branchSlug?: string }) => {
-  const { data } = useBranches({ projectId });
+  const { data } = useGetBranches({ projectId });
 
   return data ? (
     <BranchSelector branchSlug="master" branches={data} onChange={branch => console.log(branch)} />
