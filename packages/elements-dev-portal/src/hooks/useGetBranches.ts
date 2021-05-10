@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { PlatformUrlContext } from '../components/Provider';
 import { getBranches } from '../handlers/getBranches';
 
-export function useBranches(
+export function useGetBranches(
   {
     projectId,
   }: {
