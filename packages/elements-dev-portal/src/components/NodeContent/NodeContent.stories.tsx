@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react';
-import { useNodeContent } from 'elements-dev-portal/src/hooks/useNodeContent';
 import * as React from 'react';
 
+import { useGetNodeContent } from '../../hooks/useGetNodeContent';
 import { NodeContent } from './';
 
 // Wrapper to show how to use the node content hook
@@ -14,7 +14,7 @@ const NodeContentWrapper = ({
   projectId: string;
   branchSlug?: string;
 }) => {
-  const { data } = useNodeContent({ nodeSlug, projectId, branchSlug });
+  const { data } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
 
   return data ? (
     <NodeContent
