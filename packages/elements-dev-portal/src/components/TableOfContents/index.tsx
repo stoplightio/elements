@@ -1,7 +1,7 @@
 import { TableOfContents as ElementsTableOfContents } from '@stoplight/elements/components/MosaicTableOfContents';
 import { CustomLinkComponent } from '@stoplight/elements/components/MosaicTableOfContents/types';
 import { PoweredByLink } from '@stoplight/elements/components/PoweredByLink';
-import { Box, BoxProps } from '@stoplight/mosaic';
+import { Box, BoxProps, Flex } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { TableOfContents as TableOfContentsData } from '../../interfaces/tableOfContents';
@@ -14,8 +14,10 @@ export type TableOfContentsProps = BoxProps<'div'> & {
 
 export const TableOfContents = ({ tableOfContents, activeId, Link, ...boxProps }: TableOfContentsProps) => {
   return (
-    <Box bg="canvas-100" {...boxProps}>
-      <ElementsTableOfContents tree={tableOfContents.items} activeId={activeId} Link={Link} />
+    <Flex direction="col" bg="canvas-100" h="full" {...boxProps}>
+      <Box flex={1}>
+        <ElementsTableOfContents tree={tableOfContents.items} activeId={activeId} Link={Link} />
+      </Box>
 
       {tableOfContents.hide_powered_by ? null : (
         <PoweredByLink
@@ -24,6 +26,6 @@ export const TableOfContents = ({ tableOfContents, activeId, Link, ...boxProps }
           packageType="elements-dev-portal"
         />
       )}
-    </Box>
+    </Flex>
   );
 };
