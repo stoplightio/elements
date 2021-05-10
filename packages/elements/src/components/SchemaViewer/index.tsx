@@ -21,7 +21,7 @@ export interface ISchemaViewerProps {
   description?: string;
   errors?: string[];
   maxRows?: number;
-  examples?: Dictionary<string>;
+  examples?: Dictionary<unknown> | unknown[];
   className?: string;
   forceShowTabs?: boolean;
   viewMode?: ViewMode;
@@ -67,6 +67,8 @@ export const SchemaViewer = ({
     return <JSV jsvClassName={cn(className, 'dark:border-gray-9', CLASSNAMES.bordered, CLASSNAMES.block)} />;
   }
 
+  const unnamedExamples = Array.isArray(examples);
+
   return (
     <SimpleTabs
       className={cn('SchemaViewer', className)}
@@ -78,7 +80,7 @@ export const SchemaViewer = ({
         <SimpleTab>Schema</SimpleTab>
 
         {map(examples, (_, key) => (
-          <SimpleTab key={key}>{key === 'default' ? 'Example' : key}</SimpleTab>
+          <SimpleTab key={key}>{unnamedExamples || key === 'default' ? 'Example' : key}</SimpleTab>
         ))}
       </SimpleTabList>
 
