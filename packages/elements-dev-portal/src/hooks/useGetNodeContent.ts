@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { PlatformUrlContext } from '../components/Provider';
 import { getNodeContent } from '../handlers/getNodeContent';
 
-export function useNodeContent(
+export function useGetNodeContent(
   {
     nodeSlug,
     projectId,
