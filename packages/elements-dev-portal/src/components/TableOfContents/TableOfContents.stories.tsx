@@ -1,12 +1,12 @@
 import { Story } from '@storybook/react';
-import { useTableOfContents } from 'elements-dev-portal/src/hooks/useTableOfContents';
 import * as React from 'react';
 
+import { useGetTableOfContents } from '../../hooks/useGetTableOfContents';
 import { TableOfContents } from './';
 
 // Wrapper to show how to use the node content hook
 const TableOfContentsWrapper = ({ projectId, branchSlug }: { projectId: string; branchSlug?: string }) => {
-  const { data } = useTableOfContents({ projectId, branchSlug });
+  const { data } = useGetTableOfContents({ projectId, branchSlug });
 
   return data ? (
     <TableOfContents

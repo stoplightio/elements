@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { PlatformUrlContext } from '../components/Provider';
 import { getTableOfContents } from '../handlers/getTableOfContents';
 
-export function useTableOfContents(
+export function useGetTableOfContents(
   {
     projectId,
     branchSlug,
