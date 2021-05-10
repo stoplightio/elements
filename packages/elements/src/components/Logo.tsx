@@ -22,10 +22,10 @@ export const Logo: React.FC<LogoProps> = ({ logo }) => {
     >
       {logo.href ? (
         <a href={logo.href} target="_blank" rel="noreferrer">
-          <img src={logo.url} height="30px" width="30px" alt={logo.altText ?? 'logo'} />
+          <img src={logo.url} height="30px" width="30px" alt={logo.altText} />
         </a>
       ) : (
-        <img src={logo.url} height="30px" width="30px" alt={logo.altText ?? 'logo'} />
+        <img src={logo.url} height="30px" width="30px" alt={logo.altText} />
       )}
     </Box>
   );
