@@ -8,7 +8,6 @@ export default {
   component: StoplightProject,
   argTypes: {
     projectId: { table: { category: 'Input' } },
-    branchSlug: { table: { category: 'Input' } },
     basePath: { table: { category: 'Routing' } },
     router: { table: { category: 'Routing' } },
     platformUrl: { table: { category: 'Advanced' } },
@@ -23,4 +22,5 @@ export const Playground: Story<StoplightProjectProps> = args => <StoplightProjec
 Playground.storyName = 'Studio Demo';
 Playground.args = {
   projectId: 'cHJqOjY',
+  platformUrl: 'https://x-6195.stoplight-dev.com',
 };

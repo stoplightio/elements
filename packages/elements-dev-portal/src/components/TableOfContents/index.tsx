@@ -25,7 +25,9 @@ export const TableOfContents = ({
 }: TableOfContentsProps) => {
   return (
     <Flex direction="col" bg="canvas-100" h="full" {...boxProps}>
-      <BranchSelector branchSlug={branchSlug} branches={branches} onChange={onChange} />
+      {branches && branches.length > 1 && (
+        <BranchSelector branchSlug={branchSlug} branches={branches} onChange={onChange} />
+      )}
 
       <Box flex={1}>
         <ElementsTableOfContents tree={tableOfContents.items} activeId={activeId} Link={Link} />
