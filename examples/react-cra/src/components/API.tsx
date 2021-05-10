@@ -7,7 +7,7 @@ export const StoplightAPI: React.FC = () => {
   return (
     <API
       basePath="zoom-api"
-      apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
+      apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
     />
   );
 };
