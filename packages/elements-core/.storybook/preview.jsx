@@ -9,6 +9,7 @@ import '../src/styles/elements-core-scoped.scss';
 import cn from 'classnames';
 import { Provider } from '../src/containers/Provider';
 import { PersistenceContextProvider } from '../src/context/Persistence';
+import { Styled } from '../src/styled';
 
 export const globalTypes = {
   theme: {
@@ -49,7 +50,11 @@ const RouterProviderDecorator = (Story) => (
   <BrowserRouter><Story/></BrowserRouter>
 );
 
-export const decorators = [ThemeProvider, ProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, RouterProviderDecorator];
+const StyledDecorator = (Story) => (
+  <Styled><Story/></Styled>
+);
+
+export const decorators = [ThemeProvider, ProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, RouterProviderDecorator, StyledDecorator];
 
 export const parameters = {
   docs: {
