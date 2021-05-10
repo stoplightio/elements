@@ -10,8 +10,8 @@ const StoplightProjectPage = () => {
       <SEO title="Stoplight Elements" />
 
       <StoplightProject
-        workspaceSlug="elements"
-        projectSlug="studio-demo"
+        platformUrl="https://x-6195.stoplight-dev.com"
+        projectId="cHJqOjY"
         basePath="stoplight-project"
         router={typeof window === 'undefined' ? 'memory' : 'history'}
       />
