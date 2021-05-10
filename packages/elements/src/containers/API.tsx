@@ -1,5 +1,13 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { InlineRefResolverProvider } from '@stoplight/elements-core/context/InlineRefResolver';
+import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
+import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
+import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
+import { useBundleRefsIntoDocument } from '@stoplight/elements-core/hooks/useBundleRefsIntoDocument';
+import { useParsedValue } from '@stoplight/elements-core/hooks/useParsedValue';
+import { withStyles } from '@stoplight/elements-core/styled';
+import { RoutingProps } from '@stoplight/elements-core/types';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { NonIdealState } from '@stoplight/ui-kit';
 import axios from 'axios';
@@ -9,14 +17,6 @@ import useSwr from 'swr';
 
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
-import { InlineRefResolverProvider } from '../context/InlineRefResolver';
-import { withPersistenceBoundary } from '../context/Persistence';
-import { withMosaicProvider } from '../hoc/withMosaicProvider';
-import { withRouter } from '../hoc/withRouter';
-import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
-import { useParsedValue } from '../hooks/useParsedValue';
-import { withStyles } from '../styled';
-import { RoutingProps } from '../types';
 import { transformOasToServiceNode } from '../utils/oas';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
