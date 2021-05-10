@@ -3,15 +3,13 @@ import * as React from 'react';
 
 import { Branch } from '../../interfaces/branch';
 
-export const BranchSelector = ({
-  branchSlug,
-  branches,
-  onChange,
-}: {
+export type BranchSelectorProps = {
   branchSlug: string;
   branches: Branch[];
   onChange: (branch: Branch) => void;
-}) => {
+};
+
+export const BranchSelector = ({ branchSlug, branches, onChange }: BranchSelectorProps) => {
   const defaultBranch = branches.find(branch => branch.is_default);
   const handleChange = React.useCallback(
     (selectedSlug: React.ReactText) => {
