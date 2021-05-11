@@ -1,29 +1,33 @@
-schedule: &schedule
-  interval: weekly
-  day: monday
-  time: 03:00
-
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /examples/angular
-    schedule: *schedule
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
     commit-message:
-      prefix: "chore(examples-angular):"
+      prefix: "chore(examples)"
       include: scope
     versioning-strategy: increase
   - package-ecosystem: npm
     directory: /examples/react-cra
-    schedule: *schedule
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
     commit-message:
-      prefix: "chore(examples-react-cra):"
+      prefix: "chore(examples)"
       include: scope
     versioning-strategy: increase
   - package-ecosystem: npm
     directory: /examples/react-gatsby
-    schedule: *schedule
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
     commit-message:
-      prefix: "chore(examples-react-gatsby):"
+      prefix: "chore(examples)"
       include: scope
     versioning-strategy: increase
 
