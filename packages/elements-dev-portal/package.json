@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-dev-portal",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -46,7 +46,7 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@stoplight/elements-core": "^7.0.0-beta.1",
+    "@stoplight/elements-core": "7.0.0-beta.3",
     "lodash": "^4.17.19",
     "react-router-dom": "^5.2.0"
   },
