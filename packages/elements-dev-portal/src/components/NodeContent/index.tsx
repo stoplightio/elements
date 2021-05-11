@@ -1,7 +1,7 @@
-import { Docs } from '@stoplight/elements/components/Docs';
-import { MarkdownComponentsProvider } from '@stoplight/elements/components/MarkdownViewer/CustomComponents/Provider';
-import { CustomLinkComponent } from '@stoplight/elements/components/MosaicTableOfContents/types';
-import { PersistenceContextProvider } from '@stoplight/elements/context/Persistence';
+import { Docs } from '@stoplight/elements-core/components/Docs';
+import { MarkdownComponentsProvider } from '@stoplight/elements-core/components/MarkdownViewer/CustomComponents/Provider';
+import { CustomLinkComponent } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
+import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
 import { Box } from '@stoplight/mosaic';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
