@@ -59,6 +59,6 @@ const TocStoryContainer: React.FC<any> = props => {
 export const TocStory: Story<ITableOfContents<{}>> = args => <TocStoryContainer {...args} />;
 TocStory.storyName = 'TableOfContents';
 TocStory.args = {
-  workspaceSlug: 'elements',
+  workspaceSlug: 'elements-examples',
   projectSlug: 'studio-demo',
 };
