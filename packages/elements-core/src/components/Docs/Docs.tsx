@@ -1,6 +1,6 @@
-import { InlineRefResolverProvider } from '@stoplight/elements-core/context/InlineRefResolver';
 import * as React from 'react';
 
+import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { useParsedData } from '../../hooks/useParsedData';
 import { ParsedNode, UnparsedNode } from '../../types';
 import { Article } from './Article';
