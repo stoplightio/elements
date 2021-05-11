@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.4.0](https://github.com/stoplightio/elements/compare/v6.2.0...v6.4.0) (2021-05-11)
+
+
+### Bug Fixes
+
+* **schema:** handle arrayish examples ([#1206](https://github.com/stoplightio/elements/issues/1206)) ([95420c7](https://github.com/stoplightio/elements/commit/95420c7821cc4dd9953b56f9878f51eed45a564d))
+
+
+### Features
+
+* add preliminary support for OAS 3.1 ([#1143](https://github.com/stoplightio/elements/issues/1143)) ([25f0b24](https://github.com/stoplightio/elements/commit/25f0b2415f1af92c3adf4d70a863677c4c0b0776))
+
+
+
+
+
 # [6.3.0](https://github.com/stoplightio/elements/compare/v6.2.0...v6.3.0) (2021-04-28)
 
 

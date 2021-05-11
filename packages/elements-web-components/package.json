@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-web-components",
-  "version": "6.3.0",
+  "version": "6.4.0",
   "main": "dist/elements.min.js",
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",
@@ -22,7 +22,7 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@stoplight/elements": "^6.3.0",
+    "@stoplight/elements": "^6.4.0",
     "@stoplight/json": "^3.9.0",
     "@stoplight/types": "^12.0.0",
     "@storybook/addon-essentials": "^6.0.21",

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.4.0](https://github.com/stoplightio/elements/compare/v6.2.0...v6.4.0) (2021-05-11)
+
+
+### Bug Fixes
+
+* **deps:** [security] bump handlebars from 4.7.6 to 4.7.7 ([#1173](https://github.com/stoplightio/elements/issues/1173)) ([4cdbe3f](https://github.com/stoplightio/elements/commit/4cdbe3ffd56274f28b72f09ecc07fa351769a2de))
+* **deps:** [security] bump hosted-git-info from 2.8.8 to 2.8.9 ([#1188](https://github.com/stoplightio/elements/issues/1188)) ([ee71431](https://github.com/stoplightio/elements/commit/ee71431fed5c7459e5729b484bb7312df0f9885e))
+* **deps:** [security] bump property-expr from 2.0.2 to 2.0.4 ([#1176](https://github.com/stoplightio/elements/issues/1176)) ([36b3a68](https://github.com/stoplightio/elements/commit/36b3a68d7ac5c041f99c8a6590893f42dfca7480))
+* **deps:** [security] bump url-parse from 1.4.7 to 1.5.1 ([#1174](https://github.com/stoplightio/elements/issues/1174)) ([f044907](https://github.com/stoplightio/elements/commit/f0449073731bd816bee1895865b26adf8ebf906a))
+* **schema:** handle arrayish examples ([#1206](https://github.com/stoplightio/elements/issues/1206)) ([95420c7](https://github.com/stoplightio/elements/commit/95420c7821cc4dd9953b56f9878f51eed45a564d))
+* release ([#1148](https://github.com/stoplightio/elements/issues/1148)) ([894d5e2](https://github.com/stoplightio/elements/commit/894d5e2a84b2f0aa9beffff32b62fa89a6063299))
+
+
+### Features
+
+* add preliminary support for OAS 3.1 ([#1143](https://github.com/stoplightio/elements/issues/1143)) ([25f0b24](https://github.com/stoplightio/elements/commit/25f0b2415f1af92c3adf4d70a863677c4c0b0776))
+
+
+
+
+
 # [6.3.0](https://github.com/stoplightio/elements/compare/v6.2.0...v6.3.0) (2021-04-28)
 
 
