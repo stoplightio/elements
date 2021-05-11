@@ -7,6 +7,6 @@ import { environment } from '../../environments/environment';
   templateUrl: './api.component.html',
 })
 export class ApiComponent {
-  apiDescriptionUrl = 'https://raw.githubusercontent.com/stoplightio/public-apis/master/reference/zoom/zoom.yaml';
+  apiDescriptionUrl = 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml';
   basePath = environment.basePath ? `${environment.basePath}/zoom-api` : 'zoom-api';
 }

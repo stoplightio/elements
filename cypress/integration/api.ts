@@ -18,13 +18,13 @@ describe('API component', () => {
   it('does not break on select dropdown', () => {
     loadZoomApiPage();
     cy.visit('/zoom-api/operations/groups');
-    cy.get(`button[aria-label="Request Sample Language"]`).click();
-    cy.findByText('Shell / Wget').should('exist');
+    cy.findByRole('button', { name: /request sample/i }).click();
+    cy.findByText('Obj-C').should('exist');
   });
 });
 
 function loadZoomApiPage() {
   cy.visit('/');
   cy.findByRole('link', { name: /Zoom Api/i }).click();
-  cy.findByRole('heading', { name: 'Zoom', level: 1 }).should('exist');
+  cy.findByRole('heading', { name: 'Zoom API', level: 1 }).should('exist');
 }

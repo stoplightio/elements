@@ -32,8 +32,6 @@ const isOas31 = (parsed: unknown): parsed is OpenAPIObject =>
   Number.parseFloat(String((parsed as Partial<{ openapi: unknown }>).openapi)) === 3.1;
 
 const OAS_MODEL_REGEXP = /((definitions|components)\/?(schemas)?)\//;
-export const MODEL_REGEXP = /schemas\//;
-export const OPERATION_REGEXP = /\/operations\/.+|paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
 
 export function transformOasToServiceNode(apiDescriptionDocument: unknown) {
   if (isOas31(apiDescriptionDocument)) {

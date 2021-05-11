@@ -18,8 +18,8 @@ describe('Stoplight component', () => {
   it('does not break on select dropdown', () => {
     loadStoplightProjectPage();
     cy.findByText('Create Todo').click();
-    cy.get(`button[aria-label="Request Sample Language"]`).click();
-    cy.findByText('Shell / Wget').should('exist');
+    cy.findByRole('button', { name: /request sample/i }).click();
+    cy.findByText('Obj-C').should('exist');
   });
 });
 
