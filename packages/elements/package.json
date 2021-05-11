@@ -53,10 +53,9 @@
     "@stoplight/mosaic": "1.0.0-beta.47",
     "@stoplight/types": "^12.0.0",
     "@stoplight/ui-kit": "^3.0.0-beta.39",
-    "axios": "^0.21.1",
     "lodash": "^4.17.19",
-    "react-router-dom": "^5.2.0",
-    "swr": "^0.3.0"
+    "react-query": "^3.15.2",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@stoplight/scripts": "8.2.3",
