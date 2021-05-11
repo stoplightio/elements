@@ -1,6 +1,5 @@
+import { JSONSchema } from '@stoplight/elements-core/types';
 import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
-
-import { JSONSchema } from '../../types';
 
 export enum NodeTypes {
   Paths = 'paths',

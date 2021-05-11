@@ -8,7 +8,7 @@ export const EXAMPLE_SPECS = [
   },
   {
     text: 'Zoom',
-    value: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
+    value: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml',
   },
   {
     text: 'Digital Ocean',
@@ -32,7 +32,7 @@ export const EXAMPLE_SPECS = [
   },
   {
     text: 'Netlify',
-    value: 'https://api.apis.guru/v2/specs/netlify.com/2.2.0/swagger.yaml',
+    value: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/netlify/openapi.yaml',
   },
   {
     text: 'NY Times Article Search',
@@ -40,7 +40,7 @@ export const EXAMPLE_SPECS = [
   },
   {
     text: 'Plaid',
-    value: 'https://api.apis.guru/v2/specs/plaid.com/2020-09-14_1.8.0/openapi.yaml',
+    value: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/plaid/openapi.yaml',
   },
   {
     text: 'Instagram',
