@@ -1,4 +1,4 @@
-import '@stoplight/elements/styles/elements.scss';
+import '@stoplight/elements-core/styles/elements.scss';
 
 import { API } from '@stoplight/elements';
 import { Box } from '@stoplight/mosaic';
