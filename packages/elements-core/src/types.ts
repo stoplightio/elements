@@ -2,6 +2,10 @@ import * as SMDAST from '@stoplight/markdown/ast-types/smdast';
 import { Dictionary, IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
 import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
+export interface UnparsedNode {
+  type: NodeType;
+  data: unknown;
+}
 
 export type ParsedNode =
   | {

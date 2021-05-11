@@ -1,63 +1,68 @@
-import { NodeType } from '@stoplight/types';
+import { InlineRefResolverProvider } from '@stoplight/elements-core/context/InlineRefResolver';
 import * as React from 'react';
 
 import { useParsedData } from '../../hooks/useParsedData';
-import { ParsedNode } from '../../types';
+import { ParsedNode, UnparsedNode } from '../../types';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
 import { Model } from './Model';
 
-interface IBaseDocsProps {
-  className?: string;
+interface BaseDocsProps {
+   /**
+    * CSS class to add to the root container.
+    */
+   className?: string;
+   /**
+    * If true, the component will hide its title.
+    * @default false
+    */
+   headless?: boolean;
+ 
+   /**
+    * URI of the document
+    */
+   uri?: string;
 }
 
-export interface IDocsProps extends IBaseDocsProps {
-  nodeData: unknown;
-  nodeType: NodeType;
-  headless?: boolean;
-  uri?: string;
+export interface DocsProps extends BaseDocsProps {
+  unparsedNode?: UnparsedNode;
+  node?: ParsedNode;
+  useNodeForRefResolving?: boolean;
 }
 
-export interface IParsedDocsProps extends IBaseDocsProps {
-  node: ParsedNode;
-  headless?: boolean;
-  uri?: string;
-}
-
-export interface IDocsComponentProps<T = unknown> {
+export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
   /**
    * The input data for the component to display.
    */
   data: T;
-  /**
-   * CSS class to add to the root container.
-   */
-  className?: string;
-  /**
-   * If true, the component will hide its title.
-   * @default false
-   */
-  headless?: boolean;
-
-  /**
-   * URI of the document
-   */
-  uri?: string;
 }
 
-export const Docs = React.memo<IDocsProps>(({ nodeType, nodeData, className, headless, uri }) => {
-  const parsedNode = useParsedData(nodeType, nodeData);
+export const Docs = React.memo<DocsProps>(({ unparsedNode, node, useNodeForRefResolving = false, ...commonProps }) => {
+  const parsedNode = useParsedData(unparsedNode, node);
 
   if (!parsedNode) {
     // TODO: maybe report failure
     return null;
   }
+  const parsedDocs = <ParsedDocs node={parsedNode} {...commonProps} />;
 
-  return <ParsedDocs className={className} node={parsedNode} headless={headless} uri={uri} />;
+  if (useNodeForRefResolving) {
+    return (
+      <InlineRefResolverProvider document={parsedNode.data}>
+        {parsedDocs}
+      </InlineRefResolverProvider>
+    )
+  }
+
+  return parsedDocs;
 });
 
-export const ParsedDocs = ({ node, ...commonProps }: IParsedDocsProps) => {
+interface ParsedDocsProps extends BaseDocsProps {
+  node: ParsedNode;
+}
+
+const ParsedDocs = ({ node, ...commonProps }: ParsedDocsProps) => {
   switch (node.type) {
     case 'article':
       return <Article data={node.data} {...commonProps} />;

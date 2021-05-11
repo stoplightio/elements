@@ -3,11 +3,17 @@ import { NodeType } from '@stoplight/types';
 import { parse as parseYaml } from '@stoplight/yaml';
 import * as React from 'react';
 
-import { JSONSchema, ParsedNode } from '../types';
+import { JSONSchema, ParsedNode, UnparsedNode } from '../types';
 import { isHttpOperation, isHttpService, isJSONSchema, isSMDASTRoot } from '../utils/guards';
 
-export function useParsedData(nodeType: string, data: unknown): ParsedNode | undefined {
-  return React.useMemo(() => parserMap[nodeType]?.(data), [nodeType, data]);
+export function useParsedData(unparsedNode: UnparsedNode | undefined, fallbackNode?: ParsedNode): ParsedNode | undefined {
+  return React.useMemo(() => {
+    if (fallbackNode) return fallbackNode;
+
+    if (!unparsedNode) return;
+    
+    return parserMap[unparsedNode.type]?.(unparsedNode.data);
+  }, [unparsedNode, fallbackNode]);
 }
 
 type Parser = (rawData: unknown) => ParsedNode | undefined;
