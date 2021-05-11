@@ -29,6 +29,5 @@ export const getNodeContent = async (
 };
 
 function getNodeIdFromSlug(nodeSlug: string) {
-  const [nodeId] = nodeSlug.split('-');
-  return nodeId;
+  return nodeSlug.split('-')[0];
 }
