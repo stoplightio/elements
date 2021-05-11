@@ -1,15 +1,16 @@
-import { SidebarLayout } from '@stoplight/elements/components/Layout/SidebarLayout';
-import { PoweredByLink } from '@stoplight/elements/components/PoweredByLink';
-import { Row } from '@stoplight/elements/components/TableOfContents/Row';
-import { defaultPlatformUrl } from '@stoplight/elements/constants';
-import { Docs } from '@stoplight/elements/containers/Docs';
-import { Provider } from '@stoplight/elements/containers/Provider';
-import { TableOfContents } from '@stoplight/elements/containers/TableOfContents';
-import { withPersistenceBoundary } from '@stoplight/elements/context/Persistence';
-import { withMosaicProvider } from '@stoplight/elements/hoc/withMosaicProvider';
-import { withRouter } from '@stoplight/elements/hoc/withRouter';
-import { withStyles } from '@stoplight/elements/styled';
-import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '@stoplight/elements/types';
+import { SidebarLayout } from '@stoplight/elements-core/components/Layout/SidebarLayout';
+import { PoweredByLink } from '@stoplight/elements-core/components/PoweredByLink';
+import { Row } from '@stoplight/elements-core/components/TableOfContents/Row';
+import { defaultPlatformUrl } from '@stoplight/elements-core/constants';
+import { Docs } from '@stoplight/elements-core/containers/Docs';
+import { Provider } from '@stoplight/elements-core/containers/Provider';
+import { TableOfContents } from '@stoplight/elements-core/containers/TableOfContents';
+import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
+import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
+import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
+import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
+import { withStyles } from '@stoplight/elements-core/styled';
+import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '@stoplight/elements-core/types';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
@@ -103,6 +104,7 @@ export const StoplightProject = pipe(
   withStyles,
   withPersistenceBoundary,
   withMosaicProvider,
+  withQueryClientProvider,
 )(StoplightProjectImpl);
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';

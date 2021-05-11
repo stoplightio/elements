@@ -1,14 +1,14 @@
+import { Docs, ParsedDocs } from '@stoplight/elements-core/components/Docs';
+import { DeprecatedBadge } from '@stoplight/elements-core/components/Docs/HttpOperation/Badges';
+import { TryItWithRequestSamples } from '@stoplight/elements-core/components/TryIt';
+import { HttpMethodColors } from '@stoplight/elements-core/constants';
 import { NodeType } from '@stoplight/types';
 import { Collapse, Icon, Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { HttpMethodColors } from '../../constants';
 import { OperationNode, ServiceNode } from '../../utils/oas/types';
-import { Docs, ParsedDocs } from '../Docs';
-import { DeprecatedBadge } from '../Docs/HttpOperation/Badges';
-import { TryItWithRequestSamples } from '../TryIt';
 import { computeTagGroups, TagGroup } from './utils';
 
 type StackedLayoutProps = {

@@ -19,7 +19,7 @@ The API component displays API reference documentation for any OpenAPI v2 or v3 
 import { API } from "@stoplight/elements";
 
 <API
-  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
   layout="traditional"
   router="history"
 />
@@ -45,7 +45,7 @@ const apiDescriptionDocument = /* API description in the form of YAML string, JS
 
 ```html
 <elements-api
-  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
   layout="stacked"
   router="hash"
 />
@@ -86,7 +86,7 @@ document
       <td>apiDescriptionUrl</td>
       <td>string</td>
       <td></td>
-      <td><a href="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml">https://raw.githubusercontent.com/...</a></td>
+      <td><a href="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml">https://raw.githubusercontent.com/...</a></td>
       <td>URL where your OpenAPI document can be retrieved. Required if 'apiDescriptionDocument' paramter is not provided. If 'apiDescriptionDocument' is provided, this parameter becomes optional and serves as the base url for resolving references in the document.</td>
       <td>[x]</td>
     </tr>
