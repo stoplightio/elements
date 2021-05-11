@@ -6,10 +6,9 @@ export type DevPortalProviderProps = {
 
 export const PlatformUrlContext = React.createContext('https://stoplight.io');
 
-export const DevPortalProvider: React.FC<DevPortalProviderProps> = ({ platformUrl = 'https://stoplight.io', children }) => {
-  return (
-    <PlatformUrlContext.Provider value={platformUrl}>
-      {children}
-    </PlatformUrlContext.Provider>
-  );
+export const DevPortalProvider: React.FC<DevPortalProviderProps> = ({
+  platformUrl = 'https://stoplight.io',
+  children,
+}) => {
+  return <PlatformUrlContext.Provider value={platformUrl}>{children}</PlatformUrlContext.Provider>;
 };
