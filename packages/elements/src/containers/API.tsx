@@ -59,12 +59,11 @@ const APIImpl: React.FC<APIProps> = props => {
   const { layout, apiDescriptionUrl = '' } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
-  const documentShouldBeFetched = apiDescriptionUrl && !apiDescriptionDocument;
   const { data: fetchedDocument, error } = useQuery(
     [apiDescriptionUrl],
     () => fetch(apiDescriptionUrl).then(res => res.text()),
     {
-      enabled: !!documentShouldBeFetched,
+      enabled: apiDescriptionUrl !== '' && !apiDescriptionDocument,
     },
   );
 
