@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useQuery } from 'react-query';
 
-import { PlatformUrlContext } from '../components/Provider';
+import { PlatformUrlContext } from '../components/DevPortalProvider';
 import { getNodeContent } from '../handlers/getNodeContent';
 
 export function useGetNodeContent(
