@@ -1,17 +1,15 @@
 import { FieldButton, Select } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { Branch } from '../../interfaces/branch';
+import { Branch } from '../../types';
 
-export const BranchSelector = ({
-  branchSlug,
-  branches,
-  onChange,
-}: {
+export type BranchSelectorProps = {
   branchSlug: string;
   branches: Branch[];
   onChange: (branch: Branch) => void;
-}) => {
+};
+
+export const BranchSelector = ({ branchSlug, branches, onChange }: BranchSelectorProps) => {
   const defaultBranch = branches.find(branch => branch.is_default);
   const handleChange = React.useCallback(
     (selectedSlug: React.ReactText) => {
