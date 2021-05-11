@@ -25,7 +25,7 @@ export const DocsStory: Story<DocsProps> = args => <Docs {...args} />;
 DocsStory.args = {
   unparsedNode: {
     type: NodeType.Model,
-    data: model
-  }
+    data: model,
+  },
 };
 DocsStory.storyName = 'Docs Playground';

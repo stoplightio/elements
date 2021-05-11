@@ -6,12 +6,15 @@ import * as React from 'react';
 import { JSONSchema, ParsedNode, UnparsedNode } from '../types';
 import { isHttpOperation, isHttpService, isJSONSchema, isSMDASTRoot } from '../utils/guards';
 
-export function useParsedData(unparsedNode: UnparsedNode | undefined, fallbackNode?: ParsedNode): ParsedNode | undefined {
+export function useParsedData(
+  unparsedNode: UnparsedNode | undefined,
+  fallbackNode?: ParsedNode,
+): ParsedNode | undefined {
   return React.useMemo(() => {
     if (fallbackNode) return fallbackNode;
 
     if (!unparsedNode) return;
-    
+
     return parserMap[unparsedNode.type]?.(unparsedNode.data);
   }, [unparsedNode, fallbackNode]);
 }

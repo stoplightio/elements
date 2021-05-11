@@ -9,20 +9,20 @@ import { HttpService } from './HttpService';
 import { Model } from './Model';
 
 interface BaseDocsProps {
-   /**
-    * CSS class to add to the root container.
-    */
-   className?: string;
-   /**
-    * If true, the component will hide its title.
-    * @default false
-    */
-   headless?: boolean;
- 
-   /**
-    * URI of the document
-    */
-   uri?: string;
+  /**
+   * CSS class to add to the root container.
+   */
+  className?: string;
+  /**
+   * If true, the component will hide its title.
+   * @default false
+   */
+  headless?: boolean;
+
+  /**
+   * URI of the document
+   */
+  uri?: string;
 }
 
 export interface DocsProps extends BaseDocsProps {
@@ -48,11 +48,7 @@ export const Docs = React.memo<DocsProps>(({ unparsedNode, node, useNodeForRefRe
   const parsedDocs = <ParsedDocs node={parsedNode} {...commonProps} />;
 
   if (useNodeForRefResolving) {
-    return (
-      <InlineRefResolverProvider document={parsedNode.data}>
-        {parsedDocs}
-      </InlineRefResolverProvider>
-    )
+    return <InlineRefResolverProvider document={parsedNode.data}>{parsedDocs}</InlineRefResolverProvider>;
   }
 
   return parsedDocs;

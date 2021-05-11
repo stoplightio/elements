@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NonIdealState } from '@stoplight/ui-kit';
 import * as React from 'react';
 
-import { DocsSkeleton, Docs as DocsComponent } from '../components/Docs';
+import { Docs as DocsComponent, DocsSkeleton } from '../components/Docs';
 import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
 import { createResolvedImageComponent } from '../components/MarkdownViewer/CustomComponents/ResolvedImage';
 import { useMockUrl } from '../components/TryIt/mocking-utils';
