@@ -1,4 +1,4 @@
-import { TableOfContentsItem } from '@stoplight/elements/components/MosaicTableOfContents/types';
+import { TableOfContentsItem } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
 
 export type TableOfContents = {
   items: TableOfContentsItem[];
