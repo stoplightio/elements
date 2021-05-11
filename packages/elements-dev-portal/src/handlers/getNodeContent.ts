@@ -1,4 +1,4 @@
-import { Node } from '../interfaces/node';
+import { Node } from '../types';
 
 export const getNodeContent = async (
   {

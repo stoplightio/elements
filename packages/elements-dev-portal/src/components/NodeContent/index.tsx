@@ -7,7 +7,7 @@ import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
-import { Node } from '../../interfaces/node';
+import { Node } from '../../types';
 
 export type NodeContentProps = {
   node: Node;
