@@ -47,7 +47,7 @@ const MosaicProviderDecorator = (Story) => (
 );
 
 const DevPortalProviderDecorator = (Story, context) => {
-  return (<Provider platformUrl={context.args.platformUrl}><Story/></Provider>);
+  return (<DevPortalProvider platformUrl={context.args.platformUrl}><Story/></DevPortalProvider>);
 }
 
 export const decorators = [ThemeProvider, ElementsProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator];
