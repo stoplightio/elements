@@ -18,7 +18,7 @@
 
 ### Stoplight Project
 
-This component allows embedding documentation that is connected to a Stoplight workspace. In this example, we are referring to [elements.stoplight.io](https://elements.stoplight.io) workspace - [studio-demo](https://elements.stoplight.io/docs/studio-demo) project to be more precise.
+This component allows embedding documentation that is connected to a Stoplight workspace. In this example, we are referring to [elements-examples.stoplight.io](https://elements-examples.stoplight.io) workspace - [studio-demo](https://elements-examples.stoplight.io/docs/studio-demo) project to be more precise.
 
 ### Stoplight API
 
