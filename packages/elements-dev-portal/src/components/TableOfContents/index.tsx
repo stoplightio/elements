@@ -4,11 +4,11 @@ import { PoweredByLink } from '@stoplight/elements-core/components/PoweredByLink
 import { Box, BoxProps } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { TableOfContents as TableOfContentsData } from '../../interfaces/tableOfContents';
+import { ProjectTableOfContents } from '../../types';
 
 export type TableOfContentsProps = BoxProps<'div'> & {
   activeId: string;
-  tableOfContents: TableOfContentsData;
+  tableOfContents: ProjectTableOfContents;
   Link: CustomLinkComponent;
 };
 
