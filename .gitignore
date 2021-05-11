@@ -9,6 +9,7 @@ node_modules
 .pnp.js
 
 # testing
+/cypress
 /coverage
 packages/*/coverage
 

@@ -13,7 +13,7 @@ const darkMode = () => boolean('dark mode', false);
 const apiDescriptionUrl = () =>
   text(
     'apiDescriptionUrl',
-    'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml',
+    'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml',
   );
 type YamlMapper = (zoomApiYaml: string) => string | object;
 const documentTypeMap: Dictionary<YamlMapper> = {
