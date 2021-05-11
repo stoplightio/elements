@@ -12,9 +12,9 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "paths": {
-      "@stoplight/elements": ["../elements/dist"],
+      "@stoplight/elements-core": ["../elements-core/dist"],
       "@stoplight/elements-utils": ["../elements-utils/dist"],
-      "@stoplight/elements/*": ["../elements/dist/*"],
+      "@stoplight/elements-core/*": ["../elements-core/dist/*"],
       "@stoplight/elements-utils/*": ["../elements-utils/dist/*"]
     }
   }
