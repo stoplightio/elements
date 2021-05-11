@@ -94,7 +94,7 @@ const APIImpl: React.FC<APIProps> = props => {
     return (
       <Flex justify="center" alignItems="center" w="full" minH="screen" color="light">
         <Box as={Icon} icon={['fal', 'circle-notch']} size="3x" spin />
-      </Flex> 
+      </Flex>
     );
   }
 
