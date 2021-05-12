@@ -8,17 +8,15 @@ import { withStyles } from '@stoplight/elements-core/styled';
 import { RoutingProps } from '@stoplight/elements-core/types';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
-import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, Route, useParams } from 'react-router-dom';
 
+import { DevPortalProvider } from '../components/DevPortalProvider';
 import { Loading } from '../components/Loading';
 import { NodeContent } from '../components/NodeContent';
 import { NotFound } from '../components/NotFound';
-import { Provider } from '../components/Provider';
 import { TableOfContents } from '../components/TableOfContents';
-import { useGetBranches } from '../hooks/useGetBranches';
 import { useGetNodeContent } from '../hooks/useGetNodeContent';
 import { useGetTableOfContents } from '../hooks/useGetTableOfContents';
-import { Branch } from '../interfaces/branch';
 
 export interface StoplightProjectProps extends RoutingProps {
   /**
@@ -34,11 +32,9 @@ export interface StoplightProjectProps extends RoutingProps {
 }
 
 const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId }) => {
-  const history = useHistory();
   const { branchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
 
   const { data: tableOfContents, isFetched: isTocFetched } = useGetTableOfContents({ projectId, branchSlug });
-  const { data: branches } = useGetBranches({ projectId });
   const { data: node, isFetched } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
 
   let elem = <Loading />;
@@ -63,20 +59,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId }) =>
     <SidebarLayout
       sidebar={
         tableOfContents ? (
-          <TableOfContents
-            activeId={node?.id || ''}
-            tableOfContents={tableOfContents}
-            Link={Link}
-            branchSlug={branchSlug || ''}
-            branches={branches || []}
-            onChange={(branch: Branch) => {
-              if (branch.is_default) {
-                history.push(`/${nodeSlug}`);
-              } else {
-                history.push(`/branches/${branch.slug}/${nodeSlug}`);
-              }
-            }}
-          />
+          <TableOfContents activeId={node?.id || ''} tableOfContents={tableOfContents} Link={Link} />
         ) : null
       }
     >
@@ -89,7 +72,7 @@ const StoplightProjectRouter = ({ projectId, platformUrl, basePath = '/', router
   const { Router, routerProps } = useRouter(router ?? 'history', basePath);
 
   return (
-    <Provider platformUrl={platformUrl}>
+    <DevPortalProvider platformUrl={platformUrl}>
       <Router {...routerProps}>
         <Route path="/branches/:branchSlug/:nodeSlug" exact>
           <StoplightProjectImpl projectId={projectId} />
@@ -103,7 +86,7 @@ const StoplightProjectRouter = ({ projectId, platformUrl, basePath = '/', router
           <StoplightProjectImpl projectId={projectId} />
         </Route>
       </Router>
-    </Provider>
+    </DevPortalProvider>
   );
 };
 
