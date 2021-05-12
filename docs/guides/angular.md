@@ -6,7 +6,7 @@ Learn how to quickly get started with Elements in an Angular project.
 
 > Skip this step if you already have your Angular app set up.
 
-Run the following command to create a starter Angular app using the [@angular/cli](http://npmjs.com/package/@angular/cli). 
+Run the following command to create a starter Angular app using the [@angular/cli](http://npmjs.com/package/@angular/cli).
 Include the Angular routing module if prompted by the CLI.
 
 ```bash
@@ -37,7 +37,7 @@ Add the Elements CSS and JavaScript bundles to your Angular config.
             // ...
             "styles": [
               // ...
-              "node_modules/@stoplight/elements/styles/elements.min.css"
+              "node_modules/@stoplight/elements/styles/styles.min.css"
             ],
             "scripts": [
               // ...
@@ -73,7 +73,7 @@ Noticed we added a `basePath` to our API component? We'll also want to add a rou
 
 Your routing file should end up looking like this:
 
-<!-- 
+<!--
 title: app-routing.module.ts
 -->
 ```ts
