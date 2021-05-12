@@ -1,12 +1,12 @@
+export type { NodeContentProps } from './components/NodeContent';
+export { NodeContent } from './components/NodeContent';
 export type { TableOfContentsProps } from './components/TableOfContents';
 export { TableOfContents } from './components/TableOfContents';
 export type { StoplightProjectProps } from './containers/StoplightProject';
 export { StoplightProject } from './containers/StoplightProject';
+export { getNodeContent } from './handlers/getNodeContent';
 export { getTableOfContents } from './handlers/getTableOfContents';
+export { useGetNodeContent } from './hooks/useGetNodeContent';
 export { useGetTableOfContents } from './hooks/useGetTableOfContents';
 export type { ProjectTableOfContents } from './types';
-export type { NodeContentProps } from './components/NodeContent';
-export { NodeContent } from './components/NodeContent';
-export { getNodeContent } from './handlers/getNodeContent';
-export { useGetNodeContent } from './hooks/useGetNodeContent';
 export type { Node } from './types';

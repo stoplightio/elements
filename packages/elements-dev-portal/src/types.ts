@@ -3,7 +3,7 @@ import { TableOfContentsItem } from '@stoplight/elements-core/components/MosaicT
 export type ProjectTableOfContents = {
   items: TableOfContentsItem[];
   hide_powered_by?: boolean;
-}
+};
 
 export type Node = NodeSummary & {
   data: string;
