@@ -19,14 +19,14 @@ Wondering what this `unmount()` thingy in some of the tests is all about?
 
 The reason is that an asynchronous action in TryIt component - resolving
 a Promise coming from `buildHarRequest()` call - causes an async update to
-React state, which then causes an `act(...)` warning in the tests which are 
+React state, which then causes an `act(...)` warning in the tests which are
 synchronous.
 
-If you see an unwarranted `act(...)` warning when writing a synchronous test, 
+If you see an unwarranted `act(...)` warning when writing a synchronous test,
 use the same method to mitigate the issue. Don't do it mindlessly though!
 Sometimes `act(...)` warning is warranted.
 
-If `buildHarRequest` is no longer asynchronous, or it dissapeared from the codebase,
+If `buildHarRequest` is no longer asynchronous, or it disappeared from the codebase,
 you can attempt to remove manual `unmount()` calls.
 */
 
@@ -66,6 +66,51 @@ describe('HttpOperation', () => {
       expect(bearerBadge).toBeInTheDocument();
       expect(oidcBadge).toBeInTheDocument();
       expect(oauthBadge).toBeInTheDocument();
+
+      unmount();
+    });
+
+    it('displays scopes in badge when present', () => {
+      const security = [
+        [
+          {
+            key: 'oauth2WithScopes',
+            type: 'oauth2' as const,
+            description: 'foo',
+            flows: {
+              implicit: {
+                scopes: {
+                  'write:pets': 'modify pets in your account',
+                  'read:pets': 'read your pets',
+                },
+                refreshUrl: 'http://refreshUrl.com',
+                authorizationUrl: 'http://authorizationUrl.com',
+              },
+            },
+          },
+          {
+            key: 'oauth2WithEmptyScopes',
+            type: 'oauth2' as const,
+            description: 'foo',
+            flows: {
+              authorizationCode: {
+                scopes: {},
+                refreshUrl: 'http://refreshUrl.com',
+                tokenUrl: 'http://tokenUrl.com',
+                authorizationUrl: 'http://authorizationUrl.com',
+              },
+            },
+          },
+        ],
+      ];
+
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, security }} />);
+
+      const oauth2Badge = getSecurityBadge(/^OAuth 2.0 \(write:pets, read:pets\)$/i);
+      const oauth2WithEmptyScopesBadge = getSecurityBadge(/^OAuth 2.0$/i);
+
+      expect(oauth2Badge).toBeInTheDocument();
+      expect(oauth2WithEmptyScopesBadge).toBeInTheDocument();
 
       unmount();
     });
