@@ -2692,10 +2692,10 @@ alphanum-sort@^1.0.2:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-angular-http-server@~1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/angular-http-server/-/angular-http-server-1.9.0.tgz#4d3d1dcc28512805c1025541532d15dfa8046254"
-  integrity sha512-CVMqVrjd93JEYoLyD7Tx2IIKDMKWrJVJdK7EM+AVakjIYK2yajLgJiRfzofZ6PYYq8Mr5juKGzFCPrdg4rc7tQ==
+angular-http-server@~1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/angular-http-server/-/angular-http-server-1.10.0.tgz#8d518b03df6dc2633822de9603f51da7f1a0db6d"
+  integrity sha512-GlEkTzduqV56+nkP/Ye68Nd386I1G15AlIUTZYKj2yMdQOYn5E0icw7oyHBSIEOwlhzjlqm9rSxo2oJqAa7JXA==
   dependencies:
     mime "^1.3.6"
     minimist "^1.2.0"
