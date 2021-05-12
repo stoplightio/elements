@@ -1,5 +1,6 @@
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Flex } from '@stoplight/mosaic';
 import * as React from 'react';
 
 export const PoweredByLink: React.FC<{
@@ -9,13 +10,14 @@ export const PoweredByLink: React.FC<{
   packageType: 'elements' | 'elements-dev-portal';
 }> = ({ headless, source, pathname, packageType }) => {
   return (
-    <a
-      className={
-        !headless ? 'border-t flex items-center px-5 py-3 reset' : 'flex items-center px-1 py-3 reset justify-end'
-      }
-      href={`https://stoplight.io/?utm_source=elements${
-        packageType === 'elements-dev-portal' ? '-dev-portal' : ''
-      }&utm_medium=${source}&utm_campaign=powered_by&utm_content=${pathname}`}
+    <Flex
+      as="a"
+      align="center"
+      borderT={headless ? undefined : true}
+      px={headless ? 1 : 4}
+      py={3}
+      justify={headless ? 'end' : undefined}
+      href={`https://stoplight.io/?utm_source=${packageType}&utm_medium=${source}&utm_campaign=powered_by&utm_content=${pathname}`}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -27,6 +29,6 @@ export const PoweredByLink: React.FC<{
       <div>
         powered by&nbsp;<strong>Stoplight</strong>
       </div>
-    </a>
+    </Flex>
   );
 };
