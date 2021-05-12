@@ -11,8 +11,6 @@ import { Provider as ElementsProvider } from '@stoplight/elements-core/container
 import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
 import { DevPortalProvider } from '../src/components/DevPortalProvider';
 
-import { DevPortalProvider } from '../src/components/DevPortalProvider';
-
 export const globalTypes = {
   theme: {
     name: 'Theme',
