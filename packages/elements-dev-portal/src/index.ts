@@ -12,6 +12,5 @@ export { getTableOfContents } from './handlers/getTableOfContents';
 export { useGetBranches } from './hooks/useGetBranches';
 export { useGetNodeContent } from './hooks/useGetNodeContent';
 export { useGetTableOfContents } from './hooks/useGetTableOfContents';
-export type { Branch } from './types';
 export type { ProjectTableOfContents } from './types';
-export type { Node } from './types';
+export type { Branch, Node } from './types';
