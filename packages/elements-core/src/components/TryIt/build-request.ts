@@ -48,10 +48,9 @@ export async function buildFetchRequest({
       ?.map(param => ({ name: param.name, value: parameterValues[param.name] ?? '' }))
       .filter(({ value }) => value.length > 0) ?? [];
 
-  const rawHeaders = filterOutAuthorizationParams(
-    httpOperation.request?.headers ?? [],
-    httpOperation.security,
-  ).map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' }));
+  const rawHeaders = filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security).map(
+    header => ({ name: header.name, value: parameterValues[header.name] ?? '' }),
+  );
 
   const [queryParamsWithAuth, headersWithAuth] = runAuthRequestEhancements(auth, queryParams, rawHeaders);
 

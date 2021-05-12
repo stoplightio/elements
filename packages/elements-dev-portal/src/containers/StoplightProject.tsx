@@ -7,6 +7,7 @@ import { Provider } from '@stoplight/elements-core/containers/Provider';
 import { TableOfContents } from '@stoplight/elements-core/containers/TableOfContents';
 import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
 import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
+import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
 import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
 import { withStyles } from '@stoplight/elements-core/styled';
 import { ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from '@stoplight/elements-core/types';
@@ -103,6 +104,7 @@ export const StoplightProject = pipe(
   withStyles,
   withPersistenceBoundary,
   withMosaicProvider,
+  withQueryClientProvider,
 )(StoplightProjectImpl);
 
 const isItem = (item: TableOfContentItem): item is Item => item.type === 'item';

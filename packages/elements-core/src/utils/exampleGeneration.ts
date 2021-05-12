@@ -10,11 +10,10 @@ export const useGenerateExampleFromMediaTypeContent = (
   chosenExampleIndex?: number,
 ) => {
   const document = useDocument();
-  return React.useMemo(() => generateExampleFromMediaTypeContent(mediaTypeContent, document, chosenExampleIndex), [
-    mediaTypeContent,
-    document,
-    chosenExampleIndex,
-  ]);
+  return React.useMemo(
+    () => generateExampleFromMediaTypeContent(mediaTypeContent, document, chosenExampleIndex),
+    [mediaTypeContent, document, chosenExampleIndex],
+  );
 };
 
 export const generateExampleFromMediaTypeContent = (
