@@ -1,7 +1,7 @@
 import { FieldButton, Select } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { Branch } from '../../interfaces/branch';
+import { Branch } from '../../types';
 
 export type BranchSelectorProps = {
   branchSlug: string;
@@ -33,11 +33,16 @@ export const BranchSelector = ({ branchSlug, branches, onChange }: BranchSelecto
           {selectedItem?.label || selectedItem?.value}
         </FieldButton>
       )}
-      options={branches.map(branch => ({
-        label: branch.name || branch.slug,
-        value: branch.slug,
-        meta: branch.is_default ? 'Default' : undefined,
-      }))}
+      options={[
+        {
+          title: 'Versions',
+          options: branches.map(branch => ({
+            label: branch.name || branch.slug,
+            value: branch.slug,
+            meta: branch.is_default ? 'Default' : undefined,
+          })),
+        },
+      ]}
     />
   );
 };
