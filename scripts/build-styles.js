@@ -5,14 +5,16 @@ const ncp = require('ncp');
 
 const packageImporter = require('node-sass-package-importer');
 
-const packageName = process.argv[2];
-const inputFileName = `${packageName}-scoped.scss`;
-const outputFileName = `${packageName}.min.css`;
+const sourcePackageName = 'elements-core';
+const packageName = process.argv[2] || sourcePackageName;
+const inputFileName = 'styles.scss';
+const outputFileName = 'styles.min.css';
 
-const packagePath = resolve(__dirname, '..', 'packages', packageName);
+const sourcePackagePath = resolve(__dirname, '..', 'packages', sourcePackageName);
+const destinationPackagePath = resolve(__dirname, '..', 'packages', packageName);
 
 console.log('Copying SCSS files...');
-ncp(resolve(packagePath, 'src', 'styles'), resolve(packagePath, 'dist', 'styles'), err => {
+ncp(resolve(sourcePackagePath, 'src', 'styles'), resolve(destinationPackagePath, 'dist', 'styles'), err => {
   if (err) {
     return console.error(err);
   }
@@ -21,10 +23,10 @@ ncp(resolve(packagePath, 'src', 'styles'), resolve(packagePath, 'dist', 'styles'
 
 console.log('Compiling SCSS...');
 
-const outFile = resolve(packagePath, 'dist', 'styles', outputFileName);
+const outFile = resolve(destinationPackagePath, 'dist', 'styles', outputFileName);
 render(
   {
-    file: resolve(packagePath, 'src', 'styles', inputFileName),
+    file: resolve(sourcePackagePath, 'src', 'styles', inputFileName),
     outFile: outFile,
     importer: packageImporter(),
     outputStyle: 'compressed',
