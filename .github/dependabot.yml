@@ -7,7 +7,7 @@ updates:
       day: monday
       time: '03:00'
     commit-message:
-      prefix: "chore(examples)"
+      prefix: "chore"
       include: scope
     versioning-strategy: increase
   - package-ecosystem: npm
@@ -17,7 +17,7 @@ updates:
       day: monday
       time: '03:00'
     commit-message:
-      prefix: "chore(examples)"
+      prefix: "chore"
       include: scope
     versioning-strategy: increase
   - package-ecosystem: npm
@@ -27,7 +27,7 @@ updates:
       day: monday
       time: '03:00'
     commit-message:
-      prefix: "chore(examples)"
+      prefix: "chore"
       include: scope
     versioning-strategy: increase
 
