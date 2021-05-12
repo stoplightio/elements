@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-dev-portal",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -28,7 +28,7 @@
     "build.react": "sl-scripts build",
     "build.webcomponents": "webpack -c ./web-components.config.js",
     "build.docs": "build-storybook -c .storybook -o dist-storybook",
-    "build.styles": "node ../../scripts/build-styles.js elements-dev-portal",
+    "build.styles": "node ../../scripts/build-styles.js elements-core && cp -r ../elements-core/dist/styles dist",
     "commit": "git-cz",
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
@@ -46,7 +46,7 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@stoplight/elements": "^7.0.0-beta.1",
+    "@stoplight/elements-core": "7.0.0-beta.3",
     "lodash": "^4.17.19",
     "react-router-dom": "^5.2.0",
     "react-query": "^3.15.2"

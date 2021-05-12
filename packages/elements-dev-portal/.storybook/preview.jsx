@@ -3,12 +3,14 @@ import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';
 
-import '../src/styles/elements-dev-portal-scoped.scss';
+import '../../elements-core/src/styles/elements-core-scoped.scss';
 
 import cn from 'classnames';
-import { Provider as ElementsProvider } from '@stoplight/elements/containers/Provider';
-import { PersistenceContextProvider } from '@stoplight/elements/context/Persistence';
-import { Provider } from '../src/components/Provider';
+
+import { Provider as ElementsProvider } from '@stoplight/elements-core/containers/Provider';
+import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
+import { Styled } from '@stoplight/elements-core/styled';
+import { DevPortalProvider } from '../src/components/DevPortalProvider';
 
 export const globalTypes = {
   theme: {
@@ -46,10 +48,14 @@ const MosaicProviderDecorator = (Story) => (
 );
 
 const DevPortalProviderDecorator = (Story, context) => {
-  return (<Provider platformUrl={context.args.platformUrl}><Story/></Provider>);
+  return (<DevPortalProvider platformUrl={context.args.platformUrl}><Story/></DevPortalProvider>);
 }
 
-export const decorators = [ThemeProvider, ElementsProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator];
+const StyledDecorator = (Story) => (
+  <Styled><Story/></Styled>
+);
+
+export const decorators = [ThemeProvider, ElementsProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator, StyledDecorator];
 
 export const parameters = {
   docs: {

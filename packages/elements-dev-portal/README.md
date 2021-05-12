@@ -3,7 +3,7 @@
 
 # @stoplight/elements-dev-portal
 
-Elements is a collection of UI components for displaying beautiful developer documentation using an OpenAPI document or a Stoplight project.
+Elements Dev Portal is an extension to Elements, giving API teams the tools they need to make a beautiful developer portal from any OpenAPI or Markdown content, in a [Stoplight][stoplight] Project.
 
 ## Documentation
 
@@ -11,10 +11,12 @@ Visit our **[Documentation Site](https://meta.stoplight.io/docs/elements)** for 
 
 ## About
 
-Elements is developed and maintained by [Stoplight](https://stoplight.io).
+Elements is developed and maintained by [Stoplight][stoplight].
 
 ## License
 
 Licensed under the Apache 2.0 License, Copyright © 2020-present Stoplight.
 
 See [LICENSE](LICENSE) for more information.
+
+[stoplight]: https://stoplight.io/?utm_source=github&utm_medium=elements-dev-portal&utm_campaign=readme

@@ -1,25 +1,23 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { InlineRefResolverProvider } from '@stoplight/elements-core/context/InlineRefResolver';
+import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
+import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
+import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
+import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
+import { useBundleRefsIntoDocument } from '@stoplight/elements-core/hooks/useBundleRefsIntoDocument';
+import { useParsedValue } from '@stoplight/elements-core/hooks/useParsedValue';
+import { withStyles } from '@stoplight/elements-core/styled';
+import { RoutingProps } from '@stoplight/elements-core/types';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { NonIdealState } from '@stoplight/ui-kit';
-import axios from 'axios';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
-import useSwr from 'swr';
+import { useQuery } from 'react-query';
 
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
-import { InlineRefResolverProvider } from '../context/InlineRefResolver';
-import { withPersistenceBoundary } from '../context/Persistence';
-import { withMosaicProvider } from '../hoc/withMosaicProvider';
-import { withRouter } from '../hoc/withRouter';
-import { useBundleRefsIntoDocument } from '../hooks/useBundleRefsIntoDocument';
-import { useParsedValue } from '../hooks/useParsedValue';
-import { withStyles } from '../styled';
-import { RoutingProps } from '../types';
 import { transformOasToServiceNode } from '../utils/oas';
-
-const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 
@@ -51,6 +49,7 @@ export interface CommonAPIProps extends RoutingProps {
    * @default "sidebar"
    */
   layout?: 'sidebar' | 'stacked';
+  logo?: string;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -58,11 +57,16 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl } = props;
+  const { layout, apiDescriptionUrl = '', logo } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
-  const documentShouldBeFetched = apiDescriptionUrl && !apiDescriptionDocument;
-  const { data: fetchedDocument, error } = useSwr(documentShouldBeFetched ? apiDescriptionUrl! : null, fetcher);
+  const { data: fetchedDocument, error } = useQuery(
+    [apiDescriptionUrl],
+    () => fetch(apiDescriptionUrl).then(res => res.text()),
+    {
+      enabled: apiDescriptionUrl !== '' && !apiDescriptionDocument,
+    },
+  );
 
   React.useEffect(() => {
     if (error) {
@@ -79,7 +83,7 @@ const APIImpl: React.FC<APIProps> = props => {
       <Flex justify="center" alignItems="center" w="full" minH="screen">
         <NonIdealState
           title="Something went wrong"
-          description={error.message}
+          description={String(error)}
           icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
         />
       </Flex>
@@ -111,10 +115,16 @@ const APIImpl: React.FC<APIProps> = props => {
       {layout === 'stacked' ? (
         <APIWithStackedLayout serviceNode={serviceNode} />
       ) : (
-        <APIWithSidebarLayout serviceNode={serviceNode} />
+        <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} />
       )}
     </InlineRefResolverProvider>
   );
 };
 
-export const API = pipe(withRouter, withStyles, withPersistenceBoundary, withMosaicProvider)(APIImpl);
+export const API = pipe(
+  withRouter,
+  withStyles,
+  withPersistenceBoundary,
+  withMosaicProvider,
+  withQueryClientProvider,
+)(APIImpl);

@@ -2,9 +2,10 @@ import * as React from 'react';
 
 import { HttpMethodColors } from '../constants';
 import { ITableOfContentsTree, TableOfContentItem, TableOfContentsLinkWithId } from '../types';
-import { MODEL_REGEXP, OPERATION_REGEXP } from '../utils/oas';
 
 export const MARKDOWN_REGEXP = /\/?\w+\.md$/;
+export const MODEL_REGEXP = /schemas\//;
+export const OPERATION_REGEXP = /\/operations\/.+|paths\/.+\/(get|post|put|patch|delete|head|options|trace)$/;
 
 type OperationMap = Record<string, string | undefined>;
 

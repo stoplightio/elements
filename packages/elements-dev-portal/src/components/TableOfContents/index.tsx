@@ -1,37 +1,21 @@
-import { TableOfContents as ElementsTableOfContents } from '@stoplight/elements/components/MosaicTableOfContents';
-import { CustomLinkComponent } from '@stoplight/elements/components/MosaicTableOfContents/types';
-import { PoweredByLink } from '@stoplight/elements/components/PoweredByLink';
-import { Box, BoxProps, Flex } from '@stoplight/mosaic';
+import { TableOfContents as ElementsTableOfContents } from '@stoplight/elements-core/components/MosaicTableOfContents';
+import { CustomLinkComponent } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
+import { PoweredByLink } from '@stoplight/elements-core/components/PoweredByLink';
+import { Box, BoxProps } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { TableOfContents as TableOfContentsData } from '../../interfaces/tableOfContents';
-import { BranchSelector, BranchSelectorProps } from '../BranchSelector';
+import { ProjectTableOfContents } from '../../types';
 
-export type TableOfContentsProps = BranchSelectorProps &
-  Omit<BoxProps<'div'>, 'onChange'> & {
-    activeId: string;
-    tableOfContents: TableOfContentsData;
-    Link: CustomLinkComponent;
-  };
+export type TableOfContentsProps = BoxProps<'div'> & {
+  activeId: string;
+  tableOfContents: ProjectTableOfContents;
+  Link: CustomLinkComponent;
+};
 
-export const TableOfContents = ({
-  tableOfContents,
-  activeId,
-  Link,
-  branchSlug,
-  branches,
-  onChange,
-  ...boxProps
-}: TableOfContentsProps) => {
+export const TableOfContents = ({ tableOfContents, activeId, Link, ...boxProps }: TableOfContentsProps) => {
   return (
-    <Flex direction="col" bg="canvas-100" h="full" {...boxProps}>
-      {branches && branches.length > 1 && (
-        <BranchSelector branchSlug={branchSlug} branches={branches} onChange={onChange} />
-      )}
-
-      <Box flex={1}>
-        <ElementsTableOfContents tree={tableOfContents.items} activeId={activeId} Link={Link} />
-      </Box>
+    <Box bg="canvas-100" {...boxProps}>
+      <ElementsTableOfContents tree={tableOfContents.items} activeId={activeId} Link={Link} />
 
       {tableOfContents.hide_powered_by ? null : (
         <PoweredByLink
@@ -40,6 +24,6 @@ export const TableOfContents = ({
           packageType="elements-dev-portal"
         />
       )}
-    </Flex>
+    </Box>
   );
 };

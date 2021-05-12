@@ -7,20 +7,29 @@ export default {
   title: 'Public/StoplightProject',
   component: StoplightProject,
   argTypes: {
-    projectId: { table: { category: 'Input' } },
+    workspaceSlug: { table: { category: 'Input' } },
+    projectSlug: { table: { category: 'Input' } },
+    branchSlug: { table: { category: 'Input' } },
+    authToken: { table: { category: 'Input' } },
     basePath: { table: { category: 'Routing' } },
     router: { table: { category: 'Routing' } },
     platformUrl: { table: { category: 'Advanced' } },
   },
   args: {
     router: 'memory',
-    platformUrl: 'https://x-6195.stoplight-dev.com',
   },
 };
 
 export const Playground: Story<StoplightProjectProps> = args => <StoplightProject {...args} />;
 Playground.storyName = 'Studio Demo';
 Playground.args = {
-  projectId: 'cHJqOjY',
-  platformUrl: 'https://x-6195.stoplight-dev.com',
+  workspaceSlug: 'elements-examples',
+  projectSlug: 'studio-demo',
+};
+
+export const PublicApis: Story<StoplightProjectProps> = args => <StoplightProject {...args} />;
+PublicApis.storyName = 'Public APIs';
+PublicApis.args = {
+  workspaceSlug: 'elements-examples',
+  projectSlug: 'public-apis',
 };

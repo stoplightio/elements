@@ -64,7 +64,7 @@ title: api-reference.component.html
 -->
 ```html
 <elements-api
-  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/zoom.yaml"
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
   basePath="/api-reference"
 ></elements-api>
 ```
