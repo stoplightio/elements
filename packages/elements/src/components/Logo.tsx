@@ -21,7 +21,7 @@ export const Logo: React.FC<LogoProps> = ({ logo }) => {
       style={{ backgroundColor: logo.backgroundColor ?? 'transparent' }}
     >
       {logo.href ? (
-        <a href={logo.href} target="_blank" rel="noreferrer">
+        <a href={logo.href} target="_blank" rel="noopener noreferrer">
           <img src={logo.url} height="30px" width="30px" alt={logo.altText} />
         </a>
       ) : (

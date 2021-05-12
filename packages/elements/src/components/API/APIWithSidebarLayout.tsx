@@ -12,12 +12,7 @@ import { computeAPITree, findFirstNodeSlug } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
-  logo?: {
-    url: string;
-    backgroundColor?: string;
-    altText?: string;
-    href?: string;
-  };
+  logo?: string;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode, logo }) => {
@@ -40,7 +35,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode
     <>
       <Flex ml={4} mb={5} alignItems="center">
         {logo ? (
-          <Logo logo={{ ...logo, altText: logo.altText ?? 'logo' }} />
+          <Logo logo={{ url: logo, altText: 'logo' }} />
         ) : (
           serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
         )}

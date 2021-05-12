@@ -51,12 +51,7 @@ export interface CommonAPIProps extends RoutingProps {
    * @default "sidebar"
    */
   layout?: 'sidebar' | 'stacked';
-  logo?: {
-    url: string;
-    backgroundColor?: string;
-    altText?: string;
-    href?: string;
-  };
+  logo?: string;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
