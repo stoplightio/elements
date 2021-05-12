@@ -16,10 +16,11 @@ export function getReadableSecurityName(securityScheme: HttpSecurityScheme, incl
     case 'http':
       return `${capitalize(securityScheme.scheme)} Auth`;
     case 'oauth2':
-      if (!includeScope) return 'OAuth 2.0';
-
       const scopes = uniq(flatMap(keys(securityScheme.flows), getOauthScopeMapper(securityScheme)));
-      return `OAuth 2.0 (${scopes.join(', ')})`;
+      if (includeScope && scopes.length > 1) {
+        return `OAuth 2.0 (${scopes.join(', ')})`;
+      }
+      return 'OAuth 2.0';
     case 'openIdConnect':
       return 'OpenID Connect';
     case 'mutualTLS':
