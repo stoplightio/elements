@@ -2,12 +2,12 @@ import { ParsedDocs } from '@stoplight/elements-core/components/Docs';
 import { SidebarLayout } from '@stoplight/elements-core/components/Layout/SidebarLayout';
 import { TableOfContents } from '@stoplight/elements-core/components/MosaicTableOfContents';
 import { PoweredByLink } from '@stoplight/elements-core/components/PoweredByLink';
+import { Logo } from '@stoplight/elements-core/src/components/Logo';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
-import { Logo } from '../Logo';
 import { computeAPITree, findFirstNodeSlug } from './utils';
 
 type SidebarLayoutProps = {
