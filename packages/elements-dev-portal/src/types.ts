@@ -1,5 +1,14 @@
 import { TableOfContentsItem } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
 
+export type Branch = {
+  id: number;
+  slug: string;
+  is_default: boolean;
+  is_published: boolean;
+  projectId: number;
+  name?: string;
+};
+
 export type ProjectTableOfContents = {
   items: TableOfContentsItem[];
   hide_powered_by?: boolean;
