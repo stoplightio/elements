@@ -17,7 +17,7 @@
         
 ## Intro
 
-TBD
+Elements is an open-source project, and we love contributions. If you're familiar with TypeScript and Jest then dive right in, see how far you can get, and talk to us in [Discussions](https://github.com/stoplightio/elements/discussions) or start a draft PR if you get stuck.
 
 ## Testing
 
