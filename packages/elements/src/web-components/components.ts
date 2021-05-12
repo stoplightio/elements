@@ -1,5 +1,6 @@
+import { createElementClass } from '@stoplight/elements-core/web-components/createElementClass';
+
 import { API } from '../index';
-import { createElementClass } from './createElementClass';
 
 export const ApiElement = createElementClass(API, {
   apiDescriptionUrl: { type: 'string', defaultValue: '' },
