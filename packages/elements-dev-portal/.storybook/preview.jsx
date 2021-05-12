@@ -6,8 +6,11 @@ import customTheme from './theme';
 import '../../elements-core/src/styles/elements-core-scoped.scss';
 
 import cn from 'classnames';
-import { Provider } from '@stoplight/elements-core/containers/Provider';
+
+import { Provider as ElementsProvider } from '@stoplight/elements-core/containers/Provider';
 import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
+
+import { DevPortalProvider } from '../src/components/DevPortalProvider';
 
 export const globalTypes = {
   theme: {
@@ -30,10 +33,10 @@ const ThemeProvider = (Story, context) => {
   );
 };
 
-const ProviderDecorator = (Story) => (
-  <Provider host="http://stoplight-local.com:8080" workspace="elements" project="public-apis">
+const ElementsProviderDecorator = (Story) => (
+  <ElementsProvider host="http://stoplight-local.com:8080" workspace="elements" project="public-apis">
     <Story />
-  </Provider>
+  </ElementsProvider>
 );
 
 const PersistenceBoundaryDecorator = (Story) => (
@@ -44,7 +47,11 @@ const MosaicProviderDecorator = (Story) => (
   <MosaicProvider><Story/></MosaicProvider>
 );
 
-export const decorators = [ThemeProvider, ProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator];
+const DevPortalProviderDecorator = (Story, context) => {
+  return (<DevPortalProvider platformUrl={context.args.platformUrl}><Story/></DevPortalProvider>);
+}
+
+export const decorators = [ThemeProvider, ElementsProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator];
 
 export const parameters = {
   docs: {

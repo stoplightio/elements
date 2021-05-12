@@ -5,8 +5,9 @@ export type TableOfContentsProps = {
 };
 
 export type CustomLinkComponent = React.ComponentType<{
-  className: string;
   to: string;
+  className?: string;
+  hash?: string;
   children: React.ReactNode;
 }>;
 
