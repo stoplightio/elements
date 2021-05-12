@@ -1,5 +1,6 @@
 import { ParsedDocs } from '@stoplight/elements-core/components/Docs';
 import { SidebarLayout } from '@stoplight/elements-core/components/Layout/SidebarLayout';
+import { Logo } from '@stoplight/elements-core/components/Logo';
 import { TableOfContents } from '@stoplight/elements-core/components/MosaicTableOfContents';
 import { PoweredByLink } from '@stoplight/elements-core/components/PoweredByLink';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
@@ -11,9 +12,10 @@ import { computeAPITree, findFirstNodeSlug } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
+  logo?: string;
 };
 
-export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode }) => {
+export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode, logo }) => {
   const tree = React.useMemo(() => computeAPITree(serviceNode), [serviceNode]);
   const { pathname } = useLocation();
 
@@ -31,9 +33,14 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode
 
   const sidebar = (
     <>
-      <Heading ml={4} mb={5} size={4}>
-        {serviceNode.name}
-      </Heading>
+      <Flex ml={4} mb={5} alignItems="center">
+        {logo ? (
+          <Logo logo={{ url: logo, altText: 'logo' }} />
+        ) : (
+          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
+        )}
+        <Heading size={4}>{serviceNode.name}</Heading>
+      </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} />
       </Flex>
