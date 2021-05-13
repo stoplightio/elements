@@ -1,8 +1,9 @@
+import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { useParsedData } from '../../hooks/useParsedData';
-import { ParsedNode, UnparsedNode } from '../../types';
+import { ParsedNode } from '../../types';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
@@ -26,8 +27,8 @@ interface BaseDocsProps {
 }
 
 export interface DocsProps extends BaseDocsProps {
-  unparsedNode?: UnparsedNode;
-  node?: ParsedNode;
+  nodeType: NodeType;
+  nodeData: unknown;
   useNodeForRefResolving?: boolean;
 }
 
@@ -38,13 +39,14 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
   data: T;
 }
 
-export const Docs = React.memo<DocsProps>(({ unparsedNode, node, useNodeForRefResolving = false, ...commonProps }) => {
-  const parsedNode = useParsedData(unparsedNode, node);
+export const Docs = React.memo<DocsProps>(({ nodeType, nodeData, useNodeForRefResolving = false, ...commonProps }) => {
+  const parsedNode = useParsedData(nodeType, nodeData);
 
   if (!parsedNode) {
     // TODO: maybe report failure
     return null;
   }
+
   const parsedDocs = <ParsedDocs node={parsedNode} {...commonProps} />;
 
   if (useNodeForRefResolving) {
@@ -54,11 +56,11 @@ export const Docs = React.memo<DocsProps>(({ unparsedNode, node, useNodeForRefRe
   return parsedDocs;
 });
 
-interface ParsedDocsProps extends BaseDocsProps {
+export interface ParsedDocsProps extends BaseDocsProps {
   node: ParsedNode;
 }
 
-const ParsedDocs = ({ node, ...commonProps }: ParsedDocsProps) => {
+export const ParsedDocs = ({ node, ...commonProps }: ParsedDocsProps) => {
   switch (node.type) {
     case 'article':
       return <Article data={node.data} {...commonProps} />;

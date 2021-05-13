@@ -1,4 +1,4 @@
-import { Docs } from '@stoplight/elements-core/components/Docs';
+import { ParsedDocs } from '@stoplight/elements-core/components/Docs';
 import { DeprecatedBadge } from '@stoplight/elements-core/components/Docs/HttpOperation/Badges';
 import { TryItWithRequestSamples } from '@stoplight/elements-core/components/TryIt';
 import { HttpMethodColors } from '@stoplight/elements-core/constants';
@@ -24,7 +24,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
   return (
     <div className="w-full flex flex-col m-auto max-w-4xl">
       <div className="w-full border-b dark:border-gray-6">
-        <Docs className="mx-auto" node={serviceNode} headless />
+        <ParsedDocs className="mx-auto" node={serviceNode} headless />
       </div>
 
       {groups.map(group => (
@@ -129,7 +129,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
           onChange={(tabId: PanelTabId) => setTabId(tabId)}
           renderActiveTabPanelOnly
         >
-          <Tab id="docs" title="Docs" className="p-4" panel={<Docs node={item} headless />} />
+          <Tab id="docs" title="Docs" className="p-4" panel={<ParsedDocs node={item} headless />} />
           <Tab
             id="tryit"
             title="Try It"

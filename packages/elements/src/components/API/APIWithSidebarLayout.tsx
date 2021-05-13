@@ -1,4 +1,4 @@
-import { Docs } from '@stoplight/elements-core/components/Docs';
+import { ParsedDocs } from '@stoplight/elements-core/components/Docs';
 import { SidebarLayout } from '@stoplight/elements-core/components/Layout/SidebarLayout';
 import { Logo } from '@stoplight/elements-core/components/Logo';
 import { TableOfContents } from '@stoplight/elements-core/components/MosaicTableOfContents';
@@ -50,7 +50,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode
 
   return (
     <SidebarLayout sidebar={sidebar}>
-      {node && <Box as={Docs} key={pathname} uri={hasOverview ? pathname : undefined} node={node} />}
+      {node && <Box as={ParsedDocs} key={pathname} uri={hasOverview ? pathname : undefined} node={node} />}
     </SidebarLayout>
   );
 };

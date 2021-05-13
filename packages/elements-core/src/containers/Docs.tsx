@@ -54,7 +54,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
   return (
     <MockingProvider mockUrl={mockUrlResult}>
       <MarkdownComponentsProvider value={{ image }}>
-        <DocsComponent key={nodeUri} unparsedNode={result} uri={node} className={className} useNodeForRefResolving />
+        <DocsComponent key={nodeUri} nodeType={result.type} nodeData={result.data} uri={node} className={className} useNodeForRefResolving />
       </MarkdownComponentsProvider>
     </MockingProvider>
   );
