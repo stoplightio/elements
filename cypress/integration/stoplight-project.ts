@@ -11,7 +11,7 @@ describe('Stoplight component', () => {
   });
 
   it('opens via url', () => {
-    cy.visit('/stoplight-project/reference/todos/todo.v1.yaml/components/schemas/Todos');
+    cy.visit('/stoplight-project/c2NoOjEwNg-todo');
     cy.findByRole('heading', { name: /Todo/i }).should('exist');
   });
 
