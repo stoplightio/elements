@@ -6,10 +6,8 @@ import * as React from 'react';
 import { JSONSchema, ParsedNode } from '../types';
 import { isHttpOperation, isHttpService, isJSONSchema, isSMDASTRoot } from '../utils/guards';
 
-export function useParsedData(
-  nodeType: NodeType, nodeData: unknown
-): ParsedNode | undefined {
-  return React.useMemo(() => parserMap[nodeType]?.(nodeData), [nodeType, nodeType]);
+export function useParsedData(nodeType: NodeType, data: unknown): ParsedNode | undefined {
+  return React.useMemo(() => parserMap[nodeType]?.(data), [nodeType, data]);
 }
 
 type Parser = (rawData: unknown) => ParsedNode | undefined;
