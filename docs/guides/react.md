@@ -24,14 +24,14 @@ In `App.js` import the API component and CSS file from the Elements library.
 <!-- title: App.js -->
 ```jsx
 import { API } from '@stoplight/elements';
-import '@stoplight/elements/styles/elements.min.css';
+import '@stoplight/elements/styles.min.css';
 ```
 
 Now you can replace the existing App component's contents with the API component we just imported.
 
 <!-- title: App.js -->
 ```jsx
-<API 
+<API
   apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
 />
 ```
@@ -45,7 +45,7 @@ Now your `App.js` file should look something like this:
 import React from 'react';
 
 import { API } from '@stoplight/elements';
-import '@stoplight/elements/styles/elements.min.css';
+import '@stoplight/elements/styles.min.css';
 
 
 function App() {

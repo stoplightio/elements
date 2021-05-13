@@ -3,7 +3,7 @@ import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';
 
-import '../../elements-core/src/styles/elements-core-scoped.scss';
+import '../../elements-core/src/styles/styles.scss';
 
 import cn from 'classnames';
 import { Provider } from '@stoplight/elements-core/containers/Provider';
