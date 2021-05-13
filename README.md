@@ -5,7 +5,7 @@
 [![NPM Downloads][circle_ci_image]][npm]
 [![Buy us a tree][ecologi_image]][ecologi]
 
-Beautiful API documentation powered by OpenAPI and Markdown. Use these UI components to create API reference documentation, or more complete documentation with Markdown articles covering tutorials, how-to guides, etc. 
+Beautiful API documentation powered by OpenAPI and Markdown. Use these UI components to create API reference documentation, or more complete documentation with Markdown articles covering tutorials, how-to guides, etc.
 
 Available as React Components, or Web Components, you can use Elements all together to build beautiful three-column "Stripe-esque" documentation, or stacked documentation thats easier for integrating into existing Content Management Systems with their own navigation.
 
@@ -45,7 +45,7 @@ To run these examples yourself:
 
 ## 🏁 Usage
 
-The examples will hopefully help show Elements working in close to real world situations, but the most bare bones examples of Elements can be found below. 
+The examples will hopefully help show Elements working in close to real world situations, but the most bare bones examples of Elements can be found below.
 
 ### React Component
 
@@ -74,7 +74,7 @@ import { API } from "@stoplight/elements";
     <title>Elements in HTML</title>
     <!-- Embed elements Elements via Web Component -->
     <script src="https://unpkg.com/@stoplight/elements@beta/web-components.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements@beta/styles/elements.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements@beta/styles.min.css">
   </head>
   <body>
 
@@ -122,9 +122,9 @@ The React and Web Components both have the following configuration options.
 ## ⚙️ Integrations
 
 - [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=readme): Free visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
-- [Stoplight Platform](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme): Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements. 
+- [Stoplight Platform](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme): Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
 
-## 🏁 Help Others Utilize Elements 
+## 🏁 Help Others Utilize Elements
 
 If you're using Elements for an interesting use case, [contact us](mailto:growth@stoplight.io) for a case study. We'll add it to a list here. Spread the goodness 🎉
 

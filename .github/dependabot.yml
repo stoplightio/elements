@@ -1,0 +1,34 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /examples/angular
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
+    commit-message:
+      prefix: "chore"
+      include: scope
+    versioning-strategy: increase
+  - package-ecosystem: npm
+    directory: /examples/react-cra
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
+    commit-message:
+      prefix: "chore"
+      include: scope
+    versioning-strategy: increase
+  - package-ecosystem: npm
+    directory: /examples/react-gatsby
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
+    commit-message:
+      prefix: "chore"
+      include: scope
+    versioning-strategy: increase
+
+
