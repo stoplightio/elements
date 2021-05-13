@@ -74,15 +74,15 @@ const StoplightProjectRouter = ({ projectId, platformUrl, basePath = '/', router
   return (
     <DevPortalProvider platformUrl={platformUrl}>
       <Router {...routerProps} key={basePath}>
-        <Route path="/branches/:branchSlug/:nodeSlug">
+        <Route path="/branches/:branchSlug/:nodeSlug" exact>
           <StoplightProjectImpl projectId={projectId} />
         </Route>
 
-        <Route path="/:nodeSlug">
+        <Route path="/:nodeSlug" exact>
           <StoplightProjectImpl projectId={projectId} />
         </Route>
 
-        <Route path="/">
+        <Route path="/" exact>
           <StoplightProjectImpl projectId={projectId} />
         </Route>
       </Router>
