@@ -1,4 +1,4 @@
-import '@stoplight/elements/styles/elements.scss';
+import '@stoplight/elements/styles.min.css';
 
 import { API } from '@stoplight/elements';
 import React from 'react';

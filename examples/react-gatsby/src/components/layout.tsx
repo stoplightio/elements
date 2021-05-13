@@ -4,7 +4,7 @@ import React from 'react';
 
 import Header from './header';
 
-require('@stoplight/elements/styles/styles.min.css');
+require('@stoplight/elements/styles.min.css');
 
 const Layout = ({ children }) => {
   return (

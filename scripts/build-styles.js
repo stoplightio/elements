@@ -13,17 +13,7 @@ const outputFileName = 'styles.min.css';
 const sourcePackagePath = resolve(__dirname, '..', 'packages', sourcePackageName);
 const destinationPackagePath = resolve(__dirname, '..', 'packages', packageName);
 
-console.log('Copying SCSS files...');
-ncp(resolve(sourcePackagePath, 'src', 'styles'), resolve(destinationPackagePath, 'dist', 'styles'), err => {
-  if (err) {
-    return console.error(err);
-  }
-  console.log('Done copying.');
-});
-
-console.log('Compiling SCSS...');
-
-const outFile = resolve(destinationPackagePath, 'dist', 'styles', outputFileName);
+const outFile = resolve(destinationPackagePath, 'dist', outputFileName);
 render(
   {
     file: resolve(sourcePackagePath, 'src', 'styles', inputFileName),
