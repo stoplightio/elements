@@ -16,7 +16,7 @@ export function isGroupOpenByDefault(
   depth: number,
   item: TableOfContentsGroup | TableOfContentsNodeGroup,
   activeId?: string,
-  maxDepthOpenByDefault: number = 0
+  maxDepthOpenByDefault: number = 0,
 ) {
   return (
     depth < maxDepthOpenByDefault ||
