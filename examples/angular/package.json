@@ -38,15 +38,15 @@
     "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular/cli": "^11.1.1",
+    "@angular/cli": "^11.2.12",
     "@angular/compiler-cli": "^11.1.1",
-    "@angular/language-service": "^11.1.1",
+    "@angular/language-service": "^11.2.13",
     "@angular-devkit/build-angular": "~0.1102.12",
-    "@types/node": "^14.14.6",
-    "angular-http-server": "~1.9.0",
+    "@types/node": "^14.14.44",
+    "angular-http-server": "~1.10.0",
     "typescript": "~4.0.5"
   }
 }
