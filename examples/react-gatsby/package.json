@@ -28,7 +28,7 @@
     "@stoplight/elements": "file:../../packages/elements/dist",
     "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
     "canvas": "^2.6.1",
-    "gatsby": "^3.4.1",
+    "gatsby": "^3.5.0",
     "gatsby-image": "^3.5.0",
     "gatsby-plugin-manifest": "^3.5.0",
     "gatsby-plugin-offline": "^4.4.0",
@@ -49,7 +49,7 @@
     "gh-pages": "^3.1.0",
     "node-sass": "^4.14.1",
     "node-sass-package-importer": "^5.3.2",
-    "typescript": "4.1.x"
+    "typescript": "4.2.x"
   },
   "keywords": [
     "gatsby"
