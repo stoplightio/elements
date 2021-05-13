@@ -14,13 +14,16 @@ export const operationWithUrlVariables: IHttpOperation = {
   ],
   servers: [
     {
-      url: '{protocol}://{namespace}.stoplight.io',
+      url: '{protocol}://{namespace}.stoplight.io/api/{location}',
       variables: {
         protocol: {
           default: 'ftp',
         },
         namespace: {
           default: 'default-namespace',
+        },
+        location: {
+          default: 'eu',
         },
       },
     },
