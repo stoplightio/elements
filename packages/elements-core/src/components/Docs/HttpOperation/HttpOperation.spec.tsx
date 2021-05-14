@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import requestBody from '../../../__fixtures__/operations/request-body';
 import { withPersistenceBoundary } from '../../../context/Persistence';
+import { VisibilityProvider } from '../../../context/Visibility';
 import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
 import { chooseOption } from '../../../utils/tests/chooseOption';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
@@ -529,6 +530,30 @@ describe('HttpOperation', () => {
       chooseOption(select, 'application/xml');
 
       expect(screen.queryByText('some_property')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Visibility', () => {
+    it('should hide TryIt', async () => {
+      render(
+        <VisibilityProvider visibility={{ hideTryIt: true }}>
+          <HttpOperation data={httpOperation} />
+        </VisibilityProvider>,
+      );
+
+      expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
+      expect(await screen.findByText('Response Example')).toBeInTheDocument();
+    });
+
+    it('should hide right column', async () => {
+      render(
+        <VisibilityProvider visibility={{ docsOnly: true }}>
+          <HttpOperation data={httpOperation} />
+        </VisibilityProvider>,
+      );
+
+      expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
+      expect(screen.queryByText('Response Example')).not.toBeInTheDocument();
     });
   });
 });
