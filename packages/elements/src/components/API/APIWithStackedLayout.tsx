@@ -26,7 +26,13 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
   return (
     <div className="w-full flex flex-col m-auto max-w-4xl">
       <div className="w-full border-b dark:border-gray-6">
-        <Docs className="mx-auto" nodeData={serviceNode.data} nodeType={NodeType.HttpService} headless location={location} />
+        <Docs
+          className="mx-auto"
+          nodeData={serviceNode.data}
+          nodeType={NodeType.HttpService}
+          headless
+          location={location}
+        />
       </div>
 
       {groups.map(group => (

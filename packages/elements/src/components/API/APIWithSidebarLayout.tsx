@@ -51,7 +51,9 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode
 
   return (
     <SidebarLayout sidebar={sidebar}>
-      {node && <Box as={ParsedDocs} key={pathname} uri={hasOverview ? pathname : undefined} node={node} location={location} />}
+      {node && (
+        <Box as={ParsedDocs} key={pathname} uri={hasOverview ? pathname : undefined} node={node} location={location} />
+      )}
     </SidebarLayout>
   );
 };

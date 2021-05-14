@@ -1,4 +1,5 @@
 import { NodeType } from '@stoplight/types';
+import { Location } from 'history';
 import * as React from 'react';
 
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
@@ -8,7 +9,6 @@ import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
 import { Model } from './Model';
-import { Location } from 'history';
 
 interface BaseDocsProps {
   /**

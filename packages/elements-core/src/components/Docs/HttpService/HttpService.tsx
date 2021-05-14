@@ -63,7 +63,9 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       ) : (
         <Box mb={10}>
           {description}
-          {pathname && <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />}
+          {pathname && (
+            <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />
+          )}
           {dataPanel}
         </Box>
       )}
