@@ -46,10 +46,13 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
+    "@stoplight/elements": "^7.0.0-beta.1",
+    "@stoplight/mosaic": "1.0.0-beta.52",
     "@stoplight/elements-core": "7.0.0-beta.3",
     "lodash": "^4.17.19",
     "react-router-dom": "^5.2.0",
-    "react-query": "^3.15.2"
+    "react-query": "^3.15.2",
+    "use-debounce": "^6.0.1"
   },
   "devDependencies": {
     "@stoplight/scripts": "8.2.3",
