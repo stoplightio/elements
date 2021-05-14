@@ -68,6 +68,11 @@ And you should see the API reference documentation for the Zoom API!
 - `layout` - There are two layouts for Elements:
   - `sidebar` - (default) Three-column design.
   - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
+- `logo` - Object containing a few options for the small square logo next to the title, above the table of contents.
+  - `url` - URL of an image to use as the logo.
+  - `backgroundColor` - Set the background color with a hex code, e.g.: `"#0f0f0f`.
+  - `altText` - Set alternative text for screen-readers. 
+  - `href` - Link if somebody clicks the logo.
 - `router` -  Determines how navigation should work:
   - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
   - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
