@@ -25,7 +25,8 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/@stoplight/elements-dev-portal/styles/elements-core.min.css"
+              "node_modules/@stoplight/elements/styles.min.css",
+              "node_modules/@stoplight/elements-dev-portal/styles.min.css"
             ],
             "scripts": [
               "node_modules/@stoplight/elements/web-components.min.js",
