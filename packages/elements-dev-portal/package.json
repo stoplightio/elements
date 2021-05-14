@@ -46,6 +46,7 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@stoplight/elements-core": "7.0.0-beta.3",
     "lodash": "^4.17.19",
     "react-router-dom": "^5.2.0",
