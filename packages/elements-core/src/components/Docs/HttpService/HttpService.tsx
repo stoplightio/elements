@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { MockingContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
-import { IDocsComponentProps } from '..';
+import { DocsComponentProps } from '..';
 import { Badge } from '../HttpOperation/Badges';
 import { SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
@@ -18,7 +18,7 @@ const enhanceVersionString = (version: string): string => {
   return `v${version}`;
 };
 
-export type HttpServiceProps = IDocsComponentProps<Partial<IHttpService>>;
+export type HttpServiceProps = DocsComponentProps<Partial<IHttpService>>;
 
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
   const { search, pathname } = useLocation();

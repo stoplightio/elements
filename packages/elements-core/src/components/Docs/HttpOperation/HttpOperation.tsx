@@ -10,12 +10,12 @@ import { VisibilityContext } from '../../../context/Visibility';
 import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
-import { IDocsComponentProps } from '..';
+import { DocsComponentProps } from '..';
 import { DeprecatedBadge, SecurityBadge } from './Badges';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-export type HttpOperationProps = IDocsComponentProps<IHttpOperation>;
+export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless, uri }) => {
   const info = React.useContext(ActiveInfoContext);
