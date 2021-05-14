@@ -39,7 +39,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId }) =>
 
   const { data: tableOfContents, isFetched: isTocFetched } = useGetTableOfContents({ projectId, branchSlug });
   const { data: branches } = useGetBranches({ projectId });
-  const { data: node, isFetched } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
+  const { data: node, isLoading: isLoadingNode } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
 
   if (!nodeSlug && isTocFetched && tableOfContents?.items) {
     const firstNode = findFirstNode(tableOfContents.items);
@@ -49,7 +49,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId }) =>
   }
 
   let elem: JSX.Element;
-  if (!nodeSlug || !isFetched) {
+  if (isLoadingNode || !isTocFetched) {
     elem = <Loading />;
   } else if (!node) {
     elem = <NotFound />;
