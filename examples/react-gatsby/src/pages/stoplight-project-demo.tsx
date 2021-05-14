@@ -10,8 +10,8 @@ const StoplightProjectPage = () => {
       <SEO title="Stoplight Elements" />
 
       <StoplightProject
-        platformUrl="https://x-6195.stoplight-dev.com"
-        projectId="cHJqOjY"
+        platformUrl="https://stoplight.io"
+        projectId="cHJqOjExOTY"
         basePath="stoplight-project"
         router={typeof window === 'undefined' ? 'memory' : 'history'}
       />

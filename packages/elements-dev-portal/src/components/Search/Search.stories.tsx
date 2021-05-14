@@ -51,9 +51,9 @@ export default {
     platformUrl: { table: { category: 'Input' } },
   },
   args: {
-    projectIds: ['cHJqOjY'],
+    projectIds: ['cHJqOjExOTY'],
     workspaceId: 'd2s6MQ',
-    platformUrl: 'https://x-6195.stoplight-dev.com',
+    platformUrl: 'https://stoplight.io',
   },
 };
 

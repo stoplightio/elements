@@ -14,13 +14,13 @@ export default {
   },
   args: {
     router: 'memory',
-    platformUrl: 'https://x-6195.stoplight-dev.com',
+    platformUrl: 'https://stoplight.io',
   },
 };
 
 export const Playground: Story<StoplightProjectProps> = args => <StoplightProject {...args} />;
 Playground.storyName = 'Studio Demo';
 Playground.args = {
-  projectId: 'cHJqOjY',
-  platformUrl: 'https://x-6195.stoplight-dev.com',
+  projectId: 'cHJqOjExOTY',
+  platformUrl: 'https://stoplight.io',
 };

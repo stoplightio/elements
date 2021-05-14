@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   templateUrl: './stoplight-project.component.html',
 })
 export class StoplightProjectComponent {
-  projectId = 'cHJqOjY';
-  platformUrl = 'https://x-6195.stoplight-dev.com';
+  projectId = 'cHJqOjExOTY';
+  platformUrl = 'https://stoplight.io';
   basePath = environment.basePath ? `${environment.basePath}/stoplight-project` : 'stoplight-project';
 }
