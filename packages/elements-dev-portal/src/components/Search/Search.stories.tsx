@@ -3,7 +3,7 @@ import { Story } from '@storybook/react';
 import * as React from 'react';
 
 import { useGetNodes } from '../../hooks/useGetNodes';
-import { NodeSearchResult } from '../../interfaces/node';
+import { NodeSearchResult } from '../../types';
 import { Search } from './';
 
 type SearchWrapperProps = { projectIds: string[]; workspaceId: string };
@@ -43,7 +43,7 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
 };
 
 export default {
-  title: 'Public/TableOfContents',
+  title: 'Public/Search',
   component: SearchWrapper,
   argTypes: {
     workspaceId: { table: { category: 'Input' } },
