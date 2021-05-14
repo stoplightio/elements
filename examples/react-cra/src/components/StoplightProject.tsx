@@ -1,4 +1,4 @@
-import '@stoplight/elements/styles/elements.scss';
+import '@stoplight/elements/styles.min.css';
 
 import { StoplightProject } from '@stoplight/elements-dev-portal';
 import React from 'react';

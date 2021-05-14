@@ -48,15 +48,14 @@ export async function buildFetchRequest({
       ?.map(param => ({ name: param.name, value: parameterValues[param.name] ?? '' }))
       .filter(({ value }) => value.length > 0) ?? [];
 
-  const rawHeaders = filterOutAuthorizationParams(
-    httpOperation.request?.headers ?? [],
-    httpOperation.security,
-  ).map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' }));
+  const rawHeaders = filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security).map(
+    header => ({ name: header.name, value: parameterValues[header.name] ?? '' }),
+  );
 
   const [queryParamsWithAuth, headersWithAuth] = runAuthRequestEhancements(auth, queryParams, rawHeaders);
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
-  const url = new URL(URI(expandedPath).absoluteTo(serverUrl).toString());
+  const url = new URL(URI(serverUrl).segment(expandedPath).toString());
   url.search = new URLSearchParams(queryParamsWithAuth.map(nameAndValueObjectToPair)).toString();
 
   const body = typeof bodyInput === 'object' ? await createRequestBody(mediaTypeContent, bodyInput) : bodyInput;

@@ -70,7 +70,7 @@ describe('TryIt', () => {
     userEvent.click(button);
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-    expect(fetchMock.mock.calls[0][0]).toBe('ftp://default-namespace.stoplight.io/todos');
+    expect(fetchMock.mock.calls[0][0]).toBe('ftp://default-namespace.stoplight.io/api/eu/todos');
   });
 
   it('makes request to origin URL if there is no URL in the document', async () => {
