@@ -41,17 +41,15 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId }) =>
   const { data: branches } = useGetBranches({ projectId });
   const { data: node, isFetched } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
 
-  let elem = <Loading />;
-  if (!nodeSlug) {
-    if (isTocFetched) {
-      if (tableOfContents?.items) {
-        const firstNode = findFirstNode(tableOfContents.items);
-        if (firstNode) {
-          return <Redirect to={branchSlug ? `/branches/${branchSlug}/${firstNode.slug}` : `/${firstNode.slug}`} />;
-        }
-      }
+  if (!nodeSlug && isTocFetched && tableOfContents?.items) {
+    const firstNode = findFirstNode(tableOfContents.items);
+    if (firstNode) {
+      return <Redirect to={branchSlug ? `/branches/${branchSlug}/${firstNode.slug}` : `/${firstNode.slug}`} />;
     }
-  } else if (!isFetched) {
+  }
+
+  let elem: JSX.Element;
+  if (!nodeSlug || !isFetched) {
     elem = <Loading />;
   } else if (!node) {
     elem = <NotFound />;
