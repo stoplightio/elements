@@ -1,22 +1,13 @@
 # Getting Started with Elements in React
 
-Learn how to quickly get started with Elements in a new React project.
+Learn how to quickly get started with Elements in a React project.
 
-## Create the React App
-
-Run the following command to create a starter React app using [create-react-app](https://github.com/facebook/create-react-app).
-
-```bash
-npx create-react-app elements-starter-react
-cd elements-starter-react
-```
-
-## Install Elements
+## Using Elements in ReactJS
 
 Next, install the Elements library and it's peer dependencies.
 
 ```bash
-yarn add @stoplight/elements @stoplight/prism-http mobx
+yarn add @stoplight/elements
 ```
 
 In `App.js` import the API component and CSS file from the Elements library.
@@ -35,8 +26,6 @@ Now you can replace the existing App component's contents with the API component
   apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
 />
 ```
-
-> Check out the [API component docs](../components/API.md) to see what other properties are avaiable.
 
 Now your `App.js` file should look something like this:
 
@@ -61,8 +50,6 @@ function App() {
 export default App;
 ```
 
-Simple, huh?
-
 ## Fire it up
 
 Now start the development server.
@@ -71,18 +58,48 @@ Now start the development server.
 yarn start
 ```
 
-And you should see the API reference documentation for the Zoom API.
+And you should see the API reference documentation for the Zoom API!
 
-![](https://cdn.stoplight.io/elements/elements-starter-react-zoom-api-reference-docs.png)
+## Configuration
+
+- `apiDescriptionUrl` - OpenAPI document URL, supporting `http://`, `https://`, and documents containing `$ref` to other http(s) documents.
+- `apiDescriptionDocument` - OpenAPI document, provided as YAML string, JSON string or JavaScript object.
+- `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
+- `layout` - There are two layouts for Elements:
+  - `sidebar` - (default) Three-column design.
+  - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
+- `router` -  Determines how navigation should work:
+  - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
+  - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
+  - `memory` - keeps the history of your "URL" in memory (does not read or write to the address bar).
+
+## Examples
+
+-<!-- title: React Component with API Description Provided as a URL -->
+
+<API
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/eference/zoom/openapi.yaml"
+  router="hash"
+/>
 
 
-## Next steps
+<!-- title: React Component with API Description Provided Directly -->
 
-Well that was easy, wasn't it? But you're not done yet! Elements provides you with the components for beautiful API reference documentation, but you'll likely want to add other things to your site such as a landing page, header and footer navigations, etc.
+```jsx
+import { API } from "@stoplight/elements";
 
-If you need some inspiration, check out some of our examples:
+const apiDescriptionDocument = {
+  openapi: '3.1.0',
+  info: {
+    title: 'Some Awesome API',
+    version: '1.0.0'
+  },
+  paths: {
+    /* ... */
+  }
+};
 
-- [elements-starter-gatsby](https://github.com/stoplightio/elements-starter-gatsby)
-- [elements-starter-react](https://github.com/stoplightio/elements-starter-react)
-
-Once you're done and you're docs are live, give us a shout [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!
+<API
+  apiDescriptionDocument={apiDescriptionDocument}
+  router="hash"
+/>
