@@ -3516,7 +3516,7 @@
     "@react-types/shared" "^3.6.0"
     clsx "^1.1.1"
 
-"@react-stately/collections@^3.3.2":
+"@react-stately/collections@^3.3.2", "@react-stately/collections@~3.3.1":
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/@react-stately/collections/-/collections-3.3.2.tgz#35faeb24671a4782603ba9a6403ac36836d5a34a"
   integrity sha512-ttpvbCwKxhSKH2UN0UyfhysFKQVeozOwmafuhAPGUfdCMEsvnKdoHzgn6sI1Kt8B8WdOgHTihvkCIMFkJu9n3A==
@@ -3524,7 +3524,7 @@
     "@babel/runtime" "^7.6.2"
     "@react-types/shared" "^3.6.0"
 
-"@react-stately/list@^3.2.3":
+"@react-stately/list@^3.2.3", "@react-stately/list@~3.2.2":
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/@react-stately/list/-/list-3.2.3.tgz#08112fd7a2fe9f0ed6dee7bcafd442ea24607d2c"
   integrity sha512-hFV6x0TFl86C7seS2SEkT9slB0KZgxLZ+DQfoZgGm44znd20sJ9YPlmBBk09BtWaQuySiaUwr7pD4H4GaLn8SQ==
@@ -4157,6 +4157,42 @@
     "@react-hook/size" "^2.1.1"
     "@react-hook/window-size" "^3.0.7"
     "@react-spectrum/utils" "~3.5.1"
+    "@react-stately/select" "~3.1.1"
+    "@react-stately/tooltip" "~3.0.3"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.1.1"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    tslib "^2.1.0"
+    zustand "^3.3.3"
+
+"@stoplight/mosaic@1.0.0-beta.52":
+  version "1.0.0-beta.52"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.52.tgz#b730b29e57a5346d9eb6c48793e8c51e5f1345dd"
+  integrity sha512-btggXq/jKAT28NQKPdJfD71XL+ZbULmq//b1qgmF8ki4tOKxREaE9OdXM29kKA9N96nkdRIOTzjqbxMPlZGVEQ==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.35"
+    "@fortawesome/free-solid-svg-icons" "^5.15.3"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@react-aria/button" "~3.3.1"
+    "@react-aria/dialog" "~3.1.2"
+    "@react-aria/focus" "~3.2.4"
+    "@react-aria/interactions" "~3.3.4"
+    "@react-aria/listbox" "~3.2.4"
+    "@react-aria/overlays" "~3.6.2"
+    "@react-aria/select" "~3.3.1"
+    "@react-aria/separator" "~3.1.1"
+    "@react-aria/ssr" "~3.0.1"
+    "@react-aria/tooltip" "~3.1.1"
+    "@react-aria/utils" "~3.7.0"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@react-spectrum/utils" "~3.5.1"
+    "@react-stately/collections" "~3.3.1"
+    "@react-stately/list" "~3.2.2"
     "@react-stately/select" "~3.1.1"
     "@react-stately/tooltip" "~3.0.3"
     clsx "^1.1.1"
@@ -22398,6 +22434,11 @@ use-debounce@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-3.4.3.tgz#5df9322322b3f1b1c263d46413f9facf6d8b56ab"
   integrity sha512-nxy+opOxDccWfhMl36J5BSCTpvcj89iaQk2OZWLAtBJQj7ISCtx1gh+rFbdjGfMl6vtCZf6gke/kYvrkVfHMoA==
+
+use-debounce@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-6.0.1.tgz#ed1eb2b30189408fb9792ea2887f4c6c3cb401a3"
+  integrity sha512-kpvIxpa0vOLz/2I2sfNJ72mUeaT2CMNCu5BT1f2HkV9qZK27UVSOFf1sSSu+wjJE4TcR2VTXS2SM569+m3TN7Q==
 
 use-isomorphic-layout-effect@^1.0.0:
   version "1.1.1"

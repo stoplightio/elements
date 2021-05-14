@@ -42,3 +42,13 @@ export type NodeEdge = {
   slug: string;
   title: string;
 };
+
+export type NodeSearchResult = NodeSummary & {
+  highlighted: {
+    name: string;
+    summary: string;
+    data: string;
+  };
+  project_slug: string;
+  project_name: string;
+};
