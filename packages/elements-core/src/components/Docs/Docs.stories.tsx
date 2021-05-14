@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import * as React from 'react';
 
 import model from '../../__fixtures__/schemas/contact.json';
-import { Docs, IDocsProps } from './Docs';
+import { Docs, DocsProps } from './Docs';
 
 export default {
   title: 'Internal/Docs',
@@ -19,11 +19,11 @@ export default {
       },
     },
   },
-} as Meta<IDocsProps>;
+} as Meta<DocsProps>;
 
-export const DocsStory: Story<IDocsProps> = args => <Docs {...args} />;
+export const DocsStory: Story<DocsProps> = args => <Docs {...args} />;
 DocsStory.args = {
-  nodeData: model,
   nodeType: NodeType.Model,
+  nodeData: model,
 };
 DocsStory.storyName = 'Docs Playground';
