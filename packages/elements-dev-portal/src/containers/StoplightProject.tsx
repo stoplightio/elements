@@ -6,6 +6,7 @@ import { Docs } from '@stoplight/elements-core/containers/Docs';
 import { Provider } from '@stoplight/elements-core/containers/Provider';
 import { TableOfContents } from '@stoplight/elements-core/containers/TableOfContents';
 import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
+import { VisibilityProvider } from '@stoplight/elements-core/context/Visibility';
 import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
 import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
 import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
@@ -39,6 +40,16 @@ export interface StoplightProjectProps extends RoutingProps {
    * *TBD*
    */
   authToken?: string;
+
+  /**
+   * Shows only operation document without right column
+   */
+  docsOnly?: boolean;
+
+  /**
+   * Allows to hide TryIt component
+   */
+  hideTryIt?: boolean;
 }
 
 const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
@@ -47,6 +58,8 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   projectSlug,
   branchSlug,
   authToken,
+  docsOnly,
+  hideTryIt,
 }) => {
   const [firstItem, setFirstItem] = React.useState<Item>();
   const { pathname } = useLocation();
@@ -89,7 +102,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           authToken={authToken}
           showMocking
         >
-          <Docs node={pathname} />
+          <VisibilityProvider visibility={{ docsOnly, hideTryIt }}>
+            <Docs node={pathname} />
+          </VisibilityProvider>
         </Provider>
       )}
     </SidebarLayout>
