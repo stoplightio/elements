@@ -30,12 +30,22 @@ export const NodeContent = ({ node, Link }: NodeContentProps) => {
 
 const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefined>(undefined);
 
+const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 const LinkComponent: React.FC<{ node: { url: string } }> = ({ children, node: { url } }) => {
   const ctx = React.useContext(NodeLinkContext);
 
+  if (externalRegex.test(url)) {
+    // Open external URL in a new tab
+    return (
+      <a href={url} target="_blank" rel="noreferrer">
+        {children}
+      </a>
+    );
+  }
+
   if (ctx) {
     const [node, Link] = ctx;
-
+    // Resolve relative file URI with
     const resolvedUri = resolve(dirname(node.uri), url);
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const edge = node.outbound_edges.find(edge => edge.uri === url || edge.uri === resolvedUriWithoutAnchor);
@@ -49,9 +59,5 @@ const LinkComponent: React.FC<{ node: { url: string } }> = ({ children, node: { 
     }
   }
 
-  return (
-    <a href={url} target="_blank" rel="noreferrer">
-      {children}
-    </a>
-  );
+  return <a href={url}>{children}</a>;
 };
