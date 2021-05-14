@@ -5,10 +5,10 @@ import cn from 'classnames';
 import * as React from 'react';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { IDocsComponentProps } from '..';
+import { DocsComponentProps } from '..';
 import { ArticleHeadings } from './Headings';
 
-export type ArticleProps = IDocsComponentProps<string | MarkdownAstRoot>;
+export type ArticleProps = DocsComponentProps<string | MarkdownAstRoot>;
 
 const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
   const [container, setContainer] = React.useState<HTMLDivElement | null>(null);

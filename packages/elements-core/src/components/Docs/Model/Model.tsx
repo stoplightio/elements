@@ -5,9 +5,9 @@ import * as React from 'react';
 
 import { JSONSchema } from '../../../types';
 import { SchemaAndDescription } from '../../SchemaAndDescription';
-import { IDocsComponentProps } from '..';
+import { DocsComponentProps } from '..';
 
-export type ModelProps = IDocsComponentProps<JSONSchema>;
+export type ModelProps = DocsComponentProps<JSONSchema>;
 
 const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => {
   return (
