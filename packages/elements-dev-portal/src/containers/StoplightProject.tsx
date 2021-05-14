@@ -22,8 +22,8 @@ import { useGetTableOfContents } from '../hooks/useGetTableOfContents';
 
 export interface StoplightProjectProps extends RoutingProps {
   /**
-   * The slug of the Stoplight Project.
-   * @example "elements"
+   * The ID of the Stoplight Project.
+   * @example "cHJqOjY"
    */
   projectId: string;
   /**
