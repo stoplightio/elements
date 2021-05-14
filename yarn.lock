@@ -4169,10 +4169,10 @@
     tslib "^2.1.0"
     zustand "^3.3.3"
 
-"@stoplight/mosaic@1.0.0-beta.51":
-  version "1.0.0-beta.51"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.51.tgz#f49ba403957735ff08977a1260ba2b965ad6a4eb"
-  integrity sha512-0vieiuPK1kOocLF1hFhkOMFIw2wgcyMHc+LMmqxmx8wbGMdnrtqFDiBC8zILDloZVIkeOkCavuZctR+TxprUzA==
+"@stoplight/mosaic@1.0.0-beta.52":
+  version "1.0.0-beta.52"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.52.tgz#b730b29e57a5346d9eb6c48793e8c51e5f1345dd"
+  integrity sha512-btggXq/jKAT28NQKPdJfD71XL+ZbULmq//b1qgmF8ki4tOKxREaE9OdXM29kKA9N96nkdRIOTzjqbxMPlZGVEQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
