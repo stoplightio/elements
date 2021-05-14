@@ -8,6 +8,7 @@ import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
 import { Model } from './Model';
+import { Location } from 'history';
 
 interface BaseDocsProps {
   /**
@@ -24,6 +25,11 @@ interface BaseDocsProps {
    * URI of the document
    */
   uri?: string;
+
+  /**
+   * Some components may depend on some location/URL data.
+   */
+  location?: Location;
 }
 
 export interface DocsProps extends BaseDocsProps {

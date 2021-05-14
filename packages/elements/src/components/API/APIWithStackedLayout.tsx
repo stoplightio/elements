@@ -20,12 +20,13 @@ const itemMatchesHash = (hash: string, item: OperationNode) => {
 };
 
 export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode }) => {
+  const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
 
   return (
     <div className="w-full flex flex-col m-auto max-w-4xl">
       <div className="w-full border-b dark:border-gray-6">
-        <Docs className="mx-auto" nodeData={serviceNode.data} nodeType={NodeType.HttpService} headless />
+        <Docs className="mx-auto" nodeData={serviceNode.data} nodeType={NodeType.HttpService} headless location={location} />
       </div>
 
       {groups.map(group => (
@@ -80,7 +81,8 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
 type PanelTabId = 'docs' | 'tryit';
 
 const Item = React.memo<{ item: OperationNode }>(({ item }) => {
-  const { hash } = useLocation();
+  const location = useLocation();
+  const { hash } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const [tabId, setTabId] = React.useState<PanelTabId>('docs');
@@ -130,7 +132,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
           onChange={(tabId: PanelTabId) => setTabId(tabId)}
           renderActiveTabPanelOnly
         >
-          <Tab id="docs" title="Docs" className="p-4" panel={<ParsedDocs node={item} headless />} />
+          <Tab id="docs" title="Docs" className="p-4" panel={<ParsedDocs node={item} headless location={location} />} />
           <Tab
             id="tryit"
             title="Try It"

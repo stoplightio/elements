@@ -46,15 +46,11 @@ const MosaicProviderDecorator = (Story) => (
   <MosaicProvider><Story/></MosaicProvider>
 );
 
-const RouterProviderDecorator = (Story) => (
-  <BrowserRouter><Story/></BrowserRouter>
-);
-
 const StyledDecorator = (Story) => (
   <Styled><Story/></Styled>
 );
 
-export const decorators = [ThemeProvider, ProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, RouterProviderDecorator, StyledDecorator];
+export const decorators = [ThemeProvider, ProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, StyledDecorator];
 
 export const parameters = {
   docs: {

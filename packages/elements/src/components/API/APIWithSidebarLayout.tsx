@@ -17,7 +17,8 @@ type SidebarLayoutProps = {
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode, logo }) => {
   const tree = React.useMemo(() => computeAPITree(serviceNode), [serviceNode]);
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
 
   const hasOverview = !!serviceNode.data.description;
   const isRootPath = !pathname || pathname === '/';
@@ -50,7 +51,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode
 
   return (
     <SidebarLayout sidebar={sidebar}>
-      {node && <Box as={ParsedDocs} key={pathname} uri={hasOverview ? pathname : undefined} node={node} />}
+      {node && <Box as={ParsedDocs} key={pathname} uri={hasOverview ? pathname : undefined} node={node} location={location} />}
     </SidebarLayout>
   );
 };
