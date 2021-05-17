@@ -1,5 +1,5 @@
-import { JSONSchema } from '@stoplight/elements-core/types';
 import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
+import { JSONSchema7 } from 'json-schema';
 
 export enum NodeTypes {
   Paths = 'paths',
@@ -28,4 +28,4 @@ type Node<T, D> = {
 export type ServiceNode = Node<NodeType.HttpService, IHttpService> & { children: ServiceChildNode[] };
 export type ServiceChildNode = OperationNode | SchemaNode;
 export type OperationNode = Node<NodeType.HttpOperation, IHttpOperation>;
-export type SchemaNode = Node<NodeType.Model, JSONSchema>;
+export type SchemaNode = Node<NodeType.Model, JSONSchema7>;

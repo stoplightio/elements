@@ -1,4 +1,4 @@
-import { NodeTypeColors, NodeTypeIconDefs } from '@stoplight/elements-core/constants';
+import { NodeTypeColors, NodeTypeIconDefs } from '@stoplight/elements-core';
 import { Box, Flex, Icon, Input, ListBox, ListBoxItem, Modal, ModalProps } from '@stoplight/mosaic';
 import * as React from 'react';
 

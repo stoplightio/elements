@@ -1,8 +1,10 @@
-import { Docs } from '@stoplight/elements-core/components/Docs';
-import { MarkdownComponentsProvider } from '@stoplight/elements-core/components/MarkdownViewer/CustomComponents/Provider';
-import { CustomLinkComponent } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
-import { MockingProvider } from '@stoplight/elements-core/containers/Provider';
-import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
+import {
+  CustomLinkComponent,
+  Docs,
+  MarkdownComponentsProvider,
+  PersistenceContextProvider,
+  MockingProvider,
+} from '@stoplight/elements-core';
 import { Box } from '@stoplight/mosaic';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';

@@ -1,4 +1,4 @@
-import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
+import { withQueryClientProvider } from '@stoplight/elements-core';
 import * as React from 'react';
 
 export type DevPortalProviderProps = {
