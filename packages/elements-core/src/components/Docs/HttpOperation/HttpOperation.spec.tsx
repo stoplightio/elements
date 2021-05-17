@@ -531,6 +531,22 @@ describe('HttpOperation', () => {
       expect(screen.queryByText('some_property')).not.toBeInTheDocument();
     });
   });
+
+  describe('Visibility', () => {
+    it('should hide TryIt', async () => {
+      render(<HttpOperation data={httpOperation} hideTryIt />);
+
+      expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
+      expect(await screen.findByText('Response Example')).toBeInTheDocument();
+    });
+
+    it('should hide right column', async () => {
+      render(<HttpOperation data={httpOperation} hideTryItPanel />);
+
+      expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
+      expect(screen.queryByText('Response Example')).not.toBeInTheDocument();
+    });
+  });
 });
 
 function getDeprecatedBadge() {
