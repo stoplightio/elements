@@ -1,3 +1,4 @@
+import { version } from '../../package.json';
 import { NodeSearchResult } from '../types';
 
 export const getNodes = async ({
@@ -23,7 +24,11 @@ export const getNodes = async ({
 
   const query = queryParams.length ? `?${queryParams.join('&')}` : '';
 
-  const response = await fetch(`${platformUrl}/api/v1/workspaces/${workspaceId}/nodes${query}`);
+  const response = await fetch(`${platformUrl}/api/v1/workspaces/${workspaceId}/nodes${query}`, {
+    headers: {
+      'Stoplight-Elements-Version': version,
+    },
+  });
   const data = await response.json();
 
   if (!response.ok) {
