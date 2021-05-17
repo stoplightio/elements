@@ -191,6 +191,7 @@ export interface IActiveInfo {
   branch?: string;
   node?: string;
   authToken?: string;
+  showMocking?: boolean;
 }
 
 export interface IArticleHeading {

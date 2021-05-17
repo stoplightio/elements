@@ -6,7 +6,6 @@ import { Docs } from '@stoplight/elements-core/containers/Docs';
 import { Provider } from '@stoplight/elements-core/containers/Provider';
 import { TableOfContents } from '@stoplight/elements-core/containers/TableOfContents';
 import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
-import { TryItProvider } from '@stoplight/elements-core/context/TryIt';
 import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
 import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
 import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
@@ -94,10 +93,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           branch={branchSlug}
           node={pathname}
           authToken={authToken}
+          showMocking
         >
-          <TryItProvider hideTryIt={hideTryIt} showMocking>
-            <Docs node={pathname} />
-          </TryItProvider>
+          <Docs node={pathname} hideTryIt={hideTryIt} />
         </Provider>
       )}
     </SidebarLayout>

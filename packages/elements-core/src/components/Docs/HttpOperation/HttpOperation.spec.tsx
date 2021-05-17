@@ -7,7 +7,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import requestBody from '../../../__fixtures__/operations/request-body';
 import { withPersistenceBoundary } from '../../../context/Persistence';
-import { TryItProvider } from '../../../context/TryIt';
 import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
 import { chooseOption } from '../../../utils/tests/chooseOption';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
@@ -535,18 +534,14 @@ describe('HttpOperation', () => {
 
   describe('Visibility', () => {
     it('should hide TryIt', async () => {
-      render(
-        <TryItProvider hideTryIt>
-          <HttpOperation data={httpOperation} />
-        </TryItProvider>,
-      );
+      render(<HttpOperation data={httpOperation} hideTryIt />);
 
       expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
       expect(await screen.findByText('Response Example')).toBeInTheDocument();
     });
 
     it('should hide right column', async () => {
-      render(<HttpOperation data={httpOperation} docsOnly />);
+      render(<HttpOperation data={httpOperation} hideTryItPanel />);
 
       expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
       expect(screen.queryByText('Response Example')).not.toBeInTheDocument();

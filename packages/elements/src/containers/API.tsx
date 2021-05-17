@@ -2,7 +2,6 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InlineRefResolverProvider } from '@stoplight/elements-core/context/InlineRefResolver';
 import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
-import { TryItProvider } from '@stoplight/elements-core/context/TryIt';
 import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
 import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
 import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
@@ -118,13 +117,11 @@ const APIImpl: React.FC<APIProps> = props => {
 
   return (
     <InlineRefResolverProvider document={parsedDocument}>
-      <TryItProvider hideTryIt={hideTryIt}>
-        {layout === 'stacked' ? (
-          <APIWithStackedLayout serviceNode={serviceNode} />
-        ) : (
-          <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} />
-        )}
-      </TryItProvider>
+      {layout === 'stacked' ? (
+        <APIWithStackedLayout serviceNode={serviceNode} />
+      ) : (
+        <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} hideTryIt={hideTryIt} />
+      )}
     </InlineRefResolverProvider>
   );
 };

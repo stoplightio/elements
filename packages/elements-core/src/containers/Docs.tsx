@@ -14,11 +14,12 @@ import { ActiveInfoContext, MockingProvider } from './Provider';
 export interface IDocsProps {
   className?: string;
   node?: string;
+  hideTryIt?: boolean;
 }
 
 const bundledNodesUri = 'api/v1/projects/{workspaceSlug}/{projectSlug}/bundled-nodes/{uri}';
 
-export const Docs = ({ className, node }: IDocsProps) => {
+export const Docs = ({ className, node, hideTryIt }: IDocsProps) => {
   const info = React.useContext(ActiveInfoContext);
 
   const { data: result, error } = usePlatformApi<BundledBranchNode>(bundledNodesUri, {
@@ -61,6 +62,7 @@ export const Docs = ({ className, node }: IDocsProps) => {
           uri={node}
           className={className}
           useNodeForRefResolving
+          hideTryIt={hideTryIt}
         />
       </MarkdownComponentsProvider>
     </MockingProvider>

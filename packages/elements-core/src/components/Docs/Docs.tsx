@@ -26,9 +26,14 @@ interface BaseDocsProps {
   uri?: string;
 
   /**
+   * Allows to hide TryIt component
+   */
+  hideTryIt?: boolean;
+
+  /**
    * Shows only operation document without right column
    */
-  docsOnly?: boolean;
+  hideTryItPanel?: boolean;
 }
 
 export interface DocsProps extends BaseDocsProps {

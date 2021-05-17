@@ -12,10 +12,20 @@ const defaultInfo = {
   branch: '',
   node: '',
   authToken: '',
+  showMocking: false,
 };
 export const ActiveInfoContext = createNamedContext<IActiveInfo>('ActiveInfoContext', defaultInfo);
 
-export const Provider: React.FC<IProvider> = ({ host, workspace, project, branch, node, children, authToken }) => {
+export const Provider: React.FC<IProvider> = ({
+  host,
+  workspace,
+  project,
+  branch,
+  node,
+  children,
+  authToken,
+  showMocking,
+}) => {
   const info = {
     host,
     workspace,
@@ -23,6 +33,7 @@ export const Provider: React.FC<IProvider> = ({ host, workspace, project, branch
     branch,
     node,
     authToken,
+    showMocking,
   };
 
   return <ActiveInfoContext.Provider value={info}>{children}</ActiveInfoContext.Provider>;
