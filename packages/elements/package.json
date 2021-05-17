@@ -50,7 +50,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@stoplight/elements-core": "7.0.0-beta.3",
-    "@stoplight/mosaic": "1.0.0-beta.47",
+    "@stoplight/mosaic": "1.0.0-beta.52",
     "@stoplight/types": "^12.0.0",
     "@stoplight/ui-kit": "^3.0.0-beta.39",
     "lodash": "^4.17.19",
