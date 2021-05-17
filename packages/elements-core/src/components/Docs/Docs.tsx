@@ -24,6 +24,11 @@ interface BaseDocsProps {
    * URI of the document
    */
   uri?: string;
+
+  /**
+   * Shows only operation document without right column
+   */
+  docsOnly?: boolean;
 }
 
 export interface DocsProps extends BaseDocsProps {

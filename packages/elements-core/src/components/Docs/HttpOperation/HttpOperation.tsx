@@ -5,8 +5,8 @@ import cn from 'classnames';
 import { flatten, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { ActiveInfoContext, MockingContext } from '../../../containers/Provider';
-import { VisibilityContext } from '../../../context/Visibility';
+import { MockingContext } from '../../../containers/Provider';
+import { TryItContext } from '../../../context/TryIt';
 import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
@@ -17,10 +17,9 @@ import { Responses } from './Responses';
 
 export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
-const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless, uri }) => {
-  const info = React.useContext(ActiveInfoContext);
+const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data, headless, uri, docsOnly }) => {
+  const info = React.useContext(TryItContext);
   const mocking = React.useContext(MockingContext);
-  const visibility = React.useContext(VisibilityContext);
   const isDeprecated = !!data.deprecated;
 
   const [responseMediaType, setResponseMediaType] = React.useState('');
@@ -66,7 +65,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
             )}
           </Box>
 
-          {!visibility?.docsOnly && (
+          {!docsOnly && (
             <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
               <Box className="HttpOperation__gutter">
                 <TryItWithRequestSamples
@@ -74,9 +73,9 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
                   responseMediaType={responseMediaType}
                   responseStatusCode={responseStatusCode}
                   requestBodyIndex={requestBodyIndex}
-                  showMocking={info.showMocking}
-                  hideTryIt={visibility?.hideTryIt}
-                  mockUrl={info.showMocking ? mocking.mockUrl?.servicePath : undefined}
+                  showMocking={info?.showMocking}
+                  hideTryIt={info?.hideTryIt}
+                  mockUrl={info?.showMocking ? mocking.mockUrl?.servicePath : undefined}
                 />
               </Box>
             </Box>

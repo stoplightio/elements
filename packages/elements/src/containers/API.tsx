@@ -2,7 +2,7 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InlineRefResolverProvider } from '@stoplight/elements-core/context/InlineRefResolver';
 import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
-import { VisibilityProvider } from '@stoplight/elements-core/context/Visibility';
+import { TryItProvider } from '@stoplight/elements-core/context/TryIt';
 import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
 import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
 import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
@@ -51,10 +51,6 @@ export interface CommonAPIProps extends RoutingProps {
    */
   layout?: 'sidebar' | 'stacked';
   logo?: string;
-  /**
-   * Shows only operation document without right column
-   */
-  docsOnly?: boolean;
 
   /**
    * Allows to hide TryIt component
@@ -67,7 +63,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl = '', logo, docsOnly, hideTryIt } = props;
+  const { layout, apiDescriptionUrl = '', logo, hideTryIt } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { data: fetchedDocument, error } = useQuery(
@@ -122,13 +118,13 @@ const APIImpl: React.FC<APIProps> = props => {
 
   return (
     <InlineRefResolverProvider document={parsedDocument}>
-      <VisibilityProvider visibility={{ docsOnly, hideTryIt }}>
+      <TryItProvider hideTryIt={hideTryIt}>
         {layout === 'stacked' ? (
           <APIWithStackedLayout serviceNode={serviceNode} />
         ) : (
           <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} />
         )}
-      </VisibilityProvider>
+      </TryItProvider>
     </InlineRefResolverProvider>
   );
 };
