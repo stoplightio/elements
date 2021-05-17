@@ -2,8 +2,8 @@
 
 How you chose to work with Elements depends on what you are trying to do.
 
-- **[Command Line Interface](1-usage/cli.md)** - Quickly get up and running, see how your API documentation could look with little effort.
 - **[Web Component](1-usage/web-component.md)** - Integrate with any Content Management System or create a simple HTML rendering of your API documentation.
+- **[Command Line Interface](1-usage/cli.md)** - **Coming soon!** Quickly get up and running, see how your API documentation could look with little effort.
 
 ## Integrations
 

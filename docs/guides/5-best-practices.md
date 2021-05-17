@@ -1,5 +1,0 @@
-- Use tags
-- Add descriptions to tags and parameters
-- Add example/default to properties for better docs
-- Shared Components
-- Parameters, Models, Responses

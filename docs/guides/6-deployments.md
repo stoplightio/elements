@@ -1,5 +1,0 @@
-- Publishing to Stoplight
-- Publishing to Amazon S3
-- Publishing to GitHub Pages
-- Publishing to …
-- Publishing to Vercel (https://vercel.com/solutions/nextjs)
