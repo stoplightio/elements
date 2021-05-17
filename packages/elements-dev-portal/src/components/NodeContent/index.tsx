@@ -1,6 +1,7 @@
 import { Docs } from '@stoplight/elements-core/components/Docs';
 import { MarkdownComponentsProvider } from '@stoplight/elements-core/components/MarkdownViewer/CustomComponents/Provider';
 import { CustomLinkComponent } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
+import { MockingProvider } from '@stoplight/elements-core/containers/Provider';
 import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
 import { Box } from '@stoplight/mosaic';
 import { dirname, resolve } from '@stoplight/path';
@@ -19,9 +20,11 @@ export const NodeContent = ({ node, Link }: NodeContentProps) => {
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
         <MarkdownComponentsProvider value={{ link: LinkComponent }}>
-          <Box style={{ maxWidth: ['model'].includes(node.type) ? 1000 : undefined }}>
-            <Docs nodeType={node.type as NodeType} nodeData={node.data} />
-          </Box>
+          <MockingProvider mockUrl={node.links.mock_url}>
+            <Box style={{ maxWidth: ['model'].includes(node.type) ? 1000 : undefined }}>
+              <Docs nodeType={node.type as NodeType} nodeData={node.data} />
+            </Box>
+          </MockingProvider>
         </MarkdownComponentsProvider>
       </NodeLinkContext.Provider>
     </PersistenceContextProvider>

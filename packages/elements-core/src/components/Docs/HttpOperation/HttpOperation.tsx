@@ -72,7 +72,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(({ className, data
                 responseStatusCode={responseStatusCode}
                 requestBodyIndex={requestBodyIndex}
                 showMocking={info.showMocking}
-                mockUrl={info.showMocking ? mocking.mockUrl?.servicePath : undefined}
+                mockUrl={info.showMocking ? mocking.mockUrl : undefined}
               />
             </Box>
           </Box>
