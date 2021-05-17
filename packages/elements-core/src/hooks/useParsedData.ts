@@ -1,7 +1,6 @@
 import { processMarkdown } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import { parse as parseYaml } from '@stoplight/yaml';
-import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { ParsedNode } from '../types';
@@ -68,7 +67,7 @@ function parseModel(rawData: unknown): ParsedNode | undefined {
   if (isJSONSchema(data)) {
     return {
       type: NodeType.Model,
-      data: data as JSONSchema7,
+      data: data,
     };
   }
   return undefined;

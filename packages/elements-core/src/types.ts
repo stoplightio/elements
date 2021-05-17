@@ -1,7 +1,9 @@
 import * as SMDAST from '@stoplight/markdown/ast-types/smdast';
 import { Dictionary, IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
-import { JSONSchema7 } from 'json-schema';
+import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
+
+export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
 
 export type ParsedNode =
   | {

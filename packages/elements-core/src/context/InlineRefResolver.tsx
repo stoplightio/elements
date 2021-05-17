@@ -4,6 +4,8 @@ import { isPlainObject } from 'lodash';
 import * as React from 'react';
 import { useContext } from 'react';
 
+import { JSONSchema } from '../types';
+
 export type SchemaTreeRefInfo = {
   source: string | null;
   pointer: string | null;
@@ -12,7 +14,7 @@ export type SchemaTreeRefInfo = {
 export type SchemaTreeRefDereferenceFn = (
   ref: SchemaTreeRefInfo,
   propertyPath: string[] | null,
-  schema: JSONSchema7,
+  schema: JSONSchema,
 ) => JSONSchema7;
 
 const InlineRefResolverContext = React.createContext<SchemaTreeRefDereferenceFn | undefined>(undefined);
