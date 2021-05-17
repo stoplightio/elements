@@ -1,15 +1,14 @@
 import * as SMDAST from '@stoplight/markdown';
 import { isArray } from '@stoplight/mosaic';
 import { IHttpOperation, IHttpRequest, IHttpService, INode } from '@stoplight/types';
+import { JSONSchema7 } from 'json-schema';
 import { isObject, isPlainObject } from 'lodash';
-
-import { JSONSchema } from '../types';
 
 export function isSMDASTRoot(maybeAst: unknown): maybeAst is SMDAST.IRoot {
   return isObject(maybeAst) && maybeAst['type'] === 'root' && isArray(maybeAst['children']);
 }
 
-export function isJSONSchema(maybeSchema: unknown): maybeSchema is JSONSchema {
+export function isJSONSchema(maybeSchema: unknown): maybeSchema is JSONSchema7 {
   // the trick is, JSONSchema doesn't define any required properties, so technically even an empty object is a valid JSONSchema
   return isPlainObject(maybeSchema);
 }
