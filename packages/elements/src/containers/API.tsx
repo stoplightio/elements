@@ -50,6 +50,11 @@ export interface CommonAPIProps extends RoutingProps {
    */
   layout?: 'sidebar' | 'stacked';
   logo?: string;
+
+  /**
+   * Allows to hide TryIt component
+   */
+  hideTryIt?: boolean;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -57,7 +62,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl = '', logo } = props;
+  const { layout, apiDescriptionUrl = '', logo, hideTryIt } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { data: fetchedDocument, error } = useQuery(
@@ -113,9 +118,9 @@ const APIImpl: React.FC<APIProps> = props => {
   return (
     <InlineRefResolverProvider document={parsedDocument}>
       {layout === 'stacked' ? (
-        <APIWithStackedLayout serviceNode={serviceNode} />
+        <APIWithStackedLayout serviceNode={serviceNode} hideTryIt={hideTryIt} />
       ) : (
-        <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} />
+        <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} hideTryIt={hideTryIt} />
       )}
     </InlineRefResolverProvider>
   );

@@ -39,6 +39,11 @@ export interface StoplightProjectProps extends RoutingProps {
    * *TBD*
    */
   authToken?: string;
+
+  /**
+   * Allows to hide TryIt component
+   */
+  hideTryIt?: boolean;
 }
 
 const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
@@ -47,6 +52,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   projectSlug,
   branchSlug,
   authToken,
+  hideTryIt,
 }) => {
   const [firstItem, setFirstItem] = React.useState<Item>();
   const { pathname } = useLocation();
@@ -89,7 +95,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           authToken={authToken}
           showMocking
         >
-          <Docs node={pathname} />
+          <Docs node={pathname} hideTryIt={hideTryIt} />
         </Provider>
       )}
     </SidebarLayout>
