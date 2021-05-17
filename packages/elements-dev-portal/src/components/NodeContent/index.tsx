@@ -13,16 +13,21 @@ import { Node } from '../../types';
 export type NodeContentProps = {
   node: Node;
   Link: CustomLinkComponent;
+
+  /**
+   * Allows to hide TryIt component
+   */
+  hideTryIt?: boolean;
 };
 
-export const NodeContent = ({ node, Link }: NodeContentProps) => {
+export const NodeContent = ({ node, Link, hideTryIt }: NodeContentProps) => {
   return (
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
         <MarkdownComponentsProvider value={{ link: LinkComponent }}>
           <MockingProvider mockUrl={node.links.mock_url}>
             <Box style={{ maxWidth: ['model'].includes(node.type) ? 1000 : undefined }}>
-              <Docs nodeType={node.type as NodeType} nodeData={node.data} />
+              <Docs nodeType={node.type as NodeType} nodeData={node.data} hideTryIt={hideTryIt} />
             </Box>
           </MockingProvider>
         </MarkdownComponentsProvider>
