@@ -1,4 +1,3 @@
-import { version } from '../../package.json';
 import { Branch } from '../types';
 
 export const getBranches = async ({
@@ -10,7 +9,7 @@ export const getBranches = async ({
 }): Promise<Branch[]> => {
   const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/branches`, {
     headers: {
-      'Stoplight-Elements-Version': version,
+      'Stoplight-Elements-Version': '1.0.0',
     },
   });
   const data = await response.json();

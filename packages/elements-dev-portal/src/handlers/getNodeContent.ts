@@ -1,4 +1,3 @@
-import { version } from '../../package.json';
 import { Node } from '../types';
 
 export const getNodeContent = async ({
@@ -16,7 +15,7 @@ export const getNodeContent = async ({
   const branchQuery = branchSlug ? `?branch=${branchSlug}` : '';
   const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/nodes/${nodeId}${branchQuery}`, {
     headers: {
-      'Stoplight-Elements-Version': version,
+      'Stoplight-Elements-Version': '1.0.0',
     },
   });
   const data = await response.json();
