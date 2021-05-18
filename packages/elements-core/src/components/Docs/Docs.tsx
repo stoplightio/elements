@@ -30,6 +30,16 @@ interface BaseDocsProps {
    * Some components may depend on some location/URL data.
    */
   location?: Location;
+
+  /**
+   * Allows to hide TryIt component
+   */
+  hideTryIt?: boolean;
+
+  /**
+   * Shows only operation document without right column
+   */
+  hideTryItPanel?: boolean;
 }
 
 export interface DocsProps extends BaseDocsProps {
