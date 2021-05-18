@@ -31,9 +31,14 @@ export interface StoplightProjectProps extends RoutingProps {
    * set this prop to point the StoplightProject component at the URL of that instance.
    */
   platformUrl?: string;
+
+  /**
+   * Allows to hide TryIt component
+   */
+  hideTryIt?: boolean;
 }
 
-const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId }) => {
+const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hideTryIt }) => {
   const { branchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
   const history = useHistory();
 
@@ -54,7 +59,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId }) =>
   } else if (!node) {
     elem = <NotFound />;
   } else {
-    elem = <NodeContent node={node} Link={Link} />;
+    elem = <NodeContent node={node} Link={Link} hideTryIt={hideTryIt} />;
   }
 
   return (
