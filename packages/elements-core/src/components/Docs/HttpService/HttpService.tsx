@@ -2,7 +2,6 @@ import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { MockingContext } from '../../../containers/Provider';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -20,8 +19,8 @@ const enhanceVersionString = (version: string): string => {
 
 export type HttpServiceProps = DocsComponentProps<Partial<IHttpService>>;
 
-const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
-  const { search, pathname } = useLocation();
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless, location = {} }) => {
+  const { search, pathname } = location;
   const mocking = React.useContext(MockingContext);
   const query = new URLSearchParams(search);
 
@@ -64,7 +63,9 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       ) : (
         <Box mb={10}>
           {description}
-          <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />
+          {pathname && (
+            <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />
+          )}
           {dataPanel}
         </Box>
       )}
