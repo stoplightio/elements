@@ -6,6 +6,8 @@ export const UpgradeToStarter = () => (
   <Flex
     as="a"
     href="https://stoplight.io/pricing/"
+    target="_blank"
+    rel="noreferrer noopener"
     justify="center"
     alignItems="center"
     w="full"

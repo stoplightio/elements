@@ -1,5 +1,15 @@
 import { Node } from '../types';
 
+export class ResponseError extends Error {
+  code: number;
+
+  constructor(message: string, responseCode: number) {
+    super(message);
+    this.name = 'Response Error';
+    this.code = responseCode;
+  }
+}
+
 export const getNodeContent = async ({
   nodeSlug,
   projectId,
@@ -21,10 +31,7 @@ export const getNodeContent = async ({
   const data = await response.json();
 
   if (!response.ok) {
-    throw {
-      status: response.status,
-      data: data,
-    };
+    throw new ResponseError('Payment Required', response.status);
   }
 
   return data;

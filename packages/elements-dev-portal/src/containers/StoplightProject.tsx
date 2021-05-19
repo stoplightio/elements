@@ -17,6 +17,7 @@ import { NodeContent } from '../components/NodeContent';
 import { NotFound } from '../components/NotFound';
 import { TableOfContents } from '../components/TableOfContents';
 import { UpgradeToStarter } from '../components/UpgradeToStarter';
+import { ResponseError } from '../handlers/getNodeContent';
 import { useGetBranches } from '../hooks/useGetBranches';
 import { useGetNodeContent } from '../hooks/useGetNodeContent';
 import { useGetTableOfContents } from '../hooks/useGetTableOfContents';
@@ -63,7 +64,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hide
   if (isLoadingNode || !isTocFetched) {
     elem = <Loading />;
   } else if (isError) {
-    if ((nodeError as any).status === 402) {
+    if (nodeError instanceof ResponseError && nodeError.code === 402) {
       elem = <UpgradeToStarter />;
     } else {
       elem = <NotFound />;
