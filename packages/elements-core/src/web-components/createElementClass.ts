@@ -71,6 +71,7 @@ export const createElementClass = <P>(
 
     connectedCallback() {
       this._mountPoint = document.createElement('div');
+      this._mountPoint.style.height = '100%';
       this.appendChild(this._mountPoint);
 
       for (const key in propDescriptors) {
