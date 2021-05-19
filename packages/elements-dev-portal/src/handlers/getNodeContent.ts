@@ -21,7 +21,10 @@ export const getNodeContent = async ({
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data);
+    throw {
+      status: response.status,
+      data: data,
+    };
   }
 
   return data;
