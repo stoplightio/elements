@@ -41,6 +41,7 @@
     "typescript": "^4.0.2"
   },
   "scripts": {
+    "demo": "yarn workspace @stoplight/elements-demo",
     "elements": "yarn workspace @stoplight/elements",
     "elements-core": "yarn workspace @stoplight/elements-core",
     "elements-utils": "yarn workspace @stoplight/elements-utils",
