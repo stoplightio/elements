@@ -5,7 +5,7 @@ export class ResponseError extends Error {
 
   constructor(message: string, responseCode: number) {
     super(message);
-    this.name = 'Response Error';
+    this.name = 'ResponseError';
     this.code = responseCode;
   }
 }
