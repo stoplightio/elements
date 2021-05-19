@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { MockUrlResult } from '../components/TryIt/mocking-utils';
 import { IActiveInfo } from '../types';
 
 export interface IProvider extends IActiveInfo {}
@@ -40,11 +39,11 @@ export const Provider: React.FC<IProvider> = ({
 };
 
 export const MockingContext = createNamedContext<{
-  mockUrl: MockUrlResult | undefined;
+  mockUrl?: string;
 }>('MockingContext', { mockUrl: undefined });
 
 export const MockingProvider: React.FC<{
-  mockUrl: MockUrlResult | undefined;
+  mockUrl?: string;
 }> = ({ mockUrl, children }) => {
   const info = { mockUrl };
   return <MockingContext.Provider value={info}>{children}</MockingContext.Provider>;

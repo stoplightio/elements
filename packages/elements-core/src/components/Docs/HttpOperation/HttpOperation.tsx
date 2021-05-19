@@ -75,7 +75,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
                     requestBodyIndex={requestBodyIndex}
                     showMocking={info.showMocking}
                     hideTryIt={hideTryIt}
-                    mockUrl={info.showMocking ? mocking.mockUrl?.servicePath : undefined}
+                    mockUrl={info.showMocking ? mocking.mockUrl : undefined}
                   />
                 </Box>
               </Box>

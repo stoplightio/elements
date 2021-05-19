@@ -23,7 +23,11 @@ export const getNodes = async ({
 
   const query = queryParams.length ? `?${queryParams.join('&')}` : '';
 
-  const response = await fetch(`${platformUrl}/api/v1/workspaces/${workspaceId}/nodes${query}`);
+  const response = await fetch(`${platformUrl}/api/v1/workspaces/${workspaceId}/nodes${query}`, {
+    headers: {
+      'Stoplight-Elements-Version': '1.0.0',
+    },
+  });
   const data = await response.json();
 
   if (!response.ok) {

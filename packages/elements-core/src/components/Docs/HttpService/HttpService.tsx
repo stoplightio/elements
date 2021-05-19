@@ -28,9 +28,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
 
   const dataPanel = (
     <VStack spacing={6}>
-      {(data.servers ?? mocking.mockUrl?.servicePath) && (
-        <ServerInfo servers={data.servers} mockUrl={mocking.mockUrl?.servicePath} />
-      )}
+      {(data.servers ?? mocking.mockUrl) && <ServerInfo servers={data.servers} mockUrl={mocking.mockUrl} />}
       <Box>
         {data.securitySchemes?.length && (
           <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />

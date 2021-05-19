@@ -2,6 +2,7 @@ export type TableOfContentsProps = {
   tree: TableOfContentsItem[];
   activeId: string;
   Link: CustomLinkComponent;
+  maxDepthOpenByDefault?: number;
 };
 
 export type CustomLinkComponent = React.ComponentType<{
