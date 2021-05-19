@@ -65,6 +65,8 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hide
   } else if (isError) {
     if ((nodeError as any).status === 402) {
       elem = <UpgradeToStarter />;
+    } else {
+      elem = <NotFound />;
     }
   } else if (!node) {
     elem = <NotFound />;
