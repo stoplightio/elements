@@ -6,17 +6,17 @@ Elements is made by [Stoplight](https://stoplight.io/?utm_source=github&utm_medi
 
 How you chose to work with Elements depends on what you are trying to do.
 
-- **[Web Component](usage/web-component.md)** - Integrate with any Content Management System or create a simple HTML rendering of your API documentation.
-- **[Command Line Interface](usage/cli.md)** - **Coming soon!** Quickly get up and running, see how your API documentation could look with little effort.
+- **[Web Component](getting-started/usage/web-component.md)** - Integrate with any Content Management System or create a simple HTML rendering of your API documentation.
+- **[Command Line Interface](getting-started/usage/cli.md)** - **Coming soon!** Quickly get up and running, see how your API documentation could look with little effort.
 
 ## Integrations
 
 Learn how to integrate Elements with any of these popular frameworks.
 
-- [AngularJS](integrations/angular.md)
-- [ReactJS](integrations/react.md)
-- [NextJS](integrations/next.md)
-- [GatsbyJS](integrations/gatsby.md)
+- [AngularJS](getting-started/integrations/angular.md)
+- [ReactJS](getting-started/integrations/react.md)
+- [NextJS](getting-started/integrations/next.md)
+- [GatsbyJS](getting-started/integrations/gatsby.md)
 
 
 ## Elements vs Elements Dev Portal
@@ -144,7 +144,9 @@ The full feature comparison of the two packages:
   </tbody>
 </table>
 
-To learn how to work with Elements, head over to [Getting Started](getting-started/getting-started.md), or you can [learn more about Elements Dev Portal](getting-started/dev-portal/introduction.md).
+To learn how to work with Elements, go to the [Web Component Documentation](getting-started/usage/web-component.md) or [Command Line Interface Documentation](getting-started/usage/cli.md). 
+
+If you want to learn more about Elements Dev Portal, we have written [an introduction](getting-started/dev-portal/introduction.md).
 
 ## Free Hosted Docs
 
