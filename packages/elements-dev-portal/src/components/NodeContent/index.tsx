@@ -2,8 +2,8 @@ import {
   CustomLinkComponent,
   Docs,
   MarkdownComponentsProvider,
-  PersistenceContextProvider,
   MockingProvider,
+  PersistenceContextProvider,
 } from '@stoplight/elements-core';
 import { Box } from '@stoplight/mosaic';
 import { dirname, resolve } from '@stoplight/path';
