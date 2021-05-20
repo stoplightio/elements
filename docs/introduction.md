@@ -23,9 +23,9 @@ Learn how to integrate Elements with any of these popular frameworks.
 
 There are two main use cases for Elements, with slightly different components split across two different packages.
 
-If you have one single API with a single OpenAPI document that needs turning into API Reference Documentation, you want the "API Component" in the main Elements package.
+If you have one single API with a single OpenAPI document that needs turning into API Reference Documentation, you want the "API Component" in the main Elements package. This can be used with any OpenAPI definition via a URL or JavaScript object, and **you do not need a Stoplight Account.**
 
-If you have multiple APIs and Markdown Articles to present all together, you want the "StoplightProject Component", which is one of the first components in the Dev Portal package.
+If you have multiple APIs and Markdown Articles to present all together, you want the "StoplightProject Component", which is one of the first components in the Dev Portal package. It will allow Stoplight users to render an [entire project](https://meta.stoplight.io/docs/platform/2.-workspaces/b.adding-projects.md), with multiple APIs and articles mixed in together.
 
 The full feature comparison of the two packages:
 
