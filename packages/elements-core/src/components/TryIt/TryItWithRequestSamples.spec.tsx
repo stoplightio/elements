@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
 import { httpOperation as putTodosOperation } from '../../__fixtures__/operations/put-todos';
+import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { withPersistenceBoundary } from '../../context/Persistence';
 import { TryItWithRequestSamples as RawComponent } from './TryItWithRequestSamples';
 
@@ -39,5 +40,13 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/todoId/));
+  });
+
+  it('displays base url correctly', async () => {
+    render(<TryItWithRequestSamples httpOperation={operationWithUrlVariables} />);
+
+    const codeViewer = await screen.findByLabelText(/curl/);
+
+    expect(codeViewer).toHaveTextContent('ftp://default-namespace.stoplight.io/api/eu/todos');
   });
 });
