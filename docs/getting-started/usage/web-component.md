@@ -94,9 +94,9 @@ Elements provides you with the components for beautiful API reference documentat
 
 If you would like to see how Elements can be used in other environments, Elements is also available as a ReactJS component, which can be used in all sorts of places:
 
-- [ReactJS](../2-integrations/react.md)
-- [AngularJS](../2-integrations/angular.md)
-- [GatsbyJS](../2-integrations/gatsby.md)
-- [NextJS](../2-integrations/next.md)
+- [ReactJS](../integrations/react.md)
+- [AngularJS](../integrations/angular.md)
+- [GatsbyJS](../integrations/gatsby.md)
+- [NextJS](../integrations/next.md)
 
 Once you're done and you're docs are live, give us a shout at [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!

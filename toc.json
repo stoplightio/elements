@@ -1,0 +1,96 @@
+{
+  "items": [
+    {
+      "type": "item",
+      "title": "Introduction",
+      "uri": "docs/introduction.md"
+    },
+    {
+      "type": "item",
+      "title": "Getting Started",
+      "uri": "docs/getting-started/getting-started.md"
+    },
+    {
+      "type": "group",
+      "title": "Usage",
+      "items": [
+        {
+          "type": "item",
+          "title": "Web Component",
+          "uri": "docs/getting-started/usage/web-component.md"
+        },
+        {
+          "type": "item",
+          "title": "Command Line Interface",
+          "uri": "docs/getting-started/usage/cli.md"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Integrations",
+      "items": [
+        {
+          "type": "item",
+          "title": "Using Elements in Angular",
+          "uri": "docs/getting-started/integrations/angular.md"
+        },
+        {
+          "type": "item",
+          "title": "Using Elements in GatsbyJS",
+          "uri": "docs/getting-started/integrations/gatsby.md"
+        },
+        {
+          "type": "item",
+          "title": "Using Elements in NextJS",
+          "uri": "docs/getting-started/integrations/next.md"
+        },
+        {
+          "type": "item",
+          "title": "Using Elements in React",
+          "uri": "docs/getting-started/integrations/react.md"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Elements Dev Portal",
+      "items": [
+        {
+          "type": "item",
+          "title": "Introduction to Elements Dev Portal",
+          "uri": "docs/getting-started/dev-portal/introduction.md"
+        },
+        {
+          "type": "item",
+          "title": "Elements Dev Portal in React",
+          "uri": "docs/getting-started/dev-portal/react.md"
+        },
+        {
+          "type": "item",
+          "title": "Web Component",
+          "uri": "docs/getting-started/dev-portal/web-component.md"
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "title": "guides"
+    },
+    {
+      "type": "item",
+      "title": "Hello World",
+      "uri": "docs/guides/hello-world.md"
+    },
+    {
+      "type": "item",
+      "title": "Great API Documentation",
+      "uri": "docs/guides/great-api-docs.md"
+    },
+    {
+      "type": "item",
+      "title": "How Response Examples Work",
+      "uri": "docs/guides/examples.md"
+    }
+  ]
+}
