@@ -129,7 +129,7 @@ The full feature comparison of the two packages:
   </tbody>
 </table>
 
-To get started with elements, head over to [Getting Started](docs/getting-started.md).
+To learn how to work with Elements, head over to [Getting Started](getting-started/getting-started.md), or you can [learn more about Elements Dev Portal](getting-started/3-dev-portal/introduction.md).
 
 ## Free Hosted Docs
 
