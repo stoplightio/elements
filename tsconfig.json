@@ -5,12 +5,14 @@
     "esModuleInterop": true,
     "baseUrl": "./packages",
     "paths": {
-      "@stoplight/elements-utils": ["./elements-utils/src"],
-      "@stoplight/elements-core": ["./elements-core/src"],
       "@stoplight/elements": ["./elements/src"],
-      "@stoplight/elements-utils/*": ["./elements-utils/src/*"],
+      "@stoplight/elements/*": ["./elements/src/*"],
+      "@stoplight/elements-dev-portal": ["./elements-dev-portal/src"],
+      "@stoplight/elements-dev-portal/*": ["./elements-dev-portal/src/*"],
+      "@stoplight/elements-core": ["./elements-core/src"],
       "@stoplight/elements-core/*": ["./elements-core/src/*"],
-      "@stoplight/elements/*": ["./elements/src/*"]
+      "@stoplight/elements-utils": ["./elements-utils/src"],
+      "@stoplight/elements-utils/*": ["./elements-utils/src/*"]
     }
   }
 }

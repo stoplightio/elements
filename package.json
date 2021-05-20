@@ -42,6 +42,7 @@
     "typescript": "^4.0.2"
   },
   "scripts": {
+    "demo": "yarn workspace @stoplight/elements-demo",
     "elements": "yarn workspace @stoplight/elements",
     "elements-core": "yarn workspace @stoplight/elements-core",
     "elements-utils": "yarn workspace @stoplight/elements-utils",
@@ -53,7 +54,8 @@
     "release": "bash ./release.sh",
     "release.docs": "yarn workspace @stoplight/elements release.docs",
     "type-check": "yarn workspaces run type-check",
-    "test.prod": "yarn workspace @stoplight/elements-utils test.prod && yarn workspace @stoplight/elements test.prod",
+    "test": "yarn workspace @stoplight/elements-utils test && yarn workspace @stoplight/elements test && yarn workspace @stoplight/elements-core test && yarn workspace @stoplight/elements-dev-portal test --passWithNoTests",
+    "test.prod": "yarn workspace @stoplight/elements-utils test.prod && yarn workspace @stoplight/elements test.prod && yarn workspace @stoplight/elements-core test.prod && yarn workspace @stoplight/elements-dev-portal test.prod --passWithNoTests",
     "prepublishOnly": "yarn build",
     "/// examples ///": "",
     "build:angular": "(cd ./examples/angular && yarn reinstall && yarn build)",

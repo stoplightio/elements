@@ -1,12 +1,10 @@
 import { createElementClass } from '@stoplight/elements-core/web-components/createElementClass';
 
-import { StoplightProject } from '../index';
+import { StoplightProject } from '../containers/StoplightProject';
 
 export const StoplightProjectElement = createElementClass(StoplightProject, {
-  workspaceSlug: { type: 'string', defaultValue: '' },
-  projectSlug: { type: 'string', defaultValue: '' },
-  branchSlug: { type: 'string' },
-  authToken: { type: 'string' },
+  projectId: { type: 'string', defaultValue: '' },
+  hideTryIt: { type: 'boolean' },
   basePath: { type: 'string' },
   router: { type: 'string' },
   platformUrl: { type: 'string' },

@@ -15,7 +15,9 @@ export function useGetNodeContent({
 }) {
   const platformUrl = React.useContext(PlatformUrlContext);
 
-  return useQuery(['useNodeContent', nodeSlug, projectId, branchSlug, platformUrl], () =>
-    getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl }),
+  return useQuery(
+    ['useNodeContent', nodeSlug, projectId, branchSlug, platformUrl],
+    () => getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl }),
+    { enabled: nodeSlug && projectId ? true : false },
   );
 }

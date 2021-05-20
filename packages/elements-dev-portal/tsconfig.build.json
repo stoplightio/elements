@@ -13,9 +13,7 @@
     "module": "commonjs",
     "paths": {
       "@stoplight/elements-core": ["../elements-core/dist"],
-      "@stoplight/elements-utils": ["../elements-utils/dist"],
-      "@stoplight/elements-core/*": ["../elements-core/dist/*"],
-      "@stoplight/elements-utils/*": ["../elements-utils/dist/*"]
+      "@stoplight/elements-core/*": ["../elements-core/dist/*"]
     }
   }
 }

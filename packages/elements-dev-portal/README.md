@@ -7,7 +7,7 @@ Elements Dev Portal is an extension to Elements, giving API teams the tools they
 
 ## Documentation
 
-Visit our **[Documentation Site](https://meta.stoplight.io/docs/elements)** for guides and documentation.
+Visit our **[Documentation](https://meta.stoplight.io/docs/elements)** for getting starting, guides and demos.
 
 ## About
 
