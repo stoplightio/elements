@@ -150,6 +150,7 @@ export async function buildHarRequest({
     [];
 
   const [queryParamsWithAuth, headerParamsWithAuth] = runAuthRequestEhancements(auth, queryParams, headerParams);
+  const extendedPath = uriExpand(httpOperation.path, parameterValues);
 
   let postData: HarRequest['postData'] = undefined;
   if (shouldIncludeBody && typeof bodyInput === 'string') {
@@ -176,7 +177,7 @@ export async function buildHarRequest({
 
   return {
     method: httpOperation.method.toUpperCase(),
-    url: URI(uriExpand(httpOperation.path, parameterValues)).absoluteTo(serverUrl).toString(),
+    url: URI(serverUrl).segment(extendedPath).toString(),
     httpVersion: 'HTTP/1.1',
     cookies: [],
     headers: [{ name: 'Content-Type', value: mimeType }, ...headerParamsWithAuth],

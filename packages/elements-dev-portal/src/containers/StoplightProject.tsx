@@ -18,6 +18,8 @@ import { Loading } from '../components/Loading';
 import { NodeContent } from '../components/NodeContent';
 import { NotFound } from '../components/NotFound';
 import { TableOfContents } from '../components/TableOfContents';
+import { UpgradeToStarter } from '../components/UpgradeToStarter';
+import { ResponseError } from '../handlers/getNodeContent';
 import { useGetBranches } from '../hooks/useGetBranches';
 import { useGetNodeContent } from '../hooks/useGetNodeContent';
 import { useGetTableOfContents } from '../hooks/useGetTableOfContents';
@@ -46,7 +48,12 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hide
 
   const { data: tableOfContents, isFetched: isTocFetched } = useGetTableOfContents({ projectId, branchSlug });
   const { data: branches } = useGetBranches({ projectId });
-  const { data: node, isLoading: isLoadingNode } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
+  const {
+    data: node,
+    isLoading: isLoadingNode,
+    isError,
+    error: nodeError,
+  } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
 
   if (!nodeSlug && isTocFetched && tableOfContents?.items) {
     const firstNode = findFirstNode(tableOfContents.items);
@@ -58,6 +65,12 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hide
   let elem: JSX.Element;
   if (isLoadingNode || !isTocFetched) {
     elem = <Loading />;
+  } else if (isError) {
+    if (nodeError instanceof ResponseError && nodeError.code === 402) {
+      elem = <UpgradeToStarter />;
+    } else {
+      elem = <NotFound />;
+    }
   } else if (!node) {
     elem = <NotFound />;
   } else {
