@@ -18,14 +18,13 @@ This will work with pretty much any CMS: Drupal, Joomla, Wordpress, Jekyll, they
 3. Embed the web component inside the HTML `<body>` tag.
 
 ```html
-<elements@beta-api
+<elements-api
   apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml"
   router="hash"
 />
 ```
 
 Alternatively, copy and paste this into an `index.html` and open it in a browser.
-
 
 ```html
 <!doctype html>
