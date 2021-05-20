@@ -6,9 +6,8 @@
       "uri": "docs/introduction.md"
     },
     {
-      "type": "item",
-      "title": "Getting Started",
-      "uri": "docs/getting-started/getting-started.md"
+      "type": "divider",
+      "title": "Getting Started"
     },
     {
       "type": "group",
@@ -75,7 +74,7 @@
     },
     {
       "type": "divider",
-      "title": "guides"
+      "title": "Guides"
     },
     {
       "type": "item",
