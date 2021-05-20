@@ -2,7 +2,7 @@
 
 Elements is an API Documentation toolkit, leveraging [OpenAPI](https://openapis.org/) and Markdown ([CommonMark](https://commonmark.org/)) to provide beautiful, interactive API reference documentation, that you can integrate with any existing content-management system or single-page application. 
 
-Elements is made by [Stoplight](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=docs), which offers hosted documentation, visual API design tools, and all sorts of other handy API tooling, but you do not need a Stoplight account to use Elements. If you are an API developer you can use Elements via the command-line, Web Components, or one of our various integrations with [popular JavaScript frameworks](getting-started/2-integrations/). 
+Elements is made by [Stoplight](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=docs), which offers hosted documentation, visual API design tools, and all sorts of other handy API tooling, but you do not need a Stoplight account to use Elements. If you are an API developer you can use Elements via the command-line, Web Components, or one of our various integrations with [popular JavaScript frameworks](getting-started/integrations.md). 
 
 ## Elements vs Elements Dev Portal
 
