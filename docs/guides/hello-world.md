@@ -62,4 +62,4 @@ Open up [127.0.0.1:8080](http://127.0.0.1:8080) in the browser and there it shou
 
 -----------
 
-Learn more about [Elements API web component](../getting-started/1-usage/web-component.md) if you're curious, or let's move onto the next topic: [what makes great API docs](2-great-api-docs.md).
+Learn more about [Elements API web component](../getting-started/usage/web-component.md) if you're curious, or let's move onto the next topic: [what makes great API docs](great-api-docs.md).

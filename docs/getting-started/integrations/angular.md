@@ -1,10 +1,10 @@
 # Using Elements in Angular
 
-Learn how to quickly get started with Elements in an Angular project.
+Learn how to get started with Elements in an Angular project.
 
 ## Install Elements
 
-Next, install the Elements library.
+First, install the Elements library.
 
 ```bash
 yarn add @stoplight/elements
