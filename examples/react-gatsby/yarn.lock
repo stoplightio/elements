@@ -2228,18 +2228,17 @@
     escape-string-regexp "^2.0.0"
     lodash.deburr "^4.1.0"
 
-"@stoplight/elements-core@7.0.0-beta.3", "@stoplight/elements-core@7.0.0-beta.4", "@stoplight/elements-core@file:../../packages/elements-core/dist":
-  version "7.0.0-beta.4"
+"@stoplight/elements-core@7.0.0-beta.5", "@stoplight/elements-core@^7.0.0-beta.5", "@stoplight/elements-core@file:../../packages/elements-core/dist":
+  version "7.0.0-beta.6"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.31"
     "@fortawesome/free-solid-svg-icons" "^5.14.0"
     "@fortawesome/react-fontawesome" "^0.1.11"
-    "@stoplight/elements-utils" "^7.0.0-beta.1"
+    "@stoplight/elements-utils" "^7.0.0-beta.2"
     "@stoplight/http-spec" "^4.0.1"
     "@stoplight/json" "^3.10.0"
     "@stoplight/json-schema-ref-parser" "^9.0.5"
     "@stoplight/json-schema-sampler" "0.2.0"
-    "@stoplight/json-schema-tree" "2.0.1"
     "@stoplight/json-schema-viewer" "^4.0.0-beta.17"
     "@stoplight/markdown" "^2.10.0"
     "@stoplight/markdown-viewer" "^4.3.3"
@@ -2269,29 +2268,29 @@
     urijs "^1.19.6"
 
 "@stoplight/elements-dev-portal@file:../../packages/elements-dev-portal/dist":
-  version "1.0.0-alpha.2"
+  version "1.0.0-beta.1"
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.10.2"
-    "@stoplight/elements" "^7.0.0-beta.1"
-    "@stoplight/elements-core" "7.0.0-beta.3"
+    "@stoplight/elements" "^7.0.0-beta.4"
+    "@stoplight/elements-core" "7.0.0-beta.5"
     "@stoplight/mosaic" "1.0.0-beta.52"
     lodash "^4.17.19"
     react-query "^3.15.2"
     react-router-dom "^5.2.0"
     use-debounce "^6.0.1"
 
-"@stoplight/elements-utils@^7.0.0-beta.1", "@stoplight/elements-utils@file:../../packages/elements-utils/dist":
-  version "7.0.0-beta.1"
+"@stoplight/elements-utils@^7.0.0-beta.2", "@stoplight/elements-utils@file:../../packages/elements-utils/dist":
+  version "7.0.0-beta.2"
   dependencies:
     lodash "^4.17.19"
 
-"@stoplight/elements@^7.0.0-beta.1", "@stoplight/elements@file:../../packages/elements/dist":
-  version "7.0.0-beta.3"
+"@stoplight/elements@^7.0.0-beta.4", "@stoplight/elements@file:../../packages/elements/dist":
+  version "7.0.0-beta.4"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.31"
     "@fortawesome/free-solid-svg-icons" "^5.14.0"
     "@fortawesome/react-fontawesome" "^0.1.11"
-    "@stoplight/elements-core" "7.0.0-beta.4"
+    "@stoplight/elements-core" "^7.0.0-beta.5"
     "@stoplight/mosaic" "1.0.0-beta.52"
     "@stoplight/types" "^12.0.0"
     "@stoplight/ui-kit" "^3.0.0-beta.39"
@@ -2348,7 +2347,7 @@
     "@types/json-schema" "^7.0.7"
     json-pointer "^0.6.1"
 
-"@stoplight/json-schema-tree@2.0.1", "@stoplight/json-schema-tree@^2.0.1":
+"@stoplight/json-schema-tree@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-2.0.1.tgz#0affbc2c71b7cffab275385b367332fe0eaaf04e"
   integrity sha512-K+NP7dNbcwoA3OUuGsG0uZ6PJjVSP9kq0QN5+j9uHCshbLfUHwtgx9JXCX64HFWyew6HhF9wUTnzFGw/vvo+5g==
@@ -12706,15 +12705,14 @@ react-dev-utils@^11.0.3:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
-react-dom@^16.14.0:
-  version "16.14.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.14.0.tgz#7ad838ec29a777fb3c75c3a190f661cf92ab8b89"
-  integrity sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==
+react-dom@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
+  integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.19.1"
+    scheduler "^0.20.2"
 
 react-draggable@^4.4.2:
   version "4.4.3"
@@ -12874,14 +12872,13 @@ react-window@~1.8.5:
     "@babel/runtime" "^7.0.0"
     memoize-one ">=3.1.1 <6"
 
-react@^16.14.0:
-  version "16.14.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
-  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
+react@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    prop-types "^15.6.2"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -13620,10 +13617,10 @@ saxes@^5.0.1:
   dependencies:
     xmlchars "^2.2.0"
 
-scheduler@^0.19.1:
-  version "0.19.1"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
-  integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+scheduler@^0.20.2:
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
+  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
