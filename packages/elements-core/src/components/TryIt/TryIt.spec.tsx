@@ -569,16 +569,14 @@ describe('TryIt', () => {
 
   describe('Mocking', () => {
     it('Shows mock button', () => {
-      render(<TryItWithPersistence httpOperation={basicOperation} showMocking />);
+      render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
       const mockingButton = screen.getByRole('button', { name: /mocking/i });
       expect(mockingButton).toBeInTheDocument();
     });
 
     it('Invokes request with mocked data', async () => {
-      render(
-        <TryItWithPersistence httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />,
-      );
+      render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
       const mockingButton = screen.getByRole('button', { name: /mocking/i });
 
@@ -634,7 +632,7 @@ describe('TryIt', () => {
     it('Persists mocking options between operations', async () => {
       const { rerender } = render(
         <PersistenceContextProvider>
-          <TryIt httpOperation={putOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />
+          <TryIt httpOperation={putOperation} mockUrl="https://mock-todos.stoplight.io" />
         </PersistenceContextProvider>,
       );
 
@@ -658,7 +656,7 @@ describe('TryIt', () => {
 
       rerender(
         <PersistenceContextProvider>
-          <TryIt httpOperation={basicOperation} showMocking mockUrl="https://mock-todos.stoplight.io" />
+          <TryIt httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />
         </PersistenceContextProvider>,
       );
 

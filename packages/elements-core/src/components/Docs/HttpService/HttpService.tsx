@@ -3,7 +3,7 @@ import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
 
-import { MockingContext } from '../../../containers/Provider';
+import { MockingContext } from '../../../containers/MockingProvider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
