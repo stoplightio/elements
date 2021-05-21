@@ -6,7 +6,7 @@ import customTheme from './theme';
 import '../../elements-core/src/styles/styles.scss';
 
 import cn from 'classnames';
-import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
+import { PersistenceContextProvider } from '@stoplight/elements-core';
 
 export const globalTypes = {
   theme: {
@@ -33,8 +33,10 @@ const PersistenceBoundaryDecorator = (Story) => (
   <PersistenceContextProvider><Story /></PersistenceContextProvider>
 );
 
-const MosaicProviderDecorator = (Story) => (
-  <MosaicProvider><Story/></MosaicProvider>
+const MosaicProviderDecorator = Story => (
+  <MosaicProvider>
+    <Story />
+  </MosaicProvider>
 );
 
 export const decorators = [ThemeProvider, MosaicProviderDecorator, PersistenceBoundaryDecorator];

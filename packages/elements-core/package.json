@@ -13,7 +13,8 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
-  "main": "",
+  "main": "index.js",
+  "exports": "./index.js",
   "files": [
     "**/*"
   ],
@@ -95,6 +96,7 @@
     "@types/enzyme-adapter-react-16": "1.x.x",
     "@types/har-format": "^1.2.5",
     "@types/httpsnippet": "^1.23.0",
+    "@types/json-schema": "^7.0.0",
     "@types/lodash": "^4.14.149",
     "@types/prop-types": "^15.7.3",
     "@types/react": "16.9.56",

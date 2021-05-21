@@ -1,11 +1,13 @@
-import { SidebarLayout } from '@stoplight/elements-core/components/Layout/SidebarLayout';
-import { findFirstNode } from '@stoplight/elements-core/components/MosaicTableOfContents/utils';
-import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
-import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
-import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
-import { useRouter } from '@stoplight/elements-core/hooks/useRouter';
-import { withStyles } from '@stoplight/elements-core/styled';
-import { RoutingProps } from '@stoplight/elements-core/types';
+import {
+  findFirstNode,
+  RoutingProps,
+  SidebarLayout,
+  useRouter,
+  withMosaicProvider,
+  withPersistenceBoundary,
+  withQueryClientProvider,
+  withStyles,
+} from '@stoplight/elements-core';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
