@@ -1,6 +1,8 @@
-import { TableOfContents as ElementsTableOfContents } from '@stoplight/elements-core/components/MosaicTableOfContents';
-import { CustomLinkComponent } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
-import { PoweredByLink } from '@stoplight/elements-core/components/PoweredByLink';
+import {
+  CustomLinkComponent,
+  PoweredByLink,
+  TableOfContents as ElementsTableOfContents,
+} from '@stoplight/elements-core';
 import { Box, BoxProps } from '@stoplight/mosaic';
 import * as React from 'react';
 

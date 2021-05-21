@@ -1,7 +1,4 @@
-import { Docs, ParsedDocs } from '@stoplight/elements-core/components/Docs';
-import { DeprecatedBadge } from '@stoplight/elements-core/components/Docs/HttpOperation/Badges';
-import { TryItWithRequestSamples } from '@stoplight/elements-core/components/TryIt';
-import { HttpMethodColors } from '@stoplight/elements-core/constants';
+import { DeprecatedBadge, Docs, HttpMethodColors, ParsedDocs, TryItWithRequestSamples } from '@stoplight/elements-core';
 import { Box } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import { Collapse, Icon, Tab, Tabs } from '@stoplight/ui-kit';

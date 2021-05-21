@@ -15,7 +15,6 @@ import { apiKey, oauth } from '../../../../__fixtures__/security-schemes';
 import httpService from '../../../../__fixtures__/services/petstore';
 import { httpServiceWithUrlVariables } from '../../../../__fixtures__/services/with-url-variables';
 import { httpServiceWithoutOrigin } from '../../../../__fixtures__/services/without-origin';
-import { Provider } from '../../../../containers/Provider';
 import { HttpService } from '../index';
 import { getOAuthFlowDescription, SecuritySchemes } from '../SecuritySchemes';
 import { ServerInfo } from '../ServerInfo';
@@ -32,7 +31,7 @@ describe('HttpService', () => {
   });
 
   it('displays first server url', () => {
-    render(<ServerInfo servers={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />);
+    render(<ServerInfo servers={httpService.servers} />);
 
     const serverUrl = screen.getByLabelText('production-server');
     expect(serverUrl).toHaveTextContent('https://api.stoplight.io');
@@ -58,11 +57,7 @@ describe('HttpService', () => {
   });
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
-    render(
-      <Provider host="https://stoplight.io" showMocking project="studio-demo" workspace="elements-examples">
-        <ServerInfo servers={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />
-      </Provider>,
-    );
+    render(<ServerInfo servers={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />);
 
     const mockServer = screen.queryByLabelText('mock-server');
     await waitFor(() => expect(mockServer).toHaveTextContent('https://foo.stoplight.io/prism/123'));
