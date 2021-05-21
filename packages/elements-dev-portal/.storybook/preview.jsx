@@ -7,7 +7,7 @@ import '../../elements-core/src/styles/styles.scss';
 
 import cn from 'classnames';
 
-import { Provider as ElementsProvider, PersistenceContextProvider, Styled } from '@stoplight/elements-core';
+import { PersistenceContextProvider, Styled } from '@stoplight/elements-core';
 import { DevPortalProvider } from '../src/components/DevPortalProvider';
 
 export const globalTypes = {
@@ -31,16 +31,8 @@ const ThemeProvider = (Story, context) => {
   );
 };
 
-const ElementsProviderDecorator = Story => (
-  <ElementsProvider host="http://stoplight-local.com:8080" workspace="elements" project="public-apis">
-    <Story />
-  </ElementsProvider>
-);
-
-const PersistenceBoundaryDecorator = Story => (
-  <PersistenceContextProvider>
-    <Story />
-  </PersistenceContextProvider>
+const PersistenceBoundaryDecorator = (Story) => (
+  <PersistenceContextProvider><Story /></PersistenceContextProvider>
 );
 
 const MosaicProviderDecorator = Story => (
@@ -63,14 +55,7 @@ const StyledDecorator = Story => (
   </Styled>
 );
 
-export const decorators = [
-  ThemeProvider,
-  ElementsProviderDecorator,
-  MosaicProviderDecorator,
-  PersistenceBoundaryDecorator,
-  DevPortalProviderDecorator,
-  StyledDecorator,
-];
+export const decorators = [ThemeProvider, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator, StyledDecorator];
 
 export const parameters = {
   docs: {

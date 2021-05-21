@@ -20,14 +20,19 @@ export type NodeContentProps = {
    * Allows to hide TryIt component
    */
   hideTryIt?: boolean;
+
+  /**
+   * Allows to hide mocking button
+   */
+  hideMocking?: boolean;
 };
 
-export const NodeContent = ({ node, Link, hideTryIt }: NodeContentProps) => {
+export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentProps) => {
   return (
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
         <MarkdownComponentsProvider value={{ link: LinkComponent }}>
-          <MockingProvider mockUrl={node.links.mock_url}>
+          <MockingProvider mockUrl={node.links.mock_url} hideMocking={hideMocking}>
             <Box style={{ maxWidth: ['model'].includes(node.type) ? 1000 : undefined }}>
               <Docs nodeType={node.type as NodeType} nodeData={node.data} hideTryIt={hideTryIt} />
             </Box>

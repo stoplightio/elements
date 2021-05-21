@@ -17,7 +17,7 @@ export {
   NodeTypeIconDefs,
   NodeTypePrettyName,
 } from './constants';
-export { MockingProvider, Provider } from './containers/Provider';
+export { MockingProvider } from './containers/MockingProvider';
 export { InlineRefResolverProvider, SchemaTreeRefDereferenceFn } from './context/InlineRefResolver';
 export { PersistenceContextProvider, withPersistenceBoundary } from './context/Persistence';
 export { withMosaicProvider } from './hoc/withMosaicProvider';
