@@ -47,7 +47,7 @@ Tutorials are similar to getting started guides but are looking to make it easy 
 
 Other common tutorials are "Common Errors" which explain how your [error objects](https://apisyouwonthate.com/blog/creating-good-api-errors-in-rest-graphql-and-grpc/) work, what common status codes mean so you don't need to document 500, 501, 502 on every single operation, and any other useful information that can help users troubleshoot trouble.
 
-_The basic Elements package does not cover Markdown Articles, but [Elements Dev Portal](../getting-started/3-dev-portal/introduction.md) does._
+_The basic Elements package does not cover Markdown Articles, but [Elements Dev Portal](../getting-started/dev-portal/introduction.md) does._
 #### Code Samples
 
 Stack Overflow is a developer's best friend for a reason. Most developers want to jump right into code, so providing them with ready to use samples in their language can lead to happy developers saying wonderful things about you and your API. This also helps avoid mistakes novice developers can make consuming your API - Happy and smaller support teams ;)
@@ -119,4 +119,4 @@ using (var response = await client.SendAsync(request))
 ```
 <!-- type: tab-end -->
 
-The request samples are good, but a lot of developers just want to see what responses look like, so let's take a look at [Examples](3-examples.md).
+The request samples are good, but a lot of developers just want to see what responses look like, so let's take a look at [Examples](examples.md).
