@@ -51,7 +51,12 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hide
 
   const { data: tableOfContents, isFetched: isTocFetched } = useGetTableOfContents({ projectId, branchSlug });
   const { data: branches } = useGetBranches({ projectId });
-  const { data: node, isLoading: isLoadingNode, isError, error: nodeError } = useGetNodeContent({
+  const {
+    data: node,
+    isLoading: isLoadingNode,
+    isError,
+    error: nodeError,
+  } = useGetNodeContent({
     nodeSlug,
     projectId,
     branchSlug,
