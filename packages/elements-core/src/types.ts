@@ -183,17 +183,6 @@ export type ParamField = {
   description: string;
   example: string;
 };
-
-export interface IActiveInfo {
-  host: string;
-  workspace: string;
-  project: string;
-  branch?: string;
-  node?: string;
-  authToken?: string;
-  showMocking?: boolean;
-}
-
 export interface IArticleHeading {
   id: string;
   title: string;

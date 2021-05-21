@@ -8,6 +8,8 @@ export default {
   component: StoplightProject,
   argTypes: {
     projectId: { table: { category: 'Input' } },
+    hideTryIt: { table: { category: 'Input' } },
+    hideMocking: { table: { category: 'Input' } },
     basePath: { table: { category: 'Routing' } },
     router: { table: { category: 'Routing' } },
     platformUrl: { table: { category: 'Advanced' } },
