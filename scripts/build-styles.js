@@ -13,6 +13,18 @@ const outputFileName = 'styles.min.css';
 const sourcePackagePath = resolve(__dirname, '..', 'packages', sourcePackageName);
 const destinationPackagePath = resolve(__dirname, '..', 'packages', packageName);
 
+// copy scss styles only for core package
+if (packageName === sourcePackageName) {
+  ncp(resolve(sourcePackagePath, 'src', 'styles'), resolve(destinationPackagePath, 'dist', 'styles'), err => {
+    if (err) {
+      return console.error(err);
+    }
+    console.log('Done copying.');
+  });
+}
+
+console.log('Compiling SCSS...');
+
 const outFile = resolve(destinationPackagePath, 'dist', outputFileName);
 render(
   {

@@ -1,5 +1,15 @@
 import { Node } from '../types';
 
+export class ResponseError extends Error {
+  code: number;
+
+  constructor(message: string, responseCode: number) {
+    super(message);
+    this.name = 'ResponseError';
+    this.code = responseCode;
+  }
+}
+
 export const getNodeContent = async ({
   nodeSlug,
   projectId,
@@ -13,11 +23,15 @@ export const getNodeContent = async ({
 }): Promise<Node> => {
   const nodeId = getNodeIdFromSlug(nodeSlug);
   const branchQuery = branchSlug ? `?branch=${branchSlug}` : '';
-  const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/nodes/${nodeId}${branchQuery}`);
+  const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/nodes/${nodeId}${branchQuery}`, {
+    headers: {
+      'Stoplight-Elements-Version': '1.0.0',
+    },
+  });
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data);
+    throw new ResponseError('Payment Required', response.status);
   }
 
   return data;

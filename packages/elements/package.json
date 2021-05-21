@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "7.0.0-beta.2",
+  "version": "7.0.0-beta.4",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -49,7 +49,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "@stoplight/elements-core": "7.0.0-beta.3",
+    "@stoplight/elements-core": "^7.0.0-beta.5",
     "@stoplight/mosaic": "1.0.0-beta.52",
     "@stoplight/types": "^12.0.0",
     "@stoplight/ui-kit": "^3.0.0-beta.39",
@@ -70,6 +70,7 @@
     "@testing-library/user-event": "^12.2.0",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
+    "@types/json-schema": "^7.0.0",
     "@types/lodash": "^4.14.149",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.12",

@@ -24,7 +24,7 @@ import {
 const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
 
-export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeId, Link }) => {
+export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeId, Link, maxDepthOpenByDefault }) => {
   React.useEffect(() => {
     if (activeId && typeof window !== 'undefined') {
       const elem = window.document.getElementById(getHtmlIdFromItemId(activeId));
@@ -46,7 +46,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeI
                 return <Divider key={key} item={item} />;
               }
 
-              return <GroupItem key={key} item={item} depth={0} />;
+              return <GroupItem key={key} item={item} depth={0} maxDepthOpenByDefault={maxDepthOpenByDefault} />;
             })}
           </ActiveIdContext.Provider>
         </LinkContext.Provider>
@@ -77,7 +77,8 @@ const Divider = React.memo<{
 const GroupItem = React.memo<{
   depth: number;
   item: TableOfContentsGroupItem;
-}>(({ item, depth }) => {
+  maxDepthOpenByDefault?: number;
+}>(({ item, depth, maxDepthOpenByDefault }) => {
   if (isExternalLink(item)) {
     return (
       <Box as="a" href={item.url} target="_blank" rel="noopener noreferrer" display="block">
@@ -85,7 +86,7 @@ const GroupItem = React.memo<{
       </Box>
     );
   } else if (isGroup(item) || isNodeGroup(item)) {
-    return <Group depth={depth} item={item} />;
+    return <Group depth={depth} item={item} maxDepthOpenByDefault={maxDepthOpenByDefault} />;
   } else if (isNode(item)) {
     return (
       <Node
@@ -112,11 +113,12 @@ const GroupItem = React.memo<{
 const Group = React.memo<{
   depth: number;
   item: TableOfContentsGroup | TableOfContentsNodeGroup;
-}>(({ depth, item }) => {
+  maxDepthOpenByDefault?: number;
+}>(({ depth, item, maxDepthOpenByDefault }) => {
   const activeId = React.useContext(ActiveIdContext);
   const [isOpen, setIsOpen] = React.useState(() => {
     // Only need to check during initial render
-    return isGroupOpenByDefault(depth, item, activeId);
+    return isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault);
   });
 
   const onClick = (e: React.MouseEvent, forceOpen?: boolean) => {

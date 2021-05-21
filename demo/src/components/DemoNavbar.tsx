@@ -47,7 +47,6 @@ export const DemoNavbar = () => {
             <Button as="a" appearance="minimal" target="__blank" href="https://stoplight.io">
               Stoplight
             </Button>
-            {/* <Button appearance="minimal">Documentation</Button> */}
           </HStack>
         </Flex>
       </InvertTheme>

@@ -7,9 +7,7 @@ import '../../elements-core/src/styles/styles.scss';
 
 import cn from 'classnames';
 
-import { Provider as ElementsProvider } from '@stoplight/elements-core/containers/Provider';
-import { PersistenceContextProvider } from '@stoplight/elements-core/context/Persistence';
-import { Styled } from '@stoplight/elements-core/styled';
+import { PersistenceContextProvider, Styled } from '@stoplight/elements-core';
 import { DevPortalProvider } from '../src/components/DevPortalProvider';
 
 export const globalTypes = {
@@ -33,29 +31,31 @@ const ThemeProvider = (Story, context) => {
   );
 };
 
-const ElementsProviderDecorator = (Story) => (
-  <ElementsProvider host="http://stoplight-local.com:8080" workspace="elements" project="public-apis">
-    <Story />
-  </ElementsProvider>
-);
-
 const PersistenceBoundaryDecorator = (Story) => (
   <PersistenceContextProvider><Story /></PersistenceContextProvider>
 );
 
-const MosaicProviderDecorator = (Story) => (
-  <MosaicProvider><Story/></MosaicProvider>
+const MosaicProviderDecorator = Story => (
+  <MosaicProvider>
+    <Story />
+  </MosaicProvider>
 );
 
 const DevPortalProviderDecorator = (Story, context) => {
-  return (<DevPortalProvider platformUrl={context.args.platformUrl}><Story/></DevPortalProvider>);
-}
+  return (
+    <DevPortalProvider platformUrl={context.args.platformUrl}>
+      <Story />
+    </DevPortalProvider>
+  );
+};
 
-const StyledDecorator = (Story) => (
-  <Styled><Story/></Styled>
+const StyledDecorator = Story => (
+  <Styled>
+    <Story />
+  </Styled>
 );
 
-export const decorators = [ThemeProvider, ElementsProviderDecorator, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator, StyledDecorator];
+export const decorators = [ThemeProvider, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator, StyledDecorator];
 
 export const parameters = {
   docs: {

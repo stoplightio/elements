@@ -4,10 +4,9 @@
 # @stoplight/elements
 
 Elements is a collection of UI components for displaying beautiful developer documentation from any OpenAPI document.
-
 ## Documentation
 
-Visit our **[Documentation Site](https://meta.stoplight.io/docs/elements)** for guides and documentation.
+Visit our **[Documentation](https://meta.stoplight.io/docs/elements)** for getting starting, guides and demos.
 
 ## About
 

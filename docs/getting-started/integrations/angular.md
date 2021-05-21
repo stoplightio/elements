@@ -1,22 +1,10 @@
-# Getting Started with Elements in Angular
+# Using Elements in Angular
 
-Learn how to quickly get started with Elements in an Angular project.
-
-## [Optional] Create the Angular app
-
-> Skip this step if you already have your Angular app set up.
-
-Run the following command to create a starter Angular app using the [@angular/cli](http://npmjs.com/package/@angular/cli).
-Include the Angular routing module if prompted by the CLI.
-
-```bash
-npx @angular/cli new elements-starter-angular
-cd elements-starter-angular
-```
+Learn how to get started with Elements in an Angular project.
 
 ## Install Elements
 
-Next, install the Elements library.
+First, install the Elements library.
 
 ```bash
 yarn add @stoplight/elements
@@ -133,12 +121,3 @@ yarn start
 ```
 
 And you should see the API reference documentation for the Zoom API.
-
-![](https://cdn.stoplight.io/elements/elements-starter-react-zoom-api-reference-docs.png)
-
-
-## Next steps
-
-Well that was easy, wasn't it? But you're not done yet! Elements provides you with the components for beautiful API reference documentation, but you'll likely want to add other things to your site such as a landing page, header and footer navigations, etc.
-
-Once you're done and you're docs are live, give us a shout [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!

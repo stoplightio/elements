@@ -17,7 +17,6 @@ Available as React Components, or Web Components, you can use Elements all toget
   - [🏁 Usage](#-usage)
     - [React Component](#react-component)
     - [Web Component](#web-component)
-  - [🪛 Configuration](#-configuration)
   - [🚧 Roadmap](#-roadmap)
   - [⚙️ Integrations](#️-integrations)
   - [🏁 Help Others Utilize Elements](#-help-others-utilize-elements)
@@ -63,6 +62,7 @@ import { API } from "@stoplight/elements";
 />
 ```
 
+For more information on using Elements as a React component, head over to our [React documentation](docs/getting-started/2-integrations/react.md).
 ### Web Component
 
 ```html
@@ -90,39 +90,27 @@ import { API } from "@stoplight/elements";
 
 Load this page up in your browser and you should see the [GitHub REST API](https://docs.github.com/en/rest) documented in Stoplight Elements.
 
-## 🪛 Configuration
-
-The React and Web Components both have the following configuration options.
-
-- `apiDescriptionUrl` - OpenAPI document URL, supporting `http://`, `https://`, and documents containing `$ref` to other http(s) documents.
-- `apiDescriptionDocument` - OpenAPI document, provided as YAML string, JSON string or JavaScript object.
-- `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
-- `layout` - There are two layouts for Elements:
-  - `sidebar` - (default) Three-column design.
-  - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
-- `router` -  Determines how navigation should work:
-  - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
-  - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
-  - `memory` - keeps the history of your “URL” in memory (does not read or write to the address bar)
+For more information on using Elements as a Web Component, head over to our [Web Component documentation](docs/getting-started/1-usage/web-component.md).
 
 ## 🚧 Roadmap
 
 - [x] API Console (a.k.a "Try it!")
 - [x] Automatic Code Samples
-- [x] Automatic Examples! 🥳
+- [x] Automatic Examples
 - [x] React & Web Component Support
-- [ ] OpenAPI Support
-  - [x] OpenAPI v2.0
+- [x] OpenAPI Support
+  - [x] OpenAPI v3.1
   - [x] OpenAPI v3.0
-  - [ ] OpenAPI v3.1
-  - [ ] Callbacks
-  - [ ] Webhooks
-- [ ] Multiple APIs (a.k.a "Dev Portal")
+  - [x] OpenAPI v2.0
+- [ ] Callbacks
+- [ ] Webhooks
+- [x] Multiple APIs (a.k.a "Dev Portal")
 
 ## ⚙️ Integrations
 
-- [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=readme): Free visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
-- [Stoplight Platform](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme): Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
+- [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Free visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
+- [Stoplight Platform](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
+- [LaravelPHP Elements](https://packagist.org/packages/juststeveking/laravel-stoplight-elements) - A simple API documentation package for Laravel using OpenAPI and Stoplight Elements.
 
 ## 🏁 Help Others Utilize Elements
 
