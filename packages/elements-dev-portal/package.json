@@ -23,7 +23,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "yarn build.react && yarn build.webcomponents",
+    "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts build",
     "build.webcomponents": "webpack -c ./web-components.config.js",
