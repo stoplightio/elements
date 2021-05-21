@@ -33,6 +33,16 @@ TodosAPI.args = {
   apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml',
 };
 
+export const TodosAPIWithFixHeight = (props: any) => (
+  <div style={{ height: 400 }}>
+    <elements-api {...props} />
+  </div>
+);
+TodosAPIWithFixHeight.args = {
+  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml',
+};
+TodosAPIWithFixHeight.storyName = 'TodosAPI with fixed height';
+
 export const ZoomApi = Template.bind({});
 ZoomApi.args = {
   apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml',

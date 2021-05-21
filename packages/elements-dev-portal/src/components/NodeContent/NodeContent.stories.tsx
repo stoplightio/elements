@@ -46,10 +46,10 @@ export default {
     platformUrl: { table: { category: 'Input' } },
   },
   args: {
-    nodeSlug: 'b3A6MTE0-create-todo',
-    projectId: 'cHJqOjY',
+    nodeSlug: 'b3A6Mzg5NDM2-create-todo',
+    projectId: 'cHJqOjExOTY',
     branchSlug: '',
-    platformUrl: 'https://x-6195.stoplight-dev.com',
+    platformUrl: 'https://stoplight.io',
   },
 };
 

@@ -1,14 +1,16 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InlineRefResolverProvider } from '@stoplight/elements-core/context/InlineRefResolver';
-import { withPersistenceBoundary } from '@stoplight/elements-core/context/Persistence';
-import { withMosaicProvider } from '@stoplight/elements-core/hoc/withMosaicProvider';
-import { withQueryClientProvider } from '@stoplight/elements-core/hoc/withQueryClientProvider';
-import { withRouter } from '@stoplight/elements-core/hoc/withRouter';
-import { useBundleRefsIntoDocument } from '@stoplight/elements-core/hooks/useBundleRefsIntoDocument';
-import { useParsedValue } from '@stoplight/elements-core/hooks/useParsedValue';
-import { withStyles } from '@stoplight/elements-core/styled';
-import { RoutingProps } from '@stoplight/elements-core/types';
+import {
+  InlineRefResolverProvider,
+  RoutingProps,
+  useBundleRefsIntoDocument,
+  useParsedValue,
+  withMosaicProvider,
+  withPersistenceBoundary,
+  withQueryClientProvider,
+  withRouter,
+  withStyles,
+} from '@stoplight/elements-core';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { NonIdealState } from '@stoplight/ui-kit';
 import { pipe } from 'lodash/fp';

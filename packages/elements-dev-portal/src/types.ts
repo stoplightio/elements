@@ -1,4 +1,4 @@
-import { TableOfContentsItem } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
+import { TableOfContentsItem } from '@stoplight/elements-core';
 
 export type Branch = {
   id: number;

@@ -3,6 +3,8 @@ import { Dictionary, IHttpOperation, IHttpService, NodeType } from '@stoplight/t
 import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
 import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 
+export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
+
 export type ParsedNode =
   | {
       type: NodeType.Article;
@@ -18,7 +20,7 @@ export type ParsedNode =
     }
   | {
       type: NodeType.Model;
-      data: JSONSchema;
+      data: JSONSchema7;
     }
   | {
       type: NodeType.HttpServer;
@@ -36,8 +38,6 @@ export type ParsedNode =
       type: NodeType.Generic;
       data: unknown;
     };
-
-export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
 
 export interface INodeFilter {
   nodeUri?: string;
@@ -183,17 +183,6 @@ export type ParamField = {
   description: string;
   example: string;
 };
-
-export interface IActiveInfo {
-  host: string;
-  workspace: string;
-  project: string;
-  branch?: string;
-  node?: string;
-  authToken?: string;
-  showMocking?: boolean;
-}
-
 export interface IArticleHeading {
   id: string;
   title: string;
