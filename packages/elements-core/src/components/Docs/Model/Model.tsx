@@ -1,13 +1,13 @@
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
+import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
-import { JSONSchema } from '../../../types';
 import { SchemaAndDescription } from '../../SchemaAndDescription';
 import { DocsComponentProps } from '..';
 
-export type ModelProps = DocsComponentProps<JSONSchema>;
+export type ModelProps = DocsComponentProps<JSONSchema7>;
 
 const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => {
   return (

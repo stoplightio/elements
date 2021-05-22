@@ -73,6 +73,7 @@
     "@testing-library/user-event": "^12.2.0",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
+    "@types/json-schema": "^7.0.0",
     "@types/lodash": "^4.14.149",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.12",
