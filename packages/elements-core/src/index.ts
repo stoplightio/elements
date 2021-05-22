@@ -8,7 +8,6 @@ export { TableOfContents } from './components/MosaicTableOfContents';
 export { CustomLinkComponent, TableOfContentsItem } from './components/MosaicTableOfContents/types';
 export { findFirstNode } from './components/MosaicTableOfContents/utils';
 export { PoweredByLink } from './components/PoweredByLink';
-export { Row } from './components/TableOfContents/Row';
 export { TryIt, TryItProps, TryItWithRequestSamples, TryItWithRequestSamplesProps } from './components/TryIt';
 export {
   defaultPlatformUrl,
@@ -24,7 +23,6 @@ export { withMosaicProvider } from './hoc/withMosaicProvider';
 export { withQueryClientProvider } from './hoc/withQueryClientProvider';
 export { withRouter } from './hoc/withRouter';
 export { useBundleRefsIntoDocument } from './hooks/useBundleRefsIntoDocument';
-export { useDereferencedHttpOperation } from './hooks/useDereferencedHttpOperation';
 export { useParsedData } from './hooks/useParsedData';
 export { useParsedValue } from './hooks/useParsedValue';
 export { useRouter } from './hooks/useRouter';
