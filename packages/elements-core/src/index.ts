@@ -27,5 +27,5 @@ export { useParsedData } from './hooks/useParsedData';
 export { useParsedValue } from './hooks/useParsedValue';
 export { useRouter } from './hooks/useRouter';
 export { useTocContents } from './hooks/useTocContents';
-export { withStyles } from './styled';
+export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from './types';
