@@ -11,7 +11,7 @@ import { useInlineRefResolver } from '../../context/InlineRefResolver';
 import { JSONSchema } from '../../types';
 import { MarkdownViewer } from '../MarkdownViewer';
 
-export interface ISchemaAndDescriptionProps {
+interface ISchemaAndDescriptionProps {
   schema: JSONSchema;
   title?: string;
   description?: string;

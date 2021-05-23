@@ -11,7 +11,7 @@ import {
 } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 
-export interface SecuritySchemesProps {
+interface SecuritySchemesProps {
   schemes: HttpSecurityScheme[];
   defaultScheme?: string;
 }

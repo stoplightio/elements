@@ -1,4 +1,4 @@
-import { IHttpService, NodeType } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import { escapeRegExp, partial, sortBy } from 'lodash';
 import { pipe } from 'lodash/fp';
 import { dirname, sep } from 'path';
@@ -7,14 +7,6 @@ import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, Ta
 
 type SchemaType = 'divider' | 'group';
 type TocType = 'api' | 'project';
-
-export function generateApiToC(searchResults: NodeData[], httpServiceData: IHttpService) {
-  const toc = generateToC(searchResults, 'api');
-
-  prependOverviewOfHttpService(toc, searchResults, httpServiceData);
-
-  return toc;
-}
 
 export function generateProjectToC(searchResults: NodeData[]) {
   return generateToC(searchResults, 'project');
@@ -385,17 +377,6 @@ export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType 
     }
   };
 }
-
-const prependOverviewOfHttpService = (
-  toc: ITableOfContents,
-  searchResults: NodeData[],
-  httpServiceData: IHttpService,
-) => {
-  const httpService = searchResults.find(element => element.type === NodeType.HttpService);
-  if (httpService && httpServiceData.description) {
-    toc.items = [{ type: 'item', title: 'Overview', uri: httpService.uri }, ...toc.items];
-  }
-};
 
 function getDirsFromUri(uri: string) {
   const strippedUri = uri.replace(/^\/?(?:docs\/)?/, '');

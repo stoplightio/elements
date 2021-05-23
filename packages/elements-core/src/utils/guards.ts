@@ -1,6 +1,6 @@
 import * as SMDAST from '@stoplight/markdown';
 import { isArray } from '@stoplight/mosaic';
-import { IHttpOperation, IHttpRequest, IHttpService, INode } from '@stoplight/types';
+import { IHttpOperation, IHttpService, INode } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import { isObject, isPlainObject } from 'lodash';
 
@@ -23,10 +23,6 @@ export function isHttpService(maybeHttpService: unknown): maybeHttpService is IH
 
 export function isHttpOperation(maybeHttpOperation: unknown): maybeHttpOperation is IHttpOperation {
   return isStoplightNode(maybeHttpOperation) && 'method' in maybeHttpOperation && 'path' in maybeHttpOperation;
-}
-
-export function isHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is IHttpRequest {
-  return isObject(maybeHttpRequest) && 'method' in maybeHttpRequest && 'url' in maybeHttpRequest;
 }
 
 export function isProperUrl(url: string) {

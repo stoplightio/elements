@@ -14,7 +14,7 @@ import { HttpSecuritySchemeColors } from '../../../constants';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle } from '../Sections';
 
-export interface ISecuritiesProps {
+interface ISecuritiesProps {
   securities?: HttpSecurityScheme[];
   className?: string;
   title?: string;
