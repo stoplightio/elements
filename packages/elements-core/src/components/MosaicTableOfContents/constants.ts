@@ -1,5 +1,5 @@
+import { faCloud, faCube } from '@fortawesome/free-solid-svg-icons';
 import { IIconProps } from '@stoplight/mosaic';
-import { faCube, faCloud } from '@fortawesome/free-solid-svg-icons'
 
 // Icons appear left of the node title
 export const NODE_TYPE_TITLE_ICON: { [nodeType: string]: IIconProps['icon'] } = {
