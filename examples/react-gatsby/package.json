@@ -36,7 +36,7 @@
     "gatsby-plugin-sharp": "^3.5.0",
     "gatsby-source-filesystem": "^3.5.0",
     "gatsby-transformer-sharp": "^3.5.0",
-    "jsdom": "^16.5.0",
+    "jsdom": "^16.6.0",
     "mobx": "^6.3.0",
     "process": "^0.11.10",
     "react": "^17.0.2",
