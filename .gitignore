@@ -10,6 +10,7 @@ node_modules
 /coverage
 packages/*/coverage
 cypress/results
+cypress/fixtures
 
 # production
 build
