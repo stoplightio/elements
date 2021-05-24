@@ -1,13 +1,14 @@
 import { IIconProps } from '@stoplight/mosaic';
+import { faCube, faCloud } from '@fortawesome/free-solid-svg-icons'
 
 // Icons appear left of the node title
 export const NODE_TYPE_TITLE_ICON: { [nodeType: string]: IIconProps['icon'] } = {
-  http_service: ['fas', 'cloud'],
+  http_service: faCloud,
 };
 
 // Icons appear in the right meta
 export const NODE_TYPE_META_ICON: { [nodeType: string]: IIconProps['icon'] } = {
-  model: ['fas', 'cube'],
+  model: faCube,
 };
 
 export const NODE_TYPE_ICON_COLOR = {

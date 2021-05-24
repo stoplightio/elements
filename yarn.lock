@@ -4028,7 +4028,7 @@
     lodash "^4.17.15"
     safe-stable-stringify "^1.1"
 
-"@stoplight/lifecycle@^2.3.2":
+"@stoplight/lifecycle@^2.2.1", "@stoplight/lifecycle@^2.3.2":
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@stoplight/lifecycle/-/lifecycle-2.3.2.tgz#d61dff9ba20648241432e2daaef547214dc8976e"
   integrity sha512-v0u8p27FA/eg04b4z6QXw4s0NeeFcRzyvseBW0+k/q4jtpg7EhVCqy42EbbbU43NTNDpIeQ81OcvkFz+6CYshw==
@@ -4264,6 +4264,17 @@
     semantic-release "17.0.3"
     shelljs "0.8.x"
     tslib "1.10.0"
+
+"@stoplight/tree-list@^5.0.3":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.4.tgz#0b011d57bd722ba33ef3dac9990817aba2b95377"
+  integrity sha512-UHQQbqdm3zwzYfpMBHxQNWJEG2bV3vkMFRkzik7kFsVEi6Us6gxSV+kpWapZHD6rmo1m3k8qF4sSqetw0u3xZA==
+  dependencies:
+    "@stoplight/lifecycle" "^2.2.1"
+    "@stoplight/react-error-boundary" "^1.0.0"
+    classnames "^2.2.6"
+    mobx-react-lite "^1.5.2"
+    strict-event-emitter-types "^2.0.0"
 
 "@stoplight/types@^11.9.0":
   version "11.10.0"
@@ -10741,6 +10752,11 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
+fast-text-encoding@^1.0.1:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/fast-text-encoding/-/fast-text-encoding-1.0.3.tgz#ec02ac8e01ab8a319af182dae2681213cfe9ce53"
+  integrity sha512-dtm4QZH9nZtcDt8qJiOH9fcQd1NAgi+K1O2DbE6GG1PPCK/BWfOH3idCTRQ4ImXRUOyopDEgDEnVEE7Y/2Wrig==
+
 fast-xml-parser@^3.19.0:
   version "3.19.0"
   resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-3.19.0.tgz#cb637ec3f3999f51406dd8ff0e6fc4d83e520d01"
@@ -16116,6 +16132,11 @@ mkdirp@*, mkdirp@1.x, mkdirp@^1.0.3, mkdirp@^1.0.4:
   dependencies:
     minimist "^1.2.5"
 
+mobx-react-lite@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-1.5.2.tgz#c4395b0568b9cb16f07669d8869cc4efa1b8656d"
+  integrity sha512-PyZmARqqWtpuQaAoHF5pKX7h6TKNLwq6vtovm4zZvG6sEbMRHHSqioGXSeQbpRmG8Kw8uln3q/W1yMO5IfL5Sg==
+
 mobx@^5.13.0:
   version "5.15.7"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.15.7.tgz#b9a5f2b6251f5d96980d13c78e9b5d8d4ce22665"
@@ -20955,6 +20976,11 @@ stream-shift@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.1.tgz#d7088281559ab2778424279b0877da3c392d5a3d"
   integrity sha512-AiisoFqQ0vbGcZgQPY1cdP2I76glaVA/RauYR4G4thNFgkTqr90yXTo4LYX60Jl+sIlPNHHdGSwo01AvbKUSVQ==
+
+strict-event-emitter-types@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-event-emitter-types/-/strict-event-emitter-types-2.0.0.tgz#05e15549cb4da1694478a53543e4e2f4abcf277f"
+  integrity sha512-Nk/brWYpD85WlOgzw5h173aci0Teyv8YdIAEtV+N88nDB0dLlazZyJMIsN6eo1/AR61l+p6CJTG1JIyFaoNEEA==
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"
