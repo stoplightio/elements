@@ -1,4 +1,4 @@
-import { TableOfContentsItem } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
+import { TableOfContentsItem } from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
 
 import { OperationNode, ServiceNode } from '../../utils/oas/types';

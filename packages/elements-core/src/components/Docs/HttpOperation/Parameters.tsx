@@ -8,7 +8,7 @@ import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';
 
-export interface ParametersProps {
+interface ParametersProps {
   parameterType: ParameterType;
   parameters?: IHttpParam[];
 }
@@ -55,7 +55,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
 };
 Parameters.displayName = 'HttpOperation.Parameters';
 
-export interface IParameterProps {
+interface IParameterProps {
   parameter: IHttpParam;
   parameterType: ParameterType;
 }

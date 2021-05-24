@@ -6,5 +6,7 @@ import { getBranches } from '../handlers/getBranches';
 
 export function useGetBranches({ projectId }: { projectId: string }) {
   const platformUrl = React.useContext(PlatformUrlContext);
-  return useQuery(['branches', projectId, platformUrl], () => getBranches({ projectId, platformUrl }));
+  return useQuery(['branches', projectId, platformUrl], () => getBranches({ projectId, platformUrl }), {
+    enabled: projectId ? true : false,
+  });
 }

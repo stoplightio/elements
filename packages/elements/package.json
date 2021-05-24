@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "7.0.0-beta.2",
+  "version": "7.0.0-beta.4",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -23,7 +23,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "yarn build.react && yarn build.webcomponents",
+    "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts build",
     "build.styles": "node ../../scripts/build-styles.js elements",
@@ -49,10 +49,13 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "@stoplight/elements-core": "7.0.0-beta.3",
+    "@stoplight/elements-core": "^7.0.0-beta.5",
+    "@stoplight/http-spec": "^4.0.1",
+    "@stoplight/json": "^3.10.0",
     "@stoplight/mosaic": "1.0.0-beta.52",
     "@stoplight/types": "^12.0.0",
     "@stoplight/ui-kit": "^3.0.0-beta.39",
+    "classnames": "^2.2.6",
     "lodash": "^4.17.19",
     "react-query": "^3.15.2",
     "react-router-dom": "^5.2.0"
@@ -70,6 +73,7 @@
     "@testing-library/user-event": "^12.2.0",
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
+    "@types/json-schema": "^7.0.0",
     "@types/lodash": "^4.14.149",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.12",

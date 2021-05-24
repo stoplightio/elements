@@ -2,7 +2,7 @@ import { InvertTheme, Panel, Text } from '@stoplight/mosaic';
 import { IServer } from '@stoplight/types';
 import * as React from 'react';
 
-import { ActiveInfoContext } from '../../../containers/Provider';
+import { MockingContext } from '../../../containers/MockingProvider';
 import { isProperUrl } from '../../../utils/guards';
 import { getServerUrlWithDefaultValues } from '../../../utils/http-spec/IServer';
 
@@ -12,7 +12,8 @@ interface ServerInfoProps {
 }
 
 export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
-  const info = React.useContext(ActiveInfoContext);
+  const mocking = React.useContext(MockingContext);
+  const showMocking = !mocking.hideMocking && mockUrl && isProperUrl(mockUrl);
   const productionServer = servers?.[0];
   const productionUrl = productionServer && getServerUrlWithDefaultValues(productionServer);
 
@@ -24,7 +25,7 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
           <Panel.Content w="max" className="flex flex-col">
             {productionUrl && isProperUrl(productionUrl) && (
               <div className="whitespace-nowrap">
-                {info.showMocking && (
+                {showMocking && (
                   <Text pr={2} fontWeight="bold">
                     Production:
                   </Text>
@@ -32,7 +33,7 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
                 <Text aria-label="production-server">{productionUrl}</Text>
               </div>
             )}
-            {info.showMocking && mockUrl && isProperUrl(mockUrl) && (
+            {showMocking && (
               <div className="flex flex-row">
                 <Text fontWeight="bold">Mock Server:</Text>
                 <Text aria-label="mock-server" pl={2}>

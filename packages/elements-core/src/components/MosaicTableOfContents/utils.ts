@@ -12,14 +12,14 @@ export function getHtmlIdFromItemId(id: string) {
   return `sl-toc-${id}`;
 }
 
-const MAX_DEPTH_OPEN_BY_DEFAULT = 0; // Maximum group depth open by default
 export function isGroupOpenByDefault(
   depth: number,
   item: TableOfContentsGroup | TableOfContentsNodeGroup,
   activeId?: string,
+  maxDepthOpenByDefault: number = 0,
 ) {
   return (
-    depth < MAX_DEPTH_OPEN_BY_DEFAULT ||
+    depth < maxDepthOpenByDefault ||
     (activeId && (('id' in item && activeId === item.id) || hasActiveItem(item.items, activeId)))
   );
 }

@@ -2,9 +2,8 @@ import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 
-import { MockingContext } from '../../../containers/Provider';
+import { MockingContext } from '../../../containers/MockingProvider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
@@ -20,8 +19,8 @@ const enhanceVersionString = (version: string): string => {
 
 export type HttpServiceProps = DocsComponentProps<Partial<IHttpService>>;
 
-const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless }) => {
-  const { search, pathname } = useLocation();
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless, location = {} }) => {
+  const { search, pathname } = location;
   const mocking = React.useContext(MockingContext);
   const query = new URLSearchParams(search);
 
@@ -29,9 +28,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
 
   const dataPanel = (
     <VStack spacing={6}>
-      {(data.servers ?? mocking.mockUrl?.servicePath) && (
-        <ServerInfo servers={data.servers} mockUrl={mocking.mockUrl?.servicePath} />
-      )}
+      {(data.servers ?? mocking.mockUrl) && <ServerInfo servers={data.servers} mockUrl={mocking.mockUrl} />}
       <Box>
         {data.securitySchemes?.length && (
           <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />
@@ -64,7 +61,9 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
       ) : (
         <Box mb={10}>
           {description}
-          <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />
+          {pathname && (
+            <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />
+          )}
           {dataPanel}
         </Box>
       )}

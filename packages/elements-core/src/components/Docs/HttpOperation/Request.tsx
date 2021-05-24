@@ -7,7 +7,7 @@ import { SectionTitle, SubSectionPanel } from '../Sections';
 import { Body } from './Body';
 import { Parameters } from './Parameters';
 
-export interface IRequestProps {
+interface IRequestProps {
   operation: IHttpOperation;
   onChange: (requestBodyIndex: number) => void;
 }

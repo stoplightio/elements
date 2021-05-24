@@ -3,7 +3,7 @@ import { NodeType } from '@stoplight/types';
 import { parse as parseYaml } from '@stoplight/yaml';
 import * as React from 'react';
 
-import { JSONSchema, ParsedNode } from '../types';
+import { ParsedNode } from '../types';
 import { isHttpOperation, isHttpService, isJSONSchema, isSMDASTRoot } from '../utils/guards';
 
 export function useParsedData(nodeType: NodeType, data: unknown): ParsedNode | undefined {
@@ -67,7 +67,7 @@ function parseModel(rawData: unknown): ParsedNode | undefined {
   if (isJSONSchema(data)) {
     return {
       type: NodeType.Model,
-      data: data as JSONSchema,
+      data: data,
     };
   }
   return undefined;

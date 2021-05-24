@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { flatten, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { ActiveInfoContext, MockingContext } from '../../../containers/Provider';
+import { MockingContext } from '../../../containers/MockingProvider';
 import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
@@ -18,7 +18,6 @@ export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
   ({ className, data, headless, uri, hideTryIt, hideTryItPanel }) => {
-    const info = React.useContext(ActiveInfoContext);
     const mocking = React.useContext(MockingContext);
     const isDeprecated = !!data.deprecated;
 
@@ -73,9 +72,8 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
                     responseMediaType={responseMediaType}
                     responseStatusCode={responseStatusCode}
                     requestBodyIndex={requestBodyIndex}
-                    showMocking={info.showMocking}
                     hideTryIt={hideTryIt}
-                    mockUrl={info.showMocking ? mocking.mockUrl?.servicePath : undefined}
+                    mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
                   />
                 </Box>
               </Box>

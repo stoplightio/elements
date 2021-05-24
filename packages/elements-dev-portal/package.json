@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-dev-portal",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-beta.1",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -23,7 +23,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "yarn build.react && yarn build.webcomponents",
+    "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts build",
     "build.webcomponents": "webpack -c ./web-components.config.js",
@@ -46,12 +46,15 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@stoplight/elements": "^7.0.0-beta.1",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@stoplight/elements-core": "7.0.0-beta.5",
     "@stoplight/mosaic": "1.0.0-beta.52",
-    "@stoplight/elements-core": "7.0.0-beta.3",
+    "@stoplight/path": "^1.3.2",
+    "@stoplight/types": "^12.0.0",
+    "classnames": "^2.2.6",
     "lodash": "^4.17.19",
-    "react-router-dom": "^5.2.0",
     "react-query": "^3.15.2",
+    "react-router-dom": "^5.2.0",
     "use-debounce": "^6.0.1"
   },
   "devDependencies": {
@@ -66,11 +69,9 @@
     "@testing-library/react-hooks": "^3.4.2",
     "@testing-library/user-event": "^12.2.0",
     "@types/lodash": "^4.14.149",
-    "@types/prop-types": "^15.7.3",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.12",
     "@types/react-router-dom": "^5.1.5",
-    "@types/urijs": "^1.19.8",
     "node-sass": "^4.14.1",
     "node-sass-package-importer": "^5.3.2",
     "react": "16.14.0",

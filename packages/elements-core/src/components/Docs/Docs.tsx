@@ -1,4 +1,5 @@
 import { NodeType } from '@stoplight/types';
+import { Location } from 'history';
 import * as React from 'react';
 
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
@@ -24,6 +25,11 @@ interface BaseDocsProps {
    * URI of the document
    */
   uri?: string;
+
+  /**
+   * Some components may depend on some location/URL data.
+   */
+  location?: Location;
 
   /**
    * Allows to hide TryIt component
