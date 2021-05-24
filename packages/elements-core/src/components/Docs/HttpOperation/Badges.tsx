@@ -19,8 +19,10 @@ export const Badge: React.FC<{
     round
     aria-label={children}
   >
-    {icon && <FontAwesomeIcon className="mr-2" icon={icon} />}
-    <span>{children}</span>
+    <span className="flex items-center">
+      {icon && <FontAwesomeIcon className="mr-2" icon={icon} />}
+      {children}
+    </span>
   </Tag>
 );
 export const DeprecatedBadge: React.FC = () => (
@@ -30,6 +32,14 @@ export const DeprecatedBadge: React.FC = () => (
   >
     <Badge icon={faExclamationCircle} className="sl-bg-warning sl-ml-0">
       Deprecated
+    </Badge>
+  </Tooltip>
+);
+
+export const InternalBadge: React.FC = () => (
+  <Tooltip position={Position.BOTTOM_LEFT} content="This operation has been marked as internal.">
+    <Badge icon={faLock} className="sl-bg-danger sl-ml-0 ">
+      Internal
     </Badge>
   </Tooltip>
 );
