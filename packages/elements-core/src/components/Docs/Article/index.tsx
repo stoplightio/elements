@@ -8,7 +8,7 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { ArticleHeadings } from './Headings';
 
-export type ArticleProps = DocsComponentProps<string | MarkdownAstRoot>;
+type ArticleProps = DocsComponentProps<string | MarkdownAstRoot>;
 
 const ArticleComponent = React.memo<ArticleProps>(({ data, className }) => {
   const [container, setContainer] = React.useState<HTMLDivElement | null>(null);

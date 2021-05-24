@@ -1,13 +1,3 @@
-@import '~@stoplight/ui-kit/styles/blueprint/variables';
-
-.TryIt__MockMenu {
-  .#{$ns}-text-overflow-ellipsis:first-child {
-    padding-left: 23px;
-    min-width: 200px;
-  }
-}
-
-
 .ParameterGrid {
   display: grid;
   grid-template-columns: fit-content(120px) 20px auto;

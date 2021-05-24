@@ -3,15 +3,15 @@ import { Dictionary } from '@stoplight/types';
 
 type SupportedLanguage = string;
 type SupportedLibrary = string;
-export interface LibraryConfig {
+interface LibraryConfig {
   httpSnippetLibrary: string;
 }
-export interface LanguageConfig {
+interface LanguageConfig {
   mosaicCodeViewerLanguage: CodeViewerLanguage;
   httpSnippetLanguage: string;
   libraries?: Dictionary<LibraryConfig, SupportedLibrary>;
 }
-export type RequestSampleConfigs = Dictionary<LanguageConfig, SupportedLanguage>;
+type RequestSampleConfigs = Dictionary<LanguageConfig, SupportedLanguage>;
 
 export const requestSampleConfigs: RequestSampleConfigs = {
   Shell: {

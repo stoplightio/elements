@@ -1,6 +1,6 @@
 import * as SMDAST from '@stoplight/markdown/ast-types/smdast';
-import { Dictionary, IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
-import type { FAIconProp, ITableOfContentsLink } from '@stoplight/ui-kit';
+import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
+import type { ITableOfContentsLink } from '@stoplight/ui-kit';
 import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 
 export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
@@ -97,41 +97,11 @@ export interface TableOfContentsLinkWithId extends ITableOfContentsLink {
   id: number | string;
 }
 
-export interface INodeGraph {
-  nodes: IGraphNode[];
-  edges: IGraphEdge[];
-}
-
-export interface IGraphNode {
-  groupNodeId: number;
-  name: string;
-  srn: string;
-  uri: string;
-  depth: number;
-  type: NodeType | string;
-  version: string;
-
-  projectName: string;
-  groupSlug: string;
-}
-
-export interface IGraphEdge {
-  fromGroupNodeId: number;
-  fromPath: string;
-  toGroupNodeId: number;
-  toPath: string;
-}
-
-export type IconMapType = NodeType | 'group' | 'divider' | 'item';
-export type NodeIconMapping = { [type in IconMapType]?: FAIconProp };
-
 export interface ITableOfContentsTree {
   items: TableOfContentItem[];
 }
 
 export type TableOfContentItem = Divider | Group | Item;
-
-export type TocItemType = 'divider' | 'group' | 'item';
 
 export type Divider = {
   title: string;
@@ -171,11 +141,6 @@ export interface RoutingProps {
    *   @default "history"
    */
   router?: 'history' | 'hash' | 'memory';
-}
-
-export interface ILinkComponentProps {
-  data?: Dictionary<unknown>;
-  url: string;
 }
 
 export type ParamField = {
