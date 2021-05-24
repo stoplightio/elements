@@ -1,7 +1,6 @@
 import { Classes, Intent, Popover, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JsonSchemaViewer, ViewMode } from '@stoplight/json-schema-viewer';
-import { CLASSNAMES } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
@@ -35,12 +34,7 @@ export const SchemaAndDescription = ({
 
       {description && <MarkdownViewer markdown={description} />}
 
-      <JsonSchemaViewer
-        resolveRef={resolveRef}
-        className={cn(className, CLASSNAMES.block)}
-        schema={schema}
-        viewMode={viewMode}
-      />
+      <JsonSchemaViewer resolveRef={resolveRef} className={cn(className)} schema={schema} viewMode={viewMode} />
     </>
   );
 };

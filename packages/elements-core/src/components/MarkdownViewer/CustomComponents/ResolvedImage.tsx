@@ -1,18 +1,19 @@
-import { IImage } from '@stoplight/markdown';
+import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import React from 'react';
 import URI from 'urijs';
 
 import { BundledBranchNode, IntegrationKind } from '../../../types';
 
-type ResolvedImageProps = {
-  node: IImage;
-};
+export const createResolvedImageComponent = (branchNode: BundledBranchNode) => {
+  return React.memo(props => {
+    const Component: CustomComponentMapping['img'] = ({ title, src, alt }) => {
+      return <img src={resolveImageUrlHandler(src || '', branchNode)} title={title} alt={alt} />;
+    };
 
-export const createResolvedImageComponent = (branchNode: BundledBranchNode) =>
-  React.memo(({ node: { url, title, alt } }: ResolvedImageProps) => {
-    return <img src={resolveImageUrlHandler(url, branchNode)} title={title} alt={alt} />;
+    return <Component {...props} />;
   });
+};
 
 const resolveImageUrlHandler = (url: string, branchNode: BundledBranchNode) => {
   // don't touch absolute urls no matter which service we're using

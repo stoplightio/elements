@@ -1,6 +1,6 @@
 import { faStream } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRoot } from '@stoplight/markdown';
+import { MDAST } from '@stoplight/markdown';
 import { Button, Popover, Position } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
@@ -10,7 +10,7 @@ import { useComputeMarkdownHeadings } from '../../../hooks/useComputeMarkdownHea
 import { useLocationHash } from '../../../hooks/useLocationHash';
 import { IArticleHeading, IArticleHeadings } from '../../../types';
 
-export const ArticleHeadings = ({ tree, container }: { tree: IRoot; container: HTMLDivElement | null }) => {
+export const ArticleHeadings = ({ tree, container }: { tree: MDAST.Root; container: HTMLDivElement | null }) => {
   const { width } = useComponentSize(container);
   const showHeadings = width >= 768;
 

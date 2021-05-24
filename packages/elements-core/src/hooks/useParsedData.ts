@@ -1,4 +1,4 @@
-import { processMarkdown } from '@stoplight/markdown-viewer';
+import { parse } from '@stoplight/markdown-viewer';
 import { NodeType } from '@stoplight/types';
 import { parse as parseYaml } from '@stoplight/yaml';
 import * as React from 'react';
@@ -28,7 +28,7 @@ function parseArticleData(rawData: unknown): ParsedNode | undefined {
   if (typeof rawData === 'string') {
     return {
       type: NodeType.Article,
-      data: processMarkdown(rawData),
+      data: parse(rawData),
     };
   }
   if (isSMDASTRoot(rawData)) {

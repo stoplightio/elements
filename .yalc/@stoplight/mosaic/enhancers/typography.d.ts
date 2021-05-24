@@ -1,0 +1,32 @@
+import { EnhancerFn } from './types';
+export declare type FontSizeVals = '2xs' | 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl';
+export declare type LineHeights = 'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose';
+export declare type LetterSpacing = 'tight' | 'normal' | 'wide';
+export declare type ParagraphSizes = 'paragraph-leading' | 'paragraph' | 'paragraph-small' | 'paragraph-tiny';
+export declare type FontFamilyVals = 'ui' | 'prose' | 'mono';
+export declare type FontWeightVals = 'normal' | 'light' | 'medium' | 'semibold' | 'bold';
+export declare type FontStyleVals = 'italic' | 'non-italic';
+export declare type TextAlign = 'left' | 'center' | 'right' | 'justify';
+export declare type TextDecoration = 'underline' | 'line-through' | 'no-underline';
+export declare type TextTransform = 'uppercase' | 'lowercase' | 'capitalize' | 'normal-case';
+export declare type TextOverflow = 'truncate' | 'overflow-ellipsis' | 'overflow-clip';
+export declare type VerticalAlign = 'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom';
+export declare type Whitespace = 'normal' | 'nowrap' | 'pre' | 'pre-line' | 'pre-wrap';
+export declare type WordBreak = 'normal' | 'words' | 'all';
+export interface ITypographyProps {
+    fontSize?: FontSizeVals | ParagraphSizes;
+    lineHeight?: LineHeights | ParagraphSizes;
+    letterSpacing?: LetterSpacing;
+    fontFamily?: FontFamilyVals;
+    fontWeight?: FontWeightVals;
+    fontStyle?: FontStyleVals;
+    textAlign?: TextAlign;
+    textDecoration?: TextDecoration;
+    textTransform?: TextTransform;
+    textOverflow?: TextOverflow;
+    verticalAlign?: VerticalAlign;
+    whitespace?: Whitespace;
+    wordBreak?: WordBreak;
+}
+export declare const typographyPropNames: Array<keyof ITypographyProps>;
+export declare const typographyProps: EnhancerFn<ITypographyProps>;

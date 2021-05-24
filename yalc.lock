@@ -1,0 +1,25 @@
+{
+  "version": "v1",
+  "packages": {
+    "@stoplight/mosaic": {
+      "signature": "0b3514eda8d215c2e01555570251d307",
+      "file": true
+    },
+    "@stoplight/mosaic-code-viewer": {
+      "signature": "b7c5fc100345818efabc0b0198b9fe53",
+      "file": true
+    },
+    "@stoplight/mosaic-code-editor": {
+      "signature": "8f95d33e6d383b97bbe4b6e6a98e349c",
+      "file": true
+    },
+    "@stoplight/markdown-viewer": {
+      "signature": "e24b7694fb1b52f7bd15c1132fca68f9",
+      "file": true
+    },
+    "@stoplight/markdown": {
+      "signature": "e01e5e90a480e9fadeb90bf04e748b72",
+      "file": true
+    }
+  }
+}

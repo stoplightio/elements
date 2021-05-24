@@ -113,9 +113,7 @@ describe('MarkdownViewer', () => {
       const MarkdownViewerWithTryIt = withPersistenceBoundary(MarkdownViewer);
       const markdown = `### Raw Http Request
 
-<!-- type: http -->
-
-\`\`\`json
+\`\`\`json http
 {
   "method": "get",
   "url": "/gifs/search",

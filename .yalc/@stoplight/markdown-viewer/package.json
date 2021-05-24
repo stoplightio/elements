@@ -1,0 +1,48 @@
+{
+  "name": "@stoplight/markdown-viewer",
+  "version": "0.0.0-e24b7694",
+  "description": "A react component that renders Stoplight flavored markdown.",
+  "keywords": [],
+  "main": "./index.js",
+  "sideEffects": false,
+  "files": [
+    "**/*"
+  ],
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/markdown-viewer"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=12"
+  },
+  "peerDependencies": {
+    "react": ">=16.14",
+    "react-dom": ">=16.14"
+  },
+  "dependencies": {
+    "@stoplight/react-error-boundary": "^1.1.0",
+    "@stoplight/types": "^12.3.0",
+    "clsx": "^1.1.1",
+    "deepmerge": "^4.2.2",
+    "hast-util-sanitize": "^4.0.0",
+    "lodash": "^4.17.21",
+    "rehype-raw": "^5.1.0",
+    "rehype-react": "^6.2.0",
+    "remark-parse": "^9.0.0",
+    "remark-rehype": "^8.1.0"
+  },
+  "type": "commonjs",
+  "typings": "index.d.ts",
+  "module": "./index.ejs",
+  "exports": {
+    "require": "./index.js",
+    "import": "./index.mjs"
+  },
+  "bundledDependencies": [
+    "@stoplight/markdown",
+    "@stoplight/mosaic",
+    "@stoplight/mosaic-code-viewer"
+  ]
+}

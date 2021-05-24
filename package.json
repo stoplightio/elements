@@ -13,7 +13,20 @@
     "demo",
     "packages/*"
   ],
-  "dependencies": {},
+  "resolutions": {
+    "@stoplight/markdown": "file:.yalc/@stoplight/markdown",
+    "@stoplight/markdown-viewer": "file:.yalc/@stoplight/markdown-viewer",
+    "@stoplight/mosaic": "file:.yalc/@stoplight/mosaic",
+    "@stoplight/mosaic-code-editor": "file:.yalc/@stoplight/mosaic-code-editor",
+    "@stoplight/mosaic-code-viewer": "file:.yalc/@stoplight/mosaic-code-viewer"
+  },
+  "dependencies": {
+    "@stoplight/markdown": "file:.yalc/@stoplight/markdown",
+    "@stoplight/markdown-viewer": "file:.yalc/@stoplight/markdown-viewer",
+    "@stoplight/mosaic": "file:.yalc/@stoplight/mosaic",
+    "@stoplight/mosaic-code-editor": "file:.yalc/@stoplight/mosaic-code-editor",
+    "@stoplight/mosaic-code-viewer": "file:.yalc/@stoplight/mosaic-code-viewer"
+  },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "7.12.1",
