@@ -1,4 +1,4 @@
-import { faExclamationCircle, faLock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faEye, faLock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { Position, Tag, Tooltip } from '@stoplight/ui-kit';
@@ -37,8 +37,11 @@ export const DeprecatedBadge: React.FC = () => (
 );
 
 export const InternalBadge: React.FC = () => (
-  <Tooltip position={Position.BOTTOM_LEFT} content="This operation has been marked as internal.">
-    <Badge icon={faLock} className="sl-bg-danger sl-ml-0 ">
+  <Tooltip
+    position={Position.BOTTOM_LEFT}
+    content="This endpoint/model is marked as internal and won't be visible in public docs."
+  >
+    <Badge icon={faEye} className="sl-bg-danger sl-ml-0 ">
       Internal
     </Badge>
   </Tooltip>
