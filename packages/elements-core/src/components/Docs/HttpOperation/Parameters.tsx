@@ -99,7 +99,6 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       {description && (
         <div className="sl-w-full sl-text-muted sl-text-sm sl-my-2">
           <MarkdownViewer markdown={description} />
-          {/* {description} */}
         </div>
       )}
 
