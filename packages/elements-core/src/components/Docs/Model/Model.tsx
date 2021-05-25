@@ -1,5 +1,3 @@
-import { MarkdownViewer } from '@stoplight/elements-core/components/MarkdownViewer';
-import { useInlineRefResolver } from '@stoplight/elements-core/context/InlineRefResolver';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { CLASSNAMES } from '@stoplight/markdown-viewer';
 import { Heading } from '@stoplight/mosaic';
@@ -8,6 +6,8 @@ import cn from 'classnames';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
+import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 
 export type ModelProps = DocsComponentProps<JSONSchema7>;
