@@ -12,13 +12,14 @@ import { DocsComponentProps } from '..';
 
 export type ModelProps = DocsComponentProps<JSONSchema7>;
 
-const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => {
+const ModelComponent: React.FC<ModelProps> = ({ data, className, headless, nodeTitle }) => {
   const resolveRef = useInlineRefResolver();
+  const title = data.title ?? nodeTitle;
   return (
     <div className={cn('Model', className)}>
-      {!headless && data.title !== void 0 && (
+      {!headless && title !== undefined && (
         <Heading size={1} mb={4} fontWeight="semibold">
-          {data.title}
+          {title}
         </Heading>
       )}
 
