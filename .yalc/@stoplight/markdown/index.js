@@ -734,7 +734,7 @@ var assocIndexOf$3 = _assocIndexOf;
 var arrayProto$1 = Array.prototype;
 
 /** Built-in value references. */
-var splice$5 = arrayProto$1.splice;
+var splice$4 = arrayProto$1.splice;
 
 /**
  * Removes `key` and its value from the list cache.
@@ -756,7 +756,7 @@ function listCacheDelete$1(key) {
   if (index == lastIndex) {
     data.pop();
   } else {
-    splice$5.call(data, index, 1);
+    splice$4.call(data, index, 1);
   }
   --this.size;
   return true;
@@ -1509,7 +1509,7 @@ var baseUnset$1 = _baseUnset,
 var arrayProto = Array.prototype;
 
 /** Built-in value references. */
-var splice$4 = arrayProto.splice;
+var splice$3 = arrayProto.splice;
 
 /**
  * The base implementation of `_.pullAt` without support for individual
@@ -1529,7 +1529,7 @@ function basePullAt$1(array, indexes) {
     if (length == lastIndex || index !== previous) {
       var previous = index;
       if (isIndex$2(index)) {
-        splice$4.call(array, index, 1);
+        splice$3.call(array, index, 1);
       } else {
         baseUnset$1(array, index);
       }
@@ -2716,11 +2716,11 @@ var own$9 = {}.hasOwnProperty;
 
 var hasOwnProperty$1 = own$9;
 
-var splice$3 = [].splice;
+var splice$2 = [].splice;
 
-var splice_1 = splice$3;
+var splice_1 = splice$2;
 
-var splice$2 = splice_1;
+var splice$1 = splice_1;
 
 // causes a stack overflow in V8 when trying to insert 100k items for instance.
 
@@ -2740,15 +2740,15 @@ function chunkedSplice$9(list, start, remove, items) {
   if (items.length < 10000) {
     parameters = Array.from(items);
     parameters.unshift(start, remove);
-    splice$2.apply(list, parameters);
+    splice$1.apply(list, parameters);
   } else {
     // Delete `remove` items starting from `start`
-    if (remove) splice$2.apply(list, [start, remove]); // Insert the items in chunks to not cause stack overflows.
+    if (remove) splice$1.apply(list, [start, remove]); // Insert the items in chunks to not cause stack overflows.
 
     while (chunkStart < items.length) {
       parameters = items.slice(chunkStart, chunkStart + 10000);
       parameters.unshift(start, 0);
-      splice$2.apply(list, parameters);
+      splice$1.apply(list, parameters);
       chunkStart += 10000;
       start += 10000;
     }
@@ -4647,7 +4647,7 @@ var visit$1 = unistUtilVisitParents;
 var convert$2 = convert_1;
 var escape = escapeStringRegexp;
 
-var splice$1 = [].splice;
+var splice = [].splice;
 
 function findAndReplace$1(tree, find, replace, options) {
   var settings;
@@ -4725,7 +4725,7 @@ function findAndReplace$1(tree, find, replace, options) {
         }
 
         nodes.unshift(index, 1);
-        splice$1.apply(parent.children, nodes);
+        splice.apply(parent.children, nodes);
       }
 
       if (pairs.length > 1) {
@@ -18216,17 +18216,13 @@ function whitespace(thing) {
   return typeof value === 'string' && value.replace(/[ \t\n\f\r]/g, '') === ''
 }
 
-const unknown = null;
-const containsImage = true;
-const containsOther = false;
-const splice = [].splice;
 const unwrapImages = function () {
     return function transformer(tree) {
         visit(tree, 'paragraph', (node, index, parent) => {
             if (!index)
                 return;
-            if (applicable(node) === containsImage) {
-                splice.apply(parent === null || parent === void 0 ? void 0 : parent.children, [index, 1].concat(node.children));
+            if (applicable(node)) {
+                parent === null || parent === void 0 ? void 0 : parent.children.splice(index, 1, node.children);
                 return [SKIP, index];
             }
             return;
@@ -18234,7 +18230,7 @@ const unwrapImages = function () {
     };
 };
 function applicable(node, inLink) {
-    let image = unknown;
+    let image = null;
     let children = node.children;
     let length = children.length;
     let index = -1;
@@ -18244,19 +18240,19 @@ function applicable(node, inLink) {
         child = children[index];
         if (whitespace(child)) ;
         else if (child.type === 'image' || child.type === 'imageReference') {
-            image = containsImage;
+            image = true;
         }
         else if (!inLink && (child.type === 'link' || child.type === 'linkReference')) {
             linkResult = applicable(child, true);
-            if (linkResult === containsOther) {
-                return containsOther;
+            if (linkResult === false) {
+                return false;
             }
-            if (linkResult === containsImage) {
-                image = containsImage;
+            if (linkResult === true) {
+                image = true;
             }
         }
         else {
-            return containsOther;
+            return false;
         }
     }
     return image;

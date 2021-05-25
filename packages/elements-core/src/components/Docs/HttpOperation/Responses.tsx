@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Box, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@stoplight/mosaic';
+import { Box, Select, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
@@ -42,14 +42,14 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
           <TabList>
             {responses.map(({ code }) => (
               <Tab key={code} id={code}>
-                <Text color={code === activeResponseId ? 'primary' : 'muted'}>{code}</Text>
+                {code}
               </Tab>
             ))}
           </TabList>
         </SectionTitle>
         <Box as={TabPanels} mt={4}>
           {responses.map(response => (
-            <TabPanel key={response.code}>
+            <TabPanel key={response.code} id={response.code}>
               <Response response={response} onMediaTypeChange={onMediaTypeChange} />
             </TabPanel>
           ))}

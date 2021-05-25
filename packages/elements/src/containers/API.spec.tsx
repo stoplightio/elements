@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 
 import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
@@ -37,7 +37,10 @@ describe('API', () => {
   });
 
   it("doesn't display the logo when no properties are passed neither via API document nor as component prop", async () => {
-    render(<API layout="sidebar" apiDescriptionDocument={simpleApiWithoutDescription} />);
+    const { getByRole } = render(<API layout="sidebar" apiDescriptionDocument={simpleApiWithoutDescription} />);
+
+    // MutationObserver is async
+    await waitFor(() => expect(() => getByRole('tabpanel')).not.toThrow());
 
     expect(await screen.queryByAltText('logo')).not.toBeInTheDocument();
   });

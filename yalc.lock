@@ -14,11 +14,11 @@
       "file": true
     },
     "@stoplight/markdown-viewer": {
-      "signature": "e24b7694fb1b52f7bd15c1132fca68f9",
+      "signature": "6c306705fbc64afc579e5d2af9913f64",
       "file": true
     },
     "@stoplight/markdown": {
-      "signature": "e01e5e90a480e9fadeb90bf04e748b72",
+      "signature": "42edbc802748e9c4f6783ec28a09e996",
       "file": true
     }
   }

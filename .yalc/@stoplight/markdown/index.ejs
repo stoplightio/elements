@@ -426,17 +426,13 @@ const slug = function () {
     };
 };
 
-const unknown = null;
-const containsImage = true;
-const containsOther = false;
-const splice = [].splice;
 const unwrapImages = function () {
     return function transformer(tree) {
         visit(tree, 'paragraph', (node, index, parent) => {
             if (!index)
                 return;
-            if (applicable(node) === containsImage) {
-                splice.apply(parent === null || parent === void 0 ? void 0 : parent.children, [index, 1].concat(node.children));
+            if (applicable(node)) {
+                parent === null || parent === void 0 ? void 0 : parent.children.splice(index, 1, node.children);
                 return [SKIP, index];
             }
             return;
@@ -444,7 +440,7 @@ const unwrapImages = function () {
     };
 };
 function applicable(node, inLink) {
-    let image = unknown;
+    let image = null;
     let children = node.children;
     let length = children.length;
     let index = -1;
@@ -454,19 +450,19 @@ function applicable(node, inLink) {
         child = children[index];
         if (whitespace$1(child)) ;
         else if (child.type === 'image' || child.type === 'imageReference') {
-            image = containsImage;
+            image = true;
         }
         else if (!inLink && (child.type === 'link' || child.type === 'linkReference')) {
             linkResult = applicable(child, true);
-            if (linkResult === containsOther) {
-                return containsOther;
+            if (linkResult === false) {
+                return false;
             }
-            if (linkResult === containsImage) {
-                image = containsImage;
+            if (linkResult === true) {
+                image = true;
             }
         }
         else {
-            return containsOther;
+            return false;
         }
     }
     return image;

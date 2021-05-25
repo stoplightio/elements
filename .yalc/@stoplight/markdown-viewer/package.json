@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/markdown-viewer",
-  "version": "0.0.0-e24b7694",
+  "version": "0.0.0-6c306705",
   "description": "A react component that renders Stoplight flavored markdown.",
   "keywords": [],
   "main": "./index.js",

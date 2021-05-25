@@ -125,256 +125,87 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
-                components={
+                markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
+                parseOptions={
                   Object {
-                    "code": [Function],
+                    "components": Object {
+                      "code": [Function],
+                    },
                   }
                 }
-                markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
                   <MarkdownViewer.Component
                     className="flex-1 text-darken-7 dark:text-lighten-7"
-                    components={
+                    markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
+                    parseOptions={
                       Object {
-                        "code": [Function],
+                        "components": Object {
+                          "code": [Function],
+                        },
                       }
                     }
-                    markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
                   >
-                    <div
-                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                    <Memo(Prose)
+                      className="flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <paragraph
-                        index={0}
-                        key="0"
-                        node={
-                          Object {
-                            "children": Array [
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 5,
-                                    "line": 1,
-                                    "offset": 4,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Use ",
-                              },
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 18,
-                                    "line": 1,
-                                    "offset": 17,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 5,
-                                    "line": 1,
-                                    "offset": 4,
-                                  },
-                                },
-                                "type": "inlineCode",
-                                "value": "?apikey=123",
-                              },
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 63,
-                                    "line": 1,
-                                    "offset": 62,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 18,
-                                    "line": 1,
-                                    "offset": 17,
-                                  },
-                                },
-                                "type": "text",
-                                "value": " to authenticate requests. It's super secure.",
-                              },
-                            ],
-                            "position": Position {
-                              "end": Object {
-                                "column": 63,
-                                "line": 1,
-                                "offset": 62,
-                              },
-                              "indent": Array [],
-                              "start": Object {
-                                "column": 1,
-                                "line": 1,
-                                "offset": 0,
-                              },
-                            },
-                            "type": "paragraph",
-                          }
-                        }
-                        parent={
-                          Object {
-                            "type": "root",
-                          }
-                        }
-                        path={
-                          Array [
-                            "children",
-                            0,
-                          ]
-                        }
+                      <Box
+                        as="div"
+                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <p>
-                          <text
-                            index={0}
-                            key="0"
-                            node={
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 5,
-                                    "line": 1,
-                                    "offset": 4,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Use ",
-                              }
-                            }
-                            parent={
-                              Object {
-                                "parent": Object {
-                                  "type": "root",
-                                },
-                                "type": "paragraph",
-                              }
-                            }
-                            path={
-                              Array [
-                                "children",
-                                0,
-                                "children",
-                                0,
-                              ]
-                            }
+                        <div
+                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                        >
+                          <p
+                            key="h-1"
                           >
                             Use 
-                          </text>
-                          <inlineCode
-                            index={1}
-                            key="1"
-                            node={
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 18,
-                                    "line": 1,
-                                    "offset": 17,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 5,
-                                    "line": 1,
-                                    "offset": 4,
-                                  },
-                                },
-                                "type": "inlineCode",
-                                "value": "?apikey=123",
-                              }
-                            }
-                            parent={
-                              Object {
-                                "parent": Object {
-                                  "type": "root",
-                                },
-                                "type": "paragraph",
-                              }
-                            }
-                            path={
-                              Array [
-                                "children",
-                                0,
-                                "children",
-                                1,
-                              ]
-                            }
-                          >
-                            <CodeViewer
-                              className="inline-block line-none"
-                              inline={true}
-                              value="?apikey=123"
+                            <CodeComponent
+                              inline="true"
+                              key="h-2"
                             >
-                              <Component
-                                className="inline-block line-none"
-                                value="?apikey=123"
+                              <code
+                                inline="true"
                               >
-                                <code
-                                  className="CodeViewer inline-block line-none CodeViewer--inline"
-                                >
-                                  ?apikey=123
-                                </code>
-                              </Component>
-                            </CodeViewer>
-                          </inlineCode>
-                          <text
-                            index={2}
-                            key="2"
-                            node={
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 63,
-                                    "line": 1,
-                                    "offset": 62,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 18,
-                                    "line": 1,
-                                    "offset": 17,
-                                  },
-                                },
-                                "type": "text",
-                                "value": " to authenticate requests. It's super secure.",
-                              }
-                            }
-                            parent={
-                              Object {
-                                "parent": Object {
-                                  "type": "root",
-                                },
-                                "type": "paragraph",
-                              }
-                            }
-                            path={
-                              Array [
-                                "children",
-                                0,
-                                "children",
-                                2,
-                              ]
-                            }
-                          >
+                                <Code>
+                                  <Box
+                                    as="code"
+                                    bg="code"
+                                    border={true}
+                                    className=""
+                                    color="on-code"
+                                    fontFamily="mono"
+                                    fontWeight="medium"
+                                    px={1}
+                                    py={0.5}
+                                    rounded={true}
+                                    style={
+                                      Object {
+                                        "fontSize": "max(12px, 85%)",
+                                      }
+                                    }
+                                  >
+                                    <code
+                                      className="sl-font-mono sl-font-medium sl-px-1 sl-py-0.5 sl-bg-code sl-text-on-code sl-rounded sl-border"
+                                      style={
+                                        Object {
+                                          "fontSize": "max(12px, 85%)",
+                                        }
+                                      }
+                                    >
+                                      ?apikey=123
+                                    </code>
+                                  </Box>
+                                </Code>
+                              </code>
+                            </CodeComponent>
                              to authenticate requests. It's super secure.
-                          </text>
-                        </p>
-                      </paragraph>
-                    </div>
+                          </p>
+                        </div>
+                      </Box>
+                    </Memo(Prose)>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
               </MarkdownViewer>
@@ -455,125 +286,47 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
-                components={
+                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                parseOptions={
                   Object {
-                    "code": [Function],
+                    "components": Object {
+                      "code": [Function],
+                    },
                   }
                 }
-                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
                   <MarkdownViewer.Component
                     className="flex-1 text-darken-7 dark:text-lighten-7"
-                    components={
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    parseOptions={
                       Object {
-                        "code": [Function],
+                        "components": Object {
+                          "code": [Function],
+                        },
                       }
                     }
-                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                   >
-                    <div
-                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                    <Memo(Prose)
+                      className="flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <paragraph
-                        index={0}
-                        key="0"
-                        node={
-                          Object {
-                            "children": Array [
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 125,
-                                    "line": 1,
-                                    "offset": 124,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
-                              },
-                            ],
-                            "position": Position {
-                              "end": Object {
-                                "column": 125,
-                                "line": 1,
-                                "offset": 124,
-                              },
-                              "indent": Array [],
-                              "start": Object {
-                                "column": 1,
-                                "line": 1,
-                                "offset": 0,
-                              },
-                            },
-                            "type": "paragraph",
-                          }
-                        }
-                        parent={
-                          Object {
-                            "type": "root",
-                          }
-                        }
-                        path={
-                          Array [
-                            "children",
-                            0,
-                          ]
-                        }
+                      <Box
+                        as="div"
+                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <p>
-                          <text
-                            index={0}
-                            key="0"
-                            node={
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 125,
-                                    "line": 1,
-                                    "offset": 124,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
-                              }
-                            }
-                            parent={
-                              Object {
-                                "parent": Object {
-                                  "type": "root",
-                                },
-                                "type": "paragraph",
-                              }
-                            }
-                            path={
-                              Array [
-                                "children",
-                                0,
-                                "children",
-                                0,
-                              ]
-                            }
+                        <div
+                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                        >
+                          <p
+                            key="h-1"
                           >
                             Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </text>
-                        </p>
-                      </paragraph>
-                    </div>
+                          </p>
+                        </div>
+                      </Box>
+                    </Memo(Prose)>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
               </MarkdownViewer>
@@ -654,125 +407,47 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
-                components={
+                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                parseOptions={
                   Object {
-                    "code": [Function],
+                    "components": Object {
+                      "code": [Function],
+                    },
                   }
                 }
-                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
                   <MarkdownViewer.Component
                     className="flex-1 text-darken-7 dark:text-lighten-7"
-                    components={
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    parseOptions={
                       Object {
-                        "code": [Function],
+                        "components": Object {
+                          "code": [Function],
+                        },
                       }
                     }
-                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                   >
-                    <div
-                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                    <Memo(Prose)
+                      className="flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <paragraph
-                        index={0}
-                        key="0"
-                        node={
-                          Object {
-                            "children": Array [
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 125,
-                                    "line": 1,
-                                    "offset": 124,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
-                              },
-                            ],
-                            "position": Position {
-                              "end": Object {
-                                "column": 125,
-                                "line": 1,
-                                "offset": 124,
-                              },
-                              "indent": Array [],
-                              "start": Object {
-                                "column": 1,
-                                "line": 1,
-                                "offset": 0,
-                              },
-                            },
-                            "type": "paragraph",
-                          }
-                        }
-                        parent={
-                          Object {
-                            "type": "root",
-                          }
-                        }
-                        path={
-                          Array [
-                            "children",
-                            0,
-                          ]
-                        }
+                      <Box
+                        as="div"
+                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <p>
-                          <text
-                            index={0}
-                            key="0"
-                            node={
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 125,
-                                    "line": 1,
-                                    "offset": 124,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
-                              }
-                            }
-                            parent={
-                              Object {
-                                "parent": Object {
-                                  "type": "root",
-                                },
-                                "type": "paragraph",
-                              }
-                            }
-                            path={
-                              Array [
-                                "children",
-                                0,
-                                "children",
-                                0,
-                              ]
-                            }
+                        <div
+                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                        >
+                          <p
+                            key="h-1"
                           >
                             Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </text>
-                        </p>
-                      </paragraph>
-                    </div>
+                          </p>
+                        </div>
+                      </Box>
+                    </Memo(Prose)>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
               </MarkdownViewer>
@@ -875,125 +550,47 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
-                components={
+                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                parseOptions={
                   Object {
-                    "code": [Function],
+                    "components": Object {
+                      "code": [Function],
+                    },
                   }
                 }
-                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
                   <MarkdownViewer.Component
                     className="flex-1 text-darken-7 dark:text-lighten-7"
-                    components={
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    parseOptions={
                       Object {
-                        "code": [Function],
+                        "components": Object {
+                          "code": [Function],
+                        },
                       }
                     }
-                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                   >
-                    <div
-                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                    <Memo(Prose)
+                      className="flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <paragraph
-                        index={0}
-                        key="0"
-                        node={
-                          Object {
-                            "children": Array [
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 125,
-                                    "line": 1,
-                                    "offset": 124,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
-                              },
-                            ],
-                            "position": Position {
-                              "end": Object {
-                                "column": 125,
-                                "line": 1,
-                                "offset": 124,
-                              },
-                              "indent": Array [],
-                              "start": Object {
-                                "column": 1,
-                                "line": 1,
-                                "offset": 0,
-                              },
-                            },
-                            "type": "paragraph",
-                          }
-                        }
-                        parent={
-                          Object {
-                            "type": "root",
-                          }
-                        }
-                        path={
-                          Array [
-                            "children",
-                            0,
-                          ]
-                        }
+                      <Box
+                        as="div"
+                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <p>
-                          <text
-                            index={0}
-                            key="0"
-                            node={
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 125,
-                                    "line": 1,
-                                    "offset": 124,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
-                              }
-                            }
-                            parent={
-                              Object {
-                                "parent": Object {
-                                  "type": "root",
-                                },
-                                "type": "paragraph",
-                              }
-                            }
-                            path={
-                              Array [
-                                "children",
-                                0,
-                                "children",
-                                0,
-                              ]
-                            }
+                        <div
+                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                        >
+                          <p
+                            key="h-1"
                           >
                             Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </text>
-                        </p>
-                      </paragraph>
-                    </div>
+                          </p>
+                        </div>
+                      </Box>
+                    </Memo(Prose)>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
               </MarkdownViewer>
@@ -1107,125 +704,47 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
             >
               <MarkdownViewer
                 className="flex-1 text-darken-7 dark:text-lighten-7"
-                components={
+                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                parseOptions={
                   Object {
-                    "code": [Function],
+                    "components": Object {
+                      "code": [Function],
+                    },
                   }
                 }
-                markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
               >
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
                   <MarkdownViewer.Component
                     className="flex-1 text-darken-7 dark:text-lighten-7"
-                    components={
+                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                    parseOptions={
                       Object {
-                        "code": [Function],
+                        "components": Object {
+                          "code": [Function],
+                        },
                       }
                     }
-                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
                   >
-                    <div
-                      className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
+                    <Memo(Prose)
+                      className="flex-1 text-darken-7 dark:text-lighten-7"
                     >
-                      <paragraph
-                        index={0}
-                        key="0"
-                        node={
-                          Object {
-                            "children": Array [
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 125,
-                                    "line": 1,
-                                    "offset": 124,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
-                              },
-                            ],
-                            "position": Position {
-                              "end": Object {
-                                "column": 125,
-                                "line": 1,
-                                "offset": 124,
-                              },
-                              "indent": Array [],
-                              "start": Object {
-                                "column": 1,
-                                "line": 1,
-                                "offset": 0,
-                              },
-                            },
-                            "type": "paragraph",
-                          }
-                        }
-                        parent={
-                          Object {
-                            "type": "root",
-                          }
-                        }
-                        path={
-                          Array [
-                            "children",
-                            0,
-                          ]
-                        }
+                      <Box
+                        as="div"
+                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <p>
-                          <text
-                            index={0}
-                            key="0"
-                            node={
-                              Object {
-                                "position": Position {
-                                  "end": Object {
-                                    "column": 125,
-                                    "line": 1,
-                                    "offset": 124,
-                                  },
-                                  "indent": Array [],
-                                  "start": Object {
-                                    "column": 1,
-                                    "line": 1,
-                                    "offset": 0,
-                                  },
-                                },
-                                "type": "text",
-                                "value": "Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.",
-                              }
-                            }
-                            parent={
-                              Object {
-                                "parent": Object {
-                                  "type": "root",
-                                },
-                                "type": "paragraph",
-                              }
-                            }
-                            path={
-                              Array [
-                                "children",
-                                0,
-                                "children",
-                                0,
-                              ]
-                            }
+                        <div
+                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                        >
+                          <p
+                            key="h-1"
                           >
                             Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </text>
-                        </p>
-                      </paragraph>
-                    </div>
+                          </p>
+                        </div>
+                      </Box>
+                    </Memo(Prose)>
                   </MarkdownViewer.Component>
                 </ErrorBoundary>
               </MarkdownViewer>

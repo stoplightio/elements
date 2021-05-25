@@ -97,7 +97,7 @@ describe('MarkdownViewer', () => {
       ],
     ])('resolves relative image url for integration with %s', (_, branchNode, expectedUrl) => {
       render(
-        <MarkdownComponentsProvider value={{ image: createResolvedImageComponent(branchNode) }}>
+        <MarkdownComponentsProvider value={{ img: createResolvedImageComponent(branchNode) }}>
           <MarkdownViewer markdown={`![alt text](../../common/images/icon48.png "Logo Title Text 1")`} />
         </MarkdownComponentsProvider>,
       );

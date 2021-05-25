@@ -8,13 +8,15 @@ var React = require('react');
 var mosaicCodeViewer = require('@stoplight/mosaic-code-viewer');
 var markdown = require('@stoplight/markdown');
 var deepmerge = require('deepmerge');
-var require$$0$1 = require('path');
+var require$$0$1 = require('mdast-util-to-hast');
+var require$$0$2 = require('path');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var deepmerge__default = /*#__PURE__*/_interopDefaultLegacy(deepmerge);
 var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0$1);
+var require$$0__default$1 = /*#__PURE__*/_interopDefaultLegacy(require$$0$2);
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -324,18 +326,18 @@ const defaultSchema = {
  * @typedef {Object.<string, NodeDefinition|NodeDefinitionGetter>} NodeSchema
  */
 
-var own$d = {}.hasOwnProperty;
+var own$a = {}.hasOwnProperty;
 var push = [].push;
 
 /** @type {NodeSchema} */
 var nodeSchema = {
-  root: {children: all$g},
+  root: {children: all$1},
   doctype: handleDoctype,
   comment: handleComment,
   element: {
     tagName: handleTagName,
     properties: handleProperties,
-    children: all$g
+    children: all$1
   },
   text: {value: handleValue},
   '*': {data: allow, position: allow}
@@ -354,7 +356,7 @@ function sanitize$1(node, schema) {
   var replace;
 
   if (node && typeof node === 'object' && node.type) {
-    replace = one$4(Object.assign({}, defaultSchema, schema || {}), node, []);
+    replace = one$1(Object.assign({}, defaultSchema, schema || {}), node, []);
 
     if (replace) {
       if (Array.isArray(replace)) {
@@ -381,7 +383,7 @@ function sanitize$1(node, schema) {
  * @param {Array.<string>} stack
  * @returns {Node|Array.<Node>|null}
  */
-function one$4(schema, node, stack) {
+function one$1(schema, node, stack) {
   var type = node && node.type;
   /** @type {Node} */
   // @ts-ignore rest of props added later.
@@ -397,7 +399,7 @@ function one$4(schema, node, stack) {
   /** @type {string} */
   var key;
 
-  if (own$d.call(nodeSchema, type)) {
+  if (own$a.call(nodeSchema, type)) {
     definition = nodeSchema[type];
 
     if (typeof definition === 'function') {
@@ -409,7 +411,7 @@ function one$4(schema, node, stack) {
       allowed = Object.assign({}, definition, nodeSchema['*']);
 
       for (key in allowed) {
-        if (own$d.call(allowed, key)) {
+        if (own$a.call(allowed, key)) {
           result = allowed[key](schema, node[key], node, stack);
 
           // eslint-disable-next-line max-depth
@@ -442,7 +444,7 @@ function one$4(schema, node, stack) {
  * @param {Array.<Node>} children
  * @returns {Array.<Node>}
  */
-function all$g(schema, children, node, stack) {
+function all$1(schema, children, node, stack) {
   /** @type {Array.<Node>} */
   var results = [];
   var index = -1;
@@ -455,7 +457,7 @@ function all$g(schema, children, node, stack) {
     }
 
     while (++index < children.length) {
-      value = one$4(schema, children[index], stack);
+      value = one$1(schema, children[index], stack);
 
       if (value) {
         if ('length' in value) {
@@ -500,7 +502,7 @@ function handleProperties(schema, properties, node, stack) {
     {},
     toPropertyValueMap(schema.attributes['*']),
     toPropertyValueMap(
-      name && own$d.call(schema.attributes, name) ? schema.attributes[name] : []
+      name && own$a.call(schema.attributes, name) ? schema.attributes[name] : []
     )
   );
   /** @type {Properties} */
@@ -513,10 +515,10 @@ function handleProperties(schema, properties, node, stack) {
   var key;
 
   for (key in props) {
-    if (own$d.call(props, key)) {
-      if (own$d.call(allowed, key)) {
+    if (own$a.call(props, key)) {
+      if (own$a.call(allowed, key)) {
         definition = allowed[key];
-      } else if (data$1(key) && own$d.call(allowed, 'data*')) {
+      } else if (data$1(key) && own$a.call(allowed, 'data*')) {
         definition = allowed['data*'];
       } else {
         continue
@@ -533,9 +535,9 @@ function handleProperties(schema, properties, node, stack) {
     }
   }
 
-  if (name && own$d.call(reqs, name)) {
+  if (name && own$a.call(reqs, name)) {
     for (key in reqs[name]) {
-      if (!own$d.call(result, key)) {
+      if (!own$a.call(result, key)) {
         result[key] = reqs[name][key];
       }
     }
@@ -570,7 +572,7 @@ function handleTagName(schema, tagName, _, stack) {
 
   // Some nodes can break out of their context if they don’t have a certain
   // ancestor.
-  if (own$d.call(schema.ancestors, name)) {
+  if (own$a.call(schema.ancestors, name)) {
     while (++index < schema.ancestors[name].length) {
       if (stack.includes(schema.ancestors[name][index])) {
         return name
@@ -678,7 +680,7 @@ function safeProtocol(schema, value, prop) {
   var questionMark = url.indexOf('?');
   var numberSign = url.indexOf('#');
   var slash = url.indexOf('/');
-  var protocols = own$d.call(schema.protocols, prop)
+  var protocols = own$a.call(schema.protocols, prop)
     ? schema.protocols[prop].concat()
     : [];
   var index = -1;
@@ -3273,9 +3275,9 @@ Tokenizer$4.getTokenAttr = function(token, attrName) {
 
 var tokenizer = Tokenizer$4;
 
-var html$8 = {};
+var html$7 = {};
 
-const NS$3 = (html$8.NAMESPACES = {
+const NS$3 = (html$7.NAMESPACES = {
     HTML: 'http://www.w3.org/1999/xhtml',
     MATHML: 'http://www.w3.org/1998/Math/MathML',
     SVG: 'http://www.w3.org/2000/svg',
@@ -3284,7 +3286,7 @@ const NS$3 = (html$8.NAMESPACES = {
     XMLNS: 'http://www.w3.org/2000/xmlns/'
 });
 
-html$8.ATTRS = {
+html$7.ATTRS = {
     TYPE: 'type',
     ACTION: 'action',
     ENCODING: 'encoding',
@@ -3295,13 +3297,13 @@ html$8.ATTRS = {
     SIZE: 'size'
 };
 
-html$8.DOCUMENT_MODE = {
+html$7.DOCUMENT_MODE = {
     NO_QUIRKS: 'no-quirks',
     QUIRKS: 'quirks',
     LIMITED_QUIRKS: 'limited-quirks'
 };
 
-const $$4 = (html$8.TAG_NAMES = {
+const $$4 = (html$7.TAG_NAMES = {
     A: 'a',
     ADDRESS: 'address',
     ANNOTATION_XML: 'annotation-xml',
@@ -3447,7 +3449,7 @@ const $$4 = (html$8.TAG_NAMES = {
     XMP: 'xmp'
 });
 
-html$8.SPECIAL_ELEMENTS = {
+html$7.SPECIAL_ELEMENTS = {
     [NS$3.HTML]: {
         [$$4.ADDRESS]: true,
         [$$4.APPLET]: true,
@@ -3546,7 +3548,7 @@ html$8.SPECIAL_ELEMENTS = {
     }
 };
 
-const HTML$3 = html$8;
+const HTML$3 = html$7;
 
 //Aliases
 const $$3 = HTML$3.TAG_NAMES;
@@ -4491,7 +4493,7 @@ const Mixin$5 = mixin;
 const Tokenizer$2 = tokenizer;
 const LocationInfoTokenizerMixin$1 = tokenizerMixin$1;
 const LocationInfoOpenElementStackMixin = openElementStackMixin;
-const HTML$2 = html$8;
+const HTML$2 = html$7;
 
 //Aliases
 const $$2 = HTML$2.TAG_NAMES;
@@ -4843,7 +4845,7 @@ var parserMixin = ErrorReportingParserMixin$1;
 
 var _default = {};
 
-const { DOCUMENT_MODE: DOCUMENT_MODE$1 } = html$8;
+const { DOCUMENT_MODE: DOCUMENT_MODE$1 } = html$7;
 
 //Node construction
 _default.createDocument = function() {
@@ -5077,7 +5079,7 @@ var mergeOptions$1 = function mergeOptions(defaults, options) {
 
 var doctype$3 = {};
 
-const { DOCUMENT_MODE } = html$8;
+const { DOCUMENT_MODE } = html$7;
 
 //Const
 const VALID_DOCTYPE_NAME = 'html';
@@ -5241,7 +5243,7 @@ doctype$3.serializeContent = function(name, publicId, systemId) {
 var foreignContent$1 = {};
 
 const Tokenizer$1 = tokenizer;
-const HTML$1 = html$8;
+const HTML$1 = html$7;
 
 //Aliases
 const $$1 = HTML$1.TAG_NAMES;
@@ -5516,7 +5518,7 @@ const doctype$2 = doctype$3;
 const foreignContent = foreignContent$1;
 const ERR = errorCodes;
 const unicode = unicode$3;
-const HTML = html$8;
+const HTML = html$7;
 
 //Aliases
 const $ = HTML.TAG_NAMES;
@@ -8459,19 +8461,19 @@ function endTagInForeignContent(p, token) {
     }
 }
 
-var start = factory$6('start');
-var end = factory$6('end');
+var start = factory$5('start');
+var end = factory$5('end');
 
-var unistUtilPosition = position$4;
+var unistUtilPosition = position$2;
 
-position$4.start = start;
-position$4.end = end;
+position$2.start = start;
+position$2.end = end;
 
-function position$4(node) {
+function position$2(node) {
   return {start: start(node), end: end(node)}
 }
 
-function factory$6(type) {
+function factory$5(type) {
   point.displayName = type;
 
   return point
@@ -8650,7 +8652,7 @@ function toResult$1(value) {
   return [value]
 }
 
-var unistUtilVisit$1 = visit$5;
+var unistUtilVisit$1 = visit$3;
 
 var visitParents$2 = unistUtilVisitParents$1;
 
@@ -8658,11 +8660,11 @@ var CONTINUE$2 = visitParents$2.CONTINUE;
 var SKIP$2 = visitParents$2.SKIP;
 var EXIT$2 = visitParents$2.EXIT;
 
-visit$5.CONTINUE = CONTINUE$2;
-visit$5.SKIP = SKIP$2;
-visit$5.EXIT = EXIT$2;
+visit$3.CONTINUE = CONTINUE$2;
+visit$3.SKIP = SKIP$2;
+visit$3.EXIT = EXIT$2;
 
-function visit$5(tree, test, visitor, reverse) {
+function visit$3(tree, test, visitor, reverse) {
   if (typeof test === 'function' && typeof visitor !== 'function') {
     reverse = visitor;
     visitor = test;
@@ -8742,9 +8744,9 @@ function merge$2(definitions) {
   )
 }
 
-var normalize_1 = normalize$7;
+var normalize_1 = normalize$3;
 
-function normalize$7(value) {
+function normalize$3(value) {
   return value.toLowerCase()
 }
 
@@ -8825,7 +8827,7 @@ function mark(values, key, value) {
   }
 }
 
-var normalize$6 = normalize_1;
+var normalize$2 = normalize_1;
 var Schema = schema$2;
 var DefinedInfo$1 = definedInfo;
 
@@ -8856,8 +8858,8 @@ function create$6(definition) {
 
     property[prop] = info;
 
-    normal[normalize$6(prop)] = prop;
-    normal[normalize$6(info.attribute)] = prop;
+    normal[normalize$2(prop)] = prop;
+    normal[normalize$2(info.attribute)] = prop;
   }
 
   return new Schema(property, normal, space)
@@ -9611,7 +9613,7 @@ var require$$1 = [
 	"textPath"
 ];
 
-var normalize$5 = normalize_1;
+var normalize$1 = normalize_1;
 var DefinedInfo = definedInfo;
 var Info = info$1;
 
@@ -9624,7 +9626,7 @@ var dash$1 = /-[a-z]/g;
 var cap$1 = /[A-Z]/g;
 
 function find$4(schema, value) {
-  var normal = normalize$5(value);
+  var normal = normalize$1(value);
   var prop = value;
   var Type = Info;
 
@@ -9800,16 +9802,16 @@ function stringify$2(values, options) {
 }
 
 var find$3 = find_1;
-var normalize$4 = normalize_1;
+var normalize = normalize_1;
 var parseSelector = hastUtilParseSelector;
 var spaces$1 = spaceSeparatedTokens.parse;
 var commas$1 = commaSeparatedTokens.parse;
 
-var factory_1 = factory$5;
+var factory_1 = factory$4;
 
-var own$c = {}.hasOwnProperty;
+var own$9 = {}.hasOwnProperty;
 
-function factory$5(schema, defaultTagName, caseSensitive) {
+function factory$4(schema, defaultTagName, caseSensitive) {
   var adjust = caseSensitive ? createAdjustMap(caseSensitive) : null;
 
   return h
@@ -9821,7 +9823,7 @@ function factory$5(schema, defaultTagName, caseSensitive) {
     var name = node.tagName.toLowerCase();
     var property;
 
-    node.tagName = adjust && own$c.call(adjust, name) ? adjust[name] : name;
+    node.tagName = adjust && own$9.call(adjust, name) ? adjust[name] : name;
 
     if (properties && isChildren(properties, node)) {
       children.unshift(properties);
@@ -9976,7 +9978,7 @@ function parsePrimitive(info, name, value) {
     // Accept `boolean` and `string`.
     if (
       typeof result === 'string' &&
-      (result === '' || normalize$4(value) === normalize$4(name))
+      (result === '' || normalize(value) === normalize(name))
     ) {
       result = true;
     }
@@ -10012,9 +10014,9 @@ function createAdjustMap(values) {
 
 var schema$1 = svg_1$1;
 var caseSensitive = require$$1;
-var factory$4 = factory_1;
+var factory$3 = factory_1;
 
-var svg$4 = factory$4(schema$1, 'g', caseSensitive);
+var svg$4 = factory$3(schema$1, 'g', caseSensitive);
 svg$4.displayName = 'svg';
 
 var svg_1 = svg$4;
@@ -10030,7 +10032,7 @@ var number = types.number;
 var spaceSeparated = types.spaceSeparated;
 var commaSeparated = types.commaSeparated;
 
-var html$7 = create({
+var html$6 = create({
   space: 'html',
   attributes: {
     acceptcharset: 'accept-charset',
@@ -10332,23 +10334,23 @@ var xlink$1 = xlink$3;
 var xml$1 = xml$3;
 var xmlns$1 = xmlns$3;
 var aria = aria$2;
-var html$6 = html$7;
+var html$5 = html$6;
 
-var html_1$2 = merge([xml$1, xlink$1, xmlns$1, aria, html$6]);
+var html_1$1 = merge([xml$1, xlink$1, xmlns$1, aria, html$5]);
 
-var schema = html_1$2;
-var factory$3 = factory_1;
+var schema = html_1$1;
+var factory$2 = factory_1;
 
-var html$5 = factory$3(schema, 'div');
-html$5.displayName = 'html';
+var html$4 = factory$2(schema, 'div');
+html$4.displayName = 'html';
 
-var html_1$1 = html$5;
+var html_1 = html$4;
 
-var hastscript = html_1$1;
+var hastscript = html_1;
 
-var vfileLocation$1 = factory$2;
+var vfileLocation$1 = factory$1;
 
-function factory$2(file) {
+function factory$1(file) {
   var value = String(file);
   var indices = [];
   var search = /\r?\n|\r/g;
@@ -10399,14 +10401,14 @@ function factory$2(file) {
   }
 }
 
-var html$4 = "http://www.w3.org/1999/xhtml";
+var html$3 = "http://www.w3.org/1999/xhtml";
 var mathml = "http://www.w3.org/1998/Math/MathML";
 var svg$3 = "http://www.w3.org/2000/svg";
 var xlink = "http://www.w3.org/1999/xlink";
 var xml = "http://www.w3.org/XML/1998/namespace";
 var xmlns = "http://www.w3.org/2000/xmlns/";
 var require$$6 = {
-	html: html$4,
+	html: html$3,
 	mathml: mathml,
 	svg: svg$3,
 	xlink: xlink,
@@ -10417,20 +10419,20 @@ var require$$6 = {
 var s = svg_1;
 var h = hastscript;
 var find$2 = find_1;
-var html$3 = html_1$2;
+var html$2 = html_1$1;
 var svg$2 = svg_1$1;
 var vfileLocation = vfileLocation$1;
 var ns$3 = require$$6;
 
 var hastUtilFromParse5 = wrapper$1;
 
-var own$b = {}.hasOwnProperty;
+var own$8 = {}.hasOwnProperty;
 
 // Handlers.
 var map$1 = {
-  '#document': root$3,
-  '#document-fragment': root$3,
-  '#text': text$8,
+  '#document': root$2,
+  '#document-fragment': root$2,
+  '#text': text$7,
   '#comment': comment$1,
   '#documentType': doctype$1
 };
@@ -10448,7 +10450,7 @@ function wrapper$1(ast, options) {
   }
 
   return transform$1(ast, {
-    schema: settings.space === 'svg' ? svg$2 : html$3,
+    schema: settings.space === 'svg' ? svg$2 : html$2,
     file: file,
     verbose: settings.verbose
   })
@@ -10457,13 +10459,13 @@ function wrapper$1(ast, options) {
 // Transform a node.
 function transform$1(ast, config) {
   var schema = config.schema;
-  var fn = own$b.call(map$1, ast.nodeName) ? map$1[ast.nodeName] : element$2;
+  var fn = own$8.call(map$1, ast.nodeName) ? map$1[ast.nodeName] : element$2;
   var children;
   var result;
   var position;
 
   if (fn === element$2) {
-    config.schema = ast.namespaceURI === ns$3.svg ? svg$2 : html$3;
+    config.schema = ast.namespaceURI === ns$3.svg ? svg$2 : html$2;
   }
 
   if (ast.childNodes) {
@@ -10500,7 +10502,7 @@ function nodes(children, config) {
 
 // Transform a document.
 // Stores `ast.quirksMode` in `node.data.quirksMode`.
-function root$3(ast, children, config) {
+function root$2(ast, children, config) {
   var result = {
     type: 'root',
     children: children,
@@ -10532,7 +10534,7 @@ function doctype$1(ast) {
 }
 
 // Transform a text.
-function text$8(ast) {
+function text$7(ast) {
   return {type: 'text', value: ast.value}
 }
 
@@ -10562,8 +10564,8 @@ function element$2(ast, children, config) {
 
   if (result.tagName === 'template' && 'content' in ast) {
     pos = ast.sourceCodeLocation;
-    start = pos && pos.startTag && position$3(pos.startTag).end;
-    end = pos && pos.endTag && position$3(pos.endTag).start;
+    start = pos && pos.startTag && position$1(pos.startTag).end;
+    end = pos && pos.endTag && position$1(pos.endTag).start;
 
     result.content = transform$1(ast.content, config);
 
@@ -10577,7 +10579,7 @@ function element$2(ast, children, config) {
 
 // Create clean positional information.
 function location(node, location, config) {
-  var result = position$3(location);
+  var result = position$1(location);
   var tail;
   var key;
   var props;
@@ -10595,13 +10597,13 @@ function location(node, location, config) {
       props = {};
 
       for (key in location.attrs) {
-        props[find$2(config.schema, key).property] = position$3(location.attrs[key]);
+        props[find$2(config.schema, key).property] = position$1(location.attrs[key]);
       }
 
       node.data = {
         position: {
-          opening: position$3(location.startTag),
-          closing: location.endTag ? position$3(location.endTag) : null,
+          opening: position$1(location.startTag),
+          closing: location.endTag ? position$1(location.endTag) : null,
           properties: props
         }
       };
@@ -10611,7 +10613,7 @@ function location(node, location, config) {
   return result
 }
 
-function position$3(loc) {
+function position$1(loc) {
   var start = point$1({
     line: loc.startLine,
     column: loc.startCol,
@@ -10967,7 +10969,7 @@ function StyleToObject(style, iterator) {
 
 var styleToObject = StyleToObject;
 
-var html$2 = html_1$2;
+var html$1 = html_1$1;
 var svg$1 = svg_1$1;
 var find$1 = find_1;
 var hastToReact = require$$3;
@@ -10977,9 +10979,9 @@ var style = styleToObject;
 var ns$2 = require$$6;
 var convert$2 = convert_1$1;
 
-var root$2 = convert$2('root');
+var root$1 = convert$2('root');
 var element$1 = convert$2('element');
-var text$7 = convert$2('text');
+var text$6 = convert$2('text');
 
 var hastToHyperscript = wrapper;
 
@@ -11001,7 +11003,7 @@ function wrapper(h, node, options) {
     prefix = settings.prefix;
   }
 
-  if (root$2(node)) {
+  if (root$1(node)) {
     node =
       node.children.length === 1 && element$1(node.children[0])
         ? node.children[0]
@@ -11018,7 +11020,7 @@ function wrapper(h, node, options) {
   }
 
   return toH$2(h, node, {
-    schema: settings.space === 'svg' ? svg$1 : html$2,
+    schema: settings.space === 'svg' ? svg$1 : html$1,
     prefix: prefix == null ? (r || v || vd ? 'h-' : null) : prefix,
     key: 0,
     react: r,
@@ -11067,7 +11069,7 @@ function toH$2(h, node, ctx) {
 
       if (element$1(value)) {
         nodes.push(toH$2(h, value, ctx));
-      } else if (text$7(value)) {
+      } else if (text$6(value)) {
         nodes.push(value.value);
       }
     }
@@ -11184,21 +11186,21 @@ function styleReplacer($0, $1) {
   return $1.toUpperCase()
 }
 
-var zwitch$2 = factory$1;
+var zwitch$2 = factory;
 
 var noop = Function.prototype;
-var own$a = {}.hasOwnProperty;
+var own$7 = {}.hasOwnProperty;
 
 // Handle values based on a property.
-function factory$1(key, options) {
+function factory(key, options) {
   var settings = options || {};
 
   function one(value) {
     var fn = one.invalid;
     var handlers = one.handlers;
 
-    if (value && own$a.call(value, key)) {
-      fn = own$a.call(handlers, value[key]) ? handlers[value[key]] : one.unknown;
+    if (value && own$7.call(value, key)) {
+      fn = own$7.call(handlers, value[key]) ? handlers[value[key]] : one.unknown;
     }
 
     return (fn || noop).apply(this, arguments)
@@ -11212,7 +11214,7 @@ function factory$1(key, options) {
 }
 
 var xtend$1 = immutable;
-var html$1 = html_1$2;
+var html = html_1$1;
 var svg = svg_1$1;
 var find = find_1;
 var toH$1 = hastToHyperscript;
@@ -11223,20 +11225,20 @@ var hastUtilToParse5 = transform;
 
 var ignoredSpaces = ['svg', 'html'];
 
-var one$3 = zwitch$1('type');
+var one = zwitch$1('type');
 
-one$3.handlers.root = root$1;
-one$3.handlers.element = element;
-one$3.handlers.text = text$6;
-one$3.handlers.comment = comment;
-one$3.handlers.doctype = doctype;
+one.handlers.root = root;
+one.handlers.element = element;
+one.handlers.text = text$5;
+one.handlers.comment = comment;
+one.handlers.doctype = doctype;
 
 // Transform a tree from hast to Parse5’s AST.
 function transform(tree, space) {
-  return one$3(tree, space === 'svg' ? svg : html$1)
+  return one(tree, space === 'svg' ? svg : html)
 }
 
-function root$1(node, schema) {
+function root(node, schema) {
   var data = node.data || {};
   var mode = data.quirksMode ? 'quirks' : 'no-quirks';
 
@@ -11260,7 +11262,7 @@ function doctype(node, schema) {
   )
 }
 
-function text$6(node, schema) {
+function text$5(node, schema) {
   return patch(node, {nodeName: '#text', value: node.value}, schema)
 }
 
@@ -11338,7 +11340,7 @@ function patch(node, p5, parentSchema) {
   }
 
   while (++index < length) {
-    child = one$3(children[index], schema);
+    child = one(children[index], schema);
     child.parentNode = p5;
     childNodes[index] = child;
   }
@@ -11389,7 +11391,7 @@ var require$$5 = [
 
 var Parser = parser$1;
 var pos = unistUtilPosition;
-var visit$4 = unistUtilVisit$1;
+var visit$2 = unistUtilVisit$1;
 var fromParse5 = hastUtilFromParse5;
 var toParse5 = hastUtilToParse5;
 var voids = require$$5;
@@ -11397,7 +11399,7 @@ var ns = require$$6;
 var zwitch = zwitch$2;
 var xtend = immutable;
 
-var hastUtilRaw$1 = wrap$8;
+var hastUtilRaw$1 = wrap$2;
 
 var inTemplateMode = 'IN_TEMPLATE_MODE';
 var dataState = 'DATA_STATE';
@@ -11409,7 +11411,7 @@ var doctypeToken = 'DOCTYPE_TOKEN';
 
 var parseOptions = {sourceCodeLocationInfo: true, scriptingEnabled: false};
 
-function wrap$8(tree, file, options) {
+function wrap$2(tree, file, options) {
   var parser = new Parser(parseOptions);
   var one = zwitch('type', {
     handlers: {
@@ -11420,7 +11422,7 @@ function wrap$8(tree, file, options) {
       doctype: doctype,
       raw: raw
     },
-    unknown: unknown$1
+    unknown: unknown
   });
   var stitches;
   var tokenizer;
@@ -11446,7 +11448,7 @@ function wrap$8(tree, file, options) {
   result = fromParse5(documentMode(tree) ? document() : fragment(), file);
 
   if (stitches) {
-    visit$4(result, 'comment', mend);
+    visit$2(result, 'comment', mend);
   }
 
   // Unpack if possible and when not given a `root`.
@@ -11629,7 +11631,7 @@ function wrap$8(tree, file, options) {
     // Recurse, because to somewhat handle `[<x>]</x>` (where `[]` denotes the
     // passed through node).
     if (node.children) {
-      clone.children = wrap$8(
+      clone.children = wrap$2(
         {type: 'root', children: node.children},
         file,
         options
@@ -11699,7 +11701,7 @@ function endTag(node) {
   }
 }
 
-function unknown$1(node) {
+function unknown(node) {
   throw new Error('Cannot compile `' + node.type + '` node')
 }
 
@@ -11897,7 +11899,7 @@ function toResult(value) {
   return [value]
 }
 
-var unistUtilVisit = visit$3;
+var unistUtilVisit = visit$1;
 
 var visitParents = unistUtilVisitParents;
 
@@ -11905,11 +11907,11 @@ var CONTINUE = visitParents.CONTINUE;
 var SKIP = visitParents.SKIP;
 var EXIT = visitParents.EXIT;
 
-visit$3.CONTINUE = CONTINUE;
-visit$3.SKIP = SKIP;
-visit$3.EXIT = EXIT;
+visit$1.CONTINUE = CONTINUE;
+visit$1.SKIP = SKIP;
+visit$1.EXIT = EXIT;
 
-function visit$3(tree, test, visitor, reverse) {
+function visit$1(tree, test, visitor, reverse) {
   if (typeof test === 'function' && typeof visitor !== 'function') {
     reverse = visitor;
     visitor = test;
@@ -11925,7 +11927,7 @@ function visit$3(tree, test, visitor, reverse) {
   }
 }
 
-var visit$2 = unistUtilVisit;
+var visit = unistUtilVisit;
 
 var hasOwnProperty$2 = Object.prototype.hasOwnProperty;
 var hastCssPropertyMap = {
@@ -11936,7 +11938,7 @@ var hastCssPropertyMap = {
 };
 
 var hastUtilTableCellStyle = function tableCellStyle(node) {
-  visit$2(node, 'element', visitor);
+  visit(node, 'element', visitor);
   return node;
 };
 
@@ -11977,7 +11979,7 @@ var tableCellStyle = hastUtilTableCellStyle;
 
 var rehypeReact_1 = rehypeReact;
 
-var own$9 = {}.hasOwnProperty;
+var own$6 = {}.hasOwnProperty;
 
 // Add a React compiler.
 function rehypeReact(options) {
@@ -12007,7 +12009,7 @@ function rehypeReact(options) {
   function h(name, props, children) {
     var component = name;
 
-    if (settings.components && own$9.call(settings.components, name)) {
+    if (settings.components && own$6.call(settings.components, name)) {
       component = settings.components[name];
 
       if (settings.passNode) {
@@ -12030,13 +12032,13 @@ function toString$2(node) {
       (node.value ||
         node.alt ||
         node.title ||
-        ('children' in node && all$f(node.children)) ||
-        ('length' in node && all$f(node)))) ||
+        ('children' in node && all(node.children)) ||
+        ('length' in node && all(node)))) ||
     ''
   )
 }
 
-function all$f(values) {
+function all(values) {
   var result = [];
   var index = -1;
 
@@ -12051,9 +12053,9 @@ var assign$5 = Object.assign;
 
 var assign_1 = assign$5;
 
-var own$8 = {}.hasOwnProperty;
+var own$5 = {}.hasOwnProperty;
 
-var hasOwnProperty$1 = own$8;
+var hasOwnProperty$1 = own$5;
 
 function normalizeIdentifier$3(value) {
   return (
@@ -12899,14 +12901,14 @@ function initializeFlow(effects) {
 
 flow$2.tokenize = tokenize;
 
-var text$5 = {};
+var text$4 = {};
 
-Object.defineProperty(text$5, '__esModule', {value: true});
+Object.defineProperty(text$4, '__esModule', {value: true});
 
 var assign$2 = assign_1;
 var shallow$4 = shallow_1;
 
-var text$4 = initializeFactory('text');
+var text$3 = initializeFactory('text');
 var string$1 = initializeFactory('string');
 var resolver = {
   resolveAll: createResolver()
@@ -13097,9 +13099,9 @@ function resolveAllLineSuffixes(events, context) {
   return events
 }
 
-text$5.resolver = resolver;
-text$5.string = string$1;
-text$5.text = text$4;
+text$4.resolver = resolver;
+text$4.string = string$1;
+text$4.text = text$3;
 
 function miniflat$3(value) {
   return value === null || value === undefined
@@ -15289,7 +15291,7 @@ var iinfin = "⧜";
 var iiota = "℩";
 var ijlig = "ĳ";
 var imacr = "ī";
-var image$1 = "ℑ";
+var image = "ℑ";
 var imagline = "ℐ";
 var imagpart = "ℑ";
 var imath = "ı";
@@ -17511,7 +17513,7 @@ var require$$0 = {
 	iiota: iiota,
 	ijlig: ijlig,
 	imacr: imacr,
-	image: image$1,
+	image: image,
 	imagline: imagline,
 	imagpart: imagpart,
 	imath: imath,
@@ -18543,10 +18545,10 @@ var characterEntities = require$$0;
 
 var decodeEntity_1 = decodeEntity$1;
 
-var own$7 = {}.hasOwnProperty;
+var own$4 = {}.hasOwnProperty;
 
 function decodeEntity$1(characters) {
-  return own$7.call(characterEntities, characters)
+  return own$4.call(characterEntities, characters)
     ? characterEntities[characters]
     : false
 }
@@ -21081,7 +21083,7 @@ var markdownLineEnding$1 = markdownLineEnding_1;
 var markdownSpace$1 = markdownSpace_1;
 var factorySpace$2 = factorySpace$h;
 
-var thematicBreak$4 = {
+var thematicBreak$2 = {
   name: 'thematicBreak',
   tokenize: tokenizeThematicBreak
 };
@@ -21127,7 +21129,7 @@ function tokenizeThematicBreak(effects, ok, nok) {
   }
 }
 
-var thematicBreak_1$1 = thematicBreak$4;
+var thematicBreak_1 = thematicBreak$2;
 
 var asciiDigit = asciiDigit_1;
 var markdownSpace = markdownSpace_1;
@@ -21135,9 +21137,9 @@ var prefixSize = prefixSize_1;
 var sizeChunks = sizeChunks_1;
 var factorySpace$1 = factorySpace$h;
 var partialBlankLine = partialBlankLine_1;
-var thematicBreak$3 = thematicBreak_1$1;
+var thematicBreak$1 = thematicBreak_1;
 
-var list$3 = {
+var list$1 = {
   name: 'list',
   tokenize: tokenizeListStart,
   continuation: {
@@ -21182,7 +21184,7 @@ function tokenizeListStart(effects, ok, nok) {
       if (kind === 'listUnordered') {
         effects.enter('listItemPrefix');
         return code === 42 || code === 45
-          ? effects.check(thematicBreak$3, nok, atMarker)(code)
+          ? effects.check(thematicBreak$1, nok, atMarker)(code)
           : atMarker(code)
       }
 
@@ -21291,7 +21293,7 @@ function tokenizeListContinuation(effects, ok, nok) {
     self.interrupt = undefined;
     return factorySpace$1(
       effects,
-      effects.attempt(list$3, ok, nok),
+      effects.attempt(list$1, ok, nok),
       'linePrefix',
       self.parser.constructs.disable.null.indexOf('codeIndented') > -1
         ? undefined
@@ -21340,7 +21342,7 @@ function tokenizeListItemPrefixWhitespace(effects, ok, nok) {
   }
 }
 
-var list_1$1 = list$3;
+var list_1 = list$1;
 
 var markdownLineEnding = markdownLineEnding_1;
 var shallow = shallow_1;
@@ -21460,7 +21462,7 @@ var setextUnderline_1 = setextUnderline$1;
 
 Object.defineProperty(constructs$1, '__esModule', {value: true});
 
-var text$1$1 = text$5;
+var text$1 = text$4;
 var attention = attention_1;
 var autolink = autolink_1;
 var blockQuote = blockQuote_1;
@@ -21478,36 +21480,36 @@ var labelEnd = labelEnd_1;
 var labelStartImage = labelStartImage_1;
 var labelStartLink = labelStartLink_1;
 var lineEnding = lineEnding_1;
-var list$2 = list_1$1;
+var list = list_1;
 var setextUnderline = setextUnderline_1;
-var thematicBreak$2 = thematicBreak_1$1;
+var thematicBreak = thematicBreak_1;
 
 var document$1 = {
-  42: list$2,
+  42: list,
   // Asterisk
-  43: list$2,
+  43: list,
   // Plus sign
-  45: list$2,
+  45: list,
   // Dash
-  48: list$2,
+  48: list,
   // 0
-  49: list$2,
+  49: list,
   // 1
-  50: list$2,
+  50: list,
   // 2
-  51: list$2,
+  51: list,
   // 3
-  52: list$2,
+  52: list,
   // 4
-  53: list$2,
+  53: list,
   // 5
-  54: list$2,
+  54: list,
   // 6
-  55: list$2,
+  55: list,
   // 7
-  56: list$2,
+  56: list,
   // 8
-  57: list$2,
+  57: list,
   // 9
   62: blockQuote // Greater than
 };
@@ -21524,15 +21526,15 @@ var flowInitial = {
 var flow$1 = {
   35: headingAtx,
   // Number sign
-  42: thematicBreak$2,
+  42: thematicBreak,
   // Asterisk
-  45: [setextUnderline, thematicBreak$2],
+  45: [setextUnderline, thematicBreak],
   // Dash
   60: htmlFlow,
   // Less than
   61: setextUnderline,
   // Equals to
-  95: thematicBreak$2,
+  95: thematicBreak,
   // Underscore
   96: codeFenced,
   // Grave accent
@@ -21543,7 +21545,7 @@ var string = {
   // Ampersand
   92: characterEscape // Backslash
 };
-var text$3 = {
+var text$2 = {
   '-5': lineEnding,
   // Carriage return
   '-4': lineEnding,
@@ -21569,7 +21571,7 @@ var text$3 = {
   96: codeText // Grave accent
 };
 var insideSpan = {
-  null: [attention, text$1$1.resolver]
+  null: [attention, text$1.resolver]
 };
 var disable = {
   null: []
@@ -21582,12 +21584,12 @@ constructs$1.flow = flow$1;
 constructs$1.flowInitial = flowInitial;
 constructs$1.insideSpan = insideSpan;
 constructs$1.string = string;
-constructs$1.text = text$3;
+constructs$1.text = text$2;
 
 var content = content$3;
 var document = document$2;
 var flow = flow$2;
-var text$2 = text$5;
+var text = text$4;
 var combineExtensions = combineExtensions_1;
 var createTokenizer = createTokenizer_1;
 var miniflat = miniflat_1;
@@ -21603,8 +21605,8 @@ function parse$2(options) {
     content: create(content),
     document: create(document),
     flow: create(flow),
-    string: create(text$2.string),
-    text: create(text$2.text)
+    string: create(text.string),
+    text: create(text.text)
   };
   return parser
 
@@ -21717,7 +21719,7 @@ function postprocess$1(events) {
 
 var postprocess_1 = postprocess$1;
 
-var own$6 = {}.hasOwnProperty;
+var own$3 = {}.hasOwnProperty;
 
 var unistUtilStringifyPosition = stringify$1;
 
@@ -21728,17 +21730,17 @@ function stringify$1(value) {
   }
 
   // Node.
-  if (own$6.call(value, 'position') || own$6.call(value, 'type')) {
-    return position$2(value.position)
+  if (own$3.call(value, 'position') || own$3.call(value, 'type')) {
+    return position(value.position)
   }
 
   // Position.
-  if (own$6.call(value, 'start') || own$6.call(value, 'end')) {
-    return position$2(value)
+  if (own$3.call(value, 'start') || own$3.call(value, 'end')) {
+    return position(value)
   }
 
   // Point.
-  if (own$6.call(value, 'line') || own$6.call(value, 'column')) {
+  if (own$3.call(value, 'line') || own$3.call(value, 'column')) {
     return point(value)
   }
 
@@ -21754,7 +21756,7 @@ function point(point) {
   return index(point.line) + ':' + index(point.column)
 }
 
-function position$2(pos) {
+function position(pos) {
   if (!pos || typeof pos !== 'object') {
     pos = {};
   }
@@ -21772,7 +21774,7 @@ var dist = fromMarkdown$1;
 
 var toString$1 = mdastUtilToString;
 var assign = assign_1;
-var own$5 = hasOwnProperty$1;
+var own$2 = hasOwnProperty$1;
 var normalizeIdentifier = normalizeIdentifier_1;
 var safeFromInt = safeFromInt_1;
 var parser = parse_1;
@@ -21953,7 +21955,7 @@ function compiler(options) {
     while (++index < events.length) {
       handler = config[events[index][0]];
 
-      if (own$5.call(handler, events[index][1].type)) {
+      if (own$2.call(handler, events[index][1].type)) {
         handler[events[index][1].type].call(
           assign({sliceSerialize: events[index][2].sliceSerialize}, context),
           events[index][1]
@@ -22574,7 +22576,7 @@ function extension(config, extension) {
   var left;
 
   for (key in extension) {
-    left = own$5.call(config, key) ? config[key] : (config[key] = {});
+    left = own$2.call(config, key) ? config[key] : (config[key] = {});
 
     if (key === 'canContainEols' || key === 'transforms') {
       config[key] = [].concat(left, extension[key]);
@@ -22609,1014 +22611,7 @@ function parse$1(options) {
   }
 }
 
-var unistBuilder = u$c;
-
-function u$c(type, props, value) {
-  var node;
-
-  if (
-    (value === null || value === undefined) &&
-    (typeof props !== 'object' || Array.isArray(props))
-  ) {
-    value = props;
-    props = {};
-  }
-
-  node = Object.assign({type: String(type)}, props);
-
-  if (Array.isArray(value)) {
-    node.children = value;
-  } else if (value !== null && value !== undefined) {
-    node.value = String(value);
-  }
-
-  return node
-}
-
-var unistUtilGenerated = generated$1;
-
-function generated$1(node) {
-  return (
-    !node ||
-    !node.position ||
-    !node.position.start ||
-    !node.position.start.line ||
-    !node.position.start.column ||
-    !node.position.end ||
-    !node.position.end.line ||
-    !node.position.end.column
-  )
-}
-
-var visit$1 = unistUtilVisit$1;
-
-var mdastUtilDefinitions = getDefinitionFactory;
-
-var own$4 = {}.hasOwnProperty;
-
-// Get a definition in `node` by `identifier`.
-function getDefinitionFactory(node, options) {
-  return getterFactory(gather(node))
-}
-
-// Gather all definitions in `node`
-function gather(node) {
-  var cache = {};
-
-  if (!node || !node.type) {
-    throw new Error('mdast-util-definitions expected node')
-  }
-
-  visit$1(node, 'definition', ondefinition);
-
-  return cache
-
-  function ondefinition(definition) {
-    var id = normalise(definition.identifier);
-    if (!own$4.call(cache, id)) {
-      cache[id] = definition;
-    }
-  }
-}
-
-// Factory to get a node from the given definition-cache.
-function getterFactory(cache) {
-  return getter
-
-  // Get a node from the bound definition-cache.
-  function getter(identifier) {
-    var id = identifier && normalise(identifier);
-    return id && own$4.call(cache, id) ? cache[id] : null
-  }
-}
-
-function normalise(identifier) {
-  return identifier.toUpperCase()
-}
-
-var all_1 = all$e;
-
-var one$2 = one_1;
-
-function all$e(h, parent) {
-  var nodes = parent.children || [];
-  var length = nodes.length;
-  var values = [];
-  var index = -1;
-  var result;
-  var head;
-
-  while (++index < length) {
-    result = one$2(h, nodes[index], parent);
-
-    if (result) {
-      if (index && nodes[index - 1].type === 'break') {
-        if (result.value) {
-          result.value = result.value.replace(/^\s+/, '');
-        }
-
-        head = result.children && result.children[0];
-
-        if (head && head.value) {
-          head.value = head.value.replace(/^\s+/, '');
-        }
-      }
-
-      values = values.concat(result);
-    }
-  }
-
-  return values
-}
-
-var one_1 = one$1;
-
-var u$b = unistBuilder;
-var all$d = all_1;
-
-var own$3 = {}.hasOwnProperty;
-
-// Transform an unknown node.
-function unknown(h, node) {
-  if (text$1(node)) {
-    return h.augment(node, u$b('text', node.value))
-  }
-
-  return h(node, 'div', all$d(h, node))
-}
-
-// Visit a node.
-function one$1(h, node, parent) {
-  var type = node && node.type;
-  var fn;
-
-  // Fail on non-nodes.
-  if (!type) {
-    throw new Error('Expected node, got `' + node + '`')
-  }
-
-  if (own$3.call(h.handlers, type)) {
-    fn = h.handlers[type];
-  } else if (h.passThrough && h.passThrough.indexOf(type) > -1) {
-    fn = returnNode;
-  } else {
-    fn = h.unknownHandler;
-  }
-
-  return (typeof fn === 'function' ? fn : unknown)(h, node, parent)
-}
-
-// Check if the node should be renderered as a text node.
-function text$1(node) {
-  var data = node.data || {};
-
-  if (
-    own$3.call(data, 'hName') ||
-    own$3.call(data, 'hProperties') ||
-    own$3.call(data, 'hChildren')
-  ) {
-    return false
-  }
-
-  return 'value' in node
-}
-
-function returnNode(h, node) {
-  var clone;
-
-  if (node.children) {
-    clone = Object.assign({}, node);
-    clone.children = all$d(h, node);
-    return clone
-  }
-
-  return node
-}
-
-var thematicBreak_1 = thematicBreak$1;
-
-function thematicBreak$1(h, node) {
-  return h(node, 'hr')
-}
-
-var wrap_1$1 = wrap$7;
-
-var u$a = unistBuilder;
-
-// Wrap `nodes` with line feeds between each entry.
-// Optionally adds line feeds at the start and end.
-function wrap$7(nodes, loose) {
-  var result = [];
-  var index = -1;
-  var length = nodes.length;
-
-  if (loose) {
-    result.push(u$a('text', '\n'));
-  }
-
-  while (++index < length) {
-    if (index) {
-      result.push(u$a('text', '\n'));
-    }
-
-    result.push(nodes[index]);
-  }
-
-  if (loose && nodes.length > 0) {
-    result.push(u$a('text', '\n'));
-  }
-
-  return result
-}
-
-var list_1 = list$1;
-
-var wrap$6 = wrap_1$1;
-var all$c = all_1;
-
-function list$1(h, node) {
-  var props = {};
-  var name = node.ordered ? 'ol' : 'ul';
-  var items;
-  var index = -1;
-  var length;
-
-  if (typeof node.start === 'number' && node.start !== 1) {
-    props.start = node.start;
-  }
-
-  items = all$c(h, node);
-  length = items.length;
-
-  // Like GitHub, add a class for custom styling.
-  while (++index < length) {
-    if (
-      items[index].properties.className &&
-      items[index].properties.className.indexOf('task-list-item') !== -1
-    ) {
-      props.className = ['contains-task-list'];
-      break
-    }
-  }
-
-  return h(node, name, props, wrap$6(items, true))
-}
-
-var footer$1 = generateFootnotes;
-
-var thematicBreak = thematicBreak_1;
-var list = list_1;
-var wrap$5 = wrap_1$1;
-
-function generateFootnotes(h) {
-  var footnoteById = h.footnoteById;
-  var footnoteOrder = h.footnoteOrder;
-  var length = footnoteOrder.length;
-  var index = -1;
-  var listItems = [];
-  var def;
-  var backReference;
-  var content;
-  var tail;
-
-  while (++index < length) {
-    def = footnoteById[footnoteOrder[index].toUpperCase()];
-
-    if (!def) {
-      continue
-    }
-
-    content = def.children.concat();
-    tail = content[content.length - 1];
-    backReference = {
-      type: 'link',
-      url: '#fnref-' + def.identifier,
-      data: {hProperties: {className: ['footnote-backref']}},
-      children: [{type: 'text', value: '↩'}]
-    };
-
-    if (!tail || tail.type !== 'paragraph') {
-      tail = {type: 'paragraph', children: []};
-      content.push(tail);
-    }
-
-    tail.children.push(backReference);
-
-    listItems.push({
-      type: 'listItem',
-      data: {hProperties: {id: 'fn-' + def.identifier}},
-      children: content,
-      position: def.position
-    });
-  }
-
-  if (listItems.length === 0) {
-    return null
-  }
-
-  return h(
-    null,
-    'div',
-    {className: ['footnotes']},
-    wrap$5(
-      [
-        thematicBreak(h),
-        list(h, {type: 'list', ordered: true, children: listItems})
-      ],
-      true
-    )
-  )
-}
-
-var blockquote_1 = blockquote;
-
-var wrap$4 = wrap_1$1;
-var all$b = all_1;
-
-function blockquote(h, node) {
-  return h(node, 'blockquote', wrap$4(all$b(h, node), true))
-}
-
-var _break = hardBreak;
-
-var u$9 = unistBuilder;
-
-function hardBreak(h, node) {
-  return [h(node, 'br'), u$9('text', '\n')]
-}
-
-var code_1 = code;
-
-var u$8 = unistBuilder;
-
-function code(h, node) {
-  var value = node.value ? node.value + '\n' : '';
-  // To do: next major, use `node.lang` w/o regex, the splitting’s been going
-  // on for years in remark now.
-  var lang = node.lang && node.lang.match(/^[^ \t]+(?=[ \t]|$)/);
-  var props = {};
-  var code;
-
-  if (lang) {
-    props.className = ['language-' + lang];
-  }
-
-  code = h(node, 'code', props, [u$8('text', value)]);
-
-  if (node.meta) {
-    code.data = {meta: node.meta};
-  }
-
-  return h(node.position, 'pre', [code])
-}
-
-var _delete = strikethrough;
-
-var all$a = all_1;
-
-function strikethrough(h, node) {
-  return h(node, 'del', all$a(h, node))
-}
-
-var emphasis_1 = emphasis;
-
-var all$9 = all_1;
-
-function emphasis(h, node) {
-  return h(node, 'em', all$9(h, node))
-}
-
-var footnoteReference_1 = footnoteReference$1;
-
-var u$7 = unistBuilder;
-
-function footnoteReference$1(h, node) {
-  var footnoteOrder = h.footnoteOrder;
-  var identifier = String(node.identifier);
-
-  if (footnoteOrder.indexOf(identifier) === -1) {
-    footnoteOrder.push(identifier);
-  }
-
-  return h(node.position, 'sup', {id: 'fnref-' + identifier}, [
-    h(node, 'a', {href: '#fn-' + identifier, className: ['footnote-ref']}, [
-      u$7('text', node.label || identifier)
-    ])
-  ])
-}
-
-var footnote_1 = footnote;
-
-var footnoteReference = footnoteReference_1;
-
-function footnote(h, node) {
-  var footnoteById = h.footnoteById;
-  var footnoteOrder = h.footnoteOrder;
-  var identifier = 1;
-
-  while (identifier in footnoteById) {
-    identifier++;
-  }
-
-  identifier = String(identifier);
-
-  // No need to check if `identifier` exists in `footnoteOrder`, it’s guaranteed
-  // to not exist because we just generated it.
-  footnoteOrder.push(identifier);
-
-  footnoteById[identifier] = {
-    type: 'footnoteDefinition',
-    identifier: identifier,
-    children: [{type: 'paragraph', children: node.children}],
-    position: node.position
-  };
-
-  return footnoteReference(h, {
-    type: 'footnoteReference',
-    identifier: identifier,
-    position: node.position
-  })
-}
-
-var heading_1 = heading;
-
-var all$8 = all_1;
-
-function heading(h, node) {
-  return h(node, 'h' + node.depth, all$8(h, node))
-}
-
-var html_1 = html;
-
-var u$6 = unistBuilder;
-
-// Return either a `raw` node in dangerous mode, otherwise nothing.
-function html(h, node) {
-  return h.dangerous ? h.augment(node, u$6('raw', node.value)) : null
-}
-
-var encodeCache = {};
-
-
-// Create a lookup array where anything but characters in `chars` string
-// and alphanumeric chars is percent-encoded.
-//
-function getEncodeCache(exclude) {
-  var i, ch, cache = encodeCache[exclude];
-  if (cache) { return cache; }
-
-  cache = encodeCache[exclude] = [];
-
-  for (i = 0; i < 128; i++) {
-    ch = String.fromCharCode(i);
-
-    if (/^[0-9a-z]$/i.test(ch)) {
-      // always allow unencoded alphanumeric characters
-      cache.push(ch);
-    } else {
-      cache.push('%' + ('0' + i.toString(16).toUpperCase()).slice(-2));
-    }
-  }
-
-  for (i = 0; i < exclude.length; i++) {
-    cache[exclude.charCodeAt(i)] = exclude[i];
-  }
-
-  return cache;
-}
-
-
-// Encode unsafe characters with percent-encoding, skipping already
-// encoded sequences.
-//
-//  - string       - string to encode
-//  - exclude      - list of characters to ignore (in addition to a-zA-Z0-9)
-//  - keepEscaped  - don't encode '%' in a correct escape sequence (default: true)
-//
-function encode(string, exclude, keepEscaped) {
-  var i, l, code, nextCode, cache,
-      result = '';
-
-  if (typeof exclude !== 'string') {
-    // encode(string, keepEscaped)
-    keepEscaped  = exclude;
-    exclude = encode.defaultChars;
-  }
-
-  if (typeof keepEscaped === 'undefined') {
-    keepEscaped = true;
-  }
-
-  cache = getEncodeCache(exclude);
-
-  for (i = 0, l = string.length; i < l; i++) {
-    code = string.charCodeAt(i);
-
-    if (keepEscaped && code === 0x25 /* % */ && i + 2 < l) {
-      if (/^[0-9a-f]{2}$/i.test(string.slice(i + 1, i + 3))) {
-        result += string.slice(i, i + 3);
-        i += 2;
-        continue;
-      }
-    }
-
-    if (code < 128) {
-      result += cache[code];
-      continue;
-    }
-
-    if (code >= 0xD800 && code <= 0xDFFF) {
-      if (code >= 0xD800 && code <= 0xDBFF && i + 1 < l) {
-        nextCode = string.charCodeAt(i + 1);
-        if (nextCode >= 0xDC00 && nextCode <= 0xDFFF) {
-          result += encodeURIComponent(string[i] + string[i + 1]);
-          i++;
-          continue;
-        }
-      }
-      result += '%EF%BF%BD';
-      continue;
-    }
-
-    result += encodeURIComponent(string[i]);
-  }
-
-  return result;
-}
-
-encode.defaultChars   = ";/?:@&=+$,-_.!~*'()#";
-encode.componentChars = "-_.!~*'()";
-
-
-var encode_1 = encode;
-
-var revert_1 = revert$2;
-
-var u$5 = unistBuilder;
-var all$7 = all_1;
-
-// Return the content of a reference without definition as Markdown.
-function revert$2(h, node) {
-  var subtype = node.referenceType;
-  var suffix = ']';
-  var contents;
-  var head;
-  var tail;
-
-  if (subtype === 'collapsed') {
-    suffix += '[]';
-  } else if (subtype === 'full') {
-    suffix += '[' + (node.label || node.identifier) + ']';
-  }
-
-  if (node.type === 'imageReference') {
-    return u$5('text', '![' + node.alt + suffix)
-  }
-
-  contents = all$7(h, node);
-  head = contents[0];
-
-  if (head && head.type === 'text') {
-    head.value = '[' + head.value;
-  } else {
-    contents.unshift(u$5('text', '['));
-  }
-
-  tail = contents[contents.length - 1];
-
-  if (tail && tail.type === 'text') {
-    tail.value += suffix;
-  } else {
-    contents.push(u$5('text', suffix));
-  }
-
-  return contents
-}
-
-var imageReference_1 = imageReference;
-
-var normalize$3 = encode_1;
-var revert$1 = revert_1;
-
-function imageReference(h, node) {
-  var def = h.definition(node.identifier);
-  var props;
-
-  if (!def) {
-    return revert$1(h, node)
-  }
-
-  props = {src: normalize$3(def.url || ''), alt: node.alt};
-
-  if (def.title !== null && def.title !== undefined) {
-    props.title = def.title;
-  }
-
-  return h(node, 'img', props)
-}
-
-var normalize$2 = encode_1;
-
-var image_1 = image;
-
-function image(h, node) {
-  var props = {src: normalize$2(node.url), alt: node.alt};
-
-  if (node.title !== null && node.title !== undefined) {
-    props.title = node.title;
-  }
-
-  return h(node, 'img', props)
-}
-
-var inlineCode_1 = inlineCode;
-
-var u$4 = unistBuilder;
-
-function inlineCode(h, node) {
-  var value = node.value.replace(/\r?\n|\r/g, ' ');
-  return h(node, 'code', [u$4('text', value)])
-}
-
-var linkReference_1 = linkReference;
-
-var normalize$1 = encode_1;
-var revert = revert_1;
-var all$6 = all_1;
-
-function linkReference(h, node) {
-  var def = h.definition(node.identifier);
-  var props;
-
-  if (!def) {
-    return revert(h, node)
-  }
-
-  props = {href: normalize$1(def.url || '')};
-
-  if (def.title !== null && def.title !== undefined) {
-    props.title = def.title;
-  }
-
-  return h(node, 'a', props, all$6(h, node))
-}
-
-var normalize = encode_1;
-var all$5 = all_1;
-
-var link_1 = link;
-
-function link(h, node) {
-  var props = {href: normalize(node.url)};
-
-  if (node.title !== null && node.title !== undefined) {
-    props.title = node.title;
-  }
-
-  return h(node, 'a', props, all$5(h, node))
-}
-
-var listItem_1 = listItem;
-
-var u$3 = unistBuilder;
-var all$4 = all_1;
-
-function listItem(h, node, parent) {
-  var result = all$4(h, node);
-  var head = result[0];
-  var loose = parent ? listLoose(parent) : listItemLoose(node);
-  var props = {};
-  var wrapped = [];
-  var length;
-  var index;
-  var child;
-
-  if (typeof node.checked === 'boolean') {
-    if (!head || head.tagName !== 'p') {
-      head = h(null, 'p', []);
-      result.unshift(head);
-    }
-
-    if (head.children.length > 0) {
-      head.children.unshift(u$3('text', ' '));
-    }
-
-    head.children.unshift(
-      h(null, 'input', {
-        type: 'checkbox',
-        checked: node.checked,
-        disabled: true
-      })
-    );
-
-    // According to github-markdown-css, this class hides bullet.
-    // See: <https://github.com/sindresorhus/github-markdown-css>.
-    props.className = ['task-list-item'];
-  }
-
-  length = result.length;
-  index = -1;
-
-  while (++index < length) {
-    child = result[index];
-
-    // Add eols before nodes, except if this is a loose, first paragraph.
-    if (loose || index !== 0 || child.tagName !== 'p') {
-      wrapped.push(u$3('text', '\n'));
-    }
-
-    if (child.tagName === 'p' && !loose) {
-      wrapped = wrapped.concat(child.children);
-    } else {
-      wrapped.push(child);
-    }
-  }
-
-  // Add a final eol.
-  if (length && (loose || child.tagName !== 'p')) {
-    wrapped.push(u$3('text', '\n'));
-  }
-
-  return h(node, 'li', props, wrapped)
-}
-
-function listLoose(node) {
-  var loose = node.spread;
-  var children = node.children;
-  var length = children.length;
-  var index = -1;
-
-  while (!loose && ++index < length) {
-    loose = listItemLoose(children[index]);
-  }
-
-  return loose
-}
-
-function listItemLoose(node) {
-  var spread = node.spread;
-
-  return spread === undefined || spread === null
-    ? node.children.length > 1
-    : spread
-}
-
-var paragraph_1 = paragraph;
-
-var all$3 = all_1;
-
-function paragraph(h, node) {
-  return h(node, 'p', all$3(h, node))
-}
-
-var root_1 = root;
-
-var u$2 = unistBuilder;
-var wrap$3 = wrap_1$1;
-var all$2 = all_1;
-
-function root(h, node) {
-  return h.augment(node, u$2('root', wrap$3(all$2(h, node))))
-}
-
-var strong_1 = strong;
-
-var all$1 = all_1;
-
-function strong(h, node) {
-  return h(node, 'strong', all$1(h, node))
-}
-
-var table_1 = table;
-
-var position$1 = unistUtilPosition;
-var wrap$2 = wrap_1$1;
-var all = all_1;
-
-function table(h, node) {
-  var rows = node.children;
-  var index = rows.length;
-  var align = node.align || [];
-  var alignLength = align.length;
-  var result = [];
-  var pos;
-  var row;
-  var out;
-  var name;
-  var cell;
-
-  while (index--) {
-    row = rows[index].children;
-    name = index === 0 ? 'th' : 'td';
-    pos = alignLength || row.length;
-    out = [];
-
-    while (pos--) {
-      cell = row[pos];
-      out[pos] = h(cell, name, {align: align[pos]}, cell ? all(h, cell) : []);
-    }
-
-    result[index] = h(rows[index], 'tr', wrap$2(out, true));
-  }
-
-  return h(
-    node,
-    'table',
-    wrap$2(
-      [h(result[0].position, 'thead', wrap$2([result[0]], true))].concat(
-        result[1]
-          ? h(
-              {
-                start: position$1.start(result[1]),
-                end: position$1.end(result[result.length - 1])
-              },
-              'tbody',
-              wrap$2(result.slice(1), true)
-            )
-          : []
-      ),
-      true
-    )
-  )
-}
-
-var text_1 = text;
-
-var u$1 = unistBuilder;
-
-function text(h, node) {
-  return h.augment(
-    node,
-    u$1('text', String(node.value).replace(/[ \t]*(\r?\n|\r)[ \t]*/g, '$1'))
-  )
-}
-
-var handlers$1 = {
-  blockquote: blockquote_1,
-  break: _break,
-  code: code_1,
-  delete: _delete,
-  emphasis: emphasis_1,
-  footnoteReference: footnoteReference_1,
-  footnote: footnote_1,
-  heading: heading_1,
-  html: html_1,
-  imageReference: imageReference_1,
-  image: image_1,
-  inlineCode: inlineCode_1,
-  linkReference: linkReference_1,
-  link: link_1,
-  listItem: listItem_1,
-  list: list_1,
-  paragraph: paragraph_1,
-  root: root_1,
-  strong: strong_1,
-  table: table_1,
-  text: text_1,
-  thematicBreak: thematicBreak_1,
-  toml: ignore,
-  yaml: ignore,
-  definition: ignore,
-  footnoteDefinition: ignore
-};
-
-// Return nothing for nodes that are ignored.
-function ignore() {
-  return null
-}
-
-var lib = toHast;
-
-var u = unistBuilder;
-var visit = unistUtilVisit$1;
-var position = unistUtilPosition;
-var generated = unistUtilGenerated;
-var definitions = mdastUtilDefinitions;
-var one = one_1;
-var footer = footer$1;
-var handlers = handlers$1;
-
-var own$2 = {}.hasOwnProperty;
-
-var deprecationWarningIssued = false;
-
-// Factory to transform.
-function factory(tree, options) {
-  var settings = options || {};
-
-  // Issue a warning if the deprecated tag 'allowDangerousHTML' is used
-  if (settings.allowDangerousHTML !== undefined && !deprecationWarningIssued) {
-    deprecationWarningIssued = true;
-    console.warn(
-      'mdast-util-to-hast: deprecation: `allowDangerousHTML` is nonstandard, use `allowDangerousHtml` instead'
-    );
-  }
-
-  var dangerous = settings.allowDangerousHtml || settings.allowDangerousHTML;
-  var footnoteById = {};
-
-  h.dangerous = dangerous;
-  h.definition = definitions(tree);
-  h.footnoteById = footnoteById;
-  h.footnoteOrder = [];
-  h.augment = augment;
-  h.handlers = Object.assign({}, handlers, settings.handlers);
-  h.unknownHandler = settings.unknownHandler;
-  h.passThrough = settings.passThrough;
-
-  visit(tree, 'footnoteDefinition', onfootnotedefinition);
-
-  return h
-
-  // Finalise the created `right`, a hast node, from `left`, an mdast node.
-  function augment(left, right) {
-    var data;
-    var ctx;
-
-    // Handle `data.hName`, `data.hProperties, `data.hChildren`.
-    if (left && left.data) {
-      data = left.data;
-
-      if (data.hName) {
-        if (right.type !== 'element') {
-          right = {
-            type: 'element',
-            tagName: '',
-            properties: {},
-            children: []
-          };
-        }
-
-        right.tagName = data.hName;
-      }
-
-      if (right.type === 'element' && data.hProperties) {
-        right.properties = Object.assign({}, right.properties, data.hProperties);
-      }
-
-      if (right.children && data.hChildren) {
-        right.children = data.hChildren;
-      }
-    }
-
-    ctx = left && left.position ? left : {position: left};
-
-    if (!generated(ctx)) {
-      right.position = {
-        start: position.start(ctx),
-        end: position.end(ctx)
-      };
-    }
-
-    return right
-  }
-
-  // Create an element for `node`.
-  function h(node, tagName, props, children) {
-    if (
-      (children === undefined || children === null) &&
-      typeof props === 'object' &&
-      'length' in props
-    ) {
-      children = props;
-      props = {};
-    }
-
-    return augment(node, {
-      type: 'element',
-      tagName: tagName,
-      properties: props || {},
-      children: children || []
-    })
-  }
-
-  function onfootnotedefinition(definition) {
-    var id = String(definition.identifier).toUpperCase();
-
-    // Mimick CM behavior of link definitions.
-    // See: <https://github.com/syntax-tree/mdast-util-definitions/blob/8290999/index.js#L26>.
-    if (!own$2.call(footnoteById, id)) {
-      footnoteById[id] = definition;
-    }
-  }
-}
-
-// Transform `tree`, which is an mdast node, to a hast node.
-function toHast(tree, options) {
-  var h = factory(tree, options);
-  var node = one(h, tree);
-  var foot = footer(h);
-
-  if (foot) {
-    node.children = node.children.concat(u('text', '\n'), foot);
-  }
-
-  return node
-}
-
-var mdastUtilToHast = lib;
-
-var mdast2hast = mdastUtilToHast;
+var mdast2hast = require$$0__default['default'];
 
 var remarkRehype = remark2rehype;
 
@@ -24032,7 +23027,7 @@ function parseOrigin(origin) {
   return result
 }
 
-var path$1 = require$$0__default['default'];
+var path$1 = require$$0__default$1['default'];
 
 function replaceExt(npath, ext) {
   if (typeof npath !== 'string') {
@@ -24049,7 +23044,7 @@ function replaceExt(npath, ext) {
 
 var replaceExt_1 = replaceExt;
 
-var path = require$$0__default['default'];
+var path = require$$0__default$1['default'];
 var replace = replaceExt_1;
 var buffer$1 = isBuffer;
 
