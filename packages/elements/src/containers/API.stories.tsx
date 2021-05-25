@@ -53,9 +53,9 @@ StackedLayout.storyName = 'Stacked Layout (Zoom)';
 
 export const Box = Template.bind({});
 Box.args = {
-  apiDescriptionUrl: 'https://raw.githubusercontent.com/twilio/twilio-oai/main/spec/yaml/twilio_api_v2010.yaml',
+  apiDescriptionUrl: 'https://raw.githubusercontent.com/box/box-openapi/main/content/openapi.yml',
 };
-Box.storyName = 'Twillio';
+Box.storyName = 'Box';
 
 export const DigitalOcean = Template.bind({});
 DigitalOcean.args = {
