@@ -4017,6 +4017,20 @@
     classnames "^2.2.6"
     lodash "^4.17.19"
 
+"@stoplight/json-schema-viewer@^4.0.0-beta.18":
+  version "4.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.18.tgz#b55051f8a867c195cc3e0743101ae90b3b0f99f0"
+  integrity sha512-HYi8d41U+HIlY5HcM8s08PF4xtYDYVcbftJmXeL9ePxhp+wqfBKkiLFgQxM9bgM1GH0+FtTb3Emh5AE0Y/pIwA==
+  dependencies:
+    "@fortawesome/free-solid-svg-icons" "^5.15.2"
+    "@stoplight/json" "^3.10.0"
+    "@stoplight/json-schema-tree" "^2.0.1"
+    "@stoplight/mosaic" "1.0.0-beta.46"
+    "@stoplight/react-error-boundary" "^1.0.0"
+    "@types/json-schema" "^7.0.7"
+    classnames "^2.2.6"
+    lodash "^4.17.19"
+
 "@stoplight/json@^3.10.0", "@stoplight/json@^3.10.2", "@stoplight/json@^3.12.0", "@stoplight/json@^3.6":
   version "3.13.6"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.13.6.tgz#5e4927734348a0a257c066de7ca3ffe9d8526d6f"
