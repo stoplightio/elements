@@ -101,7 +101,7 @@ jobs:
           command: yarn --frozen-lockfile
       - run:
           name: run release script
-          command: yarn lerna publish from-package --dist-tag beta --yes
+          command: yarn release
 workflows:
   version: 2
   test-and-release:
