@@ -1,6 +1,5 @@
 import * as SMDAST from '@stoplight/markdown/ast-types/smdast';
 import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
-import type { ITableOfContentsLink } from '@stoplight/ui-kit';
 import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 
 export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
@@ -92,10 +91,6 @@ export type BundledBranchNode = {
   externalOrgSlug: string;
   externalSlug: string;
 };
-
-export interface TableOfContentsLinkWithId extends ITableOfContentsLink {
-  id: number | string;
-}
 
 export interface ITableOfContentsTree {
   items: TableOfContentItem[];

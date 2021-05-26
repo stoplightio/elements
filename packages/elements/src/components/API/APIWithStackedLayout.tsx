@@ -1,7 +1,6 @@
 import { DeprecatedBadge, Docs, HttpMethodColors, ParsedDocs, TryItWithRequestSamples } from '@stoplight/elements-core';
-import { Box } from '@stoplight/mosaic';
+import { Box, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
-import { Collapse, Icon, Tab, Tabs } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -76,7 +75,7 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
         className="mx-auto flex justify-between items-center border-b dark:border-gray-6 text-gray-7 dark:text-gray-7 hover:text-gray-6 px-2 py-4 cursor-pointer"
       >
         <div className="text-lg font-medium">{group.title}</div>
-        <Icon className="mr-2" icon={isExpanded ? 'chevron-down' : 'chevron-right'} iconSize={14} />
+        <Icon className="mr-2" icon={isExpanded ? 'chevron-down' : 'chevron-right'} size="sm" />
       </div>
 
       <Collapse isOpen={isExpanded}>
@@ -88,14 +87,11 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
   );
 });
 
-type PanelTabId = 'docs' | 'tryit';
-
 const Item = React.memo<{ item: OperationNode }>(({ item }) => {
   const location = useLocation();
   const { hash } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
-  const [tabId, setTabId] = React.useState<PanelTabId>('docs');
   const color = HttpMethodColors[item.data.method] || 'gray';
   const isDeprecated = !!item.data.deprecated;
   const { hideTryIt } = React.useContext(TryItContext);
@@ -140,27 +136,27 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
         {hideTryIt ? (
           <Box as={ParsedDocs} node={item} headless p={4} />
         ) : (
-          <Tabs
-            className="PreviewTabs mx-auto"
-            selectedTabId={tabId}
-            onChange={(tabId: PanelTabId) => setTabId(tabId)}
-            renderActiveTabPanelOnly
-          >
-            <Tab
-              id="docs"
-              title="Docs"
-              className="p-4"
-              panel={<ParsedDocs node={item} headless location={location} />}
-            />
-            <Tab
-              id="tryit"
-              title="Try It"
-              className="p-4"
-              panel={<TryItWithRequestSamples httpOperation={item.data} />}
-            />
+          <Tabs appearance="line">
+            <TabList>
+              <Tab>Docs</Tab>
+              <Tab>TryIt</Tab>
+            </TabList>
+
+            <TabPanels>
+              <TabPanel>
+                <ParsedDocs node={item} headless location={location} />
+              </TabPanel>
+              <TabPanel>
+                <TryItWithRequestSamples httpOperation={item.data} />
+              </TabPanel>
+            </TabPanels>
           </Tabs>
         )}
       </Collapse>
     </div>
   );
 });
+
+const Collapse: React.FC<{ isOpen: boolean }> = ({ isOpen, children }) => {
+  return <Box style={{ display: isOpen ? 'block' : 'none' }}>{children}</Box>;
+};

@@ -52,7 +52,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           <Flex mt={12}>
             <Box flex={1}>
               {data.description && (
-                <MarkdownViewer className="HttpOperation__Description mb-10" markdown={data.description} />
+                <MarkdownViewer className="HttpOperation__Description sl-mb-10" markdown={data.description} />
               )}
 
               <Request onChange={setTextRequestBodyIndex} operation={data} />
@@ -85,9 +85,9 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
       );
 
     return (
-      <div className={cn('HttpOperation px-5', className)}>
+      <Box px={5} className={cn('HttpOperation', className)}>
         {data.description && (
-          <MarkdownViewer className="HttpOperation__Description mb-10 ml-1" markdown={data.description} />
+          <MarkdownViewer className="HttpOperation__Description sl-mb-10 sl-ml-1" markdown={data.description} />
         )}
 
         <Request onChange={setTextRequestBodyIndex} operation={data} />
@@ -99,7 +99,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             onStatusCodeChange={setResponseStatusCode}
           />
         )}
-      </div>
+      </Box>
     );
   },
 );

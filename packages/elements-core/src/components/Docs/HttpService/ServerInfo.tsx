@@ -1,4 +1,4 @@
-import { InvertTheme, Panel, Text } from '@stoplight/mosaic';
+import { Box, Flex, InvertTheme, Panel, Text } from '@stoplight/mosaic';
 import { IServer } from '@stoplight/types';
 import * as React from 'react';
 
@@ -21,28 +21,28 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
     <InvertTheme>
       <Panel rounded isCollapsible={false} className="BaseURLContent" w="full">
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
-        <div className="overflow-x-auto">
-          <Panel.Content w="max" className="flex flex-col">
+        <Box overflowX="auto">
+          <Panel.Content w="max" className="sl-flex sl-flex-col">
             {productionUrl && isProperUrl(productionUrl) && (
-              <div className="whitespace-nowrap">
+              <Box whitespace="nowrap">
                 {showMocking && (
                   <Text pr={2} fontWeight="bold">
                     Production:
                   </Text>
                 )}
                 <Text aria-label="production-server">{productionUrl}</Text>
-              </div>
+              </Box>
             )}
             {showMocking && (
-              <div className="flex flex-row">
+              <Flex>
                 <Text fontWeight="bold">Mock Server:</Text>
                 <Text aria-label="mock-server" pl={2}>
                   {mockUrl}
                 </Text>
-              </div>
+              </Flex>
             )}
           </Panel.Content>
-        </div>
+        </Box>
       </Panel>
     </InvertTheme>
   );

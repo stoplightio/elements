@@ -74,7 +74,7 @@ const Response = ({ response: { contents = [], headers = [], description }, onMe
 
   return (
     <Box>
-      {description && <MarkdownViewer className="ml-1 mb-6" markdown={description} />}
+      {description && <MarkdownViewer className="sl-ml-1 sl-mb-6" markdown={description} />}
 
       {headers.length > 0 && (
         <SubSectionPanel title="Headers">

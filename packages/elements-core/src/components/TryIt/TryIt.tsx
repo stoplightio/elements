@@ -188,7 +188,7 @@ const TryItResponse: React.FC<{ response: ResponseState }> = ({ response }) => (
     <Panel.Titlebar>Response</Panel.Titlebar>
     <Panel.Content>
       <div>
-        <div className={`mb-3 text-${getHttpCodeColor(response.status)}`}>
+        <div className={`sl-mb-3 sl-text-${getHttpCodeColor(response.status)}`}>
           {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
         </div>
         {response.bodyText ? (
@@ -198,7 +198,7 @@ const TryItResponse: React.FC<{ response: ResponseState }> = ({ response }) => (
           />
         ) : (
           <p>
-            <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
+            <FontAwesomeIcon icon={faExclamationCircle} className="sl-mr-2" />
             No response body returned
           </p>
         )}

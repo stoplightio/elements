@@ -3400,6 +3400,30 @@
   dependencies:
     "@babel/runtime" "^7.6.2"
 
+"@react-aria/switch@~3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@react-aria/switch/-/switch-3.1.2.tgz#633f9bfb851247d283f4efec7a7e1518f2d31f9b"
+  integrity sha512-kBCZwktmtgHz9dCZWKwRHNPIePwf5JK7xR8g7q0UBeyhhiE0UKMvybY8Jw+mgjIWYKz77ZZfmATfQ9jccANCNQ==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/toggle" "^3.1.3"
+    "@react-stately/toggle" "^3.2.2"
+    "@react-types/switch" "^3.1.1"
+
+"@react-aria/toggle@^3.1.3":
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/@react-aria/toggle/-/toggle-3.1.3.tgz#f3b0a75b7b968b6d9592359ef863b2039e09663a"
+  integrity sha512-hyXpubOl1YOCaPDTdvqVBuvOLYWfuWU31cJiQFT/udOkcOYvpU2yBDTgavXWRLCuuyHkV0HHKC21Stc5wfbPEg==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/focus" "^3.3.0"
+    "@react-aria/interactions" "^3.4.0"
+    "@react-aria/utils" "^3.8.0"
+    "@react-stately/toggle" "^3.2.2"
+    "@react-types/checkbox" "^3.2.2"
+    "@react-types/shared" "^3.6.0"
+    "@react-types/switch" "^3.1.1"
+
 "@react-aria/tooltip@~3.1.1":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@react-aria/tooltip/-/tooltip-3.1.2.tgz#e1f6b1427280b247c3acd1910b1d76b133ef07fd"
@@ -3625,7 +3649,7 @@
   dependencies:
     "@react-types/shared" "^3.4.0"
 
-"@react-types/checkbox@^3.2.1":
+"@react-types/checkbox@^3.2.1", "@react-types/checkbox@^3.2.2":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@react-types/checkbox/-/checkbox-3.2.2.tgz#7182d44a533e2ffd2c9118372cbc2c33b006eb18"
   integrity sha512-WAAqLdjf6GUWjsMN5NaFMFumOtGTq+3+48CpM0ah2L+qmhMdj1s4gvHDerhls6u4ovRK/7zhg7XK+qQwcYVqMg==
@@ -3680,6 +3704,14 @@
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@react-types/shared/-/shared-3.6.0.tgz#e3f32bdef168de9245648e9f0357930b13795bc2"
   integrity sha512-oa8m+GP881IUQmi+L0UoM5aC5t/6L6QIEA2I1FUMgwMeJn24qPAcEqYrTWeJzX2S+gAfa5r9qbzcVEgpQorEUw==
+
+"@react-types/switch@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@react-types/switch/-/switch-3.1.1.tgz#7909a8f7c2cb68ab7536efd03af3be3417e0eca3"
+  integrity sha512-nI5J/1CrJrVANwgikXyPMqxWJ4UyefzE4Vz/TwTgoXQ9v+LRNo22wbisfh1EmJAlZ0E52X/iKViVaBroNty+EA==
+  dependencies:
+    "@react-types/checkbox" "^3.2.1"
+    "@react-types/shared" "^3.2.1"
 
 "@react-types/tooltip@^3.1.1":
   version "3.1.1"
@@ -4122,6 +4154,48 @@
     tslib "^2.1.0"
     zustand "^3.3.3"
 
+"@stoplight/mosaic-code-editor@1.0.0-beta.55":
+  version "1.0.0-beta.55"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.0.0-beta.55.tgz#5bb16a477658d3f01616af131dc8207f7b7342c0"
+  integrity sha512-PRSZHdfm8LT+YpmwB/dwCkvPoRJHbjqF0fg0ow6GiAJVehH8wSLIssgqjLlMg14CCCTwVSadJ345rZIjNVCmuw==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.35"
+    "@fortawesome/free-solid-svg-icons" "^5.15.3"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@react-aria/button" "~3.3.1"
+    "@react-aria/dialog" "~3.1.2"
+    "@react-aria/focus" "~3.2.4"
+    "@react-aria/interactions" "~3.3.4"
+    "@react-aria/listbox" "~3.2.4"
+    "@react-aria/overlays" "~3.6.2"
+    "@react-aria/select" "~3.3.1"
+    "@react-aria/separator" "~3.1.1"
+    "@react-aria/ssr" "~3.0.1"
+    "@react-aria/switch" "~3.1.2"
+    "@react-aria/tooltip" "~3.1.1"
+    "@react-aria/utils" "~3.7.0"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@react-spectrum/utils" "~3.5.1"
+    "@react-stately/collections" "~3.3.1"
+    "@react-stately/list" "~3.2.2"
+    "@react-stately/select" "~3.1.1"
+    "@react-stately/tooltip" "~3.0.3"
+    "@stoplight/mosaic" "1.0.0-beta.55"
+    "@stoplight/mosaic-code-viewer" "1.0.0-beta.55"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.1.1"
+    prism-react-renderer "^1.2.0"
+    prismjs "^1.23.0"
+    react-simple-code-editor "^0.11.0"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    tslib "^2.1.0"
+    zustand "^3.3.3"
+
 "@stoplight/mosaic-code-viewer@1.0.0-beta.52":
   version "1.0.0-beta.52"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.52.tgz#d8b9eee8f64e17c34a888dd26a33902ff8107697"
@@ -4149,6 +4223,46 @@
     "@react-stately/select" "~3.1.1"
     "@react-stately/tooltip" "~3.0.3"
     "@stoplight/mosaic" "1.0.0-beta.52"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.1.1"
+    prism-react-renderer "^1.2.0"
+    prismjs "^1.23.0"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    tslib "^2.1.0"
+    zustand "^3.3.3"
+
+"@stoplight/mosaic-code-viewer@1.0.0-beta.55":
+  version "1.0.0-beta.55"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.55.tgz#cd0c8b0e3107f0af41eb17e90139f769dd5891d4"
+  integrity sha512-bHblhxXbSBAzIf+MXXOGFXHQd8zSIp8tjbmRBzRsvnTP86UiSrReclZaY29ece2hazCUr9alAKqdJCv0D31yAQ==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.35"
+    "@fortawesome/free-solid-svg-icons" "^5.15.3"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@react-aria/button" "~3.3.1"
+    "@react-aria/dialog" "~3.1.2"
+    "@react-aria/focus" "~3.2.4"
+    "@react-aria/interactions" "~3.3.4"
+    "@react-aria/listbox" "~3.2.4"
+    "@react-aria/overlays" "~3.6.2"
+    "@react-aria/select" "~3.3.1"
+    "@react-aria/separator" "~3.1.1"
+    "@react-aria/ssr" "~3.0.1"
+    "@react-aria/switch" "~3.1.2"
+    "@react-aria/tooltip" "~3.1.1"
+    "@react-aria/utils" "~3.7.0"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@react-spectrum/utils" "~3.5.1"
+    "@react-stately/collections" "~3.3.1"
+    "@react-stately/list" "~3.2.2"
+    "@react-stately/select" "~3.1.1"
+    "@react-stately/tooltip" "~3.0.3"
+    "@stoplight/mosaic" "1.0.0-beta.55"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
@@ -4212,6 +4326,43 @@
     "@react-aria/select" "~3.3.1"
     "@react-aria/separator" "~3.1.1"
     "@react-aria/ssr" "~3.0.1"
+    "@react-aria/tooltip" "~3.1.1"
+    "@react-aria/utils" "~3.7.0"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@react-spectrum/utils" "~3.5.1"
+    "@react-stately/collections" "~3.3.1"
+    "@react-stately/list" "~3.2.2"
+    "@react-stately/select" "~3.1.1"
+    "@react-stately/tooltip" "~3.0.3"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    deepmerge "^4.2.2"
+    lodash.get "^4.4.2"
+    polished "^4.1.1"
+    reakit "npm:@stoplight/reakit@~1.3.5"
+    ts-keycode-enum "^1.0.6"
+    tslib "^2.1.0"
+    zustand "^3.3.3"
+
+"@stoplight/mosaic@1.0.0-beta.55":
+  version "1.0.0-beta.55"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.55.tgz#2dd217fc36a54e87411aa0ba4d1f62294851d17d"
+  integrity sha512-wiNcuomOwkGLNGgxa+lz43bHEBBCtLszipnCACDUVtmn/IgLfQNUmgX+cuC4NrydHVbosNxMRiXIxqUYW96qkA==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.35"
+    "@fortawesome/free-solid-svg-icons" "^5.15.3"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@react-aria/button" "~3.3.1"
+    "@react-aria/dialog" "~3.1.2"
+    "@react-aria/focus" "~3.2.4"
+    "@react-aria/interactions" "~3.3.4"
+    "@react-aria/listbox" "~3.2.4"
+    "@react-aria/overlays" "~3.6.2"
+    "@react-aria/select" "~3.3.1"
+    "@react-aria/separator" "~3.1.1"
+    "@react-aria/ssr" "~3.0.1"
+    "@react-aria/switch" "~3.1.2"
     "@react-aria/tooltip" "~3.1.1"
     "@react-aria/utils" "~3.7.0"
     "@react-hook/size" "^2.1.1"

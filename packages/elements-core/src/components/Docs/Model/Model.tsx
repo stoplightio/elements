@@ -1,6 +1,5 @@
-import { HStack } from '@stoplight/mosaic';
+import { Box, Heading, HStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
-import { Classes } from '@stoplight/ui-kit';
 import cn from 'classnames';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
@@ -15,8 +14,12 @@ const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => 
   const isInternal = !!data['x-internal'];
 
   return (
-    <div className={cn('Model MarkdownViewer', className)}>
-      {!headless && data.title !== void 0 && <h1 className={Classes.HEADING}>{data.title}</h1>}
+    <Box className={cn('Model MarkdownViewer', className)}>
+      {!headless && data.title !== void 0 && (
+        <Heading size={1} fontWeight="semibold">
+          {data.title}
+        </Heading>
+      )}
 
       {isInternal && (
         <HStack spacing={2} mt={3} mb={12}>
@@ -24,7 +27,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => 
         </HStack>
       )}
       <SchemaAndDescription schema={data} description={data.description} />
-    </div>
+    </Box>
   );
 };
 
