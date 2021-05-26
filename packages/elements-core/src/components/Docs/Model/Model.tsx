@@ -20,7 +20,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data, className, headless }) => 
 
       {isInternal && (
         <HStack spacing={2} mt={3} mb={12}>
-          {isInternal && <InternalBadge />}
+          <InternalBadge />
         </HStack>
       )}
       <SchemaAndDescription schema={data} description={data.description} />

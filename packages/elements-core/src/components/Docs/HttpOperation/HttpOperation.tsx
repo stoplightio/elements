@@ -45,7 +45,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
               {sortBy(securitySchemes, 'type').map((scheme, i) => (
                 <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
               ))}
-              {isInternal && <InternalBadge />}
+              {isInternal && <InternalBadge isHttpService />}
             </HStack>
           )}
 

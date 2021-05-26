@@ -36,10 +36,10 @@ export const DeprecatedBadge: React.FC = () => (
   </Tooltip>
 );
 
-export const InternalBadge: React.FC = () => (
+export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpService }) => (
   <Tooltip
     position={Position.BOTTOM_LEFT}
-    content="This endpoint/model is marked as internal and won't be visible in public docs."
+    content={`This ${isHttpService ? 'operation' : 'model'} is marked as internal and won't be visible in public docs.`}
   >
     <Badge icon={faEye} className="sl-bg-danger sl-ml-0 ">
       Internal
