@@ -10,7 +10,6 @@
     "url": "git+https://github.com/stoplightio/elements-starter-angular.git"
   },
   "scripts": {
-    "reinstall": "rm -rf node_modules && yarn install",
     "start": "ng serve",
     "build": "ng build --configuration production",
     "serve": "angular-http-server --path ./dist/angular -p 4200"
@@ -18,13 +17,9 @@
   "bugs": {
     "url": "https://github.com/stoplightio/elements-starter-angular/issues"
   },
-  "resolutions": {
-    "@stoplight/elements": "file:../../packages/elements/dist",
-    "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
-    "@stoplight/elements-core": "file:../../packages/elements-core/dist",
-    "@stoplight/elements-utils": "file:../../packages/elements-utils/dist"
-  },
   "dependencies": {
+    "@stoplight/elements": "^7.0.0-beta.4",
+    "@stoplight/elements-dev-portal": "^1.0.0-beta.1",
     "@angular/animations": "12.0.1",
     "@angular/common": "12.0.1",
     "@angular/compiler": "12.0.1",
@@ -33,8 +28,6 @@
     "@angular/platform-browser": "12.0.1",
     "@angular/platform-browser-dynamic": "12.0.1",
     "@angular/router": "12.0.1",
-    "@stoplight/elements": "file:../../packages/elements/dist",
-    "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
     "rxjs": "6.6.7",
     "tslib": "2.2.0",
     "zone.js": "0.11.4"
