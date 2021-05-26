@@ -12,8 +12,7 @@
   "scripts": {
     "reinstall": "rm -rf node_modules && yarn install",
     "start": "ng serve",
-    "build": "ng build --prod",
-    "postinstall": "ngcc --tsconfig './tsconfig.app.json'",
+    "build": "ng build --configuration production",
     "serve": "angular-http-server --path ./dist/angular -p 4200"
   },
   "bugs": {
@@ -26,27 +25,26 @@
     "@stoplight/elements-utils": "file:../../packages/elements-utils/dist"
   },
   "dependencies": {
-    "@angular/animations": "^11.1.1",
-    "@angular/common": "^11.1.1",
-    "@angular/compiler": "^11.1.1",
-    "@angular/core": "^11.1.1",
-    "@angular/forms": "^11.1.1",
-    "@angular/platform-browser": "^11.1.1",
-    "@angular/platform-browser-dynamic": "^11.1.1",
-    "@angular/router": "^11.1.1",
+    "@angular/animations": "12.0.1",
+    "@angular/common": "12.0.1",
+    "@angular/compiler": "12.0.1",
+    "@angular/core": "12.0.1",
+    "@angular/forms": "12.0.1",
+    "@angular/platform-browser": "12.0.1",
+    "@angular/platform-browser-dynamic": "12.0.1",
+    "@angular/router": "12.0.1",
     "@stoplight/elements": "file:../../packages/elements/dist",
     "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
-    "rxjs": "^6.6.7",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.11.4"
+    "rxjs": "6.6.7",
+    "tslib": "2.2.0",
+    "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular/cli": "^11.2.12",
-    "@angular/compiler-cli": "^11.1.1",
-    "@angular/language-service": "^12.0.1",
-    "@angular-devkit/build-angular": "~0.1102.12",
-    "@types/node": "^14.14.45",
-    "angular-http-server": "~1.10.0",
-    "typescript": "~4.1.5"
+    "@angular/cli": "12.0.1",
+    "@angular/compiler-cli": "12.0.1",
+    "@angular/language-service": "12.0.1",
+    "@angular-devkit/build-angular": "12.0.1",
+    "angular-http-server": "1.10.0",
+    "typescript": "4.2.4"
   }
 }
