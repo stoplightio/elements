@@ -1,4 +1,5 @@
 import { Validations } from '@stoplight/json-schema-viewer';
+import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { Box, VStack } from '@stoplight/mosaic';
 import { Dictionary, HttpParamStyles, IHttpParam } from '@stoplight/types';
 import { get, isEmpty, omit, omitBy, sortBy } from 'lodash';
@@ -95,7 +96,11 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
         </div>
       </div>
 
-      {description && <div className="sl-w-full sl-text-muted sl-text-sm sl-my-2">{description}</div>}
+      {description && (
+        <div className="sl-w-full sl-text-muted sl-text-sm sl-my-2">
+          <MarkdownViewer markdown={description} />
+        </div>
+      )}
 
       <div className="sl-text-sm">
         <Validations validations={validations} />
