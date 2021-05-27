@@ -1,13 +1,18 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NodeTypeColors, NodeTypeIconDefs } from '@stoplight/elements-core';
+import { useInlineRefResolver } from '@stoplight/elements-core/context/InlineRefResolver';
+import { JSONSchema } from '@stoplight/elements-core/types';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { ICode } from '@stoplight/markdown/ast-types/smdast';
 import { defaultComponentMapping, ICodeAnnotations, IComponentMappingProps } from '@stoplight/markdown-viewer';
-import { HttpParamStyles, IHttpOperation, IHttpRequest } from '@stoplight/types';
+import { Box, Flex } from '@stoplight/mosaic';
+import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
 import { get, isObject } from 'lodash';
 import React from 'react';
 import URI from 'urijs';
 
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { isHttpOperation, isJSONSchema } from '../../../utils/guards';
-import { SchemaAndDescription } from '../../SchemaAndDescription';
 import { TryIt } from '../../TryIt';
 
 type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRequest>;
@@ -21,6 +26,30 @@ function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is Pa
     typeof maybeHttpRequest['url'] === 'string'
   );
 }
+
+interface ISchemaAndDescriptionProps {
+  schema: JSONSchema;
+  title?: string;
+}
+
+const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptionProps) => {
+  const resolveRef = useInlineRefResolver();
+  const title = titleProp ?? schema.title;
+  return (
+    <Box py={2}>
+      {title && (
+        <Flex className="sl-flex sl-items-center flex-1" p={2}>
+          <FontAwesomeIcon icon={NodeTypeIconDefs[NodeType.Model]} color={NodeTypeColors[NodeType.Model]} />
+          <Box color="muted" px={2}>
+            {title}
+          </Box>
+        </Flex>
+      )}
+
+      <JsonSchemaViewer resolveRef={resolveRef} schema={schema} />
+    </Box>
+  );
+};
 
 export const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
   const {
