@@ -38,7 +38,7 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
   return (
     <Box py={2}>
       {title && (
-        <Flex className="sl-flex sl-items-center flex-1" p={2}>
+        <Flex alignItems="center" p={2}>
           <FontAwesomeIcon icon={NodeTypeIconDefs[NodeType.Model]} color={NodeTypeColors[NodeType.Model]} />
           <Box color="muted" px={2}>
             {title}
