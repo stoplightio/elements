@@ -550,9 +550,19 @@ describe('HttpOperation', () => {
 });
 
 function getDeprecatedBadge() {
-  return screen.queryByRole('badge', { name: /Deprecated/i });
+  const badges = screen.getAllByRole('badge');
+  return screen.queryByText(
+    (_, element) => element !== null && badges.includes(element as HTMLElement) && element.textContent === 'Deprecated',
+  );
 }
 
 function getSecurityBadge(re: RegExp) {
-  return screen.queryByRole('badge', { name: re });
+  const badges = screen.getAllByRole('badge');
+  return screen.queryByText(
+    (_, element) =>
+      element !== null &&
+      element.textContent !== null &&
+      badges.includes(element as HTMLElement) &&
+      re.test(element.textContent),
+  );
 }

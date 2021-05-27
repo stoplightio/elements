@@ -9,7 +9,7 @@ import { getReadableSecurityName } from '../../../utils/oas/security';
 export const DeprecatedBadge: React.FC = () => (
   <Tooltip
     renderTrigger={
-      <Badge intent="warning" icon={faExclamationCircle}>
+      <Badge intent="warning" icon={faExclamationCircle} role="badge">
         Deprecated
       </Badge>
     }
@@ -21,7 +21,7 @@ export const DeprecatedBadge: React.FC = () => (
 export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpService }) => (
   <Tooltip
     renderTrigger={
-      <Badge icon={faEye} className="sl-bg-danger sl-ml-0 ">
+      <Badge icon={faEye} role="badge" className="sl-bg-danger sl-ml-0">
         Internal
       </Badge>
     }
@@ -35,7 +35,7 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
   httpServiceUri,
 }) => {
   const badge = (
-    <Badge icon={faLock} className="sl-truncate" style={{ backgroundColor: '#293742' }}>
+    <Badge icon={faLock} role="badge" className="sl-truncate" style={{ backgroundColor: '#293742' }}>
       {getReadableSecurityName(scheme, true)}
     </Badge>
   );
