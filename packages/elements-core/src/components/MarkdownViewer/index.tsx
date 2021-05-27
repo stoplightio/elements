@@ -12,4 +12,3 @@ export const MarkdownViewer = (props: IMarkdownViewerProps) => {
   return <MarkdownViewerComponent {...props} components={components} />;
 };
 MarkdownViewer.displayName = 'MarkdownViewer';
-export { SchemaAndDescription } from '@stoplight/elements-core/components/MarkdownViewer/CustomComponents/CodeComponent';

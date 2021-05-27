@@ -1,7 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NodeTypeColors, NodeTypeIconDefs } from '@stoplight/elements-core';
-import { useInlineRefResolver } from '@stoplight/elements-core/context/InlineRefResolver';
-import { JSONSchema } from '@stoplight/elements-core/types';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { ICode } from '@stoplight/markdown/ast-types/smdast';
 import { defaultComponentMapping, ICodeAnnotations, IComponentMappingProps } from '@stoplight/markdown-viewer';
@@ -11,7 +8,10 @@ import { get, isObject } from 'lodash';
 import React from 'react';
 import URI from 'urijs';
 
+import { NodeTypeColors, NodeTypeIconDefs } from '../../../constants';
+import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useParsedValue } from '../../../hooks/useParsedValue';
+import { JSONSchema } from '../../../types';
 import { isHttpOperation, isJSONSchema } from '../../../utils/guards';
 import { TryIt } from '../../TryIt';
 
