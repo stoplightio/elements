@@ -31,6 +31,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
           <Docs
             className="mx-auto"
             nodeData={serviceNode.data}
+            nodeTitle={serviceNode.name}
             nodeType={NodeType.HttpService}
             headless
             location={location}
