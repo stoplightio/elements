@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Example - use local builds
           working_directory: /mnt/ramdisk/project
-          command: . ./use-local-elements.sh <<parameters.example-name>>
+          command: . ./use-local-elements.sh examples <<parameters.example-name>>
       - run:
           name: Example - Install dependencies
           working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
