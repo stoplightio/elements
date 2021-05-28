@@ -55,7 +55,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /mnt/ramdisk/
-      - run: 
+      - run:
           name: Example - use local builds
           working_directory: /mnt/ramdisk/project
           command: . ./use-local-elements.sh <<parameters.example-name>>
@@ -65,7 +65,7 @@ jobs:
           command: yarn install --frozen-lockfile
       - run:
           name: Example - Build
-          working_directory: /mnt/ramdisk/project/examples-dev/<<parameters.example-name>>
+          working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
           command: yarn build
       - run:
           name: Run E2E checks
