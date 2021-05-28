@@ -21,6 +21,8 @@ function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is Pa
   );
 }
 
+const DefaultCode = DefaultSMDComponents.code!;
+
 export const CodeComponent: CustomComponentMapping['code'] = props => {
   const { title, children, jsonSchema, http, resolved } = props;
 
@@ -41,8 +43,6 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
 
     return <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} />;
   }
-
-  const DefaultCode = DefaultSMDComponents.code!;
 
   return <DefaultCode {...props} />;
 };

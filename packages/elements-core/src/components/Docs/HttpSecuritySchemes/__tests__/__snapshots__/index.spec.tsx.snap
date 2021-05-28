@@ -137,76 +137,78 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
-                  <MarkdownViewer.Component
-                    className="flex-1 text-darken-7 dark:text-lighten-7"
-                    markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
-                    parseOptions={
-                      Object {
-                        "components": Object {
-                          "code": [Function],
-                        },
-                      }
-                    }
-                  >
-                    <Memo(Prose)
+                  <MarkdownViewerProvider>
+                    <MarkdownViewer.Component
                       className="flex-1 text-darken-7 dark:text-lighten-7"
+                      markdown="Use \`?apikey=123\` to authenticate requests. It's super secure."
+                      parseOptions={
+                        Object {
+                          "components": Object {
+                            "code": [Function],
+                          },
+                        }
+                      }
                     >
-                      <Box
-                        as="div"
-                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                      <Memo(Prose)
+                        className="flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <div
+                        <Box
+                          as="div"
                           className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                         >
-                          <p
-                            key="h-1"
+                          <div
+                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                           >
-                            Use 
-                            <CodeComponent
-                              inline="true"
-                              key="h-2"
+                            <p
+                              key="h-1"
                             >
-                              <code
+                              Use 
+                              <CodeComponent
                                 inline="true"
+                                key="h-2"
                               >
-                                <Code>
-                                  <Box
-                                    as="code"
-                                    bg="code"
-                                    border={true}
-                                    className=""
-                                    color="on-code"
-                                    fontFamily="mono"
-                                    fontWeight="medium"
-                                    px={1}
-                                    py={0.5}
-                                    rounded={true}
-                                    style={
-                                      Object {
-                                        "fontSize": "max(12px, 85%)",
-                                      }
-                                    }
-                                  >
-                                    <code
-                                      className="sl-font-mono sl-font-medium sl-px-1 sl-py-0.5 sl-bg-code sl-text-on-code sl-rounded sl-border"
+                                <code
+                                  inline="true"
+                                >
+                                  <Code>
+                                    <Box
+                                      as="code"
+                                      bg="code"
+                                      border={true}
+                                      className=""
+                                      color="on-code"
+                                      fontFamily="mono"
+                                      fontWeight="medium"
+                                      px={1}
+                                      py={0.5}
+                                      rounded={true}
                                       style={
                                         Object {
                                           "fontSize": "max(12px, 85%)",
                                         }
                                       }
                                     >
-                                      ?apikey=123
-                                    </code>
-                                  </Box>
-                                </Code>
-                              </code>
-                            </CodeComponent>
-                             to authenticate requests. It's super secure.
-                          </p>
-                        </div>
-                      </Box>
-                    </Memo(Prose)>
-                  </MarkdownViewer.Component>
+                                      <code
+                                        className="sl-font-mono sl-font-medium sl-px-1 sl-py-0.5 sl-bg-code sl-text-on-code sl-rounded sl-border"
+                                        style={
+                                          Object {
+                                            "fontSize": "max(12px, 85%)",
+                                          }
+                                        }
+                                      >
+                                        ?apikey=123
+                                      </code>
+                                    </Box>
+                                  </Code>
+                                </code>
+                              </CodeComponent>
+                               to authenticate requests. It's super secure.
+                            </p>
+                          </div>
+                        </Box>
+                      </Memo(Prose)>
+                    </MarkdownViewer.Component>
+                  </MarkdownViewerProvider>
                 </ErrorBoundary>
               </MarkdownViewer>
             </MarkdownViewer>
@@ -298,36 +300,38 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
-                  <MarkdownViewer.Component
-                    className="flex-1 text-darken-7 dark:text-lighten-7"
-                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
-                    parseOptions={
-                      Object {
-                        "components": Object {
-                          "code": [Function],
-                        },
-                      }
-                    }
-                  >
-                    <Memo(Prose)
+                  <MarkdownViewerProvider>
+                    <MarkdownViewer.Component
                       className="flex-1 text-darken-7 dark:text-lighten-7"
+                      markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                      parseOptions={
+                        Object {
+                          "components": Object {
+                            "code": [Function],
+                          },
+                        }
+                      }
                     >
-                      <Box
-                        as="div"
-                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                      <Memo(Prose)
+                        className="flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <div
+                        <Box
+                          as="div"
                           className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                         >
-                          <p
-                            key="h-1"
+                          <div
+                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                           >
-                            Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </p>
-                        </div>
-                      </Box>
-                    </Memo(Prose)>
-                  </MarkdownViewer.Component>
+                            <p
+                              key="h-1"
+                            >
+                              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                            </p>
+                          </div>
+                        </Box>
+                      </Memo(Prose)>
+                    </MarkdownViewer.Component>
+                  </MarkdownViewerProvider>
                 </ErrorBoundary>
               </MarkdownViewer>
             </MarkdownViewer>
@@ -419,36 +423,38 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
-                  <MarkdownViewer.Component
-                    className="flex-1 text-darken-7 dark:text-lighten-7"
-                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
-                    parseOptions={
-                      Object {
-                        "components": Object {
-                          "code": [Function],
-                        },
-                      }
-                    }
-                  >
-                    <Memo(Prose)
+                  <MarkdownViewerProvider>
+                    <MarkdownViewer.Component
                       className="flex-1 text-darken-7 dark:text-lighten-7"
+                      markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                      parseOptions={
+                        Object {
+                          "components": Object {
+                            "code": [Function],
+                          },
+                        }
+                      }
                     >
-                      <Box
-                        as="div"
-                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                      <Memo(Prose)
+                        className="flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <div
+                        <Box
+                          as="div"
                           className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                         >
-                          <p
-                            key="h-1"
+                          <div
+                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                           >
-                            Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </p>
-                        </div>
-                      </Box>
-                    </Memo(Prose)>
-                  </MarkdownViewer.Component>
+                            <p
+                              key="h-1"
+                            >
+                              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                            </p>
+                          </div>
+                        </Box>
+                      </Memo(Prose)>
+                    </MarkdownViewer.Component>
+                  </MarkdownViewerProvider>
                 </ErrorBoundary>
               </MarkdownViewer>
             </MarkdownViewer>
@@ -562,36 +568,38 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
-                  <MarkdownViewer.Component
-                    className="flex-1 text-darken-7 dark:text-lighten-7"
-                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
-                    parseOptions={
-                      Object {
-                        "components": Object {
-                          "code": [Function],
-                        },
-                      }
-                    }
-                  >
-                    <Memo(Prose)
+                  <MarkdownViewerProvider>
+                    <MarkdownViewer.Component
                       className="flex-1 text-darken-7 dark:text-lighten-7"
+                      markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                      parseOptions={
+                        Object {
+                          "components": Object {
+                            "code": [Function],
+                          },
+                        }
+                      }
                     >
-                      <Box
-                        as="div"
-                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                      <Memo(Prose)
+                        className="flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <div
+                        <Box
+                          as="div"
                           className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                         >
-                          <p
-                            key="h-1"
+                          <div
+                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                           >
-                            Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </p>
-                        </div>
-                      </Box>
-                    </Memo(Prose)>
-                  </MarkdownViewer.Component>
+                            <p
+                              key="h-1"
+                            >
+                              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                            </p>
+                          </div>
+                        </Box>
+                      </Memo(Prose)>
+                    </MarkdownViewer.Component>
+                  </MarkdownViewerProvider>
                 </ErrorBoundary>
               </MarkdownViewer>
             </MarkdownViewer>
@@ -716,36 +724,38 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                 <ErrorBoundary
                   FallbackComponent={[Function]}
                 >
-                  <MarkdownViewer.Component
-                    className="flex-1 text-darken-7 dark:text-lighten-7"
-                    markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
-                    parseOptions={
-                      Object {
-                        "components": Object {
-                          "code": [Function],
-                        },
-                      }
-                    }
-                  >
-                    <Memo(Prose)
+                  <MarkdownViewerProvider>
+                    <MarkdownViewer.Component
                       className="flex-1 text-darken-7 dark:text-lighten-7"
+                      markdown="Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access."
+                      parseOptions={
+                        Object {
+                          "components": Object {
+                            "code": [Function],
+                          },
+                        }
+                      }
                     >
-                      <Box
-                        as="div"
-                        className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                      <Memo(Prose)
+                        className="flex-1 text-darken-7 dark:text-lighten-7"
                       >
-                        <div
+                        <Box
+                          as="div"
                           className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                         >
-                          <p
-                            key="h-1"
+                          <div
+                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
                           >
-                            Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
-                          </p>
-                        </div>
-                      </Box>
-                    </Memo(Prose)>
-                  </MarkdownViewer.Component>
+                            <p
+                              key="h-1"
+                            >
+                              Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.
+                            </p>
+                          </div>
+                        </Box>
+                      </Memo(Prose)>
+                    </MarkdownViewer.Component>
+                  </MarkdownViewerProvider>
                 </ErrorBoundary>
               </MarkdownViewer>
             </MarkdownViewer>

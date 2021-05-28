@@ -1,14 +1,16 @@
-import { CustomComponentMapping } from '@stoplight/markdown-viewer';
+import { CustomComponentMapping, DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import React from 'react';
 import URI from 'urijs';
 
 import { BundledBranchNode, IntegrationKind } from '../../../types';
 
+const DefaultImg = DefaultSMDComponents.img!;
+
 export const createResolvedImageComponent = (branchNode: BundledBranchNode) => {
   return React.memo(props => {
-    const Component: CustomComponentMapping['img'] = ({ title, src, alt }) => {
-      return <img src={resolveImageUrlHandler(src || '', branchNode)} title={title} alt={alt} />;
+    const Component: CustomComponentMapping['img'] = ({ src, ...rest }) => {
+      return <DefaultImg src={resolveImageUrlHandler(src || '', branchNode)} {...rest} />;
     };
 
     return <Component {...props} />;
