@@ -18,3 +18,5 @@ export { useGetNodes } from './hooks/useGetNodes';
 export { useGetTableOfContents } from './hooks/useGetTableOfContents';
 export type { ProjectTableOfContents } from './types';
 export type { Branch, Node } from './types';
+export { DevPortalProvider } from './components/DevPortalProvider';
+export type { DevPortalProviderProps } from './components/DevPortalProvider';
