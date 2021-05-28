@@ -3,6 +3,7 @@ import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
 
+import { badgeDefaultColor } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
@@ -46,7 +47,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
 
       {data.version && (
         <Box mt={3}>
-          <Badge style={{ backgroundColor: '#293742' }}>{enhanceVersionString(data.version)}</Badge>
+          <Badge style={{ backgroundColor: badgeDefaultColor }}>{enhanceVersionString(data.version)}</Badge>
         </Box>
       )}
 

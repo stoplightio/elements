@@ -4,6 +4,7 @@ import { HttpSecurityScheme } from '@stoplight/types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { badgeDefaultColor } from '../../../constants';
 import { getReadableSecurityName } from '../../../utils/oas/security';
 
 export const DeprecatedBadge: React.FC = () => (
@@ -35,7 +36,7 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
   httpServiceUri,
 }) => {
   const badge = (
-    <Badge icon={faLock} role="badge" className="sl-truncate" style={{ backgroundColor: '#293742' }}>
+    <Badge icon={faLock} role="badge" className="sl-truncate" style={{ backgroundColor: badgeDefaultColor }}>
       {getReadableSecurityName(scheme, true)}
     </Badge>
   );

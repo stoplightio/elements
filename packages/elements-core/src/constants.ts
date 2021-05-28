@@ -138,3 +138,5 @@ export const HttpCodeDescriptions = {
   598: 'Network read timeout error',
   599: 'Network connect timeout error',
 };
+
+export const badgeDefaultColor = '#293742';
