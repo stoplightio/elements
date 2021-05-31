@@ -115,14 +115,28 @@ describe('HttpOperation', () => {
       unmount();
     });
 
-    it('should contain link to Overview for operation with uri', () => {
+    it('should contain link to Overview for operation with uri when `allowRouting` is present', () => {
       const { unmount } = render(
         <Router>
-          <HttpOperation data={{ ...httpOperation }} uri="/reference/todos/openapi.v1.json/paths/~1todos/post" />
+          <HttpOperation
+            data={{ ...httpOperation }}
+            uri="/reference/todos/openapi.v1.json/paths/~1todos/post"
+            allowRouting
+          />
         </Router>,
       );
       const apikeyBadge = getSecurityBadge(/API Key/i);
       expect(apikeyBadge?.closest('a')).toHaveAttribute('href', '/reference/todos/openapi.v1.json?security=api_key');
+
+      unmount();
+    });
+
+    it('should not contain link to Overview for operation with uri by default', () => {
+      const { unmount } = render(
+        <HttpOperation data={{ ...httpOperation }} uri="/reference/todos/openapi.v1.json/paths/~1todos/post" />,
+      );
+      const apikeyBadge = getSecurityBadge(/API Key/i);
+      expect(apikeyBadge?.closest('a')).not.toBeInTheDocument();
 
       unmount();
     });

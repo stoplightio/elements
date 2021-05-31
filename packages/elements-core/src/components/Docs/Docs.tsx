@@ -40,6 +40,16 @@ interface BaseDocsProps {
    * Shows only operation document without right column
    */
   hideTryItPanel?: boolean;
+
+  /**
+   * The original title of the node. It serves as a fallback title in case on is not available inside the model.
+   */
+  nodeTitle?: string;
+
+  /**
+   * Allows to use internal routing (requires wrapping with Router component)
+   */
+  allowRouting?: boolean;
 }
 
 export interface DocsProps extends BaseDocsProps {

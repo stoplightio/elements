@@ -1,4 +1,4 @@
-import { faExclamationCircle, faLock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faEye, faLock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { Position, Tag, Tooltip } from '@stoplight/ui-kit';
@@ -19,8 +19,10 @@ export const Badge: React.FC<{
     round
     aria-label={children}
   >
-    {icon && <FontAwesomeIcon className="mr-2" icon={icon} />}
-    <span>{children}</span>
+    <span className="flex items-center">
+      {icon && <FontAwesomeIcon className="mr-2" icon={icon} />}
+      {children}
+    </span>
   </Tag>
 );
 export const DeprecatedBadge: React.FC = () => (
@@ -30,6 +32,17 @@ export const DeprecatedBadge: React.FC = () => (
   >
     <Badge icon={faExclamationCircle} className="sl-bg-warning sl-ml-0">
       Deprecated
+    </Badge>
+  </Tooltip>
+);
+
+export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpService }) => (
+  <Tooltip
+    position={Position.BOTTOM_LEFT}
+    content={`This ${isHttpService ? 'operation' : 'model'} is marked as internal and won't be visible in public docs.`}
+  >
+    <Badge icon={faEye} className="sl-bg-danger sl-ml-0 ">
+      Internal
     </Badge>
   </Tooltip>
 );

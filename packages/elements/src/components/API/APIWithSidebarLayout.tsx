@@ -1,5 +1,5 @@
 import { Logo, ParsedDocs, PoweredByLink, SidebarLayout, TableOfContents } from '@stoplight/elements-core';
-import { Box, Flex, Heading } from '@stoplight/mosaic';
+import { Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 
@@ -49,13 +49,14 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode
   return (
     <SidebarLayout sidebar={sidebar}>
       {node && (
-        <Box
-          as={ParsedDocs}
+        <ParsedDocs
           key={pathname}
           uri={hasOverview ? pathname : undefined}
           node={node}
+          nodeTitle={node.name}
           hideTryIt={hideTryIt}
           location={location}
+          allowRouting
         />
       )}
     </SidebarLayout>

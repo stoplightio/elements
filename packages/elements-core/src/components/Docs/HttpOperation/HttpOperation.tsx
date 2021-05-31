@@ -10,16 +10,17 @@ import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
-import { DeprecatedBadge, SecurityBadge } from './Badges';
+import { DeprecatedBadge, InternalBadge, SecurityBadge } from './Badges';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
 export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data, headless, uri, hideTryIt, hideTryItPanel }) => {
+  ({ className, data, headless, uri, hideTryIt, hideTryItPanel, allowRouting = false }) => {
     const mocking = React.useContext(MockingContext);
     const isDeprecated = !!data.deprecated;
+    const isInternal = !!data.internal;
 
     const [responseMediaType, setResponseMediaType] = React.useState('');
     const [responseStatusCode, setResponseStatusCode] = React.useState('');
@@ -29,7 +30,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
 
     const securitySchemes = flatten(data.security);
 
-    const hasBadges = isDeprecated || securitySchemes.length > 0;
+    const hasBadges = isDeprecated || securitySchemes.length > 0 || isInternal;
 
     if (!headless)
       return (
@@ -42,8 +43,9 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             <HStack spacing={2} mt={3}>
               {isDeprecated && <DeprecatedBadge />}
               {sortBy(securitySchemes, 'type').map((scheme, i) => (
-                <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
+                <SecurityBadge key={i} scheme={scheme} httpServiceUri={allowRouting ? httpServiceUri : undefined} />
               ))}
+              {isInternal && <InternalBadge isHttpService />}
             </HStack>
           )}
 
