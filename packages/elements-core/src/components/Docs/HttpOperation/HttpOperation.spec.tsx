@@ -133,9 +133,7 @@ describe('HttpOperation', () => {
 
     it('should not contain link to Overview for operation with uri by default', () => {
       const { unmount } = render(
-        <Router>
-          <HttpOperation data={{ ...httpOperation }} uri="/reference/todos/openapi.v1.json/paths/~1todos/post" />
-        </Router>,
+        <HttpOperation data={{ ...httpOperation }} uri="/reference/todos/openapi.v1.json/paths/~1todos/post" />,
       );
       const apikeyBadge = getSecurityBadge(/API Key/i);
       expect(apikeyBadge?.closest('a')).not.toBeInTheDocument();
