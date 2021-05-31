@@ -91,7 +91,8 @@
     "react-test-renderer": "^16.8.0",
     "resolve-url-loader": "^3.1.2",
     "sass-loader": "^10.1.1",
-    "style-loader": "^2.0.0"
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.1.0"
   },
   "publishConfig": {
     "directory": "dist"
