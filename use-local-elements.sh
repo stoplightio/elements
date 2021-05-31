@@ -1,8 +1,7 @@
 #!/bin/bash
-examplesFolder=$1
-example=$2
+example=$1
 
-cd ./$examplesFolder/$example
+cd ./examples-dev/$example
 
 npx json -I -f package.json -e "this.resolutions={
 \"@stoplight/elements\": \"file:../../packages/elements/dist\",

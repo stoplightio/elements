@@ -10,7 +10,7 @@
     "url": "git+https://github.com/stoplightio/elements-starter-angular.git"
   },
   "scripts": {
-    "start": "ng serve",
+    "start": "ng serve -p 4200",
     "build": "ng build --configuration production",
     "serve": "angular-http-server --path ./dist/angular -p 4200"
   },

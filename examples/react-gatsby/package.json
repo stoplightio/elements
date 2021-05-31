@@ -12,7 +12,7 @@
     "url": "https://github.com/stoplightio/elements-starter-gatsby/issues"
   },
   "scripts": {
-    "start": "gatsby develop",
+    "start": "gatsby develop -p 4200",
     "serve": "gatsby serve -p 4200",
     "build": "gatsby build"
   },
