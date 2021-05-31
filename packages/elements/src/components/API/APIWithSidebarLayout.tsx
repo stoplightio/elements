@@ -56,6 +56,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode
           nodeTitle={node.name}
           hideTryIt={hideTryIt}
           location={location}
+          allowRouting
         />
       )}
     </SidebarLayout>
