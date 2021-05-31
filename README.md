@@ -36,11 +36,12 @@ Stoplight Elements comes with a few example integration projects, showing you ho
 - **[bootstrap](./examples/bootstrap)** - A single HTML page utilizing the Web Components distribution via a global script tag.
 
 To run these examples yourself:
-1. Clone this repo and open a command line in the repo's directory.
-2. Run `yarn` to install all dependencies.
-3. Run `yarn build` to build Elements itself.
-4. Run `yarn build:react-cra` to build the *react-cra* example site. An analogous command is available for *react-gatsby* and *angular*, but is not required for **bootstrap**.
-5. Run `yarn serve:react-cra` (or equivalent) to serve the example project on `http://localhost:4200`.
+1. Clone this repo.
+2. Go to `/examples` folder within a cloned repo and open a command line in a given example directory.
+3. Run `yarn` to install all dependencies.
+4. Run `yarn start` to run the example.
+
+> **Note:** for **bootstrap** example just go straight to its directory and open the HTML file.
 
 ## 🏁 Usage
 

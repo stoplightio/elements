@@ -97,9 +97,10 @@ mainly because we use *Cypress* to run them, a traditionally end-to-end test run
 
 The logical steps in which these tests are run:
 1. You build *Elements* from the current TypeScript source.
-2. You install this *Elements* build into the chosen example project.
-3. You serve the example project on localhost over HTTP port 4200
-4. You run the *Cypress* test suite against this example application.
+2. You copy the contents of predefined example project from `examples` to `examples-dev`.
+3. You install this *Elements* build into the chosen example project.
+4. You serve the example project on localhost over HTTP port 4200
+5. You run the *Cypress* test suite against this example application.
 
 **You generally don't need to amend e2e tests** when working on *Elements* unless you are adding a new supported framework.
 These tests are run by the CI pipeline to ensure that a PR does not break any environments.
@@ -114,11 +115,14 @@ That being said, if you for some reason want to run them by hand, here's how to 
 yarn 
 # Build Elements itself
 yarn build
+# Copy the contents of predefined example application and make it use the local build
+yarn copy:react-cra
 # Build the chosen example (sub `react-cra` for any other example repo)
 yarn build:react-cra
 # Run the example and the test suite against it
 yarn e2e:run:react-cra
 ```
+> **Note**: You only need to run `yarn copy:$INTEGRATION-NAME` once after you clone the Elements repo.
 
 #### Run the tests manually
 
@@ -131,6 +135,8 @@ The first 3 steps are the same, but this time, instead of running the tests in h
 yarn 
 # Build Elements itself
 yarn build
+# Copy the contents of predefined example application and make it use the local build
+yarn copy:react-cra
 # Build the chosen example (sub `react-cra` for any other example repo)
 yarn build:react-cra
 # Run the example on port 4200. This is going to block so (unless you '&' it) or you'll need another terminal for the next step.
@@ -138,6 +144,8 @@ yarn serve:react-cra
 # Open the Cypress console
 yarn e2e:open
 ```
+
+> **Note**: You only need to run `yarn copy:$INTEGRATION-NAME` once after you clone the Elements repo.
 
 With the console open, click on any test suite to run it visually. Check [Cypress Docs](https://docs.cypress.io/guides/core-concepts/test-runner.html) for more details about the Test Runner.
 
