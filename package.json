@@ -51,7 +51,7 @@
     "build.docs": "yarn workspace @stoplight/elements build.docs",
     "lint": "eslint '{packages,examples}/*/src/**/*.{ts,tsx}'",
     "version": "lerna version --no-push",
-    "release": "lerna publish from-package --dist-tag beta --yes",
+    "release": "lerna publish from-package --dist-tag beta --yes --registry https://registry.npmjs.org",
     "release.docs": "yarn workspace @stoplight/elements release.docs",
     "type-check": "yarn workspaces run type-check",
     "test": "yarn workspace @stoplight/elements-utils test && yarn workspace @stoplight/elements test && yarn workspace @stoplight/elements-core test && yarn workspace @stoplight/elements-dev-portal test --passWithNoTests",
