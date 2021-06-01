@@ -1,13 +1,7 @@
 #!/bin/bash
 example=$1
 
-pwd
-
 cd ./examples-dev/$example
-
-pwd
-
-ls
 
 npx json -I -f package.json -e "this.resolutions={
 \"@stoplight/elements\": \"file:../../packages/elements/dist\",
