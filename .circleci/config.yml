@@ -97,11 +97,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install dependencies
+          name: Install Dependencies
           command: yarn --frozen-lockfile
       - run:
-          name: run release script
-          command: yarn lerna publish from-package --dist-tag beta --yes
+          name: Set NPM Token
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: Run Release Script
+          command: yarn release
 workflows:
   version: 2
   test-and-release:

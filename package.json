@@ -38,7 +38,7 @@
     "start-server-and-test": "^1.11.6",
     "ts-jest": "^26.4.4",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "typescript": "^4.0.2"
+    "typescript": "4.2.2"
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",
@@ -49,8 +49,8 @@
     "build": "yarn workspace @stoplight/elements-utils build && yarn workspace @stoplight/elements-core build && concurrently -n elements,dev-portal \"yarn workspace @stoplight/elements build\" \"yarn workspace @stoplight/elements-dev-portal build\"",
     "build.docs": "yarn workspace @stoplight/elements build.docs",
     "lint": "eslint '{packages,examples}/*/src/**/*.{ts,tsx}'",
-    "version": "yarn lerna version --no-push",
-    "release": "bash ./release.sh",
+    "version": "lerna version --no-push",
+    "release": "lerna publish from-package --dist-tag beta --yes",
     "release.docs": "yarn workspace @stoplight/elements release.docs",
     "type-check": "yarn workspaces run type-check",
     "test": "yarn workspace @stoplight/elements-utils test && yarn workspace @stoplight/elements test && yarn workspace @stoplight/elements-core test && yarn workspace @stoplight/elements-dev-portal test --passWithNoTests",

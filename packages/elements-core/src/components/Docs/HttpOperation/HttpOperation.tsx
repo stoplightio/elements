@@ -17,7 +17,7 @@ import { Responses } from './Responses';
 export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data, headless, uri, hideTryIt, hideTryItPanel }) => {
+  ({ className, data, headless, uri, hideTryIt, hideTryItPanel, allowRouting = false }) => {
     const mocking = React.useContext(MockingContext);
     const isDeprecated = !!data.deprecated;
     const isInternal = !!data.internal;
@@ -43,7 +43,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             <HStack spacing={2} mt={3}>
               {isDeprecated && <DeprecatedBadge />}
               {sortBy(securitySchemes, 'type').map((scheme, i) => (
-                <SecurityBadge key={i} scheme={scheme} httpServiceUri={httpServiceUri} />
+                <SecurityBadge key={i} scheme={scheme} httpServiceUri={allowRouting ? httpServiceUri : undefined} />
               ))}
               {isInternal && <InternalBadge isHttpService />}
             </HStack>
