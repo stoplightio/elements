@@ -13,6 +13,9 @@
     "demo",
     "packages/*"
   ],
+  "resolutions": {
+    "@stoplight/json-schema-viewer": "file:.yalc/@stoplight/json-schema-viewer"
+  },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "7.12.1",
