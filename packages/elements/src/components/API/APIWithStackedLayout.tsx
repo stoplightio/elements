@@ -1,5 +1,5 @@
 import { DeprecatedBadge, Docs, HttpMethodColors, ParsedDocs, TryItWithRequestSamples } from '@stoplight/elements-core';
-import { Box, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
+import { Box, Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
@@ -26,22 +26,22 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
 
   return (
     <TryItContext.Provider value={{ hideTryIt }}>
-      <div className="w-full flex flex-col m-auto max-w-4xl">
-        <div className="w-full border-b dark:border-gray-6">
+      <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
+        <Box w="full" borderB>
           <Docs
-            className="mx-auto"
+            className="sl-mx-auto"
             nodeData={serviceNode.data}
             nodeTitle={serviceNode.name}
             nodeType={NodeType.HttpService}
             headless
             location={location}
           />
-        </div>
+        </Box>
 
         {groups.map(group => (
           <Group key={group.title} group={group} />
         ))}
-      </div>
+      </Flex>
     </TryItContext.Provider>
   );
 };
@@ -69,22 +69,31 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
   }, [shouldExpand, urlHashMatches, group, hash]);
 
   return (
-    <div>
-      <div
+    <Box>
+      <Flex
         ref={scrollRef}
         onClick={onClick}
-        className="mx-auto flex justify-between items-center border-b dark:border-gray-6 text-gray-7 dark:text-gray-7 hover:text-gray-6 px-2 py-4 cursor-pointer"
+        mx="auto"
+        justifyContent="between"
+        alignItems="center"
+        borderB
+        px={2}
+        py={4}
+        cursor="pointer"
+        color={{ default: 'current', hover: 'muted' }}
       >
-        <div className="text-lg font-medium">{group.title}</div>
-        <Icon className="mr-2" icon={isExpanded ? 'chevron-down' : 'chevron-right'} size="sm" />
-      </div>
+        <Box fontSize="lg" fontWeight="medium">
+          {group.title}
+        </Box>
+        <Icon className="sl-mr-2" icon={isExpanded ? 'chevron-down' : 'chevron-right'} size="sm" />
+      </Flex>
 
       <Collapse isOpen={isExpanded}>
         {group.items.map(item => {
           return <Item key={item.uri} item={item} />;
         })}
       </Collapse>
-    </div>
+    </Box>
   );
 });
 
@@ -109,29 +118,34 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
   }, [hash, item]);
 
   return (
-    <div
+    <Box
       ref={scrollRef}
-      className={cn('w-full my-2 border border-transparent hover:border-gray-2 hover:bg-darken-1', {
-        'border-gray-2 bg-darken-1': isExpanded,
-      })}
+      w="full"
+      my={2}
+      border
+      borderColor={{ default: isExpanded ? 'light' : 'transparent', hover: 'light' }}
+      bg={{ default: isExpanded ? 'code' : 'transparent', hover: 'code' }}
     >
-      <div
-        onClick={onClick}
-        className="mx-auto flex items-center text-gray-7 dark:text-gray-3 hover:text-gray-8 p-2 cursor-pointer text-lg"
-      >
-        <div
-          className={cn(
-            `w-24 uppercase mr-5 text-center text-base font-semibold border rounded px-2 bg-white`,
-            `text-${color}`,
-            `border-${color}`,
-          )}
+      <Flex mx="auto" alignItems="center" cursor="pointer" fontSize="lg" p={2} onClick={onClick} color="current">
+        <Box
+          w={24}
+          textTransform="uppercase"
+          textAlign="center"
+          fontWeight="semibold"
+          border
+          rounded
+          px={2}
+          bg="canvas"
+          className={cn(`sl-mr-5 sl-text-base`, `sl-text-${color}`, `sl-border-${color}`)}
         >
           {item.data.method || 'UNKNOWN'}
-        </div>
+        </Box>
 
-        <div className="flex-1 font-medium break-all">{item.name}</div>
+        <Box flex={1} fontWeight="medium" wordBreak="all">
+          {item.name}
+        </Box>
         {isDeprecated && <DeprecatedBadge />}
-      </div>
+      </Flex>
 
       <Collapse isOpen={isExpanded}>
         {hideTryIt ? (
@@ -154,10 +168,10 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
           </Tabs>
         )}
       </Collapse>
-    </div>
+    </Box>
   );
 });
 
 const Collapse: React.FC<{ isOpen: boolean }> = ({ isOpen, children }) => {
-  return <Box style={{ display: isOpen ? 'block' : 'none' }}>{children}</Box>;
+  return <Box display={isOpen ? 'block' : 'hidden'}>{children}</Box>;
 };

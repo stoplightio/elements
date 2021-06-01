@@ -4,7 +4,7 @@ import { Box, Flex, Heading, Icon, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
 type NonIdealStateProps = {
-  description?: React.ReactChild;
+  description?: React.ReactNode;
   icon?: IconProp;
   title?: React.ReactNode;
 };
