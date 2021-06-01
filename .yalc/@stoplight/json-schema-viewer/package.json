@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/json-schema-viewer",
-  "version": "0.0.0-f92a058d",
+  "version": "0.0.0-88022954",
   "description": "A beautiful React component for viewing JSON Schema",
   "keywords": [],
   "main": "index.cjs.js",

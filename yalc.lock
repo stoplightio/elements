@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@stoplight/json-schema-viewer": {
-      "signature": "f92a058d61ed4a62a2d7a1245e1a7823",
+      "signature": "88022954c1c1c934b2e9f765751ab952",
       "file": true
     }
   }

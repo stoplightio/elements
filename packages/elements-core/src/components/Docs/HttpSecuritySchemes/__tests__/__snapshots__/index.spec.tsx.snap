@@ -150,14 +150,14 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     >
                       <Memo(Prose)
-                        className="flex-1 text-darken-7 dark:text-lighten-7"
+                        className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                       >
                         <Box
                           as="div"
-                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                          className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                         >
                           <div
-                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                            className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                           >
                             <p
                               key="h-1"
@@ -179,20 +179,21 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                                       color="on-code"
                                       fontFamily="mono"
                                       fontWeight="medium"
+                                      mx={0.5}
                                       px={1}
                                       py={0.5}
                                       rounded={true}
                                       style={
                                         Object {
-                                          "fontSize": "max(12px, 85%)",
+                                          "fontSize": "0.9em",
                                         }
                                       }
                                     >
                                       <code
-                                        className="sl-font-mono sl-font-medium sl-px-1 sl-py-0.5 sl-bg-code sl-text-on-code sl-rounded sl-border"
+                                        className="sl-font-mono sl-font-medium sl-mx-0.5 sl-px-1 sl-py-0.5 sl-bg-code sl-text-on-code sl-rounded sl-border"
                                         style={
                                           Object {
-                                            "fontSize": "max(12px, 85%)",
+                                            "fontSize": "0.9em",
                                           }
                                         }
                                       >
@@ -313,14 +314,14 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     >
                       <Memo(Prose)
-                        className="flex-1 text-darken-7 dark:text-lighten-7"
+                        className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                       >
                         <Box
                           as="div"
-                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                          className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                         >
                           <div
-                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                            className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                           >
                             <p
                               key="h-1"
@@ -436,14 +437,14 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     >
                       <Memo(Prose)
-                        className="flex-1 text-darken-7 dark:text-lighten-7"
+                        className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                       >
                         <Box
                           as="div"
-                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                          className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                         >
                           <div
-                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                            className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                           >
                             <p
                               key="h-1"
@@ -581,14 +582,14 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     >
                       <Memo(Prose)
-                        className="flex-1 text-darken-7 dark:text-lighten-7"
+                        className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                       >
                         <Box
                           as="div"
-                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                          className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                         >
                           <div
-                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                            className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                           >
                             <p
                               key="h-1"
@@ -737,14 +738,14 @@ exports[`HttpSecuritySchemes should match snapshot 1`] = `
                       }
                     >
                       <Memo(Prose)
-                        className="flex-1 text-darken-7 dark:text-lighten-7"
+                        className="MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                       >
                         <Box
                           as="div"
-                          className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                          className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                         >
                           <div
-                            className="sl-prose flex-1 text-darken-7 dark:text-lighten-7"
+                            className="sl-prose MarkdownViewer flex-1 text-darken-7 dark:text-lighten-7"
                           >
                             <p
                               key="h-1"
