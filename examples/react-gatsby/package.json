@@ -33,7 +33,7 @@
     "gatsby-plugin-manifest": "^3.6.0",
     "gatsby-plugin-offline": "^4.6.0",
     "gatsby-plugin-react-helmet": "^4.6.0",
-    "gatsby-plugin-sharp": "^3.5.0",
+    "gatsby-plugin-sharp": "^3.6.0",
     "gatsby-source-filesystem": "^3.5.0",
     "gatsby-transformer-sharp": "^3.6.0",
     "jsdom": "^16.6.0",
