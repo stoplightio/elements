@@ -1,12 +1,17 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { CustomComponentMapping, DefaultSMDComponents } from '@stoplight/markdown-viewer';
-import { HttpParamStyles, IHttpOperation, IHttpRequest } from '@stoplight/types';
+import { Box, Flex } from '@stoplight/mosaic';
+import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
 import { isObject } from 'lodash';
 import React from 'react';
 import URI from 'urijs';
 
+import { NodeTypeColors, NodeTypeIconDefs } from '../../../constants';
+import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useParsedValue } from '../../../hooks/useParsedValue';
+import { JSONSchema } from '../../../types';
 import { isHttpOperation, isJSONSchema } from '../../../utils/guards';
-import { SchemaAndDescription } from '../../SchemaAndDescription';
 import { TryIt } from '../../TryIt';
 
 type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRequest>;
@@ -22,6 +27,29 @@ function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is Pa
 }
 
 const DefaultCode = DefaultSMDComponents.code!;
+interface ISchemaAndDescriptionProps {
+  schema: JSONSchema;
+  title?: string;
+}
+
+const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptionProps) => {
+  const resolveRef = useInlineRefResolver();
+  const title = titleProp ?? schema.title;
+  return (
+    <Box py={2}>
+      {title && (
+        <Flex alignItems="center" p={2}>
+          <FontAwesomeIcon icon={NodeTypeIconDefs[NodeType.Model]} color={NodeTypeColors[NodeType.Model]} />
+          <Box color="muted" px={2}>
+            {title}
+          </Box>
+        </Flex>
+      )}
+
+      <JsonSchemaViewer resolveRef={resolveRef} schema={schema} />
+    </Box>
+  );
+};
 
 export const CodeComponent: CustomComponentMapping['code'] = props => {
   const { title, children, jsonSchema, http, resolved } = props;
