@@ -1,6 +1,8 @@
 #!/bin/bash
 example=$1
 
+pwd
+
 cd examples-dev/$example
 
 npx json -I -f package.json -e "this.resolutions={
