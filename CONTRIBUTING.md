@@ -97,9 +97,9 @@ mainly because we use *Cypress* to run them, a traditionally end-to-end test run
 
 The logical steps in which these tests are run:
 1. You build *Elements* from the current TypeScript source.
-2. You copy the contents of predefined example project from `examples` to `examples-dev`.
-3. You install this *Elements* build into the chosen example project.
-4. You serve the example project on localhost over HTTP port 4200
+2. You copy the contents of predefined example project from `examples` to `examples-dev` e.g. copy `examples/angular` to `examples-dev/angular`
+3. You install the *Elements* build from the first step into the chosen example project in `examples-dev` (you modify `package.json` to point to `dist` folder of `elements-core`, `elements` or `elements-dev-portal`)
+4. You serve the example from `examples-dev` project on localhost over HTTP port 4200
 5. You run the *Cypress* test suite against this example application.
 
 **You generally don't need to amend e2e tests** when working on *Elements* unless you are adding a new supported framework.
