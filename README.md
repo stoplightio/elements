@@ -37,7 +37,7 @@ Stoplight Elements comes with a few example integration projects, showing you ho
 
 To run these examples yourself:
 1. Clone this repo.
-2. Go to `/examples` folder within a cloned repo and open a command line in a given example directory.
+2. Go to `examples` folder and open an example, e.g.: `examples/angular`.
 3. Run `yarn` to install all dependencies.
 4. Run `yarn start` to run the example.
 
