@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { Provider as MosaicProvider } from '@stoplight/mosaic';
+import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
 import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';
 
 import '../../elements-core/src/styles/styles.scss';
 
-import cn from 'classnames';
 import { PersistenceContextProvider } from '@stoplight/elements-core';
 
 export const globalTypes = {
@@ -22,10 +21,9 @@ export const globalTypes = {
 
 const ThemeProvider = (Story, context) => {
   const theme = context.globals.theme;
+  subscribeTheme({ mode: theme === 'dark' ? 'dark' : 'light' });
   return (
-    <div className={cn({ 'bp3-dark bg-gray-8': theme === 'dark' })}>
-      <Story {...context} />
-    </div>
+    <Story {...context} />
   );
 };
 
