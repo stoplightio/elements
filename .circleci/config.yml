@@ -56,12 +56,16 @@ jobs:
       - attach_workspace:
           at: /mnt/ramdisk/
       - run:
+          name: Example - use local builds
+          working_directory: /mnt/ramdisk/project
+          command: yarn copy:<<parameters.example-name>>
+      - run:
           name: Example - Install dependencies
-          working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
-          command: yarn install --frozen-lockfile
+          working_directory: /mnt/ramdisk/project/examples-dev/<<parameters.example-name>>
+          command: yarn install
       - run:
           name: Example - Build
-          working_directory: /mnt/ramdisk/project/examples/<<parameters.example-name>>
+          working_directory: /mnt/ramdisk/project/examples-dev/<<parameters.example-name>>
           command: yarn build
       - run:
           name: Run E2E checks

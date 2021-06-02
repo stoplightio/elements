@@ -33,6 +33,7 @@ dist-storybook
 .cache
 .rpt2_cache
 .eslintcache
+/examples-dev
 
 # logs
 *.log*
