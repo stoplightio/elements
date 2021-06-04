@@ -21,7 +21,9 @@ export const globalTypes = {
 
 const ThemeProvider = (Story, context) => {
   const theme = context.globals.theme;
-  subscribeTheme({ mode: theme === 'dark' ? 'dark' : 'light' });
+  React.useEffect(() => {
+    subscribeTheme({ mode: theme === 'dark' ? 'dark' : 'light' });
+  }, [subscribeTheme, theme]);
   return (
     <Story {...context} />
   );
