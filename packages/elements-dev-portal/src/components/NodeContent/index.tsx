@@ -39,6 +39,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentP
                 nodeData={node.data}
                 nodeTitle={node.title}
                 hideTryIt={hideTryIt}
+                useNodeForRefResolving
               />
             </Box>
           </MockingProvider>
