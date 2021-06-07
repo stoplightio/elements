@@ -564,19 +564,11 @@ describe('HttpOperation', () => {
 });
 
 function getDeprecatedBadge() {
-  const badges = screen.getAllByRole('badge');
-  return screen.queryByText(
-    (_, element) => element !== null && badges.includes(element as HTMLElement) && element.textContent === 'Deprecated',
-  );
+  return screen.queryByTestId('badge-deprecated');
 }
 
 function getSecurityBadge(re: RegExp) {
-  const badges = screen.getAllByRole('badge');
-  return screen.queryByText(
-    (_, element) =>
-      element !== null &&
-      element.textContent !== null &&
-      badges.includes(element as HTMLElement) &&
-      re.test(element.textContent),
-  );
+  return screen
+    .queryAllByTestId('badge-security')
+    .find(element => element.textContent !== null && re.test(element.textContent));
 }
