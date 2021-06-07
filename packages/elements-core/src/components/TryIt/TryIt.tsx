@@ -1,7 +1,7 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeParse, safeStringify } from '@stoplight/json';
-import { Box, Button, Flex, Panel, Text, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, Flex, Link, Panel, Text, useThemeIsDark } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -226,14 +226,14 @@ const NetworkErrorMessage = () => (
 
     <p>
       3. If you've checked all of the above and still experiencing issues, check if the API supports{' '}
-      <a
+      <Link
         target="_blank"
         rel="noopener noreferrer"
-        className="font-semibold text-darken-7 dark:text-gray-6"
         href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"
+        fontWeight="semibold"
       >
         CORS
-      </a>
+      </Link>
       .
     </p>
   </>
