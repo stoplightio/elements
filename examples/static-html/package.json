@@ -5,7 +5,8 @@
   "description": "",
   "main": "stoplight-project/index.html",
   "scripts": {
-    "serve": "node serve-files.js"
+    "serve": "node serve-files.js",
+    "build": "exit 0"
   },
   "author": "",
   "license": "ISC"
