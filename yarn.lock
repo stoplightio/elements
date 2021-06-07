@@ -3991,10 +3991,10 @@
     "@types/json-schema" "^7.0.7"
     magic-error "^0.0.0"
 
-"@stoplight/json-schema-viewer@^4.0.0-beta.20":
-  version "4.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.20.tgz#060cb6306bbbd2bd206996614aaf65f50d6f02af"
-  integrity sha512-TOr2NH4nk0hzxzyhPSpXMA03XlTkYVfecIdxqP5q/GyYL7EQhUiNiUecgUcIlvzPfIy2nnVZ5MpObkq4iEykrg==
+"@stoplight/json-schema-viewer@^4.0.0-beta.21":
+  version "4.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.21.tgz#45ae03c4d6cc4ba3152ca7ae0d960154c1474d2d"
+  integrity sha512-9jsCa7c5NbrnZwO38QDHTh57493wG25aAl/Yu+qNldhO9ieBtMBCGE63yO60vXI9W/DLEZ4eU/A4svPf7I2kRA==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.10.0"
@@ -4024,12 +4024,12 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.0.0-beta.4":
-  version "5.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.0.0-beta.4.tgz#1be6f1553272b182d22ba701eb1efa3e021938ec"
-  integrity sha512-1Vqf6096U+w+WVKiHqstTfXzJwaAkofZWMscRDaz3MbLXEGITjF+ucyD0UNOBxSiaZNAzRSb9Z158aROJcikTQ==
+"@stoplight/markdown-viewer@^5.0.0-beta.5":
+  version "5.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.0.0-beta.5.tgz#f5ac8bfffb9fd664ad87bb9fecd6618fa6baf100"
+  integrity sha512-bI8/FVTRTS6wmaXNXUeoq3tUuhVdIlDI0vk3nuUVsU2+H0xf+rDy8ALznSbVN1y559s7nwgxS8cl8/NC2roKXQ==
   dependencies:
-    "@stoplight/markdown" "^3.0.0-beta.4"
+    "@stoplight/markdown" "^3.0.0-beta.5"
     "@stoplight/react-error-boundary" "^1.1.0"
     "@stoplight/types" "^12.3.0"
     clsx "^1.1.1"
@@ -4040,10 +4040,10 @@
     remark-parse "^9.0.0"
     remark-rehype "^8.1.0"
 
-"@stoplight/markdown@^3.0.0-beta.4":
-  version "3.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-3.0.0-beta.4.tgz#bd3c2cde4b473e46968edcb44a26c1e87cb9c75a"
-  integrity sha512-QQhXKs5wKMg7s5WhtTKapjhe4kCv+1TjtoNRjGW6/JT/TnNnN1dR5C91NpOt787XtG6m1tN54pAZq2nUWcpkdA==
+"@stoplight/markdown@^3.0.0-beta.5":
+  version "3.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-3.0.0-beta.5.tgz#08f84f3a2c27e88647a2e4e4f64bcb39a99add39"
+  integrity sha512-x7uX121NBqKzrfDDljR/2i+Egwk+iGsLe2BlT0SIujlxS0aaCS7QMWzJekOAUT9xK1vxM1becWTQ47HF/6U22g==
   dependencies:
     "@stoplight/types" "^12.3.0"
     "@stoplight/yaml" "^4.2.2"
