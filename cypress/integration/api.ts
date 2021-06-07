@@ -1,4 +1,9 @@
+///<reference path="../support/index.d.ts"/>
 describe('API component', () => {
+  beforeEach(() => {
+    cy.redirectUnpkgToLocalDistFolder('elements');
+  });
+
   it('loads correctly', () => {
     loadZoomApiPage();
   });
