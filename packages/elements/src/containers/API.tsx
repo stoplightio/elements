@@ -69,17 +69,17 @@ const APIImpl: React.FC<APIProps> = props => {
 
   const { data: fetchedDocument, error } = useQuery(
     [apiDescriptionUrl],
-    () => fetch(apiDescriptionUrl).then(res => res.text()),
+    () =>
+      fetch(apiDescriptionUrl).then(res => {
+        if (res.ok) {
+          return res.text();
+        }
+        throw new Error(`Unable to load spec, status code: ${res.status}`);
+      }),
     {
       enabled: apiDescriptionUrl !== '' && !apiDescriptionDocument,
     },
   );
-
-  React.useEffect(() => {
-    if (error) {
-      console.error('Could not fetch spec', error);
-    }
-  }, [error]);
 
   const parsedDocument = useParsedValue(apiDescriptionDocument || fetchedDocument);
   const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl });
@@ -89,8 +89,8 @@ const APIImpl: React.FC<APIProps> = props => {
     return (
       <Flex justify="center" alignItems="center" w="full" minH="screen">
         <NonIdealState
-          title="Something went wrong"
-          description={String(error)}
+          title={'Specification could not be loaded'}
+          description={`The API specification could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec.`}
           icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
         />
       </Flex>
