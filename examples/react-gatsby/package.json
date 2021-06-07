@@ -1,7 +1,6 @@
 {
   "name": "@stoplight/elements-starter-gatsby",
   "description": "A starter template to build beautiful developer docs using Stoplight Elements & Gatsby",
-  "private": true,
   "version": "0.1.0",
   "author": "Stoplight <support@stoplight.io>",
   "license": "Unlicense",
@@ -13,22 +12,15 @@
     "url": "https://github.com/stoplightio/elements-starter-gatsby/issues"
   },
   "scripts": {
-    "reinstall": "rm -rf node_modules && yarn install",
-    "start": "gatsby develop",
+    "start": "gatsby develop -p 4200",
     "serve": "gatsby serve -p 4200",
     "build": "gatsby build"
   },
-  "resolutions": {
-    "@stoplight/elements": "file:../../packages/elements/dist",
-    "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
-    "@stoplight/elements-core": "file:../../packages/elements-core/dist",
-    "@stoplight/elements-utils": "file:../../packages/elements-utils/dist"
-  },
   "dependencies": {
-    "@stoplight/elements": "file:../../packages/elements/dist",
-    "@stoplight/elements-dev-portal": "file:../../packages/elements-dev-portal/dist",
+    "@stoplight/elements": "^7.0.0-beta.4",
+    "@stoplight/elements-dev-portal": "^1.0.0-beta.1",
     "canvas": "^2.8.0",
-    "gatsby": "^3.5.1",
+    "gatsby": "^3.6.2",
     "gatsby-image": "^3.6.0",
     "gatsby-plugin-manifest": "^3.6.0",
     "gatsby-plugin-offline": "^4.6.0",
