@@ -131,7 +131,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   return (
     <Box rounded="lg" overflowY="hidden">
-      <Panel isCollapsible={false} className="p-0 TryItPanel">
+      <Panel isCollapsible={false} p={0} className="TryItPanel">
         <Panel.Titlebar bg="canvas-300">
           <div role="heading" className="sl-font-bold">
             <Text color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>

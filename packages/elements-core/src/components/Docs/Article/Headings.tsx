@@ -2,7 +2,6 @@ import { faStream } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MDAST } from '@stoplight/markdown';
 import { Box, Button, Flex, Popover } from '@stoplight/mosaic';
-import cn from 'classnames';
 import * as React from 'react';
 
 import { useComponentSize } from '../../../hooks/useComponentSize';
@@ -78,7 +77,7 @@ const Heading: React.FC<{ item: IArticleHeading; isSelected: boolean }> = ({ ite
       pr={8}
       fontWeight="medium"
       fontSize="sm"
-      className={cn('hover:sl-text-blue-6 hover:sl-no-underline', isSelected ? 'sl-text-blue-6' : 'sl-text-gray-6')}
+      color={isSelected ? 'primary' : 'muted'}
       style={{ paddingLeft: `${3 + item.depth * 15}px` }}
     >
       {item.title}
