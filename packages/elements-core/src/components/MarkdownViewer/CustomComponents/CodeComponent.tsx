@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { ICode } from '@stoplight/markdown/ast-types/smdast';
-import { defaultComponentMapping, ICodeAnnotations, IComponentMappingProps } from '@stoplight/markdown-viewer';
+import { CustomComponentMapping, DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { Box, Flex } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
-import { get, isObject } from 'lodash';
+import { isObject } from 'lodash';
 import React from 'react';
 import URI from 'urijs';
 
@@ -51,23 +50,21 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
   );
 };
 
-export const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotations>>) => {
-  const {
-    node: { annotations, value, resolved, meta },
-  } = props;
-  const nodeType = get(annotations, 'type') || meta;
+export const CodeComponent: CustomComponentMapping['code'] = props => {
+  const { title, jsonSchema, http, children } = props;
 
-  const parsedValue = useParsedValue(resolved ?? value);
+  const value = String(Array.isArray(children) ? children[0] : children);
+  const parsedValue = useParsedValue(value);
 
-  if (nodeType === 'json_schema') {
+  if (jsonSchema) {
     if (!isJSONSchema(parsedValue)) {
       return null;
     }
 
-    return <SchemaAndDescription title={annotations?.title} schema={parsedValue} />;
+    return <SchemaAndDescription title={title} schema={parsedValue} />;
   }
 
-  if (nodeType === 'http') {
+  if (http) {
     if (!isObject(parsedValue) || (!isPartialHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
       return null;
     }
@@ -75,7 +72,7 @@ export const CodeComponent = (props: IComponentMappingProps<ICode<ICodeAnnotatio
     return <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} />;
   }
 
-  const DefaultCode = defaultComponentMapping.code!;
+  const DefaultCode = DefaultSMDComponents.code!;
   return <DefaultCode {...props} />;
 };
 

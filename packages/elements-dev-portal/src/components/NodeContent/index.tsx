@@ -5,6 +5,7 @@ import {
   MockingProvider,
   PersistenceContextProvider,
 } from '@stoplight/elements-core';
+import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { Box } from '@stoplight/mosaic';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
@@ -51,13 +52,13 @@ export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentP
 const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefined>(undefined);
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
-const LinkComponent: React.FC<{ node: { url: string } }> = ({ children, node: { url } }) => {
+const LinkComponent: CustomComponentMapping['link'] = ({ children, href = '' }) => {
   const ctx = React.useContext(NodeLinkContext);
 
-  if (externalRegex.test(url)) {
+  if (externalRegex.test(href)) {
     // Open external URL in a new tab
     return (
-      <a href={url} target="_blank" rel="noreferrer">
+      <a href={href} target="_blank" rel="noreferrer">
         {children}
       </a>
     );
@@ -66,9 +67,9 @@ const LinkComponent: React.FC<{ node: { url: string } }> = ({ children, node: { 
   if (ctx) {
     const [node, Link] = ctx;
     // Resolve relative file URI with
-    const resolvedUri = resolve(dirname(node.uri), url);
+    const resolvedUri = resolve(dirname(node.uri), href);
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
-    const edge = node.outbound_edges.find(edge => edge.uri === url || edge.uri === resolvedUriWithoutAnchor);
+    const edge = node.outbound_edges.find(edge => edge.uri === href || edge.uri === resolvedUriWithoutAnchor);
 
     if (edge) {
       return (
@@ -79,5 +80,5 @@ const LinkComponent: React.FC<{ node: { url: string } }> = ({ children, node: { 
     }
   }
 
-  return <a href={url}>{children}</a>;
+  return <a href={href}>{children}</a>;
 };

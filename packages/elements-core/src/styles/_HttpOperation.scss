@@ -10,6 +10,13 @@
   }
 }
 
+.Model {
+  .MarkdownViewer p {
+    font-size: 14px;
+    line-height: 1.5em;
+  }
+}
+
 .HttpOperation__gutter {
   --fs-code: 12px;
 }
