@@ -41,9 +41,9 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
       <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
         <Box ml={-2}>
           <Menu
-            label="Request Sample Language"
-            trigger={
-              <Button size="sm" iconRight="caret-down" appearance="minimal">
+            aria-label="Request Sample Language"
+            renderTrigger={
+              <Button size="sm" iconRight="chevron-down" appearance="minimal">
                 Request Sample: {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
               </Button>
             }
@@ -53,9 +53,8 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
               return (
                 <MenuItem
                   key={language}
-                  indent
-                  text={language}
-                  onClick={
+                  title={language}
+                  onPress={
                     hasLibraries
                       ? undefined
                       : () => {
@@ -68,9 +67,8 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
                     Object.keys(config.libraries!).map(library => (
                       <MenuItem
                         key={library}
-                        text={library}
-                        indent
-                        onClick={() => {
+                        title={library}
+                        onPress={() => {
                           setSelectedLanguage(language);
                           setSelectedLibrary(library);
                         }}

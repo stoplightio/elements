@@ -7,7 +7,7 @@ import {
   InvertTheme,
   Menu,
   MenuOption,
-  MenuRadioGroup,
+  MenuOptionGroup,
   Text,
 } from '@stoplight/mosaic';
 import React, { useContext, useState } from 'react';
@@ -101,12 +101,19 @@ const ExamplePicker = () => {
   const { apiDescriptionUrl, setDescriptionUrl } = useContext(GlobalContext);
 
   return (
-    <Menu trigger={<Button iconRight={['fas', 'caret-down']}>Pick an Example</Button>}>
-      <MenuRadioGroup value={apiDescriptionUrl} onChange={setDescriptionUrl}>
+    <Menu
+      shouldAlwaysCloseOnSelect
+      renderTrigger={({ isOpen }) => (
+        <Button iconRight={['fas', 'caret-down']} active={isOpen}>
+          Pick an Example
+        </Button>
+      )}
+    >
+      <MenuOptionGroup value={apiDescriptionUrl} onChange={setDescriptionUrl}>
         {EXAMPLE_SPECS.map((s, i) => (
-          <MenuOption key={i} text={s.text} value={s.value} />
+          <MenuOption key={i} title={s.text} value={s.value} />
         ))}
-      </MenuRadioGroup>
+      </MenuOptionGroup>
     </Menu>
   );
 };

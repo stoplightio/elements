@@ -21,15 +21,15 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody,
         rightComponent={
           examples.length > 1 && (
             <Menu
-              label="Examples"
-              trigger={
+              aria-label="Examples"
+              renderTrigger={
                 <Button appearance="minimal" iconRight="caret-down">
                   Examples
                 </Button>
               }
             >
               {examples.map(example => (
-                <MenuItem key={example.key} text={example.key} onClick={() => handleClick(example)} />
+                <MenuItem key={example.key} title={example.key} onPress={() => handleClick(example)} />
               ))}
             </Menu>
           )

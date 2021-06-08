@@ -41,8 +41,8 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
         rightComponent={
           filteredSecurityItems.length > 1 && (
             <Menu
-              label="security-schemes"
-              trigger={
+              aria-label="security-schemes"
+              renderTrigger={
                 <Button appearance="minimal" iconRight="caret-down">
                   {menuName}
                 </Button>
@@ -51,8 +51,8 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
               {filteredSecurityItems.map(auth => (
                 <MenuItem
                   key={auth.key}
-                  text={getReadableSecurityName(auth)}
-                  onClick={() => {
+                  title={getReadableSecurityName(auth)}
+                  onPress={() => {
                     onChange({ scheme: auth, authValue: undefined });
                   }}
                 />
