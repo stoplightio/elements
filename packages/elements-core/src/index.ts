@@ -29,3 +29,4 @@ export { useRouter } from './hooks/useRouter';
 export { useTocContents } from './hooks/useTocContents';
 export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from './types';
+export { createResolvedObject } from './utils/resolvedObject';

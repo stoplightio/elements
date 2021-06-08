@@ -1,5 +1,7 @@
+import { createResolvedObject } from '@stoplight/elements-core/utils/resolvedObject';
 import { NodeType } from '@stoplight/types';
 import { Location } from 'history';
+import { isPlainObject } from 'lodash';
 import * as React from 'react';
 
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
@@ -73,7 +75,13 @@ export const Docs = React.memo<DocsProps>(({ nodeType, nodeData, useNodeForRefRe
     return null;
   }
 
-  const parsedDocs = <ParsedDocs node={parsedNode} {...commonProps} />;
+  console.log(parsedNode.data);
+  const resolvedParsedNode = {
+    type: parsedNode.type,
+    data: createResolvedObject(parsedNode.data as object),
+  } as ParsedNode;
+
+  const parsedDocs = <ParsedDocs node={resolvedParsedNode} {...commonProps} />;
 
   if (useNodeForRefResolving) {
     return <InlineRefResolverProvider document={parsedNode.data}>{parsedDocs}</InlineRefResolverProvider>;
