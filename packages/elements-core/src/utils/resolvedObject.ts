@@ -1,7 +1,11 @@
 import { resolveInlineRef } from '@stoplight/json';
 import { isArray, isPlainObject } from 'lodash';
 
+const resolvedObjectSymbol = Symbol('ResolvedObject');
+
 export const createResolvedObject = (currentObject: object, originalObject: object = currentObject): object => {
+  if (currentObject[resolvedObjectSymbol]) return currentObject;
+
   if (!isPlainObject(currentObject) && !isArray(currentObject)) {
     return currentObject;
   }
@@ -10,6 +14,8 @@ export const createResolvedObject = (currentObject: object, originalObject: obje
 
   return new Proxy(currentObject, {
     get(target, name) {
+      if (name === resolvedObjectSymbol) return true;
+
       if (cachedValues[name]) return cachedValues[name];
 
       const value = target[name];
