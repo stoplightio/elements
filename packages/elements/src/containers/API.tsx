@@ -74,7 +74,7 @@ const APIImpl: React.FC<APIProps> = props => {
         if (res.ok) {
           return res.text();
         }
-        throw new Error(`Unable to load spec, status code: ${res.status}`);
+        throw new Error(`Unable to load description document, status code: ${res.status}`);
       }),
     {
       enabled: apiDescriptionUrl !== '' && !apiDescriptionDocument,
@@ -89,8 +89,8 @@ const APIImpl: React.FC<APIProps> = props => {
     return (
       <Flex justify="center" alignItems="center" w="full" minH="screen">
         <NonIdealState
-          title={'Specification could not be loaded'}
-          description={`The API specification could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec.`}
+          title={'Document could not be loaded'}
+          description={`The API description document could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec.`}
           icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
         />
       </Flex>
