@@ -1,4 +1,3 @@
-import { generateExampleFromJsonSchema } from '@stoplight/elements-core/utils/exampleGeneration';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Flex, Heading, HStack, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
@@ -8,6 +7,7 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { generateExampleFromJsonSchema } from '../../../utils/exampleGeneration';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { InternalBadge } from '../HttpOperation/Badges';
@@ -39,13 +39,14 @@ const ModelComponent: React.FC<ModelProps> = ({ data, className, headless, nodeT
 
       <Flex>
         <Box flex={1}>
-
           <JsonSchemaViewer resolveRef={resolveRef} className={className} schema={data} />
         </Box>
         <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
           <Panel rounded isCollapsible={false}>
             <Panel.Titlebar>
-              <Text color="body">Example</Text>
+              <Text color="body" role="heading">
+                Example
+              </Text>
             </Panel.Titlebar>
             <Panel.Content p={0}>
               <CodeViewer
