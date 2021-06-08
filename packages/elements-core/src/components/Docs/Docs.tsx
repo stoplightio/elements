@@ -1,12 +1,11 @@
-import { createResolvedObject } from '@stoplight/elements-core/utils/resolvedObject';
 import { NodeType } from '@stoplight/types';
 import { Location } from 'history';
-import { isPlainObject } from 'lodash';
 import * as React from 'react';
 
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { useParsedData } from '../../hooks/useParsedData';
 import { ParsedNode } from '../../types';
+import { createResolvedObject } from '../../utils/resolvedObject';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
