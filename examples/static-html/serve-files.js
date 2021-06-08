@@ -6,11 +6,11 @@ http
   .createServer((req, res) => {
     fs.readFile(__dirname + req.url, (err, data) => {
       if (err) {
-        res.writeHead(404);
         serveFallback(req, res);
         return;
       }
-      res.writeHead(200);
+      res.setHeader('Content-Type', 'text/html; charset=utf8');
+      res.writeHead(200, 'OK');
       res.end(data);
     });
   })
@@ -36,7 +36,9 @@ function serveFallback(req, res) {
       res.end();
       return;
     }
-    res.writeHead(200);
+
+    res.setHeader('Content-Type', 'text/html; charset=utf8');
+    res.writeHead(200, 'OK');
     res.end(data);
   });
 }
