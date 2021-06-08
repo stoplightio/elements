@@ -1,6 +1,7 @@
 import { safeStringify } from '@stoplight/json';
 import * as Sampler from '@stoplight/json-schema-sampler';
 import { IMediaTypeContent } from '@stoplight/types';
+import { JSONSchema7 } from 'json-schema';
 import React from 'react';
 
 import { useDocument } from '../context/InlineRefResolver';
@@ -35,4 +36,9 @@ export const generateExampleFromMediaTypeContent = (
     console.warn(e);
   }
   return '';
+};
+
+export const generateExampleFromJsonSchema = (schema: JSONSchema7) => {
+  const generated = Sampler.sample(schema);
+  return generated !== null ? safeStringify(generated, undefined, 2) ?? '' : '';
 };

@@ -39,6 +39,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentP
                 nodeData={node.data}
                 nodeTitle={node.title}
                 hideTryIt={hideTryIt}
+                useNodeForRefResolving
               />
             </Box>
           </MockingProvider>
@@ -68,7 +69,11 @@ const LinkComponent: React.FC<{ node: { url: string } }> = ({ children, node: { 
     // Resolve relative file URI with
     const resolvedUri = resolve(dirname(node.uri), url);
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
-    const edge = node.outbound_edges.find(edge => edge.uri === url || edge.uri === resolvedUriWithoutAnchor);
+    const decodedUrl = decodeURIComponent(url);
+    const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
+    const edge = node.outbound_edges.find(
+      edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
+    );
 
     if (edge) {
       return (
