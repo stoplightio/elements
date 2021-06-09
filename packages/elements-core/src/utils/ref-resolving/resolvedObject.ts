@@ -11,11 +11,12 @@ interface CreateResolvedObjectOptions {
 }
 
 export const createResolvedObject = (currentObject: object, options: CreateResolvedObjectOptions = {}): object =>
-  recursivelyCreateResolvedObject(currentObject, currentObject, options);
+  recursivelyCreateResolvedObject(currentObject, currentObject, [], options);
 
 const recursivelyCreateResolvedObject = (
   currentObject: object,
   rootCurrentObject: object,
+  propertyPath: string[],
   options: CreateResolvedObjectOptions = {},
 ): object => {
   const mergedOptions = {
@@ -41,14 +42,25 @@ const recursivelyCreateResolvedObject = (
 
       const value = target[name];
 
+      const newPropertyPath = [...propertyPath, name.toString()];
+
       if (isPlainObject(value) && value.hasOwnProperty('$ref')) {
-        const resolvedValue = mergedOptions.resolver({ pointer: value['$ref'], source: null }, [], rootCurrentObject);
-        const result = recursivelyCreateResolvedObject(resolvedValue as object, rootCurrentObject, mergedOptions);
+        const resolvedValue = mergedOptions.resolver(
+          { pointer: value['$ref'], source: null },
+          newPropertyPath,
+          rootCurrentObject,
+        );
+        const result = recursivelyCreateResolvedObject(
+          resolvedValue as object,
+          rootCurrentObject,
+          newPropertyPath,
+          mergedOptions,
+        );
         cachedValues[name] = result;
         return result;
       }
 
-      const result = recursivelyCreateResolvedObject(value, rootCurrentObject, mergedOptions);
+      const result = recursivelyCreateResolvedObject(value, rootCurrentObject, newPropertyPath, mergedOptions);
       cachedValues[name] = result;
       return result;
     },

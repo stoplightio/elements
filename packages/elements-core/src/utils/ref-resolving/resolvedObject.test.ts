@@ -126,7 +126,7 @@ describe('createResolvedObject', () => {
 
     expect((resolvedObject as any).paramaterA.parameterB).toEqual({
       pointer: '#/bundled/parameterB',
-      propertyPath: [],
+      propertyPath: ['paramaterA', 'parameterB'],
       originalObjectProperties: ['paramaterA', 'bundled'],
     });
   });
