@@ -58,7 +58,6 @@
     "use-debounce": "^6.0.1"
   },
   "devDependencies": {
-    "@stoplight/scripts": "8.2.3",
     "@storybook/addon-docs": "^6.2.8",
     "@storybook/addon-essentials": "^6.2.8",
     "@storybook/react": "^6.2.8",
