@@ -1,7 +1,7 @@
 import { createResolvedObject, getOriginalObject } from './resolvedObject';
 
 describe('createResolvedObject', () => {
-  it('resolves refed property', () => {
+  it('resolves a reference', () => {
     const resolvedObject = createResolvedObject({
       paramaterA: {
         parameterB: {
@@ -16,7 +16,7 @@ describe('createResolvedObject', () => {
     expect((resolvedObject as any).paramaterA.parameterB).toBe('parameterB value');
   });
 
-  it('resolves deeply nested refed property', () => {
+  it('resolves deeply nested reference', () => {
     const resolvedObject = createResolvedObject({
       paramaterA: {
         parameterB: {
@@ -36,7 +36,7 @@ describe('createResolvedObject', () => {
     expect((resolvedObject as any).paramaterA.parameterB.parameterC).toBe('parameterC value');
   });
 
-  it('resolves refs in arrays', () => {
+  it('resolves references nested in arrays', () => {
     const resolvedObject = createResolvedObject({
       list: [
         {

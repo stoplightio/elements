@@ -1,26 +1,27 @@
 import { resolveInlineRef } from '@stoplight/json';
+import { Dictionary } from '@stoplight/types';
 
 export type ReferenceInfo = {
   source: string | null;
   pointer: string | null;
 };
 
-export type ReferenceResolver = (ref: ReferenceInfo, propertyPath: string[] | null, originalObject: object) => object;
+export type ReferenceResolver = (ref: ReferenceInfo, propertyPath: string[] | null, currentObject: object) => any;
 
 export const defaultResolver =
-  (document: any): ReferenceResolver =>
-  ({ pointer }, _, schema) => {
-    const activeSchema = document ?? schema;
+  (contextObject: object): ReferenceResolver =>
+  ({ pointer }, _, currentObject) => {
+    const activeObject = contextObject ?? currentObject;
 
     if (pointer === null) {
       return null;
     }
 
     if (pointer === '#') {
-      return activeSchema;
+      return activeObject;
     }
 
-    const resolved = resolveInlineRef(activeSchema, pointer);
+    const resolved = resolveInlineRef(activeObject as Dictionary<string>, pointer);
 
     if (resolved) return resolved;
 

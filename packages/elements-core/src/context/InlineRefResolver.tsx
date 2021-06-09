@@ -36,9 +36,9 @@ export const useInlineRefResolver = () => useContext(InlineRefResolverContext);
 
 export const useDocument = () => useContext(DocumentContext);
 
-export const useResolvedObject = (currentObject: unknown): unknown => {
+export const useResolvedObject = (currentObject: object): object => {
   const document = useDocument();
   const resolver = useInlineRefResolver();
 
-  return createResolvedObject(currentObject as object, { originalObject: document as object, resolver });
+  return createResolvedObject(currentObject, { contextObject: document as object, resolver });
 };

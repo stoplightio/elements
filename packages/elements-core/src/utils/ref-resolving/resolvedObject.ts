@@ -6,7 +6,7 @@ const resolvedObjectSymbol = Symbol('ResolvedObject');
 const originalObjectSymbol = Symbol('OriginalObject');
 
 interface CreateResolvedObjectOptions {
-  originalObject?: object;
+  contextObject?: object;
   resolver?: ReferenceResolver;
 }
 
@@ -20,8 +20,8 @@ const recursivelyCreateResolvedObject = (
   options: CreateResolvedObjectOptions = {},
 ): object => {
   const mergedOptions = {
-    originalObject: options.originalObject || currentObject,
-    resolver: options.resolver || defaultResolver(options.originalObject || currentObject),
+    contextObject: options.contextObject || currentObject,
+    resolver: options.resolver || defaultResolver(options.contextObject || currentObject),
   };
 
   if (!currentObject || currentObject[resolvedObjectSymbol]) return currentObject;
