@@ -130,4 +130,19 @@ describe('createResolvedObject', () => {
       originalObjectProperties: ['paramaterA', 'bundled'],
     });
   });
+
+  it('provides error message when resolving fails', () => {
+    const resolvedObject = createResolvedObject({
+      paramaterA: {
+        parameterB: {
+          $ref: '#/bundled/parameterB',
+        },
+      },
+    });
+
+    expect((resolvedObject as any).paramaterA.parameterB).toEqual({
+      $ref: '#/bundled/parameterB',
+      error: "Could not resolve '#/bundled/parameterB'",
+    });
+  });
 });

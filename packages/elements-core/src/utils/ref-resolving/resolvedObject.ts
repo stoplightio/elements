@@ -45,11 +45,19 @@ const recursivelyCreateResolvedObject = (
       const newPropertyPath = [...propertyPath, name.toString()];
 
       if (isPlainObject(value) && value.hasOwnProperty('$ref')) {
-        const resolvedValue = mergedOptions.resolver(
-          { pointer: value['$ref'], source: null },
-          newPropertyPath,
-          rootCurrentObject,
-        );
+        let resolvedValue;
+        try {
+          resolvedValue = mergedOptions.resolver(
+            { pointer: value['$ref'], source: null },
+            newPropertyPath,
+            rootCurrentObject,
+          );
+        } catch (e) {
+          resolvedValue = {
+            ...value,
+            error: e.message,
+          };
+        }
         const result = recursivelyCreateResolvedObject(
           resolvedValue as object,
           rootCurrentObject,
