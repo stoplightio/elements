@@ -13,6 +13,7 @@ import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { JSONSchema } from '../../../types';
 import { isHttpOperation, isJSONSchema } from '../../../utils/guards';
+import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { TryIt } from '../../TryIt';
 
 type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRequest>;
@@ -46,7 +47,7 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
         </Flex>
       )}
 
-      <JsonSchemaViewer resolveRef={resolveRef} schema={schema} />
+      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(schema)} />
     </Box>
   );
 };

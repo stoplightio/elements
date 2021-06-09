@@ -1,4 +1,4 @@
-import { createResolvedObject } from './resolvedObject';
+import { createResolvedObject, getOriginalObject } from './resolvedObject';
 
 describe('createResolvedObject', () => {
   it('resolves refed property', () => {
@@ -86,5 +86,48 @@ describe('createResolvedObject', () => {
     });
 
     expect(createResolvedObject(resolvedObject)).toBe(resolvedObject);
+  });
+
+  it('allows to retrieve the original object', () => {
+    const originalObject = {
+      paramaterA: {
+        parameterB: {
+          $ref: '#/bundled/parameterB',
+        },
+      },
+      bundled: {
+        parameterB: 'parameterB value',
+      },
+    };
+    const resolvedObject = createResolvedObject(originalObject);
+
+    expect(getOriginalObject((resolvedObject as any).paramaterA)).toBe(originalObject.paramaterA);
+  });
+
+  it('allows to customize resolution process', () => {
+    const originalObject = {
+      paramaterA: {
+        parameterB: {
+          $ref: '#/bundled/parameterB',
+        },
+      },
+      bundled: {
+        parameterB: 'parameterB value',
+      },
+    };
+
+    const resolvedObject = createResolvedObject(originalObject, {
+      resolver: ({ pointer }, propertyPath, originalObject) => ({
+        pointer,
+        propertyPath,
+        originalObjectProperties: Object.keys(originalObject),
+      }),
+    });
+
+    expect((resolvedObject as any).paramaterA.parameterB).toEqual({
+      pointer: '#/bundled/parameterB',
+      propertyPath: [],
+      originalObjectProperties: ['paramaterA', 'bundled'],
+    });
   });
 });
