@@ -60,6 +60,31 @@ describe('createResolvedObject', () => {
     );
   });
 
+  it('resolves circular reference to the same value', () => {
+    const resolvedObject = createResolvedObject({
+      paramaterA: {
+        $ref: '#/bundled/paramaterA',
+      },
+      bundled: {
+        paramaterA: {
+          parameterB: {
+            $ref: '#/bundled/parameterB',
+          },
+          parameterC: 'parameterC value',
+        },
+        parameterB: {
+          paramaterA: {
+            $ref: '#/bundled/paramaterA',
+          },
+        },
+      },
+    });
+
+    expect((resolvedObject as any).paramaterA.parameterB.paramaterA.parameterB.paramaterA).toBe(
+      (resolvedObject as any).paramaterA,
+    );
+  });
+
   it('resolves deeply nested reference', () => {
     const resolvedObject = createResolvedObject({
       paramaterA: {

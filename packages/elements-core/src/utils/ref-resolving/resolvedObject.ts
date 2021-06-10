@@ -10,12 +10,13 @@ interface CreateResolvedObjectOptions {
 }
 
 export const createResolvedObject = (currentObject: object, options: CreateResolvedObjectOptions = {}): object =>
-  recursivelyCreateResolvedObject(currentObject, currentObject, [], options);
+  recursivelyCreateResolvedObject(currentObject, currentObject, [], new Map(), options);
 
 const recursivelyCreateResolvedObject = (
   currentObject: object,
   rootCurrentObject: object,
   propertyPath: string[],
+  objectToProxiedObjectCache: Map<object, object>,
   options: CreateResolvedObjectOptions = {},
 ): object => {
   const mergedOptions = {
@@ -24,20 +25,17 @@ const recursivelyCreateResolvedObject = (
   };
   if (!currentObject || isResolvedObjectProxy(currentObject)) return currentObject;
 
-  const cachedValues = {};
+  if (objectToProxiedObjectCache.has(currentObject)) return objectToProxiedObjectCache.get(currentObject)!;
 
-  return new Proxy(currentObject, {
+  const resolvedObjectProxy = new Proxy(currentObject, {
     get(target, name) {
       if (name === originalObjectSymbol) return currentObject;
 
-      if (cachedValues[name]) return cachedValues[name];
-
       const value = target[name];
-
       const newPropertyPath = [...propertyPath, name.toString()];
 
       let resolvedValue;
-      if (isPlainObject(value) && value.hasOwnProperty('$ref') && typeof value['$ref'] === 'string') {
+      if (isReference(value)) {
         try {
           resolvedValue = mergedOptions.resolver(
             { pointer: value['$ref'], source: null },
@@ -54,15 +52,23 @@ const recursivelyCreateResolvedObject = (
         resolvedValue = value;
       }
 
-      const result =
-        isPlainObject(resolvedValue) || isArray(resolvedValue)
-          ? recursivelyCreateResolvedObject(resolvedValue, rootCurrentObject, newPropertyPath, mergedOptions)
-          : resolvedValue;
+      if (isPlainObject(resolvedValue) || isArray(resolvedValue)) {
+        return recursivelyCreateResolvedObject(
+          resolvedValue,
+          rootCurrentObject,
+          newPropertyPath,
+          objectToProxiedObjectCache,
+          mergedOptions,
+        );
+      }
 
-      cachedValues[name] = result;
-      return result;
+      return resolvedValue;
     },
   });
+
+  objectToProxiedObjectCache.set(currentObject, resolvedObjectProxy);
+
+  return resolvedObjectProxy;
 };
 
 export const isResolvedObjectProxy = (someObject: object): boolean => {
@@ -71,4 +77,10 @@ export const isResolvedObjectProxy = (someObject: object): boolean => {
 
 export const getOriginalObject = (resolvedObject: object): object => {
   return resolvedObject[originalObjectSymbol] || resolvedObject;
+};
+
+const isReference = (value: unknown): boolean => {
+  return (
+    isPlainObject(value) && (value as object).hasOwnProperty('$ref') && typeof (value as object)['$ref'] === 'string'
+  );
 };
