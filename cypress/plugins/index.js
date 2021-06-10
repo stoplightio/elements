@@ -12,10 +12,20 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const fs = require('fs');
+const path = require('path');
 /**
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-}
+  on('task', {
+    readPackageDir(packageName) {
+      return {
+        'web-components.min.js': fs.readFileSync(path.join(packageName, 'web-components.min.js'), {
+          encoding: 'utf-8',
+        }),
+        'styles.min.css': fs.readFileSync(path.join(packageName, 'styles.min.css'), { encoding: 'utf-8' }),
+      };
+    },
+  });
+};
