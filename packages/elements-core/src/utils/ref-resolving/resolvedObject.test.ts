@@ -45,6 +45,7 @@ describe('createResolvedObject', () => {
           parameterB: {
             $ref: '#/bundled/parameterB',
           },
+          parameterC: 'parameterC value',
         },
         parameterB: {
           paramaterA: {
@@ -54,7 +55,9 @@ describe('createResolvedObject', () => {
       },
     });
 
-    expect((resolvedObject as any).paramaterA.parameterB.paramaterA.parameterB.paramaterA).toBeDefined();
+    expect((resolvedObject as any).paramaterA.parameterB.paramaterA.parameterB.paramaterA.parameterC).toBe(
+      'parameterC value',
+    );
   });
 
   it('resolves deeply nested reference', () => {
