@@ -1,4 +1,5 @@
-import { Box, Button, Menu, MenuDivider, MenuItem } from '@stoplight/mosaic';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Box, Button, Icon, Menu, MenuDivider, MenuItem } from '@stoplight/mosaic';
 import { IHttpOperation } from '@stoplight/types';
 import { uniq } from 'lodash';
 import * as React from 'react';
@@ -30,7 +31,14 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
     <Box>
       <Menu
         trigger={
-          <Button iconRight="caret-down" appearance={isEnabled ? 'primary' : 'minimal'} ml={3}>
+          <Button iconRight="caret-down" appearance="minimal" ml={2} size="sm">
+            <Box
+              as={Icon}
+              icon={faCheck}
+              mr={2}
+              color="success-darker"
+              style={{ width: isEnabled ? 12 : 0, transition: 'width 0.5s' }}
+            />
             Mocking
           </Button>
         }
