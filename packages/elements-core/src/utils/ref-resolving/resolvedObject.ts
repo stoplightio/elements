@@ -9,8 +9,50 @@ interface CreateResolvedObjectOptions {
   resolver?: ReferenceResolver;
 }
 
-export const createResolvedObject = (currentObject: object, options: CreateResolvedObjectOptions = {}): object =>
-  recursivelyCreateResolvedObject(currentObject, currentObject, [], new Map(), options);
+type ObjectWithRef = { $ref: string };
+
+type RefToRoot = { $ref: '#' };
+
+type ErrorObject = {
+  $ref: string;
+  $error: string;
+};
+
+type TryResolveRef1<TContext extends {}, Key extends string> = TContext extends { [key in Key]: infer SubProp }
+  ? SubProp
+  : ErrorObject;
+type TryResolveRef2<TContext extends {}, Key1 extends string, Key2 extends string> = TContext extends {
+  [key in Key1]: { [key in Key2]: infer SubProp };
+}
+  ? ResolvedObject<SubProp, TContext>
+  : ErrorObject;
+type TryResolveRef3<TContext extends {}, Key1 extends string, Key2 extends string, Key3 extends string> =
+  TContext extends {
+    [key in Key1]: { [key in Key2]: { [key in Key3]: infer SubProp } };
+  }
+    ? ResolvedObject<SubProp, TContext>
+    : ErrorObject;
+
+type ResolvedProperty<TOriginal, TContext extends {}> = TOriginal extends RefToRoot
+  ? ResolvedObject<TContext>
+  : TOriginal extends { $ref: `#/${infer Key1}/${infer Key2}/${infer Key3}` }
+  ? TryResolveRef3<TContext, Key1, Key2, Key3>
+  : TOriginal extends { $ref: `#/${infer Key1}/${infer Key2}` }
+  ? TryResolveRef2<TContext, Key1, Key2>
+  : TOriginal extends { $ref: `#/${infer Key}` }
+  ? TryResolveRef1<TContext, Key>
+  : TOriginal;
+
+type ResolvedObject<TOriginal extends {}, TContext extends {} = TOriginal> = TOriginal extends ObjectWithRef
+  ? ErrorObject
+  : {
+      [key in keyof TOriginal]: ResolvedProperty<TOriginal[key], TContext>;
+    };
+
+export const createResolvedObject = <T extends {}>(
+  currentObject: T,
+  options: CreateResolvedObjectOptions = {},
+): ResolvedObject<T> => recursivelyCreateResolvedObject(currentObject, currentObject, [], new Map(), options) as any;
 
 const recursivelyCreateResolvedObject = (
   currentObject: object,

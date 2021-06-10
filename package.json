@@ -39,7 +39,7 @@
     "start-server-and-test": "^1.11.6",
     "ts-jest": "^26.4.4",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "typescript": "4.2.2"
+    "typescript": "4.3.2"
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",

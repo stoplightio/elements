@@ -4,33 +4,32 @@ describe('createResolvedObject', () => {
   it('resolves a reference', () => {
     const resolvedObject = createResolvedObject({
       paramaterA: {
-        parameterB: {
-          $ref: '#/bundled/parameterB',
-        },
+        $ref: '#' as const,
       },
       bundled: {
         parameterB: 'parameterB value',
       },
     });
 
-    expect((resolvedObject as any).paramaterA.parameterB).toBe('parameterB value');
+    expect(resolvedObject.paramaterA.paramaterA.paramaterA.paramaterA).toBe('parameterB value');
   });
 
   it('resolves a reference to an object', () => {
     const resolvedObject = createResolvedObject({
-      paramaterA: {
-        parameterB: {
-          $ref: '#/bundled/parameterB',
-        },
+      parameterA: {
+        $ref: `#/bundled/parameterB`,
+      },
+      asd: {
+        x: 3,
       },
       bundled: {
         parameterB: {
           something: 'something else',
         },
       },
-    });
+    } as const);
 
-    expect((resolvedObject as any).paramaterA.parameterB).toEqual({
+    expect(resolvedObject.parameterA.something).toEqual({
       something: 'something else',
     });
   });
@@ -38,51 +37,47 @@ describe('createResolvedObject', () => {
   it('resolves a circular reference', () => {
     const resolvedObject = createResolvedObject({
       paramaterA: {
-        $ref: '#/bundled/paramaterA',
+        $ref: `#/bundled/paramaterA`,
       },
       bundled: {
         paramaterA: {
           parameterB: {
-            $ref: '#/bundled/parameterB',
+            $ref: `#/bundled/parameterB`,
           },
           parameterC: 'parameterC value',
         },
         parameterB: {
           paramaterA: {
-            $ref: '#/bundled/paramaterA',
+            $ref: `#/bundled/paramaterA`,
           },
         },
       },
-    });
+    } as const);
 
-    expect((resolvedObject as any).paramaterA.parameterB.paramaterA.parameterB.paramaterA.parameterC).toBe(
-      'parameterC value',
-    );
+    expect(resolvedObject.paramaterA.parameterB.paramaterA.parameterB.paramaterA.parameterC).toBe('parameterC value');
   });
 
   it('resolves circular reference to the same value', () => {
     const resolvedObject = createResolvedObject({
       paramaterA: {
-        $ref: '#/bundled/paramaterA',
+        $ref: `#/bundled/paramaterA`,
       },
       bundled: {
         paramaterA: {
           parameterB: {
-            $ref: '#/bundled/parameterB',
+            $ref: `#/bundled/parameterB`,
           },
           parameterC: 'parameterC value',
         },
         parameterB: {
           paramaterA: {
-            $ref: '#/bundled/paramaterA',
+            $ref: `#/bundled/paramaterA`,
           },
         },
       },
-    });
+    } as const);
 
-    expect((resolvedObject as any).paramaterA.parameterB.paramaterA.parameterB.paramaterA).toBe(
-      (resolvedObject as any).paramaterA,
-    );
+    expect(resolvedObject.paramaterA.parameterB.paramaterA.parameterB.paramaterA).toBe(resolvedObject.paramaterA);
   });
 
   it('resolves deeply nested reference', () => {
