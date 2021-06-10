@@ -23,12 +23,7 @@ const recursivelyCreateResolvedObject = (
     contextObject: options.contextObject || currentObject,
     resolver: options.resolver || defaultResolver(options.contextObject || currentObject),
   };
-
   if (!currentObject || currentObject[resolvedObjectSymbol]) return currentObject;
-
-  if (!isPlainObject(currentObject) && !isArray(currentObject)) {
-    return currentObject;
-  }
 
   const cachedValues = {};
 
@@ -44,8 +39,8 @@ const recursivelyCreateResolvedObject = (
 
       const newPropertyPath = [...propertyPath, name.toString()];
 
+      let resolvedValue;
       if (isPlainObject(value) && value.hasOwnProperty('$ref')) {
-        let resolvedValue;
         try {
           resolvedValue = mergedOptions.resolver(
             { pointer: value['$ref'], source: null },
@@ -58,17 +53,15 @@ const recursivelyCreateResolvedObject = (
             error: e.message,
           };
         }
-        const result = recursivelyCreateResolvedObject(
-          resolvedValue as object,
-          rootCurrentObject,
-          newPropertyPath,
-          mergedOptions,
-        );
-        cachedValues[name] = result;
-        return result;
+      } else {
+        resolvedValue = value;
       }
 
-      const result = recursivelyCreateResolvedObject(value, rootCurrentObject, newPropertyPath, mergedOptions);
+      const result =
+        isPlainObject(resolvedValue) || isArray(resolvedValue)
+          ? recursivelyCreateResolvedObject(resolvedValue, rootCurrentObject, newPropertyPath, mergedOptions)
+          : resolvedValue;
+
       cachedValues[name] = result;
       return result;
     },
