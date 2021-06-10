@@ -94,6 +94,53 @@ describe('HttpOperation', () => {
       );
       expect(queryParameterElement.find(Tag).length).toEqual(1);
     });
+
+    it('should render examples with object as a value', () => {
+      const operationData = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {
+          query: [
+            {
+              name: 'parameter name',
+              description: 'a parameter description',
+              schema: {
+                type: 'string' as const,
+              },
+              allowEmptyValue: true,
+              allowReserved: true,
+              deprecated: true,
+              explode: true,
+              required: true,
+              style: HttpParamStyles.Form as const,
+              examples: [
+                {
+                  value: {
+                    includeRestrictedPosts: 0,
+                  },
+                  key: 'Include Restricted Posts Disabled',
+                },
+                {
+                  value: {
+                    includeRestrictedPosts: 1,
+                  },
+                  key: 'Include Restricted Posts Enabled',
+                },
+              ],
+            },
+          ],
+        },
+      };
+
+      wrapper = mount(<HttpOperation data={operationData} />);
+      const queryParameterElement = wrapper.findWhere(
+        w => w.type() === Parameters && w.props().title === 'Query Parameters',
+      );
+      expect(queryParameterElement.text()).toContain('{"includeRestrictedPosts":0}');
+      expect(queryParameterElement.text()).toContain('{"includeRestrictedPosts":1}');
+    });
   });
 
   describe('Header Parameters', () => {
