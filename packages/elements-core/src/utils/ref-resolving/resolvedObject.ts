@@ -2,7 +2,6 @@ import { isArray, isPlainObject } from 'lodash';
 
 import { defaultResolver, ReferenceResolver } from './ReferenceResolver';
 
-const resolvedObjectSymbol = Symbol('ResolvedObject');
 const originalObjectSymbol = Symbol('OriginalObject');
 
 interface CreateResolvedObjectOptions {
@@ -23,14 +22,12 @@ const recursivelyCreateResolvedObject = (
     contextObject: options.contextObject || currentObject,
     resolver: options.resolver || defaultResolver(options.contextObject || currentObject),
   };
-  if (!currentObject || currentObject[resolvedObjectSymbol]) return currentObject;
+  if (!currentObject || isResolvedObjectProxy(currentObject)) return currentObject;
 
   const cachedValues = {};
 
   return new Proxy(currentObject, {
     get(target, name) {
-      if (name === resolvedObjectSymbol) return true;
-
       if (name === originalObjectSymbol) return currentObject;
 
       if (cachedValues[name]) return cachedValues[name];
@@ -40,7 +37,7 @@ const recursivelyCreateResolvedObject = (
       const newPropertyPath = [...propertyPath, name.toString()];
 
       let resolvedValue;
-      if (isPlainObject(value) && value.hasOwnProperty('$ref')) {
+      if (isPlainObject(value) && value.hasOwnProperty('$ref') && typeof value['$ref'] === 'string') {
         try {
           resolvedValue = mergedOptions.resolver(
             { pointer: value['$ref'], source: null },
@@ -50,7 +47,7 @@ const recursivelyCreateResolvedObject = (
         } catch (e) {
           resolvedValue = {
             ...value,
-            error: e.message,
+            $error: e.message,
           };
         }
       } else {
@@ -66,6 +63,10 @@ const recursivelyCreateResolvedObject = (
       return result;
     },
   });
+};
+
+export const isResolvedObjectProxy = (someObject: object): boolean => {
+  return !!someObject[originalObjectSymbol];
 };
 
 export const getOriginalObject = (resolvedObject: object): object => {

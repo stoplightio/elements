@@ -16,6 +16,47 @@ describe('createResolvedObject', () => {
     expect((resolvedObject as any).paramaterA.parameterB).toBe('parameterB value');
   });
 
+  it('resolves a reference to an object', () => {
+    const resolvedObject = createResolvedObject({
+      paramaterA: {
+        parameterB: {
+          $ref: '#/bundled/parameterB',
+        },
+      },
+      bundled: {
+        parameterB: {
+          something: 'something else',
+        },
+      },
+    });
+
+    expect((resolvedObject as any).paramaterA.parameterB).toEqual({
+      something: 'something else',
+    });
+  });
+
+  it('resolves a circular reference', () => {
+    const resolvedObject = createResolvedObject({
+      paramaterA: {
+        $ref: '#/bundled/paramaterA',
+      },
+      bundled: {
+        paramaterA: {
+          parameterB: {
+            $ref: '#/bundled/parameterB',
+          },
+        },
+        parameterB: {
+          paramaterA: {
+            $ref: '#/bundled/paramaterA',
+          },
+        },
+      },
+    });
+
+    expect((resolvedObject as any).paramaterA.parameterB.paramaterA.parameterB.paramaterA).toBeDefined();
+  });
+
   it('resolves deeply nested reference', () => {
     const resolvedObject = createResolvedObject({
       paramaterA: {
@@ -142,7 +183,29 @@ describe('createResolvedObject', () => {
 
     expect((resolvedObject as any).paramaterA.parameterB).toEqual({
       $ref: '#/bundled/parameterB',
-      error: "Could not resolve '#/bundled/parameterB'",
+      $error: "Could not resolve '#/bundled/parameterB'",
     });
+  });
+
+  it('does not pass non-string references to resolver and ignores them', () => {
+    const originalObject = {
+      paramaterA: {
+        parameterB: {
+          $ref: {
+            not: 'a reference string',
+          },
+        },
+      },
+    };
+
+    const resolvedObject = createResolvedObject(originalObject, {
+      resolver: ({ pointer }) => {
+        if (typeof pointer !== 'string') {
+          throw new Error('Pointer should be a string!!!');
+        }
+      },
+    });
+
+    expect(resolvedObject).toEqual(originalObject);
   });
 });
