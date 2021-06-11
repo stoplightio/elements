@@ -17,7 +17,7 @@ export {
   NodeTypePrettyName,
 } from './constants';
 export { MockingProvider } from './containers/MockingProvider';
-export { InlineRefResolverProvider, SchemaTreeRefDereferenceFn } from './context/InlineRefResolver';
+export { InlineRefResolverProvider } from './context/InlineRefResolver';
 export { PersistenceContextProvider, withPersistenceBoundary } from './context/Persistence';
 export { withMosaicProvider } from './hoc/withMosaicProvider';
 export { withQueryClientProvider } from './hoc/withQueryClientProvider';
@@ -29,3 +29,5 @@ export { useRouter } from './hooks/useRouter';
 export { useTocContents } from './hooks/useTocContents';
 export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from './types';
+export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
+export { createResolvedObject } from './utils/ref-resolving/resolvedObject';

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <title>Stoplight Elements example</title>
+    <meta name="description" content="Example site using Stoplight Elements to display docs" />
+    <meta name="author" content="Stoplight" />
+
+    <script src="https://unpkg.com/@stoplight/elements@beta/web-components.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements@beta/styles.min.css" />
+
+    <style>
+        body {
+            font-family: ui-sans-serif, sans-serif;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <elements-api apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml" basePath="zoom-api"></elements-api>
+</body>
+</html>

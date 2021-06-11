@@ -1,4 +1,8 @@
 describe('Stoplight component', () => {
+  beforeEach(() => {
+    cy.redirectUnpkgToLocalDistFolder('elements');
+  });
+
   it('loads correctly', () => {
     loadStoplightProjectPage();
   });

@@ -1,0 +1,13 @@
+{
+  "name": "@stoplight/elements-starter-static-html",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "stoplight-project/index.html",
+  "scripts": {
+    "serve": "node serve-files.js",
+    "build": "exit 0"
+  },
+  "author": "",
+  "license": "ISC"
+}

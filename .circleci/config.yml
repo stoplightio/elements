@@ -131,6 +131,11 @@ workflows:
           example-name: angular
           requires:
             - build
+      - run-e2e-tests:
+          name: e2e-static-html
+          example-name: static-html
+          requires:
+            - build
       - release:
           requires:
             - lint-and-check
@@ -138,6 +143,7 @@ workflows:
             - build-docs
             - e2e-react-cra
             - e2e-react-gatsby
+            - e2e-static-html
             - e2e-angular
           filters:
             branches:
