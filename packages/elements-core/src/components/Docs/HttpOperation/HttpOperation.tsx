@@ -6,6 +6,7 @@ import { flatten, sortBy } from 'lodash';
 import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
+import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
@@ -17,7 +18,9 @@ import { Responses } from './Responses';
 export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data, headless, uri, hideTryIt, hideTryItPanel, allowRouting = false }) => {
+  ({ className, data: unresolvedData, headless, uri, hideTryIt, hideTryItPanel, allowRouting = false }) => {
+    const data = useResolvedObject(unresolvedData) as IHttpOperation;
+
     const mocking = React.useContext(MockingContext);
     const isDeprecated = !!data.deprecated;
     const isInternal = !!data.internal;
