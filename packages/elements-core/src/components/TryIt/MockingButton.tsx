@@ -31,7 +31,7 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
     <Box>
       <Menu
         trigger={
-          <Button iconRight="caret-down" appearance="minimal" ml={2} size="sm">
+          <Button iconRight="caret-down" appearance="minimal" ml={3} size="sm">
             <Box
               as={Icon}
               icon={faCheck}
