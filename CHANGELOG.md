@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.1](https://github.com/stoplightio/elements/compare/v6.4.0...v6.4.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* stringify validation values ([#1389](https://github.com/stoplightio/elements/issues/1389)) ([927deb0](https://github.com/stoplightio/elements/commit/927deb0e82483fd024c376c9df7baa4a5e974cd2))
+
+
+
+
+
 # [6.4.0](https://github.com/stoplightio/elements/compare/v6.2.0...v6.4.0) (2021-05-11)
 
 
