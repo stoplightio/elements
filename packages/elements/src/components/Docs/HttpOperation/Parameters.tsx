@@ -1,3 +1,4 @@
+import { safeStringify } from '@stoplight/json';
 import { PropertyTypeColors } from '@stoplight/json-schema-viewer';
 import { Dictionary, HttpParamStyles, IHttpParam, Primitive } from '@stoplight/types';
 import { Tag } from '@stoplight/ui-kit';
@@ -227,8 +228,8 @@ const KeyValueValidation = ({
         .map(v => {
           const value = typeof v === 'object' ? v.value : String(v);
           return (
-            <code className="ml-1" key={value}>
-              {value}
+            <code className="ml-1" key={safeStringify(value)}>
+              {safeStringify(value)}
             </code>
           );
         })}
