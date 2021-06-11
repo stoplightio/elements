@@ -1,4 +1,4 @@
-import { isArray, isPlainObject } from 'lodash';
+import { isArray, isObject, isPlainObject } from 'lodash';
 
 import { defaultResolver, ReferenceResolver } from './ReferenceResolver';
 
@@ -19,13 +19,14 @@ const recursivelyCreateResolvedObject = (
   objectToProxiedObjectCache: Map<object, object>,
   options: CreateResolvedObjectOptions = {},
 ): object => {
+  if (isResolvedObjectProxy(currentObject)) return currentObject;
+
+  if (objectToProxiedObjectCache.has(currentObject)) return objectToProxiedObjectCache.get(currentObject)!;
+
   const mergedOptions = {
     contextObject: options.contextObject || currentObject,
     resolver: options.resolver || defaultResolver(options.contextObject || currentObject),
   };
-  if (!currentObject || isResolvedObjectProxy(currentObject)) return currentObject;
-
-  if (objectToProxiedObjectCache.has(currentObject)) return objectToProxiedObjectCache.get(currentObject)!;
 
   const resolvedObjectProxy = new Proxy(currentObject, {
     get(target, name) {
@@ -38,7 +39,7 @@ const recursivelyCreateResolvedObject = (
       if (isReference(value)) {
         try {
           resolvedValue = mergedOptions.resolver(
-            { pointer: value['$ref'], source: null },
+            { pointer: value.$ref, source: null },
             newPropertyPath,
             rootCurrentObject,
           );
@@ -79,8 +80,4 @@ export const getOriginalObject = (resolvedObject: object): object => {
   return resolvedObject[originalObjectSymbol] || resolvedObject;
 };
 
-const isReference = (value: unknown): boolean => {
-  return (
-    isPlainObject(value) && (value as object).hasOwnProperty('$ref') && typeof (value as object)['$ref'] === 'string'
-  );
-};
+const isReference = (value: unknown): value is { $ref: string } => isObject(value) && typeof value['$ref'] === 'string';
