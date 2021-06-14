@@ -7550,12 +7550,12 @@ gatsby-graphiql-explorer@^1.7.1:
   dependencies:
     "@babel/runtime" "^7.14.0"
 
-gatsby-image@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/gatsby-image/-/gatsby-image-3.6.0.tgz#8bca9ac0c61290c0a1acf90eb6fe93576e45368b"
-  integrity sha512-1Hh4VWmNBAig3WOwNKwgkmXxg2SYPbGZ11qJBzGp0igfQsBnNw1XkmfDwACfhIbxRSKSaN6gbgQgOOpQau4NtA==
+gatsby-image@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/gatsby-image/-/gatsby-image-3.7.1.tgz#ccf0884c2503d2282bc92de110d375135040637c"
+  integrity sha512-cYGL00RDJXYRiVI2aNf6FGDjP5ebfAI3v8R9SakPa78LYVlgX8wUxtTTT7Pq95Lq5Lxo8m5mM+cFUnLFLsMK/A==
   dependencies:
-    "@babel/runtime" "^7.12.5"
+    "@babel/runtime" "^7.14.0"
     object-fit-images "^3.2.4"
     prop-types "^15.7.2"
 
@@ -7800,12 +7800,12 @@ gatsby-telemetry@^2.6.0, gatsby-telemetry@^2.7.1:
     node-fetch "^2.6.1"
     uuid "3.4.0"
 
-gatsby-transformer-sharp@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/gatsby-transformer-sharp/-/gatsby-transformer-sharp-3.6.0.tgz#f62a80e9631ccdc248392482877cfa3dc29512e5"
-  integrity sha512-tEN04fbU4LJLZasPiLYronFAkWf2hCiKz6PrEbBNkPWeurjz3i9gp+pCXh0JJa7ccrq0geidtgPSaL7JztbXdQ==
+gatsby-transformer-sharp@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/gatsby-transformer-sharp/-/gatsby-transformer-sharp-3.7.1.tgz#c1458a056dc9a8e27a556f29a176b8cb422e2282"
+  integrity sha512-Q+/X8sbVpabJz4G+V4aMt0f7XlB5lsPfM3zYUkb9ns4c+soN+qPMqZRiaKqoLb7hXG9Bs48EV8mJXeWc4w+xOA==
   dependencies:
-    "@babel/runtime" "^7.12.5"
+    "@babel/runtime" "^7.14.0"
     bluebird "^3.7.2"
     common-tags "^1.8.0"
     fs-extra "^9.1.0"
