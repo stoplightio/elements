@@ -45,7 +45,7 @@ describe('Response Examples', () => {
       <ResponseExamples httpOperation={httpOperation} responseMediaType="application/xml" responseStatusCode="203" />,
     );
 
-    expect(container.children[0]).toBeEmptyDOMElement();
+    expect(container.children[0].children[0]).toBeEmptyDOMElement();
   });
 
   it('does not show component if there are no examples and no schemas', () => {
@@ -53,7 +53,7 @@ describe('Response Examples', () => {
       <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="404" />,
     );
 
-    expect(container.children[0]).toBeEmptyDOMElement();
+    expect(container.children[0].children[0]).toBeEmptyDOMElement();
   });
 
   it('does not show select if there is only one example present', () => {

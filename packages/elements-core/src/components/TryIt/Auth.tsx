@@ -34,16 +34,23 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
   }, []);
 
   const menuItems = React.useMemo(() => {
-    const items: MenuItems = filteredSecurityItems.map(auth => ({
-      id: `security-scheme-${auth.key}`,
-      title: getReadableSecurityName(auth),
-      onPress: () => {
-        onChange({ scheme: auth, authValue: undefined });
+    const items: MenuItems = [
+      {
+        type: 'group',
+        title: 'Security Schemes',
+        children: filteredSecurityItems.map(auth => ({
+          id: `security-scheme-${auth.key}`,
+          title: getReadableSecurityName(auth),
+          isChecked: auth.key === securityScheme?.key,
+          onPress: () => {
+            onChange({ scheme: auth, authValue: undefined });
+          },
+        })),
       },
-    }));
+    ];
 
     return items;
-  }, [filteredSecurityItems, onChange]);
+  }, [filteredSecurityItems, onChange, securityScheme]);
 
   if (filteredSecurityItems.length === 0) return null;
 
@@ -55,11 +62,12 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
             <Menu
               aria-label="security-schemes"
               items={menuItems}
-              renderTrigger={
-                <Button appearance="minimal" iconRight="caret-down">
+              closeOnPress
+              renderTrigger={({ isOpen }) => (
+                <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen}>
                   {menuName}
                 </Button>
-              }
+              )}
             />
           )
         }

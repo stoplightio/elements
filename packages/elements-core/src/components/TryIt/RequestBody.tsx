@@ -49,11 +49,11 @@ function ExampleMenu({ examples, requestBody, onChange }: RequestBodyProps) {
     <Menu
       aria-label="Examples"
       items={menuItems}
-      renderTrigger={
-        <Button appearance="minimal" iconRight="caret-down">
+      renderTrigger={({ isOpen }) => (
+        <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen}>
           Examples
         </Button>
-      }
+      )}
     />
   );
 }
