@@ -28,7 +28,7 @@ export const SubSectionPanel: React.FC<SubSectionPanelProps> = ({ title, childre
         <div role="heading">{title}</div>
       </Panel.Titlebar>
       {hasContent !== false && (
-        <Panel.Content pl={5} pr={3} className="sl-py-0">
+        <Panel.Content pr={3} className="sl-py-0 sl-pl-0">
           {children}
         </Panel.Content>
       )}

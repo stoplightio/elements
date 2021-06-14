@@ -33,7 +33,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
   if (!parameters || !parameters.length) return null;
 
   return (
-    <VStack spacing={2} divider={<Box borderT borderColor="light" w="full"></Box>}>
+    <VStack spacing={2} pl={6} divider={<Box borderT borderColor="light" w="full"></Box>}>
       {sortBy(parameters, ['required', 'name']).map(parameter => {
         return <Parameter key={parameter.name} parameter={parameter} parameterType={parameterType} />;
       })}
