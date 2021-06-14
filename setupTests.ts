@@ -4,9 +4,7 @@ import fetchMock from 'jest-fetch-mock';
 
 type WindowWithResizeObserver = Window &
   typeof globalThis & {
-    ResizeObserver(
-      entries: any[],
-    ): {
+    ResizeObserver(entries: any[]): {
       observe(el: HTMLElement): void;
       unobserve(el: HTMLElement): void;
       disconnect(): void;
