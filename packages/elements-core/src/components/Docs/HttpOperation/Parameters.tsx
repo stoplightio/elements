@@ -5,8 +5,6 @@ import { Dictionary, HttpParamStyles, IHttpParam } from '@stoplight/types';
 import { get, isEmpty, omit, omitBy, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { useInlineRefResolver } from '../../../context/InlineRefResolver';
-
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';
 
 interface ParametersProps {
@@ -32,24 +30,12 @@ const defaultStyle = {
 } as const;
 
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
-  const resolveRef = useInlineRefResolver();
   if (!parameters || !parameters.length) return null;
 
   return (
-    <VStack spacing={2} divider={<Box borderT borderColor="light" w="full"></Box>}>
+    <VStack spacing={2} pl={6} divider={<Box borderT borderColor="light" w="full"></Box>}>
       {sortBy(parameters, ['required', 'name']).map(parameter => {
-        const resolvedSchema =
-          parameter.schema?.$ref && resolveRef
-            ? resolveRef({ pointer: parameter.schema.$ref, source: null }, null, {})
-            : null;
-
-        return (
-          <Parameter
-            key={parameter.name}
-            parameter={resolvedSchema ? { ...parameter, schema: resolvedSchema } : parameter}
-            parameterType={parameterType}
-          />
-        );
+        return <Parameter key={parameter.name} parameter={parameter} parameterType={parameterType} />;
       })}
     </VStack>
   );
