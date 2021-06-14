@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useQuery } from 'react-query';
 import { useDebounce } from 'use-debounce';
 
-import { PlatformUrlContext } from '../components/DevPortalProvider';
+import { PlatformContext } from '../components/DevPortalProvider';
 import { getNodes } from '../handlers/getNodes';
 
 export function useGetNodes({
@@ -14,9 +14,9 @@ export function useGetNodes({
   workspaceId: string;
   projectIds?: string[];
 }) {
-  const platformUrl = React.useContext(PlatformUrlContext);
+  const { platformUrl, authToken } = React.useContext(PlatformContext);
   const [debounceSearch] = useDebounce(search, 500);
-  return useQuery(['workspaceNodes', workspaceId, projectIds, debounceSearch, platformUrl], () =>
-    getNodes({ workspaceId, projectIds, search: debounceSearch, platformUrl }),
+  return useQuery(['workspaceNodes', workspaceId, projectIds, debounceSearch, platformUrl, authToken], () =>
+    getNodes({ workspaceId, projectIds, search: debounceSearch, platformUrl, authToken }),
   );
 }

@@ -37,6 +37,12 @@ export interface StoplightProjectProps extends RoutingProps {
   platformUrl?: string;
 
   /**
+   * If your company runs an on-premise deployment of Stoplight,
+   * use this prop to provide authorization token to access private projects.
+   */
+  authToken?: string;
+
+  /**
    * Allows to hide TryIt component
    */
   hideTryIt?: boolean;
@@ -110,11 +116,17 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hide
   );
 };
 
-const StoplightProjectRouter = ({ platformUrl, basePath = '/', router, ...props }: StoplightProjectProps) => {
+const StoplightProjectRouter = ({
+  platformUrl,
+  authToken,
+  basePath = '/',
+  router,
+  ...props
+}: StoplightProjectProps) => {
   const { Router, routerProps } = useRouter(router ?? 'history', basePath);
 
   return (
-    <DevPortalProvider platformUrl={platformUrl}>
+    <DevPortalProvider platformUrl={platformUrl} authToken={authToken}>
       <Router {...routerProps} key={basePath}>
         <Route path="/branches/:branchSlug/:nodeSlug" exact>
           <StoplightProjectImpl {...props} />

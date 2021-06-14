@@ -15,17 +15,20 @@ export const getNodeContent = async ({
   projectId,
   branchSlug,
   platformUrl = 'https://stoplight.io',
+  authToken,
 }: {
   nodeSlug: string;
   projectId: string;
   branchSlug?: string;
   platformUrl?: string;
+  authToken?: string;
 }): Promise<Node> => {
   const nodeId = getNodeIdFromSlug(nodeSlug);
   const branchQuery = branchSlug ? `?branch=${branchSlug}` : '';
   const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/nodes/${nodeId}${branchQuery}`, {
     headers: {
       'Stoplight-Elements-Version': '1.0.0',
+      ...(authToken && { Authorization: `Bearer ${authToken}` }),
     },
   });
   const data = await response.json();
