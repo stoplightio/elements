@@ -49,7 +49,7 @@ describe('Stoplight Project', () => {
 
     expect(
       await screen.findByText(
-        'Studio is our next generation app for API design, modeling, and technical writing.',
+        'Markdown is supported in descriptions. Add information here for users to get accustomed to endpoints',
         {},
         { timeout: 10000 },
       ),
