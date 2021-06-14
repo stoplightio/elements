@@ -1,5 +1,7 @@
 export type { BranchSelectorProps } from './components/BranchSelector';
 export { BranchSelector } from './components/BranchSelector';
+export type { DevPortalProviderProps } from './components/DevPortalProvider';
+export { DevPortalProvider } from './components/DevPortalProvider';
 export type { NodeContentProps } from './components/NodeContent';
 export { NodeContent } from './components/NodeContent';
 export type { SearchProps } from './components/Search';
@@ -18,5 +20,3 @@ export { useGetNodes } from './hooks/useGetNodes';
 export { useGetTableOfContents } from './hooks/useGetTableOfContents';
 export type { ProjectTableOfContents } from './types';
 export type { Branch, Node } from './types';
-export { DevPortalProvider } from './components/DevPortalProvider';
-export type { DevPortalProviderProps } from './components/DevPortalProvider';
