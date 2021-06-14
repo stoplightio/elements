@@ -5,6 +5,7 @@ import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionTitle, SubSectionPanel } from '../Sections';
 import { Parameters } from './Parameters';
@@ -97,7 +98,12 @@ const Response = ({ response: { contents = [], headers = [], description }, onMe
         >
           {schema && (
             <Box>
-              <JsonSchemaViewer schema={schema} resolveRef={refResolver} viewMode="read" hideExamples />
+              <JsonSchemaViewer
+                schema={getOriginalObject(schema)}
+                resolveRef={refResolver}
+                viewMode="read"
+                hideExamples
+              />
             </Box>
           )}
         </SubSectionPanel>

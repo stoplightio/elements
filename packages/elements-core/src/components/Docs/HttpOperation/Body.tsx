@@ -5,6 +5,7 @@ import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { isJSONSchema } from '../../../utils/guards';
+import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SubSectionPanel } from '../Sections';
 
@@ -46,7 +47,7 @@ export const Body = ({ body: { contents = [], description }, onChange }: BodyPro
 
       {isJSONSchema(schema) && (
         <Box>
-          <JsonSchemaViewer resolveRef={refResolver} schema={schema} viewMode="write" hideExamples />
+          <JsonSchemaViewer resolveRef={refResolver} schema={getOriginalObject(schema)} viewMode="write" hideExamples />
         </Box>
       )}
     </SubSectionPanel>
