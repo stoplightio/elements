@@ -1,5 +1,5 @@
 import { safeStringify } from '@stoplight/json';
-import { Button, Menu, MenuItem, Panel } from '@stoplight/mosaic';
+import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeEditor } from '@stoplight/mosaic-code-editor';
 import { INodeExample, INodeExternalExample } from '@stoplight/types';
 import * as React from 'react';
@@ -11,28 +11,11 @@ interface RequestBodyProps {
 }
 
 export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody, onChange }) => {
-  const handleClick = (example: INodeExample | INodeExternalExample) => {
-    onChange(safeStringify('value' in example ? example.value : example.externalValue, undefined, 2) ?? requestBody);
-  };
-
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar
         rightComponent={
-          examples.length > 1 && (
-            <Menu
-              aria-label="Examples"
-              renderTrigger={
-                <Button appearance="minimal" iconRight="caret-down">
-                  Examples
-                </Button>
-              }
-            >
-              {examples.map(example => (
-                <MenuItem key={example.key} title={example.key} onPress={() => handleClick(example)} />
-              ))}
-            </Menu>
-          )
+          examples.length > 1 && <ExampleMenu examples={examples} requestBody={requestBody} onChange={onChange} />
         }
       >
         Body
@@ -43,3 +26,34 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody,
     </Panel>
   );
 };
+
+function ExampleMenu({ examples, requestBody, onChange }: RequestBodyProps) {
+  const handleClick = React.useCallback(
+    (example: INodeExample | INodeExternalExample) => {
+      onChange(safeStringify('value' in example ? example.value : example.externalValue, undefined, 2) ?? requestBody);
+    },
+    [onChange, requestBody],
+  );
+
+  const menuItems = React.useMemo(() => {
+    const items: MenuItems = examples.map(example => ({
+      id: `request-example-${example.key}`,
+      title: example.key,
+      onPress: () => handleClick(example),
+    }));
+
+    return items;
+  }, [examples, handleClick]);
+
+  return (
+    <Menu
+      aria-label="Examples"
+      items={menuItems}
+      renderTrigger={
+        <Button appearance="minimal" iconRight="caret-down">
+          Examples
+        </Button>
+      }
+    />
+  );
+}

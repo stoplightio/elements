@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem, Panel } from '@stoplight/mosaic';
+import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten } from 'lodash';
 import * as React from 'react';
@@ -33,6 +33,18 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const menuItems = React.useMemo(() => {
+    const items: MenuItems = filteredSecurityItems.map(auth => ({
+      id: `security-scheme-${auth.key}`,
+      title: getReadableSecurityName(auth),
+      onPress: () => {
+        onChange({ scheme: auth, authValue: undefined });
+      },
+    }));
+
+    return items;
+  }, [filteredSecurityItems, onChange]);
+
   if (filteredSecurityItems.length === 0) return null;
 
   return (
@@ -42,22 +54,13 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
           filteredSecurityItems.length > 1 && (
             <Menu
               aria-label="security-schemes"
+              items={menuItems}
               renderTrigger={
                 <Button appearance="minimal" iconRight="caret-down">
                   {menuName}
                 </Button>
               }
-            >
-              {filteredSecurityItems.map(auth => (
-                <MenuItem
-                  key={auth.key}
-                  title={getReadableSecurityName(auth)}
-                  onPress={() => {
-                    onChange({ scheme: auth, authValue: undefined });
-                  }}
-                />
-              ))}
-            </Menu>
+            />
           )
         }
       >

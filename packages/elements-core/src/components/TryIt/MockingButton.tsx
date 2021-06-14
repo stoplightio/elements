@@ -1,5 +1,5 @@
-import { Box, Button, Menu, MenuGroup, MenuItem } from '@stoplight/mosaic';
-import { IHttpOperation } from '@stoplight/types';
+import { Box, Button, Menu, MenuActionItem, MenuItems, MenuItemWithSubmenu } from '@stoplight/mosaic';
+import { IHttpOperation, IHttpOperationResponse } from '@stoplight/types';
 import { uniq } from 'lodash';
 import * as React from 'react';
 
@@ -22,83 +22,95 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
 
   const operationResponses = operation.responses;
 
-  const setMockingOptions = ({ code, example, dynamic }: Omit<MockingOptions, 'isEnabled'>) => {
-    onOptionsChange({ isEnabled, code, example, dynamic });
-  };
+  const setMockingOptions = React.useCallback(
+    ({ code, example, dynamic }: Omit<MockingOptions, 'isEnabled'>) => {
+      onOptionsChange({ isEnabled, code, example, dynamic });
+    },
+    [isEnabled, onOptionsChange],
+  );
+
+  const menuItems = React.useMemo(() => {
+    const items: MenuItems = [
+      { id: 'mocking-enabled', title: 'Enabled', isChecked: isEnabled, onPress: toggleEnabled },
+      {
+        type: 'group',
+        children: operationResponses
+          ?.filter(operationResponse => Number.isInteger(parseFloat(operationResponse.code)))
+          ?.map(generateOperationResponseMenu),
+      },
+    ];
+
+    function generateOperationResponseMenu(operationResponse: IHttpOperationResponse) {
+      const menuId = `response-${operationResponse.code}`;
+      const isActive = operationResponse.code === code;
+      const exampleKeys = uniq(operationResponse.contents?.flatMap(c => c.examples || []).map(example => example.key));
+
+      const exampleChildren: MenuActionItem[] = exampleKeys?.map(exampleKey => ({
+        id: `${menuId}-example-${exampleKey}`,
+        title: exampleKey,
+        isChecked: isActive && exampleKey === example,
+        onPress: () => {
+          setMockingOptions({ code: operationResponse.code, example: exampleKey });
+        },
+      }));
+
+      const generationModeItems: MenuActionItem[] = [
+        {
+          id: `${menuId}-gen-static`,
+          title: 'Statically Generated',
+          isChecked: isActive && dynamic === false,
+          onPress: () => {
+            setMockingOptions({ code: operationResponse.code, dynamic: false });
+          },
+        },
+        {
+          id: `${menuId}-gen-dynamic`,
+          title: 'Dynamically Generated',
+          isChecked: isActive && dynamic === true,
+          onPress: () => {
+            setMockingOptions({ code: operationResponse.code, dynamic: true });
+          },
+        },
+      ];
+
+      const menuItem: MenuItemWithSubmenu = {
+        id: menuId,
+        isDisabled: !isEnabled,
+        isChecked: isActive,
+        title: operationResponse.code,
+        onPress: () => {
+          setMockingOptions({ code: operationResponse.code, dynamic: false });
+        },
+        children: [
+          { type: 'group', children: generationModeItems },
+          { type: 'group', title: 'Examples', children: exampleChildren },
+        ],
+      };
+
+      return menuItem;
+    }
+
+    return items;
+  }, [code, dynamic, example, isEnabled, operationResponses, setMockingOptions, toggleEnabled]);
 
   return (
     <Box>
       <Menu
         aria-label="Mocking"
-        renderTrigger={
-          <Button iconRight="caret-down" appearance={isEnabled ? 'primary' : 'minimal'} ml={3}>
+        items={menuItems}
+        renderTrigger={({ isOpen }) => (
+          <Button
+            iconRight="chevron-down"
+            icon={isEnabled ? 'check' : undefined}
+            appearance={isEnabled ? 'primary' : 'minimal'}
+            ml={2}
+            active={isOpen}
+            size="sm"
+          >
             Mocking
           </Button>
-        }
-      >
-        <MenuItem title="Enabled" isChecked={isEnabled} onPress={toggleEnabled} />
-
-        <MenuGroup>
-          {operationResponses
-            ?.filter(operationResponse => Number.isInteger(parseFloat(operationResponse.code)))
-            ?.map(operationResponse => {
-              const isActive = operationResponse.code === code;
-              const exampleKeys = uniq(
-                operationResponse.contents?.flatMap(c => c.examples || []).map(example => example.key),
-              );
-
-              const exampleChildren = exampleKeys?.map(exampleKey => (
-                <MenuItem
-                  isChecked={isActive && exampleKey === example}
-                  title={exampleKey}
-                  key={exampleKey}
-                  onPress={() => {
-                    setMockingOptions({ code: operationResponse.code, example: exampleKey });
-                  }}
-                />
-              ));
-
-              const generationModeItems = (
-                <>
-                  <MenuItem
-                    title="Statically Generated"
-                    isChecked={isActive && dynamic === false}
-                    onPress={() => {
-                      setMockingOptions({ code: operationResponse.code, dynamic: false });
-                    }}
-                  />
-
-                  <MenuItem
-                    title="Dynamically Generated"
-                    isChecked={isActive && dynamic === true}
-                    onPress={() => {
-                      setMockingOptions({ code: operationResponse.code, dynamic: true });
-                    }}
-                  />
-                </>
-              );
-
-              return (
-                <MenuItem
-                  isDisabled={!isEnabled}
-                  isChecked={isActive}
-                  title={operationResponse.code}
-                  key={operationResponse.code}
-                  onPress={() => {
-                    setMockingOptions({ code: operationResponse.code, dynamic: false });
-                  }}
-                >
-                  {generationModeItems}
-                  {exampleChildren}
-                </MenuItem>
-              );
-            })}
-        </MenuGroup>
-
-        <MenuGroup>
-          <MenuItem isIndented title="Learn About Mocking" href="https://stoplight.io/api-mocking/" />
-        </MenuGroup>
-      </Menu>
+        )}
+      />
     </Box>
   );
 };
