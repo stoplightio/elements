@@ -41,7 +41,6 @@
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "mobx": ">=5",
     "react": ">=16.8",
     "react-dom": ">=16.8"
   },
