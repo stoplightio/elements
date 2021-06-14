@@ -6,7 +6,7 @@ interface BasicAuthProps {
   value: string;
 }
 
-const digestPlaceholder = `Digest username="Mufasa",
+const digestPlaceholder = `Digest username="User Name",
             realm="testrealm@host.com",
             nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093",
             uri="/dir/index.html",
