@@ -2241,7 +2241,7 @@
     "@react-types/shared" "^3.6.0"
     clsx "^1.1.1"
 
-"@react-stately/collections@^3.3.2", "@react-stately/collections@~3.3.1", "@react-stately/collections@~3.3.2":
+"@react-stately/collections@^3.3.2", "@react-stately/collections@~3.3.2":
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/@react-stately/collections/-/collections-3.3.2.tgz#35faeb24671a4782603ba9a6403ac36836d5a34a"
   integrity sha512-ttpvbCwKxhSKH2UN0UyfhysFKQVeozOwmafuhAPGUfdCMEsvnKdoHzgn6sI1Kt8B8WdOgHTihvkCIMFkJu9n3A==
@@ -2249,7 +2249,7 @@
     "@babel/runtime" "^7.6.2"
     "@react-types/shared" "^3.6.0"
 
-"@react-stately/list@^3.2.3", "@react-stately/list@~3.2.2", "@react-stately/list@~3.2.3":
+"@react-stately/list@^3.2.3", "@react-stately/list@~3.2.3":
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/@react-stately/list/-/list-3.2.3.tgz#08112fd7a2fe9f0ed6dee7bcafd442ea24607d2c"
   integrity sha512-hFV6x0TFl86C7seS2SEkT9slB0KZgxLZ+DQfoZgGm44znd20sJ9YPlmBBk09BtWaQuySiaUwr7pD4H4GaLn8SQ==
@@ -2502,47 +2502,6 @@
     escape-string-regexp "^2.0.0"
     lodash.deburr "^4.1.0"
 
-"@stoplight/elements-core@7.0.0-beta.5":
-  version "7.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements-core/-/elements-core-7.0.0-beta.5.tgz#58952f3a4a6435bfbd27206ee08151079a1cf97f"
-  integrity sha512-JhELNapQPStW3qY2sN63kbNMMZx9OABdbhYvH7YXUvj3cAacMq4/PQ7+YiiM150H5BUSUd3Gu20tDlGRXb3rdA==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.31"
-    "@fortawesome/free-solid-svg-icons" "^5.14.0"
-    "@fortawesome/react-fontawesome" "^0.1.11"
-    "@stoplight/elements-utils" "^7.0.0-beta.2"
-    "@stoplight/http-spec" "^4.0.1"
-    "@stoplight/json" "^3.10.0"
-    "@stoplight/json-schema-ref-parser" "^9.0.5"
-    "@stoplight/json-schema-sampler" "0.2.0"
-    "@stoplight/json-schema-viewer" "^4.0.0-beta.17"
-    "@stoplight/markdown" "^2.10.0"
-    "@stoplight/markdown-viewer" "^4.3.3"
-    "@stoplight/mosaic" "1.0.0-beta.52"
-    "@stoplight/mosaic-code-editor" "1.0.0-beta.52"
-    "@stoplight/mosaic-code-viewer" "1.0.0-beta.52"
-    "@stoplight/path" "^1.3.2"
-    "@stoplight/react-error-boundary" "^1.1.0"
-    "@stoplight/tree-list" "^5.0.3"
-    "@stoplight/types" "^12.0.0"
-    "@stoplight/ui-kit" "^3.0.0-beta.39"
-    "@stoplight/yaml" "^4.2.2"
-    axios "^0.21.1"
-    classnames "^2.2.6"
-    fast-text-encoding "^1.0.1"
-    httpsnippet "^1.24.0"
-    jotai "^0.12.4"
-    lodash "^4.17.19"
-    nanoid "^3.1.20"
-    prop-types "^15.7.2"
-    react-query "^3.15.2"
-    react-router-dom "^5.2.0"
-    react-router-hash-link "^2.1.0"
-    swr "^0.3.0"
-    tslib "^2.1.0"
-    unist-util-select "^3.0.1"
-    urijs "^1.19.6"
-
 "@stoplight/elements-core@7.0.0-beta.8":
   version "7.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/@stoplight/elements-core/-/elements-core-7.0.0-beta.8.tgz#706a9d43202e794815e19ffc0ae1ee792dd72d25"
@@ -2581,28 +2540,23 @@
     unist-util-select "^3.0.1"
     urijs "^1.19.6"
 
-"@stoplight/elements-dev-portal@^1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements-dev-portal/-/elements-dev-portal-1.0.0-beta.1.tgz#847d2e9b87be4fef2d3a7424fe788dc1ce3d4148"
-  integrity sha512-c+fxOCGnIYfQVHunsegQRGGp6dAvxc3OEda6I1Vg/86CVJOGet+O2soyISpMv0B8PKPAh7aD/aS0klpZdTg5oA==
+"@stoplight/elements-dev-portal@^1.0.0-beta.2":
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements-dev-portal/-/elements-dev-portal-1.0.0-beta.2.tgz#42daa0fcf4922d2926772b9348e2e199f1589c1b"
+  integrity sha512-YMtgW6g1iBdgFCJx+PjNqYdvrce7MNihk2peSBTFR2/CF0jeA79cg+WCHCcYIz4inOpQQ+vpvhRbsJE9dJe1zQ==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.10.2"
-    "@stoplight/elements" "^7.0.0-beta.4"
-    "@stoplight/elements-core" "7.0.0-beta.5"
-    "@stoplight/mosaic" "1.0.0-beta.52"
+    "@stoplight/elements-core" "7.0.0-beta.8"
+    "@stoplight/mosaic" "1.0.0-beta.58"
+    "@stoplight/path" "^1.3.2"
+    "@stoplight/types" "^12.0.0"
+    classnames "^2.2.6"
     lodash "^4.17.19"
     react-query "^3.15.2"
     react-router-dom "^5.2.0"
     use-debounce "^6.0.1"
 
-"@stoplight/elements-utils@^7.0.0-beta.2":
-  version "7.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements-utils/-/elements-utils-7.0.0-beta.2.tgz#39a5b3f4014efb6a2942d250f94a7120f68d0c80"
-  integrity sha512-5uq9hfTGa4S/MXxH7u+ReGzdDRXDMuB1FhSQ5u3yQ2REVTnAPNWWGL1A1W6iS2emF8drUFfDmNgHynUTO+72Ng==
-  dependencies:
-    lodash "^4.17.19"
-
-"@stoplight/elements@^7.0.0-beta.4", "@stoplight/elements@^7.0.0-beta.5":
+"@stoplight/elements@^7.0.0-beta.5":
   version "7.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-7.0.0-beta.5.tgz#27b2c5971cac9cd2c538d034b7023d990c7bb14a"
   integrity sha512-4Sn3u3C7wr6q+H+Tcv5M7n+tbKDau6Mu6uyV570nm6Xs0JbxKxYVJXMa7L3ZCiS61u7J4UmJDBAIs0JSTgjrLQ==
@@ -2695,20 +2649,6 @@
     classnames "^2.2.6"
     lodash "^4.17.19"
 
-"@stoplight/json-schema-viewer@^4.0.0-beta.17":
-  version "4.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.0-beta.17.tgz#43692ea78eed59907a5814f53df95f5d7f54adee"
-  integrity sha512-0/QShQp/vj9BhVW3Gp3U5lh92btvzfIK6kSu6HmBr+yYdibun/QfxaT+0ap6ZHvXHaCsGAqVB2KsNEXMDzY1Lw==
-  dependencies:
-    "@fortawesome/free-solid-svg-icons" "^5.15.2"
-    "@stoplight/json" "^3.10.0"
-    "@stoplight/json-schema-tree" "^2.0.1"
-    "@stoplight/mosaic" "1.0.0-beta.46"
-    "@stoplight/react-error-boundary" "^1.0.0"
-    "@types/json-schema" "^7.0.7"
-    classnames "^2.2.6"
-    lodash "^4.17.19"
-
 "@stoplight/json@^3.10.0", "@stoplight/json@^3.10.2", "@stoplight/json@^3.12.0", "@stoplight/json@^3.6":
   version "3.13.5"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.13.5.tgz#60ba72ae24bfb0fc1b8b7cb7fbf44199825a3dcf"
@@ -2720,7 +2660,7 @@
     lodash "^4.17.15"
     safe-stable-stringify "^1.1"
 
-"@stoplight/lifecycle@^2.2.1", "@stoplight/lifecycle@^2.3.2":
+"@stoplight/lifecycle@^2.3.2":
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@stoplight/lifecycle/-/lifecycle-2.3.2.tgz#d61dff9ba20648241432e2daaef547214dc8976e"
   integrity sha512-v0u8p27FA/eg04b4z6QXw4s0NeeFcRzyvseBW0+k/q4jtpg7EhVCqy42EbbbU43NTNDpIeQ81OcvkFz+6CYshw==
@@ -2758,47 +2698,6 @@
     unified "^9.0.0"
     unist-util-select "^3.0.1"
     unist-util-visit "^2.0.2"
-
-"@stoplight/mosaic-code-editor@1.0.0-beta.52":
-  version "1.0.0-beta.52"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.0.0-beta.52.tgz#ca4e4b6178a9d53daf0f0a47545146debbbc2e72"
-  integrity sha512-IkqnFnnDXJk2YvE6LJtO1CI7JlGdk9aGzgQEJ4SxeJdjZsga2wvrEjYE7nstn00sasZyzPBcLje/z5FDRpjL+A==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.35"
-    "@fortawesome/free-solid-svg-icons" "^5.15.3"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    "@react-aria/button" "~3.3.1"
-    "@react-aria/dialog" "~3.1.2"
-    "@react-aria/focus" "~3.2.4"
-    "@react-aria/interactions" "~3.3.4"
-    "@react-aria/listbox" "~3.2.4"
-    "@react-aria/overlays" "~3.6.2"
-    "@react-aria/select" "~3.3.1"
-    "@react-aria/separator" "~3.1.1"
-    "@react-aria/ssr" "~3.0.1"
-    "@react-aria/tooltip" "~3.1.1"
-    "@react-aria/utils" "~3.7.0"
-    "@react-hook/size" "^2.1.1"
-    "@react-hook/window-size" "^3.0.7"
-    "@react-spectrum/utils" "~3.5.1"
-    "@react-stately/collections" "~3.3.1"
-    "@react-stately/list" "~3.2.2"
-    "@react-stately/select" "~3.1.1"
-    "@react-stately/tooltip" "~3.0.3"
-    "@stoplight/mosaic" "1.0.0-beta.52"
-    "@stoplight/mosaic-code-viewer" "1.0.0-beta.52"
-    clsx "^1.1.1"
-    copy-to-clipboard "^3.3.1"
-    deepmerge "^4.2.2"
-    lodash.get "^4.4.2"
-    polished "^4.1.1"
-    prism-react-renderer "^1.2.0"
-    prismjs "^1.23.0"
-    react-simple-code-editor "^0.11.0"
-    reakit "npm:@stoplight/reakit@~1.3.5"
-    ts-keycode-enum "^1.0.6"
-    tslib "^2.1.0"
-    zustand "^3.3.3"
 
 "@stoplight/mosaic-code-editor@1.0.0-beta.58":
   version "1.0.0-beta.58"
@@ -2846,45 +2745,6 @@
     ts-keycode-enum "^1.0.6"
     tslib "^2.1.0"
     zustand "^3.5.1"
-
-"@stoplight/mosaic-code-viewer@1.0.0-beta.52":
-  version "1.0.0-beta.52"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.0.0-beta.52.tgz#d8b9eee8f64e17c34a888dd26a33902ff8107697"
-  integrity sha512-4cW32E4TF9r70kk4v83Shj7nDYN2duiyruBInNBYfGnTnsoVWS9tXuU6Sa6DXj+DKmU40Wp3C5XGL6zWU1HnfQ==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.35"
-    "@fortawesome/free-solid-svg-icons" "^5.15.3"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    "@react-aria/button" "~3.3.1"
-    "@react-aria/dialog" "~3.1.2"
-    "@react-aria/focus" "~3.2.4"
-    "@react-aria/interactions" "~3.3.4"
-    "@react-aria/listbox" "~3.2.4"
-    "@react-aria/overlays" "~3.6.2"
-    "@react-aria/select" "~3.3.1"
-    "@react-aria/separator" "~3.1.1"
-    "@react-aria/ssr" "~3.0.1"
-    "@react-aria/tooltip" "~3.1.1"
-    "@react-aria/utils" "~3.7.0"
-    "@react-hook/size" "^2.1.1"
-    "@react-hook/window-size" "^3.0.7"
-    "@react-spectrum/utils" "~3.5.1"
-    "@react-stately/collections" "~3.3.1"
-    "@react-stately/list" "~3.2.2"
-    "@react-stately/select" "~3.1.1"
-    "@react-stately/tooltip" "~3.0.3"
-    "@stoplight/mosaic" "1.0.0-beta.52"
-    clsx "^1.1.1"
-    copy-to-clipboard "^3.3.1"
-    deepmerge "^4.2.2"
-    lodash.get "^4.4.2"
-    polished "^4.1.1"
-    prism-react-renderer "^1.2.0"
-    prismjs "^1.23.0"
-    reakit "npm:@stoplight/reakit@~1.3.5"
-    ts-keycode-enum "^1.0.6"
-    tslib "^2.1.0"
-    zustand "^3.3.3"
 
 "@stoplight/mosaic-code-viewer@1.0.0-beta.58":
   version "1.0.0-beta.58"
@@ -2965,42 +2825,6 @@
     tslib "^2.1.0"
     zustand "^3.3.3"
 
-"@stoplight/mosaic@1.0.0-beta.52":
-  version "1.0.0-beta.52"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.52.tgz#b730b29e57a5346d9eb6c48793e8c51e5f1345dd"
-  integrity sha512-btggXq/jKAT28NQKPdJfD71XL+ZbULmq//b1qgmF8ki4tOKxREaE9OdXM29kKA9N96nkdRIOTzjqbxMPlZGVEQ==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.35"
-    "@fortawesome/free-solid-svg-icons" "^5.15.3"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    "@react-aria/button" "~3.3.1"
-    "@react-aria/dialog" "~3.1.2"
-    "@react-aria/focus" "~3.2.4"
-    "@react-aria/interactions" "~3.3.4"
-    "@react-aria/listbox" "~3.2.4"
-    "@react-aria/overlays" "~3.6.2"
-    "@react-aria/select" "~3.3.1"
-    "@react-aria/separator" "~3.1.1"
-    "@react-aria/ssr" "~3.0.1"
-    "@react-aria/tooltip" "~3.1.1"
-    "@react-aria/utils" "~3.7.0"
-    "@react-hook/size" "^2.1.1"
-    "@react-hook/window-size" "^3.0.7"
-    "@react-spectrum/utils" "~3.5.1"
-    "@react-stately/collections" "~3.3.1"
-    "@react-stately/list" "~3.2.2"
-    "@react-stately/select" "~3.1.1"
-    "@react-stately/tooltip" "~3.0.3"
-    clsx "^1.1.1"
-    copy-to-clipboard "^3.3.1"
-    deepmerge "^4.2.2"
-    lodash.get "^4.4.2"
-    polished "^4.1.1"
-    reakit "npm:@stoplight/reakit@~1.3.5"
-    ts-keycode-enum "^1.0.6"
-    tslib "^2.1.0"
-    zustand "^3.3.3"
-
 "@stoplight/mosaic@1.0.0-beta.58":
   version "1.0.0-beta.58"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.0.0-beta.58.tgz#41a9fef41ca0a0df782c21b933e1cceb9da9e7fa"
@@ -3059,17 +2883,6 @@
   integrity sha512-z/1gDVQAafqYuJksL212F1DXHSr604KDqAspZwbC+kWVqCsddQBmXzwI4Lqqem4wHbNGeVZYk3svW+sILX/PUQ==
   dependencies:
     "@stoplight/types" "^11.9.0"
-
-"@stoplight/tree-list@^5.0.3":
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/tree-list/-/tree-list-5.0.4.tgz#0b011d57bd722ba33ef3dac9990817aba2b95377"
-  integrity sha512-UHQQbqdm3zwzYfpMBHxQNWJEG2bV3vkMFRkzik7kFsVEi6Us6gxSV+kpWapZHD6rmo1m3k8qF4sSqetw0u3xZA==
-  dependencies:
-    "@stoplight/lifecycle" "^2.2.1"
-    "@stoplight/react-error-boundary" "^1.0.0"
-    classnames "^2.2.6"
-    mobx-react-lite "^1.5.2"
-    strict-event-emitter-types "^2.0.0"
 
 "@stoplight/types@^11.9.0":
   version "11.10.0"
@@ -7235,11 +7048,6 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
-fast-text-encoding@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/fast-text-encoding/-/fast-text-encoding-1.0.3.tgz#ec02ac8e01ab8a319af182dae2681213cfe9ce53"
-  integrity sha512-dtm4QZH9nZtcDt8qJiOH9fcQd1NAgi+K1O2DbE6GG1PPCK/BWfOH3idCTRQ4ImXRUOyopDEgDEnVEE7Y/2Wrig==
-
 fastest-levenshtein@^1.0.12:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/fastest-levenshtein/-/fastest-levenshtein-1.0.12.tgz#9990f7d3a88cc5a9ffd1f1745745251700d497e2"
@@ -11141,11 +10949,6 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mobx-react-lite@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-1.5.2.tgz#c4395b0568b9cb16f07669d8869cc4efa1b8656d"
-  integrity sha512-PyZmARqqWtpuQaAoHF5pKX7h6TKNLwq6vtovm4zZvG6sEbMRHHSqioGXSeQbpRmG8Kw8uln3q/W1yMO5IfL5Sg==
-
 mobx@^6.3.2:
   version "6.3.2"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-6.3.2.tgz#125590961f702a572c139ab69392bea416d2e51b"
@@ -12839,11 +12642,6 @@ pretty-format@^25.5.0:
     ansi-regex "^5.0.0"
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
-
-prism-react-renderer@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/prism-react-renderer/-/prism-react-renderer-1.2.0.tgz#5ad4f90c3e447069426c8a53a0eafde60909cdf4"
-  integrity sha512-GHqzxLYImx1iKN1jJURcuRoA/0ygCcNhfGw1IT8nPIMzarmKQ3Nc+JcG0gi8JXQzuh0C5ShE4npMIoqNin40hg==
 
 prism-react-renderer@^1.2.1:
   version "1.2.1"
@@ -14709,11 +14507,6 @@ streamsearch@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/streamsearch/-/streamsearch-0.1.2.tgz#808b9d0e56fc273d809ba57338e929919a1a9f1a"
   integrity sha1-gIudDlb8Jz2Am6VzOOkpkZoanxo=
-
-strict-event-emitter-types@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/strict-event-emitter-types/-/strict-event-emitter-types-2.0.0.tgz#05e15549cb4da1694478a53543e4e2f4abcf277f"
-  integrity sha512-Nk/brWYpD85WlOgzw5h173aci0Teyv8YdIAEtV+N88nDB0dLlazZyJMIsN6eo1/AR61l+p6CJTG1JIyFaoNEEA==
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"
