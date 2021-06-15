@@ -1,4 +1,4 @@
-import { Flex, Panel, Text } from '@stoplight/mosaic';
+import { Panel, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
 interface DigestAuthProps {
