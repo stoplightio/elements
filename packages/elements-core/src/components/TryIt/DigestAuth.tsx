@@ -1,7 +1,7 @@
 import { Flex, Panel, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
-interface BasicAuthProps {
+interface DigestAuthProps {
   onChange: (value: string) => void;
   value: string;
 }
@@ -17,21 +17,19 @@ const digestPlaceholder = `Digest username="User Name",
             opaque="5ccc069c403ebaf9f0171e9517f40e41"
 `;
 
-export const DigestAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
+export const DigestAuth: React.FC<DigestAuthProps> = ({ onChange, value }) => {
   return (
     <Panel.Content className="ParameterGrid">
       <div>Authorization</div>
       <Text mx={3}>:</Text>
-      <Flex flex={1}>
-        <textarea
-          className="sl-relative sl-z-10 sl-w-full sl-text-base sl-bg-canvas-100 sl-p-1 sl-pr-2.5 sl-pl-2.5 sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border"
-          aria-label="Authorization"
-          placeholder={digestPlaceholder}
-          value={value}
-          onChange={e => onChange(e.currentTarget.value)}
-          rows={9}
-        />
-      </Flex>
+      <textarea
+        className="sl-relative sl-z-10 sl-w-full sl-text-base sl-bg-canvas-100 sl-p-1 sl-pr-2.5 sl-pl-2.5 sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border"
+        aria-label="Authorization"
+        placeholder={digestPlaceholder}
+        value={value}
+        onChange={e => onChange(e.currentTarget.value)}
+        rows={9}
+      />
     </Panel.Content>
   );
 };
