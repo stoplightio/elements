@@ -8,6 +8,7 @@ import { APIKeyAuth } from './APIKeyAuth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';
 import { BasicAuth } from './BasicAuth';
 import { BearerAuth } from './BearerAuth';
+import { DigestAuth } from './DigestAuth';
 import { OAuth2Auth } from './OAuth2Auth';
 
 interface TryItAuthProps {
@@ -94,6 +95,8 @@ const SecuritySchemeComponent: React.FC<SecuritySchemeComponentProps> = ({ schem
       switch (scheme.scheme) {
         case 'basic':
           return <BasicAuth {...rest} />;
+        case 'digest':
+          return <DigestAuth {...rest} />;
         case 'bearer':
           return <BearerAuth scheme={scheme} {...rest} />;
         default:

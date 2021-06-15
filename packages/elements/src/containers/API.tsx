@@ -54,7 +54,7 @@ export interface CommonAPIProps extends RoutingProps {
   logo?: string;
 
   /**
-   * Allows to hide TryIt component
+   * Allows hiding the TryIt component
    */
   hideTryIt?: boolean;
 }
