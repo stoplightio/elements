@@ -461,6 +461,14 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        key: 'digest',
+        type: 'http',
+        scheme: 'digest',
+        description: 'Digest is cool. Use digest. No questions asked money back guarantee.',
+      },
+    ],
+    [
+      {
         key: 'openIdConnectKey',
         type: 'openIdConnect',
         description:

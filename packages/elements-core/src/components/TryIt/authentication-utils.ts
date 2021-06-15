@@ -32,6 +32,9 @@ export const isBasicSecurityScheme = (maybeIBasic: HttpSecurityScheme): maybeIBa
 export const isBearerSecurityScheme = (maybeIBearer: HttpSecurityScheme): maybeIBearer is IBearerSecurityScheme =>
   isObject(maybeIBearer) && maybeIBearer.type === 'http' && maybeIBearer.scheme === 'bearer';
 
+export const isDigestSecurityScheme = (maybeIBearer: HttpSecurityScheme): maybeIBearer is IBasicSecurityScheme =>
+  isObject(maybeIBearer) && maybeIBearer.type === 'http' && maybeIBearer.scheme === 'digest';
+
 export function filterOutAuthorizationParams(
   queryParams: IHttpQueryParam[],
   securitySchemes?: HttpSecurityScheme[][],
