@@ -11,7 +11,7 @@ const DummyLink: CustomLinkComponent = ({ children, ...propsRest }) => {
 
 describe(NodeContent.name, () => {
   it('renders correctly', async () => {
-    render(<NodeContent node={nodeContent} Link={DummyLink} />);
+    const { unmount } = render(<NodeContent node={nodeContent} Link={DummyLink} />);
 
     expect(screen.getByRole('heading', { name: /create todo/i })).toBeInTheDocument();
     expect(
@@ -19,17 +19,23 @@ describe(NodeContent.name, () => {
         'Markdown is supported in descriptions. Add information here for users to get accustomed to endpoints',
       ),
     ).toBeInTheDocument();
+
+    unmount();
   });
 
   it('shows TryIt by default', () => {
-    render(<NodeContent node={nodeContent} Link={DummyLink} />);
+    const { unmount } = render(<NodeContent node={nodeContent} Link={DummyLink} />);
 
     expect(screen.getByText(/send request/i)).toBeInTheDocument();
+
+    unmount();
   });
 
   it('can hide TryIt', () => {
-    render(<NodeContent node={nodeContent} Link={DummyLink} hideTryIt />);
+    const { unmount } = render(<NodeContent node={nodeContent} Link={DummyLink} hideTryIt />);
 
     expect(screen.queryByText(/send request/i)).not.toBeInTheDocument();
+
+    unmount();
   });
 });
