@@ -15,7 +15,7 @@ export type ProjectTableOfContents = {
 };
 
 export type Node = NodeSummary & {
-  data: string;
+  data: any;
   links: {
     mock_url?: string;
     export_url?: string;
