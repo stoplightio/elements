@@ -1,5 +1,6 @@
 import { TableOfContentsItem } from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
+import { defaults } from 'lodash';
 
 import { OperationNode, ServiceNode } from '../../utils/oas/types';
 
@@ -60,10 +61,7 @@ const defaultComputerAPITreeConfig = {
 };
 
 export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
-  const mergedConfig = {
-    ...defaultComputerAPITreeConfig,
-    ...config,
-  };
+  const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
   const tree: TableOfContentsItem[] = [];
 
   // Only show overview if service node has a description

@@ -388,7 +388,7 @@ describe('computeAPITree', () => {
     ]);
   });
 
-  it('hides schemas from ToC', () => {
+  it('allows to hide schemas from ToC', () => {
     const apiDocument: OpenAPIObject = {
       openapi: '3.0.0',
       info: {
