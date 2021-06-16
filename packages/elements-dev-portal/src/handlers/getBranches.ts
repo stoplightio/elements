@@ -3,16 +3,16 @@ import { Branch } from '../types';
 export const getBranches = async ({
   projectId,
   platformUrl = 'https://stoplight.io',
-  authToken,
+  platformAuthToken,
 }: {
   projectId: string;
   platformUrl?: string;
-  authToken?: string;
+  platformAuthToken?: string;
 }): Promise<Branch[]> => {
   const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/branches`, {
     headers: {
       'Stoplight-Elements-Version': '1.0.0',
-      ...(authToken && { Authorization: `Bearer ${authToken}` }),
+      ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
     },
   });
   const data = await response.json();

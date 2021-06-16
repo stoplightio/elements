@@ -3,17 +3,17 @@ import * as React from 'react';
 
 export type DevPortalProviderProps = {
   platformUrl?: string;
-  authToken?: string;
+  platformAuthToken?: string;
 };
 
 export const PlatformContext = React.createContext<DevPortalProviderProps>({ platformUrl: 'https://stoplight.io' });
 
-const PlatformUrlProvider: React.FC<DevPortalProviderProps> = ({
+const PlatformProvider: React.FC<DevPortalProviderProps> = ({
   platformUrl = 'https://stoplight.io',
-  authToken,
+  platformAuthToken,
   children,
 }) => {
-  return <PlatformContext.Provider value={{ platformUrl, authToken }}>{children}</PlatformContext.Provider>;
+  return <PlatformContext.Provider value={{ platformUrl, platformAuthToken }}>{children}</PlatformContext.Provider>;
 };
 
-export const DevPortalProvider = withQueryClientProvider(PlatformUrlProvider);
+export const DevPortalProvider = withQueryClientProvider(PlatformProvider);

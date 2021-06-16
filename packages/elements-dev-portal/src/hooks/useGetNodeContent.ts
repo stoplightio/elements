@@ -13,11 +13,11 @@ export function useGetNodeContent({
   projectId: string;
   branchSlug?: string;
 }) {
-  const { platformUrl, authToken } = React.useContext(PlatformContext);
+  const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
 
   return useQuery(
-    ['useNodeContent', nodeSlug, projectId, branchSlug, platformUrl, authToken],
-    () => getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl, authToken }),
+    ['useNodeContent', nodeSlug, projectId, branchSlug, platformUrl, platformAuthToken],
+    () => getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl, platformAuthToken }),
     { enabled: nodeSlug && projectId ? true : false },
   );
 }

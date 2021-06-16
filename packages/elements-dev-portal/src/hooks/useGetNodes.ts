@@ -14,9 +14,9 @@ export function useGetNodes({
   workspaceId: string;
   projectIds?: string[];
 }) {
-  const { platformUrl, authToken } = React.useContext(PlatformContext);
+  const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
   const [debounceSearch] = useDebounce(search, 500);
-  return useQuery(['workspaceNodes', workspaceId, projectIds, debounceSearch, platformUrl, authToken], () =>
-    getNodes({ workspaceId, projectIds, search: debounceSearch, platformUrl, authToken }),
+  return useQuery(['workspaceNodes', workspaceId, projectIds, debounceSearch, platformUrl, platformAuthToken], () =>
+    getNodes({ workspaceId, projectIds, search: debounceSearch, platformUrl, platformAuthToken }),
   );
 }

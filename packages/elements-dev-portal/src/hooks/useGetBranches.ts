@@ -5,10 +5,10 @@ import { PlatformContext } from '../components/DevPortalProvider';
 import { getBranches } from '../handlers/getBranches';
 
 export function useGetBranches({ projectId }: { projectId: string }) {
-  const { platformUrl, authToken } = React.useContext(PlatformContext);
+  const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
   return useQuery(
-    ['branches', projectId, platformUrl, authToken],
-    () => getBranches({ projectId, platformUrl, authToken }),
+    ['branches', projectId, platformUrl, platformAuthToken],
+    () => getBranches({ projectId, platformUrl, platformAuthToken }),
     {
       enabled: projectId ? true : false,
     },

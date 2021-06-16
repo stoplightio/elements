@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
@@ -54,29 +54,5 @@ describe('Stoplight Project', () => {
         { timeout: 10000 },
       ),
     ).toBeInTheDocument();
-  });
-
-  it('includes authorization header when auth token is passed', async () => {
-    render(
-      <StoplightProject
-        router="memory"
-        projectId="cHJqOjExOTY"
-        platformUrl="https://stoplight.io"
-        authToken="secret"
-      />,
-    );
-
-    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-    const tocRequestInit = fetchMock.mock.calls[3][1]!;
-    const branchesRequestInit = fetchMock.mock.calls[4][1]!;
-    const nodeRequestInit = fetchMock.mock.calls[5][1]!;
-
-    const tocHeaders = new Headers(tocRequestInit.headers);
-    const branchesHeaders = new Headers(branchesRequestInit.headers);
-    const nodeHeaders = new Headers(nodeRequestInit.headers);
-
-    expect(tocHeaders.get('Authorization')).toBe('Bearer secret');
-    expect(branchesHeaders.get('Authorization')).toBe('Bearer secret');
-    expect(nodeHeaders.get('Authorization')).toBe('Bearer secret');
   });
 });
