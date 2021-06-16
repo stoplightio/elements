@@ -11,13 +11,13 @@ import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { apiKey, oauth } from '../../../../__fixtures__/security-schemes';
-import httpService from '../../../../__fixtures__/services/petstore';
-import { httpServiceWithUrlVariables } from '../../../../__fixtures__/services/with-url-variables';
-import { httpServiceWithoutOrigin } from '../../../../__fixtures__/services/without-origin';
-import { HttpService } from '../index';
-import { getOAuthFlowDescription, SecuritySchemes } from '../SecuritySchemes';
-import { ServerInfo } from '../ServerInfo';
+import { apiKey, oauth } from '../../../__fixtures__/security-schemes';
+import httpService from '../../../__fixtures__/services/petstore';
+import { httpServiceWithUrlVariables } from '../../../__fixtures__/services/with-url-variables';
+import { httpServiceWithoutOrigin } from '../../../__fixtures__/services/without-origin';
+import { HttpService } from './index';
+import { getOAuthFlowDescription, SecuritySchemes } from './SecuritySchemes';
+import { ServerInfo } from './ServerInfo';
 
 describe('HttpService', () => {
   it('Should render correctly', () => {
@@ -31,7 +31,7 @@ describe('HttpService', () => {
   });
 
   it('displays first server url', () => {
-    render(<ServerInfo servers={httpService.servers} />);
+    render(<ServerInfo servers={httpService.servers ?? []} />);
 
     const serverUrl = screen.getByLabelText('production-server');
     expect(serverUrl).toHaveTextContent('https://api.stoplight.io');
@@ -43,24 +43,44 @@ describe('HttpService', () => {
   });
 
   it('replaces url variables with default values in displayed url', () => {
-    render(<ServerInfo servers={httpServiceWithUrlVariables.servers} />);
+    render(<ServerInfo servers={httpServiceWithUrlVariables.servers ?? []} />);
 
     const serverUrl = screen.getByLabelText('production-server');
     expect(serverUrl).toHaveTextContent('ftp://default-namespace.stoplight.io');
   });
 
   it('prepends origin to urls without origin', () => {
-    render(<ServerInfo servers={httpServiceWithoutOrigin.servers} />);
+    render(<ServerInfo servers={httpServiceWithoutOrigin.servers ?? []} />);
 
     const serverUrl = screen.getByLabelText('production-server');
     expect(serverUrl).toHaveTextContent('http://localhost/api');
   });
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
-    render(<ServerInfo servers={httpService.servers} mockUrl="https://foo.stoplight.io/prism/123" />);
+    render(<ServerInfo servers={httpService.servers ?? []} mockUrl="https://foo.stoplight.io/prism/123" />);
 
     const mockServer = screen.queryByLabelText('mock-server');
     await waitFor(() => expect(mockServer).toHaveTextContent('https://foo.stoplight.io/prism/123'));
+  });
+
+  it('removes Base URL block when an invalid URL is given', () => {
+    const modifiedData = {
+      ...httpService,
+      servers: [
+        {
+          url: 'https://///',
+          name: 'Production API',
+        },
+      ],
+    };
+
+    render(
+      <Router>
+        <HttpService data={modifiedData} />
+      </Router>,
+    );
+
+    expect(screen.queryByText(/api base url/i)).not.toBeInTheDocument();
   });
 
   describe('Security schemes', () => {
