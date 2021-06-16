@@ -1,21 +1,24 @@
 import { throttle } from 'lodash';
 import * as React from 'react';
 
-function getSize(el: HTMLDivElement | null) {
-  return el ? el.getBoundingClientRect() : new DOMRect();
-}
-
-export function useComponentSize(container: HTMLDivElement | null) {
-  const [componentSize, setComponentSize] = React.useState<DOMRect>(getSize(null));
+export function useComponentSize(container: HTMLDivElement | null): {
+  readonly width: number;
+  readonly height: number;
+} {
+  const [componentSize, setComponentSize] = React.useState({ width: 0, height: 0 });
 
   React.useEffect(() => {
     if (!container) {
       return;
     }
 
-    const updateComponentSize = throttle(() => container && setComponentSize(getSize(container)), 1000, {
-      trailing: true,
-    });
+    const updateComponentSize = throttle(
+      () => (container ? setComponentSize(container.getBoundingClientRect()) : { width: 0, height: 0 }),
+      1000,
+      {
+        trailing: true,
+      },
+    );
 
     updateComponentSize();
 

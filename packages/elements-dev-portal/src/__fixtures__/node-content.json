@@ -1,0 +1,255 @@
+{
+  "id": "b3A6Mzg5NDM2",
+  "type": "http_operation",
+  "uri": "/reference/todos/todo.v1.yaml/paths/~1todos/post",
+  "slug": "b3A6Mzg5NDM2-create-todo",
+  "title": "Create Todo",
+  "summary": "This creates a Todo object\n\n*Markdown is supported in descriptions. Add information here for users to get accustomed to endpoints*",
+  "project_id": "cHJqOjExOTY",
+  "branch_id": "YnI6MTAyODA",
+  "data": {
+    "id": "?http-operation-id?",
+    "iid": "post-todos",
+    "description": "This creates a Todo object\n\n*Markdown is supported in descriptions. Add information here for users to get accustomed to endpoints*",
+    "method": "post",
+    "path": "/todos",
+    "summary": "Create Todo",
+    "responses": [
+      {
+        "code": "201",
+        "description": "New Todo Created",
+        "headers": [],
+        "contents": [
+          {
+            "mediaType": "multipart/form-data",
+            "schema": {
+              "description": "I'm a model's description.",
+              "type": "object",
+              "x-examples": {},
+              "title": "Todo",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 9999,
+                  "description": "ID of the task",
+                  "readOnly": true
+                },
+                "name": { "type": "string", "minLength": 1, "maxLength": 100, "description": "Name of the task" },
+                "completed": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Boolean indicating if the task has been completed or not"
+                },
+                "completed_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Time when the task was completed",
+                  "readOnly": true
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Time when the task was created",
+                  "readOnly": true
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Time when the task was updated",
+                  "readOnly": true
+                }
+              },
+              "required": ["id", "name", "completed_at", "created_at", "updated_at"],
+              "$schema": "http://json-schema.org/draft-07/schema#"
+            },
+            "examples": [
+              {
+                "key": "Example Todo",
+                "value": {
+                  "id": 0,
+                  "name": "string",
+                  "completed": true,
+                  "completed_at": "2019-08-24T14:15:22Z",
+                  "created_at": "2019-08-24T14:15:22Z",
+                  "updated_at": "2019-08-24T14:15:22Z"
+                }
+              }
+            ],
+            "encodings": []
+          }
+        ]
+      },
+      {
+        "code": "403",
+        "description": "Action not allowed",
+        "headers": [],
+        "contents": [
+          {
+            "mediaType": "application/json",
+            "schema": {
+              "type": "object",
+              "properties": { "message": { "type": "string" } },
+              "required": ["message"],
+              "$schema": "http://json-schema.org/draft-07/schema#"
+            },
+            "examples": [],
+            "encodings": []
+          }
+        ]
+      },
+      {
+        "code": "404",
+        "description": "Resource not found",
+        "headers": [],
+        "contents": [
+          {
+            "mediaType": "application/json",
+            "schema": {
+              "title": "Error",
+              "type": "object",
+              "description": "A standard error object.",
+              "x-tags": ["Common"],
+              "properties": { "status": { "type": "string", "description": "A code." }, "error": { "type": "string" } },
+              "required": ["status", "error"],
+              "$schema": "http://json-schema.org/draft-07/schema#"
+            },
+            "examples": [],
+            "encodings": []
+          }
+        ]
+      }
+    ],
+    "servers": [
+      { "description": "Production", "url": "https://todos.stoplight.io" },
+      { "description": "Sandbox", "url": "https://todos-sandbox.stoplight.io" }
+    ],
+    "request": {
+      "body": {
+        "description": "Name of the Todo",
+        "contents": [
+          {
+            "mediaType": "application/json",
+            "schema": {
+              "description": "I'm a model's description.",
+              "type": "object",
+              "x-examples": {},
+              "title": "Todo",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 9999,
+                  "description": "ID of the task",
+                  "readOnly": true
+                },
+                "name": { "type": "string", "minLength": 1, "maxLength": 100, "description": "Name of the task" },
+                "completed": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Boolean indicating if the task has been completed or not"
+                },
+                "completed_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Time when the task was completed",
+                  "readOnly": true
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Time when the task was created",
+                  "readOnly": true
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Time when the task was updated",
+                  "readOnly": true
+                }
+              },
+              "required": ["id", "name", "completed_at", "created_at", "updated_at"],
+              "$schema": "http://json-schema.org/draft-07/schema#"
+            },
+            "examples": [],
+            "encodings": []
+          }
+        ]
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "required": true,
+          "description": "application/json",
+          "schema": {
+            "type": "string",
+            "default": "application/json",
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "examples": []
+        }
+      ],
+      "query": [],
+      "cookie": [],
+      "path": []
+    },
+    "tags": [],
+    "security": [
+      [
+        {
+          "key": "API Key",
+          "description": "Just use `123`. It's super secure ;)",
+          "type": "apiKey",
+          "name": "apikey",
+          "in": "query"
+        }
+      ]
+    ]
+  },
+  "links": { "mock_url": "https://stoplight.io/mocks/demo/studio-demo/389434/todos" },
+  "outbound_edges": [
+    {
+      "id": "c2NoOjkxNDY1MDA",
+      "type": "model",
+      "slug": "c2NoOjkxNDY1MDA-todo",
+      "title": "Todo",
+      "uri": "/reference/todos/todo.v1.yaml/components/schemas/Todos"
+    },
+    {
+      "id": "YXBpOjM4OTQzNA",
+      "type": "http_service",
+      "slug": "YXBpOjM4OTQzNA-to-dos",
+      "title": "To-dos",
+      "uri": "/reference/todos/todo.v1.yaml"
+    },
+    {
+      "id": "YXBpOjM4OTQzNA",
+      "type": "http_service",
+      "slug": "YXBpOjM4OTQzNA-to-dos",
+      "title": "To-dos",
+      "uri": "/reference/todos/todo.v1.yaml"
+    },
+    {
+      "id": "YXBpOjM4OTQzNA",
+      "type": "http_service",
+      "slug": "YXBpOjM4OTQzNA-to-dos",
+      "title": "To-dos",
+      "uri": "/reference/todos/todo.v1.yaml"
+    },
+    {
+      "id": "c2NoOjkxNDY1MDA",
+      "type": "model",
+      "slug": "c2NoOjkxNDY1MDA-todo",
+      "title": "Todo",
+      "uri": "/reference/todos/todo.v1.yaml/components/schemas/Todos"
+    },
+    {
+      "id": "YXBpOjM4OTQzNA",
+      "type": "http_service",
+      "slug": "YXBpOjM4OTQzNA-to-dos",
+      "title": "To-dos",
+      "uri": "/reference/todos/todo.v1.yaml"
+    }
+  ],
+  "inbound_edges": []
+}

@@ -1,0 +1,144 @@
+{
+  "showPoweredBy": true,
+  "items": [
+    { "id": "ZG9jOjE", "title": "Introduction", "type": "article", "slug": "ZG9jOjE-introduction", "meta": "" },
+    { "id": "ZG9jOjI", "title": "UI Overview", "type": "article", "slug": "ZG9jOjI-ui-overview", "meta": "" },
+    { "title": "markdown" },
+    { "id": "ZG9jOjM", "title": "Markdown Basics", "type": "article", "slug": "ZG9jOjM-markdown-basics", "meta": "" },
+    {
+      "id": "ZG9jOjQ",
+      "title": "Stoplight Flavored Markdown (SMD)",
+      "type": "article",
+      "slug": "ZG9jOjQ-stoplight-flavored-markdown-smd",
+      "meta": ""
+    },
+    { "title": "APIS" },
+    {
+      "id": "YXBpOjEy",
+      "title": "Swagger Petstore",
+      "type": "http_service",
+      "slug": "YXBpOjEy-swagger-petstore",
+      "meta": "",
+      "items": [
+        {
+          "title": "pets",
+          "items": [
+            {
+              "id": "b3A6MTU",
+              "title": "Create a pet",
+              "type": "http_operation",
+              "slug": "b3A6MTU-create-a-pet",
+              "meta": "post"
+            },
+            {
+              "id": "b3A6MTY",
+              "title": "Info for a specific pet",
+              "type": "http_operation",
+              "slug": "b3A6MTY-info-for-a-specific-pet",
+              "meta": "get"
+            },
+            {
+              "id": "b3A6MTQ",
+              "title": "List all pets",
+              "type": "http_operation",
+              "slug": "b3A6MTQ-list-all-pets",
+              "meta": "get"
+            }
+          ]
+        },
+        {
+          "title": "Schemas",
+          "items": [{ "id": "c2NoOjg", "title": "Pets", "type": "model", "slug": "c2NoOjg-pets", "meta": "" }]
+        }
+      ]
+    },
+    {
+      "id": "YXBpOjM4OTQzNA",
+      "title": "To-dos",
+      "type": "http_service",
+      "slug": "YXBpOjM4OTQzNA-to-dos",
+      "meta": "",
+      "items": [
+        {
+          "id": "b3A6Mzg5NDM1",
+          "title": "List Todos",
+          "type": "http_operation",
+          "slug": "b3A6Mzg5NDM1-list-todos",
+          "meta": "get"
+        },
+        {
+          "id": "b3A6Mzg5NDM2",
+          "title": "Create Todo",
+          "type": "http_operation",
+          "slug": "b3A6Mzg5NDM2-create-todo",
+          "meta": "post"
+        },
+        {
+          "id": "b3A6Mzg5NDM4",
+          "title": "Get Todo",
+          "type": "http_operation",
+          "slug": "b3A6Mzg5NDM4-get-todo",
+          "meta": "get"
+        },
+        {
+          "id": "b3A6OTE0NjUxMA",
+          "title": "Replace Todo",
+          "type": "http_operation",
+          "slug": "b3A6OTE0NjUxMA-replace-todo",
+          "meta": "put"
+        },
+        {
+          "id": "b3A6Mzg5NDM5",
+          "title": "Delete Todo",
+          "type": "http_operation",
+          "slug": "b3A6Mzg5NDM5-delete-todo",
+          "meta": "delete"
+        },
+        {
+          "id": "b3A6Mzg5NDQw",
+          "title": "Update Todo",
+          "type": "http_operation",
+          "slug": "b3A6Mzg5NDQw-update-todo",
+          "meta": "patch"
+        },
+        {
+          "title": "Users",
+          "items": [
+            {
+              "id": "b3A6OTE0NjUxMw",
+              "title": "Get User",
+              "type": "http_operation",
+              "slug": "b3A6OTE0NjUxMw-get-user",
+              "meta": "get"
+            },
+            {
+              "id": "b3A6OTE0NjUxNA",
+              "title": "Delete User",
+              "type": "http_operation",
+              "slug": "b3A6OTE0NjUxNA-delete-user",
+              "meta": "delete"
+            },
+            {
+              "id": "b3A6OTE0NjUxNQ",
+              "title": "Create User",
+              "type": "http_operation",
+              "slug": "b3A6OTE0NjUxNQ-create-user",
+              "meta": "post"
+            }
+          ]
+        },
+        {
+          "title": "Schemas",
+          "items": [
+            { "id": "c2NoOjkxNDY1MDA", "title": "Todo", "type": "model", "slug": "c2NoOjkxNDY1MDA-todo", "meta": "" },
+            { "id": "c2NoOjkxNDY1MDE", "title": "User", "type": "model", "slug": "c2NoOjkxNDY1MDE-user", "meta": "" }
+          ]
+        }
+      ]
+    },
+    { "title": "Schemas" },
+    { "id": "c2NoOjU", "title": "Error", "type": "model", "slug": "c2NoOjU-error", "meta": "" },
+    { "id": "c2NoOjY", "title": "Category", "type": "model", "slug": "c2NoOjY-category", "meta": "" },
+    { "id": "c2NoOjc", "title": "Pet", "type": "model", "slug": "c2NoOjc-pet", "meta": "" }
+  ]
+}
