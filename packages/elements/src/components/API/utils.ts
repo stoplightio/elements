@@ -1,5 +1,6 @@
 import { TableOfContentsItem } from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
+import { defaults } from 'lodash';
 
 import { OperationNode, ServiceNode } from '../../utils/oas/types';
 
@@ -51,7 +52,16 @@ export const computeTagGroups = (serviceNode: ServiceNode) => {
   return { groups: orderedTagGroups, ungrouped };
 };
 
-export const computeAPITree = (serviceNode: ServiceNode) => {
+interface ComputeAPITreeConfig {
+  hideSchemas?: boolean;
+}
+
+const defaultComputerAPITreeConfig = {
+  hideSchemas: false,
+};
+
+export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
+  const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
   const tree: TableOfContentsItem[] = [];
 
   // Only show overview if service node has a description
@@ -101,7 +111,7 @@ export const computeAPITree = (serviceNode: ServiceNode) => {
   }
 
   const schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
-  if (schemaNodes.length) {
+  if (!mergedConfig.hideSchemas && schemaNodes.length) {
     tree.push({
       title: 'Schemas',
     });
