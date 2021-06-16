@@ -577,21 +577,19 @@ describe('TryIt', () => {
     });
 
     it('Invokes request with mocked data', async () => {
-      const { getByRole } = render(
-        <TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />,
-      );
+      render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
       const mockingButton = screen.getByRole('button', { name: /mocking/i });
 
       userEvent.click(mockingButton);
 
       // enable mocking
-      let enableItem = await getByRole('menuitemcheckbox', { name: 'Enabled' });
+      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
       expect(enableItem).toBeInTheDocument();
       userEvent.click(enableItem);
 
       // set response code
-      const responseCodeItem = await getByRole('menuitemcheckbox', { name: '200' });
+      const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
       expect(responseCodeItem).toBeInTheDocument();
       userEvent.click(responseCodeItem);
 
@@ -604,7 +602,7 @@ describe('TryIt', () => {
 
       // disable mocking and send
       userEvent.click(mockingButton);
-      enableItem = await getByRole('menuitemcheckbox', { name: /enabled/i });
+      enableItem = await screen.getByRole('menuitemcheckbox', { name: /enabled/i });
       userEvent.click(enableItem);
 
       clickSend();
@@ -635,7 +633,7 @@ describe('TryIt', () => {
     });
 
     it('Persists mocking options between operations', async () => {
-      const { rerender, getByRole } = render(
+      const { rerender } = render(
         <MosaicProvider>
           <PersistenceContextProvider>
             <TryIt httpOperation={putOperation} mockUrl="https://mock-todos.stoplight.io" />
@@ -644,16 +642,16 @@ describe('TryIt', () => {
       );
 
       // enable mocking
-      const mockingButton = getByRole('button', { name: /mocking/i });
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
       userEvent.click(mockingButton);
 
       // enable mocking
-      let enableItem = await getByRole('menuitemcheckbox', { name: 'Enabled' });
+      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
       expect(enableItem).toBeInTheDocument();
       userEvent.click(enableItem);
 
       // set response code
-      const responseCodeItem = await getByRole('menuitemcheckbox', { name: '200' });
+      const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
       expect(responseCodeItem).toBeInTheDocument();
       userEvent.click(responseCodeItem);
 
@@ -719,25 +717,25 @@ describe('TryIt', () => {
       });
 
       it('allows to select a security schemes from dropdown menu', () => {
-        const { getByRole, getByLabelText } = render(<TryItWithPersistence httpOperation={putOperation} />);
+        render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = getByLabelText('security-schemes');
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
         userEvent.click(securitySchemes);
 
         expect(securitySchemesButton).toHaveTextContent('OAuth 2.0');
       });
 
       it('preserves state when changing schemes', async () => {
-        const { getByLabelText } = render(<TryItWithPersistence httpOperation={putOperation} />);
+        render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        let APIKeyField = getByLabelText('API Key');
+        let APIKeyField = screen.getByLabelText('API Key');
         await userEvent.type(APIKeyField, '123');
 
         // switch to OAuth
-        let securitySchemesButton = getByLabelText('security-schemes');
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
@@ -828,9 +826,9 @@ describe('TryIt', () => {
 
     describe('OAuth2 Component', () => {
       it('allows to send a OAuth2 request', async () => {
-        const { getByLabelText } = render(<TryItWithPersistence httpOperation={putOperation} />);
+        render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = getByLabelText('security-schemes');
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
@@ -858,9 +856,9 @@ describe('TryIt', () => {
 
     describe('Basic Auth Component', () => {
       it('allows to send a Basic Auth request', async () => {
-        const { getByLabelText } = render(<TryItWithPersistence httpOperation={putOperation} />);
+        render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = getByLabelText('security-schemes');
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Basic Auth' });
@@ -883,9 +881,9 @@ describe('TryIt', () => {
 
     describe('Bearer Auth Component', () => {
       it('allows to send a Bearer Auth request', async () => {
-        const { getByLabelText } = render(<TryItWithPersistence httpOperation={putOperation} />);
+        render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = getByLabelText('security-schemes');
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Bearer Auth' });

@@ -8,7 +8,7 @@
     "start": "PORT=4200 react-scripts start",
     "build": "react-scripts build",
     "serve": "serve -s -l 4200 build"
-    },
+  },
   "dependencies": {
     "@stoplight/elements": "^7.0.0-beta.4",
     "@stoplight/elements-dev-portal": "^1.0.0-beta.1",
