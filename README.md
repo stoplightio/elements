@@ -58,12 +58,11 @@ import { API } from "@stoplight/elements";
 
 <API
   apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
-  layout="traditional"
   router="history"
 />
 ```
 
-For more information on using Elements as a React component, head over to our [React documentation](docs/getting-started/2-integrations/react.md).
+For more information on using Elements as a React component, head over to our [React documentation](docs/getting-started/integrations/react.md).
 ### Web Component
 
 ```html
