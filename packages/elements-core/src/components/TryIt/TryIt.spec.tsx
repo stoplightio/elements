@@ -886,6 +886,42 @@ describe('TryIt', () => {
         expect(headers.get('Authorization')).toBe('Bearer 0a1b2c');
       });
     });
+
+    describe('Digest Auth Component', () => {
+      it('allows to send a Digest Auth request', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        userEvent.click(securitySchemesButton);
+
+        const securitySchemes = screen.getByRole('menuitem', { name: 'Digest Auth' });
+        userEvent.click(securitySchemes);
+
+        const authInput = screen.getByLabelText('Authorization');
+
+        const digestContent = `Digest username="Mufasa",
+            realm="testrealm@host.com",
+            nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093",
+            uri="/dir/index.html",
+            qop=auth,
+            nc=00000001,
+            cnonce="0a4f113b",
+            response="6629fae49393a05397450978507c4ef1",
+            opaque="5ccc069c403ebaf9f0171e9517f40e41"
+        `;
+
+        const expectedDigestContent = `Digest username="Mufasa", realm="testrealm@host.com", nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093", uri="/dir/index.html", qop=auth, nc=00000001, cnonce="0a4f113b", response="6629fae49393a05397450978507c4ef1", opaque="5ccc069c403ebaf9f0171e9517f40e41"`;
+
+        await userEvent.type(authInput, digestContent);
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('Authorization')).toBe(expectedDigestContent);
+      });
+    });
   });
 
   describe('Ref resolving', () => {
