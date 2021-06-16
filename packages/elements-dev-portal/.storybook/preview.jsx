@@ -44,7 +44,7 @@ const MosaicProviderDecorator = Story => (
 
 const DevPortalProviderDecorator = (Story, context) => {
   return (
-    <DevPortalProvider platformUrl={context.args.platformUrl} authToken={context.args.authToken}>
+    <DevPortalProvider platformUrl={context.args.platformUrl}>
       <Story />
     </DevPortalProvider>
   );
