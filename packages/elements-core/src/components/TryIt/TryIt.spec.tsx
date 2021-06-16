@@ -906,10 +906,10 @@ describe('TryIt', () => {
       it('allows to send a Digest Auth request', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitem', { name: 'Digest Auth' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Digest Auth' });
         userEvent.click(securitySchemes);
 
         const authInput = screen.getByLabelText('Authorization');
