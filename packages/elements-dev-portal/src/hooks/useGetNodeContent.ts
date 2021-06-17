@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useQuery } from 'react-query';
 
-import { PlatformUrlContext } from '../components/DevPortalProvider';
+import { PlatformContext } from '../components/DevPortalProvider';
 import { getNodeContent } from '../handlers/getNodeContent';
 
 export function useGetNodeContent({
@@ -13,11 +13,11 @@ export function useGetNodeContent({
   projectId: string;
   branchSlug?: string;
 }) {
-  const platformUrl = React.useContext(PlatformUrlContext);
+  const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
 
   return useQuery(
-    ['useNodeContent', nodeSlug, projectId, branchSlug, platformUrl],
-    () => getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl }),
+    ['useNodeContent', nodeSlug, projectId, branchSlug, platformUrl, platformAuthToken],
+    () => getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl, platformAuthToken }),
     { enabled: nodeSlug && projectId ? true : false },
   );
 }
