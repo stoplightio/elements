@@ -21,7 +21,8 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
     userDefinedExamples = responseContents?.examples;
   }
 
-  const responseExample = useGenerateExampleFromMediaTypeContent(responseContents, chosenExampleIndex);
+  const options = React.useMemo(() => ({ skipWriteOnly: true }), []);
+  const responseExample = useGenerateExampleFromMediaTypeContent(responseContents, chosenExampleIndex, options);
 
   if (!userDefinedExamples && responseMediaType !== 'application/json') return null;
 

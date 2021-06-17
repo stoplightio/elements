@@ -12,7 +12,8 @@ import { useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGener
 export const useTextRequestBodyState = (
   mediaTypeContent: IMediaTypeContent | undefined,
 ): [string, React.Dispatch<React.SetStateAction<string>>] => {
-  const initialRequestBody = useGenerateExampleFromMediaTypeContent(mediaTypeContent);
+  const options = React.useMemo(() => ({ skipReadOnly: true }), []);
+  const initialRequestBody = useGenerateExampleFromMediaTypeContent(mediaTypeContent, undefined, options);
 
   const [textRequestBody, setTextRequestBody] = React.useState<string>(initialRequestBody);
 
