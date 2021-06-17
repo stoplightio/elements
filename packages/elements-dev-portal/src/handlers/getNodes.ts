@@ -5,11 +5,13 @@ export const getNodes = async ({
   projectIds,
   search,
   platformUrl = 'https://stoplight.io',
+  platformAuthToken,
 }: {
   workspaceId: string;
   search?: string;
   projectIds?: string[];
   platformUrl?: string;
+  platformAuthToken?: string;
 }): Promise<NodeSearchResult[]> => {
   const queryParams = [];
 
@@ -26,6 +28,7 @@ export const getNodes = async ({
   const response = await fetch(`${platformUrl}/api/v1/workspaces/${workspaceId}/nodes${query}`, {
     headers: {
       'Stoplight-Elements-Version': '1.0.0',
+      ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
     },
   });
   const data = await response.json();
