@@ -10,8 +10,7 @@ export type BranchSelectorProps = {
 };
 
 export const BranchSelector = ({ branchSlug, branches, onChange }: BranchSelectorProps) => {
-  const defaultBranch = branches.find(branch => branch.is_default);
-  const selectedItem = branchSlug || defaultBranch?.slug;
+  const currentBranch = branches.find(branch => (!branchSlug ? branch.is_default : branch.slug === branchSlug));
   const handleChange = React.useCallback(
     (selectedSlug: React.ReactText) => {
       const selectedBranch = branches.find(branch => branch.slug === selectedSlug);
@@ -30,7 +29,7 @@ export const BranchSelector = ({ branchSlug, branches, onChange }: BranchSelecto
       matchTriggerWidth
       renderTrigger={({ isOpen }) => (
         <FieldButton w="full" icon="layer-group" px={4} h="md" active={isOpen} borderR={0} roundedR="none">
-          {selectedItem}
+          {currentBranch?.name || currentBranch?.slug || 'Choose a version'}
         </FieldButton>
       )}
       items={[
@@ -38,7 +37,7 @@ export const BranchSelector = ({ branchSlug, branches, onChange }: BranchSelecto
           type: 'option_group',
           title: 'Versions',
           onChange: handleChange,
-          value: branchSlug || defaultBranch?.slug || '',
+          value: currentBranch?.slug || '',
           children: branches.map(branch => ({
             label: branch.name || branch.slug,
             value: branch.slug,
