@@ -439,4 +439,95 @@ describe('computeAPITree', () => {
       },
     ]);
   });
+
+  it('allows to hide internal operations from ToC', () => {
+    const apiDocument: OpenAPIObject = {
+      openapi: '3.0.0',
+      info: {
+        title: 'some api',
+        version: '1.0.0',
+        description: 'some description',
+      },
+      paths: {
+        '/something': {
+          get: {},
+          post: {
+            'x-internal': true,
+          },
+        },
+      },
+    };
+
+    expect(computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true })).toEqual([
+      {
+        id: '/',
+        meta: '',
+        slug: '/',
+        title: 'Overview',
+        type: 'overview',
+      },
+      {
+        title: 'Endpoints',
+      },
+      {
+        id: '/paths/something/get',
+        meta: 'get',
+        slug: '/paths/something/get',
+        title: '/something',
+        type: 'http_operation',
+      },
+    ]);
+  });
+
+  it('allows to hide nested internal operations from ToC', () => {
+    const apiDocument: OpenAPIObject = {
+      openapi: '3.0.0',
+      info: {
+        title: 'some api',
+        version: '1.0.0',
+        description: 'some description',
+      },
+      tags: [
+        {
+          name: 'a',
+        },
+      ],
+      paths: {
+        '/something': {
+          get: {
+            tags: ['a'],
+          },
+          post: {
+            'x-internal': true,
+            tags: ['a'],
+          },
+        },
+      },
+    };
+
+    expect(computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true })).toEqual([
+      {
+        id: '/',
+        meta: '',
+        slug: '/',
+        title: 'Overview',
+        type: 'overview',
+      },
+      {
+        title: 'Endpoints',
+      },
+      {
+        title: 'a',
+        items: [
+          {
+            id: '/paths/something/get',
+            meta: 'get',
+            slug: '/paths/something/get',
+            title: '/something',
+            type: 'http_operation',
+          },
+        ],
+      },
+    ]);
+  });
 });

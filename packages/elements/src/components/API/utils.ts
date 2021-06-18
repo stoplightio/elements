@@ -54,10 +54,12 @@ export const computeTagGroups = (serviceNode: ServiceNode) => {
 
 interface ComputeAPITreeConfig {
   hideSchemas?: boolean;
+  hideInternal?: boolean;
 }
 
 const defaultComputerAPITreeConfig = {
   hideSchemas: false,
+  hideInternal: false,
 };
 
 export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
@@ -85,6 +87,9 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
 
     // Show ungroupped operations above tag groups
     ungrouped.forEach(operationNode => {
+      if (mergedConfig.hideInternal && operationNode.data.internal) {
+        return;
+      }
       tree.push({
         id: operationNode.uri,
         slug: operationNode.uri,
@@ -97,7 +102,10 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     groups.forEach(group => {
       tree.push({
         title: group.title,
-        items: group.items.map(operationNode => {
+        items: group.items.flatMap(operationNode => {
+          if (mergedConfig.hideInternal && operationNode.data.internal) {
+            return [];
+          }
           return {
             id: operationNode.uri,
             slug: operationNode.uri,
