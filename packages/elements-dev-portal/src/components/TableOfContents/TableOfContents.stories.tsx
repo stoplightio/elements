@@ -41,7 +41,7 @@ export default {
     platformUrl: { table: { category: 'Input' } },
   },
   args: {
-    projectId: 'cHJqOjExOTY',
+    projectId: 'cHJqOjYwNjYx',
     branchSlug: '',
     platformUrl: 'https://stoplight.io',
   },
