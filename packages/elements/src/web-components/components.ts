@@ -1,4 +1,4 @@
-import { createElementClass } from '@stoplight/elements-core/web-components/createElementClass';
+import { createElementClass } from '@stoplight/elements-core';
 
 import { API } from '../index';
 
@@ -8,4 +8,7 @@ export const ApiElement = createElementClass(API, {
   basePath: { type: 'string' },
   router: { type: 'string' },
   layout: { type: 'string' },
+  hideTryIt: { type: 'boolean' },
+  hideSchemas: { type: 'boolean' },
+  logo: { type: 'string' },
 });
