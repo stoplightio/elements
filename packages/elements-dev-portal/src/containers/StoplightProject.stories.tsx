@@ -23,6 +23,6 @@ export default {
 export const Playground: Story<StoplightProjectProps> = args => <StoplightProject {...args} />;
 Playground.storyName = 'Studio Demo';
 Playground.args = {
-  projectId: 'cHJqOjExOTY',
+  projectId: 'cHJqOjYwNjYx',
   platformUrl: 'https://stoplight.io',
 };
