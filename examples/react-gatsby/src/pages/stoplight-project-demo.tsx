@@ -11,7 +11,7 @@ const StoplightProjectPage = () => {
 
       <StoplightProject
         platformUrl="https://stoplight.io"
-        projectId="cHJqOjExOTY"
+        projectId="cHJqOjYwNjYx"
         basePath="stoplight-project"
         router={typeof window === 'undefined' ? 'memory' : 'history'}
       />

@@ -45,7 +45,7 @@ describe('Stoplight Project', () => {
   });
 
   it('loads correctly', async () => {
-    render(<StoplightProject router="memory" projectId="cHJqOjExOTY" platformUrl="https://stoplight.io" />);
+    render(<StoplightProject router="memory" projectId="cHJqOjYwNjYx" platformUrl="https://stoplight.io" />);
 
     expect(
       await screen.findByText(
