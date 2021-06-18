@@ -31,3 +31,4 @@ export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from './types';
 export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
 export { createResolvedObject } from './utils/ref-resolving/resolvedObject';
+export { createElementClass } from './web-components/createElementClass';
