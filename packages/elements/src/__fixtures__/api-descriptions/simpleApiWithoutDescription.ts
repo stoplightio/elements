@@ -42,7 +42,6 @@ export const simpleApiWithoutDescription = {
         operationId: 'GET_todo',
         summary: 'Get Todo',
         tags: ['Todos'],
-        'x-internal': true,
         responses: {
           '200': {
             description: '',
