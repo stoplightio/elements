@@ -9,4 +9,5 @@ export const StoplightProjectElement = createElementClass(StoplightProject, {
   basePath: { type: 'string' },
   router: { type: 'string' },
   platformUrl: { type: 'string' },
+  collapseTableOfContents: { type: 'boolean' },
 });

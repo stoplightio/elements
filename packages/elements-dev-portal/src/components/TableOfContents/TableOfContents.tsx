@@ -12,12 +12,24 @@ export type TableOfContentsProps = BoxProps<'div'> & {
   activeId: string;
   tableOfContents: ProjectTableOfContents;
   Link: CustomLinkComponent;
+  collapseTableOfContents?: boolean;
 };
 
-export const TableOfContents = ({ tableOfContents, activeId, Link, ...boxProps }: TableOfContentsProps) => {
+export const TableOfContents = ({
+  tableOfContents,
+  activeId,
+  Link,
+  collapseTableOfContents = false,
+  ...boxProps
+}: TableOfContentsProps) => {
   return (
     <Box bg="canvas-100" {...boxProps}>
-      <ElementsTableOfContents tree={tableOfContents.items} activeId={activeId} Link={Link} maxDepthOpenByDefault={1} />
+      <ElementsTableOfContents
+        tree={tableOfContents.items}
+        activeId={activeId}
+        Link={Link}
+        maxDepthOpenByDefault={collapseTableOfContents ? 0 : 1}
+      />
 
       {tableOfContents.hide_powered_by ? null : (
         <PoweredByLink

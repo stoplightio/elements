@@ -39,6 +39,35 @@ describe('TableOfContents', () => {
       unmount();
     });
 
+    it('it renders group contents if maxDepthOpenByDefault > 0', () => {
+      const { unmount } = render(
+        <TableOfContents
+          activeId=""
+          tree={[
+            {
+              title: 'Root',
+              items: [
+                {
+                  id: 'targetId',
+                  title: 'Target',
+                  slug: 'target',
+                  type: 'article',
+                  meta: '',
+                },
+              ],
+            },
+          ]}
+          Link={Link}
+          maxDepthOpenByDefault={1}
+        />,
+      );
+
+      expect(screen.queryByTitle('Root')).toBeInTheDocument();
+      expect(screen.queryByTitle('Target')).toBeInTheDocument();
+
+      unmount();
+    });
+
     it('should default open when nested child is active', () => {
       const { unmount } = render(
         <TableOfContents
