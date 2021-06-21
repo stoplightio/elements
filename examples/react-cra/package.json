@@ -12,7 +12,6 @@
   "dependencies": {
     "@stoplight/elements": "7.0.0-beta.6",
     "@stoplight/elements-dev-portal": "1.0.0-beta.3",
-    "mobx": "^6.3.2",
     "react": "^17.0.2"
   },
   "devDependencies": {

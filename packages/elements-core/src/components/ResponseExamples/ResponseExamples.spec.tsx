@@ -65,4 +65,13 @@ describe('Response Examples', () => {
 
     expect(select).not.toBeInTheDocument();
   });
+
+  it('does not show write only parameters in the response example', () => {
+    const { container } = render(
+      <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="204" />,
+    );
+
+    expect(container).not.toHaveTextContent('writeOnlyParamter');
+    expect(container).toHaveTextContent('someOtherParameter');
+  });
 });
