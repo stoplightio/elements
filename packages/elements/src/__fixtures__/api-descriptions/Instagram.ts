@@ -1847,5 +1847,13 @@ export const InstagramAPI = {
       },
       type: 'object',
     },
+    InternalObject: {
+      description: 'Cool object, but internal.',
+      type: 'object',
+      properties: {
+        a: { type: 'string' },
+      },
+      'x-internal': true,
+    },
   },
 };

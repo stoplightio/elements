@@ -79,6 +79,21 @@ describe('API', () => {
     expect(screen.getByText('If you see this, something went wrong')).toBeInTheDocument();
   });
 
+  it('displays internal models by default', () => {
+    const history = createMemoryHistory();
+    history.push('/schemas/InternalObject');
+
+    render(
+      <Router history={history}>
+        <Route path="/">
+          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} />
+        </Route>
+      </Router>,
+    );
+
+    expect(screen.getByText('Cool object, but internal.')).toBeInTheDocument();
+  });
+
   it('reroutes to main page on internal operation if hideInternal is on', () => {
     const history = createMemoryHistory();
     history.push('/paths/internal-operation/get');
@@ -92,6 +107,22 @@ describe('API', () => {
     );
 
     expect(screen.queryByText('If you see this, something went wrong')).not.toBeInTheDocument();
+    expect(history.location.pathname).toBe('/');
+  });
+
+  it('reroutes to main page on internal model if hideInternal is on', () => {
+    const history = createMemoryHistory();
+    history.push('/schemas/InternalObject');
+
+    render(
+      <Router history={history}>
+        <Route path="/">
+          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
+        </Route>
+      </Router>,
+    );
+
+    expect(screen.queryByText('Cool object, but internal.')).not.toBeInTheDocument();
     expect(history.location.pathname).toBe('/');
   });
 });
