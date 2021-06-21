@@ -11,10 +11,20 @@ type SidebarLayoutProps = {
   logo?: string;
   hideTryIt?: boolean;
   hideSchemas?: boolean;
+  hideInternal?: boolean;
 };
 
-export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({ serviceNode, logo, hideTryIt, hideSchemas }) => {
-  const tree = React.useMemo(() => computeAPITree(serviceNode, { hideSchemas }), [serviceNode, hideSchemas]);
+export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
+  serviceNode,
+  logo,
+  hideTryIt,
+  hideSchemas,
+  hideInternal,
+}) => {
+  const tree = React.useMemo(
+    () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
+    [serviceNode, hideSchemas, hideInternal],
+  );
   const location = useLocation();
   const { pathname } = location;
 

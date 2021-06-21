@@ -62,6 +62,12 @@ export interface CommonAPIProps extends RoutingProps {
    * Hides schemas from being displayed in Table of Contents
    */
   hideSchemas?: boolean;
+
+  /**
+   * Hides models and operations marked as internal
+   * @default false
+   */
+  hideInternal?: boolean;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -69,7 +75,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas } = props;
+  const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas, hideInternal } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { data: fetchedDocument, error } = useQuery(
@@ -127,7 +133,13 @@ const APIImpl: React.FC<APIProps> = props => {
       {layout === 'stacked' ? (
         <APIWithStackedLayout serviceNode={serviceNode} hideTryIt={hideTryIt} />
       ) : (
-        <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} hideTryIt={hideTryIt} hideSchemas={hideSchemas} />
+        <APIWithSidebarLayout
+          logo={logo}
+          serviceNode={serviceNode}
+          hideTryIt={hideTryIt}
+          hideSchemas={hideSchemas}
+          hideInternal={hideInternal}
+        />
       )}
     </InlineRefResolverProvider>
   );
