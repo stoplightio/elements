@@ -51,7 +51,7 @@
     "@stoplight/elements-core": "7.0.0-beta.9",
     "@stoplight/http-spec": "^4.0.1",
     "@stoplight/json": "^3.10.0",
-    "@stoplight/mosaic": "1.0.0-beta.66",
+    "@stoplight/mosaic": "^1",
     "@stoplight/types": "^12.0.0",
     "@stoplight/ui-kit": "^3.0.0-beta.39",
     "classnames": "^2.2.6",
