@@ -530,4 +530,33 @@ describe('computeAPITree', () => {
       },
     ]);
   });
+
+  it('allows to hide internal models from ToC', () => {
+    const apiDocument: OpenAPIObject = {
+      openapi: '3.0.0',
+      info: {
+        title: 'some api',
+        version: '1.0.0',
+        description: 'some description',
+      },
+      paths: {},
+      components: {
+        schemas: {
+          SomeInternalSchema: {
+            'x-internal': true,
+          },
+        },
+      },
+    };
+
+    expect(computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true })).toEqual([
+      {
+        id: '/',
+        meta: '',
+        slug: '/',
+        title: 'Overview',
+        type: 'overview',
+      },
+    ]);
+  });
 });

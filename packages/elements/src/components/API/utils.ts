@@ -118,7 +118,11 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     });
   }
 
-  const schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
+  let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
+  if (mergedConfig.hideInternal) {
+    schemaNodes = schemaNodes.filter(node => !node.data['x-internal']);
+  }
+
   if (!mergedConfig.hideSchemas && schemaNodes.length) {
     tree.push({
       title: 'Schemas',

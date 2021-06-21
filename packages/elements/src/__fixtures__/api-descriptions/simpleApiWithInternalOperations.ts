@@ -242,4 +242,12 @@ export const simpleApiWithInternalOperations = {
       },
     },
   },
+  definitions: {
+    InternalSchema: {
+      title: 'Internal Schema',
+      description: 'Fun Internal Schema',
+      schema: { type: 'object' },
+      'x-internal': true,
+    },
+  },
 };
