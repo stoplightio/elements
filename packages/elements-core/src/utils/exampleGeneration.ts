@@ -11,12 +11,17 @@ export type GenerateExampleFromMediaTypeContentOptions = Sampler.Options;
 export const useGenerateExampleFromMediaTypeContent = (
   mediaTypeContent: IMediaTypeContent | undefined,
   chosenExampleIndex?: number,
-  options?: GenerateExampleFromMediaTypeContentOptions,
+  { skipReadOnly, skipWriteOnly, skipNonRequired }: GenerateExampleFromMediaTypeContentOptions = {},
 ) => {
   const document = useDocument();
   return React.useMemo(
-    () => generateExampleFromMediaTypeContent(mediaTypeContent, document, chosenExampleIndex, options),
-    [mediaTypeContent, document, chosenExampleIndex, options],
+    () =>
+      generateExampleFromMediaTypeContent(mediaTypeContent, document, chosenExampleIndex, {
+        skipNonRequired,
+        skipWriteOnly,
+        skipReadOnly,
+      }),
+    [mediaTypeContent, document, chosenExampleIndex, skipNonRequired, skipReadOnly, skipWriteOnly],
   );
 };
 
