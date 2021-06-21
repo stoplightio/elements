@@ -22,12 +22,17 @@ export type NodeContentProps = {
   hideTryIt?: boolean;
 
   /**
+   * Allows to hide TryIt panel
+   */
+  hideTryItPanel?: boolean;
+
+  /**
    * Allows to hide mocking button
    */
   hideMocking?: boolean;
 };
 
-export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentProps) => {
+export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking }: NodeContentProps) => {
   return (
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
@@ -39,6 +44,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentP
                 nodeData={node.data}
                 nodeTitle={node.title}
                 hideTryIt={hideTryIt}
+                hideTryItPanel={hideTryItPanel}
                 useNodeForRefResolving
               />
             </Box>
