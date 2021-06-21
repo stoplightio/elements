@@ -21,7 +21,9 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
     userDefinedExamples = responseContents?.examples;
   }
 
-  const responseExample = useGenerateExampleFromMediaTypeContent(responseContents, chosenExampleIndex);
+  const responseExample = useGenerateExampleFromMediaTypeContent(responseContents, chosenExampleIndex, {
+    skipWriteOnly: true,
+  });
 
   if (!userDefinedExamples && responseMediaType !== 'application/json') return null;
 

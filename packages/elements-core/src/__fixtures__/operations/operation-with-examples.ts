@@ -68,6 +68,25 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      code: '204',
+      contents: [
+        {
+          mediaType: 'application/json',
+          schema: {
+            properties: {
+              writeOnlyParameter: {
+                type: 'string',
+                writeOnly: true,
+              },
+              someOtherParameter: {
+                type: 'string',
+              },
+            },
+          },
+        },
+      ],
+    },
+    {
       code: '404',
       contents: [
         {
