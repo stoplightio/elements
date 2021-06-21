@@ -74,7 +74,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
   return props.hasOwnProperty('apiDescriptionDocument');
 };
 
-const APIImpl: React.FC<APIProps> = props => {
+export const APIImpl: React.FC<APIProps> = props => {
   const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas, hideInternal } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 

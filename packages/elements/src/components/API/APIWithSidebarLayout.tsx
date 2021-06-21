@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
-import { computeAPITree, findFirstNodeSlug } from './utils';
+import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
@@ -38,6 +38,10 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     if (firstSlug) {
       return <Redirect to={firstSlug} />;
     }
+  }
+
+  if (hideInternal && node && isInternal(node)) {
+    return <Redirect to="/" />;
   }
 
   const sidebar = (

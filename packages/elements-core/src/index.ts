@@ -29,6 +29,7 @@ export { useRouter } from './hooks/useRouter';
 export { useTocContents } from './hooks/useTocContents';
 export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from './types';
+export { isHttpOperation, isHttpService } from './utils/guards';
 export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
 export { createResolvedObject } from './utils/ref-resolving/resolvedObject';
 export { createElementClass } from './web-components/createElementClass';

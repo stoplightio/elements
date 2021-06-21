@@ -1106,6 +1106,12 @@ export const InstagramAPI = {
         tags: ['users'],
       },
     },
+    '/internal/operation': {
+      get: {
+        description: 'If you see this, something went wrong',
+        'x-internal': true,
+      },
+    },
     '/users/{user-id}/relationship': {
       get: {
         description: 'Get information about a relationship to another user.',

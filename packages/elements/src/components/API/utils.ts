@@ -1,8 +1,8 @@
-import { TableOfContentsItem } from '@stoplight/elements-core';
+import { isHttpOperation, isHttpService, TableOfContentsItem } from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
-import { OperationNode, ServiceNode } from '../../utils/oas/types';
+import { OperationNode, ServiceChildNode, ServiceNode } from '../../utils/oas/types';
 
 export type TagGroup = { title: string; items: OperationNode[] };
 
@@ -153,4 +153,18 @@ export const findFirstNodeSlug = (tree: TableOfContentsItem[]): string | void =>
   }
 
   return;
+};
+
+export const isInternal = (node: ServiceChildNode | ServiceNode): boolean => {
+  const data = node.data;
+
+  if (isHttpOperation(data)) {
+    return !!data.internal;
+  }
+
+  if (isHttpService(data)) {
+    return false;
+  }
+
+  return !!data['x-internal'];
 };
