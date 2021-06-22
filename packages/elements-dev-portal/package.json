@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-dev-portal",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -46,8 +46,8 @@
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
-    "@stoplight/elements-core": "7.0.0-beta.9",
-    "@stoplight/mosaic": "1.0.0-beta.58",
+    "@stoplight/elements-core": "7.0.0-beta.10",
+    "@stoplight/mosaic": "^1",
     "@stoplight/path": "^1.3.2",
     "@stoplight/types": "^12.0.0",
     "classnames": "^2.2.6",
