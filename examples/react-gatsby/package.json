@@ -20,7 +20,7 @@
     "@stoplight/elements": "7.0.0-beta.7",
     "@stoplight/elements-dev-portal": "1.0.0-beta.5",
     "canvas": "^2.8.0",
-    "gatsby": "^3.7.1",
+    "gatsby": "^3.7.2",
     "gatsby-image": "^3.7.1",
     "gatsby-plugin-manifest": "^3.7.1",
     "gatsby-plugin-offline": "^4.7.1",
