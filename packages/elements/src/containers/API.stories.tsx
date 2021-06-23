@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
+import { simpleApiWithParameterExamples } from '../__fixtures__/api-descriptions/simpleApiWithParameterExamples';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
 
@@ -50,6 +51,12 @@ APIWithInternalOperations.args = {
   apiDescriptionDocument: simpleApiWithInternalOperations,
 };
 APIWithInternalOperations.storyName = 'API With Internal Operations';
+
+export const APIWithParameterExamples = Template.bind({});
+APIWithParameterExamples.args = {
+  apiDescriptionDocument: simpleApiWithParameterExamples,
+};
+APIWithParameterExamples.storyName = 'API With Parameter Examples';
 
 export const StackedLayout = Template.bind({});
 StackedLayout.args = {
