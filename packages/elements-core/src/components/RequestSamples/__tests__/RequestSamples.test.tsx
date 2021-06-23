@@ -95,12 +95,12 @@ async function chooseLanguage(language: string, library?: string) {
   const langSelector = getLanguageSelectorButton();
   userEvent.click(langSelector);
 
-  const menuItem = await screen.findByRole('menuitem', { name: language });
+  const menuItem = await screen.findByRole('menuitemcheckbox', { name: language });
   if (!library) {
     userEvent.click(menuItem);
   } else {
     userEvent.hover(menuItem);
-    const subMenuItem = await screen.findByRole('menuitem', { name: library });
+    const subMenuItem = await screen.findByRole('menuitemcheckbox', { name: library });
     userEvent.click(subMenuItem);
   }
 }

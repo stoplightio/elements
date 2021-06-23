@@ -1,4 +1,4 @@
-import { Flex, useIconStore } from '@stoplight/mosaic';
+import { Flex, Provider as MosaicProvider, useIconStore } from '@stoplight/mosaic';
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -38,11 +38,13 @@ export function App() {
   });
 
   return (
-    <GlobalContext.Provider value={globalState}>
-      <Flex direction="col" bg="canvas" h="screen">
-        <DemoNavbar />
-        <ElementsAPI />
-      </Flex>
-    </GlobalContext.Provider>
+    <MosaicProvider>
+      <GlobalContext.Provider value={globalState}>
+        <Flex direction="col" bg="canvas" h="screen">
+          <DemoNavbar />
+          <ElementsAPI />
+        </Flex>
+      </GlobalContext.Provider>
+    </MosaicProvider>
   );
 }

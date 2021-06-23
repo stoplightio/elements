@@ -42,7 +42,7 @@ const BranchSelectorWrapper: React.FC = () => {
 };
 
 function getBranchSelector() {
-  return screen.getByLabelText('Branch');
+  return screen.getByRole('button');
 }
 
 describe('Branch selector', () => {
@@ -56,7 +56,7 @@ describe('Branch selector', () => {
     render(<BranchSelectorWrapper />);
 
     userEvent.click(getBranchSelector());
-    userEvent.selectOptions(screen.getByRole('listbox'), screen.getByRole('option', { name: 'beta' }));
+    userEvent.click(screen.getByRole('menuitemradio', { name: 'beta' }));
 
     expect(getBranchSelector()).toHaveTextContent('beta');
   });

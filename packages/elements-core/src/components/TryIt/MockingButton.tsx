@@ -1,6 +1,5 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { Box, Button, Icon, Menu, MenuDivider, MenuItem } from '@stoplight/mosaic';
-import { IHttpOperation } from '@stoplight/types';
+import { Box, Button, Menu, MenuActionItem, MenuItems, MenuItemWithSubmenu } from '@stoplight/mosaic';
+import { IHttpOperation, IHttpOperationResponse } from '@stoplight/types';
 import { uniq } from 'lodash';
 import * as React from 'react';
 
@@ -23,88 +22,95 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
 
   const operationResponses = operation.responses;
 
-  const setMockingOptions = ({ code, example, dynamic }: Omit<MockingOptions, 'isEnabled'>) => {
-    onOptionsChange({ isEnabled, code, example, dynamic });
-  };
+  const setMockingOptions = React.useCallback(
+    ({ code, example, dynamic }: Omit<MockingOptions, 'isEnabled'>) => {
+      onOptionsChange({ isEnabled, code, example, dynamic });
+    },
+    [isEnabled, onOptionsChange],
+  );
+
+  const menuItems = React.useMemo(() => {
+    const items: MenuItems = [
+      { id: 'mocking-enabled', title: 'Enabled', isChecked: isEnabled, onPress: toggleEnabled },
+      {
+        type: 'group',
+        children: operationResponses
+          ?.filter(operationResponse => Number.isInteger(parseFloat(operationResponse.code)))
+          ?.map(generateOperationResponseMenu),
+      },
+    ];
+
+    function generateOperationResponseMenu(operationResponse: IHttpOperationResponse) {
+      const menuId = `response-${operationResponse.code}`;
+      const isActive = operationResponse.code === code;
+      const exampleKeys = uniq(operationResponse.contents?.flatMap(c => c.examples || []).map(example => example.key));
+
+      const exampleChildren: MenuActionItem[] = exampleKeys?.map(exampleKey => ({
+        id: `${menuId}-example-${exampleKey}`,
+        title: exampleKey,
+        isChecked: isActive && exampleKey === example,
+        onPress: () => {
+          setMockingOptions({ code: operationResponse.code, example: exampleKey });
+        },
+      }));
+
+      const generationModeItems: MenuActionItem[] = [
+        {
+          id: `${menuId}-gen-static`,
+          title: 'Statically Generated',
+          isChecked: isActive && dynamic === false,
+          onPress: () => {
+            setMockingOptions({ code: operationResponse.code, dynamic: false });
+          },
+        },
+        {
+          id: `${menuId}-gen-dynamic`,
+          title: 'Dynamically Generated',
+          isChecked: isActive && dynamic === true,
+          onPress: () => {
+            setMockingOptions({ code: operationResponse.code, dynamic: true });
+          },
+        },
+      ];
+
+      const menuItem: MenuItemWithSubmenu = {
+        id: menuId,
+        isDisabled: !isEnabled,
+        isChecked: isActive,
+        title: operationResponse.code,
+        onPress: () => {
+          setMockingOptions({ code: operationResponse.code, dynamic: false });
+        },
+        children: [
+          { type: 'group', children: generationModeItems },
+          { type: 'group', title: 'Examples', children: exampleChildren },
+        ],
+      };
+
+      return menuItem;
+    }
+
+    return items;
+  }, [code, dynamic, example, isEnabled, operationResponses, setMockingOptions, toggleEnabled]);
 
   return (
     <Box>
       <Menu
-        trigger={
-          <Button iconRight="caret-down" appearance="minimal" ml={3} size="sm">
-            <Box
-              as={Icon}
-              icon={faCheck}
-              mr={2}
-              color="success-darker"
-              style={{ width: isEnabled ? 12 : 0, transition: 'width 0.5s' }}
-            />
+        aria-label="Mocking"
+        items={menuItems}
+        renderTrigger={({ isOpen }) => (
+          <Button
+            iconRight="chevron-down"
+            icon={isEnabled ? 'check' : undefined}
+            appearance={isEnabled ? 'primary' : 'minimal'}
+            ml={2}
+            active={isOpen}
+            size="sm"
+          >
             Mocking
           </Button>
-        }
-      >
-        <MenuItem indent text="Enabled" checked={isEnabled} onClick={toggleEnabled} />
-        <MenuDivider />
-        {operationResponses
-          ?.filter(operationResponse => Number.isInteger(parseFloat(operationResponse.code)))
-          ?.map(operationResponse => {
-            const isActive = operationResponse.code === code;
-            const exampleKeys = uniq(
-              operationResponse.contents?.flatMap(c => c.examples || []).map(example => example.key),
-            );
-
-            const exampleChildren = exampleKeys?.map(exampleKey => (
-              <MenuItem
-                checked={isActive && exampleKey === example}
-                indent
-                text={exampleKey}
-                key={exampleKey}
-                onClick={() => {
-                  setMockingOptions({ code: operationResponse.code, example: exampleKey });
-                }}
-              />
-            ));
-
-            const generationModeItems = (
-              <>
-                <MenuItem
-                  text="Statically Generated"
-                  checked={isActive && dynamic === false}
-                  indent
-                  onClick={() => {
-                    setMockingOptions({ code: operationResponse.code, dynamic: false });
-                  }}
-                />
-                <MenuItem
-                  text="Dynamically Generated"
-                  checked={isActive && dynamic === true}
-                  indent
-                  onClick={() => {
-                    setMockingOptions({ code: operationResponse.code, dynamic: true });
-                  }}
-                />
-              </>
-            );
-
-            return (
-              <MenuItem
-                disabled={!isEnabled}
-                checked={isActive}
-                indent
-                text={operationResponse.code}
-                key={operationResponse.code}
-                onClick={() => {
-                  setMockingOptions({ code: operationResponse.code, dynamic: false });
-                }}
-              >
-                {generationModeItems}
-                {exampleChildren}
-              </MenuItem>
-            );
-          })}
-        <MenuDivider />
-        <MenuItem indent text="Learn About Mocking" href="https://stoplight.io/api-mocking/" />
-      </Menu>
+        )}
+      />
     </Box>
   );
 };
