@@ -49,7 +49,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@stoplight/elements-core": "7.0.0-beta.10",
-    "@stoplight/http-spec": "^4.0.1",
+    "@stoplight/http-spec": "^9999.9999.9998",
     "@stoplight/json": "^3.10.0",
     "@stoplight/mosaic": "^1",
     "@stoplight/types": "^12.0.0",
