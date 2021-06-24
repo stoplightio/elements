@@ -5,6 +5,8 @@ import { Dictionary, HttpParamStyles, IHttpParam } from '@stoplight/types';
 import { get, isEmpty, omit, omitBy, sortBy } from 'lodash';
 import * as React from 'react';
 
+import { isNodeExample } from '../../../utils/http-spec/examples';
+
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';
 
 interface ParametersProps {
@@ -62,11 +64,18 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   const validations = omitBy(
     {
-      ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style']),
+      ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style', 'examples']),
       ...omit(get(parameter, 'schema'), ['description', 'type', 'deprecated']),
+      examples: parameter.examples?.map(example => {
+        if (isNodeExample(example)) {
+          return example.value;
+        }
+
+        return example.externalValue;
+      }),
     },
     // Remove empty arrays and objects
-    value => typeof value === 'object' && isEmpty(value),
+    value => (typeof value === 'object' && isEmpty(value)) || typeof value === 'undefined',
   ) as Dictionary<unknown, string>;
 
   return (
