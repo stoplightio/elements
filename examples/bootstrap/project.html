@@ -23,7 +23,7 @@
 
     <header>
       <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Fixed navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -51,7 +51,7 @@
     <!-- Begin page content -->
     <main role="main"">
       <elements-stoplight-project 
-        projectId="cHJqOjYyNTgw"
+        projectId="cHJqOjYwNjYx"
         router="hash"
       ></elements-stoplight-project>
     </main>
@@ -61,6 +61,19 @@
         <span class="text-muted">Awesome footer goes here.</span>
       </div>
     </footer>
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      main {
+        flex: 1 0 0;
+        overflow: hidden;
+      }
+    </style>
 
   </body>
 </html>
