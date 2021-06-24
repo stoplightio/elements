@@ -1,8 +1,8 @@
-import { TableOfContentsItem } from '@stoplight/elements-core';
+import { isHttpOperation, isHttpService, TableOfContentsItem } from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
-import { OperationNode, ServiceNode } from '../../utils/oas/types';
+import { OperationNode, ServiceChildNode, ServiceNode } from '../../utils/oas/types';
 
 export type TagGroup = { title: string; items: OperationNode[] };
 
@@ -54,10 +54,12 @@ export const computeTagGroups = (serviceNode: ServiceNode) => {
 
 interface ComputeAPITreeConfig {
   hideSchemas?: boolean;
+  hideInternal?: boolean;
 }
 
 const defaultComputerAPITreeConfig = {
   hideSchemas: false,
+  hideInternal: false,
 };
 
 export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
@@ -85,6 +87,9 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
 
     // Show ungroupped operations above tag groups
     ungrouped.forEach(operationNode => {
+      if (mergedConfig.hideInternal && operationNode.data.internal) {
+        return;
+      }
       tree.push({
         id: operationNode.uri,
         slug: operationNode.uri,
@@ -97,7 +102,10 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     groups.forEach(group => {
       tree.push({
         title: group.title,
-        items: group.items.map(operationNode => {
+        items: group.items.flatMap(operationNode => {
+          if (mergedConfig.hideInternal && operationNode.data.internal) {
+            return [];
+          }
           return {
             id: operationNode.uri,
             slug: operationNode.uri,
@@ -110,7 +118,11 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     });
   }
 
-  const schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
+  let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
+  if (mergedConfig.hideInternal) {
+    schemaNodes = schemaNodes.filter(node => !node.data['x-internal']);
+  }
+
   if (!mergedConfig.hideSchemas && schemaNodes.length) {
     tree.push({
       title: 'Schemas',
@@ -145,4 +157,18 @@ export const findFirstNodeSlug = (tree: TableOfContentsItem[]): string | void =>
   }
 
   return;
+};
+
+export const isInternal = (node: ServiceChildNode | ServiceNode): boolean => {
+  const data = node.data;
+
+  if (isHttpOperation(data)) {
+    return !!data.internal;
+  }
+
+  if (isHttpService(data)) {
+    return false;
+  }
+
+  return !!data['x-internal'];
 };
