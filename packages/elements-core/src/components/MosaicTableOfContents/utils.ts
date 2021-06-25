@@ -70,25 +70,10 @@ export function isGroup(item: TableOfContentsItem): item is TableOfContentsGroup
   return Object.keys(item).length === 2 && 'title' in item && 'items' in item;
 }
 export function isNodeGroup(item: TableOfContentsItem): item is TableOfContentsNodeGroup {
-  return (
-    Object.keys(item).length === 6 &&
-    'title' in item &&
-    'items' in item &&
-    'slug' in item &&
-    'id' in item &&
-    'meta' in item &&
-    'type' in item
-  );
+  return 'title' in item && 'items' in item && 'slug' in item && 'id' in item && 'meta' in item && 'type' in item;
 }
 export function isNode(item: TableOfContentsItem): item is TableOfContentsNode {
-  return (
-    Object.keys(item).length === 5 &&
-    'title' in item &&
-    'slug' in item &&
-    'id' in item &&
-    'meta' in item &&
-    'type' in item
-  );
+  return 'title' in item && 'slug' in item && 'id' in item && 'meta' in item && 'type' in item;
 }
 export function isExternalLink(item: TableOfContentsItem): item is TableOfContentsExternalLink {
   return Object.keys(item).length === 2 && 'title' in item && 'url' in item;

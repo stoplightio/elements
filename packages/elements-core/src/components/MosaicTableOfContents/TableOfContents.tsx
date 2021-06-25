@@ -1,4 +1,4 @@
-import { Box, Flex, Icon } from '@stoplight/mosaic';
+import { Badge, Box, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { NODE_META_COLOR, NODE_TYPE_ICON_COLOR, NODE_TYPE_META_ICON, NODE_TYPE_TITLE_ICON } from './constants';
@@ -99,7 +99,10 @@ const GroupItem = React.memo<{
             </Box>
           ) : (
             NODE_TYPE_META_ICON[item.type] && (
-              <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_META_ICON[item.type]} />
+              <Flex alignItems="center">
+                {item.version && <Version value={item.version} />}
+                <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_META_ICON[item.type]} />
+              </Flex>
             )
           )
         }
@@ -126,18 +129,21 @@ const Group = React.memo<{
   };
 
   const meta = (
-    <Box
-      as={Icon}
-      icon={['fas', isOpen ? 'chevron-down' : 'chevron-right']}
-      color="muted"
-      fixedWidth
-      onClick={(e: React.MouseEvent) => {
-        // Don't propagate event when clicking icon
-        e.stopPropagation();
-        e.preventDefault();
-        onClick(e);
-      }}
-    />
+    <Flex alignItems="center">
+      {isNodeGroup(item) && item.version && <Version value={item.version} />}
+      <Box
+        as={Icon}
+        icon={['fas', isOpen ? 'chevron-down' : 'chevron-right']}
+        color="muted"
+        fixedWidth
+        onClick={(e: React.MouseEvent) => {
+          // Don't propagate event when clicking icon
+          e.stopPropagation();
+          e.preventDefault();
+          onClick(e);
+        }}
+      />
+    </Flex>
   );
 
   let elem;
@@ -236,3 +242,13 @@ const Node = React.memo<{
     </Box>
   );
 });
+
+const Version: React.FC<{ value: string }> = ({ value }) => {
+  return (
+    <Box mr={2}>
+      <Badge appearance="outline" intent="warning">
+        v{value}
+      </Badge>
+    </Box>
+  );
+};
