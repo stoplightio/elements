@@ -13,6 +13,7 @@ Available as React Components, or Web Components, you can use Elements all toget
 
 - [Overview](#overview)
   - [📖 Community](#-community)
+  - [Templates](#-templates)
   - [👁️🗨 ️️Examples](#️-️️examples)
   - [🏁 Usage](#-usage)
     - [React Component](#react-component)
@@ -26,6 +27,17 @@ Available as React Components, or Web Components, you can use Elements all toget
 ## 📖 Community
 
 Let's chat about features, ideas, what you're doing with Elements, on [GitHub Discussions](https://github.com/stoplightio/elements/discussions).
+
+## Templates
+
+Stoplight Elements and Elements Dev Portal come with templates which allow you to create a new documentation website by executing a single command line.
+
+### Create React App Templates
+
+In order to create a new React documentation website, run:
+
+- `npx create-react-app my-dir --template @stoplight/elements` for Elements,
+- `npx create-react-app my-dir --tempalte @stoplight/elements-dev-portal` for Elements Dev Portal.
 
 ## 👁️🗨 ️️Examples
 
