@@ -3,7 +3,7 @@ import {
   PoweredByLink,
   TableOfContents as ElementsTableOfContents,
 } from '@stoplight/elements-core';
-import { Box, BoxProps } from '@stoplight/mosaic';
+import { BoxProps, Flex } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { ProjectTableOfContents } from '../../types';
@@ -23,13 +23,15 @@ export const TableOfContents = ({
   ...boxProps
 }: TableOfContentsProps) => {
   return (
-    <Box bg="canvas-100" {...boxProps}>
-      <ElementsTableOfContents
-        tree={tableOfContents.items}
-        activeId={activeId}
-        Link={Link}
-        maxDepthOpenByDefault={collapseTableOfContents ? 0 : 1}
-      />
+    <Flex bg="canvas-100" {...boxProps} flexDirection="col" maxH="full">
+      <Flex flexGrow flexShrink overflowY="auto">
+        <ElementsTableOfContents
+          tree={tableOfContents.items}
+          activeId={activeId}
+          Link={Link}
+          maxDepthOpenByDefault={collapseTableOfContents ? 0 : 1}
+        />
+      </Flex>
 
       {tableOfContents.hide_powered_by ? null : (
         <PoweredByLink
@@ -38,6 +40,6 @@ export const TableOfContents = ({
           packageType="elements-dev-portal"
         />
       )}
-    </Box>
+    </Flex>
   );
 };

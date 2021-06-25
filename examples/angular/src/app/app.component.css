@@ -25,8 +25,15 @@ p {
   flex: 1;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .docs {
-  height: calc(100vh - 60px);
+  flex: 1 0 0;
+  overflow: hidden;
 }
 
 .toolbar {
