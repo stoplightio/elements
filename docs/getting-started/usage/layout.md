@@ -41,5 +41,5 @@ If you have some additional components above and/or below `API`, you can use a f
 
 Note that those are only our recommendations. You can use any other HTML/CSS approaches to limit the height of `API` component.
 
-Also, you don't *have to* limit the height. Tthe `API` component without any additional styling will still work 100% correctly and look aesthetic. You just won't get the "two scrollbars" functionality.
+Also, you don't *have to* limit the height. The `API` component without any additional styling will still work 100% correctly and look aesthetic. You just won't get the "two scrollbars" functionality.
 
