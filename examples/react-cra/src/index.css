@@ -39,7 +39,7 @@ code {
   height: 100vh;
 }
 
-.main-content {
+main {
   flex: 1 0 0;
   overflow: hidden;
 }
