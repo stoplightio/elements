@@ -18,11 +18,11 @@
     "url": "https://github.com/stoplightio/elements-starter-angular/issues"
   },
   "dependencies": {
-    "@angular/animations": "12.0.4",
+    "@angular/animations": "12.1.0",
     "@angular/common": "12.0.4",
     "@angular/compiler": "12.0.4",
     "@angular/core": "12.0.4",
-    "@angular/forms": "12.0.4",
+    "@angular/forms": "12.1.0",
     "@angular/platform-browser": "12.0.4",
     "@angular/platform-browser-dynamic": "12.0.4",
     "@angular/router": "12.0.4",
