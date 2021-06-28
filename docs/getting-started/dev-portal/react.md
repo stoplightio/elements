@@ -2,6 +2,16 @@
 
 Learn how to quickly get started with Elements Dev Portal in a React project.
 
+## Create React App Template
+
+We've created a Create React App template, which allows you to create a brand new Elements Dev Portal website in React without any additional setup.
+
+Simply run:
+
+`npx create-react-app my-dir --template @stoplight/elements-dev-portal`.
+
+Then run `cd my-dir` and `yarn start` and you will see a basic Elements Dev Portal website in the browser.
+
 ## Usage
 
 1. First, install the elements-dev-portal package with NPM/Yarn.
