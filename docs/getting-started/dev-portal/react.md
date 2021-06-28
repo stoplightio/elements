@@ -4,17 +4,21 @@ Learn how to quickly get started with Elements Dev Portal in a React project.
 
 ## Create React App Template
 
-We've created a Create React App template, which allows you to create a brand new Elements Dev Portal website in React without any additional setup.
+We've created a [Create React App template](https://github.com/stoplightio/cra-template-elements-dev-portal), which allows you to create a brand new Elements Dev Portal website in React without any additional setup.
 
-Simply run:
-
-`npx create-react-app my-dir --template @stoplight/elements-dev-portal`.
+```bash
+npx create-react-app my-dir --template @stoplight/elements-dev-portal
+```
 
 Then run `cd my-dir` and `yarn start` and you will see a basic Elements Dev Portal website in the browser.
 
-## Usage
+The project loaded is based on `https://github.com/stoplightio/studio-demo`, but you can follow the instructions below to change your `projectId` and load up your own projects.
 
-1. First, install the elements-dev-portal package with NPM/Yarn.
+## Manual Setup
+
+To install Elements Dev Portal in an existing React app, follow these instructions.
+
+1. Install the [@stoplight/elements-dev-portal](https://www.npmjs.com/package/@stoplight/elements-dev-portal) package with NPM/Yarn.
 
 ```bash
 yarn add @stoplight/elements-dev-portal
@@ -76,9 +80,6 @@ And you should see the API reference documentation for the Zoom API!
 - `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
 - `hideMocking` - Pass `true` to disable all mocking options and remove mention of the mock server.
 - `hideTryIt` - Pass `true` to hide the "Try It" panel (the interactive API console).
-- `layout` - There are two layouts for Elements:
-  - `sidebar` - (default) Three-column design.
-  - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
 - `router` -  Determines how navigation should work:
   - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
   - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
