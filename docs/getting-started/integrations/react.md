@@ -2,6 +2,16 @@
 
 Learn how to quickly get started with Elements in a React project.
 
+## Create React App Template
+
+We've created a Create React App template, which allows you to create a brand new Elements website in React without any additional setup.
+
+Simply run:
+
+`npx create-react-app my-dir --template @stoplight/elements`.
+
+Then run `cd my-dir` and `yarn start` and you will see a basic Elements website in the browser.
+
 ## Using Elements in ReactJS
 
 First, install the Elements package with NPM/Yarn.
