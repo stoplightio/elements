@@ -1,11 +1,27 @@
 import '@testing-library/jest-dom';
 
+import {
+  withMosaicProvider,
+  withPersistenceBoundary,
+  withQueryClientProvider,
+  withStyles,
+} from '@stoplight/elements-core';
 import { render, screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { pipe } from 'lodash/fp';
 import * as React from 'react';
+import { Route, Router } from 'react-router';
 
 import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
-import { API } from './API';
+import { API, APIImpl } from './API';
+
+export const APIWithoutRouter = pipe(
+  withStyles,
+  withPersistenceBoundary,
+  withMosaicProvider,
+  withQueryClientProvider,
+)(APIImpl);
 
 describe('API', () => {
   const APIDocument = {
@@ -47,5 +63,66 @@ describe('API', () => {
 
     expect(screen.queryByAltText('instagram-logo')).not.toBeInTheDocument();
     expect(await screen.findByAltText('logo')).toBeInTheDocument();
+  });
+
+  it('displays internal operations by default', () => {
+    const history = createMemoryHistory();
+    history.push('/paths/internal-operation/get');
+    render(
+      <Router history={history}>
+        <Route path="/">
+          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} />
+        </Route>
+      </Router>,
+    );
+
+    expect(screen.getByText('If you see this, something went wrong')).toBeInTheDocument();
+  });
+
+  it('displays internal models by default', () => {
+    const history = createMemoryHistory();
+    history.push('/schemas/InternalObject');
+
+    render(
+      <Router history={history}>
+        <Route path="/">
+          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} />
+        </Route>
+      </Router>,
+    );
+
+    expect(screen.getByText('Cool object, but internal.')).toBeInTheDocument();
+  });
+
+  it('reroutes to main page on internal operation if hideInternal is on', () => {
+    const history = createMemoryHistory();
+    history.push('/paths/internal-operation/get');
+
+    render(
+      <Router history={history}>
+        <Route path="/">
+          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
+        </Route>
+      </Router>,
+    );
+
+    expect(screen.queryByText('If you see this, something went wrong')).not.toBeInTheDocument();
+    expect(history.location.pathname).toBe('/');
+  });
+
+  it('reroutes to main page on internal model if hideInternal is on', () => {
+    const history = createMemoryHistory();
+    history.push('/schemas/InternalObject');
+
+    render(
+      <Router history={history}>
+        <Route path="/">
+          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
+        </Route>
+      </Router>,
+    );
+
+    expect(screen.queryByText('Cool object, but internal.')).not.toBeInTheDocument();
+    expect(history.location.pathname).toBe('/');
   });
 });

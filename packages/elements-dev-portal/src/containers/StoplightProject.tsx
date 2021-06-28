@@ -27,7 +27,7 @@ import { useGetTableOfContents } from '../hooks/useGetTableOfContents';
 export interface StoplightProjectProps extends RoutingProps {
   /**
    * The ID of the Stoplight Project.
-   * @example "cHJqOjExOTY"
+   * @example "d2s6NDE1NTU"
    */
   projectId: string;
   /**
@@ -45,9 +45,20 @@ export interface StoplightProjectProps extends RoutingProps {
    * Allows to hide mocking button
    */
   hideMocking?: boolean;
+
+  /**
+   * If set to true, all table of contents panels will be collapsed.
+   * @default false
+   */
+  collapseTableOfContents?: boolean;
 }
 
-const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hideTryIt, hideMocking }) => {
+const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
+  projectId,
+  hideTryIt,
+  hideMocking,
+  collapseTableOfContents = false,
+}) => {
   const { branchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
   const history = useHistory();
 
@@ -100,7 +111,12 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, hide
             />
           ) : null}
           {tableOfContents ? (
-            <TableOfContents activeId={node?.id || ''} tableOfContents={tableOfContents} Link={Link} />
+            <TableOfContents
+              activeId={node?.id || ''}
+              tableOfContents={tableOfContents}
+              Link={Link}
+              collapseTableOfContents={collapseTableOfContents}
+            />
           ) : null}
         </>
       }

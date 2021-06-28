@@ -7,15 +7,20 @@ import { isProperUrl } from '../../../utils/guards';
 import { getServerUrlWithDefaultValues } from '../../../utils/http-spec/IServer';
 
 interface ServerInfoProps {
-  servers?: IServer[];
+  servers: IServer[];
   mockUrl?: string;
 }
 
 export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   const mocking = React.useContext(MockingContext);
   const showMocking = !mocking.hideMocking && mockUrl && isProperUrl(mockUrl);
-  const productionServer = servers?.[0];
+  const productionServer = servers[0];
   const productionUrl = productionServer && getServerUrlWithDefaultValues(productionServer);
+  const showProductionUrl = productionUrl && isProperUrl(productionUrl);
+
+  if (!showMocking && !showProductionUrl) {
+    return null;
+  }
 
   return (
     <InvertTheme>
@@ -23,7 +28,7 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Box overflowX="auto">
           <Panel.Content w="max" className="sl-flex sl-flex-col">
-            {productionUrl && isProperUrl(productionUrl) && (
+            {showProductionUrl && (
               <Box whitespace="nowrap">
                 {showMocking && (
                   <Text pr={2} fontWeight="bold">

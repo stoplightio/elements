@@ -1,8 +1,8 @@
-import { Box, Button, CopyButton, Menu, MenuItem, Panel } from '@stoplight/mosaic';
+import { Box, Button, CopyButton, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import { atom, useAtom } from 'jotai';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
@@ -36,52 +36,53 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
 
   const requestSample = convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request);
 
+  const menuItems = useMemo(() => {
+    const items: MenuItems = Object.entries(requestSampleConfigs).map(([language, config]) => {
+      const hasLibraries = config.libraries && Object.keys(config.libraries).length > 0;
+      return {
+        id: language,
+        title: language,
+        isChecked: selectedLanguage === language,
+        onPress: hasLibraries
+          ? undefined
+          : () => {
+              setSelectedLanguage(language);
+              setSelectedLibrary('');
+            },
+        children: config.libraries
+          ? Object.keys(config.libraries).map(library => ({
+              id: `${language}-${library}`,
+              title: library,
+              isChecked: selectedLanguage === language && selectedLibrary === library,
+              onPress: () => {
+                setSelectedLanguage(language);
+                setSelectedLibrary(library);
+              },
+            }))
+          : undefined,
+      };
+    });
+
+    return items;
+  }, [selectedLanguage, selectedLibrary, setSelectedLanguage, setSelectedLibrary]);
+
   return (
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
         <Box ml={-2}>
           <Menu
-            label="Request Sample Language"
-            trigger={
-              <Button size="sm" iconRight="caret-down" appearance="minimal">
+            aria-label="Request Sample Language"
+            closeOnPress
+            items={menuItems}
+            renderTrigger={({ isOpen }) => (
+              <Button size="sm" iconRight="chevron-down" appearance="minimal" active={isOpen}>
                 Request Sample: {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
               </Button>
-            }
-          >
-            {Object.entries(requestSampleConfigs).map(([language, config]) => {
-              const hasLibraries = config.libraries && Object.keys(config.libraries).length > 0;
-              return (
-                <MenuItem
-                  key={language}
-                  indent
-                  text={language}
-                  onClick={
-                    hasLibraries
-                      ? undefined
-                      : () => {
-                          setSelectedLanguage(language);
-                          setSelectedLibrary('');
-                        }
-                  }
-                >
-                  {hasLibraries &&
-                    Object.keys(config.libraries!).map(library => (
-                      <MenuItem
-                        key={library}
-                        text={library}
-                        indent
-                        onClick={() => {
-                          setSelectedLanguage(language);
-                          setSelectedLibrary(library);
-                        }}
-                      />
-                    ))}
-                </MenuItem>
-              );
-            })}
-          </Menu>
+            )}
+          />
         </Box>
       </Panel.Titlebar>
+
       <Panel.Content p={0}>
         <CodeViewer
           aria-label={requestSample ?? fallbackText}

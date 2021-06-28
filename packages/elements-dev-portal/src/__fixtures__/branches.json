@@ -1,0 +1,26 @@
+[
+  {
+    "id": "YnI6NDc4MDUy",
+    "name": null,
+    "slug": "master",
+    "is_default": true,
+    "is_published": true,
+    "project_id": "cHJqOjM1ODEw"
+  },
+  {
+    "id": "YnI6OTYwNDM4",
+    "name": null,
+    "slug": "v2",
+    "is_default": false,
+    "is_published": true,
+    "project_id": "cHJqOjM1ODEw"
+  },
+  {
+    "id": "YnI6OTYwNDM5",
+    "name": null,
+    "slug": "feat/toc-file",
+    "is_default": false,
+    "is_published": true,
+    "project_id": "cHJqOjM1ODEw"
+  }
+]

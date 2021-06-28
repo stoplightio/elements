@@ -2,6 +2,7 @@ import { parse } from '@stoplight/yaml';
 import { Story } from '@storybook/react';
 import * as React from 'react';
 
+import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
@@ -43,6 +44,12 @@ APIWithoutDescription.args = {
   apiDescriptionDocument: simpleApiWithoutDescription,
 };
 APIWithoutDescription.storyName = 'API Without Description';
+
+export const APIWithInternalOperations = Template.bind({});
+APIWithInternalOperations.args = {
+  apiDescriptionDocument: simpleApiWithInternalOperations,
+};
+APIWithInternalOperations.storyName = 'API With Internal Operations';
 
 export const StackedLayout = Template.bind({});
 StackedLayout.args = {

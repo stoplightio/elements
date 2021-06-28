@@ -31,7 +31,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
         direction="col"
         bg="canvas-100"
         borderR
-        pt={5}
+        pt={8}
         pos="sticky"
         pinY
         overflowY="auto"
@@ -45,7 +45,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
       </Flex>
 
       <Box ref={scrollRef} bg="canvas" px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
-        <Box style={{ maxWidth: `${maxContentWidth - sidebarWidth}px` }} pt={4} pb={8}>
+        <Box style={{ maxWidth: `${maxContentWidth - sidebarWidth}px` }} py={16}>
           {children}
         </Box>
       </Box>

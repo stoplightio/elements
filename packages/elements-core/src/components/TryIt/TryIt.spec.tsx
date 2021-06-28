@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 
+import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen, waitFor } from '@testing-library/dom';
 import { cleanup, render } from '@testing-library/react';
@@ -343,11 +344,11 @@ describe('TryIt', () => {
     describe.each(formDataCases)('Builds correct %p request', (mimeType, prototype, fixture) => {
       let body: URLSearchParams | FormData;
       let headers: Headers;
-      beforeAll(async () => {
-        render(<TryItWithPersistence httpOperation={fixture} />);
+      beforeEach(async () => {
+        const { getByRole } = render(<TryItWithPersistence httpOperation={fixture} />);
 
         // path param
-        const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
+        const nameField = getByRole('textbox', { name: 'name' }) as HTMLInputElement;
         await userEvent.type(nameField, 'some-name');
 
         // click send
@@ -582,15 +583,17 @@ describe('TryIt', () => {
 
       userEvent.click(mockingButton);
 
-      let enableItem = await screen.findByText('Enabled');
-      const responseCodeItem = screen.getByText('200');
-
+      // enable mocking
+      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
       expect(enableItem).toBeInTheDocument();
-      expect(responseCodeItem).toBeInTheDocument();
-
-      // enable mocking, set response code and send
       userEvent.click(enableItem);
+
+      // set response code
+      const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
+      expect(responseCodeItem).toBeInTheDocument();
       userEvent.click(responseCodeItem);
+
+      // and send
       clickSend();
 
       await waitFor(() => expect(screen.getByRole('button', { name: /send/i })).toBeEnabled());
@@ -599,7 +602,7 @@ describe('TryIt', () => {
 
       // disable mocking and send
       userEvent.click(mockingButton);
-      enableItem = await screen.findByRole('menuitem', { name: /enabled/i });
+      enableItem = await screen.getByRole('menuitemcheckbox', { name: /enabled/i });
       userEvent.click(enableItem);
 
       clickSend();
@@ -631,33 +634,47 @@ describe('TryIt', () => {
 
     it('Persists mocking options between operations', async () => {
       const { rerender } = render(
-        <PersistenceContextProvider>
-          <TryIt httpOperation={putOperation} mockUrl="https://mock-todos.stoplight.io" />
-        </PersistenceContextProvider>,
+        <MosaicProvider>
+          <PersistenceContextProvider>
+            <TryIt httpOperation={putOperation} mockUrl="https://mock-todos.stoplight.io" />
+          </PersistenceContextProvider>
+        </MosaicProvider>,
       );
 
       // enable mocking
       const mockingButton = screen.getByRole('button', { name: /mocking/i });
       userEvent.click(mockingButton);
 
-      const enableItem = screen.getByText('Enabled');
-      const responseCodeItem = screen.getByText('200');
+      // enable mocking
+      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
+      expect(enableItem).toBeInTheDocument();
       userEvent.click(enableItem);
+
+      // set response code
+      const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
+      expect(responseCodeItem).toBeInTheDocument();
       userEvent.click(responseCodeItem);
+
+      // and send
+      clickSend();
 
       // unmount (to make sure parameters are not simply stored in component state)
       rerender(
-        <PersistenceContextProvider>
-          <div />
-        </PersistenceContextProvider>,
+        <MosaicProvider>
+          <PersistenceContextProvider>
+            <div />
+          </PersistenceContextProvider>
+        </MosaicProvider>,
       );
 
       // mount a different instance
 
       rerender(
-        <PersistenceContextProvider>
-          <TryIt httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />
-        </PersistenceContextProvider>,
+        <MosaicProvider>
+          <PersistenceContextProvider>
+            <TryIt httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />
+          </PersistenceContextProvider>
+        </MosaicProvider>,
       );
 
       clickSend();
@@ -702,14 +719,13 @@ describe('TryIt', () => {
       it('allows to select a security schemes from dropdown menu', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
         userEvent.click(securitySchemes);
 
-        const HttpSchemesButton = screen.queryByRole('button', { name: 'OAuth 2.0' });
-        expect(HttpSchemesButton).toBeInTheDocument();
+        expect(securitySchemesButton).toHaveTextContent('OAuth 2.0');
       });
 
       it('preserves state when changing schemes', async () => {
@@ -719,17 +735,16 @@ describe('TryIt', () => {
         await userEvent.type(APIKeyField, '123');
 
         // switch to OAuth
-        let securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        let securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
         userEvent.click(securitySchemes);
 
         // switch back to API Key
-        securitySchemesButton = screen.getByRole('button', { name: 'OAuth 2.0' });
         userEvent.click(securitySchemesButton);
 
-        securitySchemes = screen.getByRole('menuitem', { name: 'API Key' });
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key' });
         userEvent.click(securitySchemes);
 
         APIKeyField = screen.getByLabelText('API Key');
@@ -813,10 +828,10 @@ describe('TryIt', () => {
       it('allows to send a OAuth2 request', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitem', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
         userEvent.click(securitySchemes);
 
         const tokenInput = screen.getByLabelText('Token');
@@ -843,10 +858,10 @@ describe('TryIt', () => {
       it('allows to send a Basic Auth request', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitem', { name: 'Basic Auth' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Basic Auth' });
         userEvent.click(securitySchemes);
 
         const usernameInput = screen.getByLabelText('Username');
@@ -868,10 +883,10 @@ describe('TryIt', () => {
       it('allows to send a Bearer Auth request', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
-        const securitySchemesButton = screen.getByRole('button', { name: 'API Key' });
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitem', { name: 'Bearer Auth' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Bearer Auth' });
         userEvent.click(securitySchemes);
 
         const tokenInput = screen.getByLabelText('Token');
@@ -884,6 +899,42 @@ describe('TryIt', () => {
 
         const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
         expect(headers.get('Authorization')).toBe('Bearer 0a1b2c');
+      });
+    });
+
+    describe('Digest Auth Component', () => {
+      it('allows to send a Digest Auth request', async () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        const securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Digest Auth' });
+        userEvent.click(securitySchemes);
+
+        const authInput = screen.getByLabelText('Authorization');
+
+        const digestContent = `Digest username="Mufasa",
+            realm="testrealm@host.com",
+            nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093",
+            uri="/dir/index.html",
+            qop=auth,
+            nc=00000001,
+            cnonce="0a4f113b",
+            response="6629fae49393a05397450978507c4ef1",
+            opaque="5ccc069c403ebaf9f0171e9517f40e41"
+        `;
+
+        const expectedDigestContent = `Digest username="Mufasa", realm="testrealm@host.com", nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093", uri="/dir/index.html", qop=auth, nc=00000001, cnonce="0a4f113b", response="6629fae49393a05397450978507c4ef1", opaque="5ccc069c403ebaf9f0171e9517f40e41"`;
+
+        await userEvent.type(authInput, digestContent);
+
+        clickSend();
+
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+        const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+        expect(headers.get('Authorization')).toBe(expectedDigestContent);
       });
     });
   });

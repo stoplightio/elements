@@ -166,7 +166,7 @@ describe('HttpOperation', () => {
               examples: [
                 {
                   value: 'example value',
-                  key: 'example',
+                  key: 'example key',
                 },
               ],
             },
@@ -184,6 +184,7 @@ describe('HttpOperation', () => {
       expect(await screen.findByText(/parameter name$/)).toBeInTheDocument();
       expect(await screen.findByText(/required/)).toBeInTheDocument();
       expect(await screen.findByText(/deprecated/)).toBeInTheDocument();
+      expect(screen.queryByText(/example key/)).not.toBeInTheDocument();
     });
 
     it('should not render default styles', () => {

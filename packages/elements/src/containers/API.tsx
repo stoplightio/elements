@@ -52,32 +52,43 @@ export interface CommonAPIProps extends RoutingProps {
   logo?: string;
 
   /**
-   * Allows to hide TryIt component
+   * Allows hiding the TryIt component
    */
   hideTryIt?: boolean;
+
+  /**
+   * Hides schemas from being displayed in Table of Contents
+   */
+  hideSchemas?: boolean;
+
+  /**
+   * Hides models and operations marked as internal
+   * @default false
+   */
+  hideInternal?: boolean;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
   return props.hasOwnProperty('apiDescriptionDocument');
 };
 
-const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl = '', logo, hideTryIt } = props;
+export const APIImpl: React.FC<APIProps> = props => {
+  const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas, hideInternal } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { data: fetchedDocument, error } = useQuery(
     [apiDescriptionUrl],
-    () => fetch(apiDescriptionUrl).then(res => res.text()),
+    () =>
+      fetch(apiDescriptionUrl).then(res => {
+        if (res.ok) {
+          return res.text();
+        }
+        throw new Error(`Unable to load description document, status code: ${res.status}`);
+      }),
     {
       enabled: apiDescriptionUrl !== '' && !apiDescriptionDocument,
     },
   );
-
-  React.useEffect(() => {
-    if (error) {
-      console.error('Could not fetch spec', error);
-    }
-  }, [error]);
 
   const parsedDocument = useParsedValue(apiDescriptionDocument || fetchedDocument);
   const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl });
@@ -86,7 +97,11 @@ const APIImpl: React.FC<APIProps> = props => {
   if (error) {
     return (
       <Flex justify="center" alignItems="center" w="full" minH="screen">
-        <NonIdealState title="Something went wrong" description={String(error)} />
+        <NonIdealState
+          title="Document could not be loaded"
+          description="The API description document could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec."
+          icon="exclamation-triangle"
+        />
       </Flex>
     );
   }
@@ -115,7 +130,13 @@ const APIImpl: React.FC<APIProps> = props => {
       {layout === 'stacked' ? (
         <APIWithStackedLayout serviceNode={serviceNode} hideTryIt={hideTryIt} />
       ) : (
-        <APIWithSidebarLayout logo={logo} serviceNode={serviceNode} hideTryIt={hideTryIt} />
+        <APIWithSidebarLayout
+          logo={logo}
+          serviceNode={serviceNode}
+          hideTryIt={hideTryIt}
+          hideSchemas={hideSchemas}
+          hideInternal={hideInternal}
+        />
       )}
     </InlineRefResolverProvider>
   );

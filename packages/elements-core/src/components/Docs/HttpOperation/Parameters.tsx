@@ -5,7 +5,7 @@ import { Dictionary, HttpParamStyles, IHttpParam } from '@stoplight/types';
 import { get, isEmpty, omit, omitBy, sortBy } from 'lodash';
 import * as React from 'react';
 
-import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { isNodeExample } from '../../../utils/http-spec/examples';
 
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';
 
@@ -32,24 +32,12 @@ const defaultStyle = {
 } as const;
 
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
-  const resolveRef = useInlineRefResolver();
   if (!parameters || !parameters.length) return null;
 
   return (
-    <VStack spacing={2} divider={<Box borderT borderColor="light" w="full"></Box>}>
+    <VStack spacing={2} pl={6} divider={<Box borderT borderColor="light" w="full"></Box>}>
       {sortBy(parameters, ['required', 'name']).map(parameter => {
-        const resolvedSchema =
-          parameter.schema?.$ref && resolveRef
-            ? resolveRef({ pointer: parameter.schema.$ref, source: null }, null, {})
-            : null;
-
-        return (
-          <Parameter
-            key={parameter.name}
-            parameter={resolvedSchema ? { ...parameter, schema: resolvedSchema } : parameter}
-            parameterType={parameterType}
-          />
-        );
+        return <Parameter key={parameter.name} parameter={parameter} parameterType={parameterType} />;
       })}
     </VStack>
   );
@@ -76,11 +64,18 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
 
   const validations = omitBy(
     {
-      ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style']),
+      ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style', 'examples']),
       ...omit(get(parameter, 'schema'), ['description', 'type', 'deprecated']),
+      examples: parameter.examples?.map(example => {
+        if (isNodeExample(example)) {
+          return example.value;
+        }
+
+        return example.externalValue;
+      }),
     },
     // Remove empty arrays and objects
-    value => typeof value === 'object' && isEmpty(value),
+    value => (typeof value === 'object' && isEmpty(value)) || typeof value === 'undefined',
   ) as Dictionary<unknown, string>;
 
   return (

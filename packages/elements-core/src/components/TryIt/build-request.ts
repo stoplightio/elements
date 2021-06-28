@@ -9,6 +9,7 @@ import {
   isApiKeySecurityScheme,
   isBasicSecurityScheme,
   isBearerSecurityScheme,
+  isDigestSecurityScheme,
   isOAuth2SecurityScheme,
 } from './authentication-utils';
 import { MockData } from './mocking-utils';
@@ -114,6 +115,13 @@ const runAuthRequestEhancements = (
     newHeaders.push({
       name: 'Authorization',
       value: `Bearer ${auth.authValue}`,
+    });
+  }
+
+  if (isDigestSecurityScheme(auth.scheme)) {
+    newHeaders.push({
+      name: 'Authorization',
+      value: auth.authValue?.replace(/\s\s+/g, ' ').trim() ?? '',
     });
   }
 

@@ -6,3 +6,14 @@ html {
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   margin: 0;
 }
+
+.Layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.MainContent {
+  flex: 1 0 0;
+  overflow: hidden;
+}

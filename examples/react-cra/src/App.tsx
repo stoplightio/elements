@@ -10,11 +10,11 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <div className="app-container">
           <header>
             <Navigation />
           </header>
-          <main>
+          <main className="main-content">
             <Switch>
               <Route exact path="/">
                 <Redirect to="/stoplight-project" />
