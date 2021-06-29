@@ -9,6 +9,6 @@ import { useMarkdownComponents } from './CustomComponents/Provider';
 export const MarkdownViewer = (props: IMarkdownViewerProps) => {
   const components = useMarkdownComponents();
 
-  return <MarkdownViewerComponent {...props} components={components} />;
+  return <MarkdownViewerComponent {...props} parseOptions={{ components }} />;
 };
 MarkdownViewer.displayName = 'MarkdownViewer';

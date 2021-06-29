@@ -23,7 +23,7 @@ export const PoweredByLink: React.FC<{
     >
       <FontAwesomeIcon
         icon={faBolt}
-        className={!headless ? 'mr-1 fa-fw' : 'mr-1 fa-fw'}
+        className={!headless ? 'sl-mr-1 fa-fw' : 'sl-mr-1 fa-fw'}
         style={{ color: 'rgba(144, 97, 249, 1)' }}
       />
       <div>

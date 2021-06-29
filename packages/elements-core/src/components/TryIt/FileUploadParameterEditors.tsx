@@ -46,7 +46,7 @@ export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps>
           disabled
         />
         {value && (
-          <button className="mr-3 p-2" aria-label="Remove file" onClick={clearFile}>
+          <button className="sl-mr-3 sl-p-2" aria-label="Remove file" onClick={clearFile}>
             <Icon icon="times" />
           </button>
         )}
