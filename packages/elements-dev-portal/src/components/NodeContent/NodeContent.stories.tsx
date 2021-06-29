@@ -47,7 +47,7 @@ export default {
   },
   args: {
     nodeSlug: 'b3A6Mzg5NDM2-create-todo',
-    projectId: 'cHJqOjExOTY',
+    projectId: 'cHJqOjYwNjYx',
     branchSlug: '',
     platformUrl: 'https://stoplight.io',
   },

@@ -8,11 +8,10 @@
     "start": "PORT=4200 react-scripts start",
     "build": "react-scripts build",
     "serve": "serve -s -l 4200 build"
-    },
+  },
   "dependencies": {
-    "@stoplight/elements": "^7.0.0-beta.5",
-    "@stoplight/elements-dev-portal": "^1.0.0-beta.2",
-    "mobx": "^6.3.2",
+    "@stoplight/elements": "7.0.0-beta.7",
+    "@stoplight/elements-dev-portal": "1.0.0-beta.5",
     "react": "^17.0.2"
   },
   "devDependencies": {
@@ -20,11 +19,11 @@
     "@types/react": "^17.0.11",
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.7",
-    "node-sass": "^6.0.0",
+    "node-sass": "^6.0.1",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "serve": "^11.3.2",
-    "typescript": "^4.3.2"
+    "serve": "^12.0.0",
+    "typescript": "^4.3.4"
   },
   "browserslist": {
     "production": [

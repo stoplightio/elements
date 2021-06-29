@@ -32,3 +32,14 @@ code {
   background-color: #ddd;
   color: black;
 }
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+main {
+  flex: 1 0 0;
+  overflow: hidden;
+}

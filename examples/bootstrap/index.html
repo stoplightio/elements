@@ -17,13 +17,26 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Twitter Bootstrap: Sticky Footer Example -->
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.5/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      main {
+        flex: 1 0 0;
+        overflow: hidden;
+      }
+    </style>
   </head>
 
   <body>
 
     <header>
       <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Fixed navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -61,6 +74,5 @@
         <span class="text-muted">Awesome footer goes here.</span>
       </div>
     </footer>
-
   </body>
 </html>

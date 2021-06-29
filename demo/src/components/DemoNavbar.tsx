@@ -1,16 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Input,
-  InvertTheme,
-  Menu,
-  MenuOption,
-  MenuRadioGroup,
-  Text,
-} from '@stoplight/mosaic';
-import React, { useContext, useState } from 'react';
+import { Box, Button, Flex, HStack, Input, InvertTheme, Menu, MenuItems, Text } from '@stoplight/mosaic';
+import React, { useContext, useMemo, useState } from 'react';
 
 import { DEFAULT_API_URL, EXAMPLE_SPECS } from '../constants';
 import { GlobalContext } from '../context';
@@ -100,13 +89,31 @@ const SpecUrlInput = () => {
 const ExamplePicker = () => {
   const { apiDescriptionUrl, setDescriptionUrl } = useContext(GlobalContext);
 
+  const menuItems = useMemo(() => {
+    const items: MenuItems = [
+      {
+        type: 'option_group',
+        value: apiDescriptionUrl,
+        onChange: setDescriptionUrl,
+        children: EXAMPLE_SPECS.map(s => ({
+          title: s.text,
+          value: s.value,
+        })),
+      },
+    ];
+
+    return items;
+  }, [apiDescriptionUrl, setDescriptionUrl]);
+
   return (
-    <Menu trigger={<Button iconRight={['fas', 'caret-down']}>Pick an Example</Button>}>
-      <MenuRadioGroup value={apiDescriptionUrl} onChange={setDescriptionUrl}>
-        {EXAMPLE_SPECS.map((s, i) => (
-          <MenuOption key={i} text={s.text} value={s.value} />
-        ))}
-      </MenuRadioGroup>
-    </Menu>
+    <Menu
+      closeOnPress
+      items={menuItems}
+      renderTrigger={({ isOpen }) => (
+        <Button iconRight={['fas', 'caret-down']} active={isOpen}>
+          Pick an Example
+        </Button>
+      )}
+    />
   );
 };

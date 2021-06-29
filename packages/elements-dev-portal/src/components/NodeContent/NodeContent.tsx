@@ -5,6 +5,7 @@ import {
   MockingProvider,
   PersistenceContextProvider,
 } from '@stoplight/elements-core';
+import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { Box } from '@stoplight/mosaic';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
@@ -22,12 +23,17 @@ export type NodeContentProps = {
   hideTryIt?: boolean;
 
   /**
+   * Allows to hide TryIt panel
+   */
+  hideTryItPanel?: boolean;
+
+  /**
    * Allows to hide mocking button
    */
   hideMocking?: boolean;
 };
 
-export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentProps) => {
+export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking }: NodeContentProps) => {
   return (
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
@@ -39,6 +45,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentP
                 nodeData={node.data}
                 nodeTitle={node.title}
                 hideTryIt={hideTryIt}
+                hideTryItPanel={hideTryItPanel}
                 useNodeForRefResolving
               />
             </Box>
@@ -52,24 +59,24 @@ export const NodeContent = ({ node, Link, hideTryIt, hideMocking }: NodeContentP
 const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefined>(undefined);
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
-const LinkComponent: React.FC<{ node: { url: string } }> = ({ children, node: { url } }) => {
+const LinkComponent: CustomComponentMapping['link'] = ({ children, href }) => {
   const ctx = React.useContext(NodeLinkContext);
 
-  if (externalRegex.test(url)) {
+  if (href && externalRegex.test(href)) {
     // Open external URL in a new tab
     return (
-      <a href={url} target="_blank" rel="noreferrer">
+      <a href={href} target="_blank" rel="noreferrer">
         {children}
       </a>
     );
   }
 
-  if (ctx) {
+  if (href && ctx) {
     const [node, Link] = ctx;
     // Resolve relative file URI with
-    const resolvedUri = resolve(dirname(node.uri), url);
+    const resolvedUri = resolve(dirname(node.uri), href);
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
-    const decodedUrl = decodeURIComponent(url);
+    const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
     const edge = node.outbound_edges.find(
       edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
@@ -84,5 +91,5 @@ const LinkComponent: React.FC<{ node: { url: string } }> = ({ children, node: { 
     }
   }
 
-  return <a href={url}>{children}</a>;
+  return <a href={href}>{children}</a>;
 };

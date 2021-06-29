@@ -9,8 +9,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
 
-export const defaultPlatformUrl = 'https://stoplight.io';
-
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',
   http_service: '#e056fd',
@@ -140,3 +138,5 @@ export const HttpCodeDescriptions = {
   598: 'Network read timeout error',
   599: 'Network connect timeout error',
 };
+
+export const badgeDefaultColor = '#293742';

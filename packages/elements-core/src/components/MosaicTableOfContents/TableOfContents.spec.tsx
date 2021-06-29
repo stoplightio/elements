@@ -39,6 +39,35 @@ describe('TableOfContents', () => {
       unmount();
     });
 
+    it('it renders group contents if maxDepthOpenByDefault > 0', () => {
+      const { unmount } = render(
+        <TableOfContents
+          activeId=""
+          tree={[
+            {
+              title: 'Root',
+              items: [
+                {
+                  id: 'targetId',
+                  title: 'Target',
+                  slug: 'target',
+                  type: 'article',
+                  meta: '',
+                },
+              ],
+            },
+          ]}
+          Link={Link}
+          maxDepthOpenByDefault={1}
+        />,
+      );
+
+      expect(screen.queryByTitle('Root')).toBeInTheDocument();
+      expect(screen.queryByTitle('Target')).toBeInTheDocument();
+
+      unmount();
+    });
+
     it('should default open when nested child is active', () => {
       const { unmount } = render(
         <TableOfContents
@@ -137,6 +166,55 @@ describe('TableOfContents', () => {
       Root?.click();
 
       expect(screen.queryByTitle(/Target/)).toBeInTheDocument();
+
+      unmount();
+    });
+
+    it('should display item version', () => {
+      const { unmount } = render(
+        <TableOfContents
+          activeId=""
+          maxDepthOpenByDefault={1}
+          tree={[
+            {
+              title: 'Root',
+              items: [
+                {
+                  id: 'abc',
+                  title: 'Todo Api',
+                  slug: 'abc-todo-api',
+                  type: 'http_service',
+                  items: [],
+                  meta: '',
+                  version: '2',
+                },
+                {
+                  id: 'def',
+                  title: 'Todo',
+                  slug: 'def-todo',
+                  type: 'model',
+                  meta: '',
+                  version: '1.0.1',
+                },
+                {
+                  id: 'ghi',
+                  title: 'Get Todo',
+                  slug: 'ghi-get-todo',
+                  type: 'http_operation',
+                  meta: 'get',
+                  version: '1.0.2',
+                },
+              ],
+            },
+          ]}
+          Link={Link}
+        />,
+      );
+
+      expect(screen.queryByText(/v2/)).toBeInTheDocument();
+      expect(screen.queryByText(/v1.0.1/)).toBeInTheDocument();
+
+      expect(screen.queryByText(/v1.0.2/)).not.toBeInTheDocument();
 
       unmount();
     });

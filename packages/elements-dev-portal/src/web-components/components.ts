@@ -1,4 +1,4 @@
-import { createElementClass } from '@stoplight/elements-core/web-components/createElementClass';
+import { createElementClass } from '@stoplight/elements-core';
 
 import { StoplightProject } from '../containers/StoplightProject';
 
@@ -9,4 +9,5 @@ export const StoplightProjectElement = createElementClass(StoplightProject, {
   basePath: { type: 'string' },
   router: { type: 'string' },
   platformUrl: { type: 'string' },
+  collapseTableOfContents: { type: 'boolean' },
 });

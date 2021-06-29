@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem, Panel } from '@stoplight/mosaic';
+import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten } from 'lodash';
 import * as React from 'react';
@@ -34,6 +34,25 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const menuItems = React.useMemo(() => {
+    const items: MenuItems = [
+      {
+        type: 'group',
+        title: 'Security Schemes',
+        children: filteredSecurityItems.map(auth => ({
+          id: `security-scheme-${auth.key}`,
+          title: getReadableSecurityName(auth),
+          isChecked: auth.key === securityScheme?.key,
+          onPress: () => {
+            onChange({ scheme: auth, authValue: undefined });
+          },
+        })),
+      },
+    ];
+
+    return items;
+  }, [filteredSecurityItems, onChange, securityScheme]);
+
   if (filteredSecurityItems.length === 0) return null;
 
   return (
@@ -42,23 +61,15 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
         rightComponent={
           filteredSecurityItems.length > 1 && (
             <Menu
-              label="security-schemes"
-              trigger={
-                <Button appearance="minimal" iconRight="caret-down">
+              aria-label="security-schemes"
+              items={menuItems}
+              closeOnPress
+              renderTrigger={({ isOpen }) => (
+                <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen}>
                   {menuName}
                 </Button>
-              }
-            >
-              {filteredSecurityItems.map(auth => (
-                <MenuItem
-                  key={auth.key}
-                  text={getReadableSecurityName(auth)}
-                  onClick={() => {
-                    onChange({ scheme: auth, authValue: undefined });
-                  }}
-                />
-              ))}
-            </Menu>
+              )}
+            />
           )
         }
       >
