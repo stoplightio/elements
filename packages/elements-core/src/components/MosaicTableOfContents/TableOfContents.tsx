@@ -246,7 +246,13 @@ const Node = React.memo<{
 const Version: React.FC<{ value: string }> = ({ value }) => {
   return (
     <Box mr={2}>
-      <Badge appearance="outline" intent="warning">
+      <Badge
+        appearance="solid"
+        style={{
+          backgroundColor: '#909DAB',
+          border: 'none',
+        }}
+      >
         v{value}
       </Badge>
     </Box>
