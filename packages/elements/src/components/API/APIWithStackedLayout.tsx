@@ -34,7 +34,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
             nodeData={serviceNode.data}
             nodeTitle={serviceNode.name}
             nodeType={NodeType.HttpService}
-            headless
+            layout="stacked"
             location={location}
           />
         </div>

@@ -50,6 +50,11 @@ interface BaseDocsProps {
    * Allows to use internal routing (requires wrapping with Router component)
    */
   allowRouting?: boolean;
+
+  /**
+   * Allows to choose a between 'Sidebar' and 'Stacked' layout
+   */
+  layout?: 'sidebar' | 'stacked';
 }
 
 export interface DocsProps extends BaseDocsProps {
