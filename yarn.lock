@@ -4117,10 +4117,23 @@
     "@types/json-schema" "^7.0.7"
     magic-error "^0.0.0"
 
-"@stoplight/json-schema-viewer@^4.0.0-beta.22", "@stoplight/json-schema-viewer@^4.0.1":
+"@stoplight/json-schema-viewer@^4.0.0-beta.22":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.1.tgz#6005b5dd95c3acf89c702bdbe05ebb49d59ec3ce"
   integrity sha512-W2q/CcUC4yPZC1NvzIA694JJi29K/ve1VfXER/1jQHfaGUAaPpDLWxp1DgD7PRQJU0SqedboN+D8arn38xIJyw==
+  dependencies:
+    "@fortawesome/free-solid-svg-icons" "^5.15.2"
+    "@stoplight/json" "^3.10.0"
+    "@stoplight/json-schema-tree" "^2.1.0"
+    "@stoplight/react-error-boundary" "^1.0.0"
+    "@types/json-schema" "^7.0.7"
+    classnames "^2.2.6"
+    lodash "^4.17.19"
+
+"@stoplight/json-schema-viewer@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.0.2.tgz#3734dc57f2772219f3cf9e15c1f1366931e51fcd"
+  integrity sha512-FUy2LQ8kIHQ7RjggEzMbKDhS1QLodkpoQszZMiJeYxXgLXBX9FL4sLeH2oG4B53gWYDQUDWjoALGIoAwfSH8xA==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.10.0"
