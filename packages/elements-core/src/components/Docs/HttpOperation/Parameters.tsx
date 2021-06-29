@@ -83,7 +83,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
       <div className="sl-flex sl-items-center sl-my-2">
         <div className="sl-flex sl-items-baseline sl-text-base sl-flex-1">
           <div className="sl-font-mono sl-font-bold">{parameter.name}</div>
-          <div className={'ml-2 sl-text-muted'}>{format ? `${type}<${format}>` : type}</div>
+          <div className={'sl-ml-2 sl-text-muted'}>{format ? `${type}<${format}>` : type}</div>
         </div>
         <div className="sl-text-sm sl-text-warning">
           {deprecated && <span className="sl-ml-2">deprecated</span>}

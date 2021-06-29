@@ -1,0 +1,12 @@
+.DocsSkeleton {
+  animation: 500ms linear infinite alternate skeleton-glow;
+  background: rgba(206, 217, 224, 0.2);
+  background-clip: padding-box !important;
+  border-color: rgba(206, 217, 224, 0.2) !important;
+  border-radius: 2px;
+  box-shadow: none !important;
+  color: transparent !important;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+}
