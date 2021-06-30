@@ -18,15 +18,7 @@ import { Responses } from './Responses';
 export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({
-    className,
-    data: unresolvedData,
-    uri,
-    hideTryIt,
-    hideTryItPanel,
-    allowRouting = false,
-    customStyle = { noHeading: false },
-  }) => {
+  ({ className, data: unresolvedData, uri, hideTryIt, hideTryItPanel, allowRouting = false, layoutOptions }) => {
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
 
     const mocking = React.useContext(MockingContext);
@@ -45,7 +37,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
 
     return (
       <Box bg="transparent" className={cn('HttpOperation', className)} w="full">
-        {!customStyle.noHeading && (
+        {!layoutOptions?.noHeading && (
           <Heading size={1} fontWeight="semibold">
             {data.summary || data.iid || `${data.method} ${data.path}`}
           </Heading>

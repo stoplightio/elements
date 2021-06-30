@@ -54,7 +54,7 @@ interface BaseDocsProps {
   /**
    * Allows to customize the layout of Docs
    */
-  customStyle?: {
+  layoutOptions?: {
     /**
      * If true, the component will hide its title
      * @default false
@@ -62,9 +62,9 @@ interface BaseDocsProps {
     noHeading?: boolean;
     /**
      * If true, the component will hide the Powered by Stoplight banner in Docs
-     * @default true
+     * @default false
      */
-    hidePoweredByLink?: boolean;
+    showPoweredByLink?: boolean;
   };
 }
 
