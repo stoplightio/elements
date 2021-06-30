@@ -21,7 +21,7 @@ export const PoweredByLink: React.FC<{
       target="_blank"
       rel="noopener noreferrer"
     >
-      <FontAwesomeIcon icon={faBolt} className="mr-1 fa-fw" style={{ color: 'rgba(144, 97, 249, 1)' }} />
+      <FontAwesomeIcon icon={faBolt} className="sl-mr-1 fa-fw" style={{ color: 'rgba(144, 97, 249, 1)' }} />
       <div>
         powered by&nbsp;<strong>Stoplight</strong>
       </div>

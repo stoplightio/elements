@@ -30,7 +30,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const example = React.useMemo(() => generateExampleFromJsonSchema(data), [data]);
 
   return (
-    <div className={cn('Model', className)}>
+    <Box className={cn('Model', className)}>
       {!customStyle.noHeading && title !== undefined && (
         <Heading size={1} mb={4} fontWeight="semibold">
           {title}
@@ -69,7 +69,7 @@ const ModelComponent: React.FC<ModelProps> = ({
           </Panel>
         </Box>
       </Flex>
-    </div>
+    </Box>
   );
 };
 
