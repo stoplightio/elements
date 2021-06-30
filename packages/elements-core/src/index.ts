@@ -7,15 +7,10 @@ export { MarkdownComponentsProvider } from './components/MarkdownViewer/CustomCo
 export { TableOfContents } from './components/MosaicTableOfContents';
 export { CustomLinkComponent, TableOfContentsItem } from './components/MosaicTableOfContents/types';
 export { findFirstNode } from './components/MosaicTableOfContents/utils';
+export { NonIdealState } from './components/NonIdealState';
 export { PoweredByLink } from './components/PoweredByLink';
 export { TryIt, TryItProps, TryItWithRequestSamples, TryItWithRequestSamplesProps } from './components/TryIt';
-export {
-  defaultPlatformUrl,
-  HttpMethodColors,
-  NodeTypeColors,
-  NodeTypeIconDefs,
-  NodeTypePrettyName,
-} from './constants';
+export { HttpMethodColors, NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName } from './constants';
 export { MockingProvider } from './containers/MockingProvider';
 export { InlineRefResolverProvider } from './context/InlineRefResolver';
 export { PersistenceContextProvider, withPersistenceBoundary } from './context/Persistence';
@@ -26,7 +21,6 @@ export { useBundleRefsIntoDocument } from './hooks/useBundleRefsIntoDocument';
 export { useParsedData } from './hooks/useParsedData';
 export { useParsedValue } from './hooks/useParsedValue';
 export { useRouter } from './hooks/useRouter';
-export { useTocContents } from './hooks/useTocContents';
 export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, RoutingProps, TableOfContentItem } from './types';
 export { isHttpOperation, isHttpService } from './utils/guards';

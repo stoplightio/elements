@@ -108,6 +108,7 @@ Playground.args = {
       title: 'Todo',
       type: 'model',
       meta: '',
+      version: '1.0.2',
     },
     {
       id: '/schemas/User',

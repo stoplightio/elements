@@ -40,6 +40,7 @@ export type TableOfContentsNode<T = 'http_service' | 'http_operation' | 'model' 
   title: string;
   type: T;
   meta: string;
+  version?: string;
 };
 
 export type TableOfContentsNodeGroup = TableOfContentsNode<'http_service'> & TableOfContentsGroup;

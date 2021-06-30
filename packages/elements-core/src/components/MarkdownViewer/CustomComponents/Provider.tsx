@@ -1,19 +1,19 @@
-import { IComponentMapping } from '@stoplight/markdown-viewer';
+import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { defaults } from 'lodash';
 import * as React from 'react';
 
 import { CodeComponent } from './CodeComponent';
 
-const MarkdownComponentsContext = React.createContext<IComponentMapping | undefined>(undefined);
+const MarkdownComponentsContext = React.createContext<CustomComponentMapping | undefined>(undefined);
 MarkdownComponentsContext.displayName = 'MarkdownComponentsContext';
 
 export const useMarkdownComponents = () => React.useContext(MarkdownComponentsContext) ?? defaultComponents;
 
 interface MarkdownComponentsProviderProps {
-  value: Partial<IComponentMapping> | undefined;
+  value: Partial<CustomComponentMapping> | undefined;
 }
 
-const defaultComponents: IComponentMapping = {
+const defaultComponents: CustomComponentMapping = {
   code: CodeComponent,
 };
 

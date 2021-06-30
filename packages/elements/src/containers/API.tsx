@@ -1,7 +1,6 @@
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   InlineRefResolverProvider,
+  NonIdealState,
   RoutingProps,
   useBundleRefsIntoDocument,
   useParsedValue,
@@ -12,7 +11,6 @@ import {
   withStyles,
 } from '@stoplight/elements-core';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
-import { NonIdealState } from '@stoplight/ui-kit';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { useQuery } from 'react-query';
@@ -100,9 +98,9 @@ export const APIImpl: React.FC<APIProps> = props => {
     return (
       <Flex justify="center" alignItems="center" w="full" minH="screen">
         <NonIdealState
-          title={'Document could not be loaded'}
-          description={`The API description document could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec.`}
-          icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
+          title="Document could not be loaded"
+          description="The API description document could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec."
+          icon="exclamation-triangle"
         />
       </Flex>
     );
@@ -122,7 +120,6 @@ export const APIImpl: React.FC<APIProps> = props => {
         <NonIdealState
           title="Failed to parse OpenAPI file"
           description="Please make sure your OpenAPI file is valid and try again"
-          icon={<FontAwesomeIcon icon={faExclamationTriangle} />}
         />
       </Flex>
     );

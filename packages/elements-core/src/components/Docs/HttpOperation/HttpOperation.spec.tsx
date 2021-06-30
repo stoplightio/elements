@@ -565,9 +565,11 @@ describe('HttpOperation', () => {
 });
 
 function getDeprecatedBadge() {
-  return screen.queryByRole('badge', { name: /Deprecated/i });
+  return screen.queryByTestId('badge-deprecated');
 }
 
 function getSecurityBadge(re: RegExp) {
-  return screen.queryByRole('badge', { name: re });
+  return screen
+    .queryAllByTestId('badge-security')
+    .find(element => element.textContent !== null && re.test(element.textContent));
 }

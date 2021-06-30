@@ -12,7 +12,7 @@ npx create-react-app my-dir --template @stoplight/elements-dev-portal
 
 Then run `cd my-dir` and `yarn start` and you will see a basic Elements Dev Portal website in the browser.
 
-The project loaded is based on `https://github.com/stoplightio/studio-demo`, but you can follow the instructions below to change your `projectId` and load up your own projects.
+When the server has started, navigate to `http://localhost:3000`. There you will see Elements Dev Portal rendering an [example Git project](https://github.com/stoplightio/studio-demo). Follow the instructions below to change your `projectId` and load up one of your own projects.
 
 ## Manual Setup
 

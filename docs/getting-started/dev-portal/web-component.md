@@ -80,9 +80,6 @@ These properties can be provided as HTML attributes to the web component.
 - `collapseTableOfContents` - Pass `true` to stop the table of contents expanding folders of articles, and showing lists of endpoints for an API. This will clean up the ToC if you have a lot of content.
 - `hideMocking` - Pass `true` to disable all mocking options and remove mention of the mock server.
 - `hideTryIt` - Pass `true` to hide the "Try It" panel (the interactive API console).
-- `layout` - There are two layouts for Elements:
-  - `sidebar` - (default) Three-column design.
-  - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
 - `router` -  Determines how navigation should work:
   - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
   - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
