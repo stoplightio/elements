@@ -83,6 +83,11 @@
     },
     {
       "type": "item",
+      "title": "Layouts",
+      "uri": "docs/guides/layouts.md"
+    },
+    {
+      "type": "item",
       "title": "Great API Documentation",
       "uri": "docs/guides/great-api-docs.md"
     },
