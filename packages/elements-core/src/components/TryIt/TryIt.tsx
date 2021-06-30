@@ -131,7 +131,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   return (
     <Box rounded="lg" overflowY="hidden">
-      <Panel isCollapsible={false} className="p-0 TryItPanel">
+      <Panel isCollapsible={false} p={0} className="TryItPanel">
         <Panel.Titlebar bg="canvas-300">
           <div role="heading" className="sl-font-bold">
             <Text color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
@@ -188,7 +188,7 @@ const TryItResponse: React.FC<{ response: ResponseState }> = ({ response }) => (
     <Panel.Titlebar>Response</Panel.Titlebar>
     <Panel.Content>
       <div>
-        <div className={`mb-3 text-${getHttpCodeColor(response.status)}`}>
+        <div className={`sl-mb-3 sl-text-${getHttpCodeColor(response.status)}`}>
           {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
         </div>
         {response.bodyText ? (
@@ -198,7 +198,7 @@ const TryItResponse: React.FC<{ response: ResponseState }> = ({ response }) => (
           />
         ) : (
           <p>
-            <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
+            <FontAwesomeIcon icon={faExclamationCircle} className="sl-mr-2" />
             No response body returned
           </p>
         )}

@@ -1,13 +1,13 @@
-import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
+import { Badge, Box, Flex, Heading, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
 
+import { badgeDefaultColor } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
-import { Badge } from '../HttpOperation/Badges';
 import { SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
 
@@ -47,7 +47,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
 
       {data.version && (
         <Box mt={3}>
-          <Badge className="sl-bg-gray-6">{enhanceVersionString(data.version)}</Badge>
+          <Badge style={{ backgroundColor: badgeDefaultColor }}>{enhanceVersionString(data.version)}</Badge>
         </Box>
       )}
 

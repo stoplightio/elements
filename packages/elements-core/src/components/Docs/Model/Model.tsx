@@ -25,7 +25,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className,
   const example = React.useMemo(() => generateExampleFromJsonSchema(data), [data]);
 
   return (
-    <div className={cn('Model', className)}>
+    <Box className={cn('Model', className)}>
       {!headless && title !== undefined && (
         <Heading size={1} mb={4} fontWeight="semibold">
           {title}
@@ -64,7 +64,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className,
           </Panel>
         </Box>
       </Flex>
-    </div>
+    </Box>
   );
 };
 
