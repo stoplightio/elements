@@ -4,17 +4,21 @@ Learn how to quickly get started with Elements Dev Portal in a React project.
 
 ## Create React App Template
 
-We've created a Create React App template, which allows you to create a brand new Elements Dev Portal website in React without any additional setup.
+We've created a [Create React App template](https://github.com/stoplightio/cra-template-elements-dev-portal), which allows you to create a brand new Elements Dev Portal website in React without any additional setup.
 
-Simply run:
-
-`npx create-react-app my-dir --template @stoplight/elements-dev-portal`.
+```bash
+npx create-react-app my-dir --template @stoplight/elements-dev-portal
+```
 
 Then run `cd my-dir` and `yarn start` and you will see a basic Elements Dev Portal website in the browser.
 
-## Usage
+When the server has started, navigate to `http://localhost:3000`. There you will see Elements Dev Portal rendering an [example Git project](https://github.com/stoplightio/studio-demo). Follow the instructions below to change your `projectId` and load up one of your own projects.
 
-1. First, install the elements-dev-portal package with NPM/Yarn.
+## Manual Setup
+
+To install Elements Dev Portal in an existing React app, follow these instructions.
+
+1. Install the [@stoplight/elements-dev-portal](https://www.npmjs.com/package/@stoplight/elements-dev-portal) package with NPM/Yarn.
 
 ```bash
 yarn add @stoplight/elements-dev-portal

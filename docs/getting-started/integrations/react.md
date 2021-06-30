@@ -4,30 +4,33 @@ Learn how to quickly get started with Elements in a React project.
 
 ## Create React App Template
 
-We've created a Create React App template, which allows you to create a brand new Elements website in React without any additional setup.
+We've created a [Create React App template](https://github.com/stoplightio/cra-template-elements), which allows you to create a brand new Elements website in React without any additional setup.
 
-Simply run:
-
-`npx create-react-app my-dir --template @stoplight/elements`.
+```bash
+npx create-react-app my-dir --template @stoplight/elements
+```
 
 Then run `cd my-dir` and `yarn start` and you will see a basic Elements website in the browser.
 
-## Using Elements in ReactJS
+## Manual Setup
 
-First, install the Elements package with NPM/Yarn.
+To install Elements Dev Portal in an existing React app, follow these instructions.
+
+
+1. Install the [@stoplight/elements](https://www.npmjs.com/package/@stoplight/elements) package with NPM/Yarn.
 
 ```bash
 yarn add @stoplight/elements
 ```
 
-In `App.js` import the API component and CSS file from the Elements library.
+2. In `App.js` import the API component and CSS file from the Elements library.
 
 ```jsx
 import { API } from '@stoplight/elements';
 import '@stoplight/elements/styles.min.css';
 ```
 
-Now you can replace the existing App component's contents with the API component we just imported.
+1. Add the App component to the output of the app.
 
 ```jsx
 <API
@@ -35,7 +38,7 @@ Now you can replace the existing App component's contents with the API component
 />
 ```
 
-Now your `App.js` file should look something like this:
+4. Now your `App.js` file should look something like this:
 
 <!-- title: App.js -->
 ```jsx
@@ -85,13 +88,13 @@ And you should see the API reference documentation for the Zoom API!
 
 ## Examples
 
--<!-- title: React Component with API Description Provided as a URL -->
-
+<!-- title: React Component with API Description Provided as a URL -->
+```
 <API
-  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/eference/zoom/openapi.yaml"
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
   router="hash"
 />
-
+```
 
 <!-- title: React Component with API Description Provided Directly -->
 
