@@ -169,5 +169,54 @@ describe('TableOfContents', () => {
 
       unmount();
     });
+
+    it('should display item version', () => {
+      const { unmount } = render(
+        <TableOfContents
+          activeId=""
+          maxDepthOpenByDefault={1}
+          tree={[
+            {
+              title: 'Root',
+              items: [
+                {
+                  id: 'abc',
+                  title: 'Todo Api',
+                  slug: 'abc-todo-api',
+                  type: 'http_service',
+                  items: [],
+                  meta: '',
+                  version: '2',
+                },
+                {
+                  id: 'def',
+                  title: 'Todo',
+                  slug: 'def-todo',
+                  type: 'model',
+                  meta: '',
+                  version: '1.0.1',
+                },
+                {
+                  id: 'ghi',
+                  title: 'Get Todo',
+                  slug: 'ghi-get-todo',
+                  type: 'http_operation',
+                  meta: 'get',
+                  version: '1.0.2',
+                },
+              ],
+            },
+          ]}
+          Link={Link}
+        />,
+      );
+
+      expect(screen.queryByText(/v2/)).toBeInTheDocument();
+      expect(screen.queryByText(/v1.0.1/)).toBeInTheDocument();
+
+      expect(screen.queryByText(/v1.0.2/)).not.toBeInTheDocument();
+
+      unmount();
+    });
   });
 });
