@@ -149,7 +149,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
 
       <Collapse isOpen={isExpanded}>
         {hideTryIt ? (
-          <Box as={ParsedDocs} layoutOptions={{ noHeading: true }} node={item} p={4} />
+          <Box as={ParsedDocs} layoutOptions={{ noHeading: true, hideTryItPanel: true }} node={item} p={4} />
         ) : (
           <Tabs appearance="line">
             <TabList>

@@ -61,6 +61,21 @@ interface BaseDocsProps {
      * @default false
      */
     showPoweredByLink?: boolean;
+    /**
+     * Allows to hide model examples
+     * @default false
+     */
+    hideModelExamples?: boolean;
+    /**
+     * Allows to hide server information
+     * @default false
+     */
+    hideServerInfo?: boolean;
+    /**
+     * Allows to hide security information
+     * @default false
+     */
+    hideSecurityInfo?: boolean;
   };
 }
 
