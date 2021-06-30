@@ -18,7 +18,7 @@ import { Responses } from './Responses';
 export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data: unresolvedData, uri, hideTryIt, hideTryItPanel, allowRouting = false, layoutOptions }) => {
+  ({ className, data: unresolvedData, uri, allowRouting = false, layoutOptions }) => {
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
 
     const mocking = React.useContext(MockingContext);
@@ -70,7 +70,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             )}
           </Box>
 
-          {!hideTryItPanel && (
+          {!layoutOptions?.hideTryItPanel && (
             <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
               <Box className="HttpOperation__gutter">
                 <TryItWithRequestSamples
@@ -78,7 +78,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
                   responseMediaType={responseMediaType}
                   responseStatusCode={responseStatusCode}
                   requestBodyIndex={requestBodyIndex}
-                  hideTryIt={hideTryIt}
+                  hideTryIt={layoutOptions?.hideTryIt}
                   mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
                 />
               </Box>

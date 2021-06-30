@@ -163,8 +163,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
                   className="sl-px-4"
                   node={item}
                   location={location}
-                  layoutOptions={{ noHeading: true }}
-                  hideTryItPanel
+                  layoutOptions={{ noHeading: true, hideTryItPanel: true }}
                 />
               </TabPanel>
               <TabPanel>

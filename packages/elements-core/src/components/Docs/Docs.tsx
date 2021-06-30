@@ -15,11 +15,6 @@ interface BaseDocsProps {
    * CSS class to add to the root container.
    */
   className?: string;
-  /**
-   * If true, the component will hide its title.
-   * @default false
-   */
-  headless?: boolean;
 
   /**
    * URI of the document
@@ -30,16 +25,6 @@ interface BaseDocsProps {
    * Some components may depend on some location/URL data.
    */
   location?: Location;
-
-  /**
-   * Allows to hide TryIt component
-   */
-  hideTryIt?: boolean;
-
-  /**
-   * Shows only operation document without right column
-   */
-  hideTryItPanel?: boolean;
 
   /**
    * The original title of the node. It serves as a fallback title in case on is not available inside the model.
@@ -55,6 +40,17 @@ interface BaseDocsProps {
    * Allows to customize the layout of Docs
    */
   layoutOptions?: {
+    /**
+     * Allows to hide TryIt component
+     * @default false
+     */
+    hideTryIt?: boolean;
+
+    /**
+     * Shows only operation document without right column
+     * @default false
+     */
+    hideTryItPanel?: boolean;
     /**
      * If true, the component will hide its title
      * @default false
