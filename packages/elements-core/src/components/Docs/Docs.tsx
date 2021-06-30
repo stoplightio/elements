@@ -52,9 +52,20 @@ interface BaseDocsProps {
   allowRouting?: boolean;
 
   /**
-   * Allows to choose a between 'Sidebar' and 'Stacked' layout
+   * Allows to customize the layout of Docs
    */
-  layout?: 'sidebar' | 'stacked';
+  customStyle?: {
+    /**
+     * If true, the component will hide its title
+     * @default false
+     */
+    noHeading?: boolean;
+    /**
+     * If true, the component will hide the Powered by Stoplight banner in Docs
+     * @default true
+     */
+    hidePoweredByLink?: boolean;
+  };
 }
 
 export interface DocsProps extends BaseDocsProps {

@@ -34,8 +34,8 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
             nodeData={serviceNode.data}
             nodeTitle={serviceNode.name}
             nodeType={NodeType.HttpService}
-            layout="stacked"
             location={location}
+            customStyle={{ hidePoweredByLink: false }}
           />
         </div>
 
@@ -139,7 +139,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
 
       <Collapse isOpen={isExpanded}>
         {hideTryIt ? (
-          <Box as={ParsedDocs} node={item} headless p={4} />
+          <Box as={ParsedDocs} customStyle={{ hidePoweredByLink: false }} node={item} p={4} />
         ) : (
           <Tabs
             className="PreviewTabs mx-auto"
@@ -151,7 +151,9 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
               id="docs"
               title="Docs"
               className="p-4"
-              panel={<ParsedDocs node={item} headless location={location} />}
+              panel={
+                <ParsedDocs node={item} location={location} customStyle={{ hidePoweredByLink: false }} hideTryItPanel />
+              }
             />
             <Tab
               id="tryit"
