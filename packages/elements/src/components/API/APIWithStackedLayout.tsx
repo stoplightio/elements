@@ -159,7 +159,13 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
 
             <TabPanels>
               <TabPanel>
-                <ParsedDocs node={item} location={location} customStyle={{ hidePoweredByLink: false }} hideTryItPanel />
+                <ParsedDocs
+                  className="sl-px-4"
+                  node={item}
+                  location={location}
+                  customStyle={{ hidePoweredByLink: false }}
+                  hideTryItPanel
+                />
               </TabPanel>
               <TabPanel>
                 <TryItWithRequestSamples httpOperation={item.data} />
