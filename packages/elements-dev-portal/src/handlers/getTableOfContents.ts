@@ -1,4 +1,5 @@
 import { ProjectTableOfContents } from '../types';
+import { appVersion } from '../version';
 
 export const getTableOfContents = async ({
   projectId,
@@ -11,10 +12,11 @@ export const getTableOfContents = async ({
   platformUrl?: string;
   platformAuthToken?: string;
 }): Promise<ProjectTableOfContents> => {
+  console.log('version: ', appVersion);
   const branchQuery = branchSlug ? `?branch=${branchSlug}` : '';
   const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/table-of-contents${branchQuery}`, {
     headers: {
-      'Stoplight-Elements-Version': '1.0.0',
+      'Stoplight-Elements-Version': appVersion,
       ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
     },
   });

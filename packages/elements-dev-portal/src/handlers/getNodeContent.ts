@@ -1,4 +1,5 @@
 import { Node } from '../types';
+import { appVersion } from '../version';
 
 export class ResponseError extends Error {
   code: number;
@@ -27,7 +28,7 @@ export const getNodeContent = async ({
   const branchQuery = branchSlug ? `?branch=${branchSlug}` : '';
   const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/nodes/${nodeId}${branchQuery}`, {
     headers: {
-      'Stoplight-Elements-Version': '1.0.0',
+      'Stoplight-Elements-Version': appVersion,
       ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
     },
   });
