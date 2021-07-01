@@ -19,7 +19,7 @@ const enhanceVersionString = (version: string): string => {
 
 export type HttpServiceProps = DocsComponentProps<Partial<IHttpService>>;
 
-const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, headless, location = {} }) => {
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, location = {}, layoutOptions }) => {
   const { search, pathname } = location;
   const mocking = React.useContext(MockingContext);
   const query = new URLSearchParams(search);
@@ -39,7 +39,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
 
   return (
     <Box className={className} w="full">
-      {data.name && (
+      {data.name && !layoutOptions?.noHeading && (
         <Heading size={1} fontWeight="semibold">
           {data.name}
         </Heading>
@@ -51,21 +51,26 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, he
         </Box>
       )}
 
-      {!headless ? (
+      {layoutOptions?.showPoweredByLink ? (
+        <Box mb={10}>
+          {description}
+          {pathname && (
+            <PoweredByLink
+              source={data.name ?? 'no-title'}
+              pathname={pathname}
+              packageType="elements"
+              layout="stacked"
+            />
+          )}
+          {dataPanel}
+        </Box>
+      ) : (
         <Flex mt={12}>
           <Box flex={1}>{description}</Box>
           <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
             {dataPanel}
           </Box>
         </Flex>
-      ) : (
-        <Box mb={10}>
-          {description}
-          {pathname && (
-            <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" headless />
-          )}
-          {dataPanel}
-        </Box>
       )}
     </Box>
   );

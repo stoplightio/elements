@@ -18,7 +18,7 @@ import { Responses } from './Responses';
 export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data: unresolvedData, headless, uri, hideTryIt, hideTryItPanel, allowRouting = false }) => {
+  ({ className, data: unresolvedData, uri, allowRouting = false, layoutOptions }) => {
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
 
     const mocking = React.useContext(MockingContext);
@@ -35,73 +35,56 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
 
     const hasBadges = isDeprecated || securitySchemes.length > 0 || isInternal;
 
-    if (!headless)
-      return (
-        <Box bg="transparent" className={cn('HttpOperation', className)} w="full">
+    return (
+      <Box bg="transparent" className={cn('HttpOperation', className)} w="full">
+        {!layoutOptions?.noHeading && (
           <Heading size={1} fontWeight="semibold">
             {data.summary || data.iid || `${data.method} ${data.path}`}
           </Heading>
+        )}
 
-          {hasBadges && (
-            <HStack spacing={2} mt={3}>
-              {isDeprecated && <DeprecatedBadge />}
-              {sortBy(securitySchemes, 'type').map((scheme, i) => (
-                <SecurityBadge key={i} scheme={scheme} httpServiceUri={allowRouting ? httpServiceUri : undefined} />
-              ))}
-              {isInternal && <InternalBadge isHttpService />}
-            </HStack>
-          )}
+        {hasBadges && (
+          <HStack spacing={2} mt={3}>
+            {isDeprecated && <DeprecatedBadge />}
+            {sortBy(securitySchemes, 'type').map((scheme, i) => (
+              <SecurityBadge key={i} scheme={scheme} httpServiceUri={allowRouting ? httpServiceUri : undefined} />
+            ))}
+            {isInternal && <InternalBadge isHttpService />}
+          </HStack>
+        )}
 
-          <Flex mt={12}>
-            <Box flex={1}>
-              {data.description && (
-                <MarkdownViewer className="HttpOperation__Description sl-mb-10" markdown={data.description} />
-              )}
-
-              <Request onChange={setTextRequestBodyIndex} operation={data} />
-
-              {data.responses && (
-                <Responses
-                  responses={data.responses}
-                  onMediaTypeChange={setResponseMediaType}
-                  onStatusCodeChange={setResponseStatusCode}
-                />
-              )}
-            </Box>
-
-            {!hideTryItPanel && (
-              <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
-                <Box className="HttpOperation__gutter">
-                  <TryItWithRequestSamples
-                    httpOperation={data}
-                    responseMediaType={responseMediaType}
-                    responseStatusCode={responseStatusCode}
-                    requestBodyIndex={requestBodyIndex}
-                    hideTryIt={hideTryIt}
-                    mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
-                  />
-                </Box>
-              </Box>
+        <Flex mt={12}>
+          <Box flex={1}>
+            {data.description && (
+              <MarkdownViewer className="HttpOperation__Description sl-mb-10" markdown={data.description} />
             )}
-          </Flex>
-        </Box>
-      );
 
-    return (
-      <Box px={5} className={cn('HttpOperation', className)}>
-        {data.description && (
-          <MarkdownViewer className="HttpOperation__Description sl-mb-10 sl-ml-1" markdown={data.description} />
-        )}
+            <Request onChange={setTextRequestBodyIndex} operation={data} />
 
-        <Request onChange={setTextRequestBodyIndex} operation={data} />
+            {data.responses && (
+              <Responses
+                responses={data.responses}
+                onMediaTypeChange={setResponseMediaType}
+                onStatusCodeChange={setResponseStatusCode}
+              />
+            )}
+          </Box>
 
-        {data.responses && (
-          <Responses
-            responses={data.responses}
-            onMediaTypeChange={setResponseMediaType}
-            onStatusCodeChange={setResponseStatusCode}
-          />
-        )}
+          {!layoutOptions?.hideTryItPanel && (
+            <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
+              <Box className="HttpOperation__gutter">
+                <TryItWithRequestSamples
+                  httpOperation={data}
+                  responseMediaType={responseMediaType}
+                  responseStatusCode={responseStatusCode}
+                  requestBodyIndex={requestBodyIndex}
+                  hideTryIt={layoutOptions?.hideTryIt}
+                  mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
+                />
+              </Box>
+            </Box>
+          )}
+        </Flex>
       </Box>
     );
   },

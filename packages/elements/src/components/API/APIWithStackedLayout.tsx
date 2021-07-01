@@ -33,8 +33,8 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
             nodeData={serviceNode.data}
             nodeTitle={serviceNode.name}
             nodeType={NodeType.HttpService}
-            headless
             location={location}
+            layoutOptions={{ showPoweredByLink: true }}
           />
         </Box>
 
@@ -149,7 +149,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
 
       <Collapse isOpen={isExpanded}>
         {hideTryIt ? (
-          <Box as={ParsedDocs} node={item} headless p={4} />
+          <Box as={ParsedDocs} layoutOptions={{ noHeading: true, hideTryItPanel: true }} node={item} p={4} />
         ) : (
           <Tabs appearance="line">
             <TabList>
@@ -159,7 +159,12 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
 
             <TabPanels>
               <TabPanel>
-                <ParsedDocs node={item} headless location={location} />
+                <ParsedDocs
+                  className="sl-px-4"
+                  node={item}
+                  location={location}
+                  layoutOptions={{ noHeading: true, hideTryItPanel: true }}
+                />
               </TabPanel>
               <TabPanel>
                 <TryItWithRequestSamples httpOperation={item.data} />

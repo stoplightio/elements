@@ -15,11 +15,6 @@ interface BaseDocsProps {
    * CSS class to add to the root container.
    */
   className?: string;
-  /**
-   * If true, the component will hide its title.
-   * @default false
-   */
-  headless?: boolean;
 
   /**
    * URI of the document
@@ -32,16 +27,6 @@ interface BaseDocsProps {
   location?: Location;
 
   /**
-   * Allows to hide TryIt component
-   */
-  hideTryIt?: boolean;
-
-  /**
-   * Shows only operation document without right column
-   */
-  hideTryItPanel?: boolean;
-
-  /**
    * The original title of the node. It serves as a fallback title in case on is not available inside the model.
    */
   nodeTitle?: string;
@@ -50,6 +35,48 @@ interface BaseDocsProps {
    * Allows to use internal routing (requires wrapping with Router component)
    */
   allowRouting?: boolean;
+
+  /**
+   * Allows to customize the layout of Docs
+   */
+  layoutOptions?: {
+    /**
+     * Allows to hide TryIt component
+     * @default false
+     */
+    hideTryIt?: boolean;
+
+    /**
+     * Shows only operation document without right column
+     * @default false
+     */
+    hideTryItPanel?: boolean;
+    /**
+     * If true, the component will hide its title
+     * @default false
+     */
+    noHeading?: boolean;
+    /**
+     * If true, the component will hide the Powered by Stoplight banner in Docs
+     * @default false
+     */
+    showPoweredByLink?: boolean;
+    /**
+     * Allows to hide model examples
+     * @default false
+     */
+    hideModelExamples?: boolean;
+    /**
+     * Allows to hide server information
+     * @default false
+     */
+    hideServerInfo?: boolean;
+    /**
+     * Allows to hide security information
+     * @default false
+     */
+    hideSecurityInfo?: boolean;
+  };
 }
 
 export interface DocsProps extends BaseDocsProps {

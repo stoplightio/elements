@@ -44,8 +44,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
                 nodeType={node.type as NodeType}
                 nodeData={node.data}
                 nodeTitle={node.title}
-                hideTryIt={hideTryIt}
-                hideTryItPanel={hideTryItPanel}
+                layoutOptions={{ hideTryIt: hideTryIt, hideTryItPanel: hideTryItPanel }}
                 useNodeForRefResolving
               />
             </Box>
