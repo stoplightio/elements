@@ -67,6 +67,11 @@
         },
         {
           "type": "item",
+          "title": "Elements Dev Portal in GatsbyJS",
+          "uri": "docs/getting-started/dev-portal/gatsby.md"
+        },
+        {
+          "type": "item",
           "title": "Web Component",
           "uri": "docs/getting-started/dev-portal/web-component.md"
         }
