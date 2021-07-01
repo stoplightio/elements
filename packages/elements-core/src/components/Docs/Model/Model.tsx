@@ -15,7 +15,7 @@ import { InternalBadge } from '../HttpOperation/Badges';
 
 export type ModelProps = DocsComponentProps<JSONSchema7>;
 
-const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className, headless, nodeTitle }) => {
+const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className, nodeTitle, layoutOptions }) => {
   const resolveRef = useInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
 
@@ -26,7 +26,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className,
 
   return (
     <Box className={cn('Model', className)}>
-      {!headless && title !== undefined && (
+      {!layoutOptions?.noHeading && title !== undefined && (
         <Heading size={1} mb={4} fontWeight="semibold">
           {title}
         </Heading>
@@ -44,25 +44,27 @@ const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className,
         <Box flex={1}>
           <JsonSchemaViewer resolveRef={resolveRef} className={className} schema={getOriginalObject(data)} />
         </Box>
-        <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
-          <Panel rounded isCollapsible={false}>
-            <Panel.Titlebar>
-              <Text color="body" role="heading">
-                Example
-              </Text>
-            </Panel.Titlebar>
-            <Panel.Content p={0}>
-              <CodeViewer
-                aria-label={example}
-                noCopyButton
-                maxHeight="500px"
-                language="json"
-                value={example}
-                showLineNumbers
-              />
-            </Panel.Content>
-          </Panel>
-        </Box>
+        {!layoutOptions?.hideModelExamples && (
+          <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
+            <Panel rounded isCollapsible={false}>
+              <Panel.Titlebar>
+                <Text color="body" role="heading">
+                  Example
+                </Text>
+              </Panel.Titlebar>
+              <Panel.Content p={0}>
+                <CodeViewer
+                  aria-label={example}
+                  noCopyButton
+                  maxHeight="500px"
+                  language="json"
+                  value={example}
+                  showLineNumbers
+                />
+              </Panel.Content>
+            </Panel>
+          </Box>
+        )}
       </Flex>
     </Box>
   );
