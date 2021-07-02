@@ -1,4 +1,5 @@
 import { Branch } from '../types';
+import { appVersion } from '../version';
 
 export const getBranches = async ({
   projectId,
@@ -11,7 +12,7 @@ export const getBranches = async ({
 }): Promise<Branch[]> => {
   const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/branches`, {
     headers: {
-      'Stoplight-Elements-Version': '1.0.0',
+      'Stoplight-Elements-Version': appVersion,
       ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
     },
   });
