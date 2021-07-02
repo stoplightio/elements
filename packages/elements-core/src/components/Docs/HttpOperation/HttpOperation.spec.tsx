@@ -549,14 +549,14 @@ describe('HttpOperation', () => {
 
   describe('Visibility', () => {
     it('should hide TryIt', async () => {
-      render(<HttpOperation data={httpOperation} hideTryIt />);
+      render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryIt: true }} />);
 
       expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
       expect(await screen.findByText('Response Example')).toBeInTheDocument();
     });
 
     it('should hide right column', async () => {
-      render(<HttpOperation data={httpOperation} hideTryItPanel />);
+      render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryItPanel: true }} />);
 
       expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
       expect(screen.queryByText('Response Example')).not.toBeInTheDocument();

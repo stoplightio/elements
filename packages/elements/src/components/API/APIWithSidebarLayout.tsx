@@ -69,7 +69,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           uri={hasOverview ? pathname : undefined}
           node={node}
           nodeTitle={node.name}
-          hideTryIt={hideTryIt}
+          layoutOptions={{ hideTryIt: hideTryIt }}
           location={location}
           allowRouting
         />
