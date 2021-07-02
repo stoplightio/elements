@@ -1,4 +1,5 @@
 import { NodeSearchResult } from '../types';
+import { appVersion } from '../version';
 
 export const getNodes = async ({
   workspaceId,
@@ -27,7 +28,7 @@ export const getNodes = async ({
 
   const response = await fetch(`${platformUrl}/api/v1/workspaces/${workspaceId}/nodes${query}`, {
     headers: {
-      'Stoplight-Elements-Version': '1.0.0',
+      'Stoplight-Elements-Version': appVersion,
       ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
     },
   });
