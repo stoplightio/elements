@@ -60,7 +60,7 @@ describe('Stoplight component', () => {
       loadListTodosPage();
       cy.findByRole('button', { name: /mocking/i }).click();
       cy.findByRole('menuitemcheckbox', { name: /enabled/i }).then(enabled => {
-        enabled.click();
+        enabled.trigger('click');
       });
       cy.findByRole('button', { name: /send request/i }).click();
       cy.findByText('200 OK').should('exist');
