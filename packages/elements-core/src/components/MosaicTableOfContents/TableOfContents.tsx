@@ -225,7 +225,13 @@ const Node = React.memo<{
   };
 
   return (
-    <Box as={LinkComponent} to={item.slug} display="block" textDecoration="no-underline">
+    <Box
+      as={LinkComponent}
+      to={item.slug}
+      display="block"
+      textDecoration="no-underline"
+      className="ElementsTableOfContentsItem"
+    >
       <Item
         id={getHtmlIdFromItemId(item.id)}
         isActive={isActive}
