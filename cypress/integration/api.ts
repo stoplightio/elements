@@ -31,16 +31,13 @@ describe('API component', () => {
 
     it('displays request sample correctly', () => {
       cy.visit('/zoom-api/operations/userCreate');
-      cy.findByLabelText(
-        'curl --request POST \\ --url \'https://api.zoom.us/v2/users?access_token=\' \\ --header \'Content-Type: application/json\' \\ --data \'{ "action": "create", "user_info": { "email": "string", "first_name": "string", "last_name": "string", "password": "string", "type": 1 } }\'',
-      ).should('exist');
+      cy.findByLabelText(/curl/i).should('exist');
+      cy.findByLabelText(/--request post/i).should('exist');
     });
 
     it('displays example correctly', () => {
-      cy.visit('/zoom-api/operations/userCreate');
-      cy.findByLabelText(
-        '{ "email": "string", "first_name": "string", "id": "string", "last_name": "string", "type": 1 }',
-      ).should('exist');
+      cy.visit('/zoom-api/operations/users');
+      cy.findByLabelText(/{.+}/).should('exist');
     });
 
     it('displays schema correctly', () => {
@@ -52,7 +49,7 @@ describe('API component', () => {
     it('invokes TryIt request (receives network error)', () => {
       cy.visit('/zoom-api/operations/userCreate');
       cy.findByRole('button', { name: /Send Request/i }).click();
-      cy.findByText('Network Error occured.').should('exist');
+      cy.findByRole('button', { name: 'Error' }).should('exist');
     });
 
     it('navigates on auth badge', () => {
@@ -72,9 +69,7 @@ describe('API component', () => {
 
     it('displays example correctly', () => {
       cy.visit('/zoom-api/schemas/Account');
-      cy.findByLabelText(
-        '{ "email": "string", "first_name": "string", "last_name": "string", "options": { "meeting_connectors": "string", "pay_mode": "master", "room_connectors": "string", "share_mc": false, "share_rc": false }, "password": "string" }',
-      ).should('exist');
+      cy.findByLabelText(/{.+}/).should('exist');
     });
   });
 

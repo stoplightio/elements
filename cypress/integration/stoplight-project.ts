@@ -10,7 +10,6 @@ describe('Stoplight component', () => {
       cy.findByText('https://todos.stoplight.io/').should('exist');
       cy.findByText('https://stoplight.io/mocks/elements-examples/studio-demo/389434').should('exist');
       cy.findByRole('heading', { name: /API Key/ }).should('exist');
-      cy.findByText('💫 Overview').should('exist');
     });
   });
 
@@ -31,16 +30,13 @@ describe('Stoplight component', () => {
 
     it('displays request sample correctly', () => {
       loadCreateTodoPage();
-      cy.findByLabelText(
-        'curl --request POST \\ --url \'https://todos.stoplight.io/todos?apikey=\' \\ --header \'Content-Type: application/json\' \\ --data \'{ "name": "string", "completed": false }\'',
-      ).should('exist');
+      cy.findByLabelText(/curl/i);
+      cy.findByLabelText(/--request post/i).should('exist');
     });
 
     it('displays example correctly', () => {
-      loadCreateTodoPage();
-      cy.findByLabelText(
-        '{ "id": 0, "name": "string", "completed": true, "completed_at": "2019-08-24T14:15:22Z", "created_at": "2019-08-24T14:15:22Z", "updated_at": "2019-08-24T14:15:22Z" }',
-      ).should('exist');
+      loadListTodosPage();
+      cy.findByLabelText(/\[.+\]/).should('exist');
     });
 
     it('displays schema correctly', () => {
@@ -64,7 +60,6 @@ describe('Stoplight component', () => {
       });
       cy.findByRole('button', { name: /send request/i }).click();
       cy.findByText('200 OK').should('exist');
-      cy.findAllByText('"2019-08-24T14:15:22Z"').should('exist');
     });
   });
 
@@ -78,9 +73,7 @@ describe('Stoplight component', () => {
 
     it('displays example correctly', () => {
       loadTodoSchemaPage();
-      cy.findByLabelText(
-        '{ "id": 0, "name": "string", "completed": false, "completed_at": "2019-08-24T14:15:22Z", "created_at": "2019-08-24T14:15:22Z", "updated_at": "2019-08-24T14:15:22Z" }',
-      ).should('exist');
+      cy.findByLabelText(/{.+}/).should('exist');
     });
   });
 
