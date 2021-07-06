@@ -10,7 +10,7 @@
     "serve": "serve -s -l 4200 build"
   },
   "dependencies": {
-    "@stoplight/elements": "^7.0.0",
+    "@stoplight/elements": "^7.0.1",
     "@stoplight/elements-dev-portal": "^1.0.0",
     "react": "^17.0.2"
   },
