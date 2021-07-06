@@ -4,7 +4,7 @@ import { HttpSecurityScheme } from '@stoplight/types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { badgeDefaultColor } from '../../../constants';
+import { badgeDefaultBackgroundColor, badgeDefaultColor } from '../../../constants';
 import { getReadableSecurityName } from '../../../utils/oas/security';
 
 export const DeprecatedBadge: React.FC = () => (
@@ -40,7 +40,7 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
       icon={faLock}
       data-testid="badge-security"
       className="sl-truncate"
-      style={{ backgroundColor: badgeDefaultColor }}
+      style={{ backgroundColor: badgeDefaultBackgroundColor, color: badgeDefaultColor }}
     >
       {getReadableSecurityName(scheme, true)}
     </Badge>
@@ -53,4 +53,23 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
   ) : (
     badge
   );
+};
+
+export const VersionBadge: React.FC<{ value: string; backgroundColor?: string }> = ({ value, backgroundColor }) => (
+  <Badge
+    appearance="solid"
+    style={{
+      backgroundColor: backgroundColor || badgeDefaultBackgroundColor,
+      border: 'none',
+      color: badgeDefaultColor,
+    }}
+  >
+    {enhanceVersionString(value)}
+  </Badge>
+);
+
+const enhanceVersionString = (version: string): string => {
+  if (version[0] === 'v') return version;
+
+  return `v${version}`;
 };

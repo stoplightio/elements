@@ -1,6 +1,7 @@
-import { Badge, Box, Flex, Icon } from '@stoplight/mosaic';
+import { Box, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
+import { VersionBadge } from '../Docs/HttpOperation/Badges';
 import { NODE_META_COLOR, NODE_TYPE_ICON_COLOR, NODE_TYPE_META_ICON, NODE_TYPE_TITLE_ICON } from './constants';
 import {
   CustomLinkComponent,
@@ -252,15 +253,7 @@ const Node = React.memo<{
 const Version: React.FC<{ value: string }> = ({ value }) => {
   return (
     <Box mr={2}>
-      <Badge
-        appearance="solid"
-        style={{
-          backgroundColor: '#909DAB',
-          border: 'none',
-        }}
-      >
-        v{value}
-      </Badge>
+      <VersionBadge value={value} backgroundColor="#909DAB" />
     </Box>
   );
 };

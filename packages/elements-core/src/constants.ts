@@ -139,4 +139,5 @@ export const HttpCodeDescriptions = {
   599: 'Network connect timeout error',
 };
 
-export const badgeDefaultColor = '#293742';
+export const badgeDefaultBackgroundColor = '#293742';
+export const badgeDefaultColor = '#FFFFFF';
