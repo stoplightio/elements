@@ -210,6 +210,7 @@ const Node = React.memo<{
 }>(({ item, depth, meta, onClick }) => {
   const activeId = React.useContext(ActiveIdContext);
   const isActive = activeId === item.id;
+  const shouldNavigate = !!item.slug;
   const LinkComponent = React.useContext(LinkContext);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -221,11 +222,27 @@ const Node = React.memo<{
 
     // Force open when clicking inactive group
     if (onClick) {
-      onClick(e, isActive ? undefined : true);
+      onClick(e, isActive || !shouldNavigate ? undefined : true);
     }
   };
 
-  return (
+  const elem = (
+    <Item
+      id={getHtmlIdFromItemId(item.id)}
+      isActive={isActive}
+      depth={depth}
+      title={item.title}
+      icon={
+        NODE_TYPE_TITLE_ICON[item.type] && (
+          <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
+        )
+      }
+      meta={meta}
+      onClick={handleClick}
+    />
+  );
+
+  return shouldNavigate ? (
     <Box
       as={LinkComponent}
       to={item.slug}
@@ -233,20 +250,10 @@ const Node = React.memo<{
       textDecoration="no-underline"
       className="ElementsTableOfContentsItem"
     >
-      <Item
-        id={getHtmlIdFromItemId(item.id)}
-        isActive={isActive}
-        depth={depth}
-        title={item.title}
-        icon={
-          NODE_TYPE_TITLE_ICON[item.type] && (
-            <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
-          )
-        }
-        meta={meta}
-        onClick={handleClick}
-      />
+      {elem}
     </Box>
+  ) : (
+    elem
   );
 });
 
