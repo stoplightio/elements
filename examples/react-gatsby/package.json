@@ -17,7 +17,7 @@
     "build": "gatsby build"
   },
   "dependencies": {
-    "@stoplight/elements": "^7.0.0",
+    "@stoplight/elements": "^7.0.2",
     "@stoplight/elements-dev-portal": "^1.0.0",
     "gatsby": "^3.7.1",
     "gatsby-image": "^3.8.0",
