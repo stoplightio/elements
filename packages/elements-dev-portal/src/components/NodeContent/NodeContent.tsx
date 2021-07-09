@@ -6,7 +6,6 @@ import {
   PersistenceContextProvider,
 } from '@stoplight/elements-core';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
-import { Box } from '@stoplight/mosaic';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
