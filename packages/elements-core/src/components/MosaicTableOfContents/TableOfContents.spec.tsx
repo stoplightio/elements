@@ -4,6 +4,8 @@ import * as React from 'react';
 
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
 import { TableOfContents as TOC } from './TableOfContents';
+import { TableOfContentsItem } from './types';
+import { findFirstNode } from './utils';
 
 const TableOfContents = withMosaicProvider(TOC);
 
@@ -217,6 +219,81 @@ describe('TableOfContents', () => {
       expect(screen.queryByText(/v1.0.2/)).not.toBeInTheDocument();
 
       unmount();
+    });
+  });
+});
+
+describe('utils', () => {
+  describe('findFirstNode', () => {
+    it('should find the first node', () => {
+      const items: TableOfContentsItem[] = [
+        {
+          title: 'group',
+          items: [
+            {
+              id: 'abc',
+              title: 'Doc',
+              type: 'article',
+              slug: 'abc-doc',
+              meta: '',
+            },
+            {
+              id: 'targetId',
+              title: 'Target',
+              slug: 'target',
+              type: 'article',
+              meta: '',
+            },
+          ],
+        },
+      ];
+
+      const firstNode = findFirstNode(items);
+
+      expect(firstNode).toEqual({
+        id: 'abc',
+        title: 'Doc',
+        type: 'article',
+        slug: 'abc-doc',
+        meta: '',
+      });
+    });
+
+    it('should ignore group node if slug is empty', () => {
+      const items: TableOfContentsItem[] = [
+        {
+          id: 'abc',
+          title: 'Todo API',
+          type: 'http_service',
+          meta: '',
+          slug: '',
+          items: [
+            {
+              id: 'def',
+              title: 'Get Todo',
+              slug: 'def-get-todo',
+              type: 'http_operation',
+              meta: 'get',
+            },
+            {
+              id: 'ghi',
+              title: 'Add Todo',
+              slug: 'ghi-add-todo',
+              type: 'http_operation',
+              meta: 'post',
+            },
+          ],
+        },
+      ];
+
+      const firstNode = findFirstNode(items);
+      expect(firstNode).toEqual({
+        id: 'def',
+        title: 'Get Todo',
+        slug: 'def-get-todo',
+        type: 'http_operation',
+        meta: 'get',
+      });
     });
   });
 });
