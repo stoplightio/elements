@@ -8,6 +8,7 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
 import { VersionBadge } from '../HttpOperation/Badges';
+import { TwoColumnLayout } from '../TwoColumnLayout';
 import { SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
 
@@ -18,7 +19,25 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, lo
   const mocking = React.useContext(MockingContext);
   const query = new URLSearchParams(search);
 
-  const description = data.description && <MarkdownViewer className="sl-mb-10" markdown={data.description} />;
+  const shouldDisplayHeader = data.name && !layoutOptions?.noHeading;
+
+  const header = (shouldDisplayHeader || data.version) && (
+    <>
+      {shouldDisplayHeader && (
+        <Heading size={1} mb={4} fontWeight="semibold">
+          {data.name}
+        </Heading>
+      )}
+
+      {data.version && (
+        <Box mb={5}>
+          <VersionBadge value={data.version} />
+        </Box>
+      )}
+    </>
+  );
+
+  const description = data.description && <MarkdownViewer className="sl-mb-5" markdown={data.description} />;
 
   const dataPanel = (
     <VStack spacing={6}>
@@ -31,43 +50,20 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, lo
     </VStack>
   );
 
-  return (
-    <Box className={className} w="full">
-      {data.name && !layoutOptions?.noHeading && (
-        <Heading size={1} fontWeight="semibold">
-          {data.name}
-        </Heading>
-      )}
+  if (layoutOptions?.showPoweredByLink) {
+    return (
+      <Box mb={10}>
+        {header}
+        {description}
+        {pathname && (
+          <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" layout="stacked" />
+        )}
+        {dataPanel}
+      </Box>
+    );
+  }
 
-      {data.version && (
-        <Box mt={3}>
-          <VersionBadge value={data.version} />
-        </Box>
-      )}
-
-      {layoutOptions?.showPoweredByLink ? (
-        <Box mb={10}>
-          {description}
-          {pathname && (
-            <PoweredByLink
-              source={data.name ?? 'no-title'}
-              pathname={pathname}
-              packageType="elements"
-              layout="stacked"
-            />
-          )}
-          {dataPanel}
-        </Box>
-      ) : (
-        <Flex mt={12}>
-          <Box flex={1}>{description}</Box>
-          <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
-            {dataPanel}
-          </Box>
-        </Flex>
-      )}
-    </Box>
-  );
+  return <TwoColumnLayout className={className} header={header} left={description} right={dataPanel} />;
 });
 HttpServiceComponent.displayName = 'HttpService.Component';
 

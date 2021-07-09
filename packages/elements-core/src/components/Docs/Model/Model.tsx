@@ -12,6 +12,7 @@ import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { InternalBadge } from '../HttpOperation/Badges';
+import { TwoColumnLayout } from '../TwoColumnLayout';
 
 export type ModelProps = DocsComponentProps<JSONSchema7>;
 
@@ -24,50 +25,52 @@ const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className,
 
   const example = React.useMemo(() => generateExampleFromJsonSchema(data), [data]);
 
-  return (
-    <Box className={cn('Model', className)}>
-      {!layoutOptions?.noHeading && title !== undefined && (
+  const shouldDisplayHeader = !layoutOptions?.noHeading && title !== undefined;
+
+  const header = (shouldDisplayHeader || isInternal) && (
+    <>
+      {shouldDisplayHeader && (
         <Heading size={1} mb={4} fontWeight="semibold">
           {title}
         </Heading>
       )}
 
       {isInternal && (
-        <HStack spacing={2} mt={3} mb={12}>
+        <HStack spacing={2} mb={12}>
           <InternalBadge />
         </HStack>
       )}
-
-      {data.description && <MarkdownViewer markdown={data.description} />}
-
-      <Flex>
-        <Box flex={1}>
-          <JsonSchemaViewer resolveRef={resolveRef} className={className} schema={getOriginalObject(data)} />
-        </Box>
-        {!layoutOptions?.hideModelExamples && (
-          <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
-            <Panel rounded isCollapsible={false}>
-              <Panel.Titlebar>
-                <Text color="body" role="heading">
-                  Example
-                </Text>
-              </Panel.Titlebar>
-              <Panel.Content p={0}>
-                <CodeViewer
-                  aria-label={example}
-                  noCopyButton
-                  maxHeight="500px"
-                  language="json"
-                  value={example}
-                  showLineNumbers
-                />
-              </Panel.Content>
-            </Panel>
-          </Box>
-        )}
-      </Flex>
-    </Box>
+    </>
   );
+
+  const description = (
+    <>
+      {data.description && <MarkdownViewer className="sl-mb-6" markdown={data.description} />}
+      <JsonSchemaViewer resolveRef={resolveRef} className={className} schema={getOriginalObject(data)} />
+    </>
+  );
+
+  const modelExamples = !layoutOptions?.hideModelExamples && (
+    <Panel rounded isCollapsible={false}>
+      <Panel.Titlebar>
+        <Text color="body" role="heading">
+          Example
+        </Text>
+      </Panel.Titlebar>
+      <Panel.Content p={0}>
+        <CodeViewer
+          aria-label={example}
+          noCopyButton
+          maxHeight="500px"
+          language="json"
+          value={example}
+          showLineNumbers
+        />
+      </Panel.Content>
+    </Panel>
+  );
+
+  return <TwoColumnLayout className="Model" header={header} left={description} right={modelExamples} />;
 };
 
 export const Model = withErrorBoundary<ModelProps>(ModelComponent, { recoverableProps: ['data'] });

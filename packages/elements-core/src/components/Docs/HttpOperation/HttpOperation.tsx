@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, HStack } from '@stoplight/mosaic';
+import { Box, Heading, HStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
@@ -11,6 +11,7 @@ import { getServiceUriFromOperation } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
+import { TwoColumnLayout } from '../TwoColumnLayout';
 import { DeprecatedBadge, InternalBadge, SecurityBadge } from './Badges';
 import { Request } from './Request';
 import { Responses } from './Responses';
@@ -35,16 +36,16 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
 
     const hasBadges = isDeprecated || securitySchemes.length > 0 || isInternal;
 
-    return (
-      <Box bg="transparent" className={cn('HttpOperation', className)} w="full">
+    const header = (!layoutOptions?.noHeading || hasBadges) && (
+      <>
         {!layoutOptions?.noHeading && (
-          <Heading size={1} fontWeight="semibold">
+          <Heading size={1} mb={4} fontWeight="semibold">
             {data.summary || data.iid || `${data.method} ${data.path}`}
           </Heading>
         )}
 
         {hasBadges && (
-          <HStack spacing={2} mt={3}>
+          <HStack spacing={2}>
             {isDeprecated && <DeprecatedBadge />}
             {sortBy(securitySchemes, 'type').map((scheme, i) => (
               <SecurityBadge key={i} scheme={scheme} httpServiceUri={allowRouting ? httpServiceUri : undefined} />
@@ -52,40 +53,47 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             {isInternal && <InternalBadge isHttpService />}
           </HStack>
         )}
+      </>
+    );
 
-        <Flex mt={12}>
-          <Box flex={1}>
-            {data.description && (
-              <MarkdownViewer className="HttpOperation__Description sl-mb-10" markdown={data.description} />
-            )}
+    const description = (
+      <>
+        {data.description && (
+          <MarkdownViewer className="HttpOperation__Description sl-mb-10" markdown={data.description} />
+        )}
 
-            <Request onChange={setTextRequestBodyIndex} operation={data} />
+        <Request onChange={setTextRequestBodyIndex} operation={data} />
 
-            {data.responses && (
-              <Responses
-                responses={data.responses}
-                onMediaTypeChange={setResponseMediaType}
-                onStatusCodeChange={setResponseStatusCode}
-              />
-            )}
-          </Box>
+        {data.responses && (
+          <Responses
+            responses={data.responses}
+            onMediaTypeChange={setResponseMediaType}
+            onStatusCodeChange={setResponseStatusCode}
+          />
+        )}
+      </>
+    );
 
-          {!layoutOptions?.hideTryItPanel && (
-            <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
-              <Box className="HttpOperation__gutter">
-                <TryItWithRequestSamples
-                  httpOperation={data}
-                  responseMediaType={responseMediaType}
-                  responseStatusCode={responseStatusCode}
-                  requestBodyIndex={requestBodyIndex}
-                  hideTryIt={layoutOptions?.hideTryIt}
-                  mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
-                />
-              </Box>
-            </Box>
-          )}
-        </Flex>
+    const tryItPanel = !layoutOptions?.hideTryItPanel && (
+      <Box className="HttpOperation__gutter">
+        <TryItWithRequestSamples
+          httpOperation={data}
+          responseMediaType={responseMediaType}
+          responseStatusCode={responseStatusCode}
+          requestBodyIndex={requestBodyIndex}
+          hideTryIt={layoutOptions?.hideTryIt}
+          mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
+        />
       </Box>
+    );
+
+    return (
+      <TwoColumnLayout
+        className={cn('HttpOperation', className)}
+        header={header}
+        left={description}
+        right={tryItPanel}
+      />
     );
   },
 );
