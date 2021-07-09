@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Box, Flex, Heading, HStack, Panel, Text } from '@stoplight/mosaic';
+import { Heading, HStack, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
@@ -46,7 +46,7 @@ const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className,
   const description = (
     <>
       {data.description && <MarkdownViewer className="sl-mb-6" markdown={data.description} />}
-      <JsonSchemaViewer resolveRef={resolveRef} className={className} schema={getOriginalObject(data)} />
+      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} />
     </>
   );
 
@@ -70,7 +70,9 @@ const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className,
     </Panel>
   );
 
-  return <TwoColumnLayout className="Model" header={header} left={description} right={modelExamples} />;
+  return (
+    <TwoColumnLayout className={cn('Model', className)} header={header} left={description} right={modelExamples} />
+  );
 };
 
 export const Model = withErrorBoundary<ModelProps>(ModelComponent, { recoverableProps: ['data'] });

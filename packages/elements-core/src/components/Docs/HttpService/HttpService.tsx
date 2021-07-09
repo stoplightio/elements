@@ -1,6 +1,7 @@
-import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
+import { Box, Heading, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
+import cn from 'classnames';
 import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
@@ -63,7 +64,9 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, lo
     );
   }
 
-  return <TwoColumnLayout className={className} header={header} left={description} right={dataPanel} />;
+  return (
+    <TwoColumnLayout className={cn('HttpService', className)} header={header} left={description} right={dataPanel} />
+  );
 });
 HttpServiceComponent.displayName = 'HttpService.Component';
 
