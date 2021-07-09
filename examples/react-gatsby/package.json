@@ -19,7 +19,7 @@
   "dependencies": {
     "@stoplight/elements": "^7.0.2",
     "@stoplight/elements-dev-portal": "^1.0.0",
-    "gatsby": "^3.7.1",
+    "gatsby": "^3.9.0",
     "gatsby-image": "^3.8.0",
     "gatsby-plugin-manifest": "^3.7.1",
     "gatsby-plugin-offline": "^4.7.1",
