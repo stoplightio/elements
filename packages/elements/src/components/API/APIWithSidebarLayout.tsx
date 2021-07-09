@@ -12,6 +12,7 @@ type SidebarLayoutProps = {
   hideTryIt?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -20,6 +21,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideTryIt,
   hideSchemas,
   hideInternal,
+  tryItCredentialsPolicy,
 }) => {
   const tree = React.useMemo(
     () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
@@ -72,6 +74,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           layoutOptions={{ hideTryIt: hideTryIt }}
           location={location}
           allowRouting
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
         />
       )}
     </SidebarLayout>

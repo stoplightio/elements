@@ -66,6 +66,14 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   hideInternal?: boolean;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -73,7 +81,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 export const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas, hideInternal } = props;
+  const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas, hideInternal, tryItCredentialsPolicy } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { data: fetchedDocument, error } = useQuery(
@@ -128,7 +136,11 @@ export const APIImpl: React.FC<APIProps> = props => {
   return (
     <InlineRefResolverProvider document={parsedDocument}>
       {layout === 'stacked' ? (
-        <APIWithStackedLayout serviceNode={serviceNode} hideTryIt={hideTryIt} />
+        <APIWithStackedLayout
+          serviceNode={serviceNode}
+          hideTryIt={hideTryIt}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
+        />
       ) : (
         <APIWithSidebarLayout
           logo={logo}
@@ -136,6 +148,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideTryIt={hideTryIt}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
         />
       )}
     </InlineRefResolverProvider>

@@ -40,6 +40,13 @@ export interface TryItProps {
    */
   onRequestChange?: (currentRequest: HarRequest) => void;
   requestBodyIndex?: number;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
 }
 
 interface ResponseState {
@@ -55,7 +62,13 @@ interface ErrorState {
  * Displays the TryIt component for a given IHttpOperation.
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
-export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestChange, requestBodyIndex }) => {
+export const TryIt: React.FC<TryItProps> = ({
+  httpOperation,
+  mockUrl,
+  onRequestChange,
+  requestBodyIndex,
+  tryItCredentialsPolicy,
+}) => {
   const isDark = useThemeIsDark();
 
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
@@ -109,6 +122,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         mediaTypeContent,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         mockData,
+        credentials: tryItCredentialsPolicy,
         auth: operationAuthValue,
       });
       let response: Response | undefined;

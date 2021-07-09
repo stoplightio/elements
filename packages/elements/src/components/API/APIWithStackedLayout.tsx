@@ -8,24 +8,34 @@ import { useLocation } from 'react-router-dom';
 import { OperationNode, ServiceNode } from '../../utils/oas/types';
 import { computeTagGroups, TagGroup } from './utils';
 
+type TryItCredentialsPolicy = 'omit' | 'include' | 'same-origin';
+
 type StackedLayoutProps = {
   serviceNode: ServiceNode;
   hideTryIt?: boolean;
+  tryItCredentialsPolicy?: TryItCredentialsPolicy;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode) => {
   return hash.substr(1) === `${item.name}-${item.data.method}`;
 };
 
-const TryItContext = React.createContext<{ hideTryIt?: boolean }>({ hideTryIt: false });
+const TryItContext = React.createContext<{ hideTryIt?: boolean; tryItCredentialsPolicy?: TryItCredentialsPolicy }>({
+  hideTryIt: false,
+  tryItCredentialsPolicy: 'omit',
+});
 TryItContext.displayName = 'TryItContext';
 
-export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode, hideTryIt }) => {
+export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
+  serviceNode,
+  hideTryIt,
+  tryItCredentialsPolicy,
+}) => {
   const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
 
   return (
-    <TryItContext.Provider value={{ hideTryIt }}>
+    <TryItContext.Provider value={{ hideTryIt, tryItCredentialsPolicy }}>
       <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
         <Box w="full" borderB>
           <Docs
@@ -35,6 +45,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
             nodeType={NodeType.HttpService}
             location={location}
             layoutOptions={{ showPoweredByLink: true }}
+            tryItCredentialsPolicy={tryItCredentialsPolicy}
           />
         </Box>
 
@@ -104,7 +115,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const color = HttpMethodColors[item.data.method] || 'gray';
   const isDeprecated = !!item.data.deprecated;
-  const { hideTryIt } = React.useContext(TryItContext);
+  const { hideTryIt, tryItCredentialsPolicy } = React.useContext(TryItContext);
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -164,10 +175,11 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
                   node={item}
                   location={location}
                   layoutOptions={{ noHeading: true, hideTryItPanel: true }}
+                  tryItCredentialsPolicy={tryItCredentialsPolicy}
                 />
               </TabPanel>
               <TabPanel>
-                <TryItWithRequestSamples httpOperation={item.data} />
+                <TryItWithRequestSamples tryItCredentialsPolicy={tryItCredentialsPolicy} httpOperation={item.data} />
               </TabPanel>
             </TabPanels>
           </Tabs>

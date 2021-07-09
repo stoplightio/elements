@@ -29,6 +29,7 @@ interface BuildRequestInput {
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
   auth?: HttpSecuritySchemeWithValues;
+  credentials?: 'omit' | 'include' | 'same-origin';
 }
 
 export async function buildFetchRequest({
@@ -38,6 +39,7 @@ export async function buildFetchRequest({
   parameterValues,
   mockData,
   auth,
+  credentials,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
   const firstServer = httpOperation.servers?.[0];
   const firstServerUrl = firstServer && getServerUrlWithDefaultValues(firstServer);
@@ -70,7 +72,7 @@ export async function buildFetchRequest({
   return [
     url.toString(),
     {
-      credentials: 'omit',
+      credentials,
       method: httpOperation.method,
       headers,
       body: shouldIncludeBody ? body : undefined,

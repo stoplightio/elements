@@ -18,7 +18,7 @@ import { Responses } from './Responses';
 export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data: unresolvedData, uri, allowRouting = false, layoutOptions }) => {
+  ({ className, data: unresolvedData, uri, allowRouting = false, layoutOptions, tryItCredentialsPolicy }) => {
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
 
     const mocking = React.useContext(MockingContext);
@@ -79,6 +79,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
                   responseStatusCode={responseStatusCode}
                   requestBodyIndex={requestBodyIndex}
                   hideTryIt={layoutOptions?.hideTryIt}
+                  tryItCredentialsPolicy={tryItCredentialsPolicy}
                   mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
                 />
               </Box>

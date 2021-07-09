@@ -37,6 +37,13 @@ interface BaseDocsProps {
   allowRouting?: boolean;
 
   /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+  /**
    * Allows to customize the layout of Docs
    */
   layoutOptions?: {
