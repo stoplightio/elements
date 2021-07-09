@@ -42,15 +42,12 @@ function hasActiveItem(items: TableOfContentsGroupItem[], activeId: string): boo
 // Recursively finds the first node
 export function findFirstNode(items: TableOfContentsItem[]): TableOfContentsNode | TableOfContentsNodeGroup | void {
   for (const item of items) {
-    if (isNode(item)) {
+    // ignore nodes with empty slug
+    if ((isNode(item) || isNodeGroup(item)) && item.slug) {
       return item;
     }
 
-    if (isNodeGroup(item)) {
-      return item;
-    }
-
-    if (isGroup(item)) {
+    if (isGroup(item) || isNodeGroup(item)) {
       const firstNode = findFirstNode(item.items);
       if (firstNode) {
         return firstNode;

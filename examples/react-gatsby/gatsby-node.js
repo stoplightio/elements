@@ -1,9 +1,7 @@
-exports.onCreateWebpackConfig = ({ stage, loaders, actions, plugins }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, plugins }) => {
   actions.setWebpackConfig({
     resolve: {
       fallback: {
-        "http": false,
-        "https": false,
         "stream": false,
         "path": false,
         "process": false
@@ -17,19 +15,6 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions, plugins }) => {
         plugins.provide({ process: 'process/browser' })
       ]
     })
-  }
-
-  if (stage === 'build-html') {
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          {
-            test: /canvas/,
-            use: loaders.null(),
-          },
-        ],
-      },
-    });
   }
 };
 

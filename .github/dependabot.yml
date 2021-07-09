@@ -2,9 +2,6 @@ version: 2
 updates:
   - package-ecosystem: npm
     directory: /examples/angular
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-patch", "version-update:semver-minor"]
     schedule:
       interval: weekly
       day: monday
@@ -12,12 +9,9 @@ updates:
     commit-message:
       prefix: "chore"
       include: scope
-    versioning-strategy: increase
+    versioning-strategy: increase-if-necessary
   - package-ecosystem: npm
     directory: /examples/react-cra
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-patch", "version-update:semver-minor"]
     schedule:
       interval: weekly
       day: monday
@@ -25,12 +19,9 @@ updates:
     commit-message:
       prefix: "chore"
       include: scope
-    versioning-strategy: increase
+    versioning-strategy: increase-if-necessary
   - package-ecosystem: npm
     directory: /examples/react-gatsby
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-patch", "version-update:semver-minor"]
     schedule:
       interval: weekly
       day: monday
@@ -38,6 +29,6 @@ updates:
     commit-message:
       prefix: "chore"
       include: scope
-    versioning-strategy: increase
+    versioning-strategy: increase-if-necessary
 
 
