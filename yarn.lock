@@ -4091,24 +4091,6 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.0.0.tgz#44fc6e1d8fcfd8b6804261665d2ed3d29beefc02"
-  integrity sha512-c+bkpZ1sPI/DqKRMI7ewKoeuAxfULdpoHUnJwM9q2KsER1bwxNkvpUIuVdH0bel2MAxA9Ac49TXezsCeYyBRKQ==
-  dependencies:
-    "@stoplight/markdown" "^3.0.0"
-    "@stoplight/react-error-boundary" "^1.1.0"
-    "@stoplight/types" "^12.3.0"
-    clsx "^1.1.1"
-    deepmerge "^4.2.2"
-    hast-to-hyperscript "^10.0.0"
-    hast-util-raw "^7.0.0"
-    hast-util-sanitize "^4.0.0"
-    mdast-util-to-hast "^11.1.1"
-    remark-parse "^9.0.0"
-    unified "^9.2.1"
-    unist-util-visit "^3.1.0"
-
 "@stoplight/markdown-viewer@^5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.1.0.tgz#2a21fc0032a63218a325923a0beca79e78c94c33"
