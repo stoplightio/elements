@@ -9,8 +9,8 @@ This will work with pretty much any CMS: Drupal, Joomla, Wordpress, Jekyll, they
 1. Load the Elements web component JavaScript and default CSS. These can go in the `<head>` tag.
   
 ```html
-<script src="https://unpkg.com/@stoplight/elements@beta/web-components.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/@stoplight/elements@beta/styles.min.css">  
+<script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">  
 ```
 
 2. Find an OpenAPI document to work with. You could create a document using [Stoplight Studio](https://stoplight.io/studio), [generate it from source code](https://stoplight.io/blog/generate-documentation-from-code/), or browse through some [real-world examples](https://apis.guru/browse-apis/).
@@ -34,8 +34,8 @@ Alternatively, copy and paste this into an `index.html` and open it in a browser
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Elements in HTML</title>
   
-    <script src="https://unpkg.com/@stoplight/elements@beta/web-components.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements@beta/styles.min.css">
+    <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
   </head>
   <body>
 
