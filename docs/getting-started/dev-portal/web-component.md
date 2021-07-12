@@ -11,8 +11,8 @@ For now, the only component in the DevPortal package is `<elements-stoplight-pro
 1. Load the Elements Dev Portal JavaScript and default CSS. These can go in the `<head>` tag.
   
 ```html
-<script src="https://unpkg.com/@stoplight/elements-dev-portal@beta/web-components.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/@stoplight/elements-dev-portal@beta/styles.min.css">  
+<script src="https://unpkg.com/@stoplight/elements-dev-portal/web-components.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@stoplight/elements-dev-portal/styles.min.css">  
 ```
 
 2. Find the "Project ID" from the Project Settings view of your Stoplight Project.
@@ -39,8 +39,8 @@ Alternatively, copy and paste this into an `index.html` and open it in a browser
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Elements Dev Portal</title>
   
-    <script src="https://unpkg.com/@stoplight/elements-dev-portal@beta/web-components.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements-dev-portal@beta/styles.min.css">
+    <script src="https://unpkg.com/@stoplight/elements-dev-portal/web-components.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements-dev-portal/styles.min.css">
   </head>
   <body>
 
