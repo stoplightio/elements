@@ -6,7 +6,6 @@ import {
   PersistenceContextProvider,
 } from '@stoplight/elements-core';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
-import { Box } from '@stoplight/mosaic';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
@@ -39,15 +38,13 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
       <NodeLinkContext.Provider value={[node, Link]}>
         <MarkdownComponentsProvider value={{ link: LinkComponent }}>
           <MockingProvider mockUrl={node.links.mock_url} hideMocking={hideMocking}>
-            <Box style={{ maxWidth: ['model'].includes(node.type) ? 1000 : undefined }}>
-              <Docs
-                nodeType={node.type as NodeType}
-                nodeData={node.data}
-                nodeTitle={node.title}
-                layoutOptions={{ hideTryIt: hideTryIt, hideTryItPanel: hideTryItPanel }}
-                useNodeForRefResolving
-              />
-            </Box>
+            <Docs
+              nodeType={node.type as NodeType}
+              nodeData={node.data}
+              nodeTitle={node.title}
+              layoutOptions={{ hideTryIt: hideTryIt, hideTryItPanel: hideTryItPanel }}
+              useNodeForRefResolving
+            />
           </MockingProvider>
         </MarkdownComponentsProvider>
       </NodeLinkContext.Provider>
