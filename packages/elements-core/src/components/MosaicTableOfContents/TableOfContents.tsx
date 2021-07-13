@@ -26,8 +26,14 @@ const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
 
 export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeId, Link, maxDepthOpenByDefault }) => {
+  const container = React.useRef<HTMLDivElement>(null);
+  const child = React.useRef<HTMLDivElement>(null);
+
   React.useEffect(() => {
-    if (activeId && typeof window !== 'undefined') {
+    const tocHasScrollbar =
+      container.current && child.current && container.current.offsetHeight < child.current.offsetHeight;
+
+    if (activeId && typeof window !== 'undefined' && tocHasScrollbar) {
       const elem = window.document.getElementById(getHtmlIdFromItemId(activeId));
       if (elem && 'scrollIntoView' in elem) {
         elem.scrollIntoView({ block: 'center' });
@@ -38,8 +44,8 @@ export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeI
   }, []);
 
   return (
-    <Box w="full" bg="canvas-100">
-      <Box my={3}>
+    <Box ref={container} w="full" bg="canvas-100" overflowY="auto">
+      <Box ref={child} my={3}>
         <LinkContext.Provider value={Link}>
           <ActiveIdContext.Provider value={activeId}>
             {tree.map((item, key) => {
