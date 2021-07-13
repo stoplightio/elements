@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Heading, HStack, Panel, Text } from '@stoplight/mosaic';
+import { Box, Flex, Heading, HStack, Panel, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
@@ -45,7 +45,13 @@ const ModelComponent: React.FC<ModelProps> = ({ data: unresolvedData, className,
 
   const description = (
     <>
-      {data.description && <MarkdownViewer className="sl-mb-6" markdown={data.description} />}
+      {data.description && (
+        <Flex>
+          <Box className="sl-flex-1 sl-markdown-viewer-wrapper">
+            <MarkdownViewer className="sl-mb-6" markdown={data.description} />
+          </Box>
+        </Flex>
+      )}
       <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} />
     </>
   );
