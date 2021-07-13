@@ -12,7 +12,9 @@ export const TwoColumnLayout = ({ header, right, left, className }: TwoColumnLay
   <Box w="full" className={className}>
     {header}
     <Flex mt={header ? 12 : undefined}>
-      <Box flex={1}>{left}</Box>
+      <Box style={{ width: 0 }} flex={1}>
+        {left}
+      </Box>
       {right && (
         <Box ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
           {right}
