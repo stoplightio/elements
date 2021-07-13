@@ -18,7 +18,7 @@ const ArticleComponent = React.memo<ArticleProps>(({ data }) => {
 
   return (
     <Flex w="full" pos="relative" ref={setContainer}>
-      <Box className="sl-flex-1 sl-markdown-viewer-wrapper">
+      <Box style={{ width: 0 }} flex={1}>
         <MarkdownViewer markdown={tree} />
       </Box>
       <ArticleHeadings tree={tree} container={container} />

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
+import { Box, Heading, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import cn from 'classnames';
@@ -38,13 +38,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ className, data, lo
     </>
   );
 
-  const description = data.description && (
-    <Flex>
-      <Box className="sl-flex-1 sl-markdown-viewer-wrapper">
-        <MarkdownViewer className="sl-mb-5" markdown={data.description} />;
-      </Box>
-    </Flex>
-  );
+  const description = data.description && <MarkdownViewer className="sl-mb-5" markdown={data.description} />;
 
   const dataPanel = (
     <VStack spacing={6}>

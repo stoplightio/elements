@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, HStack } from '@stoplight/mosaic';
+import { Box, Heading, HStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
@@ -59,11 +59,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
     const description = (
       <>
         {data.description && (
-          <Flex>
-            <Box className="sl-flex-1 sl-markdown-viewer-wrapper">
-              <MarkdownViewer className="HttpOperation__Description sl-mb-10" markdown={data.description} />
-            </Box>
-          </Flex>
+          <MarkdownViewer className="HttpOperation__Description sl-mb-10" markdown={data.description} />
         )}
 
         <Request onChange={setTextRequestBodyIndex} operation={data} />
