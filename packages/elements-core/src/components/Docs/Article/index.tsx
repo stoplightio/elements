@@ -1,5 +1,5 @@
 import { MDAST, parse } from '@stoplight/markdown';
-import { Flex } from '@stoplight/mosaic';
+import { Box, Flex } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import * as React from 'react';
 
@@ -18,7 +18,9 @@ const ArticleComponent = React.memo<ArticleProps>(({ data }) => {
 
   return (
     <Flex w="full" pos="relative" ref={setContainer}>
-      <MarkdownViewer className="sl-flex-1" markdown={tree} />
+      <Box style={{ width: 0 }} flex={1}>
+        <MarkdownViewer markdown={tree} />
+      </Box>
       <ArticleHeadings tree={tree} container={container} />
     </Flex>
   );
