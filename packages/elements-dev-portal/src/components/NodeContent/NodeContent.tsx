@@ -36,7 +36,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
   return (
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
-        <MarkdownComponentsProvider value={{ link: LinkComponent }}>
+        <MarkdownComponentsProvider value={{ a: LinkComponent }}>
           <MockingProvider mockUrl={node.links.mock_url} hideMocking={hideMocking}>
             <Docs
               nodeType={node.type as NodeType}
@@ -55,7 +55,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
 const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefined>(undefined);
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
-const LinkComponent: CustomComponentMapping['link'] = ({ children, href }) => {
+const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
   const ctx = React.useContext(NodeLinkContext);
 
   if (href && externalRegex.test(href)) {
