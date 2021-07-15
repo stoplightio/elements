@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
-    "@stoplight/elements-core": "^7.1.7",
+    "@stoplight/elements-core": "~7.1.7",
     "@stoplight/markdown-viewer": "^5.1.0",
     "@stoplight/mosaic": "^1",
     "@stoplight/path": "^1.3.2",
