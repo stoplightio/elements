@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-demo",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "private": true,
   "scripts": {
     "build": "yarn run clean-dist && webpack --config=webpack/prod.js",
@@ -10,7 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@stoplight/elements": "^7.0.0",
+    "@stoplight/elements": "^7.0.5",
     "@stoplight/mosaic": "1.0.0",
     "history": "^5.0.0",
     "react": "16.14.0",
