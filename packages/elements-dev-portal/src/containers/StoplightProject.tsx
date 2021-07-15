@@ -74,6 +74,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     projectId,
     branchSlug,
   });
+  const container = React.useRef<HTMLDivElement>(null);
 
   if (!nodeSlug && isTocFetched && tableOfContents?.items) {
     const firstNode = findFirstNode(tableOfContents.items);
@@ -97,8 +98,15 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     elem = <NodeContent node={node} Link={Link} hideTryIt={hideTryIt} hideMocking={hideMocking} />;
   }
 
+  const handleTocClick = () => {
+    if (container.current) {
+      container.current.scrollIntoView();
+    }
+  };
+
   return (
     <SidebarLayout
+      ref={container}
       sidebar={
         <>
           {branches && branches.length > 1 ? (
@@ -116,6 +124,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
               tableOfContents={tableOfContents}
               Link={Link}
               collapseTableOfContents={collapseTableOfContents}
+              onLinkClick={handleTocClick}
             />
           ) : null}
         </>

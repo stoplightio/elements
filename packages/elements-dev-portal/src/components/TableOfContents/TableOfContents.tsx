@@ -13,6 +13,7 @@ export type TableOfContentsProps = BoxProps<'div'> & {
   tableOfContents: ProjectTableOfContents;
   Link: CustomLinkComponent;
   collapseTableOfContents?: boolean;
+  onLinkClick?(): void;
 };
 
 export const TableOfContents = ({
@@ -20,6 +21,7 @@ export const TableOfContents = ({
   activeId,
   Link,
   collapseTableOfContents = false,
+  onLinkClick,
   ...boxProps
 }: TableOfContentsProps) => {
   return (
@@ -30,6 +32,7 @@ export const TableOfContents = ({
           activeId={activeId}
           Link={Link}
           maxDepthOpenByDefault={collapseTableOfContents ? 0 : 1}
+          onLinkClick={onLinkClick}
         />
       </Flex>
 

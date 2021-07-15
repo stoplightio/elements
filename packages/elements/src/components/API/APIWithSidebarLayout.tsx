@@ -21,6 +21,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideSchemas,
   hideInternal,
 }) => {
+  const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
     () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
     [serviceNode, hideSchemas, hideInternal],
@@ -44,6 +45,12 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     return <Redirect to="/" />;
   }
 
+  const handleTocClick = () => {
+    if (container.current) {
+      container.current.scrollIntoView();
+    }
+  };
+
   const sidebar = (
     <>
       <Flex ml={4} mb={5} alignItems="center">
@@ -55,14 +62,14 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
         <Heading size={4}>{serviceNode.name}</Heading>
       </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
-        <TableOfContents tree={tree} activeId={pathname} Link={Link} />
+        <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
       </Flex>
       <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
     </>
   );
 
   return (
-    <SidebarLayout sidebar={sidebar}>
+    <SidebarLayout ref={container} sidebar={sidebar}>
       {node && (
         <ParsedDocs
           key={pathname}

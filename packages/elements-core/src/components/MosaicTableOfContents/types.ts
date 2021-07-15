@@ -3,6 +3,7 @@ export type TableOfContentsProps = {
   activeId: string;
   Link: CustomLinkComponent;
   maxDepthOpenByDefault?: number;
+  onLinkClick?(): void;
 };
 
 export type CustomLinkComponent = React.ComponentType<{

@@ -25,36 +25,52 @@ import {
 const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
 
-export const TableOfContents = React.memo<TableOfContentsProps>(({ tree, activeId, Link, maxDepthOpenByDefault }) => {
-  React.useEffect(() => {
-    if (activeId && typeof window !== 'undefined') {
-      const elem = window.document.getElementById(getHtmlIdFromItemId(activeId));
-      if (elem && 'scrollIntoView' in elem) {
-        elem.scrollIntoView({ block: 'center' });
+export const TableOfContents = React.memo<TableOfContentsProps>(
+  ({ tree, activeId, Link, maxDepthOpenByDefault, onLinkClick }) => {
+    const container = React.useRef<HTMLDivElement>(null);
+    const child = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+      const tocHasScrollbar =
+        container.current && child.current && container.current.offsetHeight < child.current.offsetHeight;
+
+      if (activeId && typeof window !== 'undefined' && tocHasScrollbar) {
+        const elem = window.document.getElementById(getHtmlIdFromItemId(activeId));
+        if (elem && 'scrollIntoView' in elem) {
+          elem.scrollIntoView({ block: 'center' });
+        }
       }
-    }
-    // Only want to run this effect on initial render
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      // Only want to run this effect on initial render
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-  return (
-    <Box w="full" bg="canvas-100">
-      <Box my={3}>
-        <LinkContext.Provider value={Link}>
-          <ActiveIdContext.Provider value={activeId}>
-            {tree.map((item, key) => {
-              if (isDivider(item)) {
-                return <Divider key={key} item={item} />;
-              }
+    return (
+      <Box ref={container} w="full" bg="canvas-100" overflowY="auto">
+        <Box ref={child} my={3}>
+          <LinkContext.Provider value={Link}>
+            <ActiveIdContext.Provider value={activeId}>
+              {tree.map((item, key) => {
+                if (isDivider(item)) {
+                  return <Divider key={key} item={item} />;
+                }
 
-              return <GroupItem key={key} item={item} depth={0} maxDepthOpenByDefault={maxDepthOpenByDefault} />;
-            })}
-          </ActiveIdContext.Provider>
-        </LinkContext.Provider>
+                return (
+                  <GroupItem
+                    key={key}
+                    item={item}
+                    depth={0}
+                    maxDepthOpenByDefault={maxDepthOpenByDefault}
+                    onLinkClick={onLinkClick}
+                  />
+                );
+              })}
+            </ActiveIdContext.Provider>
+          </LinkContext.Provider>
+        </Box>
       </Box>
-    </Box>
-  );
-});
+    );
+  },
+);
 
 const Divider = React.memo<{
   item: TableOfContentsDivider;
@@ -79,7 +95,8 @@ const GroupItem = React.memo<{
   depth: number;
   item: TableOfContentsGroupItem;
   maxDepthOpenByDefault?: number;
-}>(({ item, depth, maxDepthOpenByDefault }) => {
+  onLinkClick?(): void;
+}>(({ item, depth, maxDepthOpenByDefault, onLinkClick }) => {
   if (isExternalLink(item)) {
     return (
       <Box as="a" href={item.url} target="_blank" rel="noopener noreferrer" display="block">
@@ -87,12 +104,13 @@ const GroupItem = React.memo<{
       </Box>
     );
   } else if (isGroup(item) || isNodeGroup(item)) {
-    return <Group depth={depth} item={item} maxDepthOpenByDefault={maxDepthOpenByDefault} />;
+    return <Group depth={depth} item={item} maxDepthOpenByDefault={maxDepthOpenByDefault} onLinkClick={onLinkClick} />;
   } else if (isNode(item)) {
     return (
       <Node
         depth={depth}
         item={item}
+        onLinkClick={onLinkClick}
         meta={
           item.meta ? (
             <Box color={NODE_META_COLOR[item.meta]} textTransform="uppercase" fontWeight="medium">
@@ -118,14 +136,15 @@ const Group = React.memo<{
   depth: number;
   item: TableOfContentsGroup | TableOfContentsNodeGroup;
   maxDepthOpenByDefault?: number;
-}>(({ depth, item, maxDepthOpenByDefault }) => {
+  onLinkClick?(): void;
+}>(({ depth, item, maxDepthOpenByDefault, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
   const [isOpen, setIsOpen] = React.useState(() => {
     // Only need to check during initial render
     return isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault);
   });
 
-  const onClick = (e: React.MouseEvent, forceOpen?: boolean) => {
+  const handleClick = (e: React.MouseEvent, forceOpen?: boolean) => {
     setIsOpen(forceOpen ? true : !isOpen);
   };
 
@@ -141,7 +160,7 @@ const Group = React.memo<{
           // Don't propagate event when clicking icon
           e.stopPropagation();
           e.preventDefault();
-          onClick(e);
+          handleClick(e);
         }}
       />
     </Flex>
@@ -149,9 +168,9 @@ const Group = React.memo<{
 
   let elem;
   if (isNodeGroup(item)) {
-    elem = <Node depth={depth} item={item} meta={meta} onClick={onClick} />;
+    elem = <Node depth={depth} item={item} meta={meta} onClick={handleClick} onLinkClick={onLinkClick} />;
   } else {
-    elem = <Item title={item.title} meta={meta} onClick={onClick} depth={depth} />;
+    elem = <Item title={item.title} meta={meta} onClick={handleClick} depth={depth} />;
   }
 
   return (
@@ -160,7 +179,7 @@ const Group = React.memo<{
 
       {isOpen &&
         item.items.map((groupItem, key) => {
-          return <GroupItem key={key} item={groupItem} depth={depth + 1} />;
+          return <GroupItem key={key} item={groupItem} depth={depth + 1} onLinkClick={onLinkClick} />;
         })}
     </>
   );
@@ -207,7 +226,8 @@ const Node = React.memo<{
   depth: number;
   meta?: React.ReactNode;
   onClick?: (e: React.MouseEvent, forceOpen?: boolean) => void;
-}>(({ item, depth, meta, onClick }) => {
+  onLinkClick?(): void;
+}>(({ item, depth, meta, onClick, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
   const isActive = activeId === item.id;
   const shouldNavigate = !!item.slug;
@@ -218,6 +238,8 @@ const Node = React.memo<{
       // Don't trigger link click when we're active
       e.stopPropagation();
       e.preventDefault();
+    } else {
+      onLinkClick();
     }
 
     // Force open when clicking inactive group
