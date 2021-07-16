@@ -9,18 +9,18 @@ import * as React from 'react';
 
 import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
-import { TryItAuth } from './Auth';
-import { usePersistedSecuritySchemeWithValues } from './authentication-utils';
+import { TryItAuth } from './Auth/Auth';
+import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
+import { FormDataBody } from './Body/FormDataBody';
+import { useBodyParameterState } from './Body/request-body-utils';
+import { RequestBody } from './Body/RequestBody';
+import { useTextRequestBodyState } from './Body/useTextRequestBodyState';
 import { buildFetchRequest, buildHarRequest } from './build-request';
-import { FormDataBody } from './FormDataBody';
-import { getMockData } from './mocking-utils';
-import { MockingButton } from './MockingButton';
-import { OperationParameters } from './OperationParameters';
-import { useBodyParameterState } from './request-body-utils';
-import { RequestBody } from './RequestBody';
-import { useMockingOptions } from './useMockingOptions';
-import { useRequestParameters } from './useOperationParameters';
-import { useTextRequestBodyState } from './useTextRequestBodyState';
+import { getMockData } from './Mocking/mocking-utils';
+import { MockingButton } from './Mocking/MockingButton';
+import { useMockingOptions } from './Mocking/useMockingOptions';
+import { OperationParameters } from './Parameters/OperationParameters';
+import { useRequestParameters } from './Parameters/useOperationParameters';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;

@@ -3,7 +3,7 @@ import { atom, useAtom } from 'jotai';
 import { orderBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
-import { filterOutAuthorizationParams } from './authentication-utils';
+import { filterOutAuthorizationParams } from '../Auth/authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
 const persistedParameterValuesAtom = atom({});

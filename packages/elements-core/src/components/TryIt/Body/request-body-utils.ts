@@ -2,12 +2,12 @@ import { IMediaTypeContent } from '@stoplight/types';
 import { isString, pickBy } from 'lodash';
 import * as React from 'react';
 
-import { fileToBase64 } from '../../utils/fileToBase64';
+import { fileToBase64 } from '../../../utils/fileToBase64';
 import {
   initialParameterValues,
   mapSchemaPropertiesToParameters,
   parameterSupportsFileUpload,
-} from './parameter-utils';
+} from '../Parameters/parameter-utils';
 
 export type BodyParameterValues = Record<string, string | File>;
 

@@ -1,7 +1,7 @@
 import { Flex, Icon, Input, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { useUniqueId } from '../../hooks/useUniqueId';
+import { useUniqueId } from '../../../hooks/useUniqueId';
 import { ParameterSpec } from './parameter-utils';
 
 interface FileUploadParameterEditorProps {

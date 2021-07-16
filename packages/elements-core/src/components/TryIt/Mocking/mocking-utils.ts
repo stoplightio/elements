@@ -1,7 +1,7 @@
 import { IHttpOperation } from '@stoplight/types';
 import { compact, uniq } from 'lodash';
 
-import { formatMultiValueHeader } from '../../utils/headers';
+import { formatMultiValueHeader } from '../../../utils/headers';
 
 export type MockingOptions = { isEnabled: boolean; code?: string; example?: string; dynamic?: boolean };
 type PreferHeaderProps = { code?: string; example?: string; dynamic?: boolean };
