@@ -11,9 +11,9 @@ import {
   isBearerSecurityScheme,
   isDigestSecurityScheme,
   isOAuth2SecurityScheme,
-} from './authentication-utils';
-import { MockData } from './mocking-utils';
-import { BodyParameterValues, createRequestBody } from './request-body-utils';
+} from './Auth/authentication-utils';
+import { BodyParameterValues, createRequestBody } from './Body/request-body-utils';
+import { MockData } from './Mocking/mocking-utils';
 
 type NameAndValue = {
   name: string;

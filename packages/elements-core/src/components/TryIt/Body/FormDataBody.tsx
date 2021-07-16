@@ -4,9 +4,9 @@ import { IMediaTypeContent } from '@stoplight/types';
 import { omit } from 'lodash';
 import * as React from 'react';
 
-import { FileUploadParameterEditor } from './FileUploadParameterEditors';
-import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from './parameter-utils';
-import { ParameterEditor } from './ParameterEditor';
+import { FileUploadParameterEditor } from '../Parameters/FileUploadParameterEditors';
+import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from '../Parameters/parameter-utils';
+import { ParameterEditor } from '../Parameters/ParameterEditor';
 import { BodyParameterValues } from './request-body-utils';
 
 interface FormDataBodyProps {

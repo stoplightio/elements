@@ -2,7 +2,7 @@ import { Flex, Input, Text } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import * as React from 'react';
 
-import { useUniqueId } from '../../hooks/useUniqueId';
+import { useUniqueId } from '../../../hooks/useUniqueId';
 
 interface AuthTokenInputProps {
   onChange: (value: string) => void;

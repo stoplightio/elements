@@ -1,7 +1,7 @@
 import { Flex, Input, Select, SelectProps, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { useUniqueId } from '../../hooks/useUniqueId';
+import { useUniqueId } from '../../../hooks/useUniqueId';
 import {
   exampleOptions,
   getPlaceholderForParameter,

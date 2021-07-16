@@ -12,8 +12,8 @@ import { atom, useAtom } from 'jotai';
 import { flatten, isObject } from 'lodash';
 import React from 'react';
 
-import { persistAtom } from '../../utils/jotai/persistAtom';
-import { caseInsensitivelyEquals } from '../../utils/string';
+import { persistAtom } from '../../../utils/jotai/persistAtom';
+import { caseInsensitivelyEquals } from '../../../utils/string';
 
 export type HttpSecuritySchemeWithValues = {
   scheme: HttpSecurityScheme;
