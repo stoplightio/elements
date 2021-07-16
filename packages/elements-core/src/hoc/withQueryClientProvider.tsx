@@ -6,7 +6,7 @@ import { getDisplayName } from './utils';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 15,
+      staleTime: 15 * 1000,
     },
   },
 });
