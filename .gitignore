@@ -11,6 +11,7 @@ node_modules
 packages/*/coverage
 cypress/results
 cypress/fixtures
+test-results
 
 # production
 build
