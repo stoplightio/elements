@@ -17,12 +17,14 @@ module.exports = {
       {
         test: /\.mjs$/,
         include: /node_modules/,
-        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false,
+        },
       },
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
     ],
   },
