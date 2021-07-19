@@ -18,6 +18,9 @@ jobs:
       - run: yarn type-check
       - run: yarn lint
       - run: yarn test.prod
+      - store_test_results:
+          name: Upload test results
+          path: test-results
   build:
     working_directory: /mnt/ramdisk/project
     docker:
@@ -87,7 +90,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: | 
+          command: |
             git checkout main
             export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") && git checkout -b $BRANCH_NAME
             yarn upgrade
@@ -147,7 +150,7 @@ workflows:
             - e2e-angular
           filters:
             branches:
-              only: 
+              only:
                 - main
   perform-lockfile-maintenance:
     triggers:
