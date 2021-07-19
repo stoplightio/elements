@@ -26,7 +26,7 @@
     "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts build",
-    "build.styles": "node ../../scripts/build-styles.js elements",
+    "build.styles": "postcss src/styles.css -o dist/styles.min.css",
     "build.webcomponents": "webpack -c ./web-components.config.js",
     "build.docs": "build-storybook -c .storybook -o dist-storybook",
     "commit": "git-cz",
