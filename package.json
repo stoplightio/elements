@@ -29,6 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "concurrently": "6.1.0",
+    "cssnano": "5.0.6",
     "cypress": "^6.3.0",
     "eslint": "^7.22.0",
     "eslint-plugin-import": "^2.22.0",
