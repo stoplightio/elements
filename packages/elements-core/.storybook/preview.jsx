@@ -3,7 +3,7 @@ import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
 import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';
 
-import '../src/styles/styles.scss';
+import '../src/styles.css';
 
 import { PersistenceContextProvider } from '../src/context/Persistence';
 import { Styled } from '../src/styled';

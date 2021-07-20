@@ -2,7 +2,6 @@
 @import '@stoplight/mosaic/themes/default.css';
 
 .sl-elements {
-  color: #125699;
   font-size: 13px;
 
   @import './HttpOperation.css';

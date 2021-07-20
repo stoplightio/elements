@@ -22,6 +22,7 @@
     "@stoplight/eslint-config": "^2.0.0",
     "@storybook/addon-docs": "^6.2.8",
     "@storybook/addon-essentials": "^6.2.8",
+    "@storybook/addon-postcss": "2.0.0",
     "@storybook/react": "^6.2.8",
     "@storybook/theming": "^6.2.8",
     "@testing-library/cypress": "^7.0.3",
