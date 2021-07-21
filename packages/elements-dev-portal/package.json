@@ -90,5 +90,8 @@
   },
   "release": {
     "extends": "@stoplight/scripts/release"
+  },
+  "exports": {
+    "./styles.min.css": "./styles.min.css"
   }
 }
