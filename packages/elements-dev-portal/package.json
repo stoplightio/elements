@@ -28,7 +28,7 @@
     "build.react": "sl-scripts build",
     "build.webcomponents": "webpack -c ./web-components.config.js",
     "build.docs": "build-storybook -c .storybook -o dist-storybook",
-    "build.styles": "node ../../scripts/build-styles.js elements-dev-portal",
+    "build.styles": "postcss src/styles.css -o dist/styles.min.css",
     "version.set": "replace \"appVersion = '.*'\" \"appVersion = '$npm_package_version'\" src/version.ts --silent",
     "commit": "git-cz",
     "release": "sl-scripts release",

@@ -25,7 +25,7 @@
     "build": "yarn build.react",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts build",
-    "build.styles": "node ../../scripts/build-styles.js",
+    "build.styles": "postcss src/styles.css -o dist/styles.min.css",
     "build.docs": "build-storybook -o dist-storybook",
     "commit": "git-cz",
     "release": "sl-scripts release",
