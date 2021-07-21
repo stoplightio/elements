@@ -3,10 +3,6 @@
 
 .sl-elements {
   font-size: 13px;
-
-  @import './HttpOperation.css';
-  @import './TryIt.css';
-  @import './TableOfContents.css';
 }
 
 .sl-elements .svg-inline--fa {
