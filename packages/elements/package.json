@@ -25,7 +25,7 @@
   "scripts": {
     "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
     "postbuild": "yarn build.styles",
-    "build.react": "sl-scripts build",
+    "build.react": "sl-scripts bundle",
     "build.styles": "node ../../scripts/build-styles.js elements",
     "build.webcomponents": "webpack -c ./web-components.config.js",
     "build.docs": "build-storybook -c .storybook -o dist-storybook",
@@ -59,7 +59,7 @@
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
-    "@stoplight/scripts": "8.2.3",
+    "@stoplight/scripts": "9.1.0",
     "@storybook/addon-docs": "^6.2.8",
     "@storybook/addon-essentials": "^6.2.8",
     "@storybook/react": "^6.2.8",
@@ -96,5 +96,8 @@
   },
   "release": {
     "extends": "@stoplight/scripts/release"
+  },
+  "exports": {
+    "./styles.min.css": "./styles.min.css"
   }
 }
