@@ -77,13 +77,10 @@
     "enzyme-to-json": "3.x.x",
     "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
-    "node-sass": "^4.14.1",
-    "node-sass-package-importer": "^5.3.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",
     "resolve-url-loader": "^3.1.2",
-    "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.1.0"
   },
