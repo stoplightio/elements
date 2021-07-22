@@ -17,7 +17,7 @@
     "node": ">=12"
   },
   "scripts": {
-    "build": "sl-scripts build",
+    "build": "sl-scripts bundle",
     "test": "jest",
     "test.prod": "yarn test --coverage --maxWorkers=2",
     "type-check": "tsc --noEmit"
@@ -26,7 +26,7 @@
     "lodash": "^4.17.19"
   },
   "devDependencies": {
-    "@stoplight/scripts": "8.2.3",
+    "@stoplight/scripts": "9.1.0",
     "@stoplight/types": "^12.0.0"
   }
 }

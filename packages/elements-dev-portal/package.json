@@ -25,7 +25,7 @@
   "scripts": {
     "build": "yarn version.set && concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
     "postbuild": "yarn build.styles",
-    "build.react": "sl-scripts build",
+    "build.react": "sl-scripts bundle",
     "build.webcomponents": "webpack -c ./web-components.config.js",
     "build.docs": "build-storybook -c .storybook -o dist-storybook",
     "build.styles": "postcss src/styles.css -o dist/styles.min.css",
@@ -59,7 +59,7 @@
     "use-debounce": "^6.0.1"
   },
   "devDependencies": {
-    "@stoplight/scripts": "8.2.3",
+    "@stoplight/scripts": "9.1.0",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",
@@ -82,5 +82,8 @@
   },
   "release": {
     "extends": "@stoplight/scripts/release"
+  },
+  "exports": {
+    "./styles.min.css": "./styles.min.css"
   }
 }
