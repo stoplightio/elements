@@ -3,9 +3,5 @@
 
   "include": ["src"],
 
-  "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
-
-  "compilerOptions": {
-    "module": "commonjs",
-  }
+  "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"]
 }

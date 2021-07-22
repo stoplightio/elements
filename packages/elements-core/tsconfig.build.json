@@ -9,7 +9,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "dist",
-    "moduleResolution": "node",
-    "module": "commonjs"
+    "moduleResolution": "node"
   }
 }
