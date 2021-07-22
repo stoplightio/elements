@@ -1,26 +1,13 @@
 import * as React from 'react';
 import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
-import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
-import customTheme from './theme';
-
-import '../../elements-core/src/styles/styles.scss';
-
-import cn from 'classnames';
 
 import { PersistenceContextProvider, Styled } from '@stoplight/elements-core';
 import { DevPortalProvider } from '../src/components/DevPortalProvider';
 
-export const globalTypes = {
-  theme: {
-    name: 'Theme',
-    description: 'Global theme for components',
-    defaultValue: 'light',
-    toolbar: {
-      icon: 'circlehollow',
-      items: ['light', 'dark'],
-    },
-  },
-};
+export * from '../../../.storybook/preview';
+
+import '../src/styles.css';
+
 
 const ThemeProvider = (Story, context) => {
   const theme = context.globals.theme;
@@ -57,23 +44,3 @@ const StyledDecorator = Story => (
 );
 
 export const decorators = [ThemeProvider, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator, StyledDecorator];
-
-export const parameters = {
-  docs: {
-    page: () => (
-      <>
-        <Title />
-        <Subtitle />
-        <Description />
-        <Primary />
-        <ArgsTable story={PRIMARY_STORY} />
-      </>
-    ),
-    theme: customTheme,
-  },
-  options: {
-    storySort: {
-      order: ['Public', 'Internal'],
-    },
-  },
-};

@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "7.1.9",
+  "version": "7.1.10",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**"
@@ -25,8 +25,8 @@
     "build": "yarn build.react",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts bundle",
-    "build.styles": "node ../../scripts/build-styles.js",
-    "build.docs": "build-storybook -c .storybook -o dist-storybook",
+    "build.styles": "postcss src/styles.css -o dist/styles.min.css",
+    "build.docs": "build-storybook -o dist-storybook",
     "commit": "git-cz",
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
@@ -79,10 +79,6 @@
   },
   "devDependencies": {
     "@stoplight/scripts": "9.1.0",
-    "@storybook/addon-docs": "^6.2.8",
-    "@storybook/addon-essentials": "^6.2.8",
-    "@storybook/react": "^6.2.8",
-    "@storybook/theming": "^6.2.8",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",
@@ -106,14 +102,10 @@
     "enzyme-to-json": "3.x.x",
     "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
-    "ncp": "^2.0.0",
-    "node-sass": "^4.14.1",
-    "node-sass-package-importer": "^5.3.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",
     "resolve-url-loader": "^3.1.2",
-    "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0"
   },
   "publishConfig": {
