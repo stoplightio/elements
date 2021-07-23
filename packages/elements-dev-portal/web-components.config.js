@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
@@ -7,6 +8,11 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     plugins: [new TsconfigPathsPlugin()],
+    fallback: {
+      stream: false,
+      path: false,
+      process: require.resolve('process/browser'),
+    },
   },
   output: {
     filename: 'web-components.min.js',
@@ -17,13 +23,20 @@ module.exports = {
       {
         test: /\.mjs$/,
         include: /node_modules/,
-        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false,
+        },
       },
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
     ],
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: require.resolve('process/browser'),
+    }),
+  ],
 };
