@@ -8,7 +8,10 @@ module.exports = {
   },
   stories: ['../src/**/*.stories.{js,jsx,ts,tsx}'],
   addons: [
-    '@storybook/addon-essentials',
+    '@storybook/addon-docs',
+    '@storybook/addon-controls',
+    '@storybook/addon-toolbars',
+    '@storybook/addon-viewport',
     {
       name: '@storybook/addon-postcss',
       options: {
