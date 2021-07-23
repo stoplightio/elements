@@ -6,13 +6,8 @@ import { dirname, sep } from 'path';
 import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, TableOfContentItem } from './types';
 
 type SchemaType = 'divider' | 'group';
-type TocType = 'api' | 'project';
 
 export function generateProjectToC(searchResults: NodeData[]) {
-  return generateToC(searchResults, 'project');
-}
-
-function generateToC(searchResults: NodeData[], type: TocType) {
   return pipe(
     () => searchResults,
     groupNodesByType,
@@ -22,25 +17,14 @@ function generateToC(searchResults: NodeData[], type: TocType) {
       // Articles
       pipe(() => articles, sortArticlesByTypeAndPath, appendArticlesToToC(toc))();
 
-      if (type === 'api') {
-        if (httpServices.length !== 1) return toc;
-
-        if (httpOperations.length) {
-          toc.items.push({ type: 'divider', title: 'Endpoints' });
-        }
-      } else {
-        if (httpServices.length > 0) {
-          toc.items.push({ type: 'divider', title: 'APIS' });
-        }
+      if (httpServices.length > 0) {
+        toc.items.push({ type: 'divider', title: 'APIS' });
       }
 
       pipe(
         () => httpServices,
         httpServices =>
-          appendHttpServicesToToC(
-            toc,
-            type,
-          )({
+          appendHttpServicesToToC(toc)({
             httpServices,
             models,
             httpOperations,
@@ -125,7 +109,7 @@ export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfCont
 
           const items: TableOfContentItem[] = [];
 
-          appendHttpServiceItemsToToC({ items }, 'project')(subNodes, httpService.tags || []);
+          appendHttpServiceItemsToToC({ items })(subNodes, httpService.tags || []);
 
           return [{ type: 'group', title: item.title, items, uri: httpService.uri }];
         },
@@ -256,7 +240,7 @@ function filterByUriRegexpAndCheckTags(standaloneModels: NodeData[]) {
   };
 }
 
-function appendHttpServiceItemsToToC(toc: ITableOfContents, type: TocType) {
+function appendHttpServiceItemsToToC(toc: ITableOfContents) {
   return (
     { httpOperations, models }: { httpOperations: NodeData[]; models: NodeData[] },
     serviceTagNames: string[],
@@ -312,7 +296,7 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents, type: TocType) {
       })
       .forEach(([, group]) => toc.items.push(group));
 
-    appendModelsToToc(toc, type === 'api' ? 'divider' : 'group')(models);
+    appendModelsToToc(toc, 'group')(models);
   };
 }
 
@@ -326,7 +310,7 @@ function appendHttpServicesItemsToToC(toc: ITableOfContents) {
   };
 }
 
-export function appendHttpServicesToToC(toc: ITableOfContents, type: TocType) {
+export function appendHttpServicesToToC(toc: ITableOfContents) {
   return ({
     httpServices,
     httpOperations,
@@ -339,12 +323,10 @@ export function appendHttpServicesToToC(toc: ITableOfContents, type: TocType) {
     const standaloneModels = models.slice();
     sortBy(httpServices, 'name').forEach(httpService => {
       let tocNode: ITableOfContents | Group;
-      if (type === 'api') {
-        tocNode = toc;
-      } else {
-        tocNode = { type: 'group', title: httpService.name, items: [], uri: httpService.uri };
-        toc.items.push(tocNode);
-      }
+
+      tocNode = { type: 'group', title: httpService.name, items: [], uri: httpService.uri };
+      toc.items.push(tocNode);
+
       pipe(
         () => ({
           httpOperations,
@@ -352,7 +334,7 @@ export function appendHttpServicesToToC(toc: ITableOfContents, type: TocType) {
           regexp: new RegExp(`^${escapeRegExp(httpService.uri)}${httpService.uri.endsWith('/') ? '' : '/'}`, 'i'),
         }),
         filterByUriRegexpAndCheckTags(standaloneModels),
-        ({ hasTags, ...subNodes }) => appendHttpServiceItemsToToC(tocNode, type)(subNodes, httpService.tags || []),
+        ({ hasTags, ...subNodes }) => appendHttpServiceItemsToToC(tocNode)(subNodes, httpService.tags || []),
       )();
     });
     return standaloneModels;
