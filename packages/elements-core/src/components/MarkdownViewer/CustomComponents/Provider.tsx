@@ -1,10 +1,12 @@
-import { CustomComponentMapping as MDVCustomComponentMapping } from '@stoplight/markdown-viewer';
+import { CustomComponentMapping as MDVCustomComponentMapping, DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { defaults } from 'lodash';
 import * as React from 'react';
 
 import { CodeComponent } from './CodeComponent';
 
 export type CustomComponentMapping = MDVCustomComponentMapping;
+
+export { DefaultSMDComponents };
 
 const MarkdownComponentsContext = React.createContext<CustomComponentMapping | undefined>(undefined);
 MarkdownComponentsContext.displayName = 'MarkdownComponentsContext';
