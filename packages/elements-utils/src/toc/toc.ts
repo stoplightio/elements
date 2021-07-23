@@ -1,7 +1,7 @@
+import { dirname, sep } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
 import { escapeRegExp, partial, sortBy } from 'lodash';
 import { pipe } from 'lodash/fp';
-import { dirname, sep } from 'path';
 
 import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, TableOfContentItem } from './types';
 
