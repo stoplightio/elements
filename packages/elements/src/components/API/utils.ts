@@ -67,7 +67,7 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
   const tree: TableOfContentsItem[] = [];
 
   // Only show overview if service node has a description
-  if (serviceNode.data.description) {
+  if (serviceNode.data) {
     tree.push({
       id: '/',
       slug: '/',
@@ -138,7 +138,6 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
       });
     });
   }
-
   return tree;
 };
 
