@@ -1,3 +1,5 @@
+const {ProvidePlugin} = require("webpack");
+
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
@@ -30,6 +32,10 @@ module.exports = {
         fullySpecified: false
       }
     });
+
+    config.plugins.push(new ProvidePlugin({
+      process: require.resolve('process/browser'),
+    }));
 
     return config;
   },
