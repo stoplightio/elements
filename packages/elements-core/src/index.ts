@@ -5,6 +5,7 @@ export { SidebarLayout } from './components/Layout/SidebarLayout';
 export { Logo } from './components/Logo';
 export {
   CustomComponentMapping,
+  DefaultSMDComponents,
   MarkdownComponentsProvider,
 } from './components/MarkdownViewer/CustomComponents/Provider';
 export { TableOfContents } from './components/MosaicTableOfContents';

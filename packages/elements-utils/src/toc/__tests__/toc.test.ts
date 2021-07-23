@@ -133,7 +133,7 @@ describe('toc', () => {
 
         const toc = { items: [] };
 
-        const standaloneModels = appendHttpServicesToToC(toc, 'project')({ httpServices, httpOperations, models });
+        const standaloneModels = appendHttpServicesToToC(toc)({ httpServices, httpOperations, models });
 
         expect(toc).toEqual({
           items: [
@@ -170,55 +170,6 @@ describe('toc', () => {
       });
 
       describe('tags are in mixed case', () => {
-        it('performs case insensitive grouping', () => {
-          const models: NodeData[] = [
-            {
-              type: NodeType.Model,
-              tags: ['einz'],
-              name: 'Model',
-              uri: '/reference/openapi.json/components/a',
-            },
-          ];
-          const httpServices: NodeData[] = [
-            {
-              type: NodeType.HttpService,
-              tags: ['Einz'],
-              name: 'Service',
-              uri: '/reference/openapi.json',
-            },
-          ];
-          const httpOperations: NodeData[] = [
-            {
-              type: NodeType.HttpOperation,
-              tags: ['Einz'],
-              name: 'Operation',
-              uri: '/reference/openapi.json/paths/~1test/get',
-            },
-          ];
-
-          const toc = { items: [] };
-
-          appendHttpServicesToToC(toc, 'api')({ httpServices, httpOperations, models });
-          expect(toc).toEqual({
-            items: [
-              {
-                type: 'group',
-                items: [{ type: 'item', title: 'Operation', uri: '/reference/openapi.json/paths/~1test/get' }],
-                title: 'Einz',
-              },
-              {
-                type: 'divider',
-                title: 'Schemas',
-              },
-              {
-                type: 'item',
-                title: 'Model',
-                uri: '/reference/openapi.json/components/a',
-              },
-            ],
-          });
-        });
-
         describe('tag is present in httpService tag list', () => {
           it("follows letter case found in HTTP Service node's tags", () => {
             const httpOperations: NodeData[] = [
@@ -246,7 +197,7 @@ describe('toc', () => {
 
             const toc = { items: [] };
 
-            appendHttpServicesToToC(toc, 'project')({ httpServices, httpOperations, models: [] });
+            appendHttpServicesToToC(toc)({ httpServices, httpOperations, models: [] });
 
             expect(toc).toEqual({
               items: [
@@ -297,7 +248,7 @@ describe('toc', () => {
 
             const toc = { items: [] };
 
-            appendHttpServicesToToC(toc, 'project')({ httpServices, httpOperations, models: [] });
+            appendHttpServicesToToC(toc)({ httpServices, httpOperations, models: [] });
 
             expect(toc).toEqual({
               items: [
@@ -358,7 +309,7 @@ describe('toc', () => {
 
         const toc = { items: [] };
 
-        const standaloneModels = appendHttpServicesToToC(toc, 'project')({ httpServices, httpOperations, models });
+        const standaloneModels = appendHttpServicesToToC(toc)({ httpServices, httpOperations, models });
 
         expect(toc).toEqual({
           items: [
