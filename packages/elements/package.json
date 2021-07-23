@@ -48,7 +48,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "@stoplight/elements-core": "~7.1.10",
+    "@stoplight/elements-core": "~7.1.11",
     "@stoplight/http-spec": "^4.0.1",
     "@stoplight/json": "^3.10.0",
     "@stoplight/mosaic": "^1",
