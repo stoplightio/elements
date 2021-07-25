@@ -613,7 +613,7 @@ describe('TryIt', () => {
         [
           'https://mock-todos.stoplight.io/todos',
           expect.objectContaining({
-            method: 'get',
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
               Prefer: 'code=200',
@@ -623,7 +623,7 @@ describe('TryIt', () => {
         [
           'https://todos.stoplight.io/todos',
           expect.objectContaining({
-            method: 'get',
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
@@ -683,7 +683,7 @@ describe('TryIt', () => {
       expect(fetchMock).toBeCalledWith(
         'https://mock-todos.stoplight.io/todos',
         expect.objectContaining({
-          method: 'get',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             Prefer: 'code=200',
