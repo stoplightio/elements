@@ -71,7 +71,7 @@ export async function buildFetchRequest({
     url.toString(),
     {
       credentials: 'omit',
-      method: httpOperation.method,
+      method: httpOperation.method.toUpperCase(),
       headers,
       body: shouldIncludeBody ? body : undefined,
     },
