@@ -29,11 +29,10 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const location = useLocation();
   const { pathname } = location;
 
-  const hasOverview = !!serviceNode.data.description;
   const isRootPath = !pathname || pathname === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
-  if ((isRootPath && !hasOverview) || !node) {
-    // Redirect to the first child if service node has no description or node doesn't exist
+  if (!node) {
+    // Redirect to the first child if node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
 
     if (firstSlug) {
@@ -73,7 +72,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
       {node && (
         <ParsedDocs
           key={pathname}
-          uri={hasOverview ? pathname : undefined}
+          uri={pathname}
           node={node}
           nodeTitle={node.name}
           layoutOptions={{ hideTryIt: hideTryIt }}
