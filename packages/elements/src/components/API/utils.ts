@@ -66,16 +66,13 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
   const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
   const tree: TableOfContentsItem[] = [];
 
-  // Only show overview if service node has a description
-  if (serviceNode.data) {
-    tree.push({
-      id: '/',
-      slug: '/',
-      title: 'Overview',
-      type: 'overview',
-      meta: '',
-    });
-  }
+  tree.push({
+    id: '/',
+    slug: '/',
+    title: 'Overview',
+    type: 'overview',
+    meta: '',
+  });
 
   const operationNodes = serviceNode.children.filter(node => node.type === NodeType.HttpOperation);
   if (operationNodes.length) {

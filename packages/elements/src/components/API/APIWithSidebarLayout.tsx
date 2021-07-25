@@ -32,7 +32,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const isRootPath = !pathname || pathname === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
   if (!node) {
-    // Redirect to the first child if service node has no description or node doesn't exist
+    // Redirect to the first child if node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
 
     if (firstSlug) {
