@@ -141,10 +141,11 @@ export async function buildHarRequest({
   parameterValues,
   mediaTypeContent,
   auth,
+  mockData,
 }: BuildRequestInput): Promise<HarRequest> {
   const firstServer = httpOperation.servers?.[0];
   const firstServerUrl = firstServer && getServerUrlWithDefaultValues(firstServer);
-  const serverUrl = firstServerUrl || window.location.origin;
+  const serverUrl = mockData?.url || firstServerUrl || window.location.origin;
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
@@ -156,6 +157,10 @@ export async function buildHarRequest({
   const headerParams =
     httpOperation.request?.headers?.map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' })) ??
     [];
+
+  if (mockData?.header) {
+    headerParams.push({ name: 'Prefer', value: mockData.header.Prefer });
+  }
 
   const [queryParamsWithAuth, headerParamsWithAuth] = runAuthRequestEhancements(auth, queryParams, headerParams);
   const extendedPath = uriExpand(httpOperation.path, parameterValues);
