@@ -19308,9 +19308,9 @@ rechoir@^0.6.2:
     resolve "^1.1.6"
 
 rechoir@^0.7.0:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.7.1.tgz#9478a96a1ca135b5e88fc027f03ee92d6c645686"
-  integrity sha512-/njmZ8s1wVeR6pjTZ+0nCnv8SpZNRMT2D1RLOJQESlYFDBvwpTA4KWJpZ+sBJ4+vhjILRcK7JIFdGCdxEAAitg==
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.7.0.tgz#32650fd52c21ab252aa5d65b19310441c7e03aca"
+  integrity sha512-ADsDEH2bvbjltXEP+hTIAmeFekTFK0V2BTxMkok6qILyAJEXV0AFfoWcAq4yfll5VdIMd/RVXq0lR+wQi5ZU3Q==
   dependencies:
     resolve "^1.9.0"
 
@@ -21745,9 +21745,9 @@ ts-loader@^8.1.0:
     semver "^7.3.4"
 
 ts-loader@^9.2.3:
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-9.2.3.tgz#dc3b6362a4d4382493cd4f138d345f419656de68"
-  integrity sha512-sEyWiU3JMHBL55CIeC4iqJQadI0U70A5af0kvgbNLHVNz2ACztQg0j/9x10bjjIht8WfFYLKfn4L6tkZ+pu+8Q==
+  version "9.2.4"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-9.2.4.tgz#55fe7e5eab29fe4bdfb01c1f941c2bab928b7f92"
+  integrity sha512-Ats2BCqPFBkgsoZUmmYMjuQu+iBNExt4o3QDsJqRMuPdStWlnOthdqX/GHHJnxSSgw7Gu6Hll/MD5b4usgKFOg==
   dependencies:
     chalk "^4.1.0"
     enhanced-resolve "^5.0.0"
