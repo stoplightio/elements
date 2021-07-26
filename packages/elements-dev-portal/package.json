@@ -5,7 +5,8 @@
   "keywords": [],
   "sideEffects": [
     "web-components.min.js",
-    "src/web-components/**"
+    "src/web-components/**",
+    "**/*.css"
   ],
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",
