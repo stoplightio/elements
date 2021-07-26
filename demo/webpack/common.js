@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -16,6 +18,11 @@ module.exports = {
       '@stoplight/elements-utils': absoluteElementsUtilsPath,
       '@stoplight/elements-core': absoluteElementsCorePath,
     },
+    fallback: {
+      stream: false,
+      path: false,
+      process: require.resolve('process/browser'),
+    },
   },
   module: {
     rules: [
@@ -25,14 +32,16 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [
-          'file-loader?hash=sha512&digest=hex&name=img/[contenthash].[ext]',
-          'image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false',
-        ],
+        type: 'asset/resource',
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: '../index.html' })],
+  plugins: [
+    new HtmlWebpackPlugin({ template: '../index.html' }),
+    new webpack.ProvidePlugin({
+      process: require.resolve('process/browser'),
+    }),
+  ],
   performance: {
     hints: false,
   },
