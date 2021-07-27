@@ -16,6 +16,7 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.12.17",
+    "@babel/plugin-syntax-object-rest-spread": "7.8.3",
     "@stoplight/eslint-config": "2.1.0",
     "@storybook/addon-controls": "6.3.5",
     "@storybook/addon-docs": "6.3.5",
