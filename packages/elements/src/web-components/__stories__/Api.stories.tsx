@@ -1,8 +1,9 @@
 import '../index';
 
-import { zoomApiYaml } from '@stoplight/elements/src/__fixtures__/api-descriptions/zoomApiYaml';
 import { parse } from '@stoplight/yaml';
 import React from 'react';
+
+import { zoomApiYaml } from '../../__fixtures__/api-descriptions/zoomApiYaml';
 
 declare global {
   namespace JSX {

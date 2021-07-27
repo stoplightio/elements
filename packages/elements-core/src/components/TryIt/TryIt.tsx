@@ -81,6 +81,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         httpOperation,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         auth: operationAuthValue,
+        ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
       }).then(request => {
         if (isActive) onRequestChange(request);
       });
@@ -97,6 +98,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
     bodyParameterValues,
     textRequestBody,
     operationAuthValue,
+    mockingOptions,
   ]);
 
   const handleClick = async () => {
