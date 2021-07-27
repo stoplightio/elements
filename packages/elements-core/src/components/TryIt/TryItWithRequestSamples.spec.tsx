@@ -5,9 +5,10 @@ import * as React from 'react';
 import { httpOperation as putTodosOperation } from '../../__fixtures__/operations/put-todos';
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { withPersistenceBoundary } from '../../context/Persistence';
+import { withMosaicProvider } from '../../hoc/withMosaicProvider';
 import { TryItWithRequestSamples as RawComponent } from './TryItWithRequestSamples';
 
-const TryItWithRequestSamples = withPersistenceBoundary(RawComponent);
+const TryItWithRequestSamples = withMosaicProvider(withPersistenceBoundary(RawComponent));
 
 describe('TryItWithRequestSamples', () => {
   it('displays RequestSamples', async () => {
@@ -26,6 +27,26 @@ describe('TryItWithRequestSamples', () => {
     userEvent.type(todoIdField, '123456789');
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/123456789/));
+  });
+
+  it('reacts to mocking', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} mockUrl="https://mock-todos.stoplight.io" />);
+
+    const mockingButton = screen.getByRole('button', { name: /mocking/i });
+
+    userEvent.click(mockingButton);
+
+    // enable mocking
+    let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
+    userEvent.click(enableItem);
+
+    // set response code
+    const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
+    userEvent.click(responseCodeItem);
+
+    const codeViewer = await screen.findByLabelText(/curl/);
+    expect(codeViewer).toHaveTextContent(/https:\/\/mock-todos\.stoplight\.io/);
+    expect(codeViewer).toHaveTextContent(/Prefer: code=200/);
   });
 
   it('includes authentication data in request sample', async () => {
