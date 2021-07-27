@@ -8,7 +8,7 @@ import { withPersistenceBoundary } from '../../context/Persistence';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
 import { TryItWithRequestSamples as RawComponent } from './TryItWithRequestSamples';
 
-const TryItWithRequestSamples = withPersistenceBoundary(RawComponent);
+const TryItWithRequestSamples = withMosaicProvider(withPersistenceBoundary(RawComponent));
 
 describe('TryItWithRequestSamples', () => {
   it('displays RequestSamples', async () => {
@@ -30,8 +30,7 @@ describe('TryItWithRequestSamples', () => {
   });
 
   it('reacts to mocking', async () => {
-    const TryItWithPersistence = withMosaicProvider(withPersistenceBoundary(TryItWithRequestSamples));
-    render(<TryItWithPersistence httpOperation={putTodosOperation} mockUrl="https://mock-todos.stoplight.io" />);
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
     const mockingButton = screen.getByRole('button', { name: /mocking/i });
 
@@ -39,12 +38,10 @@ describe('TryItWithRequestSamples', () => {
 
     // enable mocking
     let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
-    expect(enableItem).toBeInTheDocument();
     userEvent.click(enableItem);
 
     // set response code
     const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
-    expect(responseCodeItem).toBeInTheDocument();
     userEvent.click(responseCodeItem);
 
     const codeViewer = await screen.findByLabelText(/curl/);
