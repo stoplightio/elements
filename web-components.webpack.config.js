@@ -14,6 +14,10 @@ module.exports = {
       process: require.resolve('process/browser'),
     },
   },
+  performance: {
+    maxEntrypointSize: 2000000,
+    maxAssetSize: 2000000,
+  },
   output: {
     filename: 'web-components.min.js',
     path: path.join(process.cwd(), 'dist'),

@@ -1,4 +1,3 @@
-export { TableOfContents as TableOfContentsContainer } from './';
 export { Docs, ParsedDocs } from './components/Docs';
 export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { SidebarLayout } from './components/Layout/SidebarLayout';
