@@ -24,7 +24,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({ original, bundled })
         aria-label="Export"
         items={menuItems}
         renderTrigger={({ isOpen }) => (
-          <Button iconRight="chevron-down" appearance="primary" ml={2} active={isOpen} size="sm">
+          <Button iconRight="chevron-down" appearance="default" ml={2} active={isOpen} size="sm">
             Export
           </Button>
         )}
