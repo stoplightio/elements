@@ -19,6 +19,7 @@ type SidebarLayoutProps = {
   hideTryIt?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
+  hideExport?: boolean;
   exportProps?: ExportButtonProps;
 };
 
@@ -28,6 +29,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideTryIt,
   hideSchemas,
   hideInternal,
+  hideExport,
   exportProps,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
@@ -84,7 +86,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           uri={pathname}
           node={node}
           nodeTitle={node.name}
-          layoutOptions={{ hideTryIt: hideTryIt }}
+          layoutOptions={{ hideTryIt: hideTryIt, hideExport }}
           location={location}
           allowRouting
           exportProps={exportProps}

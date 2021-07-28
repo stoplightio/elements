@@ -18,6 +18,7 @@ import { computeTagGroups, TagGroup } from './utils';
 type StackedLayoutProps = {
   serviceNode: ServiceNode;
   hideTryIt?: boolean;
+  hideExport?: boolean;
   exportProps?: ExportButtonProps;
 };
 
@@ -28,7 +29,12 @@ const itemMatchesHash = (hash: string, item: OperationNode) => {
 const TryItContext = React.createContext<{ hideTryIt?: boolean }>({ hideTryIt: false });
 TryItContext.displayName = 'TryItContext';
 
-export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode, hideTryIt, exportProps }) => {
+export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
+  serviceNode,
+  hideTryIt,
+  hideExport,
+  exportProps,
+}) => {
   const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
 
@@ -42,7 +48,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
             nodeTitle={serviceNode.name}
             nodeType={NodeType.HttpService}
             location={location}
-            layoutOptions={{ showPoweredByLink: true }}
+            layoutOptions={{ showPoweredByLink: true, hideExport }}
             exportProps={exportProps}
           />
         </Box>
