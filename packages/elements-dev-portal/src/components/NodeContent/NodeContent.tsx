@@ -1,7 +1,6 @@
 import {
   CustomLinkComponent,
   Docs,
-  ExportButtonProps,
   MarkdownComponentsProvider,
   MockingProvider,
   PersistenceContextProvider,
