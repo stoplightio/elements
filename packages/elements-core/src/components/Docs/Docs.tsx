@@ -8,6 +8,7 @@ import { ParsedNode } from '../../types';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
+import { ExportButtonProps } from './HttpService/ExportButton';
 import { Model } from './Model';
 
 interface BaseDocsProps {
@@ -35,6 +36,11 @@ interface BaseDocsProps {
    * Allows to use internal routing (requires wrapping with Router component)
    */
   allowRouting?: boolean;
+
+  /**
+   * Export button props
+   */
+  exportProps?: ExportButtonProps;
 
   /**
    * Allows to customize the layout of Docs
@@ -76,6 +82,12 @@ interface BaseDocsProps {
      * @default false
      */
     hideSecurityInfo?: boolean;
+
+    /**
+     * Allows to hide export button
+     * @default false
+     */
+    hideExport?: boolean;
   };
 }
 

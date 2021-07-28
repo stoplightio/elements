@@ -1,4 +1,11 @@
-import { Logo, ParsedDocs, PoweredByLink, SidebarLayout, TableOfContents } from '@stoplight/elements-core';
+import {
+  ExportButtonProps,
+  Logo,
+  ParsedDocs,
+  PoweredByLink,
+  SidebarLayout,
+  TableOfContents,
+} from '@stoplight/elements-core';
 import { Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
@@ -12,6 +19,7 @@ type SidebarLayoutProps = {
   hideTryIt?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
+  exportProps?: ExportButtonProps;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -20,6 +28,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideTryIt,
   hideSchemas,
   hideInternal,
+  exportProps,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -78,6 +87,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           layoutOptions={{ hideTryIt: hideTryIt }}
           location={location}
           allowRouting
+          exportProps={exportProps}
         />
       )}
     </SidebarLayout>

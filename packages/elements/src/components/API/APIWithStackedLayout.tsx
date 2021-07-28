@@ -1,4 +1,11 @@
-import { DeprecatedBadge, Docs, HttpMethodColors, ParsedDocs, TryItWithRequestSamples } from '@stoplight/elements-core';
+import {
+  DeprecatedBadge,
+  Docs,
+  ExportButtonProps,
+  HttpMethodColors,
+  ParsedDocs,
+  TryItWithRequestSamples,
+} from '@stoplight/elements-core';
 import { Box, Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
@@ -11,6 +18,7 @@ import { computeTagGroups, TagGroup } from './utils';
 type StackedLayoutProps = {
   serviceNode: ServiceNode;
   hideTryIt?: boolean;
+  exportProps?: ExportButtonProps;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode) => {
@@ -20,7 +28,7 @@ const itemMatchesHash = (hash: string, item: OperationNode) => {
 const TryItContext = React.createContext<{ hideTryIt?: boolean }>({ hideTryIt: false });
 TryItContext.displayName = 'TryItContext';
 
-export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode, hideTryIt }) => {
+export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode, hideTryIt, exportProps }) => {
   const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
 
@@ -35,6 +43,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({ serviceNode
             nodeType={NodeType.HttpService}
             location={location}
             layoutOptions={{ showPoweredByLink: true }}
+            exportProps={exportProps}
           />
         </Box>
 
