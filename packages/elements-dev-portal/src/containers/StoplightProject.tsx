@@ -120,7 +120,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           ) : null}
           {tableOfContents ? (
             <TableOfContents
-              activeId={node?.id || ''}
+              activeId={node?.id || nodeSlug?.split('-')[0] || ''}
               tableOfContents={tableOfContents}
               Link={Link}
               collapseTableOfContents={collapseTableOfContents}
