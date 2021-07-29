@@ -3,7 +3,7 @@ version: 2.1
 executors:
   cypress-default:
     docker:
-      - image: cimg/node:12.22.3
+      - image: cypress/base:12
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -57,8 +57,10 @@ jobs:
         type: string
     steps:
       - run:
-          name: Install Cypress dependencies
-          command: sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+          name: Install Node 12.22+
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_12.x | bash -
+            apt-get install -y nodejs
       - attach_workspace:
           at: /mnt/ramdisk/
       - run:
