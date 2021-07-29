@@ -41,7 +41,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}
           )}
         </Box>
       </VStack>
-      {data.description && <MarkdownViewer className="sl-mb-5" markdown={data.description} />}
+      {data.description && <MarkdownViewer className="sl-my-5" markdown={data.description} />}
     </Box>
   );
 });
