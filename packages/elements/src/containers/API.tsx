@@ -11,15 +11,14 @@ import {
   withStyles,
 } from '@stoplight/elements-core';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
-import { safeStringify } from '@stoplight/yaml';
-import { saveAs } from 'file-saver';
 import { pipe } from 'lodash/fp';
 import * as React from 'react';
 import { useQuery } from 'react-query';
 
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
-import { isJson, transformOasToServiceNode } from '../utils/oas';
+import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
+import { transformOasToServiceNode } from '../utils/oas';
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 
@@ -98,43 +97,11 @@ export const APIImpl: React.FC<APIProps> = props => {
     },
   );
 
-  const document = apiDescriptionDocument || fetchedDocument;
-  const isJsonDocument = typeof document === 'object' || (!!document && isJson(document));
+  const document = apiDescriptionDocument || fetchedDocument || '';
   const parsedDocument = useParsedValue(document);
   const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl });
   const serviceNode = React.useMemo(() => transformOasToServiceNode(bundledDocument), [bundledDocument]);
-
-  const exportDocument = React.useCallback(
-    (document: string) => {
-      const type = isJsonDocument ? 'json' : 'yaml';
-      const blob = new Blob([document], {
-        type: `application/${type}`,
-      });
-      saveAs(blob, `document.${type}`);
-    },
-    [isJsonDocument],
-  );
-
-  const exportOriginalDocument = React.useCallback(() => {
-    const originalDocument = typeof document === 'object' ? JSON.stringify(document, null, 2) : document || '';
-    exportDocument(originalDocument);
-  }, [document, exportDocument]);
-
-  const exportBundledDocument = React.useCallback(() => {
-    const stringifiedDocument = isJsonDocument
-      ? JSON.stringify(bundledDocument, null, 2)
-      : safeStringify(bundledDocument);
-    exportDocument(stringifiedDocument);
-  }, [bundledDocument, isJsonDocument, exportDocument]);
-
-  const exportProps = {
-    original: {
-      onPress: exportOriginalDocument,
-    },
-    bundled: {
-      onPress: exportBundledDocument,
-    },
-  };
+  const exportProps = useExportDocumentProps({ originalDocument: document, bundledDocument });
 
   if (error) {
     return (
