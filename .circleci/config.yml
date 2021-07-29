@@ -3,7 +3,7 @@ version: 2.1
 executors:
   cypress-default:
     docker:
-      - image: cypress/base:12
+      - image: cypress/base:14.17.0
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -11,7 +11,7 @@ executors:
 jobs:
   lint-and-check:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:12.22.3
     steps:
       - checkout
       - run: yarn --frozen-lockfile
@@ -24,7 +24,7 @@ jobs:
   build:
     working_directory: /mnt/ramdisk/project
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:12.22.3
     resource_class: large
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
@@ -40,7 +40,7 @@ jobs:
             - .cache/Cypress
   build-docs:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:12.22.3
     steps:
       - checkout
       - run: yarn --frozen-lockfile
@@ -86,7 +86,7 @@ jobs:
           destination: screenshots
   lockfile-maintenance:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:12.22.3
     steps:
       - checkout
       - run:
@@ -100,7 +100,7 @@ jobs:
             BODY='{"head":''"'${BRANCH_NAME}'"'',"base":"main","title":"Weekly lockfile maintenance"}' && curl -X POST -H "Accept:application/vnd.github.v3+json" -u $GIT_AUTHOR_NAME:$GH_TOKEN https://api.github.com/repos/stoplightio/elements/pulls -d "$BODY"
   release:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:12.22.3
     steps:
       - checkout
       - run:
