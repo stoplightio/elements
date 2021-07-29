@@ -317,18 +317,7 @@ export const httpOperation: IHttpOperation = {
         description: 'How many todos to limit?',
         name: 'limit',
         style: HttpParamStyles.Form,
-        example: 'hoho',
-        examples: [
-          {
-            key: 'a',
-            value: 'hehe',
-          },
-          {
-            key: 'b',
-            value: 'hihi',
-          },
-        ],
-      } as any,
+      },
       {
         schema: {
           type: 'string',
