@@ -1,4 +1,4 @@
-import { Box, Heading, VStack } from '@stoplight/mosaic';
+import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
@@ -8,12 +8,13 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
 import { VersionBadge } from '../HttpOperation/Badges';
+import { ExportButton } from './ExportButton';
 import { SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
 
 export type HttpServiceProps = DocsComponentProps<Partial<IHttpService>>;
 
-const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}, layoutOptions }) => {
+const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}, layoutOptions, exportProps }) => {
   const { search, pathname } = location;
   const mocking = React.useContext(MockingContext);
   const query = new URLSearchParams(search);
@@ -21,9 +22,12 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}
   return (
     <Box mb={10}>
       {data.name && !layoutOptions?.noHeading && (
-        <Heading size={1} mb={4} fontWeight="semibold">
-          {data.name}
-        </Heading>
+        <Flex justifyContent="between" alignItems="center">
+          <Heading size={1} mb={4} fontWeight="semibold">
+            {data.name}
+          </Heading>
+          {exportProps && !layoutOptions?.hideExport && <ExportButton {...exportProps} />}
+        </Flex>
       )}
       {data.version && (
         <Box mb={5}>

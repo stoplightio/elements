@@ -30,9 +30,15 @@ export type NodeContentProps = {
    * Allows to hide mocking button
    */
   hideMocking?: boolean;
+
+  /**
+   * Allows to hide export button
+   * @default false
+   */
+  hideExport?: boolean;
 };
 
-export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking }: NodeContentProps) => {
+export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking, hideExport }: NodeContentProps) => {
   return (
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
@@ -42,8 +48,24 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
               nodeType={node.type as NodeType}
               nodeData={node.data}
               nodeTitle={node.title}
-              layoutOptions={{ hideTryIt: hideTryIt, hideTryItPanel: hideTryItPanel }}
+              layoutOptions={{
+                hideTryIt: hideTryIt,
+                hideTryItPanel: hideTryItPanel,
+                hideExport: hideExport || node.links.export_url === undefined,
+              }}
               useNodeForRefResolving
+              exportProps={
+                node.type === NodeType.HttpService
+                  ? {
+                      original: {
+                        href: node.links.export_url,
+                      },
+                      bundled: {
+                        href: getBundledUrl(node.links.export_url),
+                      },
+                    }
+                  : undefined
+              }
             />
           </MockingProvider>
         </MarkdownComponentsProvider>
@@ -89,3 +111,12 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
 
   return <a href={href}>{children}</a>;
 };
+
+function getBundledUrl(url: string | undefined) {
+  if (url === undefined) return undefined;
+  const bundledUrl = new URL(url);
+  const searchParams = new URLSearchParams(bundledUrl.search);
+  searchParams.append('deref', 'optimizedBundle');
+  bundledUrl.search = searchParams.toString();
+  return bundledUrl.toString();
+}
