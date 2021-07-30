@@ -281,7 +281,7 @@ describe('HttpService', () => {
       expect(exportButton).not.toBeInTheDocument();
     });
 
-    it('should not render if hno exportProps are present', () => {
+    it('should not render if no exportProps are present', () => {
       const wrapper = render(
         <Router>
           <MosaicProvider>
