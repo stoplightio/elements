@@ -54,14 +54,18 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
                 hideExport: hideExport || node.links.export_url === undefined,
               }}
               useNodeForRefResolving
-              exportProps={{
-                original: {
-                  href: node.links.export_url,
-                },
-                bundled: {
-                  href: `${node.links.export_url}?deref=optimizedBundle`,
-                },
-              }}
+              exportProps={
+                node.type === NodeType.HttpService
+                  ? {
+                      original: {
+                        href: node.links.export_url,
+                      },
+                      bundled: {
+                        href: getBundledUrl(node.links.export_url),
+                      },
+                    }
+                  : undefined
+              }
             />
           </MockingProvider>
         </MarkdownComponentsProvider>
@@ -107,3 +111,12 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
 
   return <a href={href}>{children}</a>;
 };
+
+function getBundledUrl(url: string | undefined) {
+  if (url === undefined) return undefined;
+  const bundledUrl = new URL(url);
+  const searchParams = new URLSearchParams(bundledUrl.search);
+  searchParams.append('deref', 'optimizedBundle');
+  bundledUrl.search = searchParams.toString();
+  return bundledUrl.toString();
+}
