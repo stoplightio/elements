@@ -298,6 +298,7 @@ describe('HttpOperation', () => {
               description: 'a parameter description',
               schema: {
                 type: 'string',
+                examples: ['another example'],
               },
               deprecated: true,
               explode: true,
@@ -322,6 +323,8 @@ describe('HttpOperation', () => {
       expect(pathParametersPanel).toBeEnabled();
 
       expect(await screen.findByText('parameter name')).toBeInTheDocument();
+      expect(await screen.findByText('"example value"')).toBeInTheDocument();
+      expect(await screen.findByText('"another example"')).toBeInTheDocument();
     });
 
     it('should still show path parameters panel when there are no parameters', () => {
