@@ -62,17 +62,23 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   // TODO (JJ): schema.deprecated is used in platform - to be removed once it's updated https://github.com/stoplightio/platform-internal/issues/2267
   const deprecated = get(parameter, 'deprecated') || get(parameter, 'schema.deprecated', false);
 
+  const parameterExamples =
+    parameter.examples?.map(example => {
+      if (isNodeExample(example)) {
+        return example.value;
+      }
+
+      return example.externalValue;
+    }) || [];
+
+  const schemaExamples = parameter.schema?.examples;
+  const schemaExamplesArray = Array.isArray(schemaExamples) ? schemaExamples : [];
+
   const validations = omitBy(
     {
       ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style', 'examples']),
       ...omit(get(parameter, 'schema'), ['description', 'type', 'deprecated']),
-      examples: parameter.examples?.map(example => {
-        if (isNodeExample(example)) {
-          return example.value;
-        }
-
-        return example.externalValue;
-      }),
+      examples: [...parameterExamples, ...schemaExamplesArray],
     },
     // Remove empty arrays and objects
     value => (typeof value === 'object' && isEmpty(value)) || typeof value === 'undefined',

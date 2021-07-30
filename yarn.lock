@@ -3940,10 +3940,10 @@
   dependencies:
     eslint-config-prettier "^8.3.0"
 
-"@stoplight/http-spec@^4.0.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-4.2.1.tgz#f0816dec054ec1a373d725ee15543bcd0d20cb68"
-  integrity sha512-qS1JaAva6QpP3YfOyeeh/FXt+yvYF248GSSzHhIIv0xNl/WtuiilzAOaDxv1Hi/o/tRszfE8q2GPMi0h92g7cg==
+"@stoplight/http-spec@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-4.2.2.tgz#096286ee879e44fcc8237174e7f18ede37028677"
+  integrity sha512-m49Sn2iW7DeAqEaSFRixr7led6tLCkobKML16jWT0BBwInouZATPfzbSHymHGqyjqgaE0tJde+hgmiOFMAKLCQ==
   dependencies:
     "@stoplight/json" "^3.10.2"
     "@stoplight/types" "^12.3.0"
