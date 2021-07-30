@@ -3940,10 +3940,10 @@
   dependencies:
     eslint-config-prettier "^8.3.0"
 
-"@stoplight/http-spec@^4.0.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-4.2.1.tgz#f0816dec054ec1a373d725ee15543bcd0d20cb68"
-  integrity sha512-qS1JaAva6QpP3YfOyeeh/FXt+yvYF248GSSzHhIIv0xNl/WtuiilzAOaDxv1Hi/o/tRszfE8q2GPMi0h92g7cg==
+"@stoplight/http-spec@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-4.2.2.tgz#096286ee879e44fcc8237174e7f18ede37028677"
+  integrity sha512-m49Sn2iW7DeAqEaSFRixr7led6tLCkobKML16jWT0BBwInouZATPfzbSHymHGqyjqgaE0tJde+hgmiOFMAKLCQ==
   dependencies:
     "@stoplight/json" "^3.10.2"
     "@stoplight/types" "^12.3.0"
@@ -4031,10 +4031,10 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.1.0.tgz#2a21fc0032a63218a325923a0beca79e78c94c33"
-  integrity sha512-QcF/Ju54RZERH+ewGqW8dHYcuvL9YoaXNg8tvze5y4Z7L2bIpaNUdMUDsEDdFWC/h/MePumo3OQDpo4hV2VHFQ==
+"@stoplight/markdown-viewer@^5.1.3":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.1.3.tgz#bfc29886a88391348507a2c9a72b3271d67cd463"
+  integrity sha512-t784OxZEJpRpUlh8t8Ohtm5NBF5n56ybtZhe252ehBQ9lPkS24p8LggMtf3bnZW37jsgaBpTdBkoR75145ujnQ==
   dependencies:
     "@stoplight/markdown" "^3.0.0"
     "@stoplight/react-error-boundary" "^1.1.0"
@@ -4047,6 +4047,7 @@
     mdast-util-to-hast "^11.1.1"
     remark-parse "^9.0.0"
     unified "^9.2.1"
+    unist-builder "^3.0.0"
     unist-util-visit "^3.1.0"
 
 "@stoplight/markdown@^3.0.0":
