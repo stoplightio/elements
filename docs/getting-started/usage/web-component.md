@@ -89,7 +89,7 @@ These properties can be provided as HTML attributes to the web component.
 
 ## Next steps
 
-Elements provides you with the components for beautiful API reference documentation, but you'll likely want to add other things to your site such as a landing page, header and footer navigation, etc. Check out our [Twitter Bootstrap](../../../examples/bootstrap/index.html) for an idea of how that could look.
+Elements provides you with the components for beautiful API reference documentation, but you'll likely want to add other things to your site such as a landing page, header and footer navigation, etc. Check out our [Twitter Bootstrap](https://github.com/stoplightio/elements/blob/main/examples/bootstrap/project.html) for an idea of how that could look.
 
 ## Integrations 
 
