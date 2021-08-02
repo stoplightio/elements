@@ -37,7 +37,6 @@ import '@stoplight/elements-dev-portal/styles.min.css';
 
 ![The project ID can be found on the Project Settings page in a text box after Display Name and Slug](../../images/projectId.png)
 
-
 4. Now you can replace the existing App component's contents with the StoplightProject component.
 
 ```jsx
