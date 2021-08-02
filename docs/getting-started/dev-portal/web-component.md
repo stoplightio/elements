@@ -87,6 +87,6 @@ These properties can be provided as HTML attributes to the web component.
 
 ## Next steps
 
-You can customize things to your hearts content by wrapping this component in other HTML and changing the CSS, like this [Twitter Bootstrap](../../../examples/bootstrap/project.html) example.
+You can customize things to your hearts content by wrapping this component in other HTML and changing the CSS, like this [Twitter Bootstrap](https://github.com/stoplightio/elements/blob/main/examples/bootstrap/project.html) example.
 
 Once you're done and you're docs are live, give us a shout at [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!
