@@ -35,8 +35,7 @@ import '@stoplight/elements-dev-portal/styles.min.css';
 
 > Project Settings can only be viewed by Project Editors or above. Read more about project permissions [here](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
 
-![The product ID can be found on the Project Settings page in a text box after Display Name and Slug](../../images/projectId.png)
-
+![The project ID can be found on the Project Settings page in a text box after Display Name and Slug](../../images/projectId.png)
 
 4. Now you can replace the existing App component's contents with the StoplightProject component.
 

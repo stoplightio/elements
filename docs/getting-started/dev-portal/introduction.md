@@ -8,6 +8,8 @@ Elements comes in two flavours, the basic package which only covers a single API
 - Version Selector (Multiple Branches)
 - Powerful Search
 
+> The Dev Portal can only be tested on local host using the free plan. Please upgrade to starter or above to use it in a production environment.
+
 Think of the dev portal as more of a Content Management System, focused entirely on making an awesome developer experience for an organization. 
 
 Just like the Elements API component, it is available as a Web Component or a React component. 
