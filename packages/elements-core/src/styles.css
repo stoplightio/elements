@@ -85,6 +85,10 @@
   line-height: 1.5em;
 }
 
+.sl-elements .sl-markdown-viewer .JsonSchemaViewer {
+  padding-right: 10px;
+}
+
 .sl-elements .HttpOperation__gutter {
   --fs-code: 12px;
 }
