@@ -32,7 +32,8 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const example = React.useMemo(() => generateExampleFromJsonSchema(data), [data]);
 
-  const shouldDisplayHeader = !layoutOptions?.noHeading && (title !== undefined || exportProps);
+  const shouldDisplayHeader =
+    !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
   const header = (shouldDisplayHeader || isInternal) && (
     <>
