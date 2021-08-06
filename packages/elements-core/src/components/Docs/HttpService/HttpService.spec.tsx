@@ -53,14 +53,8 @@ describe('HttpService', () => {
   it('generates names for servers without names', () => {
     render(<ServerInfo servers={httpServiceWithUnnamedServers.servers ?? []} />);
 
-    const serverUrl = screen.getByLabelText('Production API');
-    expect(serverUrl).toHaveTextContent('https://api.stoplight.io');
-
     const secondServerUrl = screen.getByLabelText('Server 2');
     expect(secondServerUrl).toHaveTextContent('https://api.staging.stoplight.io');
-
-    const thirdServerUrl = screen.getByLabelText('Integration API');
-    expect(thirdServerUrl).toHaveTextContent('https://api.int.stoplight.io');
 
     const fourthServerUrl = screen.getByLabelText('Server 4');
     expect(fourthServerUrl).toHaveTextContent('https://localhost:4060');
