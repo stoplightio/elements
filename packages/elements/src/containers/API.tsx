@@ -17,6 +17,7 @@ import { useQuery } from 'react-query';
 
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
+import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
 import { transformOasToServiceNode } from '../utils/oas';
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
@@ -66,6 +67,12 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   hideInternal?: boolean;
+
+  /**
+   * Hides export button from being displayed in overview page
+   * @default false
+   */
+  hideExport?: boolean;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -73,7 +80,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 export const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas, hideInternal } = props;
+  const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas, hideInternal, hideExport } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { data: fetchedDocument, error } = useQuery(
@@ -90,9 +97,11 @@ export const APIImpl: React.FC<APIProps> = props => {
     },
   );
 
-  const parsedDocument = useParsedValue(apiDescriptionDocument || fetchedDocument);
+  const document = apiDescriptionDocument || fetchedDocument || '';
+  const parsedDocument = useParsedValue(document);
   const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl });
   const serviceNode = React.useMemo(() => transformOasToServiceNode(bundledDocument), [bundledDocument]);
+  const exportProps = useExportDocumentProps({ originalDocument: document, bundledDocument });
 
   if (error) {
     return (
@@ -128,7 +137,12 @@ export const APIImpl: React.FC<APIProps> = props => {
   return (
     <InlineRefResolverProvider document={parsedDocument}>
       {layout === 'stacked' ? (
-        <APIWithStackedLayout serviceNode={serviceNode} hideTryIt={hideTryIt} />
+        <APIWithStackedLayout
+          serviceNode={serviceNode}
+          hideTryIt={hideTryIt}
+          hideExport={hideExport}
+          exportProps={exportProps}
+        />
       ) : (
         <APIWithSidebarLayout
           logo={logo}
@@ -136,6 +150,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideTryIt={hideTryIt}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
+          hideExport={hideExport}
+          exportProps={exportProps}
         />
       )}
     </InlineRefResolverProvider>

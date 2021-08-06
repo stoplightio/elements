@@ -1,5 +1,6 @@
 import 'jest-enzyme';
 
+import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import {
   IOauth2AuthorizationCodeFlow,
   IOauth2ClientCredentialsFlow,
@@ -239,6 +240,58 @@ describe('HttpService', () => {
         Scopes:
         - \`scope:password\` - password scope description"
       `);
+    });
+  });
+
+  describe('export button', () => {
+    it('should render correctly', () => {
+      const wrapper = render(
+        <Router>
+          <MosaicProvider>
+            <HttpService
+              data={httpService}
+              exportProps={{ original: { onPress: jest.fn() }, bundled: { onPress: jest.fn() } }}
+            />
+          </MosaicProvider>
+        </Router>,
+      );
+
+      const exportButton = wrapper.getByRole('button', { name: 'Export' });
+      expect(exportButton).toBeInTheDocument();
+
+      userEvent.click(exportButton);
+      expect(wrapper.getByRole('menuitem', { name: 'Original' })).toBeInTheDocument();
+      expect(wrapper.getByRole('menuitem', { name: 'Bundled References' })).toBeInTheDocument();
+    });
+
+    it('should not render if hideExport is true', () => {
+      const wrapper = render(
+        <Router>
+          <MosaicProvider>
+            <HttpService
+              data={httpService}
+              exportProps={{ original: { onPress: jest.fn() }, bundled: { onPress: jest.fn() } }}
+              layoutOptions={{ hideExport: true }}
+            />
+          </MosaicProvider>
+        </Router>,
+      );
+
+      const exportButton = wrapper.queryByRole('button', { name: 'Export' });
+      expect(exportButton).not.toBeInTheDocument();
+    });
+
+    it('should not render if no exportProps are present', () => {
+      const wrapper = render(
+        <Router>
+          <MosaicProvider>
+            <HttpService data={httpService} />
+          </MosaicProvider>
+        </Router>,
+      );
+
+      const exportButton = wrapper.queryByRole('button', { name: 'Export' });
+      expect(exportButton).not.toBeInTheDocument();
     });
   });
 });

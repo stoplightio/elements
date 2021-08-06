@@ -1,9 +1,10 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "7.1.8",
+  "version": "7.1.11",
   "sideEffects": [
     "web-components.min.js",
-    "src/web-components/**"
+    "src/web-components/**",
+    "**/*.css"
   ],
   "homepage": "https://github.com/stoplightio/elements",
   "bugs": "https://github.com/stoplightio/elements/issues",
@@ -24,9 +25,9 @@
   "scripts": {
     "build": "yarn build.react",
     "postbuild": "yarn build.styles",
-    "build.react": "sl-scripts build",
-    "build.styles": "node ../../scripts/build-styles.js",
-    "build.docs": "build-storybook -c .storybook -o dist-storybook",
+    "build.react": "sl-scripts bundle",
+    "build.styles": "postcss src/styles.css -o dist/styles.min.css",
+    "build.docs": "build-storybook -o dist-storybook",
     "commit": "git-cz",
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
@@ -51,7 +52,7 @@
     "@stoplight/json-schema-sampler": "0.2.0",
     "@stoplight/json-schema-viewer": "^4.0.3",
     "@stoplight/markdown": "^3.0.0",
-    "@stoplight/markdown-viewer": "^5.1.0",
+    "@stoplight/markdown-viewer": "^5.1.3",
     "@stoplight/mosaic": "^1",
     "@stoplight/mosaic-code-editor": "^1",
     "@stoplight/mosaic-code-viewer": "^1",
@@ -62,7 +63,7 @@
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "httpsnippet": "^1.24.0",
-    "jotai": "^0.12.4",
+    "jotai": "1.2.2",
     "json-schema": "^0.3.0",
     "lodash": "^4.17.19",
     "nanoid": "^3.1.20",
@@ -78,11 +79,7 @@
     "util": "^0.12.4"
   },
   "devDependencies": {
-    "@stoplight/scripts": "8.2.3",
-    "@storybook/addon-docs": "^6.2.8",
-    "@storybook/addon-essentials": "^6.2.8",
-    "@storybook/react": "^6.2.8",
-    "@storybook/theming": "^6.2.8",
+    "@stoplight/scripts": "9.1.0",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",
@@ -106,14 +103,10 @@
     "enzyme-to-json": "3.x.x",
     "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
-    "ncp": "^2.0.0",
-    "node-sass": "^4.14.1",
-    "node-sass-package-importer": "^5.3.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",
     "resolve-url-loader": "^3.1.2",
-    "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0"
   },
   "publishConfig": {

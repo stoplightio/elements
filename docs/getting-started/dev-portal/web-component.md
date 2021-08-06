@@ -17,7 +17,9 @@ For now, the only component in the DevPortal package is `<elements-stoplight-pro
 
 2. Find the "Project ID" from the Project Settings view of your Stoplight Project.
 
-![The product ID can be found on the Project Settings page in a text box after Display Name and Slug](../../images/projectId.png)
+> Project Settings can only be viewed by Project Editors or above. Read more about project permissions [here](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
+
+![The project ID can be found on the Project Settings page in a text box after Display Name and Slug](../../images/projectId.png)
 
 
 3. Embed the web component inside the HTML `<body>` tag, and enter the project ID.
@@ -87,6 +89,6 @@ These properties can be provided as HTML attributes to the web component.
 
 ## Next steps
 
-You can customize things to your hearts content by wrapping this component in other HTML and changing the CSS, like this [Twitter Bootstrap](../../../examples/bootstrap/project.html) example.
+You can customize things to your hearts content by wrapping this component in other HTML and changing the CSS, like this [Twitter Bootstrap](https://github.com/stoplightio/elements/blob/main/examples/bootstrap/project.html) example.
 
 Once you're done and you're docs are live, give us a shout at [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!

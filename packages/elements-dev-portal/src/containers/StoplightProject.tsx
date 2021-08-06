@@ -47,6 +47,12 @@ export interface StoplightProjectProps extends RoutingProps {
   hideMocking?: boolean;
 
   /**
+   * Allows to hide export button
+   * @default false
+   */
+  hideExport?: boolean;
+
+  /**
    * If set to true, all table of contents panels will be collapsed.
    * @default false
    */
@@ -57,6 +63,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   projectId,
   hideTryIt,
   hideMocking,
+  hideExport,
   collapseTableOfContents = false,
 }) => {
   const { branchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
@@ -95,7 +102,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   } else if (!node) {
     elem = <NotFound />;
   } else {
-    elem = <NodeContent node={node} Link={Link} hideTryIt={hideTryIt} hideMocking={hideMocking} />;
+    elem = (
+      <NodeContent node={node} Link={Link} hideTryIt={hideTryIt} hideMocking={hideMocking} hideExport={hideExport} />
+    );
   }
 
   const handleTocClick = () => {
@@ -120,7 +129,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
           ) : null}
           {tableOfContents ? (
             <TableOfContents
-              activeId={node?.id || ''}
+              activeId={node?.id || nodeSlug?.split('-')[0] || ''}
               tableOfContents={tableOfContents}
               Link={Link}
               collapseTableOfContents={collapseTableOfContents}

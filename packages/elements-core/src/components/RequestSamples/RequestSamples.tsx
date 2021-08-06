@@ -15,8 +15,8 @@ export interface RequestSamplesProps {
   request: Request;
 }
 
-const selectedLanguageAtom = persistAtom('RequestSamples_selectedLanguage', atom('Shell'));
-const selectedLibraryAtom = persistAtom('RequestSamples_selectedLibrary', atom('cURL'));
+const selectedLanguageAtom = persistAtom<string>('RequestSamples_selectedLanguage', atom('Shell'));
+const selectedLibraryAtom = persistAtom<string>('RequestSamples_selectedLibrary', atom('cURL'));
 
 const fallbackText = 'Unable to generate code example';
 
