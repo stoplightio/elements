@@ -18,14 +18,14 @@ export const httpServiceWithUnnamedServers: IHttpService = {
   servers: [
     {
       url: 'https://api.stoplight.io',
-      name: 'Production API',
+      description: 'Production API',
     },
     {
       url: 'https://api.staging.stoplight.io',
     },
     {
       url: 'https://api.int.stoplight.io',
-      name: 'Integration API',
+      description: 'Integration API',
     },
     {
       url: 'https://localhost:4060',

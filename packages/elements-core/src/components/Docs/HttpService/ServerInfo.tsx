@@ -16,7 +16,7 @@ const getServersToDisplay = (originalServers: IServer[]): IServer[] => {
     .map((server, i) => ({
       ...server,
       url: getServerUrlWithDefaultValues(server),
-      name: server.name || `Server ${i + 1}`,
+      description: server.description || `Server ${i + 1}`,
     }))
     .filter(server => isProperUrl(server.url));
 };
@@ -37,12 +37,12 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Box overflowX="auto">
           <Panel.Content w="full" className="sl-flex sl-flex-col">
-            {serversToDisplay.map(({ name, url }) => (
+            {serversToDisplay.map(({ description, url }) => (
               <Box whitespace="nowrap" mb={1} key={url}>
                 <Text pr={2} fontWeight="bold">
-                  {name}:
+                  {description}:
                 </Text>
-                <Text aria-label={name}>{url}</Text>
+                <Text aria-label={description}>{url}</Text>
               </Box>
             ))}
             {showMocking && (
