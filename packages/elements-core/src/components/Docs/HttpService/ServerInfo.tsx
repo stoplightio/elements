@@ -11,14 +11,23 @@ interface ServerInfoProps {
   mockUrl?: string;
 }
 
+const getServersToDisplay = (originalServers: IServer[]): IServer[] => {
+  return originalServers
+    .map((server, i) => ({
+      ...server,
+      url: getServerUrlWithDefaultValues(server),
+      name: server.name || `Server ${i + 1}`,
+    }))
+    .filter(server => isProperUrl(server.url));
+};
+
 export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   const mocking = React.useContext(MockingContext);
   const showMocking = !mocking.hideMocking && mockUrl && isProperUrl(mockUrl);
-  const productionServer = servers[0];
-  const productionUrl = productionServer && getServerUrlWithDefaultValues(productionServer);
-  const showProductionUrl = productionUrl && isProperUrl(productionUrl);
 
-  if (!showMocking && !showProductionUrl) {
+  const serversToDisplay = getServersToDisplay(servers);
+
+  if (!showMocking && serversToDisplay.length === 0) {
     return null;
   }
 
@@ -27,24 +36,25 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
       <Panel rounded isCollapsible={false} className="BaseURLContent" w="full">
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Box overflowX="auto">
-          <Panel.Content w="max" className="sl-flex sl-flex-col">
-            {showProductionUrl && (
-              <Box whitespace="nowrap">
-                {showMocking && (
-                  <Text pr={2} fontWeight="bold">
-                    Production:
-                  </Text>
-                )}
-                <Text aria-label="production-server">{productionUrl}</Text>
-              </Box>
-            )}
-            {showMocking && (
-              <Flex>
-                <Text fontWeight="bold">Mock Server:</Text>
-                <Text aria-label="mock-server" pl={2}>
-                  {mockUrl}
+          <Panel.Content w="full" className="sl-flex sl-flex-col">
+            {serversToDisplay.map(({ name, url }) => (
+              <Box whitespace="nowrap" mb={1} key={url}>
+                <Text pr={2} fontWeight="bold">
+                  {name}:
                 </Text>
-              </Flex>
+                <Text aria-label={name}>{url}</Text>
+              </Box>
+            ))}
+            {showMocking && (
+              <>
+                <Box borderT={2} pt={2} mt={1} borderColor="light" w="full" />
+                <Flex>
+                  <Text fontWeight="bold">Mock Server:</Text>
+                  <Text aria-label="Mock Server" pl={2}>
+                    {mockUrl}
+                  </Text>
+                </Flex>
+              </>
             )}
           </Panel.Content>
         </Box>

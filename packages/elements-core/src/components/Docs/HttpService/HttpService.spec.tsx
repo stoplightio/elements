@@ -14,6 +14,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { apiKey, oauth } from '../../../__fixtures__/security-schemes';
 import httpService from '../../../__fixtures__/services/petstore';
+import { httpServiceWithUnnamedServers } from '../../../__fixtures__/services/with-unnamed-servers';
 import { httpServiceWithUrlVariables } from '../../../__fixtures__/services/with-url-variables';
 import { httpServiceWithoutOrigin } from '../../../__fixtures__/services/without-origin';
 import { HttpService } from './index';
@@ -31,36 +32,60 @@ describe('HttpService', () => {
     expect(wrapper.getByText(httpService.name).tagName.toLowerCase()).toBe('h1');
   });
 
-  it('displays first server url', () => {
+  it('displays all server urls', () => {
     render(<ServerInfo servers={httpService.servers ?? []} />);
 
-    const serverUrl = screen.getByLabelText('production-server');
+    const serverUrl = screen.getByLabelText('Production API');
     expect(serverUrl).toHaveTextContent('https://api.stoplight.io');
 
-    const secondServer = screen.queryByText('https://api.staging.stoplight.io');
-    expect(secondServer).not.toBeInTheDocument();
+    const secondServerUrl = screen.getByLabelText('Staging API');
+    expect(secondServerUrl).toHaveTextContent('https://api.staging.stoplight.io');
 
-    expect(screen.queryByLabelText('mock-server')).not.toBeInTheDocument();
+    const thirdServerUrl = screen.getByLabelText('Integration API');
+    expect(thirdServerUrl).toHaveTextContent('https://api.int.stoplight.io');
+
+    const fourthServerUrl = screen.getByLabelText('Development API');
+    expect(fourthServerUrl).toHaveTextContent('https://localhost:4060');
+
+    expect(screen.queryByLabelText('Mock Server')).not.toBeInTheDocument();
+  });
+
+  it('generates names for servers without names', () => {
+    render(<ServerInfo servers={httpServiceWithUnnamedServers.servers ?? []} />);
+
+    const serverUrl = screen.getByLabelText('Production API');
+    expect(serverUrl).toHaveTextContent('https://api.stoplight.io');
+
+    const secondServerUrl = screen.getByLabelText('Server 2');
+    expect(secondServerUrl).toHaveTextContent('https://api.staging.stoplight.io');
+
+    const thirdServerUrl = screen.getByLabelText('Integration API');
+    expect(thirdServerUrl).toHaveTextContent('https://api.int.stoplight.io');
+
+    const fourthServerUrl = screen.getByLabelText('Server 4');
+    expect(fourthServerUrl).toHaveTextContent('https://localhost:4060');
+
+    expect(screen.queryByLabelText('Mock Server')).not.toBeInTheDocument();
   });
 
   it('replaces url variables with default values in displayed url', () => {
     render(<ServerInfo servers={httpServiceWithUrlVariables.servers ?? []} />);
 
-    const serverUrl = screen.getByLabelText('production-server');
+    const serverUrl = screen.getByLabelText('Production API');
     expect(serverUrl).toHaveTextContent('ftp://default-namespace.stoplight.io');
   });
 
   it('prepends origin to urls without origin', () => {
     render(<ServerInfo servers={httpServiceWithoutOrigin.servers ?? []} />);
 
-    const serverUrl = screen.getByLabelText('production-server');
+    const serverUrl = screen.getByLabelText('Production API');
     expect(serverUrl).toHaveTextContent('http://localhost/api');
   });
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
     render(<ServerInfo servers={httpService.servers ?? []} mockUrl="https://foo.stoplight.io/prism/123" />);
 
-    const mockServer = screen.queryByLabelText('mock-server');
+    const mockServer = screen.queryByLabelText('Mock Server');
     await waitFor(() => expect(mockServer).toHaveTextContent('https://foo.stoplight.io/prism/123'));
   });
 
