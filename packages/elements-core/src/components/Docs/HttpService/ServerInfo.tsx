@@ -37,8 +37,8 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Box overflowX="auto">
           <Panel.Content w="full" className="sl-flex sl-flex-col">
-            {serversToDisplay.map(({ description, url }) => (
-              <Box whitespace="nowrap" mb={1} key={url}>
+            {serversToDisplay.map(({ description, url }, index) => (
+              <Box whitespace="nowrap" mb={1} key={index}>
                 <Text pr={2} fontWeight="bold">
                   {description}:
                 </Text>
