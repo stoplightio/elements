@@ -4070,10 +4070,10 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.2.0.tgz#9ae4f07707bba0b9f10c441729f23da56b7cd7fc"
-  integrity sha512-cf4Ijf+VKbFsM7tAzsgTxZKs96wZb/n1M38bkMFt6aG+1H5VbIkrQgvVu1lq6GGZ/ruBos2xpn1ke4ISW1ct7A==
+"@stoplight/mosaic-code-editor@1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.1.5.tgz#9d5efc0d2a2412c6a673b0eaa28397ad8bdc524a"
+  integrity sha512-FYmbPJnLewUpoN/F5pJL2lhuc3vwK4g4LnFLhzSzzbj0huEKh6FUQNoEvigvlRjj/2XtUjLNypZmFpl3rGchlQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -4104,8 +4104,8 @@
     "@react-stately/select" "3.1.2"
     "@react-stately/tabs" "3.0.0"
     "@react-stately/tooltip" "3.0.4"
-    "@stoplight/mosaic" "1.2.0"
-    "@stoplight/mosaic-code-viewer" "1.2.0"
+    "@stoplight/mosaic" "1.1.5"
+    "@stoplight/mosaic-code-viewer" "1.1.5"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     lodash.get "^4.4.2"
@@ -4116,10 +4116,10 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.2.0", "@stoplight/mosaic-code-viewer@^1":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.2.0.tgz#7e0ebabc99dccfa02bfc0f4edd99400116c3d332"
-  integrity sha512-s9/ybTJ4tgPn9ISt9Sporp9UgS4whwB8qNYkTeh6H+bvVOu1L5VfsUYrXi+bWOlSGjMKKwy1JZFXoYLoTfc9Rg==
+"@stoplight/mosaic-code-viewer@1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.1.5.tgz#9cc0d341184c51b085e3ff912e91700a20d944b4"
+  integrity sha512-5PgAHTI139CEHl0CFArYxZ2FfjlYwYwBxhIa6JJ+W2E33VnAww+4x/9IPLG6pv68x0kVW5KYRIX1nwv8EvlshA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -4150,7 +4150,7 @@
     "@react-stately/select" "3.1.2"
     "@react-stately/tabs" "3.0.0"
     "@react-stately/tooltip" "3.0.4"
-    "@stoplight/mosaic" "1.2.0"
+    "@stoplight/mosaic" "1.1.5"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     lodash.get "^4.4.2"
@@ -4205,10 +4205,10 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.2.0", "@stoplight/mosaic@^1":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.2.0.tgz#ffc3cc5c5f00d1c973ebe527f23ac8defd241f38"
-  integrity sha512-aAVrB7k2Wwzz2nIiFFgqCvgOxV7KQx8BEekk8t1ZbSerVVtQzxCnAhlyYwPSi7Rh9OZmVYpkfEaAKbEvn1Y7lg==
+"@stoplight/mosaic@1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.1.5.tgz#e6c3221180efd2d2b77c1409dcac0941db9e8c3f"
+  integrity sha512-PM0tJV8kc4kst80qmeBMsz8NPVJRCXsrMOJG0QfalXFqCztHVl5kWyNSwOEZWneGti3VyQB6/uzbfsqykuktqw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"

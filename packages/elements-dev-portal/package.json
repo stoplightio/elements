@@ -50,7 +50,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@stoplight/elements-core": "~7.1.11",
     "@stoplight/markdown-viewer": "^5.1.3",
-    "@stoplight/mosaic": "^1",
+    "@stoplight/mosaic": "1.1.5",
     "@stoplight/path": "^1.3.2",
     "@stoplight/types": "^12.0.0",
     "classnames": "^2.2.6",
