@@ -31,10 +31,11 @@ export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpSer
   </Tooltip>
 );
 
-export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUri?: string }> = ({
-  scheme,
-  httpServiceUri,
-}) => {
+export const SecurityBadge: React.FC<{
+  scheme: HttpSecurityScheme;
+  httpServiceUri?: string;
+  includeKey?: boolean;
+}> = ({ scheme, httpServiceUri, includeKey }) => {
   const badge = (
     <Badge
       icon={faLock}
@@ -42,7 +43,7 @@ export const SecurityBadge: React.FC<{ scheme: HttpSecurityScheme; httpServiceUr
       className="sl-truncate"
       style={{ backgroundColor: badgeDefaultBackgroundColor, color: badgeDefaultColor }}
     >
-      {getReadableSecurityName(scheme, true)}
+      {getReadableSecurityName(scheme, includeKey)}
     </Badge>
   );
 
