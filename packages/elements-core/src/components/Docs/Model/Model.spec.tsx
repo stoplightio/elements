@@ -15,6 +15,11 @@ const exampleSchema: JSONSchema7 = {
   },
 };
 
+const exampleStringSchema: JSONSchema7 = {
+  type: 'string',
+  description: 'example schema description that should only show once :)',
+};
+
 describe('Model', () => {
   it('displays examples', async () => {
     const { container } = render(<Model data={exampleSchema} />);
@@ -24,12 +29,16 @@ describe('Model', () => {
   });
 
   it('displays description at top of doc for objects', async () => {
-    const { container } = render(<Model data={exampleSchema} />);
+    render(<Model data={exampleSchema} />);
+    const description = screen.queryAllByText('example schema description');
+    const textboxDescription = screen.getByRole('textbox');
 
-    expect(container).toHaveTextContent(/example schema description/i);
+    expect(description).toHaveLength(1);
+    expect(textboxDescription).toHaveTextContent('example schema description');
   });
 
   it('does not display description at top of doc for non-objects', async () => {
+    render(<Model data={exampleStringSchema} />);
     const description = screen.queryByRole('textbox');
 
     expect(description).not.toBeInTheDocument();
