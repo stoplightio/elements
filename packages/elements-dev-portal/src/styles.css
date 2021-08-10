@@ -1,12 +1,13 @@
 @import "../../elements-core/src/styles.css";
 
 .sl-elements-article {
-    justify-content: space-evenly;
-    padding-left: 60px;
-    padding-right: 60px;
-  }
+  justify-content: space-evenly;
+}
   
-  .sl-elements-article-content {
-    max-width: 800px;
-  }
-  
+.sl-elements-article-content {
+  max-width: 700px;
+}
+
+.ArticleHeadings {
+  max-width: 300px;
+}
