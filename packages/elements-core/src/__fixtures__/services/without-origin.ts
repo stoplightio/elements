@@ -8,11 +8,11 @@ export const httpServiceWithoutOrigin: IHttpService = {
   servers: [
     {
       url: 'api',
-      name: 'Production API',
+      description: 'Production API',
     },
     {
       url: 'https://api.staging.stoplight.io',
-      name: 'Staging API',
+      description: 'Staging API',
     },
   ],
 };

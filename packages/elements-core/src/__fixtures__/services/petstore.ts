@@ -19,19 +19,19 @@ export const httpService: IHttpService = {
   servers: [
     {
       url: 'https://api.stoplight.io',
-      name: 'Production API',
+      description: 'Production API',
     },
     {
       url: 'https://api.staging.stoplight.io',
-      name: 'Staging API',
+      description: 'Staging API',
     },
     {
       url: 'https://api.int.stoplight.io',
-      name: 'Integration API',
+      description: 'Integration API',
     },
     {
       url: 'https://localhost:4060',
-      name: 'Development API',
+      description: 'Development API',
     },
   ],
   security: [],
