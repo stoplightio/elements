@@ -56,7 +56,9 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const description = (
     <>
-      {data.description && <MarkdownViewer className="sl-mb-6" markdown={data.description} />}
+      {data.description && data.type === 'object' && (
+        <MarkdownViewer className="sl-mb-6" role="textbox" markdown={data.description} />
+      )}
       <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} />
     </>
   );
