@@ -69,18 +69,18 @@
 
 /* HttpOperation */
 
-.sl-elements .HttpOperation .JsonSchemaViewer .MarkdownViewer p {
+.sl-elements .HttpOperation .JsonSchemaViewer .sl-markdown-viewer p {
   font-size: 12px;
   line-height: 1.5em;
 }
 
-.sl-elements .HttpOperation__Parameters .MarkdownViewer p {
+.sl-elements .HttpOperation__Parameters .sl-markdown-viewer p {
 
   font-size: 12px;
   line-height: 1.5em;
 }
 
-.sl-elements .Model .JsonSchemaViewer .MarkdownViewer p {
+.sl-elements .Model .JsonSchemaViewer .sl-markdown-viewer p {
   font-size: 12px;
   line-height: 1.5em;
 }
