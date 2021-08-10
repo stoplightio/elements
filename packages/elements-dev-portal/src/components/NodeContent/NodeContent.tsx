@@ -55,7 +55,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
               }}
               useNodeForRefResolving
               exportProps={
-                node.type === NodeType.HttpService
+                [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)
                   ? {
                       original: {
                         href: node.links.export_url,
