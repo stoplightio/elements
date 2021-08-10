@@ -3,7 +3,7 @@ import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
-import { getReadableSecurityName } from '../../../utils/oas/security';
+import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { APIKeyAuth } from './APIKeyAuth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';
 import { BasicAuth } from './BasicAuth';
@@ -41,7 +41,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
         title: 'Security Schemes',
         children: filteredSecurityItems.map(auth => ({
           id: `security-scheme-${auth.key}`,
-          title: getReadableSecurityName(auth),
+          title: getReadableSecurityName(auth, shouldIncludeKey(filteredSecurityItems, auth.type)),
           isChecked: auth.key === securityScheme?.key,
           onPress: () => {
             onChange({ scheme: auth, authValue: undefined });
