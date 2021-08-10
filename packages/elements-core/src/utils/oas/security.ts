@@ -5,33 +5,31 @@ import {
   IOauth2Flow,
   IOauth2ImplicitFlow,
   IOauth2PasswordFlow,
-  IOauth2SecurityScheme,
 } from '@stoplight/types';
-import { capitalize, flatMap, isObject, keys, uniq } from 'lodash';
+import { capitalize, filter, isObject } from 'lodash';
 
-export function getReadableSecurityName(securityScheme: HttpSecurityScheme, includeScope: boolean = false) {
+export function getReadableSecurityName(securityScheme: HttpSecurityScheme, includeKey: boolean = false) {
+  let name = '';
   switch (securityScheme.type) {
     case 'apiKey':
-      return 'API Key';
+      name = 'API Key';
+      break;
     case 'http':
-      return `${capitalize(securityScheme.scheme)} Auth`;
+      name = `${capitalize(securityScheme.scheme)} Auth`;
+      break;
     case 'oauth2':
-      const scopes = uniq(flatMap(keys(securityScheme.flows), getOauthScopeMapper(securityScheme)));
-      if (includeScope && scopes.length > 1) {
-        return `OAuth 2.0 (${scopes.join(', ')})`;
-      }
-      return 'OAuth 2.0';
+      name = 'OAuth 2.0';
+      break;
     case 'openIdConnect':
-      return 'OpenID Connect';
+      name = 'OpenID Connect';
+      break;
     case 'mutualTLS':
-      return 'Mutual TLS';
+      name = 'Mutual TLS';
+      break;
   }
-}
 
-const getOauthScopeMapper = (securityScheme: IOauth2SecurityScheme) => (flow: string) => {
-  if (!['implicit', 'password', 'clientCredentials', 'authorizationCode'].includes(flow)) return [];
-  return keys(securityScheme.flows[flow]?.scopes);
-};
+  return includeKey ? `${name} (${securityScheme.key})` : name;
+}
 
 export function getServiceUriFromOperation(uri: string) {
   const match = uri?.match(/(.*)\/(paths|operations)/);
@@ -48,3 +46,7 @@ export const isOauth2ClientCredentialsOrPasswordFlow = (
   maybeFlow: IOauth2Flow,
 ): maybeFlow is IOauth2ClientCredentialsFlow | IOauth2PasswordFlow =>
   isObject(maybeFlow) && !('authorizationUrl' in maybeFlow) && 'tokenUrl' in maybeFlow;
+
+export function shouldIncludeKey(schemes: HttpSecurityScheme[], type: HttpSecurityScheme['type']) {
+  return filter(schemes, { type }).length > 1;
+}
