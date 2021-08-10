@@ -59,7 +59,7 @@ describe('HttpOperation', () => {
       const basicBadge = getSecurityBadge(/Basic Auth/i);
       const bearerBadge = getSecurityBadge(/Bearer Auth/i);
       const oidcBadge = getSecurityBadge(/OpenID Connect/i);
-      const oauthBadge = getSecurityBadge(/OAuth 2.0 \(write:pets, read:pets\)/i);
+      const oauthBadge = getSecurityBadge(/OAuth 2.0/i);
 
       expect(apikeyBadge).toBeInTheDocument();
       expect(basicBadge).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe('HttpOperation', () => {
       unmount();
     });
 
-    it('displays scopes in badge when present', () => {
+    it('displays keys for duplicated security types', () => {
       const security = [
         [
           {
@@ -106,8 +106,8 @@ describe('HttpOperation', () => {
 
       const { unmount } = render(<HttpOperation data={{ ...httpOperation, security }} />);
 
-      const oauth2Badge = getSecurityBadge(/^OAuth 2.0 \(write:pets, read:pets\)$/i);
-      const oauth2WithEmptyScopesBadge = getSecurityBadge(/^OAuth 2.0$/i);
+      const oauth2Badge = getSecurityBadge(/^OAuth 2.0 \(oauth2WithScopes\)$/i);
+      const oauth2WithEmptyScopesBadge = getSecurityBadge(/^OAuth 2.0 \(oauth2WithEmptyScopes\)$/i);
 
       expect(oauth2Badge).toBeInTheDocument();
       expect(oauth2WithEmptyScopesBadge).toBeInTheDocument();
