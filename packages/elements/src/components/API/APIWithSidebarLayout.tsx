@@ -7,6 +7,7 @@ import {
   TableOfContents,
 } from '@stoplight/elements-core';
 import { Flex, Heading } from '@stoplight/mosaic';
+import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 
@@ -86,7 +87,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           uri={pathname}
           node={node}
           nodeTitle={node.name}
-          layoutOptions={{ hideTryIt: hideTryIt, hideExport }}
+          layoutOptions={{ hideTryIt: hideTryIt, hideExport: hideExport || node.type !== NodeType.HttpService }}
           location={location}
           allowRouting
           exportProps={exportProps}

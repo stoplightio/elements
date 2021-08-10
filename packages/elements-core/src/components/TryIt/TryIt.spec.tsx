@@ -861,7 +861,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Basic Auth' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Basic Auth (basicKey)' });
         userEvent.click(securitySchemes);
 
         const usernameInput = screen.getByLabelText('Username');
@@ -886,7 +886,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Bearer Auth' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Bearer Auth (bearerKey)' });
         userEvent.click(securitySchemes);
 
         const tokenInput = screen.getByLabelText('Token');
@@ -909,7 +909,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Digest Auth' });
+        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Digest Auth (digest)' });
         userEvent.click(securitySchemes);
 
         const authInput = screen.getByLabelText('Authorization');

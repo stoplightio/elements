@@ -8,6 +8,7 @@ import {
   isOauth2AuthorizationCodeFlow,
   isOauth2ClientCredentialsOrPasswordFlow,
   isOAuth2ImplicitFlow,
+  shouldIncludeKey,
 } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 
@@ -37,7 +38,7 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({ schemes, defau
             isCollapsible={schemes.length > 1}
           >
             <Panel.Titlebar>
-              <span role="heading">{getReadableSecurityName(scheme)}</span>
+              <span role="heading">{getReadableSecurityName(scheme, shouldIncludeKey(schemes, scheme.type))}</span>
             </Panel.Titlebar>
             <Panel.Content>
               <MarkdownViewer style={{ fontSize: 12 }} markdown={scheme.description || getDefaultDescription(scheme)} />
