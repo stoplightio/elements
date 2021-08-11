@@ -1,10 +1,12 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getServersToDisplay } from '@stoplight/elements-core/utils/http-spec/IServer';
 import { safeParse, safeStringify } from '@stoplight/json';
-import { Box, Button, Flex, Link, Panel, Text, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, Flex, Link, Menu, Panel, Select, Text, useThemeIsDark } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { IHttpOperation } from '@stoplight/types';
+import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
+import { atom, useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
@@ -55,6 +57,9 @@ interface ErrorState {
  * Displays the TryIt component for a given IHttpOperation.
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
+
+const chosenServerAtom = atom<IServer | undefined>(undefined);
+
 export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestChange, requestBodyIndex }) => {
   const isDark = useThemeIsDark();
 
@@ -72,6 +77,16 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   const [operationAuthValue, setOperationAuthValue] = usePersistedSecuritySchemeWithValues();
 
+  const servers = getServersToDisplay(httpOperation.servers || []);
+  const [chosenServer, setChosenServer] = useAtom(chosenServerAtom);
+
+  React.useEffect(() => {
+    if (!chosenServer) {
+      setChosenServer(servers[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   React.useEffect(() => {
     let isActive = true;
     if (onRequestChange) {
@@ -82,6 +97,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         auth: operationAuthValue,
         ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
+        chosenServer,
       }).then(request => {
         if (isActive) onRequestChange(request);
       });
@@ -99,6 +115,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
     textRequestBody,
     operationAuthValue,
     mockingOptions,
+    chosenServer,
   ]);
 
   const handleClick = async () => {
@@ -112,6 +129,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         mockData,
         auth: operationAuthValue,
+        chosenServer,
       });
       let response: Response | undefined;
       try {
@@ -131,10 +149,22 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
     }
   };
 
+  const serversSelect = (
+    <Select
+      options={servers.map(server => ({ value: server.description || '' }))}
+      value={chosenServer?.description}
+      onChange={value => {
+        const server = servers.find(server => server.description === value);
+
+        setChosenServer(server);
+      }}
+    />
+  );
+
   return (
     <Box rounded="lg" overflowY="hidden">
       <Panel isCollapsible={false} p={0} className="TryItPanel">
-        <Panel.Titlebar bg="canvas-300">
+        <Panel.Titlebar rightComponent={serversSelect} bg="canvas-300">
           <div role="heading" className="sl-font-bold">
             <Text color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
               {httpOperation.method.toUpperCase()}
