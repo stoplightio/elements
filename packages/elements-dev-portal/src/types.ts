@@ -33,6 +33,8 @@ export type NodeSummary = {
   summary: string;
   project_id: string;
   branch_id: string;
+  branch_node_id: number;
+  branch: string;
 };
 
 export type NodeEdge = {
