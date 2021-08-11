@@ -1,8 +1,7 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getServersToDisplay } from '@stoplight/elements-core/utils/http-spec/IServer';
 import { safeParse, safeStringify } from '@stoplight/json';
-import { Box, Button, Flex, Link, Menu, Panel, Select, Text, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, Flex, Link, Panel, Select, Text, useThemeIsDark } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -11,6 +10,7 @@ import * as React from 'react';
 
 import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
+import { getServersToDisplay } from '../../utils/http-spec/IServer';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
@@ -151,8 +151,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   const serversSelect = (
     <Select
+      aria-label="Servers"
       options={servers.map(server => ({ value: server.description || '' }))}
-      value={chosenServer?.description}
+      value={chosenServer?.description || ''}
       onChange={value => {
         const server = servers.find(server => server.description === value);
 
