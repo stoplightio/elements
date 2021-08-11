@@ -7,7 +7,7 @@ import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
-import { getServiceUriFromOperation } from '../../../utils/oas/security';
+import { getServiceUriFromOperation, shouldIncludeKey } from '../../../utils/oas/security';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
@@ -48,7 +48,12 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           <HStack spacing={2}>
             {isDeprecated && <DeprecatedBadge />}
             {sortBy(securitySchemes, 'type').map((scheme, i) => (
-              <SecurityBadge key={i} scheme={scheme} httpServiceUri={allowRouting ? httpServiceUri : undefined} />
+              <SecurityBadge
+                key={i}
+                scheme={scheme}
+                httpServiceUri={allowRouting ? httpServiceUri : undefined}
+                includeKey={shouldIncludeKey(securitySchemes, scheme.type)}
+              />
             ))}
             {isInternal && <InternalBadge isHttpService />}
           </HStack>
