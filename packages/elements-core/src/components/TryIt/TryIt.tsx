@@ -1,7 +1,7 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeParse, safeStringify } from '@stoplight/json';
-import { Box, Button, Flex, Link, Panel, Select, Text, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, Flex, Link, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -162,10 +162,22 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
     />
   );
 
+  const serverDescription = (
+    <Tooltip
+      renderTrigger={
+        <Box ml={2} mr={1} flexShrink={0}>
+          {servers[0]?.description}
+        </Box>
+      }
+    >
+      Server Host: {servers[0]?.url}
+    </Tooltip>
+  );
+
   return (
     <Box rounded="lg" overflowY="hidden">
       <Panel isCollapsible={false} p={0} className="TryItPanel">
-        <Panel.Titlebar rightComponent={serversSelect} bg="canvas-300">
+        <Panel.Titlebar rightComponent={servers.length > 1 ? serversSelect : serverDescription} bg="canvas-300">
           <div role="heading" className="sl-font-bold">
             <Text color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
               {httpOperation.method.toUpperCase()}
