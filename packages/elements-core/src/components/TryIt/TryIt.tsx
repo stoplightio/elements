@@ -154,7 +154,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
       aria-label="Servers"
       options={servers.map(server => ({ value: server.description || '' }))}
       value={chosenServer?.description || ''}
-      onChange={value => {
+      onChange={(value: string) => {
         const server = servers.find(server => server.description === value);
 
         setChosenServer(server);
