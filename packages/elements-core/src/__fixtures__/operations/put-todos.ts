@@ -259,6 +259,10 @@ export const httpOperation: IHttpOperation = {
     {
       url: 'https://todos.stoplight.io',
     },
+    {
+      description: 'Development',
+      url: 'https://todos-dev.stoplight.io',
+    },
   ],
   request: {
     body: {
