@@ -1,6 +1,18 @@
 import { IServer } from '@stoplight/types';
 import URI from 'urijs';
 
+import { isProperUrl } from '../guards';
+
+export const getServersToDisplay = (originalServers: IServer[]): IServer[] => {
+  return originalServers
+    .map((server, i) => ({
+      ...server,
+      url: getServerUrlWithDefaultValues(server),
+      description: server.description || `Server ${i + 1}`,
+    }))
+    .filter(server => isProperUrl(server.url));
+};
+
 export const getServerUrlWithDefaultValues = (server: IServer): string => {
   let urlString = server.url;
 

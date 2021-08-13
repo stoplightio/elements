@@ -108,6 +108,7 @@ const ExamplePicker = () => {
   return (
     <Menu
       closeOnPress
+      aria-label="Example Picker Menu"
       items={menuItems}
       renderTrigger={({ isOpen }) => (
         <Button iconRight={['fas', 'caret-down']} active={isOpen}>
