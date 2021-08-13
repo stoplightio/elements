@@ -1,4 +1,4 @@
-import { Panel, Select, Text } from '@stoplight/mosaic';
+import { Box, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import React from 'react';
@@ -40,18 +40,34 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
     />
   );
 
+  const ResponseExamplesViewer: React.FC<{ example: string }> = ({ example }) => {
+    const [show, setShow] = React.useState<boolean>(false);
+    const exceededSize = example.split(/\r\n|\r|\n/).length > 500;
+
+    if ((exceededSize && show) || !exceededSize)
+      return (
+        <CodeViewer
+          aria-label={example}
+          noCopyButton
+          maxHeight="400px"
+          language="json"
+          value={example}
+          showLineNumbers
+        />
+      );
+
+    return (
+      <Box p="auto" onClick={() => setShow(true)}>
+        This example is too big. Do you want to open it anyway?
+      </Box>
+    );
+  };
+
   return (
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar>{examplesSelect || <Text color="body">Response Example</Text>}</Panel.Titlebar>
       <Panel.Content p={0}>
-        <CodeViewer
-          aria-label={responseExample}
-          noCopyButton
-          maxHeight="400px"
-          language="json"
-          value={responseExample}
-          showLineNumbers
-        />
+        <ResponseExamplesViewer example={responseExample} />
       </Panel.Content>
     </Panel>
   );
