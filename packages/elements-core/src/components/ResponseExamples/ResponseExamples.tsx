@@ -68,7 +68,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
               loading={loading}
               disabled={loading}
             >
-              {loading ? '...Loading' : 'Load examples'}
+              {loading ? 'Loading...' : 'Load examples'}
             </Button>
             <Text fontSize="base" textAlign="center">
               Large examples are not rendered by default.
