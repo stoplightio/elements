@@ -1,4 +1,4 @@
-import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { Dictionary, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import URI from 'urijs';
 
@@ -29,6 +29,7 @@ interface BuildRequestInput {
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
   auth?: HttpSecuritySchemeWithValues;
+  chosenServer?: IServer;
 }
 
 export async function buildFetchRequest({
@@ -38,10 +39,12 @@ export async function buildFetchRequest({
   parameterValues,
   mockData,
   auth,
+  chosenServer,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
-  const firstServer = httpOperation.servers?.[0];
-  const firstServerUrl = firstServer && getServerUrlWithDefaultValues(firstServer);
-  const serverUrl = mockData?.url || firstServerUrl || window.location.origin;
+  const server = chosenServer || httpOperation.servers?.[0];
+  const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
+  const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
+
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
   const queryParams =
@@ -142,10 +145,11 @@ export async function buildHarRequest({
   mediaTypeContent,
   auth,
   mockData,
+  chosenServer,
 }: BuildRequestInput): Promise<HarRequest> {
-  const firstServer = httpOperation.servers?.[0];
-  const firstServerUrl = firstServer && getServerUrlWithDefaultValues(firstServer);
-  const serverUrl = mockData?.url || firstServerUrl || window.location.origin;
+  const server = chosenServer || httpOperation.servers?.[0];
+  const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
+  const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 

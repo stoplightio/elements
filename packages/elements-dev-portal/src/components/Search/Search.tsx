@@ -68,7 +68,7 @@ export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSear
           selectionMode="single"
           onSelectionChange={onSelectionChange}
         >
-          {searchResult => {
+          {(searchResult: NodeSearchResult) => {
             return (
               <ListBoxItem key={`${searchResult.id}-${searchResult.project_id}`} textValue={searchResult.title}>
                 <Box p={3} borderB>
