@@ -13,7 +13,9 @@
     "demo",
     "packages/*"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "spdx-license-list": "^6.4.0"
+  },
   "devDependencies": {
     "@babel/core": "7.12.17",
     "@babel/plugin-syntax-object-rest-spread": "7.8.3",
@@ -23,16 +25,16 @@
     "@storybook/addon-postcss": "2.0.0",
     "@storybook/addon-toolbars": "6.3.5",
     "@storybook/addon-viewport": "6.3.5",
-    "@storybook/react": "6.3.5",
-    "@storybook/theming": "6.3.5",
     "@storybook/builder-webpack5": "6.3.5",
     "@storybook/manager-webpack5": "6.3.5",
+    "@storybook/react": "6.3.5",
+    "@storybook/theming": "6.3.5",
     "@testing-library/cypress": "^7.0.3",
     "@typescript-eslint/eslint-plugin": "4.28.4",
     "@typescript-eslint/parser": "4.28.4",
     "concurrently": "6.1.0",
-    "cssnano": "5.0.6",
     "css-loader": "6.2.0",
+    "cssnano": "5.0.6",
     "cypress": "^6.3.0",
     "eslint": "7.31.0",
     "eslint-plugin-import": "2.23.4",
