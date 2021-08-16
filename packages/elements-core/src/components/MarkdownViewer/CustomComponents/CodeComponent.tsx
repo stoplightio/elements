@@ -15,7 +15,7 @@ import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { TryIt } from '../../TryIt';
 import { CustomComponentMapping, DefaultSMDComponents } from './Provider';
 
-type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRequest>;
+export type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRequest>;
 
 function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is PartialHttpRequest {
   return (

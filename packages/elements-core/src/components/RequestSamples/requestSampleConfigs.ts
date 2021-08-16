@@ -47,6 +47,10 @@ export const requestSampleConfigs: RequestSampleConfigs = {
       },
     },
   },
+  StoplightMarkdown: {
+    mosaicCodeViewerLanguage: 'json',
+    httpSnippetLanguage: 'StoplightMarkdown',
+  },
   Node: {
     mosaicCodeViewerLanguage: 'javascript',
     httpSnippetLanguage: 'node',
