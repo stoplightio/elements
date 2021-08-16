@@ -1,10 +1,8 @@
 import '@testing-library/jest-dom';
 
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { httpOperation as bigExampleOperation } from '../../__fixtures__/operations/big-response';
 import { httpOperation } from '../../__fixtures__/operations/operation-with-examples';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
 import { chooseOption } from '../../utils/tests/chooseOption';
@@ -75,32 +73,5 @@ describe('Response Examples', () => {
 
     expect(container).not.toHaveTextContent('writeOnlyParamter');
     expect(container).toHaveTextContent('someOtherParameter');
-  });
-
-  it('does not show examples >500 lines by default', async () => {
-    render(
-      <ResponseExamples
-        httpOperation={bigExampleOperation}
-        responseMediaType="application/json"
-        responseStatusCode="200"
-      />,
-    );
-
-    screen.getByText('Large examples are not rendered by default.');
-  });
-
-  it('shows examples >500 lines after clicking "Load Examples" button', async () => {
-    render(
-      <ResponseExamples
-        httpOperation={bigExampleOperation}
-        responseMediaType="application/json"
-        responseStatusCode="200"
-      />,
-    );
-
-    const button = screen.getByRole('button', { name: 'load-example' });
-    userEvent.click(button);
-
-    expect(await screen.findByText('"iamthefirstprop"')).toBeInTheDocument();
   });
 });
