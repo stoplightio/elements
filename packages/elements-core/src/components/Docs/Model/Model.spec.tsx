@@ -30,6 +30,24 @@ describe('Model', () => {
     expect(container).toHaveTextContent('"propA": "valueA"');
   });
 
+  it('uses examples defined in the schema', async () => {
+    const examples = {
+      ...exampleSchema,
+      examples: [
+        {
+          propA: 'first',
+        },
+        {
+          propA: 'second',
+        },
+      ],
+    };
+    const { container } = render(<Model data={examples} />);
+
+    expect(screen.getByRole('button')).toHaveTextContent('Example: default');
+    expect(container).toHaveTextContent('"propA": "first"');
+  });
+
   it('displays description at top of doc for objects', async () => {
     render(<Model data={exampleSchema} />);
     const description = screen.queryAllByText('example schema description');
