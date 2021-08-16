@@ -59,6 +59,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
         ) : (
           <Flex flexDirection="col" justifyContent="center" alignItems="center" style={{ height: '400px' }}>
             <Button
+              aria-label="load-example"
               onPress={() => {
                 setLoading(true);
                 setTimeout(() => setShow(true), 50);
