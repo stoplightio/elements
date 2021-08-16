@@ -953,4 +953,40 @@ describe('TryIt', () => {
       expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual({ name: 'string', completed: true });
     });
   });
+
+  describe('Multiple Servers', () => {
+    it('shows select if there is more than one server available', () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversSelect = screen.queryByLabelText('Servers');
+
+      expect(serversSelect).toHaveTextContent('Server 1');
+    });
+
+    it('allows to choose other server', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      let serversSelect = await screen.findByLabelText('Servers');
+
+      chooseOption(serversSelect, 'Development');
+
+      serversSelect = await screen.findByLabelText('Servers');
+
+      expect(serversSelect).toHaveTextContent('Development');
+    });
+
+    it('sends request to a chosen server url', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversSelect = await screen.findByLabelText('Servers');
+
+      chooseOption(serversSelect, 'Development');
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('https://todos-dev.stoplight.io');
+    });
+  });
 });

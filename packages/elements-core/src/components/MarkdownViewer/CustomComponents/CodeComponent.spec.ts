@@ -54,7 +54,7 @@ describe('parseHttpRequest', () => {
   it('parses HttpRequest parameters', () => {
     const request: IHttpRequest = {
       method: 'post',
-      url: '/todos',
+      url: '/todos/{id}',
       baseUrl: 'http://test',
       query: {
         limit: ['10'],
@@ -70,11 +70,12 @@ describe('parseHttpRequest', () => {
     expect(httpOperation).toMatchObject({
       id: '?http-operation-id?',
       method: 'post',
-      path: '/todos',
+      path: '/todos/{id}',
       servers: [{ url: 'http://test' }],
       request: {
         query: [{ name: 'limit', style: HttpParamStyles.Form, schema: { default: '10' } }],
         headers: [{ name: 'apikey', style: HttpParamStyles.Simple, schema: { default: '123' } }],
+        path: [{ name: 'id', style: HttpParamStyles.Simple, required: true }],
         body: { contents: [{ mediaType: 'application/json', schema: { default: '{}' } }] },
       },
     });

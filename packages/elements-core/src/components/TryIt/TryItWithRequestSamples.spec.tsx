@@ -6,6 +6,7 @@ import { httpOperation as putTodosOperation } from '../../__fixtures__/operation
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { withPersistenceBoundary } from '../../context/Persistence';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
+import { chooseOption } from '../../utils/tests/chooseOption';
 import { TryItWithRequestSamples as RawComponent } from './TryItWithRequestSamples';
 
 const TryItWithRequestSamples = withMosaicProvider(withPersistenceBoundary(RawComponent));
@@ -69,5 +70,25 @@ describe('TryItWithRequestSamples', () => {
     const codeViewer = await screen.findByLabelText(/curl/);
 
     expect(codeViewer).toHaveTextContent('ftp://default-namespace.stoplight.io/api/eu/todos');
+  });
+
+  it('by default displays 1st server url in request samples', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
+    const codeViewer = await screen.findByLabelText(/curl/);
+
+    expect(codeViewer).toHaveTextContent('https://todos.stoplight.io');
+  });
+
+  it('changes request sample when changing server', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
+    const serversSelect = await screen.findByLabelText('Servers');
+
+    chooseOption(serversSelect, 'Development');
+
+    const codeViewer = await screen.findByLabelText(/curl/);
+
+    expect(codeViewer).toHaveTextContent('https://todos-dev.stoplight.io');
   });
 });
