@@ -79,6 +79,7 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
 
 export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
   const uri = URI(data.url);
+  const pathParam = data.url.match(/[^{\}]+(?=})/g);
   return {
     id: '?http-operation-id?',
     method: data.method,
@@ -94,6 +95,11 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
         name: key,
         style: HttpParamStyles.Simple,
         schema: { default: value },
+      })),
+      path: pathParam?.map(name => ({
+        name,
+        style: HttpParamStyles.Simple,
+        required: true,
       })),
       ...(data.body
         ? { body: { contents: [{ mediaType: 'application/json', schema: { default: data.body } }] } }

@@ -4,22 +4,12 @@ import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
 import { isProperUrl } from '../../../utils/guards';
-import { getServerUrlWithDefaultValues } from '../../../utils/http-spec/IServer';
+import { getServersToDisplay } from '../../../utils/http-spec/IServer';
 
 interface ServerInfoProps {
   servers: IServer[];
   mockUrl?: string;
 }
-
-const getServersToDisplay = (originalServers: IServer[]): IServer[] => {
-  return originalServers
-    .map((server, i) => ({
-      ...server,
-      url: getServerUrlWithDefaultValues(server),
-      description: server.description || `Server ${i + 1}`,
-    }))
-    .filter(server => isProperUrl(server.url));
-};
 
 export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   const mocking = React.useContext(MockingContext);

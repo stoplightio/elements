@@ -11,7 +11,7 @@ export { TableOfContents } from './components/TableOfContents';
 export type { StoplightProjectProps } from './containers/StoplightProject';
 export { StoplightProject } from './containers/StoplightProject';
 export { getBranches } from './handlers/getBranches';
-export { getNodeContent } from './handlers/getNodeContent';
+export { getNodeContent, ResponseError } from './handlers/getNodeContent';
 export { getNodes } from './handlers/getNodes';
 export { getTableOfContents } from './handlers/getTableOfContents';
 export { useGetBranches } from './hooks/useGetBranches';
