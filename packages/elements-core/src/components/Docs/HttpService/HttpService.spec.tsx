@@ -17,10 +17,10 @@ import httpService from '../../../__fixtures__/services/petstore';
 import { httpServiceWithUnnamedServers } from '../../../__fixtures__/services/with-unnamed-servers';
 import { httpServiceWithUrlVariables } from '../../../__fixtures__/services/with-url-variables';
 import { httpServiceWithoutOrigin } from '../../../__fixtures__/services/without-origin';
+import { AdditionalInfo } from './AdditionalInfo';
 import { HttpService } from './index';
 import { getOAuthFlowDescription, SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
-import { AdditionalInfo } from './AdditionalInfo';
 
 describe('HttpService', () => {
   it('Should render correctly', () => {
