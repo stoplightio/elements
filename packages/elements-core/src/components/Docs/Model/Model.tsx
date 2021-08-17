@@ -7,7 +7,7 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
-import { generateExampleFromJsonSchema } from '../../../utils/exampleGeneration';
+import { generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
@@ -31,7 +31,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const title = data.title ?? nodeTitle;
   const isInternal = !!data['x-internal'];
 
-  const examples = React.useMemo(() => generateExampleFromJsonSchema(data), [data]);
+  const examples = React.useMemo(() => generateExamplesFromJsonSchema(data), [data]);
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
