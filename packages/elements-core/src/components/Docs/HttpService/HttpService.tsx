@@ -19,7 +19,6 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}
   const { search, pathname } = location;
   const mocking = React.useContext(MockingContext);
   const query = new URLSearchParams(search);
-  console.log(data);
   return (
     <Box mb={10}>
       {data.name && !layoutOptions?.noHeading && (
