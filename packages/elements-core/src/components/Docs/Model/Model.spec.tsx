@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
+import { chooseOption } from '../../../utils/tests/chooseOption';
 import { Model } from './Model';
 
 const exampleSchema: JSONSchema7 = {
@@ -42,10 +43,18 @@ describe('Model', () => {
         },
       ],
     };
-    const { container } = render(<Model data={examples} />);
+    const { container } = render(
+      <MosaicProvider>
+        <Model data={examples} />
+      </MosaicProvider>,
+    );
 
-    expect(screen.getByRole('button')).toHaveTextContent('Example: default');
+    const menuTrigger = screen.getByLabelText('Example');
+    expect(menuTrigger).toHaveTextContent('Example: default');
     expect(container).toHaveTextContent('"propA": "first"');
+
+    chooseOption(menuTrigger, 'example-1');
+    expect(container).toHaveTextContent('"propA": "second"');
   });
 
   it('displays description at top of doc for objects', async () => {
