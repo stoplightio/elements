@@ -24,7 +24,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ termsOfService, 
   const licenseUrl =
     license?.url || (spdxLicenseList[`${license?.identifier}`] && spdxLicenseList[`${license?.identifier}`].url);
 
-  const licenseLink = license?.name && licenseUrl ? `[${license.name}](${licenseUrl})` : '';
+  const licenseLink = license?.name && licenseUrl ? `[License: ${license.name}](${licenseUrl})` : '';
   const tosLink = termsOfService ? `[Terms of Service](${termsOfService})` : '';
   return (
     <>
