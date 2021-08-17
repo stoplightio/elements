@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
+import { chooseOption } from '../../../utils/tests/chooseOption';
 import { Model } from './Model';
 
 const exampleSchema: JSONSchema7 = {
@@ -28,6 +29,32 @@ describe('Model', () => {
 
     expect(screen.getByRole('heading', { name: /example/i })).toBeInTheDocument();
     expect(container).toHaveTextContent('"propA": "valueA"');
+  });
+
+  it('uses examples defined in the schema', async () => {
+    const examples = {
+      ...exampleSchema,
+      examples: [
+        {
+          propA: 'first',
+        },
+        {
+          propA: 'second',
+        },
+      ],
+    };
+    const { container } = render(
+      <MosaicProvider>
+        <Model data={examples} />
+      </MosaicProvider>,
+    );
+
+    const menuTrigger = screen.getByLabelText('Example');
+    expect(menuTrigger).toHaveTextContent('Example: default');
+    expect(container).toHaveTextContent('"propA": "first"');
+
+    chooseOption(menuTrigger, 'example-1');
+    expect(container).toHaveTextContent('"propA": "second"');
   });
 
   it('displays description at top of doc for objects', async () => {
