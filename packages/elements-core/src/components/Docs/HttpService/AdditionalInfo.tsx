@@ -1,7 +1,6 @@
 import { Panel } from '@stoplight/mosaic';
 import { IHttpService } from '@stoplight/types';
 import React from 'react';
-import spdxLicenseList from 'spdx-license-list';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
 
@@ -20,9 +19,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ termsOfService, 
       : '';
 
   //use spdx to look up url for license identifier if available
-  const licenseUrl =
-    license?.url || (spdxLicenseList[`${license?.identifier}`] && spdxLicenseList[`${license?.identifier}`].url);
-
+  const licenseUrl = license?.url || `https://spdx.org/licenses/${license?.identifier}.html`;
   const licenseLink = license?.name && licenseUrl ? `[${license.name} License](${licenseUrl})` : '';
   const tosLink = termsOfService ? `[Terms of Service](${termsOfService})` : '';
   return (
