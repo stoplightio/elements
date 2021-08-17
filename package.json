@@ -13,9 +13,7 @@
     "demo",
     "packages/*"
   ],
-  "dependencies": {
-    "spdx-license-list": "^6.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.12.17",
     "@babel/plugin-syntax-object-rest-spread": "7.8.3",

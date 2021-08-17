@@ -1,10 +1,9 @@
 import { Panel } from '@stoplight/mosaic';
 import { IHttpService } from '@stoplight/types';
 import React from 'react';
+import spdxLicenseList from 'spdx-license-list';
 
 import { MarkdownViewer } from '../../MarkdownViewer';
-
-const spdxLicenseList = require('spdx-license-list');
 
 interface AdditionalInfoProps {
   termsOfService?: string;
@@ -24,7 +23,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ termsOfService, 
   const licenseUrl =
     license?.url || (spdxLicenseList[`${license?.identifier}`] && spdxLicenseList[`${license?.identifier}`].url);
 
-  const licenseLink = license?.name && licenseUrl ? `[License: ${license.name}](${licenseUrl})` : '';
+  const licenseLink = license?.name && licenseUrl ? `[${license.name} License](${licenseUrl})` : '';
   const tosLink = termsOfService ? `[Terms of Service](${termsOfService})` : '';
   return (
     <>
