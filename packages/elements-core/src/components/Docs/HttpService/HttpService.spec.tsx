@@ -17,6 +17,7 @@ import httpService from '../../../__fixtures__/services/petstore';
 import { httpServiceWithUnnamedServers } from '../../../__fixtures__/services/with-unnamed-servers';
 import { httpServiceWithUrlVariables } from '../../../__fixtures__/services/with-url-variables';
 import { httpServiceWithoutOrigin } from '../../../__fixtures__/services/without-origin';
+import { AdditionalInfo } from './AdditionalInfo';
 import { HttpService } from './index';
 import { getOAuthFlowDescription, SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
@@ -259,6 +260,44 @@ describe('HttpService', () => {
         Scopes:
         - \`scope:password\` - password scope description"
       `);
+    });
+  });
+
+  describe('Additional information', () => {
+    it('should render additional information', () => {
+      const contact = {
+        name: 'Developer',
+        email: 'developer@stoplight.io',
+        url: 'https://stoplight.io/contact-us/',
+      };
+
+      const license = {
+        name: 'MIT',
+        url: 'https://opensource.org/licenses/MIT',
+      };
+      render(<AdditionalInfo contact={contact} license={license} termsOfService="https://stoplight.io/terms/" />);
+
+      const title = screen.getByRole('heading', { name: 'Additional Information' });
+
+      expect(title).toBeInTheDocument();
+    });
+
+    it('should not render if contact, license, and terms of service do not exist', () => {
+      render(<AdditionalInfo />);
+
+      const title = screen.queryByRole('heading', { name: 'Additional Information' });
+      expect(title).not.toBeInTheDocument();
+    });
+
+    it('should not render if props do not have sufficient subprops', () => {
+      const contact = {
+        name: 'Developer',
+      };
+
+      render(<AdditionalInfo contact={contact} />);
+
+      const title = screen.queryByRole('heading', { name: 'Additional Information' });
+      expect(title).not.toBeInTheDocument();
     });
   });
 
