@@ -294,12 +294,7 @@ describe('HttpService', () => {
         name: 'Developer',
       };
 
-      const license = {
-        name: 'MIT',
-        identifier: 'unrecognizable',
-      };
-
-      render(<AdditionalInfo contact={contact} license={license} />);
+      render(<AdditionalInfo contact={contact} />);
 
       const title = screen.queryByRole('heading', { name: 'Additional Information' });
       expect(title).not.toBeInTheDocument();
