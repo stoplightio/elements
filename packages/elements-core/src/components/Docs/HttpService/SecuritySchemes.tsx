@@ -41,7 +41,10 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({ schemes, defau
               <span role="heading">{getReadableSecurityName(scheme, shouldIncludeKey(schemes, scheme.type))}</span>
             </Panel.Titlebar>
             <Panel.Content>
-              <MarkdownViewer style={{ fontSize: 12 }} markdown={scheme.description || getDefaultDescription(scheme)} />
+              <MarkdownViewer
+                style={{ fontSize: 12 }}
+                markdown={`${scheme.description || ''}\n\n` + getDefaultDescription(scheme)}
+              />
             </Panel.Content>
           </Panel>
         ))}

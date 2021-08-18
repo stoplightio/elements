@@ -140,6 +140,16 @@ describe('HttpService', () => {
       expect(description).toBeInTheDocument();
     });
 
+    it('should render both custom description and other scheme details', () => {
+      render(<SecuritySchemes schemes={[{ ...oauth, description: 'A custom description' }]} />);
+
+      const description = screen.getByText('A custom description');
+      const implicit = screen.getByText('Implicit OAuth Flow');
+
+      expect(description).toBeInTheDocument();
+      expect(implicit).toBeInTheDocument();
+    });
+
     it('should render oauth flows for default description', () => {
       render(<SecuritySchemes schemes={[oauth]} />);
 
