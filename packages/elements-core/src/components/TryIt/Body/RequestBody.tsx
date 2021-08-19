@@ -21,7 +21,14 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody,
         Body
       </Panel.Titlebar>
       <Panel.Content className="TextRequestBody">
-        <CodeEditor onChange={onChange} language="json" value={requestBody} showLineNumbers padding={0} />
+        <CodeEditor
+          onChange={onChange}
+          language="json"
+          value={requestBody}
+          showLineNumbers
+          padding={0}
+          style={{ maxHeight: '400px' }}
+        />
       </Panel.Content>
     </Panel>
   );
