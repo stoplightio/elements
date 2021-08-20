@@ -92,3 +92,7 @@
 .sl-elements .HttpOperation__gutter {
   --fs-code: 12px;
 }
+
+.sl-elements .TryItPanel label {
+  font-size: 12px;
+}
