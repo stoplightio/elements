@@ -1,12 +1,17 @@
 import { safeParse, safeStringify } from '@stoplight/json';
 import { HttpMethod } from '@stoplight/types';
 import { safeStringify as safeStringifyYaml } from '@stoplight/yaml';
-import { Request as HarFormatRequest } from 'har-format';
 import HTTPSnippet from 'httpsnippet';
+import { concat } from 'lodash';
 
 import { PartialHttpRequest } from '../MarkdownViewer/CustomComponents/CodeComponent';
+import { ExtendedHarRequestFormat } from '../TryIt/build-request';
 
-export const convertRequestToSample = (language: string, library: string | undefined, request: HarFormatRequest) => {
+export const convertRequestToSample = (
+  language: string,
+  library: string | undefined,
+  request: ExtendedHarRequestFormat,
+) => {
   // Stoplight Markdown support
   if (language === 'StoplightMarkdown') {
     let markdown;
@@ -31,13 +36,18 @@ export const convertRequestToSample = (language: string, library: string | undef
   }
 };
 
-function toPartialHttpRequest(request: HarFormatRequest): PartialHttpRequest {
+function toPartialHttpRequest(request: ExtendedHarRequestFormat): PartialHttpRequest {
   const query = request.queryString.reduce((obj, item) => Object.assign(obj, { [item.name]: [item.value] }), {});
   const header = request.headers.reduce((obj, item) => Object.assign(obj, { [item.name]: [item.value] }), {});
+  console.log(request);
+
+  const url = request.pathParametersData?.template
+    ? request.baseUrl + request.pathParametersData?.template
+    : request.url;
 
   return {
     method: request.method as HttpMethod,
-    url: request.url,
+    url,
     query: query,
     headers: header,
     body: request.postData?.text && safeParse(request.postData?.text),

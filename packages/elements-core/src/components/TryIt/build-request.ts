@@ -1,4 +1,4 @@
-import { Dictionary, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
+import { Dictionary, IHttpOperation, IHttpPathParam, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import URI from 'urijs';
 
@@ -19,6 +19,14 @@ type NameAndValue = {
   name: string;
   value: string;
 };
+
+export interface ExtendedHarRequestFormat extends HarRequest {
+  baseUrl: string;
+  pathParametersData?: {
+    template?: string;
+    pathItems?: IHttpPathParam[];
+  };
+}
 
 const nameAndValueObjectToPair = ({ name, value }: NameAndValue): [string, string] => [name, value];
 
@@ -41,6 +49,7 @@ export async function buildFetchRequest({
   auth,
   chosenServer,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
+  console.log(httpOperation);
   const server = chosenServer || httpOperation.servers?.[0];
   const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
   const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
@@ -69,6 +78,7 @@ export async function buildFetchRequest({
     ...Object.fromEntries(headersWithAuth.map(nameAndValueObjectToPair)),
     ...mockData?.header,
   };
+  console.log(url.toString());
 
   return [
     url.toString(),
@@ -146,7 +156,7 @@ export async function buildHarRequest({
   auth,
   mockData,
   chosenServer,
-}: BuildRequestInput): Promise<HarRequest> {
+}: BuildRequestInput): Promise<ExtendedHarRequestFormat> {
   const server = chosenServer || httpOperation.servers?.[0];
   const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
   const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
@@ -169,7 +179,7 @@ export async function buildHarRequest({
   const [queryParamsWithAuth, headerParamsWithAuth] = runAuthRequestEhancements(auth, queryParams, headerParams);
   const extendedPath = uriExpand(httpOperation.path, parameterValues);
 
-  let postData: HarRequest['postData'] = undefined;
+  let postData: ExtendedHarRequestFormat['postData'] = undefined;
   if (shouldIncludeBody && typeof bodyInput === 'string') {
     postData = { mimeType, text: bodyInput };
   }
@@ -192,6 +202,18 @@ export async function buildHarRequest({
     };
   }
 
+  console.log('paramValues' + JSON.stringify(parameterValues));
+
+  let pathParametersTemplate;
+  if (httpOperation.path.match(/{([^#?]+?)}/g)) {
+    pathParametersTemplate = pathTemplateExpand(httpOperation.path, parameterValues);
+  }
+
+  let pathItems;
+  if (httpOperation.request?.path) {
+    pathItems = httpOperation.request.path;
+  }
+
   return {
     method: httpOperation.method.toUpperCase(),
     url: URI(serverUrl).segment(extendedPath).toString(),
@@ -202,7 +224,30 @@ export async function buildHarRequest({
     postData: postData,
     headersSize: -1,
     bodySize: -1,
+    pathParametersData: {
+      template: pathParametersTemplate,
+      pathItems,
+    },
+    baseUrl: serverUrl,
   };
+}
+
+function pathTemplateExpand(template: string, data: Dictionary<string, string>) {
+  // let params = pathItems.map(item => item.name);
+
+  if (!data) {
+    return template;
+  }
+
+  for (let i in data) {
+    return template.replace(`{${i}}`, (match, value) => {
+      return data[i];
+    });
+  }
+
+  // return template.replace(/{([^#?]+?)}/g, (match, value) => {
+  //   return data[value] || value;
+  // });
 }
 
 function uriExpand(uri: string, data: Dictionary<string, string>) {
