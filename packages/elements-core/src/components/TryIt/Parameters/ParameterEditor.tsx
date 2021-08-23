@@ -25,9 +25,9 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
 
   return (
     <>
-      <label aria-hidden="true" data-testid="param-label" htmlFor={inputId}>
+      <Text as="label" aria-hidden="true" data-testid="param-label" htmlFor={inputId} fontSize="base">
         {parameterDisplayName}
-      </label>
+      </Text>
       <Text mx={3}>:</Text>
       <div>
         {parameterValueOptions ? (

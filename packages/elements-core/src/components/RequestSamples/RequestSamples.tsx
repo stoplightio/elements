@@ -87,7 +87,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request }) => {
         <CodeViewer
           aria-label={requestSample ?? fallbackText}
           noCopyButton
-          maxHeight="510"
+          maxHeight="400px"
           language={mosaicCodeViewerLanguage}
           value={requestSample || fallbackText}
         />
