@@ -344,11 +344,39 @@ export function appendHttpServicesToToC(toc: ITableOfContents) {
 export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType = 'divider') {
   return (models: NodeData[]) => {
     if (models.length) {
-      const childItems: TableOfContentItem[] = models.map(model => ({
-        type: 'item',
-        title: model.name,
-        uri: model.uri,
-      }));
+      const { others, groups } = models.reduce<{
+        groups: { [key: string]: Group };
+        others: Item[];
+      }>(
+        (result, model) => {
+          const [tagName] = model.tags || [];
+
+          if (tagName) {
+            if (result.groups[tagName.toLowerCase()]) {
+              result.groups[tagName.toLowerCase()].items.push({
+                type: 'item',
+                title: model.name,
+                uri: model.uri,
+              });
+            } else {
+              result.groups[tagName.toLowerCase()] = {
+                type: 'group',
+                title: tagName,
+                items: [{ type: 'item', title: model.name, uri: model.uri }],
+              };
+            }
+          } else {
+            result.others.push({ type: 'item', title: model.name, uri: model.uri });
+          }
+
+          return result;
+        },
+        { groups: {}, others: [] },
+      );
+
+      const childItems: TableOfContentItem[] = [];
+      others.forEach(item => childItems.push(item));
+      Object.entries(groups).forEach(([, group]) => childItems.push(group));
 
       if (schemaType === 'divider') {
         toc.items.push({ type: 'divider', title: 'Schemas' });

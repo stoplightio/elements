@@ -169,6 +169,49 @@ describe('toc', () => {
         ]);
       });
 
+      it('groups standalone models', () => {
+        const models: NodeData[] = [
+          {
+            name: 'newone',
+            type: NodeType.Model,
+            uri: '/newone.yaml',
+            tags: ['modelTag'],
+          },
+          {
+            name: 'onemore',
+            type: NodeType.Model,
+            uri: '/onemore.yaml',
+            tags: ['modelTag'],
+          },
+        ];
+        const toc = generateProjectToC(models);
+
+        expect(toc).toEqual({
+          items: [
+            {
+              type: 'divider',
+              title: 'Schemas',
+            },
+            {
+              type: 'group',
+              title: 'modelTag',
+              items: [
+                {
+                  title: 'newone',
+                  type: 'item',
+                  uri: '/newone.yaml',
+                },
+                {
+                  title: 'onemore',
+                  type: 'item',
+                  uri: '/onemore.yaml',
+                },
+              ],
+            },
+          ],
+        });
+      });
+
       describe('tags are in mixed case', () => {
         describe('tag is present in httpService tag list', () => {
           it("follows letter case found in HTTP Service node's tags", () => {
