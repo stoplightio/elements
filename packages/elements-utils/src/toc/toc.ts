@@ -375,8 +375,8 @@ export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType 
       );
 
       const childItems: TableOfContentItem[] = [];
-      others.forEach(item => childItems.push(item));
       Object.entries(groups).forEach(([, group]) => childItems.push(group));
+      others.forEach(item => childItems.push(item));
 
       if (schemaType === 'divider') {
         toc.items.push({ type: 'divider', title: 'Schemas' });
