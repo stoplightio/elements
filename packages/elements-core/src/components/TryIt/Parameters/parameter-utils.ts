@@ -33,8 +33,8 @@ export function exampleOptions(parameter: ParameterSpec) {
 export function parameterSupportsFileUpload(parameter: Pick<ParameterSpec, 'schema'>) {
   return (
     parameter.schema?.type === 'string' &&
-    parameter.schema.format !== undefined &&
-    ['binary', 'base64'].includes(parameter.schema.format)
+    (parameter.schema?.contentEncoding === 'base64' ||
+      parameter.schema?.contentMediaType === 'application/octet-stream')
   );
 }
 
