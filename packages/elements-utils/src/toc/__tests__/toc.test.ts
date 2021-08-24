@@ -150,7 +150,11 @@ describe('toc', () => {
                 {
                   type: 'group',
                   items: [
-                    { type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' },
+                    {
+                      type: 'group',
+                      title: 'raz',
+                      items: [{ type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' }],
+                    },
                     { type: 'item', title: 'c', uri: '/reference/openapi.json/definitions/c' },
                   ],
                   title: 'Schemas',
@@ -167,6 +171,60 @@ describe('toc', () => {
             type: 'model',
           },
         ]);
+      });
+
+      it('groups standalone models', () => {
+        const models: NodeData[] = [
+          {
+            name: 'newone',
+            type: NodeType.Model,
+            uri: '/newone.yaml',
+            tags: ['withTag'],
+          },
+          {
+            name: 'onemore',
+            type: NodeType.Model,
+            uri: '/onemore.yaml',
+            tags: ['withTag'],
+          },
+          {
+            name: 'notag',
+            type: NodeType.Model,
+            uri: '/notag.yaml',
+            tags: [],
+          },
+        ];
+        const toc = generateProjectToC(models);
+
+        expect(toc).toEqual({
+          items: [
+            {
+              type: 'divider',
+              title: 'Schemas',
+            },
+            {
+              type: 'group',
+              title: 'withTag',
+              items: [
+                {
+                  title: 'newone',
+                  type: 'item',
+                  uri: '/newone.yaml',
+                },
+                {
+                  title: 'onemore',
+                  type: 'item',
+                  uri: '/onemore.yaml',
+                },
+              ],
+            },
+            {
+              title: 'notag',
+              type: 'item',
+              uri: '/notag.yaml',
+            },
+          ],
+        });
       });
 
       describe('tags are in mixed case', () => {
@@ -371,8 +429,12 @@ describe('toc', () => {
       expect(toc).toEqual({
         items: [
           { type: 'divider', title: 'Schemas' },
-          { type: 'item', title: 'a', uri: '/models/a' },
-          { type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' },
+          { type: 'group', title: 'einz', items: [{ type: 'item', title: 'a', uri: '/models/a' }] },
+          {
+            type: 'group',
+            title: 'raz',
+            items: [{ type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' }],
+          },
           { type: 'item', title: 'c', uri: '/reference/openapi.json/definitions/c' },
         ],
       });
@@ -683,9 +745,15 @@ describe('toc', () => {
                 type: 'group',
                 items: [
                   {
-                    title: 'The Model',
-                    type: 'item',
-                    uri: '/openapi.yaml/~1components~1model',
+                    title: 'api',
+                    type: 'group',
+                    items: [
+                      {
+                        title: 'The Model',
+                        type: 'item',
+                        uri: '/openapi.yaml/~1components~1model',
+                      },
+                    ],
                   },
                 ],
               },
@@ -821,9 +889,15 @@ describe('toc', () => {
                 type: 'group',
                 items: [
                   {
-                    title: 'The Model',
-                    type: 'item',
-                    uri: '/openapi.yaml/~1components~1model',
+                    title: 'api',
+                    type: 'group',
+                    items: [
+                      {
+                        title: 'The Model',
+                        type: 'item',
+                        uri: '/openapi.yaml/~1components~1model',
+                      },
+                    ],
                   },
                 ],
               },
@@ -834,9 +908,15 @@ describe('toc', () => {
             type: 'divider',
           },
           {
-            title: 'Standalone model',
-            type: 'item',
-            uri: '/model.yaml',
+            type: 'group',
+            title: 'api',
+            items: [
+              {
+                title: 'Standalone model',
+                type: 'item',
+                uri: '/model.yaml',
+              },
+            ],
           },
         ],
       });
@@ -909,9 +989,15 @@ describe('toc', () => {
                 type: 'group',
                 items: [
                   {
-                    title: 'The Model',
-                    type: 'item',
-                    uri: '/openapi-a.yaml/~1components~1model',
+                    title: 'api',
+                    type: 'group',
+                    items: [
+                      {
+                        title: 'The Model',
+                        type: 'item',
+                        uri: '/openapi-a.yaml/~1components~1model',
+                      },
+                    ],
                   },
                 ],
               },
@@ -1004,9 +1090,15 @@ describe('toc', () => {
             type: 'divider',
           },
           {
-            title: 'Standalone model',
-            type: 'item',
-            uri: '/model.yaml',
+            title: 'api',
+            type: 'group',
+            items: [
+              {
+                title: 'Standalone model',
+                type: 'item',
+                uri: '/model.yaml',
+              },
+            ],
           },
         ],
       });
@@ -1089,9 +1181,15 @@ describe('toc', () => {
             type: 'divider',
           },
           {
-            title: 'Standalone model',
-            type: 'item',
-            uri: '/model.yaml',
+            title: 'api',
+            type: 'group',
+            items: [
+              {
+                title: 'Standalone model',
+                type: 'item',
+                uri: '/model.yaml',
+              },
+            ],
           },
         ],
       });
@@ -1178,9 +1276,15 @@ describe('toc', () => {
                 title: 'Schemas',
                 items: [
                   {
-                    type: 'item',
-                    title: 'The Model',
-                    uri: '/openapi.yaml/~1components~1model',
+                    title: 'api',
+                    type: 'group',
+                    items: [
+                      {
+                        type: 'item',
+                        title: 'The Model',
+                        uri: '/openapi.yaml/~1components~1model',
+                      },
+                    ],
                   },
                 ],
               },
@@ -1281,9 +1385,15 @@ describe('toc', () => {
                     title: 'Schemas',
                     items: [
                       {
-                        type: 'item',
-                        title: 'The Model 1',
-                        uri: '/openapi-1.yaml/~1components~1model',
+                        title: 'api',
+                        type: 'group',
+                        items: [
+                          {
+                            type: 'item',
+                            title: 'The Model 1',
+                            uri: '/openapi-1.yaml/~1components~1model',
+                          },
+                        ],
                       },
                     ],
                   },
@@ -1310,9 +1420,15 @@ describe('toc', () => {
                     title: 'Schemas',
                     items: [
                       {
-                        type: 'item',
-                        title: 'The Model 2',
-                        uri: '/openapi-2.yaml/~1components~1model',
+                        title: 'api',
+                        type: 'group',
+                        items: [
+                          {
+                            type: 'item',
+                            title: 'The Model 2',
+                            uri: '/openapi-2.yaml/~1components~1model',
+                          },
+                        ],
                       },
                     ],
                   },
@@ -1400,9 +1516,15 @@ describe('toc', () => {
                     title: 'Schemas',
                     items: [
                       {
-                        type: 'item',
-                        title: 'The Model',
-                        uri: '/openapi.yaml/~1components~1model',
+                        type: 'group',
+                        title: 'api',
+                        items: [
+                          {
+                            type: 'item',
+                            title: 'The Model',
+                            uri: '/openapi.yaml/~1components~1model',
+                          },
+                        ],
                       },
                     ],
                   },
