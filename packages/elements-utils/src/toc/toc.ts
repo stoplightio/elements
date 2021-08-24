@@ -251,23 +251,25 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents) {
     }>(
       (result, subNode) => {
         const [tagName] = subNode.tags || [];
+        const item: Item = {
+          type: 'item',
+          title: subNode.name,
+          uri: subNode.uri,
+        };
+
         if (tagName) {
           if (result.groups[tagName.toLowerCase()]) {
-            result.groups[tagName.toLowerCase()].items.push({
-              type: 'item',
-              title: subNode.name,
-              uri: subNode.uri,
-            });
+            result.groups[tagName.toLowerCase()].items.push(item);
           } else {
             const serviceTagName = serviceTagNames.find(tn => tn.toLowerCase() === tagName.toLowerCase());
             result.groups[tagName.toLowerCase()] = {
               type: 'group',
               title: serviceTagName || tagName,
-              items: [{ type: 'item', title: subNode.name, uri: subNode.uri }],
+              items: [item],
             };
           }
         } else {
-          result.others.push({ type: 'item', title: subNode.name, uri: subNode.uri });
+          result.others.push(item);
         }
 
         return result;
@@ -350,7 +352,6 @@ export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType 
       }>(
         (result, model) => {
           const [tagName] = model.tags || [];
-
           const item: Item = { type: 'item', title: model.name, uri: model.uri };
 
           if (tagName) {
