@@ -9,9 +9,18 @@ export interface ResponseExamplesProps {
   httpOperation: IHttpOperation;
   responseStatusCode?: string;
   responseMediaType?: string;
+  /**
+   * Part of stacked RequestMaker
+   */
+  isConnected?: boolean;
 }
 
-export const ResponseExamples = ({ httpOperation, responseMediaType, responseStatusCode }: ResponseExamplesProps) => {
+export const ResponseExamples = ({
+  httpOperation,
+  responseMediaType,
+  responseStatusCode,
+  isConnected = false,
+}: ResponseExamplesProps) => {
   const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
   const [show, setShow] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -44,7 +53,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
   );
 
   return (
-    <Panel rounded isCollapsible={false}>
+    <Panel rounded isCollapsible={isConnected}>
       <Panel.Titlebar>{examplesSelect || <Text color="body">Response Example</Text>}</Panel.Titlebar>
       <Panel.Content p={0}>
         {(exceededSize && show) || !exceededSize ? (

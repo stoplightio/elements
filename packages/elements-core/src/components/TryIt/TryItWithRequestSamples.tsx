@@ -1,4 +1,4 @@
-import { Box, InvertTheme, VStack } from '@stoplight/mosaic';
+import { Box, InvertTheme, Panel, VStack } from '@stoplight/mosaic';
 import { Request as HarRequest } from 'har-format';
 import * as React from 'react';
 
@@ -16,14 +16,15 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = (
       {!hideTryIt && (
         <InvertTheme>
           <Box>
-            <TryIt {...props} onRequestChange={setRequestData} />
+            <Panel rounded isCollapsible={false} defaultIsOpen>
+              <Panel.Titlebar></Panel.Titlebar>
+              <TryIt {...props} onRequestChange={setRequestData} />
+              {requestData && <RequestSamples request={requestData} isConnected />}
+              <ResponseExamples {...props} isConnected />
+            </Panel>
           </Box>
         </InvertTheme>
       )}
-
-      {requestData && <RequestSamples request={requestData} />}
-
-      <ResponseExamples {...props} />
     </VStack>
   );
 };
