@@ -351,22 +351,20 @@ export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType 
         (result, model) => {
           const [tagName] = model.tags || [];
 
+          const item: Item = { type: 'item', title: model.name, uri: model.uri };
+
           if (tagName) {
             if (result.groups[tagName.toLowerCase()]) {
-              result.groups[tagName.toLowerCase()].items.push({
-                type: 'item',
-                title: model.name,
-                uri: model.uri,
-              });
+              result.groups[tagName.toLowerCase()].items.push(item);
             } else {
               result.groups[tagName.toLowerCase()] = {
                 type: 'group',
                 title: tagName,
-                items: [{ type: 'item', title: model.name, uri: model.uri }],
+                items: [item],
               };
             }
           } else {
-            result.others.push({ type: 'item', title: model.name, uri: model.uri });
+            result.others.push(item);
           }
 
           return result;
