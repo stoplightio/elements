@@ -3,6 +3,7 @@ export type TableOfContentsProps = {
   activeId: string;
   Link: CustomLinkComponent;
   maxDepthOpenByDefault?: number;
+  externalScrollbar?: boolean;
   onLinkClick?(): void;
 };
 
