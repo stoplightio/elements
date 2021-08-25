@@ -26,13 +26,14 @@ const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
 
 export const TableOfContents = React.memo<TableOfContentsProps>(
-  ({ tree, activeId, Link, maxDepthOpenByDefault, onLinkClick }) => {
+  ({ tree, activeId, Link, maxDepthOpenByDefault, externalScrollbar = false, onLinkClick }) => {
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
       const tocHasScrollbar =
-        container.current && child.current && container.current.offsetHeight < child.current.offsetHeight;
+        externalScrollbar ||
+        (container.current && child.current && container.current.offsetHeight < child.current.offsetHeight);
 
       if (activeId && typeof window !== 'undefined' && tocHasScrollbar) {
         const elem = window.document.getElementById(getHtmlIdFromItemId(activeId));
