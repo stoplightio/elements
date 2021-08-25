@@ -245,9 +245,12 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents) {
     { httpOperations, models }: { httpOperations: NodeData[]; models: NodeData[] },
     serviceTagNames: string[],
   ) => {
-    const all = [...httpOperations.map(i => ({ ...i, t: 'http' })), ...models.map(i => ({ ...i, t: 'model' }))];
+    const operationsAndModels = [
+      ...httpOperations.map(i => ({ ...i, nodeType: NodeType.HttpOperation })),
+      ...models.map(i => ({ ...i, nodeType: NodeType.Model })),
+    ];
 
-    const { groups, ungroupedModels, ungroupedOperations } = all.reduce<{
+    const { groups, ungroupedModels, ungroupedOperations } = operationsAndModels.reduce<{
       groups: { [key: string]: Group };
       ungroupedOperations: Item[];
       ungroupedModels: NodeData[];
@@ -272,7 +275,7 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents) {
             };
           }
         } else {
-          if (subNode.t === 'http') {
+          if (subNode.nodeType === NodeType.HttpOperation) {
             result.ungroupedOperations.push(item);
           } else {
             result.ungroupedModels.push(subNode);
