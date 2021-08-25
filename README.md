@@ -106,6 +106,8 @@ For more information on using Elements as a Web Component, head over to our [Web
 - [ ] Webhooks
 - [x] Multiple APIs (a.k.a "Dev Portal")
 
+Submit your ideas for new functionality on the [Stoplight Roadmap](https://roadmap.stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme).
+
 ## ⚙️ Integrations
 
 - [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Free visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
