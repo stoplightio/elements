@@ -3,7 +3,7 @@
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplight-elements.netlify.app)
 [![CircleCI][circle_ci_image]][circle_ci]
 [![NPM Downloads][circle_ci_image]][npm]
-[![Buy us a tree][ecologi_image]][ecologi]
+[![Stoplight Forest](https://img.shields.io/ecologi/trees/stoplightinc)][stoplight_forest]
 
 Beautiful API documentation powered by OpenAPI and Markdown. Use these UI components to create API reference documentation, or more complete documentation with Markdown articles covering tutorials, how-to guides, etc.
 
@@ -129,6 +129,12 @@ Elements is built on top of lots of excellent packages, and here are a few we'd 
 
 Check these projects out!
 
+## 🌲 Sponsor Elements by Planting a Tree
+
+If you would like to thank us for creating Elements, we ask that you [**buy the world a tree**][stoplight_forest].
+
+[stoplight_forest]: https://ecologi.com/stoplightinc
+
 [code_of_conduct]: CODE_OF_CONDUCT.md
 [contributing]: CONTRIBUTING.md
 [download-release]: https://github.com/stoplightio/elements/releases/latest
@@ -137,5 +143,4 @@ Check these projects out!
 [circle_ci_image]: https://img.shields.io/circleci/build/github/stoplightio/elements/main
 [npm]: https://www.npmjs.com/package/@stoplight/elements
 [npm_image]: https://img.shields.io/npm/dw/@stoplight/elements?color=blue
-[ecologi]: https://ecologi.com/stoplightinc
-[ecologi_image]: https://img.shields.io/badge/Buy%20us%20a%20tree-%F0%9F%8C%B3-lightgreen
+[stoplight_forest]: https://ecologi.com/stoplightinc

@@ -193,5 +193,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
 });
 
 const Collapse: React.FC<{ isOpen: boolean }> = ({ isOpen, children }) => {
-  return <Box display={isOpen ? 'block' : 'hidden'}>{children}</Box>;
+  if (!isOpen) return null;
+
+  return <Box>{children}</Box>;
 };
