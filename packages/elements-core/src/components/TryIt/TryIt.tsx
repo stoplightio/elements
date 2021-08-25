@@ -125,6 +125,9 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   const handleClick = async () => {
     setValidateParameters(true);
+
+    if (hasRequiredButEmptyParameters) return;
+
     try {
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
