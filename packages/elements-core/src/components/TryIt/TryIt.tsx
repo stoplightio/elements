@@ -1,7 +1,7 @@
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeParse, safeStringify } from '@stoplight/json';
-import { Box, Button, Flex, Link, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, Flex, Icon, Link, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -65,6 +65,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [validateParameters, setValidateParameters] = React.useState<boolean>(false);
 
   const mediaTypeContent = httpOperation.request?.body?.contents?.[requestBodyIndex ?? 0];
 
@@ -79,6 +80,10 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   const servers = getServersToDisplay(httpOperation.servers || []);
   const [chosenServer, setChosenServer] = useAtom(chosenServerAtom);
+
+  const hasRequiredButEmptyParameters = allParameters.some(
+    parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
+  );
 
   React.useEffect(() => {
     if (!chosenServer) {
@@ -119,6 +124,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
   ]);
 
   const handleClick = async () => {
+    setValidateParameters(true);
     try {
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
@@ -195,6 +201,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
             parameters={allParameters}
             values={parameterValuesWithDefaults}
             onChangeValue={updateParameterValue}
+            validate={validateParameters}
           />
         )}
         {formDataState.isFormDataBody ? (
@@ -220,6 +227,12 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
               <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
             )}
           </Flex>
+          {validateParameters && hasRequiredButEmptyParameters && (
+            <Box mt={4} color="danger-light" fontSize="sm">
+              <Icon icon={faExclamationTriangle} className="sl-mr-1" />
+              You didn't provide all of the required parameters!
+            </Box>
+          )}
         </Panel.Content>
       </Panel>
       {response && !('error' in response) && <TryItResponse response={response} />}

@@ -989,4 +989,31 @@ describe('TryIt', () => {
       expect(fetchMock.mock.calls[0][0]).toContain('https://todos-dev.stoplight.io');
     });
   });
+
+  describe('Validation', () => {
+    it('does not show a warning message before sending the request', () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument();
+    });
+
+    it('shows a warning message if at least one parameter is required but empty', () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      clickSend();
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).toBeInTheDocument();
+    });
+
+    it('does not show the message if required parameters are not empty', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const todoIdField = screen.getByLabelText('todoId');
+      await userEvent.type(todoIdField, '123');
+
+      clickSend();
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument();
+    });
+  });
 });
