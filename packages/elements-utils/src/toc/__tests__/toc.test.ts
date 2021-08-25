@@ -144,19 +144,17 @@ describe('toc', () => {
               items: [
                 {
                   type: 'group',
+                  title: 'raz',
+                  items: [{ type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' }],
+                },
+                {
+                  type: 'group',
                   items: [{ type: 'item', title: 'Operation', uri: '/reference/openapi.json/paths/~1test/get' }],
                   title: 'zwei',
                 },
                 {
                   type: 'group',
-                  items: [
-                    {
-                      type: 'group',
-                      title: 'raz',
-                      items: [{ type: 'item', title: 'b', uri: '/reference/openapi.json/definitions/b' }],
-                    },
-                    { type: 'item', title: 'c', uri: '/reference/openapi.json/definitions/c' },
-                  ],
+                  items: [{ type: 'item', title: 'c', uri: '/reference/openapi.json/definitions/c' }],
                   title: 'Schemas',
                 },
               ],
@@ -736,26 +734,14 @@ describe('toc', () => {
                     type: 'item',
                     uri: '/openapi.yaml/~1path',
                   },
+                  {
+                    title: 'The Model',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1components~1model',
+                  },
                 ],
                 title: 'api',
                 type: 'group',
-              },
-              {
-                title: 'Schemas',
-                type: 'group',
-                items: [
-                  {
-                    title: 'api',
-                    type: 'group',
-                    items: [
-                      {
-                        title: 'The Model',
-                        type: 'item',
-                        uri: '/openapi.yaml/~1components~1model',
-                      },
-                    ],
-                  },
-                ],
               },
             ],
           },
@@ -825,6 +811,12 @@ describe('toc', () => {
           type: NodeType.Model,
           tags: ['api'],
         },
+        {
+          uri: '/openapi.yaml/~1components~1model',
+          name: 'Untagged Model',
+          type: NodeType.Model,
+          tags: [],
+        },
       ]);
 
       expect(toc).toEqual({
@@ -880,6 +872,11 @@ describe('toc', () => {
                     type: 'item',
                     uri: '/openapi.yaml/~1apath',
                   },
+                  {
+                    title: 'The Model',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1components~1model',
+                  },
                 ],
                 title: 'api',
                 type: 'group',
@@ -889,15 +886,9 @@ describe('toc', () => {
                 type: 'group',
                 items: [
                   {
-                    title: 'api',
-                    type: 'group',
-                    items: [
-                      {
-                        title: 'The Model',
-                        type: 'item',
-                        uri: '/openapi.yaml/~1components~1model',
-                      },
-                    ],
+                    title: 'Untagged Model',
+                    type: 'item',
+                    uri: '/openapi.yaml/~1components~1model',
                   },
                 ],
               },
@@ -958,7 +949,7 @@ describe('toc', () => {
           uri: '/openapi-a.yaml/~1components~1model',
           name: 'The Model',
           type: NodeType.Model,
-          tags: ['api'],
+          tags: ['newtag'],
         },
       ]);
 
@@ -985,19 +976,13 @@ describe('toc', () => {
                 type: 'group',
               },
               {
-                title: 'Schemas',
+                title: 'newtag',
                 type: 'group',
                 items: [
                   {
-                    title: 'api',
-                    type: 'group',
-                    items: [
-                      {
-                        title: 'The Model',
-                        type: 'item',
-                        uri: '/openapi-a.yaml/~1components~1model',
-                      },
-                    ],
+                    title: 'The Model',
+                    type: 'item',
+                    uri: '/openapi-a.yaml/~1components~1model',
                   },
                 ],
               },
@@ -1269,22 +1254,10 @@ describe('toc', () => {
                     title: 'The Op',
                     uri: '/openapi.yaml/~1zpath',
                   },
-                ],
-              },
-              {
-                type: 'group',
-                title: 'Schemas',
-                items: [
                   {
-                    title: 'api',
-                    type: 'group',
-                    items: [
-                      {
-                        type: 'item',
-                        title: 'The Model',
-                        uri: '/openapi.yaml/~1components~1model',
-                      },
-                    ],
+                    type: 'item',
+                    title: 'The Model',
+                    uri: '/openapi.yaml/~1components~1model',
                   },
                 ],
               },
@@ -1353,7 +1326,7 @@ describe('toc', () => {
             uri: '/openapi-2.yaml/~1components~1model',
             name: 'The Model 2',
             type: NodeType.Model,
-            tags: ['api'],
+            tags: [],
           },
         ],
         toc,
@@ -1378,22 +1351,10 @@ describe('toc', () => {
                         title: 'The Op 1',
                         uri: '/openapi-1.yaml/~1path',
                       },
-                    ],
-                  },
-                  {
-                    type: 'group',
-                    title: 'Schemas',
-                    items: [
                       {
-                        title: 'api',
-                        type: 'group',
-                        items: [
-                          {
-                            type: 'item',
-                            title: 'The Model 1',
-                            uri: '/openapi-1.yaml/~1components~1model',
-                          },
-                        ],
+                        type: 'item',
+                        title: 'The Model 1',
+                        uri: '/openapi-1.yaml/~1components~1model',
                       },
                     ],
                   },
@@ -1420,15 +1381,9 @@ describe('toc', () => {
                     title: 'Schemas',
                     items: [
                       {
-                        title: 'api',
-                        type: 'group',
-                        items: [
-                          {
-                            type: 'item',
-                            title: 'The Model 2',
-                            uri: '/openapi-2.yaml/~1components~1model',
-                          },
-                        ],
+                        type: 'item',
+                        title: 'The Model 2',
+                        uri: '/openapi-2.yaml/~1components~1model',
                       },
                     ],
                   },
@@ -1509,22 +1464,10 @@ describe('toc', () => {
                         title: 'The Op',
                         uri: '/openapi.yaml/~1path',
                       },
-                    ],
-                  },
-                  {
-                    type: 'group',
-                    title: 'Schemas',
-                    items: [
                       {
-                        type: 'group',
-                        title: 'api',
-                        items: [
-                          {
-                            type: 'item',
-                            title: 'The Model',
-                            uri: '/openapi.yaml/~1components~1model',
-                          },
-                        ],
+                        type: 'item',
+                        title: 'The Model',
+                        uri: '/openapi.yaml/~1components~1model',
                       },
                     ],
                   },
