@@ -245,9 +245,15 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents) {
     { httpOperations, models }: { httpOperations: NodeData[]; models: NodeData[] },
     serviceTagNames: string[],
   ) => {
-    const { groups, others } = httpOperations.reduce<{
+    const operationsAndModels = [
+      ...httpOperations.map(i => ({ ...i, nodeType: NodeType.HttpOperation })),
+      ...models.map(i => ({ ...i, nodeType: NodeType.Model })),
+    ];
+
+    const { groups, ungroupedModels, ungroupedOperations } = operationsAndModels.reduce<{
       groups: { [key: string]: Group };
-      others: Item[];
+      ungroupedOperations: Item[];
+      ungroupedModels: NodeData[];
     }>(
       (result, subNode) => {
         const [tagName] = subNode.tags || [];
@@ -269,15 +275,19 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents) {
             };
           }
         } else {
-          result.others.push(item);
+          if (subNode.nodeType === NodeType.HttpOperation) {
+            result.ungroupedOperations.push(item);
+          } else {
+            result.ungroupedModels.push(subNode);
+          }
         }
 
         return result;
       },
-      { groups: {}, others: [] },
+      { groups: {}, ungroupedOperations: [], ungroupedModels: [] },
     );
 
-    others.forEach(item => toc.items.push(item));
+    ungroupedOperations.forEach(item => toc.items.push(item));
 
     const tagNamesLC = serviceTagNames.map(tn => tn.toLowerCase());
 
@@ -298,7 +308,7 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents) {
       })
       .forEach(([, group]) => toc.items.push(group));
 
-    appendModelsToToc(toc, 'group')(models);
+    appendModelsToToc(toc, 'group')(ungroupedModels);
   };
 }
 
