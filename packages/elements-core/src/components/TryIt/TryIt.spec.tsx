@@ -53,8 +53,7 @@ describe('TryIt', () => {
   it('Makes the correct basic request', async () => {
     render(<TryItWithPersistence httpOperation={basicOperation} />);
 
-    const button = screen.getByRole('button', { name: /send/i });
-    userEvent.click(button);
+    clickSend();
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     expect(fetchMock.mock.calls[0][0]).toBe('https://todos.stoplight.io/todos');
@@ -62,6 +61,15 @@ describe('TryIt', () => {
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
     expect(headers.get('Content-Type')).toBe('application/json');
+  });
+
+  it('uses cors proxy url, if provided', async () => {
+    render(<TryItWithPersistence httpOperation={basicOperation} corsProxy="https://some.proxy.com/" />);
+
+    clickSend();
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+    expect(fetchMock.mock.calls[0][0]).toBe('https://some.proxy.com/https://todos.stoplight.io/todos');
   });
 
   it('replaces url variables with default values when making request', async () => {

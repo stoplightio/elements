@@ -47,6 +47,7 @@ export interface TryItProps {
    * True when TryIt is embedded in Markdown doc
    */
   embedded?: boolean;
+  corsProxy?: string;
 }
 
 interface ResponseState {
@@ -71,6 +72,7 @@ export const TryIt: React.FC<TryItProps> = ({
   onRequestChange,
   requestBodyIndex,
   embedded = false,
+  corsProxy,
 }) => {
   const isDark = useThemeIsDark();
 
@@ -116,6 +118,7 @@ export const TryIt: React.FC<TryItProps> = ({
         auth: operationAuthValue,
         ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
+        corsProxy,
       });
       setRequestData(harRequest);
       if (isActive && onRequestChange) onRequestChange(harRequest);
@@ -135,6 +138,7 @@ export const TryIt: React.FC<TryItProps> = ({
     operationAuthValue,
     mockingOptions,
     chosenServer,
+    corsProxy,
   ]);
 
   const handleClick = async () => {
@@ -153,6 +157,7 @@ export const TryIt: React.FC<TryItProps> = ({
         mockData,
         auth: operationAuthValue,
         chosenServer,
+        corsProxy,
       });
       let response: Response | undefined;
       try {
