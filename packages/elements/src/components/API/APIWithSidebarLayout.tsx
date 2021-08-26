@@ -22,6 +22,7 @@ type SidebarLayoutProps = {
   hideInternal?: boolean;
   hideExport?: boolean;
   exportProps?: ExportButtonProps;
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -32,6 +33,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideInternal,
   hideExport,
   exportProps,
+  tryItCredentialsPolicy,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -91,6 +93,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           location={location}
           allowRouting
           exportProps={exportProps}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
         />
       )}
     </SidebarLayout>

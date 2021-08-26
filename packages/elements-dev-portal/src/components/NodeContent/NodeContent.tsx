@@ -36,9 +36,25 @@ export type NodeContentProps = {
    * @default false
    */
   hideExport?: boolean;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
 };
 
-export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking, hideExport }: NodeContentProps) => {
+export const NodeContent = ({
+  node,
+  Link,
+  hideTryIt,
+  hideTryItPanel,
+  hideMocking,
+  hideExport,
+  tryItCredentialsPolicy,
+}: NodeContentProps) => {
   return (
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
@@ -66,6 +82,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
                     }
                   : undefined
               }
+              tryItCredentialsPolicy={tryItCredentialsPolicy}
             />
           </MockingProvider>
         </MarkdownComponentsProvider>

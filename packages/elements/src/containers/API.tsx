@@ -73,6 +73,14 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   hideExport?: boolean;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -80,7 +88,16 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 };
 
 export const APIImpl: React.FC<APIProps> = props => {
-  const { layout, apiDescriptionUrl = '', logo, hideTryIt, hideSchemas, hideInternal, hideExport } = props;
+  const {
+    layout,
+    apiDescriptionUrl = '',
+    logo,
+    hideTryIt,
+    hideSchemas,
+    hideInternal,
+    hideExport,
+    tryItCredentialsPolicy,
+  } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { data: fetchedDocument, error } = useQuery(
@@ -142,6 +159,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideTryIt={hideTryIt}
           hideExport={hideExport}
           exportProps={exportProps}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
         />
       ) : (
         <APIWithSidebarLayout
@@ -152,6 +170,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideInternal={hideInternal}
           hideExport={hideExport}
           exportProps={exportProps}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
         />
       )}
     </InlineRefResolverProvider>
