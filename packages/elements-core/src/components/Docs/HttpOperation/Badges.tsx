@@ -59,6 +59,7 @@ export const SecurityBadge: React.FC<{
 export const VersionBadge: React.FC<{ value: string; backgroundColor?: string }> = ({ value, backgroundColor }) => (
   <Badge
     appearance="solid"
+    size="sm"
     style={{
       backgroundColor: backgroundColor || badgeDefaultBackgroundColor,
       border: 'none',
