@@ -42,6 +42,7 @@ export interface TryItProps {
    */
   onRequestChange?: (currentRequest: HarRequest) => void;
   requestBodyIndex?: number;
+  corsProxy?: string;
 }
 
 interface ResponseState {
@@ -60,7 +61,13 @@ interface ErrorState {
 
 const chosenServerAtom = atom<IServer | undefined>(undefined);
 
-export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestChange, requestBodyIndex }) => {
+export const TryIt: React.FC<TryItProps> = ({
+  httpOperation,
+  mockUrl,
+  onRequestChange,
+  requestBodyIndex,
+  corsProxy,
+}) => {
   const isDark = useThemeIsDark();
 
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
@@ -103,6 +110,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         auth: operationAuthValue,
         ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
+        corsProxy,
       }).then(request => {
         if (isActive) onRequestChange(request);
       });
@@ -121,6 +129,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
     operationAuthValue,
     mockingOptions,
     chosenServer,
+    corsProxy,
   ]);
 
   const handleClick = async () => {
@@ -139,6 +148,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         mockData,
         auth: operationAuthValue,
         chosenServer,
+        corsProxy,
       });
       let response: Response | undefined;
       try {

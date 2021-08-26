@@ -43,6 +43,13 @@ interface BaseDocsProps {
   exportProps?: ExportButtonProps;
 
   /**
+   * Url of a CORS proxy that will be used to send requests in TryIt.
+   * Provided url will be prepended to an URL of an actual request.
+   * @default false
+   */
+  tryItCorsProxy?: string;
+
+  /**
    * Allows to customize the layout of Docs
    */
   layoutOptions?: {
