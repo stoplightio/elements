@@ -12,4 +12,5 @@ export const StoplightProjectElement = createElementClass(StoplightProject, {
   platformUrl: { type: 'string' },
   collapseTableOfContents: { type: 'boolean' },
   tryItCredentialsPolicy: { type: 'string' },
+  tryItCorsProxy: { type: 'string' },
 });

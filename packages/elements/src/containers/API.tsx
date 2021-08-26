@@ -81,6 +81,13 @@ export interface CommonAPIProps extends RoutingProps {
    */
 
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+
+  /**
+   * Url of a CORS proxy that will be used to send requests in TryIt.
+   * Provided url will be prepended to an URL of an actual request.
+   * @default false
+   */
+  tryItCorsProxy?: string;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -97,6 +104,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideInternal,
     hideExport,
     tryItCredentialsPolicy,
+    tryItCorsProxy,
   } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
@@ -160,6 +168,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideExport={hideExport}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
+          tryItCorsProxy={tryItCorsProxy}
         />
       ) : (
         <APIWithSidebarLayout
@@ -171,6 +180,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideExport={hideExport}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
+          tryItCorsProxy={tryItCorsProxy}
         />
       )}
     </InlineRefResolverProvider>

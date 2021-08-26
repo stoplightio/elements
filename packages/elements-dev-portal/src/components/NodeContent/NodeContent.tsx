@@ -44,6 +44,13 @@ export type NodeContentProps = {
    */
 
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+
+  /**
+   * URL of a CORS proxy that will be used to send requests in TryIt.
+   * Provided url will be prepended to an URL of an actual request.
+   * @default false
+   */
+  tryItCorsProxy?: string;
 };
 
 export const NodeContent = ({
@@ -54,6 +61,7 @@ export const NodeContent = ({
   hideMocking,
   hideExport,
   tryItCredentialsPolicy,
+  tryItCorsProxy,
 }: NodeContentProps) => {
   return (
     <PersistenceContextProvider>
@@ -70,6 +78,7 @@ export const NodeContent = ({
                 hideExport: hideExport || node.links.export_url === undefined,
               }}
               useNodeForRefResolving
+              tryItCorsProxy={tryItCorsProxy}
               exportProps={
                 [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)
                   ? {

@@ -49,6 +49,7 @@ export interface TryItProps {
    * @default "omit"
    */
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+  corsProxy?: string;
 }
 
 interface ResponseState {
@@ -73,6 +74,7 @@ export const TryIt: React.FC<TryItProps> = ({
   onRequestChange,
   requestBodyIndex,
   tryItCredentialsPolicy,
+  corsProxy,
 }) => {
   const isDark = useThemeIsDark();
 
@@ -116,6 +118,7 @@ export const TryIt: React.FC<TryItProps> = ({
         auth: operationAuthValue,
         ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
+        corsProxy,
       }).then(request => {
         if (isActive) onRequestChange(request);
       });
@@ -134,6 +137,7 @@ export const TryIt: React.FC<TryItProps> = ({
     operationAuthValue,
     mockingOptions,
     chosenServer,
+    corsProxy,
   ]);
 
   const handleClick = async () => {
@@ -153,6 +157,7 @@ export const TryIt: React.FC<TryItProps> = ({
         auth: operationAuthValue,
         chosenServer,
         credentials: tryItCredentialsPolicy,
+        corsProxy,
       });
       let response: Response | undefined;
       try {

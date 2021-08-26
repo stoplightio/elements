@@ -23,13 +23,18 @@ type StackedLayoutProps = {
   hideExport?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
+  tryItCorsProxy?: string;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode) => {
   return hash.substr(1) === `${item.name}-${item.data.method}`;
 };
 
-const TryItContext = React.createContext<{ hideTryIt?: boolean; tryItCredentialsPolicy?: TryItCredentialsPolicy }>({
+const TryItContext = React.createContext<{
+  hideTryIt?: boolean;
+  tryItCredentialsPolicy?: TryItCredentialsPolicy;
+  corsProxy?: string;
+}>({
   hideTryIt: false,
   tryItCredentialsPolicy: 'omit',
 });
@@ -41,12 +46,13 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   hideExport,
   exportProps,
   tryItCredentialsPolicy,
+  tryItCorsProxy,
 }) => {
   const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
 
   return (
-    <TryItContext.Provider value={{ hideTryIt, tryItCredentialsPolicy }}>
+    <TryItContext.Provider value={{ hideTryIt, tryItCredentialsPolicy, corsProxy: tryItCorsProxy }}>
       <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
         <Box w="full" borderB>
           <Docs
@@ -127,7 +133,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const color = HttpMethodColors[item.data.method] || 'gray';
   const isDeprecated = !!item.data.deprecated;
-  const { hideTryIt, tryItCredentialsPolicy } = React.useContext(TryItContext);
+  const { hideTryIt, tryItCredentialsPolicy, corsProxy } = React.useContext(TryItContext);
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -190,7 +196,11 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
                 />
               </TabPanel>
               <TabPanel>
-                <TryItWithRequestSamples httpOperation={item.data} tryItCredentialsPolicy={tryItCredentialsPolicy} />
+                <TryItWithRequestSamples
+                  httpOperation={item.data}
+                  tryItCredentialsPolicy={tryItCredentialsPolicy}
+                  corsProxy={corsProxy}
+                />
               </TabPanel>
             </TabPanels>
           </Tabs>

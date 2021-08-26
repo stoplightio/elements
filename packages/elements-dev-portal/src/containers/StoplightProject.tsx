@@ -65,6 +65,13 @@ export interface StoplightProjectProps extends RoutingProps {
    */
 
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+
+  /**
+   * URL of a CORS proxy that will be used to send requests in TryIt.
+   * Provided url will be prepended to an URL of an actual request.
+   * @default false
+   */
+  tryItCorsProxy?: string;
 }
 
 const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
@@ -74,6 +81,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   hideExport,
   collapseTableOfContents = false,
   tryItCredentialsPolicy,
+  tryItCorsProxy,
 }) => {
   const { branchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
   const history = useHistory();
@@ -119,6 +127,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
         hideMocking={hideMocking}
         hideExport={hideExport}
         tryItCredentialsPolicy={tryItCredentialsPolicy}
+        tryItCorsProxy={tryItCorsProxy}
       />
     );
   }

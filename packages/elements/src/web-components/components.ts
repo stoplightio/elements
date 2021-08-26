@@ -14,4 +14,5 @@ export const ApiElement = createElementClass(API, {
   hideExport: { type: 'boolean' },
   logo: { type: 'string' },
   tryItCredentialsPolicy: { type: 'string' },
+  tryItCorsProxy: { type: 'string' },
 });
