@@ -41,7 +41,7 @@ export async function buildFetchRequest({
   mockData,
   auth,
   chosenServer,
-  credentials,
+  credentials = 'omit',
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
   const server = chosenServer || httpOperation.servers?.[0];
   const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
