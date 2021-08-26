@@ -8,9 +8,15 @@ interface OperationParametersProps<P extends keyof any = string> {
   parameters: readonly ParameterSpec[];
   values: Record<P, string>;
   onChangeValue: (parameterName: P, newValue: string) => void;
+  validate?: boolean;
 }
 
-export const OperationParameters: React.FC<OperationParametersProps> = ({ parameters, values, onChangeValue }) => {
+export const OperationParameters: React.FC<OperationParametersProps> = ({
+  parameters,
+  values,
+  onChangeValue,
+  validate,
+}) => {
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar>Parameters</Panel.Titlebar>
@@ -21,6 +27,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({ parame
             parameter={parameter}
             value={values[parameter.name]}
             onChange={(value: string | number) => onChangeValue(parameter.name, String(value))}
+            validate={validate}
           />
         ))}
       </Panel.Content>

@@ -41,6 +41,7 @@
 .sl-elements .ParameterGrid {
   display: grid;
   grid-template-columns: fit-content(120px) 20px auto;
+  row-gap: 3px;
   align-items: center;
   padding-bottom: 0;
   margin-bottom: 16px;

@@ -496,12 +496,17 @@ describe('TryIt', () => {
         });
       });
 
-      it('resets the textbox after httpOperation change', () => {
+      it('resets the textbox after httpOperation change', async () => {
         const { rerender } = render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
         const textbox = screen.getByRole('textbox');
         userEvent.type(textbox, 'asd');
         rerender(<TryItWithPersistence httpOperation={requestBody} />);
-        waitFor(() => expect(textbox).toHaveTextContent('{"name":"string","age":0}'));
+        await waitFor(() =>
+          expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+            name: 'string',
+            age: 0,
+          }),
+        );
       });
 
       it('allows users to choose request body examples from spec using dropdown menu', () => {
@@ -846,6 +851,9 @@ describe('TryIt', () => {
 
         await userEvent.type(tokenInput, 'Bearer 0a1b2c');
 
+        const todoIdField = screen.getByLabelText('todoId');
+        await userEvent.type(todoIdField, '123');
+
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
@@ -878,6 +886,9 @@ describe('TryIt', () => {
         await userEvent.type(usernameInput, 'user');
         await userEvent.type(passwordInput, 'password');
 
+        const todoIdField = screen.getByLabelText('todoId');
+        await userEvent.type(todoIdField, '123');
+
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
@@ -900,6 +911,9 @@ describe('TryIt', () => {
         const tokenInput = screen.getByLabelText('Token');
 
         await userEvent.type(tokenInput, '0a1b2c');
+
+        const todoIdField = screen.getByLabelText('todoId');
+        await userEvent.type(todoIdField, '123');
 
         clickSend();
 
@@ -936,6 +950,9 @@ describe('TryIt', () => {
         const expectedDigestContent = `Digest username="Mufasa", realm="testrealm@host.com", nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093", uri="/dir/index.html", qop=auth, nc=00000001, cnonce="0a4f113b", response="6629fae49393a05397450978507c4ef1", opaque="5ccc069c403ebaf9f0171e9517f40e41"`;
 
         await userEvent.type(authInput, digestContent);
+
+        const todoIdField = screen.getByLabelText('todoId');
+        await userEvent.type(todoIdField, '123');
 
         clickSend();
 
@@ -990,11 +1007,53 @@ describe('TryIt', () => {
 
       chooseOption(serversSelect, 'Development');
 
+      const todoIdField = screen.getByLabelText('todoId');
+      await userEvent.type(todoIdField, '123');
+
       clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock.mock.calls[0][0]).toContain('https://todos-dev.stoplight.io');
+    });
+  });
+
+  describe('Validation', () => {
+    it('does not show a warning message before sending the request', () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument();
+    });
+
+    it('shows a warning message if at least one parameter is required but empty', () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      clickSend();
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).toBeInTheDocument();
+    });
+
+    it('does not send a request if at least one parameter is required but empty', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      clickSend();
+
+      // Fetching is called asynchronously, so I am waiting for it
+      // to be actually called. Without that the test always passes.
+      await Promise.resolve();
+
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    it('does not show the message if required parameters are not empty', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const todoIdField = screen.getByLabelText('todoId');
+      await userEvent.type(todoIdField, '123');
+
+      clickSend();
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument();
     });
   });
 });
