@@ -109,24 +109,25 @@ export const TryIt: React.FC<TryItProps> = ({
 
   React.useEffect(() => {
     let isActive = true;
-    async function fetchRequest() {
-      let harRequest = await buildHarRequest({
-        mediaTypeContent,
-        parameterValues: parameterValuesWithDefaults,
-        httpOperation,
-        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
-        auth: operationAuthValue,
-        ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
-        chosenServer,
-        corsProxy,
-      });
-      setRequestData(harRequest);
-      if (isActive && onRequestChange) onRequestChange(harRequest);
-      return () => {
-        isActive = false;
-      };
-    }
-    fetchRequest();
+    buildHarRequest({
+      mediaTypeContent,
+      parameterValues: parameterValuesWithDefaults,
+      httpOperation,
+      bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+      auth: operationAuthValue,
+      ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
+      chosenServer,
+      corsProxy,
+    }).then(request => {
+      setRequestData(request);
+      if (onRequestChange) {
+        if (isActive) onRequestChange(request);
+      }
+    });
+
+    return () => {
+      isActive = false;
+    };
     // disabling because we don't want to react on `onRequestChange` change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
