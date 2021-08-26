@@ -14,14 +14,17 @@ interface ParameterProps {
   parameter: ParameterSpec;
   value?: string;
   onChange: SelectProps['onChange'];
+  validate?: boolean;
 }
 
-export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange }) => {
+export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange, validate }) => {
   const inputId = useUniqueId(`id_${parameter.name}_`);
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
   const parameterDisplayName = `${parameter.name}${parameter.required ? '*' : ''}`;
+
+  const requiredButEmpty = validate && parameter.required && !value;
 
   return (
     <>
@@ -43,11 +46,12 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
             <Input
               id={inputId}
               aria-label={parameter.name}
-              appearance="minimal"
+              appearance={requiredButEmpty ? 'default' : 'minimal'}
               flex={1}
               placeholder={getPlaceholderForParameter(parameter)}
               type={parameter.schema?.type === 'number' ? 'number' : 'text'}
               required
+              intent={requiredButEmpty ? 'danger' : 'default'}
               value={value || ''}
               onChange={e => onChange && onChange(e.currentTarget.value)}
             />
