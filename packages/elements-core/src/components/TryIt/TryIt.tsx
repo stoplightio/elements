@@ -109,22 +109,34 @@ export const TryIt: React.FC<TryItProps> = ({
 
   React.useEffect(() => {
     let isActive = true;
-    buildHarRequest({
-      mediaTypeContent,
-      parameterValues: parameterValuesWithDefaults,
-      httpOperation,
-      bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
-      auth: operationAuthValue,
-      ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
-      chosenServer,
-      corsProxy,
-    }).then(request => {
-      setRequestData(request);
-      if (onRequestChange) {
+    if (onRequestChange) {
+      buildHarRequest({
+        mediaTypeContent,
+        parameterValues: parameterValuesWithDefaults,
+        httpOperation,
+        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+        auth: operationAuthValue,
+        ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
+        chosenServer,
+        corsProxy,
+      }).then(request => {
         if (isActive) onRequestChange(request);
-      }
-    });
-
+      });
+    }
+    if (embedded) {
+      buildHarRequest({
+        mediaTypeContent,
+        parameterValues: parameterValuesWithDefaults,
+        httpOperation,
+        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+        auth: operationAuthValue,
+        ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
+        chosenServer,
+        corsProxy,
+      }).then(request => {
+        setRequestData(request);
+      });
+    }
     return () => {
       isActive = false;
     };
