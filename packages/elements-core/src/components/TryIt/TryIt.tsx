@@ -11,6 +11,7 @@ import * as React from 'react';
 import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { getServersToDisplay } from '../../utils/http-spec/IServer';
+import { RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
@@ -42,6 +43,10 @@ export interface TryItProps {
    */
   onRequestChange?: (currentRequest: HarRequest) => void;
   requestBodyIndex?: number;
+  /**
+   * True when TryIt is embedded in Markdown doc
+   */
+  embedded?: boolean;
 }
 
 interface ResponseState {
@@ -60,10 +65,18 @@ interface ErrorState {
 
 const chosenServerAtom = atom<IServer | undefined>(undefined);
 
-export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestChange, requestBodyIndex }) => {
+export const TryIt: React.FC<TryItProps> = ({
+  httpOperation,
+  mockUrl,
+  onRequestChange,
+  requestBodyIndex,
+  embedded = false,
+}) => {
   const isDark = useThemeIsDark();
 
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
+  const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
+
   const [loading, setLoading] = React.useState<boolean>(false);
   const [validateParameters, setValidateParameters] = React.useState<boolean>(false);
 
@@ -94,8 +107,8 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   React.useEffect(() => {
     let isActive = true;
-    if (onRequestChange) {
-      buildHarRequest({
+    async function fetchRequest() {
+      let harRequest = await buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
@@ -103,13 +116,14 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         auth: operationAuthValue,
         ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
-      }).then(request => {
-        if (isActive) onRequestChange(request);
       });
+      setRequestData(harRequest);
+      if (isActive && onRequestChange) onRequestChange(harRequest);
+      return () => {
+        isActive = false;
+      };
     }
-    return () => {
-      isActive = false;
-    };
+    fetchRequest();
     // disabling because we don't want to react on `onRequestChange` change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -238,6 +252,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
           )}
         </Panel.Content>
       </Panel>
+      {requestData && embedded && <RequestSamples request={requestData} embedded />}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}
     </Box>

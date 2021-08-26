@@ -70,7 +70,9 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
       return null;
     }
 
-    return <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} />;
+    return (
+      <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} embedded />
+    );
   }
 
   const DefaultCode = DefaultSMDComponents.code!;
