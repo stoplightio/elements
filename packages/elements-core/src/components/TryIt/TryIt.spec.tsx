@@ -147,6 +147,13 @@ describe('TryIt', () => {
     expect(responseHeader).not.toBeInTheDocument();
   });
 
+  it('when embedded in markdown, shows request codegen', async () => {
+    render(<TryItWithPersistence httpOperation={basicOperation} embeddedInMd />);
+
+    const requestSamplePanel = await screen.findByText('Request Sample: Shell / cURL');
+    expect(requestSamplePanel).toBeVisible();
+  });
+
   describe('Parameter Handling', () => {
     it('Hides panel when there are no parameters', () => {
       render(<TryItWithPersistence httpOperation={basicOperation} />);
