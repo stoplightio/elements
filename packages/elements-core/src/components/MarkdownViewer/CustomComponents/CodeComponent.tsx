@@ -71,7 +71,7 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
     }
 
     return (
-      <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} embedded />
+      <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} embeddedInMd />
     );
   }
 

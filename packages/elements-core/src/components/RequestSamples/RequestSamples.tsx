@@ -16,7 +16,7 @@ export interface RequestSamplesProps {
   /**
    * True when embedded in TryIt
    */
-  embedded?: boolean;
+  embeddedInMd?: boolean;
 }
 
 const selectedLanguageAtom = persistAtom<string>('RequestSamples_selectedLanguage', atom('Shell'));
@@ -29,7 +29,7 @@ const fallbackText = 'Unable to generate code example';
  *
  * The programming language can be selected by the user and is remembered across instances and remounts.
  */
-export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embedded = false }) => {
+export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embeddedInMd = false }) => {
   const [selectedLanguage, setSelectedLanguage] = useAtom(selectedLanguageAtom);
   const [selectedLibrary, setSelectedLibrary] = useAtom(selectedLibraryAtom);
 
@@ -71,7 +71,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embedd
   }, [selectedLanguage, selectedLibrary, setSelectedLanguage, setSelectedLibrary]);
 
   return (
-    <Panel rounded={embedded ? undefined : true} isCollapsible={embedded}>
+    <Panel rounded={embeddedInMd ? undefined : true} isCollapsible={embeddedInMd}>
       <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
         <Box ml={-2}>
           <Menu

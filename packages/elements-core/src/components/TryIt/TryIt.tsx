@@ -46,7 +46,7 @@ export interface TryItProps {
   /**
    * True when TryIt is embedded in Markdown doc
    */
-  embedded?: boolean;
+  embeddedInMd?: boolean;
   corsProxy?: string;
 }
 
@@ -71,7 +71,7 @@ export const TryIt: React.FC<TryItProps> = ({
   mockUrl,
   onRequestChange,
   requestBodyIndex,
-  embedded = false,
+  embeddedInMd = false,
   corsProxy,
 }) => {
   const isDark = useThemeIsDark();
@@ -109,7 +109,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
   React.useEffect(() => {
     let isActive = true;
-    if (onRequestChange) {
+    if (onRequestChange || embeddedInMd) {
       buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
@@ -120,21 +120,8 @@ export const TryIt: React.FC<TryItProps> = ({
         chosenServer,
         corsProxy,
       }).then(request => {
-        if (isActive) onRequestChange(request);
-      });
-    }
-    if (embedded) {
-      buildHarRequest({
-        mediaTypeContent,
-        parameterValues: parameterValuesWithDefaults,
-        httpOperation,
-        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
-        auth: operationAuthValue,
-        ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
-        chosenServer,
-        corsProxy,
-      }).then(request => {
-        setRequestData(request);
+        if (onRequestChange && isActive) onRequestChange(request);
+        if (embeddedInMd) setRequestData(request);
       });
     }
     return () => {
@@ -152,6 +139,7 @@ export const TryIt: React.FC<TryItProps> = ({
     mockingOptions,
     chosenServer,
     corsProxy,
+    embeddedInMd,
   ]);
 
   const handleClick = async () => {
@@ -270,7 +258,7 @@ export const TryIt: React.FC<TryItProps> = ({
           )}
         </Panel.Content>
       </Panel>
-      {requestData && embedded && <RequestSamples request={requestData} embedded />}
+      {requestData && embeddedInMd && <RequestSamples request={requestData} embeddedInMd />}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}
     </Box>
