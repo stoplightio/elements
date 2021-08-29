@@ -147,6 +147,30 @@ describe('TryIt', () => {
     expect(responseHeader).not.toBeInTheDocument();
   });
 
+  describe('Credentials policy', () => {
+    it('sets credentials correctly', async () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} tryItCredentialsPolicy="same-origin" />);
+
+      const button = screen.getByRole('button', { name: /send/i });
+      userEvent.click(button);
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.credentials).toEqual('same-origin');
+    });
+
+    it('use `omit` as default credentials policy', async () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+      const button = screen.getByRole('button', { name: /send/i });
+      userEvent.click(button);
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.credentials).toEqual('omit');
+    });
+  });
+
   describe('Parameter Handling', () => {
     it('Hides panel when there are no parameters', () => {
       render(<TryItWithPersistence httpOperation={basicOperation} />);

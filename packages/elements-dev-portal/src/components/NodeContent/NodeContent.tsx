@@ -38,6 +38,14 @@ export type NodeContentProps = {
   hideExport?: boolean;
 
   /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+
+  /**
    * URL of a CORS proxy that will be used to send requests in TryIt.
    * Provided url will be prepended to an URL of an actual request.
    * @default false
@@ -52,6 +60,7 @@ export const NodeContent = ({
   hideTryItPanel,
   hideMocking,
   hideExport,
+  tryItCredentialsPolicy,
   tryItCorsProxy,
 }: NodeContentProps) => {
   return (
@@ -82,6 +91,7 @@ export const NodeContent = ({
                     }
                   : undefined
               }
+              tryItCredentialsPolicy={tryItCredentialsPolicy}
             />
           </MockingProvider>
         </MarkdownComponentsProvider>

@@ -22,6 +22,7 @@ type SidebarLayoutProps = {
   hideInternal?: boolean;
   hideExport?: boolean;
   exportProps?: ExportButtonProps;
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
 };
 
@@ -33,6 +34,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideInternal,
   hideExport,
   exportProps,
+  tryItCredentialsPolicy,
   tryItCorsProxy,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
@@ -93,6 +95,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           location={location}
           allowRouting
           exportProps={exportProps}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
         />
       )}

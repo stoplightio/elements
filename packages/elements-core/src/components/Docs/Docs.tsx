@@ -43,6 +43,14 @@ interface BaseDocsProps {
   exportProps?: ExportButtonProps;
 
   /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+
+  /**
    * Url of a CORS proxy that will be used to send requests in TryIt.
    * Provided url will be prepended to an URL of an actual request.
    * @default false

@@ -42,6 +42,13 @@ export interface TryItProps {
    */
   onRequestChange?: (currentRequest: HarRequest) => void;
   requestBodyIndex?: number;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
 }
 
@@ -66,6 +73,7 @@ export const TryIt: React.FC<TryItProps> = ({
   mockUrl,
   onRequestChange,
   requestBodyIndex,
+  tryItCredentialsPolicy,
   corsProxy,
 }) => {
   const isDark = useThemeIsDark();
@@ -148,6 +156,7 @@ export const TryIt: React.FC<TryItProps> = ({
         mockData,
         auth: operationAuthValue,
         chosenServer,
+        credentials: tryItCredentialsPolicy,
         corsProxy,
       });
       let response: Response | undefined;
