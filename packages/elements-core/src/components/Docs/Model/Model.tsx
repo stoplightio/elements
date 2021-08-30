@@ -86,7 +86,7 @@ const ModelComponent: React.FC<ModelProps> = ({
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
-          aria-label={examples[chosenExampleIndex].label}
+          aria-label={examples[chosenExampleIndex].data}
           noCopyButton
           maxHeight="500px"
           language="json"
