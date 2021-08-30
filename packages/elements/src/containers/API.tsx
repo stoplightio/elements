@@ -75,6 +75,14 @@ export interface CommonAPIProps extends RoutingProps {
   hideExport?: boolean;
 
   /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+
+  /**
    * Url of a CORS proxy that will be used to send requests in TryIt.
    * Provided url will be prepended to an URL of an actual request.
    * @default false
@@ -95,6 +103,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideSchemas,
     hideInternal,
     hideExport,
+    tryItCredentialsPolicy,
     tryItCorsProxy,
   } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
@@ -158,6 +167,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideTryIt={hideTryIt}
           hideExport={hideExport}
           exportProps={exportProps}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
         />
       ) : (
@@ -169,6 +179,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideInternal={hideInternal}
           hideExport={hideExport}
           exportProps={exportProps}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
         />
       )}

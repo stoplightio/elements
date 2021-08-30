@@ -47,6 +47,13 @@ export interface TryItProps {
    * True when TryIt is embedded in Markdown doc
    */
   embeddedInMd?: boolean;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
 }
 
@@ -72,6 +79,7 @@ export const TryIt: React.FC<TryItProps> = ({
   onRequestChange,
   requestBodyIndex,
   embeddedInMd = false,
+  tryItCredentialsPolicy,
   corsProxy,
 }) => {
   const isDark = useThemeIsDark();
@@ -158,6 +166,7 @@ export const TryIt: React.FC<TryItProps> = ({
         mockData,
         auth: operationAuthValue,
         chosenServer,
+        credentials: tryItCredentialsPolicy,
         corsProxy,
       });
       let response: Response | undefined;

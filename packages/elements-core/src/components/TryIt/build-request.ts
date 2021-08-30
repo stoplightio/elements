@@ -30,6 +30,7 @@ interface BuildRequestInput {
   mockData?: MockData;
   auth?: HttpSecuritySchemeWithValues;
   chosenServer?: IServer;
+  credentials?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
 }
 
@@ -58,6 +59,7 @@ export async function buildFetchRequest({
   mockData,
   auth,
   chosenServer,
+  credentials = 'omit',
   corsProxy,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
@@ -90,7 +92,7 @@ export async function buildFetchRequest({
   return [
     url.toString(),
     {
-      credentials: 'omit',
+      credentials,
       method: httpOperation.method.toUpperCase(),
       headers,
       body: shouldIncludeBody ? body : undefined,
