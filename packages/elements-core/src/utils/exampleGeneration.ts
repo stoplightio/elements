@@ -53,14 +53,16 @@ export const generateExampleFromMediaTypeContent = (
 };
 
 export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] => {
+  const examples: Example[] = [];
+
   if (Array.isArray(schema?.examples)) {
-    return schema.examples.map((example, index) => ({
-      data: safeStringify(example, undefined, 2) ?? '',
-      label: index === 0 ? 'default' : `example-${index}`,
-    }));
-  }
-  if (isPlainObject(schema?.['x-examples'])) {
-    const examples: Example[] = [];
+    schema.examples.forEach((example, index) => {
+      examples.push({
+        data: safeStringify(example, undefined, 2) ?? '',
+        label: index === 0 ? 'default' : `example-${index}`,
+      });
+    });
+  } else if (isPlainObject(schema?.['x-examples'])) {
     for (const [label, example] of Object.entries(schema['x-examples'])) {
       if (isPlainObject(example) && example.hasOwnProperty('value')) {
         examples.push({
@@ -69,8 +71,12 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
         });
       }
     }
+  }
+
+  if (examples.length) {
     return examples;
   }
+
   const generated = Sampler.sample(schema);
   return generated !== null
     ? [
