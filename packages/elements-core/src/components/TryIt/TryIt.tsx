@@ -11,6 +11,7 @@ import * as React from 'react';
 import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { getServersToDisplay } from '../../utils/http-spec/IServer';
+import { RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
@@ -42,6 +43,10 @@ export interface TryItProps {
    */
   onRequestChange?: (currentRequest: HarRequest) => void;
   requestBodyIndex?: number;
+  /**
+   * True when TryIt is embedded in Markdown doc
+   */
+  embeddedInMd?: boolean;
 
   /**
    * Fetch credentials policy for TryIt component
@@ -73,12 +78,15 @@ export const TryIt: React.FC<TryItProps> = ({
   mockUrl,
   onRequestChange,
   requestBodyIndex,
+  embeddedInMd = false,
   tryItCredentialsPolicy,
   corsProxy,
 }) => {
   const isDark = useThemeIsDark();
 
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
+  const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
+
   const [loading, setLoading] = React.useState<boolean>(false);
   const [validateParameters, setValidateParameters] = React.useState<boolean>(false);
 
@@ -109,7 +117,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
   React.useEffect(() => {
     let isActive = true;
-    if (onRequestChange) {
+    if (onRequestChange || embeddedInMd) {
       buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
@@ -120,7 +128,8 @@ export const TryIt: React.FC<TryItProps> = ({
         chosenServer,
         corsProxy,
       }).then(request => {
-        if (isActive) onRequestChange(request);
+        if (onRequestChange && isActive) onRequestChange(request);
+        if (embeddedInMd) setRequestData(request);
       });
     }
     return () => {
@@ -138,6 +147,7 @@ export const TryIt: React.FC<TryItProps> = ({
     mockingOptions,
     chosenServer,
     corsProxy,
+    embeddedInMd,
   ]);
 
   const handleClick = async () => {
@@ -257,6 +267,7 @@ export const TryIt: React.FC<TryItProps> = ({
           )}
         </Panel.Content>
       </Panel>
+      {requestData && embeddedInMd && <RequestSamples request={requestData} embeddedInMd />}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}
     </Box>
