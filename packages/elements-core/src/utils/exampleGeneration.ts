@@ -1,10 +1,15 @@
-import { safeStringify } from '@stoplight/json';
+import { isPlainObject, safeStringify } from '@stoplight/json';
 import * as Sampler from '@stoplight/json-schema-sampler';
 import { IMediaTypeContent } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import React from 'react';
 
 import { useDocument } from '../context/InlineRefResolver';
+
+type Example = {
+  label: string;
+  data: string;
+};
 
 export type GenerateExampleFromMediaTypeContentOptions = Sampler.Options;
 
@@ -47,10 +52,32 @@ export const generateExampleFromMediaTypeContent = (
   return '';
 };
 
-export const generateExamplesFromJsonSchema = (schema: JSONSchema7) => {
+export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] => {
   if (Array.isArray(schema?.examples)) {
-    return schema.examples.map(example => safeStringify(example, undefined, 2) ?? '');
+    return schema.examples.map((example, index) => ({
+      data: safeStringify(example, undefined, 2) ?? '',
+      label: index === 0 ? 'default' : `example-${index}`,
+    }));
+  }
+  if (isPlainObject(schema?.['x-examples'])) {
+    const examples: Example[] = [];
+    for (const [label, example] of Object.entries(schema['x-examples'])) {
+      if (isPlainObject(example) && example.hasOwnProperty('value')) {
+        examples.push({
+          label,
+          data: safeStringify(example.value, undefined, 2) ?? '',
+        });
+      }
+    }
+    return examples;
   }
   const generated = Sampler.sample(schema);
-  return generated !== null ? [safeStringify(generated, undefined, 2) ?? ''] : [''];
+  return generated !== null
+    ? [
+        {
+          label: 'default',
+          data: safeStringify(generated, undefined, 2) ?? '',
+        },
+      ]
+    : [{ label: 'default', data: '' }];
 };

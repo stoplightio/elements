@@ -68,7 +68,7 @@ const ModelComponent: React.FC<ModelProps> = ({
     <Select
       aria-label="Example"
       value={String(chosenExampleIndex)}
-      options={examples.map((_value, index) => ({ value: index, label: index === 0 ? 'default' : `example-${index}` }))}
+      options={examples.map(({ label }, index) => ({ value: index, label }))}
       onChange={(value: string | number) => setChosenExampleIndex(parseInt(String(value), 10))}
       size="sm"
       triggerTextPrefix="Example: "
@@ -86,11 +86,11 @@ const ModelComponent: React.FC<ModelProps> = ({
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
-          aria-label={examples[chosenExampleIndex]}
+          aria-label={examples[chosenExampleIndex].label}
           noCopyButton
           maxHeight="500px"
           language="json"
-          value={examples[chosenExampleIndex]}
+          value={examples[chosenExampleIndex].data}
           showLineNumbers
         />
       </Panel.Content>
