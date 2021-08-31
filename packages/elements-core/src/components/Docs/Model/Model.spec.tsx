@@ -57,6 +57,36 @@ describe('Model', () => {
     expect(container).toHaveTextContent('"propA": "second"');
   });
 
+  it('uses x-examples defined in the schema', async () => {
+    const examples = {
+      ...exampleSchema,
+      'x-examples': {
+        firstTitle: {
+          value: {
+            propA: 'first',
+          },
+        },
+        secondTitle: {
+          value: {
+            propA: 'second',
+          },
+        },
+      },
+    };
+    const { container } = render(
+      <MosaicProvider>
+        <Model data={examples} />
+      </MosaicProvider>,
+    );
+
+    const menuTrigger = screen.getByLabelText('Example');
+    expect(menuTrigger).toHaveTextContent('Example: firstTitle');
+    expect(container).toHaveTextContent('"propA": "first"');
+
+    chooseOption(menuTrigger, 'secondTitle');
+    expect(container).toHaveTextContent('"propA": "second"');
+  });
+
   it('displays description at top of doc for objects', async () => {
     render(<Model data={exampleSchema} />);
     const description = screen.queryAllByText('example schema description');
