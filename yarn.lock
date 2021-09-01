@@ -1086,7 +1086,7 @@
     core-js-pure "^3.16.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.0", "@babel/runtime@^7.14.8", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.0", "@babel/runtime@^7.14.8", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.15.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.15.3.tgz#2e1c2880ca118e5b2f9988322bd8a7656a32502b"
   integrity sha512-OvwMLqNXkCXSz1kSm58sEsNuhqOx/fKpnUnKnFB5v8uDda5bLNEHNgKPvhDN6IU0LDcnHQ90LlJ0Q6jnyBSIBA==
@@ -3479,10 +3479,10 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.2.1":
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.2.1.tgz#2e64120fc0f4aa8da48bfa7bee21d6133395b707"
-  integrity sha512-ak54wDs0qzhH2HbUzm8h3Jw494czOpYBiHPto6vbHI0htjYMXx8nT3NoEi66lGpczESNFIk+1VK7ambIS0ovnQ==
+"@stoplight/markdown-viewer@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.3.0.tgz#709e3253a0840dff471bcecd443b8ec90507d0c0"
+  integrity sha512-xmpfsPbrgevXGbo7eX5jAk2q203SflQFKxmYlSnq9f69F5Ms9e8II3dFCn4bDa33PLXrA8SB6NwX4kVM2sSVtg==
   dependencies:
     "@stoplight/markdown" "^3.0.0"
     "@stoplight/react-error-boundary" "^1.1.0"
@@ -3519,20 +3519,21 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.2.4.tgz#20b6273117ac67102175b3e04c15b34c32d42d27"
-  integrity sha512-RSjfXwbFLc5rO6OpMml3N8r3C5ms+hLCouYFPO6+XtM4ZCQv781uqUAsbl2BMAbt7alVebgqPk8B/hrxUGvUyw==
+"@stoplight/mosaic-code-editor@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.5.0.tgz#27637ffd8f1382f09d111e40b6cc72964bb57b3c"
+  integrity sha512-i8TUfwqHLnhdoZTWkTAEyL98/xC/l1lE1rVjRS6LNs02h74wDkYqHKbecW1uMEMtpaLmPdVY91pMEeedOWzjPQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
     "@fortawesome/react-fontawesome" "^0.1.14"
     "@react-hook/size" "^2.1.1"
     "@react-hook/window-size" "^3.0.7"
-    "@stoplight/mosaic" "1.2.4"
-    "@stoplight/mosaic-code-viewer" "1.2.4"
+    "@stoplight/mosaic" "1.5.0"
+    "@stoplight/mosaic-code-viewer" "1.5.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
+    dom-helpers "^5.2.1"
     lodash.get "^4.4.2"
     polished "^4.1.3"
     prism-react-renderer "^1.2.1"
@@ -3541,19 +3542,20 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.2.4", "@stoplight/mosaic-code-viewer@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.2.4.tgz#a756a8274d1e1579cc621898d3e5baa0e4a336e8"
-  integrity sha512-g51TNEHHcv2KWRR2tKnSKyr2YvEk1i+Hrdz2fkbI9eETJsIFKdwnyh6n+rxsgWB0Qv06efaFKdbPybzF5WjnXg==
+"@stoplight/mosaic-code-viewer@1.5.0", "@stoplight/mosaic-code-viewer@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.5.0.tgz#45f82b43f7d371600d4d9706432ec2d7bf9949f5"
+  integrity sha512-7lsWBeopUL1j4gG11gYCoprADV0lg9HjeHK3299FVDGsx/ICbkf9mas9ksSrHON84bQvdLf3pBGIG5e/bJxIhQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
     "@fortawesome/react-fontawesome" "^0.1.14"
     "@react-hook/size" "^2.1.1"
     "@react-hook/window-size" "^3.0.7"
-    "@stoplight/mosaic" "1.2.4"
+    "@stoplight/mosaic" "1.5.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
+    dom-helpers "^5.2.1"
     lodash.get "^4.4.2"
     polished "^4.1.3"
     prism-react-renderer "^1.2.1"
@@ -3562,7 +3564,28 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.2.4", "@stoplight/mosaic@^1.2.4":
+"@stoplight/mosaic@1.5.0", "@stoplight/mosaic@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.5.0.tgz#3dc37a67e952a7dd341cdd365cd71d0aea3c1819"
+  integrity sha512-iZh8cBB+jE8a49Y70WLmzQY6fN0nqgklHE6ZS2gQvPbHbk8ddOXW/tPNWmxCo8kDG2mw/KxYDCNloROh8LBlEw==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.35"
+    "@fortawesome/free-solid-svg-icons" "^5.15.3"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@types/react" "^17.0.3"
+    "@types/react-dom" "^17.0.3"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    dom-helpers "^5.2.1"
+    lodash.get "^4.4.2"
+    polished "^4.1.3"
+    ts-keycode-enum "^1.0.6"
+    tslib "^2.1.0"
+    zustand "^3.5.2"
+
+"@stoplight/mosaic@^1.2.4":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.2.4.tgz#391ba88996f289cb7ce8b2e3933fe0c3965350ee"
   integrity sha512-8Jp/9OKP0081dYmBY0uKB1yapaTI3DuNUOlrtK1XrESD9dkAHkeyggtRBqqN6rvmaSsSPI0ejMTVJYikII6lSQ==
@@ -8894,6 +8917,14 @@ dom-converter@^0.2.0:
   integrity sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==
   dependencies:
     utila "~0.4"
+
+dom-helpers@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.2.1.tgz#d9400536b2bf8225ad98fe052e029451ac40e902"
+  integrity sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
+  dependencies:
+    "@babel/runtime" "^7.8.7"
+    csstype "^3.0.2"
 
 dom-serializer@0:
   version "0.2.2"
