@@ -64,10 +64,11 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
     });
   } else if (isPlainObject(schema?.['x-examples'])) {
     for (const [label, example] of Object.entries(schema['x-examples'])) {
-      if (isPlainObject(example) && example.hasOwnProperty('value')) {
+      if (isPlainObject(example)) {
+        const val = example.hasOwnProperty('value') && Object.keys(example).length === 1 ? example.value : example;
         examples.push({
           label,
-          data: safeStringify(example.value, undefined, 2) ?? '',
+          data: safeStringify(val, undefined, 2) ?? '',
         });
       }
     }
