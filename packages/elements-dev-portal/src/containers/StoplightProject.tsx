@@ -58,6 +58,21 @@ export interface StoplightProjectProps extends RoutingProps {
    * @default false
    */
   collapseTableOfContents?: boolean;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+
+  /**
+   * URL of a CORS proxy that will be used to send requests in TryIt.
+   * Provided url will be prepended to an URL of an actual request.
+   * @default false
+   */
+  tryItCorsProxy?: string;
 }
 
 const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
@@ -66,6 +81,8 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   hideMocking,
   hideExport,
   collapseTableOfContents = false,
+  tryItCredentialsPolicy,
+  tryItCorsProxy,
 }) => {
   const { branchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
   const history = useHistory();
@@ -110,7 +127,15 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     elem = <NotFound />;
   } else {
     elem = (
-      <NodeContent node={node} Link={Link} hideTryIt={hideTryIt} hideMocking={hideMocking} hideExport={hideExport} />
+      <NodeContent
+        node={node}
+        Link={Link}
+        hideTryIt={hideTryIt}
+        hideMocking={hideMocking}
+        hideExport={hideExport}
+        tryItCredentialsPolicy={tryItCredentialsPolicy}
+        tryItCorsProxy={tryItCorsProxy}
+      />
     );
   }
 

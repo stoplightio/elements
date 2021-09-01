@@ -323,8 +323,8 @@ describe('HttpOperation', () => {
       expect(pathParametersPanel).toBeEnabled();
 
       expect(await screen.findByText('parameter name')).toBeInTheDocument();
-      expect(await screen.findByText('"example value"')).toBeInTheDocument();
-      expect(await screen.findByText('"another example"')).toBeInTheDocument();
+      expect(await screen.findByText('example value')).toBeInTheDocument();
+      expect(await screen.findByText('another example')).toBeInTheDocument();
     });
 
     it('should still show path parameters panel when there are no parameters', () => {

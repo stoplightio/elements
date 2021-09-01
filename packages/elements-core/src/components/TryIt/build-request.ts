@@ -30,7 +30,26 @@ interface BuildRequestInput {
   mockData?: MockData;
   auth?: HttpSecuritySchemeWithValues;
   chosenServer?: IServer;
+  credentials?: 'omit' | 'include' | 'same-origin';
+  corsProxy?: string;
 }
+
+const getServerUrl = ({
+  chosenServer,
+  httpOperation,
+  mockData,
+  corsProxy,
+}: Pick<BuildRequestInput, 'httpOperation' | 'chosenServer' | 'mockData' | 'corsProxy'>) => {
+  const server = chosenServer || httpOperation.servers?.[0];
+  const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
+  const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
+
+  if (corsProxy && !mockData) {
+    return `${corsProxy}${serverUrl}`;
+  }
+
+  return serverUrl;
+};
 
 export async function buildFetchRequest({
   httpOperation,
@@ -40,10 +59,10 @@ export async function buildFetchRequest({
   mockData,
   auth,
   chosenServer,
+  credentials = 'omit',
+  corsProxy,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
-  const server = chosenServer || httpOperation.servers?.[0];
-  const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
-  const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
+  const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
 
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
@@ -73,7 +92,7 @@ export async function buildFetchRequest({
   return [
     url.toString(),
     {
-      credentials: 'omit',
+      credentials,
       method: httpOperation.method.toUpperCase(),
       headers,
       body: shouldIncludeBody ? body : undefined,
@@ -146,10 +165,10 @@ export async function buildHarRequest({
   auth,
   mockData,
   chosenServer,
+  corsProxy,
 }: BuildRequestInput): Promise<HarRequest> {
-  const server = chosenServer || httpOperation.servers?.[0];
-  const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
-  const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
+  const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
+
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 

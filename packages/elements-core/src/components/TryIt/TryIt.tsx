@@ -1,7 +1,7 @@
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeParse, safeStringify } from '@stoplight/json';
-import { Box, Button, Flex, Link, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, Flex, Icon, Link, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -11,6 +11,7 @@ import * as React from 'react';
 import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
 import { getHttpCodeColor } from '../../utils/http';
 import { getServersToDisplay } from '../../utils/http-spec/IServer';
+import { RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
@@ -42,6 +43,18 @@ export interface TryItProps {
    */
   onRequestChange?: (currentRequest: HarRequest) => void;
   requestBodyIndex?: number;
+  /**
+   * True when TryIt is embedded in Markdown doc
+   */
+  embeddedInMd?: boolean;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+  corsProxy?: string;
 }
 
 interface ResponseState {
@@ -60,11 +73,22 @@ interface ErrorState {
 
 const chosenServerAtom = atom<IServer | undefined>(undefined);
 
-export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestChange, requestBodyIndex }) => {
+export const TryIt: React.FC<TryItProps> = ({
+  httpOperation,
+  mockUrl,
+  onRequestChange,
+  requestBodyIndex,
+  embeddedInMd = false,
+  tryItCredentialsPolicy,
+  corsProxy,
+}) => {
   const isDark = useThemeIsDark();
 
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
+  const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
+
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [validateParameters, setValidateParameters] = React.useState<boolean>(false);
 
   const mediaTypeContent = httpOperation.request?.body?.contents?.[requestBodyIndex ?? 0];
 
@@ -80,6 +104,10 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
   const servers = getServersToDisplay(httpOperation.servers || []);
   const [chosenServer, setChosenServer] = useAtom(chosenServerAtom);
 
+  const hasRequiredButEmptyParameters = allParameters.some(
+    parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
+  );
+
   React.useEffect(() => {
     if (!chosenServer) {
       setChosenServer(servers[0]);
@@ -89,7 +117,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
 
   React.useEffect(() => {
     let isActive = true;
-    if (onRequestChange) {
+    if (onRequestChange || embeddedInMd) {
       buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
@@ -98,8 +126,10 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         auth: operationAuthValue,
         ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
+        corsProxy,
       }).then(request => {
-        if (isActive) onRequestChange(request);
+        if (onRequestChange && isActive) onRequestChange(request);
+        if (embeddedInMd) setRequestData(request);
       });
     }
     return () => {
@@ -116,9 +146,15 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
     operationAuthValue,
     mockingOptions,
     chosenServer,
+    corsProxy,
+    embeddedInMd,
   ]);
 
   const handleClick = async () => {
+    setValidateParameters(true);
+
+    if (hasRequiredButEmptyParameters) return;
+
     try {
       setLoading(true);
       const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
@@ -130,6 +166,8 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
         mockData,
         auth: operationAuthValue,
         chosenServer,
+        credentials: tryItCredentialsPolicy,
+        corsProxy,
       });
       let response: Response | undefined;
       try {
@@ -195,6 +233,7 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
             parameters={allParameters}
             values={parameterValuesWithDefaults}
             onChangeValue={updateParameterValue}
+            validate={validateParameters}
           />
         )}
         {formDataState.isFormDataBody ? (
@@ -220,8 +259,15 @@ export const TryIt: React.FC<TryItProps> = ({ httpOperation, mockUrl, onRequestC
               <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
             )}
           </Flex>
+          {validateParameters && hasRequiredButEmptyParameters && (
+            <Box mt={4} color="danger-light" fontSize="sm">
+              <Icon icon={faExclamationTriangle} className="sl-mr-1" />
+              You didn't provide all of the required parameters!
+            </Box>
+          )}
         </Panel.Content>
       </Panel>
+      {requestData && embeddedInMd && <RequestSamples request={requestData} embeddedInMd />}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}
     </Box>

@@ -245,37 +245,49 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents) {
     { httpOperations, models }: { httpOperations: NodeData[]; models: NodeData[] },
     serviceTagNames: string[],
   ) => {
-    const { groups, others } = httpOperations.reduce<{
+    const operationsAndModels = [
+      ...httpOperations.map(i => ({ ...i, nodeType: NodeType.HttpOperation })),
+      ...models.map(i => ({ ...i, nodeType: NodeType.Model })),
+    ];
+
+    const { groups, ungroupedModels, ungroupedOperations } = operationsAndModels.reduce<{
       groups: { [key: string]: Group };
-      others: Item[];
+      ungroupedOperations: Item[];
+      ungroupedModels: NodeData[];
     }>(
       (result, subNode) => {
         const [tagName] = subNode.tags || [];
+        const item: Item = {
+          type: 'item',
+          title: subNode.name,
+          uri: subNode.uri,
+        };
+
         if (tagName) {
           if (result.groups[tagName.toLowerCase()]) {
-            result.groups[tagName.toLowerCase()].items.push({
-              type: 'item',
-              title: subNode.name,
-              uri: subNode.uri,
-            });
+            result.groups[tagName.toLowerCase()].items.push(item);
           } else {
             const serviceTagName = serviceTagNames.find(tn => tn.toLowerCase() === tagName.toLowerCase());
             result.groups[tagName.toLowerCase()] = {
               type: 'group',
               title: serviceTagName || tagName,
-              items: [{ type: 'item', title: subNode.name, uri: subNode.uri }],
+              items: [item],
             };
           }
         } else {
-          result.others.push({ type: 'item', title: subNode.name, uri: subNode.uri });
+          if (subNode.nodeType === NodeType.HttpOperation) {
+            result.ungroupedOperations.push(item);
+          } else {
+            result.ungroupedModels.push(subNode);
+          }
         }
 
         return result;
       },
-      { groups: {}, others: [] },
+      { groups: {}, ungroupedOperations: [], ungroupedModels: [] },
     );
 
-    others.forEach(item => toc.items.push(item));
+    ungroupedOperations.forEach(item => toc.items.push(item));
 
     const tagNamesLC = serviceTagNames.map(tn => tn.toLowerCase());
 
@@ -296,7 +308,7 @@ function appendHttpServiceItemsToToC(toc: ITableOfContents) {
       })
       .forEach(([, group]) => toc.items.push(group));
 
-    appendModelsToToc(toc, 'group')(models);
+    appendModelsToToc(toc, 'group')(ungroupedModels);
   };
 }
 
@@ -344,11 +356,36 @@ export function appendHttpServicesToToC(toc: ITableOfContents) {
 export function appendModelsToToc(toc: ITableOfContents, schemaType: SchemaType = 'divider') {
   return (models: NodeData[]) => {
     if (models.length) {
-      const childItems: TableOfContentItem[] = models.map(model => ({
-        type: 'item',
-        title: model.name,
-        uri: model.uri,
-      }));
+      const { others, groups } = models.reduce<{
+        groups: { [key: string]: Group };
+        others: Item[];
+      }>(
+        (result, model) => {
+          const [tagName] = model.tags || [];
+          const item: Item = { type: 'item', title: model.name, uri: model.uri };
+
+          if (tagName) {
+            if (result.groups[tagName.toLowerCase()]) {
+              result.groups[tagName.toLowerCase()].items.push(item);
+            } else {
+              result.groups[tagName.toLowerCase()] = {
+                type: 'group',
+                title: tagName,
+                items: [item],
+              };
+            }
+          } else {
+            result.others.push(item);
+          }
+
+          return result;
+        },
+        { groups: {}, others: [] },
+      );
+
+      const childItems: TableOfContentItem[] = [];
+      Object.entries(groups).forEach(([, group]) => childItems.push(group));
+      others.forEach(item => childItems.push(item));
 
       if (schemaType === 'divider') {
         toc.items.push({ type: 'divider', title: 'Schemas' });

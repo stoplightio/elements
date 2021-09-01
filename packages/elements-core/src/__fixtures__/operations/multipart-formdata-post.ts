@@ -36,7 +36,7 @@ export const httpOperation: IHttpOperation = {
               },
               someFile: {
                 type: 'string',
-                format: 'binary',
+                contentMediaType: 'application/octet-stream',
               },
             },
             required: ['name', 'completed'],

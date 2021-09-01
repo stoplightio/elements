@@ -51,7 +51,7 @@ const createMultipartRequestBody: RequestBodyCreator = async ({ mediaTypeContent
 
     if (typeof schema !== 'object') continue;
 
-    if (parameterSupportsFileUpload({ schema }) && schema.format === 'base64' && value instanceof File) {
+    if (parameterSupportsFileUpload({ schema }) && schema.contentEncoding === 'base64' && value instanceof File) {
       try {
         formData.append(key, await fileToBase64(value));
       } catch {

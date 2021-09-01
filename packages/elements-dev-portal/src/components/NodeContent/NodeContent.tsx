@@ -36,9 +36,33 @@ export type NodeContentProps = {
    * @default false
    */
   hideExport?: boolean;
+
+  /**
+   * Fetch credentials policy for TryIt component
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+   * @default "omit"
+   */
+
+  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
+
+  /**
+   * URL of a CORS proxy that will be used to send requests in TryIt.
+   * Provided url will be prepended to an URL of an actual request.
+   * @default false
+   */
+  tryItCorsProxy?: string;
 };
 
-export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking, hideExport }: NodeContentProps) => {
+export const NodeContent = ({
+  node,
+  Link,
+  hideTryIt,
+  hideTryItPanel,
+  hideMocking,
+  hideExport,
+  tryItCredentialsPolicy,
+  tryItCorsProxy,
+}: NodeContentProps) => {
   return (
     <PersistenceContextProvider>
       <NodeLinkContext.Provider value={[node, Link]}>
@@ -54,6 +78,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
                 hideExport: hideExport || node.links.export_url === undefined,
               }}
               useNodeForRefResolving
+              tryItCorsProxy={tryItCorsProxy}
               exportProps={
                 [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)
                   ? {
@@ -66,6 +91,7 @@ export const NodeContent = ({ node, Link, hideTryIt, hideTryItPanel, hideMocking
                     }
                   : undefined
               }
+              tryItCredentialsPolicy={tryItCredentialsPolicy}
             />
           </MockingProvider>
         </MarkdownComponentsProvider>

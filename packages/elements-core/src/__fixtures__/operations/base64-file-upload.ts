@@ -26,7 +26,7 @@ export const httpOperation: IHttpOperation = {
             properties: {
               someFile: {
                 type: 'string',
-                format: 'base64',
+                contentEncoding: 'base64',
               },
             },
           },

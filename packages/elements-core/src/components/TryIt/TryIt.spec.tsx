@@ -53,8 +53,7 @@ describe('TryIt', () => {
   it('Makes the correct basic request', async () => {
     render(<TryItWithPersistence httpOperation={basicOperation} />);
 
-    const button = screen.getByRole('button', { name: /send/i });
-    userEvent.click(button);
+    clickSend();
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     expect(fetchMock.mock.calls[0][0]).toBe('https://todos.stoplight.io/todos');
@@ -62,6 +61,15 @@ describe('TryIt', () => {
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
     expect(headers.get('Content-Type')).toBe('application/json');
+  });
+
+  it('uses cors proxy url, if provided', async () => {
+    render(<TryItWithPersistence httpOperation={basicOperation} corsProxy="https://some.proxy.com/" />);
+
+    clickSend();
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+    expect(fetchMock.mock.calls[0][0]).toBe('https://some.proxy.com/https://todos.stoplight.io/todos');
   });
 
   it('replaces url variables with default values when making request', async () => {
@@ -137,6 +145,37 @@ describe('TryIt', () => {
 
     const responseHeader = screen.queryByText('Response');
     expect(responseHeader).not.toBeInTheDocument();
+  });
+
+  it('when embedded in markdown, shows request codegen', async () => {
+    render(<TryItWithPersistence httpOperation={basicOperation} embeddedInMd />);
+
+    const requestSamplePanel = await screen.findByText('Request Sample: Shell / cURL');
+    expect(requestSamplePanel).toBeVisible();
+  });
+
+  describe('Credentials policy', () => {
+    it('sets credentials correctly', async () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} tryItCredentialsPolicy="same-origin" />);
+
+      const button = screen.getByRole('button', { name: /send/i });
+      userEvent.click(button);
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.credentials).toEqual('same-origin');
+    });
+
+    it('use `omit` as default credentials policy', async () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+      const button = screen.getByRole('button', { name: /send/i });
+      userEvent.click(button);
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.credentials).toEqual('omit');
+    });
   });
 
   describe('Parameter Handling', () => {
@@ -488,12 +527,17 @@ describe('TryIt', () => {
         });
       });
 
-      it('resets the textbox after httpOperation change', () => {
+      it('resets the textbox after httpOperation change', async () => {
         const { rerender } = render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
         const textbox = screen.getByRole('textbox');
         userEvent.type(textbox, 'asd');
         rerender(<TryItWithPersistence httpOperation={requestBody} />);
-        waitFor(() => expect(textbox).toHaveTextContent('{"name":"string","age":0}'));
+        await waitFor(() =>
+          expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
+            name: 'string',
+            age: 0,
+          }),
+        );
       });
 
       it('allows users to choose request body examples from spec using dropdown menu', () => {
@@ -838,6 +882,9 @@ describe('TryIt', () => {
 
         await userEvent.type(tokenInput, 'Bearer 0a1b2c');
 
+        const todoIdField = screen.getByLabelText('todoId');
+        await userEvent.type(todoIdField, '123');
+
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
@@ -870,6 +917,9 @@ describe('TryIt', () => {
         await userEvent.type(usernameInput, 'user');
         await userEvent.type(passwordInput, 'password');
 
+        const todoIdField = screen.getByLabelText('todoId');
+        await userEvent.type(todoIdField, '123');
+
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
@@ -892,6 +942,9 @@ describe('TryIt', () => {
         const tokenInput = screen.getByLabelText('Token');
 
         await userEvent.type(tokenInput, '0a1b2c');
+
+        const todoIdField = screen.getByLabelText('todoId');
+        await userEvent.type(todoIdField, '123');
 
         clickSend();
 
@@ -928,6 +981,9 @@ describe('TryIt', () => {
         const expectedDigestContent = `Digest username="Mufasa", realm="testrealm@host.com", nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093", uri="/dir/index.html", qop=auth, nc=00000001, cnonce="0a4f113b", response="6629fae49393a05397450978507c4ef1", opaque="5ccc069c403ebaf9f0171e9517f40e41"`;
 
         await userEvent.type(authInput, digestContent);
+
+        const todoIdField = screen.getByLabelText('todoId');
+        await userEvent.type(todoIdField, '123');
 
         clickSend();
 
@@ -982,11 +1038,53 @@ describe('TryIt', () => {
 
       chooseOption(serversSelect, 'Development');
 
+      const todoIdField = screen.getByLabelText('todoId');
+      await userEvent.type(todoIdField, '123');
+
       clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock.mock.calls[0][0]).toContain('https://todos-dev.stoplight.io');
+    });
+  });
+
+  describe('Validation', () => {
+    it('does not show a warning message before sending the request', () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument();
+    });
+
+    it('shows a warning message if at least one parameter is required but empty', () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      clickSend();
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).toBeInTheDocument();
+    });
+
+    it('does not send a request if at least one parameter is required but empty', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      clickSend();
+
+      // Fetching is called asynchronously, so I am waiting for it
+      // to be actually called. Without that the test always passes.
+      await Promise.resolve();
+
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    it('does not show the message if required parameters are not empty', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const todoIdField = screen.getByLabelText('todoId');
+      await userEvent.type(todoIdField, '123');
+
+      clickSend();
+
+      expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument();
     });
   });
 });

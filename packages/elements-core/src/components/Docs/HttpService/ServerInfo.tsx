@@ -1,4 +1,5 @@
-import { Box, Flex, InvertTheme, Panel, Text } from '@stoplight/mosaic';
+import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { Box, Flex, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard } from '@stoplight/mosaic';
 import { IServer } from '@stoplight/types';
 import * as React from 'react';
 
@@ -27,13 +28,8 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Box overflowX="auto">
           <Panel.Content w="full" className="sl-flex sl-flex-col">
-            {serversToDisplay.map(({ description, url }, index) => (
-              <Box whitespace="nowrap" mb={1} key={index}>
-                <Text pr={2} fontWeight="bold">
-                  {description}:
-                </Text>
-                <Text aria-label={description}>{url}</Text>
-              </Box>
+            {serversToDisplay.map((server, index) => (
+              <ServerUrl {...server} key={index} />
             ))}
             {showMocking && (
               <>
@@ -50,5 +46,29 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
         </Box>
       </Panel>
     </InvertTheme>
+  );
+};
+
+const ServerUrl = ({ description, url }: IServer) => {
+  const { onCopy, hasCopied } = useClipboard(url);
+
+  return (
+    <Box whitespace="nowrap" mb={1}>
+      <Text pr={2} fontWeight="bold">
+        {description}:
+      </Text>
+      <Tooltip placement="right" renderTrigger={() => <Text aria-label={description}>{url}</Text>}>
+        {!hasCopied && (
+          <Box p={1} onClick={onCopy} cursor="pointer">
+            Copy Server URL <Icon className="sl-ml-1" icon={faCopy} />
+          </Box>
+        )}
+        {hasCopied && (
+          <Box p={1}>
+            Copied Server URL <Icon className="sl-ml-1" icon={faCheck} />
+          </Box>
+        )}
+      </Tooltip>
+    </Box>
   );
 };
