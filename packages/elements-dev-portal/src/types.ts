@@ -47,10 +47,11 @@ export type NodeEdge = {
 
 export type NodeSearchResult = NodeSummary & {
   highlighted: {
-    name: string;
-    summary: string;
-    data: string;
+    name: string | null;
+    summary: string | null;
+    data: string | null;
   };
   project_slug: string;
   project_name: string;
+  node_id: number;
 };
