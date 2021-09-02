@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "7.2.3",
+  "version": "7.2.6",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -50,7 +50,7 @@
     "@stoplight/json": "^3.10.0",
     "@stoplight/json-schema-ref-parser": "^9.0.5",
     "@stoplight/json-schema-sampler": "0.2.0",
-    "@stoplight/json-schema-viewer": "^4.2.1",
+    "@stoplight/json-schema-viewer": "^4.3.0",
     "@stoplight/markdown": "^3.0.0",
     "@stoplight/markdown-viewer": "^5.2.1",
     "@stoplight/mosaic": "^1.2.4",
