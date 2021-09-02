@@ -3492,10 +3492,10 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.2.1":
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.2.1.tgz#2e64120fc0f4aa8da48bfa7bee21d6133395b707"
-  integrity sha512-ak54wDs0qzhH2HbUzm8h3Jw494czOpYBiHPto6vbHI0htjYMXx8nT3NoEi66lGpczESNFIk+1VK7ambIS0ovnQ==
+"@stoplight/markdown-viewer@^5.3.0":
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.3.1.tgz#c6b27f0adf0d729df9bb903ad91ea5c940dbe93c"
+  integrity sha512-ZMUpIhygGO5xzdJQPcd1/gGScqwq79e5VU0GXFNPx5YprnfoosMJO4gZnsAl2iwe6F09OU5GhFZuwIvtLTiVcw==
   dependencies:
     "@stoplight/markdown" "^3.0.0"
     "@stoplight/react-error-boundary" "^1.1.0"
@@ -3532,18 +3532,18 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.2.4":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.4.1.tgz#4d059d60e984688282754e0da05f120d11403239"
-  integrity sha512-/JuyS7NXPAjoTx2PJyOzu8wi8lK3fuO5Iutbp0KDQl9dECM2E9BLIgWXD+BYnVoqBPxLRhTtdsabK2xJ3q/z+w==
+"@stoplight/mosaic-code-editor@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.5.0.tgz#27637ffd8f1382f09d111e40b6cc72964bb57b3c"
+  integrity sha512-i8TUfwqHLnhdoZTWkTAEyL98/xC/l1lE1rVjRS6LNs02h74wDkYqHKbecW1uMEMtpaLmPdVY91pMEeedOWzjPQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
     "@fortawesome/react-fontawesome" "^0.1.14"
     "@react-hook/size" "^2.1.1"
     "@react-hook/window-size" "^3.0.7"
-    "@stoplight/mosaic" "1.4.1"
-    "@stoplight/mosaic-code-viewer" "1.4.1"
+    "@stoplight/mosaic" "1.5.0"
+    "@stoplight/mosaic-code-viewer" "1.5.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^5.2.1"
@@ -3555,17 +3555,17 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.4.1", "@stoplight/mosaic-code-viewer@^1.2.4":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.4.1.tgz#e298b159963b2e977249126f6bc61bd0d06f74ca"
-  integrity sha512-t1KWjGbWrxFXqUhKZ67d3CCNUvXUwXO0zzuTjia5fk4Y3n9KvZDsZ5YkAJ9GARYUdneRsFmniOZJ7w33ew1J8A==
+"@stoplight/mosaic-code-viewer@1.5.0", "@stoplight/mosaic-code-viewer@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.5.0.tgz#45f82b43f7d371600d4d9706432ec2d7bf9949f5"
+  integrity sha512-7lsWBeopUL1j4gG11gYCoprADV0lg9HjeHK3299FVDGsx/ICbkf9mas9ksSrHON84bQvdLf3pBGIG5e/bJxIhQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
     "@fortawesome/react-fontawesome" "^0.1.14"
     "@react-hook/size" "^2.1.1"
     "@react-hook/window-size" "^3.0.7"
-    "@stoplight/mosaic" "1.4.1"
+    "@stoplight/mosaic" "1.5.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^5.2.1"
@@ -3577,10 +3577,10 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.2.4.tgz#391ba88996f289cb7ce8b2e3933fe0c3965350ee"
-  integrity sha512-8Jp/9OKP0081dYmBY0uKB1yapaTI3DuNUOlrtK1XrESD9dkAHkeyggtRBqqN6rvmaSsSPI0ejMTVJYikII6lSQ==
+"@stoplight/mosaic@1.5.0", "@stoplight/mosaic@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.5.0.tgz#3dc37a67e952a7dd341cdd365cd71d0aea3c1819"
+  integrity sha512-iZh8cBB+jE8a49Y70WLmzQY6fN0nqgklHE6ZS2gQvPbHbk8ddOXW/tPNWmxCo8kDG2mw/KxYDCNloROh8LBlEw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3591,13 +3591,14 @@
     "@types/react-dom" "^17.0.3"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
+    dom-helpers "^5.2.1"
     lodash.get "^4.4.2"
     polished "^4.1.3"
     ts-keycode-enum "^1.0.6"
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.4.1", "@stoplight/mosaic@^1.2.4":
+"@stoplight/mosaic@^1.2.4":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.4.1.tgz#c46f3a89bc37340d64a955397ef5a4b1c893c753"
   integrity sha512-CPIPCQzdEem5jhwYsBf0qHP7BIy8VBZTdCSDlO8y0c0TCS1XNQSjPjDeAy2+nEWz0XCbxXfiMkNBpd5pl8XwQA==
