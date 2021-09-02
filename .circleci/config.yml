@@ -92,6 +92,7 @@ jobs:
       - run:
           command: |
             git checkout main
+            git pull --ff-only
             export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") && git checkout -b $BRANCH_NAME
             yarn upgrade
             git add yarn.lock

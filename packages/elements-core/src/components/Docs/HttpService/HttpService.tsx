@@ -8,6 +8,7 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
 import { VersionBadge } from '../HttpOperation/Badges';
+import { AdditionalInfo } from './AdditionalInfo';
 import { ExportButton } from './ExportButton';
 import { SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
@@ -18,7 +19,6 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}
   const { search, pathname } = location;
   const mocking = React.useContext(MockingContext);
   const query = new URLSearchParams(search);
-
   return (
     <Box mb={10}>
       {data.name && !layoutOptions?.noHeading && (
@@ -42,6 +42,11 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}
         <Box>
           {data.securitySchemes?.length && (
             <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />
+          )}
+        </Box>
+        <Box>
+          {(data.contact?.email || data.license || data.termsOfService) && (
+            <AdditionalInfo contact={data.contact} license={data.license} termsOfService={data.termsOfService} />
           )}
         </Box>
       </VStack>

@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Flex, Heading, HStack, Panel, Text } from '@stoplight/mosaic';
+import { Flex, Heading, HStack, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
@@ -7,7 +7,7 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
-import { generateExampleFromJsonSchema } from '../../../utils/exampleGeneration';
+import { generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
@@ -24,13 +24,14 @@ const ModelComponent: React.FC<ModelProps> = ({
   layoutOptions,
   exportProps,
 }) => {
+  const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
   const resolveRef = useInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
 
   const title = data.title ?? nodeTitle;
   const isInternal = !!data['x-internal'];
 
-  const example = React.useMemo(() => generateExampleFromJsonSchema(data), [data]);
+  const examples = React.useMemo(() => generateExamplesFromJsonSchema(data), [data]);
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
@@ -63,20 +64,33 @@ const ModelComponent: React.FC<ModelProps> = ({
     </>
   );
 
+  const examplesSelect = examples.length > 1 && (
+    <Select
+      aria-label="Example"
+      value={String(chosenExampleIndex)}
+      options={examples.map((_value, index) => ({ value: index, label: index === 0 ? 'default' : `example-${index}` }))}
+      onChange={(value: string | number) => setChosenExampleIndex(parseInt(String(value), 10))}
+      size="sm"
+      triggerTextPrefix="Example: "
+    />
+  );
+
   const modelExamples = !layoutOptions?.hideModelExamples && (
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar>
-        <Text color="body" role="heading">
-          Example
-        </Text>
+        {examplesSelect || (
+          <Text color="body" role="heading">
+            Example
+          </Text>
+        )}
       </Panel.Titlebar>
       <Panel.Content p={0}>
         <CodeViewer
-          aria-label={example}
+          aria-label={examples[chosenExampleIndex]}
           noCopyButton
           maxHeight="500px"
           language="json"
-          value={example}
+          value={examples[chosenExampleIndex]}
           showLineNumbers
         />
       </Panel.Content>
