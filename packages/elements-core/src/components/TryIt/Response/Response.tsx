@@ -50,7 +50,11 @@ function parseBody(body: string, type: ContentType) {
     case 'json':
       return safeStringify(safeParse(body), undefined, 2) || body;
     case 'xml':
-      return formatXml(body);
+      try {
+        return formatXml(body);
+      } catch {
+        return body;
+      }
     default:
       return body;
   }
