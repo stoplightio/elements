@@ -1,9 +1,21 @@
 import './header.css';
 
+import { Provider } from '@stoplight/mosaic';
 import { Link } from 'gatsby';
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+import { Search } from './Search';
 
 const Header = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        staleTime: 15 * 1000,
+      },
+    },
+  });
   return (
     <header className="Header">
       <Link to="/" className="Header__link">
@@ -17,6 +29,15 @@ const Header = () => {
       <Link to="/zoom-api/" className="Header__link" activeClassName="Header__link--active">
         Zoom API
       </Link>
+      <Provider>
+        <QueryClientProvider client={queryClient}>
+          <Search
+            renderTrigger={({ open }: any) => <input onClick={open} placeholder="Search..." />}
+            projectId={['cHJqOjYwNjYx']}
+            workspaceId="d2s6NDE1NTU"
+          />
+        </QueryClientProvider>
+      </Provider>
     </header>
   );
 };
