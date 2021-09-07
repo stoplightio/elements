@@ -1,5 +1,13 @@
-import { NodeTypeColors, NodeTypeIconDefs } from '@stoplight/elements-core';
+import {
+  NodeTypeColors,
+  NodeTypeIconDefs,
+  withMosaicProvider,
+  withPersistenceBoundary,
+  withQueryClientProvider,
+  withStyles,
+} from '@stoplight/elements-core';
 import { Box, Flex, Icon, Input, ListBox, ListBoxItem, Modal, ModalProps } from '@stoplight/mosaic';
+import { pipe } from 'lodash/fp';
 import * as React from 'react';
 
 import { NodeSearchResult } from '../../types';
@@ -13,7 +21,7 @@ export type SearchProps = {
   onClose: ModalProps['onClose'];
 };
 
-export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
+const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
   const onChange = React.useCallback(e => onSearch(e.currentTarget.value), [onSearch]);
@@ -114,3 +122,10 @@ export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSear
     </Modal>
   );
 };
+
+export const Search = pipe(
+  withStyles,
+  withPersistenceBoundary,
+  withMosaicProvider,
+  withQueryClientProvider,
+)(SearchImpl);

@@ -1,4 +1,3 @@
-import { Provider } from '@stoplight/mosaic';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { NavLink } from 'react-router-dom';
@@ -6,23 +5,15 @@ import { NavLink } from 'react-router-dom';
 import { Search } from './Search';
 
 export const Navigation = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-        staleTime: 15 * 1000,
-      },
-    },
-  });
+  const queryClient = new QueryClient();
+
   return (
     <nav className="topnav">
       <NavLink to="/stoplight-project">Stoplight Project</NavLink>
       <NavLink to="/zoom-api">Zoom API</NavLink>
-      <Provider>
-        <QueryClientProvider client={queryClient}>
-          <Search projectIds={['cHJqOjYwNjYx']} workspaceId="d2s6NDE1NTU" />
-        </QueryClientProvider>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Search projectIds={['cHJqOjYwNjYx']} workspaceId="d2s6NDE1NTU" />
+      </QueryClientProvider>
     </nav>
   );
 };

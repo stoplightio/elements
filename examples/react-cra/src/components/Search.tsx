@@ -1,7 +1,5 @@
 import { Search as ElementsSearch, useGetNodes } from '@stoplight/elements-dev-portal';
-// import { Provider } from '@stoplight/mosaic';
 import * as React from 'react';
-// import { QueryClient, QueryClientProvider } from 'react-query';
 
 export type SearchType = {
   projectIds: string[];
@@ -24,17 +22,10 @@ export const Search = ({ projectIds, workspaceId }: SearchType) => {
   const handleClick = () => {
     console.log('clicked');
   };
-  // const queryClient = new QueryClient({
-  //   defaultOptions: {
-  //     queries: {
-  //       retry: false,
-  //       staleTime: 15 * 1000,
-  //     },
-  //   },
-  // });
+
   return (
     <>
-      <input placeholder="search term..." style={{ color: 'white' }} onFocus={() => setOpen(true)} />
+      <input placeholder="Search..." style={{ color: 'white' }} onFocus={() => setOpen(true)} />
       <ElementsSearch
         search={search}
         onSearch={setSearch}
