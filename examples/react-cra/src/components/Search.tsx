@@ -1,3 +1,4 @@
+import type { NodeSearchResult } from '@stoplight/elements-dev-portal';
 import { Search as ElementsSearch, useGetNodes } from '@stoplight/elements-dev-portal';
 import * as React from 'react';
 
@@ -19,8 +20,8 @@ export const Search = ({ projectIds, workspaceId }: SearchType) => {
     setSearch('');
   };
 
-  const handleClick = () => {
-    console.log('clicked');
+  const handleClick = (data: NodeSearchResult) => {
+    console.log('clicked', data);
   };
 
   return (

@@ -19,4 +19,4 @@ export { useGetNodeContent } from './hooks/useGetNodeContent';
 export { useGetNodes } from './hooks/useGetNodes';
 export { useGetTableOfContents } from './hooks/useGetTableOfContents';
 export type { ProjectTableOfContents } from './types';
-export type { Branch, Node } from './types';
+export type { Branch, Node, NodeSearchResult } from './types';
