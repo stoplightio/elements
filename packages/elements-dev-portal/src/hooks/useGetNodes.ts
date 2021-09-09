@@ -7,12 +7,12 @@ import { getNodes } from '../handlers/getNodes';
 
 export function useGetNodes({
   search,
-  workspaceId,
   projectIds,
+  workspaceId,
 }: {
   search: string;
-  workspaceId: string;
-  projectIds?: string[];
+  projectIds: string[];
+  workspaceId?: string;
 }) {
   const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
   const [debounceSearch] = useDebounce(search, 500);

@@ -8,7 +8,7 @@ export const Navigation = () => {
     <nav className="topnav">
       <NavLink to="/stoplight-project">Stoplight Project</NavLink>
       <NavLink to="/zoom-api">Zoom API</NavLink>
-      <Search projectIds={['cHJqOjYwNjYx']} workspaceId="d2s6NDE1NTU" />
+      <Search projectIds={['cHJqOjYwNjYx']} />
     </nav>
   );
 };

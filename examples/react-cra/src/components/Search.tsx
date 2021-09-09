@@ -4,7 +4,7 @@ import * as React from 'react';
 
 export type SearchType = {
   projectIds: string[];
-  workspaceId: string;
+  workspaceId?: string;
 };
 export const Search = ({ projectIds, workspaceId }: SearchType) => {
   const [search, setSearch] = React.useState('');
