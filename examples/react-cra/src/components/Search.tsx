@@ -3,16 +3,16 @@ import { Search as ElementsSearch, useGetNodes } from '@stoplight/elements-dev-p
 import * as React from 'react';
 
 export type SearchType = {
-  projectIds: string[];
   workspaceId?: string;
+  projectIds?: string[];
 };
 export const Search = ({ projectIds, workspaceId }: SearchType) => {
   const [search, setSearch] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const { data } = useGetNodes({
     search,
-    projectIds,
     workspaceId,
+    projectIds,
   });
 
   const handleClose = () => {
