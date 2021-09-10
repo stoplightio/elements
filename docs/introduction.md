@@ -21,13 +21,18 @@ Learn how to integrate Elements with any of these popular frameworks.
 
 ## Elements vs Elements Dev Portal
 
-There are two main use cases for Elements, with slightly different components split across two different packages.
+The concept of Elements is to be a collection of components that can be useful for building out API documentation, and those components are split across two different packages:
 
-If you have one single API with a single OpenAPI document that needs turning into API Reference Documentation, you want the "API Component" in the main Elements package. This can be used with any OpenAPI definition via a URL or JavaScript object, and **you do not need a Stoplight Account.**
+- [@stoplight/elements] - We generally just call this "Elements", and is home to the "API Component".
+- [@stoplight/elements-dev-portal] - This collection of components is referred to as Elements Dev Portal, and contains the "Stoplight Project" component and the "Search" component. 
 
-If you have multiple APIs and Markdown Articles to present all together, you want the "StoplightProject Component", which is one of the first components in the Dev Portal package. It will allow Stoplight users to render an [entire project](https://meta.stoplight.io/docs/platform/2.-workspaces/b.adding-projects.md), with multiple APIs and articles mixed in together.
+All of these components are available as Web Components or React components, so you can use them pretty much anywhere.
 
-The full feature comparison of the two packages:
+If you have one single API with a single OpenAPI document that needs turning into API Reference Documentation, you want the "API Component", and it can be used with any OpenAPI definition via a URL or JavaScript object.
+
+Elements Dev Portal is like an extension, a superset of Elements functionality, that contain multiple APIs and Markdown Articles presented together. This allows for adding generic tutorials and guides along with the API reference documentation, and requires a [Stoplight Project](https://meta.stoplight.io/docs/platform/2.-workspaces/b.adding-projects.md) to power it all, along with mocking and some other advanced functionality not available in the standalone Elements package.
+
+You can then also use the Search component to add an interactive search bar to your dev portal. 
 
 <table class="c7">
   <tbody>
@@ -128,17 +133,6 @@ The full feature comparison of the two packages:
       </td>
       <td class="c5" colspan="1" rowspan="1">
         &#9989;
-      </td>
-    </tr>
-    <tr class="c2">
-      <td class="c3" colspan="1" rowspan="1">
-        Command Line
-      </td>
-      <td class="c4" colspan="1" rowspan="1">
-        &#9989;
-      </td>
-      <td class="c5" colspan="1" rowspan="1">
-        &#10060;
       </td>
     </tr>
   </tbody>
