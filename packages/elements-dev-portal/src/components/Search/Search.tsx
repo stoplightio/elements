@@ -83,7 +83,7 @@ export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSear
                     <Box
                       flex={1}
                       fontSize="lg"
-                      dangerouslySetInnerHTML={{ __html: searchResult.highlighted.name }}
+                      dangerouslySetInnerHTML={{ __html: searchResult.highlighted.name ?? '' }}
                       fontWeight="medium"
                       textOverflow="overflow-ellipsis"
                       mx={2}
@@ -95,7 +95,7 @@ export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSear
                   </Flex>
 
                   <Box
-                    dangerouslySetInnerHTML={{ __html: searchResult.highlighted.summary }}
+                    dangerouslySetInnerHTML={{ __html: searchResult.highlighted.summary ?? '' }}
                     color="muted"
                     fontSize="sm"
                     mt={1}

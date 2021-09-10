@@ -8,15 +8,18 @@ import { getNodes } from '../handlers/getNodes';
 export function useGetNodes({
   search,
   workspaceId,
+  branchSlug,
   projectIds,
 }: {
   search: string;
   workspaceId: string;
+  branchSlug?: string;
   projectIds?: string[];
 }) {
   const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
   const [debounceSearch] = useDebounce(search, 500);
-  return useQuery(['workspaceNodes', workspaceId, projectIds, debounceSearch, platformUrl, platformAuthToken], () =>
-    getNodes({ workspaceId, projectIds, search: debounceSearch, platformUrl, platformAuthToken }),
+  return useQuery(
+    ['workspaceNodes', workspaceId, branchSlug, projectIds, debounceSearch, platformUrl, platformAuthToken],
+    () => getNodes({ workspaceId, branchSlug, projectIds, search: debounceSearch, platformUrl, platformAuthToken }),
   );
 }
