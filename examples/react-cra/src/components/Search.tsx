@@ -1,5 +1,5 @@
 import type { NodeSearchResult } from '@stoplight/elements-dev-portal';
-import { Search as ElementsSearch, useGetNodes } from '@stoplight/elements-dev-portal';
+import { Search as ElementsSearch, useGetNodes, useGetWorkspace } from '@stoplight/elements-dev-portal';
 import * as React from 'react';
 
 export type SearchProps = {
@@ -13,6 +13,9 @@ export const Search = ({ projectIds }: SearchProps) => {
     search,
     projectIds,
   });
+  const { data: workspace } = useGetWorkspace({
+    projectIds,
+  });
 
   const handleClose = () => {
     setOpen(false);
@@ -20,7 +23,7 @@ export const Search = ({ projectIds }: SearchProps) => {
   };
 
   const handleClick = (data: NodeSearchResult) => {
-    console.log('clicked', data);
+    window.location.href = `https://${workspace?.workspace.slug}.stoplight.io/docs/${data.project_slug}${data.uri}`;
   };
 
   return (

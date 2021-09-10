@@ -55,3 +55,15 @@ export type NodeSearchResult = NodeSummary & {
   project_name: string;
   node_id: number;
 };
+
+export type Workspace = {
+  id: string;
+  name: string;
+  slug: string;
+  default_branch_id: string;
+  workspace: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+};
