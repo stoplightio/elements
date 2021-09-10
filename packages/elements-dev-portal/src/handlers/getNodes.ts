@@ -11,7 +11,6 @@ export const getNodes = async ({
 }: {
   workspaceId?: string;
   branchSlug?: string;
-  search?: string;
   projectIds?: string[];
   search?: string;
   platformUrl?: string;
