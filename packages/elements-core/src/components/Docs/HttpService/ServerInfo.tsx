@@ -1,5 +1,5 @@
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
-import { Box, Flex, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard } from '@stoplight/mosaic';
+import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard } from '@stoplight/mosaic';
 import { IServer } from '@stoplight/types';
 import * as React from 'react';
 
@@ -33,13 +33,8 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
             ))}
             {showMocking && (
               <>
-                <Box borderT={2} pt={2} mt={1} borderColor="light" w="full" />
-                <Flex>
-                  <Text fontWeight="bold">Mock Server:</Text>
-                  <Text aria-label="Mock Server" pl={2}>
-                    {mockUrl}
-                  </Text>
-                </Flex>
+                <Box borderT={2} pt={2} borderColor="light" w="full" />
+                <ServerUrl description="Mock Server" url={mockUrl || ''} marginBottom={false} />
               </>
             )}
           </Panel.Content>
@@ -49,11 +44,11 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   );
 };
 
-const ServerUrl = ({ description, url }: IServer) => {
+const ServerUrl = ({ description, url, marginBottom = true }: IServer & { marginBottom?: boolean }) => {
   const { onCopy, hasCopied } = useClipboard(url);
 
   return (
-    <Box whitespace="nowrap" mb={1}>
+    <Box whitespace="nowrap" mb={marginBottom ? 2 : 0}>
       <Text pr={2} fontWeight="bold">
         {description}:
       </Text>
