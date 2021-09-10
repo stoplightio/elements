@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -49,7 +49,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "@stoplight/elements-core": "~7.3.1",
+    "@stoplight/elements-core": "~7.3.2",
     "@stoplight/http-spec": "^4.2.2",
     "@stoplight/json": "^3.10.0",
     "@stoplight/mosaic": "1.5.0",
