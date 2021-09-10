@@ -3,12 +3,15 @@ import { appVersion } from '../version';
 
 export const getNodes = async ({
   workspaceId,
+  branchSlug,
   projectIds,
   search,
   platformUrl = 'https://stoplight.io',
   platformAuthToken,
 }: {
   workspaceId?: string;
+  branchSlug?: string;
+  search?: string;
   projectIds?: string[];
   search?: string;
   platformUrl?: string;
@@ -34,6 +37,10 @@ export const getNodes = async ({
 
   if (search) {
     queryParams.push(`search=${search}`);
+  }
+
+  if (branchSlug) {
+    queryParams.push(`branchSlug=${branchSlug}`);
   }
 
   const query = queryParams.length ? `?${queryParams.join('&')}` : '';

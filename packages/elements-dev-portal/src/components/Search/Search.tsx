@@ -92,7 +92,7 @@ const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch 
                     <Box
                       flex={1}
                       fontSize="lg"
-                      dangerouslySetInnerHTML={{ __html: searchResult.highlighted.name }}
+                      dangerouslySetInnerHTML={{ __html: searchResult.highlighted.name ?? '' }}
                       fontWeight="medium"
                       textOverflow="overflow-ellipsis"
                       mx={2}
@@ -104,7 +104,7 @@ const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch 
                   </Flex>
 
                   <Box
-                    dangerouslySetInnerHTML={{ __html: searchResult.highlighted.summary }}
+                    dangerouslySetInnerHTML={{ __html: searchResult.highlighted.summary ?? '' }}
                     color="muted"
                     fontSize="sm"
                     mt={1}

@@ -14,6 +14,7 @@ import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
 
 import { BranchSelector } from '../components/BranchSelector';
 import { DevPortalProvider } from '../components/DevPortalProvider';
+import { Forbidden } from '../components/Forbidden';
 import { Loading } from '../components/Loading';
 import { NodeContent } from '../components/NodeContent';
 import { NotFound } from '../components/NotFound';
@@ -111,8 +112,14 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   if (isLoadingNode || !isTocFetched) {
     elem = <Loading />;
   } else if (isError) {
-    if (nodeError instanceof ResponseError && nodeError.code === 402) {
-      elem = <UpgradeToStarter />;
+    if (nodeError instanceof ResponseError) {
+      if (nodeError.code === 402) {
+        elem = <UpgradeToStarter />;
+      } else if (nodeError.code === 403) {
+        elem = <Forbidden />;
+      } else {
+        elem = <NotFound />;
+      }
     } else {
       elem = <NotFound />;
     }
