@@ -1,5 +1,5 @@
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
-import { Box, Flex, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard } from '@stoplight/mosaic';
+import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard } from '@stoplight/mosaic';
 import { IServer } from '@stoplight/types';
 import * as React from 'react';
 
