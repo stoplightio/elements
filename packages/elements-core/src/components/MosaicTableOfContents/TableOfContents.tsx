@@ -82,10 +82,10 @@ const Divider = React.memo<{
       mb={2}
       mt={6}
       textTransform="uppercase"
-      color="muted"
       fontSize="sm"
       lineHeight="relaxed"
       letterSpacing="wide"
+      fontWeight="bold"
     >
       {item.title}
     </Box>

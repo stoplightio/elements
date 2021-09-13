@@ -3,6 +3,7 @@ import { Story } from '@storybook/react';
 import * as React from 'react';
 
 import { useGetNodes } from '../../hooks/useGetNodes';
+import { useGetWorkspace } from '../../hooks/useGetWorkspace';
 import { NodeSearchResult } from '../../types';
 import { Search } from './';
 
@@ -16,6 +17,9 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
     projectIds,
     workspaceId,
   });
+  const { data: workspace } = useGetWorkspace({
+    projectIds,
+  });
 
   const handleClose = () => {
     close();
@@ -24,6 +28,11 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
 
   const handleClick = (searchResult: NodeSearchResult) => {
     console.log('Search clicked', searchResult);
+    window.open(
+      `https://${workspace?.workspace.slug}.stoplight.io/docs/${searchResult.project_slug}${searchResult.uri}`,
+      '_blank',
+    );
+
     handleClose();
   };
 
