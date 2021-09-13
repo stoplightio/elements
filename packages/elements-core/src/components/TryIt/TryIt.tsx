@@ -1,15 +1,11 @@
-import { faExclamationCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { safeParse, safeStringify } from '@stoplight/json';
-import { Box, Button, Flex, Icon, Link, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
-import { CodeViewer } from '@stoplight/mosaic-code-viewer';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { Box, Button, Flex, Icon, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
 import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { atom, useAtom } from 'jotai';
 import * as React from 'react';
 
-import { HttpCodeDescriptions, HttpMethodColors } from '../../constants';
-import { getHttpCodeColor } from '../../utils/http';
+import { HttpMethodColors } from '../../constants';
 import { getServersToDisplay } from '../../utils/http-spec/IServer';
 import { RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
@@ -24,6 +20,14 @@ import { MockingButton } from './Mocking/MockingButton';
 import { useMockingOptions } from './Mocking/useMockingOptions';
 import { OperationParameters } from './Parameters/OperationParameters';
 import { useRequestParameters } from './Parameters/useOperationParameters';
+import {
+  ErrorState,
+  getResponseType,
+  NetworkError,
+  ResponseError,
+  ResponseState,
+  TryItResponse,
+} from './Response/Response';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -55,15 +59,6 @@ export interface TryItProps {
    */
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
-}
-
-interface ResponseState {
-  status: number;
-  bodyText: string;
-}
-
-interface ErrorState {
-  error: Error;
 }
 
 /**
@@ -175,11 +170,17 @@ export const TryIt: React.FC<TryItProps> = ({
       } catch (e) {
         setResponse({ error: new NetworkError(e.message) });
       }
-      response &&
+      if (response) {
+        const contentType = response.headers.get('Content-Type');
+        const type = contentType ? getResponseType(contentType) : undefined;
+
         setResponse({
           status: response.status,
-          bodyText: await response.text(),
+          bodyText: type !== 'image' ? await response.text() : undefined,
+          blob: type === 'image' ? await response.blob() : undefined,
+          contentType,
         });
+      }
     } catch (e) {
       setResponse({ error: e });
     } finally {
@@ -273,63 +274,3 @@ export const TryIt: React.FC<TryItProps> = ({
     </Box>
   );
 };
-
-const TryItResponse: React.FC<{ response: ResponseState }> = ({ response }) => (
-  <Panel defaultIsOpen>
-    <Panel.Titlebar>Response</Panel.Titlebar>
-    <Panel.Content>
-      <div>
-        <div className={`sl-mb-3 sl-text-${getHttpCodeColor(response.status)}`}>
-          {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
-        </div>
-        {response.bodyText ? (
-          <CodeViewer
-            language="json"
-            value={safeStringify(safeParse(response.bodyText), undefined, 2) || response.bodyText}
-          />
-        ) : (
-          <p>
-            <FontAwesomeIcon icon={faExclamationCircle} className="sl-mr-2" />
-            No response body returned
-          </p>
-        )}
-      </div>
-    </Panel.Content>
-  </Panel>
-);
-
-const ResponseError: React.FC<{ state: ErrorState }> = ({ state: { error } }) => (
-  <Panel defaultIsOpen>
-    <Panel.Titlebar>Error</Panel.Titlebar>
-    <Panel.Content>{isNetworkError(error) ? <NetworkErrorMessage /> : <p>{error.message}</p>}</Panel.Content>
-  </Panel>
-);
-
-const NetworkErrorMessage = () => (
-  <>
-    <p className="sl-pb-2">
-      <strong>Network Error occured.</strong>
-    </p>
-
-    <p className="sl-pb-2">1. Double check that your computer is connected to the internet.</p>
-
-    <p className="sl-pb-2">2. Make sure the API is actually running and available under the specified URL.</p>
-
-    <p>
-      3. If you've checked all of the above and still experiencing issues, check if the API supports{' '}
-      <Link
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"
-        fontWeight="semibold"
-      >
-        CORS
-      </Link>
-      .
-    </p>
-  </>
-);
-
-class NetworkError extends Error {}
-
-const isNetworkError = (error: Error) => error instanceof NetworkError;

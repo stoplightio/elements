@@ -35,7 +35,13 @@ export const getNodeContent = async ({
   const data = await response.json();
 
   if (!response.ok) {
-    throw new ResponseError('Payment Required', response.status);
+    if (response.status === 402) {
+      throw new ResponseError('Payment Required', response.status);
+    } else if (response.status === 403) {
+      throw new ResponseError('Forbidden', response.status);
+    } else {
+      throw new ResponseError('Something went wrong', response.status);
+    }
   }
 
   return data;
