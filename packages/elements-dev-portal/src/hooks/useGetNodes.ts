@@ -12,7 +12,7 @@ export function useGetNodes({
   projectIds,
 }: {
   search: string;
-  workspaceId: string;
+  workspaceId?: string;
   branchSlug?: string;
   projectIds?: string[];
 }) {
