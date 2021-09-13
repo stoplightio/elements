@@ -10,18 +10,21 @@ If you'd like to use this for React (and React-based tools like Gatsby) then use
 
 ```jsx
 import type { NodeSearchResult } from '@stoplight/elements-dev-portal';
-import { Search as ElementsSearch, useGetNodes } from '@stoplight/elements-dev-portal';
+import { Search as ElementsSearch, useGetNodes, useGetWorkspace } from '@stoplight/elements-dev-portal';
 import * as React from 'react';
 
 export type SearchProps = {
   projectIds: string[];
 };
 
-export const Search = ({ projectIds }: SearchType) => {
+export const Search = ({ projectIds }: SearchProps) => {
   const [search, setSearch] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const { data } = useGetNodes({
     search,
+    projectIds,
+  });
+  const { data: workspace } = useGetWorkspace({
     projectIds,
   });
 
@@ -31,7 +34,7 @@ export const Search = ({ projectIds }: SearchType) => {
   };
 
   const handleClick = (data: NodeSearchResult) => {
-    console.log('clicked', data);
+    window.location.href = `https://${workspace?.workspace.slug}.stoplight.io/docs/${data.project_slug}${data.uri}`;
   };
 
   return (
