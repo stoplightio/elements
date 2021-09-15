@@ -1,4 +1,5 @@
 import { withQueryClientProvider } from '@stoplight/elements-core';
+import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import * as React from 'react';
 
 export type DevPortalProviderProps = {
@@ -13,7 +14,11 @@ const PlatformProvider: React.FC<DevPortalProviderProps> = ({
   platformAuthToken,
   children,
 }) => {
-  return <PlatformContext.Provider value={{ platformUrl, platformAuthToken }}>{children}</PlatformContext.Provider>;
+  return (
+    <PlatformContext.Provider value={{ platformUrl, platformAuthToken }}>
+      <MosaicProvider>{children}</MosaicProvider>
+    </PlatformContext.Provider>
+  );
 };
 
 export const DevPortalProvider = withQueryClientProvider(PlatformProvider);
