@@ -84,10 +84,10 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
 
   return generated !== null
     ? [
-      {
-        label: 'default',
-        data: safeStringify(generated, undefined, 2) ?? '',
-      },
-    ]
+        {
+          label: 'default',
+          data: safeStringify(generated, undefined, 2) ?? '',
+        },
+      ]
     : [{ label: 'default', data: '' }];
 };
