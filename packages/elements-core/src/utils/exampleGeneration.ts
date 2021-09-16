@@ -78,13 +78,16 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
     return examples;
   }
 
-  const generated = Sampler.sample(schema);
+  const generated = Sampler.sample(schema, {
+    skipNonRequired: true,
+  });
+
   return generated !== null
     ? [
-        {
-          label: 'default',
-          data: safeStringify(generated, undefined, 2) ?? '',
-        },
-      ]
+      {
+        label: 'default',
+        data: safeStringify(generated, undefined, 2) ?? '',
+      },
+    ]
     : [{ label: 'default', data: '' }];
 };
