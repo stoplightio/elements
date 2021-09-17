@@ -79,7 +79,7 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
   }
 
   const generated = Sampler.sample(schema, {
-    skipNonRequired: true,
+    maxSampleDepth: 4,
   });
 
   return generated !== null
