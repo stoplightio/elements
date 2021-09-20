@@ -23,6 +23,6 @@ export function useGetNodes({
   return useQuery(
     ['workspaceNodes', workspaceId, branchSlug, projectIds, debounceSearch, platformUrl, platformAuthToken],
     () => getNodes({ workspaceId, branchSlug, projectIds, search: debounceSearch, platformUrl, platformAuthToken }),
-    { enabled: !pause ? true : false },
+    { enabled: !pause },
   );
 }
