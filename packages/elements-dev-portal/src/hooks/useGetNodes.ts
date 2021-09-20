@@ -10,16 +10,19 @@ export function useGetNodes({
   workspaceId,
   branchSlug,
   projectIds,
+  pause,
 }: {
   search: string;
   workspaceId?: string;
   branchSlug?: string;
   projectIds?: string[];
+  pause?: boolean;
 }) {
   const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
   const [debounceSearch] = useDebounce(search, 500);
   return useQuery(
     ['workspaceNodes', workspaceId, branchSlug, projectIds, debounceSearch, platformUrl, platformAuthToken],
     () => getNodes({ workspaceId, branchSlug, projectIds, search: debounceSearch, platformUrl, platformAuthToken }),
+    { enabled: pause ? false : true },
   );
 }
