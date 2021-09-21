@@ -3442,10 +3442,10 @@
     fastestsmallesttextencoderdecoder "^1.0.22"
     isomorphic-fetch "^3.0.0"
 
-"@stoplight/json-schema-sampler@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-sampler/-/json-schema-sampler-0.2.0.tgz#31215818ad0c571852fd201955a21a25bc0b77c2"
-  integrity sha512-FKMyGU8beAQCtNmuMNOxbMWDPJGVqSQqv5ESnId2O9Arzo7jPd3QUB6E95MnEcuKVaIQd2mk+d0+Isi7gJOJcA==
+"@stoplight/json-schema-sampler@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-sampler/-/json-schema-sampler-0.2.1.tgz#6c5fd8e17598ee573cc908935bd81dd0165d6a57"
+  integrity sha512-TtF9qJleGEcyPuG77c93MLAVNVvZKUPTQpvIaki5cIrJjWsFDBjAAzv6J2AGJEcY8YQscvZQRfv8eJ/ClwZOSA==
   dependencies:
     "@types/json-schema" "^7.0.7"
     json-pointer "^0.6.1"
