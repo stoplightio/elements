@@ -1,5 +1,14 @@
-import { NodeTypeColors, NodeTypeIconDefs } from '@stoplight/elements-core';
+import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import {
+  NodeTypeColors,
+  NodeTypeIconDefs,
+  withMosaicProvider,
+  withPersistenceBoundary,
+  withQueryClientProvider,
+  withStyles,
+} from '@stoplight/elements-core';
 import { Box, Flex, Icon, Input, ListBox, ListBoxItem, Modal, ModalProps } from '@stoplight/mosaic';
+import { pipe } from 'lodash/fp';
 import * as React from 'react';
 
 import { NodeSearchResult } from '../../types';
@@ -13,7 +22,7 @@ export type SearchProps = {
   onClose: ModalProps['onClose'];
 };
 
-export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
+const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
   const onChange = React.useCallback(e => onSearch(e.currentTarget.value), [onSearch]);
@@ -46,7 +55,7 @@ export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSear
           appearance="minimal"
           borderB
           size="lg"
-          icon="search"
+          icon={<Box as={Icon} ml={1} icon={faSearch} />}
           autoFocus
           placeholder="Search..."
           value={search}
@@ -83,7 +92,7 @@ export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSear
                     <Box
                       flex={1}
                       fontSize="lg"
-                      dangerouslySetInnerHTML={{ __html: searchResult.highlighted.name }}
+                      dangerouslySetInnerHTML={{ __html: searchResult.highlighted.name ?? '' }}
                       fontWeight="medium"
                       textOverflow="overflow-ellipsis"
                       mx={2}
@@ -95,7 +104,7 @@ export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSear
                   </Flex>
 
                   <Box
-                    dangerouslySetInnerHTML={{ __html: searchResult.highlighted.summary }}
+                    dangerouslySetInnerHTML={{ __html: searchResult.highlighted.summary ?? '' }}
                     color="muted"
                     fontSize="sm"
                     mt={1}
@@ -114,3 +123,10 @@ export const Search = ({ search, searchResults, isOpen, onClose, onClick, onSear
     </Modal>
   );
 };
+
+export const Search = pipe(
+  withStyles,
+  withPersistenceBoundary,
+  withMosaicProvider,
+  withQueryClientProvider,
+)(SearchImpl);
