@@ -84,7 +84,10 @@ export async function buildFetchRequest({
   const body = typeof bodyInput === 'object' ? await createRequestBody(mediaTypeContent, bodyInput) : bodyInput;
 
   const headers = {
-    'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
+    // do not include multipart/form-data - browser handles its content type and boundary
+    ...(mediaTypeContent?.mediaType !== 'multipart/form-data' && {
+      'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
+    }),
     ...Object.fromEntries(headersWithAuth.map(nameAndValueObjectToPair)),
     ...mockData?.header,
   };
