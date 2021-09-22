@@ -401,7 +401,7 @@ describe('TryIt', () => {
       });
 
       it('Sets correct content type', () => {
-        expect(headers.get('Content-Type')).toBe(mimeType);
+        expect(headers.get('Content-Type')).toBe(mimeType === 'multipart/form-data' ? null : mimeType);
       });
 
       it('Sends user input', () => {
