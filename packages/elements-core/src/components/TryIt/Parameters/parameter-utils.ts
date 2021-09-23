@@ -83,7 +83,7 @@ export const initialParameterValues: (params: readonly ParameterSpec[]) => Recor
 
 export function mapSchemaPropertiesToParameters(
   properties: { [key: string]: JSONSchema7Definition },
-  required: string[] | undefined,
+  required?: string[],
 ) {
   return Object.entries(properties).map(([name, schema]) => ({
     name,
