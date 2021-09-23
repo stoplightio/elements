@@ -70,9 +70,8 @@ const getValueForParameter = (parameter: ParameterSpec) => {
 
 const getInitialValueForParameter = (parameter: ParameterSpec) => {
   const isRequired = !!parameter.required;
-  const isEnum = !!parameter.schema?.enum;
 
-  if (!isEnum && !isRequired) return '';
+  if (!isRequired) return '';
 
   return getValueForParameter(parameter);
 };
@@ -82,10 +81,14 @@ export const initialParameterValues: (params: readonly ParameterSpec[]) => Recor
   mapValues(getInitialValueForParameter),
 );
 
-export function mapSchemaPropertiesToParameters(properties: { [key: string]: JSONSchema7Definition }) {
+export function mapSchemaPropertiesToParameters(
+  properties: { [key: string]: JSONSchema7Definition },
+  required: string[] | undefined,
+) {
   return Object.entries(properties).map(([name, schema]) => ({
     name,
     schema: typeof schema !== 'boolean' ? schema : undefined,
     examples: typeof schema !== 'boolean' && schema.examples ? [{ key: 'example', value: schema.examples }] : undefined,
+    ...(required?.includes(name) && { required: true }),
   }));
 }

@@ -12,7 +12,6 @@ export const getTableOfContents = async ({
   platformUrl?: string;
   platformAuthToken?: string;
 }): Promise<ProjectTableOfContents> => {
-  console.log('version: ', appVersion);
   const branchQuery = branchSlug ? `?branch=${branchSlug}` : '';
   const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/table-of-contents${branchQuery}`, {
     headers: {
