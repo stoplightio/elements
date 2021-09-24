@@ -30,7 +30,11 @@ export const httpOperation: IHttpOperation = {
               completed: {
                 type: 'boolean',
               },
-              someEnum: {
+              someRequiredEnum: {
+                type: 'string',
+                enum: ['a', 'b', 'c'],
+              },
+              someOptionalEnum: {
                 type: 'string',
                 enum: ['a', 'b', 'c'],
               },
@@ -39,7 +43,7 @@ export const httpOperation: IHttpOperation = {
                 contentMediaType: 'application/octet-stream',
               },
             },
-            required: ['name', 'completed'],
+            required: ['name', 'completed', 'someRequiredEnum'],
           },
         },
       ],

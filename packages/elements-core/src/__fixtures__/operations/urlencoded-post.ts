@@ -30,12 +30,16 @@ export const httpOperation: IHttpOperation = {
               completed: {
                 type: 'boolean',
               },
-              someEnum: {
+              someRequiredEnum: {
+                type: 'string',
+                enum: ['a', 'b', 'c'],
+              },
+              someOptionalEnum: {
                 type: 'string',
                 enum: ['a', 'b', 'c'],
               },
             },
-            required: ['name', 'completed'],
+            required: ['name', 'completed', 'someRequiredEnum'],
           },
         },
       ],

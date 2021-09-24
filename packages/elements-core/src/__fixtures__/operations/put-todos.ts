@@ -333,6 +333,7 @@ export const httpOperation: IHttpOperation = {
         deprecated: true,
         description: 'How many string todos to limit?',
         name: 'value',
+        required: true,
         style: HttpParamStyles.Form,
       },
       {
@@ -358,6 +359,7 @@ export const httpOperation: IHttpOperation = {
           enum: ['something', 'another'],
         },
         name: 'type',
+        required: true,
         style: HttpParamStyles.SpaceDelimited,
       },
       {

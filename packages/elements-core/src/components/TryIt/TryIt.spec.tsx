@@ -233,7 +233,7 @@ describe('TryIt', () => {
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      expect(limitField).toHaveTextContent('1');
+      expect(limitField).toHaveTextContent('select an option');
 
       const typeField = screen.getByLabelText('type');
       expect(typeField).toHaveTextContent('something');
@@ -412,8 +412,11 @@ describe('TryIt', () => {
         expect(body.get('completed')).toBe('');
       });
 
-      it('Sets untouched enums to their first value', () => {
-        expect(body.get('someEnum')).toBe('a');
+      it('Sets untouched required enums to their first value', () => {
+        expect(body.get('someRequiredEnum')).toBe('a');
+      });
+      it('Does not set untouched optional enums', () => {
+        expect(body.get('someOptionalEnum')).toBe('');
       });
     });
 

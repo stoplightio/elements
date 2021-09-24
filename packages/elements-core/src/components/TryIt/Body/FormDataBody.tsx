@@ -18,6 +18,7 @@ interface FormDataBodyProps {
 export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, values, onChangeValues }) => {
   const schema = specification.schema;
   const parameters = schema?.properties;
+  const required = schema?.required;
 
   React.useEffect(() => {
     if (parameters === undefined) {
@@ -33,7 +34,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
     <Panel defaultIsOpen>
       <Panel.Titlebar>Body</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent">
-        {mapSchemaPropertiesToParameters(parameters).map(parameter => {
+        {mapSchemaPropertiesToParameters(parameters, required).map(parameter => {
           const supportsFileUpload = parameterSupportsFileUpload(parameter);
           const value = values[parameter.name];
 
