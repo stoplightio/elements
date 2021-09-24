@@ -55,7 +55,9 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
   const description = get(parameter, 'description') || get(parameter, 'schema.description');
 
-  const type = get(parameter, 'schema.type', 'unknown');
+  const rootType = get(parameter, 'schema.type', 'unknown');
+  const type =
+    parameter.schema?.items?.['type'] && rootType === 'array' ? `array[${parameter.schema.items['type']}]` : rootType;
 
   const format = parameter.schema?.format;
 
@@ -74,10 +76,11 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   const schemaExamples = parameter.schema?.examples;
   const schemaExamplesArray = Array.isArray(schemaExamples) ? schemaExamples : [];
 
-  const validations = omitBy(
+  let validations = omitBy(
     {
       ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style', 'examples']),
       ...omit(get(parameter, 'schema'), ['description', 'type', 'deprecated']),
+      ...omit(get(parameter, 'schema.items'), ['description', 'type', 'deprecated']),
       examples: [...parameterExamples, ...schemaExamplesArray],
     },
     // Remove empty arrays and objects
