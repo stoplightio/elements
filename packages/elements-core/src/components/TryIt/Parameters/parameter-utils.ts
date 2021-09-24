@@ -1,6 +1,6 @@
 import { safeStringify } from '@stoplight/json';
 import { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
-import { JSONSchema7Definition } from 'json-schema';
+import { JSONSchema7Definition, JSONSchema7Type } from 'json-schema';
 import { isObject, map } from 'lodash';
 import { keyBy, mapValues, pipe } from 'lodash/fp';
 
@@ -11,11 +11,16 @@ const booleanOptions = [
   { label: 'True', value: 'true' },
 ];
 
+function enumOptions(enumValues: JSONSchema7Type[], required?: boolean) {
+  const options = map(enumValues, v => ({ value: Number.isNaN(Number(v)) ? String(v) : Number(v) }));
+  return required ? options : [{ label: 'Not Set', value: '' }, ...options];
+}
+
 export function parameterOptions(parameter: ParameterSpec) {
   return parameter.schema?.type === 'boolean'
     ? booleanOptions
     : parameter.schema?.enum !== undefined
-    ? map(parameter.schema.enum, v => ({ value: Number.isNaN(Number(v)) ? String(v) : Number(v) }))
+    ? enumOptions(parameter.schema.enum, parameter.required)
     : null;
 }
 
