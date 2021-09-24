@@ -676,6 +676,36 @@ describe('TryIt', () => {
       ]);
     });
 
+    it('Invokes request with no Prefer header if mock data is not selected', async () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
+
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+
+      userEvent.click(mockingButton);
+
+      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
+      expect(enableItem).toBeInTheDocument();
+      userEvent.click(enableItem);
+
+      clickSend();
+
+      await waitFor(() => expect(screen.getByRole('button', { name: /send/i })).toBeEnabled());
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
+      expect(fetchMock.mock.calls).toEqual([
+        [
+          'https://mock-todos.stoplight.io/todos',
+          expect.objectContaining({
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }),
+        ],
+      ]);
+    });
+
     it('Persists mocking options between operations', async () => {
       const { rerender } = render(
         <MosaicProvider>
