@@ -46,7 +46,7 @@ export const requestBody: IHttpOperation = {
               completed: { type: 'boolean' },
               someEnum: { type: 'string', enum: ['a', 'b', 'c'] },
             },
-            required: ['name', 'completed'],
+            required: ['name', 'completed', 'someEnum'],
           },
         },
       ],
