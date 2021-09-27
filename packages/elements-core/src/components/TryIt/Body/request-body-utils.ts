@@ -79,7 +79,8 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
       return {};
     }
     const properties = mediaTypeContent?.schema?.properties ?? {};
-    const parameters = mapSchemaPropertiesToParameters(properties);
+    const required = mediaTypeContent?.schema?.required;
+    const parameters = mapSchemaPropertiesToParameters(properties, required);
     return initialParameterValues(parameters);
   }, [isFormDataBody, mediaTypeContent]);
 
