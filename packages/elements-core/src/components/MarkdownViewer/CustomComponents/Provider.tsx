@@ -5,6 +5,8 @@ import {
 } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 
+import { CodeComponent } from './CodeComponent';
+
 export type CustomComponentMapping = MDVCustomComponentMapping;
 
 export { DefaultSMDComponents };
@@ -16,5 +18,5 @@ interface MarkdownComponentsProviderProps {
  * Provides components to markdown-viewer.
  */
 export const MarkdownComponentsProvider: React.FC<MarkdownComponentsProviderProps> = ({ value, children }) => {
-  return <MarkdownViewerProvider components={value}>{children}</MarkdownViewerProvider>;
+  return <MarkdownViewerProvider components={{ code: CodeComponent!, ...value }}>{children}</MarkdownViewerProvider>;
 };
