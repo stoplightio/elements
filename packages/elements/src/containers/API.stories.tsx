@@ -42,13 +42,13 @@ APIWithJSONProvidedDirectly.storyName = 'Direct JSON Input (Zoom)';
 
 export const APIWithoutDescription = Template.bind({});
 APIWithoutDescription.args = {
-  apiDescriptionDocument: simpleApiWithoutDescription,
+  apiDescriptionDocument: JSON.stringify(simpleApiWithoutDescription, undefined, 2),
 };
 APIWithoutDescription.storyName = 'API Without Description';
 
 export const APIWithInternalOperations = Template.bind({});
 APIWithInternalOperations.args = {
-  apiDescriptionDocument: simpleApiWithInternalOperations,
+  apiDescriptionDocument: JSON.stringify(simpleApiWithInternalOperations, undefined, 2),
 };
 APIWithInternalOperations.storyName = 'API With Internal Operations';
 
