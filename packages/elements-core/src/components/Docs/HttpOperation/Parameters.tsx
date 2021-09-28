@@ -76,7 +76,7 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   const schemaExamples = parameter.schema?.examples;
   const schemaExamplesArray = Array.isArray(schemaExamples) ? schemaExamples : [];
 
-  let validations = omitBy(
+  const validations = omitBy(
     {
       ...omit(parameter, ['name', 'required', 'deprecated', 'description', 'schema', 'style', 'examples']),
       ...omit(get(parameter, 'schema'), ['description', 'type', 'deprecated']),
