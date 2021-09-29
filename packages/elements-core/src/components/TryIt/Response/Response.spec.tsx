@@ -12,7 +12,7 @@ describe('Response', () => {
   window.URL.createObjectURL = jest.fn();
 
   afterEach(() => {
-    (window.URL.createObjectURL as jest.Mock).mockReset();
+    jest.resetAllMocks();
   });
 
   it('displays JSON response', async () => {
