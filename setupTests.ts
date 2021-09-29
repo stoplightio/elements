@@ -21,12 +21,6 @@ process.env.TZ = 'UTC';
 
 Element.prototype.scrollTo = () => {};
 
-window.ResizeObserver = jest.fn(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
-}));
-
 window.IntersectionObserver = class implements IntersectionObserver {
   readonly root!: Element | null;
   readonly rootMargin!: string;
