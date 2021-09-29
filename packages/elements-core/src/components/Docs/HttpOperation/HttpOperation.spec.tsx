@@ -143,7 +143,7 @@ describe('HttpOperation', () => {
   });
 
   describe('Query Parameters', () => {
-    it('should render correct validations', async () => {
+    it('should render panel when there are query parameters', async () => {
       const data: IHttpOperation = {
         id: 'get',
         method: 'get',
@@ -180,11 +180,25 @@ describe('HttpOperation', () => {
       expect(queryParametersPanel).toBeInTheDocument();
       expect(queryParametersPanel).toBeVisible();
       expect(queryParametersPanel).toBeEnabled();
+    });
 
-      expect(await screen.findByText(/parameter name$/)).toBeInTheDocument();
-      expect(await screen.findByText(/required/)).toBeInTheDocument();
-      expect(await screen.findByText(/deprecated/)).toBeInTheDocument();
-      expect(screen.queryByText(/example key/)).not.toBeInTheDocument();
+    it('should not render panel when there are no header parameters', () => {
+      const data: IHttpOperation = {
+        id: 'get',
+        method: 'get',
+        path: '/path',
+        responses: [],
+        request: {
+          query: [],
+        },
+      };
+
+      const { unmount } = render(<HttpOperation data={data} />);
+
+      const headersPanel = screen.queryByRole('heading', { name: 'Query' });
+      expect(headersPanel).not.toBeInTheDocument();
+
+      unmount();
     });
 
     it('should not render default styles', () => {
@@ -258,8 +272,6 @@ describe('HttpOperation', () => {
       expect(headersPanel).toBeVisible();
       expect(headersPanel).toBeEnabled();
 
-      expect(screen.queryByText('parameter name')).toBeInTheDocument();
-
       unmount();
     });
 
@@ -284,7 +296,7 @@ describe('HttpOperation', () => {
   });
 
   describe('Path Parameters', () => {
-    it('should render correct validations', async () => {
+    it('should render panel when there are path parameters', async () => {
       const data: IHttpOperation = {
         id: 'get',
         method: 'get',
@@ -321,10 +333,6 @@ describe('HttpOperation', () => {
       expect(pathParametersPanel).toBeInTheDocument();
       expect(pathParametersPanel).toBeVisible();
       expect(pathParametersPanel).toBeEnabled();
-
-      expect(await screen.findByText('parameter name')).toBeInTheDocument();
-      expect(await screen.findByText('example value')).toBeInTheDocument();
-      expect(await screen.findByText('another example')).toBeInTheDocument();
     });
 
     it('should still show path parameters panel when there are no parameters', () => {
