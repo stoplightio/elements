@@ -2,7 +2,7 @@ export * from '../../../.storybook/preview';
 
 import * as React from "react";
 import {subscribeTheme, Provider as MosaicProvider} from "@stoplight/mosaic";
-import {PersistenceContextProvider, Styled} from "../src";
+import {PersistenceContextProvider, Styled, MarkdownComponentsProvider} from "../src";
 import '../src/styles.css';
 
 
@@ -25,8 +25,12 @@ const PersistenceBoundaryDecorator = (Story) => (
   <PersistenceContextProvider><Story /></PersistenceContextProvider>
 );
 
+const MarkdownComponentsProviderDecorator = (Story) => (
+  <MarkdownComponentsProvider><Story /></MarkdownComponentsProvider>
+);
+
 const StyledDecorator = (Story) => (
   <Styled><Story/></Styled>
 );
 
-export const decorators = [ThemeProvider, MosaicProviderDecorator, PersistenceBoundaryDecorator, StyledDecorator];
+export const decorators = [ThemeProvider, MosaicProviderDecorator, PersistenceBoundaryDecorator, StyledDecorator, MarkdownComponentsProviderDecorator];
