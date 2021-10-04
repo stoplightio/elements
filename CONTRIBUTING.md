@@ -14,7 +14,6 @@
       - [Run the tests manually](#run-the-tests-manually)
       - [Edit the tests](#edit-the-tests)
       - [Inspecting test results](#inspecting-test-results)
-  - [Yalcing into platform-internal](#yalcing-into-platform-internal)
         
 ## Intro
 
@@ -170,11 +169,3 @@ When running in *CircleCI*, the host interprets `output.xml` and displays it vis
 
 Videos - and in case of failure, screenshots - can be found under the *Artifacts* tab.
 ![screenshot](https://user-images.githubusercontent.com/543372/105713474-7f558980-5f1b-11eb-82b5-87ff764be27a.png)
-
-## Yalcing into `platform-internal`
-
-Elements is used in the Stoplight Platform, as well as in open source projects. Here is how you (if you are a Stoplight employee) can test integrating Elements locally:
-
-1. Inside of elements root directory, run `yarn build` then `cd packages/elements-core/dist` then `yalc publish`
-2. Copy the yalc published version output to terminal `@stoplight/elements-core@7.2.0`
-3. Go to `packages/ninja`, run `yalc add @stoplight/elements-core@7.2.0` and `yarn install --check-files`
