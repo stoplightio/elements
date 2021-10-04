@@ -5,6 +5,8 @@
 - [Contributing to Stoplight Elements](#contributing-to-stoplight-elements)
   - [Table Of Contents](#table-of-contents)
   - [Intro](#intro)
+  - [Installing Elements](#installing-elements)
+  - [Developing Elements](#developing-elements)
   - [Testing](#testing)
     - [Guiding principles](#guiding-principles)
     - [Unit tests](#unit-tests)
@@ -19,6 +21,36 @@
 ## Intro
 
 Elements is an open-source project, and we love contributions. If you're familiar with TypeScript and Jest then dive right in, see how far you can get, and talk to us in [Discussions](https://github.com/stoplightio/elements/discussions) or start a draft PR if you get stuck.
+
+## Installing Elements
+
+Before you start development, you have to install elements and its dependencies.
+
+Make sure you have [node](https://nodejs.org/en/) installed. We are predominantly using version 12. If you experience any issues, make sure to have this version installed. We recommened [nvm](https://github.com/nvm-sh/nvm) for managing different versions of node on your computer.
+
+For dependencies, we are using [yarn](https://yarnpkg.com/). Install it, following the [guideline](https://yarnpkg.com/getting-started/install).
+
+Clone elements repository by running `git clone git@github.com:stoplightio/elements.git` (provided you have [SSH keys added](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) in GitHub).
+
+Next, move into the repository by running `cd elements`.
+
+Now run `yarn`. Installation of dependencies will begin.
+
+To validate that the installation was successful, move into demo folder, by running `cd demo` and run `yarn start`. You should see a demo website, under the address `http://localhost:4025`.
+
+## Developing Elements
+
+Elements is split into 3 packages. 2 of them - `elements` and `elements-dev-portal` are user-facing. 3rd - `elements-core` is an implementation detail, created to share code and components between `elements` and `elements-dev-portal`.
+
+Most of the code is actually in `elements-core`, so if you are working on an issue, it's likely where you will land. `elements` and `elements-dev-portal` only have code that is higly specific to those projects.
+
+Most often, we are developing elements (in all of those packages) using [storybooks](https://storybook.js.org/).
+
+Each package has it's own storybook. In order to run a storybook for a specific package, in the main directory run, for example `yarn elements-core storybook`. This will start a storybook for `elements-core` package.
+
+Now you can develop the code and test your changes in the storybook. 
+
+For your convenience all the packages are linked. So, for example, if you run `elements` storybook, but make changes in `elements-core` codebase, those changes *will be* visible instantly in your storybook.
 
 ## Testing
 
