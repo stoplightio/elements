@@ -193,7 +193,7 @@ export const TryIt: React.FC<TryItProps> = ({
       aria-label="Servers"
       options={servers.map(server => ({ value: server.description || '' }))}
       value={chosenServer?.description || ''}
-      onChange={(value: string) => {
+      onChange={(value: React.Key) => {
         const server = servers.find(server => server.description === value);
 
         setChosenServer(server);
