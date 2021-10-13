@@ -1,9 +1,9 @@
 import { isPlainObject, safeStringify } from '@stoplight/json';
-import * as Sampler from '@stoplight/json-schema-sampler';
 import { IMediaTypeContent } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import React from 'react';
 
+import * as Sampler from '../../.yalc/@stoplight/json-schema-sampler';
 import { useDocument } from '../context/InlineRefResolver';
 
 type Example = {
@@ -78,16 +78,25 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
     return examples;
   }
 
-  const generated = Sampler.sample(schema, {
-    maxSampleDepth: 4,
-  });
+  try {
+    const generated = Sampler.sample(schema, {
+      maxSampleDepth: 4,
+    });
 
-  return generated !== null
-    ? [
-        {
-          label: 'default',
-          data: safeStringify(generated, undefined, 2) ?? '',
-        },
-      ]
-    : [{ label: 'default', data: '' }];
+    return generated !== null
+      ? [
+          {
+            label: 'default',
+            data: safeStringify(generated, undefined, 2) ?? '',
+          },
+        ]
+      : [{ label: 'default', data: '' }];
+  } catch (e) {
+    console.error(e);
+    return [{ label: '', data: `Example cannot be created for this schema\n${e}` }];
+  }
+};
+
+export const exceedsSize = (example: string, size: number = 500) => {
+  return example.split(/\r\n|\r|\n/).length > size;
 };

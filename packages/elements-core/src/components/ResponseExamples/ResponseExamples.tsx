@@ -3,7 +3,7 @@ import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import React from 'react';
 
-import { useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration';
+import { exceedsSize, useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration';
 
 export interface ResponseExamplesProps {
   httpOperation: IHttpOperation;
@@ -26,7 +26,6 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
   const responseExample = useGenerateExampleFromMediaTypeContent(responseContents, chosenExampleIndex, {
     skipWriteOnly: true,
   });
-  const exceededSize = responseExample.split(/\r\n|\r|\n/).length > 500;
 
   if (!userDefinedExamples && responseMediaType !== 'application/json') return null;
 
@@ -47,7 +46,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar>{examplesSelect || <Text color="body">Response Example</Text>}</Panel.Titlebar>
       <Panel.Content p={0}>
-        {(exceededSize && show) || !exceededSize ? (
+        {(exceedsSize(responseExample) && show) || !exceedsSize(responseExample) ? (
           <CodeViewer
             aria-label={responseExample}
             noCopyButton

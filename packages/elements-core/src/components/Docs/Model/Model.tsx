@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Flex, Heading, HStack, Panel, Select, Text } from '@stoplight/mosaic';
+import { Button, Flex, Heading, HStack, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
@@ -7,7 +7,7 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
-import { generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration';
+import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
@@ -25,6 +25,8 @@ const ModelComponent: React.FC<ModelProps> = ({
   exportProps,
 }) => {
   const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
+  const [show, setShow] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const resolveRef = useInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
 
@@ -85,14 +87,34 @@ const ModelComponent: React.FC<ModelProps> = ({
         )}
       </Panel.Titlebar>
       <Panel.Content p={0}>
-        <CodeViewer
-          aria-label={examples[chosenExampleIndex].data}
-          noCopyButton
-          maxHeight="500px"
-          language="json"
-          value={examples[chosenExampleIndex].data}
-          showLineNumbers
-        />
+        {(exceedsSize(examples[chosenExampleIndex].data) && show) || !exceedsSize(examples[chosenExampleIndex].data) ? (
+          <CodeViewer
+            aria-label={examples[chosenExampleIndex].data}
+            noCopyButton
+            maxHeight="500px"
+            language="json"
+            value={examples[chosenExampleIndex].data}
+            showLineNumbers
+          />
+        ) : (
+          <Flex flexDirection="col" justifyContent="center" alignItems="center" style={{ height: '400px' }}>
+            <Button
+              aria-label="load-example"
+              onPress={() => {
+                setLoading(true);
+                setTimeout(() => setShow(true), 50);
+              }}
+              appearance="minimal"
+              loading={loading}
+              disabled={loading}
+            >
+              {loading ? 'Loading...' : 'Load examples'}
+            </Button>
+            <Text fontSize="base" textAlign="center">
+              Large examples are not rendered by default.
+            </Text>
+          </Flex>
+        )}
       </Panel.Content>
     </Panel>
   );
