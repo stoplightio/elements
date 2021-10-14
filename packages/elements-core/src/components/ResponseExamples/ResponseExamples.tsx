@@ -1,4 +1,4 @@
-import { Button, Flex, Panel, Select, Text } from '@stoplight/mosaic';
+import { Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import React from 'react';

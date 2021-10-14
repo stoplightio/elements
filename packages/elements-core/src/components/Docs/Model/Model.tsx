@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Box, Button, Flex, Heading, HStack, Panel, Select, Text } from '@stoplight/mosaic';
+import { Flex, Heading, HStack, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
