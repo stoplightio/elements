@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Button, Flex, Heading, HStack, Panel, Select, Text } from '@stoplight/mosaic';
+import { Box, Button, Flex, Heading, HStack, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
@@ -7,8 +7,9 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
-import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration';
+import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
+import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { InternalBadge } from '../HttpOperation/Badges';
@@ -32,6 +33,11 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const title = data.title ?? nodeTitle;
   const isInternal = !!data['x-internal'];
+
+  const handlePress = () => {
+    setLoading(true);
+    setTimeout(() => setShow(true), 50);
+  };
 
   const examples = React.useMemo(() => generateExamplesFromJsonSchema(data), [data]);
 
@@ -97,23 +103,7 @@ const ModelComponent: React.FC<ModelProps> = ({
             showLineNumbers
           />
         ) : (
-          <Flex flexDirection="col" justifyContent="center" alignItems="center" style={{ height: '400px' }}>
-            <Button
-              aria-label="load-example"
-              onPress={() => {
-                setLoading(true);
-                setTimeout(() => setShow(true), 50);
-              }}
-              appearance="minimal"
-              loading={loading}
-              disabled={loading}
-            >
-              {loading ? 'Loading...' : 'Load examples'}
-            </Button>
-            <Text fontSize="base" textAlign="center">
-              Large examples are not rendered by default.
-            </Text>
-          </Flex>
+          <LoadMore loading={loading} onChange={handlePress} />
         )}
       </Panel.Content>
     </Panel>
