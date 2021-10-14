@@ -12,7 +12,7 @@ describe('generateExamplesFromJsonSchema', () => {
       throw Error(errorMessage);
     });
 
-    const dupa = generateExamplesFromJsonSchema(modelWithNoExamples);
-    expect(dupa).toEqual([{ label: '', data: `Example cannot be created for this schema\nError: ${errorMessage}` }]);
+    const example = generateExamplesFromJsonSchema(modelWithNoExamples);
+    expect(example).toEqual([{ label: '', data: `Example cannot be created for this schema\nError: ${errorMessage}` }]);
   });
 });
