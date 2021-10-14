@@ -1,10 +1,10 @@
 import { isPlainObject, safeStringify } from '@stoplight/json';
+import * as Sampler from '@stoplight/json-schema-sampler';
 import { IMediaTypeContent } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import React from 'react';
 
-import * as Sampler from '../../.yalc/@stoplight/json-schema-sampler';
-import { useDocument } from '../context/InlineRefResolver';
+import { useDocument } from '../../context/InlineRefResolver';
 
 type Example = {
   label: string;
@@ -48,6 +48,7 @@ export const generateExampleFromMediaTypeContent = (
     }
   } catch (e) {
     console.warn(e);
+    return `Example cannot be created for this schema\n${e}`;
   }
   return '';
 };

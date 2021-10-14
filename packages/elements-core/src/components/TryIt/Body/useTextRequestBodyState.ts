@@ -1,7 +1,7 @@
 import { IMediaTypeContent } from '@stoplight/types';
 import * as React from 'react';
 
-import { useGenerateExampleFromMediaTypeContent } from '../../../utils/exampleGeneration';
+import { useGenerateExampleFromMediaTypeContent } from '../../../utils/exampleGeneration/exampleGeneration';
 
 /**
  * Manages the state of the request body text editor.
