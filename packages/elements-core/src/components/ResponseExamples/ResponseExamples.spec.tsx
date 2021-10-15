@@ -7,10 +7,13 @@ import React from 'react';
 import { httpOperation as bigExampleOperation } from '../../__fixtures__/operations/big-response';
 import { httpOperation } from '../../__fixtures__/operations/operation-with-examples';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
+import * as exampleGenerationUtils from '../../utils/exampleGeneration/exampleGeneration';
 import { chooseOption } from '../../utils/tests/chooseOption';
 import { ResponseExamples as RawResponseExamples } from './ResponseExamples';
 
 const ResponseExamples = withMosaicProvider(RawResponseExamples);
+
+const generatedExample = '{\n"iamtoobig": "string",\n"name": "string",\n"id": "number",\n"email": "string", \n}';
 
 describe('Response Examples', () => {
   it('displays first provided example by default', () => {
@@ -78,6 +81,11 @@ describe('Response Examples', () => {
   });
 
   it('does not show examples >500 lines by default', async () => {
+    jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
+      return example.split(/\r\n|\r|\n/).length > size;
+    });
+    jest.spyOn(exampleGenerationUtils, 'generateExampleFromMediaTypeContent').mockReturnValue(generatedExample);
+
     render(
       <ResponseExamples
         httpOperation={bigExampleOperation}
@@ -87,9 +95,15 @@ describe('Response Examples', () => {
     );
 
     screen.getByText('Large examples are not rendered by default.');
+    jest.restoreAllMocks();
   });
 
   it('shows examples >500 lines after clicking "Load Examples" button', async () => {
+    jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
+      return example.split(/\r\n|\r|\n/).length > size;
+    });
+    jest.spyOn(exampleGenerationUtils, 'generateExampleFromMediaTypeContent').mockReturnValue(generatedExample);
+
     render(
       <ResponseExamples
         httpOperation={bigExampleOperation}
@@ -101,6 +115,7 @@ describe('Response Examples', () => {
     const button = screen.getByRole('button', { name: 'load-example' });
     userEvent.click(button);
 
-    expect(await screen.findByText('"iamthefirstprop"')).toBeInTheDocument();
+    expect(await screen.findByText('"iamtoobig"')).toBeInTheDocument();
+    jest.restoreAllMocks();
   });
 });

@@ -7,8 +7,9 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
-import { generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration';
+import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
+import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { InternalBadge } from '../HttpOperation/Badges';
@@ -25,11 +26,18 @@ const ModelComponent: React.FC<ModelProps> = ({
   exportProps,
 }) => {
   const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
+  const [show, setShow] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const resolveRef = useInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
 
   const title = data.title ?? nodeTitle;
   const isInternal = !!data['x-internal'];
+
+  const handleLoadMorePress = () => {
+    setLoading(true);
+    setTimeout(() => setShow(true), 50);
+  };
 
   const examples = React.useMemo(() => generateExamplesFromJsonSchema(data), [data]);
 
@@ -85,14 +93,18 @@ const ModelComponent: React.FC<ModelProps> = ({
         )}
       </Panel.Titlebar>
       <Panel.Content p={0}>
-        <CodeViewer
-          aria-label={examples[chosenExampleIndex].data}
-          noCopyButton
-          maxHeight="500px"
-          language="json"
-          value={examples[chosenExampleIndex].data}
-          showLineNumbers
-        />
+        {show || !exceedsSize(examples[chosenExampleIndex].data) ? (
+          <CodeViewer
+            aria-label={examples[chosenExampleIndex].data}
+            noCopyButton
+            maxHeight="500px"
+            language="json"
+            value={examples[chosenExampleIndex].data}
+            showLineNumbers
+          />
+        ) : (
+          <LoadMore loading={loading} onClick={handleLoadMorePress} />
+        )}
       </Panel.Content>
     </Panel>
   );
