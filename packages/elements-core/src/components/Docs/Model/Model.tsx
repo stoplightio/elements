@@ -34,7 +34,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const title = data.title ?? nodeTitle;
   const isInternal = !!data['x-internal'];
 
-  const handlePress = () => {
+  const handleLoadMorePress = () => {
     setLoading(true);
     setTimeout(() => setShow(true), 50);
   };
@@ -93,7 +93,7 @@ const ModelComponent: React.FC<ModelProps> = ({
         )}
       </Panel.Titlebar>
       <Panel.Content p={0}>
-        {(exceedsSize(examples[chosenExampleIndex].data) && show) || !exceedsSize(examples[chosenExampleIndex].data) ? (
+        {show || !exceedsSize(examples[chosenExampleIndex].data) ? (
           <CodeViewer
             aria-label={examples[chosenExampleIndex].data}
             noCopyButton
@@ -103,7 +103,7 @@ const ModelComponent: React.FC<ModelProps> = ({
             showLineNumbers
           />
         ) : (
-          <LoadMore loading={loading} onChange={handlePress} />
+          <LoadMore loading={loading} onClick={handleLoadMorePress} />
         )}
       </Panel.Content>
     </Panel>

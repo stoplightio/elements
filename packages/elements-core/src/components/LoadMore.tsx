@@ -3,13 +3,13 @@ import * as React from 'react';
 
 interface LoadMoreProps {
   loading: boolean;
-  onChange: () => void;
+  onClick: () => void;
 }
 
-export const LoadMore: React.FC<LoadMoreProps> = ({ loading, onChange }) => {
+export const LoadMore: React.FC<LoadMoreProps> = ({ loading, onClick }) => {
   return (
     <Flex flexDirection="col" justifyContent="center" alignItems="center" style={{ height: '400px' }}>
-      <Button aria-label="load-example" onPress={onChange} appearance="minimal" loading={loading} disabled={loading}>
+      <Button aria-label="load-example" onPress={onClick} appearance="minimal" loading={loading} disabled={loading}>
         {loading ? 'Loading...' : 'Load examples'}
       </Button>
       <Text fontSize="base" textAlign="center">

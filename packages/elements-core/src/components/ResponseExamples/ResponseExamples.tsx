@@ -28,7 +28,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
     skipWriteOnly: true,
   });
 
-  const handlePress = () => {
+  const handleLoadMore = () => {
     setLoading(true);
     setTimeout(() => setShow(true), 50);
   };
@@ -52,7 +52,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar>{examplesSelect || <Text color="body">Response Example</Text>}</Panel.Titlebar>
       <Panel.Content p={0}>
-        {(exceedsSize(responseExample) && show) || !exceedsSize(responseExample) ? (
+        {show || !exceedsSize(responseExample) ? (
           <CodeViewer
             aria-label={responseExample}
             noCopyButton
@@ -62,7 +62,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
             showLineNumbers
           />
         ) : (
-          <LoadMore loading={loading} onChange={handlePress} />
+          <LoadMore loading={loading} onClick={handleLoadMore} />
         )}
       </Panel.Content>
     </Panel>
