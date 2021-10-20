@@ -56,7 +56,7 @@ These properties can be provided as HTML attributes to the web component.
 
 - `apiDescriptionUrl` - OpenAPI document URL, supporting `http://`, `https://`, and documents containing `$ref` to other http(s) documents.
 - `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
-- `hideTryIt` - Pass `true` to hide the "Try It" panel (the interactive API console).
+- `hideTryIt` - Add this property to hide the "Try It" panel (the interactive API console).
 - `layout` - There are two layouts for Elements:
   - `sidebar` - (default) Three-column design.
   - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
@@ -84,6 +84,15 @@ These properties can be provided as HTML attributes to the web component.
 <elements-api
   apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
   layout="stacked"
+/>
+```
+
+<!-- title: Hiding "Try It" -->
+
+```html
+<elements-api
+  apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
+  hideTryIt
 />
 ```
 
