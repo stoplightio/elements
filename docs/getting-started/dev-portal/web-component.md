@@ -83,9 +83,9 @@ These properties can be provided as HTML attributes to the web component.
 - `projectId` - Find the Project ID in the Project Settings screen on Stoplight.
 - `platformUrl` - By default this is `https://stoplight.io/` and this default will be fine for most people. Some enterprise customers might need to change it.
 - `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
-- `collapseTableOfContents` - Pass `true` to stop the table of contents expanding folders of articles, and showing lists of endpoints for an API. This will clean up the ToC if you have a lot of content.
-- `hideMocking` - Add this property to disable all mocking options and remove mention of the mock server.
-- `hideTryIt` - Add this property to hide the "Try It" panel (the interactive API console).
+- `collapseTableOfContents` - Pass `"true"` to stop the table of contents expanding folders of articles, and showing lists of endpoints for an API. This will clean up the ToC if you have a lot of content.
+- `hideMocking` - Pass `"true"` to disable all mocking options and remove mention of the mock server.
+- `hideTryIt` - Pass `"true"` to hide the "Try It" panel (the interactive API console).
 - `router` -  Determines how navigation should work:
   - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
   - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
@@ -99,8 +99,8 @@ These properties can be provided as HTML attributes to the web component.
 <elements-stoplight-project
   projectId="cHJqOjYyNTgw"
   router="hash"
-  hideTryIt
-  hideMocking
+  hideTryIt="true"
+  hideMocking="true"
 ></elements-stoplight-project>
 ```
 

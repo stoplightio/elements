@@ -22,6 +22,7 @@ Available as React Components, or Web Components, you can use Elements all toget
   - [🏁 Help Others Utilize Elements](#-help-others-utilize-elements)
   - [👏 Contributing](#-contributing)
   - [🎉 Thanks](#-thanks)
+  - [🌲 Sponsor Elements by Planting a Tree](#-sponsor-elements-by-planting-a-tree)
 
 ## 📖 Community
 
