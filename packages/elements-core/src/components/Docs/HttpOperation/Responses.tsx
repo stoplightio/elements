@@ -1,3 +1,4 @@
+import { HttpCodeDescriptions } from '@stoplight/elements-core/constants';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Select, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
@@ -61,7 +62,10 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-const Response = ({ response: { contents = [], headers = [], description }, onMediaTypeChange }: ResponseProps) => {
+const Response = ({
+  response: { contents = [], headers = [], description, code },
+  onMediaTypeChange,
+}: ResponseProps) => {
   const [chosenContent, setChosenContent] = React.useState(0);
   const refResolver = useInlineRefResolver();
 
@@ -83,7 +87,7 @@ const Response = ({ response: { contents = [], headers = [], description }, onMe
         </SubSectionPanel>
       )}
 
-      {contents.length > 0 && (
+      {contents.length > 0 && code != '204' ? (
         <SubSectionPanel
           title="Body"
           rightComponent={
@@ -107,6 +111,8 @@ const Response = ({ response: { contents = [], headers = [], description }, onMe
             </Box>
           )}
         </SubSectionPanel>
+      ) : (
+        <Box>{HttpCodeDescriptions[204]}</Box>
       )}
     </Box>
   );
