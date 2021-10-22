@@ -1,4 +1,4 @@
-import { HttpCodeDescriptions } from '@stoplight/elements-core/constants';
+import { HttpCodeDescriptions } from '@stoplight/elements-core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Select, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
