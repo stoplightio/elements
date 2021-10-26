@@ -7,6 +7,7 @@ const directoryList = fs
   .map(entry => entry.name);
 
 const app = express();
+app.disable('x-powered-by');
 
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: __dirname });
