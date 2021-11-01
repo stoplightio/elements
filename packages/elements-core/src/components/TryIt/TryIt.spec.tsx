@@ -380,6 +380,29 @@ describe('TryIt', () => {
       ['multipart/form-data', FormData, multipartFormdataOperation],
     ];
 
+    it.each(formDataCases)('%s request body data is not reset on re-render', async (mimeType, prototype, fixture) => {
+      // render for first time, should be loaded with initial state for parameters
+      // which is determined by if it's required, if there's examples, default value, or if it's an enum
+      const { getByRole, rerender } = render(<TryItWithPersistence httpOperation={fixture} />);
+
+      // check name
+      const nameField = getByRole('textbox', { name: 'name' }) as HTMLInputElement;
+      expect(nameField.value).toEqual('');
+
+      // fill values
+      await userEvent.type(nameField, 'some-name');
+      expect(nameField.value).toEqual('some-name');
+      console.log('re-rendering...');
+      //re-render component
+      rerender(<TryItWithPersistence httpOperation={fixture} />);
+
+      // updated name field
+      const updatedNameField = getByRole('textbox', { name: 'name' }) as HTMLInputElement;
+
+      // make sure values are still what user entered
+      expect(updatedNameField.value).toEqual('some-name');
+    });
+
     describe.each(formDataCases)('Builds correct %p request', (mimeType, prototype, fixture) => {
       let body: URLSearchParams | FormData;
       let headers: Headers;
