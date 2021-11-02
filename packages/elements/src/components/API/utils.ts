@@ -97,21 +97,24 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     });
 
     groups.forEach(group => {
-      tree.push({
-        title: group.title,
-        items: group.items.flatMap(operationNode => {
-          if (mergedConfig.hideInternal && operationNode.data.internal) {
-            return [];
-          }
-          return {
-            id: operationNode.uri,
-            slug: operationNode.uri,
-            title: operationNode.name,
-            type: operationNode.type,
-            meta: operationNode.data.method,
-          };
-        }),
+      const items = group.items.flatMap(operationNode => {
+        if (mergedConfig.hideInternal && operationNode.data.internal) {
+          return [];
+        }
+        return {
+          id: operationNode.uri,
+          slug: operationNode.uri,
+          title: operationNode.name,
+          type: operationNode.type,
+          meta: operationNode.data.method,
+        };
       });
+      if (items.length > 0) {
+        tree.push({
+          title: group.title,
+          items,
+        });
+      }
     });
   }
 
