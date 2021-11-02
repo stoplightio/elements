@@ -44,9 +44,11 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   );
   const location = useLocation();
   const { pathname } = location;
-
   const isRootPath = !pathname || pathname === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
+
+  const layoutOptions = React.useMemo(() => ({ hideTryIt: hideTryIt, hideExport: hideExport || node?.type !== NodeType.HttpService }), [hideTryIt, hideExport, node]);
+
   if (!node) {
     // Redirect to the first child if node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
@@ -91,7 +93,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           uri={pathname}
           node={node}
           nodeTitle={node.name}
-          layoutOptions={{ hideTryIt: hideTryIt, hideExport: hideExport || node.type !== NodeType.HttpService }}
+          layoutOptions={layoutOptions}
           location={location}
           allowRouting
           exportProps={exportProps}

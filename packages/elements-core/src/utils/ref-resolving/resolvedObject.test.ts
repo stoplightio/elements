@@ -104,6 +104,27 @@ describe('createResolvedObject', () => {
 
     expect((resolvedObject as any).paramaterA.parameterB.parameterC).toBe('parameterC value');
   });
+  
+  it('resolves deeply nested reference to the same value', () => {
+    const resolvedObject = createResolvedObject({
+      paramaterA: {
+        parameterB: {
+          $ref: '#/bundled/parameterB',
+        },
+      },
+      bundled: {
+        parameterB: {
+          parameterC: {
+            $ref: '#/bundled/parameterC',
+          },
+        },
+        parameterC: 'parameterC value',
+      },
+    });
+
+    expect((resolvedObject as any).paramaterA.parameterB.parameterC).toBe((resolvedObject as any).paramaterA.parameterB.parameterC);
+  });
+
 
   it('resolves references nested in arrays', () => {
     const resolvedObject = createResolvedObject({
@@ -127,6 +148,29 @@ describe('createResolvedObject', () => {
     expect((resolvedObject as any).list[0].parameterB.parameterC).toBe('parameterC value');
   });
 
+  it('resolves references nested in arrays to the same value', () => {
+    const resolvedObject = createResolvedObject({
+      list: [
+        {
+          parameterB: {
+            $ref: '#/bundled/parameterB',
+          },
+        },
+      ],
+      bundled: {
+        parameterB: {
+          parameterC: {
+            $ref: '#/bundled/parameterC',
+          },
+        },
+        parameterC: 'parameterC value',
+      },
+    });
+
+    expect((resolvedObject as any).list[0]).toBe((resolvedObject as any).list[0]);
+  });
+
+
   it('returns the same object when accessing the parameter multiple times', () => {
     const resolvedObject = createResolvedObject({
       paramaterA: {
@@ -139,7 +183,7 @@ describe('createResolvedObject', () => {
       },
     });
 
-    expect((resolvedObject as any).paramaterA).toBe((resolvedObject as any).paramaterA);
+    expect((resolvedObject as any)?.paramaterA).toBe((resolvedObject as any)?.paramaterA);
   });
 
   it('returns the same object when called twice', () => {
