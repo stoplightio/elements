@@ -559,4 +559,58 @@ describe('computeAPITree', () => {
       },
     ]);
   });
+
+  it('excludes groups with no items', () => {
+    const apiDocument: OpenAPIObject = {
+      openapi: '3.0.0',
+      info: {
+        title: 'some api',
+        version: '1.0.0',
+        description: 'some description',
+      },
+      tags: [
+        {
+          name: 'a',
+        },
+      ],
+      paths: {
+        '/something': {
+          post: {
+            'x-internal': true,
+            tags: ['a'],
+          },
+        },
+        '/something-else': {
+          post: {
+            tags: ['b'],
+          },
+        },
+      },
+    };
+
+    expect(computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true })).toEqual([
+      {
+        id: '/',
+        meta: '',
+        slug: '/',
+        title: 'Overview',
+        type: 'overview',
+      },
+      {
+        title: 'Endpoints',
+      },
+      {
+        title: 'b',
+        items: [
+          {
+            id: '/paths/something-else/post',
+            meta: 'post',
+            slug: '/paths/something-else/post',
+            title: '/something-else',
+            type: 'http_operation',
+          },
+        ],
+      },
+    ]);
+  });
 });
