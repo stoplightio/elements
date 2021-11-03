@@ -10,16 +10,23 @@ InlineRefResolverContext.displayName = 'InlineRefResolverContext';
 const DocumentContext = React.createContext<unknown | undefined>(undefined);
 DocumentContext.displayName = 'DocumentContext';
 
-type InlineRefResolverProviderProps ={
-      document?: unknown;
-      resolver?: ReferenceResolver;
-    };
+type InlineRefResolverProviderProps = {
+  document?: unknown;
+  resolver?: ReferenceResolver;
+};
 
 /**
  * Populates `InlineRefResolverContext` with either a standard inline ref resolver based on `document`, or a custom resolver function provided by the caller.
  */
-export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps> = ({ children, document, resolver}) => {
-  const computedResolver = React.useMemo(() => resolver || (document !== undefined ?  defaultResolver(document as object) : undefined), [document, resolver]);
+export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps> = ({
+  children,
+  document,
+  resolver,
+}) => {
+  const computedResolver = React.useMemo(
+    () => resolver || (document !== undefined ? defaultResolver(document as object) : undefined),
+    [document, resolver],
+  );
 
   return (
     <InlineRefResolverContext.Provider value={computedResolver}>
@@ -36,5 +43,8 @@ export const useResolvedObject = (currentObject: object): object => {
   const document = useDocument();
   const resolver = useInlineRefResolver();
 
-  return React.useMemo(() => createResolvedObject(currentObject, { contextObject: document as object, resolver }), [currentObject, document, resolver]);
+  return React.useMemo(
+    () => createResolvedObject(currentObject, { contextObject: document as object, resolver }),
+    [currentObject, document, resolver],
+  );
 };

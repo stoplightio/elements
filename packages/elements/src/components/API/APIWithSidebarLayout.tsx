@@ -47,7 +47,10 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const isRootPath = !pathname || pathname === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
 
-  const layoutOptions = React.useMemo(() => ({ hideTryIt: hideTryIt, hideExport: hideExport || node?.type !== NodeType.HttpService }), [hideTryIt, hideExport, node]);
+  const layoutOptions = React.useMemo(
+    () => ({ hideTryIt: hideTryIt, hideExport: hideExport || node?.type !== NodeType.HttpService }),
+    [hideTryIt, hideExport, node],
+  );
 
   if (!node) {
     // Redirect to the first child if node doesn't exist
