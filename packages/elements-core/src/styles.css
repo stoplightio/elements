@@ -61,6 +61,11 @@
   max-height: 162px; /* 4.5 lines plus padding */
 }
 
+.sl-elements .Checkbox {
+  max-width: 15px;
+  padding-right : 2px;
+}
+
 .sl-elements .TextRequestBody{
   max-height: 200px;
   overflow-y: auto;

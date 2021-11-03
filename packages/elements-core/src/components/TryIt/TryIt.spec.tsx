@@ -375,6 +375,22 @@ describe('TryIt', () => {
       expect(completedField).toBeInTheDocument();
     });
 
+    it('allows to omit empty value', async () => {
+      render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
+
+      const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
+      await userEvent.type(nameField, 'some-name');
+
+      const checkboxName = screen.getByRole('checkbox', { name: 'name-checkbox' }) as HTMLInputElement;
+      await userEvent.click(checkboxName);
+
+      clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      const body = fetchMock.mock.calls[0][1]!.body as FormData;
+      expect(body.has('name')).toBe(false);
+    });
+
     const formDataCases: ReadonlyArray<[string, NewableFunction, IHttpOperation]> = [
       ['application/x-www-form-urlencoded', URLSearchParams, urlEncodedPostOperation],
       ['multipart/form-data', FormData, multipartFormdataOperation],
