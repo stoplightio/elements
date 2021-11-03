@@ -90,7 +90,8 @@ export const TryIt: React.FC<TryItProps> = ({
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
 
-  const [bodyParameterValues, setBodyParameterValues, isAllowedEmptyValues, setAllowedEmptyValues, formDataState] = useBodyParameterState(mediaTypeContent);
+  const [bodyParameterValues, setBodyParameterValues, isAllowedEmptyValues, setAllowedEmptyValues, formDataState] =
+    useBodyParameterState(mediaTypeContent);
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
@@ -114,11 +115,11 @@ export const TryIt: React.FC<TryItProps> = ({
     let isActive = true;
     if (onRequestChange || embeddedInMd) {
       const values = Object.keys(bodyParameterValues)
-      .filter(param => !isAllowedEmptyValues[param] ?? true)
-      .reduce((previousValue, currentValue) => {
-        previousValue[currentValue] = bodyParameterValues[currentValue];
-        return previousValue;
-      }, {})
+        .filter(param => !isAllowedEmptyValues[param] ?? true)
+        .reduce((previousValue, currentValue) => {
+          previousValue[currentValue] = bodyParameterValues[currentValue];
+          return previousValue;
+        }, {});
       buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,

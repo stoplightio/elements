@@ -88,7 +88,6 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
   const [bodyParameterValues, setBodyParameterValues] = React.useState<BodyParameterValues>(initialState);
   const [isAllowedEmptyValue, setAllowedEmptyValue] = React.useState<ParamaterOptional>({});
 
-
   React.useEffect(() => {
     setBodyParameterValues(initialState);
   }, [initialState]);

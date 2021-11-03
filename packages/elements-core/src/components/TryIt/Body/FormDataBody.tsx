@@ -17,7 +17,13 @@ interface FormDataBodyProps {
   isAllowedEmptyValues: ParamaterOptional;
 }
 
-export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, values, onChangeValues, onChangeParameterAllow, isAllowedEmptyValues }) => {
+export const FormDataBody: React.FC<FormDataBodyProps> = ({
+  specification,
+  values,
+  onChangeValues,
+  onChangeParameterAllow,
+  isAllowedEmptyValues,
+}) => {
   const schema = specification.schema;
   const parameters = schema?.properties;
   const required = schema?.required;
@@ -63,9 +69,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
               onChange={(value: string | number) =>
                 onChangeValues({ ...values, [parameter.name]: typeof value === 'number' ? String(value) : value })
               }
-              onChangeOptional={(value) =>
-                  onChangeParameterAllow({...isAllowedEmptyValues, [parameter.name]: value})
-              }
+              onChangeOptional={value => onChangeParameterAllow({ ...isAllowedEmptyValues, [parameter.name]: value })}
               canChangeOptional={true}
               isOptional={isAllowedEmptyValues[parameter.name] ?? false}
             />
