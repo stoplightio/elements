@@ -104,12 +104,13 @@ export const TryIt: React.FC<TryItProps> = ({
     parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
   );
 
-  const getValues = () => Object.keys(bodyParameterValues)
-        .filter(param => !isAllowedEmptyValues[param] ?? true)
-        .reduce((previousValue, currentValue) => {
-          previousValue[currentValue] = bodyParameterValues[currentValue];
-          return previousValue;
-        }, {});
+  const getValues = () =>
+    Object.keys(bodyParameterValues)
+      .filter(param => !isAllowedEmptyValues[param] ?? true)
+      .reduce((previousValue, currentValue) => {
+        previousValue[currentValue] = bodyParameterValues[currentValue];
+        return previousValue;
+      }, {});
 
   React.useEffect(() => {
     if (!chosenServer) {
