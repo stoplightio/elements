@@ -1,3 +1,4 @@
+import { isPlainObject } from '@stoplight/json';
 import * as React from 'react';
 import { useContext } from 'react';
 
@@ -7,7 +8,7 @@ import { createResolvedObject } from '../utils/ref-resolving/resolvedObject';
 const InlineRefResolverContext = React.createContext<ReferenceResolver | undefined>(undefined);
 InlineRefResolverContext.displayName = 'InlineRefResolverContext';
 
-const DocumentContext = React.createContext<unknown | undefined>(undefined);
+const DocumentContext = React.createContext<object | undefined>(undefined);
 DocumentContext.displayName = 'DocumentContext';
 
 type InlineRefResolverProviderProps = {
@@ -20,11 +21,13 @@ type InlineRefResolverProviderProps = {
  */
 export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps> = ({
   children,
-  document,
+  document: maybeDocument,
   resolver,
 }) => {
+  const document = isPlainObject(maybeDocument) ? maybeDocument : undefined;
+
   const computedResolver = React.useMemo(
-    () => resolver || (document !== undefined ? defaultResolver(document as object) : undefined),
+    () => resolver || (document !== undefined ? defaultResolver(document) : undefined),
     [document, resolver],
   );
 
