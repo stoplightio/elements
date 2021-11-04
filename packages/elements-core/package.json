@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "7.3.7",
+  "version": "7.3.8",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -66,7 +66,6 @@
     "jotai": "1.2.2",
     "json-schema": "^0.3.0",
     "lodash": "^4.17.19",
-    "xml-formatter": "^2.4.0",
     "nanoid": "^3.1.20",
     "process": "0.11.10",
     "prop-types": "^15.7.2",
@@ -76,7 +75,8 @@
     "tslib": "^2.1.0",
     "unist-util-select": "^3.0.1",
     "urijs": "^1.19.6",
-    "util": "^0.12.4"
+    "util": "^0.12.4",
+    "xml-formatter": "^2.4.0"
   },
   "devDependencies": {
     "@stoplight/scripts": "9.1.0",
