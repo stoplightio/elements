@@ -104,6 +104,13 @@ export const TryIt: React.FC<TryItProps> = ({
     parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
   );
 
+  const getValues = () => Object.keys(bodyParameterValues)
+        .filter(param => !isAllowedEmptyValues[param] ?? true)
+        .reduce((previousValue, currentValue) => {
+          previousValue[currentValue] = bodyParameterValues[currentValue];
+          return previousValue;
+        }, {});
+
   React.useEffect(() => {
     if (!chosenServer) {
       setChosenServer(servers[0]);
@@ -114,17 +121,11 @@ export const TryIt: React.FC<TryItProps> = ({
   React.useEffect(() => {
     let isActive = true;
     if (onRequestChange || embeddedInMd) {
-      const values = Object.keys(bodyParameterValues)
-        .filter(param => !isAllowedEmptyValues[param] ?? true)
-        .reduce((previousValue, currentValue) => {
-          previousValue[currentValue] = bodyParameterValues[currentValue];
-          return previousValue;
-        }, {});
       buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
-        bodyInput: formDataState.isFormDataBody ? values : textRequestBody,
+        bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
         auth: operationAuthValue,
         ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
@@ -165,7 +166,7 @@ export const TryIt: React.FC<TryItProps> = ({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
         mediaTypeContent,
-        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+        bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
         mockData,
         auth: operationAuthValue,
         chosenServer,

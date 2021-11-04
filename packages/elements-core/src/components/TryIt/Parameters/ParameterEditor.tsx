@@ -79,7 +79,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
           </Flex>
         )}
       </div>
-      {canChangeOptional && (
+      {(canChangeOptional && !parameter.required)  && (
         <>
           <div></div>
           <div>
