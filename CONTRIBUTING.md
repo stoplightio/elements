@@ -219,10 +219,10 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
 2. Create a new branch. The name doesn't really matter - something like `chore/release` will do.
 3. Run `yarn version`. You will be asked a few questions.
     - We don't release `elements-demo` or `elements-utils` packages. In order to not release them, you have to choose "Custom Version" and enter the same, old verison by hand. Awkward, but it works.
-    - In case of other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our versioning guidelines below! If in doubt, it's better to release more packages, rather than less.
+    - In case of other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our versioning guidelines below!
 4. After the script gets finalized, a commit will be created for you.
-5. *IMPORTANT!!!* If `elements-core` version was updated in `elements` and `elements-dev-portal`, the script have changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places by hand and make a new commit. The commit message doesn't really matter here, something like `fix: ^ to ~ for elements-core` is more than enouogh.
-6. Now make a push, create a PR and ask someone from review. The purpose of the review is to make sure the relase obeys our versioning guidelines.
+5. *IMPORTANT!!!* If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script have changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places by hand and make a new commit. The commit message doesn't really matter here, something like `fix: ^ to ~ for elements-core` is more than enouogh.
+6. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the relase obeys our versioning guidelines.
 
 ## Versioning Guidelines
 
@@ -230,23 +230,25 @@ If you did changes only in `elements` package, it's okay to release only `elemen
 
 If you did changes only in `elements-dev-portal` package, it's okay to release only `elements-dev-portal` package.
 
-If you did changes in the `elements-core`, this most likely means that all 3 packages should be released.
+If you did changes in the `elements-core`, this means that all 3 packages should be released.
 
-If tracking what changes occured since the last release, there is no harm in staying on the safe side and releasing all the packages. This will not cause any isuess, meanwhile - for example - releasing only `elements` but not realeasing `elements-core` can cause serious error.
+If it's difficult to figure out what changes happened since the last release, there is never any harm in releasing all the packages. This will not cause any issues, meanwhile - for example - releasing only `elements` but not realeasing `elements-core` can cause serious errors.
 
 Here is how we do versioning:
 
 ### Major versions
 
-If you are bumping a major in *any* elements package, you are most likely doing something wrong. Consult a member of Pierogi team.
+If you are bumping a major in *any* elements package, you are most likely doing something wrong. Consult a member of Pierogi Team. No yolo'ing allowed here!
 
 ### Minor versions
 
-Minor versions in `elements` and `elements-dev-portal` are purely for introducing new features. If any PR that is being released introduces a new feature / somehow extends the functionality, you can bump the minor.
+Minor versions in `elements` and `elements-dev-portal` are for introducing new features. If *any* change that is being released introduces a new feature / somehow extends the functionality, bump the minor.
 
-In case of `elements-core` (and in contrast with two other packages), we allow minors to have (within reason), some breaking changes. That's because it is an internal package that we control. If you need to make a breaking change in `elements-core`, make sure to bump minor *and* make sure that the new versions of `elements` and `elements-dev-portal` are using this new version and are compatible with it. Remember also that `elements` is also used in internal platform code, so make sure that the new version also works correctly in platform.
+In case of `elements-core` (and in contrast with two other packages), we allow minors to have (within reason), some breaking changes. That's because it is an internal package that we control. 
 
-Because we allow for breaking changes in `elements-core`, `elements` and `elements-dev-portal` `package.json` files use `~` sign, instead of a typical `^` sign. This ensures that those packages will be installing only patch updates, until the version is explicility bumped in `package.json`.
+If you need to make a breaking change in `elements-core`, make sure to bump minor *and* make sure that the new versions of `elements` and `elements-dev-portal` are using this new version and are compatible with it. Remember also that `elements` is used in internal platform code (`you-know-which` repo), so make sure that the new version also works correctly there.
+
+Because we allow for breaking changes in `elements-core`, `elements` and `elements-dev-portal` `package.json` files use `~` sign, instead of a typical `^` sign. This ensures that those packages will be installing only patch updates, until the `elements-core` version is explicility bumped in `package.json`.
 
 ### Patches
 
