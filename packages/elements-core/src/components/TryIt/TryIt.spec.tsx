@@ -378,17 +378,18 @@ describe('TryIt', () => {
     it('allows to omit empty value', async () => {
       render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
 
-      const nameField = screen.getByRole('textbox', { name: 'name' }) as HTMLInputElement;
-      await userEvent.type(nameField, 'some-name');
+      const ageField = screen.getByRole('textbox', { name: 'age' }) as HTMLInputElement;
+      await userEvent.type(ageField, '12');
 
-      const checkboxName = screen.getByRole('checkbox', { name: 'name-checkbox' }) as HTMLInputElement;
+      const checkboxName = screen.getByRole('checkbox', { name: 'age-checkbox' }) as HTMLInputElement;
       await userEvent.click(checkboxName);
 
       clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       const body = fetchMock.mock.calls[0][1]!.body as FormData;
-      expect(body.has('name')).toBe(false);
+      expect(body.has('age')).toBe(false);
+      expect(body.has('name')).toBe(true);
     });
 
     const formDataCases: ReadonlyArray<[string, NewableFunction, IHttpOperation]> = [
