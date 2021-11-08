@@ -219,10 +219,10 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
 2. Create a new branch. The name doesn't really matter - something like `chore/release` will do.
 3. Run `yarn version`. You will be asked a few questions.
     - We don't release `elements-demo` or `elements-utils` packages. In order to not release them, you have to choose "Custom Version" and enter the same, old verison by hand. Awkward, but it works.
-    - In case of other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our versioning guidelines below!
+    - For other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our versioning guidelines below!
 4. After the script gets finalized, a commit will be created for you.
-5. *IMPORTANT!!!* If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script have changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places by hand and make a new commit. The commit message doesn't really matter here, something like `fix: ^ to ~ for elements-core` is more than enouogh.
-6. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the relase obeys our versioning guidelines.
+5. *IMPORTANT!!!* If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't really matter here, something like `fix: ^ to ~ for elements-core` is more than enough.
+6. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the release obeys our versioning guidelines.
 
 ## Versioning Guidelines
 
@@ -232,7 +232,7 @@ If you did changes only in `elements-dev-portal` package, it's okay to release o
 
 If you did changes in the `elements-core`, this means that all 3 packages should be released.
 
-If it's difficult to figure out what changes happened since the last release, there is never any harm in releasing all the packages. This will not cause any issues, meanwhile - for example - releasing only `elements` but not realeasing `elements-core` can cause serious errors.
+If it's difficult to figure out what changes happened since the last release, there is never any harm in releasing all the packages. This will not cause any issues, meanwhile - for example - releasing only `elements` but not releasing `elements-core` can cause serious errors.
 
 Here is how we do versioning:
 
