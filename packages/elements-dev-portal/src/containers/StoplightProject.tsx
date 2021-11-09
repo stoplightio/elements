@@ -8,7 +8,7 @@ import {
   withQueryClientProvider,
   withStyles,
 } from '@stoplight/elements-core';
-import { pipe } from 'lodash/fp';
+import { flow } from 'lodash';
 import * as React from 'react';
 import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
 
@@ -201,7 +201,7 @@ const StoplightProjectRouter = ({ platformUrl, basePath = '/', router, ...props 
 /**
  * The StoplightProject component displays a traditional documentation UI for an existing Stoplight Project.
  */
-export const StoplightProject = pipe(
+export const StoplightProject = flow(
   withStyles,
   withPersistenceBoundary,
   withMosaicProvider,
