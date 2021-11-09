@@ -3661,10 +3661,10 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.8.2":
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.12.3.tgz#dd9e15ad7f262de932b561d51fb7db3073d69ca1"
-  integrity sha512-xSFfmIyQdXQQeGLmD3lL7nB+e50bjz9V6zqNOlk5HLi6bgBnnJYJaqL3mGPZzFX1mSqit+BQomZm2YN1BJKQtA==
+"@stoplight/mosaic-code-editor@^1.12.4":
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.12.4.tgz#11dfe55d5b444d2c444d3ce3ce4d4c3bcc48931a"
+  integrity sha512-ANpn3hhLMIjTJ9zAHwCR5gSB9UuOOCntpkoUysMW3AmDGAMRT4iaf+4yKQbbDm58tB6JOoK3ylkYAWugcZ+oZg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3674,8 +3674,8 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.12.3"
-    "@stoplight/mosaic-code-viewer" "1.12.3"
+    "@stoplight/mosaic" "1.12.4"
+    "@stoplight/mosaic-code-viewer" "1.12.4"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
@@ -3687,10 +3687,10 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.12.3", "@stoplight/mosaic-code-viewer@^1.8.2":
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.12.3.tgz#33b647a892963155c9e05662ef205500bd939cf7"
-  integrity sha512-3vNwmgkHoLzySLwX0iaGqf616kO/s5sLoe8NaQkE/GXUhgi427dcv8nMVZtYfqQQsNeuiRqxAsX4A2UmpNXa2g==
+"@stoplight/mosaic-code-viewer@1.12.4", "@stoplight/mosaic-code-viewer@^1.12.4":
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.12.4.tgz#e8c2feef672b0282c48c369908ef813184f686f7"
+  integrity sha512-K4bhU3jCL+XvbeYl/WLay+P44bXrM2oJEsmswXfDltngdUqx17Y/ZpNzi4LdBlaXnG95ijcBP/dGlvEu8BFAOA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3700,7 +3700,7 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.12.3"
+    "@stoplight/mosaic" "1.12.4"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
@@ -3712,10 +3712,10 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.12.3", "@stoplight/mosaic@^1.8.2":
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.12.3.tgz#9ab2873e3e5921ea3b55c41f63edca7074b26a36"
-  integrity sha512-ejASL054hGl7pZ585poou5JHxFIqjxAWgz/u33f9992qEldJwo1Ac77NGMbRy8Yq15uXzx77an2zXrydvr923g==
+"@stoplight/mosaic@1.12.4", "@stoplight/mosaic@^1.12.4", "@stoplight/mosaic@^1.8.2":
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.12.4.tgz#467543cb431d2f77b4454da0a1d4cfc4a48b19b3"
+  integrity sha512-Bg6C6lSw5mKSM34zoATDbx7Pywnm6VvpIIrMjHUCv1eH2m9WGhF0V1ADbB3JaxCvFVAUSr8BP+zVUWpT+GEm4A==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3747,13 +3747,6 @@
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.2.tgz#96e591496b72fde0f0cdae01a61d64f065bd9ede"
   integrity sha512-lyIc6JUlUA8Ve5ELywPC8I2Sdnh1zc1zmbYgVarhXIp9YeAB0ReeqmGEOWNtlHkbP2DAA1AL65Wfn2ncjK/jtQ==
-
-"@stoplight/react-error-boundary@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/react-error-boundary/-/react-error-boundary-1.1.0.tgz#9b0fb5d0538abbf9a416723b90f5b776bf68a75d"
-  integrity sha512-z/1gDVQAafqYuJksL212F1DXHSr604KDqAspZwbC+kWVqCsddQBmXzwI4Lqqem4wHbNGeVZYk3svW+sILX/PUQ==
-  dependencies:
-    "@stoplight/types" "^11.9.0"
 
 "@stoplight/react-error-boundary@^2.0.0":
   version "2.0.0"
@@ -3794,14 +3787,6 @@
     semantic-release "17.0.3"
     shelljs "0.8.x"
     tslib "^2.2.0"
-
-"@stoplight/types@^11.9.0":
-  version "11.10.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-11.10.0.tgz#60bbee770526f4de9cd1c613c7ab84c4e4674126"
-  integrity sha512-ffHD9i4UHS8Gsg7Ar8pKjI9B4kq7MRekE7tCROFGcFDzQhfRx9T92AduoLAtP/010XNYq23yDKpLBRPIEk8+xg==
-  dependencies:
-    "@types/json-schema" "^7.0.4"
-    utility-types "^3.10.0"
 
 "@stoplight/types@^12.0.0", "@stoplight/types@^12.3.0":
   version "12.3.0"
