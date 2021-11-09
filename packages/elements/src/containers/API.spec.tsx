@@ -8,7 +8,7 @@ import {
 } from '@stoplight/elements-core';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { pipe } from 'lodash/fp';
+import { flow } from 'lodash';
 import * as React from 'react';
 import { Route, Router } from 'react-router';
 
@@ -16,7 +16,7 @@ import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { API, APIImpl } from './API';
 
-export const APIWithoutRouter = pipe(
+export const APIWithoutRouter = flow(
   withStyles,
   withPersistenceBoundary,
   withMosaicProvider,

@@ -1,27 +1,26 @@
 import { dirname, sep } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
-import { escapeRegExp, partial, sortBy } from 'lodash';
-import { pipe } from 'lodash/fp';
+import { escapeRegExp, flow, partial, sortBy } from 'lodash';
 
 import { Group, isDivider, isGroup, isItem, ITableOfContents, Item, NodeData, TableOfContentItem } from './types';
 
 type SchemaType = 'divider' | 'group';
 
 export function generateProjectToC(searchResults: NodeData[]) {
-  return pipe(
+  return flow(
     () => searchResults,
     groupNodesByType,
     ({ articles, models, httpServices, httpOperations }) => {
       const toc: ITableOfContents = { items: [] };
 
       // Articles
-      pipe(() => articles, sortArticlesByTypeAndPath, appendArticlesToToC(toc))();
+      flow(() => articles, sortArticlesByTypeAndPath, appendArticlesToToC(toc))();
 
       if (httpServices.length > 0) {
         toc.items.push({ type: 'divider', title: 'APIS' });
       }
 
-      pipe(
+      flow(
         () => httpServices,
         httpServices =>
           appendHttpServicesToToC(toc)({
@@ -38,21 +37,21 @@ export function generateProjectToC(searchResults: NodeData[]) {
 }
 
 export function generateTocSkeleton(searchResults: NodeData[]) {
-  return pipe(
+  return flow(
     () => searchResults,
     groupNodesByType,
     ({ articles, models, httpServices }) => {
       const toc: ITableOfContents = { items: [] };
 
       // Articles
-      pipe(() => articles, sortArticlesByTypeAndPath, appendArticlesToToC(toc))();
+      flow(() => articles, sortArticlesByTypeAndPath, appendArticlesToToC(toc))();
 
       // HTTP Services
       toc.items.push({ type: 'divider', title: 'APIS' });
-      pipe(() => httpServices, appendHttpServicesItemsToToC(toc))();
+      flow(() => httpServices, appendHttpServicesItemsToToC(toc))();
 
       // Models
-      pipe(() => models, appendModelsToToc(toc))();
+      flow(() => models, appendModelsToToc(toc))();
 
       return toc;
     },
@@ -90,7 +89,7 @@ function cleanToc(toc: ITableOfContents) {
 
 export function resolveHttpServices(searchResults: NodeData[], toc: ITableOfContents) {
   cleanToc(toc);
-  pipe(
+  flow(
     () => searchResults,
     groupNodesByType,
     ({ models, httpServices, httpOperations }) => {
@@ -199,7 +198,7 @@ export function appendArticlesToToC(toc: ITableOfContents) {
   return (articles: NodeData[]) => {
     return articles.reduce<ITableOfContents>(
       (toc, article) =>
-        pipe(partial(getDirsFromUri, article.uri), findOrCreateArticleGroup(toc), group => {
+        flow(partial(getDirsFromUri, article.uri), findOrCreateArticleGroup(toc), group => {
           group.items.push({ type: 'item', title: article.name, uri: article.uri });
           return toc;
         })(),
@@ -339,7 +338,7 @@ export function appendHttpServicesToToC(toc: ITableOfContents) {
       tocNode = { type: 'group', title: httpService.name, items: [], uri: httpService.uri };
       toc.items.push(tocNode);
 
-      pipe(
+      flow(
         () => ({
           httpOperations,
           models,
