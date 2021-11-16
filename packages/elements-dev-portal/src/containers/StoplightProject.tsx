@@ -129,7 +129,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     elem = (
       <NodeContent
         node={node}
-        Link={Link}
+        Link={({ children, ...props }) => {
+          return <a href={props.to}>{children}</a>;
+        }}
         hideTryIt={hideTryIt}
         hideMocking={hideMocking}
         hideExport={hideExport}
