@@ -5,6 +5,8 @@
 - [Contributing to Stoplight Elements](#contributing-to-stoplight-elements)
   - [Table Of Contents](#table-of-contents)
   - [Intro](#intro)
+  - [Installing Elements](#installing-elements)
+  - [Developing Elements](#developing-elements)
   - [Testing](#testing)
     - [Guiding principles](#guiding-principles)
     - [Unit tests](#unit-tests)
@@ -15,10 +17,42 @@
       - [Edit the tests](#edit-the-tests)
       - [Inspecting test results](#inspecting-test-results)
   - [Yalcing into platform-internal](#yalcing-into-platform-internal)
+  - [Releasing Elements](#releasing-elements)
+  - [Versioning Guidelines](#versioning-guidelines)
         
 ## Intro
 
 Elements is an open-source project, and we love contributions. If you're familiar with TypeScript and Jest then dive right in, see how far you can get, and talk to us in [Discussions](https://github.com/stoplightio/elements/discussions) or start a draft PR if you get stuck.
+
+## Installing Elements
+
+Before you start development, you have to install elements and its dependencies.
+
+Make sure you have [node](https://nodejs.org/en/) installed. We are predominantly using version 12. If you experience any issues, make sure to have this version installed. We recommened [nvm](https://github.com/nvm-sh/nvm) for managing different versions of node on your computer.
+
+For dependencies, we are using [yarn](https://yarnpkg.com/). Install it, following the [guideline](https://yarnpkg.com/getting-started/install).
+
+Clone elements repository by running `git clone git@github.com:stoplightio/elements.git` (provided you have [SSH keys added](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) in GitHub).
+
+Next, move into the repository by running `cd elements`.
+
+Now run `yarn`. Installation of dependencies will begin.
+
+To validate that the installation was successful, move into demo folder, by running `cd demo` and run `yarn start`. You should see a demo website, under the address `http://localhost:4025`.
+
+## Developing Elements
+
+Elements is split into 3 packages. 2 of them - `elements` and `elements-dev-portal` are user-facing. 3rd - `elements-core` is an implementation detail, created to share code and components between `elements` and `elements-dev-portal`.
+
+Most of the code is actually in `elements-core`, so if you are working on an issue, it's likely where you will land. `elements` and `elements-dev-portal` only have code that is higly specific to those projects.
+
+Most often, we are developing elements (in all of those packages) using [storybooks](https://storybook.js.org/).
+
+Each package has it's own storybook. In order to run a storybook for a specific package, in the main directory run, for example `yarn elements-core storybook`. This will start a storybook for `elements-core` package.
+
+Now you can develop the code and test your changes in the storybook. 
+
+For your convenience all the packages are linked. So, for example, if you run `elements` storybook, but make changes in `elements-core` codebase, those changes *will be* visible instantly in your storybook.
 
 ## Testing
 
@@ -178,3 +212,44 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
 1. Inside of elements root directory, run `yarn build` then `cd packages/elements-core/dist` then `yalc publish`
 2. Copy the yalc published version output to terminal `@stoplight/elements-core@7.2.0`
 3. Go to `packages/ninja`, run `yalc add @stoplight/elements-core@7.2.0` and `yarn install --check-files`
+
+## Releasing Elements
+
+1. Make sure you are in the root directory of this repo and on the `main` branch. Also pull all the latest changes!
+2. Create a new branch. The name doesn't really matter - something like `chore/release` will do.
+3. Run `yarn version`. You will be asked a few questions.
+    - We don't release `elements-demo` or `elements-utils` packages. In order to not release them, you have to choose "Custom Version" and enter the same, old verison by hand. Awkward, but it works.
+    - For other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our versioning guidelines below!
+4. After the script gets finalized, a commit will be created for you.
+5. *IMPORTANT!!!* If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't really matter here, something like `fix: ^ to ~ for elements-core` is more than enough.
+6. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the release obeys our versioning guidelines.
+
+## Versioning Guidelines
+
+If you did changes only in `elements` package, it's okay to release only `elements` package.
+
+If you did changes only in `elements-dev-portal` package, it's okay to release only `elements-dev-portal` package.
+
+If you did changes in the `elements-core`, this means that all 3 packages should be released.
+
+If it's difficult to figure out what changes happened since the last release, there is never any harm in releasing all the packages. This will not cause any issues, meanwhile - for example - releasing only `elements` but not releasing `elements-core` can cause serious errors.
+
+Here is how we do versioning:
+
+### Major versions
+
+If you are bumping a major in *any* elements package, you are most likely doing something wrong. Consult a member of Pierogi Team. No yolo'ing allowed here!
+
+### Minor versions
+
+Minor versions in `elements` and `elements-dev-portal` are for introducing new features. If *any* change that is being released introduces a new feature / somehow extends the functionality, bump the minor.
+
+In case of `elements-core` (and in contrast with two other packages), we allow minors to have (within reason), some breaking changes. That's because it is an internal package that we control. 
+
+If you need to make a breaking change in `elements-core`, make sure to bump minor *and* make sure that the new versions of `elements` and `elements-dev-portal` are using this new version and are compatible with it. Remember also that `elements` is used in internal platform code (`you-know-which` repo), so make sure that the new version also works correctly there.
+
+Because we allow for breaking changes in `elements-core`, `elements` and `elements-dev-portal` `package.json` files use `~` sign, instead of a typical `^` sign. This ensures that those packages will be installing only patch updates, until the `elements-core` version is explicility bumped in `package.json`.
+
+### Patches
+
+This is probably the most obvious - in all 3 packages patch bumps are mostly for bug fixes.

@@ -22,7 +22,10 @@ export function getMockData(
 export function buildPreferHeader(
   { code, example, dynamic }: PreferHeaderProps,
   httpOperation: IHttpOperation,
-): Record<'Prefer', string> {
+): Record<'Prefer', string> | undefined {
+  if (!code) {
+    return undefined;
+  }
   const isCodeSupported = supportsResponseCode(httpOperation, code);
   const isExampleSupported = isCodeSupported && supportsExample(httpOperation, code, example);
 

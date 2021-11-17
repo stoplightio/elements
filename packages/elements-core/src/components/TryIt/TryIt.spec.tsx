@@ -233,7 +233,7 @@ describe('TryIt', () => {
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      expect(limitField).toHaveTextContent('1');
+      expect(limitField).toHaveTextContent('select an option');
 
       const typeField = screen.getByLabelText('type');
       expect(typeField).toHaveTextContent('something');
@@ -401,7 +401,7 @@ describe('TryIt', () => {
       });
 
       it('Sets correct content type', () => {
-        expect(headers.get('Content-Type')).toBe(mimeType);
+        expect(headers.get('Content-Type')).toBe(mimeType === 'multipart/form-data' ? null : mimeType);
       });
 
       it('Sends user input', () => {
@@ -412,8 +412,11 @@ describe('TryIt', () => {
         expect(body.get('completed')).toBe('');
       });
 
-      it('Sets untouched enums to their first value', () => {
-        expect(body.get('someEnum')).toBe('a');
+      it('Sets untouched required enums to their first value', () => {
+        expect(body.get('someRequiredEnum')).toBe('a');
+      });
+      it('Does not set untouched optional enums', () => {
+        expect(body.get('someOptionalEnum')).toBe('');
       });
     });
 
@@ -666,6 +669,36 @@ describe('TryIt', () => {
         ],
         [
           'https://todos.stoplight.io/todos',
+          expect.objectContaining({
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }),
+        ],
+      ]);
+    });
+
+    it('Invokes request with no Prefer header if mock data is not selected', async () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
+
+      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+
+      userEvent.click(mockingButton);
+
+      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
+      expect(enableItem).toBeInTheDocument();
+      userEvent.click(enableItem);
+
+      clickSend();
+
+      await waitFor(() => expect(screen.getByRole('button', { name: /send/i })).toBeEnabled());
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
+      expect(fetchMock.mock.calls).toEqual([
+        [
+          'https://mock-todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
             headers: {

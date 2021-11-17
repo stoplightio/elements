@@ -1,9 +1,10 @@
-import { Button, Flex, Panel, Select, Text } from '@stoplight/mosaic';
+import { Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import React from 'react';
 
-import { useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration';
+import { exceedsSize, useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration/exampleGeneration';
+import { LoadMore } from '../LoadMore';
 
 export interface ResponseExamplesProps {
   httpOperation: IHttpOperation;
@@ -26,7 +27,11 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
   const responseExample = useGenerateExampleFromMediaTypeContent(responseContents, chosenExampleIndex, {
     skipWriteOnly: true,
   });
-  const exceededSize = responseExample.split(/\r\n|\r|\n/).length > 500;
+
+  const handleLoadMore = () => {
+    setLoading(true);
+    setTimeout(() => setShow(true), 50);
+  };
 
   if (!userDefinedExamples && responseMediaType !== 'application/json') return null;
 
@@ -47,7 +52,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar>{examplesSelect || <Text color="body">Response Example</Text>}</Panel.Titlebar>
       <Panel.Content p={0}>
-        {(exceededSize && show) || !exceededSize ? (
+        {show || !exceedsSize(responseExample) ? (
           <CodeViewer
             aria-label={responseExample}
             noCopyButton
@@ -57,23 +62,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
             showLineNumbers
           />
         ) : (
-          <Flex flexDirection="col" justifyContent="center" alignItems="center" style={{ height: '400px' }}>
-            <Button
-              aria-label="load-example"
-              onPress={() => {
-                setLoading(true);
-                setTimeout(() => setShow(true), 50);
-              }}
-              appearance="minimal"
-              loading={loading}
-              disabled={loading}
-            >
-              {loading ? 'Loading...' : 'Load examples'}
-            </Button>
-            <Text fontSize="base" textAlign="center">
-              Large examples are not rendered by default.
-            </Text>
-          </Flex>
+          <LoadMore loading={loading} onClick={handleLoadMore} />
         )}
       </Panel.Content>
     </Panel>

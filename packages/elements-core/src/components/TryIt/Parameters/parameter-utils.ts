@@ -1,8 +1,7 @@
 import { safeStringify } from '@stoplight/json';
 import { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
-import { JSONSchema7Definition } from 'json-schema';
-import { isObject, map } from 'lodash';
-import { keyBy, mapValues, pipe } from 'lodash/fp';
+import { JSONSchema7Definition, JSONSchema7Type } from 'json-schema';
+import _, { isObject, map } from 'lodash';
 
 export type ParameterSpec = Pick<IHttpParam, 'name' | 'examples' | 'schema' | 'required'>;
 const booleanOptions = [
@@ -11,11 +10,16 @@ const booleanOptions = [
   { label: 'True', value: 'true' },
 ];
 
+function enumOptions(enumValues: JSONSchema7Type[], required?: boolean) {
+  const options = map(enumValues, v => ({ value: Number.isNaN(Number(v)) ? String(v) : Number(v) }));
+  return required ? options : [{ label: 'Not Set', value: '' }, ...options];
+}
+
 export function parameterOptions(parameter: ParameterSpec) {
   return parameter.schema?.type === 'boolean'
     ? booleanOptions
     : parameter.schema?.enum !== undefined
-    ? map(parameter.schema.enum, v => ({ value: Number.isNaN(Number(v)) ? String(v) : Number(v) }))
+    ? enumOptions(parameter.schema.enum, parameter.required)
     : null;
 }
 
@@ -70,22 +74,27 @@ const getValueForParameter = (parameter: ParameterSpec) => {
 
 const getInitialValueForParameter = (parameter: ParameterSpec) => {
   const isRequired = !!parameter.required;
-  const isEnum = !!parameter.schema?.enum;
 
-  if (!isEnum && !isRequired) return '';
+  if (!isRequired) return '';
 
   return getValueForParameter(parameter);
 };
 
-export const initialParameterValues: (params: readonly ParameterSpec[]) => Record<string, string> = pipe(
-  keyBy((param: ParameterSpec) => param.name),
-  mapValues(getInitialValueForParameter),
-);
+export const initialParameterValues: (params: readonly ParameterSpec[]) => Record<string, string> = params => {
+  return _.chain(params)
+    .keyBy((param: ParameterSpec) => param.name)
+    .mapValues(param => getInitialValueForParameter(param))
+    .value();
+};
 
-export function mapSchemaPropertiesToParameters(properties: { [key: string]: JSONSchema7Definition }) {
+export function mapSchemaPropertiesToParameters(
+  properties: { [key: string]: JSONSchema7Definition },
+  required: string[] | undefined,
+) {
   return Object.entries(properties).map(([name, schema]) => ({
     name,
     schema: typeof schema !== 'boolean' ? schema : undefined,
     examples: typeof schema !== 'boolean' && schema.examples ? [{ key: 'example', value: schema.examples }] : undefined,
+    ...(required?.includes(name) && { required: true }),
   }));
 }

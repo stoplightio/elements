@@ -4,9 +4,11 @@ import userEvent from '@testing-library/user-event';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
+import * as exampleGenerationUtils from '../../../utils/exampleGeneration/exampleGeneration';
 import { chooseOption } from '../../../utils/tests/chooseOption';
 import { Model } from './Model';
 
+const generatedExample = '{\n"iamtoobig": "string",\n"name": "string",\n"id": "number",\n"email": "string", \n}';
 const exampleSchema: JSONSchema7 = {
   type: 'object',
   description: 'example schema description',
@@ -29,6 +31,36 @@ describe('Model', () => {
 
     expect(screen.getByRole('heading', { name: /example/i })).toBeInTheDocument();
     expect(container).toHaveTextContent('"propA": "valueA"');
+  });
+  it('does not show examples with more lines than supported, by default', async () => {
+    jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
+      return example.split(/\r\n|\r|\n/).length > size;
+    });
+    jest
+      .spyOn(exampleGenerationUtils, 'generateExamplesFromJsonSchema')
+      .mockReturnValue([{ label: '', data: generatedExample }]);
+
+    render(<Model data={exampleSchema} />);
+
+    await screen.findByText('Large examples are not rendered by default.');
+    jest.restoreAllMocks();
+  });
+
+  it('shows examples bigger than supported after clicking "Load Examples" button', async () => {
+    jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
+      return example.split(/\r\n|\r|\n/).length > size;
+    });
+    jest
+      .spyOn(exampleGenerationUtils, 'generateExamplesFromJsonSchema')
+      .mockReturnValue([{ label: '', data: generatedExample }]);
+
+    render(<Model data={exampleSchema} />);
+
+    const button = screen.getByRole('button', { name: 'load-example' });
+    userEvent.click(button);
+
+    expect(await screen.findByText('"iamtoobig"')).toBeInTheDocument();
+    jest.restoreAllMocks();
   });
 
   it('uses examples defined in the schema', async () => {

@@ -74,6 +74,11 @@
           "type": "item",
           "title": "Web Component",
           "uri": "docs/getting-started/dev-portal/web-component.md"
+        },
+        {
+          "type": "item",
+          "title": "Search Component",
+          "uri": "docs/getting-started/dev-portal/search-component.md"
         }
       ]
     },
