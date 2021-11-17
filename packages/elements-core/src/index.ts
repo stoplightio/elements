@@ -8,6 +8,7 @@ export {
   DefaultSMDComponents,
   MarkdownComponentsProvider,
 } from './components/MarkdownViewer/CustomComponents/Provider';
+export { ReactRouterMarkdownLink } from './components/MarkdownViewer/CustomComponents/ReactRouterLink';
 export { TableOfContents } from './components/MosaicTableOfContents';
 export {
   CustomLinkComponent,
