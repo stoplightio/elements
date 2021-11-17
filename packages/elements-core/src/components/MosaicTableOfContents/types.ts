@@ -10,7 +10,6 @@ export type TableOfContentsProps = {
 export type CustomLinkComponent = React.ComponentType<{
   to: string;
   className?: string;
-  hash?: string;
   children: React.ReactNode;
 }>;
 

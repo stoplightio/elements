@@ -127,6 +127,7 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
     );
 
     if (edge) {
+      console.log('Edge Found ', edge);
       return <Link to={`${edge.slug}${hash && `#${hash}`}`}>{children}</Link>;
     }
   }

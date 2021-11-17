@@ -8,6 +8,7 @@ import {
   withQueryClientProvider,
   withStyles,
 } from '@stoplight/elements-core';
+import { ReactRouterMarkdownLink } from '@stoplight/elements-core/components/MarkdownViewer/CustomComponents/ReactRouterLink';
 import { flow } from 'lodash';
 import * as React from 'react';
 import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
@@ -129,9 +130,10 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     elem = (
       <NodeContent
         node={node}
-        Link={({ children, ...props }) => {
-          return <a href={props.to}>{children}</a>;
-        }}
+        // Link={({ children, ...props }) => {
+        //   return <a href={props.to}>{children}</a>;
+        // }}
+        Link={ReactRouterMarkdownLink!}
         hideTryIt={hideTryIt}
         hideMocking={hideMocking}
         hideExport={hideExport}
