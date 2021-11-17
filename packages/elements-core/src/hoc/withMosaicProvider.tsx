@@ -8,7 +8,7 @@ export function withMosaicProvider<P>(WrappedComponent: React.ComponentType<P>):
     try {
       // if already have mosaic context in tree, use it rather than creating a new provider
       const mosaicContext = useMosaicContext();
-      if (mosaicContext) {
+      if (mosaicContext?.providerId) {
         return <WrappedComponent {...props} />;
       }
     } catch {
