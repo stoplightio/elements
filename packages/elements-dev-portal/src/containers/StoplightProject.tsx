@@ -1,5 +1,6 @@
 import {
   findFirstNode,
+  ReactRouterMarkdownLink,
   RoutingProps,
   SidebarLayout,
   useRouter,
@@ -129,7 +130,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     elem = (
       <NodeContent
         node={node}
-        Link={Link}
+        Link={ReactRouterMarkdownLink!}
         hideTryIt={hideTryIt}
         hideMocking={hideMocking}
         hideExport={hideExport}
