@@ -1,5 +1,5 @@
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 
 import { getDisplayName } from './utils';
 
@@ -14,6 +14,14 @@ const queryClient = new QueryClient({
 
 export function withQueryClientProvider<P>(WrappedComponent: React.ComponentType<P>): React.FC<P> {
   const WithQueryClientProvider = (props: P) => {
+    try {
+      // if already have query client in tree, use it rather than creating a new provider
+      useQueryClient();
+      return <WrappedComponent {...props} />;
+    } catch {
+      // no query client yet in the tree (if `useQueryClient` throws)
+    }
+
     return (
       <QueryClientProvider client={queryClient}>
         <WrappedComponent {...props} />
