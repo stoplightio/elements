@@ -47,7 +47,6 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@stoplight/elements-core": "~7.3.11",
     "@stoplight/markdown-viewer": "^5.3.2",
     "@stoplight/mosaic": "^1.12.4",

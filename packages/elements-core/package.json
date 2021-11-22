@@ -44,8 +44,8 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^5.14.0",
-    "@fortawesome/react-fontawesome": "^0.1.11",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@stoplight/json": "^3.10.0",
     "@stoplight/json-schema-ref-parser": "^9.0.5",
     "@stoplight/json-schema-sampler": "0.2.2",
@@ -59,7 +59,6 @@
     "@stoplight/react-error-boundary": "^2.0.0",
     "@stoplight/types": "^12.0.0",
     "@stoplight/yaml": "^4.2.2",
-    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "httpsnippet": "^1.24.0",
     "jotai": "1.2.2",

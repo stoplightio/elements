@@ -1,7 +1,5 @@
-import { faStream } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MDAST } from '@stoplight/markdown';
-import { Box, Button, Flex, Popover } from '@stoplight/mosaic';
+import { Box, Button, Flex, Icon, Popover } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { useComponentSize } from '../../../hooks/useComponentSize';
@@ -24,10 +22,10 @@ const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On
   if (!headings || !headings.length) return null;
 
   const component = (
-    <div style={{ maxHeight: '85vh', overflow: 'auto' }}>
+    <Box overflowY="auto" overflowX="auto" style={{ maxHeight: '85vh' }}>
       {title && (
         <Flex py={2} alignItems="center" fontSize="sm" fontWeight="medium" color="muted" style={{ paddingLeft: 18 }}>
-          <FontAwesomeIcon icon={faStream} className="sl-mr-2" />
+          <Box as={Icon} icon="stream" mr={2} />
           {title}
         </Flex>
       )}
@@ -35,13 +33,13 @@ const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On
       {headings.map((heading, i) => (
         <Heading key={i} item={heading} isSelected={locationHash === `#${heading.id}`} />
       ))}
-    </div>
+    </Box>
   );
 
   if (minimal) {
     return (
       <Box pos="absolute" top={0} right={0} style={{ top: 10 }}>
-        <Popover renderTrigger={<Button size="sm" borderColor="light" icon={faStream} />} placement="bottom">
+        <Popover renderTrigger={<Button size="sm" borderColor="light" icon="stream" />} placement="bottom">
           <Box className={className}>{component}</Box>
         </Popover>
       </Box>

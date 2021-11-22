@@ -1,13 +1,41 @@
-import {
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faBolt } from '@fortawesome/free-solid-svg-icons/faBolt';
+import { faBookOpen } from '@fortawesome/free-solid-svg-icons/faBookOpen';
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
+import { faCloud } from '@fortawesome/free-solid-svg-icons/faCloud';
+import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
+import { faCrosshairs } from '@fortawesome/free-solid-svg-icons/faCrosshairs';
+import { faCube } from '@fortawesome/free-solid-svg-icons/faCube';
+import { faDatabase } from '@fortawesome/free-solid-svg-icons/faDatabase';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
+import { faEye } from '@fortawesome/free-solid-svg-icons/faEye';
+import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle';
+import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import { faStream } from '@fortawesome/free-solid-svg-icons/faStream';
+import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
+
+library.add(
+  faBolt,
   faBookOpen,
+  faCheck,
+  faCircleNotch,
   faCloud,
+  faCopy,
   faCrosshairs,
   faCube,
   faDatabase,
+  faExclamationCircle,
+  faExclamationTriangle,
+  faEye,
+  faLock,
   faQuestionCircle,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
+  faSearch,
+  faStream,
+);
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',

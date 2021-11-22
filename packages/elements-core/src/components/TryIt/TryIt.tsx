@@ -1,4 +1,3 @@
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Box, Button, Flex, Icon, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
 import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -262,7 +261,7 @@ export const TryIt: React.FC<TryItProps> = ({
           </Flex>
           {validateParameters && hasRequiredButEmptyParameters && (
             <Box mt={4} color="danger-light" fontSize="sm">
-              <Icon icon={faExclamationTriangle} className="sl-mr-1" />
+              <Icon icon="exclamation-triangle" className="sl-mr-1" />
               You didn't provide all of the required parameters!
             </Box>
           )}

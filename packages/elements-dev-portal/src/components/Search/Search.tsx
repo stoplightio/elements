@@ -1,4 +1,3 @@
-import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import {
   NodeTypeColors,
   NodeTypeIconDefs,
@@ -55,7 +54,7 @@ const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch 
           appearance="minimal"
           borderB
           size="lg"
-          icon={<Box as={Icon} ml={1} icon={faSearch} />}
+          icon={<Box as={Icon} ml={1} icon="search" />}
           autoFocus
           placeholder="Search..."
           value={search}

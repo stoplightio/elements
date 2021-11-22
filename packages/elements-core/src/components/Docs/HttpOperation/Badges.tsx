@@ -1,4 +1,3 @@
-import { faExclamationCircle, faEye, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Badge, Tooltip } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import React from 'react';
@@ -10,7 +9,7 @@ import { getReadableSecurityName } from '../../../utils/oas/security';
 export const DeprecatedBadge: React.FC = () => (
   <Tooltip
     renderTrigger={
-      <Badge intent="warning" icon={faExclamationCircle} data-testid="badge-deprecated">
+      <Badge intent="warning" icon="exclamation-circle" data-testid="badge-deprecated">
         Deprecated
       </Badge>
     }
@@ -22,7 +21,7 @@ export const DeprecatedBadge: React.FC = () => (
 export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpService }) => (
   <Tooltip
     renderTrigger={
-      <Badge icon={faEye} data-testid="badge-internal" className="sl-bg-danger sl-ml-0">
+      <Badge icon="eye" data-testid="badge-internal" className="sl-bg-danger sl-ml-0">
         Internal
       </Badge>
     }
@@ -38,7 +37,7 @@ export const SecurityBadge: React.FC<{
 }> = ({ scheme, httpServiceUri, includeKey }) => {
   const badge = (
     <Badge
-      icon={faLock}
+      icon="lock"
       data-testid="badge-security"
       className="sl-truncate"
       style={{ backgroundColor: badgeDefaultBackgroundColor, color: badgeDefaultColor }}
