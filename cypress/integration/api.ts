@@ -82,6 +82,10 @@ describe('API component', () => {
 });
 
 function loadZoomApiPage() {
+  cy.intercept('https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml').as(
+    'getZoomOpenAPI',
+  );
   cy.visit('/zoom-api');
   cy.findByRole('heading', { name: 'Zoom API', level: 1 }).should('exist');
+  cy.wait('@getZoomOpenAPI');
 }

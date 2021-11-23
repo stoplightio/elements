@@ -97,21 +97,29 @@ describe('Stoplight component', () => {
 });
 
 function loadStoplightProjectPage() {
+  cy.intercept('https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/*').as('getNode');
   cy.visit('/stoplight-project');
+  cy.wait('@getNode');
 }
 
 function loadCreateTodoPage() {
-  cy.visit('/stoplight-project/b3A6Mzg5NDM2-create-todo');
+  visitNode('b3A6Mzg5NDM2', 'create-todo');
 }
 
 function loadListTodosPage() {
-  cy.visit('/stoplight-project/b3A6Mzg5NDM1-list-todos');
+  visitNode('b3A6Mzg5NDM1', 'list-todos');
 }
 
 function loadTodoSchemaPage() {
-  cy.visit('/stoplight-project/c2NoOjkxNDY1MDA-todo');
+  visitNode('c2NoOjkxNDY1MDA', 'todo');
 }
 
 function loadMarkdownPage() {
-  cy.visit('/stoplight-project/ZG9jOjE-introduction');
+  visitNode('ZG9jOjE', 'introduction');
+}
+
+function visitNode(nodeId: string, nodeSlug: string) {
+  cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/${nodeId}`).as('getNode');
+  cy.visit(`/stoplight-project/${nodeId}-${nodeSlug}`);
+  cy.wait('@getNode');
 }
