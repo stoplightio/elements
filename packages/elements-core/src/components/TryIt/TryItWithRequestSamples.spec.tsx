@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
@@ -18,14 +18,15 @@ describe('TryItWithRequestSamples', () => {
     expect(await screen.findByText('Request Sample: Shell / cURL')).toBeVisible();
 
     const codeViewer = await screen.findByLabelText(/curl/);
-
     expect(codeViewer).toHaveTextContent(/PUT/i);
   });
 
   it('reacts to parameter input', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
     const todoIdField = await screen.findByLabelText('todoId');
     userEvent.type(todoIdField, '123456789');
+
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/123456789/));
   });
@@ -35,15 +36,15 @@ describe('TryItWithRequestSamples', () => {
 
     const mockingButton = screen.getByRole('button', { name: /mocking/i });
 
-    userEvent.click(mockingButton);
+    act(() => userEvent.click(mockingButton));
 
     // enable mocking
-    let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
-    userEvent.click(enableItem);
+    let enableItem = screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
+    act(() => userEvent.click(enableItem));
 
     // set response code
-    const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
-    userEvent.click(responseCodeItem);
+    const responseCodeItem = screen.getByRole('menuitemcheckbox', { name: '200' });
+    act(() => userEvent.click(responseCodeItem));
 
     const codeViewer = await screen.findByLabelText(/curl/);
     expect(codeViewer).toHaveTextContent(/https:\/\/mock-todos\.stoplight\.io/);
@@ -52,14 +53,17 @@ describe('TryItWithRequestSamples', () => {
 
   it('includes authentication data in request sample', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
     const apiKeyField = await screen.findByLabelText('API Key');
     userEvent.type(apiKeyField, '123456789');
+
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/123456789/));
   });
 
   it('displays parameter name for empty path parameter', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/todoId/));
   });
@@ -68,7 +72,6 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={operationWithUrlVariables} />);
 
     const codeViewer = await screen.findByLabelText(/curl/);
-
     expect(codeViewer).toHaveTextContent('ftp://default-namespace.stoplight.io/api/eu/todos');
   });
 
@@ -76,7 +79,6 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     const codeViewer = await screen.findByLabelText(/curl/);
-
     expect(codeViewer).toHaveTextContent('https://todos.stoplight.io');
   });
 
@@ -84,11 +86,9 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     const serversSelect = await screen.findByLabelText('Servers');
-
     chooseOption(serversSelect, 'Development');
 
     const codeViewer = await screen.findByLabelText(/curl/);
-
     expect(codeViewer).toHaveTextContent('https://todos-dev.stoplight.io');
   });
 });

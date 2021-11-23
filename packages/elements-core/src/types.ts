@@ -154,4 +154,5 @@ export interface IArticleHeadings {
   title?: string;
   className?: string;
   minimal?: boolean;
+  maxWidth?: number;
 }

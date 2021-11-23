@@ -2,8 +2,7 @@ import '@testing-library/jest-dom';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
-import { screen, waitFor } from '@testing-library/dom';
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
@@ -260,7 +259,7 @@ describe('TryIt', () => {
 
       // path param
       const todoIdField = screen.getByLabelText('todoId');
-      await userEvent.type(todoIdField, '123');
+      userEvent.type(todoIdField, '123');
 
       // query params
       const limitField = screen.getByLabelText('limit');
@@ -272,7 +271,7 @@ describe('TryIt', () => {
       // header param
 
       const accountIdField = screen.getByLabelText('account-id');
-      await userEvent.type(accountIdField, ' 1999');
+      userEvent.type(accountIdField, ' 1999');
 
       const messageIdField = screen.getByLabelText('message-id-select');
       chooseOption(messageIdField, 'example 2');
@@ -305,7 +304,7 @@ describe('TryIt', () => {
 
       // fill path param
       const todoIdField = screen.getByLabelText('todoId');
-      await userEvent.type(todoIdField, '123');
+      userEvent.type(todoIdField, '123');
 
       // unmount (to make sure parameters are not simply stored in component state)
       rerender(
@@ -388,7 +387,7 @@ describe('TryIt', () => {
 
         // path param
         const nameField = getByRole('textbox', { name: 'name' }) as HTMLInputElement;
-        await userEvent.type(nameField, 'some-name');
+        userEvent.type(nameField, 'some-name');
 
         // click send
         clickSend();
@@ -809,7 +808,7 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let APIKeyField = screen.getByLabelText('API Key');
-        await userEvent.type(APIKeyField, '123');
+        userEvent.type(APIKeyField, '123');
 
         // switch to OAuth
         let securitySchemesButton = screen.getByLabelText('security-schemes');
@@ -832,7 +831,7 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let APIKeyField = screen.getByLabelText('API Key');
-        await userEvent.type(APIKeyField, '123');
+        userEvent.type(APIKeyField, '123');
 
         cleanup();
 
@@ -866,7 +865,7 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
 
         const APIKeyField = screen.getByLabelText('API-Key');
-        await userEvent.type(APIKeyField, '123');
+        userEvent.type(APIKeyField, '123');
 
         // click send
         clickSend();
@@ -889,7 +888,7 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={singleSecurityOperation} />);
 
         const APIKeyField = screen.getByLabelText('API-Key');
-        await userEvent.type(APIKeyField, '123');
+        userEvent.type(APIKeyField, '123');
 
         // click send
         clickSend();
@@ -913,10 +912,10 @@ describe('TryIt', () => {
 
         const tokenInput = screen.getByLabelText('Token');
 
-        await userEvent.type(tokenInput, 'Bearer 0a1b2c');
+        userEvent.type(tokenInput, 'Bearer 0a1b2c');
 
         const todoIdField = screen.getByLabelText('todoId');
-        await userEvent.type(todoIdField, '123');
+        userEvent.type(todoIdField, '123');
 
         clickSend();
 
@@ -947,11 +946,11 @@ describe('TryIt', () => {
         const usernameInput = screen.getByLabelText('Username');
         const passwordInput = screen.getByLabelText('Password');
 
-        await userEvent.type(usernameInput, 'user');
-        await userEvent.type(passwordInput, 'password');
+        userEvent.type(usernameInput, 'user');
+        userEvent.type(passwordInput, 'password');
 
         const todoIdField = screen.getByLabelText('todoId');
-        await userEvent.type(todoIdField, '123');
+        userEvent.type(todoIdField, '123');
 
         clickSend();
 
@@ -974,10 +973,10 @@ describe('TryIt', () => {
 
         const tokenInput = screen.getByLabelText('Token');
 
-        await userEvent.type(tokenInput, '0a1b2c');
+        userEvent.type(tokenInput, '0a1b2c');
 
         const todoIdField = screen.getByLabelText('todoId');
-        await userEvent.type(todoIdField, '123');
+        userEvent.type(todoIdField, '123');
 
         clickSend();
 
@@ -1013,10 +1012,10 @@ describe('TryIt', () => {
 
         const expectedDigestContent = `Digest username="Mufasa", realm="testrealm@host.com", nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093", uri="/dir/index.html", qop=auth, nc=00000001, cnonce="0a4f113b", response="6629fae49393a05397450978507c4ef1", opaque="5ccc069c403ebaf9f0171e9517f40e41"`;
 
-        await userEvent.type(authInput, digestContent);
+        userEvent.type(authInput, digestContent);
 
         const todoIdField = screen.getByLabelText('todoId');
-        await userEvent.type(todoIdField, '123');
+        userEvent.type(todoIdField, '123');
 
         clickSend();
 
@@ -1072,7 +1071,7 @@ describe('TryIt', () => {
       chooseOption(serversSelect, 'Development');
 
       const todoIdField = screen.getByLabelText('todoId');
-      await userEvent.type(todoIdField, '123');
+      userEvent.type(todoIdField, '123');
 
       clickSend();
 
@@ -1113,11 +1112,13 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const todoIdField = screen.getByLabelText('todoId');
-      await userEvent.type(todoIdField, '123');
+      userEvent.type(todoIdField, '123');
 
       clickSend();
 
-      expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument();
+      await waitFor(() =>
+        expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument(),
+      );
     });
   });
 });

@@ -52,12 +52,6 @@ describe('API component', () => {
       cy.findByRole('button', { name: /Send Request/i }).click();
       cy.findByRole('button', { name: 'Error' }).should('exist');
     });
-
-    it('navigates on auth badge', () => {
-      cy.visit('/zoom-api/operations/userCreate');
-      cy.findByRole('link', { name: 'API Key' }).click();
-      cy.findByRole('heading', { name: 'Zoom API', level: 1 }).should('exist');
-    });
   });
 
   describe('Schema page', () => {
