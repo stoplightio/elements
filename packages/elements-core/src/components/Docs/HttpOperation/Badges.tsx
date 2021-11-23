@@ -1,11 +1,8 @@
-import { faExclamationCircle, faEye, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Badge, Tooltip } from '@stoplight/mosaic';
-import { HttpSecurityScheme } from '@stoplight/types';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { badgeDefaultBackgroundColor, badgeDefaultColor } from '../../../constants';
-import { getReadableSecurityName } from '../../../utils/oas/security';
 
 export const DeprecatedBadge: React.FC = () => (
   <Tooltip
@@ -22,7 +19,7 @@ export const DeprecatedBadge: React.FC = () => (
 export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpService }) => (
   <Tooltip
     renderTrigger={
-      <Badge icon={faEye} data-testid="badge-internal" className="sl-bg-danger sl-ml-0">
+      <Badge icon={faEye} data-testid="badge-internal" bg="danger" ml={0}>
         Internal
       </Badge>
     }
@@ -31,38 +28,13 @@ export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpSer
   </Tooltip>
 );
 
-export const SecurityBadge: React.FC<{
-  scheme: HttpSecurityScheme;
-  httpServiceUri?: string;
-  includeKey?: boolean;
-}> = ({ scheme, httpServiceUri, includeKey }) => {
-  const badge = (
-    <Badge
-      icon={faLock}
-      data-testid="badge-security"
-      className="sl-truncate"
-      style={{ backgroundColor: badgeDefaultBackgroundColor, color: badgeDefaultColor }}
-    >
-      {getReadableSecurityName(scheme, includeKey)}
-    </Badge>
-  );
-
-  return httpServiceUri ? (
-    <Link to={`${httpServiceUri}?security=${scheme.key}`} className="sl-no-underline sl-block">
-      {badge}
-    </Link>
-  ) : (
-    badge
-  );
-};
-
 export const VersionBadge: React.FC<{ value: string; backgroundColor?: string }> = ({ value, backgroundColor }) => (
   <Badge
     appearance="solid"
     size="sm"
+    border={0}
     style={{
       backgroundColor: backgroundColor || badgeDefaultBackgroundColor,
-      border: 'none',
       color: badgeDefaultColor,
     }}
   >

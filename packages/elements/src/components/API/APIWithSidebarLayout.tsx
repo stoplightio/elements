@@ -98,7 +98,6 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           nodeTitle={node.name}
           layoutOptions={layoutOptions}
           location={location}
-          allowRouting
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}

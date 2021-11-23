@@ -1,6 +1,9 @@
 import { safeParse } from '@stoplight/json';
 import { atom, WritableAtom } from 'jotai';
 
+/**
+ * @deprecated use `import { atomWithStorage } from 'jotai/utils'` instead
+ */
 export const persistAtom = <T extends Object>(key: string, atomInstance: WritableAtom<T, T>) => {
   if (typeof window === 'undefined' || window.localStorage === undefined) {
     return atomInstance;

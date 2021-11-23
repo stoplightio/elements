@@ -1,6 +1,5 @@
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Flex } from '@stoplight/mosaic';
+import { Box, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
 export const PoweredByLink: React.FC<{
@@ -21,10 +20,11 @@ export const PoweredByLink: React.FC<{
       target="_blank"
       rel="noopener noreferrer"
     >
-      <FontAwesomeIcon icon={faBolt} className="sl-mr-1 fa-fw" style={{ color: 'rgba(144, 97, 249, 1)' }} />
-      <div>
+      <Box as={Icon} icon={faBolt} mr={1} className="fa-fw" style={{ color: 'rgba(144, 97, 249, 1)' }} />
+
+      <Box>
         powered by&nbsp;<strong>Stoplight</strong>
-      </div>
+      </Box>
     </Flex>
   );
 };

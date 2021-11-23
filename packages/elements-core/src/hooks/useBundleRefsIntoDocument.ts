@@ -25,23 +25,25 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
       return;
     }
 
-    let isActive = true;
+    let isMounted = true;
     doBundle(document, baseUrl)
       .then(res => {
-        if (isActive) {
+        if (isMounted) {
           setBundledData({ ...res }); // this hmm....library mutates document so a shallow copy is required to force a rerender in all cases
         }
       })
       .catch(reason => {
         if (typeof reason === 'object' && reason !== null && 'files' in reason) {
-          setBundledData({ ...reason.files.schema });
+          if (isMounted) {
+            setBundledData({ ...reason.files.schema });
+          }
         } else {
           console.warn(`Could bundle: ${reason?.message ?? 'Unknown error'}`);
         }
       });
 
     return () => {
-      isActive = false;
+      isMounted = false;
     };
   }, [document, baseUrl]);
 

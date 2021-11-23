@@ -33,7 +33,7 @@ interface BaseDocsProps {
   nodeTitle?: string;
 
   /**
-   * Allows to use internal routing (requires wrapping with Router component)
+   * @deprecated this property is no longer used and will be removed in the next major version
    */
   allowRouting?: boolean;
 
