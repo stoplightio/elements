@@ -12,7 +12,7 @@ type SearchWrapperProps = { projectIds: string[]; workspaceId: string };
 const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
   const { isOpen, open, close } = useModalState();
   const [search, setSearch] = React.useState('');
-  const { data } = useGetNodes({
+  const { data, isFetching } = useGetNodes({
     search,
     projectIds,
     workspaceId,
@@ -46,6 +46,7 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
         isOpen={isOpen}
         onClose={handleClose}
         onClick={handleClick}
+        isFetching={isFetching}
       />
     </>
   );

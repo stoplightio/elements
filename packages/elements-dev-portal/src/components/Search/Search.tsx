@@ -20,9 +20,10 @@ export type SearchProps = {
   onClick: (result: NodeSearchResult) => void;
   isOpen?: boolean;
   onClose: ModalProps['onClose'];
+  isFetching: boolean;
 };
 
-const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
+const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch, isFetching }: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
   const onChange = React.useCallback(e => onSearch(e.currentTarget.value), [onSearch]);
@@ -117,7 +118,7 @@ const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch 
         </ListBox>
       ) : (
         <Flex w="full" h={80} align="center" justify="center" m={-5}>
-          No search results
+          {isFetching ? <>Fetching results...</> : <>No search results</>}
         </Flex>
       )}
     </Modal>

@@ -9,7 +9,7 @@ export type SearchProps = {
 export const Search = ({ projectIds }: SearchProps) => {
   const [search, setSearch] = React.useState('');
   const [open, setOpen] = React.useState(false);
-  const { data } = useGetNodes({
+  const { data, isFetching } = useGetNodes({
     search,
     projectIds,
   });
@@ -36,6 +36,7 @@ export const Search = ({ projectIds }: SearchProps) => {
         onClose={handleClose}
         isOpen={open}
         searchResults={data}
+        isFetching={isFetching}
       />
     </>
   );
