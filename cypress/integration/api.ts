@@ -1,4 +1,5 @@
 ///<reference path="../support/index.d.ts"/>
+
 describe('API component', () => {
   beforeEach(() => {
     cy.redirectUnpkgToLocalDistFolder('elements');
@@ -76,6 +77,15 @@ describe('API component', () => {
 });
 
 function loadZoomApiPage() {
+  cy.fixture('zoom.openapi.yml').then(zoomOpenAPI => {
+    cy.intercept(
+      'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml',
+      zoomOpenAPI,
+    ).as('getZoomOpenAPI');
+  });
+
   cy.visit('/zoom-api');
+  cy.wait('@getZoomOpenAPI');
+
   cy.findByRole('heading', { name: 'Zoom API', level: 1 }).should('exist');
 }
