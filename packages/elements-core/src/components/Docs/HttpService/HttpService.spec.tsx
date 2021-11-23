@@ -1,12 +1,6 @@
 import 'jest-enzyme';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
-import {
-  IOauth2AuthorizationCodeFlow,
-  IOauth2ClientCredentialsFlow,
-  IOauth2ImplicitFlow,
-  IOauth2PasswordFlow,
-} from '@stoplight/types';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
@@ -19,7 +13,7 @@ import { httpServiceWithUrlVariables } from '../../../__fixtures__/services/with
 import { httpServiceWithoutOrigin } from '../../../__fixtures__/services/without-origin';
 import { AdditionalInfo } from './AdditionalInfo';
 import { HttpService } from './index';
-import { getOAuthFlowDescription, SecuritySchemes } from './SecuritySchemes';
+import { SecuritySchemes } from './SecuritySchemes';
 import { ServerInfo } from './ServerInfo';
 
 describe('HttpService', () => {
@@ -189,87 +183,6 @@ describe('HttpService', () => {
       userEvent.click(oauthScheme);
       oauthDescription = screen.queryByText('Implicit OAuth Flow');
       expect(oauthDescription).toBeInTheDocument();
-    });
-
-    describe('getOAuthFlowDescription', () => {
-      it('should handle implicit flow', () => {
-        const flow: IOauth2ImplicitFlow = {
-          authorizationUrl: 'http://authorizationURL',
-          scopes: { 'scope:implicit': 'implicit scope description', 'scope:read': 'read scope description' },
-        };
-
-        const description = getOAuthFlowDescription('Implicit', flow);
-
-        expect(description).toMatchInlineSnapshot(`
-          "**Implicit OAuth Flow**
-
-          Authorize URL: http://authorizationURL
-
-          Scopes:
-          - \`scope:implicit\` - implicit scope description
-          - \`scope:read\` - read scope description"
-        `);
-      });
-    });
-
-    it('should handle authorization code flow', () => {
-      const flow: IOauth2AuthorizationCodeFlow = {
-        authorizationUrl: 'http://authorizationURL',
-        tokenUrl: 'http://tokenURL',
-        refreshUrl: 'http://refreshURL',
-        scopes: { 'scope:authorizationCode': 'authorizationCode scope description' },
-      };
-
-      const description = getOAuthFlowDescription('Authorization Code', flow);
-
-      expect(description).toMatchInlineSnapshot(`
-        "**Authorization Code OAuth Flow**
-
-        Authorize URL: http://authorizationURL
-
-        Token URL: http://tokenURL
-
-        Refresh URL: http://refreshURL
-
-        Scopes:
-        - \`scope:authorizationCode\` - authorizationCode scope description"
-      `);
-    });
-
-    it('should handle client credentials flow', () => {
-      const flow: IOauth2ClientCredentialsFlow = {
-        tokenUrl: 'http://tokenURL',
-        scopes: { 'scope:clientCredentials': 'clientCredentials scope description' },
-      };
-
-      const description = getOAuthFlowDescription('Client Credentials', flow);
-
-      expect(description).toMatchInlineSnapshot(`
-        "**Client Credentials OAuth Flow**
-
-        Token URL: http://tokenURL
-
-        Scopes:
-        - \`scope:clientCredentials\` - clientCredentials scope description"
-      `);
-    });
-
-    it('should handle password flow', () => {
-      const flow: IOauth2PasswordFlow = {
-        tokenUrl: 'http://tokenURL',
-        scopes: { 'scope:password': 'password scope description' },
-      };
-
-      const description = getOAuthFlowDescription('Password', flow);
-
-      expect(description).toMatchInlineSnapshot(`
-        "**Password OAuth Flow**
-
-        Token URL: http://tokenURL
-
-        Scopes:
-        - \`scope:password\` - password scope description"
-      `);
     });
   });
 
