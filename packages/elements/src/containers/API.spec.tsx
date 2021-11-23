@@ -52,10 +52,10 @@ describe('API', () => {
     expect(await screen.findByAltText('instagram-logo')).toBeInTheDocument();
   });
 
-  it("doesn't display the logo when no properties are passed neither via API document nor as component prop", async () => {
+  it("doesn't display the logo when no properties are passed neither via API document nor as component prop", () => {
     render(<API layout="sidebar" apiDescriptionDocument={simpleApiWithoutDescription} />);
 
-    expect(await screen.queryByAltText('logo')).not.toBeInTheDocument();
+    expect(screen.queryByAltText('logo')).not.toBeInTheDocument();
   });
 
   it('overrides the logo from API document with the one passed in a prop', async () => {
@@ -68,7 +68,8 @@ describe('API', () => {
   it('displays internal operations by default', () => {
     const history = createMemoryHistory();
     history.push('/paths/internal-operation/get');
-    render(
+
+    const { unmount } = render(
       <Router history={history}>
         <Route path="/">
           <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} />
@@ -77,6 +78,8 @@ describe('API', () => {
     );
 
     expect(screen.getByText('If you see this, something went wrong')).toBeInTheDocument();
+
+    unmount();
   });
 
   it('displays internal models by default', () => {

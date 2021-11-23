@@ -17,7 +17,7 @@ const ArticleComponent = React.memo<ArticleProps>(({ data }) => {
   if (tree === null) return null;
 
   return (
-    <Flex className="sl-elements-article" w="full" pos="relative" ref={setContainer}>
+    <Flex className="sl-elements-article" justifyContent="evenly" w="full" pos="relative" ref={setContainer}>
       <Box className="sl-elements-article-content" style={{ width: 0 }} flex={1}>
         <MarkdownViewer markdown={tree} />
       </Box>

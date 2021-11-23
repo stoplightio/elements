@@ -13,19 +13,20 @@ export const ArticleHeadings = ({ tree, container }: { tree: MDAST.Root; contain
 
   const headings = useComputeMarkdownHeadings(tree);
 
-  return <Headings className="ArticleHeadings" headings={headings} minimal={!showHeadings} />;
+  return <Headings className="ArticleHeadings" headings={headings} minimal={!showHeadings} maxWidth={300} />;
 };
 
-const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On This Page', minimal }) => {
+const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On This Page', minimal, maxWidth }) => {
   const locationHash = useLocationHash();
 
   if (!headings || !headings.length) return null;
 
   const component = (
-    <Box overflowY="auto" overflowX="auto" style={{ maxHeight: '85vh' }}>
+    <Box overflowY="auto" style={{ maxHeight: '85vh', maxWidth }}>
       {title && (
         <Flex py={2} alignItems="center" fontSize="sm" fontWeight="medium" color="muted" style={{ paddingLeft: 18 }}>
           <Box as={Icon} icon="stream" mr={2} />
+
           {title}
         </Flex>
       )}

@@ -19,10 +19,11 @@ export const PoweredByLink: React.FC<{
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Box as={Icon} icon="bolt" mr={1} style={{ color: 'rgba(144, 97, 249, 1)' }} />
-      <div>
+      <Box as={Icon} icon="bolt" mr={1} className="fa-fw" style={{ color: 'rgba(144, 97, 249, 1)' }} />
+
+      <Box>
         powered by&nbsp;<strong>Stoplight</strong>
-      </div>
+      </Box>
     </Flex>
   );
 };
