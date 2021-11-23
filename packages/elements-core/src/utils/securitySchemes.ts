@@ -81,10 +81,11 @@ function getOAuthFlowDescription(title: string, flow: IOauth2Flow) {
 
   description += flow.refreshUrl ? `\n\nRefresh URL: ${flow.refreshUrl}` : '';
 
-  description += `\n\nScopes:
-${entries(flow.scopes)
-  .map(([key, value]) => `- \`${key}\` - ${value}`)
-  .join('\n')}`;
+  const scopes = entries(flow.scopes);
+  if (scopes.length) {
+    description += `\n\nScopes:
+  ${scopes.map(([key, value]) => `- \`${key}\` - ${value}`).join('\n')}`;
+  }
 
   return description;
 }
