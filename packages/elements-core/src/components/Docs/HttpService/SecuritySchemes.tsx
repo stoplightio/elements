@@ -3,8 +3,8 @@ import { HttpSecurityScheme } from '@stoplight/types';
 import sortBy from 'lodash/sortBy';
 import React from 'react';
 
-import { getDefaultDescription } from '../../..//utils/securitySchemes';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
+import { getDefaultDescription } from '../../../utils/securitySchemes';
 import { MarkdownViewer } from '../../MarkdownViewer';
 
 interface SecuritySchemesProps {
