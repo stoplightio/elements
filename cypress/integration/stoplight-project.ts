@@ -6,7 +6,11 @@ describe('Stoplight component', () => {
   describe('Api page', () => {
     it('loads api page correctly', () => {
       loadStoplightProjectPage();
+
+      cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/**`).as('getNode');
       cy.findByText('To-dos').click();
+      cy.wait('@getNode');
+
       cy.findByText('https://todos.stoplight.io/').should('exist');
       cy.findByText('https://stoplight.io/mocks/elements-examples/studio-demo/389434').should('exist');
       cy.findByRole('heading', { name: /API Key/ }).should('exist');
@@ -97,7 +101,7 @@ describe('Stoplight component', () => {
 });
 
 function loadStoplightProjectPage() {
-  cy.intercept('https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/*').as('getNode');
+  cy.intercept('https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/**').as('getNode');
   cy.visit('/stoplight-project');
   cy.wait('@getNode');
 }
