@@ -84,7 +84,7 @@ function getOAuthFlowDescription(title: string, flow: IOauth2Flow) {
   const scopes = entries(flow.scopes);
   if (scopes.length) {
     description += `\n\nScopes:
-  ${scopes.map(([key, value]) => `- \`${key}\` - ${value}`).join('\n')}`;
+${scopes.map(([key, value]) => `- \`${key}\` - ${value}`).join('\n')}`;
   }
 
   return description;
