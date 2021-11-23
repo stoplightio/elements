@@ -85,6 +85,7 @@ function loadZoomApiPage() {
   });
 
   cy.visit('/zoom-api');
-  cy.findByRole('heading', { name: 'Zoom API', level: 1 }).should('exist');
   cy.wait('@getZoomOpenAPI');
+
+  cy.findByRole('heading', { name: 'Zoom API', level: 1 }).should('exist');
 }
