@@ -116,12 +116,7 @@ export type Item = {
   uri: string;
 };
 
-export enum RouterType {
-  History = 'history',
-  Memory = 'memory',
-  Hash = 'hash',
-  Static = 'static',
-}
+export type RouterType = 'history' | 'memory' | 'hash' | 'static';
 
 export interface RoutingProps {
   /**

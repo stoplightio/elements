@@ -14,7 +14,7 @@ const RouterComponent: Dictionary<React.ComponentType, RouterType> = {
 export const useRouter = (router: RouterType, basePath: string) => {
   const Router = RouterComponent[router];
   const routerProps = {
-    ...(router !== RouterType.Memory && { basename: basePath }),
+    ...(router !== 'memory' && { basename: basePath }),
   };
 
   return {

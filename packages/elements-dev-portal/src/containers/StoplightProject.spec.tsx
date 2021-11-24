@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 
-import { RouterType } from '@stoplight/elements-core';
 import { render, screen } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
@@ -46,7 +45,7 @@ describe('Stoplight Project', () => {
   });
 
   it('loads correctly', async () => {
-    render(<StoplightProject router={RouterType.Memory} projectId="cHJqOjYwNjYx" platformUrl="https://stoplight.io" />);
+    render(<StoplightProject router="memory" projectId="cHJqOjYwNjYx" platformUrl="https://stoplight.io" />);
 
     expect(
       await screen.findByText(

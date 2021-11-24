@@ -1,7 +1,6 @@
 import {
   findFirstNode,
   ReactRouterMarkdownLink,
-  RouterType,
   RoutingProps,
   SidebarLayout,
   useRouter,
@@ -181,7 +180,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
 const StoplightProjectRouter = ({
   platformUrl,
   basePath = '/',
-  router = RouterType.History,
+  router = 'history',
   ...props
 }: StoplightProjectProps) => {
   const { Router, routerProps } = useRouter(router, basePath);
