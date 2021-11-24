@@ -52,6 +52,7 @@
     "@stoplight/json": "^3.10.0",
     "@stoplight/mosaic": "^1.12.4",
     "@stoplight/types": "^12.0.0",
+    "@stoplight/yaml": "^4.2.2",
     "classnames": "^2.2.6",
     "file-saver": "^2.0.5",
     "lodash": "^4.17.19",
@@ -59,7 +60,7 @@
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
-    "@stoplight/scripts": "9.1.0",
+    "@stoplight/scripts": "9.2.0",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",
