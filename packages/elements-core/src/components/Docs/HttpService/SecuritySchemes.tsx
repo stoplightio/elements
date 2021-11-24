@@ -1,6 +1,6 @@
 import { Box, Panel, PanelProps } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
-import sortBy from 'lodash/sortBy';
+import { sortBy } from 'lodash';
 import React from 'react';
 
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';

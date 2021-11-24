@@ -1,6 +1,5 @@
 import { HttpSecurityScheme, IOauth2Flow, IOauth2SecurityScheme, IOauthFlowObjects } from '@stoplight/types';
-import entries from 'lodash/entries';
-import keys from 'lodash/keys';
+import { entries, keys } from 'lodash';
 
 import {
   isOauth2AuthorizationCodeFlow,
