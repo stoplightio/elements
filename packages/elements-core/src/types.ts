@@ -116,6 +116,13 @@ export type Item = {
   uri: string;
 };
 
+export enum RouterType {
+  History = 'history',
+  Memory = 'memory',
+  Hash = 'hash',
+  Static = 'static',
+}
+
 export interface RoutingProps {
   /**
    * Only applies when using `history`-based routing. (See the `router` prop.) Specifies the base path under which
@@ -135,7 +142,7 @@ export interface RoutingProps {
    *
    *   @default "history"
    */
-  router?: 'history' | 'hash' | 'memory';
+  router?: RouterType;
 }
 
 export type ParamField = {
