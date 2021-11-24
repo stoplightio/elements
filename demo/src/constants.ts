@@ -28,7 +28,7 @@ export const EXAMPLE_SPECS = [
   },
   {
     text: 'Linode',
-    value: 'https://api.apis.guru/v2/specs/linode.com/4.86.1/openapi.yaml',
+    value: 'https://api.apis.guru/v2/specs/linode.com/4.97.2/openapi.yaml',
   },
   {
     text: 'Netlify',

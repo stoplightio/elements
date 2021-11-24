@@ -28,6 +28,6 @@
     "lodash": "^4.17.19"
   },
   "devDependencies": {
-    "@stoplight/scripts": "9.1.0"
+    "@stoplight/scripts": "9.2.0"
   }
 }

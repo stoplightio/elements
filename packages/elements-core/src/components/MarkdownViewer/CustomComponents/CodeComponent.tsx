@@ -1,4 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
 import { isObject } from 'lodash';
@@ -12,7 +13,7 @@ import { JSONSchema } from '../../../types';
 import { isHttpOperation, isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { TryIt } from '../../TryIt';
-import { CustomComponentMapping, DefaultSMDComponents } from './Provider';
+import { CustomComponentMapping } from './Provider';
 
 type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRequest>;
 
@@ -49,6 +50,8 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
     </Box>
   );
 };
+
+export { DefaultSMDComponents };
 
 export const CodeComponent: CustomComponentMapping['code'] = props => {
   const { title, jsonSchema, http, children } = props;

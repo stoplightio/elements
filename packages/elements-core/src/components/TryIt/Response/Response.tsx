@@ -1,4 +1,4 @@
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { safeParse, safeStringify } from '@stoplight/json';
 import { Box, Button, Flex, Icon, Image, Link, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';

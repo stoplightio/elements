@@ -1,6 +1,5 @@
 import {
   CustomComponentMapping as MDVCustomComponentMapping,
-  DefaultSMDComponents,
   MarkdownViewerProvider,
 } from '@stoplight/markdown-viewer';
 import * as React from 'react';
@@ -9,7 +8,6 @@ import { CodeComponent } from './CodeComponent';
 
 export type CustomComponentMapping = MDVCustomComponentMapping;
 
-export { DefaultSMDComponents };
 interface MarkdownComponentsProviderProps {
   value: Partial<CustomComponentMapping> | undefined;
 }

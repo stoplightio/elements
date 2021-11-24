@@ -1,7 +1,7 @@
 import { safeStringify } from '@stoplight/json';
 import { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { JSONSchema7Definition, JSONSchema7Type } from 'json-schema';
-import _, { isObject, map } from 'lodash';
+import { isObject, keyBy, map, mapValues } from 'lodash';
 
 export type ParameterSpec = Pick<IHttpParam, 'name' | 'examples' | 'schema' | 'required'>;
 const booleanOptions = [
@@ -81,10 +81,8 @@ const getInitialValueForParameter = (parameter: ParameterSpec) => {
 };
 
 export const initialParameterValues: (params: readonly ParameterSpec[]) => Record<string, string> = params => {
-  return _.chain(params)
-    .keyBy((param: ParameterSpec) => param.name)
-    .mapValues(param => getInitialValueForParameter(param))
-    .value();
+  const paramsByName = keyBy(params, (param: ParameterSpec) => param.name);
+  return mapValues(paramsByName, param => getInitialValueForParameter(param));
 };
 
 export function mapSchemaPropertiesToParameters(

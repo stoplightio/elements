@@ -2,7 +2,7 @@ import { Box, Text } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
-import flatten from 'lodash/flatten';
+import { flatten } from 'lodash';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../../constants';
