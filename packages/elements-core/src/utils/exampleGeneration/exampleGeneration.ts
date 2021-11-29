@@ -93,7 +93,6 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
         ]
       : [{ label: 'default', data: '' }];
   } catch (e) {
-    console.error(e);
     return [{ label: '', data: `Example cannot be created for this schema\n${e}` }];
   }
 };

@@ -130,7 +130,7 @@ describe('MarkdownViewer', () => {
 \`\`\`
 `;
 
-      render(
+      const { unmount } = render(
         <MarkdownComponentsProvider value={{ code: CodeComponent }}>
           <MarkdownViewerWithTryIt markdown={markdown} />
         </MarkdownComponentsProvider>,
@@ -138,6 +138,8 @@ describe('MarkdownViewer', () => {
 
       expect(screen.getByRole('heading', { name: 'GET /gifs/search' })).toBeInTheDocument();
       expect(screen.getByText('api_key')).toBeInTheDocument();
+
+      unmount();
     });
   });
 });

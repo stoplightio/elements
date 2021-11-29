@@ -10,11 +10,12 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@stoplight/elements": "^7.3.9",
+    "@stoplight/elements": "^7.3.12",
     "@stoplight/mosaic": "^1.8.2",
     "history": "^5.0.0",
     "react": "16.14.0",
     "react-dom": "16.14.0",
+    "react-github-btn": "1.2.1",
     "react-router-dom": "6.0.0-beta.0"
   },
   "devDependencies": {

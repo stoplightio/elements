@@ -1,7 +1,6 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { safeParse, safeStringify } from '@stoplight/json';
-import { Button, Flex, Image, Link, Menu, MenuItems, Panel } from '@stoplight/mosaic';
+import { Box, Button, Flex, Icon, Image, Link, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { capitalize } from 'lodash';
 import * as React from 'react';
@@ -99,7 +98,7 @@ export const TryItResponse: React.FC<{ response: ResponseState }> = ({ response 
             </Flex>
           ) : (
             <p>
-              <FontAwesomeIcon icon={faExclamationCircle} className="sl-mr-2" />
+              <Box as={Icon} icon={faExclamationCircle} mr={2} />
               No supported response body returned
             </p>
           )}

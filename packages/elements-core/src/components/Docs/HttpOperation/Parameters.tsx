@@ -1,6 +1,6 @@
 import { Validations } from '@stoplight/json-schema-viewer';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
-import { Box, VStack } from '@stoplight/mosaic';
+import { Box, Flex, VStack } from '@stoplight/mosaic';
 import { Dictionary, HttpParamStyles, IHttpParam } from '@stoplight/types';
 import { get, isEmpty, omit, omitBy, sortBy } from 'lodash';
 import * as React from 'react';
@@ -35,7 +35,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
   if (!parameters || !parameters.length) return null;
 
   return (
-    <VStack spacing={2} pl={6} divider={<Box borderT borderColor="light" w="full"></Box>}>
+    <VStack spacing={2} divider={<Box borderT borderColor="light" w="full"></Box>}>
       {sortBy(parameters, ['required', 'name']).map(parameter => {
         return <Parameter key={parameter.name} parameter={parameter} parameterType={parameterType} />;
       })}
@@ -88,39 +88,57 @@ export const Parameter: React.FunctionComponent<IParameterProps> = ({ parameter,
   ) as Dictionary<unknown, string>;
 
   return (
-    <div className="HttpOperation__Parameters">
-      <div className="sl-flex sl-items-center sl-my-2">
-        <div className="sl-flex sl-items-baseline sl-text-base sl-flex-1">
-          <div className="sl-font-mono sl-font-bold">{parameter.name}</div>
-          <div className={'sl-ml-2 sl-text-muted'}>{format ? `${type}<${format}>` : type}</div>
-        </div>
-        <div className="sl-text-sm sl-text-warning">
-          {deprecated && <span className="sl-ml-2">deprecated</span>}
-          {parameter.required && <span className="sl-ml-2">required</span>}
-        </div>
-      </div>
+    <Box className="HttpOperation__Parameters">
+      <Flex alignItems="center" my={2}>
+        <Flex alignItems="baseline" fontSize="base" flex={1}>
+          <Box fontFamily="mono" fontWeight="bold">
+            {parameter.name}
+          </Box>
+          <Box ml={2} color="muted">
+            {format ? `${type}<${format}>` : type}
+          </Box>
+        </Flex>
+        <Box fontSize="sm" color="warning">
+          {deprecated && (
+            <Box as="span" ml={2}>
+              deprecated
+            </Box>
+          )}
+          {parameter.required && (
+            <Box as="span" ml={2}>
+              required
+            </Box>
+          )}
+        </Box>
+      </Flex>
 
       {description && (
-        <div className="sl-w-full sl-text-muted sl-text-sm sl-my-2">
+        <Box w="full" color="muted" fontSize="sm" my={2}>
           <MarkdownViewer markdown={description} />
-        </div>
+        </Box>
       )}
 
-      <div className="sl-text-sm">
+      <Box fontSize="sm">
         <Validations validations={validations} />
-      </div>
+      </Box>
 
       {parameter.style && defaultStyle[parameterType] !== parameter.style && (
-        <div className="sl-flex sl-my-2">
-          <span
-            className="sl-px-1 sl-text-muted sl-font-mono sl-border sl-rounded-lg sl-text-sm sl-capitalize"
+        <Flex my={2}>
+          <Box
+            as="span"
+            px={1}
+            color="muted"
+            fontFamily="mono"
+            rounded="lg"
+            fontSize="sm"
+            textTransform="capitalize"
             style={{ backgroundColor: '#EDF2F7' }}
           >
             {readableStyles[parameter.style] || parameter.style}
-          </span>
-        </div>
+          </Box>
+        </Flex>
       )}
-    </div>
+    </Box>
   );
 };
 Parameter.displayName = 'HttpOperation.Parameter';

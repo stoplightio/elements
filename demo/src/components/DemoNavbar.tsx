@@ -1,5 +1,6 @@
 import { Box, Button, Flex, HStack, Input, InvertTheme, Menu, MenuItems, Text } from '@stoplight/mosaic';
 import React, { useContext, useMemo, useState } from 'react';
+import GitHubButton from 'react-github-btn';
 
 import { DEFAULT_API_URL, EXAMPLE_SPECS } from '../constants';
 import { GlobalContext } from '../context';
@@ -15,16 +16,16 @@ export const DemoNavbar = () => {
             </Text>
 
             <Box style={{ height: 28 }}>
-              <a
-                className="github-button"
+              <GitHubButton
                 href="https://github.com/stoplightio/elements"
                 data-color-scheme="no-preference: light; light: light; dark: light;"
+                data-icon="octicon-star"
                 data-size="large"
                 data-show-count="true"
                 aria-label="Star stoplightio/elements on GitHub"
               >
                 Star
-              </a>
+              </GitHubButton>
             </Box>
           </HStack>
 

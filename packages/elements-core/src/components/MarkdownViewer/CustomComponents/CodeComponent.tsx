@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Box, Flex } from '@stoplight/mosaic';
+import { DefaultSMDComponents } from '@stoplight/markdown-viewer';
+import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
 import { isObject } from 'lodash';
 import React from 'react';
@@ -13,7 +13,7 @@ import { JSONSchema } from '../../../types';
 import { isHttpOperation, isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { TryIt } from '../../TryIt';
-import { CustomComponentMapping, DefaultSMDComponents } from './Provider';
+import { CustomComponentMapping } from './Provider';
 
 type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRequest>;
 
@@ -39,7 +39,7 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
     <Box py={2}>
       {title && (
         <Flex alignItems="center" p={2}>
-          <FontAwesomeIcon icon={NodeTypeIconDefs[NodeType.Model]} color={NodeTypeColors[NodeType.Model]} />
+          <Icon icon={NodeTypeIconDefs[NodeType.Model]} color={NodeTypeColors[NodeType.Model]} />
           <Box color="muted" px={2}>
             {title}
           </Box>
@@ -50,6 +50,8 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
     </Box>
   );
 };
+
+export { DefaultSMDComponents };
 
 export const CodeComponent: CustomComponentMapping['code'] = props => {
   const { title, jsonSchema, http, children } = props;
