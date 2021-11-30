@@ -11,10 +11,16 @@ const RouterComponent: Dictionary<React.ComponentType, RouterType> = {
   static: StaticRouter,
 };
 
-export const useRouter = (router: RouterType, basePath: string) => {
+interface RouterProps {
+  basename?: string;
+  location?: string;
+}
+
+export const useRouter = (router: RouterType, basePath: string, staticRouterPath?: string) => {
   const Router = RouterComponent[router];
-  const routerProps = {
+  const routerProps: RouterProps = {
     ...(router !== 'memory' && { basename: basePath }),
+    ...(router === 'static' && { location: staticRouterPath }),
   };
 
   return {

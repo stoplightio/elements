@@ -180,10 +180,11 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
 const StoplightProjectRouter = ({
   platformUrl,
   basePath = '/',
+  staticRouterPath = '',
   router = 'history',
   ...props
 }: StoplightProjectProps) => {
-  const { Router, routerProps } = useRouter(router, basePath);
+  const { Router, routerProps } = useRouter(router, basePath, staticRouterPath);
 
   return (
     <DevPortalProvider platformUrl={platformUrl}>
