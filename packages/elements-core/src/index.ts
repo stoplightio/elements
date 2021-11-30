@@ -32,16 +32,7 @@ export { useParsedData } from './hooks/useParsedData';
 export { useParsedValue } from './hooks/useParsedValue';
 export { useRouter } from './hooks/useRouter';
 export { Styled, withStyles } from './styled';
-export {
-  Divider,
-  Group,
-  ITableOfContentsTree,
-  Item,
-  ParsedNode,
-  RouterType,
-  RoutingProps,
-  TableOfContentItem,
-} from './types';
+export { Divider, Group, ITableOfContentsTree, Item, ParsedNode, RoutingProps, TableOfContentItem } from './types';
 export { isHttpOperation, isHttpService } from './utils/guards';
 export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
 export { createResolvedObject } from './utils/ref-resolving/resolvedObject';
