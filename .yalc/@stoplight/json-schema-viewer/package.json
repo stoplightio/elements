@@ -41,5 +41,5 @@
     "require": "./index.js",
     "import": "./index.mjs"
   },
-  "yalcSig": "ad312e9a911f8bdbe40ae4b2c80e3189"
+  "yalcSig": "37a34017bd06180ad909426188aa204d"
 }

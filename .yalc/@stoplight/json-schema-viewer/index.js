@@ -604,7 +604,7 @@ const useIsOnScreen = (ref) => {
                 setIsOnScreen(entry.isIntersecting);
             }, {
                 root: scrollParent === window ? undefined : scrollParent,
-                rootMargin: '100px 0px 0px 0px',
+                rootMargin: '20px 0px 0px 0px',
             });
             observerRef.current.observe(ref.current);
         }
