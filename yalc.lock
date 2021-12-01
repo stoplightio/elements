@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "packages": {
+    "@stoplight/json-schema-viewer": {
+      "signature": "ad312e9a911f8bdbe40ae4b2c80e3189",
+      "file": true
+    },
+    "@stoplight/json-schema-tree": {
+      "signature": "141a2b0ab99e7a44ea70cd260b5da6e4",
+      "file": true
+    }
+  }
+}

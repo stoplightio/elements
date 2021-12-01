@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Flex, Heading, HStack, Panel, Select, Text } from '@stoplight/mosaic';
+import { Flex, Heading, HStack, Panel, Select, Text, VStack } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
@@ -45,31 +45,26 @@ const ModelComponent: React.FC<ModelProps> = ({
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
   const header = (shouldDisplayHeader || isInternal) && (
-    <>
-      {shouldDisplayHeader && (
-        <Flex justifyContent="between" alignItems="center">
-          <Heading size={1} mb={4} fontWeight="semibold">
+    <Flex justifyContent="between" alignItems="center">
+      <HStack spacing={5}>
+        {title && (
+          <Heading size={1} fontWeight="semibold">
             {title}
           </Heading>
-          {exportProps && !layoutOptions?.hideExport && <ExportButton {...exportProps} />}
-        </Flex>
-      )}
+        )}
 
-      {isInternal && (
-        <HStack spacing={2} mb={12}>
-          <InternalBadge />
-        </HStack>
-      )}
-    </>
+        <HStack spacing={2}>{isInternal && <InternalBadge />}</HStack>
+      </HStack>
+
+      {exportProps && !layoutOptions?.hideExport && <ExportButton {...exportProps} />}
+    </Flex>
   );
 
   const description = (
-    <>
-      {data.description && data.type === 'object' && (
-        <MarkdownViewer className="sl-mb-6" role="textbox" markdown={data.description} />
-      )}
+    <VStack spacing={10}>
+      {data.description && data.type === 'object' && <MarkdownViewer role="textbox" markdown={data.description} />}
       <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} />
-    </>
+    </VStack>
   );
 
   const examplesSelect = examples.length > 1 && (

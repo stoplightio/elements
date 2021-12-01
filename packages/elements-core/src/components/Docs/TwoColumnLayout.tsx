@@ -11,7 +11,7 @@ export interface TwoColumnLayoutProps {
 export const TwoColumnLayout = ({ header, right, left, className }: TwoColumnLayoutProps) => (
   <Box w="full" className={className}>
     {header}
-    <Flex mt={header ? 12 : undefined}>
+    <Flex mt={header ? 8 : undefined}>
       <Box w={0} flex={1}>
         {left}
       </Box>

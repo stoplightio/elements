@@ -13,7 +13,12 @@
     "demo",
     "packages/*"
   ],
-  "dependencies": {},
+  "resolutions": {
+    "@stoplight/json-schema-viewer": "file:.yalc/@stoplight/json-schema-viewer"
+  },
+  "dependencies": {
+    "@stoplight/json-schema-viewer": "file:.yalc/@stoplight/json-schema-viewer"
+  },
   "devDependencies": {
     "@babel/core": "7.12.17",
     "@babel/plugin-syntax-object-rest-spread": "7.8.3",

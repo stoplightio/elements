@@ -166,7 +166,7 @@ describe('HttpOperation', () => {
 
       const { unmount } = render(<HttpOperation data={data} />);
 
-      const queryParametersPanel = screen.queryByRole('heading', { name: 'Query' });
+      const queryParametersPanel = screen.queryByRole('heading', { name: 'Query Parameters' });
       expect(queryParametersPanel).toBeInTheDocument();
       expect(queryParametersPanel).toBeVisible();
       expect(queryParametersPanel).toBeEnabled();
@@ -187,7 +187,7 @@ describe('HttpOperation', () => {
 
       const { unmount } = render(<HttpOperation data={data} />);
 
-      const headersPanel = screen.queryByRole('heading', { name: 'Query' });
+      const headersPanel = screen.queryByRole('heading', { name: 'Query Parameters' });
       expect(headersPanel).not.toBeInTheDocument();
 
       unmount();
@@ -321,30 +321,10 @@ describe('HttpOperation', () => {
 
       const { unmount } = render(<HttpOperation data={data} />);
 
-      const pathParametersPanel = screen.getByRole('button', { name: /GET.*\/path/i });
-      expect(pathParametersPanel).toBeInTheDocument();
-      expect(pathParametersPanel).toBeVisible();
-      expect(pathParametersPanel).toBeEnabled();
-
-      unmount();
-    });
-
-    it('should still show path parameters panel when there are no parameters', () => {
-      const data = {
-        id: 'get',
-        summary: 'Some endpoint',
-        method: 'get',
-        path: '/path',
-        responses: [],
-        request: {},
-      };
-
-      const { unmount } = render(<HttpOperation data={data} />);
-
-      const pathParametersPanel = screen.queryAllByRole('heading', { name: /GET.*\/path/i });
-      expect(pathParametersPanel).toHaveLength(2);
-      expect(pathParametersPanel[0]).toBeVisible();
-      expect(pathParametersPanel[1]).toBeVisible();
+      const headersPanel = screen.queryByRole('heading', { name: 'Path Parameters' });
+      expect(headersPanel).toBeInTheDocument();
+      expect(headersPanel).toBeVisible();
+      expect(headersPanel).toBeEnabled();
 
       unmount();
     });

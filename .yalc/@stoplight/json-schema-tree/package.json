@@ -1,0 +1,31 @@
+{
+  "name": "@stoplight/json-schema-tree",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "index.cjs.js",
+  "sideEffects": false,
+  "files": [
+    "**/*"
+  ],
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/json-schema-tree"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=10.18"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "@stoplight/json": "^3.12.0",
+    "@stoplight/json-schema-merge-allof": "^0.7.7",
+    "@stoplight/lifecycle": "^2.3.2",
+    "@types/json-schema": "^7.0.7",
+    "magic-error": "0.0.1"
+  },
+  "typings": "index.d.ts",
+  "module": "index.es.js",
+  "yalcSig": "141a2b0ab99e7a44ea70cd260b5da6e4"
+}

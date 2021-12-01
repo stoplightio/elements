@@ -58,7 +58,7 @@ describe('Parameter', () => {
     render(<Parameters parameters={[data]} parameterType="query" />);
 
     expect(await screen.findByText(/required/)).toBeInTheDocument();
-    expect(await screen.findByText(/Default value:/)).toBeInTheDocument();
+    expect(await screen.findByText(/Default:/)).toBeInTheDocument();
     expect(await screen.findAllByText(/foo/)).toHaveLength(2);
     expect(await screen.findByText(/bar/)).toBeInTheDocument();
   });
@@ -74,7 +74,7 @@ describe('Parameter', () => {
   it('should render correct examples', async () => {
     render(<Parameters parameters={[data]} parameterType="query" />);
 
-    expect(screen.queryByText(/Example value:/)).toBeInTheDocument();
+    expect(screen.queryByText(/Example:/)).toBeInTheDocument();
     expect(screen.queryByText(/example value/)).toBeInTheDocument();
     expect(screen.queryByText(/example key/)).not.toBeInTheDocument();
   });

@@ -29,7 +29,7 @@ interface BuildRequestInput {
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
   auth?: HttpSecuritySchemeWithValues;
-  chosenServer?: IServer;
+  chosenServer?: IServer | null;
   credentials?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
 }
