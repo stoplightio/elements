@@ -1,18 +1,23 @@
-import { Flex, Panel, PanelProps, Text } from '@stoplight/mosaic';
+import { Box, Heading, HeadingProps, HStack, Icon, IIconProps, Panel, PanelProps } from '@stoplight/mosaic';
 import * as React from 'react';
+
+import { slugify } from '../../utils/string';
 
 export interface ISectionTitle {
   title: string;
+  icon?: IIconProps['icon'];
+  size?: HeadingProps['size'];
 }
 
-export const SectionTitle: React.FC<ISectionTitle> = ({ title, children }) => {
+export const SectionTitle: React.FC<ISectionTitle> = ({ title, icon, size = 3, children }) => {
   return (
-    <Flex role="heading" borderB mb={3} pb={3} aria-label={title} align="baseline">
-      <Text size="xl" fontWeight="semibold" mr={5}>
-        {title}
-      </Text>
+    <HStack spacing={6}>
+      <HStack as={Heading} spacing={2} size={size} fontWeight="semibold" aria-label={title}>
+        {icon ? <Icon icon={icon} size="xs" fixedWidth /> : null}
+        <Box>{title}</Box>
+      </HStack>
       {children}
-    </Flex>
+    </HStack>
   );
 };
 
@@ -37,7 +42,7 @@ export const SubSectionPanel: React.FC<SubSectionPanelProps & Pick<PanelProps, '
       </Panel.Titlebar>
 
       {hasContent !== false && (
-        <Panel.Content pr={3} pl={6} p={0}>
+        <Panel.Content pr={2} p={0}>
           {children}
         </Panel.Content>
       )}

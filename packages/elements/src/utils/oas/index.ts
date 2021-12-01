@@ -1,3 +1,4 @@
+import { slugify } from '@stoplight/elements-core';
 import {
   Oas2HttpOperationTransformer,
   Oas2HttpServiceTransformer,
@@ -128,14 +129,6 @@ function computeChildNodes(
   }
 
   return nodes;
-}
-
-function slugify(name: string) {
-  return name
-    .replace(/\/|{|}|\s/g, '-')
-    .replace(/-{2,}/, '-')
-    .replace(/^-/, '')
-    .replace(/-$/, '');
 }
 
 function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeMap | void {

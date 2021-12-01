@@ -36,4 +36,5 @@ export { Divider, Group, ITableOfContentsTree, Item, ParsedNode, RoutingProps, T
 export { isHttpOperation, isHttpService } from './utils/guards';
 export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
 export { createResolvedObject } from './utils/ref-resolving/resolvedObject';
+export { slugify } from './utils/string';
 export { createElementClass } from './web-components/createElementClass';
