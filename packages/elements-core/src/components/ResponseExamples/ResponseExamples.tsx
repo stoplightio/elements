@@ -56,10 +56,17 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
           <CodeViewer
             aria-label={responseExample}
             noCopyButton
-            maxHeight="400px"
+            maxHeight="500px"
             language="json"
             value={responseExample}
             showLineNumbers
+            style={
+              // when not rendering in prose (markdown), reduce font size to be consistent with base UI
+              {
+                // @ts-expect-error react css typings do not allow for css variables...
+                '--fs-code': 12,
+              }
+            }
           />
         ) : (
           <LoadMore loading={loading} onClick={handleLoadMore} />
