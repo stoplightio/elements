@@ -1,4 +1,4 @@
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import {
   NodeTypeColors,
   NodeTypeIconDefs,
@@ -14,6 +14,7 @@ import * as React from 'react';
 import { NodeSearchResult } from '../../types';
 
 export type SearchProps = {
+  isLoading?: boolean;
   search?: string;
   searchResults?: NodeSearchResult[];
   onSearch: (search: string) => void;
@@ -22,7 +23,7 @@ export type SearchProps = {
   onClose: ModalProps['onClose'];
 };
 
-const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
+const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
   const onChange = React.useCallback(e => onSearch(e.currentTarget.value), [onSearch]);
@@ -55,7 +56,7 @@ const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch 
           appearance="minimal"
           borderB
           size="lg"
-          icon={<Box as={Icon} ml={1} icon={faSearch} />}
+          icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
           autoFocus
           placeholder="Search..."
           value={search}
