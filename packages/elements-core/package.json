@@ -48,7 +48,7 @@
     "@stoplight/json": "^3.10.0",
     "@stoplight/json-schema-ref-parser": "^9.0.5",
     "@stoplight/json-schema-sampler": "0.2.2",
-    "@stoplight/json-schema-viewer": "^4.3.4",
+    "@stoplight/json-schema-viewer": "^4.3.6",
     "@stoplight/markdown": "^3.1.1",
     "@stoplight/markdown-viewer": "^5.3.2",
     "@stoplight/mosaic": "^1.12.4",
