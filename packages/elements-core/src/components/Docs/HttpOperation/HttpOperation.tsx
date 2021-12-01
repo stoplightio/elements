@@ -1,4 +1,3 @@
-import { HttpMethodColors } from '@stoplight/elements-core';
 import { Box, Heading, HStack, Text, useThemeIsDark, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
@@ -7,6 +6,7 @@ import { useAtomValue } from 'jotai/utils';
 import * as React from 'react';
 import TruncateMarkup, { TruncateProps } from 'react-truncate-markup';
 
+import { HttpMethodColors } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { MarkdownViewer } from '../../MarkdownViewer';
