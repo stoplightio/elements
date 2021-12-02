@@ -72,7 +72,7 @@ const defaultServers: IServer[] = [];
 
 export const TryIt: React.FC<TryItProps> = ({
   httpOperation,
-  mockUrl = 'https://foo.com',
+  mockUrl,
   onRequestChange,
   requestBodyIndex,
   embeddedInMd = false,
