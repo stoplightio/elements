@@ -1,13 +1,14 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { Box, Button, Flex, Icon, Panel, Select, Text, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, HStack, Icon, Panel, useThemeIsDark } from '@stoplight/mosaic';
 import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
 import { getServersToDisplay } from '../../utils/http-spec/IServer';
 import { RequestSamples } from '../RequestSamples';
+import { chosenServerAtom } from '.';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
@@ -28,6 +29,7 @@ import {
   ResponseState,
   TryItResponse,
 } from './Response/Response';
+import { ServersDropdown } from './Servers/ServersDropdown';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -66,13 +68,11 @@ export interface TryItProps {
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
 
-// track null separately from undefined so that we can tell if the server has been set (undefined indicates it has not been "processed" yet)
-export const chosenServerAtom = atom<IServer | null | undefined>(undefined);
 const defaultServers: IServer[] = [];
 
 export const TryIt: React.FC<TryItProps> = ({
   httpOperation,
-  mockUrl,
+  mockUrl = 'https://foo.com',
   onRequestChange,
   requestBodyIndex,
   embeddedInMd = false,
@@ -98,12 +98,21 @@ export const TryIt: React.FC<TryItProps> = ({
 
   const [operationAuthValue, setOperationAuthValue] = usePersistedSecuritySchemeWithValues();
 
-  const servers = React.useMemo(
-    () => getServersToDisplay(httpOperation.servers || defaultServers),
-    [httpOperation.servers],
-  );
+  const servers = React.useMemo(() => {
+    const toDisplay = getServersToDisplay(httpOperation.servers || defaultServers);
+
+    if (mockUrl) {
+      toDisplay.push({
+        name: 'Mock Server',
+        url: mockUrl,
+      });
+    }
+
+    return toDisplay;
+  }, [httpOperation.servers, mockUrl]);
   const firstServer = servers[0] || null;
   const [chosenServer, setChosenServer] = useAtom(chosenServerAtom);
+  const isMockingEnabled = mockUrl && chosenServer?.url === mockUrl;
 
   const hasRequiredButEmptyParameters = allParameters.some(
     parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
@@ -122,7 +131,7 @@ export const TryIt: React.FC<TryItProps> = ({
         httpOperation,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         auth: operationAuthValue,
-        ...(mockingOptions.isEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
+        ...(isMockingEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
         corsProxy,
       }).then(request => {
@@ -154,7 +163,7 @@ export const TryIt: React.FC<TryItProps> = ({
     embeddedInMd,
   ]);
 
-  const handleClick = async () => {
+  const handleSendRequest = async () => {
     setValidateParameters(true);
 
     if (hasRequiredButEmptyParameters) return;
@@ -197,81 +206,89 @@ export const TryIt: React.FC<TryItProps> = ({
     }
   };
 
-  const serversSelect = (
-    <Select
-      aria-label="Servers"
-      options={servers.map(server => ({ value: server.description || '' }))}
-      value={chosenServer?.description || ''}
-      size="sm"
-      onChange={(value: React.Key) => {
-        const server = servers.find(server => server.description === value);
+  const tryItPanelContents = (
+    <>
+      <TryItAuth
+        onChange={setOperationAuthValue}
+        operationSecurityScheme={httpOperation.security ?? []}
+        value={operationAuthValue}
+      />
 
-        setChosenServer(server);
-      }}
-    />
+      {allParameters.length > 0 && (
+        <OperationParameters
+          parameters={allParameters}
+          values={parameterValuesWithDefaults}
+          onChangeValue={updateParameterValue}
+          validate={validateParameters}
+        />
+      )}
+
+      {formDataState.isFormDataBody ? (
+        <FormDataBody
+          specification={formDataState.bodySpecification}
+          values={bodyParameterValues}
+          onChangeValues={setBodyParameterValues}
+        />
+      ) : mediaTypeContent ? (
+        <RequestBody
+          examples={mediaTypeContent.examples ?? []}
+          requestBody={textRequestBody}
+          onChange={setTextRequestBody}
+        />
+      ) : null}
+
+      <Panel.Content className="SendButtonHolder">
+        <HStack alignItems="center" spacing={2}>
+          <Button appearance="primary" loading={loading} disabled={loading} onPress={handleSendRequest} size="sm">
+            Send API Request
+          </Button>
+
+          {servers.length > 1 && <ServersDropdown servers={servers} />}
+
+          {isMockingEnabled && (
+            <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
+          )}
+        </HStack>
+
+        {validateParameters && hasRequiredButEmptyParameters && (
+          <Box mt={4} color="danger-light" fontSize="sm">
+            <Icon icon={faExclamationTriangle} className="sl-mr-1" />
+            You didn't provide all of the required parameters!
+          </Box>
+        )}
+      </Panel.Content>
+    </>
   );
 
-  return (
-    <Box rounded="lg" overflowY="hidden">
+  let tryItPanelElem;
+
+  // when TryIt is embedded, we need to show extra context at the top about the method + path
+  if (embeddedInMd) {
+    tryItPanelElem = (
       <Panel isCollapsible={false} p={0} className="TryItPanel">
-        <Panel.Titlebar rightComponent={servers.length > 1 ? serversSelect : undefined} bg="canvas-300">
-          <Box role="heading" fontWeight="bold">
-            <Text color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
-              {httpOperation.method.toUpperCase()}
-            </Text>
-            <Text ml={2}>{httpOperation.path}</Text>
+        <Panel.Titlebar bg="canvas-300">
+          <Box fontWeight="bold" color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
+            {httpOperation.method.toUpperCase()}
+          </Box>
+          <Box fontWeight="medium" ml={2} textOverflow="truncate" overflowX="hidden">
+            {`${chosenServer?.url || ''}${httpOperation.path}`}
           </Box>
         </Panel.Titlebar>
 
-        <TryItAuth
-          onChange={setOperationAuthValue}
-          operationSecurityScheme={httpOperation.security ?? []}
-          value={operationAuthValue}
-        />
-
-        {allParameters.length > 0 && (
-          <OperationParameters
-            parameters={allParameters}
-            values={parameterValuesWithDefaults}
-            onChangeValue={updateParameterValue}
-            validate={validateParameters}
-          />
-        )}
-
-        {formDataState.isFormDataBody ? (
-          <FormDataBody
-            specification={formDataState.bodySpecification}
-            values={bodyParameterValues}
-            onChangeValues={setBodyParameterValues}
-          />
-        ) : mediaTypeContent ? (
-          <RequestBody
-            examples={mediaTypeContent.examples ?? []}
-            requestBody={textRequestBody}
-            onChange={setTextRequestBody}
-          />
-        ) : null}
-
-        <Panel.Content className="SendButtonHolder">
-          <Flex alignItems="center">
-            <Button appearance="primary" loading={loading} disabled={loading} onPress={handleClick} size="sm">
-              Send Request
-            </Button>
-
-            {mockUrl && (
-              <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
-            )}
-          </Flex>
-
-          {validateParameters && hasRequiredButEmptyParameters && (
-            <Box mt={4} color="danger-light" fontSize="sm">
-              <Icon icon={faExclamationTriangle} className="sl-mr-1" />
-              You didn't provide all of the required parameters!
-            </Box>
-          )}
-        </Panel.Content>
+        {tryItPanelContents}
       </Panel>
+    );
+  } else {
+    tryItPanelElem = (
+      <Box className="TryItPanel" bg="canvas-100">
+        {tryItPanelContents}
+      </Box>
+    );
+  }
 
+  return (
+    <Box rounded="lg" overflowY="hidden">
+      {tryItPanelElem}
       {requestData && embeddedInMd && <RequestSamples request={requestData} embeddedInMd />}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}

@@ -1,4 +1,4 @@
-import { Box, Button, Menu, MenuActionItem, MenuItems, MenuItemWithSubmenu } from '@stoplight/mosaic';
+import { Box, FieldButton, Menu, MenuActionItem, MenuItems, MenuItemWithSubmenu } from '@stoplight/mosaic';
 import { IHttpOperation, IHttpOperationResponse } from '@stoplight/types';
 import { uniq } from 'lodash';
 import * as React from 'react';
@@ -13,32 +13,22 @@ interface MockingButtonProps {
 
 export const MockingButton: React.FC<MockingButtonProps> = ({
   operation,
-  options: { isEnabled, code, example, dynamic },
+  options: { code, example, dynamic },
   onOptionsChange,
 }) => {
-  const toggleEnabled = React.useCallback(() => {
-    onOptionsChange({ isEnabled: !isEnabled });
-  }, [isEnabled, onOptionsChange]);
-
   const operationResponses = operation.responses;
 
   const setMockingOptions = React.useCallback(
     ({ code, example, dynamic }: Omit<MockingOptions, 'isEnabled'>) => {
-      onOptionsChange({ isEnabled, code, example, dynamic });
+      onOptionsChange({ code, example, dynamic });
     },
-    [isEnabled, onOptionsChange],
+    [onOptionsChange],
   );
 
   const menuItems = React.useMemo(() => {
-    const items: MenuItems = [
-      { id: 'mocking-enabled', title: 'Enabled', isChecked: isEnabled, onPress: toggleEnabled },
-      {
-        type: 'group',
-        children: operationResponses
-          ?.filter(operationResponse => Number.isInteger(parseFloat(operationResponse.code)))
-          ?.map(generateOperationResponseMenu),
-      },
-    ];
+    const items: MenuItems = operationResponses
+      ?.filter(operationResponse => Number.isInteger(parseFloat(operationResponse.code)))
+      ?.map(generateOperationResponseMenu);
 
     function generateOperationResponseMenu(operationResponse: IHttpOperationResponse) {
       const menuId = `response-${operationResponse.code}`;
@@ -75,7 +65,6 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
 
       const menuItem: MenuItemWithSubmenu = {
         id: menuId,
-        isDisabled: !isEnabled,
         isChecked: isActive,
         title: operationResponse.code,
         onPress: () => {
@@ -91,24 +80,17 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
     }
 
     return items;
-  }, [code, dynamic, example, isEnabled, operationResponses, setMockingOptions, toggleEnabled]);
+  }, [code, dynamic, example, operationResponses, setMockingOptions]);
 
   return (
     <Box>
       <Menu
-        aria-label="Mocking"
+        aria-label="Mocking options"
         items={menuItems}
         renderTrigger={({ isOpen }) => (
-          <Button
-            iconRight="chevron-down"
-            icon={isEnabled ? 'check' : undefined}
-            appearance={isEnabled ? 'primary' : 'minimal'}
-            ml={2}
-            active={isOpen}
-            size="sm"
-          >
-            Mocking
-          </Button>
+          <FieldButton icon="wand-magic" active={isOpen} size="sm">
+            Mock Options
+          </FieldButton>
         )}
       />
     </Box>
