@@ -88,8 +88,8 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
         aria-label="Mocking options"
         items={menuItems}
         renderTrigger={({ isOpen }) => (
-          <FieldButton icon="wand-magic" active={isOpen} size="sm">
-            Mock Options
+          <FieldButton active={isOpen} size="sm">
+            Mock Settings
           </FieldButton>
         )}
       />
