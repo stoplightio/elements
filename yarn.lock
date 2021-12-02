@@ -3607,8 +3607,10 @@
     "@types/json-schema" "^7.0.7"
     magic-error "0.0.1"
 
-"@stoplight/json-schema-viewer@^4.3.6", "@stoplight/json-schema-viewer@file:.yalc/@stoplight/json-schema-viewer":
-  version "0.0.0"
+"@stoplight/json-schema-viewer@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.4.0.tgz#23efb683ddae86a5df28b05682b08320d6645617"
+  integrity sha512-ZVEjZPC9OJJ1b7kEV2SufJUj6SefdipPodm2vTHRnFH/NOVRFteyXneRvCITYl8yndTKc2KRkIjARUqjIKpvow==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.17.1"
