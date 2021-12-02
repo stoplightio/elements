@@ -22,7 +22,6 @@ describe('Stoplight component', () => {
       loadCreateTodoPage();
       cy.findByRole('heading', { name: /Create Todo/i }).should('exist');
       cy.findByRole('heading', { name: /Request/i }).should('exist');
-      cy.findByRole('heading', { name: /post \/todos/i }).should('exist');
       cy.findByRole('heading', { name: /Response/i }).should('exist');
     });
 
