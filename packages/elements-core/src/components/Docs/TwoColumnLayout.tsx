@@ -1,4 +1,4 @@
-import { Box, Flex } from '@stoplight/mosaic';
+import { Box, Flex, VStack } from '@stoplight/mosaic';
 import React from 'react';
 
 export interface TwoColumnLayoutProps {
@@ -9,9 +9,9 @@ export interface TwoColumnLayoutProps {
 }
 
 export const TwoColumnLayout = ({ header, right, left, className }: TwoColumnLayoutProps) => (
-  <Box w="full" className={className}>
+  <VStack w="full" className={className} spacing={8}>
     {header}
-    <Flex mt={header ? 8 : undefined}>
+    <Flex>
       <Box w={0} flex={1}>
         {left}
       </Box>
@@ -22,5 +22,5 @@ export const TwoColumnLayout = ({ header, right, left, className }: TwoColumnLay
         </Box>
       )}
     </Flex>
-  </Box>
+  </VStack>
 );

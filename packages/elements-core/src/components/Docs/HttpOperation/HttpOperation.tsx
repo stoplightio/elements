@@ -1,10 +1,9 @@
-import { Box, Heading, HStack, Text, useThemeIsDark, VStack } from '@stoplight/mosaic';
+import { Box, Flex, Heading, HStack, useThemeIsDark, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
 import { useAtomValue } from 'jotai/utils';
 import * as React from 'react';
-import TruncateMarkup, { TruncateProps } from 'react-truncate-markup';
 
 import { HttpMethodColors } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
@@ -109,46 +108,42 @@ function MethodPath({ method, path }: MethodPathProps) {
   }
 
   return (
-    <Box pos="relative">
-      {chosenServer !== void 0 && <MethodPathInner method={method} path={path} chosenServerUrl={chosenServerUrl} />}
+    <Box>
+      <MethodPathInner method={method} path={path} chosenServerUrl={chosenServerUrl} />
     </Box>
   );
 }
 
-function MethodPathInner({
-  method,
-  path,
-  chosenServerUrl,
-  onTruncate,
-}: MethodPathProps & { chosenServerUrl: string; onTruncate?: TruncateProps['onTruncate'] }) {
+function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { chosenServerUrl: string }) {
   const isDark = useThemeIsDark();
+  const fullUrl = `${chosenServerUrl}${path}`;
 
   const pathElem = (
-    <Box overflowX="hidden">
+    <Flex overflowX="hidden">
       {chosenServerUrl ? (
-        <Text color="muted" fontSize="lg">
+        <Box dir="rtl" color="muted" fontSize="lg" textOverflow="truncate" overflowX="hidden">
           {chosenServerUrl}
-        </Text>
+        </Box>
       ) : null}
 
-      <Text fontSize="lg" fontWeight="semibold">
+      <Box fontSize="lg" fontWeight="semibold" flex={1}>
         {path}
-      </Text>
-    </Box>
+      </Box>
+    </Flex>
   );
 
   return (
     <HStack
       spacing={3}
-      pl={3}
+      pl={2.5}
       pr={4}
-      py={2.5}
-      ml={-3}
+      py={2}
       bg="canvas-50"
       rounded="lg"
       fontFamily="mono"
       display="inline-flex"
       maxW="full"
+      title={fullUrl}
     >
       <Box
         py={1}
@@ -163,13 +158,7 @@ function MethodPathInner({
         {method}
       </Box>
 
-      <TruncateMarkup
-        // key is important so that onTruncate re-fires if underlying full url changes
-        key={`${chosenServerUrl}${path}`}
-        onTruncate={onTruncate}
-      >
-        {pathElem}
-      </TruncateMarkup>
+      {pathElem}
     </HStack>
   );
 }
