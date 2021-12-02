@@ -330,6 +330,7 @@ export const httpOperation: IHttpOperation = {
           minLength: 0,
           maxLength: 10,
         },
+        examples: [{ key: 'Example', value: '3' }],
         deprecated: true,
         description: 'How many string todos to limit?',
         name: 'value',
