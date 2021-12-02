@@ -19,7 +19,7 @@ export default {
     projectId: { control: 'text' },
     platformUrl: { control: 'text' },
     router: {
-      control: { type: 'inline-radio', options: ['history', 'hash', 'memory', 'static'] },
+      control: { type: 'inline-radio', options: ['history', 'hash', 'memory'] },
       defaultValue: 'history',
     },
   },
