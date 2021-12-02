@@ -44,8 +44,28 @@ describe('Stoplight Project', () => {
     fetchMock.disableMocks();
   });
 
-  it('loads correctly', async () => {
+  it('loads correctly using memory router', async () => {
     render(<StoplightProject router="memory" projectId="cHJqOjYwNjYx" platformUrl="https://stoplight.io" />);
+
+    expect(
+      await screen.findByText(
+        'Markdown is supported in descriptions. Add information here for users to get accustomed to endpoints',
+        {},
+        { timeout: 10000 },
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it('loads correctly using static router', async () => {
+    render(
+      <StoplightProject
+        router="static"
+        projectId="cHJqOjYwNjYx"
+        basePath=""
+        staticRouterPath="/b3A6Mzg5NDM2-create-todo"
+        platformUrl="https://stoplight.io"
+      />,
+    );
 
     expect(
       await screen.findByText(
