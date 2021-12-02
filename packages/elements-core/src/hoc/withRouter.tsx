@@ -10,7 +10,8 @@ import { getDisplayName } from './utils';
 export function withRouter<P extends RoutingProps>(WrappedComponent: React.ComponentType<P>): React.FC<P> {
   const WithRouter = (props: P) => {
     const basePath = props.basePath ?? '/';
-    const { Router, routerProps } = useRouter(props.router ?? 'history', basePath);
+    const staticRouterPath = props.staticRouterPath ?? '';
+    const { Router, routerProps } = useRouter(props.router ?? 'history', basePath, staticRouterPath);
     return (
       <Router {...routerProps} key={basePath}>
         <Route path="/">

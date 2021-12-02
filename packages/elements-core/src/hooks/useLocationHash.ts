@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export function useLocationHash() {
-  const isBrowser = typeof window !== undefined;
+  const isBrowser = typeof window !== 'undefined';
   const [locationHash, setLocationHash] = React.useState(isBrowser && window.location.hash);
 
   React.useEffect(() => {
