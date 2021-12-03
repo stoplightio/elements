@@ -4,6 +4,7 @@ import { IHttpOperationResponse } from '@stoplight/types';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
+import { CodeToIntentMap } from '../../../constants';
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -116,16 +117,5 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
 Response.displayName = 'HttpOperation.Response';
 
 const codeToIntentVal = (code: string): IntentVals => {
-  const firstChar = code.charAt(0);
-
-  switch (firstChar) {
-    case '2':
-      return 'success';
-    case '4':
-      return 'warning';
-    case '5':
-      return 'danger';
-    default:
-      return 'default';
-  }
+  return CodeToIntentMap[code[0]] ?? 'default';
 };
