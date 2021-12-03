@@ -15,7 +15,7 @@ export interface BodyProps {
 }
 
 export const isBodyEmpty = (body?: BodyProps['body']) => {
-  if (!body) return false;
+  if (!body) return true;
 
   const { contents = [], description } = body;
 
