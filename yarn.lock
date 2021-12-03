@@ -3607,10 +3607,10 @@
     "@types/json-schema" "^7.0.7"
     magic-error "0.0.1"
 
-"@stoplight/json-schema-viewer@^4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.4.0.tgz#23efb683ddae86a5df28b05682b08320d6645617"
-  integrity sha512-ZVEjZPC9OJJ1b7kEV2SufJUj6SefdipPodm2vTHRnFH/NOVRFteyXneRvCITYl8yndTKc2KRkIjARUqjIKpvow==
+"@stoplight/json-schema-viewer@^4.4.1":
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.4.1.tgz#35275304e963145c938f2dd8fc24dbdd2ecc6060"
+  integrity sha512-TcpoIp6FxsH2H+0npG7vmVGFH2bRaHmA9QMLmKYqaUYhDYAZG4JOcWRXAyke2yKvtxC11vSNnA8OCao0RZmWsQ==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@stoplight/json" "^3.17.1"
