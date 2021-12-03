@@ -1086,6 +1086,63 @@ describe('TryIt', () => {
 
       expect(fetchMock.mock.calls[0][0]).toContain('https://todos-dev.stoplight.io');
     });
+
+    it('Persists chosen server between renders of different operations if URL is the same', async () => {
+      const operation1: IHttpOperation = {
+        ...basicOperation,
+        servers: [
+          { name: 'op 1 server a', url: 'http://url-A.com' },
+          { name: 'op 1 server b', url: 'http://url-B.com' },
+          { name: 'op 1 server c', url: 'http://url-C.com' },
+        ],
+      };
+
+      const operation2: IHttpOperation = {
+        ...basicOperation,
+        servers: [
+          { name: 'op 2 server d', url: 'http://url-D.com' },
+          { name: 'op 2 server e', url: 'http://url-E.com' },
+          { name: 'op 2 server b', url: 'http://url-B.com' }, // same URL, should preserve this server
+        ],
+      };
+
+      const { rerender } = render(
+        <MosaicProvider>
+          <PersistenceContextProvider>
+            <TryIt httpOperation={operation1} />
+          </PersistenceContextProvider>
+        </MosaicProvider>,
+      );
+
+      let serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      // select server b
+      let enableItem = screen.getByRole('menuitemradio', { name: /server b/i });
+      userEvent.click(enableItem);
+
+      // unmount (to make sure parameters are not simply stored in component state)
+      rerender(
+        <MosaicProvider>
+          <PersistenceContextProvider>
+            <div />
+          </PersistenceContextProvider>
+        </MosaicProvider>,
+      );
+
+      // mount a different instance
+
+      rerender(
+        <MosaicProvider>
+          <PersistenceContextProvider>
+            <TryIt httpOperation={operation2} />
+          </PersistenceContextProvider>
+        </MosaicProvider>,
+      );
+
+      // should still have server b selected since URLs match up
+      expect(screen.getByRole('button', { name: /server/i })).toHaveTextContent('op 2 server b');
+    });
   });
 
   describe('Validation', () => {
