@@ -58,8 +58,8 @@ describe('Stoplight component', () => {
 
     it('mocks response correctly', () => {
       loadListTodosPage();
-      cy.findByRole('button', { name: /mocking/i }).click();
-      cy.findByRole('menuitemcheckbox', { name: /enabled/i }).then(enabled => {
+      cy.findByRole('button', { name: /server/i }).click();
+      cy.findByRole('menuitemradio', { name: /mock server/i }).then(enabled => {
         enabled.trigger('click');
       });
       cy.findByRole('button', { name: /send api request/i }).click();
