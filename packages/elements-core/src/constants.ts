@@ -7,6 +7,7 @@ import {
   faQuestionCircle,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
+import { IntentVals } from '@stoplight/mosaic';
 import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
@@ -141,3 +142,9 @@ export const HttpCodeDescriptions = {
 
 export const badgeDefaultBackgroundColor = '#293742';
 export const badgeDefaultColor = '#FFFFFF';
+
+export const CodeToIntentMap: Record<number, IntentVals> = {
+  2: 'success',
+  4: 'warning',
+  5: 'danger',
+};

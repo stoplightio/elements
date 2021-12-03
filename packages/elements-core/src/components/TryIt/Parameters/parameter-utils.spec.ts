@@ -15,7 +15,7 @@ describe('Parameter Utils', () => {
       expect(parameters).toMatchObject({
         type: 'something',
         value: '1',
-        'account-id': 'example id',
+        'account-id': 'account-id-default',
         'message-id': 'example value',
       });
     });
