@@ -239,7 +239,7 @@ describe('TryIt', () => {
 
       const optionalWithDefaultField = screen.getByLabelText('optional_value_with_default') as HTMLInputElement;
       expect(optionalWithDefaultField).toHaveValue('');
-      expect(optionalWithDefaultField.placeholder).toBe('example: some default value');
+      expect(optionalWithDefaultField.placeholder).toBe('defaults to: some default value');
 
       const valueField = screen.getByLabelText('value');
       expect(valueField).toHaveTextContent('1');
@@ -247,8 +247,8 @@ describe('TryIt', () => {
       // header param
 
       const accountIdField = screen.getByLabelText('account-id') as HTMLInputElement;
-      expect(accountIdField).toHaveValue('example id');
-      expect(accountIdField.placeholder).toBe('example: example id');
+      expect(accountIdField).toHaveValue('account-id-default');
+      expect(accountIdField.placeholder).toBe('defaults to: account-id-default');
 
       const messageIdField = screen.getByLabelText('message-id');
       expect(messageIdField).toHaveValue('example value');
@@ -291,7 +291,7 @@ describe('TryIt', () => {
       // assert that headers are passed
       const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
       expect(headers.get('Content-Type')).toBe('application/json');
-      expect(headers.get('account-id')).toBe('example id 1999');
+      expect(headers.get('account-id')).toBe('account-id-default 1999');
       expect(headers.get('message-id')).toBe('another example');
     });
 
