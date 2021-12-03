@@ -26,7 +26,7 @@ describe(NodeContent.name, () => {
   it('shows TryIt by default', () => {
     const { unmount } = render(<NodeContent node={nodeContent} Link={DummyLink} />);
 
-    expect(screen.getByText(/send request/i)).toBeInTheDocument();
+    expect(screen.getByText(/send api request/i)).toBeInTheDocument();
 
     unmount();
   });
@@ -34,7 +34,7 @@ describe(NodeContent.name, () => {
   it('can hide TryIt', () => {
     const { unmount } = render(<NodeContent node={nodeContent} Link={DummyLink} hideTryIt />);
 
-    expect(screen.queryByText(/send request/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/send api request/i)).not.toBeInTheDocument();
 
     unmount();
   });

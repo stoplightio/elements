@@ -48,7 +48,7 @@ describe('API component', () => {
 
     it('invokes TryIt request (receives network error)', () => {
       cy.visit('/zoom-api/operations/userCreate');
-      cy.findByRole('button', { name: /Send Request/i }).click();
+      cy.findByRole('button', { name: /Send API Request/i }).click();
       cy.findByRole('button', { name: 'Error' }).should('exist');
     });
   });

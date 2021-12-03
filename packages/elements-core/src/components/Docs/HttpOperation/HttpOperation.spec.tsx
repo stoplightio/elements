@@ -544,7 +544,7 @@ describe('HttpOperation', () => {
     it('should hide TryIt', async () => {
       const { unmount } = render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryIt: true }} />);
 
-      expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
+      expect(screen.queryByText('Send API Request')).not.toBeInTheDocument();
       expect(await screen.findByText('Response Example')).toBeInTheDocument();
 
       unmount();
@@ -553,7 +553,7 @@ describe('HttpOperation', () => {
     it('should hide right column', () => {
       const { unmount } = render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryItPanel: true }} />);
 
-      expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
+      expect(screen.queryByText('Send API Request')).not.toBeInTheDocument();
       expect(screen.queryByText('Response Example')).not.toBeInTheDocument();
 
       unmount();

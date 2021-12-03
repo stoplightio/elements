@@ -50,7 +50,7 @@ describe('Stoplight component', () => {
 
     it('invokes TryIt request', () => {
       loadCreateTodoPage();
-      cy.findByRole('button', { name: /send request/i }).click();
+      cy.findByRole('button', { name: /send api request/i }).click();
 
       // Temporarily changing response code as the requested api is unavailable
       cy.findByText('500 Internal Server Error').should('exist');
@@ -62,7 +62,7 @@ describe('Stoplight component', () => {
       cy.findByRole('menuitemcheckbox', { name: /enabled/i }).then(enabled => {
         enabled.trigger('click');
       });
-      cy.findByRole('button', { name: /send request/i }).click();
+      cy.findByRole('button', { name: /send api request/i }).click();
       cy.findByText('200 OK').should('exist');
     });
   });

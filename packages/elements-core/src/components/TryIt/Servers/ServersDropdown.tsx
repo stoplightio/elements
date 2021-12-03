@@ -1,8 +1,8 @@
+import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { FieldButton, Menu, MenuItem } from '@stoplight/mosaic';
 import { IServer } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import * as React from 'react';
-import { faServer } from '@fortawesome/free-solid-svg-icons';
 
 import { chosenServerAtom } from '../state';
 
