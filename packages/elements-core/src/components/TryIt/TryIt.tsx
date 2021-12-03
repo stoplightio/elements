@@ -119,8 +119,12 @@ export const TryIt: React.FC<TryItProps> = ({
   );
 
   React.useEffect(() => {
-    setChosenServer(firstServer);
-  }, [firstServer, setChosenServer]);
+    const currentUrl = chosenServer?.url;
+    const exists = currentUrl && servers.find(s => s.url === currentUrl);
+    if (!exists) {
+      setChosenServer(firstServer);
+    }
+  }, [servers, firstServer, chosenServer, setChosenServer]);
 
   React.useEffect(() => {
     let isMounted = true;
@@ -170,7 +174,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
     try {
       setLoading(true);
-      const mockData = getMockData(mockUrl, httpOperation, mockingOptions);
+      const mockData = isMockingEnabled ? getMockData(mockUrl, httpOperation, mockingOptions) : undefined;
       const request = await buildFetchRequest({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,

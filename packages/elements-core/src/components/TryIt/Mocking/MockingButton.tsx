@@ -85,7 +85,7 @@ export const MockingButton: React.FC<MockingButtonProps> = ({
   return (
     <Box>
       <Menu
-        aria-label="Mocking options"
+        aria-label="Mock settings"
         items={menuItems}
         renderTrigger={({ isOpen }) => (
           <FieldButton active={isOpen} size="sm">

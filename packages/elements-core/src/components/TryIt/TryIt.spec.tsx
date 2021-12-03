@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
@@ -618,21 +618,25 @@ describe('TryIt', () => {
     it('Shows mock button', () => {
       render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
-      const mockingButton = screen.getByRole('button', { name: /mocking/i });
-      expect(mockingButton).toBeInTheDocument();
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      expect(screen.getByRole('menuitemradio', { name: /mock server/i })).toBeInTheDocument();
     });
 
     it('Invokes request with mocked data', async () => {
       render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
-      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+      let serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
 
-      userEvent.click(mockingButton);
-
-      // enable mocking
-      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
-      expect(enableItem).toBeInTheDocument();
+      // select mock server
+      let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
       userEvent.click(enableItem);
+
+      // open mock dropdown
+      const mockButton = screen.getByRole('button', { name: /mock settings/i });
+      userEvent.click(mockButton);
 
       // set response code
       const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
@@ -646,10 +650,10 @@ describe('TryIt', () => {
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
 
-      // disable mocking and send
-      userEvent.click(mockingButton);
-      enableItem = await screen.getByRole('menuitemcheckbox', { name: /enabled/i });
-      userEvent.click(enableItem);
+      // select regular server and send
+      userEvent.click(serversButton);
+      let server1 = screen.getByRole('menuitemradio', { name: /server 1/i });
+      act(() => userEvent.click(server1));
 
       clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
@@ -681,12 +685,11 @@ describe('TryIt', () => {
     it('Invokes request with no Prefer header if mock data is not selected', async () => {
       render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
-      const mockingButton = screen.getByRole('button', { name: /mocking/i });
+      let serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
 
-      userEvent.click(mockingButton);
-
-      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
-      expect(enableItem).toBeInTheDocument();
+      // select mock server
+      let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
       userEvent.click(enableItem);
 
       clickSend();
@@ -717,14 +720,16 @@ describe('TryIt', () => {
         </MosaicProvider>,
       );
 
-      // enable mocking
-      const mockingButton = screen.getByRole('button', { name: /mocking/i });
-      userEvent.click(mockingButton);
+      let serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
 
-      // enable mocking
-      let enableItem = await screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
-      expect(enableItem).toBeInTheDocument();
+      // select mock server
+      let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
       userEvent.click(enableItem);
+
+      // open mock dropdown
+      const mockButton = screen.getByRole('button', { name: /mock settings/i });
+      userEvent.click(mockButton);
 
       // set response code
       const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
@@ -1046,29 +1051,31 @@ describe('TryIt', () => {
     it('shows select if there is more than one server available', () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
-      const serversSelect = screen.queryByLabelText('Servers');
+      const serversButton = screen.getByRole('button', { name: /server/i });
 
-      expect(serversSelect).toHaveTextContent('Server 1');
+      expect(serversButton).toHaveTextContent('Server 1');
     });
 
     it('allows to choose other server', async () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
-      let serversSelect = await screen.findByLabelText('Servers');
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
 
-      chooseOption(serversSelect, 'Development');
+      const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
+      userEvent.click(enableItem);
 
-      serversSelect = await screen.findByLabelText('Servers');
-
-      expect(serversSelect).toHaveTextContent('Development');
+      expect(serversButton).toHaveTextContent('Development');
     });
 
     it('sends request to a chosen server url', async () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
-      const serversSelect = await screen.findByLabelText('Servers');
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
 
-      chooseOption(serversSelect, 'Development');
+      const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
+      userEvent.click(enableItem);
 
       const todoIdField = screen.getByLabelText('todoId');
       userEvent.type(todoIdField, '123');
