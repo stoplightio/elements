@@ -1,5 +1,5 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { Box, Button, Flex, Icon, Panel, Select, Text, Tooltip, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, Flex, Icon, Panel, Select, Text, useThemeIsDark } from '@stoplight/mosaic';
 import { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { atom, useAtom } from 'jotai';
@@ -66,7 +66,9 @@ export interface TryItProps {
  * Relies on jotai, needs to be wrapped in a PersistenceContextProvider
  */
 
-const chosenServerAtom = atom<IServer | undefined>(undefined);
+// track null separately from undefined so that we can tell if the server has been set (undefined indicates it has not been "processed" yet)
+export const chosenServerAtom = atom<IServer | null | undefined>(undefined);
+const defaultServers: IServer[] = [];
 
 export const TryIt: React.FC<TryItProps> = ({
   httpOperation,
@@ -96,7 +98,11 @@ export const TryIt: React.FC<TryItProps> = ({
 
   const [operationAuthValue, setOperationAuthValue] = usePersistedSecuritySchemeWithValues();
 
-  const servers = getServersToDisplay(httpOperation.servers || []);
+  const servers = React.useMemo(
+    () => getServersToDisplay(httpOperation.servers || defaultServers),
+    [httpOperation.servers],
+  );
+  const firstServer = servers[0] || null;
   const [chosenServer, setChosenServer] = useAtom(chosenServerAtom);
 
   const hasRequiredButEmptyParameters = allParameters.some(
@@ -104,11 +110,8 @@ export const TryIt: React.FC<TryItProps> = ({
   );
 
   React.useEffect(() => {
-    if (!chosenServer) {
-      setChosenServer(servers[0]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setChosenServer(firstServer);
+  }, [firstServer, setChosenServer]);
 
   React.useEffect(() => {
     let isMounted = true;
@@ -173,7 +176,7 @@ export const TryIt: React.FC<TryItProps> = ({
       let response: Response | undefined;
       try {
         response = await fetch(...request);
-      } catch (e) {
+      } catch (e: any) {
         setResponse({ error: new NetworkError(e.message) });
       }
       if (response) {
@@ -187,7 +190,7 @@ export const TryIt: React.FC<TryItProps> = ({
           contentType,
         });
       }
-    } catch (e) {
+    } catch (e: any) {
       setResponse({ error: e });
     } finally {
       setLoading(false);
@@ -199,6 +202,7 @@ export const TryIt: React.FC<TryItProps> = ({
       aria-label="Servers"
       options={servers.map(server => ({ value: server.description || '' }))}
       value={chosenServer?.description || ''}
+      size="sm"
       onChange={(value: React.Key) => {
         const server = servers.find(server => server.description === value);
 
@@ -207,34 +211,24 @@ export const TryIt: React.FC<TryItProps> = ({
     />
   );
 
-  const serverDescription = (
-    <Tooltip
-      renderTrigger={
-        <Box ml={2} mr={1} flexShrink={0}>
-          {servers[0]?.description}
-        </Box>
-      }
-    >
-      Server Host: {servers[0]?.url}
-    </Tooltip>
-  );
-
   return (
     <Box rounded="lg" overflowY="hidden">
       <Panel isCollapsible={false} p={0} className="TryItPanel">
-        <Panel.Titlebar rightComponent={servers.length > 1 ? serversSelect : serverDescription} bg="canvas-300">
-          <div role="heading" className="sl-font-bold">
+        <Panel.Titlebar rightComponent={servers.length > 1 ? serversSelect : undefined} bg="canvas-300">
+          <Box role="heading" fontWeight="bold">
             <Text color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
               {httpOperation.method.toUpperCase()}
             </Text>
             <Text ml={2}>{httpOperation.path}</Text>
-          </div>
+          </Box>
         </Panel.Titlebar>
+
         <TryItAuth
           onChange={setOperationAuthValue}
           operationSecurityScheme={httpOperation.security ?? []}
           value={operationAuthValue}
         />
+
         {allParameters.length > 0 && (
           <OperationParameters
             parameters={allParameters}
@@ -243,6 +237,7 @@ export const TryIt: React.FC<TryItProps> = ({
             validate={validateParameters}
           />
         )}
+
         {formDataState.isFormDataBody ? (
           <FormDataBody
             specification={formDataState.bodySpecification}
@@ -256,6 +251,7 @@ export const TryIt: React.FC<TryItProps> = ({
             onChange={setTextRequestBody}
           />
         ) : null}
+
         <Panel.Content className="SendButtonHolder">
           <Flex alignItems="center">
             <Button appearance="primary" loading={loading} disabled={loading} onPress={handleClick} size="sm">
@@ -266,6 +262,7 @@ export const TryIt: React.FC<TryItProps> = ({
               <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
             )}
           </Flex>
+
           {validateParameters && hasRequiredButEmptyParameters && (
             <Box mt={4} color="danger-light" fontSize="sm">
               <Icon icon={faExclamationTriangle} className="sl-mr-1" />
@@ -274,6 +271,7 @@ export const TryIt: React.FC<TryItProps> = ({
           )}
         </Panel.Content>
       </Panel>
+
       {requestData && embeddedInMd && <RequestSamples request={requestData} embeddedInMd />}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}

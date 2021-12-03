@@ -1,16 +1,15 @@
-import { Box, Text } from '@stoplight/mosaic';
+import { VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
-import { HttpMethodColors } from '../../../constants';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { SectionTitle, SubSectionPanel } from '../Sections';
-import { Body } from './Body';
+import { SectionSubtitle, SectionTitle, SubSectionPanel } from '../Sections';
+import { Body, isBodyEmpty } from './Body';
 import { Parameters } from './Parameters';
 
 interface IRequestProps {
@@ -20,8 +19,6 @@ interface IRequestProps {
 
 export const Request: React.FunctionComponent<IRequestProps> = ({
   operation: {
-    path,
-    method,
     request,
     request: {
       path: pathParams = [],
@@ -36,49 +33,60 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
 }) => {
   if (!request || typeof request !== 'object') return null;
 
+  const bodyIsEmpty = isBodyEmpty(body);
   const securitySchemes = flatten(security);
-
-  const pathParamBlock = (
-    <Box>
-      <Text textTransform="uppercase" mr={1} color={HttpMethodColors[method]}>
-        {method}
-      </Text>{' '}
-      {path}
-    </Box>
+  const hasRequestData = Boolean(
+    securitySchemes.length ||
+      pathParams.length ||
+      queryParams.length ||
+      headerParams.length ||
+      cookieParams.length ||
+      !bodyIsEmpty,
   );
+  if (!hasRequestData) return null;
 
   return (
-    <Box>
+    <VStack spacing={8}>
       <SectionTitle title="Request" />
 
-      {securitySchemes.map((scheme, i) => (
-        <SecurityPanel key={i} scheme={scheme} includeKey={shouldIncludeKey(securitySchemes, scheme.type)} />
-      ))}
+      {securitySchemes.length > 0 && (
+        <VStack spacing={3}>
+          {securitySchemes.map((scheme, i) => (
+            <SecurityPanel key={i} scheme={scheme} includeKey={shouldIncludeKey(securitySchemes, scheme.type)} />
+          ))}
+        </VStack>
+      )}
 
-      <SubSectionPanel title={pathParamBlock} hasContent={pathParams.length > 0}>
-        <Parameters parameterType="path" parameters={pathParams} />
-      </SubSectionPanel>
+      {pathParams.length > 0 && (
+        <VStack spacing={5}>
+          <SectionSubtitle title="Path Parameters" />
+          <Parameters parameterType="path" parameters={pathParams} />
+        </VStack>
+      )}
 
       {queryParams.length > 0 && (
-        <SubSectionPanel title="Query">
+        <VStack spacing={5}>
+          <SectionSubtitle title="Query Parameters" />
           <Parameters parameterType="query" parameters={queryParams} />
-        </SubSectionPanel>
+        </VStack>
       )}
 
       {headerParams.length > 0 && (
-        <SubSectionPanel title="Headers">
+        <VStack spacing={5}>
+          <SectionSubtitle title="Headers" id="request-headers" />
           <Parameters parameterType="header" parameters={headerParams} />
-        </SubSectionPanel>
+        </VStack>
       )}
 
       {cookieParams.length > 0 && (
-        <SubSectionPanel title="Cookie">
+        <VStack spacing={5}>
+          <SectionSubtitle title="Cookies" id="request-cookies" />
           <Parameters parameterType="cookie" parameters={cookieParams} />
-        </SubSectionPanel>
+        </VStack>
       )}
 
       {body && <Body onChange={onChange} body={body} />}
-    </Box>
+    </VStack>
   );
 };
 Request.displayName = 'HttpOperation.Request';

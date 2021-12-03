@@ -13,7 +13,6 @@
     "demo",
     "packages/*"
   ],
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.12.17",
     "@babel/plugin-syntax-object-rest-spread": "7.8.3",

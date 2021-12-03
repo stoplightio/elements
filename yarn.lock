@@ -3567,9 +3567,9 @@
     urijs "~1.19.2"
 
 "@stoplight/json-schema-merge-allof@^0.7.7":
-  version "0.7.7"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.7.tgz#d79ca8729aa5d6420e40cc545b1854b518b9240f"
-  integrity sha512-3QrZ+2hhTvsPAjl8HD9rQI3MPHSCl/kCf0rEkKM4YjLumDsfX1TSrhESDIt4lSzpSdNyT2oXSJx0ADVGE2gTyA==
+  version "0.7.8"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-merge-allof/-/json-schema-merge-allof-0.7.8.tgz#7efe5e0086dff433eb011f617e82f7295c3de061"
+  integrity sha512-JTDt6GYpCWQSb7+UW1P91IAp/pcLWis0mmEzWVFcLsrNgtUYK7JLtYYz0ZPSR4QVL0fJ0YQejM+MPq5iNDFO4g==
   dependencies:
     compute-lcm "^1.1.0"
     json-schema-compare "^0.2.2"
@@ -3596,10 +3596,10 @@
     "@types/json-schema" "^7.0.7"
     json-pointer "^0.6.1"
 
-"@stoplight/json-schema-tree@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-2.1.2.tgz#8896de9ac86a50349b1b18680dd72dfd18fe3f87"
-  integrity sha512-vku6rfILxyQOYlWT2pd+mAQuoA4apzvzGrZY9CEhgu0U2dvuZwtYMAcaSN4TL+UuiJdUsD345QrXNv4gxcabVg==
+"@stoplight/json-schema-tree@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-2.1.3.tgz#ecf6d855779e8c1644b257a41c13aae3c159d6e4"
+  integrity sha512-x9GliJgJ0uyfBng7OffqfHVA7BY4IYk6rZIS7F4oTklAUx1+xv0VQBK6i73AcNs4L7aCuQcwpiHlZuiukpkU2w==
   dependencies:
     "@stoplight/json" "^3.12.0"
     "@stoplight/json-schema-merge-allof" "^0.7.7"
@@ -3607,20 +3607,21 @@
     "@types/json-schema" "^7.0.7"
     magic-error "0.0.1"
 
-"@stoplight/json-schema-viewer@^4.3.6":
-  version "4.3.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.3.6.tgz#a555d9baa4ba239a37038f5fac87a30150afd2a3"
-  integrity sha512-XP3i4T9389O5NmJgxxrknlg8z/IJZgfSSSbMEzTk7EJrsIM7h2NcRmk+obmEJOQIKhZYePCSIwOF1hlKaX/DTQ==
+"@stoplight/json-schema-viewer@^4.4.1":
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.4.1.tgz#35275304e963145c938f2dd8fc24dbdd2ecc6060"
+  integrity sha512-TcpoIp6FxsH2H+0npG7vmVGFH2bRaHmA9QMLmKYqaUYhDYAZG4JOcWRXAyke2yKvtxC11vSNnA8OCao0RZmWsQ==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
-    "@stoplight/json" "^3.10.0"
-    "@stoplight/json-schema-tree" "^2.1.2"
+    "@stoplight/json" "^3.17.1"
+    "@stoplight/json-schema-tree" "^2.1.3"
     "@stoplight/react-error-boundary" "^2.0.0"
     "@types/json-schema" "^7.0.7"
     classnames "^2.2.6"
+    jotai "^1.4.5"
     lodash "^4.17.19"
 
-"@stoplight/json@^3.10.0", "@stoplight/json@^3.10.2", "@stoplight/json@^3.12.0":
+"@stoplight/json@^3.10.0", "@stoplight/json@^3.10.2", "@stoplight/json@^3.12.0", "@stoplight/json@^3.17.1":
   version "3.17.1"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.17.1.tgz#17aa8f17c58678649cd0d345fb184e0bea16f8df"
   integrity sha512-OQbjaPU9/VPQYa3zEfN82vjXu3vWv/537Ei7TX/xYLMPdpdBI/mCyThdZAG4SN1t3iho2dxIKpTVObuCTTgBvA==
@@ -3678,10 +3679,10 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.12.4":
-  version "1.12.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.12.5.tgz#2caf0081c558250463d10fd07d1363b9812c8fb1"
-  integrity sha512-597tWhJNUUBN9YV9mKyyjvl63qAxob8RfcbXuWJQ4QW6HhuaOCDVvBRqdBIZMW+99UPu76w8S+35SLbDZogSUA==
+"@stoplight/mosaic-code-editor@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.14.0.tgz#03b8eec6c089a4eb19971e30c385ee18e48e4a87"
+  integrity sha512-opVB/YAS5HRcK/QIFbaX8nrNYBLcW0kEqfavZkogBMrfdkvlI6VBmtTIWipsucn+d1KqtQvvrzFaLcoefTGPXg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3691,23 +3692,25 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.12.5"
-    "@stoplight/mosaic-code-viewer" "1.12.5"
+    "@stoplight/mosaic" "1.14.0"
+    "@stoplight/mosaic-code-viewer" "1.14.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
     lodash.get "^4.4.2"
+    nano-memoize "^1.2.1"
     polished "^4.1.3"
     prism-react-renderer "^1.2.1"
     prismjs "^1.23.0"
+    react-fast-compare "^3.2.0"
     ts-keycode-enum "^1.0.6"
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.12.5", "@stoplight/mosaic-code-viewer@^1.12.4":
-  version "1.12.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.12.5.tgz#54759c5575b41134538d1b59156faf5f6603b9f7"
-  integrity sha512-n5Uu8+pBJMr5wXy9lb5oKSj6EVYOspMWvmJEyboe+sKWs/tzC7z3j9s7nH6jeZ6SkIlIdfQv97ZGiH054+GuJQ==
+"@stoplight/mosaic-code-viewer@1.14.0", "@stoplight/mosaic-code-viewer@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.14.0.tgz#1145ee6a11d4e9439b2334a8b78fea96c75b9e93"
+  integrity sha512-di7KuMYZ92pxMAEECIioYFEQ+YTI6+jgGeImtm0GKd17NOh/HaxsV5MY9xuZTohoqaEZ8oFmroHCG9QFcBaZKg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3717,22 +3720,24 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.12.5"
+    "@stoplight/mosaic" "1.14.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
     lodash.get "^4.4.2"
+    nano-memoize "^1.2.1"
     polished "^4.1.3"
     prism-react-renderer "^1.2.1"
     prismjs "^1.23.0"
+    react-fast-compare "^3.2.0"
     ts-keycode-enum "^1.0.6"
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.12.5", "@stoplight/mosaic@^1.12.4", "@stoplight/mosaic@^1.8.2":
-  version "1.12.5"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.12.5.tgz#5ed6a4af469c41093f5d7c5b57d1457c904bc398"
-  integrity sha512-V6OKKxsjNdp691zi1j6UX83JZ2GSQc/s2svNbFywne0zqS46KaRJgfV+Z4PBmcYo8bB5FFPpXX5u9DtreY6lCA==
+"@stoplight/mosaic@1.14.0", "@stoplight/mosaic@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.14.0.tgz#97ccd631c1694ad013cf6f3c14101cdc1ad57578"
+  integrity sha512-xoHD4M9gZsDZwX9llTF0M59R1SoC//EAXQdG8DMa012bxcXtwbyEwCz4H4eE+gf7egOdXAvYHaW1oavuBtgmVg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3750,7 +3755,9 @@
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
     lodash.get "^4.4.2"
+    nano-memoize "^1.2.1"
     polished "^4.1.3"
+    react-fast-compare "^3.2.0"
     ts-keycode-enum "^1.0.6"
     tslib "^2.1.0"
     zustand "^3.5.2"
@@ -13764,6 +13771,11 @@ jotai@1.3.9:
   resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.3.9.tgz#d65a7069b949a3a74f9e069d3e3f06f99be02817"
   integrity sha512-b6DvH9gf+7TfjaboCO54g+C0yhaakIaUBtjLf0dk1p15FWCzNw/93sezdXy9cCaZ8qcEdMLJcjBwQlORmIq29g==
 
+jotai@^1.4.5:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.4.6.tgz#ab2d271610a3d55f17eb61d01f3bff4a0c0f8784"
+  integrity sha512-7czbkpovyzeD51BFbidDRH/Dmx2bXfz7ygd4RRwx8jxsvAJHrRjxZ1bNw1yloIhljEFkrLZd3b232kQc7HTI+A==
+
 js-sha3@0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
@@ -15938,6 +15950,11 @@ nan@^2.12.1:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.15.0.tgz#3f34a473ff18e15c1b5626b62903b5ad6e665fee"
   integrity sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==
+
+nano-memoize@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/nano-memoize/-/nano-memoize-1.2.1.tgz#21091318021c81374a525349a8cd0ad712122077"
+  integrity sha512-ANfJ0QFhLzv9BZV8tHxwaDClqr+U8yY65hZA+slbgJrx+ePnHtlY92F2ZJInkkQWUUR71NzCEHBshKCHJnNyaQ==
 
 nano-time@1.0.0:
   version "1.0.0"
