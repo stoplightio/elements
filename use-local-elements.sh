@@ -1,6 +1,7 @@
 #!/bin/bash
+example=$1
 
-cd ./examples/react-cra || return
+cd ./examples-dev/$example
 
 npx json -I -f package.json -e "this.resolutions={
 \"@stoplight/elements\": \"file:../../packages/elements/dist\",
