@@ -652,7 +652,7 @@ describe('TryIt', () => {
 
       // select regular server and send
       userEvent.click(serversButton);
-      let server1 = screen.getByRole('menuitemradio', { name: /server 1/i });
+      let server1 = screen.getByRole('menuitemradio', { name: /live server/i });
       act(() => userEvent.click(server1));
 
       clickSend();

@@ -215,11 +215,11 @@ export const TryIt: React.FC<TryItProps> = ({
   };
 
   const isOnlySendButton =
-    !operationAuthValue && !allParameters.length && !formDataState.isFormDataBody && !mediaTypeContent;
+    !httpOperation.security?.length && !allParameters.length && !formDataState.isFormDataBody && !mediaTypeContent;
 
   const tryItPanelContents = (
     <>
-      {operationAuthValue && (
+      {httpOperation.security?.length && (
         <TryItAuth
           onChange={setOperationAuthValue}
           operationSecurityScheme={httpOperation.security ?? []}
