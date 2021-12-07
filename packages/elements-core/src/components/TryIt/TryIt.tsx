@@ -219,13 +219,13 @@ export const TryIt: React.FC<TryItProps> = ({
 
   const tryItPanelContents = (
     <>
-      {httpOperation.security?.length && (
+      {httpOperation.security?.length ? (
         <TryItAuth
           onChange={setOperationAuthValue}
           operationSecurityScheme={httpOperation.security ?? []}
           value={operationAuthValue}
         />
-      )}
+      ) : null}
 
       {allParameters.length > 0 && (
         <OperationParameters
