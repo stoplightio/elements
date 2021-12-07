@@ -41,7 +41,8 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
           {sidebar}
         </Flex>
 
-        <Box ref={scrollRef} bg="canvas" px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
+        {/* The Headings component won't stick unless we remove overflow: https://github.com/w3c/csswg-drafts/issues/865 */}
+        <Box ref={scrollRef} bg="canvas" px={24} flex={1} w="full">
           <Box style={{ maxWidth: `${maxContentWidth - sidebarWidth}px` }} py={16}>
             {children}
           </Box>
