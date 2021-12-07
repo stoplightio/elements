@@ -3,14 +3,27 @@ import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
 
-export const getServersToDisplay = (originalServers: IServer[]): IServer[] => {
-  return originalServers
-    .map((server, i) => ({
-      ...server,
-      url: getServerUrlWithDefaultValues(server),
-      description: server.description || `Server ${i + 1}`,
-    }))
+export const getServersToDisplay = (originalServers: IServer[], mockUrl?: string): IServer[] => {
+  const servers = originalServers
+    .map((server, i) => {
+      const fallbackDescription = originalServers.length === 1 ? 'Live Server' : `Server ${i + 1}`;
+
+      return {
+        ...server,
+        url: getServerUrlWithDefaultValues(server),
+        description: server.description || fallbackDescription,
+      };
+    })
     .filter(server => isProperUrl(server.url));
+
+  if (mockUrl) {
+    servers.push({
+      description: 'Mock Server',
+      url: mockUrl,
+    });
+  }
+
+  return servers;
 };
 
 export const getServerUrlWithDefaultValues = (server: IServer): string => {

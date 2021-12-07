@@ -136,7 +136,7 @@ describe('MarkdownViewer', () => {
         </MarkdownComponentsProvider>,
       );
 
-      expect(screen.getByRole('heading', { name: 'GET /gifs/search' })).toBeInTheDocument();
+      expect(screen.getByText('http://api.giphy.com/v1/gifs/search')).toBeInTheDocument();
       expect(screen.getByText('api_key')).toBeInTheDocument();
 
       unmount();

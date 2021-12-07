@@ -4,12 +4,8 @@ import {
   RoutingProps,
   SidebarLayout,
   useRouter,
-  withMosaicProvider,
-  withPersistenceBoundary,
-  withQueryClientProvider,
   withStyles,
 } from '@stoplight/elements-core';
-import { flow } from 'lodash';
 import * as React from 'react';
 import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
 
@@ -208,9 +204,4 @@ const StoplightProjectRouter = ({
 /**
  * The StoplightProject component displays a traditional documentation UI for an existing Stoplight Project.
  */
-export const StoplightProject = flow(
-  withStyles,
-  withPersistenceBoundary,
-  withMosaicProvider,
-  withQueryClientProvider,
-)(StoplightProjectRouter);
+export const StoplightProject = withStyles(StoplightProjectRouter);
