@@ -4,7 +4,7 @@ import { IServer } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import * as React from 'react';
 
-import { chosenServerAtom } from '../state';
+import { chosenServerAtom } from '../chosenServer';
 
 export type ServersDropdownProps = {
   servers: IServer[];
