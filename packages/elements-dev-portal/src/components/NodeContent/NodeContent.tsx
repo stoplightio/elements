@@ -1,10 +1,4 @@
-import {
-  CustomLinkComponent,
-  Docs,
-  MarkdownComponentsProvider,
-  MockingProvider,
-  PersistenceContextProvider,
-} from '@stoplight/elements-core';
+import { CustomLinkComponent, Docs, MarkdownComponentsProvider, MockingProvider } from '@stoplight/elements-core';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
@@ -64,39 +58,37 @@ export const NodeContent = ({
   tryItCorsProxy,
 }: NodeContentProps) => {
   return (
-    <PersistenceContextProvider>
-      <NodeLinkContext.Provider value={[node, Link]}>
-        <MarkdownComponentsProvider value={{ a: LinkComponent }}>
-          <MockingProvider mockUrl={node.links.mock_url} hideMocking={hideMocking}>
-            <Docs
-              nodeType={node.type as NodeType}
-              nodeData={node.data}
-              nodeTitle={node.title}
-              layoutOptions={{
-                hideTryIt: hideTryIt,
-                hideTryItPanel: hideTryItPanel,
-                hideExport: hideExport || node.links.export_url === undefined,
-              }}
-              useNodeForRefResolving
-              tryItCorsProxy={tryItCorsProxy}
-              exportProps={
-                [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)
-                  ? {
-                      original: {
-                        href: node.links.export_url,
-                      },
-                      bundled: {
-                        href: getBundledUrl(node.links.export_url),
-                      },
-                    }
-                  : undefined
-              }
-              tryItCredentialsPolicy={tryItCredentialsPolicy}
-            />
-          </MockingProvider>
-        </MarkdownComponentsProvider>
-      </NodeLinkContext.Provider>
-    </PersistenceContextProvider>
+    <NodeLinkContext.Provider value={[node, Link]}>
+      <MarkdownComponentsProvider value={{ a: LinkComponent }}>
+        <MockingProvider mockUrl={node.links.mock_url} hideMocking={hideMocking}>
+          <Docs
+            nodeType={node.type as NodeType}
+            nodeData={node.data}
+            nodeTitle={node.title}
+            layoutOptions={{
+              hideTryIt: hideTryIt,
+              hideTryItPanel: hideTryItPanel,
+              hideExport: hideExport || node.links.export_url === undefined,
+            }}
+            useNodeForRefResolving
+            tryItCorsProxy={tryItCorsProxy}
+            exportProps={
+              [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)
+                ? {
+                    original: {
+                      href: node.links.export_url,
+                    },
+                    bundled: {
+                      href: getBundledUrl(node.links.export_url),
+                    },
+                  }
+                : undefined
+            }
+            tryItCredentialsPolicy={tryItCredentialsPolicy}
+          />
+        </MockingProvider>
+      </MarkdownComponentsProvider>
+    </NodeLinkContext.Provider>
   );
 };
 

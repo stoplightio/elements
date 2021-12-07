@@ -6,7 +6,7 @@ import { getDisplayName } from '../hoc/utils';
 /**
  * Provides a context for storing jotai atom values.
  */
-export const PersistenceContextProvider: React.FC = JotaiProvider;
+export const PersistenceContextProvider = JotaiProvider;
 
 /**
  * HOC that Wraps `WrappedComponent` in a `PersistenceContextProvider`.
