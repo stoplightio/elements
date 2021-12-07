@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
-import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
@@ -653,7 +653,7 @@ describe('TryIt', () => {
       // select regular server and send
       userEvent.click(serversButton);
       let server1 = screen.getByRole('menuitemradio', { name: /live server/i });
-      act(() => userEvent.click(server1));
+      userEvent.click(server1);
 
       clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));

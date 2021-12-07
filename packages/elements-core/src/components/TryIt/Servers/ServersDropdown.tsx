@@ -25,7 +25,7 @@ export const ServersDropdown = ({ servers }: ServersDropdownProps) => {
       children: [
         ...servers.map((server, i) => ({
           id: server.url,
-          title: server.name || server.description || `Server ${i + 1}`,
+          title: server.name || server.description,
           description: server.name ? server.description || server.url : server.description ? server.url : undefined,
           value: server.url,
         })),

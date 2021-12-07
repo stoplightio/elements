@@ -99,14 +99,7 @@ export const TryIt: React.FC<TryItProps> = ({
   const [operationAuthValue, setOperationAuthValue] = usePersistedSecuritySchemeWithValues();
 
   const servers = React.useMemo(() => {
-    const toDisplay = getServersToDisplay(httpOperation.servers || defaultServers);
-
-    if (mockUrl) {
-      toDisplay.push({
-        name: 'Mock Server',
-        url: mockUrl,
-      });
-    }
+    const toDisplay = getServersToDisplay(httpOperation.servers || defaultServers, mockUrl);
 
     return toDisplay;
   }, [httpOperation.servers, mockUrl]);
