@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: npm
     directory: /examples/angular
     schedule:
-      interval: weekly
+      interval: monthly
       day: monday
       time: '03:00'
     commit-message:
