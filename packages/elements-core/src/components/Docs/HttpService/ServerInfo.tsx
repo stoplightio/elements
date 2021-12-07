@@ -1,5 +1,5 @@
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
-import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard } from '@stoplight/mosaic';
+import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
 import { IServer } from '@stoplight/types';
 import * as React from 'react';
 
@@ -15,8 +15,9 @@ interface ServerInfoProps {
 export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   const mocking = React.useContext(MockingContext);
   const showMocking = !mocking.hideMocking && mockUrl && isProperUrl(mockUrl);
+  const $mockUrl = showMocking ? mockUrl || mocking.mockUrl : undefined;
 
-  const serversToDisplay = getServersToDisplay(servers);
+  const serversToDisplay = getServersToDisplay(servers, $mockUrl);
 
   if (!showMocking && serversToDisplay.length === 0) {
     return null;
@@ -28,15 +29,11 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Box overflowX="auto">
           <Panel.Content w="full" className="sl-flex sl-flex-col">
-            {serversToDisplay.map((server, index) => (
-              <ServerUrl {...server} key={index} />
-            ))}
-            {showMocking && (
-              <>
-                <Box borderT={2} pt={2} borderColor="light" w="full" />
-                <ServerUrl description="Mock Server" url={mockUrl || ''} marginBottom={false} />
-              </>
-            )}
+            <VStack spacing={1} divider>
+              {serversToDisplay.map((server, index) => (
+                <ServerUrl {...server} key={index} />
+              ))}
+            </VStack>
           </Panel.Content>
         </Box>
       </Panel>
@@ -48,7 +45,7 @@ const ServerUrl = ({ description, url, marginBottom = true }: IServer & { margin
   const { onCopy, hasCopied } = useClipboard(url);
 
   return (
-    <Box whitespace="nowrap" mb={marginBottom ? 2 : 0}>
+    <Box whitespace="nowrap">
       <Text pr={2} fontWeight="bold">
         {description}:
       </Text>
