@@ -214,13 +214,18 @@ export const TryIt: React.FC<TryItProps> = ({
     }
   };
 
+  const isOnlySendButton =
+    !operationAuthValue && !allParameters.length && !formDataState.isFormDataBody && !mediaTypeContent;
+
   const tryItPanelContents = (
     <>
-      <TryItAuth
-        onChange={setOperationAuthValue}
-        operationSecurityScheme={httpOperation.security ?? []}
-        value={operationAuthValue}
-      />
+      {operationAuthValue && (
+        <TryItAuth
+          onChange={setOperationAuthValue}
+          operationSecurityScheme={httpOperation.security ?? []}
+          value={operationAuthValue}
+        />
+      )}
 
       {allParameters.length > 0 && (
         <OperationParameters
@@ -245,7 +250,7 @@ export const TryIt: React.FC<TryItProps> = ({
         />
       ) : null}
 
-      <Panel.Content className="SendButtonHolder">
+      <Panel.Content className="SendButtonHolder" mt={4} pt={!isOnlySendButton && !embeddedInMd ? 0 : undefined}>
         <HStack alignItems="center" spacing={2}>
           <Button appearance="primary" loading={loading} disabled={loading} onPress={handleSendRequest} size="sm">
             Send API Request
@@ -288,7 +293,7 @@ export const TryIt: React.FC<TryItProps> = ({
     );
   } else {
     tryItPanelElem = (
-      <Box className="TryItPanel" bg="canvas-100">
+      <Box className="TryItPanel" bg="canvas-100" rounded="lg">
         {tryItPanelContents}
       </Box>
     );
