@@ -1,3 +1,5 @@
-Before releasing a version of elements, read the contributing docs: https://github.com/stoplightio/elements/blob/main/CONTRIBUTING.md#releasing-elements
+# ELements Release PR Template
 
-- [ ] Check this box to acknowledge that you have read the docs!
+Before releasing a new version of elements: (check the boxes to acknowledge you've followed this template)
+
+- [ ] [Read the release section of `CONTRIBUTING.md`](../../CONTRIBUTING.md#releasing-elements)
