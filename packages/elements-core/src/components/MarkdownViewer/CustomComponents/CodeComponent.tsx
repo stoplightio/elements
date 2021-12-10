@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+import { PersistenceContextProvider } from '@stoplight/elements-core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
@@ -73,7 +75,9 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
     }
 
     return (
-      <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} embeddedInMd />
+      <PersistenceContextProvider>
+        <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} embeddedInMd />
+      </PersistenceContextProvider>
     );
   }
 
