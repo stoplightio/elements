@@ -40,5 +40,7 @@ export const getServerUrlWithDefaultValues = (server: IServer): string => {
     url = url.absoluteTo(window.location.origin);
   }
 
-  return url.toString();
+  const stringifiedUrl = url.toString();
+
+  return stringifiedUrl.endsWith('/') ? stringifiedUrl.slice(0, -1) : stringifiedUrl;
 };
