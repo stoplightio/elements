@@ -118,7 +118,7 @@ export const TryIt: React.FC<TryItProps> = ({
     const exists = currentUrl && servers.find(s => s.url === currentUrl);
     if (!exists) {
       setChosenServer(firstServer);
-    } else if (exists.url !== chosenServer.url) {
+    } else if (exists.url !== currentUrl) {
       setChosenServer(exists);
     }
   }, [servers, firstServer, chosenServer, setChosenServer]);
