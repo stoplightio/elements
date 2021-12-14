@@ -103,7 +103,6 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               schema={getOriginalObject(schema)}
               resolveRef={refResolver}
               viewMode="read"
-              hideExamples
               parentCrumbs={['responses', response.code]}
               renderRootTreeLines
             />
