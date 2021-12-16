@@ -1,28 +1,54 @@
 ---
-title: Stoplight Flavored Markdown
+title: Using the TODO API
 ---
 
+1. Create a TODO
+
 ```json http
 {
-  "method": "get",
-  "url": "https://todos.stoplight.io/todos"
+  "method": "post",
+  "url": "/todos",
+  "baseUrl": "https://todos.stoplight.io",
+  "headers": {},
+  "query": {
+    "api_key": ["123"],
+  },
+  "body": {
+    "name": "Fetch this TODO",
+    "completed": false
+  }
 }
 ```
 
-Yo, yo
+2. Use the "id" from the previous response to fetch the TODO
+
 
 ```json http
 {
   "method": "get",
-  "url": "https://amazing.website.com/todos"
+  "url": "/todos/{id}",
+  "baseUrl": "https://todos.stoplight.io",
+  "headers": {},
+  "query": {
+    "api_key": ["123"],
+  }
 }
 ```
 
-Yo, yo, yo
+3. Update the TODO to be completed
 
 ```json http
 {
-  "method": "get",
-  "url": "https://google.com/some-url"
+  "method": "put",
+  "url": "/todos/{id}",
+  "baseUrl": "https://todos.stoplight.io",
+  "headers": {},
+  "query": {
+    "api_key": ["123"],
+  },
+  "body": {
+    "name": "[Completed] Fetch this TODO",
+    "completed": true
+  }
 }
 ```

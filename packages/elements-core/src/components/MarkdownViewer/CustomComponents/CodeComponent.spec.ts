@@ -58,6 +58,7 @@ describe('parseHttpRequest', () => {
       baseUrl: 'http://test',
       query: {
         limit: ['10'],
+        skip: [],
       },
       headers: {
         apikey: '123',
@@ -73,8 +74,11 @@ describe('parseHttpRequest', () => {
       path: '/todos/{id}',
       servers: [{ url: 'http://test' }],
       request: {
-        query: [{ name: 'limit', style: HttpParamStyles.Form, schema: { default: '10' } }],
-        headers: [{ name: 'apikey', style: HttpParamStyles.Simple, schema: { default: '123' } }],
+        query: [
+          { name: 'limit', style: HttpParamStyles.Form, schema: { default: '10' }, required: true },
+          { name: 'skip', style: HttpParamStyles.Form, schema: {}, required: false },
+        ],
+        headers: [{ name: 'apikey', style: HttpParamStyles.Simple, schema: { default: '123' }, required: true }],
         path: [{ name: 'id', style: HttpParamStyles.Simple, required: true }],
         body: { contents: [{ mediaType: 'application/json', schema: { default: '{}' } }] },
       },
