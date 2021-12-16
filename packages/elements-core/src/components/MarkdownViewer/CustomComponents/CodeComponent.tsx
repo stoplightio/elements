@@ -76,7 +76,10 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
 
     return (
       <PersistenceContextProvider>
-        <TryIt httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)} embeddedInMd />
+        <TryIt
+          httpOperation={isPartialHttpRequest(parsedValue) ? parseHttpRequest(parsedValue) : parsedValue}
+          embeddedInMd
+        />
       </PersistenceContextProvider>
     );
   }
@@ -94,15 +97,20 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
     path: uri.is('absolute') ? uri.path() : data.url,
     servers: [{ url: uri.is('absolute') ? uri.origin() : data.baseUrl || '' }],
     request: {
-      query: Object.entries(data.query || {}).map(([key, value]) => ({
-        name: key,
-        style: HttpParamStyles.Form,
-        schema: { default: Array.isArray(value) && value.length > 0 ? value[0] : value },
-      })),
+      query: Object.entries(data.query || {}).map(([key, value]) => {
+        const defaultVal = Array.isArray(value) && value.length > 0 ? value[0] : value;
+        return {
+          name: key,
+          style: HttpParamStyles.Form,
+          schema: { default: defaultVal },
+          required: isHttpRequestParamRequired(defaultVal),
+        };
+      }),
       headers: Object.entries(data.headers || {}).map(([key, value]) => ({
         name: key,
         style: HttpParamStyles.Simple,
         schema: { default: value },
+        required: isHttpRequestParamRequired(value),
       })),
       path: pathParam?.map(name => ({
         name,
@@ -110,9 +118,22 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
         required: true,
       })),
       ...(data.body
-        ? { body: { contents: [{ mediaType: 'application/json', schema: { default: data.body } }] } }
+        ? {
+            body: {
+              contents: [
+                {
+                  mediaType: 'application/json',
+                  schema: { default: data.body },
+                },
+              ],
+            },
+          }
         : null),
     },
     responses: [],
   };
+}
+
+function isHttpRequestParamRequired(value: unknown) {
+  return typeof value !== 'undefined';
 }
