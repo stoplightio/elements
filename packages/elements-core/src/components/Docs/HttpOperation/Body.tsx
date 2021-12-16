@@ -60,7 +60,6 @@ export const Body = ({ body, onChange }: BodyProps) => {
           resolveRef={refResolver}
           schema={getOriginalObject(schema)}
           viewMode="write"
-          hideExamples
           renderRootTreeLines
         />
       )}
