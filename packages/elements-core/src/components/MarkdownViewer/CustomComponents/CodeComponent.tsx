@@ -77,7 +77,7 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
     return (
       <PersistenceContextProvider>
         <TryIt
-          httpOperation={isPartialHttpRequest(parsedValue) ? parseHttpRequest(parsedValue) : parsedValue}
+          httpOperation={isHttpOperation(parsedValue) ? parsedValue : parseHttpRequest(parsedValue)}
           embeddedInMd
         />
       </PersistenceContextProvider>
