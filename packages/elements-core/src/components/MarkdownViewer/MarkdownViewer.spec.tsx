@@ -137,7 +137,7 @@ describe('MarkdownViewer', () => {
       );
 
       expect(screen.getByText('http://api.giphy.com/v1/gifs/search')).toBeInTheDocument();
-      expect(screen.getByText('api_key')).toBeInTheDocument();
+      expect(screen.getByText('api_key*')).toBeInTheDocument();
 
       unmount();
     });

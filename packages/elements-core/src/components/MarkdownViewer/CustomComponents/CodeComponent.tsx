@@ -98,7 +98,7 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
     servers: [{ url: uri.is('absolute') ? uri.origin() : data.baseUrl || '' }],
     request: {
       query: Object.entries(data.query || {}).map(([key, value]) => {
-        const defaultVal = Array.isArray(value) && value.length > 0 ? value[0] : value;
+        const defaultVal = Array.isArray(value) ? value[0] : value;
         return {
           name: key,
           style: HttpParamStyles.Form,
