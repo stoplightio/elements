@@ -11,7 +11,7 @@ const booleanOptions = [
 ];
 
 function enumOptions(enumValues: JSONSchema7Type[], required?: boolean) {
-  const options = map(enumValues, v => ({ value: Number.isNaN(Number(v)) ? String(v) : Number(v) }));
+  const options = map(enumValues, v => ({ value: typeof v === 'number' ? v : String(v) }));
   return required ? options : [{ label: 'Not Set', value: '' }, ...options];
 }
 
