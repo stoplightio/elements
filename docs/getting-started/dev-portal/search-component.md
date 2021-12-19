@@ -1,10 +1,10 @@
-# search-component
+# Elements Dev Portal Search
 
 Once youve [installed](https://github.com/stoplightio/elements) the elements-dev-portal package, you can use the Search component to offer an autocomplete search.
 
-## JavaScript
+## Usage in React
 
-If you'd like to use this for React (and React-based tools like Gatsby) then use the `Search` JavaScript component. Below is an example of one way to implement it with an input:
+If you'd like to use this for React (and React-based tools like Gatsby) then use the `Search` React component. Below is an example of one way to implement it with an input:
 
 <!-- title: Search.tsx -->
 
@@ -52,6 +52,7 @@ export const Search = ({ projectIds }: SearchProps) => {
   );
 };
 ```
+
 Here's an example of what that would look like in a website's navigation bar. All you'll need to include is any collection of `projectIds` that the search should traverse.
 
 <!-- title: Navigation.tsx -->

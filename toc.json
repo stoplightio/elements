@@ -6,48 +6,42 @@
       "uri": "docs/introduction.md"
     },
     {
+      "type": "item",
+      "title": "Elements vs Elements Dev Portal",
+      "uri": "docs/elements-vs-dev-portal.md"
+    },
+    {
       "type": "divider",
       "title": "Getting Started"
     },
     {
       "type": "group",
-      "title": "Usage",
+      "title": "Elements",
       "items": [
         {
           "type": "item",
-          "title": "Web Component",
-          "uri": "docs/getting-started/usage/web-component.md"
+          "title": "Introduction to Elements",
+          "uri": "docs/getting-started/elements/introduction.md"
         },
         {
           "type": "item",
-          "title": "Command Line Interface",
-          "uri": "docs/getting-started/usage/cli.md"
-        }
-      ]
-    },
-    {
-      "type": "group",
-      "title": "Integrations",
-      "items": [
-        {
-          "type": "item",
-          "title": "Using Elements in Angular",
-          "uri": "docs/getting-started/integrations/angular.md"
+          "title": "Usage with React",
+          "uri": "docs/getting-started/integrations/react.md"
         },
         {
           "type": "item",
-          "title": "Using Elements in GatsbyJS",
+          "title": "Usage with GatsbyJS",
           "uri": "docs/getting-started/integrations/gatsby.md"
         },
         {
           "type": "item",
-          "title": "Using Elements in NextJS",
-          "uri": "docs/getting-started/integrations/next.md"
+          "title": "Usage with HTML",
+          "uri": "docs/getting-started/elements/html.md"
         },
         {
           "type": "item",
-          "title": "Using Elements in React",
-          "uri": "docs/getting-started/integrations/react.md"
+          "title": "Usage with Angular",
+          "uri": "docs/getting-started/elements/angular.md"
         }
       ]
     },
@@ -62,22 +56,22 @@
         },
         {
           "type": "item",
-          "title": "Elements Dev Portal in React",
+          "title": "Usage with React",
           "uri": "docs/getting-started/dev-portal/react.md"
         },
         {
           "type": "item",
-          "title": "Elements Dev Portal in GatsbyJS",
+          "title": "Usage with GatsbyJS",
           "uri": "docs/getting-started/dev-portal/gatsby.md"
         },
         {
           "type": "item",
-          "title": "Web Component",
-          "uri": "docs/getting-started/dev-portal/web-component.md"
+          "title": "Usage with HTML",
+          "uri": "docs/getting-started/dev-portal/html.md"
         },
         {
           "type": "item",
-          "title": "Search Component",
+          "title": "Elements Dev Portal Search",
           "uri": "docs/getting-started/dev-portal/search-component.md"
         }
       ]

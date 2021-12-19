@@ -1,8 +1,4 @@
-# Setup
-
-
-
-## Web Component
+# Elements Dev Portal in HTML
 
 Setting up Elements Dev Portal is a case of loading up some JavaScript and CSS and embedding a Web Component (custom HTML) into the HTML of your existing documentation. 
 
