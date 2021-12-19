@@ -117,6 +117,6 @@ You can then also use the [Search component](getting-started/dev-portal/search-c
   </tbody>
 </table>
 
-To learn how to work with Elements, please read the [Introduction to Elements](getting-started/usage/web-component.md) article. 
+To learn how to work with Elements, please read the [Introduction to Elements](getting-started/elements/introduction.md) article. 
 
 To learn how to work with Elements Dev Portal, please read the [Introduction to Elements Dev Portal](getting-started/dev-portal/introduction.md) article. 
