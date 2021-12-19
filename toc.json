@@ -26,12 +26,12 @@
         {
           "type": "item",
           "title": "Usage with React",
-          "uri": "docs/getting-started/integrations/react.md"
+          "uri": "docs/getting-started/elements/react.md"
         },
         {
           "type": "item",
           "title": "Usage with GatsbyJS",
-          "uri": "docs/getting-started/integrations/gatsby.md"
+          "uri": "docs/getting-started/elements/gatsby.md"
         },
         {
           "type": "item",
