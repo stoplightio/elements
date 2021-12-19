@@ -1,4 +1,4 @@
-# Introduction to Stoplight Elements
+# Stoplight Elements
 
 Elements is an API Documentation toolkit, leveraging [OpenAPI](https://openapis.org/) and Markdown ([CommonMark](https://commonmark.org/)) to provide beautiful, interactive API reference documentation, that you can integrate with any existing content-management system or single-page application. 
 
