@@ -1,4 +1,4 @@
-# ELements Default PR Template
+# Elements Default PR Template
 
 In general, make sure you have: (check the boxes to acknowledge you've followed this template)
 

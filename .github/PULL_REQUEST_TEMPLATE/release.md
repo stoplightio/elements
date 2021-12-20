@@ -1,4 +1,4 @@
-# ELements Release PR Template
+# Elements Release PR Template
 
 Before releasing a new version of elements: (check the boxes to acknowledge you've followed this template)
 
