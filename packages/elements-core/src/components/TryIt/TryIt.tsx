@@ -229,7 +229,7 @@ export const TryIt: React.FC<TryItProps> = ({
         <OperationParameters
           parameters={allParameters}
           values={parameterValuesWithDefaults}
-          onChangeValue={updateParameterValue}
+          onChange={updateParameterValue}
           disabledParameters={disabledParameters}
           toggleDisabled={parameterName => {
             if (disabledParameters.includes(parameterName)) {
