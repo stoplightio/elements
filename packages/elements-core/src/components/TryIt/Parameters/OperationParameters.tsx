@@ -7,9 +7,9 @@ import { ParameterEditor } from './ParameterEditor';
 interface OperationParametersProps<P extends keyof any = string> {
   parameters: readonly ParameterSpec[];
   values: Record<P, string>;
+  disabledParameters: string[];
   onChangeValue: (parameterName: P, newValue: string) => void;
   toggleDisabled: (parameterName: P) => void;
-  disabledParameters: string[];
   validate?: boolean;
 }
 
@@ -30,9 +30,9 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
-            onChangeValue={(value: string | number) => onChangeValue(parameter.name, String(value))}
             validate={validate}
             isDisabled={disabledParameters.includes(parameter.name)}
+            onChangeValue={(value: string | number) => onChangeValue(parameter.name, String(value))}
             onChangeDisabled={() => toggleDisabled(parameter.name)}
           />
         ))}

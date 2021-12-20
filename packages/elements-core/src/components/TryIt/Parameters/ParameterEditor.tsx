@@ -13,9 +13,9 @@ import {
 interface ParameterProps {
   parameter: ParameterSpec;
   value?: string;
+  isDisabled?: boolean;
   onChangeValue: SelectProps['onChange'];
-  onChangeDisabled: () => void;
-  isDisabled: boolean;
+  onChangeDisabled?: () => void;
   validate?: boolean;
 }
 
@@ -73,7 +73,9 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
                 onChange={onChangeValue}
               />
             )}
-            <Input type="checkbox" checked={!isDisabled} w={3} onChange={onChangeDisabled} />
+            {isDisabled !== undefined && (
+              <Input type="checkbox" checked={!isDisabled} w={3} onChange={onChangeDisabled} />
+            )}
           </Flex>
         )}
       </div>

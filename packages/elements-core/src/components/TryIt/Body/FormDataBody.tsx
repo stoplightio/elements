@@ -58,7 +58,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
               key={parameter.name}
               parameter={parameter}
               value={typeof value === 'string' ? value : undefined}
-              onChange={(value: string | number) =>
+              onChangeValue={(value: string | number) =>
                 onChangeValues({ ...values, [parameter.name]: typeof value === 'number' ? String(value) : value })
               }
             />
