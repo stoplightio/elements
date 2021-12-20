@@ -32,8 +32,8 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
             value={values[parameter.name]}
             validate={validate}
             isDisabled={disabledParameters.includes(parameter.name)}
-            onChangeValue={(value: string | number) => onChangeValue(parameter.name, String(value))}
-            onChangeDisabled={() => toggleDisabled(parameter.name)}
+            onChange={(value: string | number) => onChangeValue(parameter.name, String(value))}
+            toggleDisabled={() => toggleDisabled(parameter.name)}
           />
         ))}
       </Panel.Content>

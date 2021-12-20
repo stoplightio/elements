@@ -14,16 +14,16 @@ interface ParameterProps {
   parameter: ParameterSpec;
   value?: string;
   isDisabled?: boolean;
-  onChangeValue: SelectProps['onChange'];
-  onChangeDisabled?: () => void;
+  onChange: SelectProps['onChange'];
+  toggleDisabled?: () => void;
   validate?: boolean;
 }
 
 export const ParameterEditor: React.FC<ParameterProps> = ({
   parameter,
   value,
-  onChangeValue,
-  onChangeDisabled,
+  onChange,
+  toggleDisabled,
   isDisabled,
   validate,
 }) => {
@@ -48,7 +48,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
             aria-label={parameter.name}
             options={parameterValueOptions}
             value={value || ''}
-            onChange={onChangeValue}
+            onChange={onChange}
           />
         ) : (
           <Flex flex={1}>
@@ -62,7 +62,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
               required
               intent={requiredButEmpty ? 'danger' : 'default'}
               value={value || ''}
-              onChange={e => onChangeValue && onChangeValue(e.currentTarget.value)}
+              onChange={e => onChange && onChange(e.currentTarget.value)}
             />
             {examples && (
               <Select
@@ -70,11 +70,11 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
                 flex={1}
                 value={selectedExample.value}
                 options={examples}
-                onChange={onChangeValue}
+                onChange={onChange}
               />
             )}
             {isDisabled !== undefined && (
-              <Input type="checkbox" checked={!isDisabled} w={3} onChange={onChangeDisabled} />
+              <Input type="checkbox" checked={!isDisabled} w={3} onChange={toggleDisabled} />
             )}
           </Flex>
         )}
