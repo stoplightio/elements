@@ -30,9 +30,9 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
+            onChange={(value: string | number) => onChangeValue(parameter.name, String(value))}
             validate={validate}
             isDisabled={disabledParameters.includes(parameter.name)}
-            onChange={(value: string | number) => onChangeValue(parameter.name, String(value))}
             toggleDisabled={() => toggleDisabled(parameter.name)}
           />
         ))}
