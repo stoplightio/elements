@@ -24,6 +24,7 @@ import {
   singleSecurityOperation,
 } from '../../__fixtures__/operations/securedOperation';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
+import { httpOperation as stringNumericEnumOperation } from '../../__fixtures__/operations/string-numeric-enums';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
@@ -346,6 +347,18 @@ describe('TryIt', () => {
       );
 
       expect(screen.getByLabelText('todoId')).toHaveValue('123');
+    });
+
+    it('Persists string enum types', () => {
+      render(<TryItWithPersistence httpOperation={stringNumericEnumOperation} />);
+
+      const cycleField = screen.getByLabelText('cycle');
+      expect(cycleField).toHaveTextContent('00');
+
+      userEvent.click(cycleField);
+
+      userEvent.click(screen.getByRole('option', { name: '06' }));
+      expect(cycleField).toHaveTextContent('06');
     });
   });
 

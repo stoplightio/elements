@@ -275,33 +275,13 @@ be the http object to be rendered.
 ```
 ````
 
-### Request from Http Operation
-
-<!-- type: http -->
-
-```json
-{
-  "$ref": "../../reference/todos/openapi.v1.json/paths/~1todos/get"
-}
-```
-
-````md
-<!-- type: http -->
-
-```json
-{
-  "$ref": "../../reference/todos/openapi.v1.json/paths/~1todos/get"
-}
-```
-````
-
 ### From a remote Http Operation
 
 <!-- type: http -->
 
 ```json
 {
-  "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/giphy/giphy.yaml/paths/~1gifs~1search/get"
+  "$ref": "https://stoplight.io/api/v1/projects/demo/external-api/nodes/zoom.yaml/paths/~1meetings~1%7BmeetingId%7D/get?deref=optimizedBundle"
 }
 ```
 
@@ -310,7 +290,7 @@ be the http object to be rendered.
 
 ```json
 {
-  "$ref": "https://stoplight.io/api/nodes.raw?srn=gh/stoplightio/sample-specs/reference/giphy/giphy.yaml/paths/~1gifs~1search/get"
+  "$ref": "https://stoplight.io/api/v1/projects/demo/external-api/nodes/zoom.yaml/paths/~1meetings~1%7BmeetingId%7D/get?deref=optimizedBundle"
 }
 ```
 ````
