@@ -90,6 +90,8 @@ export const TryIt: React.FC<TryItProps> = ({
   const mediaTypeContent = httpOperation.request?.body?.contents?.[requestBodyIndex ?? 0];
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
+  const [disabledParameters, setDisabledParameters] = React.useState<string[]>([]);
+
   const [mockingOptions, setMockingOptions] = useMockingOptions();
 
   const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(mediaTypeContent);
@@ -129,6 +131,7 @@ export const TryIt: React.FC<TryItProps> = ({
       buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
+        disabledParameters,
         httpOperation,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         auth: operationAuthValue,
@@ -162,6 +165,7 @@ export const TryIt: React.FC<TryItProps> = ({
     chosenServer,
     corsProxy,
     embeddedInMd,
+    disabledParameters,
   ]);
 
   const handleSendRequest = async () => {
@@ -175,6 +179,7 @@ export const TryIt: React.FC<TryItProps> = ({
       const request = await buildFetchRequest({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
+        disabledParameters,
         mediaTypeContent,
         bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
         mockData,
@@ -225,6 +230,14 @@ export const TryIt: React.FC<TryItProps> = ({
           parameters={allParameters}
           values={parameterValuesWithDefaults}
           onChangeValue={updateParameterValue}
+          disabledParameters={disabledParameters}
+          toggleDisabled={parameterName => {
+            if (disabledParameters.includes(parameterName)) {
+              setDisabledParameters(disabledParameters.filter(n => n !== parameterName));
+            } else {
+              setDisabledParameters([...disabledParameters, parameterName]);
+            }
+          }}
           validate={validateParameters}
         />
       )}

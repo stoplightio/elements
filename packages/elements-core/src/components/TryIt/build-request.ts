@@ -26,6 +26,7 @@ interface BuildRequestInput {
   httpOperation: IHttpOperation;
   mediaTypeContent: IMediaTypeContent | undefined;
   parameterValues: Dictionary<string, string>;
+  disabledParameters: string[];
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
   auth?: HttpSecuritySchemeWithValues;
@@ -60,6 +61,7 @@ export async function buildFetchRequest({
   auth,
   chosenServer,
   credentials = 'omit',
+  disabledParameters,
   corsProxy,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
@@ -69,11 +71,12 @@ export async function buildFetchRequest({
   const queryParams =
     httpOperation.request?.query
       ?.map(param => ({ name: param.name, value: parameterValues[param.name] ?? '' }))
+      .filter(({ name }) => !disabledParameters.includes(name))
       .filter(({ value }) => value.length > 0) ?? [];
 
-  const rawHeaders = filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security).map(
-    header => ({ name: header.name, value: parameterValues[header.name] ?? '' }),
-  );
+  const rawHeaders = filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security)
+    .map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' }))
+    .filter(({ name }) => !disabledParameters.includes(name));
 
   const [queryParamsWithAuth, headersWithAuth] = runAuthRequestEhancements(auth, queryParams, rawHeaders);
 
@@ -164,6 +167,7 @@ export async function buildHarRequest({
   httpOperation,
   bodyInput,
   parameterValues,
+  disabledParameters,
   mediaTypeContent,
   auth,
   mockData,
@@ -178,11 +182,13 @@ export async function buildHarRequest({
   const queryParams =
     httpOperation.request?.query
       ?.map(param => ({ name: param.name, value: parameterValues[param.name] ?? '' }))
+      .filter(({ name }) => !disabledParameters.includes(name))
       .filter(({ value }) => value.length > 0) ?? [];
 
   const headerParams =
-    httpOperation.request?.headers?.map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' })) ??
-    [];
+    httpOperation.request?.headers
+      ?.map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' }))
+      .filter(({ name }) => !disabledParameters.includes(name)) ?? [];
 
   if (mockData?.header) {
     headerParams.push({ name: 'Prefer', value: mockData.header.Prefer });

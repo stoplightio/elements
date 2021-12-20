@@ -13,11 +13,20 @@ import {
 interface ParameterProps {
   parameter: ParameterSpec;
   value?: string;
-  onChange: SelectProps['onChange'];
+  onChangeValue: SelectProps['onChange'];
+  onChangeDisabled: () => void;
+  isDisabled: boolean;
   validate?: boolean;
 }
 
-export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange, validate }) => {
+export const ParameterEditor: React.FC<ParameterProps> = ({
+  parameter,
+  value,
+  onChangeValue,
+  onChangeDisabled,
+  isDisabled,
+  validate,
+}) => {
   const inputId = useUniqueId(`id_${parameter.name}_`);
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
@@ -39,7 +48,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
             aria-label={parameter.name}
             options={parameterValueOptions}
             value={value || ''}
-            onChange={onChange}
+            onChange={onChangeValue}
           />
         ) : (
           <Flex flex={1}>
@@ -53,7 +62,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
               required
               intent={requiredButEmpty ? 'danger' : 'default'}
               value={value || ''}
-              onChange={e => onChange && onChange(e.currentTarget.value)}
+              onChange={e => onChangeValue && onChangeValue(e.currentTarget.value)}
             />
             {examples && (
               <Select
@@ -61,9 +70,10 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
                 flex={1}
                 value={selectedExample.value}
                 options={examples}
-                onChange={onChange}
+                onChange={onChangeValue}
               />
             )}
+            <Input type="checkbox" checked={!isDisabled} w={3} onChange={onChangeDisabled} />
           </Flex>
         )}
       </div>

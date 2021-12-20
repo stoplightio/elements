@@ -8,6 +8,8 @@ interface OperationParametersProps<P extends keyof any = string> {
   parameters: readonly ParameterSpec[];
   values: Record<P, string>;
   onChangeValue: (parameterName: P, newValue: string) => void;
+  toggleDisabled: (parameterName: P) => void;
+  disabledParameters: string[];
   validate?: boolean;
 }
 
@@ -15,6 +17,8 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
   parameters,
   values,
   onChangeValue,
+  toggleDisabled,
+  disabledParameters,
   validate,
 }) => {
   return (
@@ -26,8 +30,10 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
-            onChange={(value: string | number) => onChangeValue(parameter.name, String(value))}
+            onChangeValue={(value: string | number) => onChangeValue(parameter.name, String(value))}
             validate={validate}
+            isDisabled={disabledParameters.includes(parameter.name)}
+            onChangeDisabled={() => toggleDisabled(parameter.name)}
           />
         ))}
       </Panel.Content>
