@@ -73,7 +73,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
                 onChange={onChange}
               />
             )}
-            {parameter.required && isDisabled !== undefined && (
+            {!parameter.required && isDisabled !== undefined && (
               <Input
                 type="checkbox"
                 checked={!isDisabled}
