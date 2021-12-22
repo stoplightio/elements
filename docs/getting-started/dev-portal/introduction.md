@@ -8,7 +8,7 @@ Elements Dev Portal is backed by the Stoplight Platform and can do many many thi
 - Version Selector (Multiple Branches)
 - Powerful Search
 
-> Elements Dev Portal can be used on your local machine for free. If you need to use it in a production environment, please [subscribe to a paid plan](https://stoplight.io/pricing).
+> Elements Dev Portal can be used for free during development on your local machine. If you need to use it in a production environment, please [subscribe to a paid plan](https://stoplight.io/pricing).
 
 Think of the dev portal as more of a Content Management System, focused entirely on making an awesome developer experience for an organization.
 
