@@ -289,11 +289,13 @@ describe('TryIt', () => {
       expect(queryParams.get('limit')).toBe('3');
       expect(queryParams.get('value')).toBe('1');
       expect(queryParams.get('type')).toBe('another');
+      expect(queryParams.get('optional_value_with_default')).toBeNull();
       // assert that headers are passed
       const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
       expect(headers.get('Content-Type')).toBe('application/json');
       expect(headers.get('account-id')).toBe('account-id-default 1999');
       expect(headers.get('message-id')).toBe('another example');
+      expect(headers.get('optional_header')).toBeNull();
     });
 
     it('Persists parameter values between operations', async () => {
