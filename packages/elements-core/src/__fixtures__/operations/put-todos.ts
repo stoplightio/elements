@@ -420,6 +420,13 @@ export const httpOperation: IHttpOperation = {
           },
         ],
       },
+      {
+        name: 'optional_header',
+        schema: {
+          type: 'string',
+        },
+        style: HttpParamStyles.Simple,
+      },
     ],
     path: [
       {
