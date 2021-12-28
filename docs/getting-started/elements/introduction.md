@@ -21,4 +21,4 @@ Ready to get started using Elements? Check out these guides for using Elements i
 - [Usage with GatsbyJS](gatsby.md)
 - [Usage with AngularJS](angular.md)
 
-Once you're done and you're docs are live, give us a shout at [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!
+Once you're done and your docs are live, give us a shout at [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!
