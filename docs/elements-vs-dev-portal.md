@@ -10,7 +10,7 @@ across two different packages:
   dev portal. You can use it to combine behavioral documentation (Markdown Articles) and API reference documentation
   into a complete documentation portal.
 
-All of these components are available as Web Components and React components, which allows you to use them pretty much
+All of these components are available as Web components and React components, which allows you to use them pretty much
 anywhere.
 
 If you have a single OpenAPI document that you'd like to turn into API reference documentation, use the Elements "API
