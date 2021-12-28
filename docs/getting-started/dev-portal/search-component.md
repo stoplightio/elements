@@ -1,6 +1,6 @@
 # Elements Dev Portal Search
 
-Once youve [installed](https://github.com/stoplightio/elements) the elements-dev-portal package, you can use the Search component to offer an autocomplete search.
+Once you've [installed](https://github.com/stoplightio/elements) the elements-dev-portal package, you can use the `Search` component to offer an autocomplete search.
 
 ## Usage in React
 
