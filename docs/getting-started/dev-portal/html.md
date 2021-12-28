@@ -2,7 +2,7 @@
 
 Setting up Elements Dev Portal is a case of loading up some JavaScript and CSS and embedding a Web Component (custom HTML) into the HTML of your new or existing dev portal. This should work anywhere custom HTML can be embedded and this approach is supported by [pretty much all modern browsers](https://caniuse.com/custom-elementsv1).
 
-For now, the only component in the DevPortal package is `<elements-stoplight-project/>`, which lets users display Stoplight Projects wherever they want. There will eventually be more types of dev portal in the package. 
+For now, the only component in the Dev Portal package is `<elements-stoplight-project/>`, which lets users display Stoplight Projects wherever they want. There will eventually be more types of dev portal in the package. 
 ## Usage
 
 1. Load the Elements Dev Portal JavaScript and default CSS. These can go in the `<head>` tag.
