@@ -7,7 +7,7 @@ across two different packages:
   render documentation for a single OpenAPI document.
 - `@stoplight/elements-dev-portal` - This collection of components is referred to as "Elements Dev Portal" and contains
   the "Stoplight Project", the "Search" component, and a variety of lower level utilities to help you put together your
-  dev portal. You can use it to combine behavioral documentation (markdown articles) and API reference documentation
+  dev portal. You can use it to combine behavioral documentation (Markdown Articles) and API reference documentation
   into a complete documentation portal.
 
 All of these components are available as Web Components and React components, which allows you to use them pretty much
