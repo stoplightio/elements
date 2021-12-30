@@ -1,6 +1,6 @@
 ## Introduction to Elements Dev Portal
 
-Elements comes in two flavours, the basic package which only covers a single API, and Elements Dev Portal, which is backed by Stoplight Platform and can do many many things. 
+Elements Dev Portal is backed by the Stoplight Platform and can do many many things. 
 
 - Support multiple APIs
 - Markdown Articles
@@ -8,11 +8,17 @@ Elements comes in two flavours, the basic package which only covers a single API
 - Version Selector (Multiple Branches)
 - Powerful Search
 
-> The Dev Portal can only be tested on local host using the free plan. Please upgrade to starter or above to use it in a production environment.
+> Elements Dev Portal can be used for free during development on your local machine. If you need to use it in a production environment, please [subscribe to a paid plan](https://stoplight.io/pricing).
 
-Think of the dev portal as more of a Content Management System, focused entirely on making an awesome developer experience for an organization. 
+Think of the dev portal as more of a Content Management System, focused entirely on making an awesome developer experience for an organization.
 
-Just like the Elements API component, it is available as a Web Component or a React component. 
+## Next steps
 
-- [Elements Dev Portal: Web Component](web-component.md)
-- [Elements Dev Portal: React Component](react.md)
+Ready to get started using Elements? Check out these guides for using Elements in your favorite framework:
+
+- [Usage with HTML](html.md)
+- [Usage with ReactJS](react.md)
+- [Usage with GatsbyJS](gatsby.md)
+- [Usage with AngularJS](angular.md)
+
+Once you're done and your docs are live, give us a shout at [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!
