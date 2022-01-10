@@ -277,6 +277,9 @@ describe('TryIt', () => {
       const messageIdField = screen.getByLabelText('message-id-select');
       chooseOption(messageIdField, 'example 2');
 
+      const quoteField = screen.getByLabelText('quote-select');
+      chooseOption(quoteField, 'quote');
+
       // click send
       clickSend();
 
@@ -296,6 +299,9 @@ describe('TryIt', () => {
       expect(headers.get('account-id')).toBe('account-id-default 1999');
       expect(headers.get('message-id')).toBe('another example');
       expect(headers.get('optional_header')).toBeNull();
+
+      // assert that quote is escaped
+      expect(headers.get('quote')).toBe('\\"');
     });
 
     it('Persists parameter values between operations', async () => {
