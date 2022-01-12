@@ -43,7 +43,12 @@ export function parameterSupportsFileUpload(parameter: Pick<ParameterSpec, 'sche
 }
 
 function exampleValue(example: INodeExample | INodeExternalExample) {
-  return 'value' in example ? String(example.value) : String(example.externalValue);
+  const value = 'value' in example ? example.value : example.externalValue;
+  return escapeQuotes(String(value));
+}
+
+function escapeQuotes(value: string) {
+  return value.replace(/"/g, '\\"');
 }
 
 export function getPlaceholderForParameter(parameter: ParameterSpec) {

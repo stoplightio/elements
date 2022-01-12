@@ -427,6 +427,24 @@ export const httpOperation: IHttpOperation = {
         },
         style: HttpParamStyles.Simple,
       },
+      {
+        schema: {
+          type: 'string',
+          description: 'Quote or no quote',
+        },
+        name: 'quote',
+        style: HttpParamStyles.Simple,
+        examples: [
+          {
+            value: '',
+            key: 'no quote',
+          },
+          {
+            value: '"',
+            key: 'quote',
+          },
+        ],
+      },
     ],
     path: [
       {
