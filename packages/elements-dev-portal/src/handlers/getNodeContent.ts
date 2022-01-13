@@ -25,13 +25,19 @@ export const getNodeContent = async ({
   platformAuthToken?: string;
 }): Promise<Node> => {
   const nodeId = getNodeIdFromSlug(nodeSlug);
-  const branchQuery = branchSlug ? `?branch=${branchSlug}` : '';
-  const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/nodes/${nodeId}${branchQuery}`, {
-    headers: {
-      'Stoplight-Elements-Version': appVersion,
-      ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
+  const encodedNodeId = encodeURIComponent(nodeId);
+  const encodedProjectId = encodeURIComponent(projectId);
+  const encodedBranchSlug = branchSlug ? encodeURIComponent(branchSlug) : '';
+  const branchQuery = encodedBranchSlug ? `?branch=${encodedBranchSlug}` : '';
+  const response = await fetch(
+    `${platformUrl}/api/v1/projects/${encodedProjectId}/nodes/${encodedNodeId}${branchQuery}`,
+    {
+      headers: {
+        'Stoplight-Elements-Version': appVersion,
+        ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
+      },
     },
-  });
+  );
   const data = await response.json();
 
   if (!response.ok) {
