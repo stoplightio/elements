@@ -12,8 +12,10 @@ export const getTableOfContents = async ({
   platformUrl?: string;
   platformAuthToken?: string;
 }): Promise<ProjectTableOfContents> => {
-  const branchQuery = branchSlug ? `?branch=${branchSlug}` : '';
-  const response = await fetch(`${platformUrl}/api/v1/projects/${projectId}/table-of-contents${branchQuery}`, {
+  const encodedProjectId = encodeURIComponent(projectId);
+  const encodedBranchSlug = branchSlug ? encodeURIComponent(branchSlug) : '';
+  const branchQuery = encodedBranchSlug ? `?branch=${encodedBranchSlug}` : '';
+  const response = await fetch(`${platformUrl}/api/v1/projects/${encodedProjectId}/table-of-contents${branchQuery}`, {
     headers: {
       'Stoplight-Elements-Version': appVersion,
       ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
