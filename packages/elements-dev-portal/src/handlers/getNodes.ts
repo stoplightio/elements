@@ -20,7 +20,8 @@ export const getNodes = async ({
   let fetchedWorkspaceId = workspaceId || '';
 
   if (!workspaceId && projectIds?.length) {
-    const response = await fetch(`${platformUrl}/api/v1/projects/${projectIds[0]}`, {
+    const encodedProjectId = encodeURIComponent(projectIds[0]);
+    const response = await fetch(`${platformUrl}/api/v1/projects/${encodedProjectId}`, {
       headers: {
         'Stoplight-Elements-Version': appVersion,
         ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
@@ -31,20 +32,28 @@ export const getNodes = async ({
   }
 
   if (projectIds && projectIds.length) {
-    queryParams.push(...projectIds.map((projectId, index) => `project_ids[${index}]=${projectId}`));
+    queryParams.push(
+      ...projectIds.map((projectId, index) => {
+        const encodedProjectId = encodeURIComponent(projectId);
+        return `project_ids[${index}]=${encodedProjectId}`;
+      }),
+    );
   }
 
   if (search) {
-    queryParams.push(`search=${search}`);
+    const encodedSearch = encodeURIComponent(search);
+    queryParams.push(`search=${encodedSearch}`);
   }
 
   if (branchSlug) {
-    queryParams.push(`branchSlug=${branchSlug}`);
+    const encodedBranchSlug = encodeURIComponent(branchSlug);
+    queryParams.push(`branchSlug=${encodedBranchSlug}`);
   }
 
   const query = queryParams.length ? `?${queryParams.join('&')}` : '';
 
-  const response = await fetch(`${platformUrl}/api/v1/workspaces/${fetchedWorkspaceId}/nodes${query}`, {
+  const encodedWorkspaceId = encodeURIComponent(fetchedWorkspaceId);
+  const response = await fetch(`${platformUrl}/api/v1/workspaces/${encodedWorkspaceId}/nodes${query}`, {
     headers: {
       'Stoplight-Elements-Version': appVersion,
       ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),
