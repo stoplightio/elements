@@ -1,10 +1,10 @@
-import { MDAST } from '@stoplight/markdown';
+import type { IMarkdownViewerProps } from '@stoplight/markdown-viewer';
 import { isArray } from '@stoplight/mosaic';
 import { IHttpOperation, IHttpService, INode } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import { isObject, isPlainObject } from 'lodash';
 
-export function isSMDASTRoot(maybeAst: unknown): maybeAst is MDAST.Root {
+export function isSMDASTRoot(maybeAst: unknown): maybeAst is IMarkdownViewerProps['markdown'] {
   return isObject(maybeAst) && maybeAst['type'] === 'root' && isArray(maybeAst['children']);
 }
 

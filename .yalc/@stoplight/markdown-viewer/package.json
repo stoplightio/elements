@@ -1,0 +1,50 @@
+{
+  "name": "@stoplight/markdown-viewer",
+  "version": "0.0.0+da88f4a6",
+  "description": "A react component that renders Stoplight flavored markdown.",
+  "keywords": [],
+  "main": "./index.js",
+  "sideEffects": false,
+  "files": [
+    "**/*"
+  ],
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/markdown-viewer"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=12"
+  },
+  "peerDependencies": {
+    "@stoplight/mosaic": "^1.5.0",
+    "@stoplight/mosaic-code-viewer": "^1.5.0",
+    "react": ">=16.14",
+    "react-dom": ">=16.14"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@rehooks/component-size": "^1.0.3",
+    "@stoplight/markdown": "^3.0.0",
+    "@stoplight/react-error-boundary": "^2.0.0",
+    "deepmerge": "^4.2.2",
+    "hast-to-hyperscript": "^10.0.1",
+    "hast-util-raw": "^7.2.1",
+    "hast-util-sanitize": "^4.0.0",
+    "hastscript": "^7.0.2",
+    "mdast-util-to-hast": "^11.1.1",
+    "remark-parse": "^9.0.0",
+    "unified": "^9.2.1",
+    "unist-builder": "^3.0.0",
+    "unist-util-visit": "^3.1.0"
+  },
+  "type": "commonjs",
+  "typings": "index.d.ts",
+  "module": "./index.esm.js",
+  "exports": {
+    "require": "./index.js",
+    "import": "./index.mjs"
+  },
+  "yalcSig": "da88f4a61f7fdd4115d21de72077e135"
+}
