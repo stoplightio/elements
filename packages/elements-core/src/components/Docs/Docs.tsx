@@ -5,6 +5,7 @@ import * as React from 'react';
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { useParsedData } from '../../hooks/useParsedData';
 import { ParsedNode } from '../../types';
+import { ReferenceResolver } from '../../utils/ref-resolving/ReferenceResolver';
 import { Article } from './Article';
 import { HttpOperation } from './HttpOperation';
 import { HttpService } from './HttpService';
@@ -110,6 +111,7 @@ export interface DocsProps extends BaseDocsProps {
   nodeType: NodeType;
   nodeData: unknown;
   useNodeForRefResolving?: boolean;
+  refResolver?: ReferenceResolver;
 }
 
 export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
@@ -119,22 +121,28 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
   data: T;
 }
 
-export const Docs = React.memo<DocsProps>(({ nodeType, nodeData, useNodeForRefResolving = false, ...commonProps }) => {
-  const parsedNode = useParsedData(nodeType, nodeData);
+export const Docs = React.memo<DocsProps>(
+  ({ nodeType, nodeData, useNodeForRefResolving = false, refResolver, ...commonProps }) => {
+    const parsedNode = useParsedData(nodeType, nodeData);
 
-  if (!parsedNode) {
-    // TODO: maybe report failure
-    return null;
-  }
+    if (!parsedNode) {
+      // TODO: maybe report failure
+      return null;
+    }
 
-  const parsedDocs = <ParsedDocs node={parsedNode} {...commonProps} />;
+    const parsedDocs = <ParsedDocs node={parsedNode} {...commonProps} />;
 
-  if (useNodeForRefResolving) {
-    return <InlineRefResolverProvider document={parsedNode.data}>{parsedDocs}</InlineRefResolverProvider>;
-  }
+    if (useNodeForRefResolving) {
+      return (
+        <InlineRefResolverProvider document={parsedNode.data} resolver={refResolver}>
+          {parsedDocs}
+        </InlineRefResolverProvider>
+      );
+    }
 
-  return parsedDocs;
-});
+    return parsedDocs;
+  },
+);
 
 export interface ParsedDocsProps extends BaseDocsProps {
   node: ParsedNode;
