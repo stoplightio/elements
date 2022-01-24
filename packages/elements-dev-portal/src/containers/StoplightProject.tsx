@@ -1,4 +1,11 @@
-import { findFirstNode, RoutingProps, SidebarLayout, useRouter, withStyles } from '@stoplight/elements-core';
+import {
+  findFirstNode,
+  ReactRouterMarkdownLink,
+  RoutingProps,
+  SidebarLayout,
+  useRouter,
+  withStyles,
+} from '@stoplight/elements-core';
 import * as React from 'react';
 import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
 
@@ -119,7 +126,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     elem = (
       <NodeContent
         node={node}
-        Link={Link}
+        Link={ReactRouterMarkdownLink}
         hideTryIt={hideTryIt}
         hideMocking={hideMocking}
         hideExport={hideExport}
