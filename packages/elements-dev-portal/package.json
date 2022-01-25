@@ -49,7 +49,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@stoplight/elements-core": "~7.5.8",
-    "@stoplight/markdown-viewer": "^5.4.0",
+    "@stoplight/markdown-viewer": "^5.4.1",
     "@stoplight/mosaic": "^1.15.2",
     "@stoplight/path": "^1.3.2",
     "@stoplight/types": "^12.0.0",
