@@ -38,10 +38,12 @@ const Headings: React.FC<IArticleHeadings> = ({ headings, className, title = 'On
     </Box>
   );
 
+  const button = <Button pos="sticky" size="sm" borderColor="light" icon={faStream} style={{ top: 10 }} />;
+
   if (minimal) {
     return (
-      <Box pos="absolute" top={0} right={0} style={{ top: 10 }}>
-        <Popover renderTrigger={<Button size="sm" borderColor="light" icon={faStream} />} placement="bottom">
+      <Box pos="sticky" top={0} right={0} style={{ top: 10 }}>
+        <Popover renderTrigger={button} placement="bottom">
           <Box className={className}>{component}</Box>
         </Popover>
       </Box>

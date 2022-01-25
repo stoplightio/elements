@@ -3,7 +3,7 @@ import { compact, uniq } from 'lodash';
 
 import { formatMultiValueHeader } from '../../../utils/headers';
 
-export type MockingOptions = { isEnabled: boolean; code?: string; example?: string; dynamic?: boolean };
+export type MockingOptions = { code?: string; example?: string; dynamic?: boolean };
 type PreferHeaderProps = { code?: string; example?: string; dynamic?: boolean };
 
 export type MockData = {
@@ -14,9 +14,9 @@ export type MockData = {
 export function getMockData(
   url: string | undefined,
   httpOperation: IHttpOperation,
-  { isEnabled, code, dynamic, example }: MockingOptions,
+  { code, dynamic, example }: MockingOptions,
 ): MockData | undefined {
-  return isEnabled && url ? { url, header: buildPreferHeader({ code, dynamic, example }, httpOperation) } : undefined;
+  return url ? { url, header: buildPreferHeader({ code, dynamic, example }, httpOperation) } : undefined;
 }
 
 export function buildPreferHeader(

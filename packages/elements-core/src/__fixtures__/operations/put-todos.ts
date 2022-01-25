@@ -330,6 +330,7 @@ export const httpOperation: IHttpOperation = {
           minLength: 0,
           maxLength: 10,
         },
+        examples: [{ key: 'Example', value: '3' }],
         deprecated: true,
         description: 'How many string todos to limit?',
         name: 'value',
@@ -416,6 +417,31 @@ export const httpOperation: IHttpOperation = {
           {
             value: 'something else',
             key: 'example 3',
+          },
+        ],
+      },
+      {
+        name: 'optional_header',
+        schema: {
+          type: 'string',
+        },
+        style: HttpParamStyles.Simple,
+      },
+      {
+        schema: {
+          type: 'string',
+          description: 'Quote or no quote',
+        },
+        name: 'quote',
+        style: HttpParamStyles.Simple,
+        examples: [
+          {
+            value: '',
+            key: 'no quote',
+          },
+          {
+            value: '"',
+            key: 'quote',
           },
         ],
       },

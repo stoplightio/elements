@@ -1,4 +1,4 @@
-# Using Elements Dev Portal in GatsbyJS
+# Elements Dev Portal in GatsbyJS
 
 ## Gatsby Starter
 

@@ -6,7 +6,6 @@ import { httpOperation as putTodosOperation } from '../../__fixtures__/operation
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { withPersistenceBoundary } from '../../context/Persistence';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
-import { chooseOption } from '../../utils/tests/chooseOption';
 import { TryItWithRequestSamples as RawComponent } from './TryItWithRequestSamples';
 
 const TryItWithRequestSamples = withMosaicProvider(withPersistenceBoundary(RawComponent));
@@ -34,13 +33,16 @@ describe('TryItWithRequestSamples', () => {
   it('reacts to mocking', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
-    const mockingButton = screen.getByRole('button', { name: /mocking/i });
-
-    act(() => userEvent.click(mockingButton));
+    const serversButton = screen.getByRole('button', { name: /server/i });
+    act(() => userEvent.click(serversButton));
 
     // enable mocking
-    let enableItem = screen.getByRole('menuitemcheckbox', { name: 'Enabled' });
+    let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
     act(() => userEvent.click(enableItem));
+
+    // open mock dropdown
+    const mockButton = screen.getByRole('button', { name: /mock settings/i });
+    act(() => userEvent.click(mockButton));
 
     // set response code
     const responseCodeItem = screen.getByRole('menuitemcheckbox', { name: '200' });
@@ -85,8 +87,11 @@ describe('TryItWithRequestSamples', () => {
   it('changes request sample when changing server', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
-    const serversSelect = await screen.findByLabelText('Servers');
-    chooseOption(serversSelect, 'Development');
+    const serversButton = screen.getByRole('button', { name: /server/i });
+    act(() => userEvent.click(serversButton));
+
+    let enableItem = screen.getByRole('menuitemradio', { name: /development/i });
+    act(() => userEvent.click(enableItem));
 
     const codeViewer = await screen.findByLabelText(/curl/);
     expect(codeViewer).toHaveTextContent('https://todos-dev.stoplight.io');

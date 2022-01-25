@@ -89,3 +89,4 @@ And you should see the API reference documentation for the Zoom API!
   - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
   - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
   - `memory` - keeps the history of your "URL" in memory (does not read or write to the address bar).
+  - `static` - renders using the StaticRouter which can help rendering pages on the server.

@@ -123,7 +123,7 @@ describe('MarkdownViewer', () => {
   "headers": {},
   "query": {
     "api_key": ["dc6zaTOxFJmzC"],
-    "limit": ["1"],
+    "limit": [],
     "q": ["cats"]
   }
 }
@@ -136,8 +136,18 @@ describe('MarkdownViewer', () => {
         </MarkdownComponentsProvider>,
       );
 
-      expect(screen.getByRole('heading', { name: 'GET /gifs/search' })).toBeInTheDocument();
-      expect(screen.getByText('api_key')).toBeInTheDocument();
+      expect(screen.getByText('http://api.giphy.com/v1/gifs/search')).toBeInTheDocument();
+
+      // has default
+      expect(screen.getByText('api_key*')).toBeInTheDocument();
+      expect(screen.getByLabelText('api_key')).toHaveProperty('value', 'dc6zaTOxFJmzC');
+
+      expect(screen.getByText('q*')).toBeInTheDocument();
+      expect(screen.getByLabelText('q')).toHaveProperty('value', 'cats');
+
+      // no default
+      expect(screen.getByText('limit')).toBeInTheDocument();
+      expect(screen.getByLabelText('limit')).toHaveProperty('value', '');
 
       unmount();
     });

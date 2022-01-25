@@ -19,7 +19,7 @@ export const DeprecatedBadge: React.FC = () => (
 export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpService }) => (
   <Tooltip
     renderTrigger={
-      <Badge icon={faEye} data-testid="badge-internal" bg="danger" ml={0}>
+      <Badge icon={faEye} data-testid="badge-internal" bg="danger">
         Internal
       </Badge>
     }

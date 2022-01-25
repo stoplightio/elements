@@ -11,7 +11,7 @@ const booleanOptions = [
 ];
 
 function enumOptions(enumValues: JSONSchema7Type[], required?: boolean) {
-  const options = map(enumValues, v => ({ value: Number.isNaN(Number(v)) ? String(v) : Number(v) }));
+  const options = map(enumValues, v => ({ value: typeof v === 'number' ? v : String(v) }));
   return required ? options : [{ label: 'Not Set', value: '' }, ...options];
 }
 
@@ -43,15 +43,20 @@ export function parameterSupportsFileUpload(parameter: Pick<ParameterSpec, 'sche
 }
 
 function exampleValue(example: INodeExample | INodeExternalExample) {
-  return 'value' in example ? String(example.value) : String(example.externalValue);
+  const value = 'value' in example ? example.value : example.externalValue;
+  return escapeQuotes(String(value));
+}
+
+function escapeQuotes(value: string) {
+  return value.replace(/"/g, '\\"');
 }
 
 export function getPlaceholderForParameter(parameter: ParameterSpec) {
-  const parameterValue = getValueForParameter(parameter);
+  const { value: parameterValue, isDefault } = getValueForParameter(parameter);
 
-  if (parameterValue) return `example: ${parameterValue}`;
+  if (parameterValue) return `${isDefault ? 'defaults to' : 'example'}: ${parameterValue}`;
 
-  return parameterValue || String(parameter.schema?.type ?? '');
+  return String(parameter.schema?.type ?? '');
 }
 
 function retrieveDefaultFromSchema(parameter: ParameterSpec) {
@@ -60,16 +65,22 @@ function retrieveDefaultFromSchema(parameter: ParameterSpec) {
 }
 
 const getValueForParameter = (parameter: ParameterSpec) => {
-  const examples = parameter.examples ?? [];
-  if (examples.length > 0) return exampleValue(examples[0]);
-
   const defaultValue = retrieveDefaultFromSchema(parameter);
-  if (defaultValue) return String(defaultValue);
+  if (typeof defaultValue !== 'undefined') {
+    return { value: String(defaultValue), isDefault: true };
+  }
+
+  const examples = parameter.examples ?? [];
+  if (examples.length > 0) {
+    return { value: exampleValue(examples[0]) };
+  }
 
   const enums = parameter.schema?.enum ?? [];
-  if (enums.length > 0) return String(enums[0]);
+  if (enums.length > 0) {
+    return { value: String(enums[0]) };
+  }
 
-  return '';
+  return { value: '' };
 };
 
 const getInitialValueForParameter = (parameter: ParameterSpec) => {
@@ -77,7 +88,7 @@ const getInitialValueForParameter = (parameter: ParameterSpec) => {
 
   if (!isRequired) return '';
 
-  return getValueForParameter(parameter);
+  return getValueForParameter(parameter).value;
 };
 
 export const initialParameterValues: (params: readonly ParameterSpec[]) => Record<string, string> = params => {

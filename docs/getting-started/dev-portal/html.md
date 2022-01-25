@@ -1,15 +1,8 @@
-# Setup
+# Elements Dev Portal in HTML
 
+Setting up Elements Dev Portal is a case of loading up some JavaScript and CSS and embedding a Web Component (custom HTML) into the HTML of your new or existing dev portal. This should work anywhere custom HTML can be embedded and this approach is supported by [pretty much all modern browsers](https://caniuse.com/custom-elementsv1).
 
-
-## Web Component
-
-Setting up Elements Dev Portal is a case of loading up some JavaScript and CSS and embedding a Web Component (custom HTML) into the HTML of your existing documentation. 
-
-This works with pretty much any CMS: Drupal, Joomla, Wordpress, or Jekyll. They all allow custom HTML to be embedded and this approach is supported by [pretty much all modern browsers](https://caniuse.com/custom-elementsv1).
-
-For now, the only component in the DevPortal package is `<elements-stoplight-project/>`, which lets users render Stoplight Projects wherever they want. There will eventually be more types of dev portal in the package. 
-
+For now, the only component in the Dev Portal package is `<elements-stoplight-project/>`, which lets users display Stoplight Projects wherever they want. There will eventually be more types of dev portal in the package. 
 ## Usage
 
 1. Load the Elements Dev Portal JavaScript and default CSS. These can go in the `<head>` tag.
@@ -90,6 +83,7 @@ These properties can be provided as HTML attributes to the web component.
   - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
   - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
   - `memory` - keeps the history of your "URL" in memory (does not read or write to the address bar).
+  - `static` - renders using the StaticRouter which can help rendering pages on the server.
 
 ## Examples
 

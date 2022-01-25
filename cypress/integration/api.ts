@@ -19,7 +19,6 @@ describe('API component', () => {
       cy.visit('/zoom-api/operations/groupCreate');
       cy.findByRole('heading', { name: /Create a group/i }).should('exist');
       cy.findByRole('heading', { name: /Request/i }).should('exist');
-      cy.findByRole('heading', { name: /post \/groups/i }).should('exist');
       cy.findByRole('heading', { name: /Response/i }).should('exist');
     });
 
@@ -49,7 +48,7 @@ describe('API component', () => {
 
     it('invokes TryIt request (receives network error)', () => {
       cy.visit('/zoom-api/operations/userCreate');
-      cy.findByRole('button', { name: /Send Request/i }).click();
+      cy.findByRole('button', { name: /Send API Request/i }).click();
       cy.findByRole('button', { name: 'Error' }).should('exist');
     });
   });

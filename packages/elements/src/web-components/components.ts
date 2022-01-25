@@ -6,6 +6,7 @@ export const ApiElement = createElementClass(API, {
   apiDescriptionUrl: { type: 'string', defaultValue: '' },
   apiDescriptionDocument: { type: 'string', defaultValue: '' },
   basePath: { type: 'string' },
+  staticRouterPath: { type: 'string' },
   router: { type: 'string' },
   layout: { type: 'string' },
   hideTryIt: { type: 'boolean' },

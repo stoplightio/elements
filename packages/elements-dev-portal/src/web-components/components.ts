@@ -8,6 +8,7 @@ export const StoplightProjectElement = createElementClass(StoplightProject, {
   hideMocking: { type: 'boolean' },
   hideExport: { type: 'boolean' },
   basePath: { type: 'string' },
+  staticRouterPath: { type: 'string' },
   router: { type: 'string' },
   platformUrl: { type: 'string' },
   collapseTableOfContents: { type: 'boolean' },

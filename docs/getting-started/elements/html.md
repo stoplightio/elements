@@ -1,8 +1,8 @@
-# Web Component
+# Elements in HTML
 
-Integrating Elements into any project is a case of loading up some JavaScript and CSS, and embedding a Web Component (custom HTML) into the HTML of whatever existing documentation you have. 
+Setting up Elements is a case of loading up some JavaScript and CSS and embedding a Web Component (custom HTML) into the HTML of your new or existing dev portal. This should work anywhere custom HTML can be embedded and this approach is supported by [pretty much all modern browsers](https://caniuse.com/custom-elementsv1).
 
-This will work with pretty much any CMS: Drupal, Joomla, Wordpress, Jekyll, they will all allow custom HTML to be embedded, and this approach is supported by [pretty much all modern browsers](https://caniuse.com/custom-elementsv1).
+For now, the only Web component in the Elements package is `<elements-api/>`, which will display API reference documentation for your OpenAPI. Check out the demo for a live example https://elements-demo.stoplight.io.
 
 ## Usage
 
@@ -66,6 +66,7 @@ These properties can be provided as HTML attributes to the web component.
   - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
   - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
   - `memory` - keeps the history of your "URL" in memory (does not read or write to the address bar).
+  - `static` - renders using the StaticRouter which can help rendering pages on the server.
 
 ## Examples
 
@@ -96,18 +97,3 @@ These properties can be provided as HTML attributes to the web component.
   hideTryIt="true"
 />
 ```
-
-## Next steps
-
-Elements provides you with the components for beautiful API reference documentation, but you'll likely want to add other things to your site such as a landing page, header and footer navigation, etc. Check out our [Twitter Bootstrap](https://github.com/stoplightio/elements/blob/main/examples/bootstrap/project.html) for an idea of how that could look.
-
-## Integrations 
-
-If you would like to see how Elements can be used in other environments, Elements is also available as a ReactJS component, which can be used in all sorts of places:
-
-- [ReactJS](../integrations/react.md)
-- [AngularJS](../integrations/angular.md)
-- [GatsbyJS](../integrations/gatsby.md)
-- [NextJS](../integrations/next.md)
-
-Once you're done and you're docs are live, give us a shout at [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!

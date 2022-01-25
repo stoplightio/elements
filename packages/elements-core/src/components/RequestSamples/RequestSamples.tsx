@@ -94,6 +94,15 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embedd
           maxHeight="400px"
           language={mosaicCodeViewerLanguage}
           value={requestSample || fallbackText}
+          style={
+            embeddedInMd
+              ? undefined
+              : // when not rendering in prose (markdown), reduce font size to be consistent with base UI
+                {
+                  // @ts-expect-error react css typings do not allow for css variables...
+                  '--fs-code': 12,
+                }
+          }
         />
       </Panel.Content>
     </Panel>

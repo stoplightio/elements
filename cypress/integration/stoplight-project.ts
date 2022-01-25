@@ -11,7 +11,7 @@ describe('Stoplight component', () => {
       cy.findByText('To-dos').click();
       cy.wait('@getNode');
 
-      cy.findByText('https://todos.stoplight.io/').should('exist');
+      cy.findByText('https://todos.stoplight.io').should('exist');
       cy.findByText('https://stoplight.io/mocks/elements-examples/studio-demo/389434').should('exist');
       cy.findByRole('heading', { name: /API Key/ }).should('exist');
     });
@@ -22,7 +22,6 @@ describe('Stoplight component', () => {
       loadCreateTodoPage();
       cy.findByRole('heading', { name: /Create Todo/i }).should('exist');
       cy.findByRole('heading', { name: /Request/i }).should('exist');
-      cy.findByRole('heading', { name: /post \/todos/i }).should('exist');
       cy.findByRole('heading', { name: /Response/i }).should('exist');
     });
 
@@ -51,7 +50,7 @@ describe('Stoplight component', () => {
 
     it('invokes TryIt request', () => {
       loadCreateTodoPage();
-      cy.findByRole('button', { name: /send request/i }).click();
+      cy.findByRole('button', { name: /send api request/i }).click();
 
       // Temporarily changing response code as the requested api is unavailable
       cy.findByText('500 Internal Server Error').should('exist');
@@ -59,11 +58,11 @@ describe('Stoplight component', () => {
 
     it('mocks response correctly', () => {
       loadListTodosPage();
-      cy.findByRole('button', { name: /mocking/i }).click();
-      cy.findByRole('menuitemcheckbox', { name: /enabled/i }).then(enabled => {
+      cy.findByRole('button', { name: /server/i }).click();
+      cy.findByRole('menuitemradio', { name: /mock server/i }).then(enabled => {
         enabled.trigger('click');
       });
-      cy.findByRole('button', { name: /send request/i }).click();
+      cy.findByRole('button', { name: /send api request/i }).click();
       cy.findByText('200 OK').should('exist');
     });
   });

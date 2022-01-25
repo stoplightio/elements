@@ -1,19 +1,27 @@
-import { Flex, Panel, PanelProps, Text } from '@stoplight/mosaic';
+import { Box, HeadingProps, HStack, LinkHeading, Panel, PanelProps } from '@stoplight/mosaic';
 import * as React from 'react';
+
+import { slugify } from '../../utils/string';
 
 export interface ISectionTitle {
   title: string;
+  id?: string;
+  size?: HeadingProps['size'];
 }
 
-export const SectionTitle: React.FC<ISectionTitle> = ({ title, children }) => {
+export const SectionTitle: React.FC<ISectionTitle> = ({ title, id, size = 2, children }) => {
   return (
-    <Flex role="heading" borderB mb={3} pb={3} aria-label={title} align="baseline">
-      <Text size="xl" fontWeight="semibold" mr={5}>
+    <HStack spacing={6}>
+      <Box as={LinkHeading} size={size} aria-label={title} id={id || slugify(title)}>
         {title}
-      </Text>
+      </Box>
       {children}
-    </Flex>
+    </HStack>
   );
+};
+
+export const SectionSubtitle: React.FC<ISectionTitle> = props => {
+  return <SectionTitle {...props} size={3} />;
 };
 
 type SubSectionPanelProps = {
@@ -31,16 +39,12 @@ export const SubSectionPanel: React.FC<SubSectionPanelProps & Pick<PanelProps, '
   onChange,
 }) => {
   return (
-    <Panel appearance="minimal" isCollapsible={hasContent} defaultIsOpen={defaultIsOpen} onChange={onChange}>
+    <Panel isCollapsible={hasContent} defaultIsOpen={defaultIsOpen} onChange={onChange} appearance="outlined">
       <Panel.Titlebar fontWeight="medium" rightComponent={rightComponent}>
         <div role="heading">{title}</div>
       </Panel.Titlebar>
 
-      {hasContent !== false && (
-        <Panel.Content pr={3} pl={6} p={0}>
-          {children}
-        </Panel.Content>
-      )}
+      {hasContent !== false && <Panel.Content>{children}</Panel.Content>}
     </Panel>
   );
 };
