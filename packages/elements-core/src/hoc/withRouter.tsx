@@ -15,7 +15,7 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
     return (
       <Router {...routerProps} key={basePath}>
         <Route path="/">
-          <MarkdownComponentsProvider value={{ link: ReactRouterMarkdownLink }}>
+          <MarkdownComponentsProvider value={{ a: ReactRouterMarkdownLink }}>
             <WrappedComponent {...props} />
           </MarkdownComponentsProvider>
         </Route>

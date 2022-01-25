@@ -1,10 +1,16 @@
-import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 
-export const ReactRouterMarkdownLink: CustomComponentMapping['link'] = ({ title, href, children }) => {
+export const ReactRouterMarkdownLink = ({
+  title,
+  to,
+  href: _href,
+  children,
+}: JSX.IntrinsicElements['a'] & { to?: string }) => {
+  const href = to || _href;
+
   const isExternal = href !== undefined && externalRegex.test(href);
   if (isExternal) {
     return (
