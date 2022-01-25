@@ -11,7 +11,7 @@ import {
   withStyles,
 } from '@stoplight/elements-core';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
-import { pipe } from 'lodash/fp';
+import { flow } from 'lodash';
 import * as React from 'react';
 import { useQuery } from 'react-query';
 
@@ -187,7 +187,7 @@ export const APIImpl: React.FC<APIProps> = props => {
   );
 };
 
-export const API = pipe(
+export const API = flow(
   withRouter,
   withStyles,
   withPersistenceBoundary,

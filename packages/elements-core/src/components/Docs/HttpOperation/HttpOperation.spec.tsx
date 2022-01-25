@@ -1,8 +1,7 @@
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import * as React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import requestBody from '../../../__fixtures__/operations/request-body';
@@ -51,21 +50,23 @@ describe('HttpOperation', () => {
 
       unmount();
     });
+  });
 
-    it('should display auth badges for operation security schemas', () => {
+  describe('Security', () => {
+    it('should display security panel for each security scheme', () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
 
-      const apikeyBadge = getSecurityBadge(/API Key/i);
-      const basicBadge = getSecurityBadge(/Basic Auth/i);
-      const bearerBadge = getSecurityBadge(/Bearer Auth/i);
-      const oidcBadge = getSecurityBadge(/OpenID Connect/i);
-      const oauthBadge = getSecurityBadge(/OAuth 2.0/i);
+      const apikeyPanel = screen.getByText(/Security: API Key/i);
+      const basicPanel = screen.getByText(/Security: Basic Auth/i);
+      const bearerPanel = screen.getByText(/Security: Bearer Auth/i);
+      const oidcPanel = screen.getByText(/Security: OpenID Connect/i);
+      const oauthPanel = screen.getByText(/Security: OAuth 2.0/i);
 
-      expect(apikeyBadge).toBeInTheDocument();
-      expect(basicBadge).toBeInTheDocument();
-      expect(bearerBadge).toBeInTheDocument();
-      expect(oidcBadge).toBeInTheDocument();
-      expect(oauthBadge).toBeInTheDocument();
+      expect(apikeyPanel).toBeInTheDocument();
+      expect(basicPanel).toBeInTheDocument();
+      expect(bearerPanel).toBeInTheDocument();
+      expect(oidcPanel).toBeInTheDocument();
+      expect(oauthPanel).toBeInTheDocument();
 
       unmount();
     });
@@ -106,37 +107,26 @@ describe('HttpOperation', () => {
 
       const { unmount } = render(<HttpOperation data={{ ...httpOperation, security }} />);
 
-      const oauth2Badge = getSecurityBadge(/^OAuth 2.0 \(oauth2WithScopes\)$/i);
-      const oauth2WithEmptyScopesBadge = getSecurityBadge(/^OAuth 2.0 \(oauth2WithEmptyScopes\)$/i);
+      const oauth2Panel = screen.getByText(/^Security: OAuth 2.0 \(oauth2WithScopes\)$/i);
+      const oauth2WithEmptyScopesPanel = screen.getByText(/^Security: OAuth 2.0 \(oauth2WithEmptyScopes\)$/i);
 
-      expect(oauth2Badge).toBeInTheDocument();
-      expect(oauth2WithEmptyScopesBadge).toBeInTheDocument();
-
-      unmount();
-    });
-
-    it('should contain link to Overview for operation with uri when `allowRouting` is present', () => {
-      const { unmount } = render(
-        <Router>
-          <HttpOperation
-            data={{ ...httpOperation }}
-            uri="/reference/todos/openapi.v1.json/paths/~1todos/post"
-            allowRouting
-          />
-        </Router>,
-      );
-      const apikeyBadge = getSecurityBadge(/API Key/i);
-      expect(apikeyBadge?.closest('a')).toHaveAttribute('href', '/reference/todos/openapi.v1.json?security=api_key');
+      expect(oauth2Panel).toBeInTheDocument();
+      expect(oauth2WithEmptyScopesPanel).toBeInTheDocument();
 
       unmount();
     });
 
-    it('should not contain link to Overview for operation with uri by default', () => {
-      const { unmount } = render(
-        <HttpOperation data={{ ...httpOperation }} uri="/reference/todos/openapi.v1.json/paths/~1todos/post" />,
-      );
-      const apikeyBadge = getSecurityBadge(/API Key/i);
-      expect(apikeyBadge?.closest('a')).not.toBeInTheDocument();
+    it('should expand on click', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
+
+      const oauthPanel = screen.getByText(/Security: OAuth 2.0/i);
+
+      expect(oauthPanel).toBeInTheDocument();
+      expect(screen.queryByText('write:pets')).not.toBeInTheDocument();
+
+      act(() => oauthPanel.click());
+
+      expect(screen.queryAllByText('write:pets')).toHaveLength(4);
 
       unmount();
     });
@@ -174,12 +164,14 @@ describe('HttpOperation', () => {
         },
       };
 
-      render(<HttpOperation data={data} />);
+      const { unmount } = render(<HttpOperation data={data} />);
 
       const queryParametersPanel = screen.queryByRole('heading', { name: 'Query' });
       expect(queryParametersPanel).toBeInTheDocument();
       expect(queryParametersPanel).toBeVisible();
       expect(queryParametersPanel).toBeEnabled();
+
+      unmount();
     });
 
     it('should not render panel when there are no header parameters', () => {
@@ -327,12 +319,14 @@ describe('HttpOperation', () => {
         },
       };
 
-      render(<HttpOperation data={data} />);
+      const { unmount } = render(<HttpOperation data={data} />);
 
       const pathParametersPanel = screen.getByRole('button', { name: /GET.*\/path/i });
       expect(pathParametersPanel).toBeInTheDocument();
       expect(pathParametersPanel).toBeVisible();
       expect(pathParametersPanel).toBeEnabled();
+
+      unmount();
     });
 
     it('should still show path parameters panel when there are no parameters', () => {
@@ -436,19 +430,23 @@ describe('HttpOperation', () => {
     });
 
     it('should display description even if there are no contents', async () => {
-      render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
+      const { unmount } = render(<HttpOperation data={httpOperationWithoutRequestBodyContents} />);
 
       expect(await screen.findByText('Some body description')).toBeInTheDocument();
+
+      unmount();
     });
 
     it('should display schema for content type', async () => {
-      render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
+      const { unmount } = render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
 
       expect(await screen.findByText('some_property')).toBeInTheDocument();
+
+      unmount();
     });
 
     it('request body selection in Docs should update TryIt', async () => {
-      render(<HttpOperation data={requestBody} />);
+      const { unmount } = render(<HttpOperation data={requestBody} />);
 
       const body = screen.getByRole('textbox');
       const requestSample = await screen.findByLabelText(
@@ -466,6 +464,8 @@ describe('HttpOperation', () => {
 
       expect(screen.getByLabelText('someEnum')).toBeInTheDocument();
       expect(secondRequestSample).toBeInTheDocument();
+
+      unmount();
     });
   });
 
@@ -545,7 +545,7 @@ describe('HttpOperation', () => {
     });
 
     it('should display schema for chosen content type', async () => {
-      render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
+      const { unmount } = render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
       const property = await screen.findByText('some_property');
       expect(property).toBeInTheDocument();
@@ -555,32 +555,32 @@ describe('HttpOperation', () => {
       chooseOption(select, 'application/xml');
 
       expect(screen.queryByText('some_property')).not.toBeInTheDocument();
+
+      unmount();
     });
   });
 
   describe('Visibility', () => {
     it('should hide TryIt', async () => {
-      render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryIt: true }} />);
+      const { unmount } = render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryIt: true }} />);
 
       expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
       expect(await screen.findByText('Response Example')).toBeInTheDocument();
+
+      unmount();
     });
 
-    it('should hide right column', async () => {
-      render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryItPanel: true }} />);
+    it('should hide right column', () => {
+      const { unmount } = render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryItPanel: true }} />);
 
       expect(screen.queryByText('Send Request')).not.toBeInTheDocument();
       expect(screen.queryByText('Response Example')).not.toBeInTheDocument();
+
+      unmount();
     });
   });
 });
 
 function getDeprecatedBadge() {
   return screen.queryByTestId('badge-deprecated');
-}
-
-function getSecurityBadge(re: RegExp) {
-  return screen
-    .queryAllByTestId('badge-security')
-    .find(element => element.textContent !== null && re.test(element.textContent));
 }

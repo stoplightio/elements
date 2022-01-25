@@ -3,11 +3,12 @@ export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { ExportButton, ExportButtonProps } from './components/Docs/HttpService/ExportButton';
 export { SidebarLayout } from './components/Layout/SidebarLayout';
 export { Logo } from './components/Logo';
+export { DefaultSMDComponents } from './components/MarkdownViewer/CustomComponents/CodeComponent';
 export {
   CustomComponentMapping,
-  DefaultSMDComponents,
   MarkdownComponentsProvider,
 } from './components/MarkdownViewer/CustomComponents/Provider';
+export { ReactRouterMarkdownLink } from './components/MarkdownViewer/CustomComponents/ReactRouterLink';
 export { TableOfContents } from './components/MosaicTableOfContents';
 export {
   CustomLinkComponent,

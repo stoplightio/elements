@@ -1,4 +1,4 @@
-import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import {
   NodeTypeColors,
   NodeTypeIconDefs,
@@ -8,7 +8,7 @@ import {
   withStyles,
 } from '@stoplight/elements-core';
 import { Box, Flex, Icon, Input, ListBox, ListBoxItem, Modal, ModalProps } from '@stoplight/mosaic';
-import { pipe } from 'lodash/fp';
+import { flow } from 'lodash';
 import * as React from 'react';
 
 import { NodeSearchResult } from '../../types';
@@ -124,7 +124,7 @@ const SearchImpl = ({ search, searchResults, isOpen, onClose, onClick, onSearch 
   );
 };
 
-export const Search = pipe(
+export const Search = flow(
   withStyles,
   withPersistenceBoundary,
   withMosaicProvider,

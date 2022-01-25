@@ -1,11 +1,10 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { Box, Flex, Heading, Icon, Text } from '@stoplight/mosaic';
+import { Box, Flex, Heading, Icon, IIconProps, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
 type NonIdealStateProps = {
   description?: React.ReactNode;
-  icon?: IconProp;
+  icon?: IIconProps['icon'];
   title?: React.ReactNode;
 };
 

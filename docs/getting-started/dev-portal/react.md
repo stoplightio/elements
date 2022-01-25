@@ -31,7 +31,10 @@ import { StoplightProject } from '@stoplight/elements-dev-portal';
 import '@stoplight/elements-dev-portal/styles.min.css';
 ```
 
-3. Find the "Project ID" from the Project Settings view of your Stoplight Project.
+3. Find the "Project ID" from the Project Settings view of your Stoplight Project. 
+
+>Note: you will receive a ‘Forbidden’ error if the project visibility is not set to "Public"
+
 
 > Project Settings can only be viewed by Project Editors or above. Read more about project permissions [here](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
 
@@ -40,7 +43,7 @@ import '@stoplight/elements-dev-portal/styles.min.css';
 4. Now you can replace the existing App component's contents with the StoplightProject component.
 
 ```jsx
-<StoplightProject projectId="cHJqOjYyNTgw" />
+<StoplightProject projectId="INSERT_YOUR_PROJECT_ID_HERE" />
 ```
 
 Now your `App.js` file should look something like this:
@@ -56,7 +59,7 @@ import '@stoplight/elements-dev-portal/styles.min.css';
 function App() {
   return (
     <div className="App">
-      <StoplightProject projectId="cHJqOjYyNTgw" />
+      <StoplightProject projectId="INSERT_YOUR_PROJECT_ID_HERE" />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 ///<reference path="../support/index.d.ts"/>
+
 describe('API component', () => {
   beforeEach(() => {
     cy.redirectUnpkgToLocalDistFolder('elements');
@@ -51,12 +52,6 @@ describe('API component', () => {
       cy.findByRole('button', { name: /Send Request/i }).click();
       cy.findByRole('button', { name: 'Error' }).should('exist');
     });
-
-    it('navigates on auth badge', () => {
-      cy.visit('/zoom-api/operations/userCreate');
-      cy.findByRole('link', { name: 'API Key' }).click();
-      cy.findByRole('heading', { name: 'Zoom API', level: 1 }).should('exist');
-    });
   });
 
   describe('Schema page', () => {
@@ -82,6 +77,15 @@ describe('API component', () => {
 });
 
 function loadZoomApiPage() {
+  cy.fixture('zoom.openapi.yml').then(zoomOpenAPI => {
+    cy.intercept(
+      'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml',
+      zoomOpenAPI,
+    ).as('getZoomOpenAPI');
+  });
+
   cy.visit('/zoom-api');
+  cy.wait('@getZoomOpenAPI');
+
   cy.findByRole('heading', { name: 'Zoom API', level: 1 }).should('exist');
 }

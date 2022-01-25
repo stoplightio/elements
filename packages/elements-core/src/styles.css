@@ -28,7 +28,6 @@
   --fs-code: 12px;
 }
 
-
 /* Table of Contents */
 
 .sl-elements .ElementsTableOfContentsItem:hover {
@@ -47,7 +46,7 @@
   margin-bottom: 16px;
 }
 
-.sl-elements .SendButtonHolder{
+.sl-elements .SendButtonHolder {
   margin-top: 16px;
   padding-top: 0;
 }
@@ -66,7 +65,7 @@
   padding-right : 2px;
 }
 
-.sl-elements .TextRequestBody{
+.sl-elements .TextRequestBody {
   max-height: 200px;
   overflow-y: auto;
   padding-bottom: 0;
@@ -81,7 +80,6 @@
 }
 
 .sl-elements .HttpOperation__Parameters .sl-markdown-viewer p {
-
   font-size: 12px;
   line-height: 1.5em;
 }
@@ -95,6 +93,6 @@
   padding-right: 10px;
 }
 
-.sl-elements .HttpOperation__gutter {
+/* .sl-elements .HttpOperation__gutter {
   --fs-code: 12px;
-}
+} */

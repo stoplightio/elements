@@ -120,7 +120,7 @@ export const TryIt: React.FC<TryItProps> = ({
   }, []);
 
   React.useEffect(() => {
-    let isActive = true;
+    let isMounted = true;
     if (onRequestChange || embeddedInMd) {
       buildHarRequest({
         mediaTypeContent,
@@ -132,12 +132,18 @@ export const TryIt: React.FC<TryItProps> = ({
         chosenServer,
         corsProxy,
       }).then(request => {
-        if (onRequestChange && isActive) onRequestChange(request);
-        if (embeddedInMd) setRequestData(request);
+        if (isMounted) {
+          if (onRequestChange) {
+            onRequestChange(request);
+          }
+          if (embeddedInMd) {
+            setRequestData(request);
+          }
+        }
       });
     }
     return () => {
-      isActive = false;
+      isMounted = false;
     };
     // disabling because we don't want to react on `onRequestChange` change
     // eslint-disable-next-line react-hooks/exhaustive-deps
