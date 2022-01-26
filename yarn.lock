@@ -1578,7 +1578,7 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.36"
 
-"@fortawesome/free-solid-svg-icons@^5.10.2", "@fortawesome/free-solid-svg-icons@^5.14.0", "@fortawesome/free-solid-svg-icons@^5.15.2", "@fortawesome/free-solid-svg-icons@^5.15.3":
+"@fortawesome/free-solid-svg-icons@^5.10.2", "@fortawesome/free-solid-svg-icons@^5.14.0", "@fortawesome/free-solid-svg-icons@^5.15.2", "@fortawesome/free-solid-svg-icons@^5.15.3", "@fortawesome/free-solid-svg-icons@^5.15.4":
   version "5.15.4"
   resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.15.4.tgz#2a68f3fc3ddda12e52645654142b9e4e8fbb6cc5"
   integrity sha512-JLmQfz6tdtwxoihXLg6lT78BorrFyCf59SAwBM6qV/0zXyVeDygJVb3fk+j5Qat+Yvcxp1buLTY5iDh1ZSAQ8w==
@@ -3242,6 +3242,11 @@
   dependencies:
     "@react-types/shared" "^3.9.0"
 
+"@rehooks/component-size@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@rehooks/component-size/-/component-size-1.0.3.tgz#823eabeb42084893d46d43e3a9d1d0e34252b3cb"
+  integrity sha512-pnYld+8SSF2vXwdLOqBGUyOrv/SjzwLjIUcs/4c1JJgR0q4E9eBtBfuZMD6zUD51fvSehSsbnlQMzotSmPTXPg==
+
 "@rollup/plugin-commonjs@^19.0.0":
   version "19.0.2"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-19.0.2.tgz#1ccc3d63878d1bc9846f8969f09dd3b3e4ecc244"
@@ -3638,27 +3643,28 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.3.2":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.3.3.tgz#6bbaf4e0d61ba144dbe0a0c9831b422c3e733176"
-  integrity sha512-wAye0bKM9P3pZIYFNn5Xf4dgzrV6jP1vBc5QGQ/vMyY2f4HUeNzJloZr+r1AmhGbExJo99x8I1Lavm8l76idTg==
+"@stoplight/markdown-viewer@^5.4.1":
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.4.1.tgz#72c2846e5e89b477f14ccc8c7e27e88641e3a699"
+  integrity sha512-s0NwEDHjWDz4BNlX2qbqEN+pQkmXVj5hmSvd2nbs39SJp8nNyC4w2Qwgj6ElRYRveja+XuOybY0Z+tQw4U/dmA==
   dependencies:
-    "@stoplight/markdown" "^3.0.0"
+    "@fortawesome/free-solid-svg-icons" "^5.15.4"
+    "@rehooks/component-size" "^1.0.3"
+    "@stoplight/markdown" "^3.1.1"
     "@stoplight/react-error-boundary" "^2.0.0"
-    "@stoplight/types" "^12.3.0"
-    clsx "^1.1.1"
     deepmerge "^4.2.2"
-    hast-to-hyperscript "^10.0.0"
-    hast-util-raw "^7.0.0"
+    hast-to-hyperscript "^10.0.1"
+    hast-util-raw "7.0.0"
     hast-util-sanitize "^4.0.0"
-    hastscript "^7.0.1"
+    hastscript "^7.0.2"
     mdast-util-to-hast "^11.1.1"
     remark-parse "^9.0.0"
     unified "^9.2.1"
     unist-builder "^3.0.0"
+    unist-util-select "^4.0.1"
     unist-util-visit "^3.1.0"
 
-"@stoplight/markdown@^3.0.0", "@stoplight/markdown@^3.1.1":
+"@stoplight/markdown@^3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-3.1.1.tgz#d3f097765fde7b794a56db4e64122bede10bed1a"
   integrity sha512-46DKOnJdD2Q89xSsitDUTPTDV2HTSKxdpJyMA6LP7qxUu+7kGvL//TrQ5QRwVsZzsmEWeg15LNT1iwYvLwKbGg==
@@ -11631,7 +11637,7 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hast-to-hyperscript@^10.0.0:
+hast-to-hyperscript@^10.0.0, hast-to-hyperscript@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/hast-to-hyperscript/-/hast-to-hyperscript-10.0.1.tgz#3decd7cb4654bca8883f6fcbd4fb3695628c4296"
   integrity sha512-dhIVGoKCQVewFi+vz3Vt567E4ejMppS1haBRL6TEmeLeJVB1i/FJIIg/e6s1Bwn0g5qtYojHEKvyGA+OZuyifw==
@@ -11711,20 +11717,21 @@ hast-util-raw@6.0.1:
     xtend "^4.0.0"
     zwitch "^1.0.0"
 
-hast-util-raw@^7.0.0:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/hast-util-raw/-/hast-util-raw-7.2.1.tgz#6e964cee098dbdd93d1b77cf180b5827d48048ab"
-  integrity sha512-wgtppqXVdXzkDXDFclLLdAyVUJSKMYYi6LWIAbA8oFqEdwksYIcPGM3RkKV1Dfn5GElvxhaOCs0jmCOMayxd3A==
+hast-util-raw@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/hast-util-raw/-/hast-util-raw-7.0.0.tgz#77eb87580792a5769010b522ba2d75ba7e1a6c71"
+  integrity sha512-3UKuYgaqakZrY916JfQzqSk8xZGyxpj9zwfPB3MctXLDorPdyqk1QZGZoCEqU2LMIEzVXBZukAQs7aAH9TJPIw==
   dependencies:
     "@types/hast" "^2.0.0"
     "@types/parse5" "^6.0.0"
+    "@types/unist" "^2.0.3"
     hast-util-from-parse5 "^7.0.0"
     hast-util-to-parse5 "^7.0.0"
     html-void-elements "^2.0.0"
     parse5 "^6.0.0"
     unist-util-position "^4.0.0"
-    unist-util-visit "^4.0.0"
-    vfile "^5.0.0"
+    unist-util-visit "^3.0.0"
+    vfile "^4.0.0"
     web-namespaces "^2.0.0"
     zwitch "^2.0.0"
 
@@ -11774,7 +11781,7 @@ hastscript@^6.0.0:
     property-information "^5.0.0"
     space-separated-tokens "^1.0.0"
 
-hastscript@^7.0.0, hastscript@^7.0.1:
+hastscript@^7.0.0, hastscript@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/hastscript/-/hastscript-7.0.2.tgz#d811fc040817d91923448a28156463b2e40d590a"
   integrity sha512-uA8ooUY4ipaBvKcMuPehTAB/YfFLSSzCwFSwT6ltJbocFUKH/GDHLN+tflq7lSRf9H86uOuxOFkh1KgIy3Gg2g==
@@ -16239,11 +16246,6 @@ normalize-url@^6.0.0, normalize-url@^6.0.1, normalize-url@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-6.1.0.tgz#40d0885b535deffe3f3147bec877d05fe4c5668a"
   integrity sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==
-
-not@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/not/-/not-0.1.0.tgz#c9691c1746c55dcfbe54cbd8bd4ff041bc2b519d"
-  integrity sha1-yWkcF0bFXc++VMvYvU/wQbwrUZ0=
 
 npm-audit-report@^1.3.3:
   version "1.3.3"
@@ -21803,18 +21805,7 @@ unist-util-remove@^2.0.0:
   dependencies:
     unist-util-is "^4.0.0"
 
-unist-util-select@^3.0.1:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/unist-util-select/-/unist-util-select-3.0.4.tgz#702c9dc1db1b2bbbfe27f796fce99e43f25edc60"
-  integrity sha512-xf1zCu4okgPqGLdhCDpRnjwBNyv3EqjiXRUbz2SdK1+qnLMB7uXXajfzuBvvbHoQ+JLyp4AEbFCGndmc6S72sw==
-  dependencies:
-    css-selector-parser "^1.0.0"
-    not "^0.1.0"
-    nth-check "^2.0.0"
-    unist-util-is "^4.0.0"
-    zwitch "^1.0.0"
-
-unist-util-select@^4.0.0:
+unist-util-select@^4.0.0, unist-util-select@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/unist-util-select/-/unist-util-select-4.0.1.tgz#d1913d7a0ab4e5d4b6dd1b33b3ea79b9f9645b0b"
   integrity sha512-zPozyEo5vr1csbHf1TqlQrnuLVJ0tNMo63og3HrnINh2+OIDAgQpqHVr+0BMw1DIVHJV8ft/e6BZqtvD1Y5enw==

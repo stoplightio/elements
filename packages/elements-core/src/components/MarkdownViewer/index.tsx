@@ -2,7 +2,7 @@ import { IMarkdownViewerProps, MarkdownViewer as MarkdownViewerComponent } from 
 import * as React from 'react';
 
 /**
- * Wraps @stoplight/markdown-viewer and passes in custom components from the context provider
+ * This wrapper is no longer needed and can be removed in the future.
  */
 export const MarkdownViewer = (props: IMarkdownViewerProps) => {
   return <MarkdownViewerComponent {...props} />;
