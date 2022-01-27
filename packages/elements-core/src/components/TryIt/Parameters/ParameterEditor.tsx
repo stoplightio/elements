@@ -82,22 +82,32 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
       {canChangeOptional && !parameter.required && (
         <>
           <div></div>
+          <div></div>
           <div>
-            <Input
-              className="Checkbox"
-              aria-label={`${parameter.name}-checkbox`}
-              id={inputCheckId}
-              type="checkbox"
-              intent="success"
-              size="sm"
-              checked={isOptional}
-              onChange={e => onChangeOptional(!e.target.checked)}
-            />
-          </div>
-          <div>
-            <Text as="label" aria-hidden="true" data-testid="param-check" htmlFor={inputCheckId} fontSize="base">
-              Omit the field value
-            </Text>
+            <Flex flex={1}>
+              <Input
+                className="Checkbox"
+                aria-label={`${parameter.name}-checkbox`}
+                id={inputCheckId}
+                flex={1}
+                type="checkbox"
+                intent="success"
+                size="sm"
+                checked={isOptional}
+                onChange={e => onChangeOptional(!e.target.checked)}
+              />
+              <Text
+                className="TextForCheckBox"
+                flex={1}
+                as="label"
+                aria-hidden="true"
+                data-testid="param-check"
+                htmlFor={inputCheckId}
+                fontSize="base"
+              >
+                Omit {parameterDisplayName}
+              </Text>
+            </Flex>
           </div>
         </>
       )}

@@ -57,7 +57,12 @@
 
 .sl-elements .Checkbox {
   max-width: 15px;
-  padding-right : 2px;
+  padding-right : 3px;
+}
+
+.sl-elements .TextForCheckBox {
+  padding-top : 6px;
+  padding-left : 9px;
 }
 
 .sl-elements .TextRequestBody {
