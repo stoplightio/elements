@@ -88,6 +88,13 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   tryItCorsProxy?: string;
+
+  /**
+   * Whether to include CORS credentials (cookies, authorization headers, TLS client certificates)
+   * in remote ref requests
+   * @default: false
+   */
+  withCredentials?: boolean;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -105,6 +112,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideExport,
     tryItCredentialsPolicy,
     tryItCorsProxy,
+    withCredentials,
   } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
@@ -124,7 +132,7 @@ export const APIImpl: React.FC<APIProps> = props => {
 
   const document = apiDescriptionDocument || fetchedDocument || '';
   const parsedDocument = useParsedValue(document);
-  const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl });
+  const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl, withCredentials });
   const serviceNode = React.useMemo(() => transformOasToServiceNode(bundledDocument), [bundledDocument]);
   const exportProps = useExportDocumentProps({ originalDocument: document, bundledDocument });
 
