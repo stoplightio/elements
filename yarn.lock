@@ -3643,10 +3643,10 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.4.1":
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.4.1.tgz#72c2846e5e89b477f14ccc8c7e27e88641e3a699"
-  integrity sha512-s0NwEDHjWDz4BNlX2qbqEN+pQkmXVj5hmSvd2nbs39SJp8nNyC4w2Qwgj6ElRYRveja+XuOybY0Z+tQw4U/dmA==
+"@stoplight/markdown-viewer@^5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.4.2.tgz#e814324ccea827cbb06d4eebfce23e37e5bca426"
+  integrity sha512-1lkx7ibRqqiA+DDjcPEZ8pS61idFAieACZR2r2Ar3tdki6jvM1O+REYI4ggJJKRDh0/KVX4l/C8GF8StTkAl3A==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.4"
     "@rehooks/component-size" "^1.0.3"
