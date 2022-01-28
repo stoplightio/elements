@@ -7,14 +7,14 @@ import * as React from 'react';
 import { FileUploadParameterEditor } from '../Parameters/FileUploadParameterEditors';
 import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from '../Parameters/parameter-utils';
 import { ParameterEditor } from '../Parameters/ParameterEditor';
-import { BodyParameterValues, ParamaterOptional } from './request-body-utils';
+import { BodyParameterValues, ParameterOptional } from './request-body-utils';
 
 interface FormDataBodyProps {
   specification: IMediaTypeContent;
   values: BodyParameterValues;
   onChangeValues: (newValues: BodyParameterValues) => void;
-  onChangeParameterAllow: (newValue: ParamaterOptional) => void;
-  isAllowedEmptyValues: ParamaterOptional;
+  onChangeParameterAllow: (newValue: ParameterOptional) => void;
+  isAllowedEmptyValues: ParameterOptional;
 }
 
 export const FormDataBody: React.FC<FormDataBodyProps> = ({

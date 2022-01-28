@@ -10,7 +10,7 @@ import {
 } from '../Parameters/parameter-utils';
 
 export type BodyParameterValues = Record<string, string | File>;
-export type ParamaterOptional = Record<string, boolean>;
+export type ParameterOptional = Record<string, boolean>;
 
 export const isFormDataContent = (content: IMediaTypeContent) =>
   isUrlEncodedContent(content) || isMultipartContent(content);
@@ -86,7 +86,7 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
   }, [isFormDataBody, mediaTypeContent]);
 
   const [bodyParameterValues, setBodyParameterValues] = React.useState<BodyParameterValues>(initialState);
-  const [isAllowedEmptyValue, setAllowedEmptyValue] = React.useState<ParamaterOptional>({});
+  const [isAllowedEmptyValue, setAllowedEmptyValue] = React.useState<ParameterOptional>({});
 
   React.useEffect(() => {
     setBodyParameterValues(initialState);
