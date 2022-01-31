@@ -40,7 +40,7 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
         >
           {sidebar}
         </Flex>
-        <Box ref={scrollRef} bg="canvas" px={24} flex={1} overflowY="auto" overflowX="hidden" w="full">
+        <Box ref={scrollRef} bg="canvas" px={24} flex={1} w="full" overflowY="auto">
           <Box style={{ maxWidth: `${maxContentWidth - sidebarWidth}px` }} py={16}>
             {children}
           </Box>

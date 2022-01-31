@@ -1,4 +1,3 @@
-import { parse } from '@stoplight/markdown';
 import { NodeType } from '@stoplight/types';
 import { parse as parseYaml } from '@stoplight/yaml';
 import * as React from 'react';
@@ -25,18 +24,13 @@ const parserMap: Record<NodeType, Parser> = {
 };
 
 function parseArticleData(rawData: unknown): ParsedNode | undefined {
-  if (typeof rawData === 'string') {
-    return {
-      type: NodeType.Article,
-      data: parse(rawData),
-    };
-  }
-  if (isSMDASTRoot(rawData)) {
+  if (typeof rawData === 'string' || isSMDASTRoot(rawData)) {
     return {
       type: NodeType.Article,
       data: rawData,
     };
   }
+
   return undefined;
 }
 

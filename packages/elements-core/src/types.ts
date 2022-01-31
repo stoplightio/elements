@@ -1,4 +1,4 @@
-import { MDAST } from '@stoplight/markdown';
+import type { IMarkdownViewerProps } from '@stoplight/markdown-viewer';
 import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 
@@ -7,7 +7,7 @@ export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
 export type ParsedNode =
   | {
       type: NodeType.Article;
-      data: string | MDAST.Root;
+      data: IMarkdownViewerProps['markdown'];
     }
   | {
       type: NodeType.HttpOperation;
@@ -157,16 +157,3 @@ export type ParamField = {
   description: string;
   example: string;
 };
-export interface IArticleHeading {
-  id: string;
-  title: string;
-  depth: number;
-}
-
-export interface IArticleHeadings {
-  headings: IArticleHeading[];
-  title?: string;
-  className?: string;
-  minimal?: boolean;
-  maxWidth?: number;
-}
