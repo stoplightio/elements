@@ -3,9 +3,15 @@ import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
 
+type ServerWithOptionalUrl = Omit<IServer, 'url'> & { url: string | null } & { description: string };
+
+function isValidServer(server: ServerWithOptionalUrl): server is ServerWithOptionalUrl & { url: string } {
+  return server.url !== null && isProperUrl(server.url);
+}
+
 export const getServersToDisplay = (originalServers: IServer[], mockUrl?: string): IServer[] => {
   const servers = originalServers
-    .map((server, i) => {
+    .map<ServerWithOptionalUrl>((server, i) => {
       const fallbackDescription = originalServers.length === 1 ? 'Live Server' : `Server ${i + 1}`;
 
       return {
@@ -14,7 +20,7 @@ export const getServersToDisplay = (originalServers: IServer[], mockUrl?: string
         description: server.description || fallbackDescription,
       };
     })
-    .filter(server => isProperUrl(server.url));
+    .filter(isValidServer);
 
   if (mockUrl) {
     servers.push({
@@ -26,7 +32,7 @@ export const getServersToDisplay = (originalServers: IServer[], mockUrl?: string
   return servers;
 };
 
-export const getServerUrlWithDefaultValues = (server: IServer): string => {
+export const getServerUrlWithDefaultValues = (server: IServer): string | null => {
   let urlString = server.url;
 
   const variables = Object.entries(server.variables ?? {});
@@ -34,7 +40,13 @@ export const getServerUrlWithDefaultValues = (server: IServer): string => {
     urlString = urlString.replace(`{${variableName}}`, variableInfo.default);
   });
 
-  let url = URI(urlString);
+  let url;
+
+  try {
+    url = URI(urlString);
+  } catch {
+    return null;
+  }
 
   if (url.is('relative') && typeof window !== 'undefined') {
     url = url.absoluteTo(window.location.origin);
