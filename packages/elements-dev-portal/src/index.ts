@@ -8,6 +8,7 @@ export type { SearchProps } from './components/Search';
 export { Search } from './components/Search';
 export type { TableOfContentsProps } from './components/TableOfContents';
 export { TableOfContents } from './components/TableOfContents';
+export { devPortalCacheKeys } from './consts';
 export type { StoplightProjectProps } from './containers/StoplightProject';
 export { StoplightProject } from './containers/StoplightProject';
 export { getBranches } from './handlers/getBranches';
