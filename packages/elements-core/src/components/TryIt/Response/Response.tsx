@@ -31,9 +31,9 @@ const bodyFormatMap: Record<ContentType, BodyFormat[]> = {
 };
 
 const regex: Record<ContentType, RegExp> = {
-  image: /image\/(.+)*(jpeg|gif|png|svg)/,
-  json: /application\/(.+)*json/,
-  xml: /(text|application)\/(.+)*(xml|html)/,
+  image: /image\/(.?)*(jpeg|gif|png|svg)/,
+  json: /application\/(.?)*json/,
+  xml: /(text|application)\/(.?)*(xml|html)/,
   text: /text\/.*/,
 };
 

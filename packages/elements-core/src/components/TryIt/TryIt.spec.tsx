@@ -277,6 +277,9 @@ describe('TryIt', () => {
       const messageIdField = screen.getByLabelText('message-id-select');
       chooseOption(messageIdField, 'example 2');
 
+      const quoteField = screen.getByLabelText('quote-select');
+      chooseOption(quoteField, 'quote');
+
       // click send
       clickSend();
 
@@ -296,6 +299,9 @@ describe('TryIt', () => {
       expect(headers.get('account-id')).toBe('account-id-default 1999');
       expect(headers.get('message-id')).toBe('another example');
       expect(headers.get('optional_header')).toBeNull();
+
+      // assert that quote is escaped
+      expect(headers.get('quote')).toBe('\\"');
     });
 
     it('Persists parameter values between operations', async () => {
@@ -387,6 +393,23 @@ describe('TryIt', () => {
 
       const completedField = screen.getByLabelText('completed');
       expect(completedField).toBeInTheDocument();
+    });
+
+    it('allows to omit empty value', async () => {
+      render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
+
+      const ageField = screen.getByRole('textbox', { name: 'age' }) as HTMLInputElement;
+      await userEvent.type(ageField, '12');
+
+      const checkboxName = screen.getByRole('checkbox', { name: 'age-checkbox' }) as HTMLInputElement;
+      await userEvent.click(checkboxName);
+
+      clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      const body = fetchMock.mock.calls[0][1]!.body as FormData;
+      expect(body.has('age')).toBe(false);
+      expect(body.has('name')).toBe(true);
     });
 
     const formDataCases: ReadonlyArray<[string, NewableFunction, IHttpOperation]> = [

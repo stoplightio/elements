@@ -116,6 +116,7 @@ describe('Response', () => {
   it.each([
     ['application/json', 'json'],
     [`application/json; charset='utf-8'`, 'json'],
+    ['application/example.com.kontakt+json;version=10;charset=UTF-8', 'json'],
     ['application/foo-json', 'json'],
     ['application/xml', 'xml'],
     ['application/html', 'xml'],
@@ -130,7 +131,13 @@ describe('Response', () => {
     ['image/png', 'image'],
     ['image/svg', 'image'],
   ])('correctly maps %s mime type', (contentType, type) => {
+    const timerStart = Date.now();
     const responseType = getResponseType(contentType);
+    const timerEnd = Date.now();
+
     expect(responseType).toEqual(type);
+
+    // checking if regex is not too slow (https://github.com/stoplightio/platform-internal/issues/9446)
+    expect(timerEnd - timerStart).toBeLessThan(5000);
   });
 });

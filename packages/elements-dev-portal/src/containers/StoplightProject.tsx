@@ -126,7 +126,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     elem = (
       <NodeContent
         node={node}
-        Link={ReactRouterMarkdownLink!}
+        Link={ReactRouterMarkdownLink}
         hideTryIt={hideTryIt}
         hideMocking={hideMocking}
         hideExport={hideExport}

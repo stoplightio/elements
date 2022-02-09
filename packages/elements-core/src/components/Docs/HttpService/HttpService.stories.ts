@@ -2,7 +2,7 @@ import { httpService } from '../../../__fixtures__/services/petstore';
 import { createStoriesForDocsComponent } from '../story-helper';
 import { HttpService } from './HttpService';
 
-const { meta, createHoistedStory } = createStoriesForDocsComponent(HttpService);
+const { meta, createHoistedStory } = createStoriesForDocsComponent(HttpService, 'HttpService');
 
 export default meta;
 

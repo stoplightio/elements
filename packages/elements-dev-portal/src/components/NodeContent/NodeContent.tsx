@@ -1,4 +1,10 @@
-import { CustomLinkComponent, Docs, MarkdownComponentsProvider, MockingProvider } from '@stoplight/elements-core';
+import {
+  CustomLinkComponent,
+  Docs,
+  MarkdownComponentsProvider,
+  MockingProvider,
+  ReferenceResolver,
+} from '@stoplight/elements-core';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
@@ -45,6 +51,11 @@ export type NodeContentProps = {
    * @default false
    */
   tryItCorsProxy?: string;
+
+  /**
+   * Support for custom reference resolver
+   */
+  refResolver?: ReferenceResolver;
 };
 
 export const NodeContent = ({
@@ -56,6 +67,7 @@ export const NodeContent = ({
   hideExport,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  refResolver,
 }: NodeContentProps) => {
   return (
     <NodeLinkContext.Provider value={[node, Link]}>
@@ -71,6 +83,7 @@ export const NodeContent = ({
               hideExport: hideExport || node.links.export_url === undefined,
             }}
             useNodeForRefResolving
+            refResolver={refResolver}
             tryItCorsProxy={tryItCorsProxy}
             exportProps={
               [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)
@@ -119,7 +132,7 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
     );
 
     if (edge) {
-      return <Link to={`${edge.slug}${hash && `#${hash}`}`}>{children}</Link>;
+      return <Link to={`${edge.slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
     }
   }
 

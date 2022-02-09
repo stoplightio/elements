@@ -1,0 +1,87 @@
+.sl-elements {
+  font-size: 13px;
+}
+
+.sl-elements .svg-inline--fa {
+  display: inline-block;
+}
+
+/* Docs */
+
+.sl-elements .DocsSkeleton {
+  animation: 500ms linear infinite alternate skeleton-glow;
+  background: rgba(206, 217, 224, 0.2);
+  background-clip: padding-box !important;
+  border-color: rgba(206, 217, 224, 0.2) !important;
+  border-radius: 2px;
+  box-shadow: none !important;
+  color: transparent !important;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sl-elements .Model {
+  --fs-code: 12px;
+}
+
+/* Table of Contents */
+
+.sl-elements .ElementsTableOfContentsItem:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* TryIt */
+
+.sl-elements .ParameterGrid {
+  display: grid;
+  grid-template-columns: fit-content(120px) 20px auto;
+  row-gap: 3px;
+  align-items: center;
+  padding-bottom: 0;
+  margin-bottom: 16px;
+}
+
+.sl-elements .TryItPanel > :nth-child(2) {
+  /* This, along with the padding:0 margin: 16s above causes margin collapse to guarantee correct spacing around the panels & send button */
+  overflow: auto;
+}
+
+.sl-elements .OperationParametersContent {
+  max-height: 162px; /* 4.5 lines plus padding */
+}
+
+.sl-elements .Checkbox {
+  max-width: 15px;
+  padding-right: 3px;
+}
+
+.sl-elements .TextForCheckBox {
+  padding-top: 6px;
+  padding-left: 9px;
+}
+
+.sl-elements .TextRequestBody {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-bottom: 0;
+  margin-bottom: 16px;
+}
+
+/* HttpOperation */
+
+.sl-elements .HttpOperation .JsonSchemaViewer .sl-markdown-viewer p {
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.sl-elements .HttpOperation__Parameters .sl-markdown-viewer p {
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.sl-elements .Model .JsonSchemaViewer .sl-markdown-viewer p {
+  font-size: 12px;
+  line-height: 1.5em;
+}

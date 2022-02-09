@@ -10,7 +10,8 @@ export const getWorkspace = async ({
   platformUrl?: string;
   platformAuthToken?: string;
 }): Promise<Workspace> => {
-  const response = await fetch(`${platformUrl}/api/v1/projects/${projectIds[0]}`, {
+  const encodedProjectId = encodeURIComponent(projectIds[0]);
+  const response = await fetch(`${platformUrl}/api/v1/projects/${encodedProjectId}`, {
     headers: {
       'Stoplight-Elements-Version': appVersion,
       ...(platformAuthToken && { Authorization: `Bearer ${platformAuthToken}` }),

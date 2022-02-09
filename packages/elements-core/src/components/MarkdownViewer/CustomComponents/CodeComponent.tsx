@@ -56,9 +56,9 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
 export { DefaultSMDComponents };
 
 export const CodeComponent: CustomComponentMapping['code'] = props => {
-  const { title, jsonSchema, http, children } = props;
+  const { title, jsonSchema, http, resolved, children } = props;
 
-  const value = String(Array.isArray(children) ? children[0] : children);
+  const value = resolved || String(Array.isArray(children) ? children[0] : children);
   const parsedValue = useParsedValue(value);
 
   if (jsonSchema) {
