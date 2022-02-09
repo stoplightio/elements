@@ -1,9 +1,9 @@
-import { devPortalCacheKeys } from '@stoplight/elements-dev-portal/consts';
 import * as React from 'react';
 import { useQuery } from 'react-query';
 import { useDebounce } from 'use-debounce';
 
 import { PlatformContext } from '../components/DevPortalProvider';
+import { devPortalCacheKeys } from '../consts';
 import { getNodes } from '../handlers/getNodes';
 
 export function useGetNodes({
