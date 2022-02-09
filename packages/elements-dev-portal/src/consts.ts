@@ -12,7 +12,7 @@ export const devPortalCacheKeys = {
   branch: (projectId: string, branch: string) => [...devPortalCacheKeys.branches(projectId), branch] as const,
   branchesList: (projectId: string) => [...devPortalCacheKeys.branches(projectId), 'list'] as const,
   branchDetails: (projectId: string, branch: string) =>
-    [...devPortalCacheKeys.branch(projectId, branch), 'detail'] as const,
+    [...devPortalCacheKeys.branch(projectId, branch), 'details'] as const,
   branchTOC: (projectId: string, branch: string) => [...devPortalCacheKeys.branch(projectId, branch), 'toc'] as const,
 
   branchNodes: (projectId: string, branch: string) =>
