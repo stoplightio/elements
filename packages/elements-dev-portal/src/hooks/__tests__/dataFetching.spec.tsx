@@ -4,11 +4,11 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
-import { DevPortalProvider } from '../components/DevPortalProvider';
-import { useGetBranches } from './useGetBranches';
-import { useGetNodeContent } from './useGetNodeContent';
-import { useGetNodes } from './useGetNodes';
-import { useGetTableOfContents } from './useGetTableOfContents';
+import { DevPortalProvider } from '../../components/DevPortalProvider';
+import { useGetBranches } from '../useGetBranches';
+import { useGetNodeContent } from '../useGetNodeContent';
+import { useGetNodes } from '../useGetNodes';
+import { useGetTableOfContents } from '../useGetTableOfContents';
 
 describe('data fetching', () => {
   beforeEach(() => {

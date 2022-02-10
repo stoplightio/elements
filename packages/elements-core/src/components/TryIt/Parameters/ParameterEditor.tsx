@@ -14,11 +14,23 @@ interface ParameterProps {
   parameter: ParameterSpec;
   value?: string;
   onChange: SelectProps['onChange'];
+  isOptional: boolean;
+  onChangeOptional: (optional: boolean) => void;
+  canChangeOptional: boolean;
   validate?: boolean;
 }
 
-export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, onChange, validate }) => {
+export const ParameterEditor: React.FC<ParameterProps> = ({
+  parameter,
+  value,
+  onChange,
+  isOptional,
+  onChangeOptional,
+  canChangeOptional,
+  validate,
+}) => {
   const inputId = useUniqueId(`id_${parameter.name}_`);
+  const inputCheckId = useUniqueId(`id_${parameter.name}_checked`);
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
@@ -67,6 +79,38 @@ export const ParameterEditor: React.FC<ParameterProps> = ({ parameter, value, on
           </Flex>
         )}
       </div>
+      {canChangeOptional && !parameter.required && (
+        <>
+          <div></div>
+          <div></div>
+          <div>
+            <Flex flex={1}>
+              <Input
+                className="Checkbox"
+                aria-label={`${parameter.name}-checkbox`}
+                id={inputCheckId}
+                flex={1}
+                type="checkbox"
+                intent="success"
+                size="sm"
+                checked={isOptional}
+                onChange={e => onChangeOptional(!e.target.checked)}
+              />
+              <Text
+                className="TextForCheckBox"
+                flex={1}
+                as="label"
+                aria-hidden="true"
+                data-testid="param-check"
+                htmlFor={inputCheckId}
+                fontSize="base"
+              >
+                Omit {parameterDisplayName}
+              </Text>
+            </Flex>
+          </div>
+        </>
+      )}
     </>
   );
 };
