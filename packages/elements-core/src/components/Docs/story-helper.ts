@@ -7,7 +7,10 @@ interface HelperReturn<P> {
   createHoistedStory(input: Partial<P>): Story<P>;
 }
 
-export const createStoriesForDocsComponent = <P>(Component: React.ComponentType<P>): HelperReturn<P> => {
+export const createStoriesForDocsComponent = <P>(
+  Component: React.ComponentType<P>,
+  title?: string,
+): HelperReturn<P> => {
   const createStory = (name: string, input: Partial<P>) => {
     const story: Story<P> = args => React.createElement(Component, args);
     story.args = input;
@@ -16,7 +19,7 @@ export const createStoriesForDocsComponent = <P>(Component: React.ComponentType<
   };
   return {
     meta: {
-      title: `Internal/Docs/${Component.displayName}`,
+      title: `Internal/Docs/${title || Component.displayName}`,
       component: Component,
       argTypes: {
         data: {
@@ -27,6 +30,6 @@ export const createStoriesForDocsComponent = <P>(Component: React.ComponentType<
       },
     },
     createStory: createStory,
-    createHoistedStory: input => createStory(Component.displayName ?? Component.name ?? '_unknown_', input),
+    createHoistedStory: input => createStory(title ?? Component.displayName ?? Component.name ?? '_unknown_', input),
   };
 };
