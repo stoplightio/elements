@@ -1,6 +1,5 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
-import URI from 'urijs';
 
 import { getServerUrlWithDefaultValues } from '../../utils/http-spec/IServer';
 import {
@@ -78,8 +77,10 @@ export async function buildFetchRequest({
   const [queryParamsWithAuth, headersWithAuth] = runAuthRequestEhancements(auth, queryParams, rawHeaders);
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
-  const url = new URL(URI(serverUrl).segment(expandedPath).toString());
-  url.search = new URLSearchParams(queryParamsWithAuth.map(nameAndValueObjectToPair)).toString();
+
+  // urlObject is concatenated this way to avoid /user and /user/ endpoint edge cases
+  const urlObject = new URL(serverUrl + expandedPath);
+  urlObject.search = new URLSearchParams(queryParamsWithAuth.map(nameAndValueObjectToPair)).toString();
 
   const body = typeof bodyInput === 'object' ? await createRequestBody(mediaTypeContent, bodyInput) : bodyInput;
 
@@ -93,7 +94,7 @@ export async function buildFetchRequest({
   };
 
   return [
-    url.toString(),
+    urlObject.href,
     {
       credentials,
       method: httpOperation.method.toUpperCase(),
@@ -189,7 +190,8 @@ export async function buildHarRequest({
   }
 
   const [queryParamsWithAuth, headerParamsWithAuth] = runAuthRequestEhancements(auth, queryParams, headerParams);
-  const extendedPath = uriExpand(httpOperation.path, parameterValues);
+  const expandedPath = uriExpand(httpOperation.path, parameterValues);
+  const urlObject = new URL(serverUrl + expandedPath);
 
   let postData: HarRequest['postData'] = undefined;
   if (shouldIncludeBody && typeof bodyInput === 'string') {
@@ -216,7 +218,7 @@ export async function buildHarRequest({
 
   return {
     method: httpOperation.method.toUpperCase(),
-    url: URI(serverUrl).segment(extendedPath).toString(),
+    url: urlObject.href,
     httpVersion: 'HTTP/1.1',
     cookies: [],
     headers: [{ name: 'Content-Type', value: mimeType }, ...headerParamsWithAuth],
