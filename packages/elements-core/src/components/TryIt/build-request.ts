@@ -78,7 +78,9 @@ export async function buildFetchRequest({
   const [queryParamsWithAuth, headersWithAuth] = runAuthRequestEhancements(auth, queryParams, rawHeaders);
 
   const expandedPath = uriExpand(httpOperation.path, parameterValues);
-  const url = new URL(URI(serverUrl).segment(expandedPath).toString());
+
+  // url is concatenated this way to avoid /user and /user/ endpoint edge cases
+  const url = new URL(serverUrl + '/' + expandedPath);
   url.search = new URLSearchParams(queryParamsWithAuth.map(nameAndValueObjectToPair)).toString();
 
   const body = typeof bodyInput === 'object' ? await createRequestBody(mediaTypeContent, bodyInput) : bodyInput;
