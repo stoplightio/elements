@@ -1,6 +1,5 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
-import URI from 'urijs';
 
 import { getServerUrlWithDefaultValues } from '../../utils/http-spec/IServer';
 import {
@@ -192,6 +191,7 @@ export async function buildHarRequest({
 
   const [queryParamsWithAuth, headerParamsWithAuth] = runAuthRequestEhancements(auth, queryParams, headerParams);
   const extendedPath = uriExpand(httpOperation.path, parameterValues);
+  const combinedUrl = serverUrl + extendedPath;
 
   let postData: HarRequest['postData'] = undefined;
   if (shouldIncludeBody && typeof bodyInput === 'string') {
@@ -218,7 +218,7 @@ export async function buildHarRequest({
 
   return {
     method: httpOperation.method.toUpperCase(),
-    url: URI(serverUrl).segment(extendedPath).toString(),
+    url: combinedUrl,
     httpVersion: 'HTTP/1.1',
     cookies: [],
     headers: [{ name: 'Content-Type', value: mimeType }, ...headerParamsWithAuth],
