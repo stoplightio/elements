@@ -79,6 +79,7 @@ export const TryIt: React.FC<TryItProps> = ({
   tryItCredentialsPolicy,
   corsProxy,
 }) => {
+  TryIt.displayName = 'TryIt';
   const isDark = useThemeIsDark();
 
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
