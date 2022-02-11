@@ -63,7 +63,7 @@ import { API } from "@stoplight/elements";
 />
 ```
 
-For more information on using Elements as a React component, head over to our [React documentation](docs/getting-started/integrations/react.md).
+For more information on using Elements as a React component, head over to our [React documentation](docs/getting-started/elements/react.md).
 ### Web Component
 
 ```html
@@ -91,7 +91,7 @@ For more information on using Elements as a React component, head over to our [R
 
 Load this page up in your browser and you should see the [GitHub REST API](https://docs.github.com/en/rest) documented in Stoplight Elements.
 
-For more information on using Elements as a Web Component, head over to our [Web Component documentation](docs/getting-started/usage/web-component.md).
+For more information on using Elements as a Web Component, head over to our [Web Component documentation](docs/getting-started/elements/html.md).
 
 ## 🚧 Roadmap
 
