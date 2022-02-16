@@ -79,6 +79,7 @@ export const TryIt: React.FC<TryItProps> = ({
   tryItCredentialsPolicy,
   corsProxy,
 }) => {
+  TryIt.displayName = 'TryIt';
   const isDark = useThemeIsDark();
 
   const [response, setResponse] = React.useState<ResponseState | ErrorState | undefined>();
@@ -92,7 +93,8 @@ export const TryIt: React.FC<TryItProps> = ({
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
 
-  const [bodyParameterValues, setBodyParameterValues, formDataState] = useBodyParameterState(mediaTypeContent);
+  const [bodyParameterValues, setBodyParameterValues, isAllowedEmptyValues, setAllowedEmptyValues, formDataState] =
+    useBodyParameterState(mediaTypeContent);
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
@@ -110,6 +112,14 @@ export const TryIt: React.FC<TryItProps> = ({
   const hasRequiredButEmptyParameters = allParameters.some(
     parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
   );
+
+  const getValues = () =>
+    Object.keys(bodyParameterValues)
+      .filter(param => !isAllowedEmptyValues[param] ?? true)
+      .reduce((previousValue, currentValue) => {
+        previousValue[currentValue] = bodyParameterValues[currentValue];
+        return previousValue;
+      }, {});
 
   React.useEffect(() => {
     const currentUrl = chosenServer?.url;
@@ -130,7 +140,7 @@ export const TryIt: React.FC<TryItProps> = ({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
-        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+        bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
         auth: operationAuthValue,
         ...(isMockingEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
@@ -156,6 +166,7 @@ export const TryIt: React.FC<TryItProps> = ({
     parameterValuesWithDefaults,
     formDataState.isFormDataBody,
     bodyParameterValues,
+    isAllowedEmptyValues,
     textRequestBody,
     operationAuthValue,
     mockingOptions,
@@ -176,7 +187,7 @@ export const TryIt: React.FC<TryItProps> = ({
         parameterValues: parameterValuesWithDefaults,
         httpOperation,
         mediaTypeContent,
-        bodyInput: formDataState.isFormDataBody ? bodyParameterValues : textRequestBody,
+        bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
         mockData,
         auth: operationAuthValue,
         chosenServer,
@@ -234,6 +245,8 @@ export const TryIt: React.FC<TryItProps> = ({
           specification={formDataState.bodySpecification}
           values={bodyParameterValues}
           onChangeValues={setBodyParameterValues}
+          onChangeParameterAllow={setAllowedEmptyValues}
+          isAllowedEmptyValues={isAllowedEmptyValues}
         />
       ) : mediaTypeContent ? (
         <RequestBody

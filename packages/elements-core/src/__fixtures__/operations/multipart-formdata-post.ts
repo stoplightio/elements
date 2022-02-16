@@ -27,6 +27,9 @@ export const httpOperation: IHttpOperation = {
               name: {
                 type: 'string',
               },
+              age: {
+                type: 'string',
+              },
               completed: {
                 type: 'boolean',
               },

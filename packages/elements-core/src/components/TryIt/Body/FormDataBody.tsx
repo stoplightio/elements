@@ -7,15 +7,23 @@ import * as React from 'react';
 import { FileUploadParameterEditor } from '../Parameters/FileUploadParameterEditors';
 import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from '../Parameters/parameter-utils';
 import { ParameterEditor } from '../Parameters/ParameterEditor';
-import { BodyParameterValues } from './request-body-utils';
+import { BodyParameterValues, ParameterOptional } from './request-body-utils';
 
 interface FormDataBodyProps {
   specification: IMediaTypeContent;
   values: BodyParameterValues;
   onChangeValues: (newValues: BodyParameterValues) => void;
+  onChangeParameterAllow: (newValue: ParameterOptional) => void;
+  isAllowedEmptyValues: ParameterOptional;
 }
 
-export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, values, onChangeValues }) => {
+export const FormDataBody: React.FC<FormDataBodyProps> = ({
+  specification,
+  values,
+  onChangeValues,
+  onChangeParameterAllow,
+  isAllowedEmptyValues,
+}) => {
   const schema = specification.schema;
   const parameters = schema?.properties;
   const required = schema?.required;
@@ -61,6 +69,9 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({ specification, value
               onChange={(value: string | number) =>
                 onChangeValues({ ...values, [parameter.name]: typeof value === 'number' ? String(value) : value })
               }
+              onChangeOptional={value => onChangeParameterAllow({ ...isAllowedEmptyValues, [parameter.name]: value })}
+              canChangeOptional={true}
+              isOptional={isAllowedEmptyValues[parameter.name] ?? false}
             />
           );
         })}
