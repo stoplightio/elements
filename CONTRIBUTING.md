@@ -218,7 +218,7 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
 1. Make sure you are in the root directory of this repo and on the `main` branch. Also pull all the latest changes!
 2. Create a new branch. The name doesn't really matter - something like `chore/release` will do.
 3. Run `yarn version`. You will be asked a few questions.
-    - We don't release `elements-demo` or `elements-utils` packages. In order to not release them, you have to choose "Custom Version" and enter the same, old verison by hand. Awkward, but it works.
+    - We don't release `elements-demo`. In order to not release them, you have to choose "Custom Version" and enter the same, old verison by hand. Awkward, but it works.
     - For other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our versioning guidelines below!
 4. After the script gets finalized, a commit will be created for you.
 5. *IMPORTANT!!!* If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't really matter here, something like `fix: ^ to ~ for elements-core` is more than enough.
