@@ -10,9 +10,7 @@
       "@stoplight/elements-dev-portal": ["./elements-dev-portal/src"],
       "@stoplight/elements-dev-portal/*": ["./elements-dev-portal/src/*"],
       "@stoplight/elements-core": ["./elements-core/src"],
-      "@stoplight/elements-core/*": ["./elements-core/src/*"],
-      "@stoplight/elements-utils": ["./elements-utils/src"],
-      "@stoplight/elements-utils/*": ["./elements-utils/src/*"]
+      "@stoplight/elements-core/*": ["./elements-core/src/*"]
     }
   }
 }
