@@ -50,7 +50,7 @@
     "@stoplight/elements-core": "~7.5.13",
     "@stoplight/http-spec": "^4.3.1",
     "@stoplight/json": "^3.10.0",
-    "@stoplight/mosaic": "^1.15.4",
+    "@stoplight/mosaic": "^1.16.2",
     "@stoplight/types": "^12.0.0",
     "@stoplight/yaml": "^4.2.2",
     "classnames": "^2.2.6",
