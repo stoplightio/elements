@@ -55,6 +55,7 @@ For more configuration options, lets look at the properties available.
 These properties can be provided as HTML attributes to the web component.
 
 - `apiDescriptionUrl` - OpenAPI document URL, supporting `http://`, `https://`, and documents containing `$ref` to other HTTP(S) documents.
+- `apiDescriptionDocument` - OpenAPI document, provided as YAML string, JSON string or JavaScript object.
 - `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
 - `hideTryIt` - Pass `"true"` to hide the "Try It" panel (the interactive API console).
 - `hideInternal` - Pass `"true"` to filter out any content which has been marked as internal with `x-internal`.
@@ -96,4 +97,53 @@ These properties can be provided as HTML attributes to the web component.
   apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
   hideTryIt="true"
 />
+```
+
+<!-- title: GitHub API over HTTP using `apiDescriptionDocument` -->
+
+```html
+<elements-api id="docs" router="hash" layout="sidebar"></elements-api>
+<script>
+  (async () => {
+    const docs = document.getElementById('docs');
+    const text = await fetch('https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml').then(res => res.text())
+    docs.apiDescriptionDocument = text;
+  })();
+</script>
+```
+
+<!-- title: Component with API Description Provided Directly -->
+
+```html
+<elements-api id="docs" router="hash" layout="sidebar"></elements-api>
+<script>
+(async () => {
+  const docs = document.getElementById('docs');
+  const apiDescriptionDocument = {
+    openapi: '3.1.0',
+    info: {
+      title: 'Some Awesome API',
+      version: '1.0.0'
+    },
+    paths: {
+      /* ... */
+    }
+  };
+
+  docs.apiDescriptionDocument = apiDescriptionDocument;
+})();
+</script>
+```
+
+<!-- title: Component with API Description Provided Directly, Fetched Over HTTP -->
+
+```html
+<elements-api id="docs" router="hash" layout="sidebar"></elements-api>
+<script>
+  (async () => {
+    const docs = document.getElementById('docs');
+    const text = await fetch('https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml').then(res => res.text())
+    docs.apiDescriptionDocument = text;
+  })();
+</script>
 ```
