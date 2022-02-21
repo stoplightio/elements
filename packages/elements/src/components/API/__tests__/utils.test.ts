@@ -333,6 +333,218 @@ describe('computeTagGroups', () => {
     const serviceNode = transformOasToServiceNode(apiDocument);
     expect(serviceNode ? computeTagGroups(serviceNode) : null).toEqual({ groups: [], ungrouped: [] });
   });
+
+  it('leaves tag casing unchanged', () => {
+    const apiDocument: OpenAPIObject = {
+      openapi: '3.0.0',
+      info: {
+        title: 'some api',
+        version: '1.0.0',
+        description: 'some description',
+      },
+      tags: [
+        {
+          name: 'Beta',
+        },
+        {
+          name: 'alpha',
+        },
+      ],
+      paths: {
+        '/a': {
+          get: {
+            tags: ['alpha'],
+          },
+        },
+        '/b': {
+          get: {
+            tags: ['Beta'],
+          },
+        },
+      },
+    };
+
+    const serviceNode = transformOasToServiceNode(apiDocument);
+    expect(serviceNode ? computeTagGroups(serviceNode) : null).toEqual({
+      groups: [
+        {
+          title: 'Beta',
+          items: [
+            {
+              type: 'http_operation',
+              uri: '/paths/b/get',
+              data: {
+                id: '?http-operation-id?',
+                method: 'get',
+                path: '/b',
+                responses: [],
+                servers: [],
+                request: {
+                  body: {
+                    contents: [],
+                  },
+                  headers: [],
+                  query: [],
+                  cookie: [],
+                  path: [],
+                },
+                tags: [
+                  {
+                    name: 'Beta',
+                  },
+                ],
+                security: [],
+                extensions: {},
+              },
+              name: '/b',
+              tags: ['Beta'],
+            },
+          ],
+        },
+        {
+          title: 'alpha',
+          items: [
+            {
+              type: 'http_operation',
+              uri: '/paths/a/get',
+              data: {
+                id: '?http-operation-id?',
+                method: 'get',
+                path: '/a',
+                responses: [],
+                servers: [],
+                request: {
+                  body: {
+                    contents: [],
+                  },
+                  headers: [],
+                  query: [],
+                  cookie: [],
+                  path: [],
+                },
+                tags: [
+                  {
+                    name: 'alpha',
+                  },
+                ],
+                security: [],
+                extensions: {},
+              },
+              name: '/a',
+              tags: ['alpha'],
+            },
+          ],
+        },
+      ],
+      ungrouped: [],
+    });
+  });
+
+  it('matches mixed tag casing', () => {
+    const apiDocument: OpenAPIObject = {
+      openapi: '3.0.0',
+      info: {
+        title: 'some api',
+        version: '1.0.0',
+        description: 'some description',
+      },
+      tags: [
+        {
+          name: 'Beta',
+        },
+        {
+          name: 'alpha',
+        },
+      ],
+      paths: {
+        '/a': {
+          get: {
+            tags: ['alpha'],
+          },
+        },
+        '/b': {
+          get: {
+            tags: ['beta'],
+          },
+        },
+      },
+    };
+
+    const serviceNode = transformOasToServiceNode(apiDocument);
+    expect(serviceNode ? computeTagGroups(serviceNode) : null).toEqual({
+      groups: [
+        {
+          title: 'Beta',
+          items: [
+            {
+              type: 'http_operation',
+              uri: '/paths/b/get',
+              data: {
+                id: '?http-operation-id?',
+                method: 'get',
+                path: '/b',
+                responses: [],
+                servers: [],
+                request: {
+                  body: {
+                    contents: [],
+                  },
+                  headers: [],
+                  query: [],
+                  cookie: [],
+                  path: [],
+                },
+                tags: [
+                  {
+                    name: 'beta',
+                  },
+                ],
+                security: [],
+                extensions: {},
+              },
+              name: '/b',
+              tags: ['beta'],
+            },
+          ],
+        },
+        {
+          title: 'alpha',
+          items: [
+            {
+              type: 'http_operation',
+              uri: '/paths/a/get',
+              data: {
+                id: '?http-operation-id?',
+                method: 'get',
+                path: '/a',
+                responses: [],
+                servers: [],
+                request: {
+                  body: {
+                    contents: [],
+                  },
+                  headers: [],
+                  query: [],
+                  cookie: [],
+                  path: [],
+                },
+                tags: [
+                  {
+                    name: 'alpha',
+                  },
+                ],
+                security: [],
+                extensions: {},
+              },
+              name: '/a',
+              tags: ['alpha'],
+            },
+          ],
+        },
+      ],
+      ungrouped: [],
+    });
+  });
 });
 
 describe('computeAPITree', () => {
