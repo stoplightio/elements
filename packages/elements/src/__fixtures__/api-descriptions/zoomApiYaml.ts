@@ -89,6 +89,8 @@ parameters:
     name: meetingId
     required: true
     type: integer
+    enum: [0, 1, 2, 3]
+
   MeetingId4Metrics:
     description: 'The meeting ID or meeting UUID. If given meeting ID, will take the last meeting instance.'
     in: path
