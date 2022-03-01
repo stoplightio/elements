@@ -24,7 +24,7 @@
     "@angular/core": "^12.0.4",
     "@angular/forms": "^12.1.0",
     "@angular/platform-browser": "^13.0.1",
-    "@angular/platform-browser-dynamic": "^12.1.1",
+    "@angular/platform-browser-dynamic": "^13.2.4",
     "@angular/router": "^12.0.4",
     "@stoplight/elements": "^7.0.0",
     "@stoplight/elements-dev-portal": "^1.0.0",
