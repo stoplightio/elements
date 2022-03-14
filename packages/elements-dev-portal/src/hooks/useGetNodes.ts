@@ -10,22 +10,24 @@ export function useGetNodes({
   search,
   workspaceId,
   projectIds,
+  branchSlug,
   pause,
 }: {
   search: string;
   workspaceId?: string;
   projectIds?: string[];
+  branchSlug?: string;
   pause?: boolean;
 }) {
   const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
   const [debounceSearch] = useDebounce(search, 500);
   return useQuery(
     [
-      ...devPortalCacheKeys.searchNodes({ projectIds, workspaceId, search: debounceSearch }),
+      ...devPortalCacheKeys.searchNodes({ projectIds, branchSlug, workspaceId, search: debounceSearch }),
       platformUrl,
       platformAuthToken,
     ],
-    () => getNodes({ workspaceId, projectIds, search: debounceSearch, platformUrl, platformAuthToken }),
+    () => getNodes({ workspaceId, projectIds, branchSlug, search: debounceSearch, platformUrl, platformAuthToken }),
     { enabled: !pause, keepPreviousData: true },
   );
 }
