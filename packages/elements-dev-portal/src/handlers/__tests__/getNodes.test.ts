@@ -26,7 +26,7 @@ describe('getNodes', () => {
       });
 
       expect(fetchMock).toBeCalledWith(
-        'https://stoplight.io/api/v1/workspaces/my%3Fworkspace/nodes?project_ids[0]=some%2Fslash&search=a%3Fspecial%26search&branchSlug=test%2Bbranch',
+        'https://stoplight.io/api/v1/workspaces/my%3Fworkspace/nodes?project_ids[0]=some%2Fslash&search=a%3Fspecial%26search&branch=test%2Bbranch',
         {
           headers: expect.objectContaining({
             'Stoplight-Elements-Version': expect.any(String),
