@@ -128,7 +128,6 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
-
     const edge = node.outbound_edges.find(
       edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
     );
@@ -158,8 +157,7 @@ function getBundledUrl(url: string | undefined) {
 // pointer = /paths/~1v2~1contact~1last_change/post#heading-anchor
 export const getNodeUriParts = (uri: string): { fileUri: string; pointer: string } => {
   const parts = uri.split(/(\.yaml|\.yml|\.json|\.md)/);
-  const fileUri = parts[0] || '' + parts[1] || '';
-  const pointer = parts[2] ? `${parts[2]}` : '';
+  const fileUri = `${parts[0] || ''}${parts[1] || ''}`;
 
-  return { fileUri, pointer };
+  return { fileUri, pointer: parts[2] || '' };
 };
