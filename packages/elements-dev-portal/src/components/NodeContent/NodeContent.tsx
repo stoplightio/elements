@@ -123,11 +123,14 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
   if (href && ctx) {
     const [node, Link] = ctx;
     // Resolve relative file URI with
-    const { fileUri, pointer } = getNodeUriParts(node.uri);
-    const hash = pointer[0] === '#' ? pointer.slice(1) : null;
+    const { fileUri } = getNodeUriParts(node.uri);
+    const resolvedUri = resolve(dirname(fileUri), href);
+    const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const decodedUrl = decodeURIComponent(href);
-    const decodedFileUri = decodeURIComponent(fileUri);
-    const edge = node.outbound_edges.find(edge => edge.uri === decodedUrl || edge.uri === decodedFileUri);
+    const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
+    const edge = node.outbound_edges.find(
+      edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
+    );
 
     if (edge) {
       return <Link to={`${edge.slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
