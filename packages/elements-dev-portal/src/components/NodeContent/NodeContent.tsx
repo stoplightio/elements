@@ -128,7 +128,7 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
-    console.log({ fileUri, resolvedUri, resolvedUriWithoutAnchor, decodedUrl });
+
     const edge = node.outbound_edges.find(
       edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
     );
