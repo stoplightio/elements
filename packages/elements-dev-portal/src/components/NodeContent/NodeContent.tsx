@@ -123,7 +123,18 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
   if (href && ctx) {
     const [node, Link] = ctx;
     // Resolve relative file URI with
-    const resolvedUri = resolve(dirname(node.uri), href);
+    const { fileUri } = getNodeUriParts(node.uri);
+    const { fileUri: hrefFileUri } = getNodeUriParts(href);
+
+    let resolvedUri;
+    if (hrefFileUri) {
+      // if the href is targeting another file, resolve it against the dir path of current file
+      resolvedUri = resolve(dirname(fileUri), href);
+    } else {
+      // If the href does not include a file, resolve it relative to the current file
+      resolvedUri = resolve(fileUri, href);
+    }
+
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
@@ -147,3 +158,20 @@ function getBundledUrl(url: string | undefined) {
   bundledUrl.search = searchParams.toString();
   return bundledUrl.toString();
 }
+
+// Extract out just the file portion of the node URI
+// This handles cases such as links to http_operation node uris, which include both the file + encoded pointer, e.g.
+//
+// /reference/openapi.json/paths/~1v2~1contact~1last_change/post#heading-anchor
+// fileUri = /reference/openapi.json
+// pointer = /paths/~1v2~1contact~1last_change/post#heading-anchor
+export const getNodeUriParts = (uri: string): { fileUri: string; pointer: string } => {
+  const parts = uri.split(/(\.yaml|\.yml|\.json|\.md)/);
+  if (parts.length === 1) {
+    return { fileUri: '', pointer: parts[0] || '' };
+  }
+
+  const fileUri = `${parts[0] || ''}${parts[1] || ''}`;
+
+  return { fileUri, pointer: parts[2] || '' };
+};
