@@ -6,8 +6,10 @@ Learn how to quickly get started with Elements in a React project.
 
 We've created a [Create React App template](https://github.com/stoplightio/cra-template-elements), which allows you to create a brand new Elements website in React without any additional setup.
 
+> Note: [The Create React App template only works with version 4 of create-react-app because of Webpack 5 polyfill issues.](https://github.com/facebook/create-react-app/issues/11756)
+
 ```bash
-npx create-react-app my-dir --template @stoplight/elements
+npx create-react-app@4.0.3 my-dir --template @stoplight/elements
 ```
 
 Then run `cd my-dir` and `yarn start` and you will see a basic Elements website in the browser.
