@@ -122,6 +122,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     }
   } else if (!node) {
     elem = <NotFound />;
+  } else if (node?.slug && nodeSlug !== node.slug) {
+    // Handle redirect to node's slug
+    return <Redirect to={branchSlug ? `/branches/${branchSlug}/${node.slug}` : `/${node.slug}`} />;
   } else {
     elem = (
       <NodeContent
