@@ -28,7 +28,6 @@ export const getServersToDisplay = (originalServers: IServer[], mockUrl?: string
       url: mockUrl,
     });
   }
-
   return servers;
 };
 
@@ -52,7 +51,10 @@ export const getServerUrlWithDefaultValues = (server: IServer): string | null =>
     url = url.absoluteTo(window.location.origin);
   }
 
-  const stringifiedUrl = url.toString();
+  if (url.port() === '80') {
+    url.port(null);
+  }
 
+  const stringifiedUrl = url.toString();
   return stringifiedUrl.endsWith('/') ? stringifiedUrl.slice(0, -1) : stringifiedUrl;
 };
