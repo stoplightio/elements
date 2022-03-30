@@ -11,6 +11,25 @@ describe('IServer', () => {
 
       expect(getServerUrlWithDefaultValues(server)).toBeNull();
     });
+
+    it('should set port to empty string if port is 80', () => {
+      const urlWithPort = 'https://commonsvotes-api.parliament.uk:80/swagger/docs/v1';
+      const urlWithoutPort = 'https://commonsvotes-api.parliament.uk/swagger/docs/v1';
+      const server: IServer = {
+        url: urlWithPort,
+      };
+
+      expect(getServerUrlWithDefaultValues(server)).toEqual(urlWithoutPort);
+    });
+
+    it('should set leave port in url if port is not 80', () => {
+      const urlWithPort = 'https://commonsvotes-api.parliament.uk:100/swagger/docs/v1';
+      const server: IServer = {
+        url: urlWithPort,
+      };
+
+      expect(getServerUrlWithDefaultValues(server)).toEqual(urlWithPort);
+    });
   });
 
   describe('getServersToDisplay', () => {

@@ -52,7 +52,7 @@ export const getServerUrlWithDefaultValues = (server: IServer): string | null =>
   }
 
   if (url.port() === '80') {
-    url.port(null);
+    url.port('');
   }
 
   const stringifiedUrl = url.toString();
