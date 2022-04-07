@@ -1,10 +1,10 @@
 import { slugify } from '@stoplight/elements-core';
-import {
+import type {
   Oas2HttpOperationTransformer,
   Oas2HttpServiceTransformer,
   Oas3HttpOperationTransformer,
   Oas3HttpServiceTransformer,
-} from '@stoplight/http-spec/oas/types';
+} from '@stoplight/http-spec/oas';
 import { transformOas2Operation, transformOas2Service } from '@stoplight/http-spec/oas2';
 import { transformOas3Operation, transformOas3Service } from '@stoplight/http-spec/oas3';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';

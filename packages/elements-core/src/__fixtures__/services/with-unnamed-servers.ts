@@ -17,17 +17,21 @@ export const httpServiceWithUnnamedServers: IHttpService = {
   version: '1.0.0',
   servers: [
     {
+      id: '?http-server-0?',
       url: 'https://api.stoplight.io',
       description: 'Production API',
     },
     {
+      id: '?http-server-1?',
       url: 'https://api.staging.stoplight.io',
     },
     {
+      id: '?http-server-2?',
       url: 'https://api.int.stoplight.io',
       description: 'Integration API',
     },
     {
+      id: '?http-server-3?',
       url: 'https://localhost:4060',
     },
   ],

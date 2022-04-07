@@ -6,16 +6,20 @@ export const httpOperation: IHttpOperation = {
   id: 'some-id',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
           examples: [
             {
+              id: '?http-example-0?',
               key: 'First Example',
               value: { some: 'example' },
             },
             {
+              id: '?http-example-1?',
               key: 'Second Example',
               value: '{ "another": "example" }',
             },
@@ -24,9 +28,11 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      id: '?http-response-201?',
       code: '201',
       contents: [
         {
+          id: '?http-media-1?',
           mediaType: 'application/json',
           schema: {
             properties: {
@@ -39,12 +45,15 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      id: '?http-response-202?',
       code: '202',
       contents: [
         {
+          id: '?http-media-2?',
           mediaType: 'application/json',
           examples: [
             {
+              id: '?http-example-2?',
               key: 'Only one example',
               value: { this: 'is an example' },
             },
@@ -53,9 +62,11 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      id: '?http-response-203?',
       code: '203',
       contents: [
         {
+          id: '?http-media-3?',
           mediaType: 'application/xml',
           schema: {
             properties: {
@@ -68,9 +79,11 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      id: '?http-response-204?',
       code: '204',
       contents: [
         {
+          id: '?http-media-4?',
           mediaType: 'application/json',
           schema: {
             properties: {
@@ -87,9 +100,11 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      id: '?http-response-404?',
       code: '404',
       contents: [
         {
+          id: '?http-media-5?',
           mediaType: 'application/json',
         },
       ],

@@ -1,9 +1,11 @@
 import { safeStringify } from '@stoplight/json';
-import { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
+import type { IHttpParam, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { JSONSchema7Definition, JSONSchema7Type } from 'json-schema';
 import { isObject, keyBy, map, mapValues } from 'lodash';
 
-export type ParameterSpec = Pick<IHttpParam, 'name' | 'examples' | 'schema' | 'required'>;
+export type ParameterSpec = Pick<IHttpParam, 'name' | 'schema' | 'required'> & {
+  examples?: (Omit<INodeExample, 'id'> | Omit<INodeExternalExample, 'id'>)[];
+};
 const booleanOptions = [
   { label: 'Not Set', value: '' },
   { label: 'False', value: 'false' },
@@ -42,7 +44,7 @@ export function parameterSupportsFileUpload(parameter: Pick<ParameterSpec, 'sche
   );
 }
 
-function exampleValue(example: INodeExample | INodeExternalExample) {
+function exampleValue(example: Omit<INodeExample, 'id'> | Omit<INodeExternalExample, 'id'>) {
   const value = 'value' in example ? example.value : example.externalValue;
   return escapeQuotes(String(value));
 }

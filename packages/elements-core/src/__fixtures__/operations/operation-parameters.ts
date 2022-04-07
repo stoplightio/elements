@@ -8,6 +8,7 @@ export const httpOperation: IHttpOperation = {
   summary: 'Update Todo',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       description: '',
       headers: [
@@ -91,6 +92,7 @@ export const httpOperation: IHttpOperation = {
   ],
   servers: [
     {
+      id: '?http-server-todos.stoplight.io?',
       url: 'https://todos.stoplight.io',
     },
   ],
@@ -251,6 +253,6 @@ export const httpOperation: IHttpOperation = {
       },
     ],
   },
-};
+} as any;
 
 export default httpOperation;

@@ -8,14 +8,16 @@ export const singleSecurityOperation: IHttpOperation = {
   summary: 'Get 200',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       description: 'OK',
     },
   ],
-  servers: [{ url: 'https://todos.stoplight.io' }],
+  servers: [{ id: '?http-server-0?', url: 'https://todos.stoplight.io' }],
   security: [
     [
       {
+        id: '?http-security-api_key?',
         key: 'api_key',
         type: 'apiKey',
         name: 'API-Key',
@@ -26,7 +28,7 @@ export const singleSecurityOperation: IHttpOperation = {
   ],
 };
 
-export const emptySecurityOperation: IHttpOperation = {
+export const emptySecurityOperation: any = {
   id: '?http-operation-id?',
   iid: 'GET-simple',
   method: 'get',
@@ -34,7 +36,6 @@ export const emptySecurityOperation: IHttpOperation = {
   summary: 'Get 200',
   responses: [
     {
-      code: '200',
       description: 'OK',
     },
   ],
@@ -42,7 +43,7 @@ export const emptySecurityOperation: IHttpOperation = {
   security: [[]],
 };
 
-export const duplicatedSecurityScheme: IHttpOperation = {
+export const duplicatedSecurityScheme: any = {
   id: '?http-operation-id?',
   iid: 'GET-simple',
   method: 'get',
@@ -50,7 +51,6 @@ export const duplicatedSecurityScheme: IHttpOperation = {
   summary: 'Get 200',
   responses: [
     {
-      code: '200',
       description: 'OK',
     },
   ],
