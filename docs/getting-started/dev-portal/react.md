@@ -6,10 +6,8 @@ Learn how to quickly get started with Elements Dev Portal in a React project.
 
 We've created a [Create React App template](https://github.com/stoplightio/cra-template-elements-dev-portal), which allows you to create a brand new Elements Dev Portal website in React without any additional setup.
 
-> Note: [The Create React App template only works with version 4 of create-react-app because of Webpack 5 polyfill issues.](https://github.com/facebook/create-react-app/issues/11756)
-
 ```bash
-npx create-react-app@4.0.3 my-dir --template @stoplight/elements-dev-portal
+npx create-react-app my-dir --template @stoplight/elements-dev-portal
 ```
 
 Then run `cd my-dir` and `yarn start` and you will see a basic Elements Dev Portal website in the browser.
@@ -68,6 +66,9 @@ function App() {
 
 export default App;
 ```
+## Configuration
+
+See [Dev Portal Configuration Options](dev-portal-options.md). 
 
 ## Fire it up
 
@@ -78,17 +79,3 @@ yarn start
 ```
 
 And you should see the API reference documentation for the Zoom API!
-
-## Configuration
-
-- `projectId` - Find the Project ID in the Project Settings screen on Stoplight.
-- `platformUrl` - By default this is `https://stoplight.io/` and this default will be fine for most people. Some enterprise customers might need to change it.
-- `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
-- `collapseTableOfContents` - Pass `true` to stop the table of contents expanding folders of articles, and showing lists of endpoints for an API. This will clean up the ToC if you have a lot of content.
-- `hideMocking` - Pass `true` to disable all mocking options and remove mention of the mock server.
-- `hideTryIt` - Pass `true` to hide the "Try It" panel (the interactive API console).
-- `router` -  Determines how navigation should work:
-  - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
-  - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
-  - `memory` - keeps the history of your "URL" in memory (does not read or write to the address bar).
-  - `static` - renders using the StaticRouter which can help rendering pages on the server.

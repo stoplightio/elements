@@ -9,3 +9,8 @@ npx gatsby new my-dir https://github.com/stoplightio/gatsby-starter-elements-dev
 ```
 
 Then run `cd my-dir` and `npm run start` and you will see a basic Elements website in the browser.
+
+## Configuration
+
+See [Dev Portal Configuration Options](dev-portal-options.md). 
+
