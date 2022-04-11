@@ -47,7 +47,7 @@ export const getNodes = async ({
 
   if (branchSlug) {
     const encodedBranchSlug = encodeURIComponent(branchSlug);
-    queryParams.push(`branchSlug=${encodedBranchSlug}`);
+    queryParams.push(`branch=${encodedBranchSlug}`);
   }
 
   const query = queryParams.length ? `?${queryParams.join('&')}` : '';

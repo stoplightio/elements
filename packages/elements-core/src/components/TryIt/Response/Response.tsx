@@ -146,7 +146,7 @@ export const ResponseError: React.FC<{ state: ErrorState }> = ({ state: { error 
 const NetworkErrorMessage = () => (
   <>
     <p className="sl-pb-2">
-      <strong>Network Error occured.</strong>
+      <strong>Network Error occurred.</strong>
     </p>
 
     <p className="sl-pb-2">1. Double check that your computer is connected to the internet.</p>
