@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.11",
-    "@types/react": "^17.0.11",
+    "@types/react": "^18.0.1",
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.7",
     "node-sass": "^6.0.1",
