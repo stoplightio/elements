@@ -19,7 +19,6 @@
   "type": "commonjs",
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
-  "typings": "./dist/index.d.ts",
   "exports": {
     "./styles.min.css": "./styles.min.css",
     ".": {
@@ -37,7 +36,6 @@
     "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts bundle",
-    "postbuild.react": "cp dist/index.mjs dist/index.esm.js",
     "build.styles": "postcss src/styles.css -o dist/styles.min.css",
     "build.webcomponents": "webpack -c ./web-components.config.js",
     "build.docs": "build-storybook -c .storybook -o dist-storybook",
