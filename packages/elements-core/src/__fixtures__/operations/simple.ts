@@ -2,7 +2,7 @@ import { IHttpOperation, IHttpRequest } from '@stoplight/types';
 
 import op from './put-todos';
 
-export const operation: IHttpOperation = op;
+export const operation: any = op;
 
 export const request: Partial<IHttpRequest> = {
   url: 'https://todos.stoplight.io/todos',

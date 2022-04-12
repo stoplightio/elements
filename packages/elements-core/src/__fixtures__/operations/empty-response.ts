@@ -1,6 +1,6 @@
 import { IHttpOperation } from '@stoplight/types';
 
-export const operation: IHttpOperation = {
+export const operation: any = {
   id: '?http-operation-id?',
   iid: 'GET_dummy',
   method: 'get',

@@ -8,18 +8,22 @@ export const requestBody: IHttpOperation = {
   summary: 'Post Users',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
     },
   ],
   servers: [
     {
+      id: '?http-server-todos.stoplight.io?',
       url: 'https://todos.stoplight.io',
     },
   ],
   request: {
     body: {
+      id: '?http-request-body?',
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
           schema: {
             type: 'object',
@@ -38,6 +42,7 @@ export const requestBody: IHttpOperation = {
           },
         },
         {
+          id: '?http-media-1?',
           mediaType: 'application/x-www-form-urlencoded',
           schema: {
             type: 'object',

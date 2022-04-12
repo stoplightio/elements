@@ -20,6 +20,7 @@ const parserMap: Record<NodeType, Parser> = {
   [NodeType.Generic]: parseUnknown,
   [NodeType.TableOfContents]: parseUnknown,
   [NodeType.SpectralRuleset]: parseUnknown,
+  [NodeType.Styleguide]: parseUnknown,
   [NodeType.Unknown]: parseUnknown,
 };
 
