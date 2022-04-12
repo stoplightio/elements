@@ -16,12 +16,21 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
-  "main": "",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "exports": {
+    "./styles.min.css": "./styles.min.css",
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
   "files": [
     "**/*"
   ],
   "engines": {
-    "node": ">=12"
+    "node": ">=14.13"
   },
   "scripts": {
     "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
@@ -39,6 +48,7 @@
     "test.prod": "yarn test --coverage --maxWorkers=2",
     "test.update": "yarn test --updateSnapshot",
     "test.watch": "yarn test --watch",
+    "test.packaging": "node --input-type=commonjs -e \"require('./dist/index.js')\" && node --input-type=module -e \"import './dist/index.mjs'\"",
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
@@ -48,10 +58,10 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@stoplight/elements-core": "~7.5.14",
-    "@stoplight/http-spec": "^4.3.1",
-    "@stoplight/json": "^3.10.0",
+    "@stoplight/http-spec": "^5.0.0",
+    "@stoplight/json": "^3.18.0",
     "@stoplight/mosaic": "^1.16.2",
-    "@stoplight/types": "^12.0.0",
+    "@stoplight/types": "^13.0.0",
     "@stoplight/yaml": "^4.2.2",
     "classnames": "^2.2.6",
     "file-saver": "^2.0.5",
@@ -91,8 +101,5 @@
   },
   "release": {
     "extends": "@stoplight/scripts/release"
-  },
-  "exports": {
-    "./styles.min.css": "./styles.min.css"
   }
 }

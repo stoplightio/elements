@@ -8,6 +8,7 @@ import { Parameters } from './Parameters';
 
 describe('Parameter', () => {
   const data: IHttpParam = {
+    id: '?http-example-example-key?',
     name: 'parameter name',
     description: 'a parameter description',
     schema: {
@@ -21,6 +22,7 @@ describe('Parameter', () => {
     style: HttpParamStyles.Form,
     examples: [
       {
+        id: '?http-example-example-key?',
         value: 'example value',
         key: 'example key',
       },

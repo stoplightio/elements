@@ -1,11 +1,10 @@
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
-import { IServer } from '@stoplight/types';
 import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
 import { isProperUrl } from '../../../utils/guards';
-import { getServersToDisplay } from '../../../utils/http-spec/IServer';
+import { getServersToDisplay, IServer } from '../../../utils/http-spec/IServer';
 
 interface ServerInfoProps {
   servers: IServer[];

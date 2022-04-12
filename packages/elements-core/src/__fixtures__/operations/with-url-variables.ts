@@ -8,12 +8,14 @@ export const operationWithUrlVariables: IHttpOperation = {
   summary: 'Get 200',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       description: 'OK',
     },
   ],
   servers: [
     {
+      id: '?http-server?',
       url: '{protocol}://{namespace}.stoplight.io/api/{location}',
       variables: {
         protocol: {

@@ -8,6 +8,7 @@ export const httpOperation: IHttpOperation = {
   summary: 'Get enums',
   responses: [
     {
+      id: '?http-response-204?',
       code: '204',
       description: 'OK',
     },
@@ -15,6 +16,7 @@ export const httpOperation: IHttpOperation = {
   request: {
     query: [
       {
+        id: '?http-query-cycle?',
         schema: {
           type: 'string',
           enum: ['00', '06', '12', '18'],

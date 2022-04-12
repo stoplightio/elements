@@ -1,4 +1,7 @@
-export const httpOperation = {
+import { IHttpOperation } from '@stoplight/types';
+import type { JSONSchema7 } from 'json-schema';
+
+export const httpOperation: IHttpOperation & { __bundled__: unknown } = {
   id: '?http-operation-id?',
   iid: 'POST_todos',
   description: 'This creates a Todo object.\n\nTesting `inline code`.',
@@ -7,11 +10,13 @@ export const httpOperation = {
   summary: 'Create Todo',
   responses: [
     {
+      id: '?http-response-201?',
       code: '201',
       description: '',
       headers: [],
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
           schema: {
             title: 'Todo Full',
@@ -22,7 +27,7 @@ export const httpOperation = {
                 properties: { name: { type: 'string' }, completed: { type: ['boolean', 'null'] } },
                 required: ['name', 'completed'],
                 'x-tags': ['Todos'],
-              },
+              } as JSONSchema7 & { 'x-tags': string[] },
               {
                 type: 'object',
                 properties: {
@@ -39,15 +44,16 @@ export const httpOperation = {
                     },
                     required: ['name', 'age'],
                     'x-tags': ['Todos'],
-                  },
+                  } as JSONSchema7 & { 'x-tags': string[] },
                 },
                 required: ['id', 'user'],
               },
             ],
             'x-tags': ['Todos'],
-          },
+          } as JSONSchema7 & { 'x-tags': string[] },
           examples: [
             {
+              id: '?http-example-0?',
               key: 'application/json',
               value: {
                 id: 9000,
@@ -63,17 +69,22 @@ export const httpOperation = {
       ],
     },
   ],
-  servers: [{ url: 'https://todos.stoplight.io' }, { url: 'http://todos.stoplight.io' }],
+  servers: [
+    { id: '?http-server-0?', url: 'https://todos.stoplight.io' },
+    { id: '?http-server-1?', url: 'http://todos.stoplight.io' },
+  ],
   request: {
     body: {
+      id: '?http-request-body?',
       contents: [
         {
+          id: '?http-media-1?',
           mediaType: 'application/json',
           schema: {
             $ref: '#/__bundled__/paths/~1todos/post/responses/201/schema/allOf/0',
-            example: { name: "my todo's name", completed: false },
+            examples: [{ id: '?http-example-1?', name: "my todo's name", completed: false }],
           },
-          examples: [{ key: 'default', value: { name: "my todo's name", completed: false } }],
+          examples: [{ id: '?http-example-2?', key: 'default', value: { name: "my todo's name", completed: false } }],
         },
       ],
     },
@@ -82,6 +93,7 @@ export const httpOperation = {
   security: [
     [
       {
+        id: '?http-security-apiKey?',
         type: 'apiKey',
         name: 'apikey',
         in: 'query',

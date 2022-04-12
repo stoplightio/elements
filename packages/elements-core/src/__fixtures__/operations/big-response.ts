@@ -8,9 +8,11 @@ export const httpOperation: IHttpOperation = {
   summary: 'Patch Users',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
           schema: {
             type: 'object',
@@ -4653,13 +4655,16 @@ export const httpOperation: IHttpOperation = {
   ],
   servers: [
     {
+      id: '?http-server-todos.stoplight.io?',
       url: 'https://todos.stoplight.io',
     },
   ],
   request: {
     body: {
+      id: '?http-request-body?',
       contents: [
         {
+          id: '?http-media-1?',
           mediaType: 'application/json',
           schema: {
             type: 'object',

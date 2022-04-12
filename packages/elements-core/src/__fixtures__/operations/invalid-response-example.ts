@@ -8,10 +8,12 @@ export const invalidOperation: IHttpOperation = {
   summary: 'Get dummy invalid response',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       description: 'Invalid body and headers',
       headers: [
         {
+          id: '?http-header-sl-results?',
           name: 'sl-results',
           required: true,
           style: HttpParamStyles.Simple,
@@ -19,13 +21,14 @@ export const invalidOperation: IHttpOperation = {
             type: 'string',
             pattern: 'X-*$',
           },
-          examples: [{ key: 'example1', value: 'hello' }],
+          examples: [{ id: '?http-example-0?', key: 'example1', value: 'hello' }],
         },
       ],
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
-          examples: [{ key: 'example1', value: {} }],
+          examples: [{ id: '?http-example-1?', key: 'example1', value: {} }],
           schema: {
             type: 'object',
             required: ['name', 'surname', 'age'],
