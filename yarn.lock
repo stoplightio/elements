@@ -3684,10 +3684,10 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.16.2":
-  version "1.16.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.16.2.tgz#d33204c916da0ffda7d6ded50a50d1717df378a1"
-  integrity sha512-cs+L09gbdjeDOtWZoH9jgTa9Cc08h7Z/mSmUvkjLV7SKCmW5nWlB75fDzp/HhkS7rIRPbqiSMS0qUO7xmVpYuA==
+"@stoplight/mosaic-code-editor@^1.19.0":
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.19.0.tgz#61e1306a0f5eb7a10de3ee4ea5bcf3522e2be079"
+  integrity sha512-b64ToBkPlC6vB60YLxYsnhUV9DxAyccnVY3n/8IkVc41CDjUggbXKCzyy3WwSEtvZ2hSx8pK9o8urDJL/Y3Uig==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3697,8 +3697,8 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.16.2"
-    "@stoplight/mosaic-code-viewer" "1.16.2"
+    "@stoplight/mosaic" "1.19.0"
+    "@stoplight/mosaic-code-viewer" "1.19.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
@@ -3712,10 +3712,10 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.16.2", "@stoplight/mosaic-code-viewer@^1.16.2":
-  version "1.16.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.16.2.tgz#02df7c88bee0a6a532ea8a5fb4e71e60f9be4702"
-  integrity sha512-+OXcbEFLMFlRY4OHZKVPfwFQdeqVBpg+lgj8Ogx8nyE9CNtpn/dEY26PQRRgkkg2UayVZ+uHXY8YeocF1RMrSg==
+"@stoplight/mosaic-code-viewer@1.19.0", "@stoplight/mosaic-code-viewer@^1.19.0":
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.19.0.tgz#0cfb3aca2652deb2286b395db19a4b49aea055a9"
+  integrity sha512-kv6XuQkN86l1nqB/fKIKbhCe3nsiJtczdr/v6DwcxFH5k99pWrmJ16JkxKAE0usMCfSS+H6pIV3IJvy70MomiQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -3725,7 +3725,7 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.16.2"
+    "@stoplight/mosaic" "1.19.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
@@ -3739,7 +3739,35 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.16.2", "@stoplight/mosaic@^1.15.4", "@stoplight/mosaic@^1.16.2":
+"@stoplight/mosaic@1.19.0", "@stoplight/mosaic@^1.19.0":
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.19.0.tgz#27527ee7b8e3040fae2f9070dd72374a70b7cffd"
+  integrity sha512-5PMGAz4jwJx4ElzfmYoxdFylZtAhsXYR/v67tHJxdvelcYy7sm/wbKV39xKezDzUT86M4rxJHQYPT0EEdOMtLg==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.35"
+    "@fortawesome/free-solid-svg-icons" "^5.15.3"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@react-hook/size" "^2.1.1"
+    "@react-hook/window-size" "^3.0.7"
+    "@react-types/button" "3.4.1"
+    "@react-types/radio" "3.1.2"
+    "@react-types/shared" "3.9.0"
+    "@react-types/switch" "3.1.2"
+    "@react-types/textfield" "3.3.0"
+    "@types/react" "^17.0.3"
+    "@types/react-dom" "^17.0.3"
+    clsx "^1.1.1"
+    copy-to-clipboard "^3.3.1"
+    dom-helpers "^3.3.1"
+    lodash.get "^4.4.2"
+    nano-memoize "^1.2.1"
+    polished "^4.1.3"
+    react-fast-compare "^3.2.0"
+    ts-keycode-enum "^1.0.6"
+    tslib "^2.1.0"
+    zustand "^3.5.2"
+
+"@stoplight/mosaic@^1.15.4", "@stoplight/mosaic@^1.16.2":
   version "1.16.2"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.16.2.tgz#661389236095ba0abbdefd13018c19c42ff8920b"
   integrity sha512-uF/PSEiXGRc0xoVvLSTKPmc4vCFW3CVwOyebvepQpXaZGORrBVCvkyONE38Pa+OpBtXJ47CMAkUbiObBW7oKbw==
