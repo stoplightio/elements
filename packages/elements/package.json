@@ -58,7 +58,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@stoplight/elements-core": "~7.5.14",
-    "@stoplight/http-spec": "^5.0.0",
+    "@stoplight/http-spec": "^5.1.0",
     "@stoplight/json": "^3.18.0",
     "@stoplight/mosaic": "^1.16.2",
     "@stoplight/types": "^13.0.0",
