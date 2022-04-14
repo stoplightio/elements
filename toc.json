@@ -42,6 +42,11 @@
           "type": "item",
           "title": "Usage with Angular",
           "uri": "docs/getting-started/elements/angular.md"
+        },
+          {
+          "type": "item",
+          "title": "Elements Configuration Options",
+          "uri": "docs/getting-started/elements/elements-options.md"
         }
       ]
     },
@@ -68,6 +73,11 @@
           "type": "item",
           "title": "Usage with HTML",
           "uri": "docs/getting-started/dev-portal/html.md"
+        },
+        {
+          "type": "item",
+          "title": "Dev Portal Configuration Options",
+          "uri": "docs/getting-started/dev-portal/dev-portal-options.md"
         },
         {
           "type": "item",

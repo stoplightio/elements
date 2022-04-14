@@ -1,7 +1,7 @@
 import { transformOasToServiceNode } from '../';
 
 const oas3Document = {
-  'x-stoplight-id': 'abc',
+  'x-stoplight': { id: 'abc' },
   openapi: '3.0.0',
   info: {
     title: 'oas3',
@@ -33,7 +33,7 @@ const oas3Document = {
 };
 
 const oas2Document = {
-  'x-stoplight-id': 'abc',
+  'x-stoplight': { id: 'abc' },
   swagger: '2.0.0',
   info: {
     title: 'oas2',
@@ -214,7 +214,7 @@ describe('computeOasNodes', () => {
   it('should fallback to operationId', () => {
     expect(
       transformOasToServiceNode({
-        'x-stoplight-id': 'def',
+        'x-stoplight': { id: 'def' },
         openapi: '3.0.0',
         info: {
           title: 'oas3',
