@@ -3559,10 +3559,10 @@
   dependencies:
     eslint-config-prettier "^8.3.0"
 
-"@stoplight/http-spec@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-5.0.0.tgz#e80336db14c35f192d914620140b533eeacf5212"
-  integrity sha512-kKvzRlp0fM3Sp4whZoVyM1CdPqD3eva5D/lFXWywOHHnXw3TefbjPRD1wfl/fLguyXFREZjCOD90lG6BLGPDXw==
+"@stoplight/http-spec@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-5.1.0.tgz#e867069e4bf516cac9e78168f73690e008369967"
+  integrity sha512-YRuhU6CUDHoLAZFpA8z1qW18wBHpt0CFqeGhr7fjC9HLvfVg7o0KlKHUYpPl/NtvzrjS3zoVwXHpkPZwM586Fg==
   dependencies:
     "@stoplight/json" "^3.18.0"
     "@stoplight/types" "^13.0.0"
