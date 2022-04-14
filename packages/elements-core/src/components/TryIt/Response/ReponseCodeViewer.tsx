@@ -4,7 +4,6 @@ import React from 'react';
 import { Loading } from '../../Loading/Loading';
 import { useExampleLineCount } from './hooks/useExampleLineCount';
 
-// const MAX_LINE_COUNT = 500;
 const MAX_HIGHLIGHT_LINE_COUNT = 10000;
 
 export const ResponseCodeViewer: <E extends React.ElementType = 'pre'>(
