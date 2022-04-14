@@ -12,6 +12,9 @@ export const LoadMore: React.FC<LoadMoreProps> = ({ loading, onClick }) => {
       <Button aria-label="load-example" onPress={onClick} appearance="minimal" loading={loading} disabled={loading}>
         {loading ? 'Loading...' : 'Load examples'}
       </Button>
+      <Text fontSize="base" textAlign="center">
+        Large examples are not rendered by default.
+      </Text>
     </Flex>
   );
 };
