@@ -8,18 +8,22 @@ export const examplesRequestBody: IHttpOperation = {
   summary: 'Put Users',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
     },
   ],
   servers: [
     {
+      id: '?http-server-todos.stoplight.io?',
       url: 'https://todos.stoplight.io',
     },
   ],
   request: {
     body: {
+      id: '?http-request-body?',
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
           schema: {
             type: 'object',
@@ -38,6 +42,7 @@ export const examplesRequestBody: IHttpOperation = {
           },
           examples: [
             {
+              id: '?http-example-example-1?',
               key: 'example-1',
               value: {
                 name: 'Andrew',
@@ -46,6 +51,7 @@ export const examplesRequestBody: IHttpOperation = {
               },
             },
             {
+              id: '?http-example-named-example?',
               key: 'named example',
               value: {
                 name: 'Jane',
@@ -54,6 +60,7 @@ export const examplesRequestBody: IHttpOperation = {
               },
             },
             {
+              id: '?http-example-named-example-3?',
               key: 'example-3',
               value: {
                 name: 'Max',
@@ -76,18 +83,22 @@ export const singleExampleRequestBody: IHttpOperation = {
   summary: 'Put Users',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
     },
   ],
   servers: [
     {
+      id: '?http-server-todos.stoplight.io?',
       url: 'https://todos.stoplight.io',
     },
   ],
   request: {
     body: {
+      id: '?http-request-body?',
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
           schema: {
             type: 'object',
@@ -106,6 +117,7 @@ export const singleExampleRequestBody: IHttpOperation = {
           },
           examples: [
             {
+              id: '?http-example-example-1?',
               key: 'example-1',
               value: {
                 name: 'Andrew',

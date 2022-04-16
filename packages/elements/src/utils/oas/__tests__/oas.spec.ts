@@ -1,6 +1,7 @@
 import { transformOasToServiceNode } from '../';
 
 const oas3Document = {
+  'x-stoplight': { id: 'abc' },
   openapi: '3.0.0',
   info: {
     title: 'oas3',
@@ -32,6 +33,7 @@ const oas3Document = {
 };
 
 const oas2Document = {
+  'x-stoplight': { id: 'abc' },
   swagger: '2.0.0',
   info: {
     title: 'oas2',
@@ -66,19 +68,21 @@ describe('computeOasNodes', () => {
   });
 
   it('should return oas nodes for oas3 document', () => {
-    expect(transformOasToServiceNode(oas3Document)).toEqual({
+    expect(transformOasToServiceNode(oas3Document)).toStrictEqual({
       type: 'http_service',
       uri: '/',
       name: 'oas3',
       data: {
-        id: '?http-service-id?',
+        id: 'abc',
         version: '1.0.0',
         name: 'oas3',
         tags: [
           {
+            id: 'd3404a8f3b495',
             name: 'operation-tag',
           },
           {
+            id: 'd0460398c5f2b',
             name: 'model-tag',
           },
         ],
@@ -89,7 +93,7 @@ describe('computeOasNodes', () => {
           type: 'http_operation',
           uri: '/paths/todos/get',
           data: {
-            id: '?http-operation-id?',
+            id: 'c35bc6b301d97',
             method: 'get',
             path: '/todos',
             summary: 'Get Todos',
@@ -97,6 +101,7 @@ describe('computeOasNodes', () => {
             servers: [],
             request: {
               body: {
+                id: '704ac0beb3748',
                 contents: [],
               },
               headers: [],
@@ -106,6 +111,7 @@ describe('computeOasNodes', () => {
             },
             tags: [
               {
+                id: 'd3404a8f3b495',
                 name: 'operation-tag',
               },
             ],
@@ -136,18 +142,20 @@ describe('computeOasNodes', () => {
   });
 
   it('should return oas nodes for oas2 document', () => {
-    expect(transformOasToServiceNode(oas2Document)).toEqual({
+    expect(transformOasToServiceNode(oas2Document)).toStrictEqual({
       type: 'http_service',
       uri: '/',
       name: 'oas2',
       data: {
-        id: '?http-service-id?',
+        id: 'abc',
         name: 'oas2',
         tags: [
           {
+            id: 'd3404a8f3b495',
             name: 'operation-tag',
           },
           {
+            id: 'd0460398c5f2b',
             name: 'model-tag',
           },
         ],
@@ -159,15 +167,21 @@ describe('computeOasNodes', () => {
           type: 'http_operation',
           uri: '/paths/todos/get',
           data: {
-            id: '?http-operation-id?',
+            id: 'c35bc6b301d97',
             method: 'get',
             path: '/todos',
             summary: 'Get Todos',
             responses: [],
             servers: [],
-            request: {},
+            request: {
+              cookie: [],
+              headers: [],
+              path: [],
+              query: [],
+            },
             tags: [
               {
+                id: 'd3404a8f3b495',
                 name: 'operation-tag',
               },
             ],
@@ -200,6 +214,7 @@ describe('computeOasNodes', () => {
   it('should fallback to operationId', () => {
     expect(
       transformOasToServiceNode({
+        'x-stoplight': { id: 'def' },
         openapi: '3.0.0',
         info: {
           title: 'oas3',
@@ -219,7 +234,7 @@ describe('computeOasNodes', () => {
       name: 'oas3',
       tags: [],
       data: {
-        id: '?http-service-id?',
+        id: 'def',
         version: '1.0.0',
         name: 'oas3',
       },
@@ -228,7 +243,7 @@ describe('computeOasNodes', () => {
           type: 'http_operation',
           uri: '/operations/get-todos',
           data: {
-            id: '?http-operation-id?',
+            id: 'a61f53c324669',
             iid: 'get-todos',
             method: 'get',
             path: '/todos',
@@ -236,6 +251,7 @@ describe('computeOasNodes', () => {
             servers: [],
             request: {
               body: {
+                id: '67f97b0ec0ef8',
                 contents: [],
               },
               headers: [],

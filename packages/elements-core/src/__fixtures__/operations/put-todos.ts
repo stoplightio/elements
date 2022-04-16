@@ -8,10 +8,12 @@ export const httpOperation: IHttpOperation = {
   summary: 'Update Todo',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       description: 'It worked!',
       headers: [
         {
+          id: '?http-header-X-Stoplight-Resolver?',
           schema: {
             type: 'string',
             description: 'Resolver errors.',
@@ -23,6 +25,7 @@ export const httpOperation: IHttpOperation = {
       ],
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
           schema: {
             $schema: 'http://json-schema.org/draft-04/schema#',
@@ -87,9 +90,11 @@ export const httpOperation: IHttpOperation = {
           },
         },
         {
+          id: '?http-media-1?',
           mediaType: 'application/xml',
         },
         {
+          id: '?http-media-2?',
           mediaType: 'application/yaml',
           schema: {
             properties: {
@@ -105,11 +110,13 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      id: '?http-response-401?',
       code: '401',
       description: 'Our shared 401 response.',
       headers: [],
       contents: [
         {
+          id: '?http-media-1?',
           mediaType: 'application/json',
           schema: {
             $schema: 'http://json-schema.org/draft-04/schema#',
@@ -144,6 +151,7 @@ export const httpOperation: IHttpOperation = {
           },
           examples: [
             {
+              id: '?http-example-8?',
               key: 'application/json',
               value: {
                 code: '401',
@@ -155,11 +163,13 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      id: '?http-response-404?',
       code: '404',
       description: 'Our shared 404 response.',
       headers: [],
       contents: [
         {
+          id: '?http-media-10?',
           mediaType: 'application/json',
           schema: {
             $schema: 'http://json-schema.org/draft-04/schema#',
@@ -194,6 +204,7 @@ export const httpOperation: IHttpOperation = {
           },
           examples: [
             {
+              id: '?http-example-10?',
               key: 'application/json',
               value: {
                 code: '404',
@@ -205,11 +216,13 @@ export const httpOperation: IHttpOperation = {
       ],
     },
     {
+      id: '?http-response-500?',
       code: '500',
       description: 'Our shared 500 response.',
       headers: [],
       contents: [
         {
+          id: '?http-media-11?',
           mediaType: 'application/json',
           schema: {
             $schema: 'http://json-schema.org/draft-04/schema#',
@@ -244,6 +257,7 @@ export const httpOperation: IHttpOperation = {
           },
           examples: [
             {
+              id: '?http-example-11?',
               key: 'application/json',
               value: {
                 code: '500',
@@ -257,18 +271,22 @@ export const httpOperation: IHttpOperation = {
   ],
   servers: [
     {
+      id: '?http-server-todos.stoplight.io?',
       url: 'https://todos.stoplight.io',
     },
     {
+      id: '?http-server-todos-dev.stoplight.io?',
       description: 'Development',
       url: 'https://todos-dev.stoplight.io',
     },
   ],
   request: {
     body: {
+      id: '?http-request-body?',
       description: 'Some body description',
       contents: [
         {
+          id: '?http-media-4?',
           mediaType: 'application/json',
           schema: {
             $schema: 'http://json-schema.org/draft-04/schema#',
@@ -286,6 +304,7 @@ export const httpOperation: IHttpOperation = {
           },
           examples: [
             {
+              id: '?http-example-0?',
               key: 'Incomplete',
               value: {
                 name: 'Docs Module',
@@ -293,6 +312,7 @@ export const httpOperation: IHttpOperation = {
               },
             },
             {
+              id: '?http-example-1?',
               key: 'Completed',
               value: {
                 name: 'Studio',
@@ -302,12 +322,14 @@ export const httpOperation: IHttpOperation = {
           ],
         },
         {
+          id: '?http-media-5?',
           mediaType: 'application/xml',
         },
       ],
     },
     query: [
       {
+        id: '?http-query-limit?',
         schema: {
           type: 'number',
           default: 1,
@@ -323,6 +345,7 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Form,
       },
       {
+        id: '?http-query-value?',
         schema: {
           type: 'string',
           default: '1',
@@ -330,7 +353,7 @@ export const httpOperation: IHttpOperation = {
           minLength: 0,
           maxLength: 10,
         },
-        examples: [{ key: 'Example', value: '3' }],
+        examples: [{ id: '?http-example-2?', key: 'Example', value: '3' }],
         deprecated: true,
         description: 'How many string todos to limit?',
         name: 'value',
@@ -338,6 +361,7 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Form,
       },
       {
+        id: '?http-query-items?',
         schema: {
           type: 'array',
           minItems: 5,
@@ -347,6 +371,7 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Form,
       },
       {
+        id: '?http-query-completed?',
         schema: {
           type: 'boolean',
           description: 'Only return completed',
@@ -355,6 +380,7 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Form,
       },
       {
+        id: '?http-query-type?',
         schema: {
           type: 'string',
           enum: ['something', 'another'],
@@ -364,6 +390,7 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.SpaceDelimited,
       },
       {
+        id: '?http-query-super_duper_long_parameter_name_with_unnecessary_text?',
         name: 'super_duper_long_parameter_name_with_unnecessary_text',
         schema: {
           type: 'string',
@@ -372,6 +399,7 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Form,
       },
       {
+        id: '?http-query-optional_value_with_default?',
         name: 'optional_value_with_default',
         schema: {
           type: 'string',
@@ -382,6 +410,7 @@ export const httpOperation: IHttpOperation = {
     ],
     headers: [
       {
+        id: '?http-header-account-id?',
         schema: {
           type: 'string',
           description: 'Your Stoplight account id',
@@ -392,12 +421,14 @@ export const httpOperation: IHttpOperation = {
         required: true,
         examples: [
           {
+            id: '?http-example-3?',
             value: 'example id',
             key: 'example',
           },
         ],
       },
       {
+        id: '?http-header-message-id?',
         schema: {
           type: 'string',
           description: 'Your Stoplight account id',
@@ -407,20 +438,24 @@ export const httpOperation: IHttpOperation = {
         required: true,
         examples: [
           {
+            id: '?http-example-4?',
             value: 'example value',
             key: 'example 1',
           },
           {
+            id: '?http-example-5?',
             value: 'another example',
             key: 'example 2',
           },
           {
+            id: '?http-example-6?',
             value: 'something else',
             key: 'example 3',
           },
         ],
       },
       {
+        id: '?http-header-optional_header?',
         name: 'optional_header',
         schema: {
           type: 'string',
@@ -428,6 +463,7 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Simple,
       },
       {
+        id: '?http-header-quote?',
         schema: {
           type: 'string',
           description: 'Quote or no quote',
@@ -436,10 +472,12 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Simple,
         examples: [
           {
+            id: '?http-example-6?',
             value: '',
             key: 'no quote',
           },
           {
+            id: '?http-example-7?',
             value: '"',
             key: 'quote',
           },
@@ -448,6 +486,7 @@ export const httpOperation: IHttpOperation = {
     ],
     path: [
       {
+        id: '?http-path-param-todoId?',
         schema: {
           type: 'string',
         },
@@ -465,6 +504,7 @@ export const httpOperation: IHttpOperation = {
   security: [
     [
       {
+        id: '?http-security-api_key?',
         key: 'api_key',
         type: 'apiKey',
         name: 'API Key',
@@ -474,6 +514,7 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        id: '?http-security-basicKey?',
         key: 'basicKey',
         type: 'http',
         scheme: 'basic',
@@ -483,6 +524,7 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        id: '?http-security-bearerKey?',
         key: 'bearerKey',
         type: 'http',
         scheme: 'bearer',
@@ -493,6 +535,7 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        id: '?http-security-digest?',
         key: 'digest',
         type: 'http',
         scheme: 'digest',
@@ -501,6 +544,7 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        id: '?http-security-openIdConnectKey?',
         key: 'openIdConnectKey',
         type: 'openIdConnect',
         description:
@@ -510,6 +554,7 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        id: '?http-security-oauth2Key?',
         key: 'oauth2Key',
         type: 'oauth2',
         description:

@@ -75,6 +75,7 @@ describe('HttpOperation', () => {
       const security = [
         [
           {
+            id: '?http-security-0?',
             key: 'oauth2WithScopes',
             type: 'oauth2' as const,
             description: 'foo',
@@ -90,6 +91,7 @@ describe('HttpOperation', () => {
             },
           },
           {
+            id: '?http-security-1?',
             key: 'oauth2WithEmptyScopes',
             type: 'oauth2' as const,
             description: 'foo',
@@ -142,6 +144,7 @@ describe('HttpOperation', () => {
         request: {
           query: [
             {
+              id: '?http-query-parameter-name?',
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
@@ -155,6 +158,7 @@ describe('HttpOperation', () => {
               style: HttpParamStyles.Form,
               examples: [
                 {
+                  id: '?http-example-0?',
                   value: 'example value',
                   key: 'example key',
                 },
@@ -202,6 +206,7 @@ describe('HttpOperation', () => {
         request: {
           query: [
             {
+              id: '?http-query-default-style-param?',
               name: 'default style param',
               schema: {
                 type: 'string',
@@ -209,6 +214,7 @@ describe('HttpOperation', () => {
               style: HttpParamStyles.Form,
             },
             {
+              id: '?http-query-different-style-param?',
               name: 'different style param',
               schema: {
                 type: 'string',
@@ -237,6 +243,7 @@ describe('HttpOperation', () => {
         request: {
           headers: [
             {
+              id: '?http-header-parameter-name?',
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
@@ -248,6 +255,7 @@ describe('HttpOperation', () => {
               style: HttpParamStyles.Simple,
               examples: [
                 {
+                  id: '?http-example-0?',
                   key: 'example',
                   value: 'example value',
                 },
@@ -298,6 +306,7 @@ describe('HttpOperation', () => {
         request: {
           path: [
             {
+              id: '?http-path-param-parameter-name?',
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
@@ -310,6 +319,7 @@ describe('HttpOperation', () => {
               style: HttpParamStyles.Simple,
               examples: [
                 {
+                  id: '?http-example-example?',
                   key: 'example',
                   value: 'example value',
                 },
@@ -337,8 +347,10 @@ describe('HttpOperation', () => {
       method: 'get',
       request: {
         body: {
+          id: '?http-request-body?',
           contents: [
             {
+              id: '?http-request-body-media-0?',
               mediaType: 'application/json',
               schema: {
                 type: 'object',
@@ -347,16 +359,11 @@ describe('HttpOperation', () => {
                 },
               },
             },
-            { mediaType: 'application/xml' },
+            { id: '?http-request-body-media-1?', mediaType: 'application/xml' },
           ],
         },
       },
-      responses: [
-        {
-          code: '200',
-          description: 'Hello world!',
-        },
-      ],
+      responses: [{ id: '?http-response-200?', code: '200', description: 'Hello world!' }],
     };
 
     const httpOperationWithoutRequestBodyContents = {
@@ -365,16 +372,12 @@ describe('HttpOperation', () => {
       method: 'get',
       request: {
         body: {
+          id: '?http-request-body?',
           description: 'Some body description',
           contents: [],
         },
       },
-      responses: [
-        {
-          code: '200',
-          description: 'Hello world!',
-        },
-      ],
+      responses: [{ id: '?http-response-200?', code: '200', description: 'Hello world!' }],
     };
 
     it('should render select for content type', () => {
@@ -456,10 +459,12 @@ describe('HttpOperation', () => {
       method: 'get',
       responses: [
         {
+          id: '?http-response-200?',
           code: '200',
           description: 'Hello world!',
           contents: [
             {
+              id: '?http-request-body-media-0?',
               mediaType: 'application/json',
               schema: {
                 type: 'object',
@@ -468,7 +473,7 @@ describe('HttpOperation', () => {
                 },
               },
             },
-            { mediaType: 'application/xml' },
+            { id: '?http-request-body-media-1?', mediaType: 'application/xml' },
           ],
         },
       ],
@@ -478,12 +483,7 @@ describe('HttpOperation', () => {
       path: '/',
       id: 'some_id',
       method: 'get',
-      responses: [
-        {
-          code: '200',
-          description: 'Hello world!',
-        },
-      ],
+      responses: [{ id: '?http-response-200?', code: '200', description: 'Hello world!' }],
     };
 
     it('should render the MarkdownViewer with description', async () => {
