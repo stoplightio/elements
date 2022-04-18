@@ -114,13 +114,13 @@ export class AppModule {}
 
 ## Fire it up
 
-Now start the development server.
+Now, start the development server.
 
 ```bash
 yarn start
 ```
 
-And you should see the API reference documentation for the Zoom API.
+You should see the API reference documentation for the Zoom API.
 
 ## Configuration
 
