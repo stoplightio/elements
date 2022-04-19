@@ -230,7 +230,7 @@ const Node = React.memo<{
   onLinkClick?(): void;
 }>(({ item, depth, meta, onClick, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
-  const isActive = activeId === item.id;
+  const isActive = activeId === item.slug || activeId === item.id;
   const LinkComponent = React.useContext(LinkContext);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -257,7 +257,7 @@ const Node = React.memo<{
       className="ElementsTableOfContentsItem"
     >
       <Item
-        id={getHtmlIdFromItemId(item.id)}
+        id={getHtmlIdFromItemId(item.slug || item.id)}
         isActive={isActive}
         depth={depth}
         title={item.title}
