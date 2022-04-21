@@ -22,7 +22,7 @@
     "@storybook/addon-controls": "6.3.5",
     "@storybook/addon-docs": "6.3.5",
     "@storybook/addon-postcss": "2.0.0",
-    "@storybook/addon-toolbars": "6.3.5",
+    "@storybook/addon-toolbars": "6.4.20",
     "@storybook/addon-viewport": "6.3.5",
     "@storybook/builder-webpack5": "6.3.5",
     "@storybook/manager-webpack5": "6.3.5",
