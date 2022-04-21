@@ -121,3 +121,7 @@ yarn start
 ```
 
 And you should see the API reference documentation for the Zoom API.
+
+## Configuration
+
+See [Elements Configuration Options](elements-options.md).

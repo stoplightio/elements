@@ -14,7 +14,12 @@ describe('getDefaultDescription()', () => {
       scopes: { 'scope:implicit': 'implicit scope description', 'scope:read': 'read scope description' },
     };
 
-    const description = getDefaultDescription({ key: 'oauth2-implicit', type: 'oauth2', flows: { implicit: flow } });
+    const description = getDefaultDescription({
+      id: 'http-security-oauth2-implicit',
+      key: 'oauth2-implicit',
+      type: 'oauth2',
+      flows: { implicit: flow },
+    });
 
     expect(description).toMatchInlineSnapshot(`
       "**Implicit OAuth Flow**
@@ -36,6 +41,7 @@ describe('getDefaultDescription()', () => {
     };
 
     const description = getDefaultDescription({
+      id: 'http-security-oauth2-authorizationCode',
       key: 'oauth2-authorizationCode',
       type: 'oauth2',
       flows: { authorizationCode: flow },
@@ -62,6 +68,7 @@ describe('getDefaultDescription()', () => {
     };
 
     const description = getDefaultDescription({
+      id: 'http-security-oauth2-clientCredentials',
       key: 'oauth2-clientCredentials',
       type: 'oauth2',
       flows: { clientCredentials: flow },
@@ -84,6 +91,7 @@ describe('getDefaultDescription()', () => {
     };
 
     const description = getDefaultDescription({
+      id: 'http-security-oauth2-password',
       key: 'oauth2-password',
       type: 'oauth2',
       flows: { password: flow },

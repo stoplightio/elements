@@ -8,9 +8,10 @@ export const operation: IHttpOperation = {
   summary: 'Get 200',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       description: 'OK',
     },
   ],
-  servers: [{ url: 'https://todos.stoplight.io' }],
+  servers: [{ id: '?http-server-0?', url: 'https://todos.stoplight.io' }],
 };

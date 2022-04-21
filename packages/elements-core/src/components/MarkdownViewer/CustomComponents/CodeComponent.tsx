@@ -95,11 +95,12 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
     id: '?http-operation-id?',
     method: data.method,
     path: uri.is('absolute') ? uri.path() : data.url,
-    servers: [{ url: uri.is('absolute') ? uri.origin() : data.baseUrl || '' }],
+    servers: [{ id: `?http-server-${uri.href()}?`, url: uri.is('absolute') ? uri.origin() : data.baseUrl || '' }],
     request: {
       query: Object.entries(data.query || {}).map(([key, value]) => {
         const defaultVal = Array.isArray(value) ? value[0] : value;
         return {
+          id: `?http-query-${key}-id?`,
           name: key,
           style: HttpParamStyles.Form,
           schema: { default: defaultVal },
@@ -107,12 +108,14 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
         };
       }),
       headers: Object.entries(data.headers || {}).map(([key, value]) => ({
+        id: `?http-header-${key}-id?`,
         name: key,
         style: HttpParamStyles.Simple,
         schema: { default: value },
         required: isHttpRequestParamRequired(value),
       })),
       path: pathParam?.map(name => ({
+        id: `?http-param-${name}-id?`,
         name,
         style: HttpParamStyles.Simple,
         required: true,
@@ -120,8 +123,10 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
       ...(data.body
         ? {
             body: {
+              id: '?http-request-body?',
               contents: [
                 {
+                  id: '?http-request-body-media?',
                   mediaType: 'application/json',
                   schema: { default: data.body },
                 },

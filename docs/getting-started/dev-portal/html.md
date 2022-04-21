@@ -66,24 +66,9 @@ Available on:
 
 Open up [127.0.0.1:8080](http://127.0.0.1:8080) in the browser and there it should be, Elements in all its glory.
 
-
-For more configuration options, let's look at the properties available.
-
 ## Configuration
 
-These properties can be provided as HTML attributes to the web component.
-
-- `projectId` - Find the Project ID in the Project Settings screen on Stoplight.
-- `platformUrl` - By default this is `https://stoplight.io/` and this default will be fine for most people. Some enterprise customers might need to change it.
-- `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
-- `collapseTableOfContents` - Pass `"true"` to stop the table of contents expanding folders of articles, and showing lists of endpoints for an API. This will clean up the ToC if you have a lot of content.
-- `hideMocking` - Pass `"true"` to disable all mocking options and remove mention of the mock server.
-- `hideTryIt` - Pass `"true"` to hide the "Try It" panel (the interactive API console).
-- `router` -  Determines how navigation should work:
-  - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
-  - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
-  - `memory` - keeps the history of your "URL" in memory (does not read or write to the address bar).
-  - `static` - renders using the StaticRouter which can help rendering pages on the server.
+See [Dev Portal Configuration Options](dev-portal-options.md). 
 
 ## Examples
 

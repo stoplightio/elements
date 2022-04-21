@@ -1,5 +1,5 @@
 import { safeStringify } from '@stoplight/yaml';
-import { saveAs } from 'file-saver';
+import saver from 'file-saver';
 import * as React from 'react';
 
 import { isJson } from '../utils/oas';
@@ -19,7 +19,7 @@ export function useExportDocumentProps({
       const blob = new Blob([document], {
         type: `application/${type}`,
       });
-      saveAs(blob, `document.${type}`);
+      saver.saveAs(blob, `document.${type}`);
     },
     [isJsonDocument],
   );

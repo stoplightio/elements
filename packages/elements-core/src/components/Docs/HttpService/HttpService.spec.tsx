@@ -83,6 +83,7 @@ describe('HttpService', () => {
       ...httpService,
       servers: [
         {
+          id: '?http-server-0?',
           url: 'https://///',
           name: 'Production API',
         },
