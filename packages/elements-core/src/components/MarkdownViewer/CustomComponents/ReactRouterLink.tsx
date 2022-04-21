@@ -1,3 +1,4 @@
+import type { LinkProps } from '@stoplight/mosaic';
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 
@@ -8,7 +9,7 @@ export const ReactRouterMarkdownLink = ({
   to,
   href: _href,
   children,
-}: JSX.IntrinsicElements['a'] & { to?: string }) => {
+}: Omit<LinkProps, 'target' | 'rel'> & { to?: string }) => {
   const href = to || _href;
 
   const isExternal = href !== undefined && externalRegex.test(href);

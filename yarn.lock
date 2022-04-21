@@ -3652,14 +3652,14 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.4.2":
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.4.2.tgz#e814324ccea827cbb06d4eebfce23e37e5bca426"
-  integrity sha512-1lkx7ibRqqiA+DDjcPEZ8pS61idFAieACZR2r2Ar3tdki6jvM1O+REYI4ggJJKRDh0/KVX4l/C8GF8StTkAl3A==
+"@stoplight/markdown-viewer@^5.4.6":
+  version "5.4.6"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.4.6.tgz#fc869017d861923889858ea5bfdc7c14f9ef2eb0"
+  integrity sha512-wO/H77YE0GF2ZaLWyD+ERgUXIS0ow+OWyT3l1+Q8hCCRglspwJ2vkQAsj+ddHrBeDgBB9bmin/LsZ1lUCcoOCA==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.4"
     "@rehooks/component-size" "^1.0.3"
-    "@stoplight/markdown" "^3.1.1"
+    "@stoplight/markdown" "^3.1.3"
     "@stoplight/react-error-boundary" "^2.0.0"
     deepmerge "^4.2.2"
     hast-to-hyperscript "^10.0.1"
@@ -3673,10 +3673,10 @@
     unist-util-select "^4.0.1"
     unist-util-visit "^3.1.0"
 
-"@stoplight/markdown@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-3.1.1.tgz#d3f097765fde7b794a56db4e64122bede10bed1a"
-  integrity sha512-46DKOnJdD2Q89xSsitDUTPTDV2HTSKxdpJyMA6LP7qxUu+7kGvL//TrQ5QRwVsZzsmEWeg15LNT1iwYvLwKbGg==
+"@stoplight/markdown@^3.1.3":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-3.1.4.tgz#a2d30aba3d73eafa5398f87b5aaef8d953cbcb11"
+  integrity sha512-87O5PDe2uW2EbvaW55f+oFT5ZU5P9E16/L+8JTxFGgF9AlA3HTA2w/+RjVDDml4G0eo8h7l+xqibokH8e8FmJQ==
   dependencies:
     "@stoplight/types" "^12.3.0"
     "@stoplight/yaml" "^4.2.2"
