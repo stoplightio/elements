@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-dev-portal",
-  "version": "1.6.18",
+  "version": "1.7.0",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [

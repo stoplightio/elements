@@ -20,13 +20,20 @@ export function isGroupOpenByDefault(
 ) {
   return (
     depth < maxDepthOpenByDefault ||
-    (activeId && (('id' in item && activeId === item.id) || hasActiveItem(item.items, activeId)))
+    (activeId &&
+      (('slug' in item && activeId === item.slug) ||
+        ('id' in item && activeId === item.id) ||
+        hasActiveItem(item.items, activeId)))
   );
 }
 
 // Recursively checks for the active item
 function hasActiveItem(items: TableOfContentsGroupItem[], activeId: string): boolean {
   return items.some(item => {
+    if ('slug' in item && activeId === item.slug) {
+      return true;
+    }
+
     if ('id' in item && activeId === item.id) {
       return true;
     }
