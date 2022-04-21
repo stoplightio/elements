@@ -1,13 +1,13 @@
-import { Meta, Story } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
 import * as React from 'react';
 
-interface HelperReturn<P> {
-  meta: Meta<P>;
+interface HelperReturn<P extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>> {
+  meta: ComponentMeta<P>;
   createStory(name: string, input: Partial<P>): Story<P>;
   createHoistedStory(input: Partial<P>): Story<P>;
 }
 
-export const createStoriesForDocsComponent = <P>(
+export const createStoriesForDocsComponent = <P extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>>(
   Component: React.ComponentType<P>,
   title?: string,
 ): HelperReturn<P> => {
