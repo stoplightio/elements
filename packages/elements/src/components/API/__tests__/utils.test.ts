@@ -378,7 +378,7 @@ describe('computeTagGroups', () => {
               type: 'http_operation',
               uri: '/paths/b/get',
               data: {
-                id: '?http-operation-id?',
+                id: '2b447d075652c',
                 method: 'get',
                 path: '/b',
                 responses: [],
@@ -386,6 +386,7 @@ describe('computeTagGroups', () => {
                 request: {
                   body: {
                     contents: [],
+                    id: '1b5f96cfcd9cb',
                   },
                   headers: [],
                   query: [],
@@ -395,6 +396,7 @@ describe('computeTagGroups', () => {
                 tags: [
                   {
                     name: 'Beta',
+                    id: 'c028e10befb64',
                   },
                 ],
                 security: [],
@@ -412,7 +414,7 @@ describe('computeTagGroups', () => {
               type: 'http_operation',
               uri: '/paths/a/get',
               data: {
-                id: '?http-operation-id?',
+                id: '2b547d0756761',
                 method: 'get',
                 path: '/a',
                 responses: [],
@@ -420,6 +422,7 @@ describe('computeTagGroups', () => {
                 request: {
                   body: {
                     contents: [],
+                    id: 'c9a24d63f1884',
                   },
                   headers: [],
                   query: [],
@@ -428,6 +431,7 @@ describe('computeTagGroups', () => {
                 },
                 tags: [
                   {
+                    id: '7d65d096f3728',
                     name: 'alpha',
                   },
                 ],
@@ -484,7 +488,7 @@ describe('computeTagGroups', () => {
               type: 'http_operation',
               uri: '/paths/b/get',
               data: {
-                id: '?http-operation-id?',
+                id: '2b447d075652c',
                 method: 'get',
                 path: '/b',
                 responses: [],
@@ -492,6 +496,7 @@ describe('computeTagGroups', () => {
                 request: {
                   body: {
                     contents: [],
+                    id: '1b5f96cfcd9cb',
                   },
                   headers: [],
                   query: [],
@@ -500,6 +505,7 @@ describe('computeTagGroups', () => {
                 },
                 tags: [
                   {
+                    id: 'e01820f4e85ed',
                     name: 'beta',
                   },
                 ],
@@ -518,7 +524,7 @@ describe('computeTagGroups', () => {
               type: 'http_operation',
               uri: '/paths/a/get',
               data: {
-                id: '?http-operation-id?',
+                id: '2b547d0756761',
                 method: 'get',
                 path: '/a',
                 responses: [],
@@ -526,6 +532,7 @@ describe('computeTagGroups', () => {
                 request: {
                   body: {
                     contents: [],
+                    id: 'c9a24d63f1884',
                   },
                   headers: [],
                   query: [],
@@ -534,6 +541,7 @@ describe('computeTagGroups', () => {
                 },
                 tags: [
                   {
+                    id: '7d65d096f3728',
                     name: 'alpha',
                   },
                 ],
