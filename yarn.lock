@@ -3652,14 +3652,14 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.4.2":
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.4.2.tgz#e814324ccea827cbb06d4eebfce23e37e5bca426"
-  integrity sha512-1lkx7ibRqqiA+DDjcPEZ8pS61idFAieACZR2r2Ar3tdki6jvM1O+REYI4ggJJKRDh0/KVX4l/C8GF8StTkAl3A==
+"@stoplight/markdown-viewer@^5.4.6":
+  version "5.4.6"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.4.6.tgz#fc869017d861923889858ea5bfdc7c14f9ef2eb0"
+  integrity sha512-wO/H77YE0GF2ZaLWyD+ERgUXIS0ow+OWyT3l1+Q8hCCRglspwJ2vkQAsj+ddHrBeDgBB9bmin/LsZ1lUCcoOCA==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.15.4"
     "@rehooks/component-size" "^1.0.3"
-    "@stoplight/markdown" "^3.1.1"
+    "@stoplight/markdown" "^3.1.3"
     "@stoplight/react-error-boundary" "^2.0.0"
     deepmerge "^4.2.2"
     hast-to-hyperscript "^10.0.1"
@@ -3673,10 +3673,10 @@
     unist-util-select "^4.0.1"
     unist-util-visit "^3.1.0"
 
-"@stoplight/markdown@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-3.1.1.tgz#d3f097765fde7b794a56db4e64122bede10bed1a"
-  integrity sha512-46DKOnJdD2Q89xSsitDUTPTDV2HTSKxdpJyMA6LP7qxUu+7kGvL//TrQ5QRwVsZzsmEWeg15LNT1iwYvLwKbGg==
+"@stoplight/markdown@^3.1.3":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown/-/markdown-3.1.4.tgz#a2d30aba3d73eafa5398f87b5aaef8d953cbcb11"
+  integrity sha512-87O5PDe2uW2EbvaW55f+oFT5ZU5P9E16/L+8JTxFGgF9AlA3HTA2w/+RjVDDml4G0eo8h7l+xqibokH8e8FmJQ==
   dependencies:
     "@stoplight/types" "^12.3.0"
     "@stoplight/yaml" "^4.2.2"
@@ -3748,38 +3748,10 @@
     tslib "^2.1.0"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.19.1", "@stoplight/mosaic@^1.19.1":
+"@stoplight/mosaic@1.19.1", "@stoplight/mosaic@^1.15.4", "@stoplight/mosaic@^1.16.2", "@stoplight/mosaic@^1.19.1":
   version "1.19.1"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.19.1.tgz#b204ea42926fe77cc4bf207ee102cd58c00aa760"
   integrity sha512-6w32xHnAAqACLzeppu0yundZa/CNHn3yhUwP72N9/aLc2dmJIojpCRXIJRyqDYxqu26ZjAn2mJsxjwLReCmWsg==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.35"
-    "@fortawesome/free-solid-svg-icons" "^5.15.3"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    "@react-hook/size" "^2.1.1"
-    "@react-hook/window-size" "^3.0.7"
-    "@react-types/button" "3.4.1"
-    "@react-types/radio" "3.1.2"
-    "@react-types/shared" "3.9.0"
-    "@react-types/switch" "3.1.2"
-    "@react-types/textfield" "3.3.0"
-    "@types/react" "^17.0.3"
-    "@types/react-dom" "^17.0.3"
-    clsx "^1.1.1"
-    copy-to-clipboard "^3.3.1"
-    dom-helpers "^3.3.1"
-    lodash.get "^4.4.2"
-    nano-memoize "^1.2.1"
-    polished "^4.1.3"
-    react-fast-compare "^3.2.0"
-    ts-keycode-enum "^1.0.6"
-    tslib "^2.1.0"
-    zustand "^3.5.2"
-
-"@stoplight/mosaic@^1.15.4", "@stoplight/mosaic@^1.16.2":
-  version "1.16.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.16.2.tgz#661389236095ba0abbdefd13018c19c42ff8920b"
-  integrity sha512-uF/PSEiXGRc0xoVvLSTKPmc4vCFW3CVwOyebvepQpXaZGORrBVCvkyONE38Pa+OpBtXJ47CMAkUbiObBW7oKbw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
@@ -4810,9 +4782,9 @@
     "@types/enzyme" "*"
 
 "@types/enzyme@*", "@types/enzyme@3.x.x":
-  version "3.10.10"
-  resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.10.10.tgz#3a44cc66571432ab9e1773a831af3742beb39275"
-  integrity sha512-/D4wFhiEjUDfPu+j5FVK0g/jf7rqeEIpNfAI+kyxzLpw5CKO0drnW3W5NC38alIjsWgnyQ8pbuPF5+UD+vhVyg==
+  version "3.10.12"
+  resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.10.12.tgz#ac4494801b38188935580642f772ad18f72c132f"
+  integrity sha512-xryQlOEIe1TduDWAOphR0ihfebKFSWOXpIsk+70JskCfRfW+xALdnJ0r1ZOTo85F9Qsjk6vtlU7edTYHbls9tA==
   dependencies:
     "@types/cheerio" "*"
     "@types/react" "*"
@@ -8458,18 +8430,18 @@ css-declaration-sorter@^6.0.3:
   dependencies:
     timsort "^0.3.0"
 
-css-loader@6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-6.2.0.tgz#9663d9443841de957a3cb9bcea2eda65b3377071"
-  integrity sha512-/rvHfYRjIpymZblf49w8jYcRo2y9gj6rV8UroHGmBxKrIyGLokpycyKzp9OkitvqT29ZSpzJ0Ic7SpnJX3sC8g==
+css-loader@6.7.1:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-6.7.1.tgz#e98106f154f6e1baf3fc3bc455cb9981c1d5fd2e"
+  integrity sha512-yB5CNFa14MbPJcomwNh3wLThtkZgcNyI2bNMRt8iE5Z8Vwl7f8vQXFAzn2HDOJvtDq2NTZBUGMSUNNyrv3/+cw==
   dependencies:
     icss-utils "^5.1.0"
-    postcss "^8.2.15"
+    postcss "^8.4.7"
     postcss-modules-extract-imports "^3.0.0"
     postcss-modules-local-by-default "^4.0.0"
     postcss-modules-scope "^3.0.0"
     postcss-modules-values "^4.0.0"
-    postcss-value-parser "^4.1.0"
+    postcss-value-parser "^4.2.0"
     semver "^7.3.5"
 
 css-loader@^3.6.0:
@@ -11273,10 +11245,10 @@ gitconfiglocal@^1.0.0:
   dependencies:
     ini "^1.3.2"
 
-github-buttons@^2.8.0:
-  version "2.20.2"
-  resolved "https://registry.yarnpkg.com/github-buttons/-/github-buttons-2.20.2.tgz#1d26efff31dbce5fb59bb237ebb538691156f82b"
-  integrity sha512-MvdHtabOCHabh/tvBZ4qh9jmPKsLGT4XtAMx6jkP/MINKBhiQQiHlfxMuoxcHTVVPgU81jFsO7EMjLN4l52OoA==
+github-buttons@^2.21.1:
+  version "2.21.1"
+  resolved "https://registry.yarnpkg.com/github-buttons/-/github-buttons-2.21.1.tgz#9e55eb83b70c9149a21c235db2e971c53d4d98a2"
+  integrity sha512-n9bCQ8sj+5oX1YH5NeyWGbAclRDtHEhMBzqw2ctsWpdEHOwVgfruRu0VIVy01Ah10dd/iFajMHYU71L7IBWBOw==
 
 github-slugger@^1.0.0, github-slugger@^1.3.0:
   version "1.4.0"
@@ -15960,10 +15932,10 @@ nano-time@1.0.0:
   dependencies:
     big-integer "^1.6.16"
 
-nanoid@^3.1.20, nanoid@^3.1.23, nanoid@^3.1.30:
-  version "3.1.30"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.30.tgz#63f93cc548d2a113dc5dfbc63bfa09e2b9b64362"
-  integrity sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ==
+nanoid@^3.1.23, nanoid@^3.1.32, nanoid@^3.3.1:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.3.tgz#fd8e8b7aa761fe807dba2d1b98fb7241bb724a25"
+  integrity sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -17972,7 +17944,7 @@ postcss-unique-selectors@^5.0.2:
     alphanum-sort "^1.0.2"
     postcss-selector-parser "^6.0.5"
 
-postcss-value-parser@^4.0.0, postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0:
+postcss-value-parser@^4.0.0, postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0, postcss-value-parser@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
@@ -18003,14 +17975,14 @@ postcss@^7.0.14, postcss@^7.0.26, postcss@^7.0.32, postcss@^7.0.35, postcss@^7.0
     picocolors "^0.2.1"
     source-map "^0.6.1"
 
-postcss@^8.2.15:
-  version "8.4.5"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.5.tgz#bae665764dfd4c6fcc24dc0fdf7e7aa00cc77f95"
-  integrity sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==
+postcss@^8.2.15, postcss@^8.4.7:
+  version "8.4.12"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.12.tgz#1e7de78733b28970fa4743f7da6f3763648b1905"
+  integrity sha512-lg6eITwYe9v6Hr5CncVbK70SoioNQIq81nsaG86ev5hAidQvmOeETBqs7jm43K2F5/Ley3ytDtriImV6TpNiSg==
   dependencies:
-    nanoid "^3.1.30"
+    nanoid "^3.3.1"
     picocolors "^1.0.0"
-    source-map-js "^1.0.1"
+    source-map-js "^1.0.2"
 
 postman-collection@^4.1.0:
   version "4.1.1"
@@ -18243,16 +18215,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
-  version "15.7.2"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
-  integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
-  dependencies:
-    loose-envify "^1.4.0"
-    object-assign "^4.1.1"
-    react-is "^16.8.1"
-
-prop-types@^15.6.1:
+prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -18625,12 +18588,12 @@ react-fast-compare@^3.0.1, react-fast-compare@^3.2.0:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
-react-github-btn@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-github-btn/-/react-github-btn-1.2.1.tgz#ece93f609a4bad5e7eb9f47ae49bfaba69466dce"
-  integrity sha512-/gXD01mHAOhW0xYuNJFDn08OGjaMXOjcg6GCKVPdHvQcWzswH4aT85DLDAAJ6Zhw/71veSIH4Kx1BTBfy69SsA==
+react-github-btn@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-github-btn/-/react-github-btn-1.2.2.tgz#9aab2498ff311b9f9c448a2d2b902d0277037d5c"
+  integrity sha512-X4IcX2qwaLciSa4wcUsrFgF2PcT+ukMbZZRBT50ZvO2HJMyqQJNYNHErCN2R0sgZfSFQHUuUHlGndF15VQUhPA==
   dependencies:
-    github-buttons "^2.8.0"
+    github-buttons "^2.21.1"
 
 react-helmet-async@^1.0.7:
   version "1.2.2"
@@ -18648,7 +18611,7 @@ react-is@17.0.2, react-is@^17.0.1, react-is@^17.0.2:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.6:
+react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.6:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -20219,10 +20182,10 @@ source-map-js@^0.6.2:
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-0.6.2.tgz#0bb5de631b41cfbda6cfba8bd05a80efdfd2385e"
   integrity sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==
 
-source-map-js@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.1.tgz#a1741c131e3c77d048252adfa24e23b908670caf"
-  integrity sha512-4+TN2b3tqOCd/kaGRJ/sTYA0tR0mdXx26ipdolxcwtJVqEnqNYvlCAt1q3ypy4QMlYus+Zh34RNtYLoq2oQ4IA==
+source-map-js@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
+  integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
 
 source-map-resolve@^0.5.0, source-map-resolve@^0.5.2:
   version "0.5.3"
@@ -21940,10 +21903,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-urijs@^1.19.6:
-  version "1.19.10"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.10.tgz#8e2fe70a8192845c180f75074884278f1eea26cb"
-  integrity sha512-EzauQlgKuJgsXOqoMrCiePBf4At5jVqRhXykF3Wfb8ZsOBMxPcfiVBcsHXug4Aepb/ICm2PIgqAUGMelgdrWEg==
+urijs@^1.19.11:
+  version "1.19.11"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.11.tgz#204b0d6b605ae80bea54bea39280cdb7c9f923cc"
+  integrity sha512-HXgFDgDommxn5/bIv0cnQZsPhHDA90NPHD6+c/v21U5+Sx5hoP8+dP9IZXBU1gIfvdRfhG8cel9QNPeionfcCQ==
 
 urix@^0.1.0:
   version "0.1.0"
