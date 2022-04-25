@@ -65,28 +65,28 @@
     "@stoplight/types": "^13.0.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.19",
-    "react-query": "^3.15.2",
+    "react-query": "^3.34.19",
     "react-router-dom": "^5.2.0",
     "use-debounce": "^6.0.1"
   },
   "devDependencies": {
     "@stoplight/scripts": "9.2.0",
     "@testing-library/dom": "^7.26.5",
-    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.1",
     "@testing-library/react-hooks": "^3.4.2",
     "@testing-library/user-event": "^12.2.0",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash": "^4.14.181",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.12",
-    "@types/react-router-dom": "^5.1.5",
+    "@types/react-router-dom": "^5.3.3",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",
     "replace": "^1.2.1",
     "resolve-url-loader": "^3.1.2",
     "style-loader": "^2.0.0",
-    "ts-loader": "^8.1.0"
+    "ts-loader": "^9.2.8"
   },
   "publishConfig": {
     "directory": "dist"
