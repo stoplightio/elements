@@ -5,7 +5,6 @@ Learn how to get started with Elements Dev Portal in an Angular project.
 ## Create a Stoplight Project
 
 1. [Create a Stoplight workspace and project](https://meta.stoplight.io/docs/platform/ZG9jOjQ2OTE4Njk3-quickstart-guide#create-a-project).
-
 2. Locate and copy the **Project ID** from the **Project Settings** view of your Stoplight project.
 
 > Project Settings can only be viewed by project editors or above. Read more about project permissions [here](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
