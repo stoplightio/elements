@@ -2,9 +2,17 @@
 
 Learn how to get started with Elements Dev Portal in an Angular project.
 
+## Create a Stoplight Project
+
+1. [Create a Stoplight workspace and project](https://meta.stoplight.io/docs/platform/ZG9jOjQ2OTE4Njk3-quickstart-guide#create-a-project).
+
+2. Locate and copy the **Project ID** from the **Project Settings** view of your Stoplight project.
+
+> Project Settings can only be viewed by project editors or above. Read more about project permissions [here](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
+
 ## Install Elements
 
-First, install the Elements Dev Portal library.
+Install the Elements Dev Portal library.
 
 ```bash
 yarn add @stoplight/elements-dev-portal
@@ -39,25 +47,27 @@ Add the Elements CSS and JavaScript bundles to your Angular config.
 }
 ```
 
-Now let's generate a new Angular component for our API reference docs.
+Generate a new Angular component for the API reference docs.
 
 ```bash
 yarn ng generate component api-reference
 ```
 
-This should generate an `api-reference` folder with a few files. In the `api-reference.component.html` file, let's add the Stoplight API component.
+This should generate an `api-reference` folder with a few files. In the `api-reference.component.html` file, add the Stoplight API component.
+
+Embed the web component inside the HTML `<body>` tag, and enter the project ID, as shown in the example below.
 
 <!--
 title: api-reference.component.html
 -->
 ```html
-<elements-dev-portal-api
-  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
-  basePath="/api-reference"
-></elements-dev-portal-api>
+<elements-stoplight-project
+ projectId="your-project-id"
+   basePath="/api-reference"
+></elements-stoplight-project>
 ```
 
-Noticed we added a `basePath` to our API component? We'll also want to add a route for the `/api-reference` path in our `app-routing.module.ts` file. It's important that we also add a catch-all route `**`, so we can deep link to paths in our API reference docs.
+Notice we added a `basePath` to our API component? We'll also want to add a route for the `/your-html-file` path in our `app-routing.module.ts` file. It's important that we also add a catch-all route `**`, so we can deep link to paths in our API reference docs.
 
 Your routing file should end up looking like this:
 
@@ -85,8 +95,6 @@ const routes: Routes = [
 })
 export class AppRoutingModule {}
 ```
-
-
 And finally, we need to set up Angular to allow [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Head over to the `app-module.ts` file and add the [CUSTOM_ELEMENTS_SCHEMA](https://angular.io/api/core/CUSTOM_ELEMENTS_SCHEMA).
 
 It'll end up looking like this:
