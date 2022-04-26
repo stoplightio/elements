@@ -131,4 +131,4 @@ You should see the API reference documentation for the Zoom API.
 
 ## Configuration
 
-See [Elements Dev Portal Configuration Options](elements-dev-portal-options.md).
+See [Elements Dev Portal Configuration Options](dev-portal-options.md).
