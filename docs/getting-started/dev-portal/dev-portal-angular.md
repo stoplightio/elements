@@ -62,11 +62,11 @@ title: api-reference.component.html
 ```html
 <elements-stoplight-project
  projectId="your-project-id"
-   basePath="/api-reference"
+ basePath="/api-reference"
 ></elements-stoplight-project>
 ```
 
-Notice we added a `basePath` to our API component? We'll also want to add a route for the `/your-html-file` path in our `app-routing.module.ts` file. It's important that we also add a catch-all route `**`, so we can deep link to paths in our API reference docs.
+Notice we added a `basePath` to our API component? We'll also want to add a route for the `/api-reference` path in our `app-routing.module.ts` file. It's important that we also add a catch-all route `**`, so we can deep link to paths in our API reference docs.
 
 Your routing file should end up looking like this:
 
