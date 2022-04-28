@@ -24,13 +24,12 @@ export const getNodeContent = async ({
   platformUrl?: string;
   platformAuthToken?: string;
 }): Promise<Node> => {
-  const nodeId = getNodeIdFromSlug(nodeSlug);
-  const encodedNodeId = encodeURIComponent(nodeId);
+  const encodedNodeSlug = encodeURIComponent(nodeSlug);
   const encodedProjectId = encodeURIComponent(projectId);
   const encodedBranchSlug = branchSlug ? encodeURIComponent(branchSlug) : '';
   const branchQuery = encodedBranchSlug ? `?branch=${encodedBranchSlug}` : '';
   const response = await fetch(
-    `${platformUrl}/api/v1/projects/${encodedProjectId}/nodes/${encodedNodeId}${branchQuery}`,
+    `${platformUrl}/api/v1/projects/${encodedProjectId}/nodes/${encodedNodeSlug}${branchQuery}`,
     {
       headers: {
         'Stoplight-Elements-Version': appVersion,
@@ -52,7 +51,3 @@ export const getNodeContent = async ({
 
   return data;
 };
-
-function getNodeIdFromSlug(nodeSlug: string) {
-  return nodeSlug.split('-')[0];
-}

@@ -1,13 +1,13 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { safeParse, safeStringify } from '@stoplight/json';
 import { Box, Button, Flex, Icon, Image, Link, Menu, MenuItems, Panel } from '@stoplight/mosaic';
-import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { capitalize } from 'lodash';
 import * as React from 'react';
 import formatXml from 'xml-formatter';
 
 import { HttpCodeDescriptions } from '../../../constants';
 import { getHttpCodeColor } from '../../../utils/http';
+import { ResponseCodeViewer } from './ReponseCodeViewer';
 
 export interface ResponseState {
   status: number;
@@ -84,7 +84,7 @@ export const TryItResponse: React.FC<{ response: ResponseState }> = ({ response 
             {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
           </div>
           {response.bodyText && responseType && ['json', 'xml', 'text'].includes(responseType) ? (
-            <CodeViewer
+            <ResponseCodeViewer
               language="json"
               value={
                 responseType && bodyFormat === 'preview'
