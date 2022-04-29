@@ -21,7 +21,8 @@ export const computeTagGroups = (serviceNode: ServiceNode) => {
       if (groupsByTagId[tagId]) {
         groupsByTagId[tagId].items.push(node);
       } else {
-        const serviceTagName = lowerCaseServiceTags.find(tn => tn === tagId);
+        const serviceTagIndex = lowerCaseServiceTags.findIndex(tn => tn === tagId);
+        const serviceTagName = serviceNode.tags[serviceTagIndex];
         groupsByTagId[tagId] = {
           title: serviceTagName || tagName,
           items: [node],
