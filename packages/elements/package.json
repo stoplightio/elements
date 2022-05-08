@@ -21,6 +21,7 @@
   "module": "./dist/index.esm.js",
   "exports": {
     "./styles.min.css": "./styles.min.css",
+    "./web-components.min.js": "./web-components.min.js",
     ".": {
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
