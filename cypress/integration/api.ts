@@ -69,7 +69,7 @@ describe('API component', () => {
 
   it('navigates via table of contents', () => {
     loadZoomApiPage();
-    cy.findByText('groups').click();
+    cy.findByText('Groups').click();
     cy.findByText('Create a group').click();
     cy.findByRole('heading', { name: /Create a group/i }).should('exist');
   });
