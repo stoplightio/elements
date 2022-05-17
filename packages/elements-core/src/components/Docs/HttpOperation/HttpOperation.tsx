@@ -121,7 +121,7 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
   const pathElem = (
     <Flex overflowX="hidden">
       {chosenServerUrl ? (
-        <Box dir="rtl" color="muted" fontSize="lg" textOverflow="truncate" overflowX="hidden">
+        <Box color="muted" fontSize="lg" textOverflow="truncate" overflowX="hidden">
           {chosenServerUrl}
         </Box>
       ) : null}
