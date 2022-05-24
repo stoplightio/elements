@@ -3,6 +3,7 @@
 Setting up Elements Dev Portal is a case of loading up some JavaScript and CSS and embedding a Web Component (custom HTML) into the HTML of your new or existing dev portal. This should work anywhere custom HTML can be embedded and this approach is supported by [pretty much all modern browsers](https://caniuse.com/custom-elementsv1).
 
 For now, the only component in the Dev Portal package is `<elements-stoplight-project/>`, which lets users display Stoplight Projects wherever they want. There will eventually be more types of dev portal in the package. 
+
 ## Usage
 
 1. Load the Elements Dev Portal JavaScript and default CSS. These can go in the `<head>` tag.
@@ -17,7 +18,6 @@ For now, the only component in the Dev Portal package is `<elements-stoplight-pr
 > Project Settings can only be viewed by Project Editors or above. Read more about project permissions [here](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
 
 ![The project ID can be found on the Project Settings page in a text box after Display Name and Slug](../../images/projectId.png)
-
 
 3. Embed the web component inside the HTML `<body>` tag, and enter the project ID.
 

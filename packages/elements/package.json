@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "7.5.15",
+  "version": "7.5.19",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -21,6 +21,7 @@
   "module": "./dist/index.esm.js",
   "exports": {
     "./styles.min.css": "./styles.min.css",
+    "./web-components.min.js": "./web-components.min.js",
     ".": {
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
@@ -57,9 +58,9 @@
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
-    "@stoplight/elements-core": "~7.5.15",
     "@stoplight/http-spec": "^5.1.4",
     "@stoplight/json": "^3.18.1",
+    "@stoplight/elements-core": "~7.5.19",
     "@stoplight/mosaic": "^1.16.2",
     "@stoplight/types": "^13.0.0",
     "@stoplight/yaml": "^4.2.3",
