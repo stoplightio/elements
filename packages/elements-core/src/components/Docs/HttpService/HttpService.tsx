@@ -41,7 +41,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}
         <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" layout="stacked" />
       )}
       <VStack spacing={6}>
-        <ServerInfo servers={data.servers ?? []} variables={chosenServerVariables as any} mockUrl={mocking.mockUrl} />
+        <ServerInfo servers={data.servers ?? []} variables={chosenServerVariables} mockUrl={mocking.mockUrl} />
         <Box>
           {data.securitySchemes?.length && (
             <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />

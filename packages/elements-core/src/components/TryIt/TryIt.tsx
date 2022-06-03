@@ -105,11 +105,7 @@ export const TryIt: React.FC<TryItProps> = ({
   const [chosenServerVariables, _] = useAtom(chosenServerVariablesAtom);
 
   const servers = React.useMemo(() => {
-    const toDisplay = getServersToDisplay(
-      httpOperation.servers || defaultServers,
-      chosenServerVariables as any,
-      mockUrl,
-    );
+    const toDisplay = getServersToDisplay(httpOperation.servers || defaultServers, chosenServerVariables, mockUrl);
 
     return toDisplay;
   }, [httpOperation.servers, chosenServerVariables, mockUrl]);
