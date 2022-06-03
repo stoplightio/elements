@@ -5,9 +5,7 @@ import * as React from 'react';
 import { chosenServerAtom } from '../chosenServer';
 import { chosenServerVariablesAtom } from '../chosenServerVariables';
 
-interface TryItServersProps {
-  //onChange: (url: string) => void;
-}
+interface TryItServersProps {}
 
 export const TryItServers: React.FC<TryItServersProps> = () => {
   const [chosenServer, _] = useAtom(chosenServerAtom);
