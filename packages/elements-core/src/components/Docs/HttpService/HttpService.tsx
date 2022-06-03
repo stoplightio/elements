@@ -1,11 +1,13 @@
 import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
+import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
+import { chosenServerVariablesAtom } from '../../TryIt/chosenServerVariables';
 import { DocsComponentProps } from '..';
 import { VersionBadge } from '../HttpOperation/Badges';
 import { AdditionalInfo } from './AdditionalInfo';
@@ -18,6 +20,7 @@ export type HttpServiceProps = DocsComponentProps<Partial<IHttpService>>;
 const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}, layoutOptions, exportProps }) => {
   const { search, pathname } = location;
   const mocking = React.useContext(MockingContext);
+  const [chosenServerVariables, _] = useAtom(chosenServerVariablesAtom);
   const query = new URLSearchParams(search);
   return (
     <Box mb={10}>
@@ -38,7 +41,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(({ data, location = {}
         <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" layout="stacked" />
       )}
       <VStack spacing={6}>
-        <ServerInfo servers={data.servers ?? []} mockUrl={mocking.mockUrl} />
+        <ServerInfo servers={data.servers ?? []} variables={chosenServerVariables as any} mockUrl={mocking.mockUrl} />
         <Box>
           {data.securitySchemes?.length && (
             <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />

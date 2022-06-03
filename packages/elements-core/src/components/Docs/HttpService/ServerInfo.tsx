@@ -8,15 +8,16 @@ import { getServersToDisplay, IServer } from '../../../utils/http-spec/IServer';
 
 interface ServerInfoProps {
   servers: IServer[];
+  variables?: { [key: string]: string };
   mockUrl?: string;
 }
 
-export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
+export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, variables, mockUrl }) => {
   const mocking = React.useContext(MockingContext);
   const showMocking = !mocking.hideMocking && mockUrl && isProperUrl(mockUrl);
   const $mockUrl = showMocking ? mockUrl || mocking.mockUrl : undefined;
 
-  const serversToDisplay = getServersToDisplay(servers, $mockUrl);
+  const serversToDisplay = getServersToDisplay(servers, variables, $mockUrl);
 
   if (!showMocking && serversToDisplay.length === 0) {
     return null;

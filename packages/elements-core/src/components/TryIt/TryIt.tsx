@@ -16,6 +16,7 @@ import { useBodyParameterState } from './Body/request-body-utils';
 import { RequestBody } from './Body/RequestBody';
 import { useTextRequestBodyState } from './Body/useTextRequestBodyState';
 import { buildFetchRequest, buildHarRequest } from './build-request';
+import { chosenServerVariablesAtom } from './chosenServerVariables';
 import { getMockData } from './Mocking/mocking-utils';
 import { MockingButton } from './Mocking/MockingButton';
 import { useMockingOptions } from './Mocking/useMockingOptions';
@@ -29,6 +30,7 @@ import {
   ResponseState,
   TryItResponse,
 } from './Response/Response';
+import { TryItServers } from './Servers/Servers';
 import { ServersDropdown } from './Servers/ServersDropdown';
 
 export interface TryItProps {
@@ -100,11 +102,17 @@ export const TryIt: React.FC<TryItProps> = ({
 
   const [operationAuthValue, setOperationAuthValue] = usePersistedSecuritySchemeWithValues();
 
+  const [chosenServerVariables, _] = useAtom(chosenServerVariablesAtom);
+
   const servers = React.useMemo(() => {
-    const toDisplay = getServersToDisplay(httpOperation.servers || defaultServers, mockUrl);
+    const toDisplay = getServersToDisplay(
+      httpOperation.servers || defaultServers,
+      chosenServerVariables as any,
+      mockUrl,
+    );
 
     return toDisplay;
-  }, [httpOperation.servers, mockUrl]);
+  }, [httpOperation.servers, chosenServerVariables, mockUrl]);
   const firstServer = servers[0] || null;
   const [chosenServer, setChosenServer] = useAtom(chosenServerAtom);
   const isMockingEnabled = mockUrl && chosenServer?.url === mockUrl;
@@ -255,6 +263,8 @@ export const TryIt: React.FC<TryItProps> = ({
           onChange={setTextRequestBody}
         />
       ) : null}
+
+      {chosenServer && <TryItServers />}
 
       <Panel.Content className="SendButtonHolder" mt={4} pt={!isOnlySendButton && !embeddedInMd ? 0 : undefined}>
         <HStack alignItems="center" spacing={2}>
