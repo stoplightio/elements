@@ -45,3 +45,8 @@ dist-storybook
 
 # Vim buffer files
 *.swp
+
+# Stoplight style guides
+.stoplight/styleguide.json
+.stoplight/custom-functions
+.spectral.json
