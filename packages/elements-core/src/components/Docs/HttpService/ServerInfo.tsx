@@ -1,4 +1,3 @@
-import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
 import * as React from 'react';
 
@@ -51,12 +50,12 @@ const ServerUrl = ({ description, url, marginBottom = true }: IServer & { margin
       <Tooltip placement="right" renderTrigger={() => <Text aria-label={description}>{url}</Text>}>
         {!hasCopied && (
           <Box p={1} onClick={onCopy} cursor="pointer">
-            Copy Server URL <Icon className="sl-ml-1" icon={faCopy} />
+            Copy Server URL <Icon className="sl-ml-1" icon={['fas', 'copy']} />
           </Box>
         )}
         {hasCopied && (
           <Box p={1}>
-            Copied Server URL <Icon className="sl-ml-1" icon={faCheck} />
+            Copied Server URL <Icon className="sl-ml-1" icon={['fas', 'check']} />
           </Box>
         )}
       </Tooltip>

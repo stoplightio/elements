@@ -57,11 +57,16 @@
     "react": ">=16.8",
     "react-dom": ">=16.8"
   },
+  "rollup": {
+    "bundleDeps": [
+      "@fortawesome/free-solid-svg-icons",
+      "use-debounce"
+    ]
+  },
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@stoplight/elements-core": "~7.5.20",
-    "@stoplight/markdown-viewer": "^5.4.7",
-    "@stoplight/mosaic": "^1.16.2",
+    "@stoplight/markdown-viewer": "^5.5.0",
+    "@stoplight/mosaic": "^1.24.0",
     "@stoplight/path": "^1.3.2",
     "@stoplight/types": "^13.0.0",
     "classnames": "^2.2.6",
@@ -71,6 +76,7 @@
     "use-debounce": "^6.0.1"
   },
   "devDependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@stoplight/scripts": "9.2.0",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.16.4",
@@ -94,10 +100,5 @@
   },
   "release": {
     "extends": "@stoplight/scripts/release"
-  },
-  "rollup": {
-    "bundleDeps": [
-      "use-debounce"
-    ]
   }
 }
