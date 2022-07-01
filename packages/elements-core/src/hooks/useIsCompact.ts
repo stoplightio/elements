@@ -21,7 +21,6 @@ const getBreakpoints = (compact?: number | boolean): Breakpoints | undefined => 
  */
 export function useIsCompact(layoutOptions: DocsProps['layoutOptions']) {
   const { ref, breakpoint } = useBreakpoints(getBreakpoints(layoutOptions?.compact));
-  console.log('breakpoint', breakpoint, layoutOptions?.compact);
 
   return { ref: ref as Ref<HTMLDivElement>, isCompact: breakpoint === 'compact' };
 }
