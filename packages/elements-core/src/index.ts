@@ -1,4 +1,4 @@
-export { Docs, ParsedDocs } from './components/Docs';
+export { Docs, DocsProps, ParsedDocs } from './components/Docs';
 export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { ExportButton, ExportButtonProps } from './components/Docs/HttpService/ExportButton';
 export { SidebarLayout } from './components/Layout/SidebarLayout';

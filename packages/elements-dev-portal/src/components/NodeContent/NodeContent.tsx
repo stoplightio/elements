@@ -1,11 +1,11 @@
 import {
   CustomLinkComponent,
   Docs,
+  DocsProps,
   MarkdownComponentsProvider,
   MockingProvider,
   ReferenceResolver,
 } from '@stoplight/elements-core';
-import { DocsProps } from '@stoplight/elements-core/components/Docs';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
