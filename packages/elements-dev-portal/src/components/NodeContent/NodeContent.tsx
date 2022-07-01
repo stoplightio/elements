@@ -5,6 +5,7 @@ import {
   MockingProvider,
   ReferenceResolver,
 } from '@stoplight/elements-core';
+import { DocsProps } from '@stoplight/elements-core/components/Docs';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
@@ -12,19 +13,16 @@ import * as React from 'react';
 
 import { Node } from '../../types';
 
+// Props shared with elements-core Docs component
+type DocsBaseProps = Pick<DocsProps, 'tryItCorsProxy' | 'tryItCredentialsPolicy'>;
+type DocsLayoutProps = Pick<
+  Required<DocsProps>['layoutOptions'],
+  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'
+>;
+
 export type NodeContentProps = {
   node: Node;
   Link: CustomLinkComponent;
-
-  /**
-   * Allows to hide TryIt component
-   */
-  hideTryIt?: boolean;
-
-  /**
-   * Allows to hide TryIt panel
-   */
-  hideTryItPanel?: boolean;
 
   /**
    * Allows to hide mocking button
@@ -32,42 +30,27 @@ export type NodeContentProps = {
   hideMocking?: boolean;
 
   /**
-   * Allows to hide export button
-   * @default false
-   */
-  hideExport?: boolean;
-
-  /**
-   * Fetch credentials policy for TryIt component
-   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
-   * @default "omit"
-   */
-
-  tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
-
-  /**
-   * URL of a CORS proxy that will be used to send requests in TryIt.
-   * Provided url will be prepended to an URL of an actual request.
-   * @default false
-   */
-  tryItCorsProxy?: string;
-
-  /**
    * Support for custom reference resolver
    */
   refResolver?: ReferenceResolver;
-};
+} & DocsBaseProps &
+  DocsLayoutProps;
 
 export const NodeContent = ({
   node,
   Link,
+  hideMocking,
+  refResolver,
+
+  // Docs base props
+  tryItCorsProxy,
+  tryItCredentialsPolicy,
+
+  // Docs layout props
+  compact,
   hideTryIt,
   hideTryItPanel,
-  hideMocking,
   hideExport,
-  tryItCredentialsPolicy,
-  tryItCorsProxy,
-  refResolver,
 }: NodeContentProps) => {
   return (
     <NodeLinkContext.Provider value={[node, Link]}>
@@ -78,6 +61,7 @@ export const NodeContent = ({
             nodeData={node.data}
             nodeTitle={node.title}
             layoutOptions={{
+              compact,
               hideTryIt: hideTryIt,
               hideTryItPanel: hideTryItPanel,
               hideExport: hideExport || node.links.export_url === undefined,
