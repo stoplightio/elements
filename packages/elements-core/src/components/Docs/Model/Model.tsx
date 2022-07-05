@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Flex, Heading, HStack, Panel, Select, Text, VStack } from '@stoplight/mosaic';
+import { CopyButton, Flex, Heading, HStack, Panel, Select, Text, VStack } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
@@ -7,6 +7,7 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
+import { useIsCompact } from '../../../hooks/useIsCompact';
 import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { LoadMore } from '../../LoadMore';
@@ -25,21 +26,13 @@ const ModelComponent: React.FC<ModelProps> = ({
   layoutOptions,
   exportProps,
 }) => {
-  const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
-  const [show, setShow] = React.useState<boolean>(false);
-  const [loading, setLoading] = React.useState<boolean>(false);
   const resolveRef = useInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
 
+  const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
+
   const title = data.title ?? nodeTitle;
   const isInternal = !!data['x-internal'];
-
-  const handleLoadMorePress = () => {
-    setLoading(true);
-    setTimeout(() => setShow(true), 50);
-  };
-
-  const examples = React.useMemo(() => generateExamplesFromJsonSchema(data), [data]);
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
@@ -60,12 +53,42 @@ const ModelComponent: React.FC<ModelProps> = ({
     </Flex>
   );
 
+  const modelExamples = !layoutOptions?.hideModelExamples && <ModelExamples data={data} isCollapsible={isCompact} />;
+
   const description = (
     <VStack spacing={10}>
       {data.description && data.type === 'object' && <MarkdownViewer role="textbox" markdown={data.description} />}
+
+      {isCompact && modelExamples}
+
       <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} />
     </VStack>
   );
+
+  return (
+    <TwoColumnLayout
+      ref={layoutRef}
+      className={cn('Model', className)}
+      header={header}
+      left={description}
+      right={!isCompact && modelExamples}
+    />
+  );
+};
+
+const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONSchema7; isCollapsible?: boolean }) => {
+  const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
+  const [show, setShow] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const examples = React.useMemo(() => generateExamplesFromJsonSchema(data), [data]);
+
+  const selectedExample = examples[chosenExampleIndex]?.data;
+
+  const handleLoadMorePress = React.useCallback(() => {
+    setLoading(true);
+    setTimeout(() => setShow(true), 50);
+  }, []);
 
   const examplesSelect = examples.length > 1 && (
     <Select
@@ -78,23 +101,24 @@ const ModelComponent: React.FC<ModelProps> = ({
     />
   );
 
-  const modelExamples = !layoutOptions?.hideModelExamples && (
-    <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar>
+  return (
+    <Panel rounded isCollapsible={isCollapsible} defaultIsOpen={!isCollapsible}>
+      <Panel.Titlebar rightComponent={selectedExample ? <CopyButton size="sm" copyValue={selectedExample} /> : null}>
         {examplesSelect || (
           <Text color="body" role="heading">
             Example
           </Text>
         )}
       </Panel.Titlebar>
+
       <Panel.Content p={0}>
-        {show || !exceedsSize(examples[chosenExampleIndex].data) ? (
+        {show || !exceedsSize(selectedExample) ? (
           <CodeViewer
-            aria-label={examples[chosenExampleIndex].data}
+            aria-label={selectedExample}
             noCopyButton
             maxHeight="500px"
             language="json"
-            value={examples[chosenExampleIndex].data}
+            value={selectedExample}
             showLineNumbers
           />
         ) : (
@@ -103,10 +127,6 @@ const ModelComponent: React.FC<ModelProps> = ({
       </Panel.Content>
     </Panel>
   );
-
-  return (
-    <TwoColumnLayout className={cn('Model', className)} header={header} left={description} right={modelExamples} />
-  );
-};
+});
 
 export const Model = withErrorBoundary<ModelProps>(ModelComponent, { recoverableProps: ['data'] });
