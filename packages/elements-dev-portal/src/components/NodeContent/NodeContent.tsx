@@ -14,10 +14,9 @@ import * as React from 'react';
 import { Node } from '../../types';
 
 // Props shared with elements-core Docs component
-type DocsBaseProps = Pick<DocsProps, 'tryItCorsProxy' | 'tryItCredentialsPolicy'>;
-type DocsLayoutProps = Pick<
-  Required<DocsProps>['layoutOptions'],
-  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'
+type DocsBaseProps = Partial<Pick<DocsProps, 'tryItCorsProxy' | 'tryItCredentialsPolicy'>>;
+type DocsLayoutProps = Partial<
+  Pick<Required<DocsProps>['layoutOptions'], 'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'>
 >;
 
 export type NodeContentProps = {
