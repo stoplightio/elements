@@ -1,4 +1,4 @@
-import { faExclamationCircle, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { Badge, Tooltip } from '@stoplight/mosaic';
 import React from 'react';
 
@@ -7,7 +7,7 @@ import { badgeDefaultBackgroundColor, badgeDefaultColor } from '../../../constan
 export const DeprecatedBadge: React.FC = () => (
   <Tooltip
     renderTrigger={
-      <Badge intent="warning" icon={faExclamationCircle} data-testid="badge-deprecated">
+      <Badge intent="warning" icon={['fas', 'exclamation-circle']} data-testid="badge-deprecated">
         Deprecated
       </Badge>
     }

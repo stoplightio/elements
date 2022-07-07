@@ -104,6 +104,14 @@ interface BaseDocsProps {
      * @default false
      */
     hideExport?: boolean;
+
+    /**
+     * Provide a number to trigger compact mode when the component is within that pixel width,
+     * or a boolean to enable or diable compact mode.
+     * @default false
+     * @example 600
+     */
+    compact?: number | boolean;
   };
 }
 
