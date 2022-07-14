@@ -19,6 +19,7 @@
   - [Yalcing into platform-internal](#yalcing-into-platform-internal)
   - [Releasing Elements](#releasing-elements)
   - [Versioning Guidelines](#versioning-guidelines)
+  - [Merging into main](#merging-into-main)
         
 ## Intro
 
@@ -253,3 +254,11 @@ Because we allow for breaking changes in `elements-core`, `elements` and `elemen
 ### Patches
 
 This is probably the most obvious - in all 3 packages patch bumps are mostly for bug fixes.
+
+###  Merging into Main
+
+In order to merge your changes into main you must create a PR for your changes and then have those changes approved by a member of the stoplight elements-owner team.
+
+To do this simply create a pull request merging your branch into main. Once your changes are complete, ensure all build checks are successfully passing, fill out the pull request template, and assign elements-owner as the reviewer.
+
+While we try to be as responsive as possible it can take several days for us to review a request. We currently prioritize new issues/requests each sprint and handle them as our capacity allows. If it has been over 2 weeks since your request please add a comment mentioning the @elements-owners to give us a friendly reminder.
