@@ -12,6 +12,7 @@ export type Branch = {
 export type ProjectTableOfContents = {
   items: TableOfContentsItem[];
   hide_powered_by?: boolean;
+  collapseTableOfContents?: boolean;
 };
 
 export type Node = NodeSummary & {
