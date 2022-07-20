@@ -1,7 +1,8 @@
 {
   "formats": {
     "markdown": {
-      "rootDir": "docs"
+      "rootDir": "docs",
+      "include": ["docs/**", "CONTRIBUTING.md"]
     },
     "image": {
       "rootDir": "docs/assets/images"

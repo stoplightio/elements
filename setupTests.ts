@@ -1,16 +1,7 @@
 import '@testing-library/jest-dom';
 
+import { ResizeObserver } from '@juggle/resize-observer';
 import fetchMock from 'jest-fetch-mock';
-
-declare global {
-  interface Window {
-    ResizeObserver(entries: any[]): {
-      observe(el: HTMLElement): void;
-      unobserve(el: HTMLElement): void;
-      disconnect(): void;
-    };
-  }
-}
 
 const Enzyme = require('enzyme');
 const Adapter = require('enzyme-adapter-react-16');
@@ -20,6 +11,8 @@ Enzyme.configure({ adapter: new Adapter() });
 process.env.TZ = 'UTC';
 
 Element.prototype.scrollTo = () => {};
+
+window.ResizeObserver = ResizeObserver;
 
 window.IntersectionObserver = class implements IntersectionObserver {
   readonly root!: Element | null;

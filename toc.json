@@ -7,6 +7,11 @@
     },
     {
       "type": "item",
+      "title": "Contribute to Elements",
+      "uri": "CONTRIBUTING.md"
+    },
+    {
+      "type": "item",
       "title": "Elements vs Elements Dev Portal",
       "uri": "docs/elements-vs-dev-portal.md"
     },
