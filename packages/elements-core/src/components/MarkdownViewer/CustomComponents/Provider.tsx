@@ -9,6 +9,7 @@ import { CodeComponent } from './CodeComponent';
 export type CustomComponentMapping = MDVCustomComponentMapping;
 
 interface MarkdownComponentsProviderProps {
+  children?: React.ReactNode;
   value: Partial<CustomComponentMapping> | undefined;
 }
 

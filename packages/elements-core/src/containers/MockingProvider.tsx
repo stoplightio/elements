@@ -6,6 +6,7 @@ export const MockingContext = createNamedContext<{
 }>('MockingContext', { mockUrl: undefined, hideMocking: undefined });
 
 export const MockingProvider: React.FC<{
+  children?: React.ReactNode;
   mockUrl?: string;
   hideMocking?: boolean;
 }> = ({ mockUrl, hideMocking, children }) => {

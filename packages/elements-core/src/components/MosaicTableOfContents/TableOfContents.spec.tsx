@@ -4,12 +4,12 @@ import * as React from 'react';
 
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
 import { TableOfContents as TOC } from './TableOfContents';
-import { TableOfContentsItem } from './types';
+import { CustomLinkComponent, TableOfContentsItem } from './types';
 import { findFirstNode } from './utils';
 
 const TableOfContents = withMosaicProvider(TOC);
 
-const Link: React.FC = ({ children }) => <>{children}</>;
+const Link: CustomLinkComponent = ({ children }) => <>{children}</>;
 
 describe('TableOfContents', () => {
   describe('Group', () => {

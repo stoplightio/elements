@@ -8,7 +8,7 @@ describe('InlineRefResolver', () => {
     it('does not return document if it is not a proper object', () => {
       const document = 'This is not an object, so should not be returned from useDocument hook';
 
-      const wrapper: React.FC<{ document: unknown }> = ({ children, document }) => (
+      const wrapper: React.FC<{ document: unknown; children?: React.ReactNode }> = ({ children, document }) => (
         <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
       );
       const { result } = renderHook(() => useDocument(), { wrapper, initialProps: { document } });
@@ -21,7 +21,7 @@ describe('InlineRefResolver', () => {
     it('returns the same function on every rerender', () => {
       const document = { some: 'document object' };
 
-      const wrapper: React.FC<{ document: object }> = ({ children, document }) => (
+      const wrapper: React.FC<{ document: object; children?: React.ReactNode }> = ({ children, document }) => (
         <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
       );
       const { result, rerender } = renderHook(() => useInlineRefResolver(), { wrapper, initialProps: { document } });
@@ -38,7 +38,9 @@ describe('InlineRefResolver', () => {
 
   describe('useResolvedObject hook', () => {
     it('returns the same proxy, given the same object', () => {
-      const wrapper: React.FC = ({ children }) => <InlineRefResolverProvider>{children}</InlineRefResolverProvider>;
+      const wrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
+        <InlineRefResolverProvider>{children}</InlineRefResolverProvider>
+      );
       const objectToResolve = { some: 'object' };
       const { result, rerender } = renderHook(() => useResolvedObject(objectToResolve), { wrapper });
 

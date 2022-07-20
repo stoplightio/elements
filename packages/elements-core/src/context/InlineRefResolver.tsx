@@ -12,6 +12,7 @@ const DocumentContext = React.createContext<object | undefined>(undefined);
 DocumentContext.displayName = 'DocumentContext';
 
 type InlineRefResolverProviderProps = {
+  children?: React.ReactNode;
   document?: unknown;
   resolver?: ReferenceResolver;
 };

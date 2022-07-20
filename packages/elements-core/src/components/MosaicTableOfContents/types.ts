@@ -1,16 +1,20 @@
+import { LinkProps } from 'react-router-dom';
+
 export type TableOfContentsProps = {
   tree: TableOfContentsItem[];
   activeId: string;
-  Link: CustomLinkComponent;
+  Link: CustomLinkComponent | ReactLinkComponent;
   maxDepthOpenByDefault?: number;
   externalScrollbar?: boolean;
   onLinkClick?(): void;
 };
 
+export type ReactLinkComponent = React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<HTMLAnchorElement>>;
+
 export type CustomLinkComponent = React.ComponentType<{
   to: string;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }>;
 
 export type TableOfContentsItem = TableOfContentsDivider | TableOfContentsGroupItem;

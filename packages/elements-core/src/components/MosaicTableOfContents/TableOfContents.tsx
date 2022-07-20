@@ -48,7 +48,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     return (
       <Box ref={container} w="full" bg="canvas-100" overflowY="auto">
         <Box ref={child} my={3}>
-          <LinkContext.Provider value={Link}>
+          <LinkContext.Provider value={Link as CustomLinkComponent}>
             <ActiveIdContext.Provider value={activeId}>
               {tree.map((item, key) => {
                 if (isDivider(item)) {

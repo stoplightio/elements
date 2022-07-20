@@ -20,6 +20,7 @@ export const createStoriesForDocsComponent = <P>(
   return {
     meta: {
       title: `Internal/Docs/${title || Component.displayName}`,
+      //@ts-ignore
       component: Component,
       argTypes: {
         data: {

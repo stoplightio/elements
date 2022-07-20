@@ -13,6 +13,7 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
     const staticRouterPath = props.staticRouterPath ?? '';
     const { Router, routerProps } = useRouter(props.router ?? 'history', basePath, staticRouterPath);
     return (
+      //@ts-ignore
       <Router {...routerProps} key={basePath}>
         <Route path="/">
           <MarkdownComponentsProvider value={{ a: ReactRouterMarkdownLink }}>

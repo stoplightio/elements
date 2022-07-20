@@ -4,6 +4,7 @@ import * as React from 'react';
 import { slugify } from '../../utils/string';
 
 export interface ISectionTitle {
+  children?: React.ReactNode;
   title: string;
   id?: string;
   size?: HeadingProps['size'];
@@ -25,6 +26,7 @@ export const SectionSubtitle: React.FC<ISectionTitle> = props => {
 };
 
 type SubSectionPanelProps = {
+  children?: React.ReactNode;
   title: React.ReactNode;
   hasContent?: boolean;
   rightComponent?: React.ReactNode;
