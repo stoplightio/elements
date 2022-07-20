@@ -140,10 +140,16 @@ const Group = React.memo<{
   onLinkClick?(): void;
 }>(({ depth, item, maxDepthOpenByDefault, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
-  const [isOpen, setIsOpen] = React.useState(() => {
-    // Only need to check during initial render
-    return isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault);
-  });
+  const [isOpen, setIsOpen] = React.useState(() => isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault));
+
+  // If maxDepthOpenByDefault changes, we want to update all the isOpen states (used in live preview mode)
+  React.useEffect(() => {
+    const openByDefault = isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault);
+    if (isOpen !== openByDefault) {
+      setIsOpen(openByDefault);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [depth, maxDepthOpenByDefault]);
 
   const handleClick = (e: React.MouseEvent, forceOpen?: boolean) => {
     setIsOpen(forceOpen ? true : !isOpen);
