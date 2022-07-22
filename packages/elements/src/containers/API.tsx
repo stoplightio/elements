@@ -36,7 +36,7 @@ export type APIPropsWithDocument = {
    *
    * Mutually exclusive with `apiDescriptionUrl`.
    */
-  apiDescriptionDocument: string | object;
+  apiDescriptionDocument?: string | object;
   apiDescriptionUrl?: string;
 } & CommonAPIProps;
 
