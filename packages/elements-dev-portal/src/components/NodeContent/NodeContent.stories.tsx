@@ -1,5 +1,5 @@
+import { CustomLinkComponent } from '@stoplight/elements-core';
 import { Story } from '@storybook/react';
-import { CustomLinkComponent } from 'elements-core/dist';
 import * as React from 'react';
 
 import { useGetNodeContent } from '../../hooks/useGetNodeContent';
@@ -17,7 +17,7 @@ const NodeContentWrapper = ({
 }) => {
   const { data } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
 
-  const customLinkComp: CustomLinkComponent = ({ children, ...props }) => {
+  const customLinkComp: CustomLinkComponent & { children?: React.ReactNode } = ({ children, ...props }) => {
     return (
       <a
         onClick={() => {
