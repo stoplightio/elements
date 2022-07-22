@@ -104,7 +104,7 @@ describe('TableOfContents', () => {
       unmount();
     });
 
-    it('should close an opened group on click', () => {
+    it('should not close an opened group on click if sub-item is active', () => {
       const { unmount } = render(
         <TableOfContents
           activeId="targetId"
@@ -133,7 +133,49 @@ describe('TableOfContents', () => {
 
       Root?.click();
 
-      expect(screen.queryByTitle('Target')).not.toBeInTheDocument();
+      expect(screen.queryByTitle('Target')).toBeInTheDocument();
+
+      unmount();
+    });
+
+    it('should close an opened group on click', () => {
+      const { unmount } = render(
+        <TableOfContents
+          maxDepthOpenByDefault={1}
+          activeId="targetId"
+          tree={[
+            {
+              title: 'Root',
+              items: [
+                {
+                  id: 'anotherId',
+                  title: 'Another',
+                  slug: 'another',
+                  type: 'article',
+                  meta: '',
+                },
+              ],
+            },
+            {
+              id: 'targetId',
+              title: 'Target',
+              slug: 'target',
+              type: 'article',
+              meta: '',
+            },
+          ]}
+          Link={Link}
+        />,
+      );
+
+      const Root = screen.queryByTitle(/Root/);
+
+      expect(Root).toBeInTheDocument();
+      expect(screen.queryByTitle('Another')).toBeInTheDocument();
+
+      Root?.click();
+
+      expect(screen.queryByTitle('Another')).not.toBeInTheDocument();
 
       unmount();
     });

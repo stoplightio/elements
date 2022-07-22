@@ -14,6 +14,7 @@ import {
 } from './types';
 import {
   getHtmlIdFromItemId,
+  hasActiveItem,
   isDivider,
   isExternalLink,
   isGroup,
@@ -151,8 +152,18 @@ const Group = React.memo<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [depth, maxDepthOpenByDefault]);
 
+  React.useEffect(() => {
+    if (activeId) {
+      const open = hasActiveItem(item.items, activeId);
+      if (open) {
+        setIsOpen(true);
+      }
+    }
+  }, [activeId, item.items]);
+
   const handleClick = (e: React.MouseEvent, forceOpen?: boolean) => {
-    setIsOpen(forceOpen ? true : !isOpen);
+    const keepOpen = hasActiveItem(item.items, activeId!);
+    setIsOpen(keepOpen || forceOpen ? true : !isOpen);
   };
 
   const meta = (
