@@ -14,4 +14,5 @@ export const StoplightProjectElement = createElementClass(StoplightProject, {
   collapseTableOfContents: { type: 'boolean' },
   tryItCredentialsPolicy: { type: 'string' },
   tryItCorsProxy: { type: 'string' },
+  children: { type: 'object' },
 });

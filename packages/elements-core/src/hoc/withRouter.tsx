@@ -16,6 +16,7 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
       //@ts-ignore
       <Router {...routerProps} key={basePath}>
         <Route path="/">
+          {/*@ts-ignore*/}
           <MarkdownComponentsProvider value={{ a: ReactRouterMarkdownLink }}>
             <WrappedComponent {...props} />
           </MarkdownComponentsProvider>

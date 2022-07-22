@@ -256,7 +256,8 @@ const Node = React.memo<{
 
   return (
     <Box
-      as={LinkComponent}
+      // @ts-ignore
+      as={LinkComponent as CustomLinkComponent}
       to={item.slug}
       display="block"
       textDecoration="no-underline"

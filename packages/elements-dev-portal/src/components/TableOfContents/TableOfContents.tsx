@@ -3,6 +3,7 @@ import {
   PoweredByLink,
   TableOfContents as ElementsTableOfContents,
 } from '@stoplight/elements-core';
+import { ReactLinkComponent } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
 import { BoxProps, Flex } from '@stoplight/mosaic';
 import * as React from 'react';
 
@@ -11,7 +12,7 @@ import { ProjectTableOfContents } from '../../types';
 export type TableOfContentsProps = BoxProps<'div'> & {
   activeId: string;
   tableOfContents: ProjectTableOfContents;
-  Link: CustomLinkComponent;
+  Link: CustomLinkComponent | ReactLinkComponent;
   collapseTableOfContents?: boolean;
   externalScrollbar?: boolean;
   onLinkClick?(): void;

@@ -6,6 +6,7 @@ import {
   MockingProvider,
   ReferenceResolver,
 } from '@stoplight/elements-core';
+import { ReactLinkComponent } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
@@ -22,7 +23,7 @@ type DocsLayoutProps = Pick<
 
 export type NodeContentProps = {
   node: Node;
-  Link: CustomLinkComponent;
+  Link: CustomLinkComponent | ReactLinkComponent;
 
   /**
    * Allows to hide mocking button
@@ -89,7 +90,7 @@ export const NodeContent = ({
   );
 };
 
-const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefined>(undefined);
+const NodeLinkContext = React.createContext<[Node, CustomLinkComponent | ReactLinkComponent] | undefined>(undefined);
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
@@ -127,6 +128,7 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
     );
 
     if (edge) {
+      //@ts-ignore
       return <Link to={`${edge.slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
     }
   }

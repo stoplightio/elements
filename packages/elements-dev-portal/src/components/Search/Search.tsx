@@ -26,9 +26,9 @@ export type SearchProps = {
 const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
-  const onChange = React.useCallback(e => onSearch(e.currentTarget.value), [onSearch]);
+  const onChange = React.useCallback((e: any) => onSearch(e.currentTarget.value), [onSearch]);
 
-  const onKeyDown = React.useCallback(e => {
+  const onKeyDown = React.useCallback((e: any) => {
     // Focus the search results on arrow down
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -37,7 +37,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
   }, []);
 
   const onSelectionChange = React.useCallback(
-    keys => {
+    (keys: any) => {
       const selectedId = keys.values().next().value;
       const selectedResult = searchResults?.find(
         searchResult => `${searchResult.id}-${searchResult.project_id}` === selectedId,

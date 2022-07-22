@@ -88,6 +88,8 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   tryItCorsProxy?: string;
+
+  children?: React.ReactNode;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {

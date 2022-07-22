@@ -1,4 +1,5 @@
 import { Story } from '@storybook/react';
+import { CustomLinkComponent } from 'elements-core/dist';
 import * as React from 'react';
 
 import { useGetNodeContent } from '../../hooks/useGetNodeContent';
@@ -16,24 +17,19 @@ const NodeContentWrapper = ({
 }) => {
   const { data } = useGetNodeContent({ nodeSlug, projectId, branchSlug });
 
-  return data ? (
-    <NodeContent
-      node={data}
-      Link={({ children, ...props }) => {
-        return (
-          <a
-            onClick={() => {
-              console.log('Link clicked!', props);
-            }}
-          >
-            {children}
-          </a>
-        );
-      }}
-    />
-  ) : (
-    <>Loading</>
-  );
+  const customLinkComp: CustomLinkComponent = ({ children, ...props }) => {
+    return (
+      <a
+        onClick={() => {
+          console.log('Link clicked!', props);
+        }}
+      >
+        {children}
+      </a>
+    );
+  };
+
+  return data ? <NodeContent node={data} Link={customLinkComp} /> : <>Loading</>;
 };
 
 export default {

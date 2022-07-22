@@ -4,6 +4,7 @@ import * as React from 'react';
 export type DevPortalProviderProps = {
   platformUrl?: string;
   platformAuthToken?: string;
+  children?: React.ReactNode;
 };
 
 export const PlatformContext = React.createContext<DevPortalProviderProps>({ platformUrl: 'https://stoplight.io' });

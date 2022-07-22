@@ -12,6 +12,7 @@ const TableOfContentsWrapper = ({ projectId, branchSlug }: { projectId: string; 
     <TableOfContents
       activeId="b3A6MTE0"
       tableOfContents={data}
+      //@ts-ignore
       Link={({ children, ...props }) => {
         return (
           <a
