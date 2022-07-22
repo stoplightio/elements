@@ -16,6 +16,7 @@ export const DemoNavbar = () => {
             </Text>
 
             <Box style={{ height: 28 }}>
+              {/*@ts-ignore*/}
               <GitHubButton
                 href="https://github.com/stoplightio/elements"
                 data-color-scheme="no-preference: light; light: light; dark: light;"

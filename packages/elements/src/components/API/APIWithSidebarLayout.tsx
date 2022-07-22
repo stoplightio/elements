@@ -6,10 +6,11 @@ import {
   SidebarLayout,
   TableOfContents,
 } from '@stoplight/elements-core';
+import { ReactLinkComponent } from '@stoplight/elements-core/components/MosaicTableOfContents/types';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
 import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
@@ -53,16 +54,16 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   );
 
   if (!node) {
-    // Redirect to the first child if node doesn't exist
+    // Navigate to the first child if node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
 
     if (firstSlug) {
-      return <Redirect to={firstSlug} />;
+      return <Navigate to={firstSlug} />;
     }
   }
 
   if (hideInternal && node && isInternal(node)) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" />;
   }
 
   const handleTocClick = () => {
@@ -82,7 +83,12 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
         <Heading size={4}>{serviceNode.name}</Heading>
       </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
-        <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
+        <TableOfContents
+          tree={tree}
+          activeId={pathname}
+          Link={Link as ReactLinkComponent}
+          onLinkClick={handleTocClick}
+        />
       </Flex>
       <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
     </>
