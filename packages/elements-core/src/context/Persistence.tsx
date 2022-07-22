@@ -6,7 +6,7 @@ import { getDisplayName } from '../hoc/utils';
 /**
  * Provides a context for storing jotai atom values.
  */
-export const PersistenceContextProvider = JotaiProvider;
+export const PersistenceContextProvider: typeof JotaiProvider = JotaiProvider;
 
 /**
  * HOC that Wraps `WrappedComponent` in a `PersistenceContextProvider`.
