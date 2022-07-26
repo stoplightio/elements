@@ -142,6 +142,7 @@ const Group = React.memo<{
 }>(({ depth, item, maxDepthOpenByDefault, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
   const [isOpen, setIsOpen] = React.useState(() => isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault));
+  const hasActive = !!activeId && hasActiveItem(item.items, activeId);
 
   // If maxDepthOpenByDefault changes, we want to update all the isOpen states (used in live preview mode)
   React.useEffect(() => {
@@ -152,18 +153,15 @@ const Group = React.memo<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [depth, maxDepthOpenByDefault]);
 
+  // Expand group when it has the active item
   React.useEffect(() => {
-    if (activeId) {
-      const open = hasActiveItem(item.items, activeId);
-      if (open) {
-        setIsOpen(true);
-      }
+    if (hasActive) {
+      setIsOpen(true);
     }
-  }, [activeId, item.items]);
+  }, [hasActive]);
 
   const handleClick = (e: React.MouseEvent, forceOpen?: boolean) => {
-    const keepOpen = hasActiveItem(item.items, activeId!);
-    setIsOpen(keepOpen || forceOpen ? true : !isOpen);
+    setIsOpen(forceOpen ? true : !isOpen);
   };
 
   const meta = (
@@ -184,11 +182,22 @@ const Group = React.memo<{
     </Flex>
   );
 
+  // Show the Group as active when group has active item and is closed
+  const showAsActive = hasActive && !isOpen;
   let elem;
   if (isNodeGroup(item)) {
-    elem = <Node depth={depth} item={item} meta={meta} onClick={handleClick} onLinkClick={onLinkClick} />;
+    elem = (
+      <Node
+        depth={depth}
+        item={item}
+        meta={meta}
+        showAsActive={showAsActive}
+        onClick={handleClick}
+        onLinkClick={onLinkClick}
+      />
+    );
   } else {
-    elem = <Item title={item.title} meta={meta} onClick={handleClick} depth={depth} />;
+    elem = <Item title={item.title} meta={meta} onClick={handleClick} depth={depth} isActive={showAsActive} />;
   }
 
   return (
@@ -243,9 +252,10 @@ const Node = React.memo<{
   item: TableOfContentsNode | TableOfContentsNodeGroup;
   depth: number;
   meta?: React.ReactNode;
+  showAsActive?: boolean;
   onClick?: (e: React.MouseEvent, forceOpen?: boolean) => void;
   onLinkClick?(): void;
-}>(({ item, depth, meta, onClick, onLinkClick = () => {} }) => {
+}>(({ item, depth, meta, showAsActive, onClick, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
   const isActive = activeId === item.slug || activeId === item.id;
   const LinkComponent = React.useContext(LinkContext);
@@ -275,7 +285,7 @@ const Node = React.memo<{
     >
       <Item
         id={getHtmlIdFromItemId(item.slug || item.id)}
-        isActive={isActive}
+        isActive={isActive || showAsActive}
         depth={depth}
         title={item.title}
         icon={

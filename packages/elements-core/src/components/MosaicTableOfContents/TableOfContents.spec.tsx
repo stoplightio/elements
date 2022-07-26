@@ -104,9 +104,10 @@ describe('TableOfContents', () => {
       unmount();
     });
 
-    it('should not close an opened group on click if sub-item is active', () => {
+    it('should close an opened group on click, with active highlighting', () => {
       const { unmount } = render(
         <TableOfContents
+          maxDepthOpenByDefault={1}
           activeId="targetId"
           tree={[
             {
@@ -129,53 +130,12 @@ describe('TableOfContents', () => {
       const Root = screen.queryByTitle(/Root/);
 
       expect(Root).toBeInTheDocument();
+      expect(Root).toHaveClass('sl-bg-canvas-100');
       expect(screen.queryByTitle('Target')).toBeInTheDocument();
 
       Root?.click();
-
-      expect(screen.queryByTitle('Target')).toBeInTheDocument();
-
-      unmount();
-    });
-
-    it('should close an opened group on click', () => {
-      const { unmount } = render(
-        <TableOfContents
-          maxDepthOpenByDefault={1}
-          activeId="targetId"
-          tree={[
-            {
-              title: 'Root',
-              items: [
-                {
-                  id: 'anotherId',
-                  title: 'Another',
-                  slug: 'another',
-                  type: 'article',
-                  meta: '',
-                },
-              ],
-            },
-            {
-              id: 'targetId',
-              title: 'Target',
-              slug: 'target',
-              type: 'article',
-              meta: '',
-            },
-          ]}
-          Link={Link}
-        />,
-      );
-
-      const Root = screen.queryByTitle(/Root/);
-
-      expect(Root).toBeInTheDocument();
-      expect(screen.queryByTitle('Another')).toBeInTheDocument();
-
-      Root?.click();
-
-      expect(screen.queryByTitle('Another')).not.toBeInTheDocument();
+      expect(Root).toHaveClass('sl-bg-primary-tint');
+      expect(screen.queryByTitle('Target')).not.toBeInTheDocument();
 
       unmount();
     });
