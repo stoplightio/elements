@@ -1,6 +1,7 @@
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
+import { useFirstRender } from '../../hooks/useFirstRender';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
 import { NODE_META_COLOR, NODE_TYPE_ICON_COLOR, NODE_TYPE_META_ICON, NODE_TYPE_TITLE_ICON } from './constants';
 import {
@@ -30,21 +31,28 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
   ({ tree, activeId, Link, maxDepthOpenByDefault, externalScrollbar = false, onLinkClick }) => {
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
+    const firstRender = useFirstRender();
 
     React.useEffect(() => {
-      const tocHasScrollbar =
-        externalScrollbar ||
-        (container.current && child.current && container.current.offsetHeight < child.current.offsetHeight);
+      // setTimeout to handle scrollTo after groups expand to display active GroupItem
+      setTimeout(() => {
+        // First render should center, all others just scroll into view
+        const scrollPosition = firstRender ? 'center' : 'nearest';
+        const tocHasScrollbar =
+          externalScrollbar ||
+          (container.current && child.current && container.current.offsetHeight < child.current.offsetHeight);
 
-      if (activeId && typeof window !== 'undefined' && tocHasScrollbar) {
-        const elem = window.document.getElementById(getHtmlIdFromItemId(activeId));
-        if (elem && 'scrollIntoView' in elem) {
-          elem.scrollIntoView({ block: 'center' });
+        if (activeId && typeof window !== 'undefined' && tocHasScrollbar) {
+          const elem = window.document.getElementById(getHtmlIdFromItemId(activeId));
+          if (elem && 'scrollIntoView' in elem) {
+            elem.scrollIntoView({ block: scrollPosition });
+          }
         }
-      }
-      // Only want to run this effect on initial render
+      }, 0);
+
+      // Only run when activeId changes
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [activeId]);
 
     return (
       <Box ref={container} w="full" bg="canvas-100" overflowY="auto">
