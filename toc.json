@@ -2,11 +2,6 @@
   "items": [
     {
       "type": "item",
-      "title": "Introduction",
-      "uri": "docs/introduction.md"
-    },
-    {
-      "type": "item",
       "title": "Contribute to Elements",
       "uri": "CONTRIBUTING.md"
     },
