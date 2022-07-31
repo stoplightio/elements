@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { CopyButton, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
@@ -16,6 +17,8 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
   const [chosenExampleIndex, setChosenExampleIndex] = React.useState(0);
   const [show, setShow] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
+
+  const layoutConfig = useLayoutConfig();
 
   const response = httpOperation.responses.find(response => response.code === responseStatusCode);
   const responseContents = response?.contents?.find(content => content.mediaType === responseMediaType);
@@ -51,7 +54,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
   return (
     <Panel rounded isCollapsible={false}>
       <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={responseExample || ''} />}>
-        {examplesSelect || <Text color="body">Response Example</Text>}
+        {examplesSelect || <Text color="body">{layoutConfig?.responseExamples?.title ?? 'Response Example'}</Text>}
       </Panel.Titlebar>
       <Panel.Content p={0}>
         {show || !exceedsSize(responseExample) ? (

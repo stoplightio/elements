@@ -157,3 +157,244 @@ export type ParamField = {
   description: string;
   example: string;
 };
+
+type ApiLayoutConfig = {
+  /**
+   * Title of error message thrown when fetch of openAPI description URL fails.
+   *  @default "Document could not be loaded"
+   */
+  descriptionUrlErrorTitle?: string;
+  /**
+   * Error message thrown when fetch of openAPI description URL fails.
+   * @default "The API description document could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec."
+   */
+  descriptionUrlError?: string;
+  /**
+   * Title of error message thrown when fails to open openAPI file.
+   * @default "Failed to parse OpenAPI file"
+   */
+  descriptionFileErrorTitle?: string;
+  /**
+   * Error message thrown when fails to open openAPI file.
+   * @default "Please make sure your OpenAPI file is valid and try again"
+   */
+  descriptionFileError?: string;
+};
+
+type ApiTreeLayoutConfig = {
+  /**
+   * NavBar config.
+   * API tree alias for overview route (main page).
+   * @default "Overview"
+   */
+  overview?: string;
+  /**
+   * NavBar config.
+   * API tree alias for endpoints group title.
+   * @default "Endpoints"
+   */
+  endpoints?: string;
+  /**
+   * NavBar config.
+   * API tree alias for schemas group title.
+   * @default "Schemas"
+   */
+  schemas?: string;
+};
+
+type ServerInfoLayoutConfig = {
+  /**
+   * ServerInfo component configuration.
+   * Container title.
+   * @default "API Base URL"
+   */
+  title?: string;
+};
+
+type SecuritySchemesLayoutConfig = {
+  /**
+   * SecuritySchemes component configuration.
+   * Container title.
+   * @default "Security"
+   */
+  title?: string;
+};
+
+type AdditionalInfoLayoutConfig = {
+  /**
+   * AdditionalInfo component configuration.
+   * Container title.
+   * @default "Additional Information"
+   */
+  title?: string;
+  /**
+   * AdditionalInfo component configuration.
+   * Alias for contact.
+   * @default "Security"
+   */
+  contact?: string;
+  /**
+   * AdditionalInfo component configuration.
+   * Alias for license.
+   * @default "license"
+   */
+  license?: string;
+  /**
+   * AdditionalInfo component configuration.
+   * Alias for terms of service.
+   * @default "license"
+   */
+  termsOfService?: string;
+};
+
+type OperationParametersLayoutConfig = {
+  /**
+   * OperationParameters component configuration.
+   * Container title.
+   * @default "Parameters"
+   */
+  title?: string;
+};
+
+type TryItLayoutConfig = {
+  /**
+   * TryIt component configuration.
+   * Send API Request button text.
+   * @default "Send API Request"
+   */
+  sendApiRequest?: string;
+  /**
+   * TryItAuth component configuration.
+   * Auth component title.
+   * @default "Send API Request"
+   */
+  authTitle?: string;
+  /**
+   * TryItAuth FormDataBody component configuration.
+   * Body component title.
+   * @default "Body"
+   */
+  formDataBodyTitle?: string;
+};
+
+type RequestSamplesLayoutConfig = {
+  /**
+   * RequestSamples component configuration.
+   * Container title.
+   * @default "Request Sample"
+   */
+  title?: string;
+};
+
+type ResponseExamplesLayoutConfig = {
+  /**
+   * ResponseExamples component configuration.
+   * Container title.
+   * @default "Response Example"
+   */
+  title?: string;
+};
+
+type RequestLayoutConfig = {
+  /**
+   * Endpoints request section configuration.
+   * Header.
+   * @default "Request"
+   */
+  header?: string;
+  /**
+   * Endpoints request section configuration.
+   * Path Parameters subtitle.
+   * @default "Path Parameters"
+   */
+  pathParameters?: string;
+  /**
+   * Endpoints request section configuration.
+   * Header Parameters subtitle.
+   * @default "Header"
+   */
+  headerParameters?: string;
+  /**
+   * Endpoints request section configuration.
+   * Cookies Parameters subtitle.
+   * @default "Cookies"
+   */
+  cookiesParameters?: string;
+  /**
+   * Endpoints request section configuration.
+   * Query Parameters subtitle.
+   * @default "Query Parameters"
+   */
+  queryParameters?: string;
+  /**
+   * Endpoints responses section configuration.
+   * Body Header.
+   * @default "Body"
+   */
+  bodyHeader?: string;
+};
+
+type ResponsesLayoutConfig = {
+  /**
+   * Endpoints responses section configuration.
+   * Header.
+   * @default "Responses"
+   */
+  header?: string;
+  /**
+   * Endpoints responses section configuration.
+   * Body Header.
+   * @default "Body"
+   */
+  bodyHeader?: string;
+};
+
+type BadgesLayoutConfig = {
+  /**
+   * Badges components configuration.
+   * Deprecated badge title.
+   * @default "Deprecated"
+   */
+  deprecated?: string;
+  /**
+   * Badges components configuration.
+   * Deprecated badge tooltip text.
+   */
+  deprecatedTip?: string;
+  /**
+   * Badges components configuration.
+   * Internal badge title.
+   * @default "Internal"
+   */
+  internal?: string;
+  /**
+   * Badges components configuration.
+   * Deprecated badge tooltip text.
+   */
+  internalTip?: (isHttpService?: boolean) => string;
+};
+
+type ModelExamplesLayoutConfig = {
+  /**
+   * ModelExamples components configuration.
+   * Tilte of component.
+   * @default "Example"
+   */
+  title?: string;
+};
+
+export type LayoutConfig = {
+  api?: ApiLayoutConfig;
+  apiTree?: ApiTreeLayoutConfig;
+  serverInfo?: ServerInfoLayoutConfig;
+  securitySchemes?: SecuritySchemesLayoutConfig;
+  additionalInfo?: AdditionalInfoLayoutConfig;
+  operationParameters?: OperationParametersLayoutConfig;
+  tryIt?: TryItLayoutConfig;
+  requestSamples?: RequestSamplesLayoutConfig;
+  responseExamples?: ResponseExamplesLayoutConfig;
+  request?: RequestLayoutConfig;
+  responses?: ResponsesLayoutConfig;
+  badges?: BadgesLayoutConfig;
+  modelExamples?: ModelExamplesLayoutConfig;
+};

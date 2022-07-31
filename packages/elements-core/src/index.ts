@@ -23,7 +23,9 @@ export { TryIt, TryItProps, TryItWithRequestSamples, TryItWithRequestSamplesProp
 export { HttpMethodColors, NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName } from './constants';
 export { MockingProvider } from './containers/MockingProvider';
 export { InlineRefResolverProvider } from './context/InlineRefResolver';
+export { LayoutConfigLanguage, useLayoutConfig, useLayoutConfigStarter } from './context/LayoutConfigContext';
 export { PersistenceContextProvider, withPersistenceBoundary } from './context/Persistence';
+export { withLayoutConfigProvider } from './hoc/withLayoutConfigProvider';
 export { withMosaicProvider } from './hoc/withMosaicProvider';
 export { withQueryClientProvider } from './hoc/withQueryClientProvider';
 export { withRouter } from './hoc/withRouter';
@@ -32,7 +34,16 @@ export { useParsedData } from './hooks/useParsedData';
 export { useParsedValue } from './hooks/useParsedValue';
 export { useRouter } from './hooks/useRouter';
 export { Styled, withStyles } from './styled';
-export { Divider, Group, ITableOfContentsTree, Item, ParsedNode, RoutingProps, TableOfContentItem } from './types';
+export {
+  Divider,
+  Group,
+  ITableOfContentsTree,
+  Item,
+  LayoutConfig,
+  ParsedNode,
+  RoutingProps,
+  TableOfContentItem,
+} from './types';
 export { isHttpOperation, isHttpService } from './utils/guards';
 export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
 export { createResolvedObject } from './utils/ref-resolving/resolvedObject';

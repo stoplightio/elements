@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { safeStringify } from '@stoplight/json';
 import { Panel } from '@stoplight/mosaic';
 import { IMediaTypeContent } from '@stoplight/types';
@@ -28,6 +29,8 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
   const parameters = schema?.properties;
   const required = schema?.required;
 
+  const layoutConfig = useLayoutConfig();
+
   React.useEffect(() => {
     if (parameters === undefined) {
       console.warn(`Invalid schema in form data spec: ${safeStringify(schema)}`);
@@ -40,7 +43,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
 
   return (
     <Panel defaultIsOpen>
-      <Panel.Titlebar>Body</Panel.Titlebar>
+      <Panel.Titlebar>{layoutConfig?.tryIt?.formDataBodyTitle ?? 'Body'}</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent">
         {mapSchemaPropertiesToParameters(parameters, required).map(parameter => {
           const supportsFileUpload = parameterSupportsFileUpload(parameter);

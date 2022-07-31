@@ -5,6 +5,7 @@ import {
   PoweredByLink,
   SidebarLayout,
   TableOfContents,
+  useLayoutConfig,
 } from '@stoplight/elements-core';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
@@ -37,10 +38,11 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
 }) => {
+  const layoutConfig = useLayoutConfig();
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
-    () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
-    [serviceNode, hideSchemas, hideInternal],
+    () => computeAPITree(serviceNode, { hideSchemas, hideInternal }, layoutConfig),
+    [serviceNode, hideSchemas, hideInternal, layoutConfig],
   );
   const location = useLocation();
   const { pathname } = location;

@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { Box, Button, HStack, Icon, Panel, useThemeIsDark } from '@stoplight/mosaic';
 import { IHttpOperation } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -220,6 +221,8 @@ export const TryIt: React.FC<TryItProps> = ({
   const isOnlySendButton =
     !httpOperation.security?.length && !allParameters.length && !formDataState.isFormDataBody && !mediaTypeContent;
 
+  const layoutConfig = useLayoutConfig();
+
   const tryItPanelContents = (
     <>
       {httpOperation.security?.length ? (
@@ -258,7 +261,7 @@ export const TryIt: React.FC<TryItProps> = ({
       <Panel.Content className="SendButtonHolder" mt={4} pt={!isOnlySendButton && !embeddedInMd ? 0 : undefined}>
         <HStack alignItems="center" spacing={2}>
           <Button appearance="primary" loading={loading} disabled={loading} onPress={handleSendRequest} size="sm">
-            Send API Request
+            {layoutConfig?.tryIt?.sendApiRequest ?? 'Send API Request'}
           </Button>
 
           {servers.length > 1 && <ServersDropdown servers={servers} />}

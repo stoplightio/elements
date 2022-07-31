@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
 import * as React from 'react';
 
@@ -16,6 +17,7 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   const $mockUrl = showMocking ? mockUrl || mocking.mockUrl : undefined;
 
   const serversToDisplay = getServersToDisplay(servers, $mockUrl);
+  const layoutConfig = useLayoutConfig();
 
   if (!showMocking && serversToDisplay.length === 0) {
     return null;
@@ -24,7 +26,7 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   return (
     <InvertTheme>
       <Panel rounded isCollapsible={false} className="BaseURLContent" w="full">
-        <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
+        <Panel.Titlebar whitespace="nowrap">{layoutConfig?.serverInfo?.title ?? 'API Base URL'}</Panel.Titlebar>
         <Box overflowX="auto">
           <Panel.Content w="full" className="sl-flex sl-flex-col">
             <VStack spacing={1} divider>

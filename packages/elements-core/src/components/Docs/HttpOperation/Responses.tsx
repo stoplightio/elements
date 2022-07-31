@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Flex, IntentVals, Select, Tab, TabList, TabPanel, TabPanels, Tabs, VStack } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
@@ -28,6 +29,7 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
   );
 
   const [activeResponseId, setActiveResponseId] = React.useState(responses[0]?.code ?? '');
+  const layoutConfig = useLayoutConfig();
 
   React.useEffect(() => {
     onStatusCodeChange(activeResponseId);
@@ -38,7 +40,7 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
 
   return (
     <VStack spacing={8} as={Tabs} selectedId={activeResponseId} onChange={setActiveResponseId} appearance="pill">
-      <SectionTitle title="Responses">
+      <SectionTitle title={layoutConfig?.responses?.header ?? 'Responses'}>
         <TabList density="compact">
           {responses.map(({ code }) => (
             <Tab key={code} id={code} intent={codeToIntentVal(code)}>
@@ -68,6 +70,8 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const responseContent = contents[chosenContent];
   const schema = responseContent?.schema;
 
+  const layoutConfig = useLayoutConfig();
+
   React.useEffect(() => {
     responseContent && onMediaTypeChange(responseContent.mediaType);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,7 +90,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
 
       {contents.length > 0 && (
         <>
-          <SectionSubtitle title="Body" id="response-body">
+          <SectionSubtitle title={layoutConfig?.responses?.bodyHeader ?? 'Body'} id="response-body">
             <Flex flex={1} justify="end">
               <Select
                 aria-label="Response Body Content Type"

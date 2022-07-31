@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Flex, Select, VStack } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
@@ -26,6 +27,8 @@ export const Body = ({ body, onChange }: BodyProps) => {
   const refResolver = useInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
 
+  const layoutConfig = useLayoutConfig();
+
   React.useEffect(() => {
     onChange(chosenContent);
     // disabling because we don't want to react on `onChange` change
@@ -39,7 +42,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
 
   return (
     <VStack spacing={6}>
-      <SectionSubtitle title="Body" id="request-body">
+      <SectionSubtitle title={layoutConfig?.responses?.bodyHeader ?? 'Body'} id="request-body">
         {contents.length > 0 && (
           <Flex flex={1} justify="end">
             <Select

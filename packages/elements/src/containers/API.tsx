@@ -1,9 +1,13 @@
 import {
   InlineRefResolverProvider,
+  LayoutConfig,
+  LayoutConfigLanguage,
   NonIdealState,
   RoutingProps,
   useBundleRefsIntoDocument,
+  useLayoutConfigStarter,
   useParsedValue,
+  withLayoutConfigProvider,
   withMosaicProvider,
   withPersistenceBoundary,
   withQueryClientProvider,
@@ -88,6 +92,11 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   tryItCorsProxy?: string;
+
+  /**
+   * Configuration object used to change default layout texts.
+   */
+  layoutConfig?: LayoutConfig | LayoutConfigLanguage;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -105,6 +114,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideExport,
     tryItCredentialsPolicy,
     tryItCorsProxy,
+    layoutConfig,
   } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
@@ -128,12 +138,18 @@ export const APIImpl: React.FC<APIProps> = props => {
   const serviceNode = React.useMemo(() => transformOasToServiceNode(bundledDocument), [bundledDocument]);
   const exportProps = useExportDocumentProps({ originalDocument: document, bundledDocument });
 
+  // Set Layout Config
+  const config = useLayoutConfigStarter(layoutConfig);
+
   if (error) {
     return (
       <Flex justify="center" alignItems="center" w="full" minH="screen">
         <NonIdealState
-          title="Document could not be loaded"
-          description="The API description document could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec."
+          title={config?.api?.descriptionUrlErrorTitle ?? 'Document could not be loaded'}
+          description={
+            config?.api?.descriptionUrlError ??
+            'The API description document could not be fetched. This could indicate connectivity problems, or issues with the server hosting the spec.'
+          }
           icon="exclamation-triangle"
         />
       </Flex>
@@ -152,8 +168,8 @@ export const APIImpl: React.FC<APIProps> = props => {
     return (
       <Flex justify="center" alignItems="center" w="full" minH="screen">
         <NonIdealState
-          title="Failed to parse OpenAPI file"
-          description="Please make sure your OpenAPI file is valid and try again"
+          title={config?.api?.descriptionFileErrorTitle ?? 'Failed to parse OpenAPI file'}
+          description={config?.api?.descriptionFileError ?? 'Please make sure your OpenAPI file is valid and try again'}
         />
       </Flex>
     );
@@ -193,4 +209,5 @@ export const API = flow(
   withPersistenceBoundary,
   withMosaicProvider,
   withQueryClientProvider,
+  withLayoutConfigProvider,
 )(APIImpl);

@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
@@ -31,6 +32,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
   },
   onChange,
 }) => {
+  const layoutConfig = useLayoutConfig();
   if (!request || typeof request !== 'object') return null;
 
   const bodyIsEmpty = isBodyEmpty(body);
@@ -43,11 +45,12 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
       cookieParams.length ||
       !bodyIsEmpty,
   );
+
   if (!hasRequestData) return null;
 
   return (
     <VStack spacing={8}>
-      <SectionTitle title="Request" />
+      <SectionTitle title={layoutConfig?.request?.header ?? 'Request'} />
 
       {securitySchemes.length > 0 && (
         <VStack spacing={3}>
@@ -59,28 +62,28 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
 
       {pathParams.length > 0 && (
         <VStack spacing={5}>
-          <SectionSubtitle title="Path Parameters" />
+          <SectionSubtitle title={layoutConfig?.request?.pathParameters ?? 'Path Parameters'} />
           <Parameters parameterType="path" parameters={pathParams} />
         </VStack>
       )}
 
       {queryParams.length > 0 && (
         <VStack spacing={5}>
-          <SectionSubtitle title="Query Parameters" />
+          <SectionSubtitle title={layoutConfig?.request?.queryParameters ?? 'Query Parameters'} />
           <Parameters parameterType="query" parameters={queryParams} />
         </VStack>
       )}
 
       {headerParams.length > 0 && (
         <VStack spacing={5}>
-          <SectionSubtitle title="Headers" id="request-headers" />
+          <SectionSubtitle title={layoutConfig?.request?.headerParameters ?? 'Headers'} id="request-headers" />
           <Parameters parameterType="header" parameters={headerParams} />
         </VStack>
       )}
 
       {cookieParams.length > 0 && (
         <VStack spacing={5}>
-          <SectionSubtitle title="Cookies" id="request-cookies" />
+          <SectionSubtitle title={layoutConfig?.request?.cookiesParameters ?? 'Cookies'} id="request-cookies" />
           <Parameters parameterType="cookie" parameters={cookieParams} />
         </VStack>
       )}
@@ -95,10 +98,11 @@ const schemeExpandedState = atomWithStorage<Record<string, boolean>>('HttpOperat
 
 const SecurityPanel: React.FC<{ scheme: HttpSecurityScheme; includeKey: boolean }> = ({ scheme, includeKey }) => {
   const [expandedState, setExpanded] = useAtom(schemeExpandedState);
+  const layoutConfig = useLayoutConfig();
 
   return (
     <SubSectionPanel
-      title={`Security: ${getReadableSecurityName(scheme, includeKey)}`}
+      title={`${layoutConfig?.securitySchemes?.title ?? 'Security'}: ${getReadableSecurityName(scheme, includeKey)}`}
       defaultIsOpen={!!expandedState[scheme.key]}
       onChange={isOpen => setExpanded({ ...expandedState, [scheme.key]: isOpen })}
     >

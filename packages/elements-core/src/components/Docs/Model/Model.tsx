@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { CopyButton, Flex, Heading, HStack, Panel, Select, Text, VStack } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
@@ -85,6 +86,8 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
 
   const selectedExample = examples[chosenExampleIndex]?.data;
 
+  const layoutConfig = useLayoutConfig();
+
   const handleLoadMorePress = React.useCallback(() => {
     setLoading(true);
     setTimeout(() => setShow(true), 50);
@@ -106,7 +109,7 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
       <Panel.Titlebar rightComponent={selectedExample ? <CopyButton size="sm" copyValue={selectedExample} /> : null}>
         {examplesSelect || (
           <Text color="body" role="heading">
-            Example
+            {layoutConfig?.modelExamples?.title ?? 'Example'}
           </Text>
         )}
       </Panel.Titlebar>

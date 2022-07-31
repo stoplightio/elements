@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten } from 'lodash';
@@ -24,6 +25,8 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
   const securityScheme = value ? value.scheme : filteredSecurityItems[0];
 
   const menuName = securityScheme ? getReadableSecurityName(securityScheme) : 'Security Scheme';
+
+  const layoutConfig = useLayoutConfig();
 
   const handleChange = (authValue?: string) => {
     onChange(securityScheme && { scheme: securityScheme, authValue: authValue });
@@ -73,7 +76,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
           )
         }
       >
-        Auth
+        {layoutConfig?.tryIt?.authTitle ?? 'Auth'}
       </Panel.Titlebar>
       {
         <SecuritySchemeComponent

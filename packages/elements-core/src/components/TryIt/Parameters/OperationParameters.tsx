@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { Panel } from '@stoplight/mosaic';
 import * as React from 'react';
 
@@ -17,9 +18,10 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
   onChangeValue,
   validate,
 }) => {
+  const layoutConfig = useLayoutConfig();
   return (
     <Panel defaultIsOpen>
-      <Panel.Titlebar>Parameters</Panel.Titlebar>
+      <Panel.Titlebar>{layoutConfig?.operationParameters?.title ?? 'Parameters'}</Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent">
         {parameters.map(parameter => (
           <ParameterEditor

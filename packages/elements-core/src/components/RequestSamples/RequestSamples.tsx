@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { Box, Button, CopyButton, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
@@ -70,6 +71,8 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embedd
     return items;
   }, [selectedLanguage, selectedLibrary, setSelectedLanguage, setSelectedLibrary]);
 
+  const layoutConfig = useLayoutConfig();
+
   return (
     <Panel rounded={embeddedInMd ? undefined : true} isCollapsible={embeddedInMd}>
       <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
@@ -80,7 +83,8 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embedd
             items={menuItems}
             renderTrigger={({ isOpen }) => (
               <Button size="sm" iconRight="chevron-down" appearance="minimal" active={isOpen}>
-                Request Sample: {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
+                {`${layoutConfig?.requestSamples?.title ?? 'Request Sample'}: `}
+                {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
               </Button>
             )}
           />

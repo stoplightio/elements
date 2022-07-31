@@ -1,4 +1,5 @@
 import { isHttpOperation, isHttpService, TableOfContentsItem } from '@stoplight/elements-core';
+import { LayoutConfig } from '@stoplight/elements-core/types';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
@@ -63,14 +64,18 @@ const defaultComputerAPITreeConfig = {
   hideInternal: false,
 };
 
-export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
+export const computeAPITree = (
+  serviceNode: ServiceNode,
+  config: ComputeAPITreeConfig = {},
+  layoutConfig?: LayoutConfig,
+) => {
   const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
   const tree: TableOfContentsItem[] = [];
 
   tree.push({
     id: '/',
     slug: '/',
-    title: 'Overview',
+    title: layoutConfig?.apiTree?.overview ?? 'Overview',
     type: 'overview',
     meta: '',
   });
@@ -78,7 +83,7 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
   const operationNodes = serviceNode.children.filter(node => node.type === NodeType.HttpOperation);
   if (operationNodes.length) {
     tree.push({
-      title: 'Endpoints',
+      title: layoutConfig?.apiTree?.endpoints ?? 'Endpoints',
     });
 
     const { groups, ungrouped } = computeTagGroups(serviceNode);
@@ -126,7 +131,7 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
 
   if (!mergedConfig.hideSchemas && schemaNodes.length) {
     tree.push({
-      title: 'Schemas',
+      title: layoutConfig?.apiTree?.schemas ?? 'Schemas',
     });
 
     schemaNodes.forEach(node => {

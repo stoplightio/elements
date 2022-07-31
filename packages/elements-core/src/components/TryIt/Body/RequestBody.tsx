@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { safeStringify } from '@stoplight/json';
 import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeEditor } from '@stoplight/mosaic-code-editor';
@@ -11,6 +12,7 @@ interface RequestBodyProps {
 }
 
 export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody, onChange }) => {
+  const layoutConfig = useLayoutConfig();
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar
@@ -18,7 +20,7 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody,
           examples.length > 1 && <ExampleMenu examples={examples} requestBody={requestBody} onChange={onChange} />
         }
       >
-        Body
+        {layoutConfig?.request?.bodyHeader ?? 'Body'}
       </Panel.Titlebar>
       <Panel.Content className="TextRequestBody">
         <CodeEditor

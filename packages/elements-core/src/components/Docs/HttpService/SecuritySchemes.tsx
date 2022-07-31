@@ -1,3 +1,4 @@
+import { useLayoutConfig } from '@stoplight/elements-core';
 import { Box, Panel, PanelProps } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { sortBy } from 'lodash';
@@ -18,11 +19,12 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({
   defaultScheme,
   defaultCollapsed = false,
 }) => {
+  const layoutConfig = useLayoutConfig();
   return (
     <Panel rounded isCollapsible={defaultCollapsed}>
       <Panel.Titlebar bg="canvas-300">
         <Box as="span" role="heading">
-          Security
+          {layoutConfig?.securitySchemes?.title ?? 'Security'}
         </Box>
       </Panel.Titlebar>
       <Panel.Content p={0}>
