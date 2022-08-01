@@ -1,4 +1,3 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { Box, Button, HStack, Icon, Panel, useThemeIsDark } from '@stoplight/mosaic';
 import { IHttpOperation } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
@@ -6,6 +5,7 @@ import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
+import { useLayoutConfig } from '../../context/LayoutConfigContext';
 import { getServersToDisplay, IServer } from '../../utils/http-spec/IServer';
 import { RequestSamples } from '../RequestSamples';
 import { chosenServerAtom } from '.';
