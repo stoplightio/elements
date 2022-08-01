@@ -28,7 +28,7 @@ export function isGroupOpenByDefault(
 }
 
 // Recursively checks for the active item
-function hasActiveItem(items: TableOfContentsGroupItem[], activeId: string): boolean {
+export function hasActiveItem(items: TableOfContentsGroupItem[], activeId: string): boolean {
   return items.some(item => {
     if ('slug' in item && activeId === item.slug) {
       return true;

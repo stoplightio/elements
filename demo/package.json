@@ -10,7 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@stoplight/elements": "^7.5.19",
+    "@stoplight/elements": "^7.6.1",
     "@stoplight/mosaic": "^1.15.4",
     "history": "^5.0.0",
     "react": "16.14.0",
