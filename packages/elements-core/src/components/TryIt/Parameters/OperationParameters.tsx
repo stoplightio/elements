@@ -1,7 +1,7 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { Panel } from '@stoplight/mosaic';
 import * as React from 'react';
 
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { ParameterSpec } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
 

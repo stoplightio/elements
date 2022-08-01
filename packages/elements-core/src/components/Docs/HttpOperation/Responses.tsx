@@ -1,4 +1,3 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Flex, IntentVals, Select, Tab, TabList, TabPanel, TabPanels, Tabs, VStack } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
@@ -6,6 +5,7 @@ import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';

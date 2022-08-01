@@ -1,9 +1,9 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { APIKeyAuth } from './APIKeyAuth';
 import { HttpSecuritySchemeWithValues } from './authentication-utils';

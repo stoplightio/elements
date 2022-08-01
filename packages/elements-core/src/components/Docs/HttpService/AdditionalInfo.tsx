@@ -1,8 +1,8 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { Panel } from '@stoplight/mosaic';
 import { IHttpService } from '@stoplight/types';
 import React from 'react';
 
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { MarkdownViewer } from '../../MarkdownViewer';
 
 interface AdditionalInfoProps {

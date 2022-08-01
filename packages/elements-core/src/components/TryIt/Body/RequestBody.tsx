@@ -1,9 +1,10 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { safeStringify } from '@stoplight/json';
 import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeEditor } from '@stoplight/mosaic-code-editor';
 import { INodeExample, INodeExternalExample } from '@stoplight/types';
 import * as React from 'react';
+
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 
 interface RequestBodyProps {
   examples: ReadonlyArray<INodeExample | INodeExternalExample>;

@@ -1,4 +1,3 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
@@ -6,6 +5,7 @@ import { atomWithStorage } from 'jotai/utils';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
 import { MarkdownViewer } from '../../MarkdownViewer';

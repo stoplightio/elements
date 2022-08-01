@@ -1,10 +1,10 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { Box, Button, CopyButton, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Request } from 'har-format';
 import { atom, useAtom } from 'jotai';
 import React, { useMemo } from 'react';
 
+import { useLayoutConfig } from '../../context/LayoutConfigContext';
 import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
 import { getConfigFor, requestSampleConfigs } from './requestSampleConfigs';

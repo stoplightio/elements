@@ -1,4 +1,3 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { CopyButton, Flex, Heading, HStack, Panel, Select, Text, VStack } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
@@ -8,6 +7,7 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { useIsCompact } from '../../../hooks/useIsCompact';
 import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';

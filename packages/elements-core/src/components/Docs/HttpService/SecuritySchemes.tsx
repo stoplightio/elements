@@ -1,9 +1,9 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { Box, Panel, PanelProps } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import React from 'react';
 
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
 import { MarkdownViewer } from '../../MarkdownViewer';

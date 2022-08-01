@@ -1,8 +1,8 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { isProperUrl } from '../../../utils/guards';
 import { getServersToDisplay, IServer } from '../../../utils/http-spec/IServer';
 

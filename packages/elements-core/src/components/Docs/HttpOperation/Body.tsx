@@ -1,10 +1,10 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Flex, Select, VStack } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';

@@ -230,7 +230,7 @@ type AdditionalInfoLayoutConfig = {
   /**
    * AdditionalInfo component configuration.
    * Alias for contact.
-   * @default "Security"
+   * @default "Contact"
    */
   contact?: string;
   /**
@@ -242,7 +242,7 @@ type AdditionalInfoLayoutConfig = {
   /**
    * AdditionalInfo component configuration.
    * Alias for terms of service.
-   * @default "license"
+   * @default "Terms of Service"
    */
   termsOfService?: string;
 };
@@ -266,7 +266,7 @@ type TryItLayoutConfig = {
   /**
    * TryItAuth component configuration.
    * Auth component title.
-   * @default "Send API Request"
+   * @default "Auth"
    */
   authTitle?: string;
   /**

@@ -1,9 +1,9 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { CopyButton, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import React from 'react';
 
+import { useLayoutConfig } from '../../context/LayoutConfigContext';
 import { exceedsSize, useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration/exampleGeneration';
 import { LoadMore } from '../LoadMore';
 

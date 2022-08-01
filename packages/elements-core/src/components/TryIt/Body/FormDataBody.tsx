@@ -1,10 +1,10 @@
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { safeStringify } from '@stoplight/json';
 import { Panel } from '@stoplight/mosaic';
 import { IMediaTypeContent } from '@stoplight/types';
 import { omit } from 'lodash';
 import * as React from 'react';
 
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 import { FileUploadParameterEditor } from '../Parameters/FileUploadParameterEditors';
 import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from '../Parameters/parameter-utils';
 import { ParameterEditor } from '../Parameters/ParameterEditor';

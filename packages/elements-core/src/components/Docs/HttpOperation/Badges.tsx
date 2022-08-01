@@ -1,9 +1,9 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { useLayoutConfig } from '@stoplight/elements-core';
 import { Badge, Tooltip } from '@stoplight/mosaic';
 import React from 'react';
 
 import { badgeDefaultBackgroundColor, badgeDefaultColor } from '../../../constants';
+import { useLayoutConfig } from '../../../context/LayoutConfigContext';
 
 export const DeprecatedBadge: React.FC = () => {
   const layoutConfig = useLayoutConfig();
