@@ -1,0 +1,615 @@
+openapi: 3.1.0
+info:
+  title: NBFSA
+  version: 1.0.0
+  description: "## \U0001F4AB Overview\n\nThis document is about data exchange and integration between Online Non-Bank Financial Services Authority License Registration (ONBFSALR) with Online Business Registration (OBR). Both systems will using RESTful web service to exchange data in json format.\n\nInorder to get data from ONBFSALR system, OBR must request to ONBFSALR with payload format, which is set by ONBFSALR.\nONBFSALR provide only pull mechanism. Once received data from ONBFSALR, OBR can display information realtime to user or save into their system base on actual usecase. Authentication and authorization are needed during transmit data between systems. Also data is securely exchange throught CamDx Platform. \n\n\n### \U0001F9F0 Authentication\nFor security reason, authentication mechanism is significant while exchange data via web service between Consumer’s system and ONBFSALR system. Comsumer’s system must attach **CamDigiKey User/Organization Access Token** in the HTTP request header during request to Consumer’s endpoint.\n"
+  contact:
+    name: CamDX Team
+    email: camdx@mef.gov.kh
+    url: 'https://www.camdx.gov.kh'
+  license:
+    name: MIT
+    url: 'https://spdx.org/licenses/MIT'
+  termsOfService: 'https://www.camdx.gov.kh/#contact'
+  summary: Non-Bank Financial Services Authority License Registration Open API
+servers:
+  - url: 'https://mef-license-api.myoptistech.com'
+    description: Sandbox
+  - url: 'https://nbfsa.registrationservices.gov.kh'
+    description: Production
+components:
+  securitySchemes:
+    CamDigiKey-JWT:
+      type: http
+      scheme: bearer
+      description: Organization level’s token which generate from CamDigiKey.
+tags:
+  - name: statistics
+    description: Number of statistic
+  - name: applications
+    description: Everything about your application
+paths:
+  /api/support/statistic/biz-owner:
+    get:
+      tags:
+        - statistics
+      summary: Get Statistic Biz Owner
+      operationId: getStatisticBizOwner
+      parameters:
+        - name: nationalityCode
+          in: query
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 3
+          example: KH
+          description: 'Nationality code (KH, US, UK, .....)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              examples: {}
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    status: 1
+                    message: Success
+                    data:
+                      - _id:
+                          _id: 62708acf89648886fecb40c5
+                          country_code: KH
+                          nationality_kh: ខ្មែរ
+                          nationality_en: Cambodian
+                          gdt_id: 30
+                          name_en: Cambodia
+                          name_kh: កម្ពុជា
+                          createdAt: '2022-05-03T01:52:15.219Z'
+                          updatedAt: '2022-05-03T01:52:15.219Z'
+                          __v: 0
+                        total: 110
+                        total_male: 69
+                        total_female: 41
+                properties:
+                  status:
+                    type: integer
+                    description: |
+                      Response code: 1: Successfully, 0: Not found, -1: Internal Server Error
+                  message:
+                    type: string
+                    description: 'Response message  '
+                  data:
+                    type: array
+                    description: Return list of company statistic
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: object
+                          description: Company basic information
+                          properties:
+                            _id:
+                              type: string
+                            country_code:
+                              type: string
+                              description: 'Nationality code (KH, US, UK, .....)'
+                            nationality_kh:
+                              type: string
+                            nationality_en:
+                              type: string
+                            gdt_id:
+                              type: integer
+                            name_en:
+                              type: string
+                            name_kh:
+                              type: string
+                            createdAt:
+                              type: string
+                            updatedAt:
+                              type: string
+                            __v:
+                              type: integer
+                        total:
+                          type: integer
+                          description: Total number of biz-owner or manager
+                        total_male:
+                          type: integer
+                          description: Number of male biz-owner or manager
+                        total_female:
+                          type: integer
+                          description: Number of female biz-owner or manager
+      description: Get Statistic Biz Owner
+      security:
+        - CamDigiKey-JWT: []
+      x-internal: false
+    parameters: []
+  /api/support/statistic/licenses:
+    get:
+      tags:
+        - statistics
+      summary: Get Statistic License
+      operationId: getStatisticLicense
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+          example: '2021-06-01'
+          description: 'License last modified date (start from), (“yyyy-MM-dd”)'
+          required: true
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+          example: '2022-06-01'
+          description: 'License last modified date (to), (“yyyy-MM-dd”)'
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    status: 1
+                    message: Success
+                    data:
+                      total: 96
+                      total_approved: 64
+                      total_rejected: 4
+                      total_returned: 0
+                      total_reviewing: 4
+                      total_verified: 24
+                      total_terminate: 0
+                      total_expired: 0
+                      total_draft: 0
+                properties:
+                  status:
+                    type: integer
+                    description: 'Response code: 1: Successfully, 0: Not found, -1: Internal Server Error'
+                  message:
+                    type: string
+                    description: Response message
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: Total number of all application
+                      total_approved:
+                        type: integer
+                        description: Number of approved application
+                      total_rejected:
+                        type: integer
+                        description: Number of rejected application
+                      total_returned:
+                        type: integer
+                        description: Number of returned application
+                      total_reviewing:
+                        type: integer
+                        description: Number of reviewing application
+                      total_verified:
+                        type: integer
+                        description: Number of vertified application
+                      total_terminate:
+                        type: integer
+                        description: Number of terminate application
+                      total_expired:
+                        type: integer
+                        description: Number of expired application
+                      total_draft:
+                        type: integer
+                        description: Number of draft application
+      security:
+        - CamDigiKey-JWT: []
+      description: Get Statistic License
+  /api/support/applications:
+    post:
+      tags:
+        - applications
+      summary: Get All License
+      operationId: getAllLicense
+      requestBody:
+        content: {}
+      parameters:
+        - name: searchTerm
+          in: query
+          schema:
+            type: string
+          description: 'Registraid_id, company_name …'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+          description: Current page
+          required: true
+        - name: size
+          in: query
+          schema:
+            type: integer
+          example: 20
+          description: Number of items
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    status: 1
+                    message: Success
+                    data:
+                      applications:
+                        - _id: 62ba6269c645a5316b6d8689
+                          __v: 0
+                          address:
+                            country_code: KH
+                            province_code: '03'
+                            district_code: '0303'
+                            commune_code: '030304'
+                            village_code: '03030402'
+                            house_number: '44'
+                            street_number: '34'
+                            postcode: null
+                            foreign_address: null
+                          applicant_code: '023445556'
+                          approved_by: null
+                          approved_date: null
+                          cert_id: null
+                          close_date: null
+                          company_name_en: SDFSDFSDF
+                          company_name_kh: សដថដថ
+                          company_single_id: ''
+                          company_type_code: INCORP
+                          contact:
+                            mobile_phone: +855 98 765 444
+                            email: test@gmail.com
+                            website: sdfsdf
+                            social_media: sdfsdfsdf
+                          createdAt: '2022-06-28T02:07:37.768Z'
+                          department: null
+                          director: 62d6911f3d4174498ab3742e
+                          documents:
+                            - _id: 62d6881c3d417453eeb36c2e
+                              key: condemnation_doc
+                              type: license
+                              original_name: company_legal_doc.pdf
+                          employees:
+                            - 62d6911f3d41743817b37434
+                          expiry_date: null
+                          firstSubmittedAt: null
+                          individuals:
+                            - 62d6911f3d41742f35b37436
+                          is_accept_info: true
+                          is_active: true
+                          is_branch: false
+                          is_moc_data: false
+                          is_out_of_punishment: true
+                          is_re_registration: false
+                          is_valid_info: true
+                          legal_entities: []
+                          license_types:
+                            - license_type:
+                                _id: 60711460e0a80301a89cb39b
+                                description: នីតិវិធីស្នើសុំអាជ្ញាបណ្ណប្រកបអាជីវកម្មបញ្ចាំ
+                                name_en: Pawn Shop
+                                name_kh: អាជីវកម្មបញ្ចាំ
+                                createdAt: '2021-04-10T02:58:40.261Z'
+                                updatedAt: '2021-04-10T02:58:40.261Z'
+                                __v: 0
+                              capital_investment: 1200000000
+                          'no': null
+                          parent: 628deb9460d5fb87a8e16518
+                          registration_id: '2202040'
+                          stage: SUBMIT_VERIFY
+                          start_date: null
+                          status: DRAFT
+                          submittedAt: null
+                          suspend_date: null
+                          updatedAt: '2022-07-19T11:10:23.831Z'
+                          user: null
+                          version: 1
+                          company_type:
+                            _id: 606d6071abbd3701b4be0c3e
+                            code: INCORP
+                            desc_kh: ក្រុមហ៊ុនមូលធន
+                            desc_en: Limited Company
+                            createdAt: '2021-04-07T07:34:09.727Z'
+                            updatedAt: '2021-04-07T07:34:09.727Z'
+                            __v: 0
+                      pagination:
+                        page: 1
+                        limit: 10
+                        total: 293
+                properties:
+                  status:
+                    type: integer
+                    description: 'Response code: 1: Successfully, 0: Not found, -1: Internal Server Error'
+                  message:
+                    type: string
+                    description: Response message
+                  data:
+                    type: object
+                    properties:
+                      applications:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                            __v:
+                              type: integer
+                            address:
+                              type: object
+                              properties:
+                                country_code:
+                                  type: string
+                                province_code:
+                                  type: string
+                                district_code:
+                                  type: string
+                                commune_code:
+                                  type: string
+                                village_code:
+                                  type: string
+                                house_number:
+                                  type: string
+                                street_number:
+                                  type: string
+                                postcode:
+                                  type: 'null'
+                                foreign_address:
+                                  type: 'null'
+                            applicant_code:
+                              type: string
+                            approved_by:
+                              type: 'null'
+                            approved_date:
+                              type: 'null'
+                            cert_id:
+                              type: 'null'
+                            close_date:
+                              type: 'null'
+                            company_name_en:
+                              type: string
+                            company_name_kh:
+                              type: string
+                            company_single_id:
+                              type: string
+                            company_type_code:
+                              type: string
+                            contact:
+                              type: object
+                              properties:
+                                mobile_phone:
+                                  type: string
+                                email:
+                                  type: string
+                                website:
+                                  type: string
+                                social_media:
+                                  type: string
+                            createdAt:
+                              type: string
+                            department:
+                              type: 'null'
+                            director:
+                              type: string
+                            documents:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  _id:
+                                    type: string
+                                  key:
+                                    type: string
+                                  type:
+                                    type: string
+                                  original_name:
+                                    type: string
+                            employees:
+                              type: array
+                              items:
+                                type: string
+                            expiry_date:
+                              type: 'null'
+                            firstSubmittedAt:
+                              type: 'null'
+                            individuals:
+                              type: array
+                              items:
+                                type: string
+                            is_accept_info:
+                              type: boolean
+                            is_active:
+                              type: boolean
+                            is_branch:
+                              type: boolean
+                            is_moc_data:
+                              type: boolean
+                            is_out_of_punishment:
+                              type: boolean
+                            is_re_registration:
+                              type: boolean
+                            is_valid_info:
+                              type: boolean
+                            legal_entities:
+                              type: array
+                              items:
+                                type: object
+                            license_types:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  license_type:
+                                    type: object
+                                    properties:
+                                      _id:
+                                        type: string
+                                      description:
+                                        type: string
+                                      name_en:
+                                        type: string
+                                      name_kh:
+                                        type: string
+                                      createdAt:
+                                        type: string
+                                      updatedAt:
+                                        type: string
+                                      __v:
+                                        type: integer
+                                  capital_investment:
+                                    type: integer
+                            'no':
+                              type: 'null'
+                            parent:
+                              type: string
+                            registration_id:
+                              type: string
+                            stage:
+                              type: string
+                            start_date:
+                              type: 'null'
+                            status:
+                              type: string
+                            submittedAt:
+                              type: 'null'
+                            suspend_date:
+                              type: 'null'
+                            updatedAt:
+                              type: string
+                            user:
+                              type: 'null'
+                            version:
+                              type: integer
+                            company_type:
+                              type: object
+                              properties:
+                                _id:
+                                  type: string
+                                code:
+                                  type: string
+                                desc_kh:
+                                  type: string
+                                desc_en:
+                                  type: string
+                                createdAt:
+                                  type: string
+                                updatedAt:
+                                  type: string
+                                __v:
+                                  type: integer
+                      pagination:
+                        type: object
+                        properties:
+                          page:
+                            type: integer
+                          limit:
+                            type: integer
+                          total:
+                            type: integer
+      security:
+        - CamDigiKey-JWT: []
+      description: Get All License
+  '/api/support/application/tracking/{registration_id}':
+    get:
+      tags:
+        - applications
+      summary: Get License Timeline
+      operationId: getLicenseTimeline
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      description: Get License Timeline
+      security:
+        - CamDigiKey-JWT: []
+    parameters:
+      - schema:
+          type: string
+        name: registration_id
+        in: path
+        required: true
+        description: Register number
+  '/api/support/application/{registration_id}':
+    get:
+      tags:
+        - applications
+      summary: Get application detail
+      operationId: getApplicationDetail
+      parameters:
+        - name: Authorize-Agent
+          in: header
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      description: Get application detail
+    parameters:
+      - schema:
+          type: string
+        name: registration_id
+        in: path
+        required: true
+        description: Register number
+  '/api/support/application/{registration_id}/file/{document_id}':
+    get:
+      tags:
+        - applications
+      summary: Get License Supporting Docs
+      operationId: getLicenseSupportingDocs
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      description: Get License Supporting Docs
+      security:
+        - CamDigiKey-JWT: []
+    parameters:
+      - schema:
+          type: string
+        name: registration_id
+        in: path
+        required: true
+        description: Register number
+      - schema:
+          type: string
+        name: document_id
+        in: path
+        required: true
+        description: Document ID number
+  /api/support/application/type:
+    get:
+      tags:
+        - applications
+      summary: Get License Type
+      operationId: getLicenseType
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      description: Get License Type
+      security:
+        - CamDigiKey-JWT: []

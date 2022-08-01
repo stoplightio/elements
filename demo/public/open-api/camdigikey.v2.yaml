@@ -1,0 +1,263 @@
+openapi: 3.0.0
+info:
+  title: CamDigiKey-Kyc-OpenAPI
+  version: 1.0.0
+servers:
+  - url: http://{{dev-server}}
+paths:
+  /api/2.0/kyc/ocr-idcard:
+    post:
+      tags:
+        - default
+      summary: Ocr-Idcard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                idImage: base_64_content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/2.0/kyc/info:
+    post:
+      tags:
+        - default
+      summary: Verify-Info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                idNumber: id_number
+                firstNameKh: first_name_kh
+                lastNameKh: last_name_kh
+                firstNameEn: first_name_en
+                lastNameEn: last_name_en
+                gender: M_or_F
+                dob: yyyy-MM-dd
+                issuedDate: yyyy-MM-dd
+                expiredDate: yyyy-MM-dd
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Date:
+              schema:
+                type: string
+                example: Wed, 16 Mar 2022 03:49:40 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=60
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: 0
+                message: Successfully
+                data:
+                  idNumber: id_number
+                  score: 1
+                  incorrectFields: []
+  /api/2.0/kyc/info-face-idcard:
+    post:
+      tags:
+        - default
+      summary: Verify-Info-Face-Idcard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                userInfo:
+                  idNumber: id_number
+                  firstNameKh: first_name_kh
+                  lastNameKh: last_name_kh
+                  firstNameEn: first_name_en
+                  lastNameEn: last_name_en
+                  gender: M_or_F
+                  dob: yyyy-MM-dd
+                  issuedDate: yyyy-MM-dd
+                  expiredDate: yyyy-MM-dd
+                faceImg: base_64_content
+                idImage: base_64_content
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Date:
+              schema:
+                type: string
+                example: Wed, 16 Mar 2022 03:52:19 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=60
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: id_number
+                    score: 1
+                    incorrectFields: []
+                  faceDocumentScore: 0.9457877
+                  faceMoiScore: 0.9792682
+  /api/2.0/kyc/info-face:
+    post:
+      tags:
+        - default
+      summary: Verify-Info-Face
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                userInfo:
+                  idNumber: id_number
+                  firstNameKh: first_name_kh
+                  lastNameKh: last_name_kh
+                  firstNameEn: first_name_en
+                  lastNameEn: last_name_en
+                  gender: M_or_F
+                  dob: yyyy-MM-dd
+                  issuedDate: yyyy-MM-dd
+                  expiredDate: yyyy-MM-dd
+                faceImg: base_64_content
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Date:
+              schema:
+                type: string
+                example: Wed, 16 Mar 2022 18:38:09 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=60
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: id_number
+                    score: 1
+                    incorrectFields: []
+                  faceMoiScore: 0.9792682
+  /api/2.0/kyc/info-idcard-liveness:
+    post:
+      tags:
+        - default
+      summary: Verify-Info-Idcard-liveness
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                actions:
+                  - string array of action numbers
+                userInfo:
+                  idNumber: id_number
+                  firstNameKh: first_name_kh
+                  lastNameKh: last_name_kh
+                  firstNameEn: first_name_en
+                  lastNameEn: last_name_en
+                  gender: M_or_F
+                  dob: yyyy-MM-dd
+                  issuedDate: yyyy-MM-dd
+                  expiredDate: yyyy-MM-dd
+                idImage: base_64_content
+                liveness: base_64_content
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Date:
+              schema:
+                type: string
+                example: Mon, 14 Mar 2022 05:28:39 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=60
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: id_number
+                    score: 1
+                    incorrectFields: []
+                  livenessScore: 0.9248705
+                  faceDocumentScore: 0.94440883
+                  faceMoiScore: 0.9769943

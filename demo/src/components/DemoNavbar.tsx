@@ -12,17 +12,16 @@ export const DemoNavbar = () => {
         <Flex h="2xl" shrink={0} px={5} alignItems="center" bg="canvas-pure">
           <HStack w="1/3" alignItems="center" spacing={4}>
             <Text fontSize="lg" fontWeight="semibold" lineHeight="none">
-              Stoplight Elements Demo
+              CamDX Open API
             </Text>
-
             <Box style={{ height: 28 }}>
               <GitHubButton
-                href="https://github.com/stoplightio/elements"
+                href="https://github.com/Techo-Startup-Center/CamDL-EthStats-Server"
                 data-color-scheme="no-preference: light; light: light; dark: light;"
                 data-icon="octicon-star"
                 data-size="large"
                 data-show-count="true"
-                aria-label="Star stoplightio/elements on GitHub"
+                aria-label="Star CamDX on GitHub"
               >
                 Star
               </GitHubButton>

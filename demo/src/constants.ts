@@ -7,6 +7,14 @@ export const EXAMPLE_SPECS = [
     value: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml',
   },
   {
+    text: 'CamDigiKey API',
+    value: '/public/open-api/camdigikey.v1.yaml',
+  },
+  {
+    text: 'NBFSA',
+    value: '/public/open-api/nbfsa.openapi.v1.yaml',
+  },
+  {
     text: 'Zoom',
     value: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml',
   },

@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: app-dev
+    image: open-api
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 4025:4025
+

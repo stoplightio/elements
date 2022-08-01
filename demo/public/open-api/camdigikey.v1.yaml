@@ -1,0 +1,336 @@
+openapi: 3.0.0
+info:
+  title: CamDigiKey Client
+  version: 1.0.0
+  description: |
+    ## 1. Introduction
+
+    CamDigiKey is a E-KYC service provider focusing on convenience and security for users. Basically, users need to register themselves to the application by providing their faces and identity documents such as ID card or passport. Once the user’s account is approved, they can use CamDigiKey mobile application to login to any CamDigiKey partner’s portals.
+
+    For organization or institution, CamDigiKey provides open KYC verification APIs which enable fast user on board on the organization or institution’s platform. The open KYC verification APIs consist of checking user info and face against data from MOI and verifying user liveness to ensure user is a real human.
+
+    This document will focus on integration with CamDigiKey as authentication/authorization and the usage of open KYC verification APIs via CamDX.
+
+    ### 2. CamDigiKey as Authentication Service
+    For security reason, authentication mechanism is significant while exchange data via web service between Consumer’s system and ONBFSALR system. Comsumer’s system must attach **CamDigiKey User/Organization Access Token** in the HTTP request header during request to Consumer’s endpoint.
+  contact:
+    name: CamDX Team
+    email: camdx@mef.gov.kh
+    url: 'https://www.camdx.gov.kh'
+  license:
+    name: MIT
+    url: 'https://spdx.org/licenses/MIT'
+  termsOfService: 'https://www.camdx.gov.kh/#contact'
+  summary: CamDigiKey Client Open API
+servers:
+  - url: 'http://localhost:9005'
+    description: Sandbox
+components:
+  securitySchemes:
+    CamDigiKey-JWT:
+      type: http
+      scheme: bearer
+      description: Organization level’s token which generate from CamDigiKey.
+tags:
+  - name: statistics
+    description: Number of statistic
+  - name: applications
+    description: Everything about your application
+paths:
+  /qr-code:
+    get:
+      tags:
+        - default
+      summary: Request QR Code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    authCode: eyJkb21haW4iOiJhbnkucG9ydGFsLmdvdi5raCIsImV4cGlyZWREYXRlIjoxNjU4NDYxODI1Njc1fQ==.yovDYD/3IfQDEXmuF6M7OhTmKkEBUfHV4vO5M1DTQofLkMyPkHmiIE3iAcmu0vwyVRxqBHRn3SnQ6moXGpkbrA==.MIGHAkEiHYuFEeQhWHvUtnhnEAbMpyKyVt+US9ci2jHJmWHEbGa7hst+uBlYOjnOLTVqcZxRvYKCdVzvGkXCrRITDgDPIQJCAboku2ua28zEORBWBDTgRUJbJVH1ooyW7kj5iZKxBhl1lHyEpk5ZgoRIlyGrJUK1FnlkRNRF0HoymwXEBvUBCyGf
+                    qrImage: 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
+                properties:
+                  authCode:
+                    type: string
+                    description: Authentication Code
+                  qrImage:
+                    type: string
+                    description: QR Code image to display
+      operationId: getQrCode
+      description: This API is getting QR code to display on portal.
+      deprecated: true
+  /organization-access-token:
+    get:
+      summary: Get organization access token
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  organizationAccessToken:
+                    type: string
+                x-examples:
+                  example-1:
+                    organizationAccessToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFQ0RTQVNIQTUxMiJ9.0wHLtSCGiNFoQLzXdJ8dU/JFpwTGYVnd3krl6avuNmHZ1EA53M80LskydMY4vIaVfsL+pxGA44b0zERNS4Y0CK14j38rtIQyZTRlgXcRosLp/WqvffhsDhpIl/4t814gJg3BTvL6sfpJXKdcZJrhEDM5NvEkXjeBLAclY7Ld28eJLEIX7Pkc+R1PMBDi1WlWqP+i9TguVIB0c9XmLmAZappTY0omJ1r4ot7L5F/ezir3/7vGDd8C7xyrcUkS7WA4.MIGIAkIApEuemRLTmwIYuuajjcPT8dBFRTPlRO2cr+TAYcDzztpM04QOMDRWfHIZiwKIKSGBqYey79bRXZ7rBKvUt7F/bFsCQgDNEZuqpaI35aFOM8oY1nspGDWQCHj2HkmUMlA7Rm3Pe4dZYIrQMNvl08Mf9YQZW6QEaGKRS+2/waU4ojRHcf8/Kw==
+      operationId: getOrganizationAccessToken
+      description: This api is used for getting organization access token.
+      tags:
+        - organization
+  /:
+    post:
+      tags:
+        - default
+      summary: Validate jwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+              x-examples:
+                example-1:
+                  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJFQ0RTQVNIQTUxMiJ9.0wHLtSCGiNFoQLzXdJ8dU/JFpwTGYVnd3krl6avuNmHZ1EA53M80LskydMY4vIaVfsL+pxGA44b0zERNS4Y0CK14j38rtIQyZTRlgXcRosLp/WqvffhsDhpIl/4t814gJg3BTvL6sfpJXKdcZJrhEDM5NvEkXjeBLAclY7Ld28eJLEIX7Pkc+R1PMBDi1WlWqP+i9TguVIB0c9XmLmAZappTY0omJ1r4ot7L5F/ezir3/7vGDd8C7xyrcUkS7WA4.MIGIAkIApEuemRLTmwIYuuajjcPT8dBFRTPlRO2cr+TAYcDzztpM04QOMDRWfHIZiwKIKSGBqYey79bRXZ7rBKvUt7F/bFsCQgDNEZuqpaI35aFOM8oY1nspGDWQCHj2HkmUMlA7Rm3Pe4dZYIrQMNvl08Mf9YQZW6QEaGKRS+2/waU4ojRHcf8/Kw==
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      nbf:
+                        type: integer
+                      domain:
+                        type: string
+                      iss:
+                        type: string
+                      exp:
+                        type: integer
+                      type:
+                        type: string
+                      iat:
+                        type: integer
+                      jti:
+                        type: string
+                  is_valid:
+                    type: boolean
+                x-examples:
+                  example-1:
+                    payload:
+                      nbf: 1658458478044
+                      domain: any.portal.gov.kh
+                      iss: CamDX-CamDigiKey
+                      exp: 1659322478044
+                      type: ORGANIZATION
+                      iat: 1658458478044
+                      jti: 8a9a67e2-567b-44df-afff-40a5ea4aca93
+                    is_valid: true
+      operationId: postValidateJWT
+      description: This API is used for validate JWT token
+  /access-token:
+    post:
+      summary: Get user access token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                qrCode:
+                  type: string
+              x-examples:
+                example-1:
+                  qrCode: eyJkb21haW4iOiJhbnkucG9ydGFsLmdvdi5raCIsImV4cGlyZWREYXRlIjoxNjE0MTU4NTk5NzYxfQ==.rsMLKDX+tXcqlZC9J3LnzkzpbtlBucb/eIlm+KPNGZaXqpLryEuR6Qtrhn7ultPIdSRAwA7I1sWRBNDvthJ2oA==.MIGHAkIBSd1A+RdJZ0iuNKbim0HwGGGT4RzWMOQGQuTScTZkPk1c8aTYwFm+FG5j1asDvcbjul/JJoZekXay6mWZLug3vycCQWYIC+XxH6Y+ZG10eqOEQXOmM64t3PVcOmfmIr4f+9MuwrwTo6mes4cctTZyTavUICoOjQEdiBaxSn7ET2pKISVc
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      description: get user access token
+      operationId: getUserAccessToken
+      tags:
+        - user
+  /refresh-user-access-token:
+    post:
+      summary: Refresh user access token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+              x-examples:
+                example-1:
+                  accessToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFQ0RTQVNIQTUxMiJ9.IteVfS3Ln3qsiTOinJdOszTB7i3YsGU0EK32Z76KdjEWH33q9y47REzUZ+vyWf2Pb5X7x7Majz1lYt4ROdLlXfo5QlaJS2J0g0NZxaAxrbdfAlIyyKvt4zP7fQXyYu9lk/xn1x0K5JoXnjHmPxaWrZYWh6ABSOsvOdmg8pS8MXY6GdZ8DPRcMkuqsS6dMg+JVbuTckXC4H4c5HO011zb6kn0qlAKdMjvuOlotO4/+MpgatSPYYAcdvHEBfwZbQMam2U0CGueIBcoQ00Uc09JjkVw5b6X13bNpQgFxL9DJvzGDXH5fZixWvCJz75AMUqM1LwUvQC/0t8jN+PbNhG1yrDBQYlPnLTP5q54J8yZtthBBdccQkYfQpNdGQ3AG8//2QsbpSifk1Rab6bGijlD89TiNKuWf5yqc6JKWlH7unHOELhJcFHb6dMa3nzLXakdknxcENgjaVqLmDWMcot+A1g+0Le2dTCuIeFRItaCgLj2fz4Dwj9H/pSYfnZ+ImD5.MIGIAkIBYpLuz+WNY23baiKTmoC72VbyDanuhbxDquJxs7Csk/JcOM6rw5G1NJ1WfVJMJqgqctNEjfG5Ot8173zKBP5lrZgCQgEGYjZmHT7hc9IvBctak/RRk9I/9jB2G2jzQJPZhW2sQQUs6ZA2kLYA+acBIdmZ9YOINMRVmxW97PdzdlgyKsaO4w==
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                x-examples:
+                  example-1:
+                    accessToken: string
+      tags:
+        - user
+  /logout-access-token:
+    post:
+      tags:
+        - default
+      summary: Logout access token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+              x-examples:
+                example-1:
+                  accessToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFQ0RTQVNIQTUxMiJ9.IteVfS3Ln3qsiTOinJdOsz6pzihsA3vSAD035Y5MTERL/rQsYj3JqEALkiRue3IUZmed21Qzpcmtn54IJ/v5KkjZrbrqW/Qw4xD2lWXabgGM/qd399Eivz1WxzcMVctJ1IcwT/ddGoxWJvo7rCZjU04B/4jXKx2+ND8pp27vcaCItTkRf9QkEYMkua1tcd3OXwQfsdN4C+5vP6V55CFiGJhSeAT1mfN2bMeeKWlgBPCf1txKZ7pQyV4Jm+sujunbAmEFfoYuWYZYGCT4YUZgxQkd6eUfIf0kcKYHl+PBAYndSqhmXEGJTt+5SlXG3TNjIQO/GIaosIIQEyvMcW5WMWkdgfMjeit3ZjQUMb+MU5L1nkm+NiX4AxIIOFarhzmge0aMIeuUsu+p5bqB0lFQ05RPB0DslokA1ys49rAbFCoSYLHYuo6Z6OTBhS3ldyt+2JPXbHJZZaKxme/+YGBtCIijv89GEsTdrV2QytrrTo9Y2q4NFPdDPlUZQR6X/cEvxGtebu/18wvyMegvMcUVfg==.MIGHAkEiLJWCO11+YAOn122daWNw0PFaj2N8F2PxtiE3YHBB8LwAtYzGokMlMRIWrKDgQ6AD3coQKofy0o7PFB3E5FqAuwJCAM5krRp3kFytgbSmlY5ixv/N65k3c/8cLVWZpQTxKQpXhXgr1NJmN8g0O266U9+8EhkDuCeAQg7Gp+TLrCzIOOl2
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwtId:
+                    type: string
+                  status:
+                    type: integer
+                x-examples:
+                  example-1:
+                    jwtId: 572bf027-8219-4b0b-b1a7-f7600d6e7ec1
+                    status: 0
+  /lookup-user-profile:
+    post:
+      summary: Lookup user profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                mobilePhone:
+                  type: string
+              x-examples:
+                example-1:
+                  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJFQ0RTQVNIQTUxMiJ9.IteVfS3Ln3qsiTOinJdOszTB7i3YsGU0EK32Z76KdjEWH33q9y47REzUZ+vyWf2Pb5X7x7Majz1lYt4ROdLlXfo5QlaJS2J0g0NZxaAxrbdfAlIyyKvt4zP7fQXyYu9lk/xn1x0K5JoXnjHmPxaWrZYWh6ABSOsvOdmg8pS8MXY6GdZ8DPRcMkuqsS6dMg+JVbuTckXC4H4c5HO011zb6kn0qlAKdMjvuOlotO4/+MpgatSPYYAcdvHEBfwZbQMam2U0CGueIBcoQ00Uc09JjkVw5b6X13bNpQgFxL9DJvzGDXH5fZixWvCJz75AMUqM1LwUvQC/0t8jN+PbNhG1yrDBQYlPnLTP5q54J8yZtthBBdccQkYfQpNdGQ3AG8//2QsbpSifk1Rab6bGijlD89TiNKuWf5yqc6JKWlH7unHOELhJcFHb6dMa3nzLXakdknxcENgjaVqLmDWMcot+A1g+0Le2dTCuIeFRItaCgLj2fz4Dwj9H/pSYfnZ+ImD5.MIGIAkIBYpLuz+WNY23baiKTmoC72VbyDanuhbxDquJxs7Csk/JcOM6rw5G1NJ1WfVJMJqgqctNEjfG5Ot8173zKBP5lrZgCQgEGYjZmHT7hc9IvBctak/RRk9I/9jB2G2jzQJPZhW2sQQUs6ZA2kLYA+acBIdmZ9YOINMRVmxW97PdzdlgyKsaO4w==
+                  mobilePhone: '+85517777771'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    personal_code: string
+                    camdigikey_id: string
+                    'surname_kh: ': string
+                    given_name_kh: string
+                    surname_en: string
+                    given_name_en: string
+                    mobile_phone_number: string
+                    email_address: string
+                    expired_date: string
+                    account_token: string
+                properties:
+                  personal_code:
+                    type: string
+                  camdigikey_id:
+                    type: string
+                  'surname_kh: ':
+                    type: string
+                  given_name_kh:
+                    type: string
+                  surname_en:
+                    type: string
+                  given_name_en:
+                    type: string
+                  mobile_phone_number:
+                    type: string
+                  email_address:
+                    type: string
+                  expired_date:
+                    type: string
+                    format: date
+                  account_token:
+                    type: string
+              examples: {}
+      tags:
+        - user
+  /verify-user-profile:
+    post:
+      summary: Validate user profile token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountToken:
+                  type: string
+              x-examples:
+                example-1:
+                  accountToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFQ0RTQVNIQTUxMiJ9.IDwYNDf6DErBjTQHF7fq5bFYLPk4/vM+ZvEE7F47IQ0+u69M8edu8cb+t8SAUyCw+xnU5OfAtlLoQXSMpOy5zp62XbqR3kvLYr0zNNwUD34qo56yfNk9CFkNmGU6WDBx3B3ms0VO1jIBZaLvx6/xUFhLOmzjLaP/OxTuGf3ZTOjmjwz1ns2vg6xkzCgXQuet9sZdGy3n+cAfWeAurudydsVFdBYwN8MoesuQzaW8TCG/BBOaMsrlRPRGYrtN2IKTVYolwhpN+jQvCDxQU7ho7V4Eknce1WaHf0bbYQMgU8nRHUxJvuspAZ4X4d271xjHR8heDCUIPU4LYXYBdEak6GU7gEsn1eQW9Wb1UlkKuTEtc0Ic4y/NfBzOBpLZCOYt5nQax8j5EtkVIwBOKqGosA==.MIGHAkEvGF1dNf4v1ElwJmG6PmKHZMIkmFTzIrRHzkoEm8gkIF+VaTOfgOZUEmf5yMQUmAc61LesQFGUSuWcGNQpb3iGCQJCAWfyTzsVO6uIZsTzXlg/3SfDa8j/+dZOplb4/2glYtVtZK44tMx4qyA7qWQEu5/3t1dm7+M5Rzu+wJX9IL+GPytC
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  personal_code:
+                    type: string
+                  camdigikey_id:
+                    type: string
+                  'surname_kh: ':
+                    type: string
+                  given_name_kh:
+                    type: string
+                  surname_en:
+                    type: string
+                  given_name_en:
+                    type: string
+                  mobile_phone_number:
+                    type: string
+                  email_address:
+                    type: string
+                x-examples:
+                  example-1:
+                    personal_code: string
+                    camdigikey_id: string
+                    'surname_kh: ': string
+                    given_name_kh: string
+                    surname_en: string
+                    given_name_en: string
+                    mobile_phone_number: string
+                    email_address: string
+      tags:
+        - user
