@@ -104,9 +104,10 @@ describe('TableOfContents', () => {
       unmount();
     });
 
-    it('should close an opened group on click', () => {
+    it('should close an opened group on click, with active highlighting', () => {
       const { unmount } = render(
         <TableOfContents
+          maxDepthOpenByDefault={1}
           activeId="targetId"
           tree={[
             {
@@ -129,10 +130,11 @@ describe('TableOfContents', () => {
       const Root = screen.queryByTitle(/Root/);
 
       expect(Root).toBeInTheDocument();
+      expect(Root).toHaveClass('sl-bg-canvas-100');
       expect(screen.queryByTitle('Target')).toBeInTheDocument();
 
       Root?.click();
-
+      expect(Root).toHaveClass('sl-bg-primary-tint');
       expect(screen.queryByTitle('Target')).not.toBeInTheDocument();
 
       unmount();
