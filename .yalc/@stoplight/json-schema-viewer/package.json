@@ -1,0 +1,45 @@
+{
+  "name": "@stoplight/json-schema-viewer",
+  "version": "0.0.0",
+  "description": "A beautiful React component for viewing JSON Schema",
+  "keywords": [],
+  "main": "./index.js",
+  "typings": "src/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "**/*"
+  ],
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/json-schema-viewer"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=16"
+  },
+  "peerDependencies": {
+    "@stoplight/markdown-viewer": "^5",
+    "@stoplight/mosaic": "^1",
+    "@stoplight/mosaic-code-viewer": "^1",
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "dependencies": {
+    "@stoplight/json": "^3.17.1",
+    "@stoplight/json-schema-tree": "^2.2.1",
+    "@stoplight/react-error-boundary": "^2.0.0",
+    "@types/json-schema": "^7.0.7",
+    "classnames": "^2.2.6",
+    "fnv-plus": "^1.3.1",
+    "jotai": "^1.4.5",
+    "lodash": "^4.17.19"
+  },
+  "type": "commonjs",
+  "module": "./index.esm.js",
+  "exports": {
+    "require": "./index.js",
+    "import": "./index.mjs"
+  },
+  "yalcSig": "0f07868b0969d60f339cf76f713899ee"
+}
