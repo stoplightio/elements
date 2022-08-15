@@ -80,4 +80,5 @@ export const getOriginalObject = (resolvedObject: object): object => {
   return resolvedObject[originalObjectSymbol] || resolvedObject;
 };
 
-const isReference = (value: unknown): value is { $ref: string } => isObject(value) && typeof value['$ref'] === 'string';
+export const isReference = (value: unknown): value is { $ref: string } =>
+  isObject(value) && typeof value['$ref'] === 'string';

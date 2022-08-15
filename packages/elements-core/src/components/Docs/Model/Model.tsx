@@ -7,6 +7,7 @@ import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
 import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { useIsCompact } from '../../../hooks/useIsCompact';
 import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
@@ -28,6 +29,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 }) => {
   const resolveRef = useInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
+  const { nodeHasChanged } = useOptionsCtx();
 
   const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
@@ -61,7 +63,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       {isCompact && modelExamples}
 
-      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} />
+      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} nodeHasChanged={nodeHasChanged} />
     </VStack>
   );
 

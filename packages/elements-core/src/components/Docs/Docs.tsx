@@ -3,6 +3,7 @@ import { Location } from 'history';
 import * as React from 'react';
 
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
+import { ElementsOptionsProvider } from '../../context/Options';
 import { useParsedData } from '../../hooks/useParsedData';
 import { ParsedNode } from '../../types';
 import { ReferenceResolver } from '../../utils/ref-resolving/ReferenceResolver';
@@ -12,7 +13,16 @@ import { HttpService } from './HttpService';
 import { ExportButtonProps } from './HttpService/ExportButton';
 import { Model } from './Model';
 
-interface BaseDocsProps {
+export type ChangeType = 'added' | 'modified' | 'removed';
+export type NodeHasChangedFn = (props: {
+  nodeId: string;
+}) => false | { type: ChangeType; selfAffected?: boolean; isBreaking?: boolean };
+
+export type DiffRenderer = {
+  nodeHasChanged?: NodeHasChangedFn;
+};
+
+interface BaseDocsProps extends DiffRenderer {
   /**
    * CSS class to add to the root container.
    */
@@ -130,7 +140,7 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
 }
 
 export const Docs = React.memo<DocsProps>(
-  ({ nodeType, nodeData, useNodeForRefResolving = false, refResolver, ...commonProps }) => {
+  ({ nodeType, nodeData, useNodeForRefResolving = false, refResolver, nodeHasChanged, ...commonProps }) => {
     const parsedNode = useParsedData(nodeType, nodeData);
 
     if (!parsedNode) {
@@ -138,17 +148,17 @@ export const Docs = React.memo<DocsProps>(
       return null;
     }
 
-    const parsedDocs = <ParsedDocs node={parsedNode} {...commonProps} />;
+    let elem = <ParsedDocs node={parsedNode} {...commonProps} />;
 
     if (useNodeForRefResolving) {
-      return (
+      elem = (
         <InlineRefResolverProvider document={parsedNode.data} resolver={refResolver}>
-          {parsedDocs}
+          {elem}
         </InlineRefResolverProvider>
       );
     }
 
-    return parsedDocs;
+    return <ElementsOptionsProvider nodeHasChanged={nodeHasChanged}>{elem}</ElementsOptionsProvider>;
   },
 );
 

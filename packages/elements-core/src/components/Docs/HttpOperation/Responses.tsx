@@ -5,6 +5,7 @@ import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';
@@ -64,6 +65,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
   const refResolver = useInlineRefResolver();
+  const { nodeHasChanged } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
   const schema = responseContent?.schema;
@@ -105,6 +107,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               viewMode="read"
               parentCrumbs={['responses', response.code]}
               renderRootTreeLines
+              nodeHasChanged={nodeHasChanged}
             />
           )}
         </>

@@ -4,6 +4,7 @@ import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -25,6 +26,7 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
 export const Body = ({ body, onChange }: BodyProps) => {
   const refResolver = useInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
+  const { nodeHasChanged } = useOptionsCtx();
 
   React.useEffect(() => {
     onChange(chosenContent);
@@ -61,6 +63,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
           schema={getOriginalObject(schema)}
           viewMode="write"
           renderRootTreeLines
+          nodeHasChanged={nodeHasChanged}
         />
       )}
     </VStack>
