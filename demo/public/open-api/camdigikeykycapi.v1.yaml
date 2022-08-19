@@ -1,0 +1,586 @@
+openapi: 3.1.0
+info:
+  title: CamDigiKey KYC Verification API
+  version: 2.0.0
+  description: "## 1. Introduction\n\nCamDigiKey is a E-KYC service provider focusing on convenience and security for users. Basically, users need to register themselves to the application by providing their faces and identity documents such as ID card or passport. Once the user’s account is approved, they can use CamDigiKey mobile application to login to any CamDigiKey partner’s portals.\n\nFor organization or institution, CamDigiKey provides open KYC verification APIs which enable fast user on board on the organization or institution’s platform. The open KYC verification APIs consist of checking user info and face against data from MOI and verifying user liveness to ensure user is a real human.\n\nThis document will focus on integration with CamDigiKey as authentication/authorization and the usage of open KYC verification APIs via CamDX.\n\n## 2.\tAPIs Environment\n\n**Request Based URL:**\n```\nhttp(s)://{REQUESTER_SS_MEMBER_ADDR}/r1/CAMBODIA/GOV/{CAMDIGIKEY_MEMBER_CODE}/CAMDIGIKEY_KYC\n```\n**Request Header:**\n```\nX-Road-Client: CAMBODIA/GOV/{REQUESTER_SS_MEMBER_CODE}/{REQUESTER_SS_SUBSYSTEM_CODE}\n```\n#\n| Environment | CAMDIGIKEY_MEMBER_CODE |\n| ----------- | ---------------------- |\n| **DEVELOPMENT**| CAMDX-20201222 |\n| **PRODUCTION** | CAMDX-00003 |\n\n\n#### Example:\n\nDEVELOPMENT: \n```\nhttp(s)://dev.ss.camdx.gov.kh:8443/r1/CAMBODIA/GOV/CAMDX-20201222/CAMDIGIKEY_KYC \n```\nPRODUCTION: \n```\nhttp(s)://ss.camdx.gov.kh/r1/CAMBODIA/GOV/CAMDX-000003/CAMDIGIKEY_KYC\n```\n"
+  contact:
+    name: CamDX Team
+    email: camdx-info@techostartup.center
+    url: 'https://www.camdx.gov.kh/#contact'
+  license:
+    name: MIT
+    url: 'https://spdx.org/licenses/MIT'
+  termsOfService: 'https://www.camdx.gov.kh/terms.html'
+  summary: CamDigiKey Client Open API
+servers:
+  - url: 'http://dev.ss.camdx.gov.kh:8880/r1/CAMBODIA/GOV/CAMDX-20201222/CAMDIGIKEY_KYC'
+    description: Development
+  - url: 'https://ss.camdx.gov.kh/r1/CAMBODIA/GOV/CAMDX-000003/CAMDIGIKEY_KYC'
+    description: Production
+components:
+  securitySchemes: {}
+  parameters:
+    X-Road-Client:
+      name: X-Road-Client
+      in: header
+      required: true
+      schema:
+        type: string
+        default: CAMBODIA/GOV/CAMDX-20201222/NSPC_SYSTEM
+      description: X-Road-Client Request Header
+tags:
+  - name: default
+    description: default api
+  - name: user
+    description: Everything about user
+  - name: organization
+    description: Everything about organization
+paths:
+  /ocr-idcard:
+    post:
+      tags:
+        - KYC Verification API
+      summary: Khmer ID Card OCR
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  idImage: base_64_content
+              properties:
+                idImage:
+                  type: string
+                  description: base_64_content
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    error: 0
+                    message: Successfully
+                    data:
+                      idNumber: id_number
+                      firstNameKh: first_name_kh
+                      lastNameKh: last_name_kh
+                      firstNameEn: first_name_en
+                      lastNameEn: last_name_en
+                      gender: M_or_F
+                      dob: yyyy-MM-dd
+                      issuedDate: yyyy-MM-dd
+                      expiredDate: yyyy-MM-dd
+                      MRZ1: String
+                      MRZ2: String
+                      MRZ3: String
+                properties:
+                  error:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      idNumber:
+                        type: string
+                      firstNameKh:
+                        type: string
+                      lastNameKh:
+                        type: string
+                      firstNameEn:
+                        type: string
+                      lastNameEn:
+                        type: string
+                      gender:
+                        type: string
+                      dob:
+                        type: string
+                      issuedDate:
+                        type: string
+                        format: date
+                        example: '2022-07-22'
+                      expiredDate:
+                        type: string
+                        format: date
+                        example: '2026-07-22'
+                      MRZ1:
+                        type: string
+                      MRZ2:
+                        type: string
+                      MRZ3:
+                        type: string
+      operationId: readOcrIDCard
+      description: |-
+        OCR extracts user's information from submitted identification image
+
+        **API Code**: `KH.GOV.CAMDX-00003.CAMDIGIKEY_KYC.ocr-idcard`
+
+        **Version**: `2.0.0`
+      parameters:
+        - $ref: '#/components/parameters/X-Road-Client'
+    parameters: []
+  /info:
+    post:
+      tags:
+        - KYC Verification API
+      summary: Verify User Info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idNumber:
+                  type: string
+                firstNameKh:
+                  type: string
+                lastNameKh:
+                  type: string
+                firstNameEn:
+                  type: string
+                lastNameEn:
+                  type: string
+                gender:
+                  type: string
+                dob:
+                  type: string
+                issuedDate:
+                  type: string
+                expiredDate:
+                  type: string
+              x-examples:
+                example-1:
+                  idNumber: id_number
+                  firstNameKh: first_name_kh
+                  lastNameKh: last_name_kh
+                  firstNameEn: first_name_en
+                  lastNameEn: last_name_en
+                  gender: M_or_F
+                  dob: yyyy-MM-dd
+                  issuedDate: yyyy-MM-dd
+                  expiredDate: yyyy-MM-dd
+            examples:
+              example-1:
+                value:
+                  idNumber: string
+                  firstNameKh: string
+                  lastNameKh: string
+                  firstNameEn: string
+                  lastNameEn: string
+                  gender: string
+                  dob: string
+                  issuedDate: string
+                  expiredDate: string
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              example-1:
+                value: {}
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    error: 0
+                    message: Successfully
+                    data:
+                      idNumber: id_number
+                      score: 1
+                      incorrectFields:
+                        - requested_fields_or_empty
+                properties:
+                  error:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      idNumber:
+                        type: string
+                      score:
+                        type: integer
+                        description: '#Range [0,1]'
+                      incorrectFields:
+                        type: array
+                        description: Requested Fields or Empty
+                        items:
+                          type: string
+              example:
+                error: 0
+                message: Successfully
+                data:
+                  idNumber: id_number
+                  score: 1
+                  incorrectFields: []
+      operationId: verifyInfo
+      description: |-
+        Verification between submitted information with MOI information
+
+        **API Code**: `KH.GOV.CAMDX-00003.CAMDIGIKEY_KYC.info`
+
+        **Version**: `2.0.0`
+      parameters:
+        - $ref: '#/components/parameters/X-Road-Client'
+  /info-face-idcard:
+    post:
+      tags:
+        - KYC Verification API
+      summary: 'Verify User Info, ID Card and User Face'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userInfo:
+                  type: object
+                  properties:
+                    idNumber:
+                      type: string
+                    firstNameKh:
+                      type: string
+                    lastNameKh:
+                      type: string
+                    firstNameEn:
+                      type: string
+                    lastNameEn:
+                      type: string
+                    gender:
+                      type: string
+                    dob:
+                      type: string
+                    issuedDate:
+                      type: string
+                    expiredDate:
+                      type: string
+                faceImg:
+                  type: string
+                idImage:
+                  type: string
+              x-examples:
+                example-1:
+                  userInfo:
+                    idNumber: id_number
+                    firstNameKh: first_name_kh
+                    lastNameKh: last_name_kh
+                    firstNameEn: first_name_en
+                    lastNameEn: last_name_en
+                    gender: M_or_F
+                    dob: yyyy-MM-dd
+                    issuedDate: yyyy-MM-dd
+                    expiredDate: yyyy-MM-dd
+                  faceImg: base_64_content
+                  idImage: base_64_content
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    error: 0
+                    message: Successfully
+                    data:
+                      userInfo:
+                        idNumber: id_number
+                        score: 1
+                        incorrectFields: []
+                      faceDocumentScore: 0.9457877
+                      faceMoiScore: 0.9792682
+                properties:
+                  error:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      userInfo:
+                        type: object
+                        properties:
+                          idNumber:
+                            type: string
+                          score:
+                            type: integer
+                            description: '#Range[0,1]'
+                          incorrectFields:
+                            type: array
+                            items:
+                              type: object
+                      faceDocumentScore:
+                        type: number
+                        description: '#Range[0,1]'
+                      faceMoiScore:
+                        type: number
+                        description: '#Range[0,1]'
+              example:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: id_number
+                    score: 1
+                    incorrectFields: []
+                  faceDocumentScore: 0.9457877
+                  faceMoiScore: 0.9792682
+      operationId: verifyInfoFaceIdCard
+      description: |-
+        - Verification with submitted document, face verification with retrieved image from MOI
+        - Verification of submitted information with MOI information
+
+        **API Code**: `KH.GOV.CAMDX-00003.CAMDIGIKEY_KYC.info-face-idcard`
+
+        **Version**: `2.0.0`
+      parameters:
+        - $ref: '#/components/parameters/X-Road-Client'
+    parameters: []
+  /info-face:
+    post:
+      summary: Verify User Info and User Face
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userInfo:
+                  type: object
+                  properties:
+                    idNumber:
+                      type: string
+                    firstNameKh:
+                      type: string
+                    lastNameKh:
+                      type: string
+                    firstNameEn:
+                      type: string
+                    lastNameEn:
+                      type: string
+                    gender:
+                      type: string
+                    dob:
+                      type: string
+                    issuedDate:
+                      type: string
+                    expiredDate:
+                      type: string
+                faceImg:
+                  type: string
+              x-examples:
+                example-1:
+                  userInfo:
+                    idNumber: id_number
+                    firstNameKh: first_name_kh
+                    lastNameKh: last_name_kh
+                    firstNameEn: first_name_en
+                    lastNameEn: last_name_en
+                    gender: M_or_F
+                    dob: yyyy-MM-dd
+                    issuedDate: yyyy-MM-dd
+                    expiredDate: yyyy-MM-dd
+                  faceImg: base_64_content
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    error: 0
+                    message: Successfully
+                    data:
+                      userInfo:
+                        idNumber: id-card-number
+                        score: 1
+                        incorrectFields: []
+                      faceMoiScore: 0.9792682
+                properties:
+                  error:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      userInfo:
+                        type: object
+                        properties:
+                          idNumber:
+                            type: string
+                          score:
+                            type: integer
+                            description: '#Range [0,1]'
+                          incorrectFields:
+                            type: array
+                            items:
+                              type: object
+                      faceMoiScore:
+                        type: number
+                        description: '#Range [0,1]'
+              example:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: id_number
+                    score: 1
+                    incorrectFields: []
+                  faceMoiScore: 0.9792682
+      operationId: verifyInfoFace
+      description: |-
+        Verification between submitted user information include face image with MOI information
+
+        **API Code**: `KH.GOV.CAMDX-00003.CAMDIGIKEY_KYC.info-face`
+
+        **Version**: `2.0.0`
+      tags:
+        - KYC Verification API
+      parameters:
+        - $ref: '#/components/parameters/X-Road-Client'
+  /info-idcard-liveness:
+    post:
+      summary: 'Verify User Info, ID Card Image, and Liveness'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  actions:
+                    - '1'
+                    - '2'
+                  userInfo:
+                    idNumber: id_number
+                    firstNameKh: first_name_kh
+                    lastNameKh: last_name_kh
+                    firstNameEn: first_name_en
+                    lastNameEn: last_name_en
+                    gender: M_or_F
+                    dob: yyyy-MM-dd
+                    issuedDate: yyyy-MM-dd
+                    expiredDate: yyyy-MM-dd
+                  idImage: base_64_content
+                  liveness: base_64_content
+              properties:
+                actions:
+                  type: array
+                  description: |-
+                    1: turn face to the left, 2: turn face to the right,
+                    3: nod the head
+                  items:
+                    type: string
+                userInfo:
+                  type: object
+                  properties:
+                    idNumber:
+                      type: string
+                    firstNameKh:
+                      type: string
+                    lastNameKh:
+                      type: string
+                    firstNameEn:
+                      type: string
+                    lastNameEn:
+                      type: string
+                    gender:
+                      type: string
+                    dob:
+                      type: string
+                    issuedDate:
+                      type: string
+                    expiredDate:
+                      type: string
+                idImage:
+                  type: string
+                liveness:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      userInfo:
+                        type: object
+                        properties:
+                          idNumber:
+                            type: string
+                          score:
+                            type: integer
+                          incorrectFields:
+                            type: array
+                            items:
+                              type: object
+                              properties: {}
+                      livenessScore:
+                        type: number
+                      faceDocumentScore:
+                        type: number
+                      faceMoiScore:
+                        type: number
+                x-examples:
+                  example-1:
+                    error: 0
+                    message: Successfully
+                    data:
+                      userInfo:
+                        idNumber: '010682723'
+                        score: 1
+                        incorrectFields: []
+                      livenessScore: 0.9248705
+                      faceDocumentScore: 0.94440883
+                      faceMoiScore: 0.9769943
+              example:
+                error: 0
+                message: Successfully
+                data:
+                  userInfo:
+                    idNumber: id_number
+                    score: 1
+                    incorrectFields: []
+                  livenessScore: 0.9248705
+                  faceDocumentScore: 0.94440883
+                  faceMoiScore: 0.9769943
+      description: |-
+        - Liveness verification check, face verification with submitted document, face verification with retrieved image from MOI 
+        - Verification of submitted information with MOI information
+
+
+        **API Code**: `KH.GOV.CAMDX-00003.CAMDIGIKEY_KYC.info-idcard-liveness`
+
+        **Version**: `2.0.0`
+      operationId: verifyInfoIdcardLiveness
+      tags:
+        - KYC Verification API
+      parameters:
+        - $ref: '#/components/parameters/X-Road-Client'
+    parameters: []

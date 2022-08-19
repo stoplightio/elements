@@ -8,7 +8,7 @@ export const EXAMPLE_SPECS = [
   },
   {
     text: 'CamDigiKey API',
-    value: '/public/open-api/camdigikey.v1.yaml',
+    value: '/public/open-api/camdigikeykycapi.v1.yaml',
   },
   {
     text: 'NBFSA',
