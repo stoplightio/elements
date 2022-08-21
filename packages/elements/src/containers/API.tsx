@@ -181,6 +181,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          router={props.router}
         />
       )}
     </InlineRefResolverProvider>
