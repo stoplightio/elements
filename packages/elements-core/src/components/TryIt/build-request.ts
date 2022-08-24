@@ -1,7 +1,6 @@
 import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 
-import { fileToBase64 } from '../../utils/fileToBase64';
 import { getServerUrlWithDefaultValues, IServer } from '../../utils/http-spec/IServer';
 import {
   filterOutAuthorizationParams,
@@ -201,26 +200,19 @@ export async function buildHarRequest({
   if (shouldIncludeBody && typeof bodyInput === 'object') {
     postData = {
       mimeType,
-      params: await Promise.all(
-        Object.entries(bodyInput).map(async ([name, value]) => {
-          if (value instanceof File) {
-            let base64Value = undefined;
-            try {
-              base64Value = await fileToBase64(value);
-            } catch {}
-            return {
-              name,
-              ...(base64Value && { value: base64Value }),
-              fileName: value.name,
-              contentType: value.type,
-            };
-          }
+      params: Object.entries(bodyInput).map(([name, value]) => {
+        if (value instanceof File) {
           return {
             name,
-            value,
+            fileName: value.name,
+            contentType: value.type,
           };
-        }),
-      ),
+        }
+        return {
+          name,
+          value,
+        };
+      }),
     };
   }
 
