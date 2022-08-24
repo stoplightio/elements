@@ -23,8 +23,18 @@ const sampleRequest = {
   ],
   queryString: [],
   cookies: [],
+  postData: {
+    mimeType: 'multipart/form-data',
+    params: [
+      {
+        name: 'file',
+        fileName: 'example.jpeg',
+        contentType: 'image.jpeg',
+      },
+    ],
+  },
   headersSize: 678,
-  bodySize: 0,
+  bodySize: -1,
 };
 
 describe('RequestSend', () => {
@@ -84,6 +94,16 @@ describe('RequestSend', () => {
 
     expect(langSelector).toHaveTextContent(/obj-c/i);
     expect(container).toHaveTextContent('#import <Foundation/Foundation.h>');
+  });
+
+  it('adds multipart form data to js/fetch request', async () => {
+    const { container } = render(<RequestSamples request={sampleRequest} />);
+    const langSelector = getLanguageSelectorButton();
+    await chooseLanguage('JavaScript', 'Fetch');
+
+    expect(langSelector).toHaveTextContent(/javascript/i);
+    expect(langSelector).toHaveTextContent(/fetch/i);
+    expect(container).toHaveTextContent('options.body = form;');
   });
 });
 
