@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "7.6.4",
+  "version": "7.6.5",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -70,7 +70,7 @@
     "@stoplight/types": "^13.0.0",
     "@stoplight/yaml": "^4.2.3",
     "classnames": "^2.2.6",
-    "httpsnippet": "^1.24.0",
+    "httpsnippet": "^2.0.0",
     "jotai": "1.3.9",
     "json-schema": "^0.4.0",
     "lodash": "^4.17.19",
