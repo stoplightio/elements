@@ -50,7 +50,7 @@ const getServerUrl = ({
   return serverUrl;
 };
 
-const getQueryParams = ({
+export const getQueryParams = ({
   httpOperation,
   parameterValues,
 }: Pick<BuildRequestInput, 'httpOperation'> & Pick<BuildRequestInput, 'parameterValues'>) => {
