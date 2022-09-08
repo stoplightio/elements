@@ -202,7 +202,15 @@ describe('TryIt', () => {
           'limit*',
           'super_duper_long_parameter_name_with_unnecessary_text*',
           'completed',
+          'default_style_items',
           'items',
+          'items_not_exploded',
+          'items_pipes',
+          'items_pipes_not_exploded',
+          'items_spaces',
+          'items_spaces_not_exploded',
+          'nested',
+          'nested_not_exploded',
           'optional_value_with_default',
           'type',
           'value',
@@ -269,6 +277,12 @@ describe('TryIt', () => {
       const typeField = screen.getByLabelText('type');
       chooseOption(typeField, 'another');
 
+      const pairsField = screen.getByLabelText('pairs');
+      userEvent.type(pairsField, '{ "nestedKey": "nestedValue" }');
+
+      const itemsField = screen.getByLabelText('items');
+      userEvent.type(itemsField, '["first", "second"]');
+
       // header param
 
       const accountIdField = screen.getByLabelText('account-id');
@@ -293,6 +307,9 @@ describe('TryIt', () => {
       expect(queryParams.get('value')).toBe('1');
       expect(queryParams.get('type')).toBe('another');
       expect(queryParams.get('optional_value_with_default')).toBeNull();
+      expect(queryParams.get('nestedKey')).toBe('nestedValue');
+      expect(queryParams.get('pairs')).toBeNull();
+      expect(queryParams.getAll('items')).toEqual(['first', 'second']);
       // assert that headers are passed
       const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
       expect(headers.get('Content-Type')).toBe('application/json');
