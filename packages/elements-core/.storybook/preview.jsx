@@ -1,7 +1,7 @@
 export * from '../../../.storybook/preview';
 
 import * as React from "react";
-import {subscribeTheme, Provider as MosaicProvider} from "@stoplight/mosaic";
+import {subscribeTheme, Provider as MosaicProvider, Box} from "@stoplight/mosaic";
 import {PersistenceContextProvider, Styled, MarkdownComponentsProvider} from "../src";
 import '../src/styles.css';
 
@@ -13,7 +13,9 @@ const ThemeProvider = (Story, context) => {
     subscribeTheme({ mode: theme === 'dark' ? 'dark' : 'light' });
   }, [subscribeTheme, theme]);
   return (
-    <Story {...context} />
+    <Box style={{maxWidth: 1200, }} mx='auto' py={10}>
+      <Story {...context} />
+    </Box>
   );
 };
 
