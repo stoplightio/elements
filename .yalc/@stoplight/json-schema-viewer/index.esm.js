@@ -205,6 +205,8 @@ const Caret = ({ isExpanded }) => (React.createElement(Flex, { pl: 3, w: 8, ml: 
 
 const Description = ({ value }) => {
     const [showAll, setShowAll] = React.useState(false);
+    if (typeof value !== 'string' || value.trim().length === 0)
+        return null;
     const paragraphs = value.split('\n\n');
     if (paragraphs.length <= 1 || showAll) {
         return (React.createElement(Box, { as: MarkdownViewer, markdown: value, style: {
@@ -501,7 +503,7 @@ function getInternalSchemaError(schemaNode, defaultErrorMessage) {
     };
 }
 
-const ChildStack = React.memo(({ childNodes, currentNestingLevel, className, RowComponent = SchemaRow, parentNodeId }) => {
+const ChildStack = React.memo(({ childNodes, currentNestingLevel, className, RowComponent = SchemaRow, parentNodeId, parentChangeType, }) => {
     const { renderRootTreeLines } = useJSVOptionsContext();
     const rootLevel = renderRootTreeLines ? 0 : 1;
     const isRootLevel = currentNestingLevel < rootLevel;
@@ -509,7 +511,7 @@ const ChildStack = React.memo(({ childNodes, currentNestingLevel, className, Row
     if (!isRootLevel) {
         ml = currentNestingLevel === rootLevel ? 'px' : 7;
     }
-    return (React.createElement(Box, { className: className, ml: ml, fontSize: "sm", borderL: isRootLevel ? undefined : true, "data-level": currentNestingLevel }, childNodes.map((childNode) => (React.createElement(RowComponent, { key: childNode.id, schemaNode: childNode, nestingLevel: currentNestingLevel + 1, pl: isRootLevel ? undefined : NESTING_OFFSET, parentNodeId: parentNodeId })))));
+    return (React.createElement(Box, { className: className, ml: ml, fontSize: "sm", borderL: isRootLevel ? undefined : true, "data-level": currentNestingLevel }, childNodes.map((childNode) => (React.createElement(RowComponent, { key: childNode.id, schemaNode: childNode, nestingLevel: currentNestingLevel + 1, pl: isRootLevel ? undefined : NESTING_OFFSET, parentNodeId: parentNodeId, parentChangeType: parentChangeType })))));
 });
 
 const useHasProperties = ({ required, deprecated, validations: { readOnly, writeOnly } }) => {
@@ -589,13 +591,14 @@ const ChangeTypeToColor = {
     modified: '#E9B703',
     removed: '#F05151',
 };
-const SchemaRow = React.memo(({ schemaNode, nestingLevel, pl, parentNodeId }) => {
+const SchemaRow = React.memo(({ schemaNode, nestingLevel, pl, parentNodeId, parentChangeType }) => {
     var _a, _b;
-    const { defaultExpandedDepth, renderRowAddon, onGoToRef, hideExamples, renderRootTreeLines, nodeHasChanged } = useJSVOptionsContext();
+    const { defaultExpandedDepth, renderRowAddon, onGoToRef, hideExamples, renderRootTreeLines, nodeHasChanged, viewMode, } = useJSVOptionsContext();
     const setHoveredNode = useUpdateAtom(hoveredNodeAtom);
     const nodeId = getNodeId(schemaNode, parentNodeId);
     const originalNodeId = ((_a = schemaNode.originalFragment) === null || _a === void 0 ? void 0 : _a.$ref) ? getOriginalNodeId(schemaNode, parentNodeId) : nodeId;
-    const hasChanged = nodeHasChanged === null || nodeHasChanged === void 0 ? void 0 : nodeHasChanged({ nodeId: originalNodeId });
+    const mode = viewMode === 'standalone' ? undefined : viewMode;
+    const hasChanged = nodeHasChanged === null || nodeHasChanged === void 0 ? void 0 : nodeHasChanged({ nodeId: originalNodeId, mode });
     const [isExpanded, setExpanded] = React.useState(!isMirroredNode(schemaNode) && nestingLevel <= defaultExpandedDepth);
     const { selectedChoice, setSelectedChoice, choices } = useChoices(schemaNode);
     const typeToShow = selectedChoice.type;
@@ -632,13 +635,19 @@ const SchemaRow = React.memo(({ schemaNode, nestingLevel, pl, parentNodeId }) =>
             annotationLeftOffset += 27;
         }
     }
+    if (parentChangeType === 'added' && hasChanged && hasChanged.type === 'removed') {
+        return null;
+    }
+    if (parentChangeType === 'removed' && hasChanged && hasChanged.type === 'added') {
+        return null;
+    }
     return (React.createElement(React.Fragment, null,
         React.createElement(Flex, { maxW: "full", pl: pl, py: 2, "data-id": originalNodeId, pos: "relative", onMouseEnter: (e) => {
                 e.stopPropagation();
                 setHoveredNode(selectedChoice.type);
             } },
             !isRootLevel && React.createElement(Box, { borderT: true, w: isCollapsible ? 1 : 3, ml: -3, mr: 3, mt: 2 }),
-            React.createElement(ChangeAnnotation, { change: hasChanged, style: { left: annotationLeftOffset } }),
+            parentChangeType !== 'added' && parentChangeType !== 'removed' ? (React.createElement(ChangeAnnotation, { change: hasChanged, style: { left: annotationLeftOffset } })) : null,
             React.createElement(VStack, { spacing: 1, maxW: "full", flex: 1, ml: isCollapsible && !isRootLevel ? 2 : undefined },
                 React.createElement(Flex, { alignItems: "center", maxW: "full", onClick: isCollapsible ? () => setExpanded(!isExpanded) : undefined, cursor: isCollapsible ? 'pointer' : undefined },
                     isCollapsible ? React.createElement(Caret, { isExpanded: isExpanded }) : null,
@@ -661,7 +670,7 @@ const SchemaRow = React.memo(({ schemaNode, nestingLevel, pl, parentNodeId }) =>
                 React.createElement(Validations, { validations: isRegularNode(schemaNode) ? getValidationsFromSchema(schemaNode) : {}, hideExamples: hideExamples }),
                 (isBrokenRef || internalSchemaError.hasError) && (React.createElement(Icon, { title: (refNode === null || refNode === void 0 ? void 0 : refNode.error) || internalSchemaError.error, color: "danger", icon: ['fas', 'exclamation-triangle'], size: "sm" }))),
             renderRowAddon ? React.createElement(Box, null, renderRowAddon({ schemaNode, nestingLevel })) : null),
-        isCollapsible && isExpanded ? (React.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId })) : null));
+        isCollapsible && isExpanded ? (React.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId, parentChangeType: parentChangeType ? parentChangeType : hasChanged ? hasChanged === null || hasChanged === void 0 ? void 0 : hasChanged.type : undefined })) : null));
 });
 const ChangeAnnotation = (_a) => {
     var { change } = _a, props = __rest(_a, ["change"]);
@@ -722,6 +731,7 @@ const TopLevelSchemaRow = ({ schemaNode }) => {
     if (isRegularNode(schemaNode) && isPureObjectNode(schemaNode)) {
         return (React.createElement(React.Fragment, null,
             React.createElement(ScrollCheck, null),
+            React.createElement(Description, { value: schemaNode.annotations.description }),
             React.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId }),
             internalSchemaError.hasError && (React.createElement(Icon, { title: internalSchemaError.error, color: "danger", icon: ['fas', 'exclamation-triangle'], size: "sm" }))));
     }
@@ -729,6 +739,7 @@ const TopLevelSchemaRow = ({ schemaNode }) => {
         const combiner = isRegularNode(schemaNode) && ((_c = schemaNode.combiners) === null || _c === void 0 ? void 0 : _c.length) ? schemaNode.combiners[0] : null;
         return (React.createElement(React.Fragment, null,
             React.createElement(ScrollCheck, null),
+            React.createElement(Description, { value: schemaNode.annotations.description }),
             React.createElement(HStack, { spacing: 3, pb: 4 },
                 React.createElement(Menu, { "aria-label": "Pick a type", closeOnPress: true, placement: "bottom left", items: choices.map((choice, index) => ({
                         id: index,
@@ -745,6 +756,7 @@ const TopLevelSchemaRow = ({ schemaNode }) => {
     if (isComplexArray(schemaNode) && isPureObjectNode(schemaNode.children[0])) {
         return (React.createElement(React.Fragment, null,
             React.createElement(ScrollCheck, null),
+            React.createElement(Description, { value: schemaNode.annotations.description }),
             React.createElement(Box, { fontFamily: "mono", fontWeight: "semibold", fontSize: "base", pb: 4 }, "array of:"),
             childNodes.length > 0 ? (React.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId })) : null));
     }

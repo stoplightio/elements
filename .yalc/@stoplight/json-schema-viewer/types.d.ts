@@ -11,8 +11,9 @@ export declare type ViewMode = 'read' | 'write' | 'standalone';
 export declare type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
 export declare type ChangeType = 'added' | 'modified' | 'removed';
 export declare type NodeHasChangedFn = (props: {
-    path?: readonly string[];
-    nodeId?: string;
+    nodeId: string;
+    mode?: 'read' | 'write';
+    attr?: string | string[];
 }) => false | {
     type: ChangeType;
     selfAffected?: boolean;

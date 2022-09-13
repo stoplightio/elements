@@ -26,8 +26,8 @@
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "@stoplight/json": "^3.17.1",
-    "@stoplight/json-schema-tree": "^2.2.1",
+    "@stoplight/json": "^3.20.1",
+    "@stoplight/json-schema-tree": "^2.2.2",
     "@stoplight/react-error-boundary": "^2.0.0",
     "@types/json-schema": "^7.0.7",
     "classnames": "^2.2.6",
@@ -41,5 +41,5 @@
     "require": "./index.js",
     "import": "./index.mjs"
   },
-  "yalcSig": "0f07868b0969d60f339cf76f713899ee"
+  "yalcSig": "50f3080599444a7a6e7fa03dcceb5c0e"
 }

@@ -3625,10 +3625,10 @@
     "@types/json-schema" "^7.0.7"
     json-pointer "^0.6.1"
 
-"@stoplight/json-schema-tree@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-2.2.1.tgz#bfd8ec5a18c4bbc3e0ae3617725e4e4173553f0a"
-  integrity sha512-TKAvYtB5U8A7sAKj4co61LnMI9+133keQ+z8yGiLCpvUd8FDCNkQ7TWuFqdWOA1s5La4U6Gc75A1qZqfkGNdJw==
+"@stoplight/json-schema-tree@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-2.2.2.tgz#48339973d72ec818efea11c450bf033cd0d78d91"
+  integrity sha512-p4hRzEgTMZQRrbP1CWAZDo68zXTOsr40IxITNizKPeMPt1jsB0lvHlLinx0tSTKp2XPnaoRXH7cMsdClGD7JDQ==
   dependencies:
     "@stoplight/json" "^3.12.0"
     "@stoplight/json-schema-merge-allof" "^0.7.7"
@@ -3639,8 +3639,8 @@
 "@stoplight/json-schema-viewer@^4.7.1", "@stoplight/json-schema-viewer@file:.yalc/@stoplight/json-schema-viewer":
   version "0.0.0"
   dependencies:
-    "@stoplight/json" "^3.17.1"
-    "@stoplight/json-schema-tree" "^2.2.1"
+    "@stoplight/json" "^3.20.1"
+    "@stoplight/json-schema-tree" "^2.2.2"
     "@stoplight/react-error-boundary" "^2.0.0"
     "@types/json-schema" "^7.0.7"
     classnames "^2.2.6"
@@ -3648,13 +3648,25 @@
     jotai "^1.4.5"
     lodash "^4.17.19"
 
-"@stoplight/json@^3.12.0", "@stoplight/json@^3.17.1", "@stoplight/json@^3.18.1":
+"@stoplight/json@^3.12.0", "@stoplight/json@^3.18.1":
   version "3.18.1"
   resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.18.1.tgz#725b34b24e8b0c0f73113362be54c7a4f294cdba"
   integrity sha512-QmELAqBS8DC+8YuG7+OvDVP6RaUVi8bzN0KKW2UEcZg+0a1sqeeZgfW079AmJIZg8HEN7udAt4iozIB8Dm0t1Q==
   dependencies:
     "@stoplight/ordered-object-literal" "^1.0.2"
     "@stoplight/types" "^13.0.0"
+    jsonc-parser "~2.2.1"
+    lodash "^4.17.21"
+    safe-stable-stringify "^1.1"
+
+"@stoplight/json@^3.20.1":
+  version "3.20.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json/-/json-3.20.1.tgz#a500c5a0ef3232ec3b2fd36c4456b28085d919ae"
+  integrity sha512-FXfud+uWgIj1xv6nUO9WnmgmnVikaxJcbtR4XQt4C42n5c2qua3U05Z/3B57hP5TJRSj+tpn9ID6/bFeyYYlEg==
+  dependencies:
+    "@stoplight/ordered-object-literal" "^1.0.3"
+    "@stoplight/path" "^1.3.2"
+    "@stoplight/types" "^13.6.0"
     jsonc-parser "~2.2.1"
     lodash "^4.17.21"
     safe-stable-stringify "^1.1"
@@ -3826,6 +3838,11 @@
   resolved "https://registry.yarnpkg.com/@stoplight/ordered-object-literal/-/ordered-object-literal-1.0.2.tgz#2a88a5ebc8b68b54837ac9a9ae7b779cdd862062"
   integrity sha512-0ZMS/9sNU3kVo/6RF3eAv7MK9DY8WLjiVJB/tVyfF2lhr2R4kqh534jZ0PlrFB9CRXrdndzn1DbX6ihKZXft2w==
 
+"@stoplight/ordered-object-literal@^1.0.3":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/ordered-object-literal/-/ordered-object-literal-1.0.4.tgz#c8bb2698ab229f31e31a16dd1852c867c1f2f2ed"
+  integrity sha512-OF8uib1jjDs5/cCU+iOVy+GJjU3X7vk/qJIkIJFqwmlJKrrtijFmqwbu8XToXrwTYLQTP+Hebws5gtZEmk9jag==
+
 "@stoplight/path@^1.3.2":
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/@stoplight/path/-/path-1.3.2.tgz#96e591496b72fde0f0cdae01a61d64f065bd9ede"
@@ -3887,6 +3904,14 @@
   version "13.0.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-13.0.0.tgz#69a22d57d3a67f623a01929b10e25401c9635154"
   integrity sha512-9OTVMiSUz2NlEW14OL6NKOuMTj3dtVVsugRwe3qbq0QnUpx/VLxOuO83n47rXZUTHvk69arOlFrDmRyZMw2DUg==
+  dependencies:
+    "@types/json-schema" "^7.0.4"
+    utility-types "^3.10.0"
+
+"@stoplight/types@^13.6.0":
+  version "13.6.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-13.6.0.tgz#96c6aaae05858b36f589821cd52c95aa9b205ce7"
+  integrity sha512-dzyuzvUjv3m1wmhPfq82lCVYGcXG0xUYgqnWfCq3PCVR4BKFhjdkHrnJ+jIDoMKvXb05AZP/ObQF6+NpDo29IQ==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"

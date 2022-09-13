@@ -241,6 +241,8 @@ const Caret = ({ isExpanded }) => (React__namespace.createElement(mosaic.Flex, {
 
 const Description = ({ value }) => {
     const [showAll, setShowAll] = React__namespace.useState(false);
+    if (typeof value !== 'string' || value.trim().length === 0)
+        return null;
     const paragraphs = value.split('\n\n');
     if (paragraphs.length <= 1 || showAll) {
         return (React__namespace.createElement(mosaic.Box, { as: markdownViewer.MarkdownViewer, markdown: value, style: {
@@ -537,7 +539,7 @@ function getInternalSchemaError(schemaNode, defaultErrorMessage) {
     };
 }
 
-const ChildStack = React__namespace.memo(({ childNodes, currentNestingLevel, className, RowComponent = SchemaRow, parentNodeId }) => {
+const ChildStack = React__namespace.memo(({ childNodes, currentNestingLevel, className, RowComponent = SchemaRow, parentNodeId, parentChangeType, }) => {
     const { renderRootTreeLines } = useJSVOptionsContext();
     const rootLevel = renderRootTreeLines ? 0 : 1;
     const isRootLevel = currentNestingLevel < rootLevel;
@@ -545,7 +547,7 @@ const ChildStack = React__namespace.memo(({ childNodes, currentNestingLevel, cla
     if (!isRootLevel) {
         ml = currentNestingLevel === rootLevel ? 'px' : 7;
     }
-    return (React__namespace.createElement(mosaic.Box, { className: className, ml: ml, fontSize: "sm", borderL: isRootLevel ? undefined : true, "data-level": currentNestingLevel }, childNodes.map((childNode) => (React__namespace.createElement(RowComponent, { key: childNode.id, schemaNode: childNode, nestingLevel: currentNestingLevel + 1, pl: isRootLevel ? undefined : NESTING_OFFSET, parentNodeId: parentNodeId })))));
+    return (React__namespace.createElement(mosaic.Box, { className: className, ml: ml, fontSize: "sm", borderL: isRootLevel ? undefined : true, "data-level": currentNestingLevel }, childNodes.map((childNode) => (React__namespace.createElement(RowComponent, { key: childNode.id, schemaNode: childNode, nestingLevel: currentNestingLevel + 1, pl: isRootLevel ? undefined : NESTING_OFFSET, parentNodeId: parentNodeId, parentChangeType: parentChangeType })))));
 });
 
 const useHasProperties = ({ required, deprecated, validations: { readOnly, writeOnly } }) => {
@@ -625,13 +627,14 @@ const ChangeTypeToColor = {
     modified: '#E9B703',
     removed: '#F05151',
 };
-const SchemaRow = React__namespace.memo(({ schemaNode, nestingLevel, pl, parentNodeId }) => {
+const SchemaRow = React__namespace.memo(({ schemaNode, nestingLevel, pl, parentNodeId, parentChangeType }) => {
     var _a, _b;
-    const { defaultExpandedDepth, renderRowAddon, onGoToRef, hideExamples, renderRootTreeLines, nodeHasChanged } = useJSVOptionsContext();
+    const { defaultExpandedDepth, renderRowAddon, onGoToRef, hideExamples, renderRootTreeLines, nodeHasChanged, viewMode, } = useJSVOptionsContext();
     const setHoveredNode = utils.useUpdateAtom(hoveredNodeAtom);
     const nodeId = getNodeId(schemaNode, parentNodeId);
     const originalNodeId = ((_a = schemaNode.originalFragment) === null || _a === void 0 ? void 0 : _a.$ref) ? getOriginalNodeId(schemaNode, parentNodeId) : nodeId;
-    const hasChanged = nodeHasChanged === null || nodeHasChanged === void 0 ? void 0 : nodeHasChanged({ nodeId: originalNodeId });
+    const mode = viewMode === 'standalone' ? undefined : viewMode;
+    const hasChanged = nodeHasChanged === null || nodeHasChanged === void 0 ? void 0 : nodeHasChanged({ nodeId: originalNodeId, mode });
     const [isExpanded, setExpanded] = React__namespace.useState(!jsonSchemaTree.isMirroredNode(schemaNode) && nestingLevel <= defaultExpandedDepth);
     const { selectedChoice, setSelectedChoice, choices } = useChoices(schemaNode);
     const typeToShow = selectedChoice.type;
@@ -668,13 +671,19 @@ const SchemaRow = React__namespace.memo(({ schemaNode, nestingLevel, pl, parentN
             annotationLeftOffset += 27;
         }
     }
+    if (parentChangeType === 'added' && hasChanged && hasChanged.type === 'removed') {
+        return null;
+    }
+    if (parentChangeType === 'removed' && hasChanged && hasChanged.type === 'added') {
+        return null;
+    }
     return (React__namespace.createElement(React__namespace.Fragment, null,
         React__namespace.createElement(mosaic.Flex, { maxW: "full", pl: pl, py: 2, "data-id": originalNodeId, pos: "relative", onMouseEnter: (e) => {
                 e.stopPropagation();
                 setHoveredNode(selectedChoice.type);
             } },
             !isRootLevel && React__namespace.createElement(mosaic.Box, { borderT: true, w: isCollapsible ? 1 : 3, ml: -3, mr: 3, mt: 2 }),
-            React__namespace.createElement(ChangeAnnotation, { change: hasChanged, style: { left: annotationLeftOffset } }),
+            parentChangeType !== 'added' && parentChangeType !== 'removed' ? (React__namespace.createElement(ChangeAnnotation, { change: hasChanged, style: { left: annotationLeftOffset } })) : null,
             React__namespace.createElement(mosaic.VStack, { spacing: 1, maxW: "full", flex: 1, ml: isCollapsible && !isRootLevel ? 2 : undefined },
                 React__namespace.createElement(mosaic.Flex, { alignItems: "center", maxW: "full", onClick: isCollapsible ? () => setExpanded(!isExpanded) : undefined, cursor: isCollapsible ? 'pointer' : undefined },
                     isCollapsible ? React__namespace.createElement(Caret, { isExpanded: isExpanded }) : null,
@@ -697,7 +706,7 @@ const SchemaRow = React__namespace.memo(({ schemaNode, nestingLevel, pl, parentN
                 React__namespace.createElement(Validations, { validations: jsonSchemaTree.isRegularNode(schemaNode) ? getValidationsFromSchema(schemaNode) : {}, hideExamples: hideExamples }),
                 (isBrokenRef || internalSchemaError.hasError) && (React__namespace.createElement(mosaic.Icon, { title: (refNode === null || refNode === void 0 ? void 0 : refNode.error) || internalSchemaError.error, color: "danger", icon: ['fas', 'exclamation-triangle'], size: "sm" }))),
             renderRowAddon ? React__namespace.createElement(mosaic.Box, null, renderRowAddon({ schemaNode, nestingLevel })) : null),
-        isCollapsible && isExpanded ? (React__namespace.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId })) : null));
+        isCollapsible && isExpanded ? (React__namespace.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId, parentChangeType: parentChangeType ? parentChangeType : hasChanged ? hasChanged === null || hasChanged === void 0 ? void 0 : hasChanged.type : undefined })) : null));
 });
 const ChangeAnnotation = (_a) => {
     var { change } = _a, props = __rest(_a, ["change"]);
@@ -758,6 +767,7 @@ const TopLevelSchemaRow = ({ schemaNode }) => {
     if (jsonSchemaTree.isRegularNode(schemaNode) && isPureObjectNode(schemaNode)) {
         return (React__namespace.createElement(React__namespace.Fragment, null,
             React__namespace.createElement(ScrollCheck, null),
+            React__namespace.createElement(Description, { value: schemaNode.annotations.description }),
             React__namespace.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId }),
             internalSchemaError.hasError && (React__namespace.createElement(mosaic.Icon, { title: internalSchemaError.error, color: "danger", icon: ['fas', 'exclamation-triangle'], size: "sm" }))));
     }
@@ -765,6 +775,7 @@ const TopLevelSchemaRow = ({ schemaNode }) => {
         const combiner = jsonSchemaTree.isRegularNode(schemaNode) && ((_c = schemaNode.combiners) === null || _c === void 0 ? void 0 : _c.length) ? schemaNode.combiners[0] : null;
         return (React__namespace.createElement(React__namespace.Fragment, null,
             React__namespace.createElement(ScrollCheck, null),
+            React__namespace.createElement(Description, { value: schemaNode.annotations.description }),
             React__namespace.createElement(mosaic.HStack, { spacing: 3, pb: 4 },
                 React__namespace.createElement(mosaic.Menu, { "aria-label": "Pick a type", closeOnPress: true, placement: "bottom left", items: choices.map((choice, index) => ({
                         id: index,
@@ -781,6 +792,7 @@ const TopLevelSchemaRow = ({ schemaNode }) => {
     if (isComplexArray(schemaNode) && isPureObjectNode(schemaNode.children[0])) {
         return (React__namespace.createElement(React__namespace.Fragment, null,
             React__namespace.createElement(ScrollCheck, null),
+            React__namespace.createElement(Description, { value: schemaNode.annotations.description }),
             React__namespace.createElement(mosaic.Box, { fontFamily: "mono", fontWeight: "semibold", fontSize: "base", pb: 4 }, "array of:"),
             childNodes.length > 0 ? (React__namespace.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId })) : null));
     }
