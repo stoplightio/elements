@@ -1,7 +1,8 @@
-import { Box, HeadingProps, HStack, LinkHeading, Panel, PanelProps } from '@stoplight/mosaic';
+import { Box, HeadingProps, HStack, Panel, PanelProps } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { slugify } from '../../utils/string';
+import { LinkHeading } from '../LinkHeading';
 
 export interface ISectionTitle {
   title: string;
