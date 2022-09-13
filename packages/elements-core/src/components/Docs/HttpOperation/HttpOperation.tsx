@@ -8,6 +8,7 @@ import * as React from 'react';
 import { HttpMethodColors } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
+import { useChosenServerUrl } from '../../../hooks/useChosenServerUrl';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
@@ -117,16 +118,21 @@ function MethodPath({ method, path }: MethodPathProps) {
 function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { chosenServerUrl: string }) {
   const isDark = useThemeIsDark();
   const fullUrl = `${chosenServerUrl}${path}`;
+  const { leading, trailing } = useChosenServerUrl(chosenServerUrl);
 
   const pathElem = (
-    <Flex overflowX="hidden">
-      {chosenServerUrl ? (
-        <Box dir="rtl" color="muted" fontSize="lg" textOverflow="truncate" overflowX="hidden">
-          {chosenServerUrl}
-        </Box>
-      ) : null}
+    <Flex overflowX="hidden" fontSize="lg" userSelect="all">
+      <Box dir="rtl" color="muted" textOverflow="truncate" overflowX="hidden">
+        {leading}
 
-      <Box fontSize="lg" fontWeight="semibold" flex={1}>
+        {trailing !== null && (
+          <Box as="span" dir="ltr" style={{ unicodeBidi: 'bidi-override' }}>
+            {trailing}
+          </Box>
+        )}
+      </Box>
+
+      <Box fontWeight="semibold" flex={1}>
         {path}
       </Box>
     </Flex>
