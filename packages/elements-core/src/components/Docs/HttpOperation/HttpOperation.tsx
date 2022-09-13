@@ -8,7 +8,9 @@ import * as React from 'react';
 import { HttpMethodColors } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { useChosenServerUrl } from '../../../hooks/useChosenServerUrl';
+import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
@@ -21,6 +23,7 @@ export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
   ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy }) => {
+    const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
 
     const mocking = React.useContext(MockingContext);
@@ -34,28 +37,26 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
     const prettyName = (data.summary || data.iid || '').trim();
     const hasBadges = isDeprecated || isInternal;
 
-    const header = (!layoutOptions?.noHeading || hasBadges) && (
-      <VStack spacing={5}>
-        <HStack spacing={5}>
-          {!layoutOptions?.noHeading && prettyName ? (
-            <Heading size={1} fontWeight="semibold">
-              {prettyName}
-            </Heading>
-          ) : null}
-
-          <HStack spacing={2}>
-            {isDeprecated && <DeprecatedBadge />}
-            {isInternal && <InternalBadge isHttpService />}
-          </HStack>
-        </HStack>
-
-        <MethodPath method={data.method} path={data.path} />
-      </VStack>
+    const header = (
+      <OperationHeader
+        id={data.id}
+        method={data.method}
+        path={data.path}
+        noHeading={layoutOptions?.noHeading}
+        hasBadges={hasBadges}
+        name={prettyName}
+        isDeprecated={isDeprecated}
+        isInternal={isInternal}
+      />
     );
 
+    const descriptionChanged = nodeHasChanged?.({ nodeId: data.id, attr: 'description' });
     const description = (
       <VStack spacing={10}>
-        {data.description && <MarkdownViewer className="HttpOperation__Description" markdown={data.description} />}
+        <Box pos="relative">
+          {data.description && <MarkdownViewer className="HttpOperation__Description" markdown={data.description} />}
+          <ChangeAnnotation change={descriptionChanged} />
+        </Box>
 
         <Request onChange={setTextRequestBodyIndex} operation={data} />
 
@@ -166,5 +167,59 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
 
       {pathElem}
     </HStack>
+  );
+}
+
+function OperationHeader({
+  id,
+  noHeading,
+  hasBadges,
+  name,
+  isDeprecated,
+  isInternal,
+  method,
+  path,
+}: {
+  id: string;
+  noHeading?: boolean;
+  hasBadges: boolean;
+  name: string;
+  isDeprecated?: boolean;
+  isInternal?: boolean;
+  method: string;
+  path: string;
+}) {
+  const { nodeHasChanged } = useOptionsCtx();
+
+  if (noHeading && !hasBadges) {
+    return null;
+  }
+
+  const lineOneChanged = nodeHasChanged?.({ nodeId: id, attr: ['iid', 'summary', 'deprecated', 'internal'] });
+  const lineTwoChanged = nodeHasChanged?.({ nodeId: id, attr: ['method', 'path'] });
+
+  return (
+    <VStack spacing={5}>
+      <Box pos="relative">
+        <HStack spacing={5}>
+          {!noHeading && name ? (
+            <Heading size={1} fontWeight="semibold">
+              {name}
+            </Heading>
+          ) : null}
+
+          <HStack spacing={2}>
+            {isDeprecated && <DeprecatedBadge />}
+            {isInternal && <InternalBadge isHttpService />}
+          </HStack>
+        </HStack>
+        <ChangeAnnotation change={lineOneChanged} />
+      </Box>
+
+      <Box pos="relative">
+        <MethodPath method={method} path={path} />
+        <ChangeAnnotation change={lineTwoChanged} />
+      </Box>
+    </VStack>
   );
 }

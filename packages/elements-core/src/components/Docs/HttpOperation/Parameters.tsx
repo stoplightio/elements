@@ -83,6 +83,12 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
       examples: [...paramExamples, ...schemaExamplesArray],
       deprecated: paramDeprecated,
       style: paramStyle,
+
+      // the schema is technically the param, so set the stored id to the param's id
+      'x-stoplight': {
+        ...(p.schema?.['x-stoplight'] || {}),
+        id: p.id,
+      },
     };
 
     if (required) {

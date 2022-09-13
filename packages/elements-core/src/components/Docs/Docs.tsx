@@ -16,6 +16,8 @@ import { Model } from './Model';
 export type ChangeType = 'added' | 'modified' | 'removed';
 export type NodeHasChangedFn = (props: {
   nodeId: string;
+  mode?: 'read' | 'write';
+  attr?: string | string[];
 }) => false | { type: ChangeType; selfAffected?: boolean; isBreaking?: boolean };
 
 export type DiffRenderer = {
