@@ -3,8 +3,10 @@ import { HttpSecurityScheme } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import React from 'react';
 
+import { useOptionsCtx } from '../../../context/Options';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
+import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 
 interface SecuritySchemesProps {
@@ -46,8 +48,11 @@ const SecurityScheme: React.FC<
     showSchemeKey?: boolean;
   } & Pick<PanelProps, 'defaultIsOpen' | 'isCollapsible'>
 > = ({ scheme, defaultIsOpen, isCollapsible, showSchemeKey }) => {
+  const { nodeHasChanged } = useOptionsCtx();
+  const hasChanged = nodeHasChanged?.({ nodeId: scheme.id });
+
   return (
-    <Panel defaultIsOpen={defaultIsOpen} isCollapsible={isCollapsible}>
+    <Panel defaultIsOpen={defaultIsOpen} isCollapsible={isCollapsible} pos="relative">
       <Panel.Titlebar>
         <Box as="span" role="heading">
           {getReadableSecurityName(scheme, showSchemeKey)}
@@ -59,6 +64,8 @@ const SecurityScheme: React.FC<
           markdown={`${scheme.description || ''}\n\n` + getDefaultDescription(scheme)}
         />
       </Panel.Content>
+
+      <ChangeAnnotation change={hasChanged} />
     </Panel>
   );
 };
