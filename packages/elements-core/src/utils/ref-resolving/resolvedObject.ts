@@ -1,5 +1,5 @@
 import { hasRef } from '@stoplight/json';
-import { isArray, isObject, isPlainObject } from 'lodash';
+import { isArray, isPlainObject } from 'lodash';
 
 import { defaultResolver, ReferenceResolver } from './ReferenceResolver';
 
