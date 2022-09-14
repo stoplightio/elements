@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Flex, IntentVals, Select, Tab, TabList, TabPanel, TabPanels, Tabs, VStack } from '@stoplight/mosaic';
+import { Box, Flex, IntentVals, Select, Tab, TabList, TabPanel, TabPanels, Tabs, VStack } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
@@ -7,6 +7,7 @@ import * as React from 'react';
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
+import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';
 import { Parameters } from './Parameters';
@@ -75,9 +76,16 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responseContent]);
 
+  const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
+
   return (
     <VStack spacing={8} pt={8}>
-      {description && <MarkdownViewer markdown={description} />}
+      {description && (
+        <Box pos="relative">
+          <MarkdownViewer markdown={description} />
+          <ChangeAnnotation change={descriptionChanged} />
+        </Box>
+      )}
 
       {headers.length > 0 && (
         <VStack spacing={5}>

@@ -53,10 +53,12 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
     const descriptionChanged = nodeHasChanged?.({ nodeId: data.id, attr: 'description' });
     const description = (
       <VStack spacing={10}>
-        <Box pos="relative">
-          {data.description && <MarkdownViewer className="HttpOperation__Description" markdown={data.description} />}
-          <ChangeAnnotation change={descriptionChanged} />
-        </Box>
+        {data.description && (
+          <Box pos="relative">
+            <MarkdownViewer className="HttpOperation__Description" markdown={data.description} />
+            <ChangeAnnotation change={descriptionChanged} />
+          </Box>
+        )}
 
         <Request onChange={setTextRequestBodyIndex} operation={data} />
 
