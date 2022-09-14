@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, HStack, useThemeIsDark, VStack } from '@stoplight/mosaic';
+import { Box, Flex, Heading, HStack, NodeAnnotation, useThemeIsDark, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
@@ -10,7 +10,6 @@ import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { useChosenServerUrl } from '../../../hooks/useChosenServerUrl';
-import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
@@ -56,7 +55,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         {data.description && (
           <Box pos="relative">
             <MarkdownViewer className="HttpOperation__Description" markdown={data.description} />
-            <ChangeAnnotation change={descriptionChanged} />
+            <NodeAnnotation change={descriptionChanged} />
           </Box>
         )}
 
@@ -215,12 +214,12 @@ function OperationHeader({
             {isInternal && <InternalBadge isHttpService />}
           </HStack>
         </HStack>
-        <ChangeAnnotation change={lineOneChanged} />
+        <NodeAnnotation change={lineOneChanged} />
       </Box>
 
       <Box pos="relative">
         <MethodPath method={method} path={path} />
-        <ChangeAnnotation change={lineTwoChanged} />
+        <NodeAnnotation change={lineTwoChanged} />
       </Box>
     </VStack>
   );

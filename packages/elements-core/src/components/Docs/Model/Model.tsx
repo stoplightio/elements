@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Box, CopyButton, Flex, Heading, HStack, Panel, Select, Text, VStack } from '@stoplight/mosaic';
+import { Box, CopyButton, Flex, Heading, HStack, NodeAnnotation, Panel, Select, Text, VStack } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
@@ -11,7 +11,6 @@ import { useOptionsCtx } from '../../../context/Options';
 import { useIsCompact } from '../../../hooks/useIsCompact';
 import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
-import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
@@ -54,7 +53,8 @@ const ModelComponent: React.FC<ModelProps> = ({
 
           <HStack spacing={2}>{isInternal && <InternalBadge />}</HStack>
         </HStack>
-        <ChangeAnnotation change={titleChanged} />
+
+        <NodeAnnotation change={titleChanged} />
       </Box>
 
       {exportProps && !layoutOptions?.hideExport && <ExportButton {...exportProps} />}
@@ -69,7 +69,7 @@ const ModelComponent: React.FC<ModelProps> = ({
       {data.description && data.type === 'object' && (
         <Box pos="relative">
           <MarkdownViewer role="textbox" markdown={data.description} />
-          <ChangeAnnotation change={descriptionChanged} />
+          <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
 

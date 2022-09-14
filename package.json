@@ -13,9 +13,6 @@
     "demo",
     "packages/*"
   ],
-  "resolutions": {
-    "@stoplight/json-schema-viewer": "file:.yalc/@stoplight/json-schema-viewer"
-  },
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
@@ -123,8 +120,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "dependencies": {
-    "@stoplight/json-schema-viewer": "file:.yalc/@stoplight/json-schema-viewer"
   }
 }

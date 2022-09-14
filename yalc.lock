@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "@stoplight/json-schema-viewer": {
-      "signature": "2de3bfbcf5239f67513e8c764a6f34c4",
-      "file": true
-    }
-  }
-}

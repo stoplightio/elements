@@ -1,4 +1,4 @@
-import { Box, VStack } from '@stoplight/mosaic';
+import { Box, NodeAnnotation, VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
@@ -8,7 +8,6 @@ import * as React from 'react';
 import { useOptionsCtx } from '../../../context/Options';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
-import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle, SubSectionPanel } from '../Sections';
 import { Body, isBodyEmpty } from './Body';
@@ -118,7 +117,7 @@ const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[] }) => {
       {schemes.map((scheme, i) => (
         <Box pos="relative" key={i}>
           <SecurityPanel scheme={scheme} includeKey={shouldIncludeKey(schemes, scheme.type)} />
-          <ChangeAnnotation change={nodeHasChanged?.({ nodeId: scheme.id })} />
+          <NodeAnnotation change={nodeHasChanged?.({ nodeId: scheme.id })} />
         </Box>
       ))}
     </VStack>

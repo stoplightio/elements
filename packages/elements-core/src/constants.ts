@@ -4,6 +4,7 @@ import {
   faCrosshairs,
   faCube,
   faDatabase,
+  faImage,
   faQuestionCircle,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +22,7 @@ export const NodeTypeColors: Dictionary<string, NodeType> = {
   table_of_contents: '',
   spectral_ruleset: '',
   styleguide: '',
+  image: '',
 };
 
 export const NodeTypePrettyName: Dictionary<string, NodeType> = {
@@ -34,6 +36,7 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   table_of_contents: '',
   spectral_ruleset: '',
   styleguide: '',
+  image: '',
 };
 
 export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
@@ -47,6 +50,7 @@ export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
   table_of_contents: faQuestionCircle,
   spectral_ruleset: faQuestionCircle,
   styleguide: faQuestionCircle,
+  image: faImage,
 };
 
 export const HttpSecuritySchemeColors: Partial<Record<HttpSecurityScheme['type'], string>> = {

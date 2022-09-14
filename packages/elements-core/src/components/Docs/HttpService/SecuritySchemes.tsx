@@ -1,4 +1,4 @@
-import { Box, Panel, PanelProps } from '@stoplight/mosaic';
+import { Box, NodeAnnotation, Panel, PanelProps } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import { sortBy } from 'lodash';
 import React from 'react';
@@ -6,7 +6,6 @@ import React from 'react';
 import { useOptionsCtx } from '../../../context/Options';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
-import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 
 interface SecuritySchemesProps {
@@ -65,7 +64,7 @@ const SecurityScheme: React.FC<
         />
       </Panel.Content>
 
-      <ChangeAnnotation change={hasChanged} />
+      <NodeAnnotation change={hasChanged} />
     </Panel>
   );
 };

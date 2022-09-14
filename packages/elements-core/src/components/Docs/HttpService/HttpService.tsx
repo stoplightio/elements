@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
+import { Box, Flex, Heading, NodeAnnotation, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
@@ -6,7 +6,6 @@ import * as React from 'react';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
-import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
@@ -39,7 +38,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
               <Heading size={1} mb={4} fontWeight="semibold">
                 {data.name}
               </Heading>
-              <ChangeAnnotation change={nameChanged} />
+              <NodeAnnotation change={nameChanged} />
             </Box>
 
             {exportProps && !layoutOptions?.hideExport && <ExportButton {...exportProps} />}
@@ -49,7 +48,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
         {data.version && (
           <Box mb={5} pos="relative">
             <VersionBadge value={data.version} />
-            <ChangeAnnotation change={versionChanged} />
+            <NodeAnnotation change={versionChanged} />
           </Box>
         )}
 
@@ -81,7 +80,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
         {data.description && (
           <Box pos="relative">
             <MarkdownViewer className="sl-my-5" markdown={data.description} />
-            <ChangeAnnotation change={descriptionChanged} />
+            <NodeAnnotation change={descriptionChanged} />
           </Box>
         )}
       </Box>

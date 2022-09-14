@@ -1,5 +1,5 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Box, Flex, Select, VStack } from '@stoplight/mosaic';
+import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
 
@@ -7,7 +7,6 @@ import { useInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
-import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle } from '../Sections';
 
@@ -60,7 +59,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
       {description && (
         <Box pos="relative">
           <MarkdownViewer markdown={description} />
-          <ChangeAnnotation change={descriptionChanged} />
+          <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
 

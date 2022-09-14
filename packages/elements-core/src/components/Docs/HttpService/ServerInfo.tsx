@@ -1,11 +1,10 @@
-import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
+import { Box, Icon, InvertTheme, NodeAnnotation, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useOptionsCtx } from '../../../context/Options';
 import { isProperUrl } from '../../../utils/guards';
 import { getServersToDisplay, IServer } from '../../../utils/http-spec/IServer';
-import { ChangeAnnotation } from '../../ChangeAnnotation';
 
 interface ServerInfoProps {
   servers: IServer[];
@@ -62,7 +61,7 @@ const ServerUrl = ({ id, description, url }: IServer & { marginBottom?: boolean 
         )}
       </Tooltip>
 
-      <ChangeAnnotation change={hasChanged} additionalLeftOffset={16} />
+      <NodeAnnotation change={hasChanged} additionalLeftOffset={16} />
     </Box>
   );
 };

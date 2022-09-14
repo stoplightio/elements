@@ -1,4 +1,4 @@
-import { NodeType } from '@stoplight/types';
+import type { NodeHasChangedFn, NodeType } from '@stoplight/types';
 import { Location } from 'history';
 import * as React from 'react';
 
@@ -13,18 +13,7 @@ import { HttpService } from './HttpService';
 import { ExportButtonProps } from './HttpService/ExportButton';
 import { Model } from './Model';
 
-export type ChangeType = 'added' | 'modified' | 'removed';
-export type NodeHasChangedFn = (props: {
-  nodeId: string;
-  mode?: 'read' | 'write';
-  attr?: string | string[];
-}) => false | { type: ChangeType; selfAffected?: boolean; isBreaking?: boolean; reason?: React.ReactNode };
-
-export type DiffRenderer = {
-  nodeHasChanged?: NodeHasChangedFn;
-};
-
-interface BaseDocsProps extends DiffRenderer {
+interface BaseDocsProps {
   /**
    * CSS class to add to the root container.
    */
@@ -125,6 +114,8 @@ interface BaseDocsProps extends DiffRenderer {
      */
     compact?: number | boolean;
   };
+
+  nodeHasChanged?: NodeHasChangedFn<React.ReactNode>;
 }
 
 export interface DocsProps extends BaseDocsProps {

@@ -1,9 +1,8 @@
-import { Panel } from '@stoplight/mosaic';
+import { NodeAnnotation, Panel } from '@stoplight/mosaic';
 import { IHttpService } from '@stoplight/types';
 import React from 'react';
 
 import { useOptionsCtx } from '../../../context/Options';
-import { ChangeAnnotation } from '../../ChangeAnnotation';
 import { MarkdownViewer } from '../../MarkdownViewer';
 
 interface AdditionalInfoProps {
@@ -41,7 +40,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfServi
         </Panel.Content>
       </Panel.Content>
 
-      <ChangeAnnotation change={hasChanged} />
+      <NodeAnnotation change={hasChanged} />
     </Panel>
   ) : null;
 };
