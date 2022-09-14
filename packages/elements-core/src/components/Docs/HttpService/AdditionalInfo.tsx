@@ -6,7 +6,7 @@ import { useOptionsCtx } from '../../../context/Options';
 import { MarkdownViewer } from '../../MarkdownViewer';
 
 interface AdditionalInfoProps {
-  id?: string;
+  id: string;
   termsOfService?: string;
   contact?: IHttpService['contact'];
   license?: IHttpService['license'];
@@ -14,7 +14,7 @@ interface AdditionalInfoProps {
 
 export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfService, contact, license }) => {
   const { nodeHasChanged } = useOptionsCtx();
-  const hasChanged = nodeHasChanged?.({ nodeId: id || '', attr: ['termsOfService', 'contact', 'license'] });
+  const hasChanged = nodeHasChanged?.({ nodeId: id, attr: ['termsOfService', 'contact', 'license'] });
 
   const contactLink =
     contact?.name && contact?.url

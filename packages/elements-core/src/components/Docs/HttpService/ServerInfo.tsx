@@ -1,10 +1,11 @@
 import { Box, Icon, InvertTheme, NodeAnnotation, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
+import type { IServer } from '@stoplight/types';
 import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useOptionsCtx } from '../../../context/Options';
 import { isProperUrl } from '../../../utils/guards';
-import { getServersToDisplay, IServer } from '../../../utils/http-spec/IServer';
+import { getServersToDisplay } from '../../../utils/http-spec/IServer';
 
 interface ServerInfoProps {
   servers: IServer[];

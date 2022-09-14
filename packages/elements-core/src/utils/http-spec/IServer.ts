@@ -1,9 +1,8 @@
-import { IServer as _IServer } from '@stoplight/types';
+import type { IServer } from '@stoplight/types';
 import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
 
-export type IServer = _IServer;
 type ServerWithOptionalUrl = Omit<IServer, 'url'> & { url: string | null } & { description: string };
 
 function isValidServer(server: ServerWithOptionalUrl): server is ServerWithOptionalUrl & { url: string } {
