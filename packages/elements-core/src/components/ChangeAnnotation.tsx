@@ -12,9 +12,12 @@ const ChangeTypeToColor: Record<ChangeType, BackgroundColorVals> = {
   removed: '#F05151',
 };
 
-export type ChangeAnnotationProps = { change?: ReturnType<NodeHasChangedFn> } & BoxProps<'div'>;
+export type ChangeAnnotationProps = {
+  change?: ReturnType<NodeHasChangedFn>;
+  additionalLeftOffset?: number;
+} & BoxProps<'div'>;
 
-export const ChangeAnnotation = ({ change, ...props }: ChangeAnnotationProps) => {
+export const ChangeAnnotation = ({ change, additionalLeftOffset = 0, ...props }: ChangeAnnotationProps) => {
   if (!change) return null;
 
   const { style = {}, ...rest } = props;
@@ -24,7 +27,7 @@ export const ChangeAnnotation = ({ change, ...props }: ChangeAnnotationProps) =>
 
   const width = 32;
   // allow the default offset to be overriden
-  const left = Number(style.left ?? -28) - width;
+  const left = Number(style.left ?? -28 - additionalLeftOffset) - width;
 
   const elem = (
     <Flex

@@ -2,8 +2,10 @@ import { Box, Icon, InvertTheme, Panel, Text, Tooltip, useClipboard, VStack } fr
 import * as React from 'react';
 
 import { MockingContext } from '../../../containers/MockingProvider';
+import { useOptionsCtx } from '../../../context/Options';
 import { isProperUrl } from '../../../utils/guards';
 import { getServersToDisplay, IServer } from '../../../utils/http-spec/IServer';
+import { ChangeAnnotation } from '../../ChangeAnnotation';
 
 interface ServerInfoProps {
   servers: IServer[];
@@ -25,25 +27,25 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
     <InvertTheme>
       <Panel rounded isCollapsible={false} className="BaseURLContent" w="full">
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
-        <Box overflowX="auto">
-          <Panel.Content w="full" className="sl-flex sl-flex-col">
-            <VStack spacing={1} divider>
-              {serversToDisplay.map((server, index) => (
-                <ServerUrl {...server} key={index} />
-              ))}
-            </VStack>
-          </Panel.Content>
-        </Box>
+        <Panel.Content w="full" className="sl-flex sl-flex-col">
+          <VStack spacing={1} divider>
+            {serversToDisplay.map((server, index) => (
+              <ServerUrl {...server} key={index} />
+            ))}
+          </VStack>
+        </Panel.Content>
       </Panel>
     </InvertTheme>
   );
 };
 
-const ServerUrl = ({ description, url, marginBottom = true }: IServer & { marginBottom?: boolean }) => {
+const ServerUrl = ({ id, description, url }: IServer & { marginBottom?: boolean }) => {
+  const { nodeHasChanged } = useOptionsCtx();
   const { onCopy, hasCopied } = useClipboard(url);
+  const hasChanged = nodeHasChanged?.({ nodeId: id });
 
   return (
-    <Box whitespace="nowrap">
+    <Box whitespace="nowrap" pos="relative">
       <Text pr={2} fontWeight="bold">
         {description}:
       </Text>
@@ -59,6 +61,8 @@ const ServerUrl = ({ description, url, marginBottom = true }: IServer & { margin
           </Box>
         )}
       </Tooltip>
+
+      <ChangeAnnotation change={hasChanged} additionalLeftOffset={16} />
     </Box>
   );
 };
