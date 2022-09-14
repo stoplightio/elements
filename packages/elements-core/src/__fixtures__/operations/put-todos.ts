@@ -361,6 +361,14 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Form,
       },
       {
+        id: '?http-query-pairs?',
+        schema: {
+          type: 'object',
+        },
+        name: 'pairs',
+        style: HttpParamStyles.Form,
+      },
+      {
         id: '?http-query-items?',
         schema: {
           type: 'array',
