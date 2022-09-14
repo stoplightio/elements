@@ -1,4 +1,3 @@
-import { RouterTypeContext } from '@stoplight/elements-core/context/RouterType';
 import { DefaultComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { Route } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { Route } from 'react-router-dom';
 import { LinkHeading } from '../components/LinkHeading';
 import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
 import { ReactRouterMarkdownLink } from '../components/MarkdownViewer/CustomComponents/ReactRouterLink';
+import { RouterTypeContext } from '../context/RouterType';
 import { useRouter } from '../hooks/useRouter';
 import { RoutingProps } from '../types';
 import { getDisplayName } from './utils';
