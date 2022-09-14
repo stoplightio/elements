@@ -1,5 +1,5 @@
 import { isRootNode, isRegularNode, SchemaCombinerName, SchemaNodeKind, isReferenceNode, isMirroredNode, SchemaTree } from '@stoplight/json-schema-tree';
-import { Box, HStack, Flex, Icon, Text, Link, VStack, Select, Menu, Pressable, Provider } from '@stoplight/mosaic';
+import { Box, HStack, Flex, Icon, Text, Link, VStack, Select, Tooltip, Menu, Pressable, Provider } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import { atom, useAtom, Provider as Provider$1 } from 'jotai';
@@ -673,14 +673,35 @@ const SchemaRow = React.memo(({ schemaNode, nestingLevel, pl, parentNodeId, pare
         isCollapsible && isExpanded ? (React.createElement(ChildStack, { schemaNode: schemaNode, childNodes: childNodes, currentNestingLevel: nestingLevel, parentNodeId: nodeId, parentChangeType: parentChangeType ? parentChangeType : hasChanged ? hasChanged === null || hasChanged === void 0 ? void 0 : hasChanged.type : undefined })) : null));
 });
 const ChangeAnnotation = (_a) => {
+    var _b;
     var { change } = _a, props = __rest(_a, ["change"]);
     if (!change)
         return null;
     const { style = {} } = props, rest = __rest(props, ["style"]);
     const selfAffected = change.selfAffected || change.type === 'added' || change.type === 'removed';
-    return (React.createElement(Box, Object.assign({ w: 1.5, pos: "absolute", pinY: "px", bg: selfAffected ? ChangeTypeToColor[change.type] : undefined, rounded: true, style: Object.assign(Object.assign({}, style), { borderWidth: 2, borderColor: selfAffected ? 'transparent' : ChangeTypeToColor[change.type] }) }, rest),
-        React.createElement(Box, { pos: "absolute", right: 3, pinY: true, fontSize: "lg", display: "flex", alignItems: "center" }, change.isBreaking ? (React.createElement(Box, { color: "danger" },
-            React.createElement(Icon, { icon: [selfAffected ? 'fas' : 'far', 'exclamation-circle'] }))) : null)));
+    const width = 32;
+    const left = Number((_b = style.left) !== null && _b !== void 0 ? _b : -28) - width;
+    const elem = (React.createElement(Flex, Object.assign({ pos: "absolute", pinY: "px", alignItems: "center", style: Object.assign(Object.assign({}, style), { left,
+            width }) }, rest),
+        React.createElement(Box, { fontSize: "lg", display: "flex", alignItems: "center", flex: 1 }, change.isBreaking ? (React.createElement(Box, { color: "danger" },
+            React.createElement(Icon, { icon: [selfAffected ? 'fas' : 'far', 'exclamation-circle'] }))) : null),
+        React.createElement(Box, { w: 1.5, h: "full", bg: selfAffected ? ChangeTypeToColor[change.type] : undefined, rounded: true, style: {
+                borderWidth: 2,
+                borderColor: selfAffected ? 'transparent' : ChangeTypeToColor[change.type],
+            } })));
+    if (!change.reason) {
+        return elem;
+    }
+    return (React.createElement(Tooltip, { renderTrigger: elem },
+        React.createElement(ChangeAnnotationTipContents, { change: change })));
+};
+const ChangeAnnotationTipContents = ({ change }) => {
+    if (!change || !change.reason)
+        return null;
+    return (React.createElement(Box, { style: {
+            fontSize: 12,
+            maxWidth: 300,
+        } }, change.reason));
 };
 const Divider = ({ atom }) => {
     const isHovering = useAtomValue(atom);

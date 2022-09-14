@@ -18,6 +18,7 @@ export declare type NodeHasChangedFn = (props: {
     type: ChangeType;
     selfAffected?: boolean;
     isBreaking?: boolean;
+    reason?: React.ReactNode;
 };
 export declare type DiffRenderer = {
     nodeHasChanged?: NodeHasChangedFn;
