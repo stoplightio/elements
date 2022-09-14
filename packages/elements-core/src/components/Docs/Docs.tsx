@@ -18,7 +18,7 @@ export type NodeHasChangedFn = (props: {
   nodeId: string;
   mode?: 'read' | 'write';
   attr?: string | string[];
-}) => false | { type: ChangeType; selfAffected?: boolean; isBreaking?: boolean };
+}) => false | { type: ChangeType; selfAffected?: boolean; isBreaking?: boolean; reason?: React.ReactNode };
 
 export type DiffRenderer = {
   nodeHasChanged?: NodeHasChangedFn;
