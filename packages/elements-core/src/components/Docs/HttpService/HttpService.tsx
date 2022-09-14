@@ -60,9 +60,9 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
           <ServerInfo servers={data.servers ?? []} mockUrl={mocking.mockUrl} />
 
           <Box>
-            {data.securitySchemes?.length && (
+            {data.securitySchemes?.length ? (
               <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />
-            )}
+            ) : null}
           </Box>
 
           <Box>
