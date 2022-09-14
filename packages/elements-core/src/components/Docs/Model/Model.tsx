@@ -75,7 +75,12 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       {isCompact && modelExamples}
 
-      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} nodeHasChanged={nodeHasChanged} />
+      <JsonSchemaViewer
+        resolveRef={resolveRef}
+        schema={getOriginalObject(data)}
+        nodeHasChanged={nodeHasChanged}
+        skipTopLevelDescription
+      />
     </VStack>
   );
 
