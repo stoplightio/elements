@@ -1,6 +1,7 @@
 import { CustomLinkComponent } from '@stoplight/elements-core';
 import { render, screen } from '@testing-library/react';
 import * as React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 
 import nodeContent from '../../__fixtures__/node-content.json';
 import { NodeContent } from './NodeContent';
@@ -11,7 +12,11 @@ const DummyLink: CustomLinkComponent = ({ children, ...propsRest }) => {
 
 describe(NodeContent.name, () => {
   it('renders correctly', async () => {
-    const { unmount } = render(<NodeContent node={nodeContent} Link={DummyLink} />);
+    const { unmount } = render(
+      <MemoryRouter>
+        <NodeContent node={nodeContent} Link={DummyLink} />
+      </MemoryRouter>,
+    );
 
     expect(screen.getByRole('heading', { name: /create todo/i })).toBeInTheDocument();
     expect(
@@ -24,7 +29,11 @@ describe(NodeContent.name, () => {
   });
 
   it('shows TryIt by default', () => {
-    const { unmount } = render(<NodeContent node={nodeContent} Link={DummyLink} />);
+    const { unmount } = render(
+      <MemoryRouter>
+        <NodeContent node={nodeContent} Link={DummyLink} />
+      </MemoryRouter>,
+    );
 
     expect(screen.getByText(/send api request/i)).toBeInTheDocument();
 
@@ -32,7 +41,11 @@ describe(NodeContent.name, () => {
   });
 
   it('can hide TryIt', () => {
-    const { unmount } = render(<NodeContent node={nodeContent} Link={DummyLink} hideTryIt />);
+    const { unmount } = render(
+      <MemoryRouter>
+        <NodeContent node={nodeContent} Link={DummyLink} hideTryIt />
+      </MemoryRouter>,
+    );
 
     expect(screen.queryByText(/send api request/i)).not.toBeInTheDocument();
 

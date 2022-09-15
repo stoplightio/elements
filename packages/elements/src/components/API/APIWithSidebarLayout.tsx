@@ -3,7 +3,6 @@ import {
   Logo,
   ParsedDocs,
   PoweredByLink,
-  RoutingProps,
   SidebarLayout,
   TableOfContents,
 } from '@stoplight/elements-core';
@@ -25,7 +24,6 @@ type SidebarLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
-  router?: RoutingProps['router'];
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -38,7 +36,6 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
-  router,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -48,8 +45,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const location = useLocation();
   const { pathname } = location;
   const isRootPath = !pathname || pathname === '/';
-  let node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
-  const isHashRouter = router === 'hash';
+  const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
 
   const layoutOptions = React.useMemo(
     () => ({ hideTryIt: hideTryIt, hideExport: hideExport || node?.type !== NodeType.HttpService }),
@@ -60,9 +56,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     // Redirect to the first child if node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
 
-    if (isHashRouter) {
-      node = serviceNode;
-    } else if (firstSlug) {
+    if (firstSlug) {
       return <Redirect to={firstSlug} />;
     }
   }
