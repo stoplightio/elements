@@ -1,4 +1,5 @@
-import { isArray, isObject, isPlainObject } from 'lodash';
+import { hasRef } from '@stoplight/json';
+import { isArray, isPlainObject } from 'lodash';
 
 import { defaultResolver, ReferenceResolver } from './ReferenceResolver';
 
@@ -80,4 +81,4 @@ export const getOriginalObject = (resolvedObject: object): object => {
   return resolvedObject[originalObjectSymbol] || resolvedObject;
 };
 
-const isReference = (value: unknown): value is { $ref: string } => isObject(value) && typeof value['$ref'] === 'string';
+export const isReference = hasRef;

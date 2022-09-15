@@ -6,7 +6,7 @@ export type ReferenceInfo = {
   pointer: string | null;
 };
 
-export type ReferenceResolver = (ref: ReferenceInfo, propertyPath: string[] | null, currentObject: object) => any;
+export type ReferenceResolver = (ref: ReferenceInfo, propertyPath: string[] | null, currentObject?: object) => any;
 
 export const defaultResolver =
   (contextObject: object): ReferenceResolver =>

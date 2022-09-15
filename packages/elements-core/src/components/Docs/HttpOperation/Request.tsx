@@ -1,10 +1,11 @@
-import { VStack } from '@stoplight/mosaic';
+import { Box, NodeAnnotation, VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { flatten } from 'lodash';
 import * as React from 'react';
 
+import { useOptionsCtx } from '../../../context/Options';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -49,13 +50,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     <VStack spacing={8}>
       <SectionTitle title="Request" />
 
-      {securitySchemes.length > 0 && (
-        <VStack spacing={3}>
-          {securitySchemes.map((scheme, i) => (
-            <SecurityPanel key={i} scheme={scheme} includeKey={shouldIncludeKey(securitySchemes, scheme.type)} />
-          ))}
-        </VStack>
-      )}
+      <SecuritySchemes schemes={securitySchemes} />
 
       {pathParams.length > 0 && (
         <VStack spacing={5}>
@@ -107,5 +102,24 @@ const SecurityPanel: React.FC<{ scheme: HttpSecurityScheme; includeKey: boolean 
         markdown={`${scheme.description || ''}\n\n` + getDefaultDescription(scheme)}
       />
     </SubSectionPanel>
+  );
+};
+
+const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[] }) => {
+  const { nodeHasChanged } = useOptionsCtx();
+
+  if (!schemes.length) {
+    return null;
+  }
+
+  return (
+    <VStack spacing={3}>
+      {schemes.map((scheme, i) => (
+        <Box pos="relative" key={i}>
+          <SecurityPanel scheme={scheme} includeKey={shouldIncludeKey(schemes, scheme.type)} />
+          <NodeAnnotation change={nodeHasChanged?.({ nodeId: scheme.id })} />
+        </Box>
+      ))}
+    </VStack>
   );
 };

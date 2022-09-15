@@ -21,6 +21,7 @@ const parserMap: Record<NodeType, Parser> = {
   [NodeType.TableOfContents]: parseUnknown,
   [NodeType.SpectralRuleset]: parseUnknown,
   [NodeType.Styleguide]: parseUnknown,
+  [NodeType.Image]: parseUnknown,
   [NodeType.Unknown]: parseUnknown,
 };
 
