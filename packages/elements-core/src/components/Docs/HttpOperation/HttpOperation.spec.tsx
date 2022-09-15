@@ -2,6 +2,7 @@ import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { act, render } from '@testing-library/react';
 import * as React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import requestBody from '../../../__fixtures__/operations/request-body';
@@ -10,7 +11,13 @@ import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
 import { chooseOption } from '../../../utils/tests/chooseOption';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
-const HttpOperation = withMosaicProvider(withPersistenceBoundary(HttpOperationWithoutPersistence));
+const _HttpOperation = withMosaicProvider(withPersistenceBoundary(HttpOperationWithoutPersistence));
+
+const HttpOperation: typeof _HttpOperation = props => (
+  <MemoryRouter>
+    <_HttpOperation {...props} />
+  </MemoryRouter>
+);
 
 /*
 
