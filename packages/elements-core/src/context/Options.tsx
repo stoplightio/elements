@@ -6,7 +6,7 @@ const DEFAULT_CONTEXT: ElementsOptionsContextProps = {};
 
 export type ElementsOptionsContextProps = Pick<DocsProps, 'nodeHasChanged'>;
 
-export const ElementsOptionsContext = React.createContext<ElementsOptionsContextProps | undefined>(undefined);
+export const ElementsOptionsContext = React.createContext<ElementsOptionsContextProps>(DEFAULT_CONTEXT);
 
 export const useOptionsCtx = () => {
   return React.useContext(ElementsOptionsContext) || DEFAULT_CONTEXT;

@@ -39,7 +39,7 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   );
 };
 
-const ServerUrl = ({ id, description, url }: IServer & { marginBottom?: boolean }) => {
+const ServerUrl = ({ id, description, url }: IServer) => {
   const { nodeHasChanged } = useOptionsCtx();
   const { onCopy, hasCopied } = useClipboard(url);
   const hasChanged = nodeHasChanged?.({ nodeId: id });
