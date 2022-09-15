@@ -1,7 +1,7 @@
-import { Dictionary, HttpParamStyles, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { Dictionary, HttpParamStyles, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 
-import { getServerUrlWithDefaultValues, IServer } from '../../utils/http-spec/IServer';
+import { getServerUrlWithDefaultValues } from '../../utils/http-spec/IServer';
 import {
   filterOutAuthorizationParams,
   HttpSecuritySchemeWithValues,

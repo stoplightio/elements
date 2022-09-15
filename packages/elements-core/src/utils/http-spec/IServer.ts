@@ -1,9 +1,8 @@
-import { IServer as _IServer } from '@stoplight/types';
+import type { IServer } from '@stoplight/types';
 import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
 
-export type IServer = Omit<_IServer, 'id'>;
 type ServerWithOptionalUrl = Omit<IServer, 'url'> & { url: string | null } & { description: string };
 
 function isValidServer(server: ServerWithOptionalUrl): server is ServerWithOptionalUrl & { url: string } {
@@ -25,6 +24,7 @@ export const getServersToDisplay = (originalServers: IServer[], mockUrl?: string
 
   if (mockUrl) {
     servers.push({
+      id: 'mock',
       description: 'Mock Server',
       url: mockUrl,
     });

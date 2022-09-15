@@ -1,11 +1,11 @@
 import { Box, Button, HStack, Icon, Panel, useThemeIsDark } from '@stoplight/mosaic';
-import { IHttpOperation } from '@stoplight/types';
+import type { IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
-import { getServersToDisplay, IServer } from '../../utils/http-spec/IServer';
+import { getServersToDisplay } from '../../utils/http-spec/IServer';
 import { RequestSamples } from '../RequestSamples';
 import { chosenServerAtom } from '.';
 import { TryItAuth } from './Auth/Auth';

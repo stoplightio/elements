@@ -1,9 +1,10 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Flex, Select, VStack } from '@stoplight/mosaic';
+import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
 
 import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -25,6 +26,7 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
 export const Body = ({ body, onChange }: BodyProps) => {
   const refResolver = useInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
+  const { nodeHasChanged } = useOptionsCtx();
 
   React.useEffect(() => {
     onChange(chosenContent);
@@ -36,6 +38,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
 
   const { contents = [], description } = body;
   const schema = contents[chosenContent]?.schema;
+  const descriptionChanged = nodeHasChanged?.({ nodeId: body.id, attr: 'description' });
 
   return (
     <VStack spacing={6}>
@@ -53,7 +56,12 @@ export const Body = ({ body, onChange }: BodyProps) => {
         )}
       </SectionSubtitle>
 
-      {description && <MarkdownViewer markdown={description} />}
+      {description && (
+        <Box pos="relative">
+          <MarkdownViewer markdown={description} />
+          <NodeAnnotation change={descriptionChanged} />
+        </Box>
+      )}
 
       {isJSONSchema(schema) && (
         <JsonSchemaViewer
@@ -61,6 +69,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
           schema={getOriginalObject(schema)}
           viewMode="write"
           renderRootTreeLines
+          nodeHasChanged={nodeHasChanged}
         />
       )}
     </VStack>

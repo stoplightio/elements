@@ -4,6 +4,8 @@ import type { JSONSchema7Object } from 'json-schema';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
+import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { isNodeExample } from '../../../utils/http-spec/examples';
 
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';
@@ -31,6 +33,9 @@ const defaultStyle = {
 } as const;
 
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
+  const { nodeHasChanged } = useOptionsCtx();
+  const refResolver = useInlineRefResolver();
+
   const schema = React.useMemo(
     () => httpOperationParamsToSchema({ parameters, parameterType }),
     [parameters, parameterType],
@@ -38,7 +43,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
 
   if (!schema) return null;
 
-  return <JsonSchemaViewer schema={schema} disableCrumbs />;
+  return <JsonSchemaViewer resolveRef={refResolver} schema={schema} disableCrumbs nodeHasChanged={nodeHasChanged} />;
 };
 Parameters.displayName = 'HttpOperation.Parameters';
 
@@ -53,8 +58,6 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
   const sortedParams = sortBy(parameters, ['required', 'name']);
 
   for (const p of sortedParams) {
-    if (!p.schema) continue;
-
     const { name, description, required, deprecated, examples, style } = p;
 
     const paramExamples =
@@ -69,17 +72,23 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
     const schemaExamplesArray = Array.isArray(schemaExamples) ? schemaExamples : [];
 
     // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
-    const paramDescription = description || p.schema.description;
+    const paramDescription = description || p.schema?.description;
 
     const paramDeprecated = deprecated || (p.schema as any).deprecated;
     const paramStyle = style && defaultStyle[parameterType] !== style ? readableStyles[style] || style : undefined;
 
     schema.properties![p.name] = {
-      ...p.schema,
+      ...(p.schema || {}),
       description: paramDescription,
       examples: [...paramExamples, ...schemaExamplesArray],
       deprecated: paramDeprecated,
       style: paramStyle,
+
+      // the schema is technically the param, so set the stored id to the param's id
+      'x-stoplight': {
+        ...(p.schema?.['x-stoplight'] || {}),
+        id: p.id,
+      },
     };
 
     if (required) {

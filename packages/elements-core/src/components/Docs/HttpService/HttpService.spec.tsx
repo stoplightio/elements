@@ -199,7 +199,9 @@ describe('HttpService', () => {
         name: 'MIT',
         url: 'https://opensource.org/licenses/MIT',
       };
-      render(<AdditionalInfo contact={contact} license={license} termsOfService="https://stoplight.io/terms/" />);
+      render(
+        <AdditionalInfo id="a" contact={contact} license={license} termsOfService="https://stoplight.io/terms/" />,
+      );
 
       const title = screen.getByRole('heading', { name: 'Additional Information' });
 
@@ -207,7 +209,7 @@ describe('HttpService', () => {
     });
 
     it('should not render if contact, license, and terms of service do not exist', () => {
-      render(<AdditionalInfo />);
+      render(<AdditionalInfo id="a" />);
 
       const title = screen.queryByRole('heading', { name: 'Additional Information' });
       expect(title).not.toBeInTheDocument();
@@ -218,7 +220,7 @@ describe('HttpService', () => {
         name: 'Developer',
       };
 
-      render(<AdditionalInfo contact={contact} />);
+      render(<AdditionalInfo id="a" contact={contact} />);
 
       const title = screen.queryByRole('heading', { name: 'Additional Information' });
       expect(title).not.toBeInTheDocument();
