@@ -14,7 +14,7 @@ import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
-import { DeprecatedBadge, InternalBadge } from "../HttpOperation/Badges";
+import { DeprecatedBadge, InternalBadge } from '../HttpOperation/Badges';
 import { ExportButton } from '../HttpService/ExportButton';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 
