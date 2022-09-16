@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
+import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
@@ -57,6 +58,12 @@ OpenApi3Schema.args = {
   apiDescriptionDocument: todosApiBundled,
 };
 OpenApi3Schema.storyName = 'Open Api 3.0 Schema';
+
+export const BadgesForSchema = Template.bind({});
+BadgesForSchema.args = {
+  apiDescriptionDocument: badgesForSchema,
+};
+BadgesForSchema.storyName = 'Badges For Schema';
 
 export const StackedLayout = Template.bind({});
 StackedLayout.args = {

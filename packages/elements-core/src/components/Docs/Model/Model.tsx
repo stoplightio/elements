@@ -14,7 +14,7 @@ import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
-import { InternalBadge } from '../HttpOperation/Badges';
+import { DeprecatedBadge, InternalBadge } from "../HttpOperation/Badges";
 import { ExportButton } from '../HttpService/ExportButton';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 
@@ -35,13 +35,14 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const nodeId = data?.['x-stoplight']?.id;
   const title = data.title ?? nodeTitle;
+  const isDeprecated = !!data['deprecated'];
   const isInternal = !!data['x-internal'];
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
   const titleChanged = nodeHasChanged?.({ nodeId, attr: ['title', 'internal'] });
-  const header = (shouldDisplayHeader || isInternal) && (
+  const header = (shouldDisplayHeader || isInternal || isDeprecated) && (
     <Flex justifyContent="between" alignItems="center">
       <Box pos="relative">
         <HStack spacing={5}>
@@ -51,7 +52,10 @@ const ModelComponent: React.FC<ModelProps> = ({
             </Heading>
           )}
 
-          <HStack spacing={2}>{isInternal && <InternalBadge />}</HStack>
+          <HStack spacing={2}>
+            {isDeprecated && <DeprecatedBadge />}
+            {isInternal && <InternalBadge />}
+          </HStack>
         </HStack>
 
         <NodeAnnotation change={titleChanged} />
