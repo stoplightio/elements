@@ -9,6 +9,7 @@ import * as React from 'react';
 
 interface Options {
   baseUrl?: string;
+  withCredentials?: boolean;
 }
 
 /**
@@ -18,6 +19,7 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
   const [bundledData, setBundledData] = React.useState(document);
 
   const baseUrl = options?.baseUrl;
+  const withCredentials = options?.withCredentials;
 
   React.useEffect(() => {
     if (!isObject(document)) {
@@ -26,7 +28,7 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
     }
 
     let isMounted = true;
-    doBundle(document, baseUrl)
+    doBundle(document, baseUrl, withCredentials)
       .then(res => {
         if (isMounted) {
           setBundledData({ ...res }); // this hmm....library mutates document so a shallow copy is required to force a rerender in all cases
@@ -45,13 +47,18 @@ export function useBundleRefsIntoDocument(document: unknown, options?: Options) 
     return () => {
       isMounted = false;
     };
-  }, [document, baseUrl]);
+  }, [document, baseUrl, withCredentials]);
 
   return bundledData;
 }
 
-const commonBundleOptions = { continueOnError: true };
-const doBundle = (data: object, baseUrl?: string) => {
+const doBundle = (data: object, baseUrl?: string, withCredentials?: boolean) => {
+  const commonBundleOptions = {
+    continueOnError: true,
+    resolve: {
+      http: <$RefParser.HTTPResolverOptions>{ withCredentials },
+    },
+  };
   if (!baseUrl) {
     return $RefParser.bundle(data, commonBundleOptions);
   } else {
