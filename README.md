@@ -111,8 +111,8 @@ Submit your ideas for new functionality on the [Stoplight Roadmap](https://roadm
 
 ## ⚙️ Integrations
 
-- [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Free visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
-- [Stoplight Platform](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
+- [Stoplight Studio](https://stoplight.io/studio/?utm_source=github.com&utm_medium=referral&utm_campaign=github_repo_elements) - Free visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
+- [Stoplight Platform](https://stoplight.io/?utm_source=github.com&utm_medium=referral&utm_campaign=github_repo_elements) - Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
 - [LaravelPHP Elements](https://packagist.org/packages/juststeveking/laravel-stoplight-elements) - A simple API documentation package for Laravel using OpenAPI and Stoplight Elements.
 
 ## 🏁 Help Others Utilize Elements
