@@ -83,11 +83,19 @@ describe('Parameter', () => {
   });
 
   it('should render scheme-less params', async () => {
-    render(<Parameters parameters={[{ ...data, name: 'param' }, omit(data, 'schema')]} parameterType="query" />);
+    render(
+      <Parameters
+        parameters={[
+          { ...data, name: 'param' },
+          omit({ ...data, name: 'param 2', description: 'a param 2 description' }, 'schema'),
+          omit({ ...data, name: 'param 3', description: 'a param 3 description', deprecated: false }, 'schema'),
+        ]}
+        parameterType="query"
+      />,
+    );
 
-    expect(await screen.findByText(/Allowed values:/)).toBeInTheDocument();
-    expect(await screen.findByText(/Default:/)).toBeInTheDocument();
-    expect(await screen.findAllByText(/foo/)).toHaveLength(2);
-    expect(await screen.findByText(/bar/)).toBeInTheDocument();
+    expect(await screen.findByText(/a parameter description/)).toBeInTheDocument();
+    expect(await screen.findByText(/a param 2 description/)).toBeInTheDocument();
+    expect(await screen.findByText(/a param 3 description/)).toBeInTheDocument();
   });
 });
