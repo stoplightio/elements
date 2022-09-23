@@ -2,6 +2,7 @@ import { parse } from '@stoplight/yaml';
 import { Story } from '@storybook/react';
 import * as React from 'react';
 
+import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
 import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
@@ -57,6 +58,12 @@ OpenApi3Schema.args = {
   apiDescriptionDocument: todosApiBundled,
 };
 OpenApi3Schema.storyName = 'Open Api 3.0 Schema';
+
+export const BadgesForSchema = Template.bind({});
+BadgesForSchema.args = {
+  apiDescriptionDocument: badgesForSchema,
+};
+BadgesForSchema.storyName = 'Badges For Schema';
 
 export const StackedLayout = Template.bind({});
 StackedLayout.args = {
