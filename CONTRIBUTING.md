@@ -29,7 +29,7 @@ Elements is an open-source project, and we love contributions. If you're familia
 
 Before you start development, you have to install elements and its dependencies.
 
-Make sure you have [node](https://nodejs.org/en/) installed. We are predominantly using version 12. If you experience any issues, make sure to have this version installed. We recommened [nvm](https://github.com/nvm-sh/nvm) for managing different versions of node on your computer.
+Make sure you have [Node.js](https://nodejs.org/en/) version 16 or higher installed. We recommend [nvm](https://github.com/nvm-sh/nvm) for managing different versions of Node.js on your computer.
 
 For dependencies, we are using [yarn](https://yarnpkg.com/). Install it, following the [guideline](https://yarnpkg.com/getting-started/install).
 
