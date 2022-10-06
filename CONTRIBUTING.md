@@ -83,7 +83,7 @@ In order to achieve good quality tests, **please follow the following principles
 In this case, still try to follow the principles above as much as practical.
 - Use **Jest/JSDOM testing wherever suitable**. Cypress-based tests should be reserved for high-level integration tests, such as:
     - Basic sanity checks to make sure that *Elements* builds and loads correctly in a certain environment.
-    - Making sure that the routers/navigation of the external framework plays nicely with our internal router.
+    - Make sure the routers/navigation of the external framework play nicely with our internal router.
 
 
 ### Unit tests
@@ -229,11 +229,11 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
 
 ## Versioning Guidelines
 
-If you did changes only in the `elements` package, it's okay to release only the `elements` package.
+If you made changes only in the `elements` package, it's okay to release only the `elements` package.
 
-If you did changes only in the `elements-dev-portal` package, it's okay to release only the `elements-dev-portal` package.
+If you made changes only in the `elements-dev-portal` package, it's okay to release only the `elements-dev-portal` package.
 
-If you did changes in `elements-core`, this means that all 3 packages should be released.
+If you made changes in `elements-core`, this means that all 3 packages should be released.
 
 If it's difficult to figure out what changes happened since the last release, there is never any harm in releasing all the packages. This will not cause any issues, meanwhile - for example - releasing only `elements` but not releasing `elements-core` can cause serious errors.
 
