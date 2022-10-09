@@ -52,13 +52,15 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
   return (
     <VStack spacing={8} as={Tabs} selectedId={activeResponseId} onChange={setActiveResponseId} appearance="pill">
       <SectionTitle title="Responses">
-        <TabList density="compact">
-          {responses.map(({ code }) => (
-            <Tab key={code} id={code} intent={codeToIntentVal(code)}>
-              {code}
-            </Tab>
-          ))}
-        </TabList>
+        <div className="sl-responses-tab-list">
+          <TabList density="compact">
+            {responses.map(({ code }) => (
+              <Tab key={code} id={code} intent={codeToIntentVal(code)}>
+                {code}
+              </Tab>
+            ))}
+          </TabList>
+        </div>
       </SectionTitle>
 
       <TabPanels p={0}>

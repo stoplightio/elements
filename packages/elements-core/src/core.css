@@ -85,3 +85,10 @@
   font-size: 12px;
   line-height: 1.5em;
 }
+
+/* Responses */
+
+.sl-responses-tab-list > div {
+  flex-wrap: wrap;
+  gap: 4px;
+}
