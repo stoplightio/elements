@@ -28,7 +28,7 @@ import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { SectionSubtitle, SectionTitle } from '../Sections';
+import { SectionSubtitle, SectionTitle, SubSectionPanel } from '../Sections';
 import { Parameters } from './Parameters';
 
 interface ResponseProps {
@@ -209,14 +209,18 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
           </SectionSubtitle>
 
           {schema && (
-            <JsonSchemaViewer
-              schema={getOriginalObject(schema)}
-              resolveRef={refResolver}
-              viewMode="read"
-              parentCrumbs={['responses', response.code]}
-              renderRootTreeLines
-              nodeHasChanged={nodeHasChanged}
-            />
+            <SubSectionPanel title={(schema.title ?? '') + ' Schema'} defaultIsOpen={false} hasContent>
+              <Box pl={3} pr={3} pt={5}>
+                <JsonSchemaViewer
+                  schema={getOriginalObject(schema)}
+                  resolveRef={refResolver}
+                  viewMode="read"
+                  parentCrumbs={['responses', response.code]}
+                  renderRootTreeLines
+                  nodeHasChanged={nodeHasChanged}
+                />
+              </Box>
+            </SubSectionPanel>
           )}
         </>
       )}
