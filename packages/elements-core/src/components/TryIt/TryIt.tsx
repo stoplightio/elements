@@ -206,7 +206,7 @@ export const TryIt: React.FC<TryItProps> = ({
         const bodyText = type !== 'image' ? await response.text() : undefined;
         const blob = type === 'image' ? await response.blob() : undefined;
 
-        setResponse(undefined);
+        setResponse(undefined); // setting undefined to handle rendering large responses
         setResponse({
           status: response.status,
           bodyText,
