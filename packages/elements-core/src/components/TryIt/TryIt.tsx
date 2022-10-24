@@ -195,7 +195,6 @@ export const TryIt: React.FC<TryItProps> = ({
       });
       let response: Response | undefined;
       try {
-        setResponse(undefined);
         response = await fetch(...request);
       } catch (e: any) {
         setResponse({ error: new NetworkError(e.message) });
@@ -204,10 +203,14 @@ export const TryIt: React.FC<TryItProps> = ({
         const contentType = response.headers.get('Content-Type');
         const type = contentType ? getResponseType(contentType) : undefined;
 
+        const bodyText = type !== 'image' ? await response.text() : undefined;
+        const blob = type === 'image' ? await response.blob() : undefined;
+
+        setResponse(undefined);
         setResponse({
           status: response.status,
-          bodyText: type !== 'image' ? await response.text() : undefined,
-          blob: type === 'image' ? await response.blob() : undefined,
+          bodyText,
+          blob,
           contentType,
         });
       }
