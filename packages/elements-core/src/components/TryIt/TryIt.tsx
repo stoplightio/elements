@@ -193,20 +193,21 @@ export const TryIt: React.FC<TryItProps> = ({
         credentials: tryItCredentialsPolicy,
         corsProxy,
       });
-      let response: Response | undefined;
+      let response1: Response | undefined;
       try {
-        response = await fetch(...request);
+        setResponse(response);
+        response1 = await fetch(...request);
       } catch (e: any) {
         setResponse({ error: new NetworkError(e.message) });
       }
-      if (response) {
-        const contentType = response.headers.get('Content-Type');
+      if (response1) {
+        const contentType = response1.headers.get('Content-Type');
         const type = contentType ? getResponseType(contentType) : undefined;
 
         setResponse({
-          status: response.status,
-          bodyText: type !== 'image' ? await response.text() : undefined,
-          blob: type === 'image' ? await response.blob() : undefined,
+          status: response1.status,
+          bodyText: type !== 'image' ? await response1.text() : undefined,
+          blob: type === 'image' ? await response1.blob() : undefined,
           contentType,
         });
       }
