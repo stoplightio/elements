@@ -1,6 +1,6 @@
-import { useResizer } from '@stoplight/elements-core/hooks/useResizer';
 import { Box, Flex } from '@stoplight/mosaic';
 import * as React from 'react';
+import { useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 type SidebarLayoutProps = {
@@ -29,7 +29,7 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
       <Flex ref={ref} className="sl-elements-api" pin h="full">
         <Flex
           ref={sidebarRef}
-          direction={'row'}
+          direction="row"
           onMouseDown={(e: { preventDefault: () => void }) => e.preventDefault()}
           style={{ maxWidth: '50%' }}
         >
@@ -61,3 +61,41 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
     );
   },
 );
+
+type SidebarRef = React.Ref<HTMLDivElement>;
+type SidebarWidth = number;
+type StartResizingFn = () => void;
+
+function useResizer(sidebarWidth: number): [SidebarRef, SidebarWidth, StartResizingFn] {
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const [isResizing, setIsResizing] = useState(false);
+  const [currentSidebarWidth, setCurrentSidebarWidth] = useState(sidebarWidth);
+
+  const startResizing = React.useCallback(() => {
+    setIsResizing(true);
+  }, []);
+
+  const stopResizing = React.useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const resize = React.useCallback(
+    mouseMoveEvent => {
+      if (isResizing) {
+        setCurrentSidebarWidth(mouseMoveEvent.clientX - sidebarRef.current!.getBoundingClientRect().left);
+      }
+    },
+    [isResizing],
+  );
+
+  React.useEffect(() => {
+    window.addEventListener('mousemove', resize);
+    window.addEventListener('mouseup', stopResizing);
+    return () => {
+      window.removeEventListener('mousemove', resize);
+      window.removeEventListener('mouseup', stopResizing);
+    };
+  }, [resize, stopResizing]);
+
+  return [sidebarRef, currentSidebarWidth, startResizing];
+}
