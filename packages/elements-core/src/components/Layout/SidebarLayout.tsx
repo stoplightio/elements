@@ -1,6 +1,5 @@
 import { Box, Flex } from '@stoplight/mosaic';
 import * as React from 'react';
-import { useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 type SidebarLayoutProps = {
@@ -67,9 +66,9 @@ type SidebarWidth = number;
 type StartResizingFn = () => void;
 
 function useResizer(sidebarWidth: number): [SidebarRef, SidebarWidth, StartResizingFn] {
-  const sidebarRef = useRef<HTMLDivElement | null>(null);
-  const [isResizing, setIsResizing] = useState(false);
-  const [currentSidebarWidth, setCurrentSidebarWidth] = useState(sidebarWidth);
+  const sidebarRef = React.useRef<HTMLDivElement | null>(null);
+  const [isResizing, setIsResizing] = React.useState(false);
+  const [currentSidebarWidth, setCurrentSidebarWidth] = React.useState(sidebarWidth);
 
   const startResizing = React.useCallback(() => {
     setIsResizing(true);
