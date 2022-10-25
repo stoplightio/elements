@@ -85,3 +85,15 @@
   font-size: 12px;
   line-height: 1.5em;
 }
+
+/* Sidebar */
+
+.sl-sidebar-resizer {
+  cursor: col-resize;
+  width: 1px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 6px;
+  justify-self: flex-end;
+}
+
