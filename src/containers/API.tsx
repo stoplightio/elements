@@ -19,6 +19,7 @@ import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
 import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
 import { transformOasToServiceNode } from '../utils/oas';
+// import {InlineSearch} from "../components/InlineSearch";
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 

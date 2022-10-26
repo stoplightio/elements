@@ -10,9 +10,11 @@ import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 
-import { ServiceNode } from '../../utils/oas/types';
+import { ServiceChildNode, ServiceNode } from '../../utils/oas/types';
 import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
-import {TableOfContents} from "../MosaicTableOfContents";
+import { TableOfContents } from "../MosaicTableOfContents";
+import { SearchBox } from "../SearchBox";
+import {indexDocument} from "../../utils/flex-search";
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
@@ -26,6 +28,15 @@ type SidebarLayoutProps = {
   tryItCorsProxy?: string;
 };
 
+const indexServiceNode = (sNode: ServiceNode) => {
+  let name = sNode.name;
+  // index all children node
+  sNode.children.forEach((node: ServiceChildNode) => indexDocument(name, node));
+  sNode.customData?.customServiceNodes?.forEach((node: ServiceChildNode) => {
+    indexDocument(name, node)
+  });
+}
+
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
@@ -38,27 +49,22 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCorsProxy,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    indexServiceNode(serviceNode);
+  }, [serviceNode])
   var tree = React.useMemo(() => {
     const tree = computeAPITree(serviceNode, { hideSchemas, hideInternal });
-
-    // console.log('TableOfContents oldTree=', tree);
 
     var newToc: any[] = [];
     newToc.push(...serviceNode.customData.tocTopLevel);
     newToc.push(...serviceNode.customData.tocPredefinedGroup);
 
     serviceNode.customData.tocGroupMapping.forEach((group: any) => {
-      // console.log('group ->', group);
-      // 1. Select the group
       var parent = newToc.find(item => item.title === group.parent);
       if (!parent) {
         return;
       }
-      // console.log('parent ->', parent);
-
-      // 2. search all to find matched child group then pop-push to the parent
       var childs = tree.filter(item => group.childs.indexOf(item.title) != -1);
-      // console.log('childs ->', group.childs, childs);
       parent.items.push(...childs);
     });
 
@@ -70,10 +76,8 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
       items: [],
     };
     newToc.push(schemaNode);
-    // @ts-ignore
     schemaNode.items.push(...tree.filter((item: any) => item.slug?.startsWith('/schemas/')));
 
-    // console.log('TableOfContents newToc=', newToc);
     return newToc;
   }, [serviceNode, hideSchemas, hideInternal]);
 
@@ -116,6 +120,9 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
         )}
         <Heading size={4}>{serviceNode.name}</Heading>
+      </Flex>
+      <Flex id="flex-search" mr={4} mb={1} alignItems="center">
+        <SearchBox apiDocName={serviceNode.name} />
       </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />

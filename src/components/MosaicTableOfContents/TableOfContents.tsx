@@ -1,8 +1,8 @@
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import { useFirstRender } from '@stoplight/elements-core/hooks/useFirstRender';
-import { VersionBadge } from '@stoplight/elements-core/components/Docs/HttpOperation/Badges';
+import { useFirstRender } from '../../hooks/useFirstRender';
+import { VersionBadge } from '../Docs/HttpOperation/Badges';
 import { NODE_META_COLOR, NODE_TYPE_ICON_COLOR, NODE_TYPE_META_ICON, NODE_TYPE_TITLE_ICON } from './constants';
 import {
   CustomLinkComponent,
@@ -242,10 +242,11 @@ const Item = React.memo<{
       userSelect="none"
       onClick={onClick}
       title={title}
+      className="kc-api-group-item"
     >
       {icon}
 
-      <Box alignItems="center" flex={1} mr={meta ? 1.5 : undefined} ml={icon && 1.5} textOverflow="truncate">
+      <Box alignItems="center" flex={1} mr={meta ? 1.5 : undefined} ml={icon && 1.5} textOverflow="truncate" className="kc-api-group-item-title">
         {title}
       </Box>
 
@@ -282,6 +283,11 @@ const Node = React.memo<{
       onClick(e, isActive ? undefined : true);
     }
   };
+  var className = 'ElementsTableOfContentsItem';
+  if (!!item['items']) {
+    // console.log('Node is NODE GROUP', item.title);
+    className += ' kc-api-group-node';
+  }
 
   return (
     <Box
@@ -289,7 +295,7 @@ const Node = React.memo<{
       to={item.slug}
       display="block"
       textDecoration="no-underline"
-      className="ElementsTableOfContentsItem"
+      className={className}
     >
       <Item
         id={getHtmlIdFromItemId(item.slug || item.id)}

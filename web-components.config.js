@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -11,7 +12,7 @@ module.exports = {
         fallback: {
             stream: false,
             path: false,
-            process: require.resolve('process/browser'),
+            process: require.resolve('process/browser')
         },
     },
     performance: {
@@ -45,5 +46,18 @@ module.exports = {
     ],
     optimization: {
         minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    module: true,
+                    compress: {
+                        join_vars: false // If true, this gives an error during runtime
+                    },
+                    mangle: {
+                        keep_classnames: true // If false, Shows "unknown target" error during runtime
+                    }
+                }
+            })
+        ]
     },
 };
