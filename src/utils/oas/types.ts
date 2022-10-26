@@ -1,3 +1,4 @@
+import { IMarkdownViewerProps } from '@stoplight/markdown-viewer';
 import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 
@@ -25,7 +26,15 @@ type Node<T, D> = {
   tags: string[];
 };
 
-export type ServiceNode = Node<NodeType.HttpService, IHttpService> & { children: ServiceChildNode[] };
-export type ServiceChildNode = OperationNode | SchemaNode;
+export type ServiceNode = Node<NodeType.HttpService, IHttpService> & {
+  children: ServiceChildNode[];
+
+  // Custom data for other TOC
+  customData?: any;
+};
+export type ServiceChildNode = OperationNode | SchemaNode | ArticleNode;
 export type OperationNode = Node<NodeType.HttpOperation, IHttpOperation>;
 export type SchemaNode = Node<NodeType.Model, JSONSchema7>;
+
+// TODO: This needed to be mapped with "ParsedNode" type
+export type ArticleNode = Node<NodeType.Article, IMarkdownViewerProps['markdown']>;

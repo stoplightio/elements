@@ -4,7 +4,6 @@ import {
   ParsedDocs,
   PoweredByLink,
   SidebarLayout,
-  TableOfContents,
 } from '@stoplight/elements-core';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
@@ -13,6 +12,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
 import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
+import {TableOfContents} from "../MosaicTableOfContents";
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
@@ -38,10 +38,46 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCorsProxy,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
-  const tree = React.useMemo(
-    () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
-    [serviceNode, hideSchemas, hideInternal],
-  );
+  var tree = React.useMemo(() => {
+    const tree = computeAPITree(serviceNode, { hideSchemas, hideInternal });
+
+    // console.log('TableOfContents oldTree=', tree);
+
+    var newToc: any[] = [];
+    newToc.push(...serviceNode.customData.tocTopLevel);
+    newToc.push(...serviceNode.customData.tocPredefinedGroup);
+
+    serviceNode.customData.tocGroupMapping.forEach((group: any) => {
+      // console.log('group ->', group);
+      // 1. Select the group
+      var parent = newToc.find(item => item.title === group.parent);
+      if (!parent) {
+        return;
+      }
+      // console.log('parent ->', parent);
+
+      // 2. search all to find matched child group then pop-push to the parent
+      var childs = tree.filter(item => group.childs.indexOf(item.title) != -1);
+      // console.log('childs ->', group.childs, childs);
+      parent.items.push(...childs);
+    });
+
+    newToc.push(...serviceNode.customData.tocLastLevel);
+
+    // Put Schema to the end
+    const schemaNode = serviceNode.customData.tocSchemaNode || {
+      title: 'Schemas',
+      items: [],
+    };
+    newToc.push(schemaNode);
+    // @ts-ignore
+    schemaNode.items.push(...tree.filter((item: any) => item.slug?.startsWith('/schemas/')));
+
+    // console.log('TableOfContents newToc=', newToc);
+    return newToc;
+  }, [serviceNode, hideSchemas, hideInternal]);
+
+  // TODOL force to use new tree
   const location = useLocation();
   const { pathname } = location;
   const isRootPath = !pathname || pathname === '/';

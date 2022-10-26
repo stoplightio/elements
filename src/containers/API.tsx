@@ -52,6 +52,9 @@ export interface CommonAPIProps extends RoutingProps {
   layout?: 'sidebar' | 'stacked';
   logo?: string;
 
+  // Customized table of content
+  customConfig?: any;
+
   /**
    * Allows hiding the TryIt component
    */
@@ -99,6 +102,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     layout,
     apiDescriptionUrl = '',
     logo,
+    customConfig,
     hideTryIt,
     hideSchemas,
     hideInternal,
@@ -125,7 +129,18 @@ export const APIImpl: React.FC<APIProps> = props => {
   const document = apiDescriptionDocument || fetchedDocument || '';
   const parsedDocument = useParsedValue(document);
   const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl });
-  const serviceNode = React.useMemo(() => transformOasToServiceNode(bundledDocument), [bundledDocument]);
+  const serviceNode = React.useMemo(() => {
+    const nodes = transformOasToServiceNode(bundledDocument);
+
+    // TODO: custom data from usages
+    const customData = !!customConfig ? JSON.parse(customConfig) : undefined;
+
+    nodes?.children.push(...customData.customServiceNodes);
+    if (nodes) {
+      nodes.customData = customData;
+    }
+    return nodes;
+  }, [bundledDocument, customConfig]);
   const exportProps = useExportDocumentProps({ originalDocument: document, bundledDocument });
 
   if (error) {
