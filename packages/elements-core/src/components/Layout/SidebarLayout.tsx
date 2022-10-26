@@ -10,11 +10,10 @@ type SidebarLayoutProps = {
 };
 
 const MAX_CONTENT_WIDTH = 1800;
-const SIDEBAR_WIDTH = 300;
-const SIDEBAR_MIN_WIDTH = 120;
+const SIDEBAR_MIN_WIDTH = 300;
 
 export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps>(
-  ({ sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_WIDTH }, ref) => {
+  ({ sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH }, ref) => {
     const scrollRef = React.useRef<HTMLDivElement | null>(null);
     const [sidebarRef, currentSidebarWidth, startResizing] = useResizer(sidebarWidth);
     const { pathname } = useLocation();
