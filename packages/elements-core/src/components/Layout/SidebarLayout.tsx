@@ -46,15 +46,13 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
           >
             {sidebar}
           </Flex>
-          {/* eslint-disable-next-line prettier/prettier */}
-          {/*@ts-expect-error: need to add `col-resize` to mosaic cursor type */ /* eslint-disable-next-line prettier/prettier */}
-          <Flex cursor="col-resize"
+          <Flex
             justifySelf="end"
             flexGrow={0}
             flexShrink={0}
             resize="x"
             onMouseDown={startResizing}
-            style={{ width: '1px', flexBasis: '6px' }}
+            style={{ width: '1px', flexBasis: '6px', cursor: 'col-resize' }}
           />
         </Flex>
 
