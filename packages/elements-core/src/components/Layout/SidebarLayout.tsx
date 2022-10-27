@@ -27,8 +27,7 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
       <Flex ref={ref} className="sl-elements-api" pin h="full">
         <Flex
           ref={sidebarRef}
-          direction="row"
-          onMouseDown={(e: { preventDefault: () => void }) => e.preventDefault()}
+          onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
           style={{ maxWidth: '50%' }}
         >
           <Flex
@@ -47,7 +46,7 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
           >
             {sidebar}
           </Flex>
-          <Flex className="sl-sidebar-resizer" resize="x" onMouseDown={startResizing} />
+          <Flex cursor="col-resize" justifySelf="end" flexGrow={0} flexShrink={0} resize="x" onMouseDown={startResizing} style={{ width: '1px', flexBasis: '6px' }} />
         </Flex>
 
         <Box ref={scrollRef} bg="canvas" px={24} flex={1} w="full" overflowY="auto">
@@ -88,7 +87,7 @@ function useResizer(sidebarWidth: number): [SidebarRef, SidebarWidth, StartResiz
 
   React.useEffect(() => {
     window.addEventListener('mousemove', resize);
-    window.addEventListener('mouseup', stopResizing);
+    window.addEventListener('mouseup', stopResizing, { passive: true });
     return () => {
       window.removeEventListener('mousemove', resize);
       window.removeEventListener('mouseup', stopResizing);
