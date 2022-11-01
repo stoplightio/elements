@@ -1,4 +1,4 @@
-import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faSpinner, faCode, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {
   NodeTypeColors,
   NodeTypeIconDefs,
@@ -12,6 +12,7 @@ import { flow } from 'lodash';
 import * as React from 'react';
 
 import { NodeSearchResult } from '../../types';
+import {Dictionary, NodeType} from "@stoplight/types";
 
 export type SearchProps = {
   isLoading?: boolean;
@@ -22,6 +23,11 @@ export type SearchProps = {
   isOpen?: boolean;
   onClose: ModalProps['onClose'];
 };
+
+const customNodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
+  ...NodeTypeIconDefs,
+  http_operation: faCode
+}
 
 const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
@@ -91,7 +97,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
                     <Box
                       as={Icon}
                       w={4}
-                      icon={NodeTypeIconDefs[searchResult.type]}
+                      icon={customNodeTypeIconDefs[searchResult.type]}
                       style={{ color: NodeTypeColors[searchResult.type] }}
                     />
                     <Box
