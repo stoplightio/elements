@@ -53,17 +53,17 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
   return (
     <Modal
       renderHeader={() => (
-        <Input
-          appearance="minimal"
-          borderB
-          size="lg"
-          icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
-          autoFocus
-          placeholder="Search..."
-          value={search}
-          onChange={onChange}
-          // onKeyDown={onKeyDown}
-        />
+        <Box p={4} borderB>
+          <Input
+            appearance="minimal"
+            size="lg"
+            icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
+            autoFocus
+            placeholder="Search..."
+            value={search}
+            onChange={onChange}
+          />
+        </Box>
       )}
       isOpen={!!isOpen}
       onClose={onClose}

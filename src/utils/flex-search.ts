@@ -8,13 +8,13 @@ const documents = {};
 export const getDocument = (name: string) => {
     if (!documents[name]) {
         documents[name] = new Document({
-            tokenize: "full",
+            tokenize: "reverse",
             charset: "latin:balance",
             doc: {
                 id: "uri",
                 field: ["data"],
                 store: true,
-            }
+            },
         });
     }
     return documents[name];
@@ -65,8 +65,7 @@ export const indexDocument = (name: string, node: ServiceChildNode) => {
 
 export const searchDocument = (name: string, term: string) : NodeSearchResult[] => {
     let document = getDocument(name);
-    console.log(document.search(term, { enrich: true, suggest: true }));
-    let searchResult = document.search(term, { enrich: true, suggest: true });
+    let searchResult = document.search(term, { enrich: true, bool: "and" });
     return searchResult
         .flatMap((byField: any) => byField.result)
         .map((sResult: { id: string, doc: NodeSearchResult }) => sResult.doc);
