@@ -12,7 +12,7 @@ export const getDocument = (name: string) => {
             charset: "latin:balance",
             doc: {
                 id: "uri",
-                field: ["data"],
+                field: ["name", "data"],
                 store: true,
             },
         });
@@ -43,28 +43,27 @@ const modifyEhrLogo = (desc: string | undefined) => {
 
 export const indexDocument = (name: string, node: ServiceChildNode) => {
     let document = getDocument(name);
-    if (node.type === NodeType.HttpOperation) {
+    if (node.type === NodeType.HttpOperation || node.type === NodeType.Article) {
         document.add({
             uri: node.uri,
-            data: `${node.data.summary} ${node.data.path} ${modifyEhrLogo(node.data.description)}`,
+            data: node.type === NodeType.HttpOperation ? `${modifyEhrLogo(node.data.description)}` : node.data,
             name: node.name,
-            type: NodeType.HttpOperation
+            type: node.type
         });
-    }
-    if (node.type === NodeType.Article) {
-        document.add({
-            uri: node.uri,
-            data: node.data,
-            name: node.name,
-            type: NodeType.Article
-        })
     }
 }
 
 export const searchDocument = (name: string, term: string) : NodeSearchResult[] => {
     let document = getDocument(name);
     let searchResult = document.search(term, { enrich: true, bool: "and" });
-    return searchResult
-        .flatMap((byField: any) => byField.result)
-        .map((sResult: { id: string, doc: NodeSearchResult }) => sResult.doc);
+    const result: NodeSearchResult[] = [], resultId: any[] = [];
+    searchResult.forEach((byField: any) => {
+        byField.result.forEach((r: { id: string, doc: NodeSearchResult }) => {
+            if (resultId.indexOf(r.id) === -1) {
+                resultId.push(r.id);
+                result.push(r.doc);
+            }
+        });
+    });
+    return result;
 }

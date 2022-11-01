@@ -28,13 +28,13 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
 
   const onChange = React.useCallback(e => onSearch(e.currentTarget.value), [onSearch]);
 
-  // const onKeyDown = React.useCallback(e => {
-  //   // Focus the search results on arrow down
-  //   if (e.key === 'ArrowDown') {
-  //     e.preventDefault();
-  //     listBoxRef.current?.focus();
-  //   }
-  // }, []);
+  const onKeyDown = React.useCallback(e => {
+    // Focus the search results on arrow down
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      listBoxRef.current?.focus();
+    }
+  }, []);
 
   const onSelectionChange = React.useCallback(
     keys => {
@@ -62,6 +62,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
             placeholder="Search..."
             value={search}
             onChange={onChange}
+            onKeyDown={onKeyDown}
           />
         </Box>
       )}
