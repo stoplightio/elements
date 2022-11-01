@@ -32,7 +32,6 @@ export const SearchBox = ({ apiDocName }: SearchProps) => {
     window.location.href =
         `${getOriginPath(window.location.href)}#/${data.uri.startsWith("/") ? data.uri.substring(1) : data.uri}`;
   };
-  console.log(open);
 
   return (
     <>

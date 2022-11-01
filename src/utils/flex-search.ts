@@ -24,20 +24,18 @@ const modifyEhrLogo = (desc: string | undefined) => {
     if (!desc) {
         return desc;
     }
-    let finalStr = desc, result;
-    const pattern = /<img src="[^>]+" alt="[Cerner|Epic on FHIR|NextGen Healthcare]{1}[^>]+ style="(width[^"]+)[^>]+>/g;
+    let finalStr = desc, logoSize = {
+        "Cerner": "width: 40px;",
+        "Epic on FHIR": "width: 40px;",
+        "NextGen Healthcare": "width: 30px;",
+        "Athenahealth": "width: 60px;"
+    }, result;
+    const pattern = /<img src="[^>]+" alt="(Cerner|Epic on FHIR|NextGen Healthcare|Athenahealth)[^>]+ style="(width[^"]+)[^>]+>/g;
     while ((result = pattern.exec(desc)) != null) {
         const fullStr = result[0];
-        const widthStr = result[1];
-        const newLogo = fullStr.replace(widthStr, "width: 40px;")
-        finalStr = finalStr.replace(fullStr, newLogo);
-    }
-
-    const athenaPattern = /<img src="[^>]+" alt="[Athenahealth]{1}[^>]+ style="(width[^"]+)[^>]+>/g;
-    while ((result = athenaPattern.exec(desc)) != null) {
-        const fullStr = result[0];
-        const widthStr = result[1];
-        const newLogo = fullStr.replace(widthStr, "width: 60px;")
+        const ehr = result[1];
+        const widthStr = result[2];
+        const newLogo = fullStr.replace(widthStr, logoSize[ehr]);
         finalStr = finalStr.replace(fullStr, newLogo);
     }
     return finalStr;
