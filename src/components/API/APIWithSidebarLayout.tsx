@@ -71,12 +71,14 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     newToc.push(...serviceNode.customData.tocLastLevel);
 
     // Put Schema to the end
-    const schemaNode = serviceNode.customData.tocSchemaNode || {
-      title: 'Schemas',
-      items: [],
-    };
-    newToc.push(schemaNode);
-    schemaNode.items.push(...tree.filter((item: any) => item.slug?.startsWith('/schemas/')));
+    if (!hideSchemas) {
+      const schemaNode = serviceNode.customData.tocSchemaNode || {
+        title: 'Schemas',
+        items: [],
+      };
+      newToc.push(schemaNode);
+      schemaNode.items.push(...tree.filter((item: any) => item.slug?.startsWith('/schemas/')));
+    }
 
     return newToc;
   }, [serviceNode, hideSchemas, hideInternal]);
