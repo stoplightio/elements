@@ -1,14 +1,8 @@
-import {
-  ExportButtonProps,
-  Logo,
-  ParsedDocs,
-  PoweredByLink,
-  SidebarLayout,
-} from '@stoplight/elements-core';
-import { Flex, Heading } from '@stoplight/mosaic';
-import { NodeType } from '@stoplight/types';
+import {ExportButtonProps, Logo, ParsedDocs, PoweredByLink, SidebarLayout,} from '@stoplight/elements-core';
+import {Flex, Heading} from '@stoplight/mosaic';
+import {NodeType} from '@stoplight/types';
 import * as React from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import {Link, Redirect, useLocation} from 'react-router-dom';
 
 import { ServiceChildNode, ServiceNode } from '../../utils/oas/types';
 import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
@@ -28,10 +22,12 @@ type SidebarLayoutProps = {
   tryItCorsProxy?: string;
 };
 
-const indexServiceNode = (sNode: ServiceNode) => {
+const indexServiceNode = (sNode: ServiceNode, hideInternal?: boolean) => {
   let name = sNode.name;
   // index all children node
-  sNode.children.forEach((node: ServiceChildNode) => indexDocument(name, node));
+  sNode.children
+    .filter((node: any) => !hideInternal || !node.data.internal)
+    .forEach((node: ServiceChildNode) => indexDocument(name, node));
   sNode.customData?.customServiceNodes?.forEach((node: ServiceChildNode) => {
     indexDocument(name, node)
   });
@@ -50,8 +46,8 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
-    indexServiceNode(serviceNode);
-  }, [serviceNode])
+    indexServiceNode(serviceNode, hideInternal);
+  }, [serviceNode, hideInternal])
   var tree = React.useMemo(() => {
     const tree = computeAPITree(serviceNode, { hideSchemas, hideInternal });
 
