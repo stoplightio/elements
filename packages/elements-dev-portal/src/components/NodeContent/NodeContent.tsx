@@ -94,13 +94,13 @@ export const NodeContent = ({
 const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefined>(undefined);
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
-const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
+const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) => {
   const ctx = React.useContext(NodeLinkContext);
 
   if (href && externalRegex.test(href)) {
     // Open external URL in a new tab
     return (
-      <a href={href} target="_blank" rel="noreferrer">
+      <a href={href} target="_blank" rel="noreferrer" title={title ? title : undefined}>
         {children}
       </a>
     );
