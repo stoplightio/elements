@@ -24,7 +24,7 @@ jobs:
   build:
     working_directory: /mnt/ramdisk/project
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:16.17
     resource_class: large
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress

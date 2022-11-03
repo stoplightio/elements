@@ -50,6 +50,12 @@ const getServerUrl = ({
   return serverUrl;
 };
 
+const delimiter = {
+  [HttpParamStyles.Form]: ',',
+  [HttpParamStyles.SpaceDelimited]: ' ',
+  [HttpParamStyles.PipeDelimited]: '|',
+};
+
 export const getQueryParams = ({
   httpOperation,
   parameterValues,
@@ -57,7 +63,7 @@ export const getQueryParams = ({
   const query = httpOperation.request?.query;
   if (!query) return [];
 
-  return query.reduce((acc, param) => {
+  return query.reduce<{ name: string; value: string }[]>((acc, param) => {
     const value = parameterValues[param.name] ?? '';
     if (value.length === 0) return acc;
 
@@ -85,8 +91,14 @@ export const getQueryParams = ({
     } else if (param.schema?.type === 'array' && value) {
       let nested: string[];
       try {
-        nested = JSON.parse(value);
-        if (!Array.isArray(nested)) throw Error();
+        const parsed = JSON.parse(value);
+        if (typeof parsed === 'string') {
+          nested = parsed.split(delimiter[param.style]);
+        } else if (Array.isArray(parsed)) {
+          nested = parsed;
+        } else {
+          throw Error();
+        }
       } catch (e) {
         throw new Error(`Cannot use param value "${value}". JSON array expected.`);
       }
@@ -94,11 +106,6 @@ export const getQueryParams = ({
       if (explode) {
         acc.push(...nested.map(value => ({ name: param.name, value: value.toString() })));
       } else {
-        const delimiter = {
-          [HttpParamStyles.Form]: ',',
-          [HttpParamStyles.SpaceDelimited]: ' ',
-          [HttpParamStyles.PipeDelimited]: '|',
-        };
         acc.push({
           name: param.name,
           value: nested.join(delimiter[param.style] ?? delimiter[HttpParamStyles.Form]),
@@ -109,7 +116,7 @@ export const getQueryParams = ({
     }
 
     return acc;
-  }, [] as Array<{ name: string; value: string }>);
+  }, []);
 };
 
 export async function buildFetchRequest({
