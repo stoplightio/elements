@@ -68,7 +68,8 @@
     "lodash": "^4.17.19",
     "react-query": "^3.34.19",
     "react-router-dom": "^5.2.0",
-    "flexsearch": "0.7.31"
+    "flexsearch": "0.7.31",
+    "string-strip-html": "8.3.0"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",

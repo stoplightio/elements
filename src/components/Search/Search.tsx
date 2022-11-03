@@ -111,7 +111,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
                     />
                   </Flex>
                   <Box className="sl-elements-article search-result-content">
-                    <MarkdownViewer className="sl-elements-article-content" markdown={searchResult.data} />
+                    <MarkdownViewer className="sl-elements-article-content" markdown={searchResult.description} />
                   </Box>
                 </Box>
               </ListBoxItem>
