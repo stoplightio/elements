@@ -55,7 +55,7 @@ export const indexDocument = (name: string, node: ServiceChildNode) => {
 
 export const searchDocument = (name: string, term: string) : NodeSearchResult[] => {
     let document = getDocument(name);
-    let searchResult = document.search(term, { enrich: true, bool: "and" });
+    let searchResult = document.search(term, { enrich: true });
     const result: NodeSearchResult[] = [], resultId: any[] = [];
     searchResult.forEach((byField: any) => {
         byField.result.forEach((r: { id: string, doc: NodeSearchResult }) => {
