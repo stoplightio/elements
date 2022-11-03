@@ -35,6 +35,8 @@ export type NodeSearchResult = {
   uri: string;
   data: string;
   name: string;
+  description: string;
   type: NodeType;
+  tags: string[];
 };
 

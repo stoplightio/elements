@@ -49,7 +49,7 @@ module.exports = {
         minimizer: [
             new TerserPlugin({
                 terserOptions: {
-                    module: true,
+                    module: false,
                     compress: {
                         join_vars: false // If true, this gives an error during runtime
                     },

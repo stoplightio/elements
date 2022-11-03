@@ -3,6 +3,7 @@ import Document from 'flexsearch/dist/module/document.js';
 import {ServiceChildNode} from "./oas/types";
 import {NodeType} from "@stoplight/types";
 import {NodeSearchResult} from "../types";
+import { stripHtml } from "string-strip-html";
 
 const documents = {};
 export const getDocument = (name: string) => {
@@ -12,7 +13,7 @@ export const getDocument = (name: string) => {
             charset: "latin:balance",
             doc: {
                 id: "uri",
-                field: ["name", "data"],
+                field: ["name", "data", "tags"],
                 store: true,
             },
         });
@@ -20,33 +21,57 @@ export const getDocument = (name: string) => {
     return documents[name];
 }
 
-const modifyEhrLogo = (desc: string | undefined) => {
+const handleLogo = (desc: string | undefined): { ehrs: string[], content: string | undefined } => {
     if (!desc) {
-        return desc;
+        return {
+            ehrs: [],
+            content: desc
+        };
     }
     let finalStr = desc, logoSize = {
         "Cerner": "width: 40px;",
         "Epic on FHIR": "width: 40px;",
-        "NextGen Healthcare": "width: 30px;",
+        "NextGen": "width: 30px;",
         "Athenahealth": "width: 60px;"
-    }, result;
-    const pattern = /<img src="[^>]+" alt="(Cerner|Epic on FHIR|NextGen Healthcare|Athenahealth)[^>]+ style="(width[^"]+)[^>]+>/g;
+    }, ehrs = [], result;
+    const pattern = /<img src="[^>]+ title="(Cerner|Epic on FHIR|NextGen|Athenahealth)[^>]+ style="(width[^"]+)[^>]+>/g;
     while ((result = pattern.exec(desc)) != null) {
         const fullStr = result[0];
         const ehr = result[1];
         const widthStr = result[2];
         const newLogo = fullStr.replace(widthStr, logoSize[ehr]);
         finalStr = finalStr.replace(fullStr, newLogo);
+        ehrs.push(ehr)
     }
-    return finalStr;
+    return {
+        ehrs,
+        content: finalStr
+    };
+}
+
+const stripContent = (content: string | undefined) => {
+    if (!content) {
+        return content;
+    }
+    return stripHtml(content).result;
 }
 
 export const indexDocument = (name: string, node: ServiceChildNode) => {
     let document = getDocument(name);
     if (node.type === NodeType.HttpOperation || node.type === NodeType.Article) {
+        let docDescription, tags = node.tags;
+        if (node.type === NodeType.HttpOperation) {
+            const logoData = handleLogo(node.data.description);
+            docDescription = logoData.content;
+            tags.push(...logoData.ehrs)
+        } else {
+            docDescription = node.data
+        }
         document.add({
             uri: node.uri,
-            data: node.type === NodeType.HttpOperation ? `${modifyEhrLogo(node.data.description)}` : node.data,
+            data: stripContent(node.type === NodeType.HttpOperation ? node.data.description : node.data?.toString()),
+            description: docDescription,
+            tags,
             name: node.name,
             type: node.type
         });
