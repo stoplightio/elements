@@ -1,0 +1,9 @@
+{
+  "extends": "@stoplight/scripts/tsconfig.json",
+  "include": ["src"],
+  "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "baseUrl": "./packages"
+  }
+}

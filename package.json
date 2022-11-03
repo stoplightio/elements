@@ -1,0 +1,145 @@
+{
+  "name": "@kc/stoplight-elements",
+  "version": "7.7.2",
+  "description": "UI components for composing beautiful developer documentation.",
+  "keywords": [],
+  "sideEffects": [
+    "web-components.min.js",
+    "src/web-components/**",
+    "**/*.css"
+  ],
+  "homepage": "https://github.com/stoplightio/elements",
+  "bugs": "https://github.com/stoplightio/elements/issues",
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/elements"
+  },
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "exports": {
+    "./styles.min.css": "./styles.min.css",
+    "./web-components.min.js": "./web-components.min.js",
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "**/*"
+  ],
+  "engines": {
+    "node": ">=14.13"
+  },
+  "scripts": {
+    "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
+    "postbuild": "yarn build.styles",
+    "build.react": "sl-scripts bundle",
+    "build.styles": "postcss src/styles.css -o dist/styles.min.css",
+    "build.webcomponents": "webpack -c ./web-components.config.js",
+    "test": "jest",
+    "test.prod": "yarn test --coverage --maxWorkers=2",
+    "test.update": "yarn test --updateSnapshot",
+    "test.watch": "yarn test --watch",
+    "test.packaging": "node --input-type=commonjs -e \"require('./dist/index.js')\" && node --input-type=module -e \"import './dist/index.mjs'\"",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "rollup": {
+    "bundleDeps": [
+      "@fortawesome/free-solid-svg-icons"
+    ]
+  },
+  "dependencies": {
+    "@stoplight/elements-core": "~7.7.2",
+    "@stoplight/http-spec": "^5.1.4",
+    "@stoplight/json": "^3.18.1",
+    "@stoplight/mosaic": "^1.33.0",
+    "@stoplight/types": "^13.7.0",
+    "@stoplight/yaml": "^4.2.3",
+    "@stoplight/markdown-viewer": "5.5.0",
+    "classnames": "^2.2.6",
+    "file-saver": "^2.0.5",
+    "lodash": "^4.17.19",
+    "react-query": "^3.34.19",
+    "react-router-dom": "^5.2.0",
+    "flexsearch": "0.7.31"
+  },
+  "devDependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@stoplight/scripts": "9.2.1",
+    "@testing-library/dom": "^7.26.5",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^11.1.1",
+    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/user-event": "^12.2.0",
+    "@types/enzyme": "3.x.x",
+    "@types/enzyme-adapter-react-16": "1.x.x",
+    "@types/file-saver": "^2.0.5",
+    "@types/json-schema": "^7.0.11",
+    "@types/lodash": "^4.14.181",
+    "@types/react": "16.9.56",
+    "@types/react-dom": "16.9.12",
+    "@types/react-router-dom": "^5.3.3",
+    "enzyme": "3.x.x",
+    "enzyme-adapter-react-16": "1.x.x",
+    "enzyme-to-json": "3.x.x",
+    "jest-enzyme": "^7.1.2",
+    "jest-fetch-mock": "^3.0.3",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "react-test-renderer": "^16.8.0",
+    "resolve-url-loader": "^3.1.2",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^9.2.8",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "4.3.5",
+    "webpack": "5.46.0",
+    "webpack-cli": "4.7.2",
+    "process": "0.11.10",
+    "url": "0.11.0",
+    "querystring-es3": "0.2.1",
+    "@stoplight/eslint-config": "2.1.0",
+    "@storybook/addon-controls": "6.5.12",
+    "@storybook/addon-docs": "6.5.12",
+    "@storybook/addon-postcss": "2.0.0",
+    "@storybook/addon-toolbars": "6.5.12",
+    "@storybook/addon-viewport": "6.5.12",
+    "@storybook/builder-webpack5": "6.5.12",
+    "@storybook/manager-webpack5": "6.5.12",
+    "@storybook/react": "6.5.12",
+    "@storybook/theming": "6.5.12",
+    "eslint": "7.31.0",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-jest": "24.4.0",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
+    "jest": "^26.6.3",
+    "jest-environment-jsdom": "^26.3.1",
+    "jest-environment-jsdom-global": "^4.0.0",
+    "jest-junit": "12.2.0",
+    "ts-jest": "^26.4.4",
+    "postcss": "8.3.5",
+    "postcss-cli": "8.3.1",
+    "postcss-import": "14.0.2",
+    "postcss-loader": "6.1.1",
+    "cssnano": "5.0.6",
+    "concurrently": "6.1.0"
+  },
+  "resolutions": {
+    "@types/react": "17.0.37"
+  },
+  "publishConfig": {
+    "directory": "dist"
+  },
+  "release": {
+    "extends": "@stoplight/scripts/release"
+  }
+}

@@ -1,0 +1,34 @@
+@import "@stoplight/elements-core/styles.min.css";
+
+/* css for search modal */
+.search-result-header {
+    color: #0466b4;
+    margin-bottom: 0.5em;
+}
+.search-result-content {
+    max-height: 100px;
+    word-break: break-all;
+    overflow: hidden;
+}
+.search-result-content > .sl-prose.sl-markdown-viewer {
+    font-size: 11px;
+}
+.search-result-content > .sl-prose h1,
+.search-result-content > .sl-prose h2,
+.search-result-content > .sl-prose h3,
+.search-result-content > .sl-prose h4 {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+.search-result-content > .sl-prose h1 {
+    font-size: 14px;
+}
+.search-result-content > .sl-prose h2 {
+    font-size: 12px;
+}
+.search-result-content > .sl-prose h4 {
+    font-size: 11px;
+}
+.search-result-content .sl-prose p {
+    margin: 0;
+}
