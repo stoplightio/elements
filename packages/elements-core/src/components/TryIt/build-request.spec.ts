@@ -84,5 +84,25 @@ describe('Build Request', () => {
         { name: 'items_pipes_not_exploded', value: 'first|second' },
       ]);
     });
+
+    it('Splits string arrays by a respective delimiter', () => {
+      const params = getQueryParams({
+        httpOperation,
+        parameterValues: {
+          items: '"first,second"',
+          items_spaces: '"first second"',
+          items_pipes: '"first|second"',
+        },
+      });
+
+      expect(params).toStrictEqual([
+        { name: 'items', value: 'first' },
+        { name: 'items', value: 'second' },
+        { name: 'items_spaces', value: 'first' },
+        { name: 'items_spaces', value: 'second' },
+        { name: 'items_pipes', value: 'first' },
+        { name: 'items_pipes', value: 'second' },
+      ]);
+    });
   });
 });
