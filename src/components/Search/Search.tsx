@@ -1,18 +1,19 @@
-import {faSearch, faSpinner, faCode, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {faCode, faSearch, faSpinner, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {
-  NodeTypeColors,
-  NodeTypeIconDefs,
-  withMosaicProvider,
-  withPersistenceBoundary,
-  withQueryClientProvider,
-  withStyles,
+    NodeTypeColors,
+    NodeTypeIconDefs,
+    withMosaicProvider,
+    withPersistenceBoundary,
+    withQueryClientProvider,
+    withStyles,
 } from '@stoplight/elements-core';
 import { Box, Flex, Icon, Input, ListBox, ListBoxItem, Modal, ModalProps } from '@stoplight/mosaic';
-import { flow } from 'lodash';
+import {flow} from 'lodash';
 import * as React from 'react';
 
-import { NodeSearchResult } from '../../types';
+import {NodeSearchResult} from '../../types';
 import {Dictionary, NodeType} from "@stoplight/types";
+import {MarkdownViewer} from "@stoplight/markdown-viewer";
 
 export type SearchProps = {
   isLoading?: boolean;
@@ -93,7 +94,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
             return (
               <ListBoxItem key={`${searchResult.uri}`} textValue={searchResult.name}>
                 <Box p={3} borderB>
-                  <Flex align="center">
+                  <Flex className="search-result-header" align="center">
                     <Box
                       as={Icon}
                       w={4}
@@ -109,13 +110,9 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
                       mx={2}
                     />
                   </Flex>
-                  <Box
-                    dangerouslySetInnerHTML={{ __html: `<div style="max-height: 100px;word-break: break-all; overflow: hidden;">${searchResult.data}</div>` ?? '' }}
-                    color="muted"
-                    fontSize="sm"
-                    mt={1}
-                    ml={6}
-                  />
+                  <Box className="sl-elements-article search-result-content">
+                    <MarkdownViewer className="sl-elements-article-content" markdown={searchResult.data} />
+                  </Box>
                 </Box>
               </ListBoxItem>
             );
