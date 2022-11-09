@@ -11,6 +11,7 @@ type SidebarLayoutProps = {
 
 const MAX_CONTENT_WIDTH = 1800;
 const SIDEBAR_MIN_WIDTH = 300;
+const SIDEBAR_MAX_WIDTH = 1.5 * SIDEBAR_MIN_WIDTH;
 
 export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps>(
   ({ sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH }, ref) => {
@@ -28,7 +29,7 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
         <Flex
           ref={sidebarRef}
           onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
-          style={{ maxWidth: '50%' }}
+          style={{ maxWidth: `${SIDEBAR_MAX_WIDTH}px` }}
         >
           <Flex
             direction="col"
@@ -52,7 +53,7 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
             flexShrink={0}
             resize="x"
             onMouseDown={startResizing}
-            style={{ width: '1px', flexBasis: '6px', cursor: 'col-resize' }}
+            style={{ width: '1em', flexBasis: '6px', cursor: 'col-resize' }}
           />
         </Flex>
 
@@ -86,7 +87,8 @@ function useResizer(sidebarWidth: number): [SidebarRef, SidebarWidth, StartResiz
   const resize = React.useCallback(
     mouseMoveEvent => {
       if (isResizing) {
-        setCurrentSidebarWidth(mouseMoveEvent.clientX - sidebarRef.current!.getBoundingClientRect().left);
+        const value = mouseMoveEvent.clientX - sidebarRef.current!.getBoundingClientRect().left;
+        setCurrentSidebarWidth(Math.min(Math.max(SIDEBAR_MIN_WIDTH, value), SIDEBAR_MAX_WIDTH));
       }
     },
     [isResizing],
