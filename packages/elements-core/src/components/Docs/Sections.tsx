@@ -12,11 +12,11 @@ export interface ISectionTitle {
 
 export const SectionTitle: React.FC<ISectionTitle> = ({ title, id, size = 2, children }) => {
   return (
-    <Flex flexWrap>
+    <Flex w="full">
       <Box py={1} pr={6} as={LinkHeading} size={size} aria-label={title} id={id || slugify(title)}>
         {title}
       </Box>
-      <Box alignSelf={'center'} py={1}>
+      <Box alignSelf={'center'} py={1} flexGrow style={{ minWidth: 0 }}>
         {children}
       </Box>
     </Flex>
