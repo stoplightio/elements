@@ -1,5 +1,5 @@
-import {ExportButtonProps, Logo, ParsedDocs, PoweredByLink, SidebarLayout,} from '@stoplight/elements-core';
-import {Flex, Heading} from '@stoplight/mosaic';
+import {ExportButtonProps, ParsedDocs, PoweredByLink, SidebarLayout,} from '@stoplight/elements-core';
+import {Flex} from '@stoplight/mosaic';
 import {NodeType} from '@stoplight/types';
 import * as React from 'react';
 import {Link, Redirect, useLocation} from 'react-router-dom';
@@ -9,6 +9,7 @@ import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
 import { TableOfContents } from "../MosaicTableOfContents";
 import { SearchBox } from "../SearchBox";
 import {indexDocument} from "../../utils/flex-search";
+import {Logo} from "../Logo";
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
@@ -111,18 +112,20 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
 
   const sidebar = (
     <>
-      <Flex ml={4} mb={5} alignItems="center">
+      <Flex mb={5} alignItems="center">
         {logo ? (
-          <Logo logo={{ url: logo, altText: 'logo' }} />
+          <Logo logo={{ url: logo, altText: 'logo' }} w="2/3" />
         ) : (
-          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
+          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} w="2/3" />
         )}
-        <Heading size={4}>{serviceNode.name}</Heading>
       </Flex>
+      {/*<Flex ml={4} mb={5} alignItems="center" alignContent="center">*/}
+      {/*  <Heading size={4}>{serviceNode.name}</Heading>*/}
+      {/*</Flex>*/}
       <Flex id="flex-search" mr={4} mb={1} alignItems="center">
         <SearchBox apiDocName={serviceNode.name} />
       </Flex>
-      <Flex flexGrow flexShrink overflowY="auto" direction="col">
+      <Flex className="api-toc" flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
       </Flex>
       <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
