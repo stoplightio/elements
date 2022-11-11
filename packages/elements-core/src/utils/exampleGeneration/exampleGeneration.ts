@@ -16,7 +16,7 @@ export type GenerateExampleFromMediaTypeContentOptions = Sampler.Options;
 export const useGenerateExampleFromMediaTypeContent = (
   mediaTypeContent: IMediaTypeContent | undefined,
   chosenExampleIndex?: number,
-  { skipReadOnly, skipWriteOnly, skipNonRequired }: GenerateExampleFromMediaTypeContentOptions = {},
+  { skipReadOnly, skipWriteOnly, skipNonRequired, ticks }: GenerateExampleFromMediaTypeContentOptions = {},
 ) => {
   const document = useDocument();
   return React.useMemo(
@@ -25,8 +25,9 @@ export const useGenerateExampleFromMediaTypeContent = (
         skipNonRequired,
         skipWriteOnly,
         skipReadOnly,
+        ticks: ticks || 6000,
       }),
-    [mediaTypeContent, document, chosenExampleIndex, skipNonRequired, skipReadOnly, skipWriteOnly],
+    [mediaTypeContent, document, chosenExampleIndex, skipNonRequired, skipWriteOnly, skipReadOnly, ticks],
   );
 };
 
@@ -82,6 +83,7 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
   try {
     const generated = Sampler.sample(schema, {
       maxSampleDepth: 4,
+      ticks: 6000,
     });
 
     return generated !== null
