@@ -85,3 +85,8 @@
   font-size: 12px;
   line-height: 1.5em;
 }
+
+.sl-elements .HttpOperation div[role=tablist] {
+  /* Enables horizontal scrolling for response tabs */
+  overflow-x: auto;
+}
