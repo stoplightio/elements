@@ -66,6 +66,7 @@ function computeServiceNode(
     data: serviceDocument,
     tags: serviceDocument.tags?.map(tag => tag.name) || [],
     children: computeChildNodes(document, document, map, transformOperation),
+    extensions: serviceDocument.extensions
   };
 
   return serviceNode;
