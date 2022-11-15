@@ -53,7 +53,7 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
             flexShrink={0}
             resize="x"
             onMouseDown={startResizing}
-            style={{ width: '1em', flexBasis: '6px', cursor: 'col-resize' }}
+            style={{ width: '1em', flexBasis: '6px', cursor: 'ew-resize' }}
           />
         </Flex>
 
