@@ -6,6 +6,7 @@ import {
   TableOfContentsItem,
   TableOfContentsNode,
   TableOfContentsNodeGroup,
+  TableOfContentsTagGroups,
 } from './types';
 
 export function getHtmlIdFromItemId(id: string) {
@@ -81,4 +82,7 @@ export function isNode(item: TableOfContentsItem): item is TableOfContentsNode {
 }
 export function isExternalLink(item: TableOfContentsItem): item is TableOfContentsExternalLink {
   return Object.keys(item).length === 2 && 'title' in item && 'url' in item;
+}
+export function isTagGroup(item: TableOfContentsItem): item is TableOfContentsTagGroups{
+  return 'title' in item && 'items' in item && 'type' in item && item["type"] === "tagGroup"
 }
