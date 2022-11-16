@@ -1,4 +1,4 @@
-import { isHttpOperation, isHttpService, TableOfContentsItem, TableOfContentsTagGroups } from '@stoplight/elements-core';
+import { isHttpOperation, isHttpService, TableOfContentsItem, TableOfContentsTagGroups } from '@abbudao/elements-core';
 import { NodeType } from '@stoplight/types';
 import { defaults, isEmpty } from 'lodash';
 
@@ -162,7 +162,7 @@ const computeGroupedAPITree =(serviceNode: ServiceNode): TableOfContentsTagGroup
     const isTagGroup = node?.items && node.title
     if (isTagGroup) {
       const targetGroupName = tagToGroupRef[node.title] ?? ""
-      groupTree[targetGroupName] = groupTree[targetGroupName]?.length > 0 ? [...groupTree[targetGroupName], node] : [node]
+      groupTree[targetGroupName] = groupTree?.[targetGroupName]?.length > 0 ? [...groupTree[targetGroupName], node] : [node]
     }
   })
   const result = Object.keys(groupTree).map((title) => ({
@@ -178,7 +178,7 @@ const computeGroupedAPITree =(serviceNode: ServiceNode): TableOfContentsTagGroup
 }
 export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
   const isUsingTagGroups = !isEmpty(getTagGroups(serviceNode))
-  const tree = isUsingTagGroups? computeGroupedAPITree(serviceNode, config) : computeSimpleAPITree(serviceNode, config)
+  const tree = isUsingTagGroups? computeGroupedAPITree(serviceNode) : computeSimpleAPITree(serviceNode, config)
   return [overviewNode, ...tree]
 };
 

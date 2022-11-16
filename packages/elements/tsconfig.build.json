@@ -11,8 +11,8 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "paths": {
-      "@stoplight/elements-core": ["../elements-core/dist"],
-      "@stoplight/elements-core/*": ["../elements-core/dist/*"],
+      "@abbudao/elements-core": ["../elements-core/dist"],
+      "@abbudao/elements-core/*": ["../elements-core/dist/*"],
     }
   }
 }

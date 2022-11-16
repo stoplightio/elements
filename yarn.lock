@@ -3450,6 +3450,55 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@stoplight/elements-core@~7.7.5":
+  version "7.7.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements-core/-/elements-core-7.7.5.tgz#a6a04711219e3aa419de1f9e79769c425dc5236f"
+  integrity sha512-348JW/b1MOt4GM4EekwsuR+8pvtbbup0hcdz4PCLW3a8eODDQ6rFiwNpHNf38SN0NKs3LsR/Y3JQ4brJU14gYQ==
+  dependencies:
+    "@stoplight/json" "^3.18.1"
+    "@stoplight/json-schema-ref-parser" "^9.0.5"
+    "@stoplight/json-schema-sampler" "0.2.2"
+    "@stoplight/json-schema-viewer" "^4.9.0"
+    "@stoplight/markdown-viewer" "^5.5.0"
+    "@stoplight/mosaic" "^1.33.0"
+    "@stoplight/mosaic-code-editor" "^1.33.0"
+    "@stoplight/mosaic-code-viewer" "^1.33.0"
+    "@stoplight/path" "^1.3.2"
+    "@stoplight/react-error-boundary" "^2.0.0"
+    "@stoplight/types" "^13.7.0"
+    "@stoplight/yaml" "^4.2.3"
+    classnames "^2.2.6"
+    httpsnippet "^2.0.0"
+    jotai "1.3.9"
+    json-schema "^0.4.0"
+    lodash "^4.17.19"
+    nanoid "^3.1.32"
+    prop-types "^15.7.2"
+    react-query "^3.34.19"
+    react-router-dom "^5.2.0"
+    react-router-hash-link "^2.1.0"
+    tslib "^2.1.0"
+    urijs "^1.19.11"
+    util "^0.12.4"
+    xml-formatter "^2.6.1"
+
+"@stoplight/elements@^7.7.5":
+  version "7.7.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-7.7.5.tgz#84f8fd9a3f1eec3db04c9c483e1da44d8ab0e750"
+  integrity sha512-Nnh4FLta7jWzFH2++bxs8FgXNBgr+eINdHuqee8HNP8JibRGTzat9GGdJ8hr8WubpnZpgEShL46OTnxZ8gvXIQ==
+  dependencies:
+    "@stoplight/elements-core" "~7.7.5"
+    "@stoplight/http-spec" "^5.1.4"
+    "@stoplight/json" "^3.18.1"
+    "@stoplight/mosaic" "^1.33.0"
+    "@stoplight/types" "^13.7.0"
+    "@stoplight/yaml" "^4.2.3"
+    classnames "^2.2.6"
+    file-saver "^2.0.5"
+    lodash "^4.17.19"
+    react-query "^3.34.19"
+    react-router-dom "^5.2.0"
+
 "@stoplight/eslint-config@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@stoplight/eslint-config/-/eslint-config-2.1.0.tgz#e7ee3973f31c00dd0d5fd3b0f4520bd25db5c9ff"

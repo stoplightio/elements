@@ -5,7 +5,7 @@ import {
   withPersistenceBoundary,
   withQueryClientProvider,
   withStyles,
-} from '@stoplight/elements-core';
+} from '@abbudao/elements-core';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { flow } from 'lodash';
