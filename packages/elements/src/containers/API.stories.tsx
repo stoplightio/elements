@@ -7,6 +7,7 @@ import { simpleApiWithInternalOperations } from '../__fixtures__/api-description
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
+import { gorilaAPI } from '../__fixtures__/api-descriptions/gorila';
 import { API, APIProps } from './API';
 
 export default {
@@ -97,3 +98,9 @@ Instagram.args = {
   apiDescriptionUrl: 'https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml',
 };
 Instagram.storyName = 'Instagram';
+
+export const GorilaAPI = Template.bind({});
+GorilaAPI.args = {
+  apiDescriptionDocument: JSON.stringify(gorilaAPI)
+};
+GorilaAPI.storyName = 'Gorila API';

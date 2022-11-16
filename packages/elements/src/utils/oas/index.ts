@@ -1,4 +1,4 @@
-import { slugify } from '@stoplight/elements-core';
+import { slugify } from '@abbudao/elements-core';
 import type {
   Oas2HttpOperationTransformer,
   Oas2HttpServiceTransformer,
@@ -8,10 +8,11 @@ import type {
 import { transformOas2Operation, transformOas2Service } from '@stoplight/http-spec/oas2';
 import { transformOas3Operation, transformOas3Service } from '@stoplight/http-spec/oas3';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
-import { NodeType } from '@stoplight/types';
+import { NodeType, Extensions  } from '@stoplight/types';
 import { get, isObject, last } from 'lodash';
 import { OpenAPIObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
+import { isPlainObject } from '@stoplight/json';
 
 import { oas2SourceMap } from './oas2';
 import { oas3SourceMap } from './oas3';
@@ -66,6 +67,7 @@ function computeServiceNode(
     data: serviceDocument,
     tags: serviceDocument.tags?.map(tag => tag.name) || [],
     children: computeChildNodes(document, document, map, transformOperation),
+    extensions: getExtensions(document)
   };
 
   return serviceNode;
@@ -147,4 +149,15 @@ export function isJson(value: string) {
     return false;
   }
   return true;
+}
+
+const ROOT_EXTENSIONS = ['x-internal'];
+
+function getExtensions(target: unknown): Extensions {
+  return Object.fromEntries(entries(target).filter(([key]) => key.startsWith('x-') && !ROOT_EXTENSIONS.includes(key)));
+}
+export function entries<T = Record<string, unknown>>(o: { [s: string]: T } | ArrayLike<T>): [string, T][];
+export function entries<T = unknown>(o: T): [string, T][];
+export function entries<T = unknown>(o: T): [string, T][] {
+  return isPlainObject(o) ? Object.entries(o as T) : [];
 }
