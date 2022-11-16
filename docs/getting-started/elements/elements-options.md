@@ -8,7 +8,7 @@
 - `tryItCorsProxy` - Pass the URL of a CORS proxy used to send requests to the Try It feature. The provided url is prepended to the URL of an actual request.
 - `tryItCredentialPolicy` - Use to fetch the credential policy for the Try It feature. Options are: `omit` (default), `include`, and `same-origin`.
 - `layout` - There are two layouts for Elements:
-  - `sidebar` - (default) Three-column design.
+  - `sidebar` - (default) Three-column design with resizeable sidebar.
   - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
 - `logo` - URL to an image that will show as a small square logo next to the title, above the table of contents.
 - `router` -  Determines how navigation should work:
