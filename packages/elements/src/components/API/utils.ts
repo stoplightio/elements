@@ -79,18 +79,13 @@ const overviewNode = {
   meta: '',
 }
 
-const computeOperationNodesTree = (operationNodes: OperationNode[], config: ComputeAPITreeConfig = {}) => [
-  {
-    title: 'Endpoints',
-  },
-  ...operationNodes.map((operationNode) => ({
-    id: operationNode.uri,
-    slug: operationNode.uri,
-    title: operationNode.name,
-    type: operationNode.type,
-    meta: operationNode.data.method,
-  }))
-]
+const toLeafNode = (operationNode: OperationNode) => ({
+        id: operationNode.uri,
+        slug: operationNode.uri,
+        title: operationNode.name,
+        type: operationNode.type,
+        meta: operationNode.data.method,
+})
 
 const computeSimpleAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
 
@@ -99,28 +94,46 @@ const computeSimpleAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeCo
 
   const operationNodes = serviceNode.children.filter(node => node.type === NodeType.HttpOperation);
   if (operationNodes.length) {
-  }
-
-  let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
-  if (mergedConfig.hideInternal) {
-    schemaNodes = schemaNodes.filter(node => !node.data['x-internal']);
-  }
-
-  if (!mergedConfig.hideSchemas && schemaNodes.length) {
     tree.push({
-      title: 'Schemas',
+      title: 'Endpoints',
     });
 
-    schemaNodes.forEach(node => {
-      tree.push({
-        id: node.uri,
-        slug: node.uri,
-        title: node.name,
-        type: node.type,
-        meta: '',
+    const { groups, ungrouped } = computeTagGroups(serviceNode);
+
+    // Show ungroupped operations above tag groups
+    ungrouped.forEach(operationNode => {
+      if (mergedConfig.hideInternal && operationNode.data.internal) {
+        return;
+      }
+      tree.push(toLeafNode(operationNode));
+    });
+
+    groups.forEach(group => {
+      const items = group.items.flatMap(operationNode => {
+        if (mergedConfig.hideInternal && operationNode.data.internal) {
+          return [];
+        }
+        return toLeafNode(operationNode);
       });
+      if (items.length > 0) {
+        tree.push({
+          title: group.title,
+          items,
+        });
+      }
     });
   }
+
+let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
+  schemaNodes.forEach(node => {
+    tree.push({
+      id: node.uri,
+      slug: node.uri,
+      title: node.name,
+      type: node.type,
+      meta: '',
+    });
+  });
   return tree;
 }
 
@@ -137,7 +150,7 @@ const createTagToGroupReference = (tagGroups: XTagGroupExtension): Record<string
   return tagToTagGroup
 }
 
-const computeGroupedAPITree =(serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}): TableOfContentsTagGroups[] => {
+const computeGroupedAPITree =(serviceNode: ServiceNode): TableOfContentsTagGroups[] => {
   const groupTree: Record<string, TagGroup[]> = {};
   const xTagGroups: XTagGroupExtension = getTagGroups(serviceNode) ?? {}
   const tagToGroupRef = createTagToGroupReference(xTagGroups)
@@ -152,16 +165,16 @@ const computeGroupedAPITree =(serviceNode: ServiceNode, config: ComputeAPITreeCo
       groupTree[targetGroupName] = groupTree[targetGroupName]?.length > 0 ? [...groupTree[targetGroupName], node] : [node]
     }
   })
-
-  return Object.keys(groupTree).map((title) => ({
+  const result = Object.keys(groupTree).map((title) => ({
     title,
-    items: groupTree[title].map( i => ({
-      title: i.title,
-      items: computeOperationNodesTree(i["items"])
+    items: groupTree[title].map(({ title, items }) => ({
+      title,
+      items: items.map(i => toLeafNode(i))
     })),
-    type: "tagGroup"
-  })
-)
+    type: "tagGroup" as const
+  }))
+
+  return result
 }
 export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
   const isUsingTagGroups = !isEmpty(getTagGroups(serviceNode))
