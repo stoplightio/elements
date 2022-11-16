@@ -5,7 +5,7 @@ import {
   HttpMethodColors,
   ParsedDocs,
   TryItWithRequestSamples,
-} from '@stoplight/elements-core';
+} from '@abbudao/elements-core';
 import { Box, Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
