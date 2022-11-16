@@ -13,7 +13,13 @@ export type CustomLinkComponent = React.ComponentType<{
   children: React.ReactNode;
 }>;
 
-export type TableOfContentsItem = TableOfContentsDivider | TableOfContentsGroupItem;
+export type TableOfContentsTagGroups = {
+  title: string;
+  items: TableOfContentsGroup[];
+  type: "tagGroup"
+}
+
+export type TableOfContentsItem = TableOfContentsDivider | TableOfContentsGroupItem | TableOfContentsTagGroups;
 
 export type TableOfContentsDivider = {
   title: string;

@@ -12,6 +12,7 @@ import {
   TableOfContentsNode,
   TableOfContentsNodeGroup,
   TableOfContentsProps,
+  TableOfContentsTagGroups
 } from './types';
 import {
   getHtmlIdFromItemId,
@@ -20,6 +21,7 @@ import {
   isExternalLink,
   isGroup,
   isGroupOpenByDefault,
+  isTagGroup,
   isNode,
   isNodeGroup,
 } from './utils';
@@ -63,6 +65,14 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
                 if (isDivider(item)) {
                   return <Divider key={key} item={item} />;
                 }
+                  if (isTagGroup(item)) {
+                      return <TagGroupItem
+                          key={key}
+                          item={item}
+                          maxDepthOpenByDefault={maxDepthOpenByDefault}
+                          onLinkClick={onLinkClick}
+                      />
+                  }
 
                 return (
                   <GroupItem
@@ -100,6 +110,29 @@ const Divider = React.memo<{
     </Box>
   );
 });
+
+type TagGroupItemProps = {
+    item: TableOfContentsTagGroups;
+    maxDepthOpenByDefault?: TableOfContentsProps["maxDepthOpenByDefault"];
+    onLinkClick?(): void;
+}
+
+const TagGroupItem = ({ item, maxDepthOpenByDefault, onLinkClick }: TagGroupItemProps) => (
+    <Box>
+        <div className="sl-text-sm sl-leading-relaxed sl-tracking-wide sl-font-bold sl-uppercase sl-mt-6 sl-mb-2 sl-pl-4"> {item.title} </div>
+        {
+            item.items.map((i, k) =>
+                <GroupItem
+                    key={k}
+                    item={i}
+                    depth={1}
+                    maxDepthOpenByDefault={maxDepthOpenByDefault}
+                    onLinkClick={onLinkClick}
+                />
+            )
+        }
+    </Box>
+)
 
 const GroupItem = React.memo<{
   depth: number;

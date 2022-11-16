@@ -32,6 +32,9 @@ describe('computeTagGroups', () => {
           },
         },
       },
+      "x-tagGroups": [
+        "a"
+      ]
     };
 
     const serviceNode = transformOasToServiceNode(apiDocument);
@@ -510,7 +513,11 @@ describe('computeTagGroups', () => {
                   },
                 ],
                 security: [],
-                extensions: {},
+                extensions: {
+                  "x-tagGroups": [
+                    "a"
+                  ]
+                },
               },
               name: '/b',
               tags: ['beta'],
@@ -546,7 +553,11 @@ describe('computeTagGroups', () => {
                   },
                 ],
                 security: [],
-                extensions: {},
+                extensions: {
+                  "x-tagGroups": [
+                    "a"
+                  ]
+                },
               },
               name: '/a',
               tags: ['alpha'],

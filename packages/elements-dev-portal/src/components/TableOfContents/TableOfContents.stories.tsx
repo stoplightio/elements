@@ -7,7 +7,6 @@ import { TableOfContents } from './';
 // Wrapper to show how to use the node content hook
 const TableOfContentsWrapper = ({ projectId, branchSlug }: { projectId: string; branchSlug?: string }) => {
   const { data } = useGetTableOfContents({ projectId, branchSlug });
-
   return data ? (
     <TableOfContents
       activeId="b3A6MTE0"
