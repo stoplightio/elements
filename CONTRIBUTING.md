@@ -61,7 +61,7 @@ For your convenience, all the packages are linked. For example, if you run the `
 
 The aim should never be to write tests for the sake of writing tests. 
 
-For Stoplight, the goal of testing is **to give developers confidence** when making changes to the codebase, be it adding new features, cleaning up tech debt, or fixing bugs.
+For Stoplight, the goal of testing is **to give developers confidence** when making changes to the codebase when they are adding new features, cleaning up tech debt, or fixing bugs.
 
 Well-written tests also **saves time** when authoring or reviewing PRs as you don't have to run through hundreds of test cases manually to verify everything still works as intended.
 On the other hand, **badly written tests** that depend on the implementation need to be changed any time the implementation changes, **causing frustration and unnecessary work**, while barely adding any value.
@@ -72,7 +72,7 @@ To achieve high quality tests, **please follow the following principles**:
     
     **Instead,** extract the real business requirement from what would be the snapshot and assert against that.
     
-    - Tests that `find` child components and assert against props being passed are usually incorrect. 
+    - Tests that `find` child components and assert against props being passed may be incorrect. 
     Use the **recommended selectors** (see point below) and **[`jest-dom` assertions](https://github.com/testing-library/jest-dom)** to enforce constraints that matter to the user.
     - Searching for DOM elements using tag name, CSS class, or hierarchy (`parentElement`, etc.) is an anti-pattern.
 
@@ -89,7 +89,7 @@ In this case, still try to follow the principles above as much as practical.
 
 ### Unit tests
 
-**Each public-facing component should be thoroughly covered by unit tests.**
+**Each public-facing component should be covered by unit tests.**
 Take a sensible approach to testing and don't worship the coverage indicator but make sure that every notable feature is covered exhaustively.
 
 When you add a new component, implement a changing functional requirement, or fix a bug, **you are expected to also deliver one or more tests** that cover the feature being added/modified.
@@ -128,7 +128,7 @@ yarn elements test -t Test\ Name
 ### Framework Integration
 
 Framework integration tests are set up **to make sure *Elements* builds and loads correctly using any of the supported frameworks**.
-Even though these tests aren't fully end-to-end, they are referred to as end-to-end (e2e) tests. This is mainly because *Cypress*, a traditionally end-to-end test runner, is used to run them.
+Even though these tests aren't fully end-to-end, they're referred to as end-to-end (e2e) tests. This is mainly because *Cypress*, a traditionally end-to-end test runner, is used to run them.
 
 The logical steps in which these tests are run:
 
@@ -219,7 +219,7 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
 3. Create a new branch. The name doesn't matter, but here's an example: `chore/release`.
 4. Run `yarn version`. You are asked a few questions.
     - Don't release `elements-demo`. You have to choose "Custom Version" and enter the same, old version by hand. Awkward, but it works.
-    - For other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our [versioning guidelines](#versioning-guidelines).
+    - For other packages, choose the proposed version (patch or minor update) from the console. Remember to read the [versioning guidelines](#versioning-guidelines).
 5. After the script gets finalized, a commit is created for you.
 6. *IMPORTANT*: If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't  matter here; something like `fix: ^ to ~ for elements-core` is more than enough.
 7. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the release obeys the versioning guidelines.
@@ -258,4 +258,4 @@ To merge your changes into main you must create a PR for your changes and then h
 
 To do this simply create a pull request merging your branch into main. Once your changes are complete, ensure all build checks are successfully passing, fill out the pull request template, and assign elements-owner as the reviewer.
 
-While Stoplight tries to be as responsive as possible, it can take several days to review requests. Stoplight prioritizes new issues and requests each sprint and handles them as our capacity allows. If it has been over 2 weeks since your request, add a comment mentioning the @elements-owners to give us a friendly reminder.
+While Stoplight tries to be as responsive as possible, it can take several days to review requests. Stoplight prioritizes new issues and requests each sprint and handles them as capacity allows. If it has been over 2 weeks since your request, add a comment mentioning the @elements-owners to send a friendly reminder.
