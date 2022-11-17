@@ -9,7 +9,7 @@ How you chose to work with Elements depends on what you are trying to do.
 - **[Elements](getting-started/elements/introduction.md)** - Only need documentation for your API reference? Integrate Elements with any Content Management System, existing documentation portal, website, or React application.
 - **[Elements Dev Portal](getting-started/dev-portal/introduction.md)** - Need a full documentation portal combining articles and guides with your API reference? Integrate Elements Dev Portal using ReactJS or HTML.
 
-Still having trouble deciding between Elements and Elements Dev Portal? Read the [Elements vs Elements Dev Portal] guide (elements-vs-dev-portal.md) to better understand the differences.
+Still having trouble deciding between Elements and Elements Dev Portal? Read the [Elements vs Elements Dev Portal](elements-vs-dev-portal.md) guide to better understand the differences.
 
 ## Getting started with Elements
 
