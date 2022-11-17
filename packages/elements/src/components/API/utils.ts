@@ -239,7 +239,8 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
   const isUsingTagGroups = !isEmpty(getTagGroups(serviceNode))
   const tree = isUsingTagGroups? computeGroupedAPITree(serviceNode) : computeSimpleAPITree(serviceNode, config)
 
-  return [overviewNode, ...tree]
+  const sortedTree = sortTags(sortTree(tree))
+  return [overviewNode, ...sortedTree]
 };
 
 export const findFirstNodeSlug = (tree: TableOfContentsItem[]): string | void => {
