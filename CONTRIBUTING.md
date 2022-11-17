@@ -16,7 +16,7 @@
       - [Run the tests manually](#run-the-tests-manually)
       - [Edit the tests](#edit-the-tests)
       - [Inspecting test results](#inspecting-test-results)
-  - [Yalcing into platform-internal](#yalcing-into-platform-internal)
+  - [Yalc into platform-internal](#yalcing-into-platform-internal)
   - [Releasing Elements](#releasing-elements)
   - [Versioning Guidelines](#versioning-guidelines)
   - [Merging into main](#merging-into-main)
@@ -25,31 +25,31 @@
 
 Elements is an open-source project, and we love contributions. If you're familiar with TypeScript and Jest then dive right in, see how far you can get, and talk to us in [Discussions](https://github.com/stoplightio/elements/discussions) or start a draft PR if you get stuck.
 
-## Installing Elements
+## Install Elements
 
 Before you start development, you have to install Elements and its dependencies.
 
 Make sure you have [Node.js](https://nodejs.org/en/) version 16 or higher installed. We recommend [nvm](https://github.com/nvm-sh/nvm) for managing different versions of Node.js on your computer.
 
-For dependencies, we are using [yarn](https://yarnpkg.com/). Install it, following the [guideline](https://yarnpkg.com/getting-started/install).
+For dependencies, use [yarn](https://yarnpkg.com/). Install it, following the [guideline](https://yarnpkg.com/getting-started/install).
 
 Clone elements repository by running `git clone git@github.com:stoplightio/elements.git` (provided you have [SSH keys added](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) in GitHub).
 
 Next, move into the repository by running `cd elements`.
 
-Now run `yarn`. Installation of dependencies will begin.
+Now run `yarn` and to install dependencies.
 
 To validate that the installation was successful, move into the demo folder by running `cd demo` and run `yarn start`. You should see a demo website, under the address `http://localhost:4025`.
 
-## Developing Elements
+## Develop Elements
 
-Elements is split into 3 packages. 2 of them - `elements` and `elements-dev-portal` are user-facing. 3rd - `elements-core` is an implementation detail, created to share code and components between `elements` and `elements-dev-portal`.
+Elements is split into three packages. Two of them, `elements` and `elements-dev-portal`, are user-facing. The third, `elements-core`, is an implementation detail created to share code and components between `elements` and `elements-dev-portal`.
 
-Most of the code is actually in `elements-core`, so if you are working on an issue, it's likely where you will land. `elements` and `elements-dev-portal` only have code that is highly specific to those projects.
+Most of the code is in `elements-core`; `elements` and `elements-dev-portal` only have code that's highly specific to those projects.
 
-Most often, we are developing elements (in all of those packages) using [storybooks](https://storybook.js.org/).
+Most often, you'll develop Elements (in all of those packages) using [storybooks](https://storybook.js.org/).
 
-Each package has its own storybook. In order to run a storybook for a specific package, in the main directory run, for example `yarn elements-core storybook`. This will start a storybook for the `elements-core` package.
+Each package has its own storybook. To run a storybook for a specific package, in the main directory run, for example, `yarn elements-core storybook`. This starts a storybook for the `elements-core` package.
 
 Now you can develop the code and test your changes in the storybook. 
 
@@ -57,13 +57,13 @@ For your convenience, all the packages are linked. For example, if you run the `
 
 ## Testing
 
-### Guiding principles
+### Guiding Principles
 
 The aim should never be to write tests for the sake of writing tests. 
 In our opinion the goal of testing is **to give developers confidence** when making changes to the codebase, be it adding new features, cleaning up tech debt, or fixing bugs.
 
-Well-written tests also **spare tons of time** when authoring or reviewing PRs as one doesn't have to run through hundreds of test cases manually to verify everything still works as intended.
-On the other hand, **badly written tests** that depend on the implementation will need to be changed any time the implementation changes, **causing frustration and unnecessary work**, while barely adding any value.
+Well-written tests also **saves time** when authoring or reviewing PRs as you don't have to run through hundreds of test cases manually to verify everything still works as intended.
+On the other hand, **badly written tests** that depend on the implementation need to be changed any time the implementation changes, **causing frustration and unnecessary work**, while barely adding any value.
 
 In order to achieve good quality tests, **please follow the following principles**:
 - Always test the **behavior** of a component, not the implementation.
@@ -73,13 +73,13 @@ In order to achieve good quality tests, **please follow the following principles
     
     - Tests that `find` child components and assert against props being passed are mostly wrong. 
     Use the **recommended selectors** (see point below) and **[`jest-dom` assertions](https://github.com/testing-library/jest-dom)** to enforce constraints that actually matter to the user.
-    - Searching for DOM elements using tag name, CSS class, or hierarchy (`parentElement`, etc.) is an antipattern.
+    - Searching for DOM elements using tag name, CSS class, or hierarchy (`parentElement`, etc.) is an anti-pattern.
 
     *Do instead:* use **`findByRole` or other queries from [TL's query hierarchy](https://testing-library.com/docs/queries/about#priority)**. 
     Feel free to add accessibility attributes where missing. With a bit of practice, you'll see that almost everything can be covered with `*byRole`.
-- The goal for your test suite is **to cover** as much of the **business requirements** (e.g. in the issue description) as practical.
+- The goal for your test suite is **to cover** as much of the **business requirements** (for example, in the issue description) as practical.
 - An ideal test suite only requires a change **if business requirements change**.
-- While not generally expected, **it is OK to add additional tests** for helper functions, hooks and subcomponents where it would not be practical to test them alongside their host components.
+- While not generally expected, **it's OK to add additional tests** for helper functions, hooks and sub-components where it would not be practical to test them alongside their host components.
 In this case, still try to follow the principles above as much as practical.
 - Use **Jest/JSDOM testing wherever suitable**. Cypress-based tests should be reserved for high-level integration tests, such as:
     - Basic sanity checks to make sure that *Elements* builds and loads correctly in a certain environment.
@@ -89,9 +89,9 @@ In this case, still try to follow the principles above as much as practical.
 ### Unit tests
 
 **Each public-facing component should be thoroughly covered by unit tests.**
-We take a sensible approach to testing and do not worship the coverage indicator but make sure that every notable feature is covered exhaustively.
+We take a sensible approach to testing and don't worship the coverage indicator but make sure that every notable feature is covered exhaustively.
 
-Whenever you add a new component, implement a changing functional requirement, or fix a bug, **you are expected to also deliver one or more tests** that cover the feature being added/modified.
+When you add a new component, implement a changing functional requirement, or fix a bug, **you are expected to also deliver one or more tests** that cover the feature being added/modified.
 
 Unit testing stack:
 - [Jest](https://jestjs.io/)
@@ -104,7 +104,7 @@ Unit testing stack:
 Unit tests are currently located in a directory `__tests__` close to the component being tested, but this is soon to change:
 In the future, tests will be located right next to the components under test, with a `.spec.ts` extension.
   
-#### Running unit-tests
+#### Run Unit Tests
 
 Assuming you work on the `elements` package, you can run `jest` on it using the shorthand
 ```shell
@@ -113,7 +113,7 @@ yarn elements test
 
 There is **no need to build *Elements* beforehand**, the test runs on the currently saved TypeScript code. Make sure to install dependencies, however. (`yarn`)
 
-Any arguments you append after the command will get forwarded to jest. Some useful combinations:
+Any arguments you append after the command are forwarded to jest. Some useful combinations:
 ```shell
 # Shows the result of each individual test case
 yarn elements test --verbose
@@ -127,25 +127,24 @@ yarn elements test -t Test\ Name
 
 ### Framework Integration
 
-Framework Integration tests are set up **to make sure *Elements* builds and loads correctly using any of the supported frameworks**.
-Even though these tests are not "end to end" per se, we usually refer to them as end-to-end (e2e) tests, 
-mainly because we use *Cypress* to run them, a traditionally end-to-end test runner.
+Framework integration tests are set up **to make sure *Elements* builds and loads correctly using any of the supported frameworks**.
+Even though these tests aren't fully end-to-end, we usually refer to them as end-to-end (e2e) tests, mainly because we use *Cypress* to run them, a traditionally end-to-end test runner.
 
 The logical steps in which these tests are run:
 
-1. You build *Elements* from the current TypeScript source.
-2. You copy the contents of the predefined example project from `examples` to `examples-dev` e.g. copy `examples/angular` to `examples-dev/angular`
-3. You install the *Elements* build from the first step into the chosen example project in `examples-dev` (you modify `package.json` to point to the `dist` folder of `elements-core`, `elements` or `elements-dev-portal`)
-4. You serve the example from the `examples-dev` project on localhost over HTTP port 4200
-5. You run the *Cypress* test suite against this example application.
+1. Build *Elements* from the current TypeScript source.
+2. Copy the contents of the predefined example project from `examples` to `examples-dev`. For example, copy `examples/angular` to `examples-dev/angular`
+3. Install the *Elements* build from the first step into the chosen example project in `examples-dev` (you modify `package.json` to point to the `dist` folder of `elements-core`, `elements` or `elements-dev-portal`)
+4. Serve the example from the `examples-dev` project on localhost over HTTP port 4200
+5. Run the *Cypress* test suite against this example application.
 
 **You generally don't need to amend e2e tests** when working on *Elements* unless you are adding a new supported framework.
-These tests are run by the CI pipeline to ensure that a PR does not break any environments.
+These tests are run by the CI pipeline to ensure that a PR doesn't break any environments.
 That being said, if you for some reason want to run them by hand, here's how to do so:
 
 > **Note**: Unlike Jest tests, FI tests simulate real-world integration scenarios and therefore require *Elements* to be built before testing.
 
-#### Run tests as the CI would
+#### Run Tests as the CI Would
 
 ```shell
 # Make sure top-level dependencies are up-to-date
@@ -161,11 +160,11 @@ yarn e2e:run:react-cra
 ```
 > **Note**: You only need to run `yarn copy:$INTEGRATION-NAME` once after you clone the Elements repo.
 
-#### Run the tests manually
+#### Run the Tests Manually
 
 This is useful for either working on the tests or debugging failures.
 
-The first 3 steps are the same, but this time, instead of running the tests in headless mode, we are going to run them by hand, using the Cypress console.
+The first three steps are the same, but this time, instead of running the tests in headless mode, run them manually using the Cypress console.
 
 ```shell
 # Make sure top-level dependencies are up-to-date
@@ -190,12 +189,12 @@ Don't forget that while *Cypress* hot-reloads on test code change, it needs a co
 There is unfortunately no way around this for now. You likely won't hit this limitation often, but in case you do, one trick that may speed things up a bit is:
 You can substitute `yarn build:react-cra && yarn serve:react-cra` with `cd examples/react-cra; yarn start`.
 
-#### Edit the tests
+#### Edit the Tests
 
 The tests are located under `cypress/integration` and utilize the same principles as the unit tests.
 Fixtures, *Cypress* plugins, and support files can also be found in the relevant folder under `cypress`.
 
-#### Inspecting test results
+#### Inspect Test Results
 
 Test results can be found under the `cypress/results` directory. 
 *Cypress* records videos of every test suite run and takes screenshots on every failure. 
@@ -207,7 +206,7 @@ When running in *CircleCI*, the host interprets `output.xml` and displays it vis
 Videos - and in case of failure, screenshots - can be found under the *Artifacts* tab.
 ![screenshot](https://user-images.githubusercontent.com/543372/105713474-7f558980-5f1b-11eb-82b5-87ff764be27a.png)
 
-## Yalcing into `platform-internal`
+## Yalc into `platform-internal`
 
 Elements is used in the Stoplight Platform, as well as in open source projects. Here is how you (if you are a Stoplight employee) can test integrating Elements locally:
 
@@ -215,16 +214,16 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
 2. Copy the yalc published version output to terminal `@stoplight/elements-core@7.2.0`
 3. Go to `packages/ninja`, run `yalc add @stoplight/elements-core@7.2.0` and `yarn install --check-files`
 
-## Releasing Elements
+## Release Elements
 
 1. Make sure you are in the root directory of this repo and on the `main` branch.
 2. Pull all the latest changes.
-3. Create a new branch. The name doesn't really matter - something like `chore/release` will do.
-4. Run `yarn version`. You will be asked a few questions.
+3. Create a new branch. The name doesn't really matter, but here's an example: `chore/release`.
+4. Run `yarn version`. You are asked a few questions.
     - We don't release `elements-demo`. In order to not release them, you have to choose "Custom Version" and enter the same, old version by hand. Awkward, but it works.
-    - For other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our versioning guidelines below!
-5. After the script gets finalized, a commit will be created for you.
-6. *IMPORTANT!!!* If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't really matter here, something like `fix: ^ to ~ for elements-core` is more than enough.
+    - For other packages, you can just choose the proposed version (patch or minor update) from the console. Remember to read our [versioning guidelines](#versioning-guidelines).
+5. After the script gets finalized, a commit is created for you.
+6. *IMPORTANT*: If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't really matter here, something like `fix: ^ to ~ for elements-core` is more than enough.
 7. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the release obeys our versioning guidelines.
 
 ## Versioning Guidelines
@@ -233,9 +232,9 @@ If you made changes only in the `elements` package, it's okay to release only th
 
 If you made changes only in the `elements-dev-portal` package, it's okay to release only the `elements-dev-portal` package.
 
-If you made changes in `elements-core`, this means that all 3 packages should be released.
+If you made changes in `elements-core`, this means that all three packages should be released.
 
-If it's difficult to figure out what changes happened since the last release, there is never any harm in releasing all the packages. This will not cause any issues, meanwhile - for example - releasing only `elements` but not releasing `elements-core` can cause serious errors.
+If it's difficult to figure out what changes happened since the last release, there is never any harm in releasing all the packages. This won't cause any issues, but releasing only `elements` and not releasing `elements-core` can cause serious errors.
 
 Here is how we do versioning:
 
@@ -257,7 +256,7 @@ Because we allow for breaking changes in `elements-core`, `elements` and `elemen
 
 This is probably the most obvious - in all 3 packages patch bumps are mostly for bug fixes.
 
-###  Merging into Main
+###  Merge into Main
 
 To merge your changes into main you must create a PR for your changes and then have those changes approved by a member of the stoplight elements-owner team.
 
