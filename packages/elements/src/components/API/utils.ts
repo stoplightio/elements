@@ -70,7 +70,6 @@ export const computeTagGroups = (serviceNode: ServiceNode) => {
   return { groups: orderedTagGroups, ungrouped };
 };
 
-
 const overviewNode = {
   id: '/',
   slug: '/',
@@ -176,9 +175,70 @@ const computeGroupedAPITree =(serviceNode: ServiceNode): TableOfContentsTagGroup
 
   return result
 }
+
+const compareByTitle = weights => (x, y) => {
+  // when key is not present, it goes to the end of the line
+  const xWeight = weights[x.title] ?? Object.keys(weights).size
+  const yWeight = weights[y.title] ?? Object.keys(weights).size
+
+  if ( xWeight < yWeight ) {
+    return -1;
+  }
+
+  if ( xWeight > yWeight ) {
+    return 1;
+  }
+
+  return 0;
+}
+
+const sortTags = (tree) => {
+  const weights = {
+    // root
+    'Portfolios': 0,
+    'Securities': 1,
+    'Issuers': 2,
+    'Brokers': 3,
+    'Benchmarks': 4,
+    'Corporate Bonds': 5,
+    // portfolio
+    'Transactions': 6,
+    'Positions': 7,
+    'Net Asset Values': 8,
+    'Profit & Losses': 9,
+    'Time-Weighted Return': 10,
+    'Security Events': 11,
+    // postion
+    'Market Values': 12,
+    'Average Prices': 13,
+    'Position Profit & Losses': 14,
+    'Position Time-Weighted Return': 15,
+    'Internal Rates of Return': 16,
+    'Security Prices': 17
+  }
+
+  for (let node of tree) {
+    node.items.sort(compareByTitle(weights))
+  }
+
+  return tree
+}
+
+const sortTree = (tree) => {
+  const weights = {
+    'Overview': 0,
+    'Root Resources': 1,
+    'Portfolio Resources': 2,
+    'Position Resources': 3
+  }
+
+  return tree.sort(compareByTitle(weights))
+}
+
 export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
   const isUsingTagGroups = !isEmpty(getTagGroups(serviceNode))
   const tree = isUsingTagGroups? computeGroupedAPITree(serviceNode) : computeSimpleAPITree(serviceNode, config)
+
   return [overviewNode, ...tree]
 };
 
