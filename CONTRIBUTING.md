@@ -37,7 +37,7 @@ Clone elements repository by running `git clone git@github.com:stoplightio/eleme
 
 Next, move into the repository by running `cd elements`.
 
-Now run `yarn` and to install dependencies.
+Now run `yarn` to install dependencies.
 
 To validate that the installation was successful, move into the demo folder by running `cd demo` and run `yarn start`. You should see a demo website, under the address `http://localhost:4025`.
 
@@ -61,12 +61,11 @@ For your convenience, all the packages are linked. For example, if you run the `
 
 The aim should never be to write tests for the sake of writing tests. 
 
-For Stoplight, the goal of testing is **to give developers confidence** when making changes to the codebase when they are adding new features, cleaning up tech debt, or fixing bugs.
+For Stoplight, the goal of testing is **to give developers confidence** when making changes to the codebase when they're adding new features, cleaning up tech debt, or fixing bugs.
 
-Well-written tests also **saves time** when authoring or reviewing PRs as you don't have to run through hundreds of test cases manually to verify everything still works as intended.
-On the other hand, **badly written tests** that depend on the implementation need to be changed any time the implementation changes, **causing frustration and unnecessary work**, while barely adding any value.
+Well-written tests also **save time** when authoring or reviewing PRs as you don't have to run through hundreds of test cases manually to verify everything still works as intended. On the other hand, **badly written tests** that depend on the implementation need to be changed any time the implementation changes, **causing frustration and unnecessary work**, while barely adding any value.
 
-To achieve high quality tests, **please follow the following principles**:
+To achieve high-quality tests, **follow these principles**:
 - Always test the **behavior** of a component, not the implementation.
     - Tests that use *Jest snapshots* almost always violate this. (Except maybe when you are testing an AST parser, a linter, or similar.) 
     
@@ -80,11 +79,10 @@ To achieve high quality tests, **please follow the following principles**:
     Feel free to add accessibility attributes where missing. With a bit of practice, you'll see that almost everything can be covered with `*byRole`.
 - The goal for your test suite is **to cover** as much of the **business requirements** (for example, in the issue description) as practical.
 - An ideal test suite only requires a change **if business requirements change**.
-- While not expected, **it's OK to add additional tests** for helper functions, hooks and sub-components where it would not be practical to test them alongside their host components.
-In this case, still try to follow the principles above as much as practical.
+- While not expected, **it's OK to add additional tests** for helper functions, hooks, and sub-components where it would not be practical to test them alongside their host components. In this case, try to follow the principles above as much as practical.
 - Use **Jest/JSDOM testing wherever suitable**. Cypress-based tests should be reserved for high-level integration tests, such as:
     - Basic checks to make sure that *Elements* builds and loads correctly in a certain environment.
-    - Make sure the routers/navigation of the external framework work well with Stoplight's internal router.
+    - Make sure the routers/navigation of the external framework works well with Stoplight's internal router.
 
 
 ### Unit tests
@@ -115,13 +113,13 @@ There is **no need to build *Elements* beforehand**, the test runs on the curren
 
 Any arguments you append after the command are forwarded to jest. Some useful combinations:
 ```shell
-# Shows the result of each individual test case
+# Show the result of each individual test case
 yarn elements test --verbose
-# Only runs tests related to files changed since the last commit.
+# Only run tests related to files changed since the last commit.
 yarn elements test -o
-# Keeps running the tests whenever you change a source or test file. Implies `-o` by default.
+# Keep running the tests whenever you change a source or test file. Implies `-o` by default.
 yarn elements test --watch
-# Runs the test(s) whose name matches the argument regex
+# Run the test(s) whose name matches the argument regex
 yarn elements test -t Test\ Name
 ```
 
@@ -195,8 +193,7 @@ Fixtures, *Cypress* plugins, and support files can also be found in the relevant
 #### Inspect Test Results
 
 Test results can be found under the `cypress/results` directory. 
-*Cypress* records videos of every test suite run and takes screenshots on every failure. 
-In addition, a machine-readable and human-readable `output.xml` is generated that contains a summary of the results.
+*Cypress* records videos of every test suite run and takes screenshots for every failure. In addition, a machine-readable and human-readable `output.xml` is generated that contains a summary of the results.
 
 When running in *CircleCI*, the host interprets `output.xml` and displays it visually on the dashboard:
 ![screenshot](https://user-images.githubusercontent.com/543372/105713328-4c12fa80-5f1b-11eb-869d-6aa382818c5d.png)
@@ -221,7 +218,7 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
     - Don't release `elements-demo`. You have to choose "Custom Version" and enter the same, old version by hand. Awkward, but it works.
     - For other packages, choose the proposed version (patch or minor update) from the console. Remember to read the [versioning guidelines](#versioning-guidelines).
 5. After the script gets finalized, a commit is created for you.
-6. *IMPORTANT*: If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't  matter here; something like `fix: ^ to ~ for elements-core` is more than enough.
+6. *IMPORTANT*: If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't matter here; something like `fix: ^ to ~ for elements-core` is more than enough.
 7. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the release obeys the versioning guidelines.
 
 ## Versioning Guidelines
