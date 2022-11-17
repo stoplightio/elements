@@ -52,7 +52,7 @@ Alternatively, copy and paste this into an `index.html` and open it in a browser
 </html>
 ```
 
-5. Finally, serve it with a HTTP server. Grab any HTTP server you like, such as the NPM [http-server](https://www.npmjs.com/package/http-server).
+5. Finally, serve it with an HTTP server. Grab any HTTP server you like, such as the NPM [http-server](https://www.npmjs.com/package/http-server).
 
 ```bash
 $ npm install -g http-server
