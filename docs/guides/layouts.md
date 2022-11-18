@@ -6,9 +6,9 @@ When you render the API component on your page without any additional styling, i
 
 A second and recommended layout option exists, however. API has two scrollable areas built-in inside: the Table of Contents and the actual content. This makes scrolling through massive API docs much more pleasant.
 
-To achieve that effect, you just have to limit the height of API component. 
+To achieve that effect, you just have to limit the height of the API component. 
 
-For example if you have an empty page displaying *only* the API component, you can limit the height of `body` container:
+For example, if you have an empty page displaying *only* the API component, you can limit the height of `body` container:
 
 ```html
 <body style="height: 100vh;">
@@ -16,7 +16,7 @@ For example if you have an empty page displaying *only* the API component, you c
 </body>
 ```
 
-If you have some additional components above and/or below API, you can use a flexbox layout. This is the layout used in most of examples:
+If you have some additional components above and/or below API, you can use a flexbox layout. This is the layout used in most examples:
 
 ```html
 <body>

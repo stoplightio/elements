@@ -4,7 +4,7 @@ Elements is powered by the popular "API Description Format" known as [OpenAPI](h
 
 ### Learning OpenAPI
 
-The official [OpenAPI documentation](https://oai.github.io/Documentation/introduction.html) can help teach you what you need to learn about the official YAML/JSON flavours, or you can grab [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=docs) (or any other [visual OpenAPI editor](https://openapi.tools/#gui-editors)) to avoid needing to learn all that syntax yourself.
+The official [OpenAPI documentation](https://oai.github.io/Documentation/introduction.html) can help teach you what you need to learn about the official YAML/JSON flavors, or you can grab [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=docs) (or any other [visual OpenAPI editor](https://openapi.tools/#gui-editors)) to avoid needing to learn all that syntax yourself.
 
 Either way, there are lots of sample documents around, such as the canonical `Tic Tac Toe` example. Seeing as it's a lot of clunky YAML you probably don't want to look at, use this Mac/Linux command to save the file locally. You can also open it in your browser and then save the file.
 
@@ -63,4 +63,4 @@ Open up [127.0.0.1:8080](http://127.0.0.1:8080) in the browser and there it shou
 
 -----------
 
-Learn more about [Elements API web component](../getting-started/usage/web-component.md) if you're curious, or move onto the next topic: [what makes great API docs](great-api-docs.md).
+Learn more about [Elements API web component](../getting-started/usage/web-component.md) if you're curious, or move on to the next topic: [what makes great API docs](great-api-docs.md).
