@@ -16,7 +16,7 @@ The users of your APIs are primarily two kinds of people:
 
 The **decision-makers** who discover and decide if your API is a good fit to fulfill their use-case. They can be CEOs, CTOs, Product Managers, or Business Executives. 
  
-The **developers** who interact with the API to fulfill the use-case. These developers can be internal or external and novice or experienced. Novice developers usually require more hand-holding while experienced devs frequently use API docs as a reference. 
+The **developers** who interact with the API to fulfill the use-case. These developers can be internal or external and novice or experienced. Novice developers may require more hand-holding while experienced devs frequently use API docs as a reference. 
 
 Your developer experience must cater to both kinds of consumers. You want them to **decide and integrate with ease**. 
 
@@ -30,7 +30,7 @@ API Reference Documentation has a couple of simple goals:
 
 API Reference Documentation is the main purpose of the API Component (a.k.a the `elements-api` Web Component, or `import { API } from '@stoplight/elements';`).
 
-This documentation focuses on all the endpoints (a.k.a "operations") available in an API and helps explain potential input and output values that can be in requests and responses. Some API reference documentation only show an example, but it's more useful to expand on that and explain not just what those values mean, but what other values could also be valid in various contexts.
+This documentation focuses on all the endpoints (a.k.a "operations") available in an API and helps explain potential input and output values that can be in requests and responses. Some API reference documentation only shows an example, but it's more useful to expand on that and explain not just what those values mean, but what other values could also be valid in various contexts.
 
 Elements groups them by tags and uses their summary in the sidebar, then shows off all the request and response information. For example, which security schemes are needed to talk to the endpoint, with example request code showing how users can try talking to it? It also shows important validations, such as a property has to be a number, has a minimum value, or has to be an email address.
 
@@ -44,7 +44,7 @@ Elements generates sample code for you in Curl and other popular programming lan
 
 The API reference with code samples helps developers in the later stage of integration. For a newcomer starting with your API, you want to make it easy for them to navigate to creating their first integration. Developers learn best by doing. Create a "Quick Start Guide" with the minimum steps required to perform the first action with your API. This can be a step-by-step guide on authentication, calling your most straightforward endpoint fulfilling the most common use case. Don't forget the code samples for these steps, and keep it easy.  
 
-Tutorials are similar to getting started guides but are looking to make it easy to perform a particular use case. For example, things like pagination are partially covered in API reference documentation. Maybe a query string parameter exists like `?page=1` or `?cursor=s24dfkjfhkdf`. Some developers might understand what to do from that alone, but many won't. A tutorial for how pagination works for your API is a great place to explain why you chose your specific pagination approach [of the many that exist](https://www.citusdata.com/blog/2016/03/30/five-ways-to-paginate/), and explain how your users should interact with it. E.g.: [Slack](https://api.slack.com/docs/pagination) and [Stripe](https://stripe.com/docs/api/pagination).
+Tutorials are similar to getting started guides but are looking to make it easy to perform a particular use case. For example, things like pagination are partially covered in API reference documentation. Maybe a query string parameter exists like `?page=1` or `?cursor=s24dfkjfhkdf`. Some developers understand what to do from that alone, but many won't. A tutorial for how pagination works for your API is a great place to explain why you chose your specific pagination approach [of the many that exist](https://www.citusdata.com/blog/2016/03/30/five-ways-to-paginate/), and explain how your users should interact with it. E.g.: [Slack](https://api.slack.com/docs/pagination) and [Stripe](https://stripe.com/docs/api/pagination).
 
 Other common tutorials are "Common Errors," which explain how your [error objects](https://apisyouwonthate.com/blog/creating-good-api-errors-in-rest-graphql-and-grpc/) work, what common status codes mean so you don't need to document 500, 501, 502 on every single operation, and any other useful information that can help users.
 

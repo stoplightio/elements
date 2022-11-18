@@ -2,7 +2,7 @@
 
 The following section applies both to APIs and Stoplight project components. The example focuses on APIs.
 
-When you render the API component on your page without any additional styling, it behaves like a regular `div` element. In particular, this means that it grows in height indefinitely, depending on how much content it has. This was done so the the component behaves as predictably as possible.
+When you render the API component on your page without any additional styling, it behaves like a regular `div` element. In particular, this means that it grows in height indefinitely, depending on how much content it has. This was done so that the component behaves as predictably as possible.
 
 A second and recommended layout option exists, however. API has two scrollable areas built-in inside: the Table of Contents and the actual content. This makes scrolling through massive API docs much more pleasant.
 
