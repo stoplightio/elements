@@ -19,7 +19,7 @@ Then, run `cd my-dir` and `yarn start` to see a basic Elements website in the br
 To install Elements Dev Portal in an existing React app, follow these instructions.
 
 
-1. Install the [@stoplight/elements](https://www.npmjs.com/package/@stoplight/elements) package with NPM/Yarn.
+1. Install the [`@stoplight/elements`](https://www.npmjs.com/package/@stoplight/elements) package with NPM/Yarn.
 
 ```bash
 yarn add @stoplight/elements

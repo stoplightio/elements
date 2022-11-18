@@ -18,7 +18,7 @@ When the server has started, navigate to `http://localhost:3000` to see Elements
 
 To install Elements Dev Portal in an existing React app, follow these instructions.
 
-1. Install the [@stoplight/elements-dev-portal](https://www.npmjs.com/package/@stoplight/elements-dev-portal) package with NPM/Yarn.
+1. Install the [`@stoplight/elements-dev-portal`](https://www.npmjs.com/package/@stoplight/elements-dev-portal) package with NPM/Yarn.
 
 ```bash
 yarn add @stoplight/elements-dev-portal
