@@ -39,13 +39,13 @@ Add the Elements CSS and JavaScript bundles to your Angular config.
 }
 ```
 
-Now, let's generate a new Angular component for our API reference docs.
+Now, generate a new Angular component for your API reference docs.
 
 ```bash
 yarn ng generate component api-reference
 ```
 
-This should generate an `api-reference` folder with a few files. In the `api-reference.component.html` file, let's add the Stoplight API component.
+This should generate an `api-reference` folder with a few files. In the `api-reference.component.html` file, add the Stoplight API component.
 
 <!--
 title: api-reference.component.html
@@ -57,7 +57,7 @@ title: api-reference.component.html
 ></elements-api>
 ```
 
-Notice we added a `basePath` to our API component. We'll also want to add a route for the `/api-reference` path in our `app-routing.module.ts` file. It's important that we also add a catch-all route `**`, so we can deep link to paths in our API reference docs.
+Notice `basePath` in the API component. Add a route for the `/api-reference` path in the `app-routing.module.ts` file. It's important to add a catch-all route `**` so you can deep link to paths in the API reference docs.
 
 Your routing file should end up looking like this:
 
@@ -86,7 +86,7 @@ const routes: Routes = [
 export class AppRoutingModule {}
 ```
 
-And finally, we need to set up Angular to allow [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Head over to the `app-module.ts` file and add the [CUSTOM_PORTAL_SCHEMA](https://angular.io/api/core/CUSTOM_ELEMENTS_SCHEMA).
+Finally, set up Angular to allow [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Head over to the `app-module.ts` file and add the [CUSTOM_PORTAL_SCHEMA](https://angular.io/api/core/CUSTOM_ELEMENTS_SCHEMA).
 
 It'll end up looking like this:
 

@@ -114,11 +114,6 @@
       "type": "item",
       "title": "Great API Documentation",
       "uri": "docs/guides/great-api-docs.md"
-    },
-    {
-      "type": "item",
-      "title": "How Response Examples Work",
-      "uri": "docs/guides/examples.md"
     }
   ]
 }
