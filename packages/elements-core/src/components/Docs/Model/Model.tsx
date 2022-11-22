@@ -71,7 +71,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const description = (
     <VStack spacing={10}>
       {data.description && data.type === 'object' && (
-        <Box pos="relative">
+        <Box pos="relative" overflowX="scroll">
           <MarkdownViewer role="textbox" markdown={data.description} />
           <NodeAnnotation change={descriptionChanged} />
         </Box>
