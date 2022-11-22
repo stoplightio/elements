@@ -3,21 +3,21 @@
 ## Table Of Contents
 
 - [Intro](#intro)
-- [Installing Elements](#install-elements)
-- [Developing Elements](#develop-elements)
+- [Install Elements](#install-elements)
+- [Develop Elements](#develop-elements)
 - [Testing](#testing)
   - [Guiding principles](#guiding-principles)
   - [Unit tests](#unit-tests)
-    - [Running unit-tests](#running-unit-tests)
+    - [Run unit-tests](#run-unit-tests)
   - [Framework Integration](#framework-integration)
     - [Run tests as the CI would](#run-tests-as-the-ci-would)
     - [Run the tests manually](#run-the-tests-manually)
     - [Edit the tests](#edit-the-tests)
-    - [Inspecting test results](#inspecting-test-results)
+    - [Inspect test results](#inspect-test-results)
 - [Yalc into platform-internal](#yalc-into-platform-internal)
-- [Releasing Elements](#release-elements)
+- [Release Elements](#release-elements)
 - [Versioning Guidelines](#versioning-guidelines)
-- [Merging into main](#merge-into-main)
+- [Merge into main](#merge-into-main)
         
 ## Intro
 
