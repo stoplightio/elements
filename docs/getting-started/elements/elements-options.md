@@ -13,7 +13,7 @@
 - `logo` - URL to an image that displays as a small square logo next to the title, above the table of contents.
 - `router` -  Determines how navigation should work:
   - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
-  - `hash` - uses the hash portion of the URL (example: `window.location.hash`) to keep the UI in sync with the URL.
+  - `hash` - uses the hash portion of the URL to keep the UI in sync with the URL.
   - `memory` - keeps the history of your "URL" in memory (doesn't read or write to the address bar).
   - `static` - renders using the StaticRouter which can help render pages on the server.
 

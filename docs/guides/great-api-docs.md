@@ -36,7 +36,7 @@ Elements groups them by tags and uses their summary in the sidebar, then shows o
 
 ### Sample Code
 
-Some folks have built their own API Client code, also known as Software Development Kits ("SDKs"). These are sometimes hand-crafted, and sometimes automatically generated from OpenAPI too. 
+Some folks have built their own API Client code, also known as Software Development Kits ("SDKs"). These are sometimes hand-crafted and sometimes are automatically generated from OpenAPI. 
 
 Elements generates sample code for you in curl and other popular programming languages. In the future, Elements may integrate [custom SDK templates](https://github.com/stoplightio/elements/discussions/1138) for those who already have their own SDKs.
 
