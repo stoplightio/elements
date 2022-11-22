@@ -2,24 +2,22 @@
 
 ## Table Of Contents
 
-- [Contributing to Stoplight Elements](#contributing-to-stoplight-elements)
-  - [Table Of Contents](#table-of-contents)
-  - [Intro](#intro)
-  - [Installing Elements](#installing-elements)
-  - [Developing Elements](#developing-elements)
-  - [Testing](#testing)
-    - [Guiding principles](#guiding-principles)
-    - [Unit tests](#unit-tests)
-      - [Running unit-tests](#running-unit-tests)
-    - [Framework Integration](#framework-integration)
-      - [Run tests as the CI would](#run-tests-as-the-ci-would)
-      - [Run the tests manually](#run-the-tests-manually)
-      - [Edit the tests](#edit-the-tests)
-      - [Inspecting test results](#inspecting-test-results)
-  - [Yalc into platform-internal](#yalcing-into-platform-internal)
-  - [Releasing Elements](#releasing-elements)
-  - [Versioning Guidelines](#versioning-guidelines)
-  - [Merging into main](#merging-into-main)
+- [Intro](#intro)
+- [Installing Elements](#install-elements)
+- [Developing Elements](#develop-elements)
+- [Testing](#testing)
+  - [Guiding principles](#guiding-principles)
+  - [Unit tests](#unit-tests)
+    - [Running unit-tests](#running-unit-tests)
+  - [Framework Integration](#framework-integration)
+    - [Run tests as the CI would](#run-tests-as-the-ci-would)
+    - [Run the tests manually](#run-the-tests-manually)
+    - [Edit the tests](#edit-the-tests)
+    - [Inspecting test results](#inspecting-test-results)
+- [Yalc into platform-internal](#yalc-into-platform-internal)
+- [Releasing Elements](#release-elements)
+- [Versioning Guidelines](#versioning-guidelines)
+- [Merging into main](#merge-into-main)
         
 ## Intro
 
@@ -201,7 +199,7 @@ When running in *CircleCI*, the host interprets `output.xml` and displays it vis
 Videos - and in case of failure, screenshots - can be found under the *Artifacts* tab.
 ![screenshot](https://user-images.githubusercontent.com/543372/105713474-7f558980-5f1b-11eb-82b5-87ff764be27a.png)
 
-## Yalc into `platform-internal`
+## Yalc into platform-internal
 
 Elements is used in the Stoplight Platform, as well as in open source projects. Here is how you (if you are a Stoplight employee) can test integrating Elements locally:
 

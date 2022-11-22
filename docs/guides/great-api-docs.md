@@ -32,13 +32,13 @@ API Reference Documentation is the main purpose of the API Component (a.k.a the 
 
 This documentation focuses on all the endpoints (a.k.a "operations") available in an API and helps explain potential input and output values that can be in requests and responses. Some API reference documentation only shows an example, but it's more useful to expand on that and explain not just what those values mean, but what other values could also be valid in various contexts.
 
-Elements groups them by tags and uses their summary in the sidebar, then shows off all the request and response information. For example, which security schemes are needed to talk to the endpoint, with example request code showing how users can try talking to it? It also shows important validations, such as which property must be a number, has a minimum value, or must be an email address.
+Elements groups them by tags and uses their summary in the sidebar, then shows off all the request and response information. For example, which security schemes are needed to talk to the endpoint, with example request code showing how users can try talking to it. It also shows important validations, such as which property must be a number, has a minimum value, or must be an email address.
 
 ### Sample Code
 
 Some folks have built their own API Client code, also known as Software Development Kits ("SDKs"). These are sometimes hand-crafted, and sometimes automatically generated from OpenAPI too. 
 
-Elements generates sample code for you in Curl and other popular programming languages. In the future, Elements may integrate [custom SDK templates](https://github.com/stoplightio/elements/discussions/1138) for those who already have their own SDKs.
+Elements generates sample code for you in curl and other popular programming languages. In the future, Elements may integrate [custom SDK templates](https://github.com/stoplightio/elements/discussions/1138) for those who already have their own SDKs.
 
 ### Guides & Tutorials
 
