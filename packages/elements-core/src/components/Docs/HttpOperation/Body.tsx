@@ -70,6 +70,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
           viewMode="write"
           renderRootTreeLines
           nodeHasChanged={nodeHasChanged}
+          defaultExpandedDepth={2}
         />
       )}
     </VStack>

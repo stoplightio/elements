@@ -84,6 +84,7 @@ const ModelComponent: React.FC<ModelProps> = ({
         schema={getOriginalObject(data)}
         nodeHasChanged={nodeHasChanged}
         skipTopLevelDescription
+        defaultExpandedDepth={2}
       />
     </VStack>
   );

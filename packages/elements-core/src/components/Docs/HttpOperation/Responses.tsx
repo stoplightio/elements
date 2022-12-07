@@ -127,6 +127,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               parentCrumbs={['responses', response.code]}
               renderRootTreeLines
               nodeHasChanged={nodeHasChanged}
+              defaultExpandedDepth={2}
             />
           )}
         </>

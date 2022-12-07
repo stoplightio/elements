@@ -48,7 +48,7 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
         </Flex>
       )}
 
-      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(schema)} />
+      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(schema)}    defaultExpandedDepth={2}/>
     </Box>
   );
 };
