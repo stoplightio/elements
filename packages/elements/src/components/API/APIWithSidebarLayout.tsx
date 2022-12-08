@@ -17,6 +17,7 @@ import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
   logo?: string;
+  logoLink?: string;
   hideTryIt?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
@@ -29,6 +30,7 @@ type SidebarLayoutProps = {
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
+  logoLink,
   hideTryIt,
   hideSchemas,
   hideInternal,
@@ -75,7 +77,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     <>
       <Flex ml={4} mb={5} alignItems="center">
         {logo ? (
-          <Logo logo={{ url: logo, altText: 'logo' }} />
+          <Logo logo={{ url: logo, altText: 'logo', href: logoLink || 'https://solargraf.com/' }} />
         ) : (
           serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
         )}
