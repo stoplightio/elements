@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "7.7.7",
+  "version": "7.7.8",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -8,12 +8,12 @@
     "src/web-components/**",
     "**/*.css"
   ],
-  "homepage": "https://github.com/stoplightio/elements",
-  "bugs": "https://github.com/stoplightio/elements/issues",
+  "homepage": "https://github.com/abdut007/elements.git",
+  "bugs": "https://github.com/abdut007/elements.git/issues",
   "author": "Stoplight <support@stoplight.io>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stoplightio/elements"
+    "url": "https://github.com/abdut007/elements.git"
   },
   "license": "Apache-2.0",
   "type": "commonjs",
