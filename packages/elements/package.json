@@ -62,7 +62,7 @@
     ]
   },
   "dependencies": {
-    "@stoplight/elements-core": "~7.7.7",
+    "@stoplight/elements-core": "git+https://github.com/abdut007/element.git#elements-core",
     "@stoplight/http-spec": "^5.1.4",
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.33.0",

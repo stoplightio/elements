@@ -78,10 +78,10 @@ interface BaseDocsProps {
      * If true, the component will hide its title
      * @default false
      */
-    noHeading?: boolean;
+    noHeading?: true;
     /**
      * If true, the component will hide the Powered by Stoplight banner in Docs
-     * @default false
+     * @default true
      */
     showPoweredByLink?: boolean;
     /**
