@@ -1,12 +1,12 @@
 {
   "name": "root",
   "private": true,
-  "homepage": "https://github.com/abdut007/elements.git",
-  "bugs": "https://github.com/abdut007/elements.git/issues",
+  "homepage": "https://github.com/Sofdesk/elements.git",
+  "bugs": "https://github.com/Sofdesk/elements.git/issues",
   "author": "Stoplight <support@stoplight.io>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/abdut007/elements.git"
+    "url": "https://github.com/Sofdesk/elements.git"
   },
   "license": "Apache-2.0",
   "workspaces": [

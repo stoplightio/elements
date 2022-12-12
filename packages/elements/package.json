@@ -8,12 +8,12 @@
     "src/web-components/**",
     "**/*.css"
   ],
-  "homepage": "https://github.com/abdut007/elements.git",
-  "bugs": "https://github.com/abdut007/elements.git/issues",
+  "homepage": "https://github.com/Sofdesk/elements.git",
+  "bugs": "https://github.com/Sofdesk/elements.git/issues",
   "author": "Stoplight <support@stoplight.io>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/abdut007/elements.git"
+    "url": "https://github.com/Sofdesk/elements.git"
   },
   "license": "Apache-2.0",
   "type": "commonjs",
@@ -62,7 +62,7 @@
     ]
   },
   "dependencies": {
-    "@stoplight/elements-core": "git+https://github.com/abdut007/element.git#elements-core",
+    "@stoplight/elements-core": "git+https://github.com/Sofdesk/elements.git#elements-core",
     "@stoplight/http-spec": "^5.1.4",
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.33.0",
