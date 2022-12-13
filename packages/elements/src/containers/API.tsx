@@ -50,7 +50,17 @@ export interface CommonAPIProps extends RoutingProps {
    * @default "sidebar"
    */
   layout?: 'sidebar' | 'stacked';
+
+  /**
+   * Logo Icon url
+   */
   logo?: string;
+
+  /**
+   * href url redirecting when click on logo icon
+   * @defual https://solargraf.com/
+   */
+  logoLink?: string;
 
   /**
    * Allows hiding the TryIt component
@@ -99,6 +109,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     layout,
     apiDescriptionUrl = '',
     logo,
+    logoLink,
     hideTryIt,
     hideSchemas,
     hideInternal,
@@ -173,6 +184,7 @@ export const APIImpl: React.FC<APIProps> = props => {
       ) : (
         <APIWithSidebarLayout
           logo={logo}
+          logoLink={logoLink}
           serviceNode={serviceNode}
           hideTryIt={hideTryIt}
           hideSchemas={hideSchemas}

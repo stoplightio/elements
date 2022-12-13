@@ -44,7 +44,15 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
 
   if (!schema) return null;
 
-  return <JsonSchemaViewer resolveRef={refResolver} schema={schema} disableCrumbs nodeHasChanged={nodeHasChanged} />;
+  return (
+    <JsonSchemaViewer
+      resolveRef={refResolver}
+      schema={schema}
+      disableCrumbs
+      nodeHasChanged={nodeHasChanged}
+      defaultExpandedDepth={2}
+    />
+  );
 };
 Parameters.displayName = 'HttpOperation.Parameters';
 
