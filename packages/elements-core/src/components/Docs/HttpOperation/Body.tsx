@@ -12,6 +12,7 @@ import { SectionSubtitle } from '../Sections';
 
 export interface BodyProps {
   body: IHttpOperationRequestBody;
+  defaultExpandedDepth?: number;
   onChange: (requestBodyIndex: number) => void;
 }
 
@@ -23,7 +24,7 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
   return contents.length === 0 && !description?.trim();
 };
 
-export const Body = ({ body, onChange }: BodyProps) => {
+export const Body = ({ body, defaultExpandedDepth, onChange }: BodyProps) => {
   const refResolver = useInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
   const { nodeHasChanged } = useOptionsCtx();
@@ -70,7 +71,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
           viewMode="write"
           renderRootTreeLines
           nodeHasChanged={nodeHasChanged}
-          defaultExpandedDepth={2}
+          defaultExpandedDepth={defaultExpandedDepth || 2}
         />
       )}
     </VStack>
