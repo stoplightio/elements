@@ -25,16 +25,23 @@ import { Parameters } from './Parameters';
 
 interface ResponseProps {
   response: IHttpOperationResponse;
+  defaultExpandedDepth: number | undefined;
   onMediaTypeChange(mediaType: string): void;
 }
 
 interface ResponsesProps {
   responses: IHttpOperationResponse[];
+  defaultExpandedDepth: number | undefined;
   onMediaTypeChange(mediaType: string): void;
   onStatusCodeChange(statusCode: string): void;
 }
 
-export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, onMediaTypeChange }: ResponsesProps) => {
+export const Responses = ({
+  responses: unsortedResponses,
+  defaultExpandedDepth,
+  onStatusCodeChange,
+  onMediaTypeChange,
+}: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
     r => r.code,
@@ -64,7 +71,11 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
       <TabPanels p={0}>
         {responses.map(response => (
           <TabPanel key={response.code} id={response.code}>
-            <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+            <Response
+              response={response}
+              defaultExpandedDepth={defaultExpandedDepth}
+              onMediaTypeChange={onMediaTypeChange}
+            />
           </TabPanel>
         ))}
       </TabPanels>
@@ -73,7 +84,7 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
+const Response = ({ response, defaultExpandedDepth, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
   const refResolver = useInlineRefResolver();
@@ -127,7 +138,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               parentCrumbs={['responses', response.code]}
               renderRootTreeLines
               nodeHasChanged={nodeHasChanged}
-              defaultExpandedDepth={2}
+              defaultExpandedDepth={defaultExpandedDepth || 2}
             />
           )}
         </>

@@ -24,6 +24,7 @@ type StackedLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
+  defaultExpandedDepth?: number;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode) => {
@@ -47,6 +48,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  defaultExpandedDepth,
 }) => {
   const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
@@ -61,7 +63,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
             nodeTitle={serviceNode.name}
             nodeType={NodeType.HttpService}
             location={location}
-            layoutOptions={{ showPoweredByLink: false, hideExport }}
+            layoutOptions={{ showPoweredByLink: false, hideExport, defaultExpandedDepth }}
             exportProps={exportProps}
             tryItCredentialsPolicy={tryItCredentialsPolicy}
           />

@@ -59,11 +59,16 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           </Box>
         )}
 
-        <Request onChange={setTextRequestBodyIndex} operation={data} />
+        <Request
+          onChange={setTextRequestBodyIndex}
+          operation={data}
+          defaultExpandedDepth={layoutOptions?.defaultExpandedDepth}
+        />
 
         {data.responses && (
           <Responses
             responses={data.responses}
+            defaultExpandedDepth={layoutOptions?.defaultExpandedDepth}
             onMediaTypeChange={setResponseMediaType}
             onStatusCodeChange={setResponseStatusCode}
           />

@@ -17,4 +17,5 @@ export const ApiElement = createElementClass(API, {
   logoLink: { type: 'string' },
   tryItCredentialsPolicy: { type: 'string' },
   tryItCorsProxy: { type: 'string' },
+  defaultExpandedDepth: { type: 'number' },
 });
