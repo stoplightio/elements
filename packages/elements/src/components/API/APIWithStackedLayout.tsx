@@ -61,7 +61,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
             nodeTitle={serviceNode.name}
             nodeType={NodeType.HttpService}
             location={location}
-            layoutOptions={{ showPoweredByLink: true, hideExport }}
+            layoutOptions={{ showPoweredByLink: false, hideExport }}
             exportProps={exportProps}
             tryItCredentialsPolicy={tryItCredentialsPolicy}
           />

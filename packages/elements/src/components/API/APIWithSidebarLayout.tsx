@@ -1,11 +1,4 @@
-import {
-  ExportButtonProps,
-  Logo,
-  ParsedDocs,
-  PoweredByLink,
-  SidebarLayout,
-  TableOfContents,
-} from '@stoplight/elements-core';
+import { ExportButtonProps, Logo, ParsedDocs, SidebarLayout, TableOfContents } from '@stoplight/elements-core';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
@@ -86,7 +79,6 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
       </Flex>
-      <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
     </>
   );
 
