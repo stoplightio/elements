@@ -1,5 +1,5 @@
 import { ExportButtonProps, Logo, ParsedDocs, SidebarLayout, TableOfContents } from '@stoplight/elements-core';
-import { Flex, Heading } from '@stoplight/mosaic';
+import { Flex } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
@@ -80,7 +80,6 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
         ) : (
           serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
         )}
-        <Heading size={4}>{serviceNode.name}</Heading>
       </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
