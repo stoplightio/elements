@@ -9,7 +9,7 @@ const documents = {};
 export const getDocument = (name: string) => {
     if (!documents[name]) {
         documents[name] = new Document({
-            tokenize: "reverse",
+            tokenize: "full",
             charset: "latin:balance",
             doc: {
                 id: "uri",
