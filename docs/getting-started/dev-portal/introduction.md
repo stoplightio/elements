@@ -4,7 +4,7 @@ Elements Dev Portal is backed by the [Stoplight Platform](https://stoplight.io/)
 
 - Support for multiple APIs
 - Markdown article rendering
-- [Hosted mock servers](https://meta.stoplight.io/docs/platform/3.-design/d.setting-up-a-mock-server.md) Integration
+- [Hosted mock servers](https://meta.stoplight.io/docs/platform/3.-design/d.setting-up-a-mock-server.md)
 - Version selector (multiple branches)
 - Powerful search
 
