@@ -29,13 +29,13 @@ const handleLogo = (desc: string | undefined): { ehrs: string[], content: string
         };
     }
     let finalStr = desc, logoSize = {
-        "Cerner": "width: 40px;",
-        "Epic on FHIR": "width: 40px;",
-        "NextGen": "width: 30px;",
-        "Athenahealth": "width: 60px;",
-        "Meditech": "width: 50px;"
+        "Cerner": "height: 15px;",
+        "Epic on FHIR": "height: 15px;",
+        "NextGen": "height: 15px;",
+        "Athenahealth": "height: 15px;",
+        "Meditech": "height: 15px;"
     }, ehrs = [], result;
-    const pattern = /<img src="[^>]+ title="(Cerner|Epic on FHIR|NextGen|Athenahealth|Meditech)[^>]+ style="(width[^"]+)[^>]+>/g;
+    const pattern = /<img src="[^>]+ title="(Cerner|Epic on FHIR|NextGen|Athenahealth|Meditech)[^>]+ style="(height[^"]+)[^>]+>/g;
     while ((result = pattern.exec(desc)) != null) {
         const fullStr = result[0];
         const ehr = result[1];
