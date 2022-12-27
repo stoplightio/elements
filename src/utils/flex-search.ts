@@ -33,7 +33,7 @@ const handleLogo = (desc: string | undefined): { ehrs: string[], content: string
         "Epic on FHIR": "height: 15px;",
         "NextGen": "height: 15px;",
         "Athenahealth": "height: 15px;",
-        "Meditech": "height: 15px;"
+        "Meditech": "height: 10px;"
     }, ehrs = [], result;
     const pattern = /<img src="[^>]+ title="(Cerner|Epic on FHIR|NextGen|Athenahealth|Meditech)[^>]+ style="(height[^"]+)[^>]+>/g;
     while ((result = pattern.exec(desc)) != null) {
