@@ -33,9 +33,6 @@ import '@stoplight/elements-dev-portal/styles.min.css';
 
 3. Find the **Project ID** from the **Project Settings** page in your Stoplight project. See [Project Settings](https://docs.stoplight.io/docs/platform/252039ebe8fb2-project-settings) for details. 
 
->Note: A ‘Forbidden’ error occurs if the project visibility isn't set to Public.
-
-
 > Project Settings can only be viewed by Project Editors or above. Read more about [project permissions](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
 
 ![The project ID can be found on the Project Settings page in a text box after Display Name and Slug](../../images/projectId.png)

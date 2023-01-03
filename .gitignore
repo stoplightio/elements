@@ -50,3 +50,4 @@ dist-storybook
 .stoplight/styleguide.json
 .stoplight/custom-functions
 .spectral.json
+.spectral.mjs
