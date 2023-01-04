@@ -16,7 +16,7 @@ import { IHttpOperationResponse } from '@stoplight/types';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
-import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -76,7 +76,7 @@ Responses.displayName = 'HttpOperation.Responses';
 const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
-  const refResolver = useInlineRefResolver();
+  const refResolver = useSchemaInlineRefResolver();
   const { nodeHasChanged } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];

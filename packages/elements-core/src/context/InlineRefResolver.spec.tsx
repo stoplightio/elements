@@ -1,7 +1,13 @@
 import { renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
 
-import { InlineRefResolverProvider, useDocument, useInlineRefResolver, useResolvedObject } from './InlineRefResolver';
+import {
+  InlineRefResolverProvider,
+  useDocument,
+  useInlineRefResolver,
+  useResolvedObject,
+  useSchemaInlineRefResolver,
+} from './InlineRefResolver';
 
 describe('InlineRefResolver', () => {
   describe('useDocument hook', () => {
@@ -49,6 +55,93 @@ describe('InlineRefResolver', () => {
       const secondReturnedObject = result.current;
 
       expect(firstReturnedObject).toBe(secondReturnedObject);
+    });
+  });
+
+  describe('useSchemaInlineRefResolver', () => {
+    const wrapper: React.FC<{ document: Record<string, unknown> }> = ({ children, document }) => (
+      <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
+    );
+
+    it('translates resolved schema', () => {
+      const document = {
+        openapi: '3.0.0',
+        paths: {
+          '/user': {
+            post: {
+              requestBody: {
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'object',
+                      properties: {
+                        user: {
+                          $ref: '#/components/schemas/User',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        components: {
+          schemas: {
+            User: {
+              type: 'object',
+              nullable: true,
+              properties: {
+                id: {
+                  type: 'integer',
+                  nullable: true,
+                },
+                stars: {
+                  type: 'number',
+                  format: 'int32',
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const { result } = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+
+      const resolved = result.current(
+        {
+          source: null,
+          pointer: '#/components/schemas/User',
+        },
+        [],
+        {
+          type: 'object',
+          properties: {
+            user: {
+              $ref: '#/components/schemas/User',
+            },
+          },
+          $schema: 'http://json-schema.org/draft-07/schema#',
+          'x-stoplight': {
+            id: 'd3bf5ceb7dd53',
+          },
+        },
+      );
+
+      expect(resolved).toEqual({
+        type: ['object', 'null'],
+        properties: {
+          id: {
+            type: ['integer', 'null'],
+          },
+          stars: {
+            type: 'number',
+            format: 'int32',
+            maximum: 2147483647,
+            minimum: -2147483648,
+          },
+        },
+      });
     });
   });
 });

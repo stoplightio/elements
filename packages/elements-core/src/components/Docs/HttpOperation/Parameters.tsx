@@ -5,7 +5,7 @@ import type { JSONSchema7Object } from 'json-schema';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
-import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { isNodeExample } from '../../../utils/http-spec/examples';
 
@@ -35,7 +35,7 @@ const defaultStyle = {
 
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
   const { nodeHasChanged } = useOptionsCtx();
-  const refResolver = useInlineRefResolver();
+  const refResolver = useSchemaInlineRefResolver();
 
   const schema = React.useMemo(
     () => httpOperationParamsToSchema({ parameters, parameterType }),
