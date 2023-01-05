@@ -1,4 +1,6 @@
+import { convertToJsonSchema } from '@stoplight/http-spec/oas';
 import { isPlainObject } from '@stoplight/json';
+import type { Dictionary } from '@stoplight/types';
 import * as React from 'react';
 import { useContext } from 'react';
 
@@ -49,5 +51,24 @@ export const useResolvedObject = (currentObject: object): object => {
   return React.useMemo(
     () => createResolvedObject(currentObject, { contextObject: document as object, resolver }),
     [currentObject, document, resolver],
+  );
+};
+
+export const useSchemaInlineRefResolver = (): ReferenceResolver => {
+  const document = useDocument();
+  const resolver = useInlineRefResolver();
+
+  return React.useCallback<ReferenceResolver>(
+    (...args) => {
+      const resolved = resolver?.(...args);
+      if (!isPlainObject(resolved)) {
+        return resolved;
+      }
+
+      const converted = convertToJsonSchema((document ?? {}) as Dictionary<unknown>, resolved);
+      delete converted.$schema;
+      return converted;
+    },
+    [document, resolver],
   );
 };

@@ -3,7 +3,7 @@ import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
 
-import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
@@ -24,7 +24,7 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
 };
 
 export const Body = ({ body, onChange }: BodyProps) => {
-  const refResolver = useInlineRefResolver();
+  const refResolver = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
   const { nodeHasChanged } = useOptionsCtx();
 
