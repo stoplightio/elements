@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
 
+import type { ReferenceInfo } from '../utils/ref-resolving/ReferenceResolver';
 import {
   InlineRefResolverProvider,
   useDocument,
@@ -142,6 +143,76 @@ describe('InlineRefResolver', () => {
           },
         },
       });
+    });
+
+    it('retains the result', () => {
+      const document = {
+        openapi: '3.0.0',
+        paths: {
+          '/user': {
+            post: {
+              requestBody: {
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'object',
+                      properties: {
+                        user: {
+                          $ref: '#/components/schemas/User',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        components: {
+          schemas: {
+            User: {
+              type: 'object',
+              nullable: true,
+              properties: {
+                id: {
+                  type: 'integer',
+                  nullable: true,
+                },
+                stars: {
+                  type: 'number',
+                  format: 'int32',
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const refInfo: ReferenceInfo = {
+        source: null,
+        pointer: '#/components/schemas/User',
+      };
+      const currentObject = {
+        type: 'object',
+        properties: {
+          user: {
+            $ref: '#/components/schemas/User',
+          },
+        },
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        'x-stoplight': {
+          id: 'd3bf5ceb7dd53',
+        },
+      };
+
+      const renderedHook = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+      const renderedHook2 = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+
+      const resolved = renderedHook.result.current({ ...refInfo }, [], JSON.parse(JSON.stringify(currentObject)));
+
+      expect(renderedHook2.result.current({ ...refInfo }, [], JSON.parse(JSON.stringify(currentObject)))).toBe(
+        resolved,
+      );
     });
   });
 });
