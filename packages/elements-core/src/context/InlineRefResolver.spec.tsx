@@ -64,8 +64,10 @@ describe('InlineRefResolver', () => {
       <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
     );
 
-    it('translates resolved schema', () => {
-      const document = {
+    let document: Record<string, unknown>;
+
+    beforeEach(() => {
+      document = {
         openapi: '3.0.0',
         paths: {
           '/user': {
@@ -106,7 +108,9 @@ describe('InlineRefResolver', () => {
           },
         },
       };
+    });
 
+    it('translates resolved schema', () => {
       const { result } = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
 
       const resolved = result.current(
@@ -146,48 +150,6 @@ describe('InlineRefResolver', () => {
     });
 
     it('retains the result', () => {
-      const document = {
-        openapi: '3.0.0',
-        paths: {
-          '/user': {
-            post: {
-              requestBody: {
-                content: {
-                  'application/json': {
-                    schema: {
-                      type: 'object',
-                      properties: {
-                        user: {
-                          $ref: '#/components/schemas/User',
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-        components: {
-          schemas: {
-            User: {
-              type: 'object',
-              nullable: true,
-              properties: {
-                id: {
-                  type: 'integer',
-                  nullable: true,
-                },
-                stars: {
-                  type: 'number',
-                  format: 'int32',
-                },
-              },
-            },
-          },
-        },
-      };
-
       const refInfo: ReferenceInfo = {
         source: null,
         pointer: '#/components/schemas/User',
