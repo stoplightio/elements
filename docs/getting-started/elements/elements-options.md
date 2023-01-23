@@ -5,6 +5,8 @@
 - `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
 - `hideInternal` - Pass `"true"` to filter out any content which has been marked as internal with `x-internal`.
 - `hideTryIt` - Pass `true` to hide the [**Try It** feature](https://meta.stoplight.io/docs/platform/ZG9jOjM2OTM3Mjky-try-it).
+- `hideSchemas` - Pass `true` to hide the schemas in the Table of Contents, when using the `sidebar` layout.
+- `hideExport` - Pass `true` to hide the Export button on overview section of the documentation.
 - `tryItCorsProxy` - Pass the URL of a CORS proxy used to send requests to the Try It feature. The provided URL is pre-pended to the URL of an actual request.
 - `tryItCredentialPolicy` - Use to fetch the credential policy for the Try It feature. Options are: `omit` (default), `include`, and `same-origin`.
 - `layout` - There are two layouts for Elements:
