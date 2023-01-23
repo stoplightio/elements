@@ -45,7 +45,7 @@ describe('HttpService', () => {
     expect(screen.queryByLabelText('Mock Server')).not.toBeInTheDocument();
   });
 
-  it('generates names for servers without names', () => {
+  it('generates names for servers without descriptions', () => {
     render(<ServerInfo servers={httpServiceWithUnnamedServers.servers ?? []} />);
 
     const secondServerUrl = screen.getByLabelText('Server 2');
