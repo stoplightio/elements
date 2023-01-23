@@ -1148,18 +1148,18 @@ describe('TryIt', () => {
       const operation1: IHttpOperation = {
         ...basicOperation,
         servers: [
-          { id: '?http-server-a?', name: 'op 1 server a', url: 'http://url-A.com' },
-          { id: '?http-server-b?', name: 'op 1 server b', url: 'http://url-B.com' },
-          { id: '?http-server-c?', name: 'op 1 server c', url: 'http://url-C.com' },
+          { id: '?http-server-a?', description: 'op 1 server a', url: 'http://url-A.com' },
+          { id: '?http-server-b?', description: 'op 1 server b', url: 'http://url-B.com' },
+          { id: '?http-server-c?', description: 'op 1 server c', url: 'http://url-C.com' },
         ],
       };
 
       const operation2: IHttpOperation = {
         ...basicOperation,
         servers: [
-          { id: '?http-server-d?', name: 'op 2 server d', url: 'http://url-D.com' },
-          { id: '?http-server-e?', name: 'op 2 server e', url: 'http://url-E.com' },
-          { id: '?http-server-f?', name: 'op 2 server b', url: 'http://url-B.com' }, // same URL, should preserve this server
+          { id: '?http-server-d?', description: 'op 2 server d', url: 'http://url-D.com' },
+          { id: '?http-server-e?', description: 'op 2 server e', url: 'http://url-E.com' },
+          { id: '?http-server-f?', description: 'op 2 server b', url: 'http://url-B.com' }, // same URL, should preserve this server
         ],
       };
 
