@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
 
+import type { ReferenceInfo } from '../utils/ref-resolving/ReferenceResolver';
 import {
   InlineRefResolverProvider,
   useDocument,
@@ -63,8 +64,10 @@ describe('InlineRefResolver', () => {
       <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
     );
 
-    it('translates resolved schema', () => {
-      const document = {
+    let document: Record<string, unknown>;
+
+    beforeEach(() => {
+      document = {
         openapi: '3.0.0',
         paths: {
           '/user': {
@@ -105,7 +108,9 @@ describe('InlineRefResolver', () => {
           },
         },
       };
+    });
 
+    it('translates resolved schema', () => {
       const { result } = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
 
       const resolved = result.current(
@@ -142,6 +147,34 @@ describe('InlineRefResolver', () => {
           },
         },
       });
+    });
+
+    it('retains the result', () => {
+      const refInfo: ReferenceInfo = {
+        source: null,
+        pointer: '#/components/schemas/User',
+      };
+      const currentObject = {
+        type: 'object',
+        properties: {
+          user: {
+            $ref: '#/components/schemas/User',
+          },
+        },
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        'x-stoplight': {
+          id: 'd3bf5ceb7dd53',
+        },
+      };
+
+      const renderedHook = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+      const renderedHook2 = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+
+      const resolved = renderedHook.result.current({ ...refInfo }, [], JSON.parse(JSON.stringify(currentObject)));
+
+      expect(renderedHook2.result.current({ ...refInfo }, [], JSON.parse(JSON.stringify(currentObject)))).toBe(
+        resolved,
+      );
     });
   });
 });
