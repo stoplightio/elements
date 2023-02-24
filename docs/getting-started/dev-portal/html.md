@@ -15,7 +15,7 @@ For now, the only component in the Dev Portal package is `<elements-stoplight-pr
 
 2. Find the "Project ID" from the Project Settings view of your Stoplight Project.
 
-> Project Settings can only be viewed by Project Editors or above. Read more about [project permissions](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
+> Project Settings can only be viewed by Project Editors or above. Read more about [project permissions](https://docs.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
 
 ![The project ID can be found on the Project Settings page in a text box after Display Name and Slug](../../images/projectId.png)
 
