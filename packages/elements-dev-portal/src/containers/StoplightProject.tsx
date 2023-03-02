@@ -1,6 +1,7 @@
 import {
   findFirstNode,
   ReactRouterMarkdownLink,
+  RouterTypeContext,
   RoutingProps,
   SidebarLayout,
   useRouter,
@@ -187,19 +188,21 @@ const StoplightProjectRouter = ({
 
   return (
     <DevPortalProvider platformUrl={platformUrl}>
-      <Router {...routerProps} key={basePath}>
-        <Route path="/branches/:branchSlug/:nodeSlug" exact>
-          <StoplightProjectImpl {...props} />
-        </Route>
+      <RouterTypeContext.Provider value={router}>
+        <Router {...routerProps} key={basePath}>
+          <Route path="/branches/:branchSlug/:nodeSlug" exact>
+            <StoplightProjectImpl {...props} />
+          </Route>
 
-        <Route path="/:nodeSlug" exact>
-          <StoplightProjectImpl {...props} />
-        </Route>
+          <Route path="/:nodeSlug" exact>
+            <StoplightProjectImpl {...props} />
+          </Route>
 
-        <Route path="/" exact>
-          <StoplightProjectImpl {...props} />
-        </Route>
-      </Router>
+          <Route path="/" exact>
+            <StoplightProjectImpl {...props} />
+          </Route>
+        </Router>
+      </RouterTypeContext.Provider>
     </DevPortalProvider>
   );
 };
