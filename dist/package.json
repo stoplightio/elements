@@ -1,0 +1,55 @@
+{
+  "name": "@kc/stoplight-elements",
+  "version": "7.7.2",
+  "description": "UI components for composing beautiful developer documentation.",
+  "keywords": [],
+  "main": "./index.js",
+  "sideEffects": [
+    "web-components.min.js",
+    "src/web-components/**",
+    "**/*.css"
+  ],
+  "files": [
+    "**/*"
+  ],
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/elements"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=14.13"
+  },
+  "peerDependencies": {
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "dependencies": {
+    "@stoplight/elements-core": "~7.7.2",
+    "@stoplight/http-spec": "^5.1.4",
+    "@stoplight/json": "^3.18.1",
+    "@stoplight/mosaic": "^1.33.0",
+    "@stoplight/types": "^13.7.0",
+    "@stoplight/yaml": "^4.2.3",
+    "@stoplight/markdown-viewer": "5.5.0",
+    "classnames": "^2.2.6",
+    "file-saver": "^2.0.5",
+    "lodash": "^4.17.19",
+    "react-query": "^3.34.19",
+    "react-router-dom": "^5.2.0",
+    "flexsearch": "0.7.31",
+    "string-strip-html": "8.3.0"
+  },
+  "type": "commonjs",
+  "exports": {
+    "./styles.min.css": "./styles.min.css",
+    "./web-components.min.js": "./web-components.min.js",
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    }
+  },
+  "typings": "index.d.ts",
+  "module": "./index.esm.js"
+}
