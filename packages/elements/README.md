@@ -17,3 +17,6 @@ Elements is developed and maintained by [Stoplight](https://stoplight.io).
 Licensed under the Apache 2.0 License, Copyright © 2020-present Stoplight.
 
 See [LICENSE](LICENSE) for more information.
+
+# stoplight-elements
+The github repository to make modification to @stoplight/elements library to support KMS Connect needs

@@ -50,3 +50,10 @@ dist-storybook
 .stoplight/styleguide.json
 .stoplight/custom-functions
 .spectral.json
+
+/.idea/
+/node_modules/
+/dist/
+/test-results/
+/coverage/
+/dist-storybook/

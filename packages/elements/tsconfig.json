@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.json",
-
   "include": ["src"],
-
-  "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"]
+  "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "baseUrl": "./packages"
+  }
 }

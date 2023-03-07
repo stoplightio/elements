@@ -1,18 +1,15 @@
-import {
-  ExportButtonProps,
-  Logo,
-  ParsedDocs,
-  PoweredByLink,
-  SidebarLayout,
-  TableOfContents,
-} from '@stoplight/elements-core';
-import { Flex, Heading } from '@stoplight/mosaic';
-import { NodeType } from '@stoplight/types';
+import {ExportButtonProps, ParsedDocs, PoweredByLink, SidebarLayout,} from '@stoplight/elements-core';
+import {Flex} from '@stoplight/mosaic';
+import {NodeType} from '@stoplight/types';
 import * as React from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import {Link, Redirect, useLocation} from 'react-router-dom';
 
-import { ServiceNode } from '../../utils/oas/types';
+import { ServiceChildNode, ServiceNode } from '../../utils/oas/types';
 import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
+import { TableOfContents } from "../MosaicTableOfContents";
+import { SearchBox } from "../SearchBox";
+import {indexDocument} from "../../utils/flex-search";
+import {Logo} from "../Logo";
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
@@ -26,6 +23,17 @@ type SidebarLayoutProps = {
   tryItCorsProxy?: string;
 };
 
+const indexServiceNode = (sNode: ServiceNode, hideInternal?: boolean) => {
+  let name = sNode.name;
+  // index all children node
+  sNode.children
+    .filter((node: any) => !hideInternal || !node.data.internal)
+    .forEach((node: ServiceChildNode) => indexDocument(name, node));
+  sNode.customData?.customServiceNodes?.forEach((node: ServiceChildNode) => {
+    indexDocument(name, node)
+  });
+}
+
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
@@ -38,10 +46,41 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCorsProxy,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
-  const tree = React.useMemo(
-    () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
-    [serviceNode, hideSchemas, hideInternal],
-  );
+  React.useEffect(() => {
+    indexServiceNode(serviceNode, hideInternal);
+  }, [serviceNode, hideInternal])
+  var tree = React.useMemo(() => {
+    const tree = computeAPITree(serviceNode, { hideSchemas, hideInternal });
+
+    var newToc: any[] = [];
+    newToc.push(...serviceNode.customData.tocTopLevel);
+    newToc.push(...serviceNode.customData.tocPredefinedGroup);
+
+    serviceNode.customData.tocGroupMapping.forEach((group: any) => {
+      var parent = newToc.find(item => item.title === group.parent);
+      if (!parent) {
+        return;
+      }
+      var childs = tree.filter(item => group.childs.indexOf(item.title) != -1);
+      parent.items.push(...childs);
+    });
+
+    newToc.push(...serviceNode.customData.tocLastLevel);
+
+    // Put Schema to the end
+    if (!hideSchemas) {
+      const schemaNode = serviceNode.customData.tocSchemaNode || {
+        title: 'Schemas',
+        items: [],
+      };
+      newToc.push(schemaNode);
+      schemaNode.items.push(...tree.filter((item: any) => item.slug?.startsWith('/schemas/')));
+    }
+
+    return newToc;
+  }, [serviceNode, hideSchemas, hideInternal]);
+
+  // TODOL force to use new tree
   const location = useLocation();
   const { pathname } = location;
   const isRootPath = !pathname || pathname === '/';
@@ -73,15 +112,20 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
 
   const sidebar = (
     <>
-      <Flex ml={4} mb={5} alignItems="center">
+      <Flex mb={5} alignItems="center">
         {logo ? (
-          <Logo logo={{ url: logo, altText: 'logo' }} />
+          <Logo logo={{ url: logo, altText: 'logo' }} w="2/3" />
         ) : (
-          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
+          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} w="2/3" />
         )}
-        <Heading size={4}>{serviceNode.name}</Heading>
       </Flex>
-      <Flex flexGrow flexShrink overflowY="auto" direction="col">
+      {/*<Flex ml={4} mb={5} alignItems="center" alignContent="center">*/}
+      {/*  <Heading size={4}>{serviceNode.name}</Heading>*/}
+      {/*</Flex>*/}
+      <Flex id="flex-search" mr={4} mb={1} alignItems="center">
+        <SearchBox apiDocName={serviceNode.name} />
+      </Flex>
+      <Flex className="api-toc" flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
       </Flex>
       <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
