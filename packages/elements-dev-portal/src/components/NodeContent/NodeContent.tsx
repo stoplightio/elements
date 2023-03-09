@@ -33,6 +33,8 @@ export type NodeContentProps = {
    * Support for custom reference resolver
    */
   refResolver?: ReferenceResolver;
+
+  onExportRequest?: (type: 'original' | 'bundled') => void;
 } & DocsBaseProps &
   DocsLayoutProps;
 
@@ -51,7 +53,10 @@ export const NodeContent = ({
   compact,
   hideTryIt,
   hideTryItPanel,
+
+  // Exporting
   hideExport,
+  onExportRequest,
 }: NodeContentProps) => {
   return (
     <NodeLinkContext.Provider value={[node, Link]}>
@@ -73,12 +78,12 @@ export const NodeContent = ({
             exportProps={
               [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)
                 ? {
-                    original: {
-                      href: node.links.export_url,
-                    },
-                    bundled: {
-                      href: getBundledUrl(node.links.export_url),
-                    },
+                    original: onExportRequest
+                      ? { onPress: () => onExportRequest('original') }
+                      : { href: node.links.export_url },
+                    bundled: onExportRequest
+                      ? { onPress: () => onExportRequest('bundled') }
+                      : { href: getBundledUrl(node.links.export_url) },
                   }
                 : undefined
             }
