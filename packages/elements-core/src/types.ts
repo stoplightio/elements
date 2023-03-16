@@ -1,3 +1,4 @@
+import { HarRequest as _HarRequest } from '@readme/httpsnippet';
 import type { IMarkdownViewerProps } from '@stoplight/markdown-viewer';
 import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
 import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
@@ -156,4 +157,8 @@ export type ParamField = {
   name: string;
   description: string;
   example: string;
+};
+
+export type HarRequest = Omit<_HarRequest, 'postData'> & {
+  postData?: _HarRequest['postData'];
 };

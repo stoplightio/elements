@@ -35,7 +35,8 @@ exports[`given clojure, convertRequestToSample converts a request to a sample 1`
 `;
 
 exports[`given csharp / httpclient, convertRequestToSample converts a request to a sample 1`] = `
-"var client = new HttpClient();
+"using System.Net.Http.Headers;
+var client = new HttpClient();
 var request = new HttpRequestMessage
 {
     Method = HttpMethod.Put,
@@ -110,13 +111,29 @@ func main() {
 }"
 `;
 
-exports[`given http, convertRequestToSample converts a request to a sample 1`] = `
+exports[`given http / http1.1, convertRequestToSample converts a request to a sample 1`] = `
 "PUT /todos/todoId?value=1&type=something&API%20Key= HTTP/1.1
 Content-Type: application/json
 Account-Id: account-id-default
 Message-Id: example value
 Optional_header: 
 Quote: 
+Host: todos.stoplight.io
+Content-Length: 49
+
+{
+  \\"name\\": \\"Docs Module\\",
+  \\"completed\\": false
+}"
+`;
+
+exports[`given http1.1, convertRequestToSample converts a request to a sample 1`] = `
+"PUT /todos/todoId?value=1&type=something&API%20Key= HTTP/1.1
+Content-Type: application/json
+Account-Id: account-id-default
+Message-Id: example value
+Optional_header:
+Quote:
 Host: todos.stoplight.io
 Content-Length: 49
 
@@ -187,7 +204,7 @@ exports[`given java / unirest, convertRequestToSample converts a request to a sa
 `;
 
 exports[`given javascript / axios, convertRequestToSample converts a request to a sample 1`] = `
-"import axios from \\"axios\\";
+"import axios from 'axios';
 
 const options = {
   method: 'PUT',
@@ -203,11 +220,14 @@ const options = {
   data: {name: 'Docs Module', completed: false}
 };
 
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});"
+axios
+  .request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });"
 `;
 
 exports[`given javascript / fetch, convertRequestToSample converts a request to a sample 1`] = `
@@ -220,7 +240,7 @@ exports[`given javascript / fetch, convertRequestToSample converts a request to 
     optional_header: '',
     quote: ''
   },
-  body: '{\\"name\\":\\"Docs Module\\",\\"completed\\":false}'
+  body: JSON.stringify({name: 'Docs Module', completed: false})
 };
 
 fetch('https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=', options)
@@ -231,19 +251,19 @@ fetch('https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=
 
 exports[`given javascript / jquery, convertRequestToSample converts a request to a sample 1`] = `
 "const settings = {
-  \\"async\\": true,
-  \\"crossDomain\\": true,
-  \\"url\\": \\"https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=\\",
-  \\"method\\": \\"PUT\\",
-  \\"headers\\": {
-    \\"Content-Type\\": \\"application/json\\",
-    \\"account-id\\": \\"account-id-default\\",
-    \\"message-id\\": \\"example value\\",
-    \\"optional_header\\": \\"\\",
-    \\"quote\\": \\"\\"
+  async: true,
+  crossDomain: true,
+  url: 'https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=',
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+    'account-id': 'account-id-default',
+    'message-id': 'example value',
+    optional_header: '',
+    quote: ''
   },
-  \\"processData\\": false,
-  \\"data\\": \\"{\\\\n  \\\\\\"name\\\\\\": \\\\\\"Docs Module\\\\\\",\\\\n  \\\\\\"completed\\\\\\": false\\\\n}\\"
+  processData: false,
+  data: '{\\\\n  \\"name\\": \\"Docs Module\\",\\\\n  \\"completed\\": false\\\\n}'
 };
 
 $.ajax(settings).done(function (response) {
@@ -251,27 +271,27 @@ $.ajax(settings).done(function (response) {
 });"
 `;
 
-exports[`given javascript / xmlhttprequest, convertRequestToSample converts a request to a sample 1`] = `
+exports[`given javascript / xhr, convertRequestToSample converts a request to a sample 1`] = `
 "const data = JSON.stringify({
-  \\"name\\": \\"Docs Module\\",
-  \\"completed\\": false
+  name: 'Docs Module',
+  completed: false
 });
 
 const xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
 
-xhr.addEventListener(\\"readystatechange\\", function () {
+xhr.addEventListener('readystatechange', function () {
   if (this.readyState === this.DONE) {
     console.log(this.responseText);
   }
 });
 
-xhr.open(\\"PUT\\", \\"https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=\\");
-xhr.setRequestHeader(\\"Content-Type\\", \\"application/json\\");
-xhr.setRequestHeader(\\"account-id\\", \\"account-id-default\\");
-xhr.setRequestHeader(\\"message-id\\", \\"example value\\");
-xhr.setRequestHeader(\\"optional_header\\", \\"\\");
-xhr.setRequestHeader(\\"quote\\", \\"\\");
+xhr.open('PUT', 'https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=');
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.setRequestHeader('account-id', 'account-id-default');
+xhr.setRequestHeader('message-id', 'example value');
+xhr.setRequestHeader('optional_header', '');
+xhr.setRequestHeader('quote', '');
 
 xhr.send(data);"
 `;
@@ -295,12 +315,11 @@ val response = client.newCall(request).execute()"
 `;
 
 exports[`given node / axios, convertRequestToSample converts a request to a sample 1`] = `
-"var axios = require(\\"axios\\").default;
+"const axios = require('axios');
 
-var options = {
+const options = {
   method: 'PUT',
-  url: 'https://todos.stoplight.io/todos/todoId',
-  params: {value: '1', type: 'something', 'API Key': ''},
+  url: 'https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=',
   headers: {
     'Content-Type': 'application/json',
     'account-id': 'account-id-default',
@@ -311,19 +330,21 @@ var options = {
   data: {name: 'Docs Module', completed: false}
 };
 
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});"
+axios
+  .request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });"
 `;
 
 exports[`given node / fetch, convertRequestToSample converts a request to a sample 1`] = `
 "const fetch = require('node-fetch');
 
-let url = 'https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=';
-
-let options = {
+const url = 'https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=';
+const options = {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -332,7 +353,7 @@ let options = {
     optional_header: '',
     quote: ''
   },
-  body: '{\\"name\\":\\"Docs Module\\",\\"completed\\":false}'
+  body: JSON.stringify({name: 'Docs Module', completed: false})
 };
 
 fetch(url, options)
@@ -342,30 +363,30 @@ fetch(url, options)
 `;
 
 exports[`given node / native, convertRequestToSample converts a request to a sample 1`] = `
-"const http = require(\\"https\\");
+"const http = require('https');
 
 const options = {
-  \\"method\\": \\"PUT\\",
-  \\"hostname\\": \\"todos.stoplight.io\\",
-  \\"port\\": null,
-  \\"path\\": \\"/todos/todoId?value=1&type=something&API%20Key=\\",
-  \\"headers\\": {
-    \\"Content-Type\\": \\"application/json\\",
-    \\"account-id\\": \\"account-id-default\\",
-    \\"message-id\\": \\"example value\\",
-    \\"optional_header\\": \\"\\",
-    \\"quote\\": \\"\\"
+  method: 'PUT',
+  hostname: 'todos.stoplight.io',
+  port: null,
+  path: '/todos/todoId?value=1&type=something&API%20Key=',
+  headers: {
+    'Content-Type': 'application/json',
+    'account-id': 'account-id-default',
+    'message-id': 'example value',
+    optional_header: '',
+    quote: ''
   }
 };
 
 const req = http.request(options, function (res) {
   const chunks = [];
 
-  res.on(\\"data\\", function (chunk) {
+  res.on('data', function (chunk) {
     chunks.push(chunk);
   });
 
-  res.on(\\"end\\", function () {
+  res.on('end', function () {
     const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
@@ -380,8 +401,7 @@ exports[`given node / request, convertRequestToSample converts a request to a sa
 
 const options = {
   method: 'PUT',
-  url: 'https://todos.stoplight.io/todos/todoId',
-  qs: {value: '1', type: 'something', 'API Key': ''},
+  url: 'https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=',
   headers: {
     'Content-Type': 'application/json',
     'account-id': 'account-id-default',
@@ -397,41 +417,39 @@ request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body);
-});
-"
+});"
 `;
 
 exports[`given node / unirest, convertRequestToSample converts a request to a sample 1`] = `
-"const unirest = require(\\"unirest\\");
+"const unirest = require('unirest');
 
-const req = unirest(\\"PUT\\", \\"https://todos.stoplight.io/todos/todoId\\");
+const req = unirest('PUT', 'https://todos.stoplight.io/todos/todoId');
 
 req.query({
-  \\"value\\": \\"1\\",
-  \\"type\\": \\"something\\",
-  \\"API Key\\": \\"\\"
+  value: '1',
+  type: 'something',
+  'API Key': ''
 });
 
 req.headers({
-  \\"Content-Type\\": \\"application/json\\",
-  \\"account-id\\": \\"account-id-default\\",
-  \\"message-id\\": \\"example value\\",
-  \\"optional_header\\": \\"\\",
-  \\"quote\\": \\"\\"
+  'Content-Type': 'application/json',
+  'account-id': 'account-id-default',
+  'message-id': 'example value',
+  optional_header: '',
+  quote: ''
 });
 
-req.type(\\"json\\");
+req.type('json');
 req.send({
-  \\"name\\": \\"Docs Module\\",
-  \\"completed\\": false
+  name: 'Docs Module',
+  completed: false
 });
 
 req.end(function (res) {
   if (res.error) throw new Error(res.error);
 
   console.log(res.body);
-});
-"
+});"
 `;
 
 exports[`given objc, convertRequestToSample converts a request to a sample 1`] = `
@@ -524,37 +542,25 @@ if ($err) {
 
 exports[`given php / guzzle, convertRequestToSample converts a request to a sample 1`] = `
 "<?php
+require_once('vendor/autoload.php');
 
-$curl = curl_init();
+$client = new \\\\GuzzleHttp\\\\Client();
 
-curl_setopt_array($curl, [
-  CURLOPT_URL => \\"https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=\\",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => \\"\\",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => \\"PUT\\",
-  CURLOPT_POSTFIELDS => \\"{\\\\n  \\\\\\"name\\\\\\": \\\\\\"Docs Module\\\\\\",\\\\n  \\\\\\"completed\\\\\\": false\\\\n}\\",
-  CURLOPT_HTTPHEADER => [
-    \\"Content-Type: application/json\\",
-    \\"account-id: account-id-default\\",
-    \\"message-id: example value\\",
-    \\"optional_header: \\",
-    \\"quote: \\"
+$response = $client->request('PUT', 'https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=', [
+  'body' => '{
+  \\"name\\": \\"Docs Module\\",
+  \\"completed\\": false
+}',
+  'headers' => [
+    'Content-Type' => 'application/json',
+    'account-id' => 'account-id-default',
+    'message-id' => 'example value',
+    'optional_header' => '',
+    'quote' => '',
   ],
 ]);
 
-$response = curl_exec($curl);
-$err = curl_error($curl);
-
-curl_close($curl);
-
-if ($err) {
-  echo \\"cURL Error #:\\" . $err;
-} else {
-  echo $response;
-}"
+echo $response->getBody();"
 `;
 
 exports[`given powershell / restmethod, convertRequestToSample converts a request to a sample 1`] = `
@@ -596,7 +602,7 @@ headers = {
     'message-id': \\"example value\\",
     'optional_header': \\"\\",
     'quote': \\"\\"
-    }
+}
 
 conn.request(\\"PUT\\", \\"/todos/todoId?value=1&type=something&API%20Key=\\", payload, headers)
 
@@ -609,9 +615,7 @@ print(data.decode(\\"utf-8\\"))"
 exports[`given python / requests, convertRequestToSample converts a request to a sample 1`] = `
 "import requests
 
-url = \\"https://todos.stoplight.io/todos/todoId\\"
-
-querystring = {\\"value\\":\\"1\\",\\"type\\":\\"something\\",\\"API Key\\":\\"\\"}
+url = \\"https://todos.stoplight.io/todos/todoId?value=1&type=something&API%20Key=\\"
 
 payload = {
     \\"name\\": \\"Docs Module\\",
@@ -625,7 +629,7 @@ headers = {
     \\"quote\\": \\"\\"
 }
 
-response = requests.request(\\"PUT\\", url, json=payload, headers=headers, params=querystring)
+response = requests.put(url, json=payload, headers=headers)
 
 print(response.text)"
 `;
@@ -637,15 +641,15 @@ url <- \\"https://todos.stoplight.io/todos/todoId\\"
 
 queryString <- list(
   value = \\"1\\",
-  type = \\"something\\"
-  API Key = \\"\\",
+  type = \\"something\\",
+  API Key = \\"\\"
 )
 
 payload <- \\"{\\\\n  \\\\\\"name\\\\\\": \\\\\\"Docs Module\\\\\\",\\\\n  \\\\\\"completed\\\\\\": false\\\\n}\\"
 
 encode <- \\"json\\"
 
-response <- VERB(\\"PUT\\", url, body = payload, add_headers(account_id = 'account-id-default', message_id = 'example value', optional_header = '', quote = '', '), query = queryString, content_type(\\"application/json\\"), encode = encode)
+response <- VERB(\\"PUT\\", url, body = payload, add_headers('account-id' = 'account-id-default', 'message-id' = 'example value', 'optional_header' = '', 'quote' = ''), query = queryString, content_type(\\"application/json\\"), encode = encode)
 
 content(response, \\"text\\")"
 `;
@@ -659,7 +663,6 @@ url = URI(\\"https://todos.stoplight.io/todos/todoId?value=1&type=something&API%
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Put.new(url)
 request[\\"Content-Type\\"] = 'application/json'
@@ -681,10 +684,12 @@ exports[`given shell / curl, convertRequestToSample converts a request to a samp
   --header 'message-id: example value' \\\\
   --header 'optional_header: ' \\\\
   --header 'quote: ' \\\\
-  --data '{
+  --data '
+{
   \\"name\\": \\"Docs Module\\",
   \\"completed\\": false
-}'"
+}
+'"
 `;
 
 exports[`given shell / httpie, convertRequestToSample converts a request to a sample 1`] = `
@@ -740,7 +745,7 @@ request.httpBody = postData as Data
 let session = URLSession.shared
 let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
   if (error != nil) {
-    print(error)
+    print(error as Any)
   } else {
     let httpResponse = response as? HTTPURLResponse
     print(httpResponse)

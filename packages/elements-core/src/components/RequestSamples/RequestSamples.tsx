@@ -1,9 +1,9 @@
 import { Box, Button, CopyButton, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { Request } from 'har-format';
 import { atom, useAtom } from 'jotai';
 import React, { useMemo } from 'react';
 
+import type { HarRequest } from '../../types';
 import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
 import { getConfigFor, requestSampleConfigs } from './requestSampleConfigs';
@@ -12,7 +12,7 @@ export interface RequestSamplesProps {
   /**
    * The HTTP request to generate code for.
    */
-  request: Request;
+  request: HarRequest;
   /**
    * True when embedded in TryIt
    */

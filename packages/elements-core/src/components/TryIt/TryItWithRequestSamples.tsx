@@ -1,7 +1,7 @@
 import { Box, InvertTheme, VStack } from '@stoplight/mosaic';
-import { Request as HarRequest } from 'har-format';
 import * as React from 'react';
 
+import type { HarRequest } from '../../types';
 import { RequestSamples } from '../RequestSamples';
 import { ResponseExamples, ResponseExamplesProps } from '../ResponseExamples/ResponseExamples';
 import { TryIt, TryItProps } from './TryIt';

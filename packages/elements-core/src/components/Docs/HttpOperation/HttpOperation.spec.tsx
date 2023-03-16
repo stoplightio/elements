@@ -440,7 +440,7 @@ describe('HttpOperation', () => {
 
       const body = screen.getByRole('textbox');
       const requestSample = await screen.findByLabelText(
-        'curl --request POST \\ --url https://todos.stoplight.io/users \\ --header \'Content-Type: application/json\' \\ --data \'{ "name": "string", "age": 0 }\'',
+        'curl --request POST \\ --url https://todos.stoplight.io/users \\ --header \'Content-Type: application/json\' \\ --data \' { "name": "string", "age": 0 } \'',
       );
 
       expect(body).toHaveTextContent('{ "name": "string", "age": 0 }');
