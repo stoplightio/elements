@@ -62,8 +62,8 @@ const languages = Object.values(requestSampleConfigs).flatMap<string>(({ httpSni
   return Object.values(libraries).map(({ httpSnippetLibrary }) => `${httpSnippetLanguage} / ${httpSnippetLibrary}`);
 });
 
-test.each(languages)('given %s, convertRequestToSample converts a request to a sample', input => {
+test.each(languages)('given %s, convertRequestToSample converts a request to a sample', async input => {
   const [language, library] = input.split(' / ');
 
-  expect(convertRequestToSample(language, library, har)).toMatchSnapshot();
+  expect(convertRequestToSample(language, library, har)).resolves.toMatchSnapshot();
 });

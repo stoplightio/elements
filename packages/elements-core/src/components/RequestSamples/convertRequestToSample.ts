@@ -1,31 +1,18 @@
-import { addTargetClient, availableTargets, HTTPSnippet } from '@readme/httpsnippet';
+import { Request as HarFormatRequest } from 'har-format';
+import { HTTPSnippet, isValidTargetId } from 'httpsnippet-lite';
 
-import type { HarRequest } from '../../types';
-import { python3 } from './httpsnippet/targets/python/python3/client';
-
-addTargetClient('python', python3);
-
-const AVAILABLE_TARGET_IDS = availableTargets().map(({ key }) => key);
-
-function isValidTarget(value: string): value is typeof AVAILABLE_TARGET_IDS[number] {
-  return AVAILABLE_TARGET_IDS.includes(value as unknown as typeof AVAILABLE_TARGET_IDS[number]);
-}
-
-export const convertRequestToSample = (language: string, library: string | undefined, request: HarRequest) => {
-  if (!isValidTarget(language)) return null;
+export const convertRequestToSample = async (
+  language: string,
+  library: string | undefined,
+  request: HarFormatRequest,
+) => {
+  if (!isValidTargetId(language)) return null;
 
   try {
-    const snippet = new HTTPSnippet({
-      ...request,
-      postData: request.postData ?? {
-        mimeType: 'text/plain',
-        text: '',
-      },
-    });
-
-    const converted = snippet.convert(language, library);
+    const snippet = new HTTPSnippet(request);
+    const converted = await snippet.convert(language, library);
     if (Array.isArray(converted)) {
-      return converted.join('\n');
+      return converted[0];
     }
 
     return converted || null;
