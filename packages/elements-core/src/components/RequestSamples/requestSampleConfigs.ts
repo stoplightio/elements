@@ -37,7 +37,7 @@ export const requestSampleConfigs: RequestSampleConfigs = {
         httpSnippetLibrary: 'fetch',
       },
       XMLHttpRequest: {
-        httpSnippetLibrary: 'xmlhttprequest',
+        httpSnippetLibrary: 'xhr',
       },
       jQuery: {
         httpSnippetLibrary: 'jquery',
@@ -129,6 +129,11 @@ export const requestSampleConfigs: RequestSampleConfigs = {
   Http: {
     mosaicCodeViewerLanguage: 'http',
     httpSnippetLanguage: 'http',
+    libraries: {
+      'Http1.1': {
+        httpSnippetLibrary: 'http1.1',
+      },
+    },
   },
   Clojure: {
     mosaicCodeViewerLanguage: 'clojure',
