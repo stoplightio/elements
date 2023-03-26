@@ -1,9 +1,9 @@
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
-import { dirname, resolve } from '@stoplight/path';
-import React from 'react';
-import URI from 'urijs';
+import { dirname, isAbsolute, resolve } from '@stoplight/path';
+import * as React from 'react';
 
 import { BundledBranchNode, IntegrationKind } from '../../../types';
+import { ExtendedURL } from '../../../utils/url';
 
 export const createResolvedImageComponent = (branchNode: BundledBranchNode) => {
   const ResolvedImage: CustomComponentMapping['img'] = ({ title, alt, src }) => {
@@ -14,7 +14,7 @@ export const createResolvedImageComponent = (branchNode: BundledBranchNode) => {
 
 const resolveImageUrlHandler = (url: string, branchNode: BundledBranchNode) => {
   // don't touch absolute urls no matter which service we're using
-  if (URI(url).is('absolute')) {
+  if (isAbsolute(url)) {
     return url;
   }
 
@@ -32,7 +32,7 @@ const resolveImageUrlHandler = (url: string, branchNode: BundledBranchNode) => {
   let imageUri;
   switch (branchNode.workspaceIntegration.kind) {
     case IntegrationKind.AzureDevopsServer:
-      imageUri = new URI(branchNode.workspaceIntegration.hostUrl || '');
+      imageUri = new ExtendedURL(branchNode.workspaceIntegration.hostUrl || '');
       imageUri
         .segmentCoded([...imageUri.segmentCoded(), orgSlug, '_apis', 'git', 'repositories', projectSlug, 'items'])
         .query({
@@ -44,43 +44,43 @@ const resolveImageUrlHandler = (url: string, branchNode: BundledBranchNode) => {
 
     case IntegrationKind.BitbucketServer:
       // need to remove the api path
-      imageUri = new URI((branchNode.workspaceIntegration.apiUrl || '').replace(/\/rest\/api\/[0-9.]+/, ''));
+      imageUri = new ExtendedURL((branchNode.workspaceIntegration.apiUrl || '').replace(/\/rest\/api\/[0-9.]+/, ''));
       imageUri.segmentCoded([...imageUri.segmentCoded(), 'projects', orgSlug, 'repos', projectSlug || '', 'browse']);
       imageUri.segment([...imageUri.segment(), resolvedUri]).query({ raw: '' });
       break;
 
     case IntegrationKind.BitbucketCloud:
-      imageUri = new URI(branchNode.workspaceIntegration.hostUrl || '');
+      imageUri = new ExtendedURL(branchNode.workspaceIntegration.hostUrl || '');
       imageUri.segmentCoded([...imageUri.segmentCoded(), orgSlug, projectSlug, 'raw', branchSlug]);
       imageUri.segment([...imageUri.segment(), resolvedUri]);
       break;
 
     case IntegrationKind.Github:
-      imageUri = new URI(branchNode.workspaceIntegration.hostUrl || '');
-      imageUri.hostname(`raw.${imageUri.hostname()}`);
+      imageUri = new ExtendedURL(branchNode.workspaceIntegration.hostUrl || '');
+      imageUri.hostname = `raw.${imageUri.hostname}`;
       imageUri.segmentCoded([...imageUri.segmentCoded(), orgSlug, projectSlug, branchSlug]);
       imageUri.segment([...imageUri.segment(), resolvedUri]);
       // if image is svg sanitize true
-      if (RegExp(/\.svg$/).test(imageUri.path())) {
-        imageUri.setQuery({ sanitize: true });
+      if (RegExp(/\.svg$/).test(imageUri.pathname)) {
+        imageUri.searchParams.set('sanitize', 'true');
       }
       break;
 
     case IntegrationKind.Gitlab:
-      imageUri = new URI(branchNode.workspaceIntegration.hostUrl || '');
+      imageUri = new ExtendedURL(branchNode.workspaceIntegration.hostUrl || '');
       imageUri.segmentCoded([...imageUri.segmentCoded(), orgSlug, projectSlug, 'raw', branchSlug]);
       imageUri.segment([...imageUri.segment(), resolvedUri]);
       break;
 
     case IntegrationKind.Gitea:
-      imageUri = new URI(branchNode.workspaceIntegration.hostUrl || '');
+      imageUri = new ExtendedURL(branchNode.workspaceIntegration.hostUrl || '');
       imageUri.segmentCoded([...imageUri.segmentCoded(), orgSlug, projectSlug, 'raw', 'branch', branchSlug]);
       imageUri.segment([...imageUri.segment(), resolvedUri]);
       break;
 
     default:
-      imageUri = new URI(resolvedUri);
+      imageUri = new ExtendedURL(resolvedUri);
   }
 
-  return imageUri.normalize().valueOf();
+  return String(imageUri);
 };

@@ -1,5 +1,4 @@
 import type { IServer } from '@stoplight/types';
-import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
 
@@ -44,13 +43,9 @@ export const getServerUrlWithDefaultValues = (server: IServer): string | null =>
   let url;
 
   try {
-    url = URI(urlString);
+    url = new URL(urlString, typeof window !== 'undefined' ? window.location.origin : undefined);
   } catch {
     return null;
-  }
-
-  if (url.is('relative') && typeof window !== 'undefined') {
-    url = url.absoluteTo(window.location.origin);
   }
 
   const stringifiedUrl = url.toString();

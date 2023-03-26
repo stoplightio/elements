@@ -5,7 +5,6 @@ import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
 import { isObject } from 'lodash';
 import React from 'react';
-import URI from 'urijs';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../../../constants';
 import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
@@ -14,6 +13,7 @@ import { useParsedValue } from '../../../hooks/useParsedValue';
 import { JSONSchema } from '../../../types';
 import { isHttpOperation, isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
+import { ExtendedURL } from '../../../utils/url';
 import { TryIt } from '../../TryIt';
 import { CustomComponentMapping } from './Provider';
 
@@ -89,13 +89,13 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
 };
 
 export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
-  const uri = URI(data.url);
+  const uri = new ExtendedURL(data.url, data.baseUrl);
   const pathParam = data.url.match(/[^{\}]+(?=})/g);
   return {
     id: '?http-operation-id?',
     method: data.method,
-    path: uri.is('absolute') ? uri.path() : data.url,
-    servers: [{ id: `?http-server-${uri.href()}?`, url: uri.is('absolute') ? uri.origin() : data.baseUrl || '' }],
+    path: decodeURI(uri.pathname),
+    servers: [{ id: `?http-server-${decodeURI(uri.href)}?`, url: uri.origin }],
     request: {
       query: Object.entries(data.query || {}).map(([key, value]) => {
         const defaultVal = Array.isArray(value) ? value[0] : value;

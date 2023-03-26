@@ -25,10 +25,15 @@ describe('IServer', () => {
           id: 'http-server-https://stoplight.io/v1',
           url: 'https://stoplight.io/v1',
         },
+        {
+          id: 'http-server-https://stoplight.io/v2',
+          url: '/stoplight.io/v1',
+        },
       ];
 
       expect(getServersToDisplay(servers)).toStrictEqual([
         { id: 'http-server-https://stoplight.io/v1', description: 'Server 2', url: 'https://stoplight.io/v1' },
+        { id: 'http-server-https://stoplight.io/v2', description: 'Server 3', url: 'http://localhost/stoplight.io/v1' },
       ]);
     });
   });
