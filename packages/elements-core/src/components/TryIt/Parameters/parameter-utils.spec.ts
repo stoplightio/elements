@@ -1,4 +1,5 @@
 import { JSONSchema7Definition } from 'json-schema';
+
 import { httpOperation } from '../../../__fixtures__/operations/put-todos';
 import { initialParameterValues, mapSchemaPropertiesToParameters } from './parameter-utils';
 
