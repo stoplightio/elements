@@ -109,7 +109,10 @@ export function mapSchemaPropertiesToParameters(
   return Object.entries(properties).map(([name, schema]) => ({
     name,
     schema: typeof schema !== 'boolean' ? schema : undefined,
-    examples: typeof schema !== 'boolean' && schema.examples ? [{ key: 'example', value: schema.examples }] : undefined,
+    examples:
+      typeof schema !== 'boolean' && schema.examples && schema.examples[0]
+        ? [{ key: 'example', value: schema.examples[0] }]
+        : undefined,
     ...(required?.includes(name) && { required: true }),
   }));
 }
