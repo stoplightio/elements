@@ -132,7 +132,8 @@ export async function buildFetchRequest({
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
 
-  const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
+  const shouldIncludeBody =
+    ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
 
   const queryParams = getQueryParams({ httpOperation, parameterValues });
 
@@ -152,9 +153,10 @@ export async function buildFetchRequest({
 
   const headers = {
     // do not include multipart/form-data - browser handles its content type and boundary
-    ...(mediaTypeContent?.mediaType !== 'multipart/form-data' && {
-      'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
-    }),
+    ...(mediaTypeContent?.mediaType !== 'multipart/form-data' &&
+      shouldIncludeBody && {
+        'Content-Type': mediaTypeContent?.mediaType ?? 'application/json',
+      }),
     ...Object.fromEntries(headersWithAuth.map(nameAndValueObjectToPair)),
     ...mockData?.header,
   };
@@ -240,7 +242,8 @@ export async function buildHarRequest({
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
 
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
-  const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
+  const shouldIncludeBody =
+    ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
 
   const queryParams = getQueryParams({ httpOperation, parameterValues });
 
@@ -250,6 +253,10 @@ export async function buildHarRequest({
 
   if (mockData?.header) {
     headerParams.push({ name: 'Prefer', value: mockData.header.Prefer });
+  }
+
+  if (shouldIncludeBody) {
+    headerParams.push({ name: 'Content-Type', value: mimeType });
   }
 
   const [queryParamsWithAuth, headerParamsWithAuth] = runAuthRequestEhancements(auth, queryParams, headerParams);
@@ -284,7 +291,7 @@ export async function buildHarRequest({
     url: urlObject.href,
     httpVersion: 'HTTP/1.1',
     cookies: [],
-    headers: [{ name: 'Content-Type', value: mimeType }, ...headerParamsWithAuth],
+    headers: headerParamsWithAuth,
     queryString: queryParamsWithAuth,
     postData: postData,
     headersSize: -1,
