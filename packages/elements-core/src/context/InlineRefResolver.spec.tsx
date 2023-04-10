@@ -1,7 +1,14 @@
 import { renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
 
-import { InlineRefResolverProvider, useDocument, useInlineRefResolver, useResolvedObject } from './InlineRefResolver';
+import type { ReferenceInfo } from '../utils/ref-resolving/ReferenceResolver';
+import {
+  InlineRefResolverProvider,
+  useDocument,
+  useInlineRefResolver,
+  useResolvedObject,
+  useSchemaInlineRefResolver,
+} from './InlineRefResolver';
 
 describe('InlineRefResolver', () => {
   describe('useDocument hook', () => {
@@ -49,6 +56,125 @@ describe('InlineRefResolver', () => {
       const secondReturnedObject = result.current;
 
       expect(firstReturnedObject).toBe(secondReturnedObject);
+    });
+  });
+
+  describe('useSchemaInlineRefResolver', () => {
+    const wrapper: React.FC<{ document: Record<string, unknown> }> = ({ children, document }) => (
+      <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
+    );
+
+    let document: Record<string, unknown>;
+
+    beforeEach(() => {
+      document = {
+        openapi: '3.0.0',
+        paths: {
+          '/user': {
+            post: {
+              requestBody: {
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'object',
+                      properties: {
+                        user: {
+                          $ref: '#/components/schemas/User',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        components: {
+          schemas: {
+            User: {
+              type: 'object',
+              nullable: true,
+              properties: {
+                id: {
+                  type: 'integer',
+                  nullable: true,
+                },
+                stars: {
+                  type: 'number',
+                  format: 'int32',
+                },
+              },
+            },
+          },
+        },
+      };
+    });
+
+    it('translates resolved schema', () => {
+      const { result } = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+
+      const resolved = result.current(
+        {
+          source: null,
+          pointer: '#/components/schemas/User',
+        },
+        [],
+        {
+          type: 'object',
+          properties: {
+            user: {
+              $ref: '#/components/schemas/User',
+            },
+          },
+          $schema: 'http://json-schema.org/draft-07/schema#',
+          'x-stoplight': {
+            id: 'd3bf5ceb7dd53',
+          },
+        },
+      );
+
+      expect(resolved).toEqual({
+        type: ['object', 'null'],
+        properties: {
+          id: {
+            type: ['integer', 'null'],
+          },
+          stars: {
+            type: 'number',
+            format: 'int32',
+            maximum: 2147483647,
+            minimum: -2147483648,
+          },
+        },
+      });
+    });
+
+    it('retains the result', () => {
+      const refInfo: ReferenceInfo = {
+        source: null,
+        pointer: '#/components/schemas/User',
+      };
+      const currentObject = {
+        type: 'object',
+        properties: {
+          user: {
+            $ref: '#/components/schemas/User',
+          },
+        },
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        'x-stoplight': {
+          id: 'd3bf5ceb7dd53',
+        },
+      };
+
+      const renderedHook = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+      const renderedHook2 = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+
+      const resolved = renderedHook.result.current({ ...refInfo }, [], JSON.parse(JSON.stringify(currentObject)));
+
+      expect(renderedHook2.result.current({ ...refInfo }, [], JSON.parse(JSON.stringify(currentObject)))).toBe(
+        resolved,
+      );
     });
   });
 });

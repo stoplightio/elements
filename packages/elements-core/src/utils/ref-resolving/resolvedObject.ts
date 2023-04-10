@@ -47,7 +47,7 @@ const recursivelyCreateResolvedObject = (
         } catch (e) {
           resolvedValue = {
             ...value,
-            $error: e.message,
+            $error: e instanceof Error ? e.message : String(e),
           };
         }
       } else {

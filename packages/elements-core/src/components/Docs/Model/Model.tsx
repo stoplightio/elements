@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
-import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
+import { useResolvedObject, useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { useIsCompact } from '../../../hooks/useIsCompact';
 import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration/exampleGeneration';
@@ -27,7 +27,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   layoutOptions,
   exportProps,
 }) => {
-  const resolveRef = useInlineRefResolver();
+  const resolveRef = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
   const { nodeHasChanged } = useOptionsCtx();
 

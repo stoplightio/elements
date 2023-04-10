@@ -1,16 +1,18 @@
 ## Introduction to Elements Dev Portal
 
-Elements Dev Portal is backed by the Stoplight Platform and can do many many things. 
+Elements Dev Portal is backed by the [Stoplight Platform](https://stoplight.io/) and offers: 
 
-- Support multiple APIs
-- Markdown Articles
-- [Hosted Mock Server](https://meta.stoplight.io/docs/platform/3.-design/d.setting-up-a-mock-server.md) Integration
-- Version Selector (Multiple Branches)
-- Powerful Search
+- Support for multiple APIs
+- Markdown article rendering
+- [Hosted mock servers](https://meta.stoplight.io/docs/platform/3.-design/d.setting-up-a-mock-server.md)
+- Version selector (multiple branches)
+- Powerful search
 
-> Elements Dev Portal can be used for free during development on your local machine. If you need to use it in a production environment, please [subscribe to a paid plan](https://stoplight.io/pricing).
+## Stoplight Platform
 
-Think of the dev portal as more of a Content Management System, focused entirely on making an awesome developer experience for an organization.
+Elements Dev Portal can be used for free during development on your local machine. To use the Dev Portal in a production environment, [subscribe to a paid plan](https://stoplight.io/pricing).
+
+The Elements Dev Portal must be connected to [a public project](https://docs.stoplight.io/docs/platform/be67e532b4b2a-manage-project-access#change-project-visibility) in the Stoplight Platform. A ‘Forbidden’ error occurs if the project visibility isn't set to Public.
 
 ## Next steps
 
@@ -21,4 +23,4 @@ Ready to get started using Elements? Check out these guides for using Elements i
 - [Usage with GatsbyJS](gatsby.md)
 - [Usage with AngularJS](angular.md)
 
-Once you're done and your docs are live, give us a shout at [@stoplightio](https://twitter.com/stoplightio) and we'll help you share it with the world!
+Once you're done and your docs are live, send a note to [@stoplightio](https://twitter.com/stoplightio) and Stoplight can help you share them with the world.

@@ -1,10 +1,10 @@
 export const DEFAULT_API_URL =
-  'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml';
+  'https://raw.githubusercontent.com/stoplightio/elements/main/demo/src/reference/todo.v1.yaml';
 
 export const EXAMPLE_SPECS = [
   {
     text: 'Todo API (default example)',
-    value: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml',
+    value: 'https://raw.githubusercontent.com/stoplightio/elements/main/demo/src/reference/todo.v1.yaml',
   },
   {
     text: 'Zoom',

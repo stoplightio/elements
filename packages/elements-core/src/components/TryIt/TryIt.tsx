@@ -203,10 +203,14 @@ export const TryIt: React.FC<TryItProps> = ({
         const contentType = response.headers.get('Content-Type');
         const type = contentType ? getResponseType(contentType) : undefined;
 
+        const bodyText = type !== 'image' ? await response.text() : undefined;
+        const blob = type === 'image' ? await response.blob() : undefined;
+
+        setResponse(undefined); // setting undefined to handle rendering large responses
         setResponse({
           status: response.status,
-          bodyText: type !== 'image' ? await response.text() : undefined,
-          blob: type === 'image' ? await response.blob() : undefined,
+          bodyText,
+          blob,
           contentType,
         });
       }

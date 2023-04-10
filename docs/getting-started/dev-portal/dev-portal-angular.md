@@ -4,10 +4,10 @@ Learn how to get started with Elements Dev Portal in an Angular project.
 
 ## Create a Stoplight Project
 
-1. [Create a Stoplight workspace and project](https://meta.stoplight.io/docs/platform/ZG9jOjQ2OTE4Njk3-quickstart-guide#create-a-project).
+1. [Create a Stoplight workspace and project](https://docs.stoplight.io/docs/platform/ZG9jOjQ2OTE4Njk3-quickstart-guide#create-a-project).
 2. Locate and copy the **Project ID** from the **Project Settings** view of your Stoplight project.
 
-> Project Settings can only be viewed by project editors or above. Read more about project permissions [here](https://meta.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
+> Project Settings can only be viewed by project editors or above. Read more about [project permissions](https://docs.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
 
 ## Install Elements
 
@@ -66,7 +66,7 @@ title: api-reference.component.html
 ></elements-stoplight-project>
 ```
 
-Notice we added a `basePath` to our API component? We'll also want to add a route for the `/api-reference` path in our `app-routing.module.ts` file. It's important that we also add a catch-all route `**`, so we can deep link to paths in our API reference docs.
+Notice `basePath` in the API component. You'll also want to add a route for the `/api-reference` path in the `app-routing.module.ts` file. It's important to add a catch-all route `**` so you can deep link to paths in API reference docs.
 
 Your routing file should end up looking like this:
 
@@ -94,7 +94,7 @@ const routes: Routes = [
 })
 export class AppRoutingModule {}
 ```
-And finally, we need to set up Angular to allow [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Head over to the `app-module.ts` file and add the [CUSTOM_ELEMENTS_SCHEMA](https://angular.io/api/core/CUSTOM_ELEMENTS_SCHEMA).
+And finally, set up Angular to allow [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Head over to the `app-module.ts` file and add the [CUSTOM_ELEMENTS_SCHEMA](https://angular.io/api/core/CUSTOM_ELEMENTS_SCHEMA).
 
 It'll end up looking like this:
 
