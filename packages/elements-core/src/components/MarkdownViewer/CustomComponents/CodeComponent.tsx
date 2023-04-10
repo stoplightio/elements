@@ -8,7 +8,7 @@ import React from 'react';
 import URI from 'urijs';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../../../constants';
-import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { PersistenceContextProvider } from '../../../context/Persistence';
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { JSONSchema } from '../../../types';
@@ -35,7 +35,7 @@ interface ISchemaAndDescriptionProps {
 }
 
 const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptionProps) => {
-  const resolveRef = useInlineRefResolver();
+  const resolveRef = useSchemaInlineRefResolver();
   const title = titleProp ?? schema.title;
   return (
     <Box py={2}>

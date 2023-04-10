@@ -1,9 +1,12 @@
+import { isPlainObject } from '@stoplight/json';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { HttpParamStyles, IHttpParam } from '@stoplight/types';
 import type { JSONSchema7Object } from 'json-schema';
 import { sortBy } from 'lodash';
 import * as React from 'react';
 
+import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { isNodeExample } from '../../../utils/http-spec/examples';
 
 type ParameterType = 'query' | 'header' | 'path' | 'cookie';
@@ -31,6 +34,9 @@ const defaultStyle = {
 } as const;
 
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
+  const { nodeHasChanged } = useOptionsCtx();
+  const refResolver = useSchemaInlineRefResolver();
+
   const schema = React.useMemo(
     () => httpOperationParamsToSchema({ parameters, parameterType }),
     [parameters, parameterType],
@@ -38,7 +44,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
 
   if (!schema) return null;
 
-  return <JsonSchemaViewer schema={schema} disableCrumbs />;
+  return <JsonSchemaViewer resolveRef={refResolver} schema={schema} disableCrumbs nodeHasChanged={nodeHasChanged} />;
 };
 Parameters.displayName = 'HttpOperation.Parameters';
 
@@ -53,10 +59,9 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
   const sortedParams = sortBy(parameters, ['required', 'name']);
 
   for (const p of sortedParams) {
-    if (!p.schema) continue;
-
     const { name, description, required, deprecated, examples, style } = p;
 
+    const paramSchema = isPlainObject(p.schema) ? p.schema : {};
     const paramExamples =
       examples?.map(example => {
         if (isNodeExample(example)) {
@@ -65,26 +70,35 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
 
         return example.externalValue;
       }) || [];
-    const schemaExamples = p.schema?.examples;
+
+    const schemaExamples = paramSchema.examples;
     const schemaExamplesArray = Array.isArray(schemaExamples) ? schemaExamples : [];
 
     // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
-    const paramDescription = description || p.schema.description;
+    const paramDescription = description || paramSchema.description;
 
-    const paramDeprecated = deprecated || (p.schema as any).deprecated;
+    const paramDeprecated = !!(deprecated || paramSchema.deprecated);
     const paramStyle = style && defaultStyle[parameterType] !== style ? readableStyles[style] || style : undefined;
 
-    schema.properties![p.name] = {
-      ...p.schema,
-      description: paramDescription,
-      examples: [...paramExamples, ...schemaExamplesArray],
-      deprecated: paramDeprecated,
-      style: paramStyle,
-    };
+    if (isPlainObject(schema.properties)) {
+      schema.properties![p.name] = {
+        ...paramSchema,
+        description: paramDescription,
+        examples: [...paramExamples, ...schemaExamplesArray],
+        deprecated: paramDeprecated,
+        style: paramStyle,
 
-    if (required) {
-      // @ts-expect-error
-      schema.required!.push(name);
+        // the schema is technically the param, so set the stored id to the param's id
+        'x-stoplight': {
+          ...(isPlainObject(paramSchema['x-stoplight']) ? paramSchema['x-stoplight'] : {}),
+          id: p.id,
+        },
+      };
+    }
+
+    if (required && Array.isArray(schema.required)) {
+      // @ts-ignore
+      schema.required.push(name);
     }
   }
 

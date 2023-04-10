@@ -1,9 +1,13 @@
+import { convertToJsonSchema } from '@stoplight/http-spec/oas';
 import { isPlainObject } from '@stoplight/json';
+import type { Dictionary } from '@stoplight/types';
 import * as React from 'react';
 import { useContext } from 'react';
 
 import { defaultResolver, ReferenceResolver } from '../utils/ref-resolving/ReferenceResolver';
 import { createResolvedObject } from '../utils/ref-resolving/resolvedObject';
+
+const translatedObjectSymbol = Symbol('TranslatedObject');
 
 const InlineRefResolverContext = React.createContext<ReferenceResolver | undefined>(undefined);
 InlineRefResolverContext.displayName = 'InlineRefResolverContext';
@@ -49,5 +53,33 @@ export const useResolvedObject = (currentObject: object): object => {
   return React.useMemo(
     () => createResolvedObject(currentObject, { contextObject: document as object, resolver }),
     [currentObject, document, resolver],
+  );
+};
+
+export const useSchemaInlineRefResolver = (): ReferenceResolver => {
+  const document = useDocument();
+  const resolver = useInlineRefResolver();
+
+  return React.useCallback<ReferenceResolver>(
+    (...args) => {
+      const resolved = resolver?.(...args);
+      if (!isPlainObject(resolved)) {
+        return resolved;
+      }
+
+      if (translatedObjectSymbol in resolved) {
+        return (resolved as { [translatedObjectSymbol]: unknown })[translatedObjectSymbol];
+      }
+
+      const converted = convertToJsonSchema((document ?? {}) as Dictionary<unknown>, resolved);
+      Reflect.defineProperty(resolved, translatedObjectSymbol, {
+        configurable: true,
+        value: converted,
+      });
+
+      delete converted.$schema;
+      return converted;
+    },
+    [document, resolver],
   );
 };

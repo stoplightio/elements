@@ -14,7 +14,7 @@ import * as React from 'react';
 import { Node } from '../../types';
 
 // Props shared with elements-core Docs component
-type DocsBaseProps = Pick<DocsProps, 'tryItCorsProxy' | 'tryItCredentialsPolicy'>;
+type DocsBaseProps = Pick<DocsProps, 'tryItCorsProxy' | 'tryItCredentialsPolicy' | 'nodeHasChanged'>;
 type DocsLayoutProps = Pick<
   Required<DocsProps>['layoutOptions'],
   'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'
@@ -33,6 +33,8 @@ export type NodeContentProps = {
    * Support for custom reference resolver
    */
   refResolver?: ReferenceResolver;
+
+  onExportRequest?: (type: 'original' | 'bundled') => void;
 } & DocsBaseProps &
   DocsLayoutProps;
 
@@ -45,12 +47,16 @@ export const NodeContent = ({
   // Docs base props
   tryItCorsProxy,
   tryItCredentialsPolicy,
+  nodeHasChanged,
 
   // Docs layout props
   compact,
   hideTryIt,
   hideTryItPanel,
+
+  // Exporting
   hideExport,
+  onExportRequest,
 }: NodeContentProps) => {
   return (
     <NodeLinkContext.Provider value={[node, Link]}>
@@ -72,16 +78,17 @@ export const NodeContent = ({
             exportProps={
               [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)
                 ? {
-                    original: {
-                      href: node.links.export_url,
-                    },
-                    bundled: {
-                      href: getBundledUrl(node.links.export_url),
-                    },
+                    original: onExportRequest
+                      ? { onPress: () => onExportRequest('original') }
+                      : { href: node.links.export_url },
+                    bundled: onExportRequest
+                      ? { onPress: () => onExportRequest('bundled') }
+                      : { href: getBundledUrl(node.links.export_url) },
                   }
                 : undefined
             }
             tryItCredentialsPolicy={tryItCredentialsPolicy}
+            nodeHasChanged={nodeHasChanged}
           />
         </MockingProvider>
       </MarkdownComponentsProvider>
@@ -92,13 +99,13 @@ export const NodeContent = ({
 const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefined>(undefined);
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
-const LinkComponent: CustomComponentMapping['a'] = ({ children, href }) => {
+const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) => {
   const ctx = React.useContext(NodeLinkContext);
 
   if (href && externalRegex.test(href)) {
     // Open external URL in a new tab
     return (
-      <a href={href} target="_blank" rel="noreferrer">
+      <a href={href} target="_blank" rel="noreferrer" title={title ? title : undefined}>
         {children}
       </a>
     );

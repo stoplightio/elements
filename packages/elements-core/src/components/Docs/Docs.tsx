@@ -1,8 +1,9 @@
-import { NodeType } from '@stoplight/types';
+import type { NodeHasChangedFn, NodeType } from '@stoplight/types';
 import { Location } from 'history';
 import * as React from 'react';
 
 import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
+import { ElementsOptionsProvider } from '../../context/Options';
 import { useParsedData } from '../../hooks/useParsedData';
 import { ParsedNode } from '../../types';
 import { ReferenceResolver } from '../../utils/ref-resolving/ReferenceResolver';
@@ -113,6 +114,8 @@ interface BaseDocsProps {
      */
     compact?: number | boolean;
   };
+
+  nodeHasChanged?: NodeHasChangedFn<React.ReactNode>;
 }
 
 export interface DocsProps extends BaseDocsProps {
@@ -130,7 +133,7 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
 }
 
 export const Docs = React.memo<DocsProps>(
-  ({ nodeType, nodeData, useNodeForRefResolving = false, refResolver, ...commonProps }) => {
+  ({ nodeType, nodeData, useNodeForRefResolving = false, refResolver, nodeHasChanged, ...commonProps }) => {
     const parsedNode = useParsedData(nodeType, nodeData);
 
     if (!parsedNode) {
@@ -138,17 +141,17 @@ export const Docs = React.memo<DocsProps>(
       return null;
     }
 
-    const parsedDocs = <ParsedDocs node={parsedNode} {...commonProps} />;
+    let elem = <ParsedDocs node={parsedNode} {...commonProps} />;
 
     if (useNodeForRefResolving) {
-      return (
+      elem = (
         <InlineRefResolverProvider document={parsedNode.data} resolver={refResolver}>
-          {parsedDocs}
+          {elem}
         </InlineRefResolverProvider>
       );
     }
 
-    return parsedDocs;
+    return <ElementsOptionsProvider nodeHasChanged={nodeHasChanged}>{elem}</ElementsOptionsProvider>;
   },
 );
 

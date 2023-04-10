@@ -1,8 +1,8 @@
 # Elements in HTML
 
-Setting up Elements is a case of loading up some JavaScript and CSS and embedding a Web Component (custom HTML) into the HTML of your new or existing dev portal. This should work anywhere custom HTML can be embedded and this approach is supported by [pretty much all modern browsers](https://caniuse.com/custom-elementsv1).
+Setting up Elements is a case of loading up some JavaScript and CSS and embedding a Web Component (custom HTML) into the HTML of your new or existing developer portal. This should work anywhere custom HTML can be embedded and this approach is supported by [pretty much all modern browsers](https://caniuse.com/custom-elementsv1).
 
-For now, the only Web component in the Elements package is `<elements-api/>`, which will display API reference documentation for your OpenAPI. Check out the demo for a live example https://elements-demo.stoplight.io.
+For now, the only Web component in the Elements package is `<elements-api/>`, which displays API reference documentation for your OpenAPI. Check out the demo for a live example: https://elements-demo.stoplight.io.
 
 ## Usage
 

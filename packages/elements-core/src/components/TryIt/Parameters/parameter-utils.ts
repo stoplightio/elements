@@ -44,9 +44,13 @@ export function parameterSupportsFileUpload(parameter: Pick<ParameterSpec, 'sche
   );
 }
 
+function stringifyValue(value: unknown) {
+  return typeof value === 'object' ? JSON.stringify(value) : escapeQuotes(String(value));
+}
+
 function exampleValue(example: Omit<INodeExample, 'id'> | Omit<INodeExternalExample, 'id'>) {
   const value = 'value' in example ? example.value : example.externalValue;
-  return escapeQuotes(String(value));
+  return stringifyValue(value);
 }
 
 function escapeQuotes(value: string) {
@@ -69,7 +73,7 @@ function retrieveDefaultFromSchema(parameter: ParameterSpec) {
 const getValueForParameter = (parameter: ParameterSpec) => {
   const defaultValue = retrieveDefaultFromSchema(parameter);
   if (typeof defaultValue !== 'undefined') {
-    return { value: String(defaultValue), isDefault: true };
+    return { value: stringifyValue(defaultValue), isDefault: true };
   }
 
   const examples = parameter.examples ?? [];
@@ -79,7 +83,7 @@ const getValueForParameter = (parameter: ParameterSpec) => {
 
   const enums = parameter.schema?.enum ?? [];
   if (enums.length > 0) {
-    return { value: String(enums[0]) };
+    return { value: stringifyValue(enums[0]) };
   }
 
   return { value: '' };
@@ -105,7 +109,10 @@ export function mapSchemaPropertiesToParameters(
   return Object.entries(properties).map(([name, schema]) => ({
     name,
     schema: typeof schema !== 'boolean' ? schema : undefined,
-    examples: typeof schema !== 'boolean' && schema.examples ? [{ key: 'example', value: schema.examples }] : undefined,
+    examples:
+      typeof schema !== 'boolean' && schema.examples && schema.examples[0]
+        ? [{ key: 'example', value: schema.examples[0] }]
+        : undefined,
     ...(required?.includes(name) && { required: true }),
   }));
 }

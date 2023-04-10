@@ -24,6 +24,7 @@ export { HttpMethodColors, NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName 
 export { MockingProvider } from './containers/MockingProvider';
 export { InlineRefResolverProvider } from './context/InlineRefResolver';
 export { PersistenceContextProvider, withPersistenceBoundary } from './context/Persistence';
+export { RouterTypeContext } from './context/RouterType';
 export { withMosaicProvider } from './hoc/withMosaicProvider';
 export { withQueryClientProvider } from './hoc/withQueryClientProvider';
 export { withRouter } from './hoc/withRouter';

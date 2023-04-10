@@ -37,7 +37,7 @@ export const requestSampleConfigs: RequestSampleConfigs = {
         httpSnippetLibrary: 'fetch',
       },
       XMLHttpRequest: {
-        httpSnippetLibrary: 'xmlhttprequest',
+        httpSnippetLibrary: 'xhr',
       },
       jQuery: {
         httpSnippetLibrary: 'jquery',
@@ -129,6 +129,11 @@ export const requestSampleConfigs: RequestSampleConfigs = {
   Http: {
     mosaicCodeViewerLanguage: 'http',
     httpSnippetLanguage: 'http',
+    libraries: {
+      'Http1.1': {
+        httpSnippetLibrary: 'http1.1',
+      },
+    },
   },
   Clojure: {
     mosaicCodeViewerLanguage: 'clojure',
@@ -142,14 +147,11 @@ export const requestSampleConfigs: RequestSampleConfigs = {
     mosaicCodeViewerLanguage: 'php',
     httpSnippetLanguage: 'php',
     libraries: {
-      'pecl/http 1': {
-        httpSnippetLibrary: 'http1',
-      },
-      'pecl/http 2': {
-        httpSnippetLibrary: 'http2',
-      },
       cURL: {
         httpSnippetLibrary: 'curl',
+      },
+      guzzle: {
+        httpSnippetLibrary: 'guzzle',
       },
     },
   },

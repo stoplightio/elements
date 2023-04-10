@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "7.6.4",
+  "version": "7.7.15",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -62,11 +62,11 @@
     ]
   },
   "dependencies": {
-    "@stoplight/elements-core": "~7.6.4",
+    "@stoplight/elements-core": "~7.7.15",
     "@stoplight/http-spec": "^5.1.4",
     "@stoplight/json": "^3.18.1",
-    "@stoplight/mosaic": "^1.24.5",
-    "@stoplight/types": "^13.0.0",
+    "@stoplight/mosaic": "^1.33.0",
+    "@stoplight/types": "^13.7.0",
     "@stoplight/yaml": "^4.2.3",
     "classnames": "^2.2.6",
     "file-saver": "^2.0.5",
@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@stoplight/scripts": "9.2.0",
+    "@stoplight/scripts": "9.2.1",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.1",

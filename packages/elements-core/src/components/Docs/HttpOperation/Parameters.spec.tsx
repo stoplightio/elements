@@ -2,6 +2,7 @@ import { HttpParamStyles, IHttpParam } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import { JSONSchema7 } from 'json-schema';
+import { omit } from 'lodash';
 import * as React from 'react';
 
 import { Parameters } from './Parameters';
@@ -79,5 +80,22 @@ describe('Parameter', () => {
     expect(screen.queryByText(/Example:/)).toBeInTheDocument();
     expect(screen.queryByText(/example value/)).toBeInTheDocument();
     expect(screen.queryByText(/example key/)).not.toBeInTheDocument();
+  });
+
+  it('should render scheme-less params', async () => {
+    render(
+      <Parameters
+        parameters={[
+          { ...data, name: 'param' },
+          omit({ ...data, name: 'param 2', description: 'a param 2 description' }, 'schema'),
+          omit({ ...data, name: 'param 3', description: 'a param 3 description', deprecated: false }, 'schema'),
+        ]}
+        parameterType="query"
+      />,
+    );
+
+    expect(await screen.findByText(/a parameter description/)).toBeInTheDocument();
+    expect(await screen.findByText(/a param 2 description/)).toBeInTheDocument();
+    expect(await screen.findByText(/a param 3 description/)).toBeInTheDocument();
   });
 });

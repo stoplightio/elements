@@ -1,7 +1,7 @@
-import { Dictionary, IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { Dictionary, HttpParamStyles, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 
-import { getServerUrlWithDefaultValues, IServer } from '../../utils/http-spec/IServer';
+import { getServerUrlWithDefaultValues } from '../../utils/http-spec/IServer';
 import {
   filterOutAuthorizationParams,
   HttpSecuritySchemeWithValues,
@@ -50,6 +50,75 @@ const getServerUrl = ({
   return serverUrl;
 };
 
+const delimiter = {
+  [HttpParamStyles.Form]: ',',
+  [HttpParamStyles.SpaceDelimited]: ' ',
+  [HttpParamStyles.PipeDelimited]: '|',
+};
+
+export const getQueryParams = ({
+  httpOperation,
+  parameterValues,
+}: Pick<BuildRequestInput, 'httpOperation'> & Pick<BuildRequestInput, 'parameterValues'>) => {
+  const query = httpOperation.request?.query;
+  if (!query) return [];
+
+  return query.reduce<{ name: string; value: string }[]>((acc, param) => {
+    const value = parameterValues[param.name] ?? '';
+    if (value.length === 0) return acc;
+
+    const explode = param.explode ?? true;
+
+    if (param.schema?.type === 'object' && param.style === 'form' && value) {
+      let nested: Dictionary<string, string>;
+      try {
+        nested = JSON.parse(value);
+        if (!(typeof nested === 'object' && nested !== null)) throw Error();
+      } catch (e) {
+        throw new Error(`Cannot use param value "${value}". JSON object expected.`);
+      }
+
+      if (explode) {
+        acc.push(...Object.entries(nested).map(([name, value]) => ({ name, value: value.toString() })));
+      } else {
+        acc.push({
+          name: param.name,
+          value: Object.entries(nested)
+            .map(entry => entry.join(','))
+            .join(','),
+        });
+      }
+    } else if (param.schema?.type === 'array' && value) {
+      let nested: string[];
+      try {
+        const parsed = JSON.parse(value);
+        if (typeof parsed === 'string') {
+          nested = parsed.split(delimiter[param.style]);
+        } else if (Array.isArray(parsed)) {
+          nested = parsed;
+        } else {
+          throw Error();
+        }
+      } catch (e) {
+        throw new Error(`Cannot use param value "${value}". JSON array expected.`);
+      }
+
+      if (explode) {
+        acc.push(...nested.map(value => ({ name: param.name, value: value.toString() })));
+      } else {
+        acc.push({
+          name: param.name,
+          value: nested.join(delimiter[param.style] ?? delimiter[HttpParamStyles.Form]),
+        });
+      }
+    } else {
+      acc.push({ name: param.name, value });
+    }
+
+    return acc;
+  }, []);
+};
+
 export async function buildFetchRequest({
   httpOperation,
   mediaTypeContent,
@@ -65,10 +134,7 @@ export async function buildFetchRequest({
 
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
-  const queryParams =
-    httpOperation.request?.query
-      ?.map(param => ({ name: param.name, value: parameterValues[param.name] ?? '' }))
-      .filter(({ value }) => value.length > 0) ?? [];
+  const queryParams = getQueryParams({ httpOperation, parameterValues });
 
   const rawHeaders = filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security)
     .map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' }))
@@ -176,10 +242,7 @@ export async function buildHarRequest({
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody = ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase());
 
-  const queryParams =
-    httpOperation.request?.query
-      ?.map(param => ({ name: param.name, value: parameterValues[param.name] ?? '' }))
-      .filter(({ value }) => value.length > 0) ?? [];
+  const queryParams = getQueryParams({ httpOperation, parameterValues });
 
   const headerParams =
     httpOperation.request?.headers?.map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' })) ??

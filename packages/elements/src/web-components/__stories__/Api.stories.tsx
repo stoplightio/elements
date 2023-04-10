@@ -31,7 +31,7 @@ export default {
 
 export const TodosAPI = Template.bind({});
 TodosAPI.args = {
-  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml',
+  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/elements/main/demo/src/reference/todo.v1.yaml',
 };
 
 export const TodosAPIWithFixHeight = (props: any) => (
@@ -40,7 +40,7 @@ export const TodosAPIWithFixHeight = (props: any) => (
   </div>
 );
 TodosAPIWithFixHeight.args = {
-  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/studio-demo/master/reference/todos/todo.v1.yaml',
+  apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/elements/main/demo/src/reference/todo.v1.yaml',
 };
 TodosAPIWithFixHeight.storyName = 'TodosAPI with fixed height';
 

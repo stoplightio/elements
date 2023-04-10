@@ -189,7 +189,7 @@ describe('createResolvedObject', () => {
       resolver: ({ pointer }, propertyPath, originalObject) => ({
         pointer,
         propertyPath,
-        originalObjectProperties: Object.keys(originalObject),
+        originalObjectProperties: originalObject ? Object.keys(originalObject) : [],
       }),
     });
 

@@ -1,7 +1,8 @@
-import { Box, HeadingProps, HStack, LinkHeading, Panel, PanelProps } from '@stoplight/mosaic';
+import { Box, Flex, HeadingProps, Panel, PanelProps } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { slugify } from '../../utils/string';
+import { LinkHeading } from '../LinkHeading';
 
 export interface ISectionTitle {
   title: string;
@@ -11,12 +12,14 @@ export interface ISectionTitle {
 
 export const SectionTitle: React.FC<ISectionTitle> = ({ title, id, size = 2, children }) => {
   return (
-    <HStack spacing={6}>
-      <Box as={LinkHeading} size={size} aria-label={title} id={id || slugify(title)}>
+    <Flex w="full">
+      <Box py={1} pr={6} as={LinkHeading} size={size} aria-label={title} id={id || slugify(title)}>
         {title}
       </Box>
-      {children}
-    </HStack>
+      <Box alignSelf={'center'} py={1} flexGrow style={{ minWidth: 0 }}>
+        {children}
+      </Box>
+    </Flex>
   );
 };
 

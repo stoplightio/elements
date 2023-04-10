@@ -38,7 +38,25 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embedd
     selectedLibrary,
   );
 
-  const requestSample = convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request);
+  const [requestSample, setRequestSample] = React.useState<string | null>(null);
+  React.useEffect(() => {
+    let isStale = false;
+    convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request)
+      .then(example => {
+        if (!isStale) {
+          setRequestSample(example);
+        }
+      })
+      .catch(() => {
+        if (!isStale) {
+          setRequestSample(fallbackText);
+        }
+      });
+
+    return () => {
+      isStale = true;
+    };
+  }, [request, httpSnippetLanguage, httpSnippetLibrary]);
 
   const menuItems = useMemo(() => {
     const items: MenuItems = Object.entries(requestSampleConfigs).map(([language, config]) => {
@@ -88,22 +106,24 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embedd
       </Panel.Titlebar>
 
       <Panel.Content p={0}>
-        <CodeViewer
-          aria-label={requestSample ?? fallbackText}
-          noCopyButton
-          maxHeight="400px"
-          language={mosaicCodeViewerLanguage}
-          value={requestSample || fallbackText}
-          style={
-            embeddedInMd
-              ? undefined
-              : // when not rendering in prose (markdown), reduce font size to be consistent with base UI
-                {
-                  // @ts-expect-error react css typings do not allow for css variables...
-                  '--fs-code': 12,
-                }
-          }
-        />
+        {requestSample !== null && (
+          <CodeViewer
+            aria-label={requestSample}
+            noCopyButton
+            maxHeight="400px"
+            language={mosaicCodeViewerLanguage}
+            value={requestSample}
+            style={
+              embeddedInMd
+                ? undefined
+                : // when not rendering in prose (markdown), reduce font size to be consistent with base UI
+                  {
+                    // @ts-expect-error react css typings do not allow for css variables...
+                    '--fs-code': 12,
+                  }
+            }
+          />
+        )}
       </Panel.Content>
     </Panel>
   );

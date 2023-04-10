@@ -1,9 +1,9 @@
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { FieldButton, Menu, MenuItem } from '@stoplight/mosaic';
+import type { IServer } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import * as React from 'react';
 
-import type { IServer } from '../../../utils/http-spec/IServer';
 import { chosenServerAtom } from '../chosenServer';
 
 export type ServersDropdownProps = {
@@ -25,8 +25,8 @@ export const ServersDropdown = ({ servers }: ServersDropdownProps) => {
       children: [
         ...servers.map((server, i) => ({
           id: server.url,
-          title: server.name || server.description,
-          description: server.name ? server.description || server.url : server.description ? server.url : undefined,
+          title: server.description,
+          description: server.url,
           value: server.url,
         })),
       ],
@@ -40,7 +40,7 @@ export const ServersDropdown = ({ servers }: ServersDropdownProps) => {
       closeOnPress
       renderTrigger={({ isOpen }) => (
         <FieldButton icon={faServer} size="sm" active={isOpen}>
-          {chosenServer?.name || chosenServer?.description || 'Server'}
+          {chosenServer?.description || 'Server'}
         </FieldButton>
       )}
     />

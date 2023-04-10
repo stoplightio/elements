@@ -3,7 +3,7 @@ version: 2.1
 executors:
   cypress-default:
     docker:
-      - image: cypress/base:16.13.2
+      - image: cypress/base:16.18.1
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -24,7 +24,7 @@ jobs:
   build:
     working_directory: /mnt/ramdisk/project
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:16.17
     resource_class: large
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
@@ -93,7 +93,7 @@ jobs:
           command: weekly_lockfile_maintenance.sh
   release:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:16.17
     steps:
       - checkout
       - run:

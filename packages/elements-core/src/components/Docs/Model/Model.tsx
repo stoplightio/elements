@@ -1,19 +1,20 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { CopyButton, Flex, Heading, HStack, Panel, Select, Text, VStack } from '@stoplight/mosaic';
+import { Box, CopyButton, Flex, Heading, HStack, NodeAnnotation, Panel, Select, Text, VStack } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
-import { useInlineRefResolver, useResolvedObject } from '../../../context/InlineRefResolver';
+import { useResolvedObject, useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { useIsCompact } from '../../../hooks/useIsCompact';
 import { exceedsSize, generateExamplesFromJsonSchema } from '../../../utils/exampleGeneration/exampleGeneration';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
-import { InternalBadge } from '../HttpOperation/Badges';
+import { DeprecatedBadge, InternalBadge } from '../HttpOperation/Badges';
 import { ExportButton } from '../HttpService/ExportButton';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 
@@ -26,28 +27,39 @@ const ModelComponent: React.FC<ModelProps> = ({
   layoutOptions,
   exportProps,
 }) => {
-  const resolveRef = useInlineRefResolver();
+  const resolveRef = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
+  const { nodeHasChanged } = useOptionsCtx();
 
   const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
+  const nodeId = data?.['x-stoplight']?.id;
   const title = data.title ?? nodeTitle;
+  const isDeprecated = !!data['deprecated'];
   const isInternal = !!data['x-internal'];
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
-  const header = (shouldDisplayHeader || isInternal) && (
+  const titleChanged = nodeHasChanged?.({ nodeId, attr: ['title', 'internal'] });
+  const header = (shouldDisplayHeader || isInternal || isDeprecated) && (
     <Flex justifyContent="between" alignItems="center">
-      <HStack spacing={5}>
-        {title && (
-          <Heading size={1} fontWeight="semibold">
-            {title}
-          </Heading>
-        )}
+      <Box pos="relative">
+        <HStack spacing={5}>
+          {title && (
+            <Heading size={1} fontWeight="semibold">
+              {title}
+            </Heading>
+          )}
 
-        <HStack spacing={2}>{isInternal && <InternalBadge />}</HStack>
-      </HStack>
+          <HStack spacing={2}>
+            {isDeprecated && <DeprecatedBadge />}
+            {isInternal && <InternalBadge />}
+          </HStack>
+        </HStack>
+
+        <NodeAnnotation change={titleChanged} />
+      </Box>
 
       {exportProps && !layoutOptions?.hideExport && <ExportButton {...exportProps} />}
     </Flex>
@@ -55,13 +67,24 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const modelExamples = !layoutOptions?.hideModelExamples && <ModelExamples data={data} isCollapsible={isCompact} />;
 
+  const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
   const description = (
     <VStack spacing={10}>
-      {data.description && data.type === 'object' && <MarkdownViewer role="textbox" markdown={data.description} />}
+      {data.description && data.type === 'object' && (
+        <Box pos="relative">
+          <MarkdownViewer role="textbox" markdown={data.description} />
+          <NodeAnnotation change={descriptionChanged} />
+        </Box>
+      )}
 
       {isCompact && modelExamples}
 
-      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(data)} />
+      <JsonSchemaViewer
+        resolveRef={resolveRef}
+        schema={getOriginalObject(data)}
+        nodeHasChanged={nodeHasChanged}
+        skipTopLevelDescription
+      />
     </VStack>
   );
 
