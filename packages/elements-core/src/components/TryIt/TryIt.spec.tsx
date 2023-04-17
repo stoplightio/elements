@@ -60,7 +60,7 @@ describe('TryIt', () => {
     const requestInit = fetchMock.mock.calls[0][1]!;
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
-    expect(headers.get('Content-Type')).toBe('application/json');
+    expect(headers.get('Content-Type')).toBe(null);
   });
 
   it('uses cors proxy url, if provided', async () => {
@@ -722,7 +722,6 @@ describe('TryIt', () => {
           expect.objectContaining({
             method: 'GET',
             headers: {
-              'Content-Type': 'application/json',
               Prefer: 'code=200',
             },
           }),
@@ -731,9 +730,7 @@ describe('TryIt', () => {
           'https://todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: {},
           }),
         ],
       ]);
@@ -760,9 +757,7 @@ describe('TryIt', () => {
           'https://mock-todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: {},
           }),
         ],
       ]);
@@ -823,7 +818,6 @@ describe('TryIt', () => {
         expect.objectContaining({
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
             Prefer: 'code=200',
           },
         }),
