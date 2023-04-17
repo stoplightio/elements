@@ -44,6 +44,7 @@ export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps>
           required
           value={value?.name ?? ''}
           disabled
+          enterKeyHint="done"
         />
         {value && (
           <button className="sl-mr-3 sl-p-2" aria-label="Remove file" onClick={clearFile}>

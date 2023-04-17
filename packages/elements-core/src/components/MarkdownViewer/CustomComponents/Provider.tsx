@@ -10,6 +10,7 @@ export type CustomComponentMapping = MDVCustomComponentMapping;
 
 interface MarkdownComponentsProviderProps {
   value: Partial<CustomComponentMapping> | undefined;
+  children?: React.ReactNode;
 }
 
 /**

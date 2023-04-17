@@ -28,6 +28,7 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
           type="text"
           required
           onChange={e => onCredentialsChange(e.currentTarget.value, password)}
+          enterKeyHint="next"
         />
       </Flex>
       <div>Password</div>
@@ -43,6 +44,7 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
           type="password"
           required
           onChange={e => onCredentialsChange(username, e.currentTarget.value)}
+          enterKeyHint="done"
         />
       </Flex>
     </Panel.Content>

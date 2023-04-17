@@ -1,6 +1,6 @@
 import { Flex, Provider as MosaicProvider, useIconStore } from '@stoplight/mosaic';
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { DemoNavbar } from './components/DemoNavbar';
 import { ElementsAPI } from './components/ElementsAPI';
@@ -8,7 +8,8 @@ import { DEFAULT_API_URL } from './constants';
 import { GlobalContext } from './context';
 
 export function App() {
-  const [searchParams] = useSearchParams();
+  const { search } = useLocation();
+  const searchParams = React.useMemo(() => new URLSearchParams(search), [search]);
   const setDefaultStyle = useIconStore(state => state.setDefaultStyle);
 
   React.useEffect(() => {
