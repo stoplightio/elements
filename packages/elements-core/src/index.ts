@@ -1,7 +1,13 @@
 export { Docs, DocsProps, ParsedDocs } from './components/Docs';
 export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { ExportButton, ExportButtonProps } from './components/Docs/HttpService/ExportButton';
-export { SidebarLayout } from './components/Layout/SidebarLayout';
+export {
+  MAX_CONTENT_WIDTH,
+  SIDEBAR_MAX_WIDTH,
+  SIDEBAR_MIN_WIDTH,
+  SidebarLayout,
+  useResizer,
+} from './components/Layout/SidebarLayout';
 export { Logo } from './components/Logo';
 export { DefaultSMDComponents } from './components/MarkdownViewer/CustomComponents/CodeComponent';
 export {

@@ -9,9 +9,9 @@ type SidebarLayoutProps = {
   children?: React.ReactNode;
 };
 
-const MAX_CONTENT_WIDTH = 1800;
-const SIDEBAR_MIN_WIDTH = 300;
-const SIDEBAR_MAX_WIDTH = 1.5 * SIDEBAR_MIN_WIDTH;
+export const MAX_CONTENT_WIDTH = 1800;
+export const SIDEBAR_MIN_WIDTH = 300;
+export const SIDEBAR_MAX_WIDTH = 1.5 * SIDEBAR_MIN_WIDTH;
 
 export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps>(
   ({ sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH }, ref) => {
@@ -71,7 +71,7 @@ type SidebarRef = React.Ref<HTMLDivElement>;
 type SidebarWidth = number;
 type StartResizingFn = () => void;
 
-function useResizer(sidebarWidth: number): [SidebarRef, SidebarWidth, StartResizingFn] {
+export function useResizer(sidebarWidth: number): [SidebarRef, SidebarWidth, StartResizingFn] {
   const sidebarRef = React.useRef<HTMLDivElement | null>(null);
   const [isResizing, setIsResizing] = React.useState(false);
   const [currentSidebarWidth, setCurrentSidebarWidth] = React.useState(sidebarWidth);
