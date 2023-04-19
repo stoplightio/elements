@@ -1,4 +1,4 @@
-import { Box, Flex } from '@stoplight/mosaic';
+import { Box, Flex, InvertTheme } from '@stoplight/mosaic';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ type SidebarLayoutProps = {
   maxContentWidth?: number;
   sidebarWidth?: number;
   children?: React.ReactNode;
+  theme?: 'invert' | 'default';
 };
 
 export const MAX_CONTENT_WIDTH = 1800;
@@ -14,7 +15,7 @@ export const SIDEBAR_MIN_WIDTH = 300;
 export const SIDEBAR_MAX_WIDTH = 1.5 * SIDEBAR_MIN_WIDTH;
 
 export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps>(
-  ({ sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH }, ref) => {
+  ({ sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH, theme = 'default' }, ref) => {
     const scrollRef = React.useRef<HTMLDivElement | null>(null);
     const [sidebarRef, currentSidebarWidth, startResizing] = useResizer(sidebarWidth);
     const { pathname } = useLocation();
@@ -24,39 +25,42 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
       scrollRef.current?.scrollTo(0, 0);
     }, [pathname]);
 
+    const sidebarContent = (
+      <Flex
+        ref={sidebarRef}
+        onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
+        style={{ maxWidth: `${SIDEBAR_MAX_WIDTH}px` }}
+      >
+        <Flex
+          direction="col"
+          bg="canvas-100"
+          borderR
+          pt={8}
+          pos="sticky"
+          pinY
+          overflowY="auto"
+          style={{
+            paddingLeft: `calc((100% - ${maxContentWidth}px) / 2)`,
+            width: `${currentSidebarWidth}px`,
+            minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+          }}
+        >
+          {sidebar}
+        </Flex>
+        <Flex
+          justifySelf="end"
+          flexGrow={0}
+          flexShrink={0}
+          resize="x"
+          onMouseDown={startResizing}
+          style={{ width: '1em', flexBasis: '6px', cursor: 'ew-resize' }}
+        />
+      </Flex>
+    );
+
     return (
       <Flex ref={ref} className="sl-elements-api" pin h="full">
-        <Flex
-          ref={sidebarRef}
-          onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
-          style={{ maxWidth: `${SIDEBAR_MAX_WIDTH}px` }}
-        >
-          <Flex
-            direction="col"
-            bg="canvas-100"
-            borderR
-            pt={8}
-            pos="sticky"
-            pinY
-            overflowY="auto"
-            style={{
-              paddingLeft: `calc((100% - ${maxContentWidth}px) / 2)`,
-              width: `${currentSidebarWidth}px`,
-              minWidth: `${SIDEBAR_MIN_WIDTH}px`,
-            }}
-          >
-            {sidebar}
-          </Flex>
-          <Flex
-            justifySelf="end"
-            flexGrow={0}
-            flexShrink={0}
-            resize="x"
-            onMouseDown={startResizing}
-            style={{ width: '1em', flexBasis: '6px', cursor: 'ew-resize' }}
-          />
-        </Flex>
-
+        {theme === 'invert' ? <InvertTheme>{sidebarContent}</InvertTheme> : sidebarContent}
         <Box ref={scrollRef} bg="canvas" px={24} flex={1} w="full" overflowY="auto">
           <Box style={{ maxWidth: `${maxContentWidth - currentSidebarWidth}px` }} py={16}>
             {children}

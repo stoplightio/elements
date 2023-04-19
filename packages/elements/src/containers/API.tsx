@@ -95,6 +95,11 @@ export interface CommonAPIProps extends RoutingProps {
    * @default: false
    */
   withCredentials?: boolean;
+
+  /**
+   * Whether to use invert or default theme for sidebar
+   */
+  sidebarTheme?: 'invert' | 'default';
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -113,6 +118,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCredentialsPolicy,
     tryItCorsProxy,
     withCredentials,
+    sidebarTheme,
   } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
@@ -189,6 +195,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          sidebarTheme={sidebarTheme}
         />
       )}
     </InlineRefResolverProvider>

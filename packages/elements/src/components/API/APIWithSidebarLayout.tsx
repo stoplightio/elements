@@ -24,6 +24,7 @@ type SidebarLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
+  sidebarTheme?: 'invert' | 'default';
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -36,6 +37,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  sidebarTheme = 'default',
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -89,7 +91,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   );
 
   return (
-    <SidebarLayout ref={container} sidebar={sidebar}>
+    <SidebarLayout ref={container} sidebar={sidebar} theme={sidebarTheme}>
       {node && (
         <ParsedDocs
           key={pathname}
