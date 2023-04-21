@@ -25,6 +25,7 @@ type SidebarLayoutProps = {
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
   sidebarTheme?: 'invert' | 'default';
+  sidebarHeader?: React.ReactNode;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -38,6 +39,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
   sidebarTheme = 'default',
+  sidebarHeader,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -75,6 +77,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
 
   const sidebar = (
     <>
+      {sidebarHeader && sidebarHeader}
       <Flex ml={4} mb={5} alignItems="center">
         {logo ? (
           <Logo logo={{ url: logo, altText: 'logo' }} />

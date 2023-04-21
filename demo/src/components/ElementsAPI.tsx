@@ -16,7 +16,7 @@ export const ElementsAPI: React.FC = () => {
 
   return (
     <Box flex={1} overflowY="hidden">
-      <API apiDescriptionUrl={specUrlWithProxy} router="hash" />
+      <API apiDescriptionUrl={specUrlWithProxy} router="hash" sidebarTheme="invert" />
     </Box>
   );
 };

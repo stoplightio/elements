@@ -18,4 +18,5 @@ export const ApiElement = createElementClass(API, {
   tryItCorsProxy: { type: 'string' },
   withCredentials: { type: 'boolean' },
   sidebarTheme: { type: 'string' },
+  sidebarHeader: { type: 'object' },
 });
