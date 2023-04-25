@@ -1,3 +1,4 @@
+import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
@@ -71,7 +72,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
 
     return (
       <Box ref={container} w="full" bg={isInResponsiveMode ? 'canvas' : 'canvas-100'} overflowY="auto">
-        <Box ref={child} my={3}>
+        <Box ref={child} my={3} className="menu-items">
           <LinkContext.Provider value={Link}>
             <ActiveIdContext.Provider value={activeId}>
               {tree.map((item, key) => {
@@ -103,18 +104,22 @@ const Divider = React.memo<{
   isInResponsiveMode?: boolean;
 }>(({ item, isInResponsiveMode = false }) => {
   return (
-    <Box
-      pl={4}
-      mb={2}
-      mt={6}
-      textTransform="uppercase"
-      fontSize={isInResponsiveMode ? 'lg' : 'sm'}
-      lineHeight="relaxed"
-      letterSpacing="wide"
-      fontWeight="bold"
-    >
-      {item.title}
-    </Box>
+    <>
+      <div className="divider"></div>
+      <Box
+        pl={4}
+        mb={2}
+        mt={6}
+        className="section-header"
+        textTransform="uppercase"
+        fontSize={isInResponsiveMode ? 'lg' : 'sm'}
+        lineHeight="relaxed"
+        letterSpacing="wide"
+        fontWeight="bold"
+      >
+        {item.title}
+      </Box>
+    </>
   );
 });
 
@@ -132,7 +137,7 @@ const GroupItem = React.memo<{
           isInResponsiveMode={isInResponsiveMode}
           depth={depth}
           title={item.title}
-          meta={<Box as={Icon} icon={['fas', 'external-link']} />}
+          meta={<Box as={Icon} icon={faExternalLink} />}
         />
       </Box>
     );
