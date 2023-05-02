@@ -1,4 +1,4 @@
-import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLink, IconName } from '@fortawesome/free-solid-svg-icons';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
@@ -31,6 +31,10 @@ import {
   isNode,
   isNodeGroup,
 } from './utils';
+
+export interface CustomCSS extends React.CSSProperties {
+  '--menu-icon-bg-color': string;
+}
 
 const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
@@ -259,6 +263,7 @@ const Group = React.memo<{
             <Box as={Icon} color={NODE_TITLE_ICON_COLOR[item.title]} icon={NODE_TITLE_ICON[item.title]} />
           )
         }
+        description={(item as TableOfContentsNodeGroup).description}
       />
     );
   }
@@ -292,7 +297,8 @@ const Item = React.memo<{
   meta?: React.ReactNode;
   isInResponsiveMode?: boolean;
   onClick?: (e: React.MouseEvent) => void;
-}>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode, onClick }) => {
+  description?: string;
+}>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode, onClick, description }) => {
   return (
     <Flex
       id={id}
@@ -304,7 +310,7 @@ const Item = React.memo<{
       // @ts-expect-error
       pl={4 + depth * 4}
       pr={4}
-      h={isInResponsiveMode ? 'lg' : 'md'}
+      h={isInResponsiveMode ? (description ? 'xl' : 'lg') : 'md'}
       align="center"
       userSelect="none"
       onClick={onClick}
@@ -320,7 +326,18 @@ const Item = React.memo<{
         textOverflow="truncate"
         fontSize={isInResponsiveMode ? 'lg' : 'base'}
       >
-        {title}
+        {description ? (
+          <Box className="menu-item-heading" textOverflow="truncate">
+            {title}
+          </Box>
+        ) : (
+          title
+        )}
+        {description && (
+          <Box fontSize="sm" className="menu-item-subtext" textOverflow="truncate">
+            {description}
+          </Box>
+        )}
       </Box>
 
       <Flex alignItems="center" fontSize={isInResponsiveMode ? 'base' : 'xs'}>
@@ -372,13 +389,38 @@ const Node = React.memo<{
         depth={depth}
         title={item.title}
         icon={
-          NODE_TYPE_TITLE_ICON[item.type] && (
-            <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
+          item.presentation?.icon ? (
+            <Flex
+              rounded="full"
+              flexShrink={0}
+              className="menu-logo"
+              h="sm"
+              w="sm"
+              style={
+                {
+                  color: item.presentation?.color ?? '',
+                  '--menu-icon-bg-color': item.presentation?.color ?? '',
+                } as CustomCSS
+              }
+              fontSize="base"
+              lineHeight="none"
+              alignItems="center"
+              justify="center"
+            >
+              <Box textAlign="center">
+                <Icon icon={['fas', item.presentation?.icon as IconName]} />
+              </Box>
+            </Flex>
+          ) : (
+            NODE_TYPE_TITLE_ICON[item.type] && (
+              <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
+            )
           )
         }
         meta={meta}
         isInResponsiveMode={isInResponsiveMode}
         onClick={handleClick}
+        description={item.description}
       />
     </Box>
   );
