@@ -70,7 +70,10 @@ export const NodeContent = ({
               compact,
               hideTryIt: hideTryIt,
               hideTryItPanel: hideTryItPanel,
-              hideExport: hideExport || node.links.export_url === undefined,
+              hideExport:
+                hideExport ||
+                (node.links.export_url ?? node.links.export_original_file_url ?? node.links.export_bundled_file_url) ===
+                  undefined,
             }}
             useNodeForRefResolving
             refResolver={refResolver}
@@ -80,10 +83,10 @@ export const NodeContent = ({
                 ? {
                     original: onExportRequest
                       ? { onPress: () => onExportRequest('original') }
-                      : { href: node.links.export_url },
+                      : { href: node.links.export_original_file_url ?? node.links.export_url },
                     bundled: onExportRequest
                       ? { onPress: () => onExportRequest('bundled') }
-                      : { href: getBundledUrl(node.links.export_url) },
+                      : { href: node.links.export_bundled_file_url ?? getBundledUrl(node.links.export_url) },
                   }
                 : undefined
             }
