@@ -322,7 +322,7 @@ const Item = React.memo<{
         alignItems="center"
         flex={1}
         mr={meta ? 1.5 : undefined}
-        ml={icon && 1.5}
+        ml={icon && 2}
         textOverflow="truncate"
         fontSize={isInResponsiveMode ? 'lg' : 'base'}
       >
@@ -382,6 +382,7 @@ const Node = React.memo<{
       display="block"
       textDecoration="no-underline"
       className="ElementsTableOfContentsItem"
+      fontWeight={item.presentation?.fontWeight ?? 'normal'}
     >
       <Item
         id={getHtmlIdFromItemId(item.slug || item.id)}

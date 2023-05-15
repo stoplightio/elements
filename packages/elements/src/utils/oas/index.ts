@@ -17,7 +17,7 @@ import { oas2SourceMap } from './oas2';
 import { oas3SourceMap } from './oas3';
 import { ISourceNodeMap, NodeTypes, ServiceChildNode, ServiceNode } from './types';
 
-const isOas2 = (parsed: unknown): parsed is Spec =>
+export const isOas2 = (parsed: unknown): parsed is Spec =>
   isObject(parsed) &&
   'swagger' in parsed &&
   Number.parseInt(String((parsed as Partial<{ swagger: unknown }>).swagger)) === 2;

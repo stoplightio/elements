@@ -19,7 +19,7 @@ import { useQuery } from 'react-query';
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
 import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
-import { transformOasToServiceNode } from '../utils/oas';
+import { transformOasToServiceNode, isOas2 } from '../utils/oas';
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 
@@ -145,6 +145,11 @@ export const APIImpl: React.FC<APIProps> = props => {
 
   const document = apiDescriptionDocument || fetchedDocument || '';
   const parsedDocument = useParsedValue(document);
+  if (isOas2(parsedDocument)) {
+    parsedDocument.host = parsedDocument.host ?? window.location.host;
+    parsedDocument.schemes = parsedDocument.schemes ?? [window.location.protocol.replace(':', '')];
+  }
+
   const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl, withCredentials });
   const serviceNode = React.useMemo(() => transformOasToServiceNode(bundledDocument), [bundledDocument]);
   const exportProps = useExportDocumentProps({ originalDocument: document, bundledDocument });
