@@ -23,6 +23,8 @@ import {
   emptySecurityOperation,
   singleSecurityOperation,
 } from '../../__fixtures__/operations/securedOperation';
+import { httpOperation as basicSecurityOperation } from '../../__fixtures__/operations/security-basic';
+import { httpOperation as bearerSecurityOperation } from '../../__fixtures__/operations/security-bearer';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as stringNumericEnumOperation } from '../../__fixtures__/operations/string-numeric-enums';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
@@ -895,6 +897,47 @@ describe('TryIt', () => {
 
         APIKeyField = screen.getByLabelText('API Key');
         expect(APIKeyField).toHaveValue('123');
+      });
+
+      it('invalidated unsupported security schemes between different operations', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        let usernameInput = screen.getByLabelText('Username');
+        let passwordInput = screen.getByLabelText('Password');
+
+        userEvent.type(usernameInput, 'user');
+        userEvent.type(passwordInput, 'password');
+
+        rerender(<TryItWithPersistence httpOperation={bearerSecurityOperation} />);
+
+        const tokenInput = screen.getByLabelText('Token');
+        userEvent.type(tokenInput, 'Bearer 1234');
+
+        rerender(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        usernameInput = screen.getByLabelText('Username');
+        passwordInput = screen.getByLabelText('Password');
+
+        expect(usernameInput).toBeInTheDocument();
+        expect(passwordInput).toBeInTheDocument();
+      });
+
+      it('keep security schemes between different operations', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        let usernameInput = screen.getByLabelText('Username');
+        let passwordInput = screen.getByLabelText('Password');
+
+        userEvent.type(usernameInput, 'user');
+        userEvent.type(passwordInput, 'password');
+
+        rerender(<TryItWithPersistence httpOperation={putOperation} />);
+
+        usernameInput = screen.getByLabelText('Username');
+        passwordInput = screen.getByLabelText('Password');
+
+        expect(usernameInput).toHaveValue('user');
+        expect(passwordInput).toHaveValue('password');
       });
     });
 
