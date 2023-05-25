@@ -17,11 +17,23 @@ interface TryItAuthProps {
   value: HttpSecuritySchemeWithValues | undefined;
 }
 
+function getSupportedSecurityScheme(
+  value: HttpSecuritySchemeWithValues | undefined,
+  supportedSecuritySchemes: HttpSecurityScheme[],
+): [HttpSecurityScheme, string] {
+  // only keep the selected security scheme *if* the operation supports it (based on id)
+  if (value && supportedSecuritySchemes.some(s => value.scheme.id === s.id)) {
+    return [value.scheme, value.authValue ?? ''];
+  }
+
+  // otherwise, start over!
+  return [supportedSecuritySchemes[0], ''];
+}
+
 export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: operationAuth, onChange, value }) => {
   const operationSecurityArray = flatten(operationAuth);
   const filteredSecurityItems = operationSecurityArray.filter(scheme => securitySchemeKeys.includes(scheme?.type));
-
-  const securityScheme = value ? value.scheme : filteredSecurityItems[0];
+  const [securityScheme, authValue] = getSupportedSecurityScheme(value, filteredSecurityItems);
 
   const menuName = securityScheme ? getReadableSecurityName(securityScheme) : 'Security Scheme';
 
@@ -75,13 +87,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
       >
         Auth
       </Panel.Titlebar>
-      {
-        <SecuritySchemeComponent
-          scheme={value ? value.scheme : filteredSecurityItems[0]}
-          onChange={handleChange}
-          value={(value && value.authValue) ?? ''}
-        />
-      }
+      <SecuritySchemeComponent scheme={securityScheme} onChange={handleChange} value={authValue} />
     </Panel>
   );
 };
