@@ -9,8 +9,9 @@ export type TagGroup = { title: string; items: OperationNode[] };
 type XTagGroup = {
   name: string;
   tags: string[];
-}
-type XTagGroupExtension = Record<string, XTagGroup>
+};
+
+type XTagGroupExtension = Record<string, XTagGroup>;
 
 interface ComputeAPITreeConfig {
   hideSchemas?: boolean;
@@ -28,7 +29,7 @@ export const groupByTagId = (serviceNode: ServiceNode) => {
 
   for (const node of serviceNode.children) {
     if (node.type !== NodeType.HttpOperation) continue;
-    const tagName = node.tags[0] ?? "ungrouped";
+    const tagName = node.tags[0] ?? 'ungrouped';
 
     const tagId = tagName.toLowerCase();
     if (groupsByTagId[tagId]) {
@@ -42,13 +43,13 @@ export const groupByTagId = (serviceNode: ServiceNode) => {
       };
     }
   }
-  return groupsByTagId
-}
+  return groupsByTagId;
+};
 
 export const computeTagGroups = (serviceNode: ServiceNode) => {
   const lowerCaseServiceTags = serviceNode.tags.map(tn => tn.toLowerCase());
-  const {"ungrouped": ungroupedGroup, ...tagGroups }= groupByTagId(serviceNode)
-  const ungrouped = ungroupedGroup?.items ?? []
+  const { ungrouped: ungroupedGroup, ...tagGroups } = groupByTagId(serviceNode);
+  const ungrouped = ungroupedGroup?.items ?? [];
 
   const orderedTagGroups = Object.entries(tagGroups)
     .sort(([g1], [g2]) => {
@@ -76,18 +77,17 @@ const overviewNode = {
   title: 'Overview',
   type: 'overview',
   meta: '',
-}
+};
 
 const toLeafNode = (operationNode: OperationNode) => ({
-        id: operationNode.uri,
-        slug: operationNode.uri,
-        title: operationNode.name,
-        type: operationNode.type,
-        meta: operationNode.data.method,
-})
+  id: operationNode.uri,
+  slug: operationNode.uri,
+  title: operationNode.name,
+  type: operationNode.type,
+  meta: operationNode.data.method,
+});
 
 const computeSimpleAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
-
   const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
   const tree: TableOfContentsItem[] = [];
 
@@ -123,7 +123,7 @@ const computeSimpleAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeCo
     });
   }
 
-let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
+  let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
   schemaNodes.forEach(node => {
     tree.push({
       id: node.uri,
@@ -134,76 +134,78 @@ let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Mod
     });
   });
   return tree;
-}
+};
 
-const getTagGroups = (serviceNode: ServiceNode): XTagGroupExtension | undefined => serviceNode?.extensions?.["x-tagGroups"] as XTagGroupExtension | undefined
+const getTagGroups = (serviceNode: ServiceNode): XTagGroupExtension | undefined =>
+  serviceNode?.extensions?.['x-tagGroups'] as XTagGroupExtension | undefined;
 
 const createTagToGroupReference = (tagGroups: XTagGroupExtension): Record<string, string> => {
-  const tagToTagGroup = {}
+  const tagToTagGroup = {};
   Object.keys(tagGroups).forEach((e: string) => {
-    const group = tagGroups[e]
-    group.tags.forEach((t) => {
-      tagToTagGroup[t] = group.name
-    })
-  })
-  return tagToTagGroup
-}
+    const group = tagGroups[e];
+    group.tags.forEach(t => {
+      tagToTagGroup[t] = group.name;
+    });
+  });
+  return tagToTagGroup;
+};
 
-const computeGroupedAPITree =(serviceNode: ServiceNode): TableOfContentsTagGroups[] => {
+const computeGroupedAPITree = (serviceNode: ServiceNode): TableOfContentsTagGroups[] => {
   const groupTree: Record<string, TagGroup[]> = {};
-  const xTagGroups: XTagGroupExtension = getTagGroups(serviceNode) ?? {}
-  const tagToGroupRef = createTagToGroupReference(xTagGroups)
+  const xTagGroups: XTagGroupExtension = getTagGroups(serviceNode) ?? {};
+  const tagToGroupRef = createTagToGroupReference(xTagGroups);
   // All your resources should be tagged when using x-tagGroups
   const groups = groupByTagId(serviceNode);
 
-  Object.keys(groups).forEach( k => {
-    const node = groups[k]
-    const isTagGroup = node?.items && node.title
+  Object.keys(groups).forEach(k => {
+    const node = groups[k];
+    const isTagGroup = node?.items && node.title;
     if (isTagGroup) {
-      const targetGroupName = tagToGroupRef[node.title] ?? ""
-      groupTree[targetGroupName] = groupTree?.[targetGroupName]?.length > 0 ? [...groupTree[targetGroupName], node] : [node]
+      const targetGroupName = tagToGroupRef[node.title] ?? '';
+      groupTree[targetGroupName] =
+        groupTree?.[targetGroupName]?.length > 0 ? [...groupTree[targetGroupName], node] : [node];
     }
-  })
-  const result = Object.keys(groupTree).map((title) => ({
+  });
+  const result = Object.keys(groupTree).map(title => ({
     title,
     items: groupTree[title].map(({ title, items }) => ({
       title,
-      items: items.map(i => toLeafNode(i))
+      items: items.map(i => toLeafNode(i)),
     })),
-    type: "tagGroup" as const
-  }))
+    type: 'tagGroup' as const,
+  }));
 
-  return result
-}
+  return result;
+};
 
-const compareByTitle = weights => (x, y) => {
+const compareByTitle = (weights: any) => (x: any, y: any) => {
   // when key is not present, it goes to the end of the line
-  const xWeight = weights[x.title] ?? Object.keys(weights).size
-  const yWeight = weights[y.title] ?? Object.keys(weights).size
+  const xWeight = weights[x.title] ?? Object.keys(weights).length;
+  const yWeight = weights[y.title] ?? Object.keys(weights).length;
 
-  if ( xWeight < yWeight ) {
+  if (xWeight < yWeight) {
     return -1;
   }
 
-  if ( xWeight > yWeight ) {
+  if (xWeight > yWeight) {
     return 1;
   }
 
   return 0;
-}
+};
 
-const sortTags = (tree) => {
+const sortTags = (tree: any) => {
   const weights = {
     // root
-    'Portfolios': 0,
-    'Securities': 1,
-    'Issuers': 2,
-    'Brokers': 3,
-    'Benchmarks': 4,
+    Portfolios: 0,
+    Securities: 1,
+    Issuers: 2,
+    Brokers: 3,
+    Benchmarks: 4,
     'Corporate Bonds': 5,
     // portfolio
-    'Transactions': 6,
-    'Positions': 7,
+    Transactions: 6,
+    Positions: 7,
     'Net Asset Values': 8,
     'Profit & Losses': 9,
     'Time-Weighted Return': 10,
@@ -214,33 +216,33 @@ const sortTags = (tree) => {
     'Position Profit & Losses': 14,
     'Position Time-Weighted Return': 15,
     'Internal Rates of Return': 16,
-    'Security Prices': 17
-  }
+    'Security Prices': 17,
+  };
 
   for (let node of tree) {
-    node.items.sort(compareByTitle(weights))
+    node.items.sort(compareByTitle(weights));
   }
 
-  return tree
-}
+  return tree;
+};
 
-const sortTree = (tree) => {
+const sortTree = (tree: any) => {
   const weights = {
-    'Overview': 0,
+    Overview: 0,
     'Root Resources': 1,
     'Portfolio Resources': 2,
-    'Position Resources': 3
-  }
+    'Position Resources': 3,
+  };
 
-  return tree.sort(compareByTitle(weights))
-}
+  return tree.sort(compareByTitle(weights));
+};
 
 export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
-  const isUsingTagGroups = !isEmpty(getTagGroups(serviceNode))
-  const tree = isUsingTagGroups? computeGroupedAPITree(serviceNode) : computeSimpleAPITree(serviceNode, config)
+  const isUsingTagGroups = !isEmpty(getTagGroups(serviceNode));
+  const tree = isUsingTagGroups ? computeGroupedAPITree(serviceNode) : computeSimpleAPITree(serviceNode, config);
 
-  const sortedTree = sortTags(sortTree(tree))
-  return [overviewNode, ...sortedTree]
+  const sortedTree = sortTags(sortTree(tree));
+  return [overviewNode, ...sortedTree];
 };
 
 export const findFirstNodeSlug = (tree: TableOfContentsItem[]): string | void => {

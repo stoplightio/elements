@@ -1,7 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-
   "include": ["src"],
-
   "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"]
 }
