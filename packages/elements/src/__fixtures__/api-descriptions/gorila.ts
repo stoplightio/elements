@@ -1,3 +1,4 @@
+
 export const gorilaAPI = {
   "openapi": "3.0.0",
   "paths": {
@@ -13,7 +14,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -46,7 +47,7 @@ export const gorilaAPI = {
             "description": "Reference date to perform operation",
             "example": "2022-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -57,8 +58,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -88,8 +88,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -101,7 +101,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -111,7 +111,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -180,11 +180,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/positions/security-prices"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/positions/security-prices \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/positions/security-prices' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/positions/security-prices' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -201,7 +201,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -234,7 +234,7 @@ export const gorilaAPI = {
             "description": "Starting date to perform operation",
             "example": "2021-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -245,7 +245,7 @@ export const gorilaAPI = {
             "description": "Ending date to perform operation",
             "example": "2021-12-31",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -256,8 +256,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -287,8 +286,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -300,7 +299,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -310,7 +309,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -319,10 +318,11 @@ export const gorilaAPI = {
             "name": "groupBy",
             "required": false,
             "in": "query",
-            "description": "Grouping of the calculated value either by Asset Class or Security Type",
+            "description": "Grouping of the calculated value",
             "example": "SECURITY_ASSET_CLASS",
             "schema": {
               "enum": [
+                "BROKER_ID",
                 "SECURITY_TYPE",
                 "SECURITY_ASSET_CLASS"
               ],
@@ -393,11 +393,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/positions/twr"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/positions/twr \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/positions/twr' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/positions/twr' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -414,7 +414,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -447,7 +447,7 @@ export const gorilaAPI = {
             "description": "Starting date to perform operation",
             "example": "2021-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -458,7 +458,7 @@ export const gorilaAPI = {
             "description": "Ending date to perform operation",
             "example": "2021-12-31",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -469,8 +469,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -500,8 +499,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -513,7 +512,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -523,7 +522,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -532,10 +531,11 @@ export const gorilaAPI = {
             "name": "groupBy",
             "required": false,
             "in": "query",
-            "description": "Grouping of the calculated value either by Asset Class or Security Type",
+            "description": "Grouping of the calculated value",
             "example": "SECURITY_ASSET_CLASS",
             "schema": {
               "enum": [
+                "BROKER_ID",
                 "SECURITY_TYPE",
                 "SECURITY_ASSET_CLASS"
               ],
@@ -606,11 +606,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/positions/pnl"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/positions/pnl \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/positions/pnl' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/positions/pnl' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -627,7 +627,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -660,7 +660,7 @@ export const gorilaAPI = {
             "description": "Reference date to perform operation",
             "example": "2022-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -671,8 +671,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -702,8 +701,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -715,7 +714,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -725,7 +724,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -734,10 +733,11 @@ export const gorilaAPI = {
             "name": "groupBy",
             "required": false,
             "in": "query",
-            "description": "Grouping of the calculated value either by Asset Class or Security Type",
+            "description": "Grouping of the calculated value",
             "example": "SECURITY_ASSET_CLASS",
             "schema": {
               "enum": [
+                "BROKER_ID",
                 "SECURITY_TYPE",
                 "SECURITY_ASSET_CLASS"
               ],
@@ -808,18 +808,18 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/positions/market-values"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/positions/market-values \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/positions/market-values' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/positions/market-values' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
     },
     "/portfolios/{portfolioId}/positions/irr": {
       "get": {
-        "operationId": "List Position Internal Rates of Return",
+        "operationId": "List Position Internal Rate of Return",
         "summary": "",
         "description": "List the IRRs of each position for the selected period.",
         "parameters": [
@@ -829,7 +829,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -862,7 +862,7 @@ export const gorilaAPI = {
             "description": "Starting date to perform operation",
             "example": "2021-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -873,7 +873,7 @@ export const gorilaAPI = {
             "description": "Ending date to perform operation",
             "example": "2021-12-31",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -884,8 +884,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -915,8 +914,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -928,7 +927,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -938,7 +937,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -997,7 +996,7 @@ export const gorilaAPI = {
           }
         },
         "tags": [
-          "Internal Rates of Return"
+          "Internal Rate of Return"
         ],
         "security": [
           {
@@ -1007,11 +1006,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/positions/irr"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/positions/irr \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/positions/irr' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/positions/irr' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -1028,7 +1027,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -1061,7 +1060,7 @@ export const gorilaAPI = {
             "description": "Reference date to perform operation",
             "example": "2022-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -1072,8 +1071,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -1103,8 +1101,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -1116,7 +1114,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -1126,7 +1124,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -1195,11 +1193,243 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/positions/average-prices"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/positions/average-prices \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/positions/average-prices' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/positions/average-prices' -Method GET -Headers $headers\nWrite-Output $response"
+          }
+        ]
+      }
+    },
+    "/securities/types": {
+      "get": {
+        "operationId": "List Security Types",
+        "summary": "",
+        "description": "All securities in Gorila have two levels of classification: this endpoint returns the list\n of available Security Types which is the lower level of this classification.",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Amount of records to read, returns all if available entries are less than specified",
+            "schema": {
+              "minimum": 1,
+              "maximum": 1000,
+              "format": "integer",
+              "default": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageToken",
+            "required": false,
+            "in": "query",
+            "description": "Token to fetch target page, returns first when omitted",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "symbol",
+            "required": false,
+            "in": "query",
+            "description": "The EXACT Product Type name",
+            "example": "CURRENCY",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Search parameter used to match part of the name or information of a Product Type",
+            "example": "CORPORATE",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityProductTypePageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequestDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUnauthorizedDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access to target portfolio denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorForbiddenDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorTooManyRequestsDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Security Types"
+        ],
+        "security": [
+          {
+            "API Key": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl --request GET \\\n --url http://localhost:8080/securities/types \\\n --header 'authorization: your_authorization'"
+          },
+          {
+            "lang": "PowerShell",
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/securities/types' -Method GET -Headers $headers\nWrite-Output $response"
+          }
+        ]
+      }
+    },
+    "/securities/asset-classes": {
+      "get": {
+        "operationId": "List Asset Classes",
+        "summary": "",
+        "description": "All securities in Gorila have two levels of classification: this endpoint returns the list     of available Asset Classes which is the highest level of this classification.",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Amount of records to read, returns all if available entries are less than specified",
+            "schema": {
+              "minimum": 1,
+              "maximum": 1000,
+              "format": "integer",
+              "default": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageToken",
+            "required": false,
+            "in": "query",
+            "description": "Token to fetch target page, returns first when omitted",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Search parameter used to match part of the name or information of a Asset Class",
+            "example": "STOCK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityAssetClassPageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequestDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUnauthorizedDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access to target portfolio denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorForbiddenDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorTooManyRequestsDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Asset Classes"
+        ],
+        "security": [
+          {
+            "API Key": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl --request GET \\\n --url http://localhost:8080/securities/asset-classes \\\n --header 'authorization: your_authorization'"
+          },
+          {
+            "lang": "PowerShell",
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/securities/asset-classes' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -1216,7 +1446,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -1227,7 +1457,7 @@ export const gorilaAPI = {
             "description": "Starting date to perform operation",
             "example": "2021-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -1238,7 +1468,7 @@ export const gorilaAPI = {
             "description": "Ending date to perform operation",
             "example": "2021-12-31",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -1277,8 +1507,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -1308,8 +1537,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -1321,7 +1550,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -1331,18 +1560,18 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
           },
           {
             "name": "type",
-            "required": true,
+            "required": false,
             "in": "query",
             "description": "Choice of type of cost reference for the profit",
             "schema": {
-              "default": "GROSS",
+              "default": "GROSS_UP",
               "enum": [
                 "GROSS",
                 "GROSS_UP"
@@ -1357,7 +1586,7 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TwrDto"
+                  "$ref": "#/components/schemas/TwrTimeDto"
                 }
               }
             }
@@ -1414,11 +1643,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url 'https://core.gorila.com.br/portfolios/UUID/twr?frequency=DAILY&seriesType=PER_PERIOD&type=GROSS'"
+            "source": "curl --request GET \\\n --url 'http://localhost:8080/portfolios/uuid/twr?frequency=DAILY&seriesType=PER_PERIOD' \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/twr?frequency=DAILY&seriesType=PER_PERIOD&type=GROSS' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/twr?frequency=DAILY&seriesType=PER_PERIOD' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -1435,7 +1664,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           }
@@ -1445,10 +1674,27 @@ export const gorilaAPI = {
           "content": {
             "application/json": {
               "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionRegularCreateDto"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TransactionComeCotasCreateDto"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TransactionOptionExerciseCreateDto"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TransactionSubscriptionExerciseCreateDto"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TransactionCustodyTransferCreateDto"
+                  }
+                ],
                 "discriminator": {
                   "propertyName": "type",
                   "mapping": {
-                    "REGULAR_TRADE": "#/components/schemas/TransactionRegularTradeCreateDto",
+                    "REGULAR": "#/components/schemas/TransactionRegularCreateDto",
                     "COME_COTAS": "#/components/schemas/TransactionComeCotasCreateDto",
                     "OPTION_EXERCISE": "#/components/schemas/TransactionOptionExerciseCreateDto",
                     "SUBSCRIPTION_EXERCISE": "#/components/schemas/TransactionSubscriptionExerciseCreateDto",
@@ -1467,7 +1713,7 @@ export const gorilaAPI = {
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/TransactionRegularTradeDto"
+                      "$ref": "#/components/schemas/TransactionRegularDto"
                     },
                     {
                       "$ref": "#/components/schemas/TransactionComeCotasDto"
@@ -1538,11 +1784,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request POST \\\n --url https://core.gorila.com.br/portfolios/UUID/transactions \\\n --header 'Content-Type: application/json'"
+            "source": "curl --request POST \\\n --url http://localhost:8080/portfolios/uuid/transactions \\\n --header 'Content-Type: application/json' \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$headers=@{}\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/transactions' -Method POST -Headers $headers\nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/transactions' -Method POST -Headers $headers\nWrite-Output $response"
           }
         ]
       },
@@ -1557,7 +1803,29 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "description": "Starting date to perform operation",
+            "example": "2021-01-01",
+            "schema": {
+              "format": "iso8601",
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "description": "Ending date to perform operation",
+            "example": "2021-12-31",
+            "schema": {
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -1647,11 +1915,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/transactions"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/transactions \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/transactions' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/transactions' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -1668,7 +1936,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -1678,7 +1946,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target transaction unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           }
@@ -1689,7 +1957,23 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransactionDto"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/TransactionRegularDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TransactionComeCotasDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TransactionOptionExerciseDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TransactionSubscriptionExerciseDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TransactionCustodyTransferDto"
+                    }
+                  ]
                 }
               }
             }
@@ -1746,11 +2030,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/transactions/UUID"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/transactions/uuid \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/transactions/UUID' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/transactions/uuid' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       },
@@ -1765,7 +2049,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -1775,7 +2059,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target transaction unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           }
@@ -1796,7 +2080,23 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransactionDto"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/TransactionRegularDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TransactionComeCotasDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TransactionOptionExerciseDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TransactionSubscriptionExerciseDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TransactionCustodyTransferDto"
+                    }
+                  ]
                 }
               }
             }
@@ -1853,11 +2153,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request PATCH \\\n --url https://core.gorila.com.br/portfolios/UUID/transactions/UUID \\\n --header 'Content-Type: application/json' \\\n --data '{}'"
+            "source": "curl --request PATCH \\\n --url http://localhost:8080/portfolios/uuid/transactions/uuid \\\n --header 'Content-Type: application/json' \\\n --header 'authorization: your_authorization' \\\n --data '{}'"
           },
           {
             "lang": "PowerShell",
-            "source": "$headers=@{}\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/transactions/UUID' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{}'\nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/transactions/uuid' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{}'\nWrite-Output $response"
           }
         ]
       },
@@ -1872,7 +2172,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -1882,7 +2182,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target transaction unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           }
@@ -1943,11 +2243,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request DELETE \\\n --url https://core.gorila.com.br/portfolios/UUID/transactions/UUID"
+            "source": "curl --request DELETE \\\n --url http://localhost:8080/portfolios/uuid/transactions/uuid \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/transactions/UUID' -Method DELETE \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/transactions/uuid' -Method DELETE -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -1964,7 +2264,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -1975,7 +2275,7 @@ export const gorilaAPI = {
             "description": "Starting date to perform operation",
             "example": "2021-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -1986,7 +2286,7 @@ export const gorilaAPI = {
             "description": "Ending date to perform operation",
             "example": "2021-12-31",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           }
@@ -1997,7 +2297,7 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SecurityEventDto"
+                  "$ref": "#/components/schemas/PortfolioSecurityEventDto"
                 }
               }
             }
@@ -2044,7 +2344,7 @@ export const gorilaAPI = {
           }
         },
         "tags": [
-          "Security Events"
+          "Portfolio Security Events"
         ],
         "security": [
           {
@@ -2054,11 +2354,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/security-events"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/security-events \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/security-events' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/security-events' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -2075,7 +2375,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -2108,19 +2408,7 @@ export const gorilaAPI = {
             "description": "Reference date to perform operation",
             "example": "2022-01-01",
             "schema": {
-              "format": "ISO8601",
-              "type": "string"
-            }
-          },
-          {
-            "name": "brokerId",
-            "required": false,
-            "in": "query",
-            "description": "National identifier of the custodian institution",
-            "example": "10721160000183",
-            "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -2150,8 +2438,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -2163,7 +2451,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -2173,7 +2461,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -2182,13 +2470,25 @@ export const gorilaAPI = {
             "name": "groupBy",
             "required": false,
             "in": "query",
-            "description": "Grouping of the calculated value either by Asset Class or Security Type",
+            "description": "Grouping of the calculated value",
             "example": "SECURITY_ASSET_CLASS",
             "schema": {
               "enum": [
+                "BROKER_ID",
                 "SECURITY_TYPE",
                 "SECURITY_ASSET_CLASS"
               ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "brokerId",
+            "required": false,
+            "in": "query",
+            "description": "National identifier of the custodian institution",
+            "example": "10721160000183",
+            "schema": {
+              "minLength": 1,
               "type": "string"
             }
           }
@@ -2256,11 +2556,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID/positions"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid/positions \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/positions' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/positions' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -2277,7 +2577,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -2288,7 +2588,7 @@ export const gorilaAPI = {
             "description": "Starting date to perform operation",
             "example": "2021-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -2299,7 +2599,7 @@ export const gorilaAPI = {
             "description": "Ending date to perform operation",
             "example": "2021-12-31",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -2338,8 +2638,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -2369,8 +2668,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -2382,7 +2681,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -2392,7 +2691,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -2404,7 +2703,7 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PnlDto"
+                  "$ref": "#/components/schemas/PnlTimeDto"
                 }
               }
             }
@@ -2461,11 +2760,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url 'https://core.gorila.com.br/portfolios/UUID/pnl?frequency=DAILY&seriesType=PER_PERIOD'"
+            "source": "curl --request GET \\\n --url 'http://localhost:8080/portfolios/uuid/pnl?frequency=DAILY&seriesType=PER_PERIOD' \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/pnl?frequency=DAILY&seriesType=PER_PERIOD' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/pnl?frequency=DAILY&seriesType=PER_PERIOD' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -2482,7 +2781,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           },
@@ -2493,7 +2792,7 @@ export const gorilaAPI = {
             "description": "Starting date to perform operation",
             "example": "2021-01-01",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -2504,7 +2803,7 @@ export const gorilaAPI = {
             "description": "Ending date to perform operation",
             "example": "2021-12-31",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -2530,8 +2829,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -2561,8 +2859,8 @@ export const gorilaAPI = {
             "name": "securityCnpj",
             "required": false,
             "in": "query",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "schema": {
               "minLength": 14,
               "format": "numeric",
@@ -2574,7 +2872,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Highest order of security classification",
-            "example": "TBD",
+            "example": "STOCKS",
             "schema": {
               "type": "string"
             }
@@ -2584,7 +2882,7 @@ export const gorilaAPI = {
             "required": false,
             "in": "query",
             "description": "Gorila's type classification of the position's security",
-            "example": "TBD",
+            "example": "STOCK_LOCAL",
             "schema": {
               "type": "string"
             }
@@ -2596,7 +2894,7 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NavDto"
+                  "$ref": "#/components/schemas/NavTimeDto"
                 }
               }
             }
@@ -2643,7 +2941,7 @@ export const gorilaAPI = {
           }
         },
         "tags": [
-          "Net Asset Values"
+          "Net Asset Value"
         ],
         "security": [
           {
@@ -2653,11 +2951,123 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url 'https://core.gorila.com.br/portfolios/UUID/nav?frequency=DAILY'"
+            "source": "curl --request GET \\\n --url 'http://localhost:8080/portfolios/uuid/nav?frequency=DAILY' \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID/nav?frequency=DAILY' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid/nav?frequency=DAILY' -Method GET -Headers $headers\nWrite-Output $response"
+          }
+        ]
+      }
+    },
+    "/security-events/types": {
+      "get": {
+        "operationId": "List Security Event Types",
+        "summary": "",
+        "description": "List all available Security Event Types in Gorila",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Amount of records to read, returns all if available entries are less than specified",
+            "schema": {
+              "minimum": 1,
+              "maximum": 1000,
+              "format": "integer",
+              "default": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageToken",
+            "required": false,
+            "in": "query",
+            "description": "Token to fetch target page, returns first when omitted",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Search parameter used to match part of the name or information of a SecurityEventType",
+            "example": "bonificação",
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityEventTypePageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequestDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUnauthorizedDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access to target portfolio denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorForbiddenDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorTooManyRequestsDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Security Events"
+        ],
+        "security": [
+          {
+            "API Key": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl --request GET \\\n --url http://localhost:8080/security-events/types \\\n --header 'authorization: your_authorization'"
+          },
+          {
+            "lang": "PowerShell",
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/security-events/types' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -2673,13 +3083,23 @@ export const gorilaAPI = {
           "content": {
             "application/json": {
               "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/SecurityForwardStockCreateDto"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SecurityFixRateBankingBondCreateDto"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SecurityFloatingRateBankingBondCreateDto"
+                  }
+                ],
                 "discriminator": {
                   "propertyName": "type",
                   "mapping": {
                     "FORWARD_STOCK": "#/components/schemas/SecurityForwardStockCreateDto",
-                    "CDBISH_PRE": "#/components/schemas/SecurityCdbishPreCreateDto",
-                    "CDBISH_POS": "#/components/schemas/SecurityCdbishPosCreateDto",
-                    "CRI_CRA_DEBENTURE": "#/components/schemas/SecurityCriCraDebentureDto"
+                    "FIXED_RATE_BANKING_BOND": "#/components/schemas/SecurityFixRateBankingBondCreateDto",
+                    "FLOATING_RATE_BANKING_BOND": "#/components/schemas/SecurityFloatingRateBankingBondCreateDto"
                   }
                 }
               }
@@ -2692,7 +3112,7 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SecurityDto"
+                  "$ref": "#/components/schemas/SecurityIdDto"
                 }
               }
             }
@@ -2749,11 +3169,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request POST \\\n --url https://core.gorila.com.br/securities \\\n --header 'Content-Type: application/json'"
+            "source": "curl --request POST \\\n --url http://localhost:8080/securities \\\n --header 'Content-Type: application/json' \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$headers=@{}\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/securities' -Method POST -Headers $headers\nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/securities' -Method POST -Headers $headers\nWrite-Output $response"
           }
         ]
       },
@@ -2785,12 +3205,33 @@ export const gorilaAPI = {
             }
           },
           {
+            "name": "securityAssetClass",
+            "required": false,
+            "in": "query",
+            "description": "Highest order of security classification",
+            "example": "STOCKS",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "securityType",
+            "required": false,
+            "in": "query",
+            "description": "Gorila's type classification of the position's security",
+            "example": "STOCK_LOCAL",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "search",
             "required": false,
             "in": "query",
             "description": "Search parameter used to match part of the name of information of a Security",
-            "example": "TBD",
+            "example": "petróleo",
             "schema": {
+              "minLength": 1,
               "type": "string"
             }
           }
@@ -2858,11 +3299,101 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/securities"
+            "source": "curl --request GET \\\n --url http://localhost:8080/securities \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/securities' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/securities' -Method GET -Headers $headers\nWrite-Output $response"
+          }
+        ]
+      }
+    },
+    "/securities/{id}": {
+      "get": {
+        "operationId": "Read Security by ID",
+        "summary": "",
+        "description": "Reads target security by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Gorila's internal identification of the Security",
+            "example": 1651,
+            "schema": {
+              "format": "integer",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequestDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUnauthorizedDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access to target portfolio denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorForbiddenDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorTooManyRequestsDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Securities"
+        ],
+        "security": [
+          {
+            "API Key": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl --request GET \\\n --url http://localhost:8080/securities/1651 \\\n --header 'authorization: your_authorization'"
+          },
+          {
+            "lang": "PowerShell",
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/securities/1651' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -2946,11 +3477,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request POST \\\n --url https://core.gorila.com.br/portfolios \\\n --header 'Content-Type: application/json' \\\n --data '{\"name\":\"John Doe Portfolio\"}'"
+            "source": "curl --request POST \\\n --url http://localhost:8080/portfolios \\\n --header 'Content-Type: application/json' \\\n --header 'authorization: your_authorization' \\\n --data '{\"name\":\"John Doe Portfolio\"}'"
           },
           {
             "lang": "PowerShell",
-            "source": "$headers=@{}\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios' -Method POST -Headers $headers -ContentType 'application/json' -Body '{\"name\":\"John Doe Portfolio\"}'\nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios' -Method POST -Headers $headers -ContentType 'application/json' -Body '{\"name\":\"John Doe Portfolio\"}'\nWrite-Output $response"
           }
         ]
       },
@@ -2988,7 +3519,7 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PortfolioPage"
+                  "$ref": "#/components/schemas/PortfolioPageDto"
                 }
               }
             }
@@ -3045,11 +3576,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -3066,7 +3597,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           }
@@ -3134,11 +3665,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/portfolios/UUID"
+            "source": "curl --request GET \\\n --url http://localhost:8080/portfolios/uuid \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       },
@@ -3153,7 +3684,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           }
@@ -3231,11 +3762,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request PATCH \\\n --url https://core.gorila.com.br/portfolios/UUID \\\n --header 'Content-Type: application/json' \\\n --data '{\"name\":\"John Doe Portfolio\"}'"
+            "source": "curl --request PATCH \\\n --url http://localhost:8080/portfolios/uuid \\\n --header 'Content-Type: application/json' \\\n --header 'authorization: your_authorization' \\\n --data '{\"name\":\"John Doe Portfolio\"}'"
           },
           {
             "lang": "PowerShell",
-            "source": "$headers=@{}\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{\"name\":\"John Doe Portfolio\"}'\nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$headers.Add(\"Content-Type\", \"application/json\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid' -Method PATCH -Headers $headers -ContentType 'application/json' -Body '{\"name\":\"John Doe Portfolio\"}'\nWrite-Output $response"
           }
         ]
       },
@@ -3250,7 +3781,7 @@ export const gorilaAPI = {
             "in": "path",
             "description": "Target portfolio unique ID",
             "schema": {
-              "format": "UUID",
+              "format": "uuid",
               "type": "string"
             }
           }
@@ -3311,11 +3842,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request DELETE \\\n --url https://core.gorila.com.br/portfolios/UUID"
+            "source": "curl --request DELETE \\\n --url http://localhost:8080/portfolios/uuid \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/portfolios/UUID' -Method DELETE \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/portfolios/uuid' -Method DELETE -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -3352,9 +3883,10 @@ export const gorilaAPI = {
             "name": "search",
             "required": false,
             "in": "query",
-            "description": "TBD",
-            "example": "TBD",
+            "description": "Search parameter used to match part of the name or information of an Issuer",
+            "example": "tvm",
             "schema": {
+              "minLength": 1,
               "type": "string"
             }
           }
@@ -3422,11 +3954,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/issuers"
+            "source": "curl --request GET \\\n --url http://localhost:8080/issuers \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/issuers' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/issuers' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -3435,16 +3967,15 @@ export const gorilaAPI = {
       "get": {
         "operationId": "Read Issuer by ID",
         "summary": "",
-        "description": "TBD",
+        "description": "Read all available information of an issuer by its ID.",
         "parameters": [
           {
             "name": "issuerId",
             "required": true,
             "in": "path",
-            "description": "TBD",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies the issuer",
+            "example": "91272516000140",
             "schema": {
-              "minLength": 14,
               "format": "numeric",
               "type": "string"
             }
@@ -3513,165 +4044,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/issuers/TBD"
+            "source": "curl --request GET \\\n --url http://localhost:8080/issuers/91272516000140 \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/issuers/TBD' -Method GET \nWrite-Output $response"
-          }
-        ]
-      }
-    },
-    "/corporate-bonds": {
-      "get": {
-        "operationId": "List Corporate Bonds",
-        "summary": "",
-        "description": "TBD",
-        "parameters": [
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "description": "Amount of records to read, returns all if available entries are less than specified",
-            "schema": {
-              "minimum": 1,
-              "maximum": 1000,
-              "format": "integer",
-              "default": 100,
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageToken",
-            "required": false,
-            "in": "query",
-            "description": "Token to fetch target page, returns first when omitted",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "type",
-            "required": false,
-            "in": "query",
-            "description": "TBD",
-            "example": "CRA",
-            "schema": {
-              "enum": [
-                "CDB",
-                "LCI",
-                "LCA",
-                "LC",
-                "LF",
-                "CRI",
-                "CRA",
-                "DEBENTURE"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "name": "issueDate",
-            "required": false,
-            "in": "query",
-            "description": "TBD",
-            "example": "2016-05-05",
-            "schema": {
-              "format": "ISO8601",
-              "type": "string"
-            }
-          },
-          {
-            "name": "maturityDate",
-            "required": false,
-            "in": "query",
-            "description": "TBD",
-            "example": "2022-05-16",
-            "schema": {
-              "format": "ISO8601",
-              "type": "string"
-            }
-          },
-          {
-            "name": "yield",
-            "required": false,
-            "in": "query",
-            "description": "TBD",
-            "example": 0.98,
-            "schema": {
-              "format": "float",
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CorporateBondPageDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Request validation failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorBadRequestDto"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing or invalid API key",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorUnauthorizedDto"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Access to target portfolio denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorForbiddenDto"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limit exceeded",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorTooManyRequestsDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Corporate Bonds"
-        ],
-        "security": [
-          {
-            "API Key": []
-          }
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/corporate-bonds"
-          },
-          {
-            "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/corporate-bonds' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/issuers/91272516000140' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -3708,9 +4085,10 @@ export const gorilaAPI = {
             "name": "search",
             "required": false,
             "in": "query",
-            "description": "TBD",
-            "example": "TBD",
+            "description": "Search parameter used to match part of the name or information of a Broker",
+            "example": "corretora de valores",
             "schema": {
+              "minLength": 1,
               "type": "string"
             }
           }
@@ -3778,11 +4156,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/brokers"
+            "source": "curl --request GET \\\n --url http://localhost:8080/brokers \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/brokers' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/brokers' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -3791,7 +4169,7 @@ export const gorilaAPI = {
       "get": {
         "operationId": "Read Broker by ID",
         "summary": "",
-        "description": "TBD",
+        "description": "Read all available information of a brokerage house by its Id",
         "parameters": [
           {
             "name": "brokerId",
@@ -3800,8 +4178,7 @@ export const gorilaAPI = {
             "description": "National identifier of the custodian institution",
             "example": "10721160000183",
             "schema": {
-              "minLength": 14,
-              "format": "numeric",
+              "minLength": 1,
               "type": "string"
             }
           }
@@ -3869,11 +4246,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/brokers/10721160000183"
+            "source": "curl --request GET \\\n --url http://localhost:8080/brokers/10721160000183 \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/brokers/10721160000183' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/brokers/10721160000183' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -3882,8 +4259,42 @@ export const gorilaAPI = {
       "get": {
         "operationId": "List Benchmarks",
         "summary": "",
-        "description": "TBD",
-        "parameters": [],
+        "description": "List all available Benchmarks in Gorila",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Amount of records to read, returns all if available entries are less than specified",
+            "schema": {
+              "minimum": 1,
+              "maximum": 1000,
+              "format": "integer",
+              "default": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageToken",
+            "required": false,
+            "in": "query",
+            "description": "Token to fetch target page, returns first when omitted",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Search parameter used to match part of the name or information of a benchmark",
+            "example": "IPCA",
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -3947,11 +4358,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url https://core.gorila.com.br/benchmarks"
+            "source": "curl --request GET \\\n --url http://localhost:8080/benchmarks \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/benchmarks' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/benchmarks' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -3989,24 +4400,13 @@ export const gorilaAPI = {
             }
           },
           {
-            "name": "startDate",
-            "required": false,
-            "in": "query",
-            "description": "Starting date to perform operation",
-            "example": "2021-01-01",
-            "schema": {
-              "format": "ISO8601",
-              "type": "string"
-            }
-          },
-          {
             "name": "endDate",
             "required": false,
             "in": "query",
             "description": "Ending date to perform operation",
             "example": "2021-12-31",
             "schema": {
-              "format": "ISO8601",
+              "format": "iso8601",
               "type": "string"
             }
           },
@@ -4039,6 +4439,17 @@ export const gorilaAPI = {
             }
           },
           {
+            "name": "startDate",
+            "required": true,
+            "in": "query",
+            "description": "Starting date to perform operation",
+            "example": "2021-01-01",
+            "schema": {
+              "format": "iso8601",
+              "type": "string"
+            }
+          },
+          {
             "name": "multiplier",
             "required": false,
             "in": "query",
@@ -4067,7 +4478,7 @@ export const gorilaAPI = {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BenchmarkTimeseriesDto"
+                  "$ref": "#/components/schemas/BenchmarkTimeDto"
                 }
               }
             }
@@ -4124,11 +4535,11 @@ export const gorilaAPI = {
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl --request GET \\\n --url 'https://core.gorila.com.br/benchmarks/CDI?frequency=DAILY&seriesType=PER_PERIOD'"
+            "source": "curl --request GET \\\n --url 'http://localhost:8080/benchmarks/CDI?frequency=DAILY&seriesType=PER_PERIOD&startDate=2021-01-01' \\\n --header 'authorization: your_authorization'"
           },
           {
             "lang": "PowerShell",
-            "source": "$response = Invoke-WebRequest -Uri 'https://core.gorila.com.br/benchmarks/CDI?frequency=DAILY&seriesType=PER_PERIOD' -Method GET \nWrite-Output $response"
+            "source": "$headers=@{}\n$headers.Add(\"authorization\", \"your_authorization\")\n$response = Invoke-WebRequest -Uri 'http://localhost:8080/benchmarks/CDI?frequency=DAILY&seriesType=PER_PERIOD&startDate=2021-01-01' -Method GET -Headers $headers\nWrite-Output $response"
           }
         ]
       }
@@ -4136,7 +4547,7 @@ export const gorilaAPI = {
   },
   "info": {
     "title": "Gorila | Core API",
-    "description": "# Introduction\n\nThis API aims at making all of Gorila's market best financial calculation engine available to our users in a easy to use but powerful and reliable way. This is an RESTFul API which uses predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\nSince this API references regular Gorila users, its transactions can be seen on our Front-end platform. This also means that current Gorila users can use the API to modify its portfolios and automate routines using it.\n\nHowever, the front-end element is not at all necessary to use the API and all its functions can be performed through it only. The portfolios referenced and managed by the API do not require any Front-end interaction and will not have any need to be accessed via Gorila's platform in order to work.\n\n# Authentication\n\nGorila's Core API uses API keys to authenticate requests. These will be created, invalidated and managed directly with our costumer success team.\n\nThese keys will grant access to their respective portfolios and will carry wide-ranging privileges. Meaning that their security is of the utmost importance so keep their access and knowledge closely guarded and do not share them publicly.\n\nOur API is hosted at the URL below, and all requests must be made over `https` protocol:\n\n```text\nhttps://core.gorila.com.br\n```\n\nYour API key is a 32 characters string that should be sent at `Authorization` property of HTTP headers, for instance:\n\n```sh\ncurl --request GET \\\n --url https://core.gorila.com.br/portfolios \\\n --header 'Authorization: 7ce547b2afa8457c2d2acfce7fc9e615'\n```\n\nFailures in providing a valid key will result in a unauthorized exception:\n\n```json\n{\n  \"code\": 401,\n  \"message\": \"authentication is invalid\"\n}\n```\n\n\n# Pagination\n\nResources which consists of a record set (e.g. portfolios, transactions, positions), includes pagination support.\n\nGorila's API utilizes cursor based pagination. Each query to a supported endpoint will include a `next` property within its response, which leads directly to the next page when accessed.\n\nYou may also specify desired page size through `limit` query parameter.\n\nTherefore it is easy for the consumer to navigate between results, for example:\n\n**First Request**\n\nAcquiring transactions of target portfolio, with a page size of 100 records:\n\n```text\nGET https://core.gorila.com.br/portfolios/:portfolioId/transaction?limit=100\n```\n\n**First Response**\n\n```json\n{\n  \"next\": \"https://core.gorila.com.br/portfolios/:portfolioId/transaction?token=580c52161751632af5fdcd14bf520078\",\n  \"records\": [\n    { }, { }, { }\n  ]\n}\n```\n\n**Second Request**\n\nSimply `GET` the URL provided at `next`:\n\n```text\nhttps://core.gorila.com.br/portfolios/:portfolioId/transaction?token=580c52161751632af5fdcd14bf520078\n```\n\nAnd so on.\n\n# Core Concepts\n\n## Resources\n\nThis API is build upon Gorila’s platform and carries all the same well established concepts and terms.\n\nBefore going further into the documentation it is important to clarify our definition of resources and their relationships:\n\n**User**: Owner of a set of portfolios and the client of this API.\n\n**Portfolio**: The aggregation of all positions owned by someone at their portfolio.\n\n**Security**: A fungible and negotiable financial instrument that holds a monetary value. It will be uniquely identified by its market symbol using the `securityName` property\n\n**Position**: Once a security is owned it establishes a position which is the amount owned of a security at a given custodian (broker).\n\n![](/assets/relationships.png)\n\n\n## Cash\n\nGorila's portfolio engine always takes under consideration the account's cash balance on its calculations. However, to simplify matters for the platform users, Gorila doesn't require them to input all their cash transactions.\n\nThis is important for most of our users because they either don't have all their complete cash deposits and withdrawals history or don't want to keep them up to date in Gorila because of the amount of transactions that would be needed to be inputed.\n\nTo accommodate these circumstances, Gorila can, if the user requires it, calculated and automatically book all cash transactions that are needed to keep the cash balance as 0, effectively making cash invisible for that portfolio.\n\nThis option is given to the user at the moment of a portfolio creation as a autoRnC property.\n\n\n## Currency\n\nGorila offers the greatest selection of products and assets from the Brazilian securities market, including Fixed Income products, Stocks and Mutual Funds.\n\nFurthermore it offers a large selection of securities from the north american stock market.\n\nThis presents a challenge when dealing with currencies since a portfolio might be composed from products of both markets.\n\nTo handle that, a property `currency` will be added to clarify which currency a given value is in, when necessary.\n\nHowever, the profit, position and benchmark requests will always be in BRL (R$), even for selections where it might have been more logical to use USD (such as offshore benchmarks).\n\nThis means that offshore positions will be converted to BRL when being taken under consideration for the profit calculations.\n",
+    "description": "# Introduction\n\nThe purpose of this API is to make all of Gorila's state-of-the-art calculation engine available to our partners in a easy to use but powerful and reliable way.\n\nThis is an RESTFul API which uses predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, verbs and industry best-practices.\n\nFor more information, check our [Documentation](https://gorila.com.br/core/developers).\n\nTo get a sense of what is like to use the API for the first time, check our [Quickstart](https://gorila.com.br/core/docs/quickstart).\n\n# Authentication\n\nGorila's Core API uses API keys to authenticate requests. These will be created, invalidated and managed directly with our costumer success team.\n\nThese keys will grant access to their respective portfolios and will carry wide-ranging privileges. Meaning that their security is of the utmost importance so keep their access and knowledge closely guarded and do not share them publicly.\n\nOur API is hosted at the URL below, and all requests must be made over `https` protocol:\n\n```text\nhttps://core.gorila.com.br\n```\n\nYour API key is a 32 characters string that should be sent at `Authorization` property of HTTP headers, for instance:\n\n```sh\ncurl --request GET \\\n --url https://core.gorila.com.br/portfolios \\\n --header 'Authorization: 7ce547b2afa8457c2d2acfce7fc9e615'\n```\n\nFailures in providing a valid key will result in `Unauthorized Error`:\n\n```json\n{\n  \"code\": 401,\n  \"message\": \"authentication is invalid\"\n}\n```\n\n\n# Pagination\n\nResources that represent collections (e.g. portfolios, transactions, positions) are returned in paginated results.\n\nGorila CORE API utilizes cursor based pagination. Each request to a supported endpoint will include a `next` property within its response, which leads directly to the next page of results.\n\nYou may also specify desired page size through `limit` query parameter.\n\nTherefore it is easy for the consumer to navigate between results, for example:\n\n**First Request**\n\nAcquiring transactions of target portfolio, with a page size of 100 records:\n\n```text\nGET https://core.gorila.com.br/portfolios/:portfolioId/transaction?limit=100\n```\n\n**First Response**\n\n```json\n{\n  \"next\": \"https://core.gorila.com.br/securities?pageToken=580c52161751632af5fdcd14bf520078?limit=100\",\n  \"records\": [\n    ...\n  ]\n}\n```\n\n**Second Request**\n\nSimply `GET` the URL provided at `next`, this should return the next page of results:\n\n```text\nhttps://core.gorila.com.br/portfolios/:portfolioId/transaction?token=580c52161751632af5fdcd14bf520078\n```\n\nWhen there are no more results available to ask, the `next` property will be ommitted. This means there are no more pages to consume.\n\n# Rate Limits\n\nHitting our rate limits will result in HTTP 429 errors. Rate limits are tiered by your account's negotiated volumes.\n",
     "version": "Preview",
     "contact": {},
     "x-logo": {
@@ -4154,10 +4565,6 @@ export const gorilaAPI = {
       "description": "All positions have an associated brokerage house which can be consulted using this endpoint.\n"
     },
     {
-      "name": "Corporate Bonds",
-      "description": "TBD"
-    },
-    {
       "name": "Issuers",
       "description": "Corporate Bonds have an associated Issuer, the financial entity that registers and sells the primary emission of the security. This endpoint offers all available issuers in Gorila.\n"
     },
@@ -4170,7 +4577,15 @@ export const gorilaAPI = {
       "description": "All available assets in Gorila, which can be priced and add to a portfolio, are called Securities. Most of them are directly available to be added to one's portfolio using Transactions while some of them must first be created by the Organization before they can be used.\n"
     },
     {
-      "name": "Net Asset Values",
+      "name": "Security Events",
+      "description": "\n"
+    },
+    {
+      "name": "Positions",
+      "description": "Positions details the amount of each Security over a combination of reference date and broker. \n\nIt is not simply the sum of all buy and sell transactions, but the result of all events in portfolio's history. Which includes Security Events (e.g. Asset Bonus, Split), and transformations from other positions like the expiration of a Forward.\n\nThis allows the user to reconcile Gorila's portfolio to the original financial institution's, and keep track of its whole composition, not to mention to create reports of it.\n"
+    },
+    {
+      "name": "Net Asset Value",
       "description": "An portfolio's net asset value is a key metric to gauge a portfolio's evolution as time goes by.\n\nIt measures the whole portfolio's, all its positions', market value at a time series of moments, allowing the user to have a bird's eye view of its evolution through time.\n\nIt is very useful when building charts to analyze the evolution of the portfolio's net asset value.\n"
     },
     {
@@ -4178,11 +4593,7 @@ export const gorilaAPI = {
       "description": "TBD\n"
     },
     {
-      "name": "Positions",
-      "description": "Positions details the amount of each Security over a combination of reference date and broker. \n\nIt is not simply the sum of all buy and sell transactions, but the result of all events in portfolio's history. Which includes Security Events (e.g. Asset Bonus, Split), and transformations from other positions like the expiration of a Forward.\n\nThis allows the user to reconcile Gorila's portfolio to the original financial institution's, and keep track of its whole composition, not to mention to create reports of it.\n"
-    },
-    {
-      "name": "Security Events",
+      "name": "Portfolio Security Events",
       "description": "All corporate actions and events associated with a portfolio's security can be accessed using this endpoint.\n"
     },
     {
@@ -4194,11 +4605,19 @@ export const gorilaAPI = {
       "description": "TBD\n"
     },
     {
+      "name": "Asset Classes",
+      "description": ""
+    },
+    {
+      "name": "Security Types",
+      "description": ""
+    },
+    {
       "name": "Average Prices",
       "description": "The Average Price of a position is determined through a combination of it acquisition transactions and position altering security events such as Split or Inplit.\n"
     },
     {
-      "name": "Internal Rates of Return",
+      "name": "Internal Rate of Return",
       "description": "A simple and intuitive profit metric used to evaluate performance of individual positions. This evaluation takes under consideration the size and timing of all redemptions and contributions putting a large focus on the position size. It is sometimes referred as the Money-Weighted Rate of Return.\n"
     },
     {
@@ -4218,12 +4637,7 @@ export const gorilaAPI = {
       "description": "The last available price for each position of a portfolio on a selected date.\n"
     }
   ],
-  "servers": [
-    {
-      "url": "https://core.gorila.com.br",
-      "description": "Production"
-    }
-  ],
+  "servers": [],
   "components": {
     "securitySchemes": {
       "API Key": {
@@ -4233,80 +4647,92 @@ export const gorilaAPI = {
       }
     },
     "schemas": {
-      "SecurityDto": {
+      "SecuritySummaryDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number",
-            "description": "TBD",
+            "description": "Gorila's internal identification of the Security",
             "example": 1651,
             "format": "integer"
           },
           "isin": {
             "type": "string",
-            "description": "TBD",
-            "example": "US9311421039",
+            "description": "International Securities Identification Number",
+            "example": "BRPETRACNOR9",
             "pattern": "[A-Z]{2}[\\dA-Z]{9}\\d"
           },
           "cnpj": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
             "minLength": 14,
             "format": "numeric"
-          },
-          "lastPriceDate": {
-            "type": "string",
-            "description": "Date of the last available price for the security",
-            "example": "2022-04-01",
-            "format": "ISO8601"
           },
           "assetClass": {
             "type": "string",
             "description": "Highest order of security classification",
-            "example": "TBD"
+            "example": "STOCKS",
+            "enum": [
+              "FIXED INCOME",
+              "STOCKS",
+              "MULTIMARKET",
+              "CURRENCY",
+              "CURRENCIES",
+              "CASH",
+              "TANGIBLE",
+              "OFFSHORE"
+            ]
           },
           "type": {
             "type": "string",
             "description": "Gorila's type classification of the position's security",
-            "example": "Stocks"
+            "example": "STOCK_LOCAL"
           },
           "name": {
             "type": "string",
             "description": "Oficial ticker symbol of the position's security",
             "example": "PETR4"
+          },
+          "issuer": {
+            "type": "string",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies the issuer",
+            "example": "91272516000140",
+            "minLength": 14,
+            "format": "numeric"
           }
         },
         "required": [
           "id",
           "isin",
           "cnpj",
-          "lastPriceDate",
           "assetClass",
           "type",
-          "name"
-        ]
+          "name",
+          "issuer"
+        ],
+        "title": "SecuritySummaryDto"
       },
       "BrokerDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "Brazil's tax Id which uniquely identifies local brokerages or internal Id for international brokerages",
-            "example": "TBD",
+            "description": "Unique identifier of the broker",
+            "example": "91272516000140",
             "minLength": 14,
             "format": "numeric"
           },
           "name": {
             "type": "string",
             "description": "Registered name of the brokerage house",
-            "example": "TBD"
+            "example": "GORILA VALORES MOBILIÁRIOS S.A"
           }
         },
         "required": [
           "id",
           "name"
-        ]
+        ],
+        "title": "BrokerDto"
       },
       "SecurityPriceDto": {
         "type": "object",
@@ -4315,13 +4741,21 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Date of reference for the position",
             "example": "2022-04-04",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
           },
           "priceClose": {
             "type": "number",
@@ -4334,8 +4768,10 @@ export const gorilaAPI = {
           "referenceDate",
           "security",
           "broker",
+          "currency",
           "priceClose"
-        ]
+        ],
+        "title": "SecurityPriceDto"
       },
       "SecurityPricePageDto": {
         "type": "object",
@@ -4344,7 +4780,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -4357,7 +4793,8 @@ export const gorilaAPI = {
         "required": [
           "next",
           "records"
-        ]
+        ],
+        "title": "SecurityPricePageDto"
       },
       "ErrorBadRequestDto": {
         "type": "object",
@@ -4388,7 +4825,8 @@ export const gorilaAPI = {
           "code",
           "message",
           "constraints"
-        ]
+        ],
+        "title": "ErrorBadRequestDto"
       },
       "ErrorUnauthorizedDto": {
         "type": "object",
@@ -4408,7 +4846,8 @@ export const gorilaAPI = {
         "required": [
           "code",
           "message"
-        ]
+        ],
+        "title": "ErrorUnauthorizedDto"
       },
       "ErrorForbiddenDto": {
         "type": "object",
@@ -4428,7 +4867,8 @@ export const gorilaAPI = {
         "required": [
           "code",
           "message"
-        ]
+        ],
+        "title": "ErrorForbiddenDto"
       },
       "ErrorTooManyRequestsDto": {
         "type": "object",
@@ -4448,7 +4888,30 @@ export const gorilaAPI = {
         "required": [
           "code",
           "message"
-        ]
+        ],
+        "title": "ErrorTooManyRequestsDto"
+      },
+      "PositionTwrGroupDto": {
+        "type": "object",
+        "properties": {
+          "referenceDate": {
+            "type": "string",
+            "description": "Date of reference for the position",
+            "example": "2022-04-04",
+            "format": "iso8601"
+          },
+          "twr": {
+            "type": "number",
+            "description": "Time-weighted rate of return",
+            "example": 0.23,
+            "format": "float"
+          }
+        },
+        "required": [
+          "referenceDate",
+          "twr"
+        ],
+        "title": "PositionTwrGroupDto"
       },
       "PositionTwrDto": {
         "type": "object",
@@ -4457,17 +4920,17 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Date of reference for the position",
             "example": "2022-04-04",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
           },
           "twr": {
             "type": "number",
-            "description": "TBD",
+            "description": "Time-weighted rate of return",
             "example": 0.23,
             "format": "float"
           }
@@ -4477,7 +4940,8 @@ export const gorilaAPI = {
           "security",
           "broker",
           "twr"
-        ]
+        ],
+        "title": "PositionTwrDto"
       },
       "PositionTwrPageDto": {
         "type": "object",
@@ -4486,7 +4950,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -4499,7 +4963,7 @@ export const gorilaAPI = {
             "type": "object",
             "description": "Dictionary of resulting groups",
             "additionalProperties": {
-              "$ref": "#/components/schemas/PositionTwrDto"
+              "$ref": "#/components/schemas/PositionTwrGroupDto"
             }
           }
         },
@@ -4507,7 +4971,39 @@ export const gorilaAPI = {
           "next",
           "records",
           "groups"
-        ]
+        ],
+        "title": "PositionTwrPageDto"
+      },
+      "PositionPnlGroupDto": {
+        "type": "object",
+        "properties": {
+          "referenceDate": {
+            "type": "string",
+            "description": "Date of reference for the position",
+            "example": "2022-04-04",
+            "format": "iso8601"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
+          },
+          "pnl": {
+            "type": "number",
+            "description": "Nominal profit or loss for the position at this date",
+            "example": 356043.23,
+            "format": "float"
+          }
+        },
+        "required": [
+          "referenceDate",
+          "currency",
+          "pnl"
+        ],
+        "title": "PositionPnlGroupDto"
       },
       "PositionPnlDto": {
         "type": "object",
@@ -4516,13 +5012,21 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Date of reference for the position",
             "example": "2022-04-04",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
           },
           "pnl": {
             "type": "number",
@@ -4535,8 +5039,10 @@ export const gorilaAPI = {
           "referenceDate",
           "security",
           "broker",
+          "currency",
           "pnl"
-        ]
+        ],
+        "title": "PositionPnlDto"
       },
       "PositionPnlPageDto": {
         "type": "object",
@@ -4545,7 +5051,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -4558,7 +5064,7 @@ export const gorilaAPI = {
             "type": "object",
             "description": "Dictionary of resulting groups",
             "additionalProperties": {
-              "$ref": "#/components/schemas/PositionPnlDto"
+              "$ref": "#/components/schemas/PositionPnlGroupDto"
             }
           }
         },
@@ -4566,7 +5072,39 @@ export const gorilaAPI = {
           "next",
           "records",
           "groups"
-        ]
+        ],
+        "title": "PositionPnlPageDto"
+      },
+      "MarketValueGroupDto": {
+        "type": "object",
+        "properties": {
+          "referenceDate": {
+            "type": "string",
+            "description": "Date of reference for the position",
+            "example": "2022-04-04",
+            "format": "iso8601"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
+          },
+          "marketValue": {
+            "type": "number",
+            "description": "Cash equivalent market value of the position's security",
+            "example": 32.17,
+            "format": "float"
+          }
+        },
+        "required": [
+          "referenceDate",
+          "currency",
+          "marketValue"
+        ],
+        "title": "MarketValueGroupDto"
       },
       "MarketValueDto": {
         "type": "object",
@@ -4575,13 +5113,21 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Date of reference for the position",
             "example": "2022-04-04",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
           },
           "marketValue": {
             "type": "number",
@@ -4594,8 +5140,10 @@ export const gorilaAPI = {
           "referenceDate",
           "security",
           "broker",
+          "currency",
           "marketValue"
-        ]
+        ],
+        "title": "MarketValueDto"
       },
       "MarketValuePageDto": {
         "type": "object",
@@ -4604,7 +5152,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -4617,7 +5165,7 @@ export const gorilaAPI = {
             "type": "object",
             "description": "Dictionary of resulting groups",
             "additionalProperties": {
-              "$ref": "#/components/schemas/MarketValueDto"
+              "$ref": "#/components/schemas/MarketValueGroupDto"
             }
           }
         },
@@ -4625,7 +5173,8 @@ export const gorilaAPI = {
           "next",
           "records",
           "groups"
-        ]
+        ],
+        "title": "MarketValuePageDto"
       },
       "IrrDto": {
         "type": "object",
@@ -4634,10 +5183,10 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Date of reference for the position",
             "example": "2022-04-04",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
@@ -4654,7 +5203,8 @@ export const gorilaAPI = {
           "security",
           "broker",
           "irr"
-        ]
+        ],
+        "title": "IrrDto"
       },
       "IrrPageDto": {
         "type": "object",
@@ -4663,7 +5213,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -4676,7 +5226,8 @@ export const gorilaAPI = {
         "required": [
           "next",
           "records"
-        ]
+        ],
+        "title": "IrrPageDto"
       },
       "AveragePriceDto": {
         "type": "object",
@@ -4685,13 +5236,21 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Date of reference for the position",
             "example": "2022-04-04",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
           },
           "averagePrice": {
             "type": "number",
@@ -4704,8 +5263,10 @@ export const gorilaAPI = {
           "referenceDate",
           "security",
           "broker",
+          "currency",
           "averagePrice"
-        ]
+        ],
+        "title": "AveragePriceDto"
       },
       "AveragePricePageDto": {
         "type": "object",
@@ -4714,7 +5275,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -4727,68 +5288,222 @@ export const gorilaAPI = {
         "required": [
           "next",
           "records"
-        ]
+        ],
+        "title": "AveragePricePageDto"
       },
-      "TwrDataPointDto": {
+      "SecurityProductTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Security Type name",
+            "example": "CURRENCY"
+          },
+          "description": {
+            "type": "string",
+            "description": "Security Type description",
+            "example": "Product_Type associada a moedas exceto a moeda base BRL"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ],
+        "title": "SecurityProductTypeDto"
+      },
+      "SecurityProductTypePageDto": {
+        "type": "object",
+        "properties": {
+          "next": {
+            "type": "string",
+            "description": "Next page URL",
+            "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
+            "format": "url"
+          },
+          "records": {
+            "description": "Array of resulting records",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecurityProductTypeDto"
+            }
+          }
+        },
+        "required": [
+          "next",
+          "records"
+        ],
+        "title": "SecurityProductTypePageDto"
+      },
+      "SecurityAssetClassDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Asset Class name",
+            "example": "STOCK"
+          },
+          "description": {
+            "type": "string",
+            "description": "Asset Class description",
+            "example": "Asset Class associada a ações"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "SecurityAssetClassDto"
+      },
+      "SecurityAssetClassPageDto": {
+        "type": "object",
+        "properties": {
+          "next": {
+            "type": "string",
+            "description": "Next page URL",
+            "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
+            "format": "url"
+          },
+          "records": {
+            "description": "Array of resulting records",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecurityAssetClassDto"
+            }
+          }
+        },
+        "required": [
+          "next",
+          "records"
+        ],
+        "title": "SecurityAssetClassPageDto"
+      },
+      "TwrIntervalDto": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Start date of interval",
+            "example": "2021-01-01",
+            "format": "iso8601"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date of interval",
+            "example": "2021-01-01",
+            "format": "iso8601"
+          },
+          "twr": {
+            "type": "number",
+            "description": "Calculated TWR for target position",
+            "example": 0.5462,
+            "format": "float"
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "twr"
+        ],
+        "title": "TwrIntervalDto"
+      },
+      "TwrTimeseriesDto": {
         "type": "object",
         "properties": {
           "referenceDate": {
             "type": "string",
             "description": "Reference date of current data point",
             "example": "2021-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "twr": {
             "type": "number",
             "description": "Calculated TWR for target position",
-            "example": 54.62,
+            "example": 0.5462,
             "format": "float"
-          },
-          "currency": {
-            "type": "string",
-            "description": "Currency symbol of the position's security",
-            "example": "BRL"
           }
         },
         "required": [
           "referenceDate",
-          "twr",
-          "currency"
-        ]
+          "twr"
+        ],
+        "title": "TwrTimeseriesDto"
       },
-      "TwrDto": {
+      "TwrTimeDto": {
         "type": "object",
         "properties": {
+          "interval": {
+            "$ref": "#/components/schemas/TwrIntervalDto"
+          },
           "timeseries": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TwrDataPointDto"
+              "$ref": "#/components/schemas/TwrTimeseriesDto"
             }
           }
         },
         "required": [
+          "interval",
           "timeseries"
-        ]
+        ],
+        "title": "TwrTimeDto"
       },
-      "TransactionRegularTradeCreateDto": {
+      "TransactionSecurityCreateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Gorila's internal identification of the Security",
+            "example": 1651,
+            "format": "integer"
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
+            "minLength": 14,
+            "maxLength": 14
+          },
+          "isin": {
+            "type": "string",
+            "description": "International Securities Identification Number",
+            "example": "US9311421039",
+            "pattern": "[A-Z]{2}[\\dA-Z]{9}\\d"
+          }
+        },
+        "title": "TransactionSecurityCreateDto"
+      },
+      "TransactionRegularFeeDto": {
+        "type": "object",
+        "properties": {
+          "brokerageFee": {
+            "type": "number",
+            "description": "Brokerage fee",
+            "example": 4.78,
+            "format": "float"
+          },
+          "exchangeFee": {
+            "type": "number",
+            "description": "Exchange fee",
+            "example": 9.54,
+            "format": "float"
+          }
+        },
+        "title": "TransactionRegularFeeDto"
+      },
+      "TransactionRegularCreateDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
-              "COME_COTAS",
-              "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "REGULAR"
             ]
           },
           "transactDate": {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -4799,12 +5514,10 @@ export const gorilaAPI = {
           "brokerId": {
             "type": "string",
             "description": "National identifier of the custodian institution",
-            "example": "10721160000183",
-            "minLength": 14,
-            "format": "numeric"
+            "example": "10721160000183"
           },
           "security": {
-            "description": "TBD",
+            "description": "Security identification",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/SecurityIdCreateDto"
@@ -4815,6 +5528,20 @@ export const gorilaAPI = {
               {
                 "$ref": "#/components/schemas/SecurityCnpjCreateDto"
               }
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionSecurityCreateDto"
+              }
+            ]
+          },
+          "side": {
+            "type": "string",
+            "description": "Direction of the transaction",
+            "example": "BUY",
+            "enum": [
+              "BUY",
+              "SELL"
             ]
           },
           "price": {
@@ -4828,6 +5555,14 @@ export const gorilaAPI = {
             "description": "Foreign exchange rate associated to the transaction used for securities negotiated in a currency other than BRL",
             "example": 5.41,
             "format": "float"
+          },
+          "fees": {
+            "description": "List of associated fees",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionRegularFeeDto"
+              }
+            ]
           }
         },
         "required": [
@@ -4835,8 +5570,10 @@ export const gorilaAPI = {
           "transactDate",
           "quantity",
           "brokerId",
-          "security"
-        ]
+          "security",
+          "side"
+        ],
+        "title": "TransactionRegularCreateDto"
       },
       "TransactionComeCotasCreateDto": {
         "type": "object",
@@ -4845,18 +5582,18 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ]
           },
           "transactDate": {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -4867,12 +5604,10 @@ export const gorilaAPI = {
           "brokerId": {
             "type": "string",
             "description": "National identifier of the custodian institution",
-            "example": "10721160000183",
-            "minLength": 14,
-            "format": "numeric"
+            "example": "10721160000183"
           },
           "security": {
-            "description": "TBD",
+            "description": "Security identification",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/SecurityIdCreateDto"
@@ -4883,6 +5618,11 @@ export const gorilaAPI = {
               {
                 "$ref": "#/components/schemas/SecurityCnpjCreateDto"
               }
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionSecurityCreateDto"
+              }
             ]
           }
         },
@@ -4892,7 +5632,8 @@ export const gorilaAPI = {
           "quantity",
           "brokerId",
           "security"
-        ]
+        ],
+        "title": "TransactionComeCotasCreateDto"
       },
       "TransactionOptionExerciseCreateDto": {
         "type": "object",
@@ -4901,18 +5642,18 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ]
           },
           "transactDate": {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -4923,12 +5664,10 @@ export const gorilaAPI = {
           "brokerId": {
             "type": "string",
             "description": "National identifier of the custodian institution",
-            "example": "10721160000183",
-            "minLength": 14,
-            "format": "numeric"
+            "example": "10721160000183"
           },
           "security": {
-            "description": "TBD",
+            "description": "Security identification",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/SecurityIdCreateDto"
@@ -4939,6 +5678,11 @@ export const gorilaAPI = {
               {
                 "$ref": "#/components/schemas/SecurityCnpjCreateDto"
               }
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionSecurityCreateDto"
+              }
             ]
           }
         },
@@ -4948,7 +5692,8 @@ export const gorilaAPI = {
           "quantity",
           "brokerId",
           "security"
-        ]
+        ],
+        "title": "TransactionOptionExerciseCreateDto"
       },
       "TransactionSubscriptionExerciseCreateDto": {
         "type": "object",
@@ -4957,18 +5702,18 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ]
           },
           "transactDate": {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -4979,12 +5724,10 @@ export const gorilaAPI = {
           "brokerId": {
             "type": "string",
             "description": "National identifier of the custodian institution",
-            "example": "10721160000183",
-            "minLength": 14,
-            "format": "numeric"
+            "example": "10721160000183"
           },
           "security": {
-            "description": "TBD",
+            "description": "Security identification",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/SecurityIdCreateDto"
@@ -4994,6 +5737,11 @@ export const gorilaAPI = {
               },
               {
                 "$ref": "#/components/schemas/SecurityCnpjCreateDto"
+              }
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionSecurityCreateDto"
               }
             ]
           }
@@ -5004,7 +5752,8 @@ export const gorilaAPI = {
           "quantity",
           "brokerId",
           "security"
-        ]
+        ],
+        "title": "TransactionSubscriptionExerciseCreateDto"
       },
       "TransactionCustodyTransferCreateDto": {
         "type": "object",
@@ -5013,18 +5762,18 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ]
           },
           "transactDate": {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -5033,7 +5782,7 @@ export const gorilaAPI = {
             "format": "float"
           },
           "security": {
-            "description": "TBD",
+            "description": "Security identification",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/SecurityIdCreateDto"
@@ -5044,27 +5793,28 @@ export const gorilaAPI = {
               {
                 "$ref": "#/components/schemas/SecurityCnpjCreateDto"
               }
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionSecurityCreateDto"
+              }
             ]
           },
           "price": {
             "type": "number",
-            "description": "TBD",
-            "example": 12.34,
-            "format": "float"
+            "format": "float",
+            "description": "Average price of the position at the moment of the transfer",
+            "example": 37.46
           },
           "sourceBrokerId": {
             "type": "string",
-            "description": "Brazil's tax Id which uniquely identifies the source brokerage of the transfer",
-            "example": "TBD",
-            "minLength": 14,
-            "format": "numeric"
+            "description": "National identifier of the custodian institution",
+            "example": "91272516000140"
           },
           "targetBrokerId": {
             "type": "string",
-            "description": "Brazil's tax Id which uniquely identifies the target brokerage of the transfer",
-            "example": "TBD",
-            "minLength": 14,
-            "format": "numeric"
+            "description": "National identifier of the custodian institution",
+            "example": "91272516000140"
           }
         },
         "required": [
@@ -5074,34 +5824,47 @@ export const gorilaAPI = {
           "security",
           "sourceBrokerId",
           "targetBrokerId"
-        ]
+        ],
+        "title": "TransactionCustodyTransferCreateDto"
       },
-      "TransactionRegularTradeDto": {
+      "TransactionRegularDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
             "description": "Unique ID representing a transaction entity",
             "example": "260f7bbb-71a3-4e9d-8d44-8f0c951880b6",
-            "format": "UUID"
+            "format": "uuid"
           },
           "type": {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ],
-            "example": "REGULAR_TRADE"
+            "example": "REGULAR"
           },
           "transactDate": {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Creation date of the transaction",
+            "example": "2022-02-02",
+            "format": "iso8601"
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "Last updated date of the transaction",
+            "example": "2022-03-03",
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -5109,14 +5872,8 @@ export const gorilaAPI = {
             "example": 1000,
             "format": "float"
           },
-          "referenceDate": {
-            "type": "string",
-            "description": "Date of reference for the position",
-            "example": "2022-04-04",
-            "format": "ISO8601"
-          },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
@@ -5141,20 +5898,31 @@ export const gorilaAPI = {
             "description": "Foreign exchange rate associated to the transaction used for securities negotiated in a currency other than BRL",
             "example": 5.41,
             "format": "float"
+          },
+          "fees": {
+            "description": "List of associated fees",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionRegularFeeDto"
+              }
+            ]
           }
         },
         "required": [
           "id",
           "type",
           "transactDate",
+          "createdDate",
+          "updatedDate",
           "quantity",
-          "referenceDate",
           "security",
           "broker",
           "side",
           "price",
-          "exchangeRate"
-        ]
+          "exchangeRate",
+          "fees"
+        ],
+        "title": "TransactionRegularDto"
       },
       "TransactionComeCotasDto": {
         "type": "object",
@@ -5163,17 +5931,17 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Unique ID representing a transaction entity",
             "example": "260f7bbb-71a3-4e9d-8d44-8f0c951880b6",
-            "format": "UUID"
+            "format": "uuid"
           },
           "type": {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ],
             "example": "COME_COTAS"
           },
@@ -5181,7 +5949,19 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Creation date of the transaction",
+            "example": "2022-02-02",
+            "format": "iso8601"
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "Last updated date of the transaction",
+            "example": "2022-03-03",
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -5189,14 +5969,8 @@ export const gorilaAPI = {
             "example": 1000,
             "format": "float"
           },
-          "referenceDate": {
-            "type": "string",
-            "description": "Date of reference for the position",
-            "example": "2022-04-04",
-            "format": "ISO8601"
-          },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
@@ -5206,11 +5980,13 @@ export const gorilaAPI = {
           "id",
           "type",
           "transactDate",
+          "createdDate",
+          "updatedDate",
           "quantity",
-          "referenceDate",
           "security",
           "broker"
-        ]
+        ],
+        "title": "TransactionComeCotasDto"
       },
       "TransactionOptionExerciseDto": {
         "type": "object",
@@ -5219,17 +5995,17 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Unique ID representing a transaction entity",
             "example": "260f7bbb-71a3-4e9d-8d44-8f0c951880b6",
-            "format": "UUID"
+            "format": "uuid"
           },
           "type": {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ],
             "example": "OPTION_EXERCISE"
           },
@@ -5237,7 +6013,19 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Creation date of the transaction",
+            "example": "2022-02-02",
+            "format": "iso8601"
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "Last updated date of the transaction",
+            "example": "2022-03-03",
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -5245,14 +6033,8 @@ export const gorilaAPI = {
             "example": 1000,
             "format": "float"
           },
-          "referenceDate": {
-            "type": "string",
-            "description": "Date of reference for the position",
-            "example": "2022-04-04",
-            "format": "ISO8601"
-          },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
@@ -5262,11 +6044,13 @@ export const gorilaAPI = {
           "id",
           "type",
           "transactDate",
+          "createdDate",
+          "updatedDate",
           "quantity",
-          "referenceDate",
           "security",
           "broker"
-        ]
+        ],
+        "title": "TransactionOptionExerciseDto"
       },
       "TransactionSubscriptionExerciseDto": {
         "type": "object",
@@ -5275,17 +6059,17 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Unique ID representing a transaction entity",
             "example": "260f7bbb-71a3-4e9d-8d44-8f0c951880b6",
-            "format": "UUID"
+            "format": "uuid"
           },
           "type": {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ],
             "example": "SUBSCRIPTION_EXERCISE"
           },
@@ -5293,7 +6077,19 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Creation date of the transaction",
+            "example": "2022-02-02",
+            "format": "iso8601"
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "Last updated date of the transaction",
+            "example": "2022-03-03",
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -5301,14 +6097,8 @@ export const gorilaAPI = {
             "example": 1000,
             "format": "float"
           },
-          "referenceDate": {
-            "type": "string",
-            "description": "Date of reference for the position",
-            "example": "2022-04-04",
-            "format": "ISO8601"
-          },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
@@ -5318,11 +6108,13 @@ export const gorilaAPI = {
           "id",
           "type",
           "transactDate",
+          "createdDate",
+          "updatedDate",
           "quantity",
-          "referenceDate",
           "security",
           "broker"
-        ]
+        ],
+        "title": "TransactionSubscriptionExerciseDto"
       },
       "TransactionCustodyTransferDto": {
         "type": "object",
@@ -5331,17 +6123,17 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Unique ID representing a transaction entity",
             "example": "260f7bbb-71a3-4e9d-8d44-8f0c951880b6",
-            "format": "UUID"
+            "format": "uuid"
           },
           "type": {
             "type": "string",
             "description": "Transaction type being created",
             "enum": [
-              "REGULAR_TRADE",
+              "REGULAR",
               "COME_COTAS",
+              "CUSTODY_TRANSFER",
               "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
+              "SUBSCRIPTION_EXERCISE"
             ],
             "example": "CUSTODY_TRANSFER"
           },
@@ -5349,7 +6141,19 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Creation date of the transaction",
+            "example": "2022-02-02",
+            "format": "iso8601"
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "Last updated date of the transaction",
+            "example": "2022-03-03",
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -5357,14 +6161,8 @@ export const gorilaAPI = {
             "example": 1000,
             "format": "float"
           },
-          "referenceDate": {
-            "type": "string",
-            "description": "Date of reference for the position",
-            "example": "2022-04-04",
-            "format": "ISO8601"
-          },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "sourceBroker": {
             "$ref": "#/components/schemas/BrokerDto"
@@ -5374,7 +6172,7 @@ export const gorilaAPI = {
           },
           "price": {
             "type": "number",
-            "description": "TBD",
+            "description": "Average price of the position at the moment of the transfer",
             "example": 12.34,
             "format": "float"
           }
@@ -5383,93 +6181,15 @@ export const gorilaAPI = {
           "id",
           "type",
           "transactDate",
+          "createdDate",
+          "updatedDate",
           "quantity",
-          "referenceDate",
           "security",
           "sourceBroker",
           "targetBroker",
           "price"
-        ]
-      },
-      "TransactionDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Unique ID representing a transaction entity",
-            "example": "260f7bbb-71a3-4e9d-8d44-8f0c951880b6",
-            "format": "UUID"
-          },
-          "type": {
-            "type": "string",
-            "description": "Transaction type being created",
-            "enum": [
-              "REGULAR_TRADE",
-              "COME_COTAS",
-              "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
-            ],
-            "example": "REGULAR_TRADE"
-          },
-          "transactDate": {
-            "type": "string",
-            "description": "Execution date of the transaction",
-            "example": "2022-01-01",
-            "format": "ISO8601"
-          },
-          "quantity": {
-            "type": "number",
-            "description": "Amount of the negotiated security",
-            "example": 1000,
-            "format": "float"
-          },
-          "referenceDate": {
-            "type": "string",
-            "description": "Date of reference for the position",
-            "example": "2022-04-04",
-            "format": "ISO8601"
-          },
-          "security": {
-            "$ref": "#/components/schemas/SecurityDto"
-          },
-          "broker": {
-            "$ref": "#/components/schemas/BrokerDto"
-          },
-          "side": {
-            "type": "string",
-            "description": "Direction of the transaction",
-            "example": "BUY",
-            "enum": [
-              "BUY",
-              "SELL"
-            ]
-          },
-          "price": {
-            "type": "number",
-            "description": "Price of the negotiated security",
-            "example": 37.46,
-            "format": "float"
-          },
-          "exchangeRate": {
-            "type": "number",
-            "description": "Foreign exchange rate associated to the transaction used for securities negotiated in a currency other than BRL",
-            "example": 5.41,
-            "format": "float"
-          }
-        },
-        "required": [
-          "id",
-          "type",
-          "transactDate",
-          "quantity",
-          "referenceDate",
-          "security",
-          "broker",
-          "side",
-          "price",
-          "exchangeRate"
-        ]
+        ],
+        "title": "TransactionCustodyTransferDto"
       },
       "TransactionPageDto": {
         "type": "object",
@@ -5478,40 +6198,30 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionDto"
+              "$ref": "#/components/schemas/TransactionRegularDto"
             }
           }
         },
         "required": [
           "next",
           "records"
-        ]
+        ],
+        "title": "TransactionPageDto"
       },
       "TransactionUpdateDto": {
         "type": "object",
         "properties": {
-          "type": {
-            "type": "string",
-            "description": "Transaction type being created",
-            "enum": [
-              "REGULAR_TRADE",
-              "COME_COTAS",
-              "OPTION_EXERCISE",
-              "SUBSCRIPTION_EXERCISE",
-              "CUSTODY_TRANSFER"
-            ]
-          },
           "transactDate": {
             "type": "string",
             "description": "Execution date of the transaction",
             "example": "2022-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "quantity": {
             "type": "number",
@@ -5522,65 +6232,102 @@ export const gorilaAPI = {
           "brokerId": {
             "type": "string",
             "description": "National identifier of the custodian institution",
-            "example": "10721160000183",
-            "minLength": 14,
-            "format": "numeric"
+            "example": "10721160000183"
           },
-          "security": {
-            "description": "TBD",
-            "anyOf": [
+          "side": {
+            "type": "string",
+            "description": "Direction of the transaction",
+            "example": "BUY",
+            "enum": [
+              "BUY",
+              "SELL"
+            ]
+          },
+          "price": {
+            "type": "number",
+            "description": "Average price of the position at the moment of the transfer",
+            "example": 37.46,
+            "format": "float"
+          },
+          "exchangeRate": {
+            "type": "number",
+            "description": "Foreign exchange rate associated to the transaction used for securities negotiated in a currency other than BRL",
+            "example": 5.41,
+            "format": "float"
+          },
+          "fees": {
+            "description": "List of associated fees",
+            "allOf": [
               {
-                "$ref": "#/components/schemas/SecurityIdCreateDto"
-              },
-              {
-                "$ref": "#/components/schemas/SecurityIsinCreateDto"
-              },
-              {
-                "$ref": "#/components/schemas/SecurityCnpjCreateDto"
+                "$ref": "#/components/schemas/TransactionRegularFeeDto"
               }
             ]
+          },
+          "sourceBrokerId": {
+            "type": "string",
+            "description": "National identifier of the custodian institution",
+            "example": "91272516000140"
+          },
+          "targetBrokerId": {
+            "type": "string",
+            "description": "National identifier of the custodian institution",
+            "example": "91272516000140"
           }
-        }
+        },
+        "title": "TransactionUpdateDto"
       },
-      "SecurityEventDto": {
+      "PortfolioSecurityEventDto": {
         "type": "object",
         "properties": {
           "referenceDate": {
             "type": "string",
             "description": "Date of reference for the position",
             "example": "2022-04-04",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
           },
           "eventDate": {
             "type": "string",
             "description": "Ex date of current event",
             "example": "2022-06-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "eventType": {
             "type": "string",
             "description": "Gorila classification of security event",
-            "example": "ASSET_BONUS",
+            "example": "DIVIDEND_CASH",
             "enum": [
-              "ASSET_SPLIT",
-              "ASSET_INPLIT",
-              "ASSET_BONUS",
-              "ASSET_RETURN_OF_CAPITAL",
-              "ASSET_NAME_CHANGE",
-              "ASSET_UNIT_SPLIT"
+              "BONUS_SEC",
+              "REV_SPLIT_SEC",
+              "NAME_CHANGE_SEC",
+              "SPLIT_SEC",
+              "AMORTIZATION_CASH",
+              "AMORTIZATION_UNSCHEDULED_CASH",
+              "DIVIDEND_CASH",
+              "INCOME_CASH",
+              "JSCP_CASH",
+              "PREMIUM_CASH",
+              "RETURN_OF_CAPITAL_CASH"
             ]
           },
           "paymentDate": {
             "type": "string",
             "description": "Payment date of current event",
             "example": "2022-06-01",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "sourceQuantity": {
             "type": "number",
@@ -5589,9 +6336,12 @@ export const gorilaAPI = {
             "format": "float"
           },
           "receivedSecurity": {
-            "type": "string",
-            "description": "Oficial ticker symbol of the received security",
-            "example": "PETR3"
+            "description": "Information of received security",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SecuritySummaryDto"
+              }
+            ]
           },
           "receivedQuantity": {
             "type": "number",
@@ -5610,6 +6360,7 @@ export const gorilaAPI = {
           "referenceDate",
           "security",
           "broker",
+          "currency",
           "eventDate",
           "eventType",
           "paymentDate",
@@ -5617,7 +6368,8 @@ export const gorilaAPI = {
           "receivedSecurity",
           "receivedQuantity",
           "eventFactor"
-        ]
+        ],
+        "title": "PortfolioSecurityEventDto"
       },
       "PositionDto": {
         "type": "object",
@@ -5626,10 +6378,10 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Date of reference for the position",
             "example": "2022-04-04",
-            "format": "ISO8601"
+            "format": "iso8601"
           },
           "security": {
-            "$ref": "#/components/schemas/SecurityDto"
+            "$ref": "#/components/schemas/SecuritySummaryDto"
           },
           "broker": {
             "$ref": "#/components/schemas/BrokerDto"
@@ -5639,120 +6391,276 @@ export const gorilaAPI = {
             "description": "Amount of the position's security",
             "example": 32.17,
             "format": "float"
-          },
-          "currency": {
-            "type": "string",
-            "description": "Currency symbol of the position's security",
-            "example": "BRL"
           }
         },
         "required": [
           "referenceDate",
           "security",
           "broker",
-          "quantity",
-          "currency"
-        ]
+          "quantity"
+        ],
+        "title": "PositionDto"
       },
       "PositionPageDto": {
         "type": "object",
         "properties": {
-          "next": {
-            "type": "string",
-            "description": "Next page URL",
-            "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
-          },
-          "records": {
-            "description": "Array of resulting records",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PositionDto"
-            }
-          },
           "groups": {
             "type": "object",
             "description": "Dictionary of resulting groups",
             "additionalProperties": {
               "$ref": "#/components/schemas/PositionDto"
             }
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PositionDto"
+            }
           }
         },
         "required": [
-          "next",
-          "records",
-          "groups"
-        ]
+          "groups",
+          "records"
+        ],
+        "title": "PositionPageDto"
       },
-      "PnlDataPointDto": {
+      "PnlIntervalDto": {
         "type": "object",
         "properties": {
-          "referenceDate": {
+          "currency": {
             "type": "string",
-            "description": "Reference date of current data point",
-            "example": "2021-01-01",
-            "format": "ISO8601"
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
           },
           "pnl": {
             "type": "number",
             "description": "Nominal profit or loss for the position at this date",
             "example": 356043.23,
             "format": "float"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date of interval",
+            "example": "2021-01-01",
+            "format": "iso8601"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date of interval",
+            "example": "2021-01-01",
+            "format": "iso8601"
           }
         },
         "required": [
-          "referenceDate",
-          "pnl"
-        ]
+          "currency",
+          "pnl",
+          "startDate",
+          "endDate"
+        ],
+        "title": "PnlIntervalDto"
       },
-      "PnlDto": {
+      "PnlTimeseriesDto": {
         "type": "object",
         "properties": {
-          "timeseries": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PnlDataPointDto"
-            }
-          }
-        },
-        "required": [
-          "timeseries"
-        ]
-      },
-      "NavDataPointDto": {
-        "type": "object",
-        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
+          },
+          "pnl": {
+            "type": "number",
+            "description": "Nominal profit or loss for the position at this date",
+            "example": 356043.23,
+            "format": "float"
+          },
           "referenceDate": {
             "type": "string",
             "description": "Reference date of current data point",
             "example": "2021-01-01",
-            "format": "ISO8601"
+            "format": "iso8601"
+          }
+        },
+        "required": [
+          "currency",
+          "pnl",
+          "referenceDate"
+        ],
+        "title": "PnlTimeseriesDto"
+      },
+      "PnlTimeDto": {
+        "type": "object",
+        "properties": {
+          "interval": {
+            "$ref": "#/components/schemas/PnlIntervalDto"
+          },
+          "timeseries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PnlTimeseriesDto"
+            }
+          }
+        },
+        "required": [
+          "interval",
+          "timeseries"
+        ],
+        "title": "PnlTimeDto"
+      },
+      "NavIntervalDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
           },
           "nav": {
             "type": "number",
             "description": "Net asset value of positions at reference date",
             "example": 4567.15,
             "format": "float"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date of interval",
+            "example": "2021-01-01",
+            "format": "iso8601"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date of interval",
+            "example": "2021-01-01",
+            "format": "iso8601"
           }
         },
         "required": [
-          "referenceDate",
-          "nav"
-        ]
+          "currency",
+          "nav",
+          "startDate",
+          "endDate"
+        ],
+        "title": "NavIntervalDto"
       },
-      "NavDto": {
+      "NavTimeseriesDto": {
         "type": "object",
         "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol of the position's security",
+            "example": "BRL",
+            "enum": [
+              "BRL"
+            ]
+          },
+          "nav": {
+            "type": "number",
+            "description": "Net asset value of positions at reference date",
+            "example": 4567.15,
+            "format": "float"
+          },
+          "referenceDate": {
+            "type": "string",
+            "description": "Reference date of current data point",
+            "example": "2021-01-01",
+            "format": "iso8601"
+          }
+        },
+        "required": [
+          "currency",
+          "nav",
+          "referenceDate"
+        ],
+        "title": "NavTimeseriesDto"
+      },
+      "NavTimeDto": {
+        "type": "object",
+        "properties": {
+          "interval": {
+            "$ref": "#/components/schemas/NavIntervalDto"
+          },
           "timeseries": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/NavDataPointDto"
+              "$ref": "#/components/schemas/NavTimeseriesDto"
             }
           }
         },
         "required": [
+          "interval",
           "timeseries"
-        ]
+        ],
+        "title": "NavTimeDto"
+      },
+      "SecurityEventTypeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Security Event Type unique identification",
+            "example": "BONUS_SEC",
+            "enum": [
+              "BONUS_SEC",
+              "REV_SPLIT_SEC",
+              "NAME_CHANGE_SEC",
+              "SPLIT_SEC",
+              "AMORTIZATION_CASH",
+              "AMORTIZATION_UNSCHEDULED_CASH",
+              "DIVIDEND_CASH",
+              "INCOME_CASH",
+              "JSCP_CASH",
+              "PREMIUM_CASH",
+              "RETURN_OF_CAPITAL_CASH"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "Security Event Type name",
+            "example": "BONIFICAÇÃO EM ATIVOS"
+          },
+          "description": {
+            "type": "string",
+            "description": "Security Event Type description",
+            "example": "Código Identificador que representa os eventos de BONIFICAÇÃO EM ATIVOS pagos em ações. EFEITO NA POSIÇÃO: A mudança na posição incide 2 dias úteis ( em linha com ciclo de liquidação de ações ) após a data Ex.  EFEITO NA RENTABILIDADE: O preço médio da posição antes da ocorrência da bonificação é ajustada para também considerar a transação de bonificação usando o preço divulgado em edital correspondente - Mas o ajuste não implica em lançamento no caixa. EFEITO NO CAIXA: Não afeta o caixa. TIPOS DE ATIVOS: Incide principalmente sobre ativos renda variável."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description"
+        ],
+        "title": "SecurityEventTypeDto"
+      },
+      "SecurityEventTypePageDto": {
+        "type": "object",
+        "properties": {
+          "next": {
+            "type": "string",
+            "description": "Next page URL",
+            "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
+            "format": "url"
+          },
+          "records": {
+            "description": "Array of resulting records",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecurityEventTypeDto"
+            }
+          }
+        },
+        "required": [
+          "next",
+          "records"
+        ],
+        "title": "SecurityEventTypePageDto"
       },
       "SecurityIdCreateDto": {
         "type": "object",
@@ -5766,7 +6674,8 @@ export const gorilaAPI = {
         },
         "required": [
           "id"
-        ]
+        ],
+        "title": "SecurityIdCreateDto"
       },
       "SecurityIsinCreateDto": {
         "type": "object",
@@ -5780,295 +6689,345 @@ export const gorilaAPI = {
         },
         "required": [
           "isin"
-        ]
+        ],
+        "title": "SecurityIsinCreateDto"
       },
       "SecurityCnpjCreateDto": {
         "type": "object",
         "properties": {
           "cnpj": {
             "type": "string",
-            "description": "Brazil's tax Id which uniquely identifies local mutual funds",
-            "example": "TBD",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "example": "91272516000140",
             "minLength": 14,
-            "format": "numeric"
+            "maxLength": 14
           }
         },
         "required": [
           "cnpj"
-        ]
+        ],
+        "title": "SecurityCnpjCreateDto"
+      },
+      "SecurityForwardStockDataDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Gorila's internal identification of the Security",
+            "example": 1651,
+            "format": "integer"
+          },
+          "isin": {
+            "type": "string",
+            "description": "International Securities Identification Number",
+            "example": "US9311421039",
+            "pattern": "[A-Z]{2}[\\dA-Z]{9}\\d"
+          }
+        },
+        "title": "SecurityForwardStockDataDto"
       },
       "SecurityForwardStockCreateDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "description": "TBD",
+            "description": "Classification of security being created",
             "enum": [
-              "FORWARD_STOCK",
-              "CDBISH_PRE",
-              "CDBISH_POS",
-              "CRI_CRA_DEBENTURE"
+              "FIXED_RATE_BANKING_BOND",
+              "FLOATING_RATE_BANKING_BOND",
+              "FORWARD_STOCK"
             ]
-          },
-          "name": {
-            "type": "string",
-            "description": "TBD",
-            "example": "TBD"
-          },
-          "description": {
-            "type": "string",
-            "description": "TBD",
-            "example": "TBD"
-          },
-          "initialPrice": {
-            "type": "number",
-            "description": "TBD",
-            "example": "TBD",
-            "format": "float"
           },
           "initialDate": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "format": "ISO8601"
+            "description": "Security initial date",
+            "format": "iso8601"
           },
           "maturityDate": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "format": "ISO8601"
+            "description": "Security maturity date",
+            "format": "iso8601"
           },
           "underlyingSecurity": {
-            "description": "TBD",
+            "description": "Identification of underlying security",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/SecurityIdCreateDto"
               },
               {
                 "$ref": "#/components/schemas/SecurityIsinCreateDto"
-              },
+              }
+            ],
+            "allOf": [
               {
-                "$ref": "#/components/schemas/SecurityCnpjCreateDto"
+                "$ref": "#/components/schemas/SecurityForwardStockDataDto"
               }
             ]
           }
         },
         "required": [
           "type",
-          "name",
-          "initialPrice",
           "initialDate",
           "maturityDate",
           "underlyingSecurity"
-        ]
+        ],
+        "title": "SecurityForwardStockCreateDto"
       },
-      "SecurityCdbishPreCreateDto": {
+      "SecurityFixRateBankingBondCreateDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "description": "TBD",
+            "description": "Classification of security being created",
             "enum": [
-              "FORWARD_STOCK",
-              "CDBISH_PRE",
-              "CDBISH_POS",
-              "CRI_CRA_DEBENTURE"
+              "FIXED_RATE_BANKING_BOND",
+              "FLOATING_RATE_BANKING_BOND",
+              "FORWARD_STOCK"
             ]
           },
-          "name": {
+          "bankingBondType": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD"
-          },
-          "description": {
-            "type": "string",
-            "description": "TBD",
-            "example": "TBD"
-          },
-          "issuerId": {
-            "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "minLength": 14,
-            "format": "numeric"
-          },
-          "corporateBondType": {
-            "type": "string",
-            "description": "TBD",
-            "example": "CRA",
+            "description": "Security banking bond type",
+            "example": "CDB",
             "enum": [
               "CDB",
               "LCI",
               "LCA",
               "LC",
-              "LF",
-              "CRI",
-              "CRA",
-              "DEBENTURE"
+              "LF"
             ]
           },
           "initialDate": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "format": "ISO8601"
+            "description": "Security initial date",
+            "format": "iso8601"
           },
           "maturityDate": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "format": "ISO8601"
+            "description": "Security maturity date",
+            "format": "iso8601"
+          },
+          "issuerId": {
+            "type": "string",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies the issuer",
+            "example": "91272516000140",
+            "minLength": 14,
+            "maxLength": 14,
+            "format": "numeric"
           },
           "yield": {
             "type": "number",
-            "description": "TBD",
+            "description": "Fixed rate yield",
             "example": 0.06,
             "format": "float"
           }
         },
         "required": [
           "type",
-          "name",
-          "issuerId",
-          "corporateBondType",
+          "bankingBondType",
           "initialDate",
           "maturityDate",
+          "issuerId",
           "yield"
-        ]
+        ],
+        "title": "SecurityFixRateBankingBondCreateDto"
       },
-      "SecurityCdbishPosCreateDto": {
+      "SecurityFloatingRateBankingBondCreateDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "description": "TBD",
+            "description": "Classification of security being created",
             "enum": [
-              "FORWARD_STOCK",
-              "CDBISH_PRE",
-              "CDBISH_POS",
-              "CRI_CRA_DEBENTURE"
+              "FIXED_RATE_BANKING_BOND",
+              "FLOATING_RATE_BANKING_BOND",
+              "FORWARD_STOCK"
             ]
           },
-          "name": {
+          "bankingBondType": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD"
-          },
-          "description": {
-            "type": "string",
-            "description": "TBD",
-            "example": "TBD"
-          },
-          "issuerId": {
-            "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "minLength": 14,
-            "format": "numeric"
-          },
-          "corporateBondType": {
-            "type": "string",
-            "description": "TBD",
-            "example": "CRA",
+            "description": "Security banking bond type",
+            "example": "CDB",
             "enum": [
               "CDB",
               "LCI",
               "LCA",
               "LC",
-              "LF",
-              "CRI",
-              "CRA",
-              "DEBENTURE"
+              "LF"
             ]
           },
           "initialDate": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "format": "ISO8601"
+            "description": "Security initial date",
+            "format": "iso8601"
           },
           "maturityDate": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "format": "ISO8601"
+            "description": "Security maturity date",
+            "format": "iso8601"
+          },
+          "issuerId": {
+            "type": "string",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies the issuer",
+            "example": "91272516000140",
+            "minLength": 14,
+            "maxLength": 14,
+            "format": "numeric"
           },
           "index": {
-            "type": "number",
-            "description": "TBD",
+            "type": "string",
+            "description": "Floating rate index",
             "example": "CDI",
-            "enum": []
+            "enum": [
+              "CDI",
+              "IBOVESPA",
+              "IGPM",
+              "IPCA",
+              "IFIX",
+              "SELIC",
+              "DOW_JONES_IA",
+              "DOW_JONES_IA_BRL",
+              "NASDAQ_100",
+              "NASDAQ_100_BRL",
+              "NASDAQ_COMP",
+              "NASDAQ_COMP_BRL",
+              "SPX",
+              "SPX_BRL",
+              "USDBRL"
+            ]
           },
           "multiplier": {
             "type": "number",
-            "description": "TBD",
+            "description": "Floating rate multiplier",
             "example": 1.06,
             "format": "float"
           },
           "spread": {
             "type": "number",
-            "description": "TBD",
+            "description": "Floating rate spread",
             "example": 0.02,
             "format": "float"
           }
         },
         "required": [
           "type",
-          "name",
-          "issuerId",
-          "corporateBondType",
+          "bankingBondType",
           "initialDate",
           "maturityDate",
+          "issuerId",
           "index"
-        ]
+        ],
+        "title": "SecurityFloatingRateBankingBondCreateDto"
       },
-      "SecurityCriCraDebentureDto": {
+      "SecurityIdDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "number",
+            "description": "Gorila's internal identification of the Security",
+            "example": 1651,
+            "format": "integer"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "SecurityIdDto"
+      },
+      "SecurityDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Gorila's internal identification of the Security",
+            "example": 1651,
+            "format": "integer"
+          },
+          "isin": {
+            "type": "string",
+            "description": "International Securities Identification Number",
+            "example": "BRPETRACNOR9",
+            "pattern": "[A-Z]{2}[\\dA-Z]{9}\\d"
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies local mutual funds",
+            "minLength": 14,
+            "format": "numeric"
+          },
+          "assetClass": {
+            "type": "string",
+            "description": "Highest order of security classification",
+            "example": "STOCKS",
+            "enum": [
+              "FIXED INCOME",
+              "STOCKS",
+              "MULTIMARKET",
+              "CURRENCY",
+              "CURRENCIES",
+              "CASH",
+              "TANGIBLE",
+              "OFFSHORE"
+            ]
+          },
           "type": {
             "type": "string",
-            "description": "TBD",
-            "enum": [
-              "FORWARD_STOCK",
-              "CDBISH_PRE",
-              "CDBISH_POS",
-              "CRI_CRA_DEBENTURE"
-            ]
+            "description": "Gorila's type classification of the position's security",
+            "example": "STOCK_LOCAL"
           },
           "name": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD"
+            "description": "Oficial ticker symbol of the position's security",
+            "example": "PETR4"
           },
-          "description": {
+          "issuer": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD"
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies the issuer",
+            "example": "91272516000140",
+            "minLength": 14,
+            "format": "numeric"
           },
-          "corporateBondId": {
+          "validityDate": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD",
-            "minLength": 1
+            "description": "Date of validity for the asset",
+            "example": "2022-05-16",
+            "format": "iso8601"
           },
-          "multiplier": {
-            "type": "number",
-            "description": "TBD",
-            "example": 1.06,
-            "format": "float"
+          "maturityDate": {
+            "type": "string",
+            "description": "Date of maturity for the asset",
+            "example": "2022-05-16",
+            "format": "iso8601"
           },
-          "spread": {
+          "dealType": {
+            "type": "string",
+            "description": "TBD"
+          },
+          "index": {
+            "type": "string",
+            "description": "TBD"
+          },
+          "yield": {
             "type": "number",
-            "description": "TBD",
-            "example": 0.02,
-            "format": "float"
+            "format": "float",
+            "description": "TBD"
           }
         },
         "required": [
+          "id",
+          "isin",
+          "cnpj",
+          "assetClass",
           "type",
           "name",
-          "corporateBondId"
-        ]
+          "issuer",
+          "validityDate",
+          "maturityDate",
+          "dealType",
+          "index",
+          "yield"
+        ],
+        "title": "SecurityDto"
       },
       "SecurityPageDto": {
         "type": "object",
@@ -6077,7 +7036,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -6090,7 +7049,8 @@ export const gorilaAPI = {
         "required": [
           "next",
           "records"
-        ]
+        ],
+        "title": "SecurityPageDto"
       },
       "PortfolioCreateDto": {
         "type": "object",
@@ -6108,7 +7068,8 @@ export const gorilaAPI = {
         },
         "required": [
           "name"
-        ]
+        ],
+        "title": "PortfolioCreateDto"
       },
       "PortfolioDto": {
         "type": "object",
@@ -6117,7 +7078,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Unique ID representing a portfolio entity",
             "example": "1e0c3ede-01e5-4e81-ba6f-a50c9bd39fb7",
-            "format": "UUID"
+            "format": "uuid"
           },
           "name": {
             "type": "string",
@@ -6133,16 +7094,17 @@ export const gorilaAPI = {
         "required": [
           "id",
           "name"
-        ]
+        ],
+        "title": "PortfolioDto"
       },
-      "PortfolioPage": {
+      "PortfolioPageDto": {
         "type": "object",
         "properties": {
           "next": {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -6155,7 +7117,8 @@ export const gorilaAPI = {
         "required": [
           "next",
           "records"
-        ]
+        ],
+        "title": "PortfolioPageDto"
       },
       "PortfolioUpdateDto": {
         "type": "object",
@@ -6168,26 +7131,28 @@ export const gorilaAPI = {
         },
         "required": [
           "name"
-        ]
+        ],
+        "title": "PortfolioUpdateDto"
       },
       "IssuerDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "Brazil's tax Id which uniquely identifies the issuer",
-            "example": "TBD"
+            "description": "Brazilian tax id (CNPJ) which uniquely identifies the issuer",
+            "example": "91272516000140"
           },
           "name": {
             "type": "string",
             "description": "Registered name of the issuer",
-            "example": "TBD"
+            "example": "GORILA DTVM"
           }
         },
         "required": [
           "id",
           "name"
-        ]
+        ],
+        "title": "IssuerDto"
       },
       "IssuerPageDto": {
         "type": "object",
@@ -6196,7 +7161,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -6209,86 +7174,8 @@ export const gorilaAPI = {
         "required": [
           "next",
           "records"
-        ]
-      },
-      "CorporateBondDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "TBD",
-            "example": "CRA0160000P"
-          },
-          "type": {
-            "type": "string",
-            "description": "TBD",
-            "example": "CRA",
-            "enum": [
-              "CDB",
-              "LCI",
-              "LCA",
-              "LC",
-              "LF",
-              "CRI",
-              "CRA",
-              "DEBENTURE"
-            ]
-          },
-          "issueDate": {
-            "type": "string",
-            "description": "TBD",
-            "example": "2016-05-05",
-            "format": "ISO8601"
-          },
-          "maturityDate": {
-            "type": "string",
-            "description": "TBD",
-            "example": "2022-05-16",
-            "format": "ISO8601"
-          },
-          "index": {
-            "type": "number",
-            "description": "TBD",
-            "example": "CDI",
-            "enum": []
-          },
-          "yield": {
-            "type": "number",
-            "description": "TBD",
-            "example": 0.98,
-            "format": "float"
-          }
-        },
-        "required": [
-          "id",
-          "type",
-          "issueDate",
-          "maturityDate",
-          "index",
-          "yield"
-        ]
-      },
-      "CorporateBondPageDto": {
-        "type": "object",
-        "properties": {
-          "next": {
-            "type": "string",
-            "description": "Next page URL",
-            "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
-          },
-          "records": {
-            "description": "Array of resulting records",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CorporateBondDto"
-            }
-          }
-        },
-        "required": [
-          "next",
-          "records"
-        ]
+        ],
+        "title": "IssuerPageDto"
       },
       "BrokerPageDto": {
         "type": "object",
@@ -6297,7 +7184,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -6310,34 +7197,51 @@ export const gorilaAPI = {
         "required": [
           "next",
           "records"
-        ]
+        ],
+        "title": "BrokerPageDto"
       },
       "BenchmarkDto": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "description": "TBD",
+            "type": "string",
+            "description": "Benchmark unique identification",
             "example": "DOW JONES IA",
-            "enum": []
+            "enum": [
+              "IPCA",
+              "CDI",
+              "IGPM",
+              "IFIX",
+              "USDBRL",
+              "IBOVESPA",
+              "SELIC",
+              "NASDAQ 100",
+              "NASDAQ COMP",
+              "S&P 500",
+              "DOW JONES IA",
+              "NASDAQ 100 BRL",
+              "NASDAQ COMP BRL",
+              "S&P 500 BRL",
+              "DOW JONES IA BRL"
+            ]
           },
           "name": {
-            "type": "number",
-            "description": "TBD",
-            "example": "Dow Jones Industrial Average ",
-            "enum": []
+            "type": "string",
+            "description": "Benchmark name",
+            "example": "Dow Jones Industrial Average"
           },
           "description": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD"
+            "description": "Benchmark description",
+            "example": "Stock index that tracks 30 of the largest U.S. companies"
           }
         },
         "required": [
           "id",
           "name",
           "description"
-        ]
+        ],
+        "title": "BenchmarkDto"
       },
       "BenchmarkPageDto": {
         "type": "object",
@@ -6346,7 +7250,7 @@ export const gorilaAPI = {
             "type": "string",
             "description": "Next page URL",
             "example": "https://core.gorila.com.br/portfolio/49f430fd-cbbc-4235-ad1b-fa232c271715/transaction?token=224d7310ba1b4e5396f2fa1097834165",
-            "format": "URL"
+            "format": "url"
           },
           "records": {
             "description": "Array of resulting records",
@@ -6359,62 +7263,78 @@ export const gorilaAPI = {
         "required": [
           "next",
           "records"
-        ]
+        ],
+        "title": "BenchmarkPageDto"
       },
-      "BenchmarkDataPointDto": {
+      "BenchmarkIntervalDto": {
         "type": "object",
         "properties": {
-          "referenceDate": {
-            "type": "string",
-            "description": "Reference date of current data point",
-            "example": "2021-01-01",
-            "format": "ISO8601"
-          },
           "value": {
             "type": "number",
             "description": "Profit value of the benchmark at current data point",
             "example": 0.009270539999999938,
             "format": "float"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date of interval",
+            "example": "2021-01-01",
+            "format": "iso8601"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date of interval",
+            "example": "2021-01-01",
+            "format": "iso8601"
           }
         },
         "required": [
-          "referenceDate",
-          "value"
-        ]
+          "value",
+          "startDate",
+          "endDate"
+        ],
+        "title": "BenchmarkIntervalDto"
       },
       "BenchmarkTimeseriesDto": {
         "type": "object",
         "properties": {
-          "id": {
+          "value": {
             "type": "number",
-            "description": "TBD",
-            "example": "DOW JONES IA",
-            "enum": []
+            "description": "Profit value of the benchmark at current data point",
+            "example": 0.009270539999999938,
+            "format": "float"
           },
-          "name": {
-            "type": "number",
-            "description": "TBD",
-            "example": "Dow Jones Industrial Average ",
-            "enum": []
-          },
-          "description": {
+          "referenceDate": {
             "type": "string",
-            "description": "TBD",
-            "example": "TBD"
+            "description": "Reference date of current data point",
+            "example": "2021-01-01",
+            "format": "iso8601"
+          }
+        },
+        "required": [
+          "value",
+          "referenceDate"
+        ],
+        "title": "BenchmarkTimeseriesDto"
+      },
+      "BenchmarkTimeDto": {
+        "type": "object",
+        "properties": {
+          "interval": {
+            "$ref": "#/components/schemas/BenchmarkIntervalDto"
           },
           "timeseries": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/BenchmarkDataPointDto"
+              "$ref": "#/components/schemas/BenchmarkTimeseriesDto"
             }
           }
         },
         "required": [
-          "id",
-          "name",
-          "description",
+          "interval",
           "timeseries"
-        ]
+        ],
+        "title": "BenchmarkTimeDto"
       }
     }
   },
@@ -6427,16 +7347,24 @@ export const gorilaAPI = {
         "Corporate Bonds",
         "Issuers",
         "Portfolios",
-        "Securities"
+        "Securities",
+        "Security Events"
+      ]
+    },
+    {
+      "name": "Security Resources",
+      "tags": [
+        "Asset Classes",
+        "Security Types"
       ]
     },
     {
       "name": "Portfolio Resources",
       "tags": [
-        "Net Asset Values",
+        "Net Asset Value",
         "Profit & Losses",
         "Positions",
-        "Security Events",
+        "Portfolio Security Events",
         "Transactions",
         "Time-Weighted Return"
       ]
@@ -6445,7 +7373,7 @@ export const gorilaAPI = {
       "name": "Position Resources",
       "tags": [
         "Average Prices",
-        "Internal Rates of Return",
+        "Internal Rate of Return",
         "Market Values",
         "Position Profit & Losses",
         "Position Time-Weighted Return",
@@ -6453,4 +7381,4 @@ export const gorilaAPI = {
       ]
     }
   ]
-}
+};

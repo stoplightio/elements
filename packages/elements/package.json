@@ -62,7 +62,7 @@
     ]
   },
   "dependencies": {
-    "@abbudao/elements-core": "^7.8.0",
+    "@abbudao/elements-core": "7.8.1",
     "@stoplight/http-spec": "^5.1.4",
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.33.0",

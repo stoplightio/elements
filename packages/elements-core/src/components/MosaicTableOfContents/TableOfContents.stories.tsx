@@ -18,7 +18,7 @@ const Template: Story<TableOfContentsProps> = args => (
     <TableOfContents {...args} />
   </Flex>
 );
-export const Playground = Template.bind({})
+export const Playground = Template.bind({});
 Playground.storyName = 'Todo API';
 Playground.args = {
   tree: [
@@ -121,8 +121,7 @@ Playground.args = {
   ],
 };
 
-
-export const NestedPlayground = Template.bind({})
+export const NestedPlayground = Template.bind({});
 NestedPlayground.storyName = 'Nested Todo API';
 NestedPlayground.args = {
   tree: [
@@ -179,55 +178,55 @@ NestedPlayground.args = {
       meta: 'patch',
     },
     {
-      title: "Accounting",
-      type: "tagGroup",
+      title: 'Accounting',
+      type: 'tagGroup',
       items: [
-          {
-              title: 'Users',
-              items: [
-                  {
-                      id: '/operations/get-users',
-                      slug: '/operations/get-users',
-                      title: 'Get User',
-                      type: 'http_operation',
-                      meta: 'get',
-                  },
-                  {
-                      id: '/operations/delete-users-userID',
-                      slug: '/operations/delete-users-userID',
-                      title: 'Delete User',
-                      type: 'http_operation',
-                      meta: 'delete',
-                  },
-                  {
-                      id: '/operations/post-users-userID',
-                      slug: '/operations/post-users-userID',
-                      title: 'Create User',
-                      type: 'http_operation',
-                      meta: 'post',
-                  },
-              ],
-          },
-          {
-              title: 'Billing',
-              items: [
-                  {
-                      id: '/operations/get-billing',
-                      slug: '/operations/get-billing',
-                      title: 'Get Billing information',
-                      type: 'http_operation',
-                      meta: 'get',
-                  },
-                  {
-                      id: '/operations/post-billing',
-                      slug: '/operations/post-billing',
-                      title: 'Pay Bill',
-                      type: 'http_operation',
-                      meta: 'post',
-                  },
-              ],
-          }
-      ]
+        {
+          title: 'Users',
+          items: [
+            {
+              id: '/operations/get-users',
+              slug: '/operations/get-users',
+              title: 'Get User',
+              type: 'http_operation',
+              meta: 'get',
+            },
+            {
+              id: '/operations/delete-users-userID',
+              slug: '/operations/delete-users-userID',
+              title: 'Delete User',
+              type: 'http_operation',
+              meta: 'delete',
+            },
+            {
+              id: '/operations/post-users-userID',
+              slug: '/operations/post-users-userID',
+              title: 'Create User',
+              type: 'http_operation',
+              meta: 'post',
+            },
+          ],
+        },
+        {
+          title: 'Billing',
+          items: [
+            {
+              id: '/operations/get-billing',
+              slug: '/operations/get-billing',
+              title: 'Get Billing information',
+              type: 'http_operation',
+              meta: 'get',
+            },
+            {
+              id: '/operations/post-billing',
+              slug: '/operations/post-billing',
+              title: 'Pay Bill',
+              type: 'http_operation',
+              meta: 'post',
+            },
+          ],
+        },
+      ],
     },
     {
       title: 'Schemas',
