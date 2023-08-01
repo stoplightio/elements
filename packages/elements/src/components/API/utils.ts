@@ -3,25 +3,7 @@ import { NodeType } from '@stoplight/types';
 import { defaults, isEmpty } from 'lodash';
 
 import { OperationNode, ServiceChildNode, ServiceNode } from '../../utils/oas/types';
-
-export type TagGroup = { title: string; items: OperationNode[] };
-
-type XTagGroup = {
-  name: string;
-  tags: string[];
-};
-
-type XTagGroupExtension = Record<string, XTagGroup>;
-
-type DocumentationOverride = {
-  [iid: string]: string;
-};
-
-interface ComputeAPITreeConfig {
-  hideSchemas?: boolean;
-  hideInternal?: boolean;
-  customDocs?: DocumentationOverride;
-}
+import type { ComputeAPITreeConfig, TagGroup, XTagGroupExtension } from './types';
 
 const defaultComputerAPITreeConfig: ComputeAPITreeConfig = {
   hideSchemas: false,

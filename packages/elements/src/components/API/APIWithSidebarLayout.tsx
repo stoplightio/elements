@@ -11,7 +11,8 @@ import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 
-import { ServiceNode } from '../../utils/oas/types';
+import type { ServiceNode } from '../../utils/oas/types';
+import type { DocumentationOverride } from './types';
 import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
 
 type SidebarLayoutProps = {
@@ -24,6 +25,7 @@ type SidebarLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
+  customDocs?: DocumentationOverride;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
