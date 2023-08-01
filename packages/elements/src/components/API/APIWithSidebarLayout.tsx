@@ -38,11 +38,12 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  customDocs,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
-    () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
-    [serviceNode, hideSchemas, hideInternal],
+    () => computeAPITree(serviceNode, { hideSchemas, hideInternal, customDocs }),
+    [serviceNode, hideSchemas, hideInternal, customDocs],
   );
   const location = useLocation();
   const { pathname } = location;

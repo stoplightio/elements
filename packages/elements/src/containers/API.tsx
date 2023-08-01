@@ -88,6 +88,10 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   tryItCorsProxy?: string;
+  /**
+   * Allows overriding the default documentation, by passing an object with the operationId as key and the documentation as value.
+   */
+  customDocs?: Record<string, string>;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -105,6 +109,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideExport,
     tryItCredentialsPolicy,
     tryItCorsProxy,
+    customDocs,
   } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
@@ -181,6 +186,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          customDocs={customDocs}
         />
       )}
     </InlineRefResolverProvider>
