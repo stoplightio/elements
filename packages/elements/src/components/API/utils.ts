@@ -13,15 +13,21 @@ type XTagGroup = {
 
 type XTagGroupExtension = Record<string, XTagGroup>;
 
+type DocumentationOverride = {
+  [iid: string]: string;
+};
+
 interface ComputeAPITreeConfig {
   hideSchemas?: boolean;
   hideInternal?: boolean;
+  customDocs?: DocumentationOverride;
 }
 
-const defaultComputerAPITreeConfig = {
+const defaultComputerAPITreeConfig: ComputeAPITreeConfig = {
   hideSchemas: false,
   hideInternal: false,
 };
+
 export const groupByTagId = (serviceNode: ServiceNode) => {
   const groupsByTagId: { [tagId: string]: TagGroup } = {};
 
@@ -87,11 +93,26 @@ const toLeafNode = (operationNode: OperationNode) => ({
   meta: operationNode.data.method,
 });
 
+const toNodeWithCustomDescription = (node: ServiceChildNode, config: ComputeAPITreeConfig): ServiceChildNode => {
+  if (node.type === NodeType.HttpOperation) {
+    const customDocs = config['customDocs'];
+    // Type definitions from JSON schema doesn't contain this type
+    // but stoplight is always injecting it
+    const iid = node.data['iid'] as string;
+    if (customDocs && customDocs[iid]) {
+      node.data['description'] = customDocs[iid];
+    }
+  }
+  return node;
+};
+
 const computeSimpleAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
-  const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
   const tree: TableOfContentsItem[] = [];
 
-  const operationNodes = serviceNode.children.filter(node => node.type === NodeType.HttpOperation);
+  let operationNodes = serviceNode.children
+    .filter(node => node.type === NodeType.HttpOperation)
+    .map(node => toNodeWithCustomDescription(node, config));
+
   if (operationNodes.length) {
     tree.push({
       title: 'Endpoints',
@@ -101,7 +122,7 @@ const computeSimpleAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeCo
 
     // Show ungroupped operations above tag groups
     ungrouped.forEach(operationNode => {
-      if (mergedConfig.hideInternal && operationNode.data.internal) {
+      if (config.hideInternal && operationNode.data.internal) {
         return;
       }
       tree.push(toLeafNode(operationNode));
@@ -109,7 +130,7 @@ const computeSimpleAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeCo
 
     groups.forEach(group => {
       const items = group.items.flatMap(operationNode => {
-        if (mergedConfig.hideInternal && operationNode.data.internal) {
+        if (config.hideInternal && operationNode.data.internal) {
           return [];
         }
         return toLeafNode(operationNode);
@@ -150,11 +171,12 @@ const createTagToGroupReference = (tagGroups: XTagGroupExtension): Record<string
   return tagToTagGroup;
 };
 
-const computeGroupedAPITree = (serviceNode: ServiceNode): TableOfContentsTagGroups[] => {
+const computeGroupedAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig): TableOfContentsTagGroups[] => {
   const groupTree: Record<string, TagGroup[]> = {};
   const xTagGroups: XTagGroupExtension = getTagGroups(serviceNode) ?? {};
   const tagToGroupRef = createTagToGroupReference(xTagGroups);
   // All your resources should be tagged when using x-tagGroups
+  serviceNode.children = serviceNode.children.map(node => toNodeWithCustomDescription(node, config));
   const groups = groupByTagId(serviceNode);
 
   Object.keys(groups).forEach(k => {
@@ -220,7 +242,7 @@ const sortTags = (tree: any) => {
   };
 
   for (let node of tree) {
-    node.items.sort(compareByTitle(weights));
+    node?.items?.sort(compareByTitle(weights));
   }
 
   return tree;
@@ -239,7 +261,11 @@ const sortTree = (tree: any) => {
 
 export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
   const isUsingTagGroups = !isEmpty(getTagGroups(serviceNode));
-  const tree = isUsingTagGroups ? computeGroupedAPITree(serviceNode) : computeSimpleAPITree(serviceNode, config);
+  const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
+
+  const tree = isUsingTagGroups
+    ? computeGroupedAPITree(serviceNode, mergedConfig)
+    : computeSimpleAPITree(serviceNode, mergedConfig);
 
   const sortedTree = sortTags(sortTree(tree));
   return [overviewNode, ...sortedTree];
