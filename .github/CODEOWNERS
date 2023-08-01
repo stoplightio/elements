@@ -2,4 +2,4 @@
 # The order matters with a later match taking precedence,
 # Default Code Owners will be your maintainer team. 
 # Set a review when someone opens a pull request.
-*       @jpmorganchase/<teamreponame>_maintainer
+*       @jpmorganchase/payments_maintainer
