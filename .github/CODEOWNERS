@@ -1,7 +1,5 @@
-# https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
-#
-# These owners will be the default owners for everything in
-# the repo. Unless a later match takes precedence,
-# @stoplightio/elements-owners will be requested for
-# review when someone opens a pull request.
-*       @stoplightio/elements-owners
+# Each line is a file pattern followed by one or more owners.
+# The order matters with a later match taking precedence,
+# Default Code Owners will be your maintainer team. 
+# Set a review when someone opens a pull request.
+*       @jpmorganchase/<teamreponame>_maintainer
