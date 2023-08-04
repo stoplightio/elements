@@ -116,6 +116,7 @@ interface BaseDocsProps {
   };
 
   nodeHasChanged?: NodeHasChangedFn<React.ReactNode>;
+  tryItOutDefaultServer?: string;
 }
 
 export interface DocsProps extends BaseDocsProps {
