@@ -28,7 +28,6 @@ import {
   ResponseState,
   TryItResponse,
 } from './Response/Response';
-import { ServersDropdown } from './Servers/ServersDropdown';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -60,6 +59,7 @@ export interface TryItProps {
    */
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
+  tryItOutDefaultServer?: string;
 }
 
 /**
@@ -77,6 +77,7 @@ export const TryIt: React.FC<TryItProps> = ({
   embeddedInMd = false,
   tryItCredentialsPolicy,
   corsProxy,
+  tryItOutDefaultServer,
 }) => {
   TryIt.displayName = 'TryIt';
   const isDark = useThemeIsDark();
@@ -121,7 +122,7 @@ export const TryIt: React.FC<TryItProps> = ({
       }, {});
 
   React.useEffect(() => {
-    const currentUrl = chosenServer?.url;
+    const currentUrl = tryItOutDefaultServer ? tryItOutDefaultServer : chosenServer?.url;
 
     // simple attempt to preserve / sync up active server if the URLs are the same between re-renders / navigation
     const exists = currentUrl && servers.find(s => s.url === currentUrl);
@@ -130,7 +131,7 @@ export const TryIt: React.FC<TryItProps> = ({
     } else if (exists !== chosenServer) {
       setChosenServer(exists);
     }
-  }, [servers, firstServer, chosenServer, setChosenServer]);
+  }, [servers, firstServer, chosenServer, setChosenServer, tryItOutDefaultServer]);
 
   React.useEffect(() => {
     let isMounted = true;
@@ -264,8 +265,6 @@ export const TryIt: React.FC<TryItProps> = ({
           <Button appearance="primary" loading={loading} disabled={loading} onPress={handleSendRequest} size="sm">
             Send API Request
           </Button>
-
-          {servers.length > 1 && <ServersDropdown servers={servers} />}
 
           {isMockingEnabled && (
             <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
