@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "7.7.19",
+  "version": "7.7.20",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
