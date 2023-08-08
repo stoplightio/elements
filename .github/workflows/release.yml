@@ -22,5 +22,4 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_JPMC_PUBLISHER }}' > .npmrc
       - run: yarn
-      - run: yarn run version
       - run: yarn run release
