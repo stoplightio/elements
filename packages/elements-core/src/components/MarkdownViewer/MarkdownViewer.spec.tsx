@@ -4,6 +4,7 @@ import { NodeType } from '@stoplight/types';
 import { render, screen } from '@testing-library/react';
 import * as React from 'react';
 
+import { schemaWithRefs } from '../../__fixtures__/articles/schema-with-refs';
 import { withPersistenceBoundary } from '../../context/Persistence';
 import { IntegrationKind } from '../../types';
 import { MarkdownViewer } from '.';
@@ -148,6 +149,20 @@ describe('MarkdownViewer', () => {
       // no default
       expect(screen.getByText('limit')).toBeInTheDocument();
       expect(screen.getByLabelText('limit')).toHaveProperty('value', '');
+
+      unmount();
+    });
+
+    it('Should resolve refs in schema', () => {
+      const MarkdownViewerWithTryIt = withPersistenceBoundary(MarkdownViewer);
+
+      const { unmount } = render(
+        <MarkdownComponentsProvider value={{ code: CodeComponent }}>
+          <MarkdownViewerWithTryIt markdown={schemaWithRefs} />
+        </MarkdownComponentsProvider>,
+      );
+
+      expect(screen.getByText(/Inner referenced object/)).toBeInTheDocument();
 
       unmount();
     });
