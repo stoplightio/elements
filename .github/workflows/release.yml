@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/**'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: '16.10.0'
+          registry-url: https://registry.npmjs.org/
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: yarn changeset publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
