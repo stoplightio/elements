@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "author": "",
+  "homepage": "https://github.com/jpmorganchase/elemental",
   "repository": {
     "type": "git",
     "url": "git@github.com:jpmorganchase/elemental"
@@ -120,7 +121,5 @@
       "@commitlint/config-conventional"
     ]
   },
-  "dependencies": {
-    "@changesets/cli": "^2.26.2"
-  }
+  "dependencies": {}
 }
