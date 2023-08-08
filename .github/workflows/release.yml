@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
+      - run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_JPMC_PUBLISHER }}' > .npmrc
       - run: yarn
-      - run: yarn npm publish --dry-run
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
+      - run: yarn run version
+      - run: yarn run release
