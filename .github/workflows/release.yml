@@ -2,9 +2,7 @@ name: Publish Package to npmjs
 on:
   push:
     branches:
-      - main
       - 'release/**'
-      - defaultTryItoutserver
 
 permissions:
   contents: write
@@ -23,6 +21,7 @@ jobs:
           scope: '@jpmorganchase'
       - run: |
           yarn
+          yarn run version
           yarn run release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
