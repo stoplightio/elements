@@ -20,8 +20,9 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: yarn
+          scope: '@jpmorganchase'
       - run: |
+          yarn
           cd packages/elements-core
           yarn
           yarn npm publish
