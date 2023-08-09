@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "private": false,
+  "private": true,
   "author": "",
   "homepage": "https://github.com/jpmorganchase/elemental",
   "repository": {
