@@ -20,10 +20,10 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_JPMC_PUBLISHER }}' > .npmrc
       - run: yarn
       - run: |
-          ls
           cd packages/elements-core
           yarn
           yarn npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
