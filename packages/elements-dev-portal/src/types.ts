@@ -1,4 +1,4 @@
-import { TableOfContentsItem } from '@stoplight/elements-core';
+import { TableOfContentsItem } from '@jpmorganchase/elemental-core';
 
 export type Branch = {
   id: number;

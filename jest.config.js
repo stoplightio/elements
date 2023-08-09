@@ -7,6 +7,6 @@ module.exports = {
   coveragePathIgnorePatterns: ['__tests__', '__fixtures__', '__stories__'],
   testTimeout: 10000,
   moduleNameMapper: {
-    '^@stoplight/elements-core$': '<rootDir>/../elements-core/src',
+    '^@jpmorganchase/elemental-core$': '<rootDir>/../elements-core/src',
   },
 };

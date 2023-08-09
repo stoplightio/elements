@@ -1,4 +1,4 @@
-import { createElementClass } from '@stoplight/elements-core';
+import { createElementClass } from '@jpmorganchase/elemental-core';
 
 import { API } from '../index';
 

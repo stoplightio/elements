@@ -6,7 +6,7 @@ import {
   withPersistenceBoundary,
   withQueryClientProvider,
   withStyles,
-} from '@stoplight/elements-core';
+} from '@jpmorganchase/elemental-core';
 import { Box, Flex, Icon, Input, ListBox, ListBoxItem, Modal, ModalProps } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';

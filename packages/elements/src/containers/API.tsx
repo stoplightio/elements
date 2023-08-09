@@ -9,7 +9,7 @@ import {
   withQueryClientProvider,
   withRouter,
   withStyles,
-} from '@stoplight/elements-core';
+} from '@jpmorganchase/elemental-core';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';

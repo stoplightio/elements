@@ -1,4 +1,4 @@
-import { isHttpOperation, isHttpService, TableOfContentsItem } from '@stoplight/elements-core';
+import { isHttpOperation, isHttpService, TableOfContentsItem } from '@jpmorganchase/elemental-core';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
