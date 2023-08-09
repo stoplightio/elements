@@ -1,6 +1,7 @@
 {
   "name": "@jpmorganchase/elemental",
   "version": "0.0.1",
+  "private":"false",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
