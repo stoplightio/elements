@@ -22,7 +22,15 @@ import { Responses } from './Responses';
 export type HttpOperationProps = DocsComponentProps<IHttpOperation> & { isCallback?: boolean };
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy, isCallback }) => {
+  ({
+    className,
+    data: unresolvedData,
+    layoutOptions,
+    tryItCredentialsPolicy,
+    tryItCorsProxy,
+    isCallback,
+    tryItOutDefaultServer,
+  }) => {
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
 
@@ -84,6 +92,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         tryItCredentialsPolicy={tryItCredentialsPolicy}
         mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
         corsProxy={tryItCorsProxy}
+        tryItOutDefaultServer={tryItOutDefaultServer}
       />
     );
 

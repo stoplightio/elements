@@ -1,0 +1,27 @@
+name: Publish Package to npmjs
+on:
+  push:
+    branches:
+      - 'release/**'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@jpmorganchase'
+      - run: |
+          yarn
+          yarn run version
+          yarn run release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}

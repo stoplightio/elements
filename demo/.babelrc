@@ -5,7 +5,7 @@
       "module-resolver",
       {
         "alias": {
-          "@stoplight/elements": "../packages/elements/src"
+          "@jpmorganchase/elemental": "../packages/elements/src"
         }
       }
     ],

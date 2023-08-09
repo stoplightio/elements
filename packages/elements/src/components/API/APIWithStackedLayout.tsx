@@ -5,7 +5,7 @@ import {
   HttpMethodColors,
   ParsedDocs,
   TryItWithRequestSamples,
-} from '@stoplight/elements-core';
+} from '@jpmorganchase/elemental-core';
 import { Box, Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
@@ -24,6 +24,7 @@ type StackedLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
+  tryItOutDefaultServer?: string;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode) => {
@@ -47,6 +48,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  tryItOutDefaultServer,
 }) => {
   const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
@@ -64,6 +66,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
             layoutOptions={{ showPoweredByLink: true, hideExport }}
             exportProps={exportProps}
             tryItCredentialsPolicy={tryItCredentialsPolicy}
+            tryItOutDefaultServer={tryItOutDefaultServer}
           />
         </Box>
 

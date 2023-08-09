@@ -5,7 +5,7 @@ import {
   PoweredByLink,
   SidebarLayout,
   TableOfContents,
-} from '@stoplight/elements-core';
+} from '@jpmorganchase/elemental-core';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
@@ -24,6 +24,7 @@ type SidebarLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
+  tryItOutDefaultServer?: string;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -36,6 +37,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  tryItOutDefaultServer,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -101,6 +103,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          tryItOutDefaultServer={tryItOutDefaultServer}
         />
       )}
     </SidebarLayout>

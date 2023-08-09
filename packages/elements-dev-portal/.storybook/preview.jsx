@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
 
-import { PersistenceContextProvider, Styled } from '@stoplight/elements-core';
+import { PersistenceContextProvider, Styled } from '@jpmorganchase/elemental-core';
 import { DevPortalProvider } from '../src/components/DevPortalProvider';
 
 export * from '../../../.storybook/preview';

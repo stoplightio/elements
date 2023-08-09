@@ -1,6 +1,6 @@
 {
-  "name": "@stoplight/elements",
-  "version": "7.7.18",
+  "name": "@jpmorganchase/elemental",
+  "version": "2.1.0",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -8,12 +8,11 @@
     "src/web-components/**",
     "**/*.css"
   ],
-  "homepage": "https://github.com/stoplightio/elements",
-  "bugs": "https://github.com/stoplightio/elements/issues",
-  "author": "Stoplight <support@stoplight.io>",
+  "homepage": "https://github.com/jpmorganchase/elemental",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stoplightio/elements"
+    "url": "git@github.com:jpmorganchase/elemental.git",
+    "directory": "packages/elements"
   },
   "license": "Apache-2.0",
   "type": "commonjs",
@@ -62,7 +61,7 @@
     ]
   },
   "dependencies": {
-    "@stoplight/elements-core": "~7.7.18",
+    "@jpmorganchase/elemental-core": "^1.0.0",
     "@stoplight/http-spec": "^5.1.4",
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.33.0",
@@ -103,7 +102,8 @@
     "ts-loader": "^9.2.8"
   },
   "publishConfig": {
-    "directory": "dist"
+    "directory": "dist",
+    "access": "public"
   },
   "release": {
     "extends": "@stoplight/scripts/release"

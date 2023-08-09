@@ -1,4 +1,4 @@
-import '@stoplight/elements-core/styles.css';
+import '@jpmorganchase/elemental-core/styles.css';
 
 import { subscribeTheme } from '@stoplight/mosaic';
 import React from 'react';

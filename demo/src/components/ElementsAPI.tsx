@@ -1,6 +1,6 @@
-import '@stoplight/elements-core/styles.css';
+import '@jpmorganchase/elemental-core/styles.css';
 
-import { API } from '@stoplight/elements';
+import { API } from '@jpmorganchase/elemental';
 import { Box } from '@stoplight/mosaic';
 import React, { useContext } from 'react';
 

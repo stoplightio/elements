@@ -1,12 +1,11 @@
 {
   "name": "root",
   "private": true,
-  "homepage": "https://github.com/stoplightio/elements",
-  "bugs": "https://github.com/stoplightio/elements/issues",
-  "author": "Stoplight <support@stoplight.io>",
+  "author": "",
+  "homepage": "https://github.com/jpmorganchase/elemental",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stoplightio/elements"
+    "url": "git@github.com:jpmorganchase/elemental"
   },
   "license": "Apache-2.0",
   "workspaces": [
@@ -46,7 +45,7 @@
     "jest-environment-jsdom": "^26.3.1",
     "jest-environment-jsdom-global": "^4.0.0",
     "jest-junit": "12.2.0",
-    "lerna": "^3.22.1",
+    "lerna": "^6.1.0",
     "postcss": "8.3.5",
     "postcss-cli": "8.3.1",
     "postcss-import": "14.0.2",
@@ -66,19 +65,19 @@
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",
-    "elements": "yarn workspace @stoplight/elements",
-    "elements-core": "yarn workspace @stoplight/elements-core",
-    "elements-dev-portal": "yarn workspace @stoplight/elements-dev-portal",
-    "build": "yarn workspace @stoplight/elements-core build && concurrently -n elements,dev-portal \"yarn workspace @stoplight/elements build\" \"yarn workspace @stoplight/elements-dev-portal build\"",
-    "build.docs": "yarn workspace @stoplight/elements build.docs",
-    "postbuild": "yarn workspace @stoplight/elements test.packaging && yarn workspace @stoplight/elements-core test.packaging && yarn workspace @stoplight/elements-dev-portal test.packaging",
+    "elements": "yarn workspace @jpmorganchase/elemental",
+    "elements-core": "yarn workspace @jpmorganchase/elemental-core",
+    "elements-dev-portal": "yarn workspace @jpmorganchase/elemental-dev-portal",
+    "build": "yarn workspace @jpmorganchase/elemental-core build && concurrently -n elements,dev-portal \"yarn workspace @jpmorganchase/elemental build\" \"yarn workspace @jpmorganchase/elemental-dev-portal build\"",
+    "build.docs": "yarn workspace @jpmorganchase/elemental build.docs",
+    "postbuild": "yarn workspace @jpmorganchase/elemental test.packaging && yarn workspace @jpmorganchase/elemental-core test.packaging && yarn workspace @jpmorganchase/elemental-dev-portal test.packaging",
     "lint": "eslint '{packages,examples}/*/src/**/*.{ts,tsx}'",
-    "version": "lerna version --no-push",
-    "release": "lerna publish from-package --yes --registry https://registry.npmjs.org",
-    "release.docs": "yarn workspace @stoplight/elements release.docs",
+    "version": "lerna version --yes",
+    "release": "lerna publish from-package --no-private --yes --registry https://registry.npmjs.org",
+    "release.docs": "yarn workspace @jpmorganchase/elemental release.docs",
     "type-check": "yarn workspaces run type-check",
-    "test": "yarn workspace @stoplight/elements test && yarn workspace @stoplight/elements-core test && yarn workspace @stoplight/elements-dev-portal test --passWithNoTests",
-    "test.prod": "yarn workspace @stoplight/elements test.prod && yarn workspace @stoplight/elements-core test.prod && yarn workspace @stoplight/elements-dev-portal test.prod --passWithNoTests",
+    "test": "yarn workspace @jpmorganchase/elemental test && yarn workspace @jpmorganchase/elemental-core test && yarn workspace @jpmorganchase/elemental-dev-portal test --passWithNoTests",
+    "test.prod": "yarn workspace @jpmorganchase/elemental test.prod && yarn workspace @jpmorganchase/elemental-core test.prod && yarn workspace @jpmorganchase/elemental-dev-portal test.prod --passWithNoTests",
     "prepublishOnly": "yarn build",
     "/// examples ///": "",
     "copy:angular": "mkdir examples-dev ; cp -a -v ./examples/angular ./examples-dev ; sh ./use-local-elements.sh angular",
@@ -121,5 +120,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  }
+  },
+  "dependencies": {}
 }

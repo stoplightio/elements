@@ -1,17 +1,17 @@
 {
-  "name": "@stoplight/elements-core",
-  "version": "7.7.18",
+  "name": "@jpmorganchase/elemental-core",
+  "homepage": "https://github.com/jpmorganchase/elemental",
+  "version": "1.0.0",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
     "**/*.css"
   ],
-  "homepage": "https://github.com/stoplightio/elements",
-  "bugs": "https://github.com/stoplightio/elements/issues",
-  "author": "Stoplight <support@stoplight.io>",
+  "author": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stoplightio/elements"
+    "url": "git@github.com:jpmorganchase/elemental.git",
+    "directory": "packages/elements-core"
   },
   "license": "Apache-2.0",
   "type": "commonjs",
@@ -116,7 +116,8 @@
     "style-loader": "^2.0.0"
   },
   "publishConfig": {
-    "directory": "dist"
+    "directory": "dist",
+    "access": "public"
   },
   "release": {
     "extends": "@stoplight/scripts/release"
