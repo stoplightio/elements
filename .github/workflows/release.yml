@@ -25,9 +25,9 @@ jobs:
           yarn
           cd packages/elements
           yarn
-          yarn npm publish
-          cd ../packages/elements-dev-portal
+          yarn npm publish --access=public
+          cd ../elements-dev-portal
           yarn
-          yarn npm publish
+          yarn npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
