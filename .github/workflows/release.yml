@@ -23,10 +23,7 @@ jobs:
           scope: '@jpmorganchase'
       - run: |
           yarn
-          cd packages/elements
-          yarn
-          yarn npm publish --access=public
-          cd ../elements-dev-portal
+          cd packages/elements-dev-portal
           yarn
           yarn npm publish --access=public
         env:
