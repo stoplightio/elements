@@ -25,11 +25,9 @@ jobs:
           yarn
           cd packages/elements
           yarn
-          yarn build
           yarn npm publish
           cd ../packages/elements-dev-portal
           yarn
-          yarn build
           yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
