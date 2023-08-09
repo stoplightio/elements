@@ -116,7 +116,8 @@
     "style-loader": "^2.0.0"
   },
   "publishConfig": {
-    "directory": "dist"
+    "directory": "dist",
+    "access": "public"
   },
   "release": {
     "extends": "@stoplight/scripts/release"

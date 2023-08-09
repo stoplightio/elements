@@ -73,7 +73,7 @@
     "postbuild": "yarn workspace @jpmorganchase/elemental test.packaging && yarn workspace @jpmorganchase/elemental-core test.packaging && yarn workspace @jpmorganchase/elemental-dev-portal test.packaging",
     "lint": "eslint '{packages,examples}/*/src/**/*.{ts,tsx}'",
     "version": "lerna version --no-push",
-    "release": "lerna publish from-package --yes --registry https://registry.npmjs.org --no-private",
+    "release": "lerna publish from-package --yes --registry https://registry.npmjs.org",
     "release.docs": "yarn workspace @jpmorganchase/elemental release.docs",
     "type-check": "yarn workspaces run type-check",
     "test": "yarn workspace @jpmorganchase/elemental test && yarn workspace @jpmorganchase/elemental-core test && yarn workspace @jpmorganchase/elemental-dev-portal test --passWithNoTests",
