@@ -23,6 +23,6 @@ jobs:
           scope: '@jpmorganchase'
       - run: |
           yarn
-          yarn npm release
+          yarn run release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
