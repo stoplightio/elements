@@ -23,8 +23,6 @@ jobs:
           scope: '@jpmorganchase'
       - run: |
           yarn
-          cd packages/elements-dev-portal
-          yarn
-          yarn npm publish --access=public
+          yarn npm release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
