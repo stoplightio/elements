@@ -26,4 +26,4 @@ jobs:
           ls
           cd packages/elements-core
           yarn
-          yarn run publish
+          yarn npm publish
