@@ -23,6 +23,7 @@ jobs:
       - run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_JPMC_PUBLISHER }}' > .npmrc
       - run: yarn
       - run: |
-          cd packages/elemental-core
+          ls
+          cd packages/elements-core
           yarn
           yarn run publish
