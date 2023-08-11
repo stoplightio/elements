@@ -144,6 +144,7 @@ export const TryIt: React.FC<TryItProps> = ({
         ...(isMockingEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
         corsProxy,
+        credentials: tryItCredentialsPolicy
       }).then(request => {
         if (isMounted) {
           if (onRequestChange) {
@@ -171,6 +172,7 @@ export const TryIt: React.FC<TryItProps> = ({
     mockingOptions,
     chosenServer,
     corsProxy,
+    tryItCredentialsPolicy,
     embeddedInMd,
   ]);
 

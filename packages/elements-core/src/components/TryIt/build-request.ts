@@ -240,6 +240,7 @@ export async function buildHarRequest({
   mockData,
   chosenServer,
   corsProxy,
+  credentials
 }: BuildRequestInput): Promise<HarRequest> {
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
 
@@ -297,7 +298,7 @@ export async function buildHarRequest({
     method: httpOperation.method.toUpperCase(),
     url: urlObject.href,
     httpVersion: 'HTTP/1.1',
-    cookies: [],
+    cookies: [credentials],
     headers: headerParamsWithAuth,
     queryString: queryParamsWithAuth,
     postData: postData,
@@ -326,3 +327,4 @@ export function getAcceptedMimeTypes(httpOperation: IHttpOperation): string[] {
     ),
   );
 }
+`
