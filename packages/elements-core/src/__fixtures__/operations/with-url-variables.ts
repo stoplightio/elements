@@ -20,6 +20,7 @@ export const operationWithUrlVariables: IHttpOperation = {
       variables: {
         protocol: {
           default: 'ftp',
+          enum: ['https', 'http', 'ftp'],
         },
         namespace: {
           default: 'default-namespace',

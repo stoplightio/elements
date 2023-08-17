@@ -1,7 +1,9 @@
-import type { IServer } from '@stoplight/types';
+import type { INodeVariable, IServer } from '@stoplight/types';
 import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
+
+export type ServerVariable = INodeVariable & { name: string };
 
 type ServerWithOptionalUrl = Omit<IServer, 'url'> & { url: string | null } & { description: string };
 
@@ -31,6 +33,25 @@ export const getServersToDisplay = (originalServers: IServer[], mockUrl?: string
   }
 
   return servers;
+};
+
+export const getServerVariables = (server?: IServer | null): ServerVariable[] => {
+  return Object.entries(server?.variables ?? {}).map(([key, value]) => ({
+    name: key,
+    default: value.default,
+    description: value.description,
+    enum: value.enum,
+  }));
+};
+
+export const getServerVariableDefaults = (server: IServer): Record<string, string> => {
+  const o = {};
+  if (server.variables) {
+    for (const key in server.variables) {
+      o[key] = server.variables[key].default;
+    }
+  }
+  return o;
 };
 
 export const getServerUrlWithDefaultValues = (server: IServer): string | null => {

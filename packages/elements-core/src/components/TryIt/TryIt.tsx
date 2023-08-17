@@ -5,9 +5,8 @@ import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
-import { getServersToDisplay } from '../../utils/http-spec/IServer';
+import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/IServer';
 import { RequestSamples } from '../RequestSamples';
-import { chosenServerAtom } from '.';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
@@ -15,6 +14,7 @@ import { useBodyParameterState } from './Body/request-body-utils';
 import { RequestBody } from './Body/RequestBody';
 import { useTextRequestBodyState } from './Body/useTextRequestBodyState';
 import { buildFetchRequest, buildHarRequest } from './build-request';
+import { chosenServerAtom } from './chosenServer';
 import { getMockData } from './Mocking/mocking-utils';
 import { MockingButton } from './Mocking/MockingButton';
 import { useMockingOptions } from './Mocking/useMockingOptions';
@@ -29,6 +29,8 @@ import {
   TryItResponse,
 } from './Response/Response';
 import { ServersDropdown } from './Servers/ServersDropdown';
+import { ServerVariables } from './Servers/ServerVariables';
+import { useServerVariables } from './Servers/useServerVariables';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -106,6 +108,8 @@ export const TryIt: React.FC<TryItProps> = ({
   }, [httpOperation.servers, mockUrl]);
   const firstServer = servers[0] || null;
   const [chosenServer, setChosenServer] = useAtom(chosenServerAtom);
+  const serverVariables = getServerVariables(chosenServer);
+  const { serverVariables: serverVariableValues, updateServerVariableValue } = useServerVariables();
   const isMockingEnabled = mockUrl && chosenServer?.url === mockUrl;
 
   const hasRequiredButEmptyParameters = allParameters.some(
@@ -233,6 +237,15 @@ export const TryIt: React.FC<TryItProps> = ({
           value={operationAuthValue}
         />
       ) : null}
+
+      {serverVariables.length > 0 && (
+        <ServerVariables
+          variables={serverVariables}
+          values={serverVariableValues}
+          onChangeValue={updateServerVariableValue}
+          validate={validateParameters}
+        />
+      )}
 
       {allParameters.length > 0 && (
         <OperationParameters
