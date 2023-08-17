@@ -291,34 +291,58 @@ describe('HttpService', () => {
   });
 });
 
-test('useSplitUrl hook should correctly distinguish variables from static parts', () => {
-  let { result } = renderHook(() => useSplitUrl('https://{api}.stoplight.io:{port}'));
+describe('useSplitUrl hook', () => {
+  it('should correctly distinguish variables from static parts', () => {
+    let { result } = renderHook(() => useSplitUrl('https://{api}.stoplight.io:{port}'));
 
-  expect(result.current).toStrictEqual([
-    { kind: 'static', value: 'https://' },
-    { kind: 'variable', value: '{api}' },
-    { kind: 'static', value: '.stoplight.io:' },
-    { kind: 'variable', value: '{port}' },
-  ]);
+    expect(result.current).toStrictEqual([
+      { kind: 'static', value: 'https://' },
+      { kind: 'variable', value: '{api}' },
+      { kind: 'static', value: '.stoplight.io:' },
+      { kind: 'variable', value: '{port}' },
+    ]);
 
-  ({ result } = renderHook(() => useSplitUrl('{protocol}://stoplight.io:{port}')));
+    ({ result } = renderHook(() => useSplitUrl('{protocol}://stoplight.io:{port}')));
 
-  expect(result.current).toStrictEqual([
-    { kind: 'variable', value: '{protocol}' },
-    { kind: 'static', value: '://stoplight.io:' },
-    { kind: 'variable', value: '{port}' },
-  ]);
+    expect(result.current).toStrictEqual([
+      { kind: 'variable', value: '{protocol}' },
+      { kind: 'static', value: '://stoplight.io:' },
+      { kind: 'variable', value: '{port}' },
+    ]);
 
-  ({ result } = renderHook(() => useSplitUrl('https://{version}{username}.stoplight.io')));
+    ({ result } = renderHook(() => useSplitUrl('https://{version}{username}.stoplight.io')));
 
-  expect(result.current).toStrictEqual([
-    { kind: 'static', value: 'https://' },
-    { kind: 'variable', value: '{version}' },
-    { kind: 'variable', value: '{username}' },
-    { kind: 'static', value: '.stoplight.io' },
-  ]);
+    expect(result.current).toStrictEqual([
+      { kind: 'static', value: 'https://' },
+      { kind: 'variable', value: '{version}' },
+      { kind: 'variable', value: '{username}' },
+      { kind: 'static', value: '.stoplight.io' },
+    ]);
 
-  ({ result } = renderHook(() => useSplitUrl('https://www.stoplight.io')));
+    ({ result } = renderHook(() => useSplitUrl('https://www.stoplight.io')));
 
-  expect(result.current).toStrictEqual([{ kind: 'static', value: 'https://www.stoplight.io' }]);
+    expect(result.current).toStrictEqual([{ kind: 'static', value: 'https://www.stoplight.io' }]);
+  });
+
+  it('should gracefully handle invalid input', () => {
+    let { result } = renderHook(() => useSplitUrl('https://{{{{}'));
+
+    expect(result.current).toStrictEqual([{ kind: 'static', value: 'https://{{{{}' }]);
+
+    ({ result } = renderHook(() => useSplitUrl('{protocol://stoplight.io:{api}')));
+
+    expect(result.current).toStrictEqual([
+      { kind: 'static', value: '{protocol://stoplight.io:' },
+      { kind: 'variable', value: '{api}' },
+    ]);
+
+    ({ result } = renderHook(() => useSplitUrl('https://{version}{username}.stoplight.io{test')));
+
+    expect(result.current).toStrictEqual([
+      { kind: 'static', value: 'https://' },
+      { kind: 'variable', value: '{version}' },
+      { kind: 'variable', value: '{username}' },
+      { kind: 'static', value: '.stoplight.io{test' },
+    ]);
+  });
 });

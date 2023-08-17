@@ -134,34 +134,40 @@ function useVariablesJSONSchema(variables: Record<string, INodeVariable> | undef
 
 export function useSplitUrl(url: string) {
   return React.useMemo(() => {
-    const regExp = /\{[^}]+}/g;
+    const curly = /[{}]/g;
     const fragments: { kind: 'variable' | 'static'; value: string }[] = [];
 
-    let index = 0;
+    let startOffset = 0;
+    let curPos = 0;
     let match;
 
-    while ((match = regExp.exec(url))) {
-      const variable = match[0];
+    while ((match = curly.exec(url))) {
+      if (match[0] === '{' || startOffset + 1 === match.index) {
+        startOffset = match.index;
+        continue;
+      }
 
-      if (match.index !== index) {
+      if (startOffset !== curPos) {
         fragments.push({
           kind: 'static',
-          value: url.slice(index, match.index),
+          value: url.slice(curPos, startOffset),
         });
       }
+
+      const variable = url.slice(startOffset, match.index + 1);
 
       fragments.push({
         kind: 'variable',
         value: variable,
       });
 
-      index = regExp.lastIndex;
+      curPos = startOffset + variable.length;
     }
 
-    if (index !== url.length) {
+    if (curPos < url.length) {
       fragments.push({
         kind: 'static',
-        value: url.slice(index),
+        value: url.slice(curPos),
       });
     }
 
