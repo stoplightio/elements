@@ -2,6 +2,7 @@ import 'jest-enzyme';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { render, screen, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -14,7 +15,7 @@ import { httpServiceWithoutOrigin } from '../../../__fixtures__/services/without
 import { AdditionalInfo } from './AdditionalInfo';
 import { HttpService } from './index';
 import { SecuritySchemes } from './SecuritySchemes';
-import { ServerInfo } from './ServerInfo';
+import { ServerInfo, useSplitUrl } from './ServerInfo';
 
 describe('HttpService', () => {
   it('Should render correctly', () => {
@@ -34,13 +35,10 @@ describe('HttpService', () => {
     expect(serverUrl).toHaveTextContent('https://api.stoplight.io');
 
     const secondServerUrl = screen.getByLabelText('Staging API');
-    expect(secondServerUrl).toHaveTextContent('https://api.staging.stoplight.io');
+    expect(secondServerUrl).toHaveTextContent('https://api.{environment}.stoplight.io');
 
-    const thirdServerUrl = screen.getByLabelText('Integration API');
-    expect(thirdServerUrl).toHaveTextContent('https://api.int.stoplight.io');
-
-    const fourthServerUrl = screen.getByLabelText('Development API');
-    expect(fourthServerUrl).toHaveTextContent('https://localhost:4060');
+    const thirdServerUrl = screen.getByLabelText('Development API');
+    expect(thirdServerUrl).toHaveTextContent('https://localhost:{port}');
 
     expect(screen.queryByLabelText('Mock Server')).not.toBeInTheDocument();
   });
@@ -57,11 +55,24 @@ describe('HttpService', () => {
     expect(screen.queryByLabelText('Mock Server')).not.toBeInTheDocument();
   });
 
-  it('replaces url variables with default values in displayed url', () => {
+  it('keeps url variables in displayed url', () => {
     render(<ServerInfo servers={httpServiceWithUrlVariables.servers ?? []} />);
 
     const serverUrl = screen.getByLabelText('Production API');
-    expect(serverUrl).toHaveTextContent('ftp://default-namespace.stoplight.io');
+    expect(serverUrl).toHaveTextContent('{protocol}://{namespace}.stoplight.io');
+  });
+
+  it('shows url variables in an expandable panel', async () => {
+    render(<ServerInfo servers={httpServiceWithUrlVariables.servers ?? []} />);
+
+    const serverUrl = screen.getByLabelText('Production API');
+    userEvent.click(serverUrl.parentElement!);
+
+    await waitFor(() => expect(screen.queryByRole('region')).toBeInTheDocument());
+
+    expect(screen.getByRole('region')).toHaveTextContent(
+      `protocolstringAllowed values:ftphttphttpsDefault:ftpnamespacestringDefault:default-namespace`,
+    );
   });
 
   it('prepends origin to urls without origin', () => {
@@ -278,4 +289,36 @@ describe('HttpService', () => {
       expect(exportButton).not.toBeInTheDocument();
     });
   });
+});
+
+test('useSplitUrl hook should correctly distinguish variables from static parts', () => {
+  let { result } = renderHook(() => useSplitUrl('https://{api}.stoplight.io:{port}'));
+
+  expect(result.current).toStrictEqual([
+    { kind: 'static', value: 'https://' },
+    { kind: 'variable', value: '{api}' },
+    { kind: 'static', value: '.stoplight.io:' },
+    { kind: 'variable', value: '{port}' },
+  ]);
+
+  ({ result } = renderHook(() => useSplitUrl('{protocol}://stoplight.io:{port}')));
+
+  expect(result.current).toStrictEqual([
+    { kind: 'variable', value: '{protocol}' },
+    { kind: 'static', value: '://stoplight.io:' },
+    { kind: 'variable', value: '{port}' },
+  ]);
+
+  ({ result } = renderHook(() => useSplitUrl('https://{version}{username}.stoplight.io')));
+
+  expect(result.current).toStrictEqual([
+    { kind: 'static', value: 'https://' },
+    { kind: 'variable', value: '{version}' },
+    { kind: 'variable', value: '{username}' },
+    { kind: 'static', value: '.stoplight.io' },
+  ]);
+
+  ({ result } = renderHook(() => useSplitUrl('https://www.stoplight.io')));
+
+  expect(result.current).toStrictEqual([{ kind: 'static', value: 'https://www.stoplight.io' }]);
 });
