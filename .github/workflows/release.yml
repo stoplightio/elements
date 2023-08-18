@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Configure CI Git User
+        run: |
+          git config --global user.name '@jpmorganchase'
+          git config --global user.email 'jpmorganchase@users.noreply.github.com'
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
