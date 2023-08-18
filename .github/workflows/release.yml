@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'release/**'
+      - 'testing-release'
 
 permissions:
   contents: write
