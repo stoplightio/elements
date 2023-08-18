@@ -22,6 +22,7 @@ export const httpServiceWithUrlVariables: IHttpService = {
       url: '{protocol}://{namespace}.stoplight.io',
       variables: {
         protocol: {
+          enum: ['ftp', 'http', 'https'],
           default: 'ftp',
         },
         namespace: {
