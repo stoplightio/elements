@@ -24,14 +24,20 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
     const routerType = props.router ?? 'history';
     const { Router, routerProps } = useRouter(routerType, basePath, staticRouterPath);
 
+    const wrappedComponentRender = () => (
+      <MarkdownComponentsProvider value={components}>
+        <WrappedComponent {...props} />
+      </MarkdownComponentsProvider>
+    );
+
     return (
       <RouterTypeContext.Provider value={routerType}>
         <Router {...routerProps} key={basePath}>
-          <Route path="/">
-            <MarkdownComponentsProvider value={components}>
-              <WrappedComponent {...props} />
-            </MarkdownComponentsProvider>
-          </Route>
+          {/* Using conditional logic to ensure compatibility */}
+          { typeof Route.prototype.render === 'function' ? 
+            <Route path="/" render={wrappedComponentRender} /> : 
+            <Route path="/">{wrappedComponentRender()}</Route>
+          }
         </Router>
       </RouterTypeContext.Provider>
     );
