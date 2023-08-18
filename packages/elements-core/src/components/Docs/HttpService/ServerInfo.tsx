@@ -61,6 +61,14 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean }> = ({
   const variablesSchema = useVariablesJSONSchema(variables);
   const titlePaddingLeft = hasAnyServerVariables && !variablesSchema ? 4 : 0;
 
+  const handleCopyClick = React.useCallback<React.MouseEventHandler>(
+    e => {
+      e.stopPropagation();
+      onCopy();
+    },
+    [onCopy],
+  );
+
   return (
     <Panel isCollapsible={!!variablesSchema} w="full">
       <Panel.Titlebar whitespace="nowrap">
@@ -81,7 +89,7 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean }> = ({
           )}
         >
           {!hasCopied && (
-            <Box p={1} onClick={onCopy} cursor="pointer">
+            <Box p={1} onClick={handleCopyClick} cursor="pointer">
               Copy Server URL <Icon className="sl-ml-1" icon={['fas', 'copy']} />
             </Box>
           )}
