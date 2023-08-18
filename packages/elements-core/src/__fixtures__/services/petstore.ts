@@ -24,18 +24,26 @@ export const httpService: IHttpService = {
     },
     {
       id: '?http-server-1?',
-      url: 'https://api.staging.stoplight.io',
+      url: 'https://api.{environment}.stoplight.io',
       description: 'Staging API',
-    },
-    {
-      id: '?http-server-2?',
-      url: 'https://api.int.stoplight.io',
-      description: 'Integration API',
+      variables: {
+        environment: {
+          description: 'The kind of a durable test environment',
+          enum: ['staging', 'int'],
+          default: 'staging',
+        },
+      },
     },
     {
       id: '?http-server-3?',
-      url: 'https://localhost:4060',
+      url: 'https://localhost:{port}',
       description: 'Development API',
+      variables: {
+        port: {
+          enum: ['8443', '443'],
+          default: '8443',
+        },
+      },
     },
   ],
   security: [],
