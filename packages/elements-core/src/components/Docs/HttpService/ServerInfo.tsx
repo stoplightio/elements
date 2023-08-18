@@ -22,8 +22,8 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
 
   const serversToDisplay = React.useMemo(() => getServersToDisplay(servers, $mockUrl, false), [servers, $mockUrl]);
 
-  const hasAnyServerVariables = React.useMemo(
-    () => serversToDisplay.some(server => !isEmpty(server.variables)),
+  const firstServerVariableIndex = React.useMemo(
+    () => serversToDisplay.findIndex(server => !isEmpty(server.variables)),
     [serversToDisplay],
   );
 
@@ -38,7 +38,12 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
         <Panel.Content w="full" className="sl-flex sl-flex-col">
           <VStack spacing={1} divider>
             {serversToDisplay.map((server, index) => (
-              <ServerUrl {...server} hasAnyServerVariables={hasAnyServerVariables} key={server.id} />
+              <ServerUrl
+                {...server}
+                defaultIsOpen={index === firstServerVariableIndex}
+                hasAnyServerVariables={firstServerVariableIndex !== -1}
+                key={server.id}
+              />
             ))}
           </VStack>
         </Panel.Content>
@@ -47,12 +52,13 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   );
 };
 
-const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean }> = ({
+const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean; defaultIsOpen: boolean }> = ({
   id,
   description,
   url,
   variables,
   hasAnyServerVariables,
+  defaultIsOpen,
 }) => {
   const { nodeHasChanged } = useOptionsCtx();
   const { onCopy, hasCopied } = useClipboard(url);
@@ -70,7 +76,7 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean }> = ({
   );
 
   return (
-    <Panel isCollapsible={!!variablesSchema} w="full">
+    <Panel isCollapsible={!!variablesSchema} defaultIsOpen={defaultIsOpen} w="full">
       <Panel.Titlebar whitespace="nowrap">
         <Text pl={titlePaddingLeft} pr={2} fontWeight="bold">
           {description}:

@@ -65,14 +65,38 @@ describe('HttpService', () => {
   it('shows url variables in an expandable panel', async () => {
     render(<ServerInfo servers={httpServiceWithUrlVariables.servers ?? []} />);
 
-    const serverUrl = screen.getByLabelText('Production API');
-    userEvent.click(serverUrl.parentElement!);
-
     await waitFor(() => expect(screen.queryByRole('region')).toBeInTheDocument());
 
     expect(screen.getByRole('region')).toHaveTextContent(
       `protocolstringAllowed values:ftphttphttpsDefault:ftpnamespacestringDefault:default-namespace`,
     );
+  });
+
+  it('hides subsequent panels with server variables ', async () => {
+    const servers = [
+      ...httpServiceWithUrlVariables.servers!.slice(0, -1),
+      {
+        id: '?http-server-3?',
+        url: 'https://localhost:{port}',
+        description: 'Development API',
+        variables: {
+          port: {
+            default: '443',
+          },
+        },
+      },
+    ];
+
+    render(<ServerInfo servers={servers} />);
+
+    await waitFor(() => expect(screen.queryAllByRole('region')).toHaveLength(1));
+
+    const serverUrl = screen.getByLabelText('Development API');
+    userEvent.click(serverUrl.parentElement!);
+
+    await waitFor(() => expect(screen.queryAllByRole('region')).toHaveLength(2));
+
+    expect(screen.getAllByRole('region')[1]).toHaveTextContent(`portstringDefault:443`);
   });
 
   it('prepends origin to urls without origin', () => {
