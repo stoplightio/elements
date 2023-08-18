@@ -1,5 +1,4 @@
 import type { INodeVariable, IServer } from '@stoplight/types';
-import { isEmpty } from 'lodash';
 import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
@@ -23,10 +22,9 @@ export const getServersToDisplay = (
     let url: string | null = server.url;
 
     if (inlineDefaults) {
-      url = getServerUrlWithDefaultValues(server);
-    } else if (isEmpty(server.variables)) {
-      url = resolveUrl(server.url);
+      url = getServerUrlWithVariableValues(server, {});
     }
+    url = resolveUrl(url);
 
     return {
       ...server,
@@ -65,7 +63,9 @@ export const getServerVariableDefaults = (server: IServer): Record<string, strin
   return o;
 };
 
-function resolveUrl(urlString: string): string | null {
+function resolveUrl(urlString: string | null): string | null {
+  if (urlString === null) return null;
+
   let url;
 
   try {
@@ -89,13 +89,13 @@ function resolveUrl(urlString: string): string | null {
   return null;
 }
 
-export const getServerUrlWithDefaultValues = (server: IServer): string | null => {
+export const getServerUrlWithVariableValues = (server: IServer, values: Record<string, string>): string => {
   let urlString = server.url;
 
   const variables = Object.entries(server.variables ?? {});
   variables.forEach(([variableName, variableInfo]) => {
-    urlString = urlString.replaceAll(`{${variableName}}`, variableInfo.default);
+    urlString = urlString.replaceAll(`{${variableName}}`, values[variableName] ?? variableInfo.default);
   });
 
-  return resolveUrl(urlString);
+  return urlString;
 };

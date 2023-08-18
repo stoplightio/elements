@@ -140,6 +140,7 @@ export const TryIt: React.FC<TryItProps> = ({
       buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
+        serverVariableValues,
         httpOperation,
         bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
         auth: operationAuthValue,
@@ -186,6 +187,7 @@ export const TryIt: React.FC<TryItProps> = ({
       const mockData = isMockingEnabled ? getMockData(mockUrl, httpOperation, mockingOptions) : undefined;
       const request = await buildFetchRequest({
         parameterValues: parameterValuesWithDefaults,
+        serverVariableValues,
         httpOperation,
         mediaTypeContent,
         bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
