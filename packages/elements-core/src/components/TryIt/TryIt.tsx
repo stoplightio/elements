@@ -168,6 +168,7 @@ export const TryIt: React.FC<TryItProps> = ({
     parameterValuesWithDefaults,
     formDataState.isFormDataBody,
     bodyParameterValues,
+    serverVariableValues,
     isAllowedEmptyValues,
     textRequestBody,
     operationAuthValue,
