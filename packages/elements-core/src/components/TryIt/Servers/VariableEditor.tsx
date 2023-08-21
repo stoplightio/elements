@@ -11,10 +11,8 @@ interface VariableProps {
   validate?: boolean;
 }
 
-export const VariableEditor: React.FC<VariableProps> = ({ variable, value, onChange, validate }) => {
+export const VariableEditor: React.FC<VariableProps> = ({ variable, value, onChange }) => {
   const inputId = useUniqueId(`id_${variable.name}_`);
-
-  const requiredButEmpty = validate && !value;
 
   return (
     <>
@@ -36,12 +34,12 @@ export const VariableEditor: React.FC<VariableProps> = ({ variable, value, onCha
             <Input
               id={inputId}
               aria-label={variable.name}
-              appearance={requiredButEmpty ? 'default' : 'minimal'}
+              appearance={'minimal'}
               flex={1}
               placeholder={variable.default}
               type="text"
               required
-              intent={requiredButEmpty ? 'danger' : 'default'}
+              intent={'default'}
               value={value || ''}
               onChange={e => onChange && onChange(e.currentTarget.value)}
             />

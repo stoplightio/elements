@@ -30,5 +30,18 @@ export const operationWithUrlVariables: IHttpOperation = {
         },
       },
     },
+    {
+      id: 'PR Environment',
+      url: '{protocol}://x-{namespace}.stoplight.io/api/',
+      variables: {
+        protocol: {
+          default: 'ftp',
+          enum: ['https', 'http', 'ftp'],
+        },
+        namespace: {
+          default: 'default-namespace',
+        },
+      },
+    },
   ],
 };

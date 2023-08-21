@@ -1,4 +1,4 @@
-import type { INodeVariable, IServer } from '@stoplight/types';
+import type { Dictionary, INodeVariable, IServer } from '@stoplight/types';
 import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
@@ -24,7 +24,6 @@ export const getServersToDisplay = (
     if (inlineDefaults) {
       url = getServerUrlWithVariableValues(server, {});
     }
-    url = resolveUrl(url);
 
     return {
       ...server,
@@ -63,7 +62,7 @@ export const getServerVariableDefaults = (server: IServer): Record<string, strin
   return o;
 };
 
-function resolveUrl(urlString: string | null): string | null {
+export function resolveUrl(urlString: string | null): string | null {
   if (urlString === null) return null;
 
   let url;
@@ -74,7 +73,7 @@ function resolveUrl(urlString: string | null): string | null {
     return null;
   }
 
-  let stringifiedUrl;
+  let stringifiedUrl: string;
 
   if (url.is('relative') && typeof window !== 'undefined') {
     stringifiedUrl = url.absoluteTo(window.location.origin).toString();
@@ -89,7 +88,7 @@ function resolveUrl(urlString: string | null): string | null {
   return null;
 }
 
-export const getServerUrlWithVariableValues = (server: IServer, values: Record<string, string>): string => {
+export const getServerUrlWithVariableValues = (server: IServer, values: Dictionary<string, string>): string => {
   let urlString = server.url;
 
   const variables = Object.entries(server.variables ?? {});

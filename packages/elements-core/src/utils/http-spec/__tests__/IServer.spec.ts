@@ -1,16 +1,16 @@
 import type { IServer } from '@stoplight/types';
 
-import { getServersToDisplay, getServerUrlWithDefaultValues } from '../IServer';
+import { getServersToDisplay, getServerUrlWithVariableValues } from '../IServer';
 
 describe('IServer', () => {
-  describe('getServerUrlWithDefaultValues()', () => {
+  describe('getServerUrlWithVariableValues()', () => {
     it('should handle invalid server URLs', () => {
       const server: IServer = {
         id: 'http-server-https://[env].stoplight.io/v1',
         url: 'https://[env].stoplight.io/v1',
       };
 
-      expect(getServerUrlWithDefaultValues(server)).toBeNull();
+      expect(getServerUrlWithVariableValues(server, {})).toBeNull();
     });
   });
 

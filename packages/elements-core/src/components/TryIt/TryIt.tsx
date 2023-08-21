@@ -102,7 +102,7 @@ export const TryIt: React.FC<TryItProps> = ({
   const [operationAuthValue, setOperationAuthValue] = usePersistedSecuritySchemeWithValues();
 
   const servers = React.useMemo(() => {
-    return getServersToDisplay(httpOperation.servers || defaultServers, mockUrl, true);
+    return getServersToDisplay(httpOperation.servers || defaultServers, mockUrl, false);
   }, [httpOperation.servers, mockUrl]);
   const firstServer = servers[0] || null;
   const [chosenServer, setChosenServer] = useAtom(chosenServerAtom);
@@ -243,7 +243,6 @@ export const TryIt: React.FC<TryItProps> = ({
           variables={serverVariables}
           values={serverVariableValues}
           onChangeValue={updateServerVariableValue}
-          validate={validateParameters}
         />
       )}
 

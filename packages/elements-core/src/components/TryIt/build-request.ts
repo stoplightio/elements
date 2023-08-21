@@ -1,7 +1,7 @@
 import { Dictionary, HttpParamStyles, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 
-import { getServerUrlWithVariableValues } from '../../utils/http-spec/IServer';
+import { getServerUrlWithVariableValues, resolveUrl } from '../../utils/http-spec/IServer';
 import {
   filterOutAuthorizationParams,
   HttpSecuritySchemeWithValues,
@@ -43,7 +43,7 @@ const getServerUrl = ({
 }: Pick<BuildRequestInput, 'httpOperation' | 'chosenServer' | 'mockData' | 'corsProxy' | 'serverVariableValues'>) => {
   const server = chosenServer || httpOperation.servers?.[0];
   const chosenServerUrl = server && getServerUrlWithVariableValues(server, serverVariableValues);
-  const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
+  const serverUrl = resolveUrl(mockData?.url || chosenServerUrl || window.location.origin);
 
   if (corsProxy && !mockData) {
     return `${corsProxy}${serverUrl}`;
