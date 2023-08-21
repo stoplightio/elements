@@ -1162,6 +1162,24 @@ describe('TryIt', () => {
       expect(serversButton).toHaveTextContent('Development');
     });
 
+    it('shows server variables', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const protoField = screen.getByLabelText('proto');
+      expect(protoField).toBeInTheDocument();
+
+      const prField = screen.getByLabelText('pr');
+      expect(prField).toBeInTheDocument();
+    });
+
     it('sends request to a chosen server url', async () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
@@ -1179,6 +1197,54 @@ describe('TryIt', () => {
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock.mock.calls[0][0]).toContain('https://todos-dev.stoplight.io');
+    });
+
+    it('sends a request using server variable default values', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const todoIdField = screen.getByLabelText('todoId');
+      userEvent.type(todoIdField, '123');
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('http://x-1000.todos-pr.stoplight.io');
+    });
+
+    it('sends a request using server variable modified values', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const todoIdField = screen.getByLabelText('todoId');
+      userEvent.type(todoIdField, '123');
+
+      const prField = screen.getByLabelText('pr');
+      userEvent.type(prField, '123');
+
+      const protoField = screen.getByLabelText('proto');
+      chooseOption(protoField, 'https');
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('https://x-123.todos-pr.stoplight.io');
     });
 
     it('Persists chosen server between renders of different operations if URL is the same', async () => {
