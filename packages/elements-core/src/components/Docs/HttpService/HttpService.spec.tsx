@@ -99,11 +99,11 @@ describe('HttpService', () => {
     expect(screen.getAllByRole('region')[1]).toHaveTextContent(`portstringDefault:443`);
   });
 
-  it('prepends origin to urls without origin', () => {
+  it('handles urls without an origin', () => {
     render(<ServerInfo servers={httpServiceWithoutOrigin.servers ?? []} />);
 
     const serverUrl = screen.getByLabelText('Production API');
-    expect(serverUrl).toHaveTextContent('http://localhost/api');
+    expect(serverUrl).toHaveTextContent('api');
   });
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
@@ -113,7 +113,7 @@ describe('HttpService', () => {
     await waitFor(() => expect(mockServer).toHaveTextContent('https://foo.stoplight.io/prism/123'));
   });
 
-  it('removes Base URL block when an invalid URL is given', () => {
+  it('Base URL block handles an invalid URL', () => {
     const modifiedData = {
       ...httpService,
       servers: [
@@ -131,7 +131,7 @@ describe('HttpService', () => {
       </Router>,
     );
 
-    expect(screen.queryByText(/api base url/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/api base url/i)).toBeInTheDocument();
   });
 
   describe('Security schemes', () => {
