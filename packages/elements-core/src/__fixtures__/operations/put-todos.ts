@@ -279,6 +279,20 @@ export const httpOperation: IHttpOperation = {
       description: 'Development',
       url: 'https://todos-dev.stoplight.io',
     },
+    {
+      id: '?http-server-todos-pr.stoplight.io?',
+      description: 'PR',
+      url: '{proto}://x-{pr}.todos-pr.stoplight.io',
+      variables: {
+        proto: {
+          default: 'http',
+          enum: ['http', 'https'],
+        },
+        pr: {
+          default: '1000',
+        },
+      },
+    },
   ],
   request: {
     body: {

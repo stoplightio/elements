@@ -1,8 +1,9 @@
-import type { IServer } from '@stoplight/types';
-import { isEmpty } from 'lodash';
+import type { Dictionary, INodeVariable, IServer } from '@stoplight/types';
 import URI from 'urijs';
 
 import { isProperUrl } from '../guards';
+
+export type ServerVariable = INodeVariable & { name: string };
 
 type ServerWithOptionalUrl = Omit<IServer, 'url'> & { url: string | null } & { description: string };
 
@@ -21,9 +22,7 @@ export const getServersToDisplay = (
     let url: string | null = server.url;
 
     if (inlineDefaults) {
-      url = getServerUrlWithDefaultValues(server);
-    } else if (isEmpty(server.variables)) {
-      url = resolveUrl(server.url);
+      url = getServerUrlWithVariableValues(server, {});
     }
 
     return {
@@ -44,7 +43,28 @@ export const getServersToDisplay = (
   return servers.filter(isValidServer);
 };
 
-function resolveUrl(urlString: string): string | null {
+export const getServerVariables = (server?: IServer | null): ServerVariable[] => {
+  return Object.entries(server?.variables ?? {}).map(([key, value]) => ({
+    name: key,
+    default: value.default,
+    description: value.description,
+    enum: value.enum,
+  }));
+};
+
+export const getServerVariableDefaults = (server: IServer): Record<string, string> => {
+  const o = {};
+  if (server.variables) {
+    for (const key in server.variables) {
+      o[key] = server.variables[key].default;
+    }
+  }
+  return o;
+};
+
+export function resolveUrl(urlString: string | null): string | null {
+  if (urlString === null) return null;
+
   let url;
 
   try {
@@ -53,7 +73,7 @@ function resolveUrl(urlString: string): string | null {
     return null;
   }
 
-  let stringifiedUrl;
+  let stringifiedUrl: string;
 
   if (url.is('relative') && typeof window !== 'undefined') {
     stringifiedUrl = url.absoluteTo(window.location.origin).toString();
@@ -68,13 +88,13 @@ function resolveUrl(urlString: string): string | null {
   return null;
 }
 
-export const getServerUrlWithDefaultValues = (server: IServer): string | null => {
+export const getServerUrlWithVariableValues = (server: IServer, values: Dictionary<string, string>): string => {
   let urlString = server.url;
 
   const variables = Object.entries(server.variables ?? {});
   variables.forEach(([variableName, variableInfo]) => {
-    urlString = urlString.replaceAll(`{${variableName}}`, variableInfo.default);
+    urlString = urlString.replaceAll(`{${variableName}}`, values[variableName] ?? variableInfo.default);
   });
 
-  return resolveUrl(urlString);
+  return urlString;
 };

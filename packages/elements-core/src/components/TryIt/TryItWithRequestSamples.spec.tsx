@@ -6,6 +6,7 @@ import { httpOperation as putTodosOperation } from '../../__fixtures__/operation
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { withPersistenceBoundary } from '../../context/Persistence';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
+import { chooseOption } from '../../utils/tests/chooseOption';
 import { TryItWithRequestSamples as RawComponent } from './TryItWithRequestSamples';
 
 const TryItWithRequestSamples = withMosaicProvider(withPersistenceBoundary(RawComponent));
@@ -95,5 +96,24 @@ describe('TryItWithRequestSamples', () => {
 
     const codeViewer = await screen.findByLabelText(/curl/);
     expect(codeViewer).toHaveTextContent('https://todos-dev.stoplight.io');
+  });
+
+  it('changes request sample when changing server variables', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
+    const serversButton = screen.getByRole('button', { name: /server/i });
+    userEvent.click(serversButton);
+
+    let enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+    userEvent.click(enableItem);
+
+    const protoField = screen.getByLabelText('proto');
+    chooseOption(protoField, 'https');
+
+    const prField = screen.getByLabelText('pr');
+    userEvent.type(prField, '123');
+
+    const codeViewer = await screen.findByLabelText(/curl/);
+    expect(codeViewer).toHaveTextContent('https://x-123.todos-pr.stoplight.io');
   });
 });
