@@ -14,7 +14,7 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
   const [search, setSearch] = React.useState('');
   const { data, isFetching } = useGetNodes({
     search,
-    projectIds,
+    // projectIds,
     workspaceId,
   });
 
@@ -39,7 +39,7 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
 
   return (
     <>
-      <Input placeholder="Search..." onClick={open} />
+      {/* <Input placeholder="Search..." onClick={open} /> */}
       <Search
         isLoading={isFetching}
         search={search}

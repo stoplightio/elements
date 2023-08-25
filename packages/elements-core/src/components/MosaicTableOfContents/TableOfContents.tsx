@@ -1,4 +1,4 @@
-import { Box, Flex, Icon } from '@stoplight/mosaic';
+import { Box, Button, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import { useFirstRender } from '../../hooks/useFirstRender';
@@ -32,6 +32,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
     const firstRender = useFirstRender();
+    const [isListOpen, setIsListOpen] = React.useState(false);
 
     React.useEffect(() => {
       // setTimeout to handle scrollTo after groups expand to display active GroupItem
@@ -55,29 +56,40 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     }, [activeId]);
 
     return (
-      <Box ref={container} w="full" bg="canvas-100" overflowY="auto">
-        <Box ref={child} my={3}>
-          <LinkContext.Provider value={Link}>
-            <ActiveIdContext.Provider value={activeId}>
-              {tree.map((item, key) => {
-                if (isDivider(item)) {
-                  return <Divider key={key} item={item} />;
-                }
+      <>
+        <Box w="full">
+          <Button w="full" onClick={() => setIsListOpen(!isListOpen)} h={10}>
+            Click to see TOC
+          </Button>
+          {isListOpen && (
+            <Box ref={container} w="full" bg="canvas-100" overflowY="auto">
+              <Box ref={child} my={3}>
+                <LinkContext.Provider value={Link}>
+                  <ActiveIdContext.Provider value={activeId}>
+                    <Box h={60}>
+                      {tree.map((item, key) => {
+                        if (isDivider(item)) {
+                          return <Divider key={key} item={item} />;
+                        }
 
-                return (
-                  <GroupItem
-                    key={key}
-                    item={item}
-                    depth={0}
-                    maxDepthOpenByDefault={maxDepthOpenByDefault}
-                    onLinkClick={onLinkClick}
-                  />
-                );
-              })}
-            </ActiveIdContext.Provider>
-          </LinkContext.Provider>
+                        return (
+                          <GroupItem
+                            key={key}
+                            item={item}
+                            depth={0}
+                            maxDepthOpenByDefault={maxDepthOpenByDefault}
+                            onLinkClick={onLinkClick}
+                          />
+                        );
+                      })}
+                    </Box>
+                  </ActiveIdContext.Provider>
+                </LinkContext.Provider>
+              </Box>
+            </Box>
+          )}
         </Box>
-      </Box>
+      </>
     );
   },
 );

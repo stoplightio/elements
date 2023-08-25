@@ -49,79 +49,78 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
     [searchResults, onClick],
   );
 
+  console.log(searchResults);
+
   return (
-    <Modal
-      renderHeader={() => (
-        <Input
-          appearance="minimal"
-          borderB
-          size="lg"
-          icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
-          autoFocus
-          placeholder="Search..."
-          value={search}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-        />
-      )}
-      isOpen={!!isOpen}
-      onClose={onClose}
-    >
+    <Box>
+      <Input
+        appearance="minimal"
+        borderB
+        size="lg"
+        icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
+        autoFocus
+        placeholder="Search..."
+        value={search}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+      />
       {searchResults && searchResults.length > 0 ? (
-        <ListBox
-          ref={listBoxRef}
-          aria-label="Search"
-          overflowY="auto"
-          h={80}
-          m={-5}
-          items={searchResults}
-          selectionMode="single"
-          onSelectionChange={onSelectionChange}
-        >
-          {(searchResult: NodeSearchResult) => {
-            return (
-              <ListBoxItem key={`${searchResult.id}-${searchResult.project_id}`} textValue={searchResult.title}>
-                <Box p={3} borderB>
-                  <Flex align="center">
-                    <Box
-                      as={Icon}
-                      w={4}
-                      icon={NodeTypeIconDefs[searchResult.type]}
-                      style={{ color: NodeTypeColors[searchResult.type] }}
-                    />
+        <Flex mt={5}>
+          <ListBox
+            ref={listBoxRef}
+            aria-label="Search"
+            overflowY="auto"
+            // h={80}
+            // m={-5}
+            items={searchResults}
+            selectionMode="single"
+            onSelectionChange={onSelectionChange}
+          >
+            {(searchResult: NodeSearchResult) => {
+              return (
+                <ListBoxItem key={`${searchResult.id}-${searchResult.project_id}`} textValue={searchResult.title}>
+                  <Box p={3} borderB>
+                    <Flex align="center">
+                      <Box
+                        as={Icon}
+                        w={4}
+                        icon={NodeTypeIconDefs[searchResult.type]}
+                        style={{ color: NodeTypeColors[searchResult.type] }}
+                      />
+
+                      <Box
+                        flex={1}
+                        fontSize="lg"
+                        dangerouslySetInnerHTML={{ __html: searchResult.highlighted.name ?? '' }}
+                        fontWeight="medium"
+                        textOverflow="overflow-ellipsis"
+                        mx={2}
+                      />
+
+                      <Box fontSize="sm" color="muted">
+                        {searchResult.project_name}
+                      </Box>
+                    </Flex>
 
                     <Box
-                      flex={1}
-                      fontSize="lg"
-                      dangerouslySetInnerHTML={{ __html: searchResult.highlighted.name ?? '' }}
-                      fontWeight="medium"
-                      textOverflow="overflow-ellipsis"
-                      mx={2}
+                      dangerouslySetInnerHTML={{ __html: searchResult.highlighted.summary ?? '' }}
+                      color="muted"
+                      fontSize="sm"
+                      mt={1}
+                      ml={6}
                     />
-
-                    <Box fontSize="sm" color="muted">
-                      {searchResult.project_name}
-                    </Box>
-                  </Flex>
-
-                  <Box
-                    dangerouslySetInnerHTML={{ __html: searchResult.highlighted.summary ?? '' }}
-                    color="muted"
-                    fontSize="sm"
-                    mt={1}
-                    ml={6}
-                  />
-                </Box>
-              </ListBoxItem>
-            );
-          }}
-        </ListBox>
+                  </Box>
+                </ListBoxItem>
+              );
+            }}
+          </ListBox>
+        </Flex>
       ) : (
         <Flex w="full" h={80} align="center" justify="center" m={-5}>
           No search results
         </Flex>
       )}
-    </Modal>
+    </Box>
   );
 };
 
