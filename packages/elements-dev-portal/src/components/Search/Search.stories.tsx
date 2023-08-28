@@ -1,4 +1,5 @@
-import { Input, useModalState } from '@stoplight/mosaic';
+import { useGetTableOfContents } from '@stoplight/elements-dev-portal/hooks/useGetTableOfContents';
+import { useModalState } from '@stoplight/mosaic';
 import { Story } from '@storybook/react';
 import * as React from 'react';
 
@@ -17,6 +18,8 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
     // projectIds,
     workspaceId,
   });
+
+  const { data: tableOfContents } = useGetTableOfContents({ projectId: projectIds[0] });
 
   const { data: workspace } = useGetWorkspace({
     projectIds,
@@ -48,6 +51,7 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
         isOpen={isOpen}
         onClose={handleClose}
         onClick={handleClick}
+        tableOfContents={tableOfContents}
       />
     </>
   );

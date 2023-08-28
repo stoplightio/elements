@@ -5,6 +5,7 @@ export type TableOfContentsProps = {
   maxDepthOpenByDefault?: number;
   externalScrollbar?: boolean;
   onLinkClick?(): void;
+  dropdown?: boolean;
 };
 
 export type CustomLinkComponent = React.ComponentType<{

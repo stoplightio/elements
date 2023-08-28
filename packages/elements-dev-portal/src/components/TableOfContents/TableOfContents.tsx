@@ -15,6 +15,7 @@ export type TableOfContentsProps = BoxProps<'div'> & {
   collapseTableOfContents?: boolean;
   externalScrollbar?: boolean;
   onLinkClick?(): void;
+  dropdown?: boolean;
 };
 
 export const TableOfContents = ({
@@ -24,6 +25,7 @@ export const TableOfContents = ({
   collapseTableOfContents = false,
   externalScrollbar,
   onLinkClick,
+  dropdown,
   ...boxProps
 }: TableOfContentsProps) => {
   return (
@@ -33,9 +35,10 @@ export const TableOfContents = ({
           tree={tableOfContents.items}
           activeId={activeId}
           Link={Link}
-          maxDepthOpenByDefault={collapseTableOfContents ? 0 : 1}
+          maxDepthOpenByDefault={collapseTableOfContents ? 0 : 2}
           externalScrollbar={externalScrollbar}
           onLinkClick={onLinkClick}
+          dropdown={dropdown}
         />
       </Flex>
 

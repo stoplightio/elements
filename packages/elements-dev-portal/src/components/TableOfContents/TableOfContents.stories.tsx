@@ -7,7 +7,10 @@ import { TableOfContents } from './';
 // Wrapper to show how to use the node content hook
 const TableOfContentsWrapper = ({ projectId, branchSlug }: { projectId: string; branchSlug?: string }) => {
   const { data } = useGetTableOfContents({ projectId, branchSlug });
-
+  if (data) {
+    data.hide_powered_by = true;
+    data.collapseTableOfContents = false;
+  }
   return data ? (
     <TableOfContents
       activeId="b3A6MTE0"
@@ -26,6 +29,7 @@ const TableOfContentsWrapper = ({ projectId, branchSlug }: { projectId: string; 
       style={{
         width: '300px',
       }}
+      dropdown={true}
     />
   ) : (
     <>Loading</>

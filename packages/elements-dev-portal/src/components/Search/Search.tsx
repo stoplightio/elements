@@ -2,6 +2,7 @@ import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import {
   NodeTypeColors,
   NodeTypeIconDefs,
+  TableOfContents,
   withMosaicProvider,
   withPersistenceBoundary,
   withQueryClientProvider,
@@ -11,7 +12,7 @@ import { Box, Flex, Icon, Input, ListBox, ListBoxItem, Modal, ModalProps } from 
 import { flow } from 'lodash';
 import * as React from 'react';
 
-import { NodeSearchResult } from '../../types';
+import { NodeSearchResult, ProjectTableOfContents } from '../../types';
 
 export type SearchProps = {
   isLoading?: boolean;
@@ -20,10 +21,20 @@ export type SearchProps = {
   onSearch: (search: string) => void;
   onClick: (result: NodeSearchResult) => void;
   isOpen?: boolean;
+  tableOfContents?: ProjectTableOfContents | undefined;
   onClose: ModalProps['onClose'];
 };
 
-const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
+const SearchImpl = ({
+  isLoading,
+  search,
+  searchResults,
+  isOpen,
+  onClose,
+  onClick,
+  onSearch,
+  tableOfContents,
+}: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
   const onChange = React.useCallback(e => onSearch(e.currentTarget.value), [onSearch]);
@@ -49,7 +60,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
     [searchResults, onClick],
   );
 
-  console.log(searchResults);
+  console.log(tableOfContents?.items);
 
   return (
     <Box>
@@ -64,7 +75,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
         onChange={onChange}
         onKeyDown={onKeyDown}
       />
-      {searchResults && searchResults.length > 0 ? (
+      {searchResults && searchResults.length > 0 && search && search.length > 0 && (
         <Flex mt={5}>
           <ListBox
             ref={listBoxRef}
@@ -115,10 +126,29 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
             }}
           </ListBox>
         </Flex>
-      ) : (
+      )}
+      {searchResults && searchResults.length === 0 && search && search.length > 0 && (
         <Flex w="full" h={80} align="center" justify="center" m={-5}>
           No search results
         </Flex>
+      )}
+
+      {!search && tableOfContents && (
+        <TableOfContents
+          activeId="b3A6MTE0"
+          tree={tableOfContents.items}
+          Link={({ children, ...props }) => {
+            return (
+              <a
+                onClick={() => {
+                  console.log('Link clicked!', props);
+                }}
+              >
+                {children}
+              </a>
+            );
+          }}
+        />
       )}
     </Box>
   );

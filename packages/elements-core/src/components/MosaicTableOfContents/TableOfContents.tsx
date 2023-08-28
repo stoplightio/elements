@@ -28,11 +28,11 @@ const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
 
 export const TableOfContents = React.memo<TableOfContentsProps>(
-  ({ tree, activeId, Link, maxDepthOpenByDefault, externalScrollbar = false, onLinkClick }) => {
+  ({ tree, activeId, Link, maxDepthOpenByDefault, externalScrollbar = false, onLinkClick, dropdown }) => {
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
     const firstRender = useFirstRender();
-    const [isListOpen, setIsListOpen] = React.useState(false);
+    const [isListOpen, setIsListOpen] = React.useState(true);
 
     React.useEffect(() => {
       // setTimeout to handle scrollTo after groups expand to display active GroupItem
@@ -58,15 +58,17 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     return (
       <>
         <Box w="full">
-          <Button w="full" onClick={() => setIsListOpen(!isListOpen)} h={10}>
-            Click to see TOC
-          </Button>
+          {dropdown && (
+            <Button w="full" onClick={() => setIsListOpen(!isListOpen)} h={10}>
+              Click to see TOC
+            </Button>
+          )}
           {isListOpen && (
-            <Box ref={container} w="full" bg="canvas-100" overflowY="auto">
+            <Box ref={container} w="full" bg="canvas" overflowY="auto">
               <Box ref={child} my={3}>
                 <LinkContext.Provider value={Link}>
                   <ActiveIdContext.Provider value={activeId}>
-                    <Box h={60}>
+                    <Box h={dropdown ? 40 : 'auto'}>
                       {tree.map((item, key) => {
                         if (isDivider(item)) {
                           return <Divider key={key} item={item} />;
@@ -244,7 +246,7 @@ const Item = React.memo<{
   return (
     <Flex
       id={id}
-      bg={{ default: isActive ? 'primary-tint' : 'canvas-100', hover: isActive ? undefined : 'canvas-200' }}
+      bg={{ default: isActive ? 'primary-tint' : 'canvas', hover: isActive ? undefined : 'canvas-200' }}
       cursor="pointer"
       // @ts-expect-error
       pl={4 + depth * 4}
