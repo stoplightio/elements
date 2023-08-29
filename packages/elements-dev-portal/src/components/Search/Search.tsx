@@ -23,6 +23,11 @@ export type SearchProps = {
   onClose: ModalProps['onClose'];
 };
 
+export type SearchResultsProps = {
+  searchResults?: NodeSearchResult[];
+  onSelectionChange: (keys: any) => void;
+};
+
 const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
@@ -67,6 +72,16 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
       isOpen={!!isOpen}
       onClose={onClose}
     >
+      <SearchResults searchResults={searchResults} onSelectionChange={onSelectionChange}></SearchResults>
+    </Modal>
+  );
+};
+
+const SearchResults = ({ searchResults, onSelectionChange }: SearchResultsProps) => {
+  const listBoxRef = React.useRef<HTMLDivElement>(null);
+
+  return (
+    <Box>
       {searchResults && searchResults.length > 0 ? (
         <ListBox
           ref={listBoxRef}
@@ -121,7 +136,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
           No search results
         </Flex>
       )}
-    </Modal>
+    </Box>
   );
 };
 
