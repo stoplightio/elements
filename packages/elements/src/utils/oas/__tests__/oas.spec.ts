@@ -269,4 +269,63 @@ describe('computeOasNodes', () => {
       ],
     });
   });
+
+  it('should not throw error for non-common url paths', () => {
+    expect(
+      transformOasToServiceNode({
+        'x-stoplight': { id: 'def' },
+        openapi: '3.0.0',
+        info: {
+          title: 'oas3',
+          version: '1.0.0',
+        },
+        paths: {
+          '/todos/{id}/flow)': {
+            get: {
+              operationId: 'get-todos',
+            },
+          },
+        },
+      }),
+    ).toEqual({
+      type: 'http_service',
+      uri: '/',
+      name: 'oas3',
+      tags: [],
+      data: {
+        id: 'def',
+        version: '1.0.0',
+        name: 'oas3',
+      },
+      children: [
+        {
+          type: 'http_operation',
+          uri: '/operations/get-todos',
+          data: {
+            id: '7b7e36ffa6501',
+            iid: 'get-todos',
+            method: 'get',
+            path: '/todos/{id}/flow)',
+            responses: [],
+            servers: [],
+            request: {
+              body: {
+                id: '9b96158a8647a',
+                contents: [],
+              },
+              headers: [],
+              query: [],
+              cookie: [],
+              path: [],
+            },
+            tags: [],
+            security: [],
+            extensions: {},
+          },
+          tags: [],
+          name: 'get-todos',
+        },
+      ],
+    });
+  });
 });
