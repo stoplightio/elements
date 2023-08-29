@@ -24,7 +24,8 @@
     "./web-components.min.js": "./web-components.min.js",
     ".": {
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "types": "./index.d.ts"
     }
   },
   "files": [
