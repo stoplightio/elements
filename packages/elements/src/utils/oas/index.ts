@@ -134,7 +134,7 @@ function computeChildNodes(
 function findMapMatch(key: string | number, map: ISourceNodeMap[]): ISourceNodeMap | void {
   if (typeof key === 'number') return;
   for (const entry of map) {
-    const escapedKey = key.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&')
+    const escapedKey = key.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 
     if (!!entry.match?.match(escapedKey) || (entry.notMatch !== void 0 && !entry.notMatch.match(escapedKey))) {
       return entry;
