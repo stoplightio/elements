@@ -7,9 +7,9 @@ import { useGetWorkspace } from '../../hooks/useGetWorkspace';
 import { NodeSearchResult } from '../../types';
 import { Search } from './';
 
-type SearchWrapperProps = { projectIds: string[]; workspaceId: string };
+type SearchWrapperProps = { projectIds: string[]; workspaceId: string; isEmbedded?: boolean };
 // Wrapper to show how to use the node content hook
-const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
+const SearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperProps) => {
   const { isOpen, open, close } = useModalState();
   const [search, setSearch] = React.useState('');
   const { data, isFetching } = useGetNodes({
@@ -39,7 +39,7 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
 
   return (
     <>
-      <Input placeholder="Search..." onClick={open} />
+      {!isEmbedded && <Input placeholder="Search..." onClick={open} />}
       <Search
         isLoading={isFetching}
         search={search}
@@ -48,6 +48,7 @@ const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
         isOpen={isOpen}
         onClose={handleClose}
         onClick={handleClick}
+        isEmbedded={isEmbedded}
       />
     </>
   );
@@ -71,3 +72,9 @@ export default {
 export const Playground: Story<SearchWrapperProps> = args => <SearchWrapper {...args} />;
 
 Playground.storyName = 'Studio Demo';
+
+export const EmbeddedSearch = Playground.bind({});
+EmbeddedSearch.args = {
+  isEmbedded: true,
+};
+EmbeddedSearch.storyName = 'Embedded Search';

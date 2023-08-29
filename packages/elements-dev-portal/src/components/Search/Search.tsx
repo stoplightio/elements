@@ -21,14 +21,25 @@ export type SearchProps = {
   onClick: (result: NodeSearchResult) => void;
   isOpen?: boolean;
   onClose: ModalProps['onClose'];
+  isEmbedded?: boolean;
 };
 
 export type SearchResultsProps = {
   searchResults?: NodeSearchResult[];
+  isEmbedded?: boolean;
   onSelectionChange: (keys: any) => void;
 };
 
-const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
+const SearchImpl = ({
+  isLoading,
+  search,
+  searchResults,
+  isOpen,
+  onClose,
+  onClick,
+  onSearch,
+  isEmbedded,
+}: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
   const onChange = React.useCallback(e => onSearch(e.currentTarget.value), [onSearch]);
@@ -55,39 +66,67 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
   );
 
   return (
-    <Modal
-      renderHeader={() => (
-        <Input
-          appearance="minimal"
-          borderB
-          size="lg"
-          icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
-          autoFocus
-          placeholder="Search..."
-          value={search}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-        />
+    <>
+      {!isEmbedded ? (
+        <Modal
+          renderHeader={() => (
+            <Input
+              appearance="minimal"
+              borderB
+              size="lg"
+              icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
+              autoFocus
+              placeholder="Search..."
+              value={search}
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+            />
+          )}
+          isOpen={!!isOpen}
+          onClose={onClose}
+        >
+          <SearchResults
+            searchResults={searchResults}
+            onSelectionChange={onSelectionChange}
+            isEmbedded={false}
+          ></SearchResults>
+        </Modal>
+      ) : (
+        <Box>
+          <Input
+            appearance="minimal"
+            borderB
+            icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
+            autoFocus
+            placeholder="Search..."
+            value={search}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+          />
+          <Box p={5}>
+            <SearchResults
+              searchResults={searchResults}
+              onSelectionChange={onSelectionChange}
+              isEmbedded={true}
+            ></SearchResults>
+          </Box>
+        </Box>
       )}
-      isOpen={!!isOpen}
-      onClose={onClose}
-    >
-      <SearchResults searchResults={searchResults} onSelectionChange={onSelectionChange}></SearchResults>
-    </Modal>
+    </>
   );
 };
 
-const SearchResults = ({ searchResults, onSelectionChange }: SearchResultsProps) => {
+const SearchResults = ({ searchResults, onSelectionChange, isEmbedded }: SearchResultsProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
   return (
-    <Box>
+    <>
       {searchResults && searchResults.length > 0 ? (
         <ListBox
           ref={listBoxRef}
           aria-label="Search"
           overflowY="auto"
-          h={80}
+          h={isEmbedded ? undefined : 80}
           m={-5}
           items={searchResults}
           selectionMode="single"
@@ -136,7 +175,7 @@ const SearchResults = ({ searchResults, onSelectionChange }: SearchResultsProps)
           No search results
         </Flex>
       )}
-    </Box>
+    </>
   );
 };
 
