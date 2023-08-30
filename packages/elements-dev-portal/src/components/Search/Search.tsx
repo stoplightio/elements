@@ -60,12 +60,12 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
       isOpen={!!isOpen}
       onClose={onClose}
     >
-      <SearchResults searchResults={searchResults} onClick={onClick} isEmbedded={false} />
+      <SearchResultsList searchResults={searchResults} onClick={onClick} />
     </Modal>
   );
 };
 
-export const SearchResults = ({ searchResults, onClick, isEmbedded }: SearchResultsProps) => {
+export const SearchResultsList = ({ searchResults, onClick, isEmbedded }: SearchResultsProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
   const onSelectionChange = React.useCallback(
     keys => {
@@ -139,6 +139,13 @@ export const SearchResults = ({ searchResults, onClick, isEmbedded }: SearchResu
     </>
   );
 };
+
+export const SearchResults = flow(
+  withStyles,
+  withPersistenceBoundary,
+  withMosaicProvider,
+  withQueryClientProvider,
+)(SearchResultsList);
 
 export const Search = flow(
   withStyles,
