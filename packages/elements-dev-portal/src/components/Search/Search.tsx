@@ -85,38 +85,18 @@ const SearchImpl = ({
           isOpen={!!isOpen}
           onClose={onClose}
         >
-          <SearchResults
-            searchResults={searchResults}
-            onSelectionChange={onSelectionChange}
-            isEmbedded={false}
-          ></SearchResults>
+          <SearchResults searchResults={searchResults} onSelectionChange={onSelectionChange} isEmbedded={false} />
         </Modal>
       ) : (
-        <Box>
-          <Input
-            appearance="minimal"
-            borderB
-            icon={<Box as={Icon} ml={1} icon={isLoading ? faSpinner : faSearch} spin={isLoading} />}
-            autoFocus
-            placeholder="Search..."
-            value={search}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-          />
-          <Box p={5}>
-            <SearchResults
-              searchResults={searchResults}
-              onSelectionChange={onSelectionChange}
-              isEmbedded={true}
-            ></SearchResults>
-          </Box>
+        <Box p={5}>
+          <SearchResults searchResults={searchResults} onSelectionChange={onSelectionChange} isEmbedded={true} />
         </Box>
       )}
     </>
   );
 };
 
-const SearchResults = ({ searchResults, onSelectionChange, isEmbedded }: SearchResultsProps) => {
+export const SearchResults = ({ searchResults, onSelectionChange, isEmbedded }: SearchResultsProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
   return (

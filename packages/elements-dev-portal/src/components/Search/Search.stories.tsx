@@ -1,4 +1,5 @@
-import { Input, useModalState } from '@stoplight/mosaic';
+import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { Box, Icon, Input, useModalState } from '@stoplight/mosaic';
 import { Story } from '@storybook/react';
 import * as React from 'react';
 
@@ -39,7 +40,7 @@ const SearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperPro
 
   return (
     <>
-      {!isEmbedded && <Input placeholder="Search..." onClick={open} />}
+      <Input placeholder="Search..." onClick={open} />
       <Search
         isLoading={isFetching}
         search={search}
@@ -54,6 +55,61 @@ const SearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperPro
   );
 };
 
+const EmbeddedSearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperProps) => {
+  const { isOpen, close } = useModalState();
+  const [search, setSearch] = React.useState('');
+  const { data, isFetching } = useGetNodes({
+    search,
+    projectIds,
+    workspaceId,
+  });
+
+  const { data: workspace } = useGetWorkspace({
+    projectIds,
+  });
+
+  const handleClose = () => {
+    close();
+    setSearch('');
+  };
+
+  const handleClick = (searchResult: NodeSearchResult) => {
+    console.log('Search clicked', searchResult);
+    window.open(
+      `https://${workspace?.workspace.slug}.stoplight.io/docs/${searchResult.project_slug}${searchResult.uri}`,
+      '_blank',
+    );
+
+    handleClose();
+  };
+
+  return (
+    <>
+      <Input
+        appearance="minimal"
+        borderB
+        icon={<Box as={Icon} ml={1} icon={isFetching ? faSpinner : faSearch} spin={isFetching} />}
+        autoFocus
+        placeholder="Search..."
+        value={search}
+        onChange={e => {
+          setSearch(e.currentTarget.value);
+        }}
+        type="search"
+      />
+      <Search
+        isLoading={isFetching}
+        search={search}
+        searchResults={data}
+        onSearch={setSearch}
+        isOpen={isOpen}
+        onClose={handleClose}
+        onClick={handleClick}
+        isEmbedded={true}
+      />
+    </>
+  );
+};
 export default {
   title: 'Public/Search',
   component: SearchWrapper,
@@ -70,11 +126,8 @@ export default {
 };
 
 export const Playground: Story<SearchWrapperProps> = args => <SearchWrapper {...args} />;
+export const EmbeddedSearch: Story<SearchWrapperProps> = args => <EmbeddedSearchWrapper {...args} />;
 
 Playground.storyName = 'Studio Demo';
 
-export const EmbeddedSearch = Playground.bind({});
-EmbeddedSearch.args = {
-  isEmbedded: true,
-};
 EmbeddedSearch.storyName = 'Embedded Search';
