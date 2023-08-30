@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/elemental-demo",
-  "version": "7.0.4",
+  "version": "7.1.0",
   "private": true,
   "scripts": {
     "build": "yarn run clean-dist && webpack --config=webpack/prod.js",
@@ -10,7 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@jpmorganchase/elemental": "^2.1.0",
+    "@jpmorganchase/elemental": "^3.0.0",
     "@stoplight/mosaic": "^1.33.0",
     "history": "^5.0.0",
     "react": "16.14.0",
