@@ -8,9 +8,9 @@ import { useGetWorkspace } from '../../hooks/useGetWorkspace';
 import { NodeSearchResult } from '../../types';
 import { Search, SearchResults } from './';
 
-type SearchWrapperProps = { projectIds: string[]; workspaceId: string; isEmbedded?: boolean };
+type SearchWrapperProps = { projectIds: string[]; workspaceId: string };
 // Wrapper to show how to use the node content hook
-const SearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperProps) => {
+const SearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
   const { isOpen, open, close } = useModalState();
   const [search, setSearch] = React.useState('');
   const { data, isFetching } = useGetNodes({
@@ -54,7 +54,7 @@ const SearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperPro
   );
 };
 
-const EmbeddedSearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperProps) => {
+const EmbeddedSearchWrapper = ({ projectIds, workspaceId }: SearchWrapperProps) => {
   const [search, setSearch] = React.useState('');
   const { data, isFetching } = useGetNodes({
     search,

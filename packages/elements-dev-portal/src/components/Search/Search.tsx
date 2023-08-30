@@ -23,7 +23,7 @@ export type SearchProps = {
   onClose: ModalProps['onClose'];
 };
 
-export type SearchResultsProps = {
+export type SearchResultsListProps = {
   searchResults?: NodeSearchResult[];
   isEmbedded?: boolean;
   onClick: (result: NodeSearchResult) => void;
@@ -65,7 +65,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
   );
 };
 
-export const SearchResultsList = ({ searchResults, onClick, isEmbedded }: SearchResultsProps) => {
+export const SearchResultsList = ({ searchResults, onClick, isEmbedded }: SearchResultsListProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
   const onSelectionChange = React.useCallback(
     keys => {
