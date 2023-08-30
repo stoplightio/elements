@@ -26,6 +26,7 @@ export type SearchProps = {
 export type SearchResultsListProps = {
   searchResults?: NodeSearchResult[];
   isEmbedded?: boolean;
+  showDivider?: boolean;
   onClick: (result: NodeSearchResult) => void;
 };
 
@@ -65,7 +66,12 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
   );
 };
 
-export const SearchResultsList = ({ searchResults, onClick, isEmbedded }: SearchResultsListProps) => {
+export const SearchResultsList = ({
+  searchResults,
+  onClick,
+  isEmbedded,
+  showDivider = true,
+}: SearchResultsListProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
   const onSelectionChange = React.useCallback(
     keys => {
@@ -96,7 +102,7 @@ export const SearchResultsList = ({ searchResults, onClick, isEmbedded }: Search
           {(searchResult: NodeSearchResult) => {
             return (
               <ListBoxItem key={`${searchResult.id}-${searchResult.project_id}`} textValue={searchResult.title}>
-                <Box p={3} borderB>
+                <Box p={3} borderB={!showDivider ? undefined : true}>
                   <Flex align="center">
                     <Box
                       as={Icon}
