@@ -5,7 +5,7 @@ export { DevPortalProvider } from './components/DevPortalProvider';
 export type { NodeContentProps } from './components/NodeContent';
 export { NodeContent } from './components/NodeContent';
 export type { SearchProps } from './components/Search';
-export { Search } from './components/Search';
+export { Search, SearchResults } from './components/Search';
 export type { TableOfContentsProps } from './components/TableOfContents';
 export { TableOfContents } from './components/TableOfContents';
 export { devPortalCacheKeys } from './consts';
