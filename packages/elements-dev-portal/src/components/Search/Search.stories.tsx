@@ -6,7 +6,7 @@ import * as React from 'react';
 import { useGetNodes } from '../../hooks/useGetNodes';
 import { useGetWorkspace } from '../../hooks/useGetWorkspace';
 import { NodeSearchResult } from '../../types';
-import { Search } from './';
+import { Search, SearchResults } from './';
 
 type SearchWrapperProps = { projectIds: string[]; workspaceId: string; isEmbedded?: boolean };
 // Wrapper to show how to use the node content hook
@@ -49,14 +49,12 @@ const SearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperPro
         isOpen={isOpen}
         onClose={handleClose}
         onClick={handleClick}
-        isEmbedded={isEmbedded}
       />
     </>
   );
 };
 
 const EmbeddedSearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWrapperProps) => {
-  const { isOpen, close } = useModalState();
   const [search, setSearch] = React.useState('');
   const { data, isFetching } = useGetNodes({
     search,
@@ -68,19 +66,12 @@ const EmbeddedSearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWr
     projectIds,
   });
 
-  const handleClose = () => {
-    close();
-    setSearch('');
-  };
-
   const handleClick = (searchResult: NodeSearchResult) => {
     console.log('Search clicked', searchResult);
     window.open(
       `https://${workspace?.workspace.slug}.stoplight.io/docs/${searchResult.project_slug}${searchResult.uri}`,
       '_blank',
     );
-
-    handleClose();
   };
 
   return (
@@ -97,16 +88,9 @@ const EmbeddedSearchWrapper = ({ projectIds, workspaceId, isEmbedded }: SearchWr
         }}
         type="search"
       />
-      <Search
-        isLoading={isFetching}
-        search={search}
-        searchResults={data}
-        onSearch={setSearch}
-        isOpen={isOpen}
-        onClose={handleClose}
-        onClick={handleClick}
-        isEmbedded={true}
-      />
+      <Box p={5}>
+        <SearchResults searchResults={data} onClick={handleClick} isEmbedded={true} />
+      </Box>
     </>
   );
 };
