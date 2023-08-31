@@ -10,6 +10,7 @@ import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { useChosenServerUrl } from '../../../hooks/useChosenServerUrl';
+import { useIsCompact } from '../../../hooks/useIsCompact';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
@@ -24,6 +25,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
   ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy }) => {
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
+    const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
     const mocking = React.useContext(MockingContext);
     const isDeprecated = !!data.deprecated;
@@ -49,6 +51,19 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
       />
     );
 
+    const tryItPanel = !layoutOptions?.hideTryItPanel && (
+      <TryItWithRequestSamples
+        httpOperation={data}
+        responseMediaType={responseMediaType}
+        responseStatusCode={responseStatusCode}
+        requestBodyIndex={requestBodyIndex}
+        hideTryIt={layoutOptions?.hideTryIt}
+        tryItCredentialsPolicy={tryItCredentialsPolicy}
+        mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
+        corsProxy={tryItCorsProxy}
+      />
+    );
+
     const descriptionChanged = nodeHasChanged?.({ nodeId: data.id, attr: 'description' });
     const description = (
       <VStack spacing={10}>
@@ -66,30 +81,21 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             responses={data.responses}
             onMediaTypeChange={setResponseMediaType}
             onStatusCodeChange={setResponseStatusCode}
+            isCompact={isCompact}
           />
         )}
-      </VStack>
-    );
 
-    const tryItPanel = !layoutOptions?.hideTryItPanel && (
-      <TryItWithRequestSamples
-        httpOperation={data}
-        responseMediaType={responseMediaType}
-        responseStatusCode={responseStatusCode}
-        requestBodyIndex={requestBodyIndex}
-        hideTryIt={layoutOptions?.hideTryIt}
-        tryItCredentialsPolicy={tryItCredentialsPolicy}
-        mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
-        corsProxy={tryItCorsProxy}
-      />
+        {isCompact && tryItPanel}
+      </VStack>
     );
 
     return (
       <TwoColumnLayout
+        ref={layoutRef}
         className={cn('HttpOperation', className)}
         header={header}
         left={description}
-        right={tryItPanel}
+        right={!isCompact && tryItPanel}
       />
     );
   },

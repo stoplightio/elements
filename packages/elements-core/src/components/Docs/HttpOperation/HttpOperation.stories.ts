@@ -6,4 +6,4 @@ const { meta, createHoistedStory } = createStoriesForDocsComponent(HttpOperation
 
 export default meta;
 
-export const Story = createHoistedStory({ data: httpOperation });
+export const Story = createHoistedStory({ data: httpOperation, layoutOptions: { compact: 600 } });
