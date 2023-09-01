@@ -1,8 +1,14 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
   Box,
+  Button,
   Flex,
+  HStack,
+  Icon,
   IntentVals,
+  ListBox,
+  ListBoxItem,
+  Modal,
   NodeAnnotation,
   Select,
   Tab,
@@ -10,6 +16,8 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
+  useModalState,
   VStack,
 } from '@stoplight/mosaic';
 import { IHttpOperationResponse } from '@stoplight/types';
@@ -32,15 +40,34 @@ interface ResponsesProps {
   responses: IHttpOperationResponse[];
   onMediaTypeChange(mediaType: string): void;
   onStatusCodeChange(statusCode: string): void;
+  isCompact?: boolean;
 }
 
-export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, onMediaTypeChange }: ResponsesProps) => {
+export const Responses = ({
+  responses: unsortedResponses,
+  onStatusCodeChange,
+  onMediaTypeChange,
+  isCompact,
+}: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
     r => r.code,
   );
 
   const [activeResponseId, setActiveResponseId] = React.useState(responses[0]?.code ?? '');
+  const { isOpen, open, close } = useModalState();
+
+  const onSelectionChange = React.useCallback(
+    keys => {
+      const selectedId = keys.values().next().value;
+      const selectedResponse = responses?.find(response => response.id === selectedId);
+      if (selectedResponse) {
+        setActiveResponseId(selectedResponse.code);
+        close();
+      }
+    },
+    [responses, setActiveResponseId, close],
+  );
 
   React.useEffect(() => {
     onStatusCodeChange(activeResponseId);
@@ -49,25 +76,83 @@ export const Responses = ({ responses: unsortedResponses, onStatusCodeChange, on
 
   if (!responses.length) return null;
 
+  const response = responses.find(r => r.code === activeResponseId) || responses[0];
+
+  const compactResponses = (
+    <>
+      <Button
+        onPress={open}
+        iconRight={<Icon icon="chevron-down" color="var(--color-border-button)" />}
+        style={{
+          color: `var(--color-${codeToIntentVal(activeResponseId)})`,
+        }}
+      >
+        {activeResponseId}
+      </Button>
+
+      <Modal
+        title="Response Code"
+        isOpen={isOpen}
+        onClose={close}
+        size="sm"
+        footer={
+          <HStack justifyContent="end">
+            <Button onPress={close} intent="default" appearance="primary">
+              Close
+            </Button>
+          </HStack>
+        }
+      >
+        <ListBox
+          aria-label="Response Code"
+          overflowY="auto"
+          m={-5}
+          items={responses}
+          selectionMode="single"
+          onSelectionChange={onSelectionChange}
+        >
+          {(response: IHttpOperationResponse) => (
+            <ListBoxItem key={response.id}>
+              <Box p={3} bg={{ hover: 'primary-tint' }}>
+                <Flex w="2xl" align="center" justify="end">
+                  {response.code === activeResponseId && <Box as={Icon} icon="check" />}
+                  <Text ml={3} fontWeight="medium">
+                    {response.code}
+                  </Text>
+                </Flex>
+              </Box>
+            </ListBoxItem>
+          )}
+        </ListBox>
+      </Modal>
+    </>
+  );
+
+  const tabResponses = (
+    <TabList density="compact">
+      {responses.map(({ code }) => (
+        <Tab key={code} id={code} intent={codeToIntentVal(code)}>
+          {code}
+        </Tab>
+      ))}
+    </TabList>
+  );
+
   return (
     <VStack spacing={8} as={Tabs} selectedId={activeResponseId} onChange={setActiveResponseId} appearance="pill">
-      <SectionTitle title="Responses">
-        <TabList density="compact">
-          {responses.map(({ code }) => (
-            <Tab key={code} id={code} intent={codeToIntentVal(code)}>
-              {code}
-            </Tab>
-          ))}
-        </TabList>
-      </SectionTitle>
+      <SectionTitle title="Responses">{isCompact ? compactResponses : tabResponses}</SectionTitle>
 
-      <TabPanels p={0}>
-        {responses.map(response => (
-          <TabPanel key={response.code} id={response.code}>
-            <Response response={response} onMediaTypeChange={onMediaTypeChange} />
-          </TabPanel>
-        ))}
-      </TabPanels>
+      {isCompact ? (
+        <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+      ) : (
+        <TabPanels p={0}>
+          {responses.map(response => (
+            <TabPanel key={response.code} id={response.code}>
+              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+            </TabPanel>
+          ))}
+        </TabPanels>
+      )}
     </VStack>
   );
 };
