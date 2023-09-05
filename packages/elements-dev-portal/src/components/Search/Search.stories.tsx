@@ -93,7 +93,7 @@ const EmbeddedSearchWrapper = ({ projectIds, workspaceId, isInResponsiveMode }: 
           type="search"
         />
       </Box>
-      <Box p={5}>
+      <Box>
         {isInResponsiveMode && !search && tableOfContents ? (
           <TableOfContents
             isInResponsiveMode={isInResponsiveMode}
@@ -116,7 +116,9 @@ const EmbeddedSearchWrapper = ({ projectIds, workspaceId, isInResponsiveMode }: 
         )}
         {/* show search results first if not in responsive mode */}
         {!isInResponsiveMode || (isInResponsiveMode && search) ? (
-          <SearchResults searchResults={data} onClick={handleClick} isEmbedded={true} />
+          <Box p={5}>
+            <SearchResults searchResults={data} onClick={handleClick} isEmbedded={true} />
+          </Box>
         ) : null}
       </Box>
     </>
