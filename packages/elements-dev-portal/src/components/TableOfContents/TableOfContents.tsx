@@ -14,6 +14,7 @@ export type TableOfContentsProps = BoxProps<'div'> & {
   Link: CustomLinkComponent;
   collapseTableOfContents?: boolean;
   externalScrollbar?: boolean;
+  isInResponsiveMode?: boolean;
   onLinkClick?(): void;
 };
 
@@ -23,11 +24,12 @@ export const TableOfContents = ({
   Link,
   collapseTableOfContents = false,
   externalScrollbar,
+  isInResponsiveMode = false,
   onLinkClick,
   ...boxProps
 }: TableOfContentsProps) => {
   return (
-    <Flex bg="canvas-100" {...boxProps} flexDirection="col" maxH="full">
+    <Flex bg={isInResponsiveMode ? 'canvas' : 'canvas-100'} {...boxProps} flexDirection="col" maxH="full">
       <Flex flexGrow flexShrink overflowY="auto">
         <ElementsTableOfContents
           tree={tableOfContents.items}
@@ -36,10 +38,11 @@ export const TableOfContents = ({
           maxDepthOpenByDefault={collapseTableOfContents ? 0 : 1}
           externalScrollbar={externalScrollbar}
           onLinkClick={onLinkClick}
+          isInResponsiveMode={isInResponsiveMode}
         />
       </Flex>
 
-      {tableOfContents.hide_powered_by ? null : (
+      {tableOfContents.hide_powered_by || isInResponsiveMode ? null : (
         <PoweredByLink
           source={activeId}
           pathname={typeof window !== 'undefined' ? window.location.pathname : ''}
