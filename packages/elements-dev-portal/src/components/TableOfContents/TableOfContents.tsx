@@ -42,7 +42,7 @@ export const TableOfContents = ({
         />
       </Flex>
 
-      {tableOfContents.hide_powered_by || isInResponsiveMode ? null : (
+      {tableOfContents.hide_powered_by ? null : (
         <PoweredByLink
           source={activeId}
           pathname={typeof window !== 'undefined' ? window.location.pathname : ''}
