@@ -79,19 +79,21 @@ const EmbeddedSearchWrapper = ({ projectIds, workspaceId, isInResponsiveMode }: 
 
   return (
     <>
-      <Box pos="sticky" pinY bg="canvas" w="full">
-        <Input
-          appearance="minimal"
-          border
-          icon={<Box as={Icon} ml={1} icon={isFetching ? faSpinner : faSearch} spin={isFetching} />}
-          autoFocus
-          placeholder="Search..."
-          value={search}
-          onChange={e => {
-            setSearch(e.currentTarget.value);
-          }}
-          type="search"
-        />
+      <Box bg="canvas" pos="sticky" style={{ top: 0 }}>
+        <Box bg="canvas" w="full" pt={3}>
+          <Input
+            appearance="minimal"
+            border
+            icon={<Box as={Icon} ml={1} icon={isFetching ? faSpinner : faSearch} spin={isFetching} />}
+            autoFocus
+            placeholder="Search..."
+            value={search}
+            onChange={e => {
+              setSearch(e.currentTarget.value);
+            }}
+            type="search"
+          />
+        </Box>
       </Box>
       <Box>
         {isInResponsiveMode && !search && tableOfContents ? (
