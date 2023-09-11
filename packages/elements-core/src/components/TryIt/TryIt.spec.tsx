@@ -1245,6 +1245,14 @@ describe('TryIt', () => {
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock.mock.calls[0][0]).toContain('https://x-123.todos-pr.stoplight.io');
+      fetchMock.mockClear();
+
+      userEvent.clear(prField);
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('https://x-1000.todos-pr.stoplight.io');
     });
 
     it('Persists chosen server between renders of different operations if URL is the same', async () => {
