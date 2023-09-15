@@ -85,7 +85,7 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean; defaultIsO
         <Tooltip
           placement="right"
           renderTrigger={() => (
-            <Text aria-label={description} whitespace="normal">
+            <Text aria-label={description} whitespace="normal" wordBreak="all">
               {urlFragments.map(({ kind, value }, i) => (
                 <Text key={i} fontWeight={kind === 'variable' ? 'semibold' : 'normal'}>
                   {value}
