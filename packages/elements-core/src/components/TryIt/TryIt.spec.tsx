@@ -878,7 +878,7 @@ describe('TryIt', () => {
         // switch back to API Key
         userEvent.click(securitySchemesButton);
 
-        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key' });
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
         userEvent.click(securitySchemes);
 
         APIKeyField = screen.getByLabelText('API Key');
@@ -938,6 +938,78 @@ describe('TryIt', () => {
 
         expect(usernameInput).toHaveValue('user');
         expect(passwordInput).toHaveValue('password');
+      });
+
+      it('adds key value to menu items if multiple schemes of same security type', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
+        userEvent.click(securitySchemes);
+
+        // switch back to API Key
+        userEvent.click(securitySchemesButton);
+
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+      });
+
+      it('keeps distinct values for multiple schemes of same security type', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        // Fill in 123 for API Key 1
+        let APIKeyField = screen.getByLabelText('API Key');
+        userEvent.type(APIKeyField, '123');
+
+        // Fill in 456 for API Key 2
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key 2');
+        userEvent.type(APIKeyField, '456');
+
+        // switch back to API Key 1 confirm still 123
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key');
+        expect(APIKeyField).toHaveValue('123');
+
+        // switch back to API Key 2 confirm still 456
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key 2');
+        expect(APIKeyField).toHaveValue('456');
+      });
+
+      it('renders AND security correctly in menu item list, retaining values through rerender', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        // Select AND security from menu
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key & Basic Auth' });
+        userEvent.click(securitySchemes);
+
+        // Fill in a value from each scheme
+        let APIKeyField = screen.getByLabelText('API Key 2');
+        userEvent.type(APIKeyField, '123');
+
+        let usernameInput = screen.getByLabelText('Username');
+        userEvent.type(usernameInput, 'user');
+
+        // Rerender and confirm values
+        rerender(<TryItWithPersistence httpOperation={putOperation} />);
+
+        APIKeyField = screen.getByLabelText('API Key 2');
+        usernameInput = screen.getByLabelText('Username');
+
+        expect(usernameInput).toHaveValue('user');
+        expect(APIKeyField).toHaveValue('123');
       });
     });
 

@@ -2,9 +2,9 @@ import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import * as React from 'react';
 
-import { getReadableSecurityName, getReadableSecurityNames } from '../../../utils/oas/security';
+import { getReadableSecurityName, getReadableSecurityNames, shouldIncludeKey } from '../../../utils/oas/security';
 import { APIKeyAuth } from './APIKeyAuth';
-import { usePersistedSecuritySchemeWithValues } from './authentication-utils';
+import { createUndefinedValuedSchemes, HttpSecuritySchemeWithValues } from './authentication-utils';
 import { BasicAuth } from './BasicAuth';
 import { BearerAuth } from './BearerAuth';
 import { DigestAuth } from './DigestAuth';
@@ -12,44 +12,90 @@ import { OAuth2Auth } from './OAuth2Auth';
 
 interface TryItAuthProps {
   operationSecuritySchemes: HttpSecurityScheme[][];
+  operationAuthValue: HttpSecuritySchemeWithValues[] | undefined;
+  setOperationAuthValue: React.Dispatch<HttpSecuritySchemeWithValues | undefined>;
+  setCurrentScheme: React.Dispatch<HttpSecuritySchemeWithValues[] | undefined>;
 }
 
-export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecuritySchemes }) => {
-  const [operationAuthValue, setOperationAuthValue, setCurrentScheme] = usePersistedSecuritySchemeWithValues();
+const shouldAddKey = (auth: HttpSecurityScheme[], operationSecuritySchemes: HttpSecurityScheme[][]) => {
+  if (auth.length !== 1) return false;
+  return shouldIncludeKey(operationSecuritySchemes.flat(1), auth[0].type);
+};
 
-  const filteredSecurityItems = operationSecuritySchemes.filter(auth =>
-    auth.every(scheme => securitySchemeKeys.includes(scheme.type)),
+const checkViableCurrentAuth = (
+  current: HttpSecuritySchemeWithValues[] | undefined,
+  operationSecuritySchemes: HttpSecurityScheme[][],
+) => {
+  if (current === undefined) return false;
+
+  const flattened = operationSecuritySchemes.flat(1);
+  for (const element of current) {
+    if (!flattened.some(flat => flat.id === element.scheme.id)) return false;
+  }
+
+  return true;
+};
+
+const createMenuChild = (name: string, currentItemName: string | undefined, onPress: () => void) => {
+  return {
+    id: `security-scheme-${name}`,
+    title: name,
+    isChecked: name === currentItemName,
+    onPress,
+  };
+};
+
+export const TryItAuth: React.FC<TryItAuthProps> = ({
+  operationSecuritySchemes,
+  operationAuthValue,
+  setOperationAuthValue,
+  setCurrentScheme,
+}) => {
+  const filteredSecurityItems = operationSecuritySchemes.filter(
+    auth => auth.length > 0 && auth.every(scheme => securitySchemeKeys.includes(scheme.type)),
   );
 
   const menuName = operationAuthValue
     ? getReadableSecurityNames(operationAuthValue.map(auth => auth.scheme))
     : 'Security Scheme';
 
+  const currentName = operationAuthValue
+    ? getReadableSecurityNames(
+        operationAuthValue.map(auth => auth.scheme),
+        shouldAddKey(
+          operationAuthValue.map(auth => auth.scheme),
+          operationSecuritySchemes,
+        ),
+      )
+    : undefined;
+
   const handleChange = (scheme: HttpSecurityScheme, authValue?: string) => {
     setOperationAuthValue({ scheme, authValue });
   };
+
+  React.useEffect(() => {
+    if (checkViableCurrentAuth(operationAuthValue, operationSecuritySchemes) === false) {
+      setCurrentScheme(createUndefinedValuedSchemes(operationSecuritySchemes[0]));
+    }
+  });
 
   const menuItems = React.useMemo(() => {
     const items: MenuItems = [
       {
         type: 'group',
         title: 'Security Schemes',
-        children: filteredSecurityItems.map(auth => ({
-          id: `security-scheme-${getReadableSecurityNames(auth)}}`,
-          title: getReadableSecurityNames(auth),
-          isChecked: getReadableSecurityNames(auth) === menuName,
-          onPress: () =>
-            setCurrentScheme(
-              auth.map(scheme => {
-                return { scheme, authValue: undefined };
-              }),
-            ),
-        })),
+        children: filteredSecurityItems.map(auth =>
+          createMenuChild(
+            getReadableSecurityNames(auth, shouldAddKey(auth, operationSecuritySchemes)),
+            currentName,
+            () => setCurrentScheme(createUndefinedValuedSchemes(auth)),
+          ),
+        ),
       },
     ];
 
     return items;
-  }, [filteredSecurityItems, menuName, setCurrentScheme]);
+  }, [currentName, filteredSecurityItems, operationSecuritySchemes, setCurrentScheme]);
 
   if (filteredSecurityItems.length === 0) return null;
 

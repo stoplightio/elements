@@ -31,13 +31,14 @@ export function getReadableSecurityName(securityScheme: HttpSecurityScheme, incl
   return includeKey ? `${name} (${securityScheme.key})` : name;
 }
 
-export function getReadableSecurityNames(securitySchemes: HttpSecurityScheme[]) {
+export function getReadableSecurityNames(securitySchemes: HttpSecurityScheme[], includeKey: boolean = false) {
   let name = '';
   for (let i = 0; i < securitySchemes.length; i++) {
     if (i > 0) name += ' & ';
-    name += getReadableSecurityName(securitySchemes[i], false);
+    name += getReadableSecurityName(securitySchemes[i], shouldIncludeKey(securitySchemes, securitySchemes[i].type));
   }
-  return name;
+
+  return includeKey ? `${name} (${securitySchemes[0].key})` : name;
 }
 
 export function getServiceUriFromOperation(uri: string) {

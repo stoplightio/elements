@@ -103,3 +103,7 @@ export const usePersistedSecuritySchemeWithValues = (): [
 
   return [schemeWithPersistedValue, setPersistedAuthenticationSettings, setCurrentScheme];
 };
+
+export const createUndefinedValuedSchemes = (schemes: HttpSecurityScheme[]): HttpSecuritySchemeWithValues[] => {
+  return schemes.map(scheme => ({ scheme, authValue: undefined }));
+};

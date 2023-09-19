@@ -99,7 +99,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
   const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
 
-  const [operationAuthValue] = usePersistedSecuritySchemeWithValues();
+  const [operationAuthValue, setOperationAuthValue, setCurrentScheme] = usePersistedSecuritySchemeWithValues();
 
   const servers = React.useMemo(() => {
     return getServersToDisplay(httpOperation.servers || defaultServers, mockUrl, false);
@@ -231,7 +231,14 @@ export const TryIt: React.FC<TryItProps> = ({
 
   const tryItPanelContents = (
     <>
-      {httpOperation.security?.length ? <TryItAuth operationSecuritySchemes={httpOperation.security} /> : null}
+      {httpOperation.security?.length ? (
+        <TryItAuth
+          operationSecuritySchemes={httpOperation.security}
+          operationAuthValue={operationAuthValue}
+          setOperationAuthValue={setOperationAuthValue}
+          setCurrentScheme={setCurrentScheme}
+        />
+      ) : null}
 
       {serverVariables.length > 0 && (
         <ServerVariables
