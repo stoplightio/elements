@@ -31,6 +31,15 @@ export function getReadableSecurityName(securityScheme: HttpSecurityScheme, incl
   return includeKey ? `${name} (${securityScheme.key})` : name;
 }
 
+export function getReadableSecurityNames(securitySchemes: HttpSecurityScheme[]) {
+  let name = '';
+  for (let i = 0; i < securitySchemes.length; i++) {
+    if (i > 0) name += ' & ';
+    name += getReadableSecurityName(securitySchemes[i], false);
+  }
+  return name;
+}
+
 export function getServiceUriFromOperation(uri: string) {
   const match = uri?.match(/(.*)\/(paths|operations)/);
   return match && match.length > 1 ? match[1] || '/' : undefined;

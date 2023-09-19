@@ -533,8 +533,6 @@ export const httpOperation: IHttpOperation = {
         in: 'query',
         description: "Use `?apikey=123` to authenticate requests. It's super secure.",
       },
-    ],
-    [
       {
         id: '?http-security-basicKey?',
         key: 'basicKey',
