@@ -63,13 +63,9 @@ jobs:
           working_directory: /mnt/ramdisk/project
           command: yarn copy:<<parameters.example-name>>
       - run:
-          name: Example - Install dependencies
-          working_directory: /mnt/ramdisk/project/examples-dev/<<parameters.example-name>>
-          command: yarn install
-      - run:
-          name: Example - Build
-          working_directory: /mnt/ramdisk/project/examples-dev/<<parameters.example-name>>
-          command: yarn build
+          name: Example - Install dependencies and build
+          working_directory: /mnt/ramdisk/project
+          command: yarn build:<<parameters.example-name>>
       - run:
           name: Run E2E checks
           command: yarn e2e:run:<<parameters.example-name>>
