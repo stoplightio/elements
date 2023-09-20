@@ -1,3 +1,4 @@
 module.exports = {
-    extends: ["@stoplight"],
-  };
+  root: true,
+  extends: ["@stoplight"],
+};
