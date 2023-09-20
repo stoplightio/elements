@@ -1,13 +1,15 @@
 [![Elements - OpenAPI Powered API Documentation](docs/images/readme-header.svg)][elements_landing_page]
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplight-elements.netlify.app)
-[![CircleCI][circle_ci_image]][circle_ci]
-[![NPM Downloads][circle_ci_image]][npm]
+[![CircleCI][circle_ci_image]][circle_ci] [![NPM Downloads][circle_ci_image]][npm]
 [![Stoplight Forest](https://img.shields.io/ecologi/trees/stoplightinc)][stoplight_forest]
 
-Beautiful API documentation powered by OpenAPI and Markdown. Use these UI components to create API reference documentation, or more complete documentation with Markdown articles covering tutorials, how-to guides, etc.
+Beautiful API documentation powered by OpenAPI and Markdown. Use these UI components to create API reference
+documentation, or more complete documentation with Markdown articles covering tutorials, how-to guides, etc.
 
-Available as React Components, or Web Components, you can use Elements all together to build beautiful three-column "Stripe-esque" documentation, or stacked documentation thats easier for integrating into existing Content Management Systems with their own navigation.
+Available as React Components, or Web Components, you can use Elements all together to build beautiful three-column
+"Stripe-esque" documentation, or stacked documentation thats easier for integrating into existing Content Management
+Systems with their own navigation.
 
 # Overview
 
@@ -26,17 +28,22 @@ Available as React Components, or Web Components, you can use Elements all toget
 
 ## 📖 Community
 
-Let's chat about features, ideas, what you're doing with Elements, on [GitHub Discussions](https://github.com/stoplightio/elements/discussions).
+Let's chat about features, ideas, what you're doing with Elements, on
+[GitHub Discussions](https://github.com/stoplightio/elements/discussions).
 
 ## 👁️🗨 ️️Examples
 
-Stoplight Elements comes with a few example integration projects, showing you how to utilize Elements with different frameworks.
+Stoplight Elements comes with a few example integration projects, showing you how to utilize Elements with different
+frameworks.
+
 - **[react-cra](./examples/react-cra)** - An example app built Create React App utilizing Stoplight Elements.
 - **[react-gatsby](./examples/react-gatsby)** - An example Gatsby site utilizing Stoplight Elements.
 - **[angular](./examples/angular)** - An angular app utilizing the Web Components distribution of Elements.
-- **[bootstrap](./examples/bootstrap)** - A single HTML page utilizing the Web Components distribution via a global script tag.
+- **[bootstrap](./examples/bootstrap)** - A single HTML page utilizing the Web Components distribution via a global
+  script tag.
 
 To run these examples yourself:
+
 1. Clone this repo.
 2. Go to `examples` folder and open an example, e.g.: `examples/angular`.
 3. Run `yarn` to install all dependencies.
@@ -46,7 +53,8 @@ To run these examples yourself:
 
 ## 🏁 Usage
 
-The examples will hopefully help show Elements working in close to real world situations, but the most bare bones examples of Elements can be found below.
+The examples will hopefully help show Elements working in close to real world situations, but the most bare bones
+examples of Elements can be found below.
 
 ### React Component
 
@@ -55,43 +63,42 @@ $ npm install @stoplight/elements
 ```
 
 ```js
-import { API } from "@stoplight/elements";
+import { API } from '@stoplight/elements';
 
-<API
-  apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
-  router="history"
-/>
+<API apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml" router="history" />;
 ```
 
-For more information on using Elements as a React component, head over to our [React documentation](docs/getting-started/elements/react.md).
+For more information on using Elements as a React component, head over to our
+[React documentation](docs/getting-started/elements/react.md).
+
 ### Web Component
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Elements in HTML</title>
     <!-- Embed elements Elements via Web Component -->
     <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css" />
   </head>
   <body>
-
     <elements-api
       apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
       router="hash"
       layout="sidebar"
     />
-
   </body>
 </html>
 ```
 
-Load this page up in your browser and you should see the [GitHub REST API](https://docs.github.com/en/rest) documented in Stoplight Elements.
+Load this page up in your browser and you should see the [GitHub REST API](https://docs.github.com/en/rest) documented
+in Stoplight Elements.
 
-For more information on using Elements as a Web Component, head over to our [Web Component documentation](docs/getting-started/elements/html.md).
+For more information on using Elements as a Web Component, head over to our
+[Web Component documentation](docs/getting-started/elements/html.md).
 
 ## 🚧 Roadmap
 
@@ -107,25 +114,31 @@ For more information on using Elements as a Web Component, head over to our [Web
 - [ ] Webhooks
 - [x] Multiple APIs (a.k.a "Dev Portal")
 
-Submit your ideas for new functionality on the [Stoplight Roadmap](https://roadmap.stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme).
+Submit your ideas for new functionality on the
+[Stoplight Roadmap](https://roadmap.stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme).
 
 ## ⚙️ Integrations
 
-- [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Free visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
-- [Stoplight Platform](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
-- [LaravelPHP Elements](https://packagist.org/packages/juststeveking/laravel-stoplight-elements) - A simple API documentation package for Laravel using OpenAPI and Stoplight Elements.
+- [Stoplight Studio](https://stoplight.io/studio/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Free
+  visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
+- [Stoplight Platform](https://stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme) - Collaborative
+  API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
+- [LaravelPHP Elements](https://packagist.org/packages/juststeveking/laravel-stoplight-elements) - A simple API
+  documentation package for Laravel using OpenAPI and Stoplight Elements.
 
 ## 🏁 Help Others Utilize Elements
 
-If you're using Elements for an interesting use case, [contact us](mailto:growth@stoplight.io) for a case study. We'll add it to a list here. Spread the goodness 🎉
+If you're using Elements for an interesting use case, [contact us](mailto:growth@stoplight.io) for a case study. We'll
+add it to a list here. Spread the goodness 🎉
 
 ## 👏 Contributing
 
-If you are interested in contributing to Elements itself, check out our [contributing docs ⇗][contributing] and [code of conduct ⇗][code_of_conduct] to get started.
+If you are interested in contributing to Elements itself, check out our [contributing docs ⇗][contributing] and [code of
+conduct ⇗][code_of_conduct] to get started.
 
 ## 🎉 Thanks
 
-Elements is built on top of lots of excellent packages, and here are a few we'd like to say a special thanks to.
+Elements is built on top of lots of excellent packages, and here are a few we'd like to say a special thanks to:
 
 - [httpsnippet](https://www.npmjs.com/package/httpsnippet) by [Kong](https://github.com/Kong).
 - [openapi-sampler](https://www.npmjs.com/package/openapi-sampler) by [ReDocly](https://redoc.ly/).
@@ -137,7 +150,6 @@ Check these projects out!
 If you would like to thank us for creating Elements, we ask that you [**buy the world a tree**][stoplight_forest].
 
 [stoplight_forest]: https://ecologi.com/stoplightinc
-
 [code_of_conduct]: CODE_OF_CONDUCT.md
 [contributing]: CONTRIBUTING.md
 [download-release]: https://github.com/stoplightio/elements/releases/latest
