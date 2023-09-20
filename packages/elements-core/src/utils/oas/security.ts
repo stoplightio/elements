@@ -6,7 +6,7 @@ import {
   IOauth2ImplicitFlow,
   IOauth2PasswordFlow,
 } from '@stoplight/types';
-import { capitalize, filter, isObject } from 'lodash';
+import { capitalize, filter, flatten, isObject } from 'lodash';
 
 export function getReadableSecurityName(securityScheme: HttpSecurityScheme, includeKey: boolean = false) {
   let name = '';
@@ -31,6 +31,16 @@ export function getReadableSecurityName(securityScheme: HttpSecurityScheme, incl
   return includeKey ? `${name} (${securityScheme.key})` : name;
 }
 
+export function getReadableSecurityNames(securitySchemes: HttpSecurityScheme[], includeKey: boolean = false) {
+  let name = '';
+  for (let i = 0; i < securitySchemes.length; i++) {
+    if (i > 0) name += ' & ';
+    name += getReadableSecurityName(securitySchemes[i], shouldIncludeKey(securitySchemes, securitySchemes[i].type));
+  }
+
+  return includeKey ? `${name} (${securitySchemes[0].key})` : name;
+}
+
 export function getServiceUriFromOperation(uri: string) {
   const match = uri?.match(/(.*)\/(paths|operations)/);
   return match && match.length > 1 ? match[1] || '/' : undefined;
@@ -50,3 +60,8 @@ export const isOauth2ClientCredentialsOrPasswordFlow = (
 export function shouldIncludeKey(schemes: HttpSecurityScheme[], type: HttpSecurityScheme['type']) {
   return filter(schemes, { type }).length > 1;
 }
+
+export const shouldAddKey = (auth: HttpSecurityScheme[], operationSecuritySchemes: HttpSecurityScheme[][]) => {
+  if (auth.length !== 1) return false;
+  return shouldIncludeKey(flatten(operationSecuritySchemes.filter(scheme => scheme.length === 1)), auth[0].type);
+};
