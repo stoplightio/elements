@@ -68,7 +68,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
   if (filteredSecurityItems.length === 0) return null;
 
   return (
-    <Panel defaultIsOpen>
+    <Panel defaultIsOpen data-test="try-it-auth">
       <Panel.Titlebar
         rightComponent={
           filteredSecurityItems.length > 1 && (
@@ -93,7 +93,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
 };
 
 const GenericMessageContainer: React.FC<{ scheme: HttpSecurityScheme }> = ({ scheme }) => {
-  return <Panel.Content>Coming Soon: {getReadableSecurityName(scheme)}</Panel.Content>;
+  return <Panel.Content data-test="auth-try-it-row">Coming Soon: {getReadableSecurityName(scheme)}</Panel.Content>;
 };
 
 interface SecuritySchemeComponentProps {

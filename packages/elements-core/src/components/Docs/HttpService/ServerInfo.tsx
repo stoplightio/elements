@@ -33,7 +33,7 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
 
   return (
     <InvertTheme>
-      <Panel rounded isCollapsible={false} className="BaseURLContent" w="full">
+      <Panel rounded isCollapsible={false} className="BaseURLContent" w="full" data-test="servers">
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Panel.Content w="full" className="sl-flex sl-flex-col">
           <VStack spacing={1} divider>
@@ -76,7 +76,7 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean; defaultIsO
   );
 
   return (
-    <Panel isCollapsible={!!variablesSchema} defaultIsOpen={defaultIsOpen} w="full">
+    <Panel isCollapsible={!!variablesSchema} defaultIsOpen={defaultIsOpen} w="full" data-test="server-row">
       <Panel.Titlebar whitespace="nowrap">
         <Text pl={titlePaddingLeft} pr={2} fontWeight="bold">
           {description}:

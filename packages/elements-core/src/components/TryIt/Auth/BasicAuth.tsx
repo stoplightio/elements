@@ -14,7 +14,7 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
   };
 
   return (
-    <Panel.Content className="ParameterGrid">
+    <Panel.Content className="ParameterGrid" data-test="auth-try-it-row">
       <div>Username</div>
       <Text mx={3}>:</Text>
       <Flex flex={1}>

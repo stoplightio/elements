@@ -132,7 +132,7 @@ const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[][] }) => {
   return (
     <VStack spacing={3}>
       {schemes.map((scheme, i) => (
-        <Box pos="relative" key={i} p={0}>
+        <Box pos="relative" key={i} p={0} data-test="security-row">
           <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
           <NodeAnnotation change={nodeHasChanged?.({ nodeId: scheme.map(node => node.id).join('') })} />
         </Box>
