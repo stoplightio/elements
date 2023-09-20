@@ -94,6 +94,8 @@ const schemeExpandedState = atomWithStorage<Record<string, boolean>>('HttpOperat
 
 const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boolean }> = ({ schemes, includeKey }) => {
   const [expandedState, setExpanded] = useAtom(schemeExpandedState);
+  const { nodeHasChanged } = useOptionsCtx();
+
   const collection = schemes.length > 1;
 
   return (
@@ -115,6 +117,7 @@ const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boole
               style={{ fontSize: 12 }}
               markdown={`${scheme.description ?? ''}\n\n` + getDefaultDescription(scheme)}
             />
+            <NodeAnnotation change={nodeHasChanged?.({ nodeId: scheme.id })} />
           </Box>
         ))}
       </Box>
@@ -123,8 +126,6 @@ const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boole
 };
 
 const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[][] }) => {
-  const { nodeHasChanged } = useOptionsCtx();
-
   if (!schemes.length) {
     return null;
   }
@@ -134,7 +135,6 @@ const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[][] }) => {
       {schemes.map((scheme, i) => (
         <Box pos="relative" key={i} p={0} data-test="security-row">
           <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
-          <NodeAnnotation change={nodeHasChanged?.({ nodeId: scheme.map(node => node.id).join('') })} />
         </Box>
       ))}
     </VStack>
