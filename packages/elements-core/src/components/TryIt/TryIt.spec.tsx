@@ -840,7 +840,10 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={emptySecurityOperation} />);
 
         let authPanel = screen.queryByText('Auth');
-        expect(authPanel).not.toBeInTheDocument();
+        expect(authPanel).toBeInTheDocument();
+
+        let noAuthCount = screen.getAllByText('No auth selected').length;
+        expect(noAuthCount).toBe(1);
       });
 
       it("does not show up the Security Schemes select if there's only one schema", () => {
@@ -1010,6 +1013,34 @@ describe('TryIt', () => {
 
         expect(usernameInput).toHaveValue('user');
         expect(APIKeyField).toHaveValue('123');
+      });
+
+      it('renders None in the menu if a Optional security auth {} is presented', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
+        userEvent.click(securitySchemes);
+      });
+
+      it('display No auth selected if user chooses None in the menu', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OpenID Connect' });
+        userEvent.click(securitySchemes);
+        let noAuth = screen.queryByText('No auth selected');
+        expect(noAuth).toBe(null);
+
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
+        userEvent.click(securitySchemes);
+        let noAuthCount = screen.getAllByText('No auth selected').length;
+        expect(noAuthCount).toBe(1);
       });
     });
 

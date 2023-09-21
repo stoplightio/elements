@@ -584,6 +584,7 @@ export const httpOperation: IHttpOperation = {
         openIdConnectUrl: 'http://openIdConnect.com',
       },
     ],
+    [],
     [
       {
         id: '?http-security-oauth2Key?',

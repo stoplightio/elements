@@ -47,7 +47,7 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({
   setCurrentScheme,
 }) => {
   const filteredSecurityItems = operationSecuritySchemes.filter(
-    auth => auth.length > 0 && auth.every(scheme => securitySchemeKeys.includes(scheme.type)),
+    auth => auth.length === 0 || auth.every(scheme => securitySchemeKeys.includes(scheme.type)),
   );
 
   const menuName = operationAuthValue
@@ -114,20 +114,28 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({
       >
         Auth
       </Panel.Titlebar>
-      {operationAuthValue?.map(scheme => (
-        <SecuritySchemeComponent
-          key={scheme.scheme.key}
-          scheme={scheme.scheme}
-          onChange={(authValue?: string) => handleChange(scheme.scheme, authValue)}
-          value={scheme.authValue ?? ''}
-        />
-      ))}
+      {operationAuthValue && operationAuthValue.length > 0 ? (
+        operationAuthValue.map(scheme => (
+          <SecuritySchemeComponent
+            key={scheme.scheme.key}
+            scheme={scheme.scheme}
+            onChange={(authValue?: string) => handleChange(scheme.scheme, authValue)}
+            value={scheme.authValue ?? ''}
+          />
+        ))
+      ) : (
+        <OptionalMessageContainer />
+      )}
     </Panel>
   );
 };
 
 const GenericMessageContainer: React.FC<{ scheme: HttpSecurityScheme }> = ({ scheme }) => {
   return <Panel.Content>Coming Soon: {getReadableSecurityName(scheme)}</Panel.Content>;
+};
+
+const OptionalMessageContainer: React.FC = () => {
+  return <Panel.Content>No auth selected</Panel.Content>;
 };
 
 interface SecuritySchemeComponentProps {
