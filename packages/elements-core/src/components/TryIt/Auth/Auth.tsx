@@ -2,7 +2,7 @@ import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import * as React from 'react';
 
-import { getReadableSecurityName, getReadableSecurityNames, shouldIncludeKey } from '../../../utils/oas/security';
+import { getReadableSecurityName, getReadableSecurityNames, shouldAddKey } from '../../../utils/oas/security';
 import { APIKeyAuth } from './APIKeyAuth';
 import { createUndefinedValuedSchemes, HttpSecuritySchemeWithValues } from './authentication-utils';
 import { BasicAuth } from './BasicAuth';
@@ -16,11 +16,6 @@ interface TryItAuthProps {
   setOperationAuthValue: React.Dispatch<HttpSecuritySchemeWithValues | undefined>;
   setCurrentScheme: React.Dispatch<HttpSecuritySchemeWithValues[] | undefined>;
 }
-
-const shouldAddKey = (auth: HttpSecurityScheme[], operationSecuritySchemes: HttpSecurityScheme[][]) => {
-  if (auth.length !== 1) return false;
-  return shouldIncludeKey(operationSecuritySchemes.flat(1), auth[0].type);
-};
 
 const checkViableCurrentAuth = (
   current: HttpSecuritySchemeWithValues[] | undefined,

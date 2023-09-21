@@ -6,7 +6,7 @@ import {
   IOauth2ImplicitFlow,
   IOauth2PasswordFlow,
 } from '@stoplight/types';
-import { capitalize, filter, isObject } from 'lodash';
+import { capitalize, filter, flatten, isObject } from 'lodash';
 
 export function getReadableSecurityName(securityScheme: HttpSecurityScheme, includeKey: boolean = false) {
   let name = '';
@@ -60,3 +60,8 @@ export const isOauth2ClientCredentialsOrPasswordFlow = (
 export function shouldIncludeKey(schemes: HttpSecurityScheme[], type: HttpSecurityScheme['type']) {
   return filter(schemes, { type }).length > 1;
 }
+
+export const shouldAddKey = (auth: HttpSecurityScheme[], operationSecuritySchemes: HttpSecurityScheme[][]) => {
+  if (auth.length !== 1) return false;
+  return shouldIncludeKey(flatten(operationSecuritySchemes.filter(scheme => scheme.length === 1)), auth[0].type);
+};
