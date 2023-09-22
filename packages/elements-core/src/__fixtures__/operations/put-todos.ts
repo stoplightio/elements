@@ -536,6 +536,16 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        id: '?http-security-api_key2?',
+        key: 'api_key2',
+        type: 'apiKey',
+        name: 'API Key 2',
+        in: 'query',
+        description: "Use `?apikey2=456` to authenticate requests. It's super secure.",
+      },
+    ],
+    [
+      {
         id: '?http-security-basicKey?',
         key: 'basicKey',
         type: 'http',
@@ -574,6 +584,7 @@ export const httpOperation: IHttpOperation = {
         openIdConnectUrl: 'http://openIdConnect.com',
       },
     ],
+    [],
     [
       {
         id: '?http-security-oauth2Key?',
@@ -616,6 +627,24 @@ export const httpOperation: IHttpOperation = {
             authorizationUrl: 'http://authorizationUrl.com',
           },
         },
+      },
+    ],
+    [
+      {
+        id: '?http-security-api_key2?',
+        key: 'api_key2',
+        type: 'apiKey',
+        name: 'API Key 2',
+        in: 'query',
+        description: "Use `?apikey2=456` to authenticate requests. It's super secure.",
+      },
+      {
+        id: '?http-security-basicKey?',
+        key: 'basicKey',
+        type: 'http',
+        scheme: 'basic',
+        description:
+          'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
       },
     ],
   ],

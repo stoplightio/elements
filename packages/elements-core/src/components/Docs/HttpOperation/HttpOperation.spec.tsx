@@ -63,8 +63,8 @@ describe('HttpOperation', () => {
     it('should display security panel for each security scheme', () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
 
-      const apikeyPanel = screen.getByText(/Security: API Key/i);
-      const basicPanel = screen.getByText(/Security: Basic Auth/i);
+      const apikeyPanel = screen.getByText(/Security: API Key \(api_key\)/i);
+      const basicPanel = screen.getAllByText(/Security: Basic Auth/i)[0];
       const bearerPanel = screen.getByText(/Security: Bearer Auth/i);
       const oidcPanel = screen.getByText(/Security: OpenID Connect/i);
       const oauthPanel = screen.getByText(/Security: OAuth 2.0/i);
