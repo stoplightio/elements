@@ -26,12 +26,16 @@ export function getReadableSecurityName(securityScheme: HttpSecurityScheme, incl
     case 'mutualTLS':
       name = 'Mutual TLS';
       break;
+    case undefined:
+      name = 'None';
+      break;
   }
 
   return includeKey ? `${name} (${securityScheme.key})` : name;
 }
 
 export function getReadableSecurityNames(securitySchemes: HttpSecurityScheme[], includeKey: boolean = false) {
+  if (securitySchemes.length === 0) return 'None';
   let name = '';
   for (let i = 0; i < securitySchemes.length; i++) {
     if (i > 0) name += ' & ';

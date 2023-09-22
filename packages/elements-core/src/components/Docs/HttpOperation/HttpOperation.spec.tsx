@@ -159,7 +159,7 @@ describe('HttpOperation', () => {
 
       expect(oauthPanel).toBeInTheDocument();
       expect(screen.queryByText('write:pets')).not.toBeInTheDocument();
-      expect(apiKeysBefore).toHaveLength(6);
+      expect(apiKeysBefore).toHaveLength(7);
       expect(oauthKeysBefore).toHaveLength(2);
 
       act(() => oauthPanel.click());
@@ -168,7 +168,7 @@ describe('HttpOperation', () => {
       const oauthKeysAfter = screen.getAllByText(/OAuth 2.0/i);
 
       expect(screen.queryAllByText('write:pets')).toHaveLength(4);
-      expect(apiKeysAfter).toHaveLength(10);
+      expect(apiKeysAfter).toHaveLength(11);
       expect(oauthKeysAfter).toHaveLength(3);
 
       unmount();
