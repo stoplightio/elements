@@ -59,13 +59,13 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
         <VStack spacing={6}>
           <ServerInfo servers={data.servers ?? []} mockUrl={mocking.mockUrl} />
 
-          <Box>
+          <Box data-test="security">
             {data.securitySchemes?.length ? (
               <SecuritySchemes schemes={data.securitySchemes} defaultScheme={query.get('security') || undefined} />
             ) : null}
           </Box>
 
-          <Box>
+          <Box data-test="additional-info">
             {(data.contact?.email || data.license || data.termsOfService) && (
               <AdditionalInfo
                 id={data.id}

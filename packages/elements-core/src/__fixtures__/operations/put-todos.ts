@@ -576,6 +576,24 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        id: '?http-security-api_key?',
+        key: 'api_key',
+        type: 'apiKey',
+        name: 'API Key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+      {
+        id: '?http-security-api_key2?',
+        key: 'api_key2',
+        type: 'apiKey',
+        name: 'Alternate API key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+    ],
+    [
+      {
         id: '?http-security-openIdConnectKey?',
         key: 'openIdConnectKey',
         type: 'openIdConnect',
@@ -585,6 +603,58 @@ export const httpOperation: IHttpOperation = {
       },
     ],
     [],
+    [
+      {
+        id: '?http-security-oauth2Key?',
+        key: 'oauth2Key',
+        type: 'oauth2',
+        description:
+          'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
+        flows: {
+          implicit: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            authorizationUrl: 'http://authorizationUrl.com',
+          },
+          password: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+          },
+          clientCredentials: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+          },
+          authorizationCode: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+            authorizationUrl: 'http://authorizationUrl.com',
+          },
+        },
+      },
+      {
+        id: '?http-security-api_key?',
+        key: 'api_key',
+        type: 'apiKey',
+        name: 'API Key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+    ],
     [
       {
         id: '?http-security-oauth2Key?',

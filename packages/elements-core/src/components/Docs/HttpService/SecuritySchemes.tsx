@@ -20,7 +20,7 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({
   defaultCollapsed = false,
 }) => {
   return (
-    <Panel rounded isCollapsible={defaultCollapsed}>
+    <Panel rounded isCollapsible={defaultCollapsed} data-test="security-row">
       <Panel.Titlebar bg="canvas-300">
         <Box as="span" role="heading">
           Security

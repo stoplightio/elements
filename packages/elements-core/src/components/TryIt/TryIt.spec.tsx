@@ -859,7 +859,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         expect(securitySchemesButton).toHaveTextContent('OAuth 2.0');
@@ -875,13 +875,13 @@ describe('TryIt', () => {
         let securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        let securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         // switch back to API Key
         userEvent.click(securitySchemesButton);
 
-        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
+        securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'API Key (api_key)' })[0];
         userEvent.click(securitySchemes);
 
         APIKeyField = screen.getByLabelText('API Key');
@@ -1109,7 +1109,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         const tokenInput = screen.getByLabelText('Token');
