@@ -129,7 +129,6 @@ const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[][] }) => {
   if (!schemes.length) {
     return null;
   }
-  /* Note: not sure what to do about the nodeId below and how important it was to be tied to the scheme id like that... */
   return (
     <VStack spacing={3}>
       {schemes.map((scheme, i) => (
