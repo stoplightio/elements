@@ -1,9 +1,10 @@
-import { Box, VStack } from '@stoplight/mosaic';
+import { Box, Callout, VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import * as React from 'react';
 
+import { OptionalSecurityMessage } from '../../../constants';
 import { getReadableSecurityNames, shouldAddKey } from '../../../utils/oas/security';
 import { SectionSubtitle, SectionTitle, SubSectionPanel } from '../Sections';
 import { PanelContent } from '../Security/PanelContent';
@@ -105,13 +106,23 @@ const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[][] }) => {
   if (!schemes.length) {
     return null;
   }
+
+  const includeOptional = schemes.length > 1 && schemes.some(scheme => scheme.length === 0);
+
   return (
     <VStack spacing={3}>
-      {schemes.map((scheme, i) => (
-        <Box pos="relative" key={i} p={0} data-test="security-row">
-          <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
-        </Box>
-      ))}
+      {includeOptional && <OptionalMessage />}
+      {schemes
+        .filter(scheme => scheme.length > 0) // Remove the None scheme from listed display
+        .map((scheme, i) => (
+          <Box pos="relative" key={i} p={0} data-test="security-row">
+            <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
+          </Box>
+        ))}
     </VStack>
   );
+};
+
+const OptionalMessage: React.FC = () => {
+  return <Callout appearance="outline">{OptionalSecurityMessage}</Callout>;
 };

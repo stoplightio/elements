@@ -148,7 +148,7 @@ describe('HttpService', () => {
     it('should not render if no security schemes provided', () => {
       render(
         <Router>
-          <HttpService data={{ ...httpService, securitySchemes: [] }} />
+          <HttpService data={{ ...httpService, security: [] }} />
         </Router>,
       );
 

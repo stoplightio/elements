@@ -78,14 +78,20 @@ describe('computeOasNodes', () => {
         name: 'oas3',
         tags: [
           {
-            id: 'd3404a8f3b495',
+            id: '68c460dd9e97a',
             name: 'operation-tag',
           },
           {
-            id: 'd0460398c5f2b',
+            id: 'feec8b579ae6b',
             name: 'model-tag',
           },
         ],
+        extensions: {
+          'x-stoplight': {
+            id: 'abc',
+          },
+        },
+        infoExtensions: {},
       },
       tags: ['operation-tag', 'model-tag'],
       children: [
@@ -100,10 +106,6 @@ describe('computeOasNodes', () => {
             responses: [],
             servers: [],
             request: {
-              body: {
-                id: '704ac0beb3748',
-                contents: [],
-              },
               headers: [],
               query: [],
               cookie: [],
@@ -111,11 +113,12 @@ describe('computeOasNodes', () => {
             },
             tags: [
               {
-                id: 'd3404a8f3b495',
+                id: '68c460dd9e97a',
                 name: 'operation-tag',
               },
             ],
             security: [],
+            securityDeclarationType: 'inheritedFromService',
             extensions: {},
           },
           name: 'Get Todos',
@@ -151,14 +154,20 @@ describe('computeOasNodes', () => {
         name: 'oas2',
         tags: [
           {
-            id: 'd3404a8f3b495',
+            id: '68c460dd9e97a',
             name: 'operation-tag',
           },
           {
-            id: 'd0460398c5f2b',
+            id: 'feec8b579ae6b',
             name: 'model-tag',
           },
         ],
+        extensions: {
+          'x-stoplight': {
+            id: 'abc',
+          },
+        },
+        infoExtensions: {},
         version: '1.0.0',
       },
       tags: ['operation-tag', 'model-tag'],
@@ -181,11 +190,12 @@ describe('computeOasNodes', () => {
             },
             tags: [
               {
-                id: 'd3404a8f3b495',
+                id: '68c460dd9e97a',
                 name: 'operation-tag',
               },
             ],
             security: [],
+            securityDeclarationType: 'inheritedFromService',
             extensions: {},
           },
           name: 'Get Todos',
@@ -237,6 +247,12 @@ describe('computeOasNodes', () => {
         id: 'def',
         version: '1.0.0',
         name: 'oas3',
+        extensions: {
+          'x-stoplight': {
+            id: 'def',
+          },
+        },
+        infoExtensions: {},
       },
       children: [
         {
@@ -250,10 +266,6 @@ describe('computeOasNodes', () => {
             responses: [],
             servers: [],
             request: {
-              body: {
-                id: '67f97b0ec0ef8',
-                contents: [],
-              },
               headers: [],
               query: [],
               cookie: [],
@@ -261,6 +273,7 @@ describe('computeOasNodes', () => {
             },
             tags: [],
             security: [],
+            securityDeclarationType: 'inheritedFromService',
             extensions: {},
           },
           tags: [],
@@ -296,6 +309,12 @@ describe('computeOasNodes', () => {
         id: 'def',
         version: '1.0.0',
         name: 'oas3',
+        extensions: {
+          'x-stoplight': {
+            id: 'def',
+          },
+        },
+        infoExtensions: {},
       },
       children: [
         {
@@ -309,16 +328,14 @@ describe('computeOasNodes', () => {
             responses: [],
             servers: [],
             request: {
-              body: {
-                id: '9b96158a8647a',
-                contents: [],
-              },
               headers: [],
               query: [],
               cookie: [],
               path: [],
             },
             tags: [],
+
+            securityDeclarationType: 'inheritedFromService',
             security: [],
             extensions: {},
           },

@@ -164,3 +164,6 @@ export const CodeToIntentMap: Record<number, IntentVals> = {
   4: 'warning',
   5: 'danger',
 };
+
+export const OptionalSecurityMessage =
+  'Requiring authorization is optional.  A user can access data without authorization or with authorization, if provided.';
