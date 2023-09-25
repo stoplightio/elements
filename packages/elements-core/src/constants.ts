@@ -23,6 +23,9 @@ export const NodeTypeColors: Dictionary<string, NodeType> = {
   spectral_ruleset: '',
   styleguide: '',
   image: '',
+  http_callback: '',
+  stoplight_override: '',
+  stoplight_resolutions: '',
 };
 
 export const NodeTypePrettyName: Dictionary<string, NodeType> = {
@@ -37,6 +40,9 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   spectral_ruleset: '',
   styleguide: '',
   image: '',
+  http_callback: '',
+  stoplight_override: '',
+  stoplight_resolutions: '',
 };
 
 export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
@@ -51,6 +57,9 @@ export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
   spectral_ruleset: faQuestionCircle,
   styleguide: faQuestionCircle,
   image: faImage,
+  http_callback: faQuestionCircle,
+  stoplight_override: faQuestionCircle,
+  stoplight_resolutions: faQuestionCircle,
 };
 
 export const HttpSecuritySchemeColors: Partial<Record<HttpSecurityScheme['type'], string>> = {

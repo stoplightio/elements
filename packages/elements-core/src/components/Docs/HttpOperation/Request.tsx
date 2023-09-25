@@ -1,19 +1,12 @@
-import { Box, NodeAnnotation, VStack } from '@stoplight/mosaic';
+import { Box, VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import * as React from 'react';
 
-import { useOptionsCtx } from '../../../context/Options';
-import {
-  getReadableSecurityName,
-  getReadableSecurityNames,
-  shouldAddKey,
-  shouldIncludeKey,
-} from '../../../utils/oas/security';
-import { getDefaultDescription } from '../../../utils/securitySchemes';
-import { MarkdownViewer } from '../../MarkdownViewer';
+import { getReadableSecurityNames, shouldAddKey } from '../../../utils/oas/security';
 import { SectionSubtitle, SectionTitle, SubSectionPanel } from '../Sections';
+import { PanelContent } from '../Security/PanelContent';
 import { Body, isBodyEmpty } from './Body';
 import { Parameters } from './Parameters';
 
@@ -94,9 +87,6 @@ const schemeExpandedState = atomWithStorage<Record<string, boolean>>('HttpOperat
 
 const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boolean }> = ({ schemes, includeKey }) => {
   const [expandedState, setExpanded] = useAtom(schemeExpandedState);
-  const { nodeHasChanged } = useOptionsCtx();
-
-  const collection = schemes.length > 1;
 
   return (
     <SubSectionPanel
@@ -105,21 +95,7 @@ const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boole
       onChange={isOpen => setExpanded({ ...expandedState, [getReadableSecurityNames(schemes)]: isOpen })}
     >
       <Box m={-2}>
-        {schemes.map(scheme => (
-          <Box key={scheme.key} p={2} m={2} border>
-            {collection && (
-              <MarkdownViewer
-                style={{ fontWeight: 'bold', fontSize: 12, marginBottom: 10 }}
-                markdown={getReadableSecurityName(scheme, shouldIncludeKey(schemes, scheme.type))}
-              />
-            )}
-            <MarkdownViewer
-              style={{ fontSize: 12 }}
-              markdown={`${scheme.description ?? ''}\n\n` + getDefaultDescription(scheme)}
-            />
-            <NodeAnnotation change={nodeHasChanged?.({ nodeId: scheme.id })} />
-          </Box>
-        ))}
+        <PanelContent schemes={schemes} />
       </Box>
     </SubSectionPanel>
   );

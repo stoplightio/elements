@@ -45,7 +45,12 @@ export const httpOperation: IHttpOperation & { __bundled__: unknown } = {
       ],
     },
   },
-  tags: [{ name: 'Todos' }],
+  tags: [
+    {
+      id: '?http-tags-todos?',
+      name: 'Todos',
+    },
+  ],
   __bundled__: {
     schema: {
       title: 'Todo Partial',
