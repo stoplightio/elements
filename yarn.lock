@@ -3457,14 +3457,14 @@
   dependencies:
     eslint-config-prettier "^8.3.0"
 
-"@stoplight/http-spec@^6.0.0-beta.1":
-  version "6.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-6.0.0-beta.1.tgz#c20ea4ad114b64db2e0c2c00bcd0eaac17c3f964"
-  integrity sha512-QBUF4kMvtoJ7TS2DvRGMWvOJqrrW4P+PfvVCdNXNW7QMpIknW8tiLQmUqcZkijJY8J2xttw1PVap4NjiwUrllQ==
+"@stoplight/http-spec@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-6.0.0.tgz#e472032b1dab536c9d0bbf76fbae0d9eae2f7e7d"
+  integrity sha512-bCNw24C0xSHJTJDKs7Bz6RViyZ593uS7rpfGvcA7bOIdNT5wzUwXY27TMIzGA5HV2aGawc4RPdc8CufluFaNTg==
   dependencies:
     "@stoplight/json" "^3.18.1"
     "@stoplight/json-schema-generator" "1.0.2"
-    "@stoplight/types" "14.0.0-beta.1"
+    "@stoplight/types" "14.0.0"
     "@types/json-schema" "7.0.11"
     "@types/swagger-schema-official" "~2.0.22"
     "@types/type-is" "^1.6.3"
@@ -3745,10 +3745,10 @@
     shelljs "0.8.x"
     tslib "^2.2.0"
 
-"@stoplight/types@14.0.0-beta.1":
-  version "14.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0-beta.1.tgz#9eee1811a03749d9b63a9f003897c6ee5005698c"
-  integrity sha512-TypAJM0SLIc42uMgKRAipecind5vjEYVRL7iCrLMCdgpliLWXwsaEKYgNTtGS7NeQ6159arvi5cNVnEQu2460w==
+"@stoplight/types@14.0.0", "@stoplight/types@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0.tgz#f444490664c2c16d5f06265fcbac8d94a33481e8"
+  integrity sha512-w7Ejau6TaB7RqR0vWzGJSdmgLEYD2frjgbHPZoxgGQwAq/R8Qh/D9p9Bl9JFdii+YTL5xoDjyX0c1WDRlbMV8g==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
@@ -3765,14 +3765,6 @@
   version "13.7.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-13.7.0.tgz#717d9e3ef068e8f143d045e9bc89b97da06933c4"
   integrity sha512-7ePIccfTxjEhruv8VrkDv5whP5qd9ijRzAWEbjYpUYnDfaqPTfq8/wMMjMCAKIecboxsAVD9LZy/3puXddGsDQ==
-  dependencies:
-    "@types/json-schema" "^7.0.4"
-    utility-types "^3.10.0"
-
-"@stoplight/types@^14.0.0":
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0.tgz#f444490664c2c16d5f06265fcbac8d94a33481e8"
-  integrity sha512-w7Ejau6TaB7RqR0vWzGJSdmgLEYD2frjgbHPZoxgGQwAq/R8Qh/D9p9Bl9JFdii+YTL5xoDjyX0c1WDRlbMV8g==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
