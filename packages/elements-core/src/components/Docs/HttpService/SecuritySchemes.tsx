@@ -35,7 +35,7 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({
               key={i}
               schemes={schemes}
               defaultIsOpen={defaultScheme ? schemes.length === 1 && schemes[0].key === defaultScheme : i === 0}
-              isCollapsible={schemes.length > 1}
+              isCollapsible={secSchemes.length > 1}
               showSchemeKey={shouldAddKey(schemes, secSchemes)}
             />
           ))}
@@ -51,7 +51,7 @@ const SecurityScheme: React.FC<
   } & Pick<PanelProps, 'defaultIsOpen' | 'isCollapsible'>
 > = ({ schemes, defaultIsOpen, isCollapsible, showSchemeKey }) => {
   return (
-    <Panel defaultIsOpen={defaultIsOpen} pos="relative">
+    <Panel defaultIsOpen={defaultIsOpen} isCollapsible={isCollapsible} pos="relative">
       <Panel.Titlebar>
         <Box as="span" role="heading">
           {getReadableSecurityNames(schemes, showSchemeKey)}

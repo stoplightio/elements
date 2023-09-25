@@ -1,5 +1,5 @@
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
-import { Box, NodeAnnotation, PanelProps } from '@stoplight/mosaic';
+import { Box, NodeAnnotation } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
 import * as React from 'react';
 
@@ -7,11 +7,7 @@ import { useOptionsCtx } from '../../../context/Options';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
 
-export const PanelContent: React.FC<
-  {
-    schemes: HttpSecurityScheme[];
-  } & Pick<PanelProps, 'defaultIsOpen' | 'isCollapsible'>
-> = ({ schemes }) => {
+export const PanelContent: React.FC<{ schemes: HttpSecurityScheme[] }> = ({ schemes }) => {
   const { nodeHasChanged } = useOptionsCtx();
 
   const collection = schemes.length > 1;
