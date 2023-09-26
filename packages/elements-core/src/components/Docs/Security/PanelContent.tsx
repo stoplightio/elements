@@ -10,6 +10,10 @@ import { getDefaultDescription } from '../../../utils/securitySchemes';
 export const PanelContent: React.FC<{ schemes: HttpSecurityScheme[] }> = ({ schemes }) => {
   const { nodeHasChanged } = useOptionsCtx();
 
+  if (!schemes || !schemes.length) {
+    return null;
+  }
+
   const collection = schemes.length > 1;
 
   return (
