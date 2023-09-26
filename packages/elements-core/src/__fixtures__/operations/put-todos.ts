@@ -520,6 +520,7 @@ export const httpOperation: IHttpOperation = {
   },
   tags: [
     {
+      id: '?http-tags-todos?',
       name: 'Todos',
     },
   ],

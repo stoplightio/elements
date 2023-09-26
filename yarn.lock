@@ -3457,14 +3457,14 @@
   dependencies:
     eslint-config-prettier "^8.3.0"
 
-"@stoplight/http-spec@^5.1.4":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-5.1.4.tgz#85677ed0b238794f0ee7fc6b48e192c623d29598"
-  integrity sha512-9TC1iNvDWC8XI3w8vMVwSYBWXTx67PhwYPntm/izbsUIIJ17Y/9KZ04WtqrlqBdF4GLfTXq6ysdRiuYSc0H48Q==
+"@stoplight/http-spec@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-6.0.0.tgz#e472032b1dab536c9d0bbf76fbae0d9eae2f7e7d"
+  integrity sha512-bCNw24C0xSHJTJDKs7Bz6RViyZ593uS7rpfGvcA7bOIdNT5wzUwXY27TMIzGA5HV2aGawc4RPdc8CufluFaNTg==
   dependencies:
     "@stoplight/json" "^3.18.1"
-    "@stoplight/json-schema-generator" "1.0.1"
-    "@stoplight/types" "^13.0.0"
+    "@stoplight/json-schema-generator" "1.0.2"
+    "@stoplight/types" "14.0.0"
     "@types/json-schema" "7.0.11"
     "@types/swagger-schema-official" "~2.0.22"
     "@types/type-is" "^1.6.3"
@@ -3477,16 +3477,16 @@
     tslib "^2.3.1"
     type-is "^1.6.18"
 
-"@stoplight/json-schema-generator@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-generator/-/json-schema-generator-1.0.1.tgz#ae4c9db389ec98e849055fae842553822797721d"
-  integrity sha512-b9WT8Z5M7Nc/O6+JVEMvOdkLR1fePbCHnPlOpnRFxp+pkfM+VRwLaD4toWRpnpBlHXphRfDxFj5/zxcVvqeKDA==
+"@stoplight/json-schema-generator@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-generator/-/json-schema-generator-1.0.2.tgz#9db1b05bc6c79f7dd5bdab86985ed9eccc964d93"
+  integrity sha512-FzSLFoIZc6Lmw3oRE7kU6YUrl5gBmUs//rY59jdFipBoSyTPv5NyqeyTg5mvT6rY1F3qTLU3xgzRi/9Pb9eZpA==
   dependencies:
+    cross-fetch "^3.1.5"
     json-promise "1.1.x"
     minimist "1.2.6"
     mkdirp "0.5.x"
     pretty-data "0.40.x"
-    request "2.x.x"
 
 "@stoplight/json-schema-merge-allof@^0.7.8":
   version "0.7.8"
@@ -3744,6 +3744,14 @@
     semantic-release "17.0.3"
     shelljs "0.8.x"
     tslib "^2.2.0"
+
+"@stoplight/types@14.0.0", "@stoplight/types@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0.tgz#f444490664c2c16d5f06265fcbac8d94a33481e8"
+  integrity sha512-w7Ejau6TaB7RqR0vWzGJSdmgLEYD2frjgbHPZoxgGQwAq/R8Qh/D9p9Bl9JFdii+YTL5xoDjyX0c1WDRlbMV8g==
+  dependencies:
+    "@types/json-schema" "^7.0.4"
+    utility-types "^3.10.0"
 
 "@stoplight/types@^12.3.0":
   version "12.3.0"
@@ -8188,6 +8196,13 @@ cross-fetch@^3.0.4:
   integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
   dependencies:
     node-fetch "2.6.1"
+
+cross-fetch@^3.1.5:
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.8.tgz#0327eba65fd68a7d119f8fb2bf9334a1a7956f82"
+  integrity sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==
+  dependencies:
+    node-fetch "^2.6.12"
 
 cross-spawn@^5.0.1:
   version "5.1.0"
@@ -15665,6 +15680,13 @@ node-fetch@^2.5.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
+node-fetch@^2.6.12:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
+  integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
+  dependencies:
+    whatwg-url "^5.0.0"
+
 node-forge@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.10.0.tgz#32dea2afb3e9926f02ee5ce8794902691a676bf3"
@@ -18816,7 +18838,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@2.x.x, request@^2.87.0, request@^2.88.0, request@^2.88.2:
+request@^2.87.0, request@^2.88.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==

@@ -1,19 +1,15 @@
-import { Box, NodeAnnotation, VStack } from '@stoplight/mosaic';
+import { Box, Callout, NodeAnnotation, VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import * as React from 'react';
 
+import { operation } from '../../../__fixtures__/operations/simple-get';
+import { OptionalSecurityMessage } from '../../../constants';
 import { useOptionsCtx } from '../../../context/Options';
-import {
-  getReadableSecurityName,
-  getReadableSecurityNames,
-  shouldAddKey,
-  shouldIncludeKey,
-} from '../../../utils/oas/security';
-import { getDefaultDescription } from '../../../utils/securitySchemes';
-import { MarkdownViewer } from '../../MarkdownViewer';
+import { getReadableSecurityNames, getSecurityGroupId, shouldAddKey } from '../../../utils/oas/security';
 import { SectionSubtitle, SectionTitle, SubSectionPanel } from '../Sections';
+import { PanelContent } from '../Security/PanelContent';
 import { Body, isBodyEmpty } from './Body';
 import { Parameters } from './Parameters';
 
@@ -54,7 +50,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     <VStack spacing={8}>
       <SectionTitle title="Request" />
 
-      <SecuritySchemes schemes={securitySchemes} />
+      <SecuritySchemes schemes={securitySchemes} parentId={operation.id} />
 
       {pathParams.length > 0 && (
         <VStack spacing={5}>
@@ -94,9 +90,6 @@ const schemeExpandedState = atomWithStorage<Record<string, boolean>>('HttpOperat
 
 const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boolean }> = ({ schemes, includeKey }) => {
   const [expandedState, setExpanded] = useAtom(schemeExpandedState);
-  const { nodeHasChanged } = useOptionsCtx();
-
-  const collection = schemes.length > 1;
 
   return (
     <SubSectionPanel
@@ -105,37 +98,39 @@ const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boole
       onChange={isOpen => setExpanded({ ...expandedState, [getReadableSecurityNames(schemes)]: isOpen })}
     >
       <Box m={-2}>
-        {schemes.map(scheme => (
-          <Box key={scheme.key} p={2} m={2} border>
-            {collection && (
-              <MarkdownViewer
-                style={{ fontWeight: 'bold', fontSize: 12, marginBottom: 10 }}
-                markdown={getReadableSecurityName(scheme, shouldIncludeKey(schemes, scheme.type))}
-              />
-            )}
-            <MarkdownViewer
-              style={{ fontSize: 12 }}
-              markdown={`${scheme.description ?? ''}\n\n` + getDefaultDescription(scheme)}
-            />
-            <NodeAnnotation change={nodeHasChanged?.({ nodeId: scheme.id })} />
-          </Box>
-        ))}
+        <PanelContent schemes={schemes} />
       </Box>
     </SubSectionPanel>
   );
 };
 
-const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[][] }) => {
+const SecuritySchemes = ({ schemes, parentId }: { schemes: HttpSecurityScheme[][]; parentId: string }) => {
+  const { nodeHasChanged } = useOptionsCtx();
+
   if (!schemes.length) {
     return null;
   }
+
+  const includeOptional = schemes.length > 1 && schemes.some(scheme => scheme.length === 0);
+
   return (
     <VStack spacing={3}>
-      {schemes.map((scheme, i) => (
-        <Box pos="relative" key={i} p={0} data-test="security-row">
-          <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
-        </Box>
-      ))}
+      {includeOptional && <OptionalMessage />}
+      {schemes
+        .filter(scheme => scheme.length > 0) // Remove the None scheme from listed display
+        .map((scheme, i) => {
+          const secGroupId = getSecurityGroupId(parentId, i);
+          return (
+            <Box pos="relative" key={secGroupId} p={0} data-test="http-operation-security-row">
+              <NodeAnnotation change={nodeHasChanged?.({ nodeId: secGroupId })} />
+              <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
+            </Box>
+          );
+        })}
     </VStack>
   );
+};
+
+const OptionalMessage: React.FC = () => {
+  return <Callout appearance="outline">{OptionalSecurityMessage}</Callout>;
 };

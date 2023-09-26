@@ -22,6 +22,9 @@ const parserMap: Record<NodeType, Parser> = {
   [NodeType.SpectralRuleset]: parseUnknown,
   [NodeType.Styleguide]: parseUnknown,
   [NodeType.Image]: parseUnknown,
+  [NodeType.HttpCallback]: parseUnknown,
+  [NodeType.StoplightOverride]: parseUnknown,
+  [NodeType.StoplightResolutions]: parseUnknown,
   [NodeType.Unknown]: parseUnknown,
 };
 

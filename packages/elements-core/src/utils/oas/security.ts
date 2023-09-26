@@ -1,3 +1,4 @@
+import { hash } from '@stoplight/http-spec/hash';
 import {
   HttpSecurityScheme,
   IOauth2AuthorizationCodeFlow,
@@ -68,4 +69,8 @@ export function shouldIncludeKey(schemes: HttpSecurityScheme[], type: HttpSecuri
 export const shouldAddKey = (auth: HttpSecurityScheme[], operationSecuritySchemes: HttpSecurityScheme[][]) => {
   if (auth.length !== 1) return false;
   return shouldIncludeKey(flatten(operationSecuritySchemes.filter(scheme => scheme.length === 1)), auth[0].type);
+};
+
+export const getSecurityGroupId = (id: string, position: number) => {
+  return hash(`http_security_group-${id}-${position}`);
 };
