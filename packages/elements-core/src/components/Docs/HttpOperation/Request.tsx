@@ -1,11 +1,13 @@
-import { Box, Callout, VStack } from '@stoplight/mosaic';
+import { operation } from '@stoplight/elements-core/__fixtures__/operations/simple-get';
+import { useOptionsCtx } from '@stoplight/elements-core/context/Options';
+import { Box, Callout, NodeAnnotation, VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import * as React from 'react';
 
 import { OptionalSecurityMessage } from '../../../constants';
-import { getReadableSecurityNames, shouldAddKey } from '../../../utils/oas/security';
+import { getReadableSecurityNames, getSecurityGroupId, shouldAddKey } from '../../../utils/oas/security';
 import { SectionSubtitle, SectionTitle, SubSectionPanel } from '../Sections';
 import { PanelContent } from '../Security/PanelContent';
 import { Body, isBodyEmpty } from './Body';
@@ -48,7 +50,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     <VStack spacing={8}>
       <SectionTitle title="Request" />
 
-      <SecuritySchemes schemes={securitySchemes} />
+      <SecuritySchemes schemes={securitySchemes} parentId={operation.id} />
 
       {pathParams.length > 0 && (
         <VStack spacing={5}>
@@ -102,7 +104,9 @@ const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boole
   );
 };
 
-const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[][] }) => {
+const SecuritySchemes = ({ schemes, parentId }: { schemes: HttpSecurityScheme[][]; parentId: string }) => {
+  const { nodeHasChanged } = useOptionsCtx();
+
   if (!schemes.length) {
     return null;
   }
@@ -114,11 +118,15 @@ const SecuritySchemes = ({ schemes }: { schemes: HttpSecurityScheme[][] }) => {
       {includeOptional && <OptionalMessage />}
       {schemes
         .filter(scheme => scheme.length > 0) // Remove the None scheme from listed display
-        .map((scheme, i) => (
-          <Box pos="relative" key={i} p={0} data-test="security-row">
-            <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
-          </Box>
-        ))}
+        .map((scheme, i) => {
+          const secGroupId = getSecurityGroupId(parentId, i);
+          return (
+            <Box pos="relative" key={secGroupId} p={0} data-test="http-operation-security-row">
+              <NodeAnnotation change={nodeHasChanged?.({ nodeId: secGroupId })} />
+              <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
+            </Box>
+          );
+        })}
     </VStack>
   );
 };

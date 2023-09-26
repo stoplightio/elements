@@ -61,7 +61,11 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
 
           <Box data-test="security">
             {data.security?.length ? (
-              <SecuritySchemes secSchemes={data.security} defaultScheme={query.get('security') || undefined} />
+              <SecuritySchemes
+                secSchemes={data.security}
+                defaultScheme={query.get('security') || undefined}
+                parentId={data.id}
+              />
             ) : null}
           </Box>
 
