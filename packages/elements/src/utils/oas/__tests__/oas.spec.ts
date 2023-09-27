@@ -345,4 +345,50 @@ describe('computeOasNodes', () => {
       ],
     });
   });
+
+  it('should filter out unused security nodes', () => {
+    const serviceNode = transformOasToServiceNode({
+      openapi: '3.1.0',
+      'x-stoplight': {
+        id: 'nso1sfqvio7bp',
+      },
+      info: {
+        title: 'Test',
+        version: '1.0',
+      },
+      servers: [
+        {
+          url: 'http://localhost:3000',
+        },
+      ],
+      paths: {},
+      components: {
+        schemas: {},
+        securitySchemes: {
+          API_Key_Query: {
+            name: 'API Key',
+            type: 'apiKey',
+            in: 'query',
+          },
+          API_Key_Header: {
+            name: 'API Key',
+            type: 'apiKey',
+            in: 'header',
+          },
+          API_Key_Cookie: {
+            name: 'API Key',
+            type: 'apiKey',
+            in: 'cookie',
+          },
+        },
+      },
+      security: [
+        {
+          API_Key_Query: [],
+        },
+      ],
+    });
+
+    expect(serviceNode?.data.security).toHaveLength(1);
+  });
 });
