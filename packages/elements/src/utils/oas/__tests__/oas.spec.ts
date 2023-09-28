@@ -346,7 +346,7 @@ describe('computeOasNodes', () => {
     });
   });
 
-  it('should filter out unused security nodes', () => {
+  it('should filter out unused security nodes and not show duplicate nodes', () => {
     const serviceNode = transformOasToServiceNode({
       openapi: '3.1.0',
       'x-stoplight': {
@@ -361,7 +361,24 @@ describe('computeOasNodes', () => {
           url: 'http://localhost:3000',
         },
       ],
-      paths: {},
+      paths: {
+        '/users': {
+          get: {
+            summary: 'Your GET endpoint',
+            tags: [],
+            responses: {},
+            operationId: 'get-users',
+            'x-stoplight': {
+              id: 'oblhqa66gbqqg',
+            },
+            security: [
+              {
+                API_Key_Query: [],
+              },
+            ],
+          },
+        },
+      },
       components: {
         schemas: {},
         securitySchemes: {
