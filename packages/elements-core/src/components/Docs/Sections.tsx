@@ -8,17 +8,18 @@ export interface ISectionTitle {
   title: string;
   id?: string;
   size?: HeadingProps['size'];
+  isCompact?: boolean;
 }
 
-export const SectionTitle: React.FC<ISectionTitle> = ({ title, id, size = 2, children }) => {
+export const SectionTitle: React.FC<ISectionTitle> = ({ title, id, size = 2, isCompact = false, children }) => {
   return (
     <Flex w="full">
       <Box py={1} pr={6} as={LinkHeading} size={size} aria-label={title} id={id || slugify(title)}>
         {title}
       </Box>
-      <Box alignSelf={'center'} py={1} flexGrow style={{ minWidth: 0 }}>
+      <Flex alignSelf={'center'} py={1} flexGrow style={{ minWidth: 0 }} justify={isCompact ? 'end' : undefined}>
         {children}
-      </Box>
+      </Flex>
     </Flex>
   );
 };
