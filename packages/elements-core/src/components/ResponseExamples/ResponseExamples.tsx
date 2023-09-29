@@ -42,7 +42,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
       aria-label="Response Example"
       value={String(chosenExampleIndex)}
       options={userDefinedExamples.map((example, index) => ({ value: index, label: example.key }))}
-      onChange={(value: string | number) => setChosenExampleIndex(parseInt(String(value), 10))}
+      onChange={value => setChosenExampleIndex(parseInt(String(value), 10))}
       size="sm"
       triggerTextPrefix="Response Example: "
     />
