@@ -198,7 +198,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               <Select
                 aria-label="Response Body Content Type"
                 value={String(chosenContent)}
-                onChange={(value: string | number) => setChosenContent(parseInt(String(value), 10))}
+                onChange={value => setChosenContent(parseInt(String(value), 10))}
                 options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
                 size="sm"
               />
