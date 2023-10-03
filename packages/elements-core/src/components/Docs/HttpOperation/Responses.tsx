@@ -87,6 +87,7 @@ export const Responses = ({
         style={{
           color: `var(--color-${codeToIntentVal(activeResponseId)})`,
         }}
+        appearance="minimal"
       >
         {activeResponseId}
       </Button>
@@ -141,7 +142,9 @@ export const Responses = ({
 
   return (
     <VStack spacing={8} as={Tabs} selectedId={activeResponseId} onChange={setActiveResponseId} appearance="pill">
-      <SectionTitle title="Responses">{isCompact ? compactResponses : tabResponses}</SectionTitle>
+      <SectionTitle title="Responses" isCompact={isCompact}>
+        {isCompact ? compactResponses : tabResponses}
+      </SectionTitle>
 
       {isCompact ? (
         <Response response={response} onMediaTypeChange={onMediaTypeChange} />
