@@ -76,7 +76,13 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean; defaultIsO
   );
 
   return (
-    <Panel isCollapsible={!!variablesSchema} defaultIsOpen={defaultIsOpen} w="full" data-test="server-row">
+    <Panel
+      isCollapsible={!!variablesSchema}
+      defaultIsOpen={defaultIsOpen}
+      w="full"
+      className="ServerInfo"
+      data-test="server-row"
+    >
       <Panel.Titlebar whitespace="nowrap">
         <Text pl={titlePaddingLeft} pr={2} fontWeight="bold">
           {description}:
@@ -85,7 +91,7 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean; defaultIsO
         <Tooltip
           placement="right"
           renderTrigger={() => (
-            <Text aria-label={description} whitespace="normal" style={{ wordBreak: 'break-word' }}>
+            <Text aria-label={description} whitespace="normal" py={2} style={{ wordBreak: 'break-word' }}>
               {urlFragments.map(({ kind, value }, i) => (
                 <Text key={i} fontWeight={kind === 'variable' ? 'semibold' : 'normal'}>
                   {value}

@@ -6,6 +6,7 @@ import * as React from 'react';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
+import { useIsCompact } from '../../../hooks/useIsCompact';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
@@ -21,6 +22,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
   ({ data: unresolvedData, location = {}, layoutOptions, exportProps }) => {
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpService;
+    const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
     const { search, pathname } = location;
     const mocking = React.useContext(MockingContext);
@@ -31,7 +33,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
     const descriptionChanged = nodeHasChanged?.({ nodeId: data.id, attr: 'description' });
 
     return (
-      <Box mb={10}>
+      <Box ref={layoutRef} mb={10} className="HttpService">
         {data.name && !layoutOptions?.noHeading && (
           <Flex justifyContent="between" alignItems="center">
             <Box pos="relative">
@@ -41,7 +43,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
               <NodeAnnotation change={nameChanged} />
             </Box>
 
-            {exportProps && !layoutOptions?.hideExport && <ExportButton {...exportProps} />}
+            {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
           </Flex>
         )}
 
