@@ -3457,14 +3457,14 @@
   dependencies:
     eslint-config-prettier "^8.3.0"
 
-"@stoplight/http-spec@^5.1.4":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-5.1.4.tgz#85677ed0b238794f0ee7fc6b48e192c623d29598"
-  integrity sha512-9TC1iNvDWC8XI3w8vMVwSYBWXTx67PhwYPntm/izbsUIIJ17Y/9KZ04WtqrlqBdF4GLfTXq6ysdRiuYSc0H48Q==
+"@stoplight/http-spec@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-6.0.0.tgz#e472032b1dab536c9d0bbf76fbae0d9eae2f7e7d"
+  integrity sha512-bCNw24C0xSHJTJDKs7Bz6RViyZ593uS7rpfGvcA7bOIdNT5wzUwXY27TMIzGA5HV2aGawc4RPdc8CufluFaNTg==
   dependencies:
     "@stoplight/json" "^3.18.1"
-    "@stoplight/json-schema-generator" "1.0.1"
-    "@stoplight/types" "^13.0.0"
+    "@stoplight/json-schema-generator" "1.0.2"
+    "@stoplight/types" "14.0.0"
     "@types/json-schema" "7.0.11"
     "@types/swagger-schema-official" "~2.0.22"
     "@types/type-is" "^1.6.3"
@@ -3477,16 +3477,16 @@
     tslib "^2.3.1"
     type-is "^1.6.18"
 
-"@stoplight/json-schema-generator@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-generator/-/json-schema-generator-1.0.1.tgz#ae4c9db389ec98e849055fae842553822797721d"
-  integrity sha512-b9WT8Z5M7Nc/O6+JVEMvOdkLR1fePbCHnPlOpnRFxp+pkfM+VRwLaD4toWRpnpBlHXphRfDxFj5/zxcVvqeKDA==
+"@stoplight/json-schema-generator@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-generator/-/json-schema-generator-1.0.2.tgz#9db1b05bc6c79f7dd5bdab86985ed9eccc964d93"
+  integrity sha512-FzSLFoIZc6Lmw3oRE7kU6YUrl5gBmUs//rY59jdFipBoSyTPv5NyqeyTg5mvT6rY1F3qTLU3xgzRi/9Pb9eZpA==
   dependencies:
+    cross-fetch "^3.1.5"
     json-promise "1.1.x"
     minimist "1.2.6"
     mkdirp "0.5.x"
     pretty-data "0.40.x"
-    request "2.x.x"
 
 "@stoplight/json-schema-merge-allof@^0.7.8":
   version "0.7.8"
@@ -3518,10 +3518,10 @@
     "@types/json-schema" "^7.0.7"
     json-pointer "^0.6.1"
 
-"@stoplight/json-schema-tree@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-2.2.4.tgz#60e41ffc454a60225a45450bfac711ec31bd7766"
-  integrity sha512-UW+ubBHgh1QIGvhA3tFlDLBwWyq4vAxlln/rDwPcaSFjP9PKlJu7d19RT6WJyg247FwbSqsTTqS7n4Y7aLz63A==
+"@stoplight/json-schema-tree@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-2.2.5.tgz#a3f78f3d475b74338f6d2da7ec6733a96cb9819f"
+  integrity sha512-H2d5EHbWJwbu4h7Eh3R4He4SGlfA5ScucpMqylVTgPwQImvikIyrI+v6oqzpl9fFZ6SkidfTcUs3z1+IKwxWdA==
   dependencies:
     "@stoplight/json" "^3.12.0"
     "@stoplight/json-schema-merge-allof" "^0.7.8"
@@ -3529,13 +3529,13 @@
     "@types/json-schema" "^7.0.7"
     magic-error "0.0.1"
 
-"@stoplight/json-schema-viewer@^4.10.1":
-  version "4.10.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.10.1.tgz#8f199a1902a8eb10aa0b5107ef8b4d3863c9ee73"
-  integrity sha512-jyQdeME80Y1Q3Ap/XL8YdpCHvqYso0FgWpFCULcg1KFO7Ga9o+Scs4ifl1mefgqPL2Vs65kteM8A+Uln3f2Alw==
+"@stoplight/json-schema-viewer@^4.12.1":
+  version "4.12.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.12.1.tgz#dc28bde019b24876db003881e41dc505c2af024c"
+  integrity sha512-oMx0WrggjDPbIUcoqO7gx8dx1QA9bs7Y2jYNGAWnDe1wmsGcOOevkJ5LaruoCbuYAvsoGsBfqyJv8Ec8ATHBGQ==
   dependencies:
     "@stoplight/json" "^3.20.1"
-    "@stoplight/json-schema-tree" "^2.2.4"
+    "@stoplight/json-schema-tree" "^2.2.5"
     "@stoplight/react-error-boundary" "^2.0.0"
     "@types/json-schema" "^7.0.7"
     classnames "^2.2.6"
@@ -3744,6 +3744,14 @@
     semantic-release "17.0.3"
     shelljs "0.8.x"
     tslib "^2.2.0"
+
+"@stoplight/types@14.0.0", "@stoplight/types@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0.tgz#f444490664c2c16d5f06265fcbac8d94a33481e8"
+  integrity sha512-w7Ejau6TaB7RqR0vWzGJSdmgLEYD2frjgbHPZoxgGQwAq/R8Qh/D9p9Bl9JFdii+YTL5xoDjyX0c1WDRlbMV8g==
+  dependencies:
+    "@types/json-schema" "^7.0.4"
+    utility-types "^3.10.0"
 
 "@stoplight/types@^12.3.0":
   version "12.3.0"
@@ -8182,12 +8190,12 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-cross-fetch@^3.0.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
-  integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
+cross-fetch@^3.0.4, cross-fetch@^3.1.5:
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.8.tgz#0327eba65fd68a7d119f8fb2bf9334a1a7956f82"
+  integrity sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==
   dependencies:
-    node-fetch "2.6.1"
+    node-fetch "^2.6.12"
 
 cross-spawn@^5.0.1:
   version "5.1.0"
@@ -15545,10 +15553,10 @@ nano-time@1.0.0:
   dependencies:
     big-integer "^1.6.16"
 
-nanoid@^3.1.23, nanoid@^3.1.32, nanoid@^3.3.1:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.3.tgz#fd8e8b7aa761fe807dba2d1b98fb7241bb724a25"
-  integrity sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==
+nanoid@^3.1.32, nanoid@^3.3.1, nanoid@^3.3.6:
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.6.tgz#443380c856d6e9f9824267d960b4236ad583ea4c"
+  integrity sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -15653,15 +15661,10 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
-node-fetch@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
-
-node-fetch@^2.5.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
-  version "2.6.7"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
-  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
+node-fetch@^2.5.0, node-fetch@^2.6.1, node-fetch@^2.6.12, node-fetch@^2.6.7:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
+  integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
   dependencies:
     whatwg-url "^5.0.0"
 
@@ -17554,14 +17557,14 @@ postcss@7.0.36:
     source-map "^0.6.1"
     supports-color "^6.1.0"
 
-postcss@8.3.5:
-  version "8.3.5"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.5.tgz#982216b113412bc20a86289e91eb994952a5b709"
-  integrity sha512-NxTuJocUhYGsMiMFHDUkmjSKT3EdH4/WbGF6GCi1NDGk+vbcUTun4fpbOqaPtD8IIsztA2ilZm2DhYCuyN58gA==
+postcss@8.4.31, postcss@^8.2.15, postcss@^8.4.7:
+  version "8.4.31"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.31.tgz#92b451050a9f914da6755af352bdc0192508656d"
+  integrity sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==
   dependencies:
-    colorette "^1.2.2"
-    nanoid "^3.1.23"
-    source-map-js "^0.6.2"
+    nanoid "^3.3.6"
+    picocolors "^1.0.0"
+    source-map-js "^1.0.2"
 
 postcss@^7.0.14, postcss@^7.0.26, postcss@^7.0.32, postcss@^7.0.35, postcss@^7.0.36, postcss@^7.0.5, postcss@^7.0.6:
   version "7.0.39"
@@ -17570,15 +17573,6 @@ postcss@^7.0.14, postcss@^7.0.26, postcss@^7.0.32, postcss@^7.0.35, postcss@^7.0
   dependencies:
     picocolors "^0.2.1"
     source-map "^0.6.1"
-
-postcss@^8.2.15, postcss@^8.4.7:
-  version "8.4.12"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.12.tgz#1e7de78733b28970fa4743f7da6f3763648b1905"
-  integrity sha512-lg6eITwYe9v6Hr5CncVbK70SoioNQIq81nsaG86ev5hAidQvmOeETBqs7jm43K2F5/Ley3ytDtriImV6TpNiSg==
-  dependencies:
-    nanoid "^3.3.1"
-    picocolors "^1.0.0"
-    source-map-js "^1.0.2"
 
 postman-collection@^4.1.2:
   version "4.1.2"
@@ -18816,7 +18810,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@2.x.x, request@^2.87.0, request@^2.88.0, request@^2.88.2:
+request@^2.87.0, request@^2.88.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -19674,11 +19668,6 @@ source-list-map@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
   integrity sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==
-
-source-map-js@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-0.6.2.tgz#0bb5de631b41cfbda6cfba8bd05a80efdfd2385e"
-  integrity sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==
 
 source-map-js@^1.0.2:
   version "1.0.2"

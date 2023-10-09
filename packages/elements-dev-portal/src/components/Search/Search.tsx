@@ -23,6 +23,13 @@ export type SearchProps = {
   onClose: ModalProps['onClose'];
 };
 
+export type SearchResultsListProps = {
+  searchResults?: NodeSearchResult[];
+  isEmbedded?: boolean;
+  showDivider?: boolean;
+  onClick: (result: NodeSearchResult) => void;
+};
+
 const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
   const listBoxRef = React.useRef<HTMLDivElement>(null);
 
@@ -35,19 +42,6 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
       listBoxRef.current?.focus();
     }
   }, []);
-
-  const onSelectionChange = React.useCallback(
-    keys => {
-      const selectedId = keys.values().next().value;
-      const selectedResult = searchResults?.find(
-        searchResult => `${searchResult.id}-${searchResult.project_id}` === selectedId,
-      );
-      if (selectedResult) {
-        onClick(selectedResult);
-      }
-    },
-    [searchResults, onClick],
-  );
 
   return (
     <Modal
@@ -67,12 +61,39 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
       isOpen={!!isOpen}
       onClose={onClose}
     >
+      <SearchResultsList searchResults={searchResults} onClick={onClick} />
+    </Modal>
+  );
+};
+
+export const SearchResultsList = ({
+  searchResults,
+  onClick,
+  isEmbedded,
+  showDivider = true,
+}: SearchResultsListProps) => {
+  const listBoxRef = React.useRef<HTMLDivElement>(null);
+  const onSelectionChange = React.useCallback(
+    keys => {
+      const selectedId = keys.values().next().value;
+      const selectedResult = searchResults?.find(
+        searchResult => `${searchResult.id}-${searchResult.project_id}` === selectedId,
+      );
+      if (selectedResult) {
+        onClick(selectedResult);
+      }
+    },
+    [searchResults, onClick],
+  );
+
+  return (
+    <>
       {searchResults && searchResults.length > 0 ? (
         <ListBox
           ref={listBoxRef}
           aria-label="Search"
           overflowY="auto"
-          h={80}
+          h={isEmbedded ? undefined : 80}
           m={-5}
           items={searchResults}
           selectionMode="single"
@@ -81,7 +102,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
           {(searchResult: NodeSearchResult) => {
             return (
               <ListBoxItem key={`${searchResult.id}-${searchResult.project_id}`} textValue={searchResult.title}>
-                <Box p={3} borderB>
+                <Box p={3} borderB={!showDivider ? undefined : true}>
                   <Flex align="center">
                     <Box
                       as={Icon}
@@ -121,9 +142,16 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
           No search results
         </Flex>
       )}
-    </Modal>
+    </>
   );
 };
+
+export const SearchResults = flow(
+  withStyles,
+  withPersistenceBoundary,
+  withMosaicProvider,
+  withQueryClientProvider,
+)(SearchResultsList);
 
 export const Search = flow(
   withStyles,

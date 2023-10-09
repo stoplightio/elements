@@ -19,7 +19,7 @@ const digestPlaceholder = `Digest username="User Name",
 
 export const DigestAuth: React.FC<DigestAuthProps> = ({ onChange, value }) => {
   return (
-    <Panel.Content className="ParameterGrid">
+    <Panel.Content className="ParameterGrid" data-test="auth-try-it-row">
       <div>Authorization</div>
       <Text mx={3}>:</Text>
       <textarea
