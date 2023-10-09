@@ -33,7 +33,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
     const descriptionChanged = nodeHasChanged?.({ nodeId: data.id, attr: 'description' });
 
     return (
-      <Box ref={layoutRef} mb={10}>
+      <Box ref={layoutRef} mb={10} className="HttpService">
         {data.name && !layoutOptions?.noHeading && (
           <Flex justifyContent="between" alignItems="center">
             <Box pos="relative">
