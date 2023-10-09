@@ -4,6 +4,7 @@ export type TableOfContentsProps = {
   Link: CustomLinkComponent;
   maxDepthOpenByDefault?: number;
   externalScrollbar?: boolean;
+  isInResponsiveMode?: boolean;
   onLinkClick?(): void;
 };
 

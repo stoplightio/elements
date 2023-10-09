@@ -14,7 +14,10 @@ import * as React from 'react';
 import { Node } from '../../types';
 
 // Props shared with elements-core Docs component
-type DocsBaseProps = Pick<DocsProps, 'tryItCorsProxy' | 'tryItCredentialsPolicy' | 'nodeHasChanged'>;
+type DocsBaseProps = Pick<
+  DocsProps,
+  'tryItCorsProxy' | 'tryItCredentialsPolicy' | 'nodeHasChanged' | 'nodeUnsupported'
+>;
 type DocsLayoutProps = Pick<
   Required<DocsProps>['layoutOptions'],
   'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'
@@ -48,6 +51,7 @@ export const NodeContent = ({
   tryItCorsProxy,
   tryItCredentialsPolicy,
   nodeHasChanged,
+  nodeUnsupported,
 
   // Docs layout props
   compact,
@@ -92,6 +96,7 @@ export const NodeContent = ({
             }
             tryItCredentialsPolicy={tryItCredentialsPolicy}
             nodeHasChanged={nodeHasChanged}
+            nodeUnsupported={nodeUnsupported}
           />
         </MockingProvider>
       </MarkdownComponentsProvider>

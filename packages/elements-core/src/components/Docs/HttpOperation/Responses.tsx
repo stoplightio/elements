@@ -81,11 +81,13 @@ export const Responses = ({
   const compactResponses = (
     <>
       <Button
+        aria-label="response-codes"
         onPress={open}
         iconRight={<Icon icon="chevron-down" color="var(--color-border-button)" />}
         style={{
           color: `var(--color-${codeToIntentVal(activeResponseId)})`,
         }}
+        appearance="minimal"
       >
         {activeResponseId}
       </Button>
@@ -113,7 +115,7 @@ export const Responses = ({
         >
           {(response: IHttpOperationResponse) => (
             <ListBoxItem key={response.id}>
-              <Box p={3} bg={{ hover: 'primary-tint' }}>
+              <Box data-test={response.code} p={3} bg={{ hover: 'primary-tint' }}>
                 <Flex w="2xl" align="center" justify="end">
                   {response.code === activeResponseId && <Box as={Icon} icon="check" />}
                   <Text ml={3} fontWeight="medium">
@@ -140,7 +142,9 @@ export const Responses = ({
 
   return (
     <VStack spacing={8} as={Tabs} selectedId={activeResponseId} onChange={setActiveResponseId} appearance="pill">
-      <SectionTitle title="Responses">{isCompact ? compactResponses : tabResponses}</SectionTitle>
+      <SectionTitle title="Responses" isCompact={isCompact}>
+        {isCompact ? compactResponses : tabResponses}
+      </SectionTitle>
 
       {isCompact ? (
         <Response response={response} onMediaTypeChange={onMediaTypeChange} />

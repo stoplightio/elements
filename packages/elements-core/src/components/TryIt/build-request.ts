@@ -28,7 +28,7 @@ interface BuildRequestInput {
   serverVariableValues: Dictionary<string, string>;
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
-  auth?: HttpSecuritySchemeWithValues;
+  auth?: HttpSecuritySchemeWithValues[];
   chosenServer?: IServer | null;
   credentials?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
@@ -178,58 +178,59 @@ export async function buildFetchRequest({
 }
 
 const runAuthRequestEhancements = (
-  auth: HttpSecuritySchemeWithValues | undefined,
+  auths: HttpSecuritySchemeWithValues[] | undefined,
   queryParams: NameAndValue[],
   headers: NameAndValue[],
 ): [NameAndValue[], NameAndValue[]] => {
-  if (!auth) return [queryParams, headers];
+  if (!auths) return [queryParams, headers];
 
   const newQueryParams = [...queryParams];
   const newHeaders = [...headers];
+  auths.forEach(auth => {
+    if (isApiKeySecurityScheme(auth.scheme)) {
+      if (auth.scheme.in === 'query') {
+        newQueryParams.push({
+          name: auth.scheme.name,
+          value: auth.authValue || '123',
+        });
+      }
 
-  if (isApiKeySecurityScheme(auth.scheme)) {
-    if (auth.scheme.in === 'query') {
-      newQueryParams.push({
-        name: auth.scheme.name,
-        value: auth.authValue ?? '',
-      });
+      if (auth.scheme.in === 'header') {
+        newHeaders.push({
+          name: auth.scheme.name,
+          value: auth.authValue || '123',
+        });
+      }
     }
 
-    if (auth.scheme.in === 'header') {
+    if (isOAuth2SecurityScheme(auth.scheme)) {
       newHeaders.push({
-        name: auth.scheme.name,
-        value: auth.authValue ?? '',
+        name: 'Authorization',
+        value: auth.authValue || 'Bearer 123',
       });
     }
-  }
 
-  if (isOAuth2SecurityScheme(auth.scheme)) {
-    newHeaders.push({
-      name: 'Authorization',
-      value: auth.authValue ?? '',
-    });
-  }
+    if (isBearerSecurityScheme(auth.scheme)) {
+      newHeaders.push({
+        name: 'Authorization',
+        value: `Bearer ${auth.authValue || '123'}`,
+      });
+    }
 
-  if (isBearerSecurityScheme(auth.scheme)) {
-    newHeaders.push({
-      name: 'Authorization',
-      value: `Bearer ${auth.authValue}`,
-    });
-  }
+    if (isDigestSecurityScheme(auth.scheme)) {
+      newHeaders.push({
+        name: 'Authorization',
+        value: auth.authValue?.replace(/\s\s+/g, ' ').trim() || '123',
+      });
+    }
 
-  if (isDigestSecurityScheme(auth.scheme)) {
-    newHeaders.push({
-      name: 'Authorization',
-      value: auth.authValue?.replace(/\s\s+/g, ' ').trim() ?? '',
-    });
-  }
-
-  if (isBasicSecurityScheme(auth.scheme)) {
-    newHeaders.push({
-      name: 'Authorization',
-      value: `Basic ${auth.authValue}`,
-    });
-  }
+    if (isBasicSecurityScheme(auth.scheme)) {
+      newHeaders.push({
+        name: 'Authorization',
+        value: `Basic ${auth.authValue || '123'}`,
+      });
+    }
+  });
 
   return [newQueryParams, newHeaders];
 };

@@ -54,14 +54,25 @@ describe('TryItWithRequestSamples', () => {
     expect(codeViewer).toHaveTextContent(/Prefer: code=200/);
   });
 
-  it('includes authentication data in request sample', async () => {
+  it('includes renders authentication data with suggested value initially', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
+    const codeViewer = await screen.findByLabelText(/curl/);
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123'/));
 
     const apiKeyField = await screen.findByLabelText('API Key');
     userEvent.type(apiKeyField, '123456789');
 
-    const codeViewer = await screen.findByLabelText(/curl/);
-    await waitFor(() => expect(codeViewer).toHaveTextContent(/123456789/));
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123456789'/));
+
+    userEvent.clear(apiKeyField);
+    userEvent.type(apiKeyField, '23456789');
+
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=23456789'/));
+
+    userEvent.clear(apiKeyField);
+
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123'/));
   });
 
   it('displays parameter name for empty path parameter', async () => {
