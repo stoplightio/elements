@@ -61,7 +61,7 @@ const ModelComponent: React.FC<ModelProps> = ({
         <NodeAnnotation change={titleChanged} />
       </Box>
 
-      {exportProps && !layoutOptions?.hideExport && <ExportButton {...exportProps} />}
+      {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
     </Flex>
   );
 

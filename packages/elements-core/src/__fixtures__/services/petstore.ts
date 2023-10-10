@@ -24,52 +24,143 @@ export const httpService: IHttpService = {
     },
     {
       id: '?http-server-1?',
-      url: 'https://api.staging.stoplight.io',
+      url: 'https://api.{environment}.stoplight.io',
       description: 'Staging API',
-    },
-    {
-      id: '?http-server-2?',
-      url: 'https://api.int.stoplight.io',
-      description: 'Integration API',
-    },
-    {
-      id: '?http-server-3?',
-      url: 'https://localhost:4060',
-      description: 'Development API',
-    },
-  ],
-  security: [],
-  securitySchemes: [
-    {
-      id: '?http-security-0?',
-      key: 'oauth_scheme',
-      type: 'oauth2',
-      description:
-        'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
-      flows: {
-        implicit: {
-          authorizationUrl: 'https://implicit.authorization-url.com',
-          refreshUrl: 'https://implicit.refresh-url.com',
-          scopes: { 'scope:implicit': 'implicit scope description' },
-        },
-        password: {
-          tokenUrl: 'https://password.token-url.com',
-          refreshUrl: 'https://password.refresh-url.com',
-          scopes: { 'scope:password': 'password scope description' },
-        },
-        clientCredentials: {
-          tokenUrl: 'https://clientCredentials.token-url.com',
-          refreshUrl: 'https://clientCredentials.refresh-url.com',
-          scopes: { 'scope:clientCredentials': 'clientCredentials scope description' },
-        },
-        authorizationCode: {
-          authorizationUrl: 'https://authorizationCode.authorization-url.com',
-          tokenUrl: 'https://authorizationCode.token-url.com',
-          refreshUrl: 'https://authorizationCode.refresh-url.com',
-          scopes: { 'scope:authorizationCode': 'authorizationCode scope description' },
+      variables: {
+        environment: {
+          description: 'The kind of a durable test environment',
+          enum: ['staging', 'int'],
+          default: 'staging',
         },
       },
     },
+    {
+      id: '?http-server-3?',
+      url: 'https://localhost:{port}',
+      description: 'Development API',
+      variables: {
+        port: {
+          enum: ['8443', '443'],
+          default: '8443',
+        },
+      },
+    },
+  ],
+  securitySchemes: [],
+  security: [
+    [
+      {
+        id: '?http-security-0?',
+        key: 'oauth_scheme',
+        type: 'oauth2',
+        description:
+          'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
+        flows: {
+          implicit: {
+            authorizationUrl: 'https://implicit.authorization-url.com',
+            refreshUrl: 'https://implicit.refresh-url.com',
+            scopes: { 'scope:implicit': 'implicit scope description' },
+          },
+          password: {
+            tokenUrl: 'https://password.token-url.com',
+            refreshUrl: 'https://password.refresh-url.com',
+            scopes: { 'scope:password': 'password scope description' },
+          },
+          clientCredentials: {
+            tokenUrl: 'https://clientCredentials.token-url.com',
+            refreshUrl: 'https://clientCredentials.refresh-url.com',
+            scopes: { 'scope:clientCredentials': 'clientCredentials scope description' },
+          },
+          authorizationCode: {
+            authorizationUrl: 'https://authorizationCode.authorization-url.com',
+            tokenUrl: 'https://authorizationCode.token-url.com',
+            refreshUrl: 'https://authorizationCode.refresh-url.com',
+            scopes: { 'scope:authorizationCode': 'authorizationCode scope description' },
+          },
+        },
+      },
+    ],
+    [
+      {
+        id: '?http-security-api_key?',
+        key: 'api_key',
+        type: 'apiKey',
+        name: 'API Key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+      {
+        id: '?http-security-api_key2?',
+        key: 'api_key2',
+        type: 'apiKey',
+        name: 'Alternate API key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+    ],
+    [
+      {
+        id: '?http-security-openIdConnectKey?',
+        key: 'openIdConnectKey',
+        type: 'openIdConnect',
+        description:
+          'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
+        openIdConnectUrl: 'http://openIdConnect.com',
+      },
+    ],
+    [],
+    [
+      {
+        id: '?http-security-oauth2Key?',
+        key: 'oauth2Key',
+        type: 'oauth2',
+        description:
+          'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
+        flows: {
+          implicit: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            authorizationUrl: 'http://authorizationUrl.com',
+          },
+          password: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+          },
+          clientCredentials: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+          },
+          authorizationCode: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+            authorizationUrl: 'http://authorizationUrl.com',
+          },
+        },
+      },
+      {
+        id: '?http-security-api_key?',
+        key: 'api_key',
+        type: 'apiKey',
+        name: 'API Key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+    ],
   ],
 };
 

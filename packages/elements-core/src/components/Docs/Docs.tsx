@@ -13,6 +13,8 @@ import { HttpService } from './HttpService';
 import { ExportButtonProps } from './HttpService/ExportButton';
 import { Model } from './Model';
 
+type NodeUnsupportedFn = (err: 'dataEmpty' | 'invalidType' | Error) => void;
+
 interface BaseDocsProps {
   /**
    * CSS class to add to the root container.
@@ -116,6 +118,14 @@ interface BaseDocsProps {
   };
 
   nodeHasChanged?: NodeHasChangedFn<React.ReactNode>;
+
+  /**
+   * Allows consumers to know when the node is not supported.
+   *
+   * @type {NodeUnsupportedFn}
+   * @default undefined
+   */
+  nodeUnsupported?: NodeUnsupportedFn;
 }
 
 export interface DocsProps extends BaseDocsProps {
@@ -137,7 +147,7 @@ export const Docs = React.memo<DocsProps>(
     const parsedNode = useParsedData(nodeType, nodeData);
 
     if (!parsedNode) {
-      // TODO: maybe report failure
+      commonProps.nodeUnsupported?.('dataEmpty');
       return null;
     }
 
@@ -159,7 +169,7 @@ export interface ParsedDocsProps extends BaseDocsProps {
   node: ParsedNode;
 }
 
-export const ParsedDocs = ({ node, ...commonProps }: ParsedDocsProps) => {
+export const ParsedDocs = ({ node, nodeUnsupported, ...commonProps }: ParsedDocsProps) => {
   switch (node.type) {
     case 'article':
       return <Article data={node.data} {...commonProps} />;
@@ -170,6 +180,7 @@ export const ParsedDocs = ({ node, ...commonProps }: ParsedDocsProps) => {
     case 'model':
       return <Model data={node.data} {...commonProps} />;
     default:
+      nodeUnsupported?.('invalidType');
       return null;
   }
 };

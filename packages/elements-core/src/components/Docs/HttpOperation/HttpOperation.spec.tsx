@@ -63,17 +63,25 @@ describe('HttpOperation', () => {
     it('should display security panel for each security scheme', () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
 
-      const apikeyPanel = screen.getByText(/Security: API Key/i);
-      const basicPanel = screen.getByText(/Security: Basic Auth/i);
-      const bearerPanel = screen.getByText(/Security: Bearer Auth/i);
+      const apikeyPanel = screen.getAllByText(/Security: API Key \(api_key\)/i);
+      const apikey2Panel = screen.getByText(/Security: API Key \(api_key2\)/i);
+      const apiMultiplePanel = screen.getByText(/Security: API Key \(api_key\) & API Key \(api_key2\)/i);
+      const basicPanel = screen.getByText(/Security: Basic Auth \(basicKey\)/i);
+      const bearerPanel = screen.getByText(/Security: Bearer Auth \(bearerKey\)/i);
+      const digestPanel = screen.getByText(/Security: Digest Auth \(digest\)/i);
       const oidcPanel = screen.getByText(/Security: OpenID Connect/i);
-      const oauthPanel = screen.getByText(/Security: OAuth 2.0/i);
+      const oauthPanel = screen.getAllByText(/Security: OAuth 2.0/i);
+      const mixedPanel = screen.getByText(/Security: OAuth 2.0 & API Key/i);
 
-      expect(apikeyPanel).toBeInTheDocument();
+      expect(apikeyPanel).toHaveLength(2);
+      expect(apikey2Panel).toBeInTheDocument();
+      expect(apiMultiplePanel).toBeInTheDocument();
       expect(basicPanel).toBeInTheDocument();
       expect(bearerPanel).toBeInTheDocument();
+      expect(digestPanel).toBeInTheDocument();
       expect(oidcPanel).toBeInTheDocument();
-      expect(oauthPanel).toBeInTheDocument();
+      expect(oauthPanel).toHaveLength(2);
+      expect(mixedPanel).toBeInTheDocument();
 
       unmount();
     });
@@ -97,6 +105,8 @@ describe('HttpOperation', () => {
               },
             },
           },
+        ],
+        [
           {
             id: '?http-security-1?',
             key: 'oauth2WithEmptyScopes',
@@ -128,7 +138,7 @@ describe('HttpOperation', () => {
     it('should expand on click', () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
 
-      const oauthPanel = screen.getByText(/Security: OAuth 2.0/i);
+      const oauthPanel = screen.getAllByText(/Security: OAuth 2.0/i)[0];
 
       expect(oauthPanel).toBeInTheDocument();
       expect(screen.queryByText('write:pets')).not.toBeInTheDocument();
@@ -136,6 +146,50 @@ describe('HttpOperation', () => {
       act(() => oauthPanel.click());
 
       expect(screen.queryAllByText('write:pets')).toHaveLength(4);
+
+      unmount();
+    });
+
+    it('should display individual descriptions with names when expanding AND security schemes', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
+
+      const oauthPanel = screen.getByText(/Security: OAuth 2.0 & API Key/i);
+      const apiKeysBefore = screen.getAllByText(/API Key/i);
+      const oauthKeysBefore = screen.getAllByText(/OAuth 2.0/i);
+
+      expect(oauthPanel).toBeInTheDocument();
+      expect(screen.queryByText('write:pets')).not.toBeInTheDocument();
+      expect(apiKeysBefore).toHaveLength(7);
+      expect(oauthKeysBefore).toHaveLength(2);
+
+      act(() => oauthPanel.click());
+
+      const apiKeysAfter = screen.getAllByText(/API Key/i);
+      const oauthKeysAfter = screen.getAllByText(/OAuth 2.0/i);
+
+      expect(screen.queryAllByText('write:pets')).toHaveLength(4);
+      expect(apiKeysAfter).toHaveLength(11);
+      expect(oauthKeysAfter).toHaveLength(3);
+
+      unmount();
+    });
+
+    it('should not re-display security name with description when expanding singleton schemes', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
+
+      const oauthPanel = screen.getAllByText(/Security: OAuth 2.0/i)[1];
+      const oauthKeysBefore = screen.getAllByText(/OAuth 2.0/i);
+
+      expect(oauthPanel).toBeInTheDocument();
+      expect(screen.queryByText('write:pets')).not.toBeInTheDocument();
+      expect(oauthKeysBefore).toHaveLength(2);
+
+      act(() => oauthPanel.click());
+
+      const oauthKeysAfter = screen.getAllByText(/OAuth 2.0/i);
+
+      expect(screen.queryAllByText('write:pets')).toHaveLength(4);
+      expect(oauthKeysAfter).toHaveLength(2);
 
       unmount();
     });

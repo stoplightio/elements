@@ -1,6 +1,8 @@
+import { IHttpOperation } from '@stoplight/types';
+
 import { operation as minimalOperation } from '../../__fixtures__/operations/operation-minimal';
 import httpOperation from '../../__fixtures__/operations/operation-parameters';
-import { getQueryParams } from './build-request';
+import { getAcceptedMimeTypes, getQueryParams } from './build-request';
 
 describe('Build Request', () => {
   describe('Query params', () => {
@@ -102,6 +104,106 @@ describe('Build Request', () => {
         { name: 'items_spaces', value: 'second' },
         { name: 'items_pipes', value: 'first' },
         { name: 'items_pipes', value: 'second' },
+      ]);
+    });
+  });
+
+  describe('getAcceptedMimeTypes', () => {
+    const operationSingleResponse: IHttpOperation = {
+      id: 'adsf',
+      method: 'GET',
+      path: '/a/path',
+      responses: [
+        {
+          id: 'responseA',
+          code: '200',
+          contents: [
+            {
+              id: 'adsf',
+              mediaType: 'application/json',
+            },
+            {
+              id: 'dfvs',
+              mediaType: 'application/json',
+            },
+            {
+              id: 'aaaa',
+              mediaType: 'multipart/form-data',
+            },
+          ],
+        },
+      ],
+    };
+
+    const operationMultipleResponses: IHttpOperation = {
+      id: 'sfdf',
+      method: 'POST',
+      path: '/a/nother/path',
+      responses: [
+        {
+          id: 'responseA',
+          code: '200',
+          contents: [
+            {
+              id: 'adsf',
+              mediaType: 'application/json',
+            },
+            {
+              id: 'dfvs',
+              mediaType: 'application/json',
+            },
+          ],
+        },
+        {
+          id: 'responseB',
+          code: '200',
+          contents: [
+            {
+              id: 'adsf',
+              mediaType: 'application/json',
+            },
+            {
+              id: 'dfvs',
+              mediaType: 'multipart/form-data',
+            },
+          ],
+        },
+        {
+          id: 'responseC',
+          code: '200',
+          contents: [
+            {
+              id: 'dfvs',
+              mediaType: 'multipart/form-data',
+            },
+          ],
+        },
+        {
+          id: 'responseB',
+          code: '200',
+          contents: [
+            {
+              id: 'adsf',
+              mediaType: 'text/json',
+            },
+            {
+              id: 'dfvs',
+              mediaType: 'multipart/form-data',
+            },
+          ],
+        },
+      ],
+    };
+
+    it('Handles a single response with duplicates', () => {
+      expect(getAcceptedMimeTypes(operationSingleResponse)).toStrictEqual(['application/json', 'multipart/form-data']);
+    });
+
+    it('Handles multiple responses and dedups appropriately', () => {
+      expect(getAcceptedMimeTypes(operationMultipleResponses)).toStrictEqual([
+        'application/json',
+        'multipart/form-data',
+        'text/json',
       ]);
     });
   });

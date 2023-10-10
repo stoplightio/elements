@@ -34,6 +34,10 @@ export function getDefaultDescription(scheme: HttpSecurityScheme) {
   return '';
 }
 
+export function getOptionalAuthDescription() {
+  return `Providing Auth is optional; requests may be made without an included Authorization header.`;
+}
+
 function getApiKeyDescription(inProperty: 'header' | 'cookie' | 'query', name: string) {
   return `An API key is a token that you provide when making API calls. Include the token in a ${inProperty} parameter called \`${name}\`.
 

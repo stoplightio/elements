@@ -90,3 +90,8 @@
   /* Enables horizontal scrolling for response tabs */
   overflow-x: auto;
 }
+
+.sl-elements .HttpService .ServerInfo .sl-panel__titlebar div {
+  height: 100%;
+  min-height: 36px;
+}

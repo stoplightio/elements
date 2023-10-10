@@ -14,7 +14,10 @@ import * as React from 'react';
 import { Node } from '../../types';
 
 // Props shared with elements-core Docs component
-type DocsBaseProps = Pick<DocsProps, 'tryItCorsProxy' | 'tryItCredentialsPolicy' | 'nodeHasChanged'>;
+type DocsBaseProps = Pick<
+  DocsProps,
+  'tryItCorsProxy' | 'tryItCredentialsPolicy' | 'nodeHasChanged' | 'nodeUnsupported'
+>;
 type DocsLayoutProps = Pick<
   Required<DocsProps>['layoutOptions'],
   'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'
@@ -48,6 +51,7 @@ export const NodeContent = ({
   tryItCorsProxy,
   tryItCredentialsPolicy,
   nodeHasChanged,
+  nodeUnsupported,
 
   // Docs layout props
   compact,
@@ -70,7 +74,10 @@ export const NodeContent = ({
               compact,
               hideTryIt: hideTryIt,
               hideTryItPanel: hideTryItPanel,
-              hideExport: hideExport || node.links.export_url === undefined,
+              hideExport:
+                hideExport ||
+                (node.links.export_url ?? node.links.export_original_file_url ?? node.links.export_bundled_file_url) ===
+                  undefined,
             }}
             useNodeForRefResolving
             refResolver={refResolver}
@@ -80,15 +87,16 @@ export const NodeContent = ({
                 ? {
                     original: onExportRequest
                       ? { onPress: () => onExportRequest('original') }
-                      : { href: node.links.export_url },
+                      : { href: node.links.export_original_file_url ?? node.links.export_url },
                     bundled: onExportRequest
                       ? { onPress: () => onExportRequest('bundled') }
-                      : { href: getBundledUrl(node.links.export_url) },
+                      : { href: node.links.export_bundled_file_url ?? getBundledUrl(node.links.export_url) },
                   }
                 : undefined
             }
             tryItCredentialsPolicy={tryItCredentialsPolicy}
             nodeHasChanged={nodeHasChanged}
+            nodeUnsupported={nodeUnsupported}
           />
         </MockingProvider>
       </MarkdownComponentsProvider>

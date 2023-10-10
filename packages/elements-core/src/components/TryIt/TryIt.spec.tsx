@@ -23,6 +23,8 @@ import {
   emptySecurityOperation,
   singleSecurityOperation,
 } from '../../__fixtures__/operations/securedOperation';
+import { httpOperation as basicSecurityOperation } from '../../__fixtures__/operations/security-basic';
+import { httpOperation as bearerSecurityOperation } from '../../__fixtures__/operations/security-bearer';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as stringNumericEnumOperation } from '../../__fixtures__/operations/string-numeric-enums';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
@@ -60,7 +62,7 @@ describe('TryIt', () => {
     const requestInit = fetchMock.mock.calls[0][1]!;
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
-    expect(headers.get('Content-Type')).toBe('application/json');
+    expect(headers.get('Content-Type')).toBe(null);
   });
 
   it('uses cors proxy url, if provided', async () => {
@@ -722,7 +724,6 @@ describe('TryIt', () => {
           expect.objectContaining({
             method: 'GET',
             headers: {
-              'Content-Type': 'application/json',
               Prefer: 'code=200',
             },
           }),
@@ -731,9 +732,7 @@ describe('TryIt', () => {
           'https://todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: {},
           }),
         ],
       ]);
@@ -760,9 +759,7 @@ describe('TryIt', () => {
           'https://mock-todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: {},
           }),
         ],
       ]);
@@ -823,7 +820,6 @@ describe('TryIt', () => {
         expect.objectContaining({
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
             Prefer: 'code=200',
           },
         }),
@@ -844,7 +840,10 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={emptySecurityOperation} />);
 
         let authPanel = screen.queryByText('Auth');
-        expect(authPanel).not.toBeInTheDocument();
+        expect(authPanel).toBeInTheDocument();
+
+        let noAuthCount = screen.getAllByText('No auth selected').length;
+        expect(noAuthCount).toBe(1);
       });
 
       it("does not show up the Security Schemes select if there's only one schema", () => {
@@ -860,7 +859,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         expect(securitySchemesButton).toHaveTextContent('OAuth 2.0');
@@ -876,13 +875,13 @@ describe('TryIt', () => {
         let securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        let securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         // switch back to API Key
         userEvent.click(securitySchemesButton);
 
-        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key' });
+        securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'API Key (api_key)' })[0];
         userEvent.click(securitySchemes);
 
         APIKeyField = screen.getByLabelText('API Key');
@@ -901,6 +900,147 @@ describe('TryIt', () => {
 
         APIKeyField = screen.getByLabelText('API Key');
         expect(APIKeyField).toHaveValue('123');
+      });
+
+      it('invalidated unsupported security schemes between different operations', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        let usernameInput = screen.getByLabelText('Username');
+        let passwordInput = screen.getByLabelText('Password');
+
+        userEvent.type(usernameInput, 'user');
+        userEvent.type(passwordInput, 'password');
+
+        rerender(<TryItWithPersistence httpOperation={bearerSecurityOperation} />);
+
+        const tokenInput = screen.getByLabelText('Token');
+        userEvent.type(tokenInput, 'Bearer 1234');
+
+        rerender(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        usernameInput = screen.getByLabelText('Username');
+        passwordInput = screen.getByLabelText('Password');
+
+        expect(usernameInput).toBeInTheDocument();
+        expect(passwordInput).toBeInTheDocument();
+      });
+
+      it('keep security schemes between different operations', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        let usernameInput = screen.getByLabelText('Username');
+        let passwordInput = screen.getByLabelText('Password');
+
+        userEvent.type(usernameInput, 'user');
+        userEvent.type(passwordInput, 'password');
+
+        rerender(<TryItWithPersistence httpOperation={putOperation} />);
+
+        usernameInput = screen.getByLabelText('Username');
+        passwordInput = screen.getByLabelText('Password');
+
+        expect(usernameInput).toHaveValue('user');
+        expect(passwordInput).toHaveValue('password');
+      });
+
+      it('adds key value to menu items if multiple schemes of same security type', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
+        userEvent.click(securitySchemes);
+
+        // switch back to API Key
+        userEvent.click(securitySchemesButton);
+
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+      });
+
+      it('keeps distinct values for multiple schemes of same security type', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        // Fill in 123 for API Key 1
+        let APIKeyField = screen.getByLabelText('API Key');
+        userEvent.type(APIKeyField, '123');
+
+        // Fill in 456 for API Key 2
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key 2');
+        userEvent.type(APIKeyField, '456');
+
+        // switch back to API Key 1 confirm still 123
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key');
+        expect(APIKeyField).toHaveValue('123');
+
+        // switch back to API Key 2 confirm still 456
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key 2');
+        expect(APIKeyField).toHaveValue('456');
+      });
+
+      it('renders AND security correctly in menu item list, retaining values through rerender', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        // Select AND security from menu
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key & Basic Auth' });
+        userEvent.click(securitySchemes);
+
+        // Fill in a value from each scheme
+        let APIKeyField = screen.getByLabelText('API Key 2');
+        userEvent.type(APIKeyField, '123');
+
+        let usernameInput = screen.getByLabelText('Username');
+        userEvent.type(usernameInput, 'user');
+
+        // Rerender and confirm values
+        rerender(<TryItWithPersistence httpOperation={putOperation} />);
+
+        APIKeyField = screen.getByLabelText('API Key 2');
+        usernameInput = screen.getByLabelText('Username');
+
+        expect(usernameInput).toHaveValue('user');
+        expect(APIKeyField).toHaveValue('123');
+      });
+
+      it('renders None in the menu if a Optional security auth {} is presented', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
+        userEvent.click(securitySchemes);
+      });
+
+      it('display No auth selected if user chooses None in the menu', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OpenID Connect' });
+        userEvent.click(securitySchemes);
+        let noAuth = screen.queryByText('No auth selected');
+        expect(noAuth).toBe(null);
+
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
+        userEvent.click(securitySchemes);
+        let noAuthCount = screen.getAllByText('No auth selected').length;
+        expect(noAuthCount).toBe(1);
       });
     });
 
@@ -969,7 +1109,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         const tokenInput = screen.getByLabelText('Token');
@@ -1125,6 +1265,24 @@ describe('TryIt', () => {
       expect(serversButton).toHaveTextContent('Development');
     });
 
+    it('shows server variables', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const protoField = screen.getByLabelText('proto');
+      expect(protoField).toBeInTheDocument();
+
+      const prField = screen.getByLabelText('pr');
+      expect(prField).toBeInTheDocument();
+    });
+
     it('sends request to a chosen server url', async () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
@@ -1142,6 +1300,62 @@ describe('TryIt', () => {
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock.mock.calls[0][0]).toContain('https://todos-dev.stoplight.io');
+    });
+
+    it('sends a request using server variable default values', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const todoIdField = screen.getByLabelText('todoId');
+      userEvent.type(todoIdField, '123');
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('http://x-1000.todos-pr.stoplight.io');
+    });
+
+    it('sends a request using server variable modified values', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const todoIdField = screen.getByLabelText('todoId');
+      userEvent.type(todoIdField, '123');
+
+      const prField = screen.getByLabelText('pr');
+      userEvent.type(prField, '123');
+
+      const protoField = screen.getByLabelText('proto');
+      chooseOption(protoField, 'https');
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('https://x-123.todos-pr.stoplight.io');
+      fetchMock.mockClear();
+
+      userEvent.clear(prField);
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('https://x-1000.todos-pr.stoplight.io');
     });
 
     it('Persists chosen server between renders of different operations if URL is the same', async () => {
