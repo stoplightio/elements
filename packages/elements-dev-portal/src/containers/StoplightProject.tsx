@@ -82,7 +82,8 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
 }) => {
-  const { branchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
+  let { branchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
+  branchSlug = decodeURIComponent(branchSlug);
   const history = useHistory();
 
   const { data: tableOfContents, isFetched: isTocFetched } = useGetTableOfContents({ projectId, branchSlug });
@@ -156,7 +157,9 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
               branchSlug={branchSlug}
               branches={branches}
               onChange={branch =>
-                history.push(branch.is_default ? `/${nodeSlug}` : `/branches/${branch.slug}/${nodeSlug}`)
+                history.push(
+                  branch.is_default ? `/${nodeSlug}` : `/branches/${encodeURIComponent(branch.slug)}/${nodeSlug}`,
+                )
               }
             />
           ) : null}
