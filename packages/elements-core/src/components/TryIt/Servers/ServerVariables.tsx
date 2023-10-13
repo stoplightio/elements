@@ -1,5 +1,6 @@
 import { Panel } from '@stoplight/mosaic';
 import * as React from 'react';
+import { Key } from 'react';
 
 import { ServerVariable } from '../../../utils/http-spec/IServer';
 import { VariableEditor } from './VariableEditor';
@@ -21,7 +22,7 @@ export const ServerVariables: React.FC<ServerVariablesProps> = ({ variables, val
             data-test="server-vars-try-it-row"
             variable={variable}
             value={values[variable.name]}
-            onChange={(value: string | number) => {
+            onChange={(value: Key | null) => {
               const actualValue = String(value);
               onChangeValue(variable.enum || actualValue !== '' ? 'set' : 'unset', variable.name, actualValue);
             }}

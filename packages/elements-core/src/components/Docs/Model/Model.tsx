@@ -5,6 +5,7 @@ import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import cn from 'classnames';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
+import { Key } from 'react';
 
 import { useResolvedObject, useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
@@ -118,7 +119,7 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
       aria-label="Example"
       value={String(chosenExampleIndex)}
       options={examples.map(({ label }, index) => ({ value: index, label }))}
-      onChange={(value: string | number) => setChosenExampleIndex(parseInt(String(value), 10))}
+      onChange={(value: Key | null) => setChosenExampleIndex(parseInt(String(value), 10))}
       size="sm"
       triggerTextPrefix="Example: "
     />
