@@ -21,7 +21,7 @@ export const ServerVariables: React.FC<ServerVariablesProps> = ({ variables, val
             data-test="server-vars-try-it-row"
             variable={variable}
             value={values[variable.name]}
-            onChange={(value: string | number) => {
+            onChange={value => {
               const actualValue = String(value);
               onChangeValue(variable.enum || actualValue !== '' ? 'set' : 'unset', variable.name, actualValue);
             }}

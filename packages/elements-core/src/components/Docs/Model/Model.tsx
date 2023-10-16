@@ -118,7 +118,7 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
       aria-label="Example"
       value={String(chosenExampleIndex)}
       options={examples.map(({ label }, index) => ({ value: index, label }))}
-      onChange={(value: string | number) => setChosenExampleIndex(parseInt(String(value), 10))}
+      onChange={value => setChosenExampleIndex(parseInt(String(value), 10))}
       size="sm"
       triggerTextPrefix="Example: "
     />

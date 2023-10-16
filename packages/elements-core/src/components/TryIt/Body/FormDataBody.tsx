@@ -66,8 +66,11 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
               key={parameter.name}
               parameter={parameter}
               value={typeof value === 'string' ? value : undefined}
-              onChange={(value: string | number) =>
-                onChangeValues({ ...values, [parameter.name]: typeof value === 'number' ? String(value) : value })
+              onChange={value =>
+                onChangeValues({
+                  ...values,
+                  [parameter.name]: typeof value === 'number' ? String(value) : (value as any),
+                })
               }
               onChangeOptional={value => onChangeParameterAllow({ ...isAllowedEmptyValues, [parameter.name]: value })}
               canChangeOptional={true}
