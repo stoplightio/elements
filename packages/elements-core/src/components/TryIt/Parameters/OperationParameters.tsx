@@ -1,6 +1,5 @@
 import { Panel } from '@stoplight/mosaic';
 import * as React from 'react';
-import { Key } from 'react';
 
 import { ParameterSpec } from './parameter-utils';
 import { ParameterEditor } from './ParameterEditor';
@@ -27,7 +26,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
-            onChange={(value: Key | null) => onChangeValue(parameter.name, String(value))}
+            onChange={value => onChangeValue(parameter.name, String(value))}
             validate={validate}
             isOptional={false}
             canChangeOptional={false}

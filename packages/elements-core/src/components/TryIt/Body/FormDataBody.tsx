@@ -3,7 +3,6 @@ import { Panel } from '@stoplight/mosaic';
 import { IMediaTypeContent } from '@stoplight/types';
 import { omit } from 'lodash';
 import * as React from 'react';
-import { Key } from 'react';
 
 import { FileUploadParameterEditor } from '../Parameters/FileUploadParameterEditors';
 import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from '../Parameters/parameter-utils';
@@ -67,7 +66,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
               key={parameter.name}
               parameter={parameter}
               value={typeof value === 'string' ? value : undefined}
-              onChange={(value: Key | null) =>
+              onChange={value =>
                 onChangeValues({
                   ...values,
                   [parameter.name]: typeof value === 'number' ? String(value) : (value as any),

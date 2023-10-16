@@ -2,7 +2,6 @@ import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
-import { Key } from 'react';
 
 import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
@@ -49,7 +48,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
             <Select
               aria-label="Request Body Content Type"
               value={String(chosenContent)}
-              onChange={(value: Key | null) => setChosenContent(parseInt(String(value), 10))}
+              onChange={value => setChosenContent(parseInt(String(value), 10))}
               options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
               size="sm"
             />
