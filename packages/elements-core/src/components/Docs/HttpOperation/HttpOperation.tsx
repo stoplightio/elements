@@ -9,7 +9,6 @@ import { HttpMethodColors } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
-import { useChosenServerUrl } from '../../../hooks/useChosenServerUrl';
 import { useIsCompact } from '../../../hooks/useIsCompact';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
@@ -126,20 +125,14 @@ function MethodPath({ method, path }: MethodPathProps) {
 function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { chosenServerUrl: string }) {
   const isDark = useThemeIsDark();
   const fullUrl = `${chosenServerUrl}${path}`;
-  const { leading, trailing } = useChosenServerUrl(chosenServerUrl);
 
   const pathElem = (
     <Flex overflowX="hidden" fontSize="lg" userSelect="all">
       <Box dir="rtl" color="muted" textOverflow="truncate" overflowX="hidden">
-        {leading}
-
-        {trailing !== null && (
-          <Box as="span" dir="ltr" style={{ unicodeBidi: 'bidi-override' }}>
-            {trailing}
-          </Box>
-        )}
+        <Box as="span" dir="ltr" style={{ unicodeBidi: 'bidi-override' }}>
+          {chosenServerUrl}
+        </Box>
       </Box>
-
       <Box fontWeight="semibold" flex={1}>
         {path}
       </Box>
