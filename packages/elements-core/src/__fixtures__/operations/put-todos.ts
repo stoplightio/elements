@@ -282,7 +282,7 @@ export const httpOperation: IHttpOperation = {
     {
       id: '?http-server-todos-pr.stoplight.io?',
       description: 'PR',
-      url: '{proto}://x-{pr}.todos-pr.stoplight.io',
+      url: '{proto}://x-{pr}.todos-pr.stoplight.io:{port}',
       variables: {
         proto: {
           default: 'http',
@@ -290,6 +290,10 @@ export const httpOperation: IHttpOperation = {
         },
         pr: {
           default: '1000',
+        },
+        port: {
+          default: '80',
+          enum: ['443', '80'],
         },
       },
     },

@@ -1,6 +1,7 @@
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { act, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -55,6 +56,21 @@ describe('HttpOperation', () => {
 
       expect(deprecatedBadge).not.toBeInTheDocument();
 
+      unmount();
+    });
+
+    it('should correctly display with server variables at beginning, middle, and end', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      expect(screen.queryByText(/{proto}:\/\/x-{pr}.todos-pr.stoplight.io:{port}/)).toBeInTheDocument();
       unmount();
     });
   });
