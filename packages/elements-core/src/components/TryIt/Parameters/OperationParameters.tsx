@@ -26,7 +26,7 @@ export const OperationParameters: React.FC<OperationParametersProps> = ({
             key={parameter.name}
             parameter={parameter}
             value={values[parameter.name]}
-            onChange={(value: string | number) => onChangeValue(parameter.name, String(value))}
+            onChange={value => onChangeValue(parameter.name, String(value))}
             validate={validate}
             isOptional={false}
             canChangeOptional={false}

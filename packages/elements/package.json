@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "7.9.0",
+  "version": "7.13.8",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -63,11 +63,11 @@
     ]
   },
   "dependencies": {
-    "@stoplight/elements-core": "~7.9.0",
-    "@stoplight/http-spec": "^5.1.4",
+    "@stoplight/elements-core": "~7.13.8",
+    "@stoplight/http-spec": "^6.0.0",
     "@stoplight/json": "^3.18.1",
-    "@stoplight/mosaic": "^1.33.0",
-    "@stoplight/types": "^13.7.0",
+    "@stoplight/mosaic": "^1.44.3",
+    "@stoplight/types": "^14.0.0",
     "@stoplight/yaml": "^4.2.3",
     "classnames": "^2.2.6",
     "file-saver": "^2.0.5",

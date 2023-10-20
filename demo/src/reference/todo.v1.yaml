@@ -2,7 +2,15 @@ openapi: 3.0.0
 info:
   title: To-dos
   version: 1.0.0
-  description: "![](https://i.ibb.co/v3Yt03v/todo-api-background.png)\n\n## \U0001F4AB Overview\n\nTo Do API provides a simple way for people to manage their tasks and plan their day. This API can be used to create mobile and web applications.This API is documented using **OpenAPI 3.0**. The implementation lives in this [GitHub repo](https://github.com/stoplight-qa/studio-demo/blob/main/reference/todos/todo.v1.yaml).\n\n### \U0001F9F0 Cross-Origin Resource Sharing\nThis API features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https://www.w3.org/TR/cors/). CORS support is necessary to make calls from the request maker within the API docs.\n\n### \U0001F3C1 Trying out your own API Specification\nElements can be used to generate API docs for any OpenAPI document. Replace this OpenAPI with a URL to your own OpenAPI document to get started. "
+  description:
+    "![](https://i.ibb.co/v3Yt03v/todo-api-background.png)\n\n## \U0001F4AB Overview\n\nTo Do API provides a simple way
+    for people to manage their tasks and plan their day. This API can be used to create mobile and web applications.This
+    API is documented using **OpenAPI 3.0**. The implementation lives in this [GitHub
+    repo](https://github.com/stoplight-qa/studio-demo/blob/main/reference/todos/todo.v1.yaml).\n\n### \U0001F9F0
+    Cross-Origin Resource Sharing\nThis API features Cross-Origin Resource Sharing (CORS) implemented in compliance
+    with  [W3C spec](https://www.w3.org/TR/cors/). CORS support is necessary to make calls from the request maker within
+    the API docs.\n\n### \U0001F3C1 Trying out your own API Specification\nElements can be used to generate API docs for
+    any OpenAPI document. Replace this OpenAPI with a URL to your own OpenAPI document to get started. "
   contact:
     name: Stoplight Support
     email: support@stoplight.io
@@ -16,6 +24,8 @@ servers:
     description: Production
   - description: Sandbox
     url: 'https://todos-sandbox.stoplight.io'
+security:
+  - API Key: []
 paths:
   /todos:
     get:

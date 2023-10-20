@@ -282,7 +282,7 @@ export const httpOperation: IHttpOperation = {
     {
       id: '?http-server-todos-pr.stoplight.io?',
       description: 'PR',
-      url: '{proto}://x-{pr}.todos-pr.stoplight.io',
+      url: '{proto}://x-{pr}.todos-pr.stoplight.io:{port}',
       variables: {
         proto: {
           default: 'http',
@@ -290,6 +290,10 @@ export const httpOperation: IHttpOperation = {
         },
         pr: {
           default: '1000',
+        },
+        port: {
+          default: '80',
+          enum: ['443', '80'],
         },
       },
     },
@@ -520,6 +524,7 @@ export const httpOperation: IHttpOperation = {
   },
   tags: [
     {
+      id: '?http-tags-todos?',
       name: 'Todos',
     },
   ],
@@ -532,6 +537,16 @@ export const httpOperation: IHttpOperation = {
         name: 'API Key',
         in: 'query',
         description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+    ],
+    [
+      {
+        id: '?http-security-api_key2?',
+        key: 'api_key2',
+        type: 'apiKey',
+        name: 'API Key 2',
+        in: 'query',
+        description: "Use `?apikey2=456` to authenticate requests. It's super secure.",
       },
     ],
     [
@@ -566,12 +581,83 @@ export const httpOperation: IHttpOperation = {
     ],
     [
       {
+        id: '?http-security-api_key?',
+        key: 'api_key',
+        type: 'apiKey',
+        name: 'API Key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+      {
+        id: '?http-security-api_key2?',
+        key: 'api_key2',
+        type: 'apiKey',
+        name: 'Alternate API key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
+      },
+    ],
+    [
+      {
         id: '?http-security-openIdConnectKey?',
         key: 'openIdConnectKey',
         type: 'openIdConnect',
         description:
           'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
         openIdConnectUrl: 'http://openIdConnect.com',
+      },
+    ],
+    [],
+    [
+      {
+        id: '?http-security-oauth2Key?',
+        key: 'oauth2Key',
+        type: 'oauth2',
+        description:
+          'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
+        flows: {
+          implicit: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            authorizationUrl: 'http://authorizationUrl.com',
+          },
+          password: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+          },
+          clientCredentials: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+          },
+          authorizationCode: {
+            scopes: {
+              'write:pets': 'modify pets in your account',
+              'read:pets': 'read your pets',
+            },
+            refreshUrl: 'http://refreshUrl.com',
+            tokenUrl: 'http://tokenUrl.com',
+            authorizationUrl: 'http://authorizationUrl.com',
+          },
+        },
+      },
+      {
+        id: '?http-security-api_key?',
+        key: 'api_key',
+        type: 'apiKey',
+        name: 'API Key',
+        in: 'query',
+        description: "Use `?apikey=123` to authenticate requests. It's super secure.",
       },
     ],
     [
@@ -616,6 +702,24 @@ export const httpOperation: IHttpOperation = {
             authorizationUrl: 'http://authorizationUrl.com',
           },
         },
+      },
+    ],
+    [
+      {
+        id: '?http-security-api_key2?',
+        key: 'api_key2',
+        type: 'apiKey',
+        name: 'API Key 2',
+        in: 'query',
+        description: "Use `?apikey2=456` to authenticate requests. It's super secure.",
+      },
+      {
+        id: '?http-security-basicKey?',
+        key: 'basicKey',
+        type: 'http',
+        scheme: 'basic',
+        description:
+          'Get access to data while protecting your account credentials. OAuth2 is also a safer and more secure way to give you access.',
       },
     ],
   ],

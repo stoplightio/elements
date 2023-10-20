@@ -70,15 +70,14 @@ type SecuritySchemeValues = Dictionary<string>;
 
 const securitySchemeValuesAtom = persistAtom('TryIt_securitySchemeValues', atom<SecuritySchemeValues>({}));
 export const usePersistedSecuritySchemeWithValues = (): [
-  HttpSecuritySchemeWithValues | undefined,
+  HttpSecuritySchemeWithValues[] | undefined,
   React.Dispatch<HttpSecuritySchemeWithValues | undefined>,
+  React.Dispatch<HttpSecuritySchemeWithValues[] | undefined>,
 ] => {
-  const [currentScheme, setCurrentScheme] = React.useState<HttpSecuritySchemeWithValues | undefined>();
+  const [currentScheme, setCurrentScheme] = React.useState<HttpSecuritySchemeWithValues[] | undefined>();
   const [securitySchemeValues, setSecuritySchemeValues] = useAtom(securitySchemeValuesAtom);
 
   const setPersistedAuthenticationSettings = (securitySchemeWithValues: HttpSecuritySchemeWithValues | undefined) => {
-    setCurrentScheme(securitySchemeWithValues);
-
     if (securitySchemeWithValues) {
       const key = securitySchemeWithValues.scheme.key;
       const value = securitySchemeWithValues.authValue;
@@ -92,18 +91,19 @@ export const usePersistedSecuritySchemeWithValues = (): [
     }
   };
 
-  const persistedSecuritySchemeValue = currentScheme && securitySchemeValues[currentScheme.scheme.key];
-
   const schemeWithPersistedValue = React.useMemo(() => {
     if (!currentScheme) return undefined;
+    return currentScheme.map(scheme => {
+      return {
+        scheme: scheme.scheme,
+        authValue: securitySchemeValues[scheme.scheme.key],
+      };
+    });
+  }, [currentScheme, securitySchemeValues]);
 
-    if (currentScheme.authValue) return currentScheme;
+  return [schemeWithPersistedValue, setPersistedAuthenticationSettings, setCurrentScheme];
+};
 
-    return {
-      ...currentScheme,
-      authValue: persistedSecuritySchemeValue,
-    };
-  }, [currentScheme, persistedSecuritySchemeValue]);
-
-  return [schemeWithPersistedValue, setPersistedAuthenticationSettings];
+export const createUndefinedValuedSchemes = (schemes: HttpSecurityScheme[]): HttpSecuritySchemeWithValues[] => {
+  return schemes.map(scheme => ({ scheme, authValue: undefined }));
 };
