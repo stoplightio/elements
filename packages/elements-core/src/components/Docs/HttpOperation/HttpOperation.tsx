@@ -46,6 +46,20 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
     const prettyName = (data.summary || data.iid || '').trim();
     const hasBadges = isDeprecated || isInternal;
 
+    const tryItPanel = !layoutOptions?.hideTryItPanel && (
+      <TryItWithRequestSamples
+        httpOperation={data}
+        responseMediaType={responseMediaType}
+        responseStatusCode={responseStatusCode}
+        requestBodyIndex={requestBodyIndex}
+        hideTryIt={layoutOptions?.hideTryIt}
+        tryItCredentialsPolicy={tryItCredentialsPolicy}
+        mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
+        corsProxy={tryItCorsProxy}
+        tryItOutDefaultServer={tryItOutDefaultServer}
+      />
+    );
+
     const header = (
       <OperationHeader
         id={data.id}
@@ -83,20 +97,6 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         {data.callbacks && <Callbacks callbacks={data.callbacks} />}
         {isCompact && tryItPanel}
       </VStack>
-    );
-
-    const tryItPanel = !layoutOptions?.hideTryItPanel && (
-      <TryItWithRequestSamples
-        httpOperation={data}
-        responseMediaType={responseMediaType}
-        responseStatusCode={responseStatusCode}
-        requestBodyIndex={requestBodyIndex}
-        hideTryIt={layoutOptions?.hideTryIt}
-        tryItCredentialsPolicy={tryItCredentialsPolicy}
-        mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
-        corsProxy={tryItCorsProxy}
-        tryItOutDefaultServer={tryItOutDefaultServer}
-      />
     );
 
     return (
