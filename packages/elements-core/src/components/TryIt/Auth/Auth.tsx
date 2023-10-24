@@ -1,74 +1,101 @@
 import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
-import { flatten } from 'lodash';
 import * as React from 'react';
 
-import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
+import { getReadableSecurityName, getReadableSecurityNames, shouldAddKey } from '../../../utils/oas/security';
 import { APIKeyAuth } from './APIKeyAuth';
-import { HttpSecuritySchemeWithValues } from './authentication-utils';
+import { createUndefinedValuedSchemes, HttpSecuritySchemeWithValues } from './authentication-utils';
 import { BasicAuth } from './BasicAuth';
 import { BearerAuth } from './BearerAuth';
 import { DigestAuth } from './DigestAuth';
 import { OAuth2Auth } from './OAuth2Auth';
 
 interface TryItAuthProps {
-  operationSecurityScheme: HttpSecurityScheme[][];
-  onChange: (authObject: HttpSecuritySchemeWithValues | undefined) => void;
-  value: HttpSecuritySchemeWithValues | undefined;
+  operationSecuritySchemes: HttpSecurityScheme[][];
+  operationAuthValue: HttpSecuritySchemeWithValues[] | undefined;
+  setOperationAuthValue: React.Dispatch<HttpSecuritySchemeWithValues | undefined>;
+  setCurrentScheme: React.Dispatch<HttpSecuritySchemeWithValues[] | undefined>;
 }
 
-function getSupportedSecurityScheme(
-  value: HttpSecuritySchemeWithValues | undefined,
-  supportedSecuritySchemes: HttpSecurityScheme[],
-): [HttpSecurityScheme, string] {
-  // only keep the selected security scheme *if* the operation supports it (based on id)
-  if (value && supportedSecuritySchemes.some(s => value.scheme.id === s.id)) {
-    return [value.scheme, value.authValue ?? ''];
+const checkViableCurrentAuth = (
+  current: HttpSecuritySchemeWithValues[] | undefined,
+  operationSecuritySchemes: HttpSecurityScheme[][],
+) => {
+  if (current === undefined) return false;
+
+  const flattened = operationSecuritySchemes.flat(1);
+  for (const element of current) {
+    if (!flattened.some(flat => flat.id === element.scheme.id)) return false;
   }
 
-  // otherwise, start over!
-  return [supportedSecuritySchemes[0], ''];
-}
+  return true;
+};
 
-export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: operationAuth, onChange, value }) => {
-  const operationSecurityArray = flatten(operationAuth);
-  const filteredSecurityItems = operationSecurityArray.filter(scheme => securitySchemeKeys.includes(scheme?.type));
-  const [securityScheme, authValue] = getSupportedSecurityScheme(value, filteredSecurityItems);
+const createMenuChild = (name: string, currentItemName: string | undefined, onPress: () => void) => {
+  return {
+    id: `security-scheme-${name}`,
+    title: name,
+    isChecked: name === currentItemName,
+    onPress,
+  };
+};
 
-  const menuName = securityScheme ? getReadableSecurityName(securityScheme) : 'Security Scheme';
+export const TryItAuth: React.FC<TryItAuthProps> = ({
+  operationSecuritySchemes,
+  operationAuthValue,
+  setOperationAuthValue,
+  setCurrentScheme,
+}) => {
+  const filteredSecurityItems = operationSecuritySchemes.filter(
+    auth => auth.length === 0 || auth.every(scheme => securitySchemeKeys.includes(scheme.type)),
+  );
 
-  const handleChange = (authValue?: string) => {
-    onChange(securityScheme && { scheme: securityScheme, authValue: authValue });
+  const menuName = operationAuthValue
+    ? getReadableSecurityNames(operationAuthValue.map(auth => auth.scheme))
+    : 'Security Scheme';
+
+  const currentName = operationAuthValue
+    ? getReadableSecurityNames(
+        operationAuthValue.map(auth => auth.scheme),
+        shouldAddKey(
+          operationAuthValue.map(auth => auth.scheme),
+          operationSecuritySchemes,
+        ),
+      )
+    : undefined;
+
+  const handleChange = (scheme: HttpSecurityScheme, authValue?: string) => {
+    setOperationAuthValue({ scheme, authValue });
   };
 
   React.useEffect(() => {
-    handleChange();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (checkViableCurrentAuth(operationAuthValue, operationSecuritySchemes) === false) {
+      setCurrentScheme(createUndefinedValuedSchemes(operationSecuritySchemes[0]));
+    }
+  });
 
   const menuItems = React.useMemo(() => {
     const items: MenuItems = [
       {
         type: 'group',
         title: 'Security Schemes',
-        children: filteredSecurityItems.map(auth => ({
-          id: `security-scheme-${auth.key}`,
-          title: getReadableSecurityName(auth, shouldIncludeKey(filteredSecurityItems, auth.type)),
-          isChecked: auth.key === securityScheme?.key,
-          onPress: () => {
-            onChange({ scheme: auth, authValue: undefined });
-          },
-        })),
+        children: filteredSecurityItems.map(auth =>
+          createMenuChild(
+            getReadableSecurityNames(auth, shouldAddKey(auth, operationSecuritySchemes)),
+            currentName,
+            () => setCurrentScheme(createUndefinedValuedSchemes(auth)),
+          ),
+        ),
       },
     ];
 
     return items;
-  }, [filteredSecurityItems, onChange, securityScheme]);
+  }, [currentName, filteredSecurityItems, operationSecuritySchemes, setCurrentScheme]);
 
   if (filteredSecurityItems.length === 0) return null;
 
   return (
-    <Panel defaultIsOpen>
+    <Panel defaultIsOpen data-test="try-it-auth">
       <Panel.Titlebar
         rightComponent={
           filteredSecurityItems.length > 1 && (
@@ -87,13 +114,28 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({ operationSecurityScheme: o
       >
         Auth
       </Panel.Titlebar>
-      <SecuritySchemeComponent scheme={securityScheme} onChange={handleChange} value={authValue} />
+      {operationAuthValue && operationAuthValue.length > 0 ? (
+        operationAuthValue.map(scheme => (
+          <SecuritySchemeComponent
+            key={scheme.scheme.key}
+            scheme={scheme.scheme}
+            onChange={(authValue?: string) => handleChange(scheme.scheme, authValue)}
+            value={scheme.authValue ?? ''}
+          />
+        ))
+      ) : (
+        <OptionalMessageContainer />
+      )}
     </Panel>
   );
 };
 
 const GenericMessageContainer: React.FC<{ scheme: HttpSecurityScheme }> = ({ scheme }) => {
-  return <Panel.Content>Coming Soon: {getReadableSecurityName(scheme)}</Panel.Content>;
+  return <Panel.Content data-test="auth-try-it-row">Coming Soon: {getReadableSecurityName(scheme)}</Panel.Content>;
+};
+
+const OptionalMessageContainer: React.FC = () => {
+  return <Panel.Content>No auth selected</Panel.Content>;
 };
 
 interface SecuritySchemeComponentProps {

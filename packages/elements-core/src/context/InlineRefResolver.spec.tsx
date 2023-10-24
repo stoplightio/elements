@@ -144,6 +144,9 @@ describe('InlineRefResolver', () => {
             format: 'int32',
             maximum: 2147483647,
             minimum: -2147483648,
+            'x-stoplight': {
+              explicitProperties: ['type', 'format'],
+            },
           },
         },
       });

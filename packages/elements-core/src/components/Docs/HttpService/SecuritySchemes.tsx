@@ -1,41 +1,53 @@
-import { Box, NodeAnnotation, Panel, PanelProps } from '@stoplight/mosaic';
+import { Box, NodeAnnotation, Panel, PanelProps, Text } from '@stoplight/mosaic';
 import { HttpSecurityScheme } from '@stoplight/types';
-import { sortBy } from 'lodash';
 import React from 'react';
 
+import { OptionalSecurityMessage } from '../../../constants';
 import { useOptionsCtx } from '../../../context/Options';
-import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
-import { getDefaultDescription } from '../../../utils/securitySchemes';
-import { MarkdownViewer } from '../../MarkdownViewer';
+import { getReadableSecurityNames, getSecurityGroupId, shouldAddKey } from '../../../utils/oas/security';
+import { PanelContent } from '../Security/PanelContent';
 
 interface SecuritySchemesProps {
-  schemes: HttpSecurityScheme[];
+  secSchemes: HttpSecurityScheme[][];
   defaultScheme?: string;
   defaultCollapsed?: boolean;
+  parentId: string;
 }
 
 export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({
-  schemes,
+  secSchemes,
   defaultScheme,
   defaultCollapsed = false,
+  parentId,
 }) => {
+  const includeOptional = secSchemes.length > 1 && secSchemes.some(schemes => schemes.length === 0);
+  const { nodeHasChanged } = useOptionsCtx();
+
   return (
-    <Panel rounded isCollapsible={defaultCollapsed}>
+    <Panel rounded isCollapsible={defaultCollapsed} data-test="security-row">
       <Panel.Titlebar bg="canvas-300">
         <Box as="span" role="heading">
           Security
         </Box>
       </Panel.Titlebar>
       <Panel.Content p={0}>
-        {sortBy(schemes, 'type').map((scheme, i) => (
-          <SecurityScheme
-            key={i}
-            scheme={scheme}
-            defaultIsOpen={defaultScheme ? scheme.key === defaultScheme : i === 0}
-            isCollapsible={schemes.length > 1}
-            showSchemeKey={shouldIncludeKey(schemes, scheme.type)}
-          />
-        ))}
+        {includeOptional && <OptionalMessage />}
+        {secSchemes
+          .filter(scheme => scheme.length > 0) // Remove the None scheme from listed display
+          .map((schemes, i) => {
+            const secGroupId = getSecurityGroupId(parentId, i);
+            return (
+              <Box key={secGroupId} data-test="http-service-security-row">
+                <NodeAnnotation change={nodeHasChanged?.({ nodeId: secGroupId })} />
+                <SecurityScheme
+                  schemes={schemes}
+                  defaultIsOpen={defaultScheme ? schemes.length === 1 && schemes[0].key === defaultScheme : i === 0}
+                  isCollapsible={secSchemes.length > 1}
+                  showSchemeKey={shouldAddKey(schemes, secSchemes)}
+                />
+              </Box>
+            );
+          })}
       </Panel.Content>
     </Panel>
   );
@@ -43,28 +55,28 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({
 
 const SecurityScheme: React.FC<
   {
-    scheme: HttpSecurityScheme;
+    schemes: HttpSecurityScheme[];
     showSchemeKey?: boolean;
   } & Pick<PanelProps, 'defaultIsOpen' | 'isCollapsible'>
-> = ({ scheme, defaultIsOpen, isCollapsible, showSchemeKey }) => {
-  const { nodeHasChanged } = useOptionsCtx();
-  const hasChanged = nodeHasChanged?.({ nodeId: scheme.id });
-
+> = ({ schemes, defaultIsOpen, isCollapsible, showSchemeKey }) => {
   return (
     <Panel defaultIsOpen={defaultIsOpen} isCollapsible={isCollapsible} pos="relative">
       <Panel.Titlebar>
         <Box as="span" role="heading">
-          {getReadableSecurityName(scheme, showSchemeKey)}
+          {getReadableSecurityNames(schemes, showSchemeKey)}
         </Box>
       </Panel.Titlebar>
       <Panel.Content>
-        <MarkdownViewer
-          style={{ fontSize: 12 }}
-          markdown={`${scheme.description || ''}\n\n` + getDefaultDescription(scheme)}
-        />
+        <PanelContent schemes={schemes} />
       </Panel.Content>
-
-      <NodeAnnotation change={hasChanged} />
     </Panel>
+  );
+};
+
+const OptionalMessage: React.FC = () => {
+  return (
+    <Box p={2} pl={6} border>
+      <Text fontSize="base">{OptionalSecurityMessage}</Text>
+    </Box>
   );
 };

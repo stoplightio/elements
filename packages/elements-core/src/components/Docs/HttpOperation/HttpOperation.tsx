@@ -9,7 +9,7 @@ import { HttpMethodColors } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
-import { useChosenServerUrl } from '../../../hooks/useChosenServerUrl';
+import { useIsCompact } from '../../../hooks/useIsCompact';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
@@ -33,6 +33,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
   }) => {
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
+    const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
     const mocking = React.useContext(MockingContext);
     const isDeprecated = !!data.deprecated;
@@ -76,9 +77,11 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             responses={data.responses}
             onMediaTypeChange={setResponseMediaType}
             onStatusCodeChange={setResponseStatusCode}
+            isCompact={isCompact}
           />
         )}
         {data.callbacks && <Callbacks callbacks={data.callbacks} />}
+        {isCompact && tryItPanel}
       </VStack>
     );
 
@@ -98,10 +101,11 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
 
     return (
       <TwoColumnLayout
+        ref={layoutRef}
         className={cn('HttpOperation', className)}
         header={header}
         left={description}
-        right={tryItPanel}
+        right={!isCompact && tryItPanel}
       />
     );
   },
@@ -132,20 +136,14 @@ function MethodPath({ method, path, isCallback }: MethodPathProps & { isCallback
 function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { chosenServerUrl: string }) {
   const isDark = useThemeIsDark();
   const fullUrl = `${chosenServerUrl}${path}`;
-  const { leading, trailing } = useChosenServerUrl(chosenServerUrl);
 
   const pathElem = (
     <Flex overflowX="hidden" fontSize="lg" userSelect="all">
       <Box dir="rtl" color="muted" textOverflow="truncate" overflowX="hidden">
-        {leading}
-
-        {trailing !== null && (
-          <Box as="span" dir="ltr" style={{ unicodeBidi: 'bidi-override' }}>
-            {trailing}
-          </Box>
-        )}
+        <Box as="span" dir="ltr" style={{ unicodeBidi: 'bidi-override' }}>
+          {chosenServerUrl}
+        </Box>
       </Box>
-
       <Box fontWeight="semibold" flex={1}>
         {path}
       </Box>

@@ -62,10 +62,10 @@
   },
   "dependencies": {
     "@jpmorganchase/elemental-core": "^1.1.0",
-    "@stoplight/http-spec": "^5.1.4",
+    "@stoplight/http-spec": "^6.0.0",
     "@stoplight/json": "^3.18.1",
-    "@stoplight/mosaic": "^1.33.0",
-    "@stoplight/types": "^13.7.0",
+    "@stoplight/mosaic": "^1.44.3",
+    "@stoplight/types": "^14.0.0",
     "@stoplight/yaml": "^4.2.3",
     "classnames": "^2.2.6",
     "file-saver": "^2.0.5",

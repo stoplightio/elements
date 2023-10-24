@@ -4,6 +4,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "baseUrl": "./packages",
+    "lib": ["es2021", "dom"],
     "paths": {
       "@jpmorganchase/elemental": ["./elements/src"],
       "@jpmorganchase/elemental/*": ["./elements/src/*"],

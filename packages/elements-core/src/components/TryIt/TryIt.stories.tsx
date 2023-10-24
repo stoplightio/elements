@@ -8,6 +8,7 @@ import { requestBody } from '../../__fixtures__/operations/request-body';
 import { duplicatedSecurityScheme } from '../../__fixtures__/operations/securedOperation';
 import { operation as simpleGetOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedOperation } from '../../__fixtures__/operations/urlencoded-post';
+import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { TryIt, TryItProps } from './TryIt';
 
 export default {
@@ -25,6 +26,11 @@ SimpleGET.args = {
 export const WithParameters = Template.bind({});
 WithParameters.args = {
   httpOperation: putTodosOperation,
+};
+
+export const WithVariables = Template.bind({});
+WithVariables.args = {
+  httpOperation: operationWithUrlVariables,
 };
 
 export const UrlEncoded = Template.bind({});

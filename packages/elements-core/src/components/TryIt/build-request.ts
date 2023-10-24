@@ -1,7 +1,7 @@
 import { Dictionary, HttpParamStyles, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 
-import { getServerUrlWithDefaultValues } from '../../utils/http-spec/IServer';
+import { getServerUrlWithVariableValues, resolveUrl } from '../../utils/http-spec/IServer';
 import {
   filterOutAuthorizationParams,
   HttpSecuritySchemeWithValues,
@@ -25,9 +25,10 @@ interface BuildRequestInput {
   httpOperation: IHttpOperation;
   mediaTypeContent: IMediaTypeContent | undefined;
   parameterValues: Dictionary<string, string>;
+  serverVariableValues: Dictionary<string, string>;
   bodyInput?: BodyParameterValues | string;
   mockData?: MockData;
-  auth?: HttpSecuritySchemeWithValues;
+  auth?: HttpSecuritySchemeWithValues[];
   chosenServer?: IServer | null;
   credentials?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
@@ -38,10 +39,11 @@ const getServerUrl = ({
   httpOperation,
   mockData,
   corsProxy,
-}: Pick<BuildRequestInput, 'httpOperation' | 'chosenServer' | 'mockData' | 'corsProxy'>) => {
+  serverVariableValues,
+}: Pick<BuildRequestInput, 'httpOperation' | 'chosenServer' | 'mockData' | 'corsProxy' | 'serverVariableValues'>) => {
   const server = chosenServer || httpOperation.servers?.[0];
-  const chosenServerUrl = server && getServerUrlWithDefaultValues(server);
-  const serverUrl = mockData?.url || chosenServerUrl || window.location.origin;
+  const chosenServerUrl = server && getServerUrlWithVariableValues(server, serverVariableValues);
+  const serverUrl = resolveUrl(mockData?.url || chosenServerUrl || window.location.origin);
 
   if (corsProxy && !mockData) {
     return `${corsProxy}${serverUrl}`;
@@ -124,13 +126,14 @@ export async function buildFetchRequest({
   mediaTypeContent,
   bodyInput,
   parameterValues,
+  serverVariableValues,
   mockData,
   auth,
   chosenServer,
   credentials = 'omit',
   corsProxy,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
-  const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
+  const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy, serverVariableValues });
 
   const shouldIncludeBody =
     ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
@@ -175,58 +178,59 @@ export async function buildFetchRequest({
 }
 
 const runAuthRequestEhancements = (
-  auth: HttpSecuritySchemeWithValues | undefined,
+  auths: HttpSecuritySchemeWithValues[] | undefined,
   queryParams: NameAndValue[],
   headers: NameAndValue[],
 ): [NameAndValue[], NameAndValue[]] => {
-  if (!auth) return [queryParams, headers];
+  if (!auths) return [queryParams, headers];
 
   const newQueryParams = [...queryParams];
   const newHeaders = [...headers];
+  auths.forEach(auth => {
+    if (isApiKeySecurityScheme(auth.scheme)) {
+      if (auth.scheme.in === 'query') {
+        newQueryParams.push({
+          name: auth.scheme.name,
+          value: auth.authValue || '123',
+        });
+      }
 
-  if (isApiKeySecurityScheme(auth.scheme)) {
-    if (auth.scheme.in === 'query') {
-      newQueryParams.push({
-        name: auth.scheme.name,
-        value: auth.authValue ?? '',
-      });
+      if (auth.scheme.in === 'header') {
+        newHeaders.push({
+          name: auth.scheme.name,
+          value: auth.authValue || '123',
+        });
+      }
     }
 
-    if (auth.scheme.in === 'header') {
+    if (isOAuth2SecurityScheme(auth.scheme)) {
       newHeaders.push({
-        name: auth.scheme.name,
-        value: auth.authValue ?? '',
+        name: 'Authorization',
+        value: auth.authValue || 'Bearer 123',
       });
     }
-  }
 
-  if (isOAuth2SecurityScheme(auth.scheme)) {
-    newHeaders.push({
-      name: 'Authorization',
-      value: auth.authValue ?? '',
-    });
-  }
+    if (isBearerSecurityScheme(auth.scheme)) {
+      newHeaders.push({
+        name: 'Authorization',
+        value: `Bearer ${auth.authValue || '123'}`,
+      });
+    }
 
-  if (isBearerSecurityScheme(auth.scheme)) {
-    newHeaders.push({
-      name: 'Authorization',
-      value: `Bearer ${auth.authValue}`,
-    });
-  }
+    if (isDigestSecurityScheme(auth.scheme)) {
+      newHeaders.push({
+        name: 'Authorization',
+        value: auth.authValue?.replace(/\s\s+/g, ' ').trim() || '123',
+      });
+    }
 
-  if (isDigestSecurityScheme(auth.scheme)) {
-    newHeaders.push({
-      name: 'Authorization',
-      value: auth.authValue?.replace(/\s\s+/g, ' ').trim() ?? '',
-    });
-  }
-
-  if (isBasicSecurityScheme(auth.scheme)) {
-    newHeaders.push({
-      name: 'Authorization',
-      value: `Basic ${auth.authValue}`,
-    });
-  }
+    if (isBasicSecurityScheme(auth.scheme)) {
+      newHeaders.push({
+        name: 'Authorization',
+        value: `Basic ${auth.authValue || '123'}`,
+      });
+    }
+  });
 
   return [newQueryParams, newHeaders];
 };
@@ -235,13 +239,14 @@ export async function buildHarRequest({
   httpOperation,
   bodyInput,
   parameterValues,
+  serverVariableValues,
   mediaTypeContent,
   auth,
   mockData,
   chosenServer,
   corsProxy,
 }: BuildRequestInput): Promise<HarRequest> {
-  const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy });
+  const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy, serverVariableValues });
 
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody =

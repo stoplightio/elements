@@ -8,4 +8,4 @@ const { meta, createHoistedStory } = createStoriesForDocsComponent(Model);
 
 export default meta;
 
-export const Story = createHoistedStory({ data: model as JSONSchema7 });
+export const Story = createHoistedStory({ data: model as JSONSchema7, layoutOptions: { compact: 600 } });
