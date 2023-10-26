@@ -1,5 +1,5 @@
 import { safeStringify } from '@stoplight/json';
-import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
+import { Button, Menu, Panel } from '@stoplight/mosaic';
 import { IMediaTypeContent } from '@stoplight/types';
 import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 import { omit } from 'lodash';
@@ -95,12 +95,10 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
 };
 
 function initialSchema(content: IMediaTypeContent<false>): JSONSchema7 {
-  let wholeSchema = content.schema;
-  let parameters: JSONSchema7['properties'] = wholeSchema?.properties;
-  const isOneOf: boolean = parameters === undefined && wholeSchema?.oneOf !== undefined && wholeSchema.oneOf.length > 0;
-  if (isOneOf) {
-    // TODO: Need to eliminate this (spurious) type-check warning.
-    const firstOneOfItem: JSONSchema7Definition = wholeSchema?.oneOf?.[0];
+  const wholeSchema = content.schema;
+  const oneOf = wholeSchema?.oneOf;
+  if (wholeSchema?.properties === undefined && oneOf !== undefined && oneOf.length > 0) {
+    const firstOneOfItem: JSONSchema7Definition = oneOf[0];
     if (typeof firstOneOfItem !== 'boolean') {
       return firstOneOfItem;
     }
