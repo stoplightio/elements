@@ -1,6 +1,7 @@
 import { safeStringify } from '@stoplight/json';
-import { Panel } from '@stoplight/mosaic';
+import { Button, Menu, MenuItems, Panel } from '@stoplight/mosaic';
 import { IMediaTypeContent } from '@stoplight/types';
+import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 import { omit } from 'lodash';
 import * as React from 'react';
 
@@ -24,9 +25,15 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
   onChangeParameterAllow,
   isAllowedEmptyValues,
 }) => {
-  const schema = specification.schema;
-  const parameters = schema?.properties;
-  const required = schema?.required;
+  const isOneOf: boolean =
+    specification.schema?.properties === undefined &&
+    specification.schema?.oneOf !== undefined &&
+    specification.schema.oneOf.length > 0;
+  const [schema, setSchema] = React.useState(initialSchema(specification));
+  const parameters: JSONSchema7['properties'] = schema?.properties;
+  const required: string[] = schema?.required ?? [];
+
+  console.log({ schema, parameters, required });
 
   React.useEffect(() => {
     if (parameters === undefined) {
@@ -40,7 +47,11 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
 
   return (
     <Panel defaultIsOpen>
-      <Panel.Titlebar>Body</Panel.Titlebar>
+      <Panel.Titlebar
+        rightComponent={isOneOf && <OneOfMenu subSchemas={specification?.schema?.oneOf ?? []} onChange={setSchema} />}
+      >
+        Body
+      </Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent">
         {mapSchemaPropertiesToParameters(parameters, required).map(parameter => {
           const supportsFileUpload = parameterSupportsFileUpload(parameter);
@@ -82,3 +93,65 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
     </Panel>
   );
 };
+
+function initialSchema(content: IMediaTypeContent<false>): JSONSchema7 {
+  let wholeSchema = content.schema;
+  let parameters: JSONSchema7['properties'] = wholeSchema?.properties;
+  const isOneOf: boolean = parameters === undefined && wholeSchema?.oneOf !== undefined && wholeSchema.oneOf.length > 0;
+  if (isOneOf) {
+    // TODO: Need to eliminate this (spurious) type-check warning.
+    const firstOneOfItem: JSONSchema7Definition = wholeSchema?.oneOf?.[0];
+    if (typeof firstOneOfItem !== 'boolean') {
+      return firstOneOfItem;
+    }
+  }
+
+  return wholeSchema ?? {};
+}
+
+interface OneOfMenuProps {
+  subSchemas: JSONSchema7Definition[];
+  onChange: (selectedSubSchema: JSONSchema7) => void;
+}
+
+function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
+  const onSubSchemaSelect = React.useCallback(onChange, [onChange]);
+
+  const menuItems = React.useMemo(
+    () =>
+      subSchemas.map((subSchema, index) => {
+        const label = menuLabel(subSchema, index);
+        return {
+          id: `request-subschema-${label}`,
+          title: label,
+          onPress: () => onSubSchemaSelect(typeof subSchema === 'boolean' ? {} : subSchema),
+        };
+      }),
+    [subSchemas, onSubSchemaSelect],
+  );
+
+  return (
+    <Menu
+      aria-label="Examples"
+      items={menuItems}
+      renderTrigger={({ isOpen }) => (
+        <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen}>
+          Variants
+        </Button>
+      )}
+    />
+  );
+}
+
+function menuLabel(schema: JSONSchema7Definition, index: number): string {
+  if (typeof schema === 'boolean') {
+    return `${index.toString()} boolean`;
+  }
+
+  // TODO: What if `title` and/or `description` are very long strings?
+  return (
+    schema?.title ??
+    schema?.description ??
+    `${index.toString()} - ${Object.getOwnPropertyNames(schema.properties).length} properties`
+  );
+}
