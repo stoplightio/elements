@@ -34,10 +34,11 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
       <RouterTypeContext.Provider value={routerType}>
         <Router {...routerProps} key={basePath}>
           {/* Using conditional logic to ensure compatibility */}
-          { typeof Route.prototype.render === 'function' ? 
-            <Route path="/" render={wrappedComponentRender} /> : 
+          {typeof Route.prototype.render === 'function' ? (
+            <Route path="/" render={wrappedComponentRender} />
+          ) : (
             <Route path="/">{wrappedComponentRender()}</Route>
-          }
+          )}
         </Router>
       </RouterTypeContext.Provider>
     );
