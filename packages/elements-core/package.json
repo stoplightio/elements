@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "7.8.0",
+  "version": "7.13.8",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -57,18 +57,18 @@
     ]
   },
   "dependencies": {
-    "@stoplight/http-spec": "^5.1.4",
+    "@stoplight/http-spec": "^6.0.0",
     "@stoplight/json": "^3.18.1",
     "@stoplight/json-schema-ref-parser": "^9.0.5",
     "@stoplight/json-schema-sampler": "0.2.3",
-    "@stoplight/json-schema-viewer": "^4.10.2",
+    "@stoplight/json-schema-viewer": "^4.12.1",
     "@stoplight/markdown-viewer": "^5.6.0",
-    "@stoplight/mosaic": "^1.33.0",
-    "@stoplight/mosaic-code-editor": "^1.33.0",
-    "@stoplight/mosaic-code-viewer": "^1.33.0",
+    "@stoplight/mosaic": "^1.44.3",
+    "@stoplight/mosaic-code-editor": "^1.44.3",
+    "@stoplight/mosaic-code-viewer": "^1.44.3",
     "@stoplight/path": "^1.3.2",
     "@stoplight/react-error-boundary": "^2.0.0",
-    "@stoplight/types": "^13.7.0",
+    "@stoplight/types": "^14.0.0",
     "@stoplight/yaml": "^4.2.3",
     "classnames": "^2.2.6",
     "httpsnippet-lite": "^3.0.1",

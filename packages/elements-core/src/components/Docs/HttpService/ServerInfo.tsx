@@ -33,7 +33,7 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
 
   return (
     <InvertTheme>
-      <Panel rounded isCollapsible={false} className="BaseURLContent" w="full">
+      <Panel rounded isCollapsible={false} className="BaseURLContent" w="full" data-test="servers">
         <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Panel.Content w="full" className="sl-flex sl-flex-col">
           <VStack spacing={1} divider>
@@ -76,7 +76,13 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean; defaultIsO
   );
 
   return (
-    <Panel isCollapsible={!!variablesSchema} defaultIsOpen={defaultIsOpen} w="full">
+    <Panel
+      isCollapsible={!!variablesSchema}
+      defaultIsOpen={defaultIsOpen}
+      w="full"
+      className="ServerInfo"
+      data-test="server-row"
+    >
       <Panel.Titlebar whitespace="nowrap">
         <Text pl={titlePaddingLeft} pr={2} fontWeight="bold">
           {description}:
@@ -85,7 +91,7 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean; defaultIsO
         <Tooltip
           placement="right"
           renderTrigger={() => (
-            <Text aria-label={description}>
+            <Text aria-label={description} whitespace="normal" py={2} style={{ wordBreak: 'break-word' }}>
               {urlFragments.map(({ kind, value }, i) => (
                 <Text key={i} fontWeight={kind === 'variable' ? 'semibold' : 'normal'}>
                   {value}

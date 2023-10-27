@@ -47,7 +47,6 @@ export const httpServiceWithUrlVariables: IHttpService = {
       description: 'Development API',
     },
   ],
-  security: [],
   securitySchemes: [
     {
       id: '?http-security?',
@@ -80,4 +79,5 @@ export const httpServiceWithUrlVariables: IHttpService = {
       },
     },
   ],
+  security: [],
 };

@@ -13,7 +13,16 @@ describe('Stoplight component', () => {
 
       cy.findByText('https://todos.stoplight.io').should('exist');
       cy.findByText('https://stoplight.io/mocks/elements-examples/studio-demo/389434').should('exist');
-      cy.findByRole('heading', { name: /API Key/ }).should('exist');
+
+      /* With the change from displaying securitySchemes to security on the HttpService component,
+          this is no longer visible until we update the test schema - which is in a github project:
+          https://github.com/stoplightio/studio-demo - that may no longer exist. 
+
+          For now, will look at a different heading but once we update test data will revert this change.
+          TODO (DKT 9/26/23) */
+
+      //cy.findByRole('heading', { name: /API Key/ }).should('exist');
+      cy.findByRole('heading', { name: /Additional Information/ }).should('exist');
     });
   });
 
@@ -23,6 +32,7 @@ describe('Stoplight component', () => {
       cy.findByRole('heading', { name: /Create Todo/i }).should('exist');
       cy.findByRole('heading', { name: /Request/i }).should('exist');
       cy.findByRole('heading', { name: /Response/i }).should('exist');
+      cy.findByRole('heading', { name: /Security: API Key/ }).should('exist');
     });
 
     it('does not break on select dropdown', () => {

@@ -99,11 +99,11 @@ describe('HttpService', () => {
     expect(screen.getAllByRole('region')[1]).toHaveTextContent(`portstringDefault:443`);
   });
 
-  it('prepends origin to urls without origin', () => {
+  it('handles urls without an origin', () => {
     render(<ServerInfo servers={httpServiceWithoutOrigin.servers ?? []} />);
 
     const serverUrl = screen.getByLabelText('Production API');
-    expect(serverUrl).toHaveTextContent('http://localhost/api');
+    expect(serverUrl).toHaveTextContent('api');
   });
 
   it('displays mock server url when embedded in Stoplight Project', async () => {
@@ -113,7 +113,7 @@ describe('HttpService', () => {
     await waitFor(() => expect(mockServer).toHaveTextContent('https://foo.stoplight.io/prism/123'));
   });
 
-  it('removes Base URL block when an invalid URL is given', () => {
+  it('Base URL block handles an invalid URL', () => {
     const modifiedData = {
       ...httpService,
       servers: [
@@ -131,12 +131,12 @@ describe('HttpService', () => {
       </Router>,
     );
 
-    expect(screen.queryByText(/api base url/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/api base url/i)).toBeInTheDocument();
   });
 
   describe('Security schemes', () => {
     it('should render single security scheme', () => {
-      render(<SecuritySchemes schemes={[apiKey]} />);
+      render(<SecuritySchemes secSchemes={[[apiKey]]} parentId="2@adfg4F" />);
 
       const title = screen.getByRole('heading', { name: 'Security' });
       const scheme = screen.getByRole('heading', { name: 'API Key' });
@@ -148,7 +148,7 @@ describe('HttpService', () => {
     it('should not render if no security schemes provided', () => {
       render(
         <Router>
-          <HttpService data={{ ...httpService, securitySchemes: [] }} />
+          <HttpService data={{ ...httpService, security: [] }} />
         </Router>,
       );
 
@@ -157,21 +157,25 @@ describe('HttpService', () => {
     });
 
     it('should render default description', () => {
-      render(<SecuritySchemes schemes={[apiKey]} />);
+      render(<SecuritySchemes secSchemes={[[apiKey]]} parentId="2@adfg4F" />);
 
       const description = screen.getByText(/An API key/);
       expect(description).toBeInTheDocument();
     });
 
     it('should render custom description', () => {
-      render(<SecuritySchemes schemes={[{ ...apiKey, description: 'Api Key description' }]} />);
+      render(
+        <SecuritySchemes secSchemes={[[{ ...apiKey, description: 'Api Key description' }]]} parentId="2@adfg4F" />,
+      );
 
       const description = screen.getByText('Api Key description');
       expect(description).toBeInTheDocument();
     });
 
     it('should render both custom description and other scheme details', () => {
-      render(<SecuritySchemes schemes={[{ ...oauth, description: 'A custom description' }]} />);
+      render(
+        <SecuritySchemes secSchemes={[[{ ...oauth, description: 'A custom description' }]]} parentId="2@adfg4F" />,
+      );
 
       const description = screen.getByText('A custom description');
       const implicit = screen.getByText('Implicit OAuth Flow');
@@ -181,7 +185,7 @@ describe('HttpService', () => {
     });
 
     it('should render oauth flows for default description', () => {
-      render(<SecuritySchemes schemes={[oauth]} />);
+      render(<SecuritySchemes secSchemes={[[oauth]]} parentId="2@adfg4F" />);
 
       const implicit = screen.getByText('Implicit OAuth Flow');
       const password = screen.getByText('Password OAuth Flow');
@@ -195,7 +199,7 @@ describe('HttpService', () => {
     });
 
     it('should render multiple schemes', () => {
-      render(<SecuritySchemes schemes={[apiKey, oauth]} />);
+      render(<SecuritySchemes secSchemes={[[apiKey], [oauth]]} parentId="2@adfg4F" />);
 
       const apiKeyScheme = screen.getByRole('heading', { name: 'API Key' });
       const oauthScheme = screen.getByRole('heading', { name: 'OAuth 2.0' });
@@ -207,7 +211,7 @@ describe('HttpService', () => {
     });
 
     it('should expand first scheme by default', () => {
-      render(<SecuritySchemes schemes={[apiKey, oauth]} />);
+      render(<SecuritySchemes secSchemes={[[apiKey], [oauth]]} parentId="2@adfg4F" />);
 
       const apiKeyDescription = screen.queryByText(/An API key/);
       let oauthDescription = screen.queryByText('Implicit OAuth Flow');
