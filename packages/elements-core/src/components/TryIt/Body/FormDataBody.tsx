@@ -25,10 +25,7 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
   onChangeParameterAllow,
   isAllowedEmptyValues,
 }) => {
-  const isOneOf: boolean =
-    specification.schema?.properties === undefined &&
-    specification.schema?.oneOf !== undefined &&
-    specification.schema.oneOf.length > 0;
+  // TODO: What about allOf, anyOf?
   const [schema, setSchema] = React.useState(initialSchema(specification));
   const parameters: JSONSchema7['properties'] = schema?.properties;
   const required: string[] = schema?.required ?? [];
@@ -45,10 +42,16 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
     return null;
   }
 
+  const onSchemaChange = (schema: JSONSchema7) => {
+    // Erase existing values; the old and new schemas may have nothing in common.
+    onChangeValues({});
+    setSchema(schema);
+  };
+
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar
-        rightComponent={isOneOf && <OneOfMenu subSchemas={specification?.schema?.oneOf ?? []} onChange={setSchema} />}
+        rightComponent={<OneOfMenu subSchemas={specification?.schema?.oneOf ?? []} onChange={onSchemaChange} />}
       >
         Body
       </Panel.Titlebar>
@@ -72,6 +75,10 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
             );
           }
 
+          // STARTHERE
+          // TODO: When you toggle back and forth between oneOf sub-schemas,
+          // this remembers all field values, not just the most recently edited
+          // sub-schema's.
           return (
             <ParameterEditor
               key={parameter.name}
@@ -94,6 +101,10 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
   );
 };
 
+/**
+ * @returns If the top level of the schema is `oneOf`, the first of the
+ * sub-schemas; otherwise the entire schema.
+ */
 function initialSchema(content: IMediaTypeContent<false>): JSONSchema7 {
   const wholeSchema = content.schema;
   const oneOf = wholeSchema?.oneOf;
@@ -112,6 +123,10 @@ interface OneOfMenuProps {
   onChange: (selectedSubSchema: JSONSchema7) => void;
 }
 
+/**
+ * When the top level schema is `oneOf`, a drop-down menu that allows the user
+ * to select among the sub-schemas; otherwise `null`.
+ */
 function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
   const onSubSchemaSelect = React.useCallback(onChange, [onChange]);
 
@@ -128,6 +143,10 @@ function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
     [subSchemas, onSubSchemaSelect],
   );
 
+  if (!subSchemas || subSchemas.length == 0) {
+    return null;
+  }
+
   return (
     <Menu
       aria-label="Examples"
@@ -141,6 +160,13 @@ function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
   );
 }
 
+/**
+ * Produce a relatively human-friendly label for one of the schemas in a `oneOf`
+ * combiner.
+ * @param schema one schema among several in a `oneOf` combiner
+ * @param index ordinal position of `schema` in the `oneOf` combiner
+ * @returns the text label for the drop-down menu item representing `schema`
+ */
 function menuLabel(schema: JSONSchema7Definition, index: number): string {
   if (typeof schema === 'boolean') {
     return `${index.toString()} boolean`;

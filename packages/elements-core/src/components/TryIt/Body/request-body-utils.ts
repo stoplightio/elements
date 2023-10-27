@@ -79,6 +79,7 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
     if (!isFormDataBody) {
       return {};
     }
+    // TODO: Is this OK when it's a oneOf (or combiner, in general)?
     const properties = mediaTypeContent?.schema?.properties ?? {};
     const required = mediaTypeContent?.schema?.required;
     const parameters = mapSchemaPropertiesToParameters(properties, required);
