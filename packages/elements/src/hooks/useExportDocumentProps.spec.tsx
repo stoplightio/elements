@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
 import { safeStringify } from '@stoplight/yaml';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { saveAs } from 'file-saver';
 
 import { InstagramAPI as bundledJson } from '../__fixtures__/api-descriptions/Instagram';

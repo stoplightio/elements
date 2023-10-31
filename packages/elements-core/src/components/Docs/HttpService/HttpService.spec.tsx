@@ -1,8 +1,7 @@
 import 'jest-enzyme';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
-import { render, screen, waitFor } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { render, renderHook, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';

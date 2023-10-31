@@ -146,7 +146,8 @@ export const createElementClass = <P>(
     private _renderComponent() {
       if (this._mountPoint) {
         const props = mapValues(propDescriptors, (descriptor, key) => this._props[key] ?? descriptor.defaultValue);
-        ReactDOM.render(React.createElement(Component, props), this._mountPoint);
+        const element: JSX.Element = React.createElement(Component, props);
+        ReactDOM.render(element, this._mountPoint);
       }
     }
   };
