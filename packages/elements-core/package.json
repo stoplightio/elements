@@ -48,8 +48,8 @@
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react": ">=16.8",
-    "react-dom": ">=16.8"
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2"
   },
   "rollup": {
     "bundleDeps": [
@@ -98,8 +98,8 @@
     "@types/json-schema": "^7.0.11",
     "@types/lodash": "^4.14.181",
     "@types/prop-types": "^15.7.5",
-    "@types/react": "^18.2.33",
-    "@types/react-dom": "^18.2.14",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-router-hash-link": "^1.2.1",
     "@types/urijs": "^1.19.19",
@@ -108,9 +108,9 @@
     "enzyme-to-json": "3.x.x",
     "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-test-renderer": "^18.2.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-test-renderer": "^17.0.2",
     "resolve-url-loader": "^3.1.2",
     "style-loader": "^2.0.0"
   },
