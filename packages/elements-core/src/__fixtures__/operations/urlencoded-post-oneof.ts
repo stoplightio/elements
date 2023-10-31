@@ -63,10 +63,6 @@ export const httpOperation: IHttpOperation = {
                 },
               },
             ],
-            'x-stoplight': {
-              id: 'fy4lgsesqt84g',
-            },
-            'x-internal': false,
             description: '',
             title: 'Request Body Schemas',
             $schema: 'http://json-schema.org/draft-07/schema#',
