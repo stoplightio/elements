@@ -10,7 +10,7 @@ import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from '..
 import { ParameterEditor } from '../Parameters/ParameterEditor';
 import { BodyParameterValues, ParameterOptional } from './request-body-utils';
 
-interface FormDataBodyProps {
+export interface FormDataBodyProps {
   specification: IMediaTypeContent;
   values: BodyParameterValues;
   onChangeValues: (newValues: BodyParameterValues) => void;
@@ -29,8 +29,6 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
   const [schema, setSchema] = React.useState(initialSchema(specification));
   const parameters: JSONSchema7['properties'] = schema?.properties;
   const required: string[] = schema?.required ?? [];
-
-  console.log({ schema, parameters, required });
 
   React.useEffect(() => {
     if (parameters === undefined) {
@@ -75,10 +73,6 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
             );
           }
 
-          // STARTHERE
-          // TODO: When you toggle back and forth between oneOf sub-schemas,
-          // this remembers all field values, not just the most recently edited
-          // sub-schema's.
           return (
             <ParameterEditor
               key={parameter.name}
@@ -118,7 +112,7 @@ function initialSchema(content: IMediaTypeContent<false>): JSONSchema7 {
   return wholeSchema ?? {};
 }
 
-interface OneOfMenuProps {
+export interface OneOfMenuProps {
   subSchemas: JSONSchema7Definition[];
   onChange: (selectedSubSchema: JSONSchema7) => void;
 }
@@ -127,7 +121,7 @@ interface OneOfMenuProps {
  * When the top level schema is `oneOf`, a drop-down menu that allows the user
  * to select among the sub-schemas; otherwise `null`.
  */
-function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
+export function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
   const onSubSchemaSelect = React.useCallback(onChange, [onChange]);
 
   const menuItems = React.useMemo(
@@ -149,16 +143,19 @@ function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
 
   return (
     <Menu
-      aria-label="Examples"
+      aria-label="Variants"
       items={menuItems}
       renderTrigger={({ isOpen }) => (
-        <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen}>
+        <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen} data-testid="oneof-menu">
           Variants
         </Button>
       )}
     />
   );
 }
+
+/** maximum length of a menu item label */
+export const MAX_LENGTH = 60;
 
 /**
  * Produce a relatively human-friendly label for one of the schemas in a `oneOf`
@@ -172,10 +169,10 @@ function menuLabel(schema: JSONSchema7Definition, index: number): string {
     return `${index.toString()} boolean`;
   }
 
-  // TODO: What if `title` and/or `description` are very long strings?
-  return (
+  const label: string =
     schema?.title ??
     schema?.description ??
-    `${index.toString()} - ${Object.getOwnPropertyNames(schema.properties).length} properties`
-  );
+    `${index.toString()} - ${Object.getOwnPropertyNames(schema.properties).length} properties`;
+
+  return label.length <= MAX_LENGTH ? label : label.substring(0, MAX_LENGTH);
 }
