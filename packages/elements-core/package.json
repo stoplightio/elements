@@ -79,6 +79,7 @@
     "prop-types": "^15.7.2",
     "react-query": "^3.34.19",
     "react-router-dom": "^5.2.0",
+    "react-router-dom-v5-compat": "^6.18.0",
     "react-router-hash-link": "^2.1.0",
     "tslib": "^2.1.0",
     "urijs": "^1.19.11",
