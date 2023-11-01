@@ -8,8 +8,7 @@ import {
   withStyles,
 } from '@stoplight/elements-core';
 import * as React from 'react';
-import { Link, Redirect, Switch, useHistory, useParams } from 'react-router-dom';
-import { CompatRoute, CompatRouter } from 'react-router-dom-v5-compat';
+import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
 
 import { BranchSelector } from '../components/BranchSelector';
 import { DevPortalProvider } from '../components/DevPortalProvider';
@@ -193,21 +192,17 @@ const StoplightProjectRouter = ({
     <DevPortalProvider platformUrl={platformUrl}>
       <RouterTypeContext.Provider value={router}>
         <Router {...routerProps} key={basePath}>
-          <CompatRouter>
-            <Switch>
-              <CompatRoute path="/branches/:branchSlug/:nodeSlug" exact>
-                <StoplightProjectImpl {...props} />
-              </CompatRoute>
+          <Route path="/branches/:branchSlug/:nodeSlug" exact>
+            <StoplightProjectImpl {...props} />
+          </Route>
 
-              <CompatRoute path="/:nodeSlug" exact>
-                <StoplightProjectImpl {...props} />
-              </CompatRoute>
+          <Route path="/:nodeSlug" exact>
+            <StoplightProjectImpl {...props} />
+          </Route>
 
-              <CompatRoute path="/" exact>
-                <StoplightProjectImpl {...props} />
-              </CompatRoute>
-            </Switch>
-          </CompatRouter>
+          <Route path="/" exact>
+            <StoplightProjectImpl {...props} />
+          </Route>
         </Router>
       </RouterTypeContext.Provider>
     </DevPortalProvider>

@@ -1,6 +1,6 @@
 import { DefaultComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
-import { CompatRoute, CompatRouter } from 'react-router-dom-v5-compat';
+import { Route } from 'react-router-dom';
 
 import { LinkHeading } from '../components/LinkHeading';
 import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
@@ -27,13 +27,11 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
     return (
       <RouterTypeContext.Provider value={routerType}>
         <Router {...routerProps} key={basePath}>
-          <CompatRouter>
-            <CompatRoute path="/">
-              <MarkdownComponentsProvider value={components}>
-                <WrappedComponent {...props} />
-              </MarkdownComponentsProvider>
-            </CompatRoute>
-          </CompatRouter>
+          <Route path="/">
+            <MarkdownComponentsProvider value={components}>
+              <WrappedComponent {...props} />
+            </MarkdownComponentsProvider>
+          </Route>
         </Router>
       </RouterTypeContext.Provider>
     );
