@@ -15,6 +15,9 @@ interface MarkdownComponentsProviderProps {
 /**
  * Provides components to markdown-viewer.
  */
-export const MarkdownComponentsProvider: React.FC<MarkdownComponentsProviderProps> = ({ value, children }) => {
+export const MarkdownComponentsProvider: React.FC<React.PropsWithChildren<MarkdownComponentsProviderProps>> = ({
+  value,
+  children,
+}) => {
   return <MarkdownViewerProvider components={{ code: CodeComponent!, ...value }}>{children}</MarkdownViewerProvider>;
 };

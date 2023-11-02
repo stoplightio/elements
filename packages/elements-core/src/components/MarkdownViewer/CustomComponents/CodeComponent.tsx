@@ -1,14 +1,19 @@
 /* eslint-disable prettier/prettier */
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import type { HAST, MDAST } from '@stoplight/markdown';
 import { DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
 import { isObject } from 'lodash';
-import React from 'react';
+import * as React from 'react';
 import URI from 'urijs';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../../../constants';
-import { InlineRefResolverProvider, useInlineRefResolver, useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
+import {
+  InlineRefResolverProvider,
+  useInlineRefResolver,
+  useSchemaInlineRefResolver,
+} from '../../../context/InlineRefResolver';
 import { PersistenceContextProvider } from '../../../context/Persistence';
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { JSONSchema } from '../../../types';
@@ -55,7 +60,9 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
 
 export { DefaultSMDComponents };
 
-export const CodeComponent: CustomComponentMapping['code'] = props => {
+export const CodeComponent: CustomComponentMapping['code'] = (
+  props: React.PropsWithChildren<Pick<MDAST.Code, 'lang' | 'resolved'> & HAST.CodeProperties>,
+) => {
   const { title, jsonSchema, http, resolved, children } = props;
 
   const resolver = useInlineRefResolver();

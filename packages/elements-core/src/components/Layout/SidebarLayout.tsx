@@ -85,7 +85,7 @@ function useResizer(sidebarWidth: number): [SidebarRef, SidebarWidth, StartResiz
   }, []);
 
   const resize = React.useCallback(
-    mouseMoveEvent => {
+    (mouseMoveEvent: { clientX: number }) => {
       if (isResizing) {
         const value = mouseMoveEvent.clientX - sidebarRef.current!.getBoundingClientRect().left;
         setCurrentSidebarWidth(Math.min(Math.max(SIDEBAR_MIN_WIDTH, value), SIDEBAR_MAX_WIDTH));

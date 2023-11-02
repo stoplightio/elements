@@ -8,7 +8,7 @@ export type DevPortalProviderProps = {
 
 export const PlatformContext = React.createContext<DevPortalProviderProps>({ platformUrl: 'https://stoplight.io' });
 
-const PlatformProvider: React.FC<DevPortalProviderProps> = ({
+const PlatformProvider: React.FC<React.PropsWithChildren<DevPortalProviderProps>> = ({
   platformUrl = 'https://stoplight.io',
   platformAuthToken,
   children,

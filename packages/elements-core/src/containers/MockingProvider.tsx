@@ -5,10 +5,12 @@ export const MockingContext = createNamedContext<{
   hideMocking?: boolean;
 }>('MockingContext', { mockUrl: undefined, hideMocking: undefined });
 
-export const MockingProvider: React.FC<{
-  mockUrl?: string;
-  hideMocking?: boolean;
-}> = ({ mockUrl, hideMocking, children }) => {
+export const MockingProvider: React.FC<
+  React.PropsWithChildren<{
+    mockUrl?: string;
+    hideMocking?: boolean;
+  }>
+> = ({ mockUrl, hideMocking, children }) => {
   const info = {
     mockUrl,
     hideMocking: hideMocking || !mockUrl, // Mocking is hidden if no mock url is provided or if is forced hidden

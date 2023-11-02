@@ -210,7 +210,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
   );
 });
 
-const Collapse: React.FC<{ isOpen: boolean }> = ({ isOpen, children }) => {
+const Collapse: React.FC<React.PropsWithChildren<{ isOpen: boolean }>> = ({ isOpen, children }) => {
   if (!isOpen) return null;
 
   return <Box>{children}</Box>;

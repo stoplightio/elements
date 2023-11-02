@@ -23,7 +23,7 @@ type InlineRefResolverProviderProps = {
 /**
  * Populates `InlineRefResolverContext` with either a standard inline ref resolver based on `document`, or a custom resolver function provided by the caller.
  */
-export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps> = ({
+export const InlineRefResolverProvider: React.FC<React.PropsWithChildren<InlineRefResolverProviderProps>> = ({
   children,
   document: maybeDocument,
   resolver,
