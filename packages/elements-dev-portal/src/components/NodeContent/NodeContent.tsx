@@ -142,7 +142,7 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     );
 
     if (edge) {
-      return <Link to={`${edge.slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
+      return <Link to={{ pathname: edge.slug, hash }}>{children}</Link>;
     }
   }
 

@@ -72,7 +72,7 @@
     "file-saver": "^2.0.5",
     "lodash": "^4.17.19",
     "react-query": "^3.34.19",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^6.18.0"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
@@ -89,7 +89,6 @@
     "@types/lodash": "^4.14.181",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.12",
-    "@types/react-router-dom": "^5.3.3",
     "enzyme": "3.x.x",
     "enzyme-adapter-react-16": "1.x.x",
     "enzyme-to-json": "3.x.x",

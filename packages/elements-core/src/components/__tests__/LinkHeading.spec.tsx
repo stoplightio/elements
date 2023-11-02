@@ -47,8 +47,8 @@ describe('LinkHeading', () => {
           </BrowserRouter>
         </RouterTypeContext.Provider>,
       );
-
-      expect(baseElement.querySelector('a')).toHaveProperty('href', 'https://elements-demo.stoplight.io/route#heading');
+      const link = baseElement.querySelector('a');
+      expect(link).toHaveProperty('href', 'https://elements-demo.stoplight.io/route#heading');
     });
 
     it('should scroll into view', () => {
@@ -94,10 +94,8 @@ describe('LinkHeading', () => {
         </RouterTypeContext.Provider>,
       );
 
-      expect(baseElement.querySelector('a')).toHaveProperty(
-        'href',
-        'https://elements-demo.stoplight.io/#/route#heading',
-      );
+      const link = baseElement.querySelector('a');
+      expect(link).toHaveProperty('href', 'https://elements-demo.stoplight.io/#/route#heading');
     });
 
     it('should scroll into view', () => {

@@ -9,7 +9,7 @@ export type TableOfContentsProps = {
 };
 
 export type CustomLinkComponent = React.ComponentType<{
-  to: string;
+  to: string | Partial<{ pathname: string; search: string; hash: string }>;
   className?: string;
   children: React.ReactNode;
 }>;
