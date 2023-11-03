@@ -27,8 +27,10 @@ export class Styled extends React.Component {
   }
 }
 
-export function withStyles<T extends React.JSX.IntrinsicAttributes>(Component: React.ComponentType<T>): React.FC<T> {
-  const Inner: React.FC<T> = props => {
+export function withStyles<T extends React.JSX.IntrinsicAttributes>(
+  Component: React.ComponentType<React.PropsWithChildren<T>>,
+): React.FC<React.PropsWithChildren<T>> {
+  const Inner: React.FC<React.PropsWithChildren<T>> = props => {
     return (
       <Styled>
         <Component {...props} />

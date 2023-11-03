@@ -14,7 +14,7 @@ interface SecuritySchemesProps {
   parentId: string;
 }
 
-export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({
+export const SecuritySchemes: React.FC<React.PropsWithChildren<SecuritySchemesProps>> = ({
   secSchemes,
   defaultScheme,
   defaultCollapsed = false,
@@ -54,10 +54,12 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({
 };
 
 const SecurityScheme: React.FC<
-  {
-    schemes: HttpSecurityScheme[];
-    showSchemeKey?: boolean;
-  } & Pick<PanelProps, 'defaultIsOpen' | 'isCollapsible'>
+  React.PropsWithChildren<
+    {
+      schemes: HttpSecurityScheme[];
+      showSchemeKey?: boolean;
+    } & Pick<PanelProps, 'defaultIsOpen' | 'isCollapsible'>
+  >
 > = ({ schemes, defaultIsOpen, isCollapsible, showSchemeKey }) => {
   return (
     <Panel defaultIsOpen={defaultIsOpen} isCollapsible={isCollapsible} pos="relative">
@@ -73,7 +75,7 @@ const SecurityScheme: React.FC<
   );
 };
 
-const OptionalMessage: React.FC = () => {
+const OptionalMessage: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Box p={2} pl={6} border>
       <Text fontSize="base">{OptionalSecurityMessage}</Text>

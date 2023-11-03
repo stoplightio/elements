@@ -20,7 +20,7 @@ interface ParameterProps {
   validate?: boolean;
 }
 
-export const ParameterEditor: React.FC<ParameterProps> = ({
+export const ParameterEditor: React.FC<React.PropsWithChildren<ParameterProps>> = ({
   parameter,
   value,
   onChange,

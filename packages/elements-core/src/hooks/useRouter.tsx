@@ -4,7 +4,7 @@ import { BrowserRouter, HashRouter, MemoryRouter, StaticRouter } from 'react-rou
 
 import { RouterType } from '../types';
 
-const RouterComponent: Dictionary<React.ComponentType, RouterType> = {
+const RouterComponent: Dictionary<React.ComponentType<React.PropsWithChildren<unknown>>, RouterType> = {
   history: BrowserRouter,
   memory: MemoryRouter,
   hash: HashRouter,

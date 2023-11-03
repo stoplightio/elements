@@ -8,11 +8,12 @@ export type TableOfContentsProps = {
   onLinkClick?(): void;
 };
 
-export type CustomLinkComponent = React.ComponentType<{
-  to: string;
-  className?: string;
-  children: React.ReactNode;
-}>;
+export type CustomLinkComponent = React.ComponentType<
+  React.PropsWithChildren<{
+    to: string;
+    className?: string;
+  }>
+>;
 
 export type TableOfContentsItem = TableOfContentsDivider | TableOfContentsGroupItem;
 

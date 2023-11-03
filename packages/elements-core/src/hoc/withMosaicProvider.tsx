@@ -3,7 +3,9 @@ import React from 'react';
 
 import { getDisplayName } from './utils';
 
-export function withMosaicProvider<P>(WrappedComponent: React.ComponentType<P>): React.FC<P> {
+export function withMosaicProvider<P>(
+  WrappedComponent: React.ComponentType<React.PropsWithChildren<P>>,
+): React.FC<React.PropsWithChildren<P>> {
   const WithMosaicProvider = (props: P) => {
     try {
       // if already have mosaic context in tree, use it rather than creating a new provider

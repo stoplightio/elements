@@ -16,11 +16,11 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.11",
-    "@types/react": "^18.2.8",
-    "@types/react-dom": "^18.2.4",
+    "@types/react": "^18.2.34",
+    "@types/react-dom": "^18.2.14",
     "@types/react-router-dom": "^5.1.7",
     "node-sass": "^6.0.1",
-    "react-dom": "^17.0.2",
+    "react-dom": "^18.2.0",
     "react-scripts": "^4.0.3",
     "serve": "^13.0.2",
     "typescript": "^4.3.5"

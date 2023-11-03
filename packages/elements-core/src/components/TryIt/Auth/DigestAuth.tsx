@@ -17,7 +17,7 @@ const digestPlaceholder = `Digest username="User Name",
             opaque="5ccc069c403ebaf9f0171e9517f40e41"
 `;
 
-export const DigestAuth: React.FC<DigestAuthProps> = ({ onChange, value }) => {
+export const DigestAuth: React.FC<React.PropsWithChildren<DigestAuthProps>> = ({ onChange, value }) => {
   return (
     <Panel.Content className="ParameterGrid" data-test="auth-try-it-row">
       <div>Authorization</div>

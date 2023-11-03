@@ -29,7 +29,7 @@ type Complete<T> = {
 };
 
 export const createElementClass = <P>(
-  Component: React.ComponentType<P>,
+  Component: React.ComponentType<React.PropsWithChildren<P>>,
   propDescriptors: PropDescriptorMap<P>,
 ): new () => HTMLElement => {
   return class extends HTMLElement {

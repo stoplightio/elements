@@ -94,7 +94,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
   return props.hasOwnProperty('apiDescriptionDocument');
 };
 
-export const APIImpl: React.FC<APIProps> = props => {
+export const APIImpl: React.FC<React.PropsWithChildren<APIProps>> = props => {
   const {
     layout,
     apiDescriptionUrl = '',

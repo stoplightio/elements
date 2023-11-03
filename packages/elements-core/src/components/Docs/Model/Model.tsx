@@ -20,7 +20,7 @@ import { TwoColumnLayout } from '../TwoColumnLayout';
 
 export type ModelProps = DocsComponentProps<JSONSchema7>;
 
-const ModelComponent: React.FC<ModelProps> = ({
+const ModelComponent: React.FC<React.PropsWithChildren<ModelProps>> = ({
   data: unresolvedData,
   className,
   nodeTitle,

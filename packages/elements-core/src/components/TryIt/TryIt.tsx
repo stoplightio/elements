@@ -71,7 +71,7 @@ export interface TryItProps {
 
 const defaultServers: IServer[] = [];
 
-export const TryIt: React.FC<TryItProps> = ({
+export const TryIt: React.FC<React.PropsWithChildren<TryItProps>> = ({
   httpOperation,
   mockUrl,
   onRequestChange,

@@ -48,8 +48,8 @@
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react": ">=17.0.2",
-    "react-dom": ">=17.0.2"
+    "react": ">=18.2.34",
+    "react-dom": ">=18.2.14"
   },
   "rollup": {
     "bundleDeps": [
@@ -79,7 +79,7 @@
     "prop-types": "^15.7.2",
     "react-query": "^3.34.19",
     "react-router-dom": "^5.2.0",
-    "react-router-hash-link": "^2.1.0",
+    "react-router-hash-link": "^2.4.3",
     "tslib": "^2.1.0",
     "urijs": "^1.19.11",
     "util": "^0.12.4",
@@ -93,15 +93,14 @@
     "@testing-library/react": "^13.1",
     "@testing-library/user-event": "^12.2.0",
     "@types/classnames": "^2.2.10",
-    "@types/enzyme": "3.x.x",
-    "@types/enzyme-adapter-react-16": "1.x.x",
+    "@types/enzyme": "^3.10.15",
     "@types/json-schema": "^7.0.11",
     "@types/lodash": "^4.14.181",
     "@types/prop-types": "^15.7.5",
-    "@types/react": "^18.2.8",
-    "@types/react-dom": "^18.2.4",
+    "@types/react": "^18.2.34",
+    "@types/react-dom": "^18.2.14",
     "@types/react-router-dom": "^5.3.3",
-    "@types/react-router-hash-link": "^1.2.1",
+    "@types/react-router-hash-link": "^2.4.8",
     "@types/urijs": "^1.19.19",
     "enzyme": "3.x.x",
     "enzyme-adapter-react-16": "1.x.x",
@@ -109,8 +108,8 @@
     "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
     "react": "18.2.0",
-    "react-dom": "17.0.2",
-    "react-test-renderer": "^17.0.2",
+    "react-dom": "18.2.0",
+    "react-test-renderer": "^18.2.0",
     "resolve-url-loader": "^3.1.2",
     "style-loader": "^2.0.0"
   },

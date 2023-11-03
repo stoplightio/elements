@@ -12,7 +12,12 @@ interface AdditionalInfoProps {
   license?: IHttpService['license'];
 }
 
-export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfService, contact, license }) => {
+export const AdditionalInfo: React.FC<React.PropsWithChildren<AdditionalInfoProps>> = ({
+  id,
+  termsOfService,
+  contact,
+  license,
+}) => {
   const { nodeHasChanged } = useOptionsCtx();
   const hasChanged = nodeHasChanged?.({ nodeId: id, attr: ['termsOfService', 'contact', 'license'] });
 

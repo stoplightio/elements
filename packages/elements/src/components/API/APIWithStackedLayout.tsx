@@ -40,7 +40,7 @@ const TryItContext = React.createContext<{
 });
 TryItContext.displayName = 'TryItContext';
 
-export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
+export const APIWithStackedLayout: React.FC<React.PropsWithChildren<StackedLayoutProps>> = ({
   serviceNode,
   hideTryIt,
   hideExport,

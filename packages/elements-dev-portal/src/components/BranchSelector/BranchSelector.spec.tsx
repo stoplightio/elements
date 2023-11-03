@@ -31,7 +31,7 @@ export const branches = [
   },
 ];
 
-const BranchSelectorWrapper: React.FC = () => {
+const BranchSelectorWrapper: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [branchSlug, setBranchSlug] = React.useState('main');
 
   return (

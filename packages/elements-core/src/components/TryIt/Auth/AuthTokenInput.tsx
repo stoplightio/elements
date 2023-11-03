@@ -11,7 +11,12 @@ interface AuthTokenInputProps {
   value: string;
 }
 
-export const AuthTokenInput: React.FC<AuthTokenInputProps> = ({ type, name, value, onChange }) => {
+export const AuthTokenInput: React.FC<React.PropsWithChildren<AuthTokenInputProps>> = ({
+  type,
+  name,
+  value,
+  onChange,
+}) => {
   const inputId = useUniqueId(`id_auth_${name}_`);
   return (
     <>

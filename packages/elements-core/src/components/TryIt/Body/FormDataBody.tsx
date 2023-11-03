@@ -17,7 +17,7 @@ interface FormDataBodyProps {
   isAllowedEmptyValues: ParameterOptional;
 }
 
-export const FormDataBody: React.FC<FormDataBodyProps> = ({
+export const FormDataBody: React.FC<React.PropsWithChildren<FormDataBodyProps>> = ({
   specification,
   values,
   onChangeValues,

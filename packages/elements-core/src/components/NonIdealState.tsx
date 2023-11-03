@@ -7,7 +7,7 @@ type NonIdealStateProps = {
   title?: React.ReactNode;
 };
 
-export const NonIdealState: React.FC<NonIdealStateProps> = ({ description, icon, title }) => {
+export const NonIdealState: React.FC<React.PropsWithChildren<NonIdealStateProps>> = ({ description, icon, title }) => {
   return (
     <Flex flexDirection="col" alignItems="center" justifyContent="center" textAlign="center" w="full" h="full">
       <Box as={Icon} icon={icon || ['fas', 'exclamation-triangle']} color="light" fontSize="6xl" mb={4} />

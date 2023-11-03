@@ -33,7 +33,10 @@ const defaultStyle = {
   cookie: HttpParamStyles.Form,
 } as const;
 
-export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
+export const Parameters: React.FunctionComponent<React.PropsWithChildren<ParametersProps>> = ({
+  parameters,
+  parameterType,
+}) => {
   const { nodeHasChanged } = useOptionsCtx();
   const refResolver = useSchemaInlineRefResolver();
 

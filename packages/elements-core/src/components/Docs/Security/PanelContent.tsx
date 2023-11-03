@@ -7,7 +7,7 @@ import { useOptionsCtx } from '../../../context/Options';
 import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
 import { getDefaultDescription } from '../../../utils/securitySchemes';
 
-export const PanelContent: React.FC<{ schemes: HttpSecurityScheme[] }> = ({ schemes }) => {
+export const PanelContent: React.FC<React.PropsWithChildren<{ schemes: HttpSecurityScheme[] }>> = ({ schemes }) => {
   const { nodeHasChanged } = useOptionsCtx();
 
   if (!schemes || !schemes.length) {

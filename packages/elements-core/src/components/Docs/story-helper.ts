@@ -11,7 +11,7 @@ interface HelperReturn<P extends Partial<DocsProps>> {
 }
 
 export const createStoriesForDocsComponent = <P extends Partial<DocsProps> = DocsProps>(
-  Component: React.ComponentType<P>,
+  Component: React.ComponentType<React.PropsWithChildren<P>>,
   title?: string,
 ): HelperReturn<P> => {
   const createStory = (name: string, input: Partial<P>) => {

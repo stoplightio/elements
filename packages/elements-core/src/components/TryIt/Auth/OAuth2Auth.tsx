@@ -10,7 +10,7 @@ interface OAuth2AuthProps {
   value: string;
 }
 
-export const OAuth2Auth: React.FC<OAuth2AuthProps> = ({ value, onChange }) => {
+export const OAuth2Auth: React.FC<React.PropsWithChildren<OAuth2AuthProps>> = ({ value, onChange }) => {
   return (
     <Panel.Content className="ParameterGrid" data-test="auth-try-it-row">
       <AuthTokenInput type="oauth2" name="Token" value={value} onChange={onChange} />

@@ -40,7 +40,7 @@ const createMenuChild = (name: string, currentItemName: string | undefined, onPr
   };
 };
 
-export const TryItAuth: React.FC<TryItAuthProps> = ({
+export const TryItAuth: React.FC<React.PropsWithChildren<TryItAuthProps>> = ({
   operationSecuritySchemes,
   operationAuthValue,
   setOperationAuthValue,
@@ -130,11 +130,11 @@ export const TryItAuth: React.FC<TryItAuthProps> = ({
   );
 };
 
-const GenericMessageContainer: React.FC<{ scheme: HttpSecurityScheme }> = ({ scheme }) => {
+const GenericMessageContainer: React.FC<React.PropsWithChildren<{ scheme: HttpSecurityScheme }>> = ({ scheme }) => {
   return <Panel.Content data-test="auth-try-it-row">Coming Soon: {getReadableSecurityName(scheme)}</Panel.Content>;
 };
 
-const OptionalMessageContainer: React.FC = () => {
+const OptionalMessageContainer: React.FC<React.PropsWithChildren<unknown>> = () => {
   return <Panel.Content>No auth selected</Panel.Content>;
 };
 
@@ -144,7 +144,10 @@ interface SecuritySchemeComponentProps {
   value: string;
 }
 
-const SecuritySchemeComponent: React.FC<SecuritySchemeComponentProps> = ({ scheme, ...rest }) => {
+const SecuritySchemeComponent: React.FC<React.PropsWithChildren<SecuritySchemeComponentProps>> = ({
+  scheme,
+  ...rest
+}) => {
   switch (scheme.type) {
     case 'apiKey':
       return <APIKeyAuth scheme={scheme} {...rest} />;

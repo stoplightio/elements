@@ -11,7 +11,7 @@ interface MockingButtonProps {
   onOptionsChange: (data: MockingOptions) => void;
 }
 
-export const MockingButton: React.FC<MockingButtonProps> = ({
+export const MockingButton: React.FC<React.PropsWithChildren<MockingButtonProps>> = ({
   operation,
   options: { code, example, dynamic },
   onOptionsChange,

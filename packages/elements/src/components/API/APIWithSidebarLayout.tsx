@@ -26,7 +26,7 @@ type SidebarLayoutProps = {
   tryItCorsProxy?: string;
 };
 
-export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
+export const APIWithSidebarLayout: React.FC<React.PropsWithChildren<SidebarLayoutProps>> = ({
   serviceNode,
   logo,
   hideTryIt,

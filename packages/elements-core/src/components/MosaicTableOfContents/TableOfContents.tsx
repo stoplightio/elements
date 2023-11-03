@@ -379,7 +379,7 @@ const Node = React.memo<{
   );
 });
 
-const Version: React.FC<{ value: string }> = ({ value }) => {
+const Version: React.FC<React.PropsWithChildren<{ value: string }>> = ({ value }) => {
   return (
     <Box mr={2}>
       <VersionBadge value={value} backgroundColor="#909DAB" />

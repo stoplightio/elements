@@ -73,7 +73,7 @@ export interface StoplightProjectProps extends RoutingProps {
   tryItCorsProxy?: string;
 }
 
-const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
+const StoplightProjectImpl: React.FC<React.PropsWithChildren<StoplightProjectProps>> = ({
   projectId,
   hideTryIt,
   hideMocking,

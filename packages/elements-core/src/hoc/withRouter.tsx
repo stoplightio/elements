@@ -17,7 +17,9 @@ const components: Partial<DefaultComponentMapping> = {
   h4: ({ color, ...props }) => <LinkHeading size={4} {...props} />,
 };
 
-export function withRouter<P extends RoutingProps>(WrappedComponent: React.ComponentType<P>): React.FC<P> {
+export function withRouter<P extends RoutingProps>(
+  WrappedComponent: React.ComponentType<React.PropsWithChildren<P>>,
+): React.FC<React.PropsWithChildren<P>> {
   const WithRouter = (props: P) => {
     const basePath = props.basePath ?? '/';
     const staticRouterPath = props.staticRouterPath ?? '';

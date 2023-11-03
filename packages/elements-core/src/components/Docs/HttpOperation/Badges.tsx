@@ -4,7 +4,7 @@ import React from 'react';
 
 import { badgeDefaultBackgroundColor, badgeDefaultColor } from '../../../constants';
 
-export const DeprecatedBadge: React.FC = () => (
+export const DeprecatedBadge: React.FC<React.PropsWithChildren<unknown>> = () => (
   <Tooltip
     renderTrigger={
       <Badge intent="warning" icon={['fas', 'exclamation-circle']} data-testid="badge-deprecated">
@@ -16,7 +16,7 @@ export const DeprecatedBadge: React.FC = () => (
   </Tooltip>
 );
 
-export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpService }) => (
+export const InternalBadge: React.FC<React.PropsWithChildren<{ isHttpService?: boolean }>> = ({ isHttpService }) => (
   <Tooltip
     renderTrigger={
       <Badge icon={faEye} data-testid="badge-internal" bg="danger">
@@ -28,7 +28,10 @@ export const InternalBadge: React.FC<{ isHttpService?: boolean }> = ({ isHttpSer
   </Tooltip>
 );
 
-export const VersionBadge: React.FC<{ value: string; backgroundColor?: string }> = ({ value, backgroundColor }) => (
+export const VersionBadge: React.FC<React.PropsWithChildren<{ value: string; backgroundColor?: string }>> = ({
+  value,
+  backgroundColor,
+}) => (
   <Badge
     appearance="solid"
     size="sm"

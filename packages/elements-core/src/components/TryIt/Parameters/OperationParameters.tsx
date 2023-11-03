@@ -11,7 +11,7 @@ interface OperationParametersProps<P extends keyof any = string> {
   validate?: boolean;
 }
 
-export const OperationParameters: React.FC<OperationParametersProps> = ({
+export const OperationParameters: React.FC<React.PropsWithChildren<OperationParametersProps>> = ({
   parameters,
   values,
   onChangeValue,

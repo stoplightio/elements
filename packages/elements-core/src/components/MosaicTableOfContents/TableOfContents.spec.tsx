@@ -9,7 +9,7 @@ import { findFirstNode } from './utils';
 
 const TableOfContents = withMosaicProvider(TOC);
 
-const Link: React.FC = ({ children }) => <>{children}</>;
+const Link: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => <>{children}</>;
 
 describe('TableOfContents', () => {
   describe('Group', () => {

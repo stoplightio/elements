@@ -6,7 +6,7 @@ import React, { useContext } from 'react';
 
 import { GlobalContext } from '../context';
 
-export const ElementsAPI: React.FC = () => {
+export const ElementsAPI: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { apiDescriptionUrl } = useContext(GlobalContext);
 
   const specUrlWithProxy =

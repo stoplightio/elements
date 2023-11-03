@@ -10,7 +10,7 @@ interface LogoProps {
   };
 }
 
-export const Logo: React.FC<LogoProps> = ({ logo }) => {
+export const Logo: React.FC<React.PropsWithChildren<LogoProps>> = ({ logo }) => {
   return (
     <Box
       display="inline"

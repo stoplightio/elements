@@ -9,7 +9,10 @@ import { TryIt, TryItProps } from './TryIt';
 export type TryItWithRequestSamplesProps = Omit<TryItProps, 'onRequestChange'> &
   ResponseExamplesProps & { hideTryIt?: boolean };
 
-export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = ({ hideTryIt, ...props }) => {
+export const TryItWithRequestSamples: React.FC<React.PropsWithChildren<TryItWithRequestSamplesProps>> = ({
+  hideTryIt,
+  ...props
+}) => {
   const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
   return (
     <VStack spacing={6}>
