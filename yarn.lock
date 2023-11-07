@@ -11867,15 +11867,14 @@ https-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-httpsnippet-lite@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/httpsnippet-lite/-/httpsnippet-lite-3.0.1.tgz#22213e1285c4de280f314e93a27d21e986523a1e"
-  integrity sha512-XOF6WjImP4odRg+qGLPjKk+NWMy0dNHlYRmwgaPyqaz2pwSYQJxrjZWefyBPY6ygfxdNedxeb6Xiuokp2wRYuQ==
+httpsnippet-lite@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/httpsnippet-lite/-/httpsnippet-lite-3.0.5.tgz#af937fa37d3f34e333a1f68e64f906c0fe48c992"
+  integrity sha512-So4qTXY5iFj5XtFDwyz2PicUu+8NWrI8e8h+ZeZoVtMNcFQp4FFIntBHUE+JPUG6QQU8o1VHCy+X4ETRDwt9CA==
   dependencies:
     "@types/har-format" "^1.2.10"
     formdata-node "^4.4.1"
     stringify-object "3.3.0"
-    type-fest "^3.6.1"
 
 human-signals@^1.1.1:
   version "1.1.1"
@@ -21124,11 +21123,6 @@ type-fest@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
-
-type-fest@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.6.1.tgz#cf8025edeebfd6cf48de73573a5e1423350b9993"
-  integrity sha512-htXWckxlT6U4+ilVgweNliPqlsVSSucbxVexRYllyMVJDtf5rTjv6kF/s+qAd4QSL1BZcnJPEJavYBPQiWuZDA==
 
 type-is@^1.6.18, type-is@~1.6.18:
   version "1.6.18"
