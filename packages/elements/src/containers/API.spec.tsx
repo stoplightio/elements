@@ -6,7 +6,8 @@ import {
   withQueryClientProvider,
   withStyles,
 } from '@stoplight/elements-core';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { flow } from 'lodash';
 import * as React from 'react';
@@ -127,5 +128,30 @@ describe('API', () => {
 
     expect(screen.queryByText('Cool object, but internal.')).not.toBeInTheDocument();
     expect(history.location.pathname).toBe('/');
+  });
+
+  describe('stackedLayout', () => {
+    it('shows operation path and method when collapsed', async () => {
+      render(<API logo="thisisarequiredprop" layout="stacked" apiDescriptionDocument={APIDocument} />);
+
+      const users = await screen.findByText('users');
+      act(() => userEvent.click(users));
+
+      expect(screen.queryByText('/users/{user-id}')).toBeInTheDocument();
+    });
+
+    it('shows operation name when expanded', async () => {
+      render(<API logo="thisisarequiredprop" layout="stacked" apiDescriptionDocument={APIDocument} />);
+
+      const users = await screen.findByText('users');
+      act(() => userEvent.click(users));
+
+      const usersPath = await screen.findByText('/users/{user-id}');
+      act(() => userEvent.click(usersPath));
+
+      const usersSummary = await screen.findByText('Get basic information about a user.');
+
+      expect(usersSummary).toBeInTheDocument();
+    });
   });
 });

@@ -171,7 +171,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
         </Box>
 
         <Box flex={1} fontWeight="medium" wordBreak="all">
-          {item.uri}
+          {item.data.path}
         </Box>
         {isDeprecated && <DeprecatedBadge />}
       </Flex>
