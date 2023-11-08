@@ -171,12 +171,15 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
         </Box>
 
         <Box flex={1} fontWeight="medium" wordBreak="all">
-          {item.name}
+          {item.uri}
         </Box>
         {isDeprecated && <DeprecatedBadge />}
       </Flex>
 
       <Collapse isOpen={isExpanded}>
+        <Box flex={1} p={2} fontWeight="medium" mx="auto" fontSize="xl">
+          {item.name}
+        </Box>
         {hideTryIt ? (
           <Box as={ParsedDocs} layoutOptions={{ noHeading: true, hideTryItPanel: true }} node={item} p={4} />
         ) : (
