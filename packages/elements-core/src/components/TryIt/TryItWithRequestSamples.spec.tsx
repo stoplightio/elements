@@ -6,6 +6,7 @@ import { httpOperation as putTodosOperation } from '../../__fixtures__/operation
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { withPersistenceBoundary } from '../../context/Persistence';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
+import { chooseOption } from '../../utils/tests/chooseOption';
 import { TryItWithRequestSamples as RawComponent } from './TryItWithRequestSamples';
 
 const TryItWithRequestSamples = withMosaicProvider(withPersistenceBoundary(RawComponent));
@@ -53,14 +54,25 @@ describe('TryItWithRequestSamples', () => {
     expect(codeViewer).toHaveTextContent(/Prefer: code=200/);
   });
 
-  it('includes authentication data in request sample', async () => {
+  it('includes renders authentication data with suggested value initially', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
+    const codeViewer = await screen.findByLabelText(/curl/);
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123'/));
 
     const apiKeyField = await screen.findByLabelText('API Key');
     userEvent.type(apiKeyField, '123456789');
 
-    const codeViewer = await screen.findByLabelText(/curl/);
-    await waitFor(() => expect(codeViewer).toHaveTextContent(/123456789/));
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123456789'/));
+
+    userEvent.clear(apiKeyField);
+    userEvent.type(apiKeyField, '23456789');
+
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=23456789'/));
+
+    userEvent.clear(apiKeyField);
+
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123'/));
   });
 
   it('displays parameter name for empty path parameter', async () => {
@@ -95,5 +107,24 @@ describe('TryItWithRequestSamples', () => {
 
     const codeViewer = await screen.findByLabelText(/curl/);
     expect(codeViewer).toHaveTextContent('https://todos-dev.stoplight.io');
+  });
+
+  it('changes request sample when changing server variables', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
+
+    const serversButton = screen.getByRole('button', { name: /server/i });
+    userEvent.click(serversButton);
+
+    let enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+    userEvent.click(enableItem);
+
+    const protoField = screen.getByLabelText('proto');
+    chooseOption(protoField, 'https');
+
+    const prField = screen.getByLabelText('pr');
+    userEvent.type(prField, '123');
+
+    const codeViewer = await screen.findByLabelText(/curl/);
+    expect(codeViewer).toHaveTextContent('https://x-123.todos-pr.stoplight.io');
   });
 });

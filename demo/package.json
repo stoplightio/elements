@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@jpmorganchase/elemental": "^3.0.0",
-    "@stoplight/mosaic": "^1.33.0",
+    "@stoplight/mosaic": "^1.44.3",
     "history": "^5.0.0",
     "react": "16.14.0",
     "react-dom": "16.14.0",
