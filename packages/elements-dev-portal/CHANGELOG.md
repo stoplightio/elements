@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-dev-portal@2.2.0...@jpmorganchase/elemental-dev-portal@2.3.0) (2023-11-08)
+
+### Bug Fixes
+
+- bump json-schema-viewer to show array[$ref] descriptions
+  ([#2384](https://github.com/jpmorganchase/elemental/issues/2384))
+  ([25df17d](https://github.com/jpmorganchase/elemental/commit/25df17db6401eed81e17dbc643953347f7eb2dd8))
+- complex array top row validations ([#2414](https://github.com/jpmorganchase/elemental/issues/2414))
+  ([bc09e03](https://github.com/jpmorganchase/elemental/commit/bc09e03da5079183187e926bfba2ad9c231535e5))
+- **elements-core:** display end of url server vars correctly
+  ([#2432](https://github.com/jpmorganchase/elemental/issues/2432))
+  ([ac55f02](https://github.com/jpmorganchase/elemental/commit/ac55f0250d6278f2d86272f9d7b6ee1f1149fa25))
+- **elements-core:** markdown ref resolving ([#2383](https://github.com/jpmorganchase/elemental/issues/2383))
+  ([d82fa3f](https://github.com/jpmorganchase/elemental/commit/d82fa3f55c64972d3de9824178e6b5fbac2d3341))
+- mobile export button ([#2425](https://github.com/jpmorganchase/elemental/issues/2425))
+  ([a06ffb9](https://github.com/jpmorganchase/elemental/commit/a06ffb9915c2c28e5087df3f8104153cff1f730d))
+- server info long url ([#2427](https://github.com/jpmorganchase/elemental/issues/2427))
+  ([d6690ee](https://github.com/jpmorganchase/elemental/commit/d6690eebfeb82cda2e697a01102c80d1ffec86ea))
+- update responsive components to be test friendly ([#2405](https://github.com/jpmorganchase/elemental/issues/2405))
+  ([d6e5a97](https://github.com/jpmorganchase/elemental/commit/d6e5a97383dc266259a74f5c2fcdc13a59e025f4))
+- update version ([e5e9dc6](https://github.com/jpmorganchase/elemental/commit/e5e9dc668eddedf83ef6907428df1f865a486efd))
+
+### Features
+
+- **elements-core:** add callback when node docs is not going to render
+  ([#2400](https://github.com/jpmorganchase/elemental/issues/2400))
+  ([24922a4](https://github.com/jpmorganchase/elemental/commit/24922a44944b7116e5b320bf7b0244893319ede4))
+- **elements-core:** display server variables ([#2388](https://github.com/jpmorganchase/elemental/issues/2388))
+  ([c127179](https://github.com/jpmorganchase/elemental/commit/c127179eba44eadb7ddab000f276e005c8f75071))
+- **elements-core:** http-service AND and optional auth support
+  ([#2413](https://github.com/jpmorganchase/elemental/issues/2413))
+  ([6e821a4](https://github.com/jpmorganchase/elemental/commit/6e821a46c02489a50ecd7cb45a8501226b0d647a))
+- **elements-core:** server variables in TryIt ([#2389](https://github.com/jpmorganchase/elemental/issues/2389))
+  ([c7bacb1](https://github.com/jpmorganchase/elemental/commit/c7bacb19485ae5f39e303c8b828e12a48788a40d))
+- **elements-dev-portal:** embedded search component ([#2397](https://github.com/jpmorganchase/elemental/issues/2397))
+  ([eca78ba](https://github.com/jpmorganchase/elemental/commit/eca78baede62bbd360acb948c071363b90fe7e3b))
+- responsive http operation ([#2398](https://github.com/jpmorganchase/elemental/issues/2398))
+  ([6fccdff](https://github.com/jpmorganchase/elemental/commit/6fccdff14663d3e46262586af6c2d20ae00db500))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # 2.2.0 (2023-08-18)
 
 ### Bug Fixes
