@@ -25,47 +25,52 @@ export const httpOperation: IHttpOperation = {
         {
           id: '493afac014fa8',
           mediaType: 'application/x-www-form-urlencoded',
-          examples: [
-            {
-              id: '83adf9aba208e',
-              key: 'Request New Token',
-              value: {
-                username: 'Neovest provided username',
-                password: 'corresponding password',
-              },
-            },
-            {
-              id: '9dcf9cf7d39ea',
-              key: 'Refresh Token',
-              value: {
-                refresh_token: 'some string',
-              },
-            },
-          ],
           encodings: [],
           schema: {
+            description: '',
+            title: 'Authenticate or Refresh',
+            $schema: 'http://json-schema.org/draft-07/schema#',
             oneOf: [
               {
                 title: 'Authenticate',
                 description: 'supply username and password for refresh and access tokens',
-                type: 'object',
-                properties: {
-                  username: { type: 'string' },
-                  password: { type: 'string' },
-                },
+                allOf: [
+                  {
+                    type: 'object',
+                    properties: {
+                      username: { type: 'string' },
+                      password: { type: 'string' },
+                    },
+                  },
+                  {
+                    type: 'object',
+                    properties: {
+                      client_id: { type: 'string' },
+                      client_secret: { type: 'string' },
+                    },
+                  },
+                ],
               },
               {
                 title: 'Access Token Refresh',
                 description: 'supply a refresh token for new refresh and access tokens',
-                type: 'object',
-                properties: {
-                  refresh_token: { type: 'string' },
-                },
+                allOf: [
+                  {
+                    type: 'object',
+                    properties: {
+                      refresh_token: { type: 'string' },
+                    },
+                  },
+                  {
+                    type: 'object',
+                    properties: {
+                      client_id: { type: 'string' },
+                      client_secret: { type: 'string' },
+                    },
+                  },
+                ],
               },
             ],
-            description: '',
-            title: 'Request Body Schemas',
-            $schema: 'http://json-schema.org/draft-07/schema#',
           },
         },
       ],

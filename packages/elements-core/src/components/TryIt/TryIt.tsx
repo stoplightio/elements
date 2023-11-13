@@ -259,7 +259,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
       {formDataState.isFormDataBody ? (
         <FormDataBody
-          specification={formDataState.bodySpecification}
+          mediaTypeContent={formDataState.bodySpecification}
           values={bodyParameterValues}
           onChangeValues={setBodyParameterValues}
           onChangeParameterAllow={setAllowedEmptyValues}

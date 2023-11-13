@@ -1,17 +1,17 @@
-import { safeStringify } from '@stoplight/json';
+import { isRegularNode, SchemaNode, SchemaTree } from '@stoplight/json-schema-tree';
+import { Choice, useChoices, visibleChildren } from '@stoplight/json-schema-viewer';
 import { Button, Menu, Panel } from '@stoplight/mosaic';
 import { IMediaTypeContent } from '@stoplight/types';
-import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 import { omit } from 'lodash';
 import * as React from 'react';
 
 import { FileUploadParameterEditor } from '../Parameters/FileUploadParameterEditors';
-import { mapSchemaPropertiesToParameters, parameterSupportsFileUpload } from '../Parameters/parameter-utils';
+import { parameterSupportsFileUpload, toParameterSpec } from '../Parameters/parameter-utils';
 import { ParameterEditor } from '../Parameters/ParameterEditor';
 import { BodyParameterValues, ParameterOptional } from './request-body-utils';
 
 export interface FormDataBodyProps {
-  specification: IMediaTypeContent;
+  mediaTypeContent: IMediaTypeContent;
   values: BodyParameterValues;
   onChangeValues: (newValues: BodyParameterValues) => void;
   onChangeParameterAllow: (newValue: ParameterOptional) => void;
@@ -19,125 +19,114 @@ export interface FormDataBodyProps {
 }
 
 export const FormDataBody: React.FC<FormDataBodyProps> = ({
-  specification,
+  mediaTypeContent,
   values,
   onChangeValues,
   onChangeParameterAllow,
   isAllowedEmptyValues,
 }) => {
-  // TODO: What about allOf, anyOf?
-  const [schema, setSchema] = React.useState(initialSchema(specification));
-  const parameters: JSONSchema7['properties'] = schema?.properties;
-  const required: string[] = schema?.required ?? [];
+  const schema: SchemaNode = React.useMemo(() => {
+    const schema = mediaTypeContent.schema ?? {};
+    const tree = new SchemaTree(schema, { mergeAllOf: true, refResolver: null });
+    tree.populate();
+    return tree.root.children[0];
+  }, [mediaTypeContent]);
 
-  React.useEffect(() => {
-    if (parameters === undefined) {
-      console.warn(`Invalid schema in form data spec: ${safeStringify(schema)}`);
-    }
-  }, [parameters, schema]);
+  const { selectedChoice, choices, setSelectedChoice } = useChoices(schema);
 
-  if (parameters === undefined) {
-    return null;
-  }
+  const formFieldRows = visibleChildren(selectedChoice.type);
+  console.log({ schemaNode: schema, formFieldRows, choices });
 
-  const onSchemaChange = (schema: JSONSchema7) => {
+  const onSchemaChange = (choice: Choice) => {
     // Erase existing values; the old and new schemas may have nothing in common.
     onChangeValues({});
-    setSchema(schema);
+    setSelectedChoice(choice);
   };
 
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar
-        rightComponent={<OneOfMenu subSchemas={specification?.schema?.oneOf ?? []} onChange={onSchemaChange} />}
+        rightComponent={<OneOfMenu choices={choices} choice={selectedChoice} onChange={onSchemaChange} />}
       >
         Body
       </Panel.Titlebar>
       <Panel.Content className="sl-overflow-y-auto ParameterGrid OperationParametersContent">
-        {mapSchemaPropertiesToParameters(parameters, required).map(parameter => {
-          const supportsFileUpload = parameterSupportsFileUpload(parameter);
-          const value = values[parameter.name];
+        {formFieldRows
+          .filter(isRegularNode)
+          .map(toParameterSpec)
+          .map(parameter => {
+            const supportsFileUpload = parameterSupportsFileUpload(parameter);
+            const value = values[parameter.name ?? ''];
 
-          if (supportsFileUpload) {
+            if (supportsFileUpload) {
+              return (
+                <FileUploadParameterEditor
+                  key={parameter.name}
+                  parameter={parameter}
+                  value={value instanceof File ? value : undefined}
+                  onChange={newValue =>
+                    newValue
+                      ? onChangeValues({ ...values, [parameter.name]: newValue })
+                      : onChangeValues(omit(values, parameter.name))
+                  }
+                />
+              );
+            }
+
             return (
-              <FileUploadParameterEditor
+              <ParameterEditor
                 key={parameter.name}
                 parameter={parameter}
-                value={value instanceof File ? value : undefined}
-                onChange={newValue =>
-                  newValue
-                    ? onChangeValues({ ...values, [parameter.name]: newValue })
-                    : onChangeValues(omit(values, parameter.name))
+                value={typeof value === 'string' ? value : undefined}
+                onChange={value =>
+                  onChangeValues({
+                    ...values,
+                    [parameter.name]: typeof value === 'number' ? String(value) : (value as any),
+                  })
                 }
+                onChangeOptional={value => onChangeParameterAllow({ ...isAllowedEmptyValues, [parameter.name]: value })}
+                canChangeOptional={true}
+                isOptional={isAllowedEmptyValues[parameter.name] ?? false}
               />
             );
-          }
-
-          return (
-            <ParameterEditor
-              key={parameter.name}
-              parameter={parameter}
-              value={typeof value === 'string' ? value : undefined}
-              onChange={value =>
-                onChangeValues({
-                  ...values,
-                  [parameter.name]: typeof value === 'number' ? String(value) : (value as any),
-                })
-              }
-              onChangeOptional={value => onChangeParameterAllow({ ...isAllowedEmptyValues, [parameter.name]: value })}
-              canChangeOptional={true}
-              isOptional={isAllowedEmptyValues[parameter.name] ?? false}
-            />
-          );
-        })}
+          })}
       </Panel.Content>
     </Panel>
   );
 };
 
-/**
- * @returns If the top level of the schema is `oneOf`, the first of the
- * sub-schemas; otherwise the entire schema.
- */
-function initialSchema(content: IMediaTypeContent<false>): JSONSchema7 {
-  const wholeSchema = content.schema;
-  const oneOf = wholeSchema?.oneOf;
-  if (wholeSchema?.properties === undefined && oneOf !== undefined && oneOf.length > 0) {
-    const firstOneOfItem: JSONSchema7Definition = oneOf[0];
-    if (typeof firstOneOfItem !== 'boolean') {
-      return firstOneOfItem;
-    }
-  }
-
-  return wholeSchema ?? {};
-}
-
 export interface OneOfMenuProps {
-  subSchemas: JSONSchema7Definition[];
-  onChange: (selectedSubSchema: JSONSchema7) => void;
+  /** all of the available sub-schemas that can be picked */
+  choices: Choice[];
+
+  /** the currently selected sub-schema */
+  choice: Choice;
+
+  /** called when the selection changes */
+  onChange: (choice: Choice) => void;
 }
 
 /**
  * When the top level schema is `oneOf`, a drop-down menu that allows the user
  * to select among the sub-schemas; otherwise `null`.
  */
-export function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
+export function OneOfMenu({ choices: subSchemas, choice: Choice, onChange }: OneOfMenuProps) {
   const onSubSchemaSelect = React.useCallback(onChange, [onChange]);
 
   const menuItems = React.useMemo(
     () =>
       subSchemas.map((subSchema, index) => {
-        const label = menuLabel(subSchema, index);
+        const label = subSchema.title;
         return {
           id: `request-subschema-${label}`,
           title: label,
-          onPress: () => onSubSchemaSelect(typeof subSchema === 'boolean' ? {} : subSchema),
+          onPress: () => onSubSchemaSelect(subSchema),
         };
       }),
     [subSchemas, onSubSchemaSelect],
   );
 
-  if (!subSchemas || subSchemas.length == 0) {
+  if (!subSchemas || subSchemas.length < 2) {
     return null;
   }
 
@@ -152,27 +141,4 @@ export function OneOfMenu({ subSchemas, onChange }: OneOfMenuProps) {
       )}
     />
   );
-}
-
-/** maximum length of a menu item label */
-export const MAX_LENGTH = 60;
-
-/**
- * Produce a relatively human-friendly label for one of the schemas in a `oneOf`
- * combiner.
- * @param schema one schema among several in a `oneOf` combiner
- * @param index ordinal position of `schema` in the `oneOf` combiner
- * @returns the text label for the drop-down menu item representing `schema`
- */
-function menuLabel(schema: JSONSchema7Definition, index: number): string {
-  if (typeof schema === 'boolean') {
-    return `${index.toString()} boolean`;
-  }
-
-  const label: string =
-    schema?.title ??
-    schema?.description ??
-    `${index.toString()} - ${Object.getOwnPropertyNames(schema.properties).length} properties`;
-
-  return label.length <= MAX_LENGTH ? label : label.substring(0, MAX_LENGTH);
 }
