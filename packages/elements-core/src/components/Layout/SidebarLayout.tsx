@@ -7,6 +7,7 @@ type SidebarLayoutProps = {
   maxContentWidth?: number;
   sidebarWidth?: number;
   children?: React.ReactNode;
+  renderSideBar?: boolean;
 };
 
 const MAX_CONTENT_WIDTH = 1800;
@@ -14,7 +15,10 @@ const SIDEBAR_MIN_WIDTH = 300;
 const SIDEBAR_MAX_WIDTH = 1.5 * SIDEBAR_MIN_WIDTH;
 
 export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps>(
-  ({ sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH }, ref) => {
+  (
+    { sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH, renderSideBar = true },
+    ref,
+  ) => {
     const scrollRef = React.useRef<HTMLDivElement | null>(null);
     const [sidebarRef, currentSidebarWidth, startResizing] = useResizer(sidebarWidth);
     const { pathname } = useLocation();
@@ -31,22 +35,26 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
           onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
           style={{ maxWidth: `${SIDEBAR_MAX_WIDTH}px` }}
         >
-          <Flex
-            direction="col"
-            bg="canvas-100"
-            borderR
-            pt={8}
-            pos="sticky"
-            pinY
-            overflowY="auto"
-            style={{
-              paddingLeft: `calc((100% - ${maxContentWidth}px) / 2)`,
-              width: `${currentSidebarWidth}px`,
-              minWidth: `${SIDEBAR_MIN_WIDTH}px`,
-            }}
-          >
-            {sidebar}
-          </Flex>
+          {renderSideBar ? (
+            <Flex
+              direction="col"
+              bg="canvas-100"
+              borderR
+              pt={8}
+              pos="sticky"
+              pinY
+              overflowY="auto"
+              style={{
+                paddingLeft: `calc((100% - ${maxContentWidth}px) / 2)`,
+                width: `${currentSidebarWidth}px`,
+                minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+              }}
+            >
+              {sidebar}
+            </Flex>
+          ) : (
+            <></>
+          )}
           <Flex
             justifySelf="end"
             flexGrow={0}

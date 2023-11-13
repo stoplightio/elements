@@ -89,6 +89,7 @@ export interface CommonAPIProps extends RoutingProps {
    */
   tryItCorsProxy?: string;
   tryItOutDefaultServer?: string;
+  useCustomNav?: boolean;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -107,6 +108,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCredentialsPolicy,
     tryItCorsProxy,
     tryItOutDefaultServer,
+    useCustomNav,
   } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
@@ -185,6 +187,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
           tryItOutDefaultServer={tryItOutDefaultServer}
+          useCustomNav={useCustomNav}
         />
       )}
     </InlineRefResolverProvider>
