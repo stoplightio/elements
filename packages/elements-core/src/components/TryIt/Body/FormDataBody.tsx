@@ -11,7 +11,7 @@ import { ParameterEditor } from '../Parameters/ParameterEditor';
 import { BodyParameterValues, ParameterOptional } from './request-body-utils';
 
 export interface FormDataBodyProps {
-  mediaTypeContent: IMediaTypeContent;
+  specification: IMediaTypeContent;
   values: BodyParameterValues;
   onChangeValues: (newValues: BodyParameterValues) => void;
   onChangeParameterAllow: (newValue: ParameterOptional) => void;
@@ -19,7 +19,7 @@ export interface FormDataBodyProps {
 }
 
 export const FormDataBody: React.FC<FormDataBodyProps> = ({
-  mediaTypeContent,
+  specification: mediaTypeContent,
   values,
   onChangeValues,
   onChangeParameterAllow,

@@ -37,7 +37,7 @@ export function exampleOptions(parameter: ParameterSpec) {
     : null;
 }
 
-export function parameterSupportsFileUpload(parameter: Pick<ParameterSpec, 'schema'> | undefined) {
+export function parameterSupportsFileUpload(parameter?: Pick<ParameterSpec, 'schema'>) {
   return (
     parameter &&
     parameter.schema &&
@@ -129,8 +129,11 @@ export function toParameterSpec(jsonTreeNode: RegularNode): ParameterSpec {
       ? [{ key: 'example', value: jsonTreeNode.fragment.examples[0] }]
       : undefined;
 
+  // It's possible -- but very unlikely -- that the path is empty here.
+  const lastJsonPathSegment = last(jsonTreeNode.path) ?? '<<UNKNOWN>>';
+
   return {
-    name: last(jsonTreeNode.path) ?? '<<UNKNOWN>>',
+    name: lastJsonPathSegment,
     schema,
     examples,
     required: isRequired(jsonTreeNode),
