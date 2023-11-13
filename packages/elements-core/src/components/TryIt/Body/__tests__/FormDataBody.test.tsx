@@ -9,7 +9,7 @@ describe('FormDataBody', () => {
   it('when the top level of the schema is oneOf', () => {
     // Arrange
     const props: FormDataBodyProps = {
-      mediaTypeContent: {
+      specification: {
         id: '493afac014fa8',
         mediaType: 'application/x-www-form-urlencoded',
         encodings: [],
@@ -39,10 +39,6 @@ describe('FormDataBody', () => {
               },
             },
           ],
-          // 'x-stoplight': {
-          //   id: 'fy4lgsesqt84g',
-          // },
-          // 'x-internal': false,
           description: '',
           title: 'Request Body Schemas',
           $schema: 'http://json-schema.org/draft-07/schema#',
@@ -64,7 +60,7 @@ describe('FormDataBody', () => {
   it('when the top level of the schema has properties', () => {
     // Arrange
     const props: FormDataBodyProps = {
-      mediaTypeContent: {
+      specification: {
         id: '493afac014fa8',
         mediaType: 'application/x-www-form-urlencoded',
         encodings: [],
@@ -80,10 +76,6 @@ describe('FormDataBody', () => {
               type: 'string',
             },
           },
-          // 'x-stoplight': {
-          //   id: 'fy4lgsesqt84g',
-          // },
-          // 'x-internal': false,
           $schema: 'http://json-schema.org/draft-07/schema#',
         },
       },

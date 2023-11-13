@@ -19,18 +19,18 @@ export interface FormDataBodyProps {
 }
 
 export const FormDataBody: React.FC<FormDataBodyProps> = ({
-  specification: mediaTypeContent,
+  specification,
   values,
   onChangeValues,
   onChangeParameterAllow,
   isAllowedEmptyValues,
 }) => {
   const schema: SchemaNode = React.useMemo(() => {
-    const schema = mediaTypeContent.schema ?? {};
+    const schema = specification.schema ?? {};
     const tree = new SchemaTree(schema, { mergeAllOf: true, refResolver: null });
     tree.populate();
     return tree.root.children[0];
-  }, [mediaTypeContent]);
+  }, [specification]);
 
   const { selectedChoice, choices, setSelectedChoice } = useChoices(schema);
 
