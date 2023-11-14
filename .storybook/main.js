@@ -6,9 +6,6 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const config = {
   stories: [join(__dirname, '../packages/**/*.stories.{js,jsx,ts,tsx}')],
-  features: {
-    storyStoreV7: false
-  },
 
   addons: [
     getAbsolutePath('@storybook/addon-docs'),
