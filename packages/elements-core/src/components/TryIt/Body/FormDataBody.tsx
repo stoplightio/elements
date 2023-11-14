@@ -109,12 +109,12 @@ export interface OneOfMenuProps {
  * When the top level schema is `oneOf`, a drop-down menu that allows the user
  * to select among the sub-schemas; otherwise `null`.
  */
-export function OneOfMenu({ choices: subSchemas, choice: Choice, onChange }: OneOfMenuProps) {
+export function OneOfMenu({ choices: subSchemas, choice, onChange }: OneOfMenuProps) {
   const onSubSchemaSelect = React.useCallback(onChange, [onChange]);
 
   const menuItems = React.useMemo(
     () =>
-      subSchemas.map((subSchema, index) => {
+      subSchemas.map(subSchema => {
         const label = subSchema.title;
         return {
           id: `request-subschema-${label}`,
@@ -129,13 +129,15 @@ export function OneOfMenu({ choices: subSchemas, choice: Choice, onChange }: One
     return null;
   }
 
+  const title = choice?.title ?? 'Variants';
+
   return (
     <Menu
-      aria-label="Variants"
+      aria-label={title}
       items={menuItems}
       renderTrigger={({ isOpen }) => (
         <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen} data-testid="oneof-menu">
-          Variants
+          {title}
         </Button>
       )}
     />
