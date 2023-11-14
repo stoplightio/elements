@@ -35,7 +35,6 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
   const { selectedChoice, choices, setSelectedChoice } = useChoices(schema);
 
   const formFieldRows = visibleChildren(selectedChoice.type);
-  console.log({ schemaNode: schema, formFieldRows, choices });
 
   const onSchemaChange = (choice: Choice) => {
     // Erase existing values; the old and new schemas may have nothing in common.
