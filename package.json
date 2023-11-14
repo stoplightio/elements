@@ -13,6 +13,9 @@
     "demo",
     "packages/*"
   ],
+  "resolutions": {
+    "axios": "^1.6.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
@@ -55,7 +58,7 @@
     "process": "0.11.10",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "start-server-and-test": "^1.11.6",
+    "start-server-and-test": "^2.0.2",
     "style-loader": "3.2.1",
     "ts-jest": "^26.4.4",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
