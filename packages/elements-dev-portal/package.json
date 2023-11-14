@@ -45,7 +45,7 @@
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
     "release.dryRun": "sl-scripts release --dry-run --debug",
-    "storybook": "yarn version.set && start-storybook -p 9001",
+    "storybook": "yarn version.set && storybook dev -p 9001",
     "test": "jest",
     "test.prod": "yarn test --coverage --maxWorkers=2",
     "test.update": "yarn test --updateSnapshot",
