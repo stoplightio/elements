@@ -4,7 +4,7 @@ const { ProvidePlugin } = require('webpack');
 
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-module.exports = {
+const config = {
   stories: [join(__dirname, '../packages/**/*.stories.{js,jsx,ts,tsx}')],
   features: {
     storyStoreV7: false
@@ -75,3 +75,5 @@ module.exports = {
 function getAbsolutePath(value) {
   return dirname(require.resolve(join(value, 'package.json')));
 }
+
+export default config;
