@@ -39,7 +39,7 @@
     "build.react": "sl-scripts bundle",
     "build.styles": "postcss src/styles.css -o dist/styles.min.css",
     "build.webcomponents": "webpack -c ./web-components.config.js",
-    "build.docs": "build-storybook -c .storybook -o dist-storybook",
+    "build.docs": "storybook build -c .storybook -o dist-storybook",
     "commit": "git-cz",
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
