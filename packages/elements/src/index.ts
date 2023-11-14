@@ -1,3 +1,3 @@
 export type { APIProps } from './containers/API';
 export { API } from './containers/API';
-export { OasNavTree } from './containers/oas-nav-tree/OasNavTree';
+export { useGetOasNavTree } from './hooks/oas-nav-tree/useGetOasNavTree';

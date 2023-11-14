@@ -35,7 +35,7 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
           onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
           style={{ maxWidth: `${SIDEBAR_MAX_WIDTH}px` }}
         >
-          {renderSideBar ? (
+          {renderSideBar && (
             <Flex
               direction="col"
               bg="canvas-100"
@@ -52,8 +52,6 @@ export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps
             >
               {sidebar}
             </Flex>
-          ) : (
-            <></>
           )}
           <Flex
             justifySelf="end"

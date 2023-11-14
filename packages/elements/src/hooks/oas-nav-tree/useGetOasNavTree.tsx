@@ -1,8 +1,13 @@
-import { computeAPITree } from '@jpmorganchase/elemental/components/API/utils';
-import { transformOasToServiceNode } from '@jpmorganchase/elemental/utils/oas';
-import { ServiceNode } from '@jpmorganchase/elemental/utils/oas/types';
+import { useBundleRefsIntoDocument, useParsedValue } from '@jpmorganchase/elemental-core';
 
-export const OasNavTree = (bundledDocument: unknown) => {
+import { computeAPITree } from '../../components/API/utils';
+import { transformOasToServiceNode } from '../../utils/oas';
+import { ServiceNode } from '../../utils/oas/types';
+
+export const useGetOasNavTree = (apiDescriptionDocument: unknown) => {
+  const parsedDocument = useParsedValue(apiDescriptionDocument);
+  const bundledDocument = useBundleRefsIntoDocument(parsedDocument);
+
   const groupSchemas = (tree: any) => {
     const targetTitle = 'Schemas';
     // Use Array.reduce to process the array

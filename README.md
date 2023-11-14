@@ -10,7 +10,7 @@ The plan for this repo is to update elements to allow us to rapidly deploy featu
 
 ## How to use
 
-Instead of install the stoplight component instead use:
+Instead of installing the stoplight component use:
 
 ```bash
 $ npm install @jpmorganchase/elemental
@@ -27,10 +27,13 @@ import { API } from "@jpmorganchase/elemental";
 
 <API
   apiDescriptionUrl="https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.yaml"
-  router="history"
+  router="hash"
   tryItOutDefaultServer="https://tryItOutServer.server.com/"
+  useCustomNav={true}
 />
 ```
 The try it out default server needs to be included in your api description document for this to work. If it is not found it will default to the first server in the spec.
+
+useCustomNav is optional and can be set to true to hide stoplights default sidebar. 
 
 
