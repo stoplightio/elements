@@ -34,12 +34,12 @@
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts bundle",
     "build.styles": "postcss src/styles.css -o dist/styles.min.css && cp src/core.css dist",
-    "build.docs": "build-storybook -o dist-storybook",
+    "build.docs": "storybook build -o dist-storybook",
     "commit": "git-cz",
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
     "release.dryRun": "sl-scripts release --dry-run --debug",
-    "storybook": "start-storybook -p 9001",
+    "storybook": "storybook dev -p 9001",
     "test": "jest",
     "test.prod": "yarn test --coverage --maxWorkers=2",
     "test.update": "yarn test --updateSnapshot",
@@ -113,8 +113,9 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",
-    "resolve-url-loader": "^3.1.2",
-    "style-loader": "^2.0.0"
+    "resolve-url-loader": "^5.0.0",
+    "style-loader": "^3.3.3",
+    "storybook": "next"
   },
   "publishConfig": {
     "directory": "dist"
