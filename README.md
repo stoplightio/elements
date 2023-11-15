@@ -7,6 +7,8 @@ The plan for this repo is to update elements to allow us to rapidly deploy featu
 
 - Callbacks being rendered
 - Default try it out server and removal of server dropdown from try it out section
+- useCustomNav is optional and can be set to true to hide stoplights default sidebar. 
+- useGetOasNavTree parses an api spec and returns an array of grouped endpoints and schemas.
 
 ## How to use
 
@@ -34,6 +36,6 @@ import { API } from "@jpmorganchase/elemental";
 ```
 The try it out default server needs to be included in your api description document for this to work. If it is not found it will default to the first server in the spec.
 
-useCustomNav is optional and can be set to true to hide stoplights default sidebar. 
+
 
 
