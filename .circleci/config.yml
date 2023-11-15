@@ -25,7 +25,7 @@ jobs:
     working_directory: /mnt/ramdisk/project
     docker:
       - image: cimg/node:16.17
-    resource_class: large
+    resource_class: xlarge
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
       YARN_CACHE_FOLDER: /mnt/ramdisk/.cache/yarn
