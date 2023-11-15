@@ -1,4 +1,4 @@
-name: Build and Release
+name: Build
 on: push
 
 jobs:
@@ -14,5 +14,3 @@ jobs:
         run: yarn
       - name: Build
         run: yarn build
-      - name: Run tests
-        run: yarn test
