@@ -4,9 +4,10 @@ import { computeAPITree } from '../../components/API/utils';
 import { transformOasToServiceNode } from '../../utils/oas';
 import { ServiceNode } from '../../utils/oas/types';
 
-export const useGetOasNavTree = (apiDescriptionDocument: unknown) => {
+export const useGetOasNavTree = (apiDescriptionDocument: string | object) => {
   const parsedDocument = useParsedValue(apiDescriptionDocument);
   const bundledDocument = useBundleRefsIntoDocument(parsedDocument);
+  if (!bundledDocument) return [];
 
   const groupSchemas = (tree: any) => {
     const targetTitle = 'Schemas';

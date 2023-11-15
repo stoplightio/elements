@@ -74,4 +74,9 @@ describe('useGetOasNavTree returns array of endpoints and grouped schema objects
     const { result } = renderHook(() => useGetOasNavTree(simpleApiWithInternalOperations));
     expect(result.current).toStrictEqual(testArray);
   });
+
+  it('returns an empty array if empty string provided', () => {
+    const { result } = renderHook(() => useGetOasNavTree(''));
+    expect(result.current).toStrictEqual([]);
+  });
 });
