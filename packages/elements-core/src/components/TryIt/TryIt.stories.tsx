@@ -8,6 +8,7 @@ import { requestBody } from '../../__fixtures__/operations/request-body';
 import { duplicatedSecurityScheme } from '../../__fixtures__/operations/securedOperation';
 import { operation as simpleGetOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as urlEncodedOperation } from '../../__fixtures__/operations/urlencoded-post';
+import { httpOperation as urlEncodedOneOfOperation } from '../../__fixtures__/operations/urlencoded-post-oneof';
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';
 import { TryIt, TryItProps } from './TryIt';
 
@@ -38,6 +39,12 @@ UrlEncoded.args = {
   httpOperation: urlEncodedOperation,
 };
 UrlEncoded.storyName = 'application/x-www-form-urlencoded';
+
+export const UrlEncodedOneOf = Template.bind({});
+UrlEncodedOneOf.args = {
+  httpOperation: urlEncodedOneOfOperation,
+};
+UrlEncodedOneOf.storyName = 'application/x-www-form-urlencoded with oneOf';
 
 export const Multipart = Template.bind({});
 Multipart.args = {
