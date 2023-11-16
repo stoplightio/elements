@@ -165,7 +165,7 @@ Responses.displayName = 'HttpOperation.Responses';
 const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
-  const refResolver = useSchemaInlineRefResolver();
+  const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const { nodeHasChanged } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
@@ -212,6 +212,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}
               resolveRef={refResolver}
+              maxRefDepth={maxRefDepth}
               viewMode="read"
               parentCrumbs={['responses', response.code]}
               renderRootTreeLines
