@@ -1,4 +1,4 @@
-import { createElementClass } from '@stoplight/elements-core';
+import { createElementClass } from '@jpmorganchase/elemental-core';
 
 import { API } from '../index';
 
@@ -16,4 +16,6 @@ export const ApiElement = createElementClass(API, {
   logo: { type: 'string' },
   tryItCredentialsPolicy: { type: 'string' },
   tryItCorsProxy: { type: 'string' },
+  tryItOutDefaultServer: { type: 'string' },
+  useCustomNav: { type: 'boolean' },
 });

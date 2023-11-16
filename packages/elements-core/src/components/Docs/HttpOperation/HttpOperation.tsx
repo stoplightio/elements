@@ -15,13 +15,22 @@ import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 import { DeprecatedBadge, InternalBadge } from './Badges';
+import { Callbacks } from './Callbacks';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-export type HttpOperationProps = DocsComponentProps<IHttpOperation>;
+export type HttpOperationProps = DocsComponentProps<IHttpOperation> & { isCallback?: boolean };
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy }) => {
+  ({
+    className,
+    data: unresolvedData,
+    layoutOptions,
+    tryItCredentialsPolicy,
+    tryItCorsProxy,
+    isCallback,
+    tryItOutDefaultServer,
+  }) => {
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpOperation;
     const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
@@ -37,19 +46,6 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
     const prettyName = (data.summary || data.iid || '').trim();
     const hasBadges = isDeprecated || isInternal;
 
-    const header = (
-      <OperationHeader
-        id={data.id}
-        method={data.method}
-        path={data.path}
-        noHeading={layoutOptions?.noHeading}
-        hasBadges={hasBadges}
-        name={prettyName}
-        isDeprecated={isDeprecated}
-        isInternal={isInternal}
-      />
-    );
-
     const tryItPanel = !layoutOptions?.hideTryItPanel && (
       <TryItWithRequestSamples
         httpOperation={data}
@@ -60,6 +56,21 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         tryItCredentialsPolicy={tryItCredentialsPolicy}
         mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
         corsProxy={tryItCorsProxy}
+        tryItOutDefaultServer={tryItOutDefaultServer}
+      />
+    );
+
+    const header = (
+      <OperationHeader
+        id={data.id}
+        method={data.method}
+        path={data.path}
+        noHeading={layoutOptions?.noHeading}
+        hasBadges={hasBadges}
+        name={prettyName}
+        isDeprecated={isDeprecated}
+        isInternal={isInternal}
+        isCallback={isCallback}
       />
     );
 
@@ -83,7 +94,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             isCompact={isCompact}
           />
         )}
-
+        {data.callbacks && <Callbacks callbacks={data.callbacks} />}
         {isCompact && tryItPanel}
       </VStack>
     );
@@ -107,11 +118,11 @@ export const HttpOperation = withErrorBoundary<HttpOperationProps>(HttpOperation
 
 type MethodPathProps = { method: IHttpOperation['method']; path: string };
 
-function MethodPath({ method, path }: MethodPathProps) {
+function MethodPath({ method, path, isCallback }: MethodPathProps & { isCallback?: boolean }) {
   const chosenServer = useAtomValue(chosenServerAtom);
 
   let chosenServerUrl = '';
-  if (chosenServer) {
+  if (chosenServer && !isCallback) {
     chosenServerUrl = chosenServer.url.endsWith('/') ? chosenServer.url.slice(0, -1) : chosenServer.url;
   }
 
@@ -179,6 +190,7 @@ function OperationHeader({
   isInternal,
   method,
   path,
+  isCallback,
 }: {
   id: string;
   noHeading?: boolean;
@@ -188,6 +200,7 @@ function OperationHeader({
   isInternal?: boolean;
   method: string;
   path: string;
+  isCallback?: boolean;
 }) {
   const { nodeHasChanged } = useOptionsCtx();
 
@@ -217,7 +230,7 @@ function OperationHeader({
       </Box>
 
       <Box pos="relative">
-        <MethodPath method={method} path={path} />
+        <MethodPath method={method} path={path} isCallback={isCallback} />
         <NodeAnnotation change={lineTwoChanged} />
       </Box>
     </VStack>

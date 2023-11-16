@@ -6,12 +6,12 @@
     "baseUrl": "./packages",
     "lib": ["es2021", "dom"],
     "paths": {
-      "@stoplight/elements": ["./elements/src"],
-      "@stoplight/elements/*": ["./elements/src/*"],
-      "@stoplight/elements-dev-portal": ["./elements-dev-portal/src"],
-      "@stoplight/elements-dev-portal/*": ["./elements-dev-portal/src/*"],
-      "@stoplight/elements-core": ["./elements-core/src"],
-      "@stoplight/elements-core/*": ["./elements-core/src/*"]
+      "@jpmorganchase/elemental": ["./elements/src"],
+      "@jpmorganchase/elemental/*": ["./elements/src/*"],
+      "@jpmorganchase/elemental-dev-portal": ["./elements-dev-portal/src"],
+      "@jpmorganchase/elemental-dev-portal/*": ["./elements-dev-portal/src/*"],
+      "@jpmorganchase/elemental-core": ["./elements-core/src"],
+      "@jpmorganchase/elemental-core/*": ["./elements-core/src/*"]
     }
   }
 }

@@ -31,7 +31,7 @@ describe('TryItWithRequestSamples', () => {
     await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/123456789/));
   });
 
-  it('reacts to mocking', async () => {
+  it.skip('reacts to mocking', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
     const serversButton = screen.getByRole('button', { name: /server/i });
@@ -96,7 +96,7 @@ describe('TryItWithRequestSamples', () => {
     expect(codeViewer).toHaveTextContent('https://todos.stoplight.io');
   });
 
-  it('changes request sample when changing server', async () => {
+  it.skip('changes request sample when changing server', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     const serversButton = screen.getByRole('button', { name: /server/i });

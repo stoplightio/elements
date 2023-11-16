@@ -9,7 +9,7 @@ import {
   withQueryClientProvider,
   withRouter,
   withStyles,
-} from '@stoplight/elements-core';
+} from '@jpmorganchase/elemental-core';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';
@@ -88,6 +88,8 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   tryItCorsProxy?: string;
+  tryItOutDefaultServer?: string;
+  useCustomNav?: boolean;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -105,6 +107,8 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideExport,
     tryItCredentialsPolicy,
     tryItCorsProxy,
+    tryItOutDefaultServer,
+    useCustomNav,
   } = props;
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
@@ -169,6 +173,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          tryItOutDefaultServer={tryItOutDefaultServer}
         />
       ) : (
         <APIWithSidebarLayout
@@ -181,6 +186,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          tryItOutDefaultServer={tryItOutDefaultServer}
+          useCustomNav={useCustomNav}
         />
       )}
     </InlineRefResolverProvider>

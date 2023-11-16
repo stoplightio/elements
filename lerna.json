@@ -3,8 +3,10 @@
   "version": "independent",
   "npmClient": "yarn",
   "command": {
-    "publish": {
+    "version": {
+      "conventionalCommits":true,
       "message": "chore(release): publish"
+
     }
   }
 }

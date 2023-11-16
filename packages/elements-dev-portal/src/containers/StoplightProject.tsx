@@ -6,7 +6,7 @@ import {
   SidebarLayout,
   useRouter,
   withStyles,
-} from '@stoplight/elements-core';
+} from '@jpmorganchase/elemental-core';
 import * as React from 'react';
 import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
 

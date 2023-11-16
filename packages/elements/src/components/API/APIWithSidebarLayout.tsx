@@ -5,7 +5,7 @@ import {
   PoweredByLink,
   SidebarLayout,
   TableOfContents,
-} from '@stoplight/elements-core';
+} from '@jpmorganchase/elemental-core';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
@@ -24,6 +24,8 @@ type SidebarLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
+  tryItOutDefaultServer?: string;
+  useCustomNav?: boolean;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -36,16 +38,24 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  tryItOutDefaultServer,
+  useCustomNav,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
-  const tree = React.useMemo(
-    () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
-    [serviceNode, hideSchemas, hideInternal],
-  );
+
+  const tree = React.useMemo(() => {
+    if (!useCustomNav) return computeAPITree(serviceNode, { hideSchemas, hideInternal });
+    else return [];
+  }, [serviceNode, hideSchemas, hideInternal, useCustomNav]);
+
   const location = useLocation();
   const { pathname } = location;
   const isRootPath = !pathname || pathname === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
+
+  React.useEffect(() => {
+    // This is here to trick elements into reloading everytime the url changes so that we can use own sideabar
+  }, [pathname]);
 
   const layoutOptions = React.useMemo(
     () => ({ hideTryIt: hideTryIt, hideExport: hideExport || node?.type !== NodeType.HttpService }),
@@ -89,7 +99,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   );
 
   return (
-    <SidebarLayout ref={container} sidebar={sidebar}>
+    <SidebarLayout ref={container} sidebar={sidebar} renderSideBar={!useCustomNav}>
       {node && (
         <ParsedDocs
           key={pathname}
@@ -101,6 +111,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          tryItOutDefaultServer={tryItOutDefaultServer}
         />
       )}
     </SidebarLayout>

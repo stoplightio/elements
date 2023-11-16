@@ -5,7 +5,7 @@ import {
   HttpMethodColors,
   ParsedDocs,
   TryItWithRequestSamples,
-} from '@stoplight/elements-core';
+} from '@jpmorganchase/elemental-core';
 import { Box, Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
@@ -24,6 +24,7 @@ type StackedLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
+  tryItOutDefaultServer?: string;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode) => {
@@ -33,6 +34,7 @@ const itemMatchesHash = (hash: string, item: OperationNode) => {
 const TryItContext = React.createContext<{
   hideTryIt?: boolean;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
+  tryItOutDefaultServer?: string;
   corsProxy?: string;
 }>({
   hideTryIt: false,
@@ -47,12 +49,15 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  tryItOutDefaultServer,
 }) => {
   const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
 
   return (
-    <TryItContext.Provider value={{ hideTryIt, tryItCredentialsPolicy, corsProxy: tryItCorsProxy }}>
+    <TryItContext.Provider
+      value={{ hideTryIt, tryItCredentialsPolicy, corsProxy: tryItCorsProxy, tryItOutDefaultServer }}
+    >
       <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
         <Box w="full" borderB>
           <Docs
@@ -64,6 +69,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
             layoutOptions={{ showPoweredByLink: true, hideExport }}
             exportProps={exportProps}
             tryItCredentialsPolicy={tryItCredentialsPolicy}
+            tryItOutDefaultServer={tryItOutDefaultServer}
           />
         </Box>
 
@@ -133,7 +139,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const color = HttpMethodColors[item.data.method] || 'gray';
   const isDeprecated = !!item.data.deprecated;
-  const { hideTryIt, tryItCredentialsPolicy, corsProxy } = React.useContext(TryItContext);
+  const { hideTryIt, tryItCredentialsPolicy, corsProxy, tryItOutDefaultServer } = React.useContext(TryItContext);
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -202,6 +208,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
                 <TryItWithRequestSamples
                   httpOperation={item.data}
                   tryItCredentialsPolicy={tryItCredentialsPolicy}
+                  tryItOutDefaultServer={tryItOutDefaultServer}
                   corsProxy={corsProxy}
                 />
               </TabPanel>

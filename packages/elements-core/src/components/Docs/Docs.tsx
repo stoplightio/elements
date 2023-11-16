@@ -118,6 +118,7 @@ interface BaseDocsProps {
   };
 
   nodeHasChanged?: NodeHasChangedFn<React.ReactNode>;
+  tryItOutDefaultServer?: string;
 
   /**
    * Allows consumers to know when the node is not supported.
