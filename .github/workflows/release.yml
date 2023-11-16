@@ -24,7 +24,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@jpmorganchase'
       - run: |
-          yarn
+          yarn install --frozen-lockfile
           yarn run version
           yarn run release
         env:
