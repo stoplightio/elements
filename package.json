@@ -121,5 +121,8 @@
       "@commitlint/config-conventional"
     ]
   },
+  "resolutions": {
+    "rollup-plugin-typescript2": "^0.31.0"
+  },
   "dependencies": {}
 }
