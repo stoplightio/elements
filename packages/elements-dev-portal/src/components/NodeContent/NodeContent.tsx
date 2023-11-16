@@ -37,6 +37,8 @@ export type NodeContentProps = {
    */
   refResolver?: ReferenceResolver;
 
+  maxRefDepth?: number;
+
   onExportRequest?: (type: 'original' | 'bundled') => void;
 } & DocsBaseProps &
   DocsLayoutProps;
@@ -46,6 +48,7 @@ export const NodeContent = ({
   Link,
   hideMocking,
   refResolver,
+  maxRefDepth,
 
   // Docs base props
   tryItCorsProxy,
@@ -81,6 +84,7 @@ export const NodeContent = ({
             }}
             useNodeForRefResolving
             refResolver={refResolver}
+            maxRefDepth={maxRefDepth}
             tryItCorsProxy={tryItCorsProxy}
             exportProps={
               [NodeType.HttpService, NodeType.Model].includes(node.type as NodeType)

@@ -9,7 +9,12 @@ import { createResolvedObject } from '../utils/ref-resolving/resolvedObject';
 
 const translatedObjectSymbol = Symbol('TranslatedObject');
 
-const InlineRefResolverContext = React.createContext<ReferenceResolver | undefined>(undefined);
+type InlineRefResolverContext = {
+  resolver: ReferenceResolver | undefined;
+  maxRefDepth: number | undefined;
+};
+
+const InlineRefResolverContext = React.createContext<InlineRefResolverContext | undefined>(undefined);
 InlineRefResolverContext.displayName = 'InlineRefResolverContext';
 
 const DocumentContext = React.createContext<object | undefined>(undefined);
@@ -18,6 +23,7 @@ DocumentContext.displayName = 'DocumentContext';
 type InlineRefResolverProviderProps = {
   document?: unknown;
   resolver?: ReferenceResolver;
+  maxRefDepth?: number;
 };
 
 /**
@@ -27,6 +33,7 @@ export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps>
   children,
   document: maybeDocument,
   resolver,
+  maxRefDepth,
 }) => {
   const document = isPlainObject(maybeDocument) ? maybeDocument : undefined;
 
@@ -36,7 +43,7 @@ export const InlineRefResolverProvider: React.FC<InlineRefResolverProviderProps>
   );
 
   return (
-    <InlineRefResolverContext.Provider value={computedResolver}>
+    <InlineRefResolverContext.Provider value={{ resolver: computedResolver, maxRefDepth }}>
       <DocumentContext.Provider value={document}>{children}</DocumentContext.Provider>
     </InlineRefResolverContext.Provider>
   );
@@ -48,7 +55,7 @@ export const useDocument = () => useContext(DocumentContext);
 
 export const useResolvedObject = (currentObject: object): object => {
   const document = useDocument();
-  const resolver = useInlineRefResolver();
+  const { resolver } = useInlineRefResolver() ?? {};
 
   return React.useMemo(
     () => createResolvedObject(currentObject, { contextObject: document as object, resolver }),
@@ -56,11 +63,11 @@ export const useResolvedObject = (currentObject: object): object => {
   );
 };
 
-export const useSchemaInlineRefResolver = (): ReferenceResolver => {
+export const useSchemaInlineRefResolver = (): [ReferenceResolver, number | undefined] => {
   const document = useDocument();
-  const resolver = useInlineRefResolver();
+  const { resolver, maxRefDepth } = useInlineRefResolver() ?? {};
 
-  return React.useCallback<ReferenceResolver>(
+  const referenceResolver = React.useCallback<ReferenceResolver>(
     (...args) => {
       const resolved = resolver?.(...args);
       if (!isPlainObject(resolved)) {
@@ -82,4 +89,6 @@ export const useSchemaInlineRefResolver = (): ReferenceResolver => {
     },
     [document, resolver],
   );
+
+  return [referenceResolver, maxRefDepth];
 };
