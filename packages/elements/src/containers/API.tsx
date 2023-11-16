@@ -94,6 +94,13 @@ export interface CommonAPIProps extends RoutingProps {
    * @default false
    */
   tryItCorsProxy?: string;
+
+  /**
+   * The amount of references deep should be presented.
+   * @default undefined
+   */
+  maxRefDepth?: number;
+
   tryItOutDefaultServer?: string;
   useCustomNav?: boolean;
 }
@@ -114,6 +121,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideInlineExamples,
     tryItCredentialsPolicy,
     tryItCorsProxy,
+    maxRefDepth,
     tryItOutDefaultServer,
     useCustomNav,
   } = props;
@@ -171,7 +179,7 @@ export const APIImpl: React.FC<APIProps> = props => {
   }
 
   return (
-    <InlineRefResolverProvider document={parsedDocument}>
+    <InlineRefResolverProvider document={parsedDocument} maxRefDepth={maxRefDepth}>
       {layout === 'stacked' ? (
         <APIWithStackedLayout
           serviceNode={serviceNode}

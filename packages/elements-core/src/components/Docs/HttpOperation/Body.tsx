@@ -24,7 +24,7 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
 };
 
 export const Body = ({ body, onChange }: BodyProps) => {
-  const refResolver = useSchemaInlineRefResolver();
+  const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
   const { nodeHasChanged } = useOptionsCtx();
 
@@ -66,6 +66,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
       {isJSONSchema(schema) && (
         <JsonSchemaViewer
           resolveRef={refResolver}
+          maxRefDepth={maxRefDepth}
           schema={getOriginalObject(schema)}
           viewMode="write"
           renderRootTreeLines
