@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental@3.1.0...@jpmorganchase/elemental@3.2.0) (2023-11-16)
+
+### Bug Fixes
+
+- 2412 process env not defined ([#2438](https://github.com/jpmorganchase/elemental/issues/2438))
+  ([0d45bdf](https://github.com/jpmorganchase/elemental/commit/0d45bdf947d6cf2a92915a4170259ca4291a58d1))
+- update imports ([ee9f984](https://github.com/jpmorganchase/elemental/commit/ee9f9843429d9b2f3716d2fca8748a8d1bff28a3))
+- useCustomNav tests
+  ([c266e5a](https://github.com/jpmorganchase/elemental/commit/c266e5afd4a93c4c3b592870c94080d046620611))
+
+### Features
+
+- added boolean to control sidebar
+  ([a01ea87](https://github.com/jpmorganchase/elemental/commit/a01ea87006599fb2c28bea16951e7f5bed0c9039))
+- added test ([7a04a31](https://github.com/jpmorganchase/elemental/commit/7a04a31158d2e093af2404f8700438384076cd6e))
+- added tests ([810c585](https://github.com/jpmorganchase/elemental/commit/810c5858e02ba38d1aeb377236c1a4df9bd08b21))
+- export oas utils ([#2440](https://github.com/jpmorganchase/elemental/issues/2440))
+  ([4e73b72](https://github.com/jpmorganchase/elemental/commit/4e73b721ffb853601cdfe47f66765aefdda13c3d))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [3.1.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental@3.0.0...@jpmorganchase/elemental@3.1.0) (2023-11-08)
 
 ### Bug Fixes
