@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.2.0...@jpmorganchase/elemental-core@1.3.0) (2023-11-16)
+
+### Bug Fixes
+
+- 2412 process env not defined ([#2438](https://github.com/jpmorganchase/elemental/issues/2438))
+  ([0d45bdf](https://github.com/jpmorganchase/elemental/commit/0d45bdf947d6cf2a92915a4170259ca4291a58d1))
+
+### Features
+
+- added boolean to control sidebar
+  ([a01ea87](https://github.com/jpmorganchase/elemental/commit/a01ea87006599fb2c28bea16951e7f5bed0c9039))
+- added test ([7a04a31](https://github.com/jpmorganchase/elemental/commit/7a04a31158d2e093af2404f8700438384076cd6e))
+- form body oneOf selector ([#2434](https://github.com/jpmorganchase/elemental/issues/2434))
+  ([3e48923](https://github.com/jpmorganchase/elemental/commit/3e4892360b67f06e21d7956accbc9facc6bd3227))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [1.2.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.1.0...@jpmorganchase/elemental-core@1.2.0) (2023-11-08)
 
 ### Bug Fixes

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-dev-portal@2.3.0...@jpmorganchase/elemental-dev-portal@2.3.1) (2023-11-16)
+
+### Bug Fixes
+
+- 2412 process env not defined ([#2438](https://github.com/jpmorganchase/elemental/issues/2438))
+  ([0d45bdf](https://github.com/jpmorganchase/elemental/commit/0d45bdf947d6cf2a92915a4170259ca4291a58d1))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [2.3.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-dev-portal@2.2.0...@jpmorganchase/elemental-dev-portal@2.3.0) (2023-11-08)
 
 ### Bug Fixes
