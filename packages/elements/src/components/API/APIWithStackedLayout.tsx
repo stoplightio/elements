@@ -25,6 +25,7 @@ type StackedLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
+  showPoweredByLink?: boolean;
   tryItOutDefaultServer?: string;
 };
 
@@ -50,6 +51,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  showPoweredByLink = true,
   tryItOutDefaultServer,
 }) => {
   const location = useLocation();
