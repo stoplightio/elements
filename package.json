@@ -122,5 +122,8 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2"
   }
 }
