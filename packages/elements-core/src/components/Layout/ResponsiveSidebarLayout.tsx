@@ -1,4 +1,4 @@
-import { ServiceNode } from '@stoplight/elements';
+import type { ServiceNode } from '@stoplight/elements';
 import {
   Logo,
   PoweredByLink,

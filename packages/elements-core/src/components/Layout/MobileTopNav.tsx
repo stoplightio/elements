@@ -1,6 +1,6 @@
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
-import { ServiceNode } from '@stoplight/elements/utils/oas/types';
-import { TableOfContentsItem } from '@stoplight/elements-core';
+import type { ServiceNode } from '@stoplight/elements';
+import type { TableOfContentsItem } from '@stoplight/elements-core';
 import { Box, Button, Drawer, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
