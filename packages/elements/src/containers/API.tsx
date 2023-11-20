@@ -14,6 +14,7 @@ import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';
 import { useQuery } from 'react-query';
+import { useLocation } from 'react-router-dom';
 
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
@@ -125,6 +126,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItOutDefaultServer,
     useCustomNav,
   } = props;
+  const location = useLocation();
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
 
   const { data: fetchedDocument, error } = useQuery(
@@ -189,6 +191,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          location={location}
           tryItOutDefaultServer={tryItOutDefaultServer}
         />
       ) : (

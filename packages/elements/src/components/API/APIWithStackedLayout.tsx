@@ -16,6 +16,13 @@ import { OperationNode, ServiceNode } from '../../utils/oas/types';
 import { computeTagGroups, TagGroup } from './utils';
 
 type TryItCredentialsPolicy = 'omit' | 'include' | 'same-origin';
+interface Location {
+  pathname: string;
+  search: string;
+  hash: string;
+  state: unknown;
+  key: string;
+}
 
 type StackedLayoutProps = {
   serviceNode: ServiceNode;
@@ -26,6 +33,7 @@ type StackedLayoutProps = {
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
   showPoweredByLink?: boolean;
+  location: Location;
   tryItOutDefaultServer?: string;
 };
 
@@ -43,6 +51,19 @@ const TryItContext = React.createContext<{
 });
 TryItContext.displayName = 'TryItContext';
 
+const LocationContext = React.createContext<{
+  location: Location;
+}>({
+  location: {
+    hash: '',
+    key: '',
+    pathname: '',
+    search: '',
+    state: '',
+  },
+});
+LocationContext.displayName = 'LocationContext';
+
 export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   serviceNode,
   hideTryIt,
@@ -52,41 +73,43 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
   showPoweredByLink = true,
+  location,
   tryItOutDefaultServer,
 }) => {
-  const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
 
   return (
-    <TryItContext.Provider
-      value={{
-        hideTryIt,
-        hideInlineExamples,
-        tryItCredentialsPolicy,
-        corsProxy: tryItCorsProxy,
-        tryItOutDefaultServer,
-      }}
-    >
-      <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
-        <Box w="full" borderB>
-          <Docs
-            className="sl-mx-auto"
-            nodeData={serviceNode.data}
-            nodeTitle={serviceNode.name}
-            nodeType={NodeType.HttpService}
-            location={location}
-            layoutOptions={{ showPoweredByLink, hideExport }}
-            exportProps={exportProps}
-            tryItCredentialsPolicy={tryItCredentialsPolicy}
-            tryItOutDefaultServer={tryItOutDefaultServer}
-          />
-        </Box>
+    <LocationContext.Provider value={{ location }}>
+      <TryItContext.Provider
+        value={{
+          hideTryIt,
+          tryItCredentialsPolicy,
+          corsProxy: tryItCorsProxy,
+          hideInlineExamples,
+          tryItOutDefaultServer,
+        }}
+      >
+        <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
+          <Box w="full" borderB>
+            <Docs
+              className="sl-mx-auto"
+              nodeData={serviceNode.data}
+              nodeTitle={serviceNode.name}
+              nodeType={NodeType.HttpService}
+              location={location}
+              layoutOptions={{ showPoweredByLink, hideExport }}
+              exportProps={exportProps}
+              tryItCredentialsPolicy={tryItCredentialsPolicy}
+              tryItOutDefaultServer={tryItOutDefaultServer}
+            />
+          </Box>
 
-        {groups.map(group => (
-          <Group key={group.title} group={group} />
-        ))}
-      </Flex>
-    </TryItContext.Provider>
+          {groups.map(group => (
+            <Group key={group.title} group={group} />
+          ))}
+        </Flex>
+      </TryItContext.Provider>
+    </LocationContext.Provider>
   );
 };
 
@@ -135,7 +158,7 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
 });
 
 const Item = React.memo<{ item: OperationNode }>(({ item }) => {
-  const location = useLocation();
+  const { location } = React.useContext(LocationContext);
   const { pathname } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
