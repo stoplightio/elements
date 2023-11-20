@@ -1,9 +1,9 @@
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
-import type { ServiceNode } from '@stoplight/elements';
-import type { TableOfContentsItem } from '@stoplight/elements-core';
 import { Box, Button, Drawer, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
+import type { ServiceNode } from '../../../../elements/src/utils/oas/types';
+import { TableOfContentsItem } from '../MosaicTableOfContents/types';
 import { Sidebar } from './ResponsiveSidebarLayout';
 
 export const MobileTopNav = ({
