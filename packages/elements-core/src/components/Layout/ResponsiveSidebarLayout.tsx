@@ -1,15 +1,13 @@
 import type { ServiceNode } from '@stoplight/elements';
-import {
-  Logo,
-  PoweredByLink,
-  TableOfContents,
-  TableOfContentsItem,
-  useResponsiveLayout,
-} from '@stoplight/elements-core';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import { useResponsiveLayout } from '../../hooks/useResponsiveLayout';
+import { Logo } from '../Logo';
+import { TableOfContents } from '../MosaicTableOfContents';
+import { TableOfContentsItem } from '../MosaicTableOfContents/types';
+import { PoweredByLink } from '../PoweredByLink';
 import { MobileTopNav } from './MobileTopNav';
 
 type ResponsiveSidebarLayoutProps = {
