@@ -1,6 +1,7 @@
 export { Docs, DocsProps, ParsedDocs } from './components/Docs';
 export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { ExportButton, ExportButtonProps } from './components/Docs/HttpService/ExportButton';
+export { ResponsiveSidebarLayout } from './components/Layout/ResponsiveSidebarLayout';
 export { SidebarLayout } from './components/Layout/SidebarLayout';
 export { Logo } from './components/Logo';
 export { DefaultSMDComponents } from './components/MarkdownViewer/CustomComponents/CodeComponent';

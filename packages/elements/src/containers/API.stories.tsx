@@ -72,6 +72,13 @@ StackedLayout.args = {
 };
 StackedLayout.storyName = 'Stacked Layout (Zoom)';
 
+export const ResponsiveLayout = Template.bind({});
+ResponsiveLayout.args = {
+  apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
+  layout: 'responsive',
+};
+ResponsiveLayout.storyName = 'Responsive Layout (Zoom)';
+
 export const Box = Template.bind({});
 Box.args = {
   apiDescriptionUrl: 'https://raw.githubusercontent.com/box/box-openapi/main/content/openapi.yml',
