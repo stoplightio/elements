@@ -1,8 +1,8 @@
-import type { ServiceNode } from '@stoplight/elements';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import type { ServiceNode } from '../../../../elements/src/utils/oas/types';
 import { useResponsiveLayout } from '../../hooks/useResponsiveLayout';
 import { Logo } from '../Logo';
 import { TableOfContents } from '../MosaicTableOfContents';
