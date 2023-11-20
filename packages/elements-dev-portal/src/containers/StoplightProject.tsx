@@ -7,7 +7,6 @@ import {
   useRouter,
   withStyles,
 } from '@stoplight/elements-core';
-import { useResponsiveLayout } from '@stoplight/elements-core/hooks/useResponsiveLayout';
 import * as React from 'react';
 import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
 
@@ -87,8 +86,6 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   const branchSlug = decodeURIComponent(encodedBranchSlug);
   const history = useHistory();
 
-  const { isResponsiveLayoutEnabled } = useResponsiveLayout();
-
   const { data: tableOfContents, isFetched: isTocFetched } = useGetTableOfContents({ projectId, branchSlug });
   const { data: branches } = useGetBranches({ projectId });
   const {
@@ -140,7 +137,6 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
         hideExport={hideExport}
         tryItCredentialsPolicy={tryItCredentialsPolicy}
         tryItCorsProxy={tryItCorsProxy}
-        compact={isResponsiveLayoutEnabled ? true : false}
       />
     );
   }

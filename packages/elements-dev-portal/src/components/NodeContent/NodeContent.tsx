@@ -65,7 +65,6 @@ export const NodeContent = ({
   hideExport,
   onExportRequest,
 }: NodeContentProps) => {
-  console.log('compact: ', compact);
   return (
     <NodeLinkContext.Provider value={[node, Link]}>
       <MarkdownComponentsProvider value={{ a: LinkComponent }}>

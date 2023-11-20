@@ -63,7 +63,7 @@ export const MobileTopNav = ({
 };
 
 const NavHeading = ({ heading }: { heading?: string }): JSX.Element => (
-  <Flex flex={1} data-test="mobile-project-top-nav" px={3} style={{ minWidth: 0 }}>
+  <Flex flex={1} data-test="mobile-project-top-nav" style={{ minWidth: 0 }}>
     <Box
       fontSize="xl"
       fontWeight="semibold"
