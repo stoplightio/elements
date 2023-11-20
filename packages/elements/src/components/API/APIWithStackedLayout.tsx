@@ -10,12 +10,18 @@ import { Box, Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stopl
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { OperationNode, ServiceNode } from '../../utils/oas/types';
 import { computeTagGroups, TagGroup } from './utils';
 
 type TryItCredentialsPolicy = 'omit' | 'include' | 'same-origin';
+interface Location {
+  pathname: string;
+  search: string;
+  hash: string;
+  state: unknown;
+  key: string;
+}
 
 type StackedLayoutProps = {
   serviceNode: ServiceNode;
@@ -25,10 +31,11 @@ type StackedLayoutProps = {
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
   showPoweredByLink?: boolean;
+  location: Location;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode) => {
-  return hash.substr(1) === `${item.name}-${item.data.method}`;
+  return hash.substr(1) === `${item.data.path}-${item.data.method}`;
 };
 
 const TryItContext = React.createContext<{
@@ -41,6 +48,19 @@ const TryItContext = React.createContext<{
 });
 TryItContext.displayName = 'TryItContext';
 
+const LocationContext = React.createContext<{
+  location: Location;
+}>({
+  location: {
+    hash: '',
+    key: '',
+    pathname: '',
+    search: '',
+    state: '',
+  },
+});
+LocationContext.displayName = 'LocationContext';
+
 export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   serviceNode,
   hideTryIt,
@@ -49,38 +69,42 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
   showPoweredByLink = true,
+  location,
 }) => {
-  const location = useLocation();
   const { groups } = computeTagGroups(serviceNode);
 
   return (
-    <TryItContext.Provider value={{ hideTryIt, tryItCredentialsPolicy, corsProxy: tryItCorsProxy }}>
-      <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
-        <Box w="full" borderB>
-          <Docs
-            className="sl-mx-auto"
-            nodeData={serviceNode.data}
-            nodeTitle={serviceNode.name}
-            nodeType={NodeType.HttpService}
-            location={location}
-            layoutOptions={{ showPoweredByLink, hideExport }}
-            exportProps={exportProps}
-            tryItCredentialsPolicy={tryItCredentialsPolicy}
-          />
-        </Box>
+    <LocationContext.Provider value={{ location }}>
+      <TryItContext.Provider value={{ hideTryIt, tryItCredentialsPolicy, corsProxy: tryItCorsProxy }}>
+        <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
+          <Box w="full" borderB>
+            <Docs
+              className="sl-mx-auto"
+              nodeData={serviceNode.data}
+              nodeTitle={serviceNode.name}
+              nodeType={NodeType.HttpService}
+              location={location}
+              layoutOptions={{ showPoweredByLink, hideExport }}
+              exportProps={exportProps}
+              tryItCredentialsPolicy={tryItCredentialsPolicy}
+            />
+          </Box>
 
-        {groups.map(group => (
-          <Group key={group.title} group={group} />
-        ))}
-      </Flex>
-    </TryItContext.Provider>
+          {groups.map(group => (
+            <Group key={group.title} group={group} />
+          ))}
+        </Flex>
+      </TryItContext.Provider>
+    </LocationContext.Provider>
   );
 };
 
 const Group = React.memo<{ group: TagGroup }>(({ group }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const { hash } = useLocation();
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
+  const {
+    location: { hash },
+  } = React.useContext(LocationContext);
   const urlHashMatches = hash.substr(1) === group.title;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
@@ -129,7 +153,7 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
 });
 
 const Item = React.memo<{ item: OperationNode }>(({ item }) => {
-  const location = useLocation();
+  const { location } = React.useContext(LocationContext);
   const { hash } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
