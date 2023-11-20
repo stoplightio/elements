@@ -8,7 +8,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { MobileTopNav } from './MobileTopNav';
 
 type ResponsiveSidebarLayoutProps = {
-  //sidebar: React.ReactNode;
   maxContentWidth?: number;
   sidebarWidth?: number;
   children?: React.ReactNode;
