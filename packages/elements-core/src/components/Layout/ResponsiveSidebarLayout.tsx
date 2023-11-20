@@ -1,6 +1,11 @@
 import { ServiceNode } from '@stoplight/elements/utils/oas/types';
-import { Logo, PoweredByLink, TableOfContents, TableOfContentsItem } from '@stoplight/elements-core';
-import { useResponsiveLayout } from '@stoplight/elements-core/hooks/useResponsiveLayout';
+import {
+  Logo,
+  PoweredByLink,
+  TableOfContents,
+  TableOfContentsItem,
+  useResponsiveLayout,
+} from '@stoplight/elements-core';
 import { Box, Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';

@@ -32,6 +32,7 @@ export { withRouter } from './hoc/withRouter';
 export { useBundleRefsIntoDocument } from './hooks/useBundleRefsIntoDocument';
 export { useParsedData } from './hooks/useParsedData';
 export { useParsedValue } from './hooks/useParsedValue';
+export { useResponsiveLayout } from './hooks/useResponsiveLayout';
 export { useRouter } from './hooks/useRouter';
 export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, ParsedNode, RoutingProps, TableOfContentItem } from './types';

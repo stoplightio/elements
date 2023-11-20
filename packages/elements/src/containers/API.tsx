@@ -4,13 +4,13 @@ import {
   RoutingProps,
   useBundleRefsIntoDocument,
   useParsedValue,
+  useResponsiveLayout,
   withMosaicProvider,
   withPersistenceBoundary,
   withQueryClientProvider,
   withRouter,
   withStyles,
 } from '@stoplight/elements-core';
-import { useResponsiveLayout } from '@stoplight/elements-core/hooks/useResponsiveLayout';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';
