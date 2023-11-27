@@ -3991,10 +3991,10 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.44.4":
-  version "1.44.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.44.4.tgz#38f9b8de1e0b9606a7633c008dad01b3a858a591"
-  integrity sha512-JzDyi6CRlzdqaZ9yw39dpJNQ0vKrn8JGMP20ynS+1GxXpHJ84LSsRanuBdR+IMapg8UBIkSwV/P2nyejij8LxA==
+"@stoplight/mosaic-code-editor@^1.46.1":
+  version "1.46.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.46.1.tgz#81f29c4e3d8227179aeb5d425906e3d181925c54"
+  integrity sha512-rG2Zhwe0P9KJ8Lv/s7u4zsXQwX6znYz0DSs+Cq1cVJCgztOpAs1x6ISmOWdVLFJLiPioElrY+sCAwjxJcWnUuQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -4003,12 +4003,13 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.44.4"
-    "@stoplight/mosaic-code-viewer" "1.44.4"
+    "@stoplight/mosaic" "1.46.1"
+    "@stoplight/mosaic-code-viewer" "1.46.1"
     "@stoplight/types" "^13.7.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
+    focus-trap-react "^10.2.3"
     lodash.get "^4.4.2"
     nano-memoize "^1.2.1"
     polished "^4.1.3"
@@ -4021,10 +4022,10 @@
     use-resize-observer "^9.0.2"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.44.4", "@stoplight/mosaic-code-viewer@^1.44.4":
-  version "1.44.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.44.4.tgz#96da5b15c0162080e2888f439149f7b4b6f4cc1b"
-  integrity sha512-1dAkDWmatuXBtS2g1QXf75ehw98faGPKDiSdztlpGCVOKr0LPl8NPbELOQN1jPh8Vnte8ZKKseBjVF3scpdIHw==
+"@stoplight/mosaic-code-viewer@1.46.1", "@stoplight/mosaic-code-viewer@^1.46.1":
+  version "1.46.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.46.1.tgz#526bce0393f7dd3df1a9eb9a2550d29967f187b9"
+  integrity sha512-upz74Tq4p6/heg9fWYvFzlcmaajzgXybw9I4/Y8oFTxAkkOlVkHLiUKdUlZUWxWUZQNJXFSK0EMMIf+qcWZv2A==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -4033,11 +4034,12 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.44.4"
+    "@stoplight/mosaic" "1.46.1"
     "@stoplight/types" "^13.7.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
+    focus-trap-react "^10.2.3"
     lodash.get "^4.4.2"
     nano-memoize "^1.2.1"
     polished "^4.1.3"
@@ -4050,10 +4052,10 @@
     use-resize-observer "^9.0.2"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.44.4", "@stoplight/mosaic@^1.44.4":
-  version "1.44.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.44.4.tgz#becea6ff4d84a8ed6850cb8ee00366a173c68a25"
-  integrity sha512-MgFyOeodjF24/obNzLJBh+AAlz68t/L2LVjEpasZchNJvC64KTgOf20R2caG3BtsZJh/v3K5O9kMaP8OR5uunA==
+"@stoplight/mosaic@1.46.1", "@stoplight/mosaic@^1.46.1":
+  version "1.46.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.46.1.tgz#aa5b678c3b946145eaf6f1f130e92ff8efd266e1"
+  integrity sha512-ziMwdgbB77jvOoQEHr/IyqheaCzVGSkfTeBv0t6RJGADDkp+Oj8ItwDECXP7CA12VfxCgbKrGb33iyHCE/tVYA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -4070,6 +4072,7 @@
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
     dom-helpers "^3.3.1"
+    focus-trap-react "^10.2.3"
     lodash.get "^4.4.2"
     nano-memoize "^1.2.1"
     polished "^4.1.3"
@@ -11144,6 +11147,21 @@ fnv-plus@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/fnv-plus/-/fnv-plus-1.3.1.tgz#c34cb4572565434acb08ba257e4044ce2b006d67"
   integrity sha512-Gz1EvfOneuFfk4yG458dJ3TLJ7gV19q3OM/vVvvHf7eT02Hm1DleB4edsia6ahbKgAYxO9gvyQ1ioWZR+a00Yw==
+
+focus-trap-react@^10.2.3:
+  version "10.2.3"
+  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-10.2.3.tgz#a5a2ea7fbb042ffa4337fde72758325ed0fb793a"
+  integrity sha512-YXBpFu/hIeSu6NnmV2xlXzOYxuWkoOtar9jzgp3lOmjWLWY59C/b8DtDHEAV4SPU07Nd/t+nS/SBNGkhUBFmEw==
+  dependencies:
+    focus-trap "^7.5.4"
+    tabbable "^6.2.0"
+
+focus-trap@^7.5.4:
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.5.4.tgz#6c4e342fe1dae6add9c2aa332a6e7a0bbd495ba2"
+  integrity sha512-N7kHdlgsO/v+iD/dMoJKtsSqs5Dz/dXZVebRgJw23LDk+jMi/974zyiOYDziY2JPp8xivq9BmUGwIJMiuSBi7w==
+  dependencies:
+    tabbable "^6.2.0"
 
 follow-redirects@^1.0.0, follow-redirects@^1.14.0:
   version "1.15.2"
@@ -21350,6 +21368,11 @@ synchronous-promise@^2.0.15:
   version "2.0.16"
   resolved "https://registry.yarnpkg.com/synchronous-promise/-/synchronous-promise-2.0.16.tgz#669b75e86b4295fdcc1bb0498de9ac1af6fd51a9"
   integrity sha512-qImOD23aDfnIDNqlG1NOehdB9IYsn1V9oByPjKY1nakv2MQYCEMyX033/q+aEtYCpmYK1cv2+NTmlH+ra6GA5A==
+
+tabbable@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.2.0.tgz#732fb62bc0175cfcec257330be187dcfba1f3b97"
+  integrity sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==
 
 table@^6.0.9:
   version "6.7.5"
