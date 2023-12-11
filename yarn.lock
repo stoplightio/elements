@@ -4070,6 +4070,11 @@
   dependencies:
     "@sentry/react" "^6.13.2"
 
+"@stoplight/react-error-boundary@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/react-error-boundary/-/react-error-boundary-3.0.0.tgz#aaeb7edd3ff0dbe7ab5508464038c4c88cfb4772"
+  integrity sha512-lFuTpGy2fu4hffmRTnJot1URa9/ifVLyPPQg62WW3RYo9LsxxHF0PrnFzAeXEQb40g1kc55S/oX6zQc8YJrKXg==
+
 "@stoplight/scripts@9.2.1":
   version "9.2.1"
   resolved "https://registry.yarnpkg.com/@stoplight/scripts/-/scripts-9.2.1.tgz#220dc8b8b43a50efb2d24248008d6200abe6478d"
