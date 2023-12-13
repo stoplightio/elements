@@ -86,7 +86,12 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
     const paramDescription = description || paramSchema.description;
 
     const paramDeprecated = !!(deprecated || paramSchema.deprecated);
-    const paramStyle = style && defaultStyle[parameterType] !== style ? readableStyles[style] || style : undefined;
+    const paramStyleUnspecified = style === HttpParamStyles.Unspecified;
+    const paramStyle = paramStyleUnspecified
+      ? undefined
+      : style && defaultStyle[parameterType] !== style
+      ? readableStyles[style] || style
+      : undefined;
 
     if (isPlainObject(schema.properties)) {
       schema.properties![p.name] = {
