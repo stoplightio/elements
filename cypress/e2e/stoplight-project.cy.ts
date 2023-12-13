@@ -7,7 +7,12 @@ describe('Stoplight component', () => {
     it('loads api page correctly', () => {
       loadStoplightProjectPage();
 
-      cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/**`).as('getNode');
+      cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/*`, { middleware: true }, req => {
+        req.on('before:response', res => {
+          // force all API responses to not be cached
+          res.headers['cache-control'] = 'no-store';
+        });
+      }).as('getNode');
       cy.findByText('To-dos').click();
       cy.wait('@getNode');
 
@@ -110,7 +115,12 @@ describe('Stoplight component', () => {
 });
 
 function loadStoplightProjectPage() {
-  cy.intercept('https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/**').as('getNode');
+  cy.intercept('https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/*', { middleware: true }, req => {
+    req.on('before:response', res => {
+      // force all API responses to not be cached
+      res.headers['cache-control'] = 'no-store';
+    });
+  }).as('getNode');
   cy.visit('/stoplight-project');
   cy.wait('@getNode');
 }
@@ -132,7 +142,13 @@ function loadMarkdownPage() {
 }
 
 function visitNode(nodeId: string, nodeSlug: string) {
-  cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/${nodeId}`).as('getNode');
+  cy.log(nodeId);
+  cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/${nodeId}*`, { middleware: true }, req => {
+    req.on('before:response', res => {
+      // force all API responses to not be cached
+      res.headers['cache-control'] = 'no-store';
+    });
+  }).as('getNode');
   cy.visit(`/stoplight-project/${nodeId}-${nodeSlug}`);
   cy.wait('@getNode');
 }
