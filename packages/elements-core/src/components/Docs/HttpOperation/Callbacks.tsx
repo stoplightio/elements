@@ -1,8 +1,8 @@
-import { useOptionsCtx } from '@stoplight/elements-core/context/Options';
 import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpCallbackOperation } from '@stoplight/types';
 import * as React from 'react';
 
+import { useOptionsCtx } from '../../../context/Options';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';
 import { OperationHeader } from './HttpOperation';
