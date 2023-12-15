@@ -95,7 +95,9 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             isCompact={isCompact}
           />
         )}
-        {data.callbacks && <Callbacks callbacks={data.callbacks} />}
+
+        {data.callbacks?.length && <Callbacks callbacks={data.callbacks} isCompact={isCompact} />}
+
         {isCompact && tryItPanel}
       </VStack>
     );
@@ -180,7 +182,7 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
   );
 }
 
-function OperationHeader({
+export function OperationHeader({
   id,
   noHeading,
   hasBadges,
@@ -193,8 +195,8 @@ function OperationHeader({
 }: {
   id: string;
   noHeading?: boolean;
-  hasBadges: boolean;
-  name: string;
+  hasBadges?: boolean;
+  name?: string;
   isDeprecated?: boolean;
   isInternal?: boolean;
   method: string;
