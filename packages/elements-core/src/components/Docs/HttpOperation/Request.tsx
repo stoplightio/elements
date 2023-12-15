@@ -15,7 +15,7 @@ import { Parameters } from './Parameters';
 
 interface IRequestProps {
   operation: IHttpOperation;
-  onChange: (requestBodyIndex: number) => void;
+  onChange?: (requestBodyIndex: number) => void;
 }
 
 export const Request: React.FunctionComponent<IRequestProps> = ({
