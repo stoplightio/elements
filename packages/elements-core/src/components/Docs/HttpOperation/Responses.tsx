@@ -33,13 +33,13 @@ import { Parameters } from './Parameters';
 
 interface ResponseProps {
   response: IHttpOperationResponse;
-  onMediaTypeChange(mediaType: string): void;
+  onMediaTypeChange?: (mediaType: string) => void;
 }
 
 interface ResponsesProps {
   responses: IHttpOperationResponse[];
-  onMediaTypeChange(mediaType: string): void;
-  onStatusCodeChange(statusCode: string): void;
+  onMediaTypeChange?: (mediaType: string) => void;
+  onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
 }
 
@@ -70,7 +70,7 @@ export const Responses = ({
   );
 
   React.useEffect(() => {
-    onStatusCodeChange(activeResponseId);
+    onStatusCodeChange?.(activeResponseId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeResponseId]);
 
@@ -172,7 +172,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const schema = responseContent?.schema;
 
   React.useEffect(() => {
-    responseContent && onMediaTypeChange(responseContent.mediaType);
+    responseContent && onMediaTypeChange?.(responseContent.mediaType);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responseContent]);
 

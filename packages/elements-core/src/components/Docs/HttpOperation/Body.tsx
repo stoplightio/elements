@@ -12,7 +12,7 @@ import { SectionSubtitle } from '../Sections';
 
 export interface BodyProps {
   body: IHttpOperationRequestBody;
-  onChange: (requestBodyIndex: number) => void;
+  onChange?: (requestBodyIndex: number) => void;
 }
 
 export const isBodyEmpty = (body?: BodyProps['body']) => {
@@ -29,7 +29,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
   const { nodeHasChanged } = useOptionsCtx();
 
   React.useEffect(() => {
-    onChange(chosenContent);
+    onChange?.(chosenContent);
     // disabling because we don't want to react on `onChange` change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chosenContent]);
