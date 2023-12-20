@@ -625,7 +625,7 @@ describe('HttpOperation', () => {
       expect(screen.queryByText('newPet')).toBeInTheDocument();
 
       // operation header
-      expect(screen.queryByText('/{$request.body#/newPetAvailableUrl}')).toBeInTheDocument();
+      expect(screen.queryByText('{$request.body#/newPetAvailableUrl}')).toBeInTheDocument();
 
       // operation body
       expect(screen.queryByText('Callback body description')).toBeInTheDocument();
