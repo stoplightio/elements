@@ -65,7 +65,7 @@ export const Callback = ({ data, isCompact }: CallbackProps) => {
         <OperationHeader
           id={data.id}
           method={data.method}
-          path={`${data.path}`}
+          path={data.path}
           isDeprecated={isDeprecated}
           isInternal={isInternal}
           hideServerUrl
