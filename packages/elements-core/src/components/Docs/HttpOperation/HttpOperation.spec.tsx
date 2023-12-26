@@ -621,11 +621,20 @@ describe('HttpOperation', () => {
     it('should display callback operation', async () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
 
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('Development');
+
       //operation name
       expect(screen.queryByText('newPet')).toBeInTheDocument();
 
       // operation header
-      expect(screen.queryByText('/{$request.body#/newPetAvailableUrl}')).toBeInTheDocument();
+      expect(screen.queryByText('{$request.body#/newPetAvailableUrl}')).toBeInTheDocument();
+      expect(screen.queryAllByText(/https:\/\/todos-dev.stoplight.io/).length).toEqual(1); // server url visible only in the main operation header, not in callback
 
       // operation body
       expect(screen.queryByText('Callback body description')).toBeInTheDocument();

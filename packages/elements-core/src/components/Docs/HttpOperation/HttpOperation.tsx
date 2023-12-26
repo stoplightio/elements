@@ -119,9 +119,9 @@ export const HttpOperation = withErrorBoundary<HttpOperationProps>(HttpOperation
   recoverableProps: ['data'],
 });
 
-type MethodPathProps = { method: IHttpOperation['method']; path: string };
+type MethodPathProps = { method: IHttpOperation['method']; path: string; hideServerUrl?: boolean };
 
-function MethodPath({ method, path, isCallback }: MethodPathProps & { isCallback?: boolean }) {
+function MethodPath({ method, path, hideServerUrl, isCallback }: MethodPathProps & { isCallback?: boolean }) {
   const chosenServer = useAtomValue(chosenServerAtom);
 
   let chosenServerUrl = '';
@@ -131,7 +131,7 @@ function MethodPath({ method, path, isCallback }: MethodPathProps & { isCallback
 
   return (
     <Box>
-      <MethodPathInner method={method} path={path} chosenServerUrl={chosenServerUrl} />
+      <MethodPathInner method={method} path={path} chosenServerUrl={hideServerUrl ? '' : chosenServerUrl} />
     </Box>
   );
 }
@@ -189,6 +189,7 @@ export function OperationHeader({
   name,
   isDeprecated,
   isInternal,
+  hideServerUrl,
   method,
   path,
   isCallback,
@@ -199,6 +200,7 @@ export function OperationHeader({
   name?: string;
   isDeprecated?: boolean;
   isInternal?: boolean;
+  hideServerUrl?: boolean;
   method: string;
   path: string;
   isCallback?: boolean;
@@ -231,7 +233,7 @@ export function OperationHeader({
       </Box>
 
       <Box pos="relative">
-        <MethodPath method={method} path={path} isCallback={isCallback} />
+        <MethodPath method={method} path={path} hideServerUrl={hideServerUrl} isCallback={isCallback} />
         <NodeAnnotation change={lineTwoChanged} />
       </Box>
     </VStack>
