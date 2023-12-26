@@ -108,9 +108,9 @@ export const HttpOperation = withErrorBoundary<HttpOperationProps>(HttpOperation
   recoverableProps: ['data'],
 });
 
-type MethodPathProps = { method: IHttpOperation['method']; path: string };
+type MethodPathProps = { method: IHttpOperation['method']; path: string; hideServerUrl?: boolean };
 
-function MethodPath({ method, path }: MethodPathProps) {
+function MethodPath({ method, path, hideServerUrl }: MethodPathProps) {
   const chosenServer = useAtomValue(chosenServerAtom);
 
   let chosenServerUrl = '';
@@ -120,7 +120,7 @@ function MethodPath({ method, path }: MethodPathProps) {
 
   return (
     <Box>
-      <MethodPathInner method={method} path={path} chosenServerUrl={chosenServerUrl} />
+      <MethodPathInner method={method} path={path} chosenServerUrl={hideServerUrl ? '' : chosenServerUrl} />
     </Box>
   );
 }
@@ -180,6 +180,7 @@ export function OperationHeader({
   name,
   isDeprecated,
   isInternal,
+  hideServerUrl,
   method,
   path,
 }: {
@@ -189,6 +190,7 @@ export function OperationHeader({
   name?: string;
   isDeprecated?: boolean;
   isInternal?: boolean;
+  hideServerUrl?: boolean;
   method: string;
   path: string;
 }) {
@@ -220,7 +222,7 @@ export function OperationHeader({
       </Box>
 
       <Box pos="relative">
-        <MethodPath method={method} path={path} />
+        <MethodPath method={method} path={path} hideServerUrl={hideServerUrl} />
         <NodeAnnotation change={lineTwoChanged} />
       </Box>
     </VStack>
