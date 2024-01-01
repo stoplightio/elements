@@ -11,7 +11,7 @@ import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { OperationNode, ServiceNode } from '../../utils/oas/types';
+import { OperationNode, ServiceChildNode, ServiceNode } from '../../utils/oas/types';
 import { computeTagGroups, TagGroup } from './utils';
 
 type TryItCredentialsPolicy = 'omit' | 'include' | 'same-origin';
@@ -35,7 +35,7 @@ type StackedLayoutProps = {
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode) => {
-  return hash.substr(1) === `${item.data.path}-${item.data.method}`;
+  return hash.substring(1) === `${item.data.path}-${item.data.method}`;
 };
 
 const TryItContext = React.createContext<{
@@ -105,13 +105,21 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
   const {
     location: { hash },
   } = React.useContext(LocationContext);
-  const urlHashMatches = hash.substr(1) === group.title;
+  const urlHashMatches = hash.substring(1) === group.title;
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
+  const isOperationNode = (node: ServiceChildNode): node is OperationNode => {
+    return node.type === NodeType.HttpOperation;
+  };
+
+  const groupOperationItems = React.useMemo(() => {
+    return group.items.filter(isOperationNode);
+  }, [group.items]);
+
   const shouldExpand = React.useMemo(() => {
-    return urlHashMatches || group.items.some(item => itemMatchesHash(hash, item));
-  }, [group, hash, urlHashMatches]);
+    return urlHashMatches || groupOperationItems.some(item => itemMatchesHash(hash, item));
+  }, [groupOperationItems, hash, urlHashMatches]);
 
   React.useEffect(() => {
     if (shouldExpand) {
@@ -144,7 +152,7 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
       </Flex>
 
       <Collapse isOpen={isExpanded}>
-        {group.items.map(item => {
+        {groupOperationItems.map(item => {
           return <Item key={item.uri} item={item} />;
         })}
       </Collapse>

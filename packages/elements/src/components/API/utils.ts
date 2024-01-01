@@ -2,9 +2,9 @@ import { isHttpOperation, isHttpService, TableOfContentsItem } from '@stoplight/
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
-import { OperationNode, ServiceChildNode, ServiceNode } from '../../utils/oas/types';
+import { ServiceChildNode, ServiceNode } from '../../utils/oas/types';
 
-export type TagGroup = { title: string; items: OperationNode[] };
+export type TagGroup = { title: string; items: ServiceChildNode[] };
 
 export const computeTagGroups = (serviceNode: ServiceNode) => {
   const groupsByTagId: { [tagId: string]: TagGroup } = {};
@@ -13,7 +13,6 @@ export const computeTagGroups = (serviceNode: ServiceNode) => {
   const lowerCaseServiceTags = serviceNode.tags.map(tn => tn.toLowerCase());
 
   for (const node of serviceNode.children) {
-    if (node.type !== NodeType.HttpOperation) continue;
     const tagName = node.tags[0];
 
     if (tagName) {
@@ -63,83 +62,67 @@ const defaultComputerAPITreeConfig = {
   hideInternal: false,
 };
 
-export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
+const constructTreeItem = (serviceChildNode: ServiceChildNode) => {
+  return {
+    id: serviceChildNode.uri,
+    slug: serviceChildNode.uri,
+    title: serviceChildNode.name,
+    type: serviceChildNode.type,
+    meta: serviceChildNode.type === NodeType.HttpOperation ? serviceChildNode.data.method : '',
+  };
+};
+
+export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}): TableOfContentsItem[] => {
   const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
-  const tree: TableOfContentsItem[] = [];
 
-  tree.push({
-    id: '/',
-    slug: '/',
-    title: 'Overview',
-    type: 'overview',
-    meta: '',
+  const { groups, ungrouped } = computeTagGroups(serviceNode);
+  const groupedItems: TableOfContentsItem[] = [];
+  const ungroupedOperations: TableOfContentsItem[] = [];
+  const ungroupedSchemas: TableOfContentsItem[] = [];
+
+  // Show ungrouped operations above tag groups
+  ungrouped.forEach(serviceChildNode => {
+    if (mergedConfig.hideInternal && isInternal(serviceChildNode)) {
+      return;
+    } else if (serviceChildNode.type === NodeType.HttpOperation) {
+      ungroupedOperations.push(constructTreeItem(serviceChildNode));
+    } else if (serviceChildNode.type === NodeType.Model && !mergedConfig.hideSchemas) {
+      ungroupedSchemas.push(constructTreeItem(serviceChildNode));
+    }
   });
-
-  const operationNodes = serviceNode.children.filter(node => node.type === NodeType.HttpOperation);
-  if (operationNodes.length) {
-    tree.push({
-      title: 'Endpoints',
-    });
-
-    const { groups, ungrouped } = computeTagGroups(serviceNode);
-
-    // Show ungroupped operations above tag groups
-    ungrouped.forEach(operationNode => {
-      if (mergedConfig.hideInternal && operationNode.data.internal) {
-        return;
-      }
-      tree.push({
-        id: operationNode.uri,
-        slug: operationNode.uri,
-        title: operationNode.name,
-        type: operationNode.type,
-        meta: operationNode.data.method,
-      });
-    });
-
-    groups.forEach(group => {
-      const items = group.items.flatMap(operationNode => {
-        if (mergedConfig.hideInternal && operationNode.data.internal) {
-          return [];
-        }
-        return {
-          id: operationNode.uri,
-          slug: operationNode.uri,
-          title: operationNode.name,
-          type: operationNode.type,
-          meta: operationNode.data.method,
-        };
-      });
-      if (items.length > 0) {
-        tree.push({
-          title: group.title,
-          items,
-        });
-      }
-    });
-  }
-
-  let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
-  if (mergedConfig.hideInternal) {
-    schemaNodes = schemaNodes.filter(node => !node.data['x-internal']);
-  }
-
-  if (!mergedConfig.hideSchemas && schemaNodes.length) {
-    tree.push({
+  if (ungroupedSchemas.length) {
+    ungroupedSchemas.unshift({
       title: 'Schemas',
     });
-
-    schemaNodes.forEach(node => {
-      tree.push({
-        id: node.uri,
-        slug: node.uri,
-        title: node.name,
-        type: node.type,
-        meta: '',
-      });
-    });
   }
-  return tree;
+
+  groups.forEach(group => {
+    const items = group.items.flatMap(serviceChildNode => {
+      if ((mergedConfig.hideInternal && isInternal(serviceChildNode)) || mergedConfig.hideSchemas) {
+        return [];
+      }
+      return constructTreeItem(serviceChildNode);
+    });
+    if (items.length > 0) {
+      groupedItems.push({
+        title: group.title,
+        items,
+      });
+    }
+  });
+
+  return [
+    {
+      id: '/',
+      slug: '/',
+      title: 'Overview',
+      type: 'overview',
+      meta: '',
+    },
+    ...ungroupedOperations,
+    ...groupedItems,
+    ...ungroupedSchemas,
+  ];
 };
 
 export const findFirstNodeSlug = (tree: TableOfContentsItem[]): string | void => {

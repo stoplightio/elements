@@ -588,9 +588,6 @@ describe('computeAPITree', () => {
         type: 'overview',
       },
       {
-        title: 'Endpoints',
-      },
-      {
         id: '/paths/something/get',
         meta: 'get',
         slug: '/paths/something/get',
@@ -648,9 +645,6 @@ describe('computeAPITree', () => {
         type: 'overview',
       },
       {
-        title: 'Endpoints',
-      },
-      {
         id: '/paths/something/get',
         meta: 'get',
         slug: '/paths/something/get',
@@ -685,9 +679,6 @@ describe('computeAPITree', () => {
         slug: '/',
         title: 'Overview',
         type: 'overview',
-      },
-      {
-        title: 'Endpoints',
       },
       {
         id: '/paths/something/get',
@@ -732,9 +723,6 @@ describe('computeAPITree', () => {
         slug: '/',
         title: 'Overview',
         type: 'overview',
-      },
-      {
-        title: 'Endpoints',
       },
       {
         title: 'a',
@@ -815,9 +803,6 @@ describe('computeAPITree', () => {
         slug: '/',
         title: 'Overview',
         type: 'overview',
-      },
-      {
-        title: 'Endpoints',
       },
       {
         title: 'b',
