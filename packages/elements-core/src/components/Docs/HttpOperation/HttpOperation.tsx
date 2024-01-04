@@ -96,7 +96,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           />
         )}
 
-        {data.callbacks?.length && <Callbacks callbacks={data.callbacks} isCompact={isCompact} />}
+        {data.callbacks?.length ? <Callbacks callbacks={data.callbacks} isCompact={isCompact} /> : null}
 
         {isCompact && tryItPanel}
       </VStack>
