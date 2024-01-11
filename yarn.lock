@@ -4036,10 +4036,10 @@
     "@types/json-schema" "^7.0.7"
     magic-error "0.0.1"
 
-"@stoplight/json-schema-viewer@^4.14.1":
-  version "4.14.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.14.1.tgz#39472c8a11d39654457bef98bf9e9d1b5daeb55f"
-  integrity sha512-Igjdf4n5JaPRKVbPL+UKgw6hwwjskEwCDzi/ch47nNBFKFyX3TSshB5PfyJQZ72mpYZFbt1rF1Y0vtk24oFoew==
+"@stoplight/json-schema-viewer@^4.14.2":
+  version "4.14.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.14.2.tgz#81b7a8a4287be0ba05de310ba7482ece0e5153d6"
+  integrity sha512-qZl2qjR7w5wTjdoLrjgMKYtmQWPvSe/XVWM4jalmYq/c1C3nwO2b7uEH5TR/Wnqn1TmQBo3T4BaIbScC4L9Xhg==
   dependencies:
     "@stoplight/json" "^3.20.1"
     "@stoplight/json-schema-tree" "^3.0.0"
