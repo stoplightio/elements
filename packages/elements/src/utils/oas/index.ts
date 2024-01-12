@@ -2,20 +2,26 @@ import { slugify } from '@jpmorganchase/elemental-core';
 import type {
   Oas2HttpOperationTransformer,
   Oas2HttpServiceTransformer,
-  Oas3HttpOperationTransformer,
+  Oas3HttpEndpointOperationTransformer,
   Oas3HttpServiceTransformer,
+  OPERATION_CONFIG,
+  WEBHOOK_CONFIG,
 } from '@stoplight/http-spec/oas';
 import { transformOas2Operation, transformOas2Service } from '@stoplight/http-spec/oas2';
 import { transformOas3Operation, transformOas3Service } from '@stoplight/http-spec/oas3';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
-import { NodeType } from '@stoplight/types';
+import { IHttpOperation, IHttpWebhookOperation, NodeType } from '@stoplight/types';
 import { get, isObject, last } from 'lodash';
-import { OpenAPIObject } from 'openapi3-ts';
+import { OpenAPIObject as _OpenAPIObject, PathObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
 import { oas2SourceMap } from './oas2';
 import { oas3SourceMap } from './oas3';
 import { ISourceNodeMap, NodeTypes, ServiceChildNode, ServiceNode } from './types';
+
+type OpenAPIObject = _OpenAPIObject & {
+  webhooks?: PathObject;
+};
 
 const isOas2 = (parsed: unknown): parsed is Spec =>
   isObject(parsed) &&
@@ -56,7 +62,7 @@ function computeServiceNode(
   document: Spec | OpenAPIObject,
   map: ISourceNodeMap[],
   transformService: Oas2HttpServiceTransformer | Oas3HttpServiceTransformer,
-  transformOperation: Oas2HttpOperationTransformer | Oas3HttpOperationTransformer,
+  transformOperation: Oas2HttpOperationTransformer | Oas3HttpEndpointOperationTransformer,
 ) {
   const serviceDocument = transformService({ document });
   const serviceNode: ServiceNode = {
@@ -75,7 +81,7 @@ function computeChildNodes(
   document: Spec | OpenAPIObject,
   data: unknown,
   map: ISourceNodeMap[],
-  transformer: Oas2HttpOperationTransformer | Oas3HttpOperationTransformer,
+  transformer: Oas2HttpOperationTransformer | Oas3HttpEndpointOperationTransformer,
   parentUri: string = '',
 ) {
   const nodes: ServiceChildNode[] = [];
@@ -85,14 +91,20 @@ function computeChildNodes(
   for (const key of Object.keys(data)) {
     const sanitizedKey = encodePointerFragment(key);
     const match = findMapMatch(sanitizedKey, map);
+
     if (match) {
       const uri = `${parentUri}/${sanitizedKey}`;
-
       const jsonPath = pointerToPath(`#${uri}`);
+
       if (match.type === NodeTypes.Operation && jsonPath.length === 3) {
         const path = String(jsonPath[1]);
         const method = String(jsonPath[2]);
-        const operationDocument = transformer({ document, path, method });
+        const operationDocument = transformer({
+          document,
+          name: path,
+          method,
+          config: OPERATION_CONFIG,
+        }) as IHttpOperation;
         let parsedUri;
         const encodedPath = String(encodePointerFragment(path));
 
@@ -108,6 +120,32 @@ function computeChildNodes(
           data: operationDocument,
           name: operationDocument.summary || operationDocument.iid || operationDocument.path,
           tags: operationDocument.tags?.map(tag => tag.name) || [],
+        });
+      } else if (match.type === NodeTypes.Webhook && jsonPath.length === 3) {
+        const name = String(jsonPath[1]);
+        const method = String(jsonPath[2]);
+        const webhookDocument = transformer({
+          document,
+          name,
+          method,
+          config: WEBHOOK_CONFIG,
+        }) as IHttpWebhookOperation;
+
+        let parsedUri;
+        const encodedPath = String(encodePointerFragment(name));
+
+        if (webhookDocument.iid) {
+          parsedUri = `/webhooks/${webhookDocument.iid}`;
+        } else {
+          parsedUri = uri.replace(encodedPath, slugify(name));
+        }
+
+        nodes.push({
+          type: NodeType.HttpWebhook,
+          uri: parsedUri,
+          data: webhookDocument,
+          name: webhookDocument.summary || webhookDocument.name,
+          tags: webhookDocument.tags?.map(tag => tag.name) || [],
         });
       } else if (match.type === NodeTypes.Model) {
         const schemaDocument = get(document, jsonPath);

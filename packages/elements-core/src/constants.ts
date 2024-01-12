@@ -4,6 +4,7 @@ import {
   faCrosshairs,
   faCube,
   faDatabase,
+  faEnvelope,
   faImage,
   faQuestionCircle,
   IconDefinition,
@@ -13,6 +14,7 @@ import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
 
 export const NodeTypeColors: Dictionary<string, NodeType> = {
   http_operation: '#6a6acb',
+  http_webhook: 'primary',
   http_service: '#e056fd',
   article: '#399da6',
   model: '#ef932b',
@@ -30,6 +32,7 @@ export const NodeTypeColors: Dictionary<string, NodeType> = {
 
 export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   http_operation: 'Endpoint',
+  http_webhook: 'Webhook',
   http_service: 'API',
   article: 'Article',
   model: 'Model',
@@ -47,6 +50,7 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
 
 export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
   http_operation: faCrosshairs,
+  http_webhook: faEnvelope,
   http_service: faCloud,
   article: faBookOpen,
   model: faCube,

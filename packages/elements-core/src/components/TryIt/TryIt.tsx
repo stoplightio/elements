@@ -1,11 +1,12 @@
 import { Box, Button, HStack, Icon, Menu, MenuItems, Panel, useThemeIsDark } from '@stoplight/mosaic';
-import type { IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
+import type { IHttpEndpointOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
 import ExamplesContext from '../../context/ExamplesContext';
+import { isHttpOperation, isHttpWebhookOperation } from '../../utils/guards';
 import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/IServer';
 import { RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
@@ -36,7 +37,7 @@ import { useServerVariables } from './Servers/useServerVariables';
 import { extractExampleKeys } from './TryItUtils';
 
 export interface TryItProps {
-  httpOperation: IHttpOperation;
+  httpOperation: IHttpEndpointOperation;
 
   /**
    * The base URL of the prism mock server to redirect traffic to.
@@ -143,7 +144,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
   React.useEffect(() => {
     let isMounted = true;
-    if (onRequestChange || embeddedInMd) {
+    if (isHttpOperation(httpOperation) && (onRequestChange || embeddedInMd)) {
       buildHarRequest({
         mediaTypeContent,
         parameterValues: parameterValuesWithDefaults,
@@ -188,7 +189,7 @@ export const TryIt: React.FC<TryItProps> = ({
   const handleSendRequest = async () => {
     setValidateParameters(true);
 
-    if (hasRequiredButEmptyParameters) return;
+    if (hasRequiredButEmptyParameters || !isHttpOperation(httpOperation)) return;
 
     try {
       setLoading(true);
@@ -309,7 +310,7 @@ export const TryIt: React.FC<TryItProps> = ({
         />
       ) : null}
 
-      {serverVariables.length > 0 && (
+      {isHttpOperation(httpOperation) && serverVariables.length > 0 && (
         <ServerVariables
           variables={serverVariables}
           values={serverVariableValues}
@@ -326,41 +327,44 @@ export const TryIt: React.FC<TryItProps> = ({
         />
       )}
 
-      {formDataState.isFormDataBody ? (
-        <FormDataBody
-          specification={formDataState.bodySpecification}
-          values={bodyParameterValues}
-          onChangeValues={setBodyParameterValues}
-          onChangeParameterAllow={setAllowedEmptyValues}
-          isAllowedEmptyValues={isAllowedEmptyValues}
-        />
-      ) : mediaTypeContent ? (
-        <RequestBody
-          examples={mediaTypeContent.examples ?? []}
-          requestBody={textRequestBody}
-          showExamplesDropdown={!hideInlineExamples || allParameters.length === 0}
-          onChange={setTextRequestBody}
-        />
-      ) : null}
+      <Box pb={1}>
+        {formDataState.isFormDataBody ? (
+          <FormDataBody
+            specification={formDataState.bodySpecification}
+            values={bodyParameterValues}
+            onChangeValues={setBodyParameterValues}
+            onChangeParameterAllow={setAllowedEmptyValues}
+            isAllowedEmptyValues={isAllowedEmptyValues}
+          />
+        ) : mediaTypeContent ? (
+          <RequestBody
+            examples={mediaTypeContent.examples ?? []}
+            requestBody={textRequestBody}
+            onChange={setTextRequestBody}
+          />
+        ) : null}
+      </Box>
 
-      <Panel.Content className="SendButtonHolder" mt={4} pt={!isOnlySendButton && !embeddedInMd ? 0 : undefined}>
-        <HStack alignItems="center" spacing={2}>
-          <Button appearance="primary" loading={loading} disabled={loading} onPress={handleSendRequest} size="sm">
-            Send API Request
-          </Button>
+      {isHttpOperation(httpOperation) ? (
+        <Panel.Content className="SendButtonHolder" pt={!isOnlySendButton && !embeddedInMd ? 0 : undefined}>
+          <HStack alignItems="center" spacing={2}>
+            <Button appearance="primary" loading={loading} disabled={loading} onPress={handleSendRequest} size="sm">
+              Send API Request
+            </Button>
 
-          {isMockingEnabled && (
-            <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
+            {isMockingEnabled && (
+              <MockingButton options={mockingOptions} onOptionsChange={setMockingOptions} operation={httpOperation} />
+            )}
+          </HStack>
+
+          {validateParameters && hasRequiredButEmptyParameters && (
+            <Box mt={4} color="danger-light" fontSize="sm">
+              <Icon icon={['fas', 'exclamation-triangle']} className="sl-mr-1" />
+              You didn't provide all of the required parameters!
+            </Box>
           )}
-        </HStack>
-
-        {validateParameters && hasRequiredButEmptyParameters && (
-          <Box mt={4} color="danger-light" fontSize="sm">
-            <Icon icon={['fas', 'exclamation-triangle']} className="sl-mr-1" />
-            You didn't provide all of the required parameters!
-          </Box>
-        )}
-      </Panel.Content>
+        </Panel.Content>
+      ) : null}
     </>
   );
 
@@ -368,6 +372,16 @@ export const TryIt: React.FC<TryItProps> = ({
 
   // when TryIt is embedded, we need to show extra context at the top about the method + path
   if (embeddedInMd) {
+    let path: string;
+
+    if (isHttpOperation(httpOperation)) {
+      path = httpOperation.path;
+    } else if (isHttpWebhookOperation(httpOperation)) {
+      path = httpOperation.name;
+    } else {
+      throw new RangeError('unsupported type');
+    }
+
     tryItPanelElem = (
       <Panel isCollapsible={false} p={0} className="TryItPanel">
         <Panel.Titlebar bg="canvas-300">
@@ -375,7 +389,7 @@ export const TryIt: React.FC<TryItProps> = ({
             {httpOperation.method.toUpperCase()}
           </Box>
           <Box fontWeight="medium" ml={2} textOverflow="truncate" overflowX="hidden">
-            {`${chosenServer?.url || ''}${httpOperation.path}`}
+            {`${chosenServer?.url || ''}${path}`}
           </Box>
         </Panel.Titlebar>
 

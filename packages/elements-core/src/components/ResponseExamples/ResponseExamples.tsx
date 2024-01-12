@@ -1,13 +1,13 @@
 import { CopyButton, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
+import { IHttpEndpointOperation, IMediaTypeContent } from '@stoplight/types';
 import * as React from 'react';
 
 import { exceedsSize, useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration/exampleGeneration';
 import { LoadMore } from '../LoadMore';
 
 export interface ResponseExamplesProps {
-  httpOperation: IHttpOperation;
+  httpOperation: IHttpEndpointOperation;
   responseStatusCode?: string;
   responseMediaType?: string;
 }
@@ -50,7 +50,9 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={responseExample || ''} aria-label="copy response" />}>
+      <Panel.Titlebar
+        rightComponent={<CopyButton size="sm" copyValue={responseExample || ''} aria-label="copy response" />}
+      >
         {examplesSelect || <Text color="body">Response Example</Text>}
       </Panel.Titlebar>
       <Panel.Content p={0}>
