@@ -4017,6 +4017,57 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@stoplight/elements-core@~7.16.6":
+  version "7.16.6"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements-core/-/elements-core-7.16.6.tgz#51c16abed4c9c277a3d932e3d14fa337f9d3135d"
+  integrity sha512-Mip2FRflP49iDFdE6dWiOAHx3ne70uZ7Z9rDZ72yDOV/2IAF31GGEKvytkzmS0xr4L5OHgLiY5UAjzAmEYuDxQ==
+  dependencies:
+    "@stoplight/http-spec" "^6.0.0"
+    "@stoplight/json" "^3.18.1"
+    "@stoplight/json-schema-ref-parser" "^9.0.5"
+    "@stoplight/json-schema-sampler" "0.2.3"
+    "@stoplight/json-schema-tree" "^3.0.0"
+    "@stoplight/json-schema-viewer" "^4.14.2"
+    "@stoplight/markdown-viewer" "^5.6.0"
+    "@stoplight/mosaic" "^1.46.1"
+    "@stoplight/mosaic-code-editor" "^1.46.1"
+    "@stoplight/mosaic-code-viewer" "^1.46.1"
+    "@stoplight/path" "^1.3.2"
+    "@stoplight/react-error-boundary" "^3.0.0"
+    "@stoplight/types" "^14.0.0"
+    "@stoplight/yaml" "^4.2.3"
+    classnames "^2.2.6"
+    httpsnippet-lite "^3.0.5"
+    jotai "1.3.9"
+    json-schema "^0.4.0"
+    lodash "^4.17.19"
+    nanoid "^3.1.32"
+    prop-types "^15.7.2"
+    react-query "^3.34.19"
+    react-router-dom "^5.2.0"
+    react-router-hash-link "^2.1.0"
+    tslib "^2.1.0"
+    urijs "^1.19.11"
+    util "^0.12.4"
+    xml-formatter "^2.6.1"
+
+"@stoplight/elements@^7.16.4":
+  version "7.16.6"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-7.16.6.tgz#1956a307e7f8dd94a678eea32359f5a1d0094183"
+  integrity sha512-E9sM60guNcNOLOjLM3MCHkjLu3vNa8jut2Dz/Ita8/gzLu5g5OjgMkfH34EtlKe7BX+ihEmkRJveII+OmK5Gpg==
+  dependencies:
+    "@stoplight/elements-core" "~7.16.6"
+    "@stoplight/http-spec" "^6.0.0"
+    "@stoplight/json" "^3.18.1"
+    "@stoplight/mosaic" "^1.46.1"
+    "@stoplight/types" "^14.0.0"
+    "@stoplight/yaml" "^4.2.3"
+    classnames "^2.2.6"
+    file-saver "^2.0.5"
+    lodash "^4.17.19"
+    react-query "^3.34.19"
+    react-router-dom "^5.2.0"
+
 "@stoplight/eslint-config@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@stoplight/eslint-config/-/eslint-config-2.1.0.tgz#e7ee3973f31c00dd0d5fd3b0f4520bd25db5c9ff"
@@ -4026,7 +4077,7 @@
 
 "@stoplight/http-spec@^6.0.0":
   version "6.0.3"
-  resolved "https://registry.npmjs.org/@stoplight/http-spec/-/http-spec-6.0.3.tgz#f6caffbce918d08b0d2c1fd2d8d5a4cc1df5afa8"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-6.0.3.tgz#f6caffbce918d08b0d2c1fd2d8d5a4cc1df5afa8"
   integrity sha512-ED5kELP/5QH/SdKsFVx4EYUcE8FRjnDeiAx7ipHOk97t1pKgPhxH1wsvrQG3wL9TlNm0YQLLniE9Y3I6ZARJzA==
   dependencies:
     "@stoplight/json" "^3.18.1"
@@ -11396,15 +11447,25 @@ fnv-plus@^1.3.1:
   resolved "https://registry.yarnpkg.com/fnv-plus/-/fnv-plus-1.3.1.tgz#c34cb4572565434acb08ba257e4044ce2b006d67"
   integrity sha512-Gz1EvfOneuFfk4yG458dJ3TLJ7gV19q3OM/vVvvHf7eT02Hm1DleB4edsia6ahbKgAYxO9gvyQ1ioWZR+a00Yw==
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.0:
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
-  integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
+focus-trap-react@^10.2.3:
+  version "10.2.3"
+  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-10.2.3.tgz#a5a2ea7fbb042ffa4337fde72758325ed0fb793a"
+  integrity sha512-YXBpFu/hIeSu6NnmV2xlXzOYxuWkoOtar9jzgp3lOmjWLWY59C/b8DtDHEAV4SPU07Nd/t+nS/SBNGkhUBFmEw==
+  dependencies:
+    focus-trap "^7.5.4"
+    tabbable "^6.2.0"
 
-follow-redirects@^1.15.0:
-  version "1.15.3"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.3.tgz#fe2f3ef2690afce7e82ed0b44db08165b207123a"
-  integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
+focus-trap@^7.5.4:
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.5.4.tgz#6c4e342fe1dae6add9c2aa332a6e7a0bbd495ba2"
+  integrity sha512-N7kHdlgsO/v+iD/dMoJKtsSqs5Dz/dXZVebRgJw23LDk+jMi/974zyiOYDziY2JPp8xivq9BmUGwIJMiuSBi7w==
+  dependencies:
+    tabbable "^6.2.0"
+
+follow-redirects@^1.0.0, follow-redirects@^1.14.0, follow-redirects@^1.15.0:
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz#54d4d6d062c0fa7d9d17feb008461550e3ba8020"
+  integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==
 
 for-each@^0.3.3:
   version "0.3.3"
