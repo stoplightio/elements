@@ -5,6 +5,7 @@ import {
   PoweredByLink,
   SidebarLayout,
   TableOfContents,
+  TableOfContentsItem,
 } from '@stoplight/elements-core';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
@@ -65,27 +66,8 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     return <Redirect to="/" />;
   }
 
-  const handleTocClick = () => {
-    if (container.current) {
-      container.current.scrollIntoView();
-    }
-  };
-
   const sidebar = (
-    <>
-      <Flex ml={4} mb={5} alignItems="center">
-        {logo ? (
-          <Logo logo={{ url: logo, altText: 'logo' }} />
-        ) : (
-          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
-        )}
-        <Heading size={4}>{serviceNode.name}</Heading>
-      </Flex>
-      <Flex flexGrow flexShrink overflowY="auto" direction="col">
-        <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
-      </Flex>
-      <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
-    </>
+    <Sidebar serviceNode={serviceNode} logo={logo} container={container} pathname={pathname} tree={tree} />
   );
 
   return (
@@ -106,3 +88,37 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     </SidebarLayout>
   );
 };
+
+type SidebarProps = {
+  serviceNode: ServiceNode;
+  logo?: string;
+  container: React.RefObject<HTMLElement>;
+  pathname: string;
+  tree: TableOfContentsItem[];
+};
+
+export const Sidebar: React.FC<SidebarProps> = ({ serviceNode, logo, container, pathname, tree }) => {
+  const handleTocClick = () => {
+    if (container.current) {
+      container.current.scrollIntoView();
+    }
+  };
+
+  return (
+    <>
+      <Flex ml={4} mb={5} alignItems="center">
+        {logo ? (
+          <Logo logo={{ url: logo, altText: 'logo' }} />
+        ) : (
+          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
+        )}
+        <Heading size={4}>{serviceNode.name}</Heading>
+      </Flex>
+      <Flex flexGrow flexShrink overflowY="auto" direction="col">
+        <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
+      </Flex>
+      <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
+    </>
+  );
+};
+Sidebar.displayName = 'Sidebar';

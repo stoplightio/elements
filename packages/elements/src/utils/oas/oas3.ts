@@ -19,6 +19,23 @@ export const oas3SourceMap: ISourceNodeMap[] = [
   },
 
   {
+    match: 'webhooks',
+    type: NodeTypes.Webhooks,
+    children: [
+      {
+        notMatch: '^x-',
+        type: NodeTypes.Webhook,
+        children: [
+          {
+            match: 'get|post|put|delete|options|head|patch|trace',
+            type: NodeTypes.Webhook,
+          },
+        ],
+      },
+    ],
+  },
+
+  {
     match: 'components',
     type: NodeTypes.Components,
     children: [

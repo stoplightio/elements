@@ -5,9 +5,9 @@ import { useRouterType } from '../../context/RouterType';
 import { useFirstRender } from '../../hooks/useFirstRender';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
 import {
+  NODE_GROUP_ICON,
+  NODE_GROUP_ICON_COLOR,
   NODE_META_COLOR,
-  NODE_TITLE_ICON,
-  NODE_TITLE_ICON_COLOR,
   NODE_TYPE_ICON_COLOR,
   NODE_TYPE_META_ICON,
   NODE_TYPE_TITLE_ICON,
@@ -34,6 +34,7 @@ import {
 
 const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
+LinkContext.displayName = 'LinkContext';
 
 export const TableOfContents = React.memo<TableOfContentsProps>(
   ({
@@ -103,6 +104,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     );
   },
 );
+TableOfContents.displayName = 'TableOfContents';
 
 const Divider = React.memo<{
   item: TableOfContentsDivider;
@@ -123,6 +125,7 @@ const Divider = React.memo<{
     </Box>
   );
 });
+Divider.displayName = 'Divider';
 
 const GroupItem = React.memo<{
   depth: number;
@@ -184,6 +187,7 @@ const GroupItem = React.memo<{
 
   return null;
 });
+GroupItem.displayName = 'GroupItem';
 
 const Group = React.memo<{
   depth: number;
@@ -261,8 +265,9 @@ const Group = React.memo<{
         depth={depth}
         isActive={showAsActive}
         icon={
-          NODE_TITLE_ICON[item.title] && (
-            <Box as={Icon} color={NODE_TITLE_ICON_COLOR[item.title]} icon={NODE_TITLE_ICON[item.title]} />
+          item.itemsType &&
+          NODE_GROUP_ICON[item.itemsType] && (
+            <Box as={Icon} color={NODE_GROUP_ICON_COLOR[item.itemsType]} icon={NODE_GROUP_ICON[item.itemsType]} />
           )
         }
       />
@@ -289,6 +294,7 @@ const Group = React.memo<{
     </>
   );
 });
+Group.displayName = 'Group';
 
 const Item = React.memo<{
   depth: number;
@@ -336,6 +342,7 @@ const Item = React.memo<{
     </Flex>
   );
 });
+Item.displayName = 'Item';
 
 const Node = React.memo<{
   item: TableOfContentsNode | TableOfContentsNodeGroup;
@@ -393,6 +400,7 @@ const Node = React.memo<{
     );
   },
 );
+Node.displayName = 'Node';
 
 const Version: React.FC<{ value: string }> = ({ value }) => {
   return (

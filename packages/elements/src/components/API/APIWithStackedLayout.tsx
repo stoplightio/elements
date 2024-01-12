@@ -6,15 +6,16 @@ import {
   ParsedDocs,
   TryItWithRequestSamples,
 } from '@stoplight/elements-core';
-import { Box, Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
+import { Box, Flex, Heading, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { OperationNode, ServiceNode } from '../../utils/oas/types';
+import { OperationNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
 import { computeTagGroups, TagGroup } from './utils';
 
 type TryItCredentialsPolicy = 'omit' | 'include' | 'same-origin';
+
 interface Location {
   pathname: string;
   search: string;
@@ -34,8 +35,12 @@ type StackedLayoutProps = {
   location: Location;
 };
 
-const itemMatchesHash = (hash: string, item: OperationNode) => {
-  return hash.substr(1) === `${item.data.path}-${item.data.method}`;
+const itemMatchesHash = (hash: string, item: OperationNode | WebhookNode) => {
+  if (item.type === NodeType.HttpOperation) {
+    return hash.substr(1) === `${item.data.path}-${item.data.method}`;
+  } else {
+    return hash.substr(1) === `${item.data.name}-${item.data.method}`;
+  }
 };
 
 const TryItContext = React.createContext<{
@@ -71,7 +76,8 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   showPoweredByLink = true,
   location,
 }) => {
-  const { groups } = computeTagGroups(serviceNode);
+  const { groups: operationGroups } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation);
+  const { groups: webhookGroups } = computeTagGroups<WebhookNode>(serviceNode, NodeType.HttpWebhook);
 
   return (
     <LocationContext.Provider value={{ location }}>
@@ -89,8 +95,12 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
               tryItCredentialsPolicy={tryItCredentialsPolicy}
             />
           </Box>
-
-          {groups.map(group => (
+          {operationGroups.length > 0 && webhookGroups.length > 0 ? <Heading size={2}>Endpoints</Heading> : null}
+          {operationGroups.map(group => (
+            <Group key={group.title} group={group} />
+          ))}
+          {webhookGroups.length > 0 ? <Heading size={2}>Webhooks</Heading> : null}
+          {webhookGroups.map(group => (
             <Group key={group.title} group={group} />
           ))}
         </Flex>
@@ -98,8 +108,9 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
     </LocationContext.Provider>
   );
 };
+APIWithStackedLayout.displayName = 'APIWithStackedLayout';
 
-const Group = React.memo<{ group: TagGroup }>(({ group }) => {
+const Group = React.memo<{ group: TagGroup<OperationNode | WebhookNode> }>(({ group }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const {
@@ -151,8 +162,9 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
     </Box>
   );
 });
+Group.displayName = 'Group';
 
-const Item = React.memo<{ item: OperationNode }>(({ item }) => {
+const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
   const { location } = React.useContext(LocationContext);
   const { hash } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -197,7 +209,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
         </Box>
 
         <Box flex={1} fontWeight="medium" wordBreak="all">
-          {item.data.path}
+          {item.type === NodeType.HttpOperation ? item.data.path : item.name}
         </Box>
         {isDeprecated && <DeprecatedBadge />}
       </Flex>
@@ -224,6 +236,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
                   layoutOptions={{ noHeading: true, hideTryItPanel: true }}
                 />
               </TabPanel>
+
               <TabPanel>
                 <TryItWithRequestSamples
                   httpOperation={item.data}
@@ -238,9 +251,11 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
     </Box>
   );
 });
+Item.displayName = 'Item';
 
 const Collapse: React.FC<{ isOpen: boolean }> = ({ isOpen, children }) => {
   if (!isOpen) return null;
 
   return <Box>{children}</Box>;
 };
+Collapse.displayName = 'Collapse';
