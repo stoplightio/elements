@@ -183,6 +183,7 @@ export const ParsedDocs = ({ node, nodeUnsupported, ...commonProps }: ParsedDocs
     case 'article':
       return <Article data={node.data} {...commonProps} />;
     case 'http_operation':
+    case 'http_webhook':
       return <HttpOperation data={node.data} {...commonProps} />;
     case 'http_service':
       return <HttpService data={node.data} {...commonProps} />;
