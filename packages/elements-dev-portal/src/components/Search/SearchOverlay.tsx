@@ -36,9 +36,6 @@ export const SearchOverlay = ({
   onClose,
   onClick,
 }: SearchOverlayProps) => {
-  const BASE_URL =
-    `/docs/${encodeURIComponent(projectSlug!)}` + (branchSlug ? `/branches/${encodeURIComponent(branchSlug)}` : '');
-
   return (
     <Modal isOpen={isSearchShowing} onClose={onClose}>
       <Box className="sl-overlay" bg="canvas" overflowY="scroll" data-test="search-overlay">

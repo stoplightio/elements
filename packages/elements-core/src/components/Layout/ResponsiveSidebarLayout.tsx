@@ -5,9 +5,9 @@ import { Link, useLocation } from 'react-router-dom';
 import type { ServiceNode } from '../../../../elements/src/utils/oas/types';
 import { useResponsiveLayout } from '../../hooks/useResponsiveLayout';
 import { Logo } from '../Logo';
-import { TableOfContents } from '../MosaicTableOfContents';
-import { TableOfContentsItem } from '../MosaicTableOfContents/types';
 import { PoweredByLink } from '../PoweredByLink';
+import type { TableOfContentsItem } from '../TableOfContents';
+import { TableOfContents } from '../TableOfContents';
 import { MobileTopNav } from './MobileTopNav';
 
 type ResponsiveSidebarLayoutProps = {

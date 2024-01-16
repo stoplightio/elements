@@ -3,7 +3,7 @@ import { Box, Button, Drawer, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
 import type { ServiceNode } from '../../../../elements/src/utils/oas/types';
-import { TableOfContentsItem } from '../MosaicTableOfContents/types';
+import type { TableOfContentsItem } from '../TableOfContents';
 import { Sidebar } from './ResponsiveSidebarLayout';
 
 export const MobileTopNav = ({
