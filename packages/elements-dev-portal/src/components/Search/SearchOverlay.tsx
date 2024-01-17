@@ -1,13 +1,11 @@
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import {
-  NodeSearchResult,
-  ProjectTableOfContents,
-  SearchResults,
-  TableOfContents,
-} from '@stoplight/elements-dev-portal';
 import { Box, Button, Flex, Icon, Input, Modal } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+
+import { NodeSearchResult, ProjectTableOfContents } from '../../types';
+import { TableOfContents } from '../TableOfContents';
+import { SearchResults } from './Search';
 
 type SearchOverlayProps = {
   isFetching: boolean;

@@ -1,9 +1,9 @@
-import { ServiceNode } from '@stoplight/elements/utils/oas/types';
 import { ExportButtonProps, ParsedDocs, ResponsiveSidebarLayout } from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 
+import { ServiceNode } from '../../utils/oas/types';
 import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
 
 type SidebarLayoutProps = {
