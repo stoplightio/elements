@@ -161,3 +161,10 @@ export type ParamField = {
   description: string;
   example: string;
 };
+
+export type LogoProps = {
+  altText: string;
+  url?: string;
+  backgroundColor?: string;
+  href?: string;
+};

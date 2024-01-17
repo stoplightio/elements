@@ -2,8 +2,8 @@ import { Box, Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import type { ServiceNode } from '../../../../elements/src/utils/oas/types';
 import { useResponsiveLayout } from '../../hooks/useResponsiveLayout';
+import { LogoProps } from '../../types';
 import { Logo } from '../Logo';
 import { PoweredByLink } from '../PoweredByLink';
 import type { TableOfContentsItem } from '../TableOfContents';
@@ -14,8 +14,8 @@ type ResponsiveSidebarLayoutProps = {
   maxContentWidth?: number;
   sidebarWidth?: number;
   children?: React.ReactNode;
-  serviceNode: ServiceNode;
-  logo?: string;
+  name: string;
+  logo?: string | LogoProps;
   tree?: TableOfContentsItem[];
   onTocClick?(): void;
 };
@@ -26,15 +26,7 @@ const SIDEBAR_MAX_WIDTH = 1.5 * SIDEBAR_MIN_WIDTH;
 
 export const ResponsiveSidebarLayout = React.forwardRef<HTMLDivElement, ResponsiveSidebarLayoutProps>(
   (
-    {
-      children,
-      serviceNode,
-      logo,
-      tree,
-      onTocClick,
-      maxContentWidth = MAX_CONTENT_WIDTH,
-      sidebarWidth = SIDEBAR_MIN_WIDTH,
-    },
+    { children, name, logo, tree, onTocClick, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH },
     ref,
   ) => {
     const scrollRef = React.useRef<HTMLDivElement | null>(null);
@@ -70,7 +62,7 @@ export const ResponsiveSidebarLayout = React.forwardRef<HTMLDivElement, Responsi
                 minWidth: `${SIDEBAR_MIN_WIDTH}px`,
               }}
             >
-              <Sidebar serviceNode={serviceNode} logo={logo} tree={tree!} pathname={pathname} onTocClick={onTocClick} />
+              <Sidebar name={name} logo={logo} tree={tree!} pathname={pathname} onTocClick={onTocClick} />
             </Flex>
             <Flex
               justifySelf="end"
@@ -82,7 +74,7 @@ export const ResponsiveSidebarLayout = React.forwardRef<HTMLDivElement, Responsi
             />
           </Flex>
         ) : (
-          <MobileTopNav onTocClick={onTocClick!} logo={logo!} tree={tree!} pathname={pathname} node={serviceNode} />
+          <MobileTopNav onTocClick={onTocClick!} name={name} logo={logo} tree={tree!} pathname={pathname} />
         )}
 
         <Box ref={scrollRef} bg="canvas" px={!isResponsiveLayoutEnabled ? 24 : 6} flex={1} w="full" overflowY="auto">
@@ -100,14 +92,14 @@ type SidebarWidth = number;
 type StartResizingFn = () => void;
 
 export const Sidebar = ({
-  serviceNode,
+  name,
   logo,
   tree,
   pathname,
   onTocClick,
 }: {
-  serviceNode: ServiceNode;
-  logo?: string;
+  name: string;
+  logo?: string | LogoProps;
   tree: TableOfContentsItem[];
   pathname: string;
   onTocClick?(): void;
@@ -115,17 +107,17 @@ export const Sidebar = ({
   return (
     <>
       <Flex ml={4} mb={5} alignItems="center">
-        {logo ? (
+        {typeof logo === 'string' ? (
           <Logo logo={{ url: logo, altText: 'logo' }} />
         ) : (
-          serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
+          typeof logo === 'object' && <Logo logo={logo} />
         )}
-        <Heading size={4}>{serviceNode.name}</Heading>
+        <Heading size={4}>{name}</Heading>
       </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={onTocClick} />
       </Flex>
-      <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
+      <PoweredByLink source={name} pathname={pathname} packageType="elements" />
     </>
   );
 };

@@ -2,19 +2,19 @@ import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import { Box, Button, Drawer, Flex, Icon } from '@stoplight/mosaic';
 import * as React from 'react';
 
-import type { ServiceNode } from '../../../../elements/src/utils/oas/types';
+import { LogoProps } from '../../types';
 import type { TableOfContentsItem } from '../TableOfContents';
 import { Sidebar } from './ResponsiveSidebarLayout';
 
 export const MobileTopNav = ({
-  node,
+  name,
   logo,
   tree,
   pathname,
   onTocClick,
 }: {
-  node: ServiceNode;
-  logo: string;
+  name: string;
+  logo?: string | LogoProps;
   tree: TableOfContentsItem[];
   pathname: string;
   onTocClick(): void;
@@ -42,7 +42,7 @@ export const MobileTopNav = ({
         <Button data-test="show-left-sidebar-btn" onPress={() => setIsSidebarOpen(true)} appearance="minimal">
           <Icon size="lg" icon={faBars} />
         </Button>
-        <NavHeading heading={node.name} />
+        <NavHeading heading={name} />
       </Flex>
 
       <Drawer isOpen={isSidebarOpen} position="left">
@@ -56,7 +56,7 @@ export const MobileTopNav = ({
             <Icon size="lg" icon={faX} />
           </Button>
         </Flex>
-        <Sidebar logo={logo} serviceNode={node} tree={tree} pathname={pathname} onTocClick={() => handleTocClick()} />
+        <Sidebar name={name} logo={logo} tree={tree} pathname={pathname} onTocClick={() => handleTocClick()} />
       </Drawer>
     </Flex>
   );

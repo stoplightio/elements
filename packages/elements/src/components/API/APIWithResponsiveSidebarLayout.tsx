@@ -70,9 +70,9 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
     <ResponsiveSidebarLayout
       onTocClick={handleTocClick}
       tree={tree}
-      logo={logo}
+      logo={logo ?? serviceNode.data.logo}
       ref={container}
-      serviceNode={serviceNode}
+      name={serviceNode.name}
     >
       {node && (
         <ParsedDocs
