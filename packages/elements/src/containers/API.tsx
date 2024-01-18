@@ -105,7 +105,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 
 export const APIImpl: React.FC<APIProps> = props => {
   const {
-    layout,
+    layout = 'sidebar',
     apiDescriptionUrl = '',
     logo,
     hideTryIt,
