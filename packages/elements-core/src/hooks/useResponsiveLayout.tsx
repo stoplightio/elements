@@ -13,19 +13,19 @@ export enum ScreenType {
   Normal_Browser = 1_000_000,
 }
 
+const getScreenType = () => {
+  if (window?.innerWidth <= ScreenType.Phone) {
+    return ScreenType.Phone;
+  } else if (window?.innerWidth <= ScreenType.Tablet) {
+    return ScreenType.Tablet;
+  } else if (window?.innerWidth <= ScreenType.Resized_Browser) {
+    return ScreenType.Resized_Browser;
+  }
+  return ScreenType.Normal_Browser;
+};
+
 export const useResponsiveLayout = () => {
   const [screenType, setScreenType] = React.useState<ScreenType | undefined>();
-
-  const getScreenType = () => {
-    if (window.innerWidth <= ScreenType.Phone) {
-      return ScreenType.Phone;
-    } else if (window.innerWidth <= ScreenType.Tablet) {
-      return ScreenType.Tablet;
-    } else if (window.innerWidth <= ScreenType.Resized_Browser) {
-      return ScreenType.Resized_Browser;
-    }
-    return ScreenType.Normal_Browser;
-  };
 
   const getElementsBreakpoint = (node: ElementsNode) => {
     return ElementsBreakpoints[node];
@@ -35,9 +35,9 @@ export const useResponsiveLayout = () => {
     function handleResize() {
       setScreenType(getScreenType());
     }
-    window.addEventListener('resize', handleResize);
+    window?.addEventListener('resize', handleResize);
     handleResize();
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window?.removeEventListener('resize', handleResize);
   }, []);
 
   // isResponsiveLayoutEnabled can be applied to generally trigger responsive layout behavior

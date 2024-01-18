@@ -146,11 +146,11 @@ function useResizer(sidebarWidth: number): [SidebarRef, SidebarWidth, StartResiz
   );
 
   React.useEffect(() => {
-    window.addEventListener('mousemove', resize);
-    window.addEventListener('mouseup', stopResizing, { passive: true });
+    window?.addEventListener('mousemove', resize);
+    window?.addEventListener('mouseup', stopResizing, { passive: true });
     return () => {
-      window.removeEventListener('mousemove', resize);
-      window.removeEventListener('mouseup', stopResizing);
+      window?.removeEventListener('mousemove', resize);
+      window?.removeEventListener('mouseup', stopResizing);
     };
   }, [resize, stopResizing]);
 
