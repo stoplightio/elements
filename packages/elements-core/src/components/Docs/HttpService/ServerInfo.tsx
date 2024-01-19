@@ -1,3 +1,4 @@
+import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Icon, InvertTheme, NodeAnnotation, Panel, Text, Tooltip, useClipboard, VStack } from '@stoplight/mosaic';
 import type { INodeVariable, IServer } from '@stoplight/types';
@@ -102,12 +103,12 @@ const ServerUrl: React.FC<IServer & { hasAnyServerVariables: boolean; defaultIsO
         >
           {!hasCopied && (
             <Box p={1} onClick={handleCopyClick} cursor="pointer">
-              Copy Server URL <Icon className="sl-ml-1" icon={['fas', 'copy']} />
+              Copy Server URL <Icon className="sl-ml-1" icon={faCopy} />
             </Box>
           )}
           {hasCopied && (
             <Box p={1}>
-              Copied Server URL <Icon className="sl-ml-1" icon={['fas', 'check']} />
+              Copied Server URL <Icon className="sl-ml-1" icon={faCheck} />
             </Box>
           )}
         </Tooltip>

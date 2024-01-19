@@ -1,3 +1,4 @@
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Flex, Icon, Input, Text } from '@stoplight/mosaic';
 import * as React from 'react';
 
@@ -47,7 +48,7 @@ export const FileUploadParameterEditor: React.FC<FileUploadParameterEditorProps>
         />
         {value && (
           <button className="sl-mr-3 sl-p-2" aria-label="Remove file" onClick={clearFile}>
-            <Icon icon="times" />
+            <Icon icon={faTimes} />
           </button>
         )}
         <div>

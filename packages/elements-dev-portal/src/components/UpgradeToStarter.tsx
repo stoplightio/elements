@@ -1,3 +1,4 @@
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import React from 'react';
 
@@ -14,7 +15,7 @@ export const UpgradeToStarter = () => (
     color="muted"
     flexDirection="col"
   >
-    <Icon icon={['fas', 'exclamation-triangle']} size="4x" />
+    <Icon icon={faExclamationTriangle} size="4x" />
     <Box pt={3}>
       Please upgrade your Stoplight Workspace to the Starter Plan to use Elements Dev Portal in production.
     </Box>

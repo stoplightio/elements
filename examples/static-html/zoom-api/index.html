@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
+
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' raw.githubusercontent.com; img-src https://*; child-src 'none';"
+    />
 
     <title>Stoplight Elements example</title>
     <meta name="description" content="Example site using Stoplight Elements to display docs" />
     <meta name="author" content="Stoplight" />
 
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/script.js"></script>
+
     <script src="/modules/@stoplight/elements/web-components.min.js"></script>
     <link rel="stylesheet" href="/modules/@stoplight/elements/styles.min.css" />
-
-    <style>
-        body {
-            font-family: ui-sans-serif, sans-serif;
-            font-size: 12px;
-            height: 100vh;
-        }
-    </style>
-</head>
-<body>
-    <elements-api apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml" basePath="zoom-api"></elements-api>
-</body>
+  </head>
+  <body>
+    <elements-api
+      apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
+      basePath="zoom-api"
+    ></elements-api>
+  </body>
 </html>
