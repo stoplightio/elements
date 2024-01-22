@@ -56,7 +56,14 @@ export const MobileTopNav = ({
             <Icon size="lg" icon={faX} />
           </Button>
         </Flex>
-        <Sidebar name={name} logo={logo} tree={tree} pathname={pathname} onTocClick={() => handleTocClick()} />
+        <Sidebar
+          name={name}
+          logo={logo}
+          tree={tree}
+          pathname={pathname}
+          onTocClick={() => handleTocClick()}
+          isInResponsiveMode={true}
+        />
       </Drawer>
     </Flex>
   );

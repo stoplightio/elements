@@ -62,7 +62,14 @@ export const ResponsiveSidebarLayout = React.forwardRef<HTMLDivElement, Responsi
                 minWidth: `${SIDEBAR_MIN_WIDTH}px`,
               }}
             >
-              <Sidebar name={name} logo={logo} tree={tree!} pathname={pathname} onTocClick={onTocClick} />
+              <Sidebar
+                name={name}
+                logo={logo}
+                tree={tree!}
+                pathname={pathname}
+                onTocClick={onTocClick}
+                isInResponsiveMode={false}
+              />
             </Flex>
             <Flex
               justifySelf="end"
@@ -97,12 +104,14 @@ export const Sidebar = ({
   tree,
   pathname,
   onTocClick,
+  isInResponsiveMode,
 }: {
   name: string;
   logo?: string | LogoProps;
   tree: TableOfContentsItem[];
   pathname: string;
   onTocClick?(): void;
+  isInResponsiveMode: boolean;
 }) => {
   return (
     <>
@@ -115,7 +124,13 @@ export const Sidebar = ({
         <Heading size={4}>{name}</Heading>
       </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
-        <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={onTocClick} />
+        <TableOfContents
+          tree={tree}
+          activeId={pathname}
+          Link={Link}
+          onLinkClick={onTocClick}
+          isInResponsiveMode={isInResponsiveMode}
+        />
       </Flex>
       <PoweredByLink source={name} pathname={pathname} packageType="elements" />
     </>
