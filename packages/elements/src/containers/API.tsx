@@ -4,6 +4,7 @@ import {
   RoutingProps,
   useBundleRefsIntoDocument,
   useParsedValue,
+  useResponsiveLayout,
   withMosaicProvider,
   withPersistenceBoundary,
   withQueryClientProvider,
@@ -16,6 +17,7 @@ import * as React from 'react';
 import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
 
+import { APIWithResponsiveSidebarLayout } from '../components/API/APIWithResponsiveSidebarLayout';
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
 import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
@@ -50,7 +52,7 @@ export interface CommonAPIProps extends RoutingProps {
    *
    * @default "sidebar"
    */
-  layout?: 'sidebar' | 'stacked';
+  layout?: 'sidebar' | 'stacked' | 'responsive';
   logo?: string;
 
   /**
@@ -103,7 +105,7 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 
 export const APIImpl: React.FC<APIProps> = props => {
   const {
-    layout,
+    layout = 'sidebar',
     apiDescriptionUrl = '',
     logo,
     hideTryIt,
@@ -116,6 +118,7 @@ export const APIImpl: React.FC<APIProps> = props => {
   } = props;
   const location = useLocation();
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
+  const { isResponsiveLayoutEnabled } = useResponsiveLayout();
 
   const { data: fetchedDocument, error } = useQuery(
     [apiDescriptionUrl],
@@ -170,7 +173,7 @@ export const APIImpl: React.FC<APIProps> = props => {
 
   return (
     <InlineRefResolverProvider document={parsedDocument} maxRefDepth={maxRefDepth}>
-      {layout === 'stacked' ? (
+      {layout === 'stacked' && (
         <APIWithStackedLayout
           serviceNode={serviceNode}
           hideTryIt={hideTryIt}
@@ -180,7 +183,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCorsProxy={tryItCorsProxy}
           location={location}
         />
-      ) : (
+      )}
+      {layout === 'sidebar' && (
         <APIWithSidebarLayout
           logo={logo}
           serviceNode={serviceNode}
@@ -191,6 +195,20 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+        />
+      )}
+      {layout === 'responsive' && (
+        <APIWithResponsiveSidebarLayout
+          logo={logo}
+          serviceNode={serviceNode}
+          hideTryIt={hideTryIt}
+          hideSchemas={hideSchemas}
+          hideInternal={hideInternal}
+          hideExport={hideExport}
+          exportProps={exportProps}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
+          tryItCorsProxy={tryItCorsProxy}
+          compact={isResponsiveLayoutEnabled}
         />
       )}
     </InlineRefResolverProvider>

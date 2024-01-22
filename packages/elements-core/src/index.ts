@@ -1,6 +1,7 @@
 export { Docs, DocsProps, ParsedDocs } from './components/Docs';
 export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { ExportButton, ExportButtonProps } from './components/Docs/HttpService/ExportButton';
+export { ResponsiveSidebarLayout } from './components/Layout/ResponsiveSidebarLayout';
 export { SidebarLayout } from './components/Layout/SidebarLayout';
 export { Logo } from './components/Logo';
 export { DefaultSMDComponents } from './components/MarkdownViewer/CustomComponents/CodeComponent';
@@ -31,6 +32,7 @@ export { withRouter } from './hoc/withRouter';
 export { useBundleRefsIntoDocument } from './hooks/useBundleRefsIntoDocument';
 export { useParsedData } from './hooks/useParsedData';
 export { useParsedValue } from './hooks/useParsedValue';
+export { useResponsiveLayout } from './hooks/useResponsiveLayout';
 export { useRouter } from './hooks/useRouter';
 export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, ParsedNode, RoutingProps, TableOfContentItem } from './types';
