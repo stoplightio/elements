@@ -4,3 +4,4 @@ export { API } from './containers/API';
 export { useGetOasNavTree } from './hooks/oas-nav-tree/useGetOasNavTree';
 export { useExportDocumentProps } from './hooks/useExportDocumentProps';
 export { transformOasToServiceNode } from './utils/oas';
+export type { ServiceNode } from './utils/oas/types';
