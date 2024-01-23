@@ -25,13 +25,6 @@ export const APIWithoutRouter = flow(
   withQueryClientProvider,
 )(APIImpl);
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    pathname: '/operations/get-users',
-  }),
-}));
-
 describe('API', () => {
   const APIDocument = {
     ...InstagramAPI,
@@ -163,7 +156,16 @@ describe('API', () => {
     });
 
     it('automatically expands an endpoint if the URI matches the current pathname', () => {
-      render(<API logo="thisisarequiredprop" layout="stacked" apiDescriptionDocument={todosApiBundled} />);
+      const history = createMemoryHistory();
+      history.push('/operations/get-users');
+
+      render(
+        <Router history={history}>
+          <Route path="/">
+            <APIWithoutRouter layout="stacked" apiDescriptionDocument={todosApiBundled} />
+          </Route>
+        </Router>,
+      );
       expect(screen.queryByText('Get a user by ID')).toBeInTheDocument();
       expect(screen.queryByRole('heading', { level: 2, name: 'Request' })).toBeInTheDocument();
     });
