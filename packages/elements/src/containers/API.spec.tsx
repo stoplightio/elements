@@ -15,6 +15,7 @@ import { Route, Router } from 'react-router';
 
 import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
+import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { API, APIImpl } from './API';
 
 export const APIWithoutRouter = flow(
@@ -23,6 +24,13 @@ export const APIWithoutRouter = flow(
   withMosaicProvider,
   withQueryClientProvider,
 )(APIImpl);
+
+// jest.mock('react-router-dom', () => ({
+//   ...jest.requireActual('react-router-dom'),
+//   useLocation: () => ({
+//     pathname: '/operations/get-users',
+//   }),
+// }));
 
 describe('API', () => {
   const APIDocument = {
@@ -38,7 +46,7 @@ describe('API', () => {
 
   // we need to add scrollTo to the Element prototype before we mount so it has the method available
   Element.prototype.scrollTo = () => {};
-
+  window.HTMLElement.prototype.scrollIntoView = () => {};
   it('displays logo specified in x-logo property of API document', async () => {
     render(<API layout="sidebar" apiDescriptionDocument={InstagramAPI} />);
 
@@ -153,5 +161,11 @@ describe('API', () => {
 
       expect(usersSummary).toBeInTheDocument();
     });
+
+    // it.only('automatically expands an endpoint if the URI matches the current pathname', () => {
+    //   render(<API logo="thisisarequiredprop" layout="stacked" apiDescriptionDocument={todosApiBundled} />);
+    //   expect(screen.queryByText('Get a user by ID')).toBeInTheDocument();
+    //   expect(screen.queryByRole('heading', { level: 2, name: 'Request' })).toBeInTheDocument();
+    // });
   });
 });
