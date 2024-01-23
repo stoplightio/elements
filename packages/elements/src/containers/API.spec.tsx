@@ -15,6 +15,7 @@ import { Route, Router } from 'react-router';
 
 import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
+import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { API, APIImpl } from './API';
 
 export const APIWithoutRouter = flow(
@@ -38,7 +39,7 @@ describe('API', () => {
 
   // we need to add scrollTo to the Element prototype before we mount so it has the method available
   Element.prototype.scrollTo = () => {};
-
+  window.HTMLElement.prototype.scrollIntoView = () => {};
   it('displays logo specified in x-logo property of API document', async () => {
     render(<API layout="sidebar" apiDescriptionDocument={InstagramAPI} />);
 
@@ -152,6 +153,21 @@ describe('API', () => {
       const usersSummary = await screen.findByText('Get basic information about a user.');
 
       expect(usersSummary).toBeInTheDocument();
+    });
+
+    it('automatically expands an endpoint if the URI matches the current pathname', () => {
+      const history = createMemoryHistory();
+      history.push('/operations/get-users');
+
+      render(
+        <Router history={history}>
+          <Route path="/">
+            <APIWithoutRouter layout="stacked" apiDescriptionDocument={todosApiBundled} />
+          </Route>
+        </Router>,
+      );
+      expect(screen.queryByText('Get a user by ID')).toBeInTheDocument();
+      expect(screen.queryByRole('heading', { level: 2, name: 'Request' })).toBeInTheDocument();
     });
   });
 });
