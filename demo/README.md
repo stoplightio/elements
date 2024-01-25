@@ -27,7 +27,7 @@ subscribeTheme();
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoplightProject projectId="propertyID" router="history"></StoplightProject>
+    <StoplightProject projectId="projectId" router="history"></StoplightProject>
   </React.StrictMode>,
   document.getElementById('root'),
 );
