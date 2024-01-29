@@ -2,7 +2,7 @@ import { IMediaTypeContent } from '@stoplight/types';
 import * as React from 'react';
 
 import { useGenerateExampleFromMediaTypeContent } from '../../../utils/exampleGeneration/exampleGeneration';
-
+import ExamplesContext from './../../../context/ExamplesContext';
 /**
  * Manages the state of the request body text editor.
  *
@@ -12,9 +12,20 @@ import { useGenerateExampleFromMediaTypeContent } from '../../../utils/exampleGe
 export const useTextRequestBodyState = (
   mediaTypeContent: IMediaTypeContent | undefined,
 ): [string, React.Dispatch<React.SetStateAction<string>>] => {
-  const initialRequestBody = useGenerateExampleFromMediaTypeContent(mediaTypeContent, undefined, {
-    skipReadOnly: true,
-  });
+  const { globalSelectedExample } = React.useContext(ExamplesContext);
+
+  const selectedExampleIndex =
+    globalSelectedExample && mediaTypeContent?.examples?.findIndex(e => e.key === globalSelectedExample);
+
+  const hasFoundExample = selectedExampleIndex && selectedExampleIndex >= 0;
+
+  const initialRequestBody = useGenerateExampleFromMediaTypeContent(
+    mediaTypeContent,
+    hasFoundExample ? selectedExampleIndex : undefined,
+    {
+      skipReadOnly: true,
+    },
+  );
 
   const [textRequestBody, setTextRequestBody] = React.useState<string>(initialRequestBody);
 

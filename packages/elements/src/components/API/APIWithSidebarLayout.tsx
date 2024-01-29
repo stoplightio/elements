@@ -21,6 +21,7 @@ type SidebarLayoutProps = {
   hideSchemas?: boolean;
   hideInternal?: boolean;
   hideExport?: boolean;
+  hideInlineExamples?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
@@ -35,6 +36,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideSchemas,
   hideInternal,
   hideExport,
+  hideInlineExamples = false,
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
@@ -58,8 +60,8 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   }, [pathname]);
 
   const layoutOptions = React.useMemo(
-    () => ({ hideTryIt: hideTryIt, hideExport: hideExport || node?.type !== NodeType.HttpService }),
-    [hideTryIt, hideExport, node],
+    () => ({ hideTryIt: hideTryIt, hideInlineExamples, hideExport: hideExport || node?.type !== NodeType.HttpService }),
+    [hideTryIt, hideExport, node, hideInlineExamples],
   );
 
   if (!node) {

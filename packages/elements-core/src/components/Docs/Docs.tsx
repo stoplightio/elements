@@ -109,6 +109,12 @@ interface BaseDocsProps {
     hideExport?: boolean;
 
     /**
+     * Allows to hide inline example dropdowns and enable the global example selection
+     * @default false
+     */
+    hideInlineExamples?: boolean;
+
+    /**
      * Provide a number to trigger compact mode when the component is within that pixel width,
      * or a boolean to enable or diable compact mode.
      * @default false

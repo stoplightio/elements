@@ -53,6 +53,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         responseStatusCode={responseStatusCode}
         requestBodyIndex={requestBodyIndex}
         hideTryIt={layoutOptions?.hideTryIt}
+        hideInlineExamples={layoutOptions?.hideInlineExamples}
         tryItCredentialsPolicy={tryItCredentialsPolicy}
         mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
         corsProxy={tryItCorsProxy}

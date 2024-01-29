@@ -75,6 +75,12 @@ export interface CommonAPIProps extends RoutingProps {
   hideExport?: boolean;
 
   /**
+   * Hides inline examples on the tryit and enables the global example selection
+   * @default false
+   */
+  hideInlineExamples?: boolean;
+
+  /**
    * Fetch credentials policy for TryIt component
    * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
    * @default "omit"
@@ -105,6 +111,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideSchemas,
     hideInternal,
     hideExport,
+    hideInlineExamples,
     tryItCredentialsPolicy,
     tryItCorsProxy,
     tryItOutDefaultServer,
@@ -170,6 +177,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           serviceNode={serviceNode}
           hideTryIt={hideTryIt}
           hideExport={hideExport}
+          hideInlineExamples={hideInlineExamples}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
@@ -183,6 +191,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}
+          hideInlineExamples={hideInlineExamples}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}

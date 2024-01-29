@@ -21,18 +21,18 @@ type StackedLayoutProps = {
   serviceNode: ServiceNode;
   hideTryIt?: boolean;
   hideExport?: boolean;
+  hideInlineExamples?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
   tryItOutDefaultServer?: string;
 };
 
-const itemMatchesHash = (hash: string, item: OperationNode) => {
-  return hash.substr(1) === `${item.name}-${item.data.method}`;
-};
+const itemUriMatchesPathname = (itemUri: string, pathname: string) => itemUri === pathname;
 
 const TryItContext = React.createContext<{
   hideTryIt?: boolean;
+  hideInlineExamples?: boolean;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItOutDefaultServer?: string;
   corsProxy?: string;
@@ -46,6 +46,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   serviceNode,
   hideTryIt,
   hideExport,
+  hideInlineExamples,
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
@@ -56,7 +57,13 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
 
   return (
     <TryItContext.Provider
-      value={{ hideTryIt, tryItCredentialsPolicy, corsProxy: tryItCorsProxy, tryItOutDefaultServer }}
+      value={{
+        hideTryIt,
+        hideInlineExamples,
+        tryItCredentialsPolicy,
+        corsProxy: tryItCorsProxy,
+        tryItOutDefaultServer,
+      }}
     >
       <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
         <Box w="full" borderB>
@@ -83,30 +90,23 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
 
 const Group = React.memo<{ group: TagGroup }>(({ group }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const { hash } = useLocation();
-  const scrollRef = React.useRef<HTMLDivElement | null>(null);
-  const urlHashMatches = hash.substr(1) === group.title;
+  const { pathname } = useLocation();
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
   const shouldExpand = React.useMemo(() => {
-    return urlHashMatches || group.items.some(item => itemMatchesHash(hash, item));
-  }, [group, hash, urlHashMatches]);
+    return group.items.some(item => itemUriMatchesPathname(item.uri, pathname));
+  }, [group, pathname]);
 
   React.useEffect(() => {
     if (shouldExpand) {
       setIsExpanded(true);
-      if (urlHashMatches && scrollRef?.current?.offsetTop) {
-        // scroll only if group is active
-        window.scrollTo(0, scrollRef.current.offsetTop);
-      }
     }
-  }, [shouldExpand, urlHashMatches, group, hash]);
+  }, [shouldExpand]);
 
   return (
     <Box>
       <Flex
-        ref={scrollRef}
         onClick={onClick}
         mx="auto"
         justifyContent="between"
@@ -134,23 +134,29 @@ const Group = React.memo<{ group: TagGroup }>(({ group }) => {
 
 const Item = React.memo<{ item: OperationNode }>(({ item }) => {
   const location = useLocation();
-  const { hash } = location;
+  const { pathname } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const color = HttpMethodColors[item.data.method] || 'gray';
   const isDeprecated = !!item.data.deprecated;
-  const { hideTryIt, tryItCredentialsPolicy, corsProxy, tryItOutDefaultServer } = React.useContext(TryItContext);
+  const { hideTryIt, hideInlineExamples, tryItCredentialsPolicy, corsProxy, tryItOutDefaultServer } =
+    React.useContext(TryItContext);
 
-  const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
+  const onClick = React.useCallback(() => {
+    setIsExpanded(!isExpanded);
+    if (window && window.location) {
+      window.history.pushState(null, '', `#${item.uri}`);
+    }
+  }, [isExpanded, item]);
 
   React.useEffect(() => {
-    if (itemMatchesHash(hash, item)) {
+    if (itemUriMatchesPathname(item.uri, pathname)) {
       setIsExpanded(true);
-      if (scrollRef?.current?.offsetTop) {
-        window.scrollTo(0, scrollRef.current.offsetTop);
+      if (scrollRef?.current) {
+        scrollRef?.current.scrollIntoView();
       }
     }
-  }, [hash, item]);
+  }, [pathname, item]);
 
   return (
     <Box
@@ -207,6 +213,7 @@ const Item = React.memo<{ item: OperationNode }>(({ item }) => {
               <TabPanel>
                 <TryItWithRequestSamples
                   httpOperation={item.data}
+                  hideInlineExamples={hideInlineExamples}
                   tryItCredentialsPolicy={tryItCredentialsPolicy}
                   tryItOutDefaultServer={tryItOutDefaultServer}
                   corsProxy={corsProxy}
