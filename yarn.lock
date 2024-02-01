@@ -4035,10 +4035,10 @@
     tslib "^2.6.2"
     type-is "^1.6.18"
 
-"@stoplight/http-spec@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-7.0.1.tgz#6802f3e426940e02d88126fc486237e73541ee81"
-  integrity sha512-9O34o331tDMwHEHEc0N5Mh39cvVtioono46SyMy/BWQwAhuVyVfzHZxlBHepe0grIDcTrJxsb8iARGi86luwoQ==
+"@stoplight/http-spec@^7.0.2":
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-7.0.2.tgz#010f10d1f721b0f6265ae3a851d0f41f62df0875"
+  integrity sha512-4DvT0w5goAhLxVbHfdzkMqGcTdi9bU4LmBrYNrZBOCFV4JPAHRERSBdI7F7n/MfgVvzxWb3Vftrh6pCgTd/+Jg==
   dependencies:
     "@stoplight/json" "^3.18.1"
     "@stoplight/json-schema-generator" "1.0.2"
@@ -4047,9 +4047,7 @@
     "@types/swagger-schema-official" "~2.0.22"
     "@types/type-is" "^1.6.3"
     fnv-plus "^1.3.1"
-    lodash.isequalwith "^4.4.0"
-    lodash.pick "^4.4.0"
-    lodash.pickby "^4.6.0"
+    lodash "^4.17.21"
     openapi3-ts "^2.0.2"
     postman-collection "^4.1.2"
     tslib "^2.6.2"
@@ -5742,6 +5740,11 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+
+"@types/lodash@4.14.202", "@types/lodash@^4.14.202":
+  version "4.14.202"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.202.tgz#f09dbd2fb082d507178b2f2a5c7e74bd72ff98f8"
+  integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
 
 "@types/lodash@^4.14.167", "@types/lodash@^4.14.181":
   version "4.14.185"
