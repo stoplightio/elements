@@ -62,7 +62,7 @@
     ]
   },
   "dependencies": {
-    "@stoplight/elements-core": "^8.0.3",
+    "@stoplight/elements-core": "~8.0.3",
     "@stoplight/http-spec": "^7.0.2",
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.46.1",
