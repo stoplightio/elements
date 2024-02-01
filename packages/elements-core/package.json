@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -57,7 +57,7 @@
     ]
   },
   "dependencies": {
-    "@stoplight/http-spec": "^7.0.1",
+    "@stoplight/http-spec": "^7.0.2",
     "@stoplight/json": "^3.18.1",
     "@stoplight/json-schema-ref-parser": "^9.0.5",
     "@stoplight/json-schema-sampler": "0.2.3",
@@ -75,7 +75,7 @@
     "httpsnippet-lite": "^3.0.5",
     "jotai": "1.3.9",
     "json-schema": "^0.4.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "nanoid": "^3.1.32",
     "prop-types": "^15.7.2",
     "react-query": "^3.34.19",
@@ -98,7 +98,7 @@
     "@types/enzyme": "3.x.x",
     "@types/enzyme-adapter-react-16": "1.x.x",
     "@types/json-schema": "^7.0.11",
-    "@types/lodash": "^4.14.181",
+    "@types/lodash": "^4.14.202",
     "@types/prop-types": "^15.7.5",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.12",
