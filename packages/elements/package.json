@@ -62,14 +62,14 @@
   },
   "dependencies": {
     "@jpmorganchase/elemental-core": "^1.16.0",
-    "@stoplight/http-spec": "^7.0.1",
+    "@stoplight/http-spec": "^7.0.2",
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.53.4",
     "@stoplight/types": "^14.1.1",
     "@stoplight/yaml": "^4.2.3",
     "classnames": "^2.2.6",
     "file-saver": "^2.0.5",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "react-query": "^3.34.19",
     "react-router-dom": "^5.2.0"
   },
