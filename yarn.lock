@@ -3957,83 +3957,12 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stoplight/elements-core@~7.16.6":
-  version "7.16.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements-core/-/elements-core-7.16.6.tgz#51c16abed4c9c277a3d932e3d14fa337f9d3135d"
-  integrity sha512-Mip2FRflP49iDFdE6dWiOAHx3ne70uZ7Z9rDZ72yDOV/2IAF31GGEKvytkzmS0xr4L5OHgLiY5UAjzAmEYuDxQ==
-  dependencies:
-    "@stoplight/http-spec" "^6.0.0"
-    "@stoplight/json" "^3.18.1"
-    "@stoplight/json-schema-ref-parser" "^9.0.5"
-    "@stoplight/json-schema-sampler" "0.2.3"
-    "@stoplight/json-schema-tree" "^3.0.0"
-    "@stoplight/json-schema-viewer" "^4.14.2"
-    "@stoplight/markdown-viewer" "^5.6.0"
-    "@stoplight/mosaic" "^1.46.1"
-    "@stoplight/mosaic-code-editor" "^1.46.1"
-    "@stoplight/mosaic-code-viewer" "^1.46.1"
-    "@stoplight/path" "^1.3.2"
-    "@stoplight/react-error-boundary" "^3.0.0"
-    "@stoplight/types" "^14.0.0"
-    "@stoplight/yaml" "^4.2.3"
-    classnames "^2.2.6"
-    httpsnippet-lite "^3.0.5"
-    jotai "1.3.9"
-    json-schema "^0.4.0"
-    lodash "^4.17.19"
-    nanoid "^3.1.32"
-    prop-types "^15.7.2"
-    react-query "^3.34.19"
-    react-router-dom "^5.2.0"
-    react-router-hash-link "^2.1.0"
-    tslib "^2.1.0"
-    urijs "^1.19.11"
-    util "^0.12.4"
-    xml-formatter "^2.6.1"
-
-"@stoplight/elements@^7.16.4":
-  version "7.16.6"
-  resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-7.16.6.tgz#1956a307e7f8dd94a678eea32359f5a1d0094183"
-  integrity sha512-E9sM60guNcNOLOjLM3MCHkjLu3vNa8jut2Dz/Ita8/gzLu5g5OjgMkfH34EtlKe7BX+ihEmkRJveII+OmK5Gpg==
-  dependencies:
-    "@stoplight/elements-core" "~7.16.6"
-    "@stoplight/http-spec" "^6.0.0"
-    "@stoplight/json" "^3.18.1"
-    "@stoplight/mosaic" "^1.46.1"
-    "@stoplight/types" "^14.0.0"
-    "@stoplight/yaml" "^4.2.3"
-    classnames "^2.2.6"
-    file-saver "^2.0.5"
-    lodash "^4.17.19"
-    react-query "^3.34.19"
-    react-router-dom "^5.2.0"
-
 "@stoplight/eslint-config@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@stoplight/eslint-config/-/eslint-config-2.1.0.tgz#e7ee3973f31c00dd0d5fd3b0f4520bd25db5c9ff"
   integrity sha512-19ON6PLTsdDNdGLYVrfIwUYy/72P2rbvHshYX+6D6ZvzA+AuDxKIRmcvonxo/P9dY5Dp8qmC/aPzWzAZpwWnHw==
   dependencies:
     eslint-config-prettier "^8.3.0"
-
-"@stoplight/http-spec@^6.0.0":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-6.0.3.tgz#f6caffbce918d08b0d2c1fd2d8d5a4cc1df5afa8"
-  integrity sha512-ED5kELP/5QH/SdKsFVx4EYUcE8FRjnDeiAx7ipHOk97t1pKgPhxH1wsvrQG3wL9TlNm0YQLLniE9Y3I6ZARJzA==
-  dependencies:
-    "@stoplight/json" "^3.18.1"
-    "@stoplight/json-schema-generator" "1.0.2"
-    "@stoplight/types" "14.0.0"
-    "@types/json-schema" "7.0.11"
-    "@types/swagger-schema-official" "~2.0.22"
-    "@types/type-is" "^1.6.3"
-    fnv-plus "^1.3.1"
-    lodash.isequalwith "^4.4.0"
-    lodash.pick "^4.4.0"
-    lodash.pickby "^4.6.0"
-    openapi3-ts "^2.0.2"
-    postman-collection "^4.1.2"
-    tslib "^2.6.2"
-    type-is "^1.6.18"
 
 "@stoplight/http-spec@^7.0.2":
   version "7.0.2"
@@ -4093,17 +4022,6 @@
   dependencies:
     "@types/json-schema" "^7.0.7"
     json-pointer "^0.6.1"
-
-"@stoplight/json-schema-tree@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-tree/-/json-schema-tree-3.0.0.tgz#967cecda59b0dd8efa2275e580d5a8c71868cc3c"
-  integrity sha512-lxALWJtl7ev+iTNbW+QHDr66+nmspwrDyVEhNSIjWjp8Vd6+qYxqk3r9zr8Ktfrx4pREfG7iTq6rwNSxYdP+Nw==
-  dependencies:
-    "@stoplight/json" "^3.12.0"
-    "@stoplight/json-schema-merge-allof" "^0.8.0"
-    "@stoplight/lifecycle" "^2.3.2"
-    "@types/json-schema" "^7.0.7"
-    magic-error "0.0.1"
 
 "@stoplight/json-schema-tree@^4.0.0":
   version "4.0.0"
@@ -4340,14 +4258,6 @@
     shelljs "0.8.x"
     tslib "^2.2.0"
 
-"@stoplight/types@14.0.0", "@stoplight/types@^14.0.0":
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0.tgz#f444490664c2c16d5f06265fcbac8d94a33481e8"
-  integrity sha512-w7Ejau6TaB7RqR0vWzGJSdmgLEYD2frjgbHPZoxgGQwAq/R8Qh/D9p9Bl9JFdii+YTL5xoDjyX0c1WDRlbMV8g==
-  dependencies:
-    "@types/json-schema" "^7.0.4"
-    utility-types "^3.10.0"
-
 "@stoplight/types@14.1.0":
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.1.0.tgz#36b04488acc1d8ab5bb712416f50d3bc99610b34"
@@ -4368,6 +4278,14 @@
   version "13.7.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-13.7.0.tgz#717d9e3ef068e8f143d045e9bc89b97da06933c4"
   integrity sha512-7ePIccfTxjEhruv8VrkDv5whP5qd9ijRzAWEbjYpUYnDfaqPTfq8/wMMjMCAKIecboxsAVD9LZy/3puXddGsDQ==
+  dependencies:
+    "@types/json-schema" "^7.0.4"
+    utility-types "^3.10.0"
+
+"@stoplight/types@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0.tgz#f444490664c2c16d5f06265fcbac8d94a33481e8"
+  integrity sha512-w7Ejau6TaB7RqR0vWzGJSdmgLEYD2frjgbHPZoxgGQwAq/R8Qh/D9p9Bl9JFdii+YTL5xoDjyX0c1WDRlbMV8g==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
@@ -15417,11 +15335,6 @@ lodash.isequal@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
 
-lodash.isequalwith@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.isequalwith/-/lodash.isequalwith-4.4.0.tgz#266726ddd528f854f21f4ea98a065606e0fbc6b0"
-  integrity sha1-Jmcm3dUo+FTyH06pigZWBuD7xrA=
-
 lodash.ismatch@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.ismatch/-/lodash.ismatch-4.4.0.tgz#756cb5150ca3ba6f11085a78849645f188f85f37"
@@ -15470,16 +15383,6 @@ lodash.once@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
-
-lodash.pick@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
-  integrity sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM=
-
-lodash.pickby@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.pickby/-/lodash.pickby-4.6.0.tgz#7dea21d8c18d7703a27c704c15d3b84a67e33aff"
-  integrity sha1-feoh2MGNdwOifHBMFdO4SmfjOv8=
 
 lodash.set@^4.3.2:
   version "4.3.2"
