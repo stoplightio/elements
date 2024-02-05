@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/elemental-dev-portal",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "homepage": "https://github.com/jpmorganchase/elemental",
@@ -64,7 +64,7 @@
     ]
   },
   "dependencies": {
-    "@jpmorganchase/elemental-core": "^1.4.0",
+    "@jpmorganchase/elemental-core": "^1.5.0",
     "@stoplight/markdown-viewer": "^5.5.0",
     "@stoplight/mosaic": "^1.44.4",
     "@stoplight/path": "^1.3.2",
