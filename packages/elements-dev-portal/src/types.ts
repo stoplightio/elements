@@ -5,8 +5,11 @@ export type Branch = {
   slug: string;
   is_default: boolean;
   is_published: boolean;
-  projectId: number;
   name?: string;
+};
+
+export type Branches = {
+  items: Branch[];
 };
 
 export type ProjectTableOfContents = {
