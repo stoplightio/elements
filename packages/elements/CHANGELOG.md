@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental@4.0.0...@jpmorganchase/elemental@4.1.0) (2024-02-05)
+
+### Features
+
+- (Examples) ([46f4570](https://github.com/jpmorganchase/elemental/commit/46f4570d6b9c9de00b27805e46987fd6d35be54e))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # 4.0.0 (2024-01-23)
 
 ### Bug Fixes
