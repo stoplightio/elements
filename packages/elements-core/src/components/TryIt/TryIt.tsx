@@ -1,5 +1,5 @@
 import { Box, Button, HStack, Icon, Panel, useThemeIsDark } from '@stoplight/mosaic';
-import type { IHttpOperation, IServer } from '@stoplight/types';
+import type { IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { useAtom } from 'jotai';
 import * as React from 'react';
@@ -19,6 +19,7 @@ import { getMockData } from './Mocking/mocking-utils';
 import { MockingButton } from './Mocking/MockingButton';
 import { useMockingOptions } from './Mocking/useMockingOptions';
 import { OperationParameters } from './Parameters/OperationParameters';
+import { ParameterSpec } from './Parameters/parameter-utils';
 import { useRequestParameters } from './Parameters/useOperationParameters';
 import {
   ErrorState,
@@ -30,6 +31,7 @@ import {
 } from './Response/Response';
 import { ServerVariables } from './Servers/ServerVariables';
 import { useServerVariables } from './Servers/useServerVariables';
+import { extractExampleKeys } from './TryItUtils';
 
 export interface TryItProps {
   httpOperation: IHttpOperation;
@@ -62,6 +64,7 @@ export interface TryItProps {
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   corsProxy?: string;
   tryItOutDefaultServer?: string;
+  hideInlineExamples?: boolean;
 }
 
 /**
@@ -80,6 +83,7 @@ export const TryIt: React.FC<TryItProps> = ({
   tryItCredentialsPolicy,
   corsProxy,
   tryItOutDefaultServer,
+  hideInlineExamples,
 }) => {
   TryIt.displayName = 'TryIt';
   const isDark = useThemeIsDark();
@@ -230,6 +234,28 @@ export const TryIt: React.FC<TryItProps> = ({
   const isOnlySendButton =
     !httpOperation.security?.length && !allParameters.length && !formDataState.isFormDataBody && !mediaTypeContent;
 
+  const allUniqueExampleKeys = React.useMemo(() => {
+    if (!hideInlineExamples) return [];
+
+    const getAllUniqueExampleKeys = (
+      mediaTypeContent: IMediaTypeContent<false> | undefined,
+      allParameters: readonly ParameterSpec[],
+    ) => {
+      const bodyExamples = mediaTypeContent?.examples || [];
+      const paramExamples =
+        allParameters
+          ?.filter(param => param.hasOwnProperty('examples'))
+          .map(parameter => parameter.examples)
+          .flat() || [];
+
+      const { bodyKeys, paramKeys } = extractExampleKeys(bodyExamples, paramExamples);
+
+      return [...new Set([...bodyKeys, ...paramKeys])];
+    };
+
+    return getAllUniqueExampleKeys(mediaTypeContent, allParameters);
+  }, [allParameters, mediaTypeContent, hideInlineExamples]);
+
   const tryItPanelContents = (
     <>
       {httpOperation.security?.length ? (
@@ -255,6 +281,7 @@ export const TryIt: React.FC<TryItProps> = ({
           values={parameterValuesWithDefaults}
           onChangeValue={updateParameterValue}
           validate={validateParameters}
+          globalExampleOptions={allUniqueExampleKeys}
         />
       )}
 
@@ -270,6 +297,7 @@ export const TryIt: React.FC<TryItProps> = ({
         <RequestBody
           examples={mediaTypeContent.examples ?? []}
           requestBody={textRequestBody}
+          showExamplesDropdown={!hideInlineExamples || allParameters.length === 0}
           onChange={setTextRequestBody}
         />
       ) : null}

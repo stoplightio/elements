@@ -7,15 +7,17 @@ import * as React from 'react';
 interface RequestBodyProps {
   examples: ReadonlyArray<INodeExample | INodeExternalExample>;
   requestBody: string;
+  showExamplesDropdown?: boolean;
   onChange: (newRequestBody: string) => void;
 }
 
-export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody, onChange }) => {
+export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody, showExamplesDropdown, onChange }) => {
   return (
     <Panel defaultIsOpen>
       <Panel.Titlebar
         rightComponent={
-          examples.length > 1 && <ExampleMenu examples={examples} requestBody={requestBody} onChange={onChange} />
+          examples.length > 1 &&
+          showExamplesDropdown && <ExampleMenu examples={examples} requestBody={requestBody} onChange={onChange} />
         }
       >
         Body

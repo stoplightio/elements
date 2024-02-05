@@ -73,7 +73,14 @@ function retrieveDefaultFromSchema(parameter: ParameterSpec) {
   return isObject(defaultValue) ? safeStringify(defaultValue) : defaultValue;
 }
 
-const getValueForParameter = (parameter: ParameterSpec) => {
+const getValueForParameter = (parameter: ParameterSpec, globalSelectedExample?: string) => {
+  if (globalSelectedExample) {
+    const matchedExample = parameter?.examples?.find(e => e.key === globalSelectedExample);
+    if (matchedExample) {
+      return { value: exampleValue(matchedExample) };
+    }
+  }
+
   const defaultValue = retrieveDefaultFromSchema(parameter);
   if (typeof defaultValue !== 'undefined') {
     return { value: stringifyValue(defaultValue), isDefault: true };
@@ -92,17 +99,19 @@ const getValueForParameter = (parameter: ParameterSpec) => {
   return { value: '' };
 };
 
-const getInitialValueForParameter = (parameter: ParameterSpec) => {
+const getInitialValueForParameter = (parameter: ParameterSpec, globalSelectedExample?: string) => {
   const isRequired = !!parameter.required;
 
   if (!isRequired) return '';
-
-  return getValueForParameter(parameter).value;
+  return getValueForParameter(parameter, globalSelectedExample).value;
 };
 
-export const initialParameterValues: (params: readonly ParameterSpec[]) => Record<string, string> = params => {
+export const initialParameterValues: (
+  params: readonly ParameterSpec[],
+  globalSelectedExample?: string,
+) => Record<string, string> = (params, globalSelectedExample) => {
   const paramsByName = keyBy(params, (param: ParameterSpec) => param.name);
-  return mapValues(paramsByName, param => getInitialValueForParameter(param));
+  return mapValues(paramsByName, param => getInitialValueForParameter(param, globalSelectedExample));
 };
 
 export function mapSchemaPropertiesToParameters(

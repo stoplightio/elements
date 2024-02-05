@@ -8,6 +8,7 @@ import {
   mapSchemaPropertiesToParameters,
   parameterSupportsFileUpload,
 } from '../Parameters/parameter-utils';
+import ExamplesContext from './../../../context/ExamplesContext';
 
 export type BodyParameterValues = Record<string, string | File>;
 export type ParameterOptional = Record<string, boolean>;
@@ -73,6 +74,7 @@ const requestBodyCreators: Record<string, RequestBodyCreator | undefined> = {
 };
 
 export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | undefined) => {
+  const { globalSelectedExample } = React.useContext(ExamplesContext);
   const isFormDataBody = mediaTypeContent && isFormDataContent(mediaTypeContent);
 
   const initialState = React.useMemo(() => {
@@ -82,8 +84,8 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
     const properties = mediaTypeContent?.schema?.properties ?? {};
     const required = mediaTypeContent?.schema?.required;
     const parameters = mapSchemaPropertiesToParameters(properties, required);
-    return initialParameterValues(parameters);
-  }, [isFormDataBody, mediaTypeContent]);
+    return initialParameterValues(parameters, globalSelectedExample);
+  }, [isFormDataBody, mediaTypeContent, globalSelectedExample]);
 
   const [bodyParameterValues, setBodyParameterValues] = React.useState<BodyParameterValues>(initialState);
   const [isAllowedEmptyValue, setAllowedEmptyValue] = React.useState<ParameterOptional>({});

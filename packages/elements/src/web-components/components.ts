@@ -13,6 +13,7 @@ export const ApiElement = createElementClass(API, {
   hideSchemas: { type: 'boolean' },
   hideInternal: { type: 'boolean' },
   hideExport: { type: 'boolean' },
+  hideInlineExamples: { type: 'boolean' },
   logo: { type: 'string' },
   tryItCredentialsPolicy: { type: 'string' },
   tryItCorsProxy: { type: 'string' },

@@ -1,17 +1,22 @@
 import { IHttpOperation } from '@stoplight/types';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { orderBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
+import ExamplesContext from '../../../context/ExamplesContext';
 import { filterOutAuthorizationParams } from '../Auth/authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
+import { persistedParameterValuesAtom } from './persistedParameterValuesState';
 
-const persistedParameterValuesAtom = atom({});
 export const useRequestParameters = (httpOperation: IHttpOperation) => {
   const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
+  const { globalSelectedExample } = React.useContext(ExamplesContext);
 
   const allParameters = React.useMemo(() => extractAllParameters(httpOperation), [httpOperation]);
-  const parameterDefaultValues = React.useMemo(() => initialParameterValues(allParameters), [allParameters]);
+  const parameterDefaultValues = React.useMemo(
+    () => initialParameterValues(allParameters, globalSelectedExample),
+    [allParameters, globalSelectedExample],
+  );
 
   const updateParameterValue = (name: string, value: string) => {
     const defaultValue = parameterDefaultValues[name];
