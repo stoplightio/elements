@@ -4,15 +4,15 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
+import { Branch } from '../../types';
 import { BranchSelector } from './BranchSelector';
 
-export const branches = [
+export const branches: Branch[] = [
   {
     id: 0,
     slug: 'main',
     is_default: true,
     is_published: false,
-    projectId: 123,
     name: 'main-name',
   },
   {
@@ -20,14 +20,12 @@ export const branches = [
     slug: 'beta',
     is_default: false,
     is_published: false,
-    projectId: 123,
   },
   {
     id: 2,
     slug: 'feature-branch',
     is_default: false,
     is_published: false,
-    projectId: 123,
   },
 ];
 

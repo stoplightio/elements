@@ -1,4 +1,4 @@
-import { Branch } from '../types';
+import { Branches } from '../types';
 import { appVersion } from '../version';
 
 export const getBranches = async ({
@@ -9,7 +9,7 @@ export const getBranches = async ({
   projectId: string;
   platformUrl?: string;
   platformAuthToken?: string;
-}): Promise<Branch[]> => {
+}): Promise<Branches> => {
   const encodedProjectId = encodeURIComponent(projectId);
   const response = await fetch(`${platformUrl}/api/v1/projects/${encodedProjectId}/branches`, {
     headers: {
