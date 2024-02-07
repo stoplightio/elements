@@ -2,7 +2,7 @@ import { NodeType } from '@stoplight/types';
 import { OpenAPIObject as _OpenAPIObject, PathObject } from 'openapi3-ts';
 
 import { transformOasToServiceNode } from '../../../utils/oas';
-import { OperationNode, WebhookNode } from '../../../utils/oas/types';
+import { OperationNode, SchemaNode, WebhookNode } from '../../../utils/oas/types';
 import { computeAPITree, computeTagGroups } from '../utils';
 
 type OpenAPIObject = Partial<_OpenAPIObject> & {
@@ -793,6 +793,58 @@ describe.each([
       ]);
     });
 
+    it('allows to hide nested internal models from ToC', () => {
+      const apiDocument: OpenAPIObject = {
+        openapi: '3.0.0',
+        info: {
+          title: 'some api',
+          version: '1.0.0',
+          description: 'some description',
+        },
+        tags: [
+          {
+            name: 'a',
+          },
+        ],
+        [pathProp]: {},
+        components: {
+          schemas: {
+            a: {
+              'x-tags': ['a'],
+            },
+            b: {
+              'x-tags': ['a'],
+              'x-internal': true,
+            },
+          },
+        },
+      };
+
+      expect(computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true })).toEqual([
+        {
+          id: '/',
+          meta: '',
+          slug: '/',
+          title: 'Overview',
+          type: 'overview',
+        },
+        { title: 'Schemas' },
+        {
+          title: 'a',
+          itemsType: NodeType.Model,
+          items: [
+            {
+              id: '/schemas/a',
+              slug: '/schemas/a',
+              title: 'a',
+              type: 'model',
+              meta: '',
+            },
+          ],
+        },
+      ]);
+    });
+
     it('excludes groups with no items', () => {
       const apiDocument: OpenAPIObject = {
         openapi: '3.0.0',
@@ -816,6 +868,14 @@ describe.each([
           '/something-else': {
             post: {
               tags: ['b'],
+            },
+          },
+        },
+        components: {
+          schemas: {
+            a: {
+              'x-tags': ['a'],
+              'x-internal': true,
             },
           },
         },
@@ -846,6 +906,278 @@ describe.each([
           ],
         },
       ]);
+    });
+  });
+});
+
+describe('when grouping models', () => {
+  describe('computeTagGroups', () => {
+    it('orders models according to specified tags', () => {
+      const apiDocument: OpenAPIObject = {
+        openapi: '3.0.0',
+        info: {
+          title: 'some api',
+          version: '1.0.0',
+          description: 'some description',
+        },
+        tags: [
+          {
+            name: 'beta',
+          },
+          {
+            name: 'alpha',
+          },
+        ],
+        components: {
+          schemas: {
+            a: {
+              'x-tags': ['alpha'],
+            },
+            b: {
+              'x-tags': ['beta'],
+            },
+          },
+        },
+      };
+
+      const serviceNode = transformOasToServiceNode(apiDocument);
+      expect(serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model) : null).toEqual({
+        groups: [
+          {
+            title: 'beta',
+            items: [
+              {
+                type: NodeType.Model,
+                uri: '/schemas/b',
+                data: {
+                  'x-tags': ['beta'],
+                },
+                name: 'b',
+                tags: ['beta'],
+              },
+            ],
+          },
+          {
+            title: 'alpha',
+            items: [
+              {
+                type: NodeType.Model,
+                uri: '/schemas/a',
+                data: {
+                  'x-tags': ['alpha'],
+                },
+                name: 'a',
+                tags: ['alpha'],
+              },
+            ],
+          },
+        ],
+        ungrouped: [],
+      });
+    });
+
+    it("within the tags it doesn't reorder the schemas", () => {
+      const apiDocument: OpenAPIObject = {
+        openapi: '3.0.0',
+        info: {
+          title: 'some api',
+          version: '1.0.0',
+          description: 'some description',
+        },
+        tags: [
+          {
+            name: 'beta',
+          },
+          {
+            name: 'alpha',
+          },
+        ],
+        components: {
+          schemas: {
+            a: {
+              'x-tags': ['alpha'],
+            },
+            c: {
+              'x-tags': ['beta'],
+            },
+            b: {
+              'x-tags': ['beta'],
+            },
+          },
+        },
+      };
+
+      const serviceNode = transformOasToServiceNode(apiDocument);
+      expect(serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model) : null).toEqual({
+        groups: [
+          {
+            title: 'beta',
+            items: [
+              {
+                type: NodeType.Model,
+                uri: '/schemas/c',
+                data: {
+                  'x-tags': ['beta'],
+                },
+                name: 'c',
+                tags: ['beta'],
+              },
+              {
+                type: NodeType.Model,
+                uri: '/schemas/b',
+                data: {
+                  'x-tags': ['beta'],
+                },
+                name: 'b',
+                tags: ['beta'],
+              },
+            ],
+          },
+          {
+            title: 'alpha',
+            items: [
+              {
+                type: NodeType.Model,
+                uri: '/schemas/a',
+                data: {
+                  'x-tags': ['alpha'],
+                },
+                name: 'a',
+                tags: ['alpha'],
+              },
+            ],
+          },
+        ],
+        ungrouped: [],
+      });
+    });
+
+    it('leaves tag casing unchanged', () => {
+      const apiDocument: OpenAPIObject = {
+        openapi: '3.0.0',
+        info: {
+          title: 'some api',
+          version: '1.0.0',
+          description: 'some description',
+        },
+        tags: [
+          {
+            name: 'Beta',
+          },
+          {
+            name: 'alpha',
+          },
+        ],
+        components: {
+          schemas: {
+            a: {
+              'x-tags': ['alpha'],
+            },
+            b: {
+              'x-tags': ['Beta'],
+            },
+          },
+        },
+      };
+
+      const serviceNode = transformOasToServiceNode(apiDocument);
+      expect(serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model) : null).toEqual({
+        groups: [
+          {
+            title: 'Beta',
+            items: [
+              {
+                type: NodeType.Model,
+                uri: '/schemas/b',
+                data: {
+                  'x-tags': ['Beta'],
+                },
+                name: 'b',
+                tags: ['Beta'],
+              },
+            ],
+          },
+          {
+            title: 'alpha',
+            items: [
+              {
+                type: NodeType.Model,
+                uri: '/schemas/a',
+                data: {
+                  'x-tags': ['alpha'],
+                },
+                name: 'a',
+                tags: ['alpha'],
+              },
+            ],
+          },
+        ],
+        ungrouped: [],
+      });
+    });
+
+    it('matches mixed tag casing', () => {
+      const apiDocument: OpenAPIObject = {
+        openapi: '3.0.0',
+        info: {
+          title: 'some api',
+          version: '1.0.0',
+          description: 'some description',
+        },
+        tags: [
+          {
+            name: 'Beta',
+          },
+          {
+            name: 'alpha',
+          },
+        ],
+        components: {
+          schemas: {
+            a: {
+              'x-tags': ['alpha'],
+            },
+            b: {
+              'x-tags': ['beta'],
+            },
+          },
+        },
+      };
+
+      const serviceNode = transformOasToServiceNode(apiDocument);
+      expect(serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model) : null).toEqual({
+        groups: [
+          {
+            title: 'Beta',
+            items: [
+              {
+                type: NodeType.Model,
+                uri: '/schemas/b',
+                data: {
+                  'x-tags': ['beta'],
+                },
+                name: 'b',
+                tags: ['beta'],
+              },
+            ],
+          },
+          {
+            title: 'alpha',
+            items: [
+              {
+                type: NodeType.Model,
+                uri: '/schemas/a',
+                data: {
+                  'x-tags': ['alpha'],
+                },
+                name: 'a',
+                tags: ['alpha'],
+              },
+            ],
+          },
+        ],
+        ungrouped: [],
+      });
     });
   });
 });

@@ -1,10 +1,16 @@
-import { isHttpOperation, isHttpService, isHttpWebhookOperation, TableOfContentsItem } from '@stoplight/elements-core';
+import {
+  isHttpOperation,
+  isHttpService,
+  isHttpWebhookOperation,
+  TableOfContentsGroup,
+  TableOfContentsItem,
+} from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
-import { OperationNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
+import { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
 
-type GroupableNode = OperationNode | WebhookNode;
+type GroupableNode = OperationNode | WebhookNode | SchemaNode;
 
 export type TagGroup<T extends GroupableNode> = { title: string; items: T[] };
 
@@ -85,42 +91,7 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     });
 
     const { groups, ungrouped } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation);
-
-    // Show ungrouped operations above tag groups
-    ungrouped.forEach(operationNode => {
-      if (mergedConfig.hideInternal && operationNode.data.internal) {
-        return;
-      }
-      tree.push({
-        id: operationNode.uri,
-        slug: operationNode.uri,
-        title: operationNode.name,
-        type: operationNode.type,
-        meta: operationNode.data.method,
-      });
-    });
-
-    groups.forEach(group => {
-      const items = group.items.flatMap(operationNode => {
-        if (mergedConfig.hideInternal && operationNode.data.internal) {
-          return [];
-        }
-        return {
-          id: operationNode.uri,
-          slug: operationNode.uri,
-          title: operationNode.name,
-          type: operationNode.type,
-          meta: operationNode.data.method,
-        };
-      });
-      if (items.length > 0) {
-        tree.push({
-          title: group.title,
-          items,
-          itemsType: 'http_operation',
-        });
-      }
-    });
+    addTagGroupsToTree(groups, ungrouped, tree, NodeType.HttpOperation, mergedConfig.hideInternal);
   }
 
   const hasWebhookNodes = serviceNode.children.some(node => node.type === NodeType.HttpWebhook);
@@ -130,42 +101,7 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     });
 
     const { groups, ungrouped } = computeTagGroups<WebhookNode>(serviceNode, NodeType.HttpWebhook);
-
-    // Show ungrouped operations above tag groups
-    ungrouped.forEach(operationNode => {
-      if (mergedConfig.hideInternal && operationNode.data.internal) {
-        return;
-      }
-      tree.push({
-        id: operationNode.uri,
-        slug: operationNode.uri,
-        title: operationNode.name,
-        type: operationNode.type,
-        meta: operationNode.data.method,
-      });
-    });
-
-    groups.forEach(group => {
-      const items = group.items.flatMap(operationNode => {
-        if (mergedConfig.hideInternal && operationNode.data.internal) {
-          return [];
-        }
-        return {
-          id: operationNode.uri,
-          slug: operationNode.uri,
-          title: operationNode.name,
-          type: operationNode.type,
-          meta: operationNode.data.method,
-        };
-      });
-      if (items.length > 0) {
-        tree.push({
-          title: group.title,
-          items,
-          itemsType: 'http_webhook',
-        });
-      }
-    });
+    addTagGroupsToTree(groups, ungrouped, tree, NodeType.HttpWebhook, mergedConfig.hideInternal);
   }
 
   let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
@@ -178,15 +114,8 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
       title: 'Schemas',
     });
 
-    schemaNodes.forEach(node => {
-      tree.push({
-        id: node.uri,
-        slug: node.uri,
-        title: node.name,
-        type: node.type,
-        meta: '',
-      });
-    });
+    const { groups, ungrouped } = computeTagGroups<SchemaNode>(serviceNode, NodeType.Model);
+    addTagGroupsToTree(groups, ungrouped, tree, NodeType.Model, mergedConfig.hideInternal);
   }
   return tree;
 };
@@ -220,4 +149,48 @@ export const isInternal = (node: ServiceChildNode | ServiceNode): boolean => {
   }
 
   return !!data['x-internal'];
+};
+
+const addTagGroupsToTree = <T extends GroupableNode>(
+  groups: TagGroup<T>[],
+  ungrouped: T[],
+  tree: TableOfContentsItem[],
+  itemsType: TableOfContentsGroup['itemsType'],
+  hideInternal: boolean,
+) => {
+  // Show ungrouped nodes above tag groups
+  ungrouped.forEach(node => {
+    if (hideInternal && isInternal(node)) {
+      return;
+    }
+    tree.push({
+      id: node.uri,
+      slug: node.uri,
+      title: node.name,
+      type: node.type,
+      meta: isHttpOperation(node.data) || isHttpWebhookOperation(node.data) ? node.data.method : '',
+    });
+  });
+
+  groups.forEach(group => {
+    const items = group.items.flatMap(node => {
+      if (hideInternal && isInternal(node)) {
+        return [];
+      }
+      return {
+        id: node.uri,
+        slug: node.uri,
+        title: node.name,
+        type: node.type,
+        meta: isHttpOperation(node.data) || isHttpWebhookOperation(node.data) ? node.data.method : '',
+      };
+    });
+    if (items.length > 0) {
+      tree.push({
+        title: group.title,
+        items,
+        itemsType,
+      });
+    }
+  });
 };
