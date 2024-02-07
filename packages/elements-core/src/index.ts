@@ -16,6 +16,7 @@ export { PoweredByLink } from './components/PoweredByLink';
 export { TableOfContents } from './components/TableOfContents';
 export {
   CustomLinkComponent,
+  TableOfContentsGroup,
   TableOfContentsItem,
   TableOfContentsNode,
   TableOfContentsNodeGroup,

@@ -1,5 +1,10 @@
-import { isHttpOperation, isHttpService, isHttpWebhookOperation, TableOfContentsItem } from '@stoplight/elements-core';
-import { TableOfContentsGroup } from '@stoplight/elements-core/components/TableOfContents';
+import {
+  isHttpOperation,
+  isHttpService,
+  isHttpWebhookOperation,
+  TableOfContentsGroup,
+  TableOfContentsItem,
+} from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
