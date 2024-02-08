@@ -31,7 +31,7 @@ import { StoplightProject } from '@stoplight/elements-dev-portal';
 import '@stoplight/elements-dev-portal/styles.min.css';
 ```
 
-3. Find the **Project ID** from the **Project Settings** page in your Stoplight project. See [Project Settings](https://docs.stoplight.io/docs/platform/252039ebe8fb2-project-settings) for details. 
+3. Find the **Project ID** from the **Project Settings** page in your Stoplight project. See [Project Settings](https://docs.stoplight.io/docs/platform/252039ebe8fb2-project-settings) for details.
 
 > Project Settings can only be viewed by Project Editors or above. Read more about [project permissions](https://docs.stoplight.io/docs/platform/ZG9jOjg1NjcyNzE-manage-project-access#project-roles).
 
@@ -63,9 +63,47 @@ function App() {
 
 export default App;
 ```
+## Polyfills
+Create React App is now using Webpack 5 that doesn't come with node polyfills anymore. Since elements dependencies use `url` and `buffer` packages they need to be added separately. The easiest way to do that is to include [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) to CRA webpack config. This can be done either by:
+1. Ejecting CRA configuration:
+- running `npm eject` script
+- installing  `node-polyfill-webpack-plugin`
+- adding `NodePolyfillPlugin` to `config/webpack.config.js`:
+```js
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+...
+plugins: [
+  // Other plugins...
+  new NodePolyfillPlugin(),
+]
+```
+2. Using `react-app-rewired` package that overrides CRA webpack config without ejecting:
+- installing `react-app-rewired`
+- installing  `node-polyfill-webpack-plugin`
+- overriding default scripts in `package.json`:
+```json
+"scripts": {
+  "start": "react-app-rewired start",
+  "build": "react-app-rewired build",
+  "test": "react-app-rewired test",
+  "eject": "react-scripts eject"
+}
+```
+- creating `config-overrides.js` configuration file in root directory:
+```js
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
+module.exports = function override(config, env) {
+  config.plugins.push(
+    new NodePolyfillPlugin()
+  );
+  return config;
+};
+```
+
 ## Configuration
 
-See [Dev Portal Configuration Options](dev-portal-options.md). 
+See [Dev Portal Configuration Options](dev-portal-options.md).
 
 ## Fire it up
 
