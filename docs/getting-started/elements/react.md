@@ -63,6 +63,52 @@ function App() {
 export default App;
 ```
 
+## Fire it up
+
+Now start the development server.
+
+```bash
+yarn start
+```
+
+And you should see the API reference documentation for the Zoom API.
+
+## Configuration
+
+See [Elements Configuration Options](elements-options.md).
+
+## Examples
+
+<!-- title: React Component with API Description Provided as a URL -->
+```
+<API
+  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
+  router="hash"
+/>
+```
+
+<!-- title: React Component with API Description Provided Directly -->
+
+```jsx
+import { API } from "@stoplight/elements";
+
+const apiDescriptionDocument = {
+  openapi: '3.1.0',
+  info: {
+    title: 'Some Awesome API',
+    version: '1.0.0'
+  },
+  paths: {
+    /* ... */
+  }
+};
+
+<API
+  apiDescriptionDocument={apiDescriptionDocument}
+  router="hash"
+/>
+```
+
 ## Polyfills
 Create React App is now using Webpack 5 that doesn't come with node polyfills anymore. Since elements dependencies use `url` and `buffer` packages they need to be added separately. The easiest way to do that is to include [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) in webpack configuration file:
 ```js
@@ -132,49 +178,3 @@ module.exports = {
 };
 ```
 Since Docusaurus makes use of SSR when running it with `API`, default `history` (`BrowserRouter`) router should not be used.
-
-## Fire it up
-
-Now start the development server.
-
-```bash
-yarn start
-```
-
-And you should see the API reference documentation for the Zoom API.
-
-## Configuration
-
-See [Elements Configuration Options](elements-options.md).
-
-## Examples
-
-<!-- title: React Component with API Description Provided as a URL -->
-```
-<API
-  apiDescriptionUrl="https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml"
-  router="hash"
-/>
-```
-
-<!-- title: React Component with API Description Provided Directly -->
-
-```jsx
-import { API } from "@stoplight/elements";
-
-const apiDescriptionDocument = {
-  openapi: '3.1.0',
-  info: {
-    title: 'Some Awesome API',
-    version: '1.0.0'
-  },
-  paths: {
-    /* ... */
-  }
-};
-
-<API
-  apiDescriptionDocument={apiDescriptionDocument}
-  router="hash"
-/>
-```

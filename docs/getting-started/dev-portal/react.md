@@ -63,6 +63,21 @@ function App() {
 
 export default App;
 ```
+
+## Configuration
+
+See [Dev Portal Configuration Options](dev-portal-options.md).
+
+## Fire it up
+
+Now start the development server.
+
+```bash
+yarn start
+```
+
+And you should see the API reference documentation for the Zoom API.
+
 ## Polyfills
 Create React App is now using Webpack 5 that doesn't come with node polyfills anymore. Since elements dependencies use `url` and `buffer` packages they need to be added separately. The easiest way to do that is to include [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) in webpack configuration file:
 ```js
@@ -132,17 +147,3 @@ module.exports = {
 };
 ```
 Since Docusaurus makes use of SSR when running it with `StoplightProject`, default `history` (`BrowserRouter`) router should not be used.
-
-## Configuration
-
-See [Dev Portal Configuration Options](dev-portal-options.md).
-
-## Fire it up
-
-Now start the development server.
-
-```bash
-yarn start
-```
-
-And you should see the API reference documentation for the Zoom API.
