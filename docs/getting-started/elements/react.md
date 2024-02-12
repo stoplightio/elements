@@ -62,6 +62,77 @@ function App() {
 
 export default App;
 ```
+
+## Polyfills
+Create React App is now using Webpack 5 that doesn't come with node polyfills anymore. Since elements dependencies use `url` and `buffer` packages they need to be added separately. The easiest way to do that is to include [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) in webpack configuration file:
+```js
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+...
+plugins: [
+  // Other plugins...
+  new NodePolyfillPlugin(),
+]
+```
+In case of CRA it can be done either by:
+1. Ejecting CRA configuration:
+- running `npm eject` script
+- installing `node-polyfill-webpack-plugin`
+- adding `NodePolyfillPlugin` to `config/webpack.config.js` as shown above
+
+2. Using `react-app-rewired` package that overrides CRA webpack config without ejecting:
+- installing `react-app-rewired`
+- installing  `node-polyfill-webpack-plugin`
+- overriding default scripts in `package.json`:
+```json
+"scripts": {
+  "start": "react-app-rewired start",
+  "build": "react-app-rewired build",
+  "test": "react-app-rewired test",
+  "eject": "react-scripts eject"
+}
+```
+- creating `config-overrides.js` configuration file in root directory:
+```js
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
+module.exports = function override(config, env) {
+  config.plugins.push(
+    new NodePolyfillPlugin()
+  );
+  return config;
+};
+```
+In case of Docusaurus it can be done by:
+- installing `node-polyfill-webpack-plugin`
+- creating a new file for the plugin such as `./plugins/webpackPolyfillPlugin.js`:
+```js
+// ./plugins/webpackPolyfillPlugin.js
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+
+module.exports = function (context, options) {
+  return {
+    name: 'webpack-polyfill-plugin',
+    configureWebpack(config, isServer, utils) {
+      return {
+        plugins: [new NodePolyfillPlugin()],
+      };
+    },
+  };
+};
+```
+- using the custom plugin in docusaurus configuration:
+```js
+// docusaurus.config.js
+module.exports = {
+  ...
+  plugins: [
+    ...
+    require.resolve('./plugins/webpackPolyfillPlugin'),
+  ],
+};
+```
+Since Docusaurus makes use of SSR when running it with `API`, default `history` (`BrowserRouter`) router should not be used.
+
 ## Fire it up
 
 Now start the development server.
@@ -74,7 +145,7 @@ And you should see the API reference documentation for the Zoom API.
 
 ## Configuration
 
-See [Elements Configuration Options](elements-options.md). 
+See [Elements Configuration Options](elements-options.md).
 
 ## Examples
 
