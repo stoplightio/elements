@@ -4107,10 +4107,10 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.51.2.tgz#d573c3d4801bcb7c39810ef0905d1d3f5d01ebd2"
-  integrity sha512-zDtvKodu5cSD1RQS98QVBy/j8jedyaGpf957nmMnmtiu/4iyQmMnUeQW8sdUEil0m9nmO5TBH1zlDGQfBQ8Cwg==
+"@stoplight/mosaic-code-editor@^1.51.3":
+  version "1.51.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.51.3.tgz#035aef46c338bbc1c97e870e149d9b86c89b86f2"
+  integrity sha512-tbjA3PFE8XPClO5VMvwbkBeUXwGsDvtckEawU4ZFvh31+Ga9v+qsMgTfqyvYFK9fXNVIKoOclsB1D3c4tLyIiw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -4119,8 +4119,8 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.51.2"
-    "@stoplight/mosaic-code-viewer" "1.51.2"
+    "@stoplight/mosaic" "1.51.3"
+    "@stoplight/mosaic-code-viewer" "1.51.3"
     "@stoplight/types" "^13.7.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
@@ -4138,10 +4138,10 @@
     use-resize-observer "^9.0.2"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.51.2", "@stoplight/mosaic-code-viewer@^1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.51.2.tgz#333889b1bbfd633b642c8d572d11c4eef6d9d020"
-  integrity sha512-LFRc7CiWxx3YXk8UdBjh9nySIIxNrGoNvBw3Y8seAngwna0NTwrCNwY2pwHhEqKOeEvKg7hWhVCnLAA+yOf/cA==
+"@stoplight/mosaic-code-viewer@1.51.3", "@stoplight/mosaic-code-viewer@^1.51.3":
+  version "1.51.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.51.3.tgz#de29365424bc41322560640c9c6f58113c71b2a6"
+  integrity sha512-S+efac0brZrFw4mt75dLCJim4tBilmr80HoIwrCgc3opqdmFlGvksu+bwp3pIJu2Hk/JQxrLu+eZ4DZ7TgDc8Q==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -4150,7 +4150,7 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.51.2"
+    "@stoplight/mosaic" "1.51.3"
     "@stoplight/types" "^13.7.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
@@ -4168,10 +4168,10 @@
     use-resize-observer "^9.0.2"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.51.2", "@stoplight/mosaic@^1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.51.2.tgz#65cd6a32be552ce37e81f2a2cc266af246beaf48"
-  integrity sha512-gF4El9V7tuoSq0Rp/PBaLG+w3rky0mMNED2kQHSEtbtLyPAjW3a7trv3Ig/TM4V0/Oyd+S78/i3j5svRQSA+oA==
+"@stoplight/mosaic@1.51.3", "@stoplight/mosaic@^1.51.3":
+  version "1.51.3"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.51.3.tgz#b4317d3bbec78e0681c8735e0b5253df853c5842"
+  integrity sha512-3C4bAvfG85sO2j6S4saseDbwS4sekmZ9CJy+vwpDK8EaBTy8GEon9TKTkwRiJ9VbFVCNhMVI/xucKuHHMMfYsQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
