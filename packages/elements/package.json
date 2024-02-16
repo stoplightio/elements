@@ -23,6 +23,7 @@
     "./styles.min.css": "./styles.min.css",
     "./web-components.min.js": "./web-components.min.js",
     ".": {
+      "types": "./index.d.ts",
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
     }
