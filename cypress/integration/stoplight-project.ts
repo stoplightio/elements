@@ -59,11 +59,31 @@ describe('Stoplight component', () => {
     });
 
     it('invokes TryIt request', () => {
-      loadCreateTodoPage();
+      loadListTodosPage();
+
+      cy.intercept(
+        {
+          method: 'GET',
+          hostname: 'todos.stoplight.io',
+          pathname: '/**',
+          https: true,
+        },
+        {
+          statusCode: 200,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'content-type',
+            'Content-Type': 'application/json',
+          },
+          body: '"hello world"',
+        },
+      ).as('todos-api');
+
       cy.findByRole('button', { name: /send api request/i }).click();
 
-      // Temporarily changing response code as the requested api is unavailable
-      cy.findByText('500 Internal Server Error').should('exist');
+      cy.waitFor('@todos-api');
+
+      cy.findByText('hello world').should('exist');
     });
 
     it('mocks response correctly', () => {

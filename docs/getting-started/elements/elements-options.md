@@ -9,8 +9,9 @@
 - `hideExport` - Pass `true` to hide the Export button on overview section of the documentation.
 - `tryItCorsProxy` - Pass the URL of a CORS proxy used to send requests to the Try It feature. The provided URL is pre-pended to the URL of an actual request.
 - `tryItCredentialsPolicy` - Use to fetch the credential policy for the Try It feature. Options are: `omit` (default), `include`, and `same-origin`.
-- `layout` - There are two layouts for Elements:
+- `layout` - There are three layouts for Elements:
   - `sidebar` - (default) Three-column design with a sidebar that can be resized.
+  - `responsive` - Like `sidebar`, except at small screen sizes it collapses the sidebar into a drawer that can be toggled open.
   - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
 - `logo` - URL to an image that displays as a small square logo next to the title, above the table of contents.
 - `router` -  Determines how navigation should work:

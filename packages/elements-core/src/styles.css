@@ -2,3 +2,10 @@
 @import '@stoplight/mosaic/themes/default.css';
 
 @import 'core.css';
+
+/* Drawer */
+
+.drawer-container.in.open .left,
+.drawer-container.in.open .right {
+  width: 90%;
+}

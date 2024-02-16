@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['@stoplight'],
+  extends: ['@stoplight', 'plugin:storybook/recommended'],
   rules: {
     'no-console': 'off',
     'no-unused-vars': 'off',

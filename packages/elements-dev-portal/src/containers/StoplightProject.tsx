@@ -1,14 +1,17 @@
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import {
   findFirstNode,
   ReactRouterMarkdownLink,
   RouterTypeContext,
   RoutingProps,
   SidebarLayout,
+  useResponsiveLayout,
   useRouter,
   withStyles,
 } from '@stoplight/elements-core';
+import { Box, Button, Icon, useModalState } from '@stoplight/mosaic';
 import * as React from 'react';
-import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, Route, Switch, useHistory, useParams } from 'react-router-dom';
 
 import { BranchSelector } from '../components/BranchSelector';
 import { DevPortalProvider } from '../components/DevPortalProvider';
@@ -16,12 +19,15 @@ import { Forbidden } from '../components/Forbidden';
 import { Loading } from '../components/Loading';
 import { NodeContent } from '../components/NodeContent';
 import { NotFound } from '../components/NotFound';
+import { SearchOverlay } from '../components/Search/SearchOverlay';
 import { TableOfContents } from '../components/TableOfContents';
 import { UpgradeToStarter } from '../components/UpgradeToStarter';
 import { ResponseError } from '../handlers/getNodeContent';
 import { useGetBranches } from '../hooks/useGetBranches';
 import { useGetNodeContent } from '../hooks/useGetNodeContent';
+import { useGetNodes } from '../hooks/useGetNodes';
 import { useGetTableOfContents } from '../hooks/useGetTableOfContents';
+import { NodeSearchResult } from '../types';
 
 export interface StoplightProjectProps extends RoutingProps {
   /**
@@ -98,6 +104,20 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     projectId,
     branchSlug,
   });
+  const { isOpen, open, close } = useModalState();
+  const [search, setSearch] = React.useState('');
+  const onSearchResultClick = (item?: NodeSearchResult) => {
+    close();
+  };
+
+  const { isResponsiveLayoutEnabled } = useResponsiveLayout();
+
+  const { data, isFetching } = useGetNodes({
+    search,
+    projectIds: [projectId],
+    pause: !isResponsiveLayoutEnabled,
+  });
+
   const container = React.useRef<HTMLDivElement>(null);
 
   if (!nodeSlug && isTocFetched && tableOfContents?.items) {
@@ -129,15 +149,41 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     return <Redirect to={branchSlug ? `/branches/${branchSlug}/${node.slug}` : `/${node.slug}`} />;
   } else {
     elem = (
-      <NodeContent
-        node={node}
-        Link={ReactRouterMarkdownLink}
-        hideTryIt={hideTryIt}
-        hideMocking={hideMocking}
-        hideExport={hideExport}
-        tryItCredentialsPolicy={tryItCredentialsPolicy}
-        tryItCorsProxy={tryItCorsProxy}
-      />
+      <>
+        <Button
+          data-test="show-project-search-overlay"
+          onPress={open}
+          appearance="default"
+          w="full"
+          rounded="lg"
+          borderColor="light"
+        >
+          <Icon icon={faSearch} />
+          <Box pl={2}>{node.title}</Box>
+        </Button>
+        <SearchOverlay
+          toc={tableOfContents}
+          projectSlug={nodeSlug}
+          branchSlug={branchSlug}
+          nodeSlug={nodeSlug}
+          isFetching={isFetching || !isTocFetched}
+          search={search}
+          setSearch={setSearch}
+          data={data}
+          isSearchShowing={isOpen}
+          onClose={close}
+          onClick={onSearchResultClick}
+        />
+        <NodeContent
+          node={node}
+          Link={ReactRouterMarkdownLink}
+          hideTryIt={hideTryIt}
+          hideMocking={hideMocking}
+          hideExport={hideExport}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
+          tryItCorsProxy={tryItCorsProxy}
+        />
+      </>
     );
   }
 
@@ -152,10 +198,10 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
       ref={container}
       sidebar={
         <>
-          {branches && branches.length > 1 ? (
+          {branches && branches.items.length > 1 ? (
             <BranchSelector
               branchSlug={branchSlug}
-              branches={branches}
+              branches={branches.items}
               onChange={branch => {
                 const encodedBranchSlug = encodeURIComponent(branch.slug);
                 history.push(branch.is_default ? `/${nodeSlug}` : `/branches/${encodedBranchSlug}/${nodeSlug}`);
@@ -192,17 +238,19 @@ const StoplightProjectRouter = ({
     <DevPortalProvider platformUrl={platformUrl}>
       <RouterTypeContext.Provider value={router}>
         <Router {...routerProps} key={basePath}>
-          <Route path="/branches/:branchSlug/:nodeSlug" exact>
-            <StoplightProjectImpl {...props} />
-          </Route>
+          <Switch>
+            <Route path="/branches/:branchSlug/:nodeSlug+" exact>
+              <StoplightProjectImpl {...props} />
+            </Route>
 
-          <Route path="/:nodeSlug" exact>
-            <StoplightProjectImpl {...props} />
-          </Route>
+            <Route path="/:nodeSlug+" exact>
+              <StoplightProjectImpl {...props} />
+            </Route>
 
-          <Route path="/" exact>
-            <StoplightProjectImpl {...props} />
-          </Route>
+            <Route path="/" exact>
+              <StoplightProjectImpl {...props} />
+            </Route>
+          </Switch>
         </Router>
       </RouterTypeContext.Provider>
     </DevPortalProvider>

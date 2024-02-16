@@ -71,7 +71,7 @@ export function isDivider(item: TableOfContentsItem): item is TableOfContentsDiv
   return Object.keys(item).length === 1 && 'title' in item;
 }
 export function isGroup(item: TableOfContentsItem): item is TableOfContentsGroup {
-  return Object.keys(item).length === 2 && 'title' in item && 'items' in item;
+  return Object.keys(item).length >= 2 && 'title' in item && 'items' in item;
 }
 export function isNodeGroup(item: TableOfContentsItem): item is TableOfContentsNodeGroup {
   return 'title' in item && 'items' in item && 'slug' in item && 'id' in item && 'meta' in item && 'type' in item;

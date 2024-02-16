@@ -1,21 +1,23 @@
 import type { ErrorBoundaryProps } from '@stoplight/react-error-boundary';
-import type { Meta, Story } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import * as React from 'react';
 
-type DocsProps = { data: unknown } & ErrorBoundaryProps;
+type DocsProps = { data: any } & ErrorBoundaryProps;
 
-interface HelperReturn<P extends Partial<DocsProps>> {
-  meta: Meta<P>;
-  createStory(name: string, input: Partial<P>): Story<P>;
-  createHoistedStory(input: Partial<P>): Story<P>;
+type storyOptions = DocsProps & { layoutOptions?: object };
+
+interface HelperReturn<P extends DocsProps> {
+  meta: Meta<DocsProps>;
+  createStory(name: string, input: storyOptions): StoryFn<P>;
+  createHoistedStory(input: storyOptions): StoryFn<P>;
 }
 
-export const createStoriesForDocsComponent = <P extends Partial<DocsProps> = DocsProps>(
-  Component: React.ComponentType<P>,
+export const createStoriesForDocsComponent = (
+  Component: React.ComponentType<DocsProps>,
   title?: string,
-): HelperReturn<P> => {
-  const createStory = (name: string, input: Partial<P>) => {
-    const story: Story<P> = args => React.createElement(Component, args);
+): HelperReturn<DocsProps> => {
+  const createStory = (name: string, input: storyOptions) => {
+    const story: StoryFn<DocsProps> = (args: any) => React.createElement(Component, args);
     story.args = input;
     story.storyName = name;
     return story;
@@ -24,7 +26,7 @@ export const createStoriesForDocsComponent = <P extends Partial<DocsProps> = Doc
     meta: {
       title: `Internal/Docs/${title || Component.displayName}`,
       component: Component,
-      argTypes: <HelperReturn<P>['meta']['argTypes']>{
+      argTypes: <HelperReturn<DocsProps>['meta']['argTypes']>{
         data: {
           control: { type: 'object' },
         },

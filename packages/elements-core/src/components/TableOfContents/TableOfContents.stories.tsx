@@ -6,7 +6,7 @@ import { TableOfContents } from './TableOfContents';
 import { TableOfContentsProps } from './types';
 
 export default {
-  title: 'Internal/MosaicTableOfContents',
+  title: 'Internal/TableOfContents',
   component: TableOfContents,
   argTypes: {
     tree: { table: { category: 'Input' } },

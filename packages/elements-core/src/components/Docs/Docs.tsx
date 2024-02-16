@@ -133,6 +133,7 @@ export interface DocsProps extends BaseDocsProps {
   nodeData: unknown;
   useNodeForRefResolving?: boolean;
   refResolver?: ReferenceResolver;
+  maxRefDepth?: number;
 }
 
 export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
@@ -143,7 +144,15 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
 }
 
 export const Docs = React.memo<DocsProps>(
-  ({ nodeType, nodeData, useNodeForRefResolving = false, refResolver, nodeHasChanged, ...commonProps }) => {
+  ({
+    nodeType,
+    nodeData,
+    useNodeForRefResolving = false,
+    refResolver,
+    maxRefDepth,
+    nodeHasChanged,
+    ...commonProps
+  }) => {
     const parsedNode = useParsedData(nodeType, nodeData);
 
     if (!parsedNode) {
@@ -155,7 +164,7 @@ export const Docs = React.memo<DocsProps>(
 
     if (useNodeForRefResolving) {
       elem = (
-        <InlineRefResolverProvider document={parsedNode.data} resolver={refResolver}>
+        <InlineRefResolverProvider document={parsedNode.data} resolver={refResolver} maxRefDepth={maxRefDepth}>
           {elem}
         </InlineRefResolverProvider>
       );
@@ -174,6 +183,7 @@ export const ParsedDocs = ({ node, nodeUnsupported, ...commonProps }: ParsedDocs
     case 'article':
       return <Article data={node.data} {...commonProps} />;
     case 'http_operation':
+    case 'http_webhook':
       return <HttpOperation data={node.data} {...commonProps} />;
     case 'http_service':
       return <HttpService data={node.data} {...commonProps} />;

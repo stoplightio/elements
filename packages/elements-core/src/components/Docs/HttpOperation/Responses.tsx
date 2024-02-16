@@ -33,13 +33,13 @@ import { Parameters } from './Parameters';
 
 interface ResponseProps {
   response: IHttpOperationResponse;
-  onMediaTypeChange(mediaType: string): void;
+  onMediaTypeChange?: (mediaType: string) => void;
 }
 
 interface ResponsesProps {
   responses: IHttpOperationResponse[];
-  onMediaTypeChange(mediaType: string): void;
-  onStatusCodeChange(statusCode: string): void;
+  onMediaTypeChange?: (mediaType: string) => void;
+  onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
 }
 
@@ -70,7 +70,7 @@ export const Responses = ({
   );
 
   React.useEffect(() => {
-    onStatusCodeChange(activeResponseId);
+    onStatusCodeChange?.(activeResponseId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeResponseId]);
 
@@ -165,14 +165,14 @@ Responses.displayName = 'HttpOperation.Responses';
 const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
-  const refResolver = useSchemaInlineRefResolver();
+  const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const { nodeHasChanged } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
   const schema = responseContent?.schema;
 
   React.useEffect(() => {
-    responseContent && onMediaTypeChange(responseContent.mediaType);
+    responseContent && onMediaTypeChange?.(responseContent.mediaType);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responseContent]);
 
@@ -212,6 +212,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}
               resolveRef={refResolver}
+              maxRefDepth={maxRefDepth}
               viewMode="read"
               parentCrumbs={['responses', response.code]}
               renderRootTreeLines
