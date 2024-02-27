@@ -43,10 +43,13 @@ export const EXAMPLE_SPECS = [
     value: 'https://api.apis.guru/v2/specs/nytimes.com/article_search/1.0.0/openapi.yaml',
   },
   {
+    text: 'Museum API',
+    value: 'https://raw.githubusercontent.com/Redocly/museum-openapi-example/main/openapi.yaml',
+  },
+  {
     text: 'Plaid',
     value: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/plaid/openapi.yaml',
   },
-  
   {
     text: 'Train Travel API',
     value: 'https://raw.githubusercontent.com/bump-sh-examples/train-travel-api/main/openapi.yaml',
