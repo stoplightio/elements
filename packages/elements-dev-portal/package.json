@@ -90,7 +90,7 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",
-    "replace": "^1.2.1",
+    "replace": "^1.2.2",
     "resolve-url-loader": "^5.0.0",
     "storybook": "next",
     "style-loader": "^3.3.3",
