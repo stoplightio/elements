@@ -88,7 +88,7 @@
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@stoplight/scripts": "9.3.1",
+    "@stoplight/scripts": "9.3.3",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.1",
