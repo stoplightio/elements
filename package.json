@@ -55,7 +55,7 @@
     "process": "0.11.10",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "start-server-and-test": "^1.11.6",
+    "start-server-and-test": "^2.0.0",
     "storybook": "7.5.3",
     "style-loader": "^3.3.3",
     "ts-jest": "^26.4.5",
