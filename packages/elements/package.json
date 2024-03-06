@@ -93,7 +93,6 @@
     "enzyme": "3.x.x",
     "enzyme-adapter-react-16": "1.x.x",
     "enzyme-to-json": "3.x.x",
-    "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
     "react": "16.14.0",
     "react-dom": "16.14.0",
