@@ -1,5 +1,3 @@
-import 'jest-enzyme';
-
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { render, screen, waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
