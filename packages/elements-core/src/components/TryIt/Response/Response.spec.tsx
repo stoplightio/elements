@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import 'jest-enzyme';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
