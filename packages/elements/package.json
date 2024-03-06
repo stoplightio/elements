@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@jpmorganchase/elemental-core": "^1.16.0",
-    "@stoplight/http-spec": "^7.0.2",
+    "@stoplight/http-spec": "^7.0.3",
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.53.4",
     "@stoplight/types": "^14.1.1",
