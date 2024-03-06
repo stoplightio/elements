@@ -81,7 +81,7 @@ describe('Stoplight component', () => {
 
       cy.findByRole('button', { name: /send api request/i }).click();
 
-      cy.waitFor('@todos-api');
+      cy.wait('@todos-api');
 
       cy.findByText('hello world').should('exist');
     });
@@ -152,7 +152,7 @@ function loadMarkdownPage() {
 }
 
 function visitNode(nodeId: string, nodeSlug: string) {
-  cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/${nodeId}`).as('getNode');
+  cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/${nodeId}-${nodeSlug}`).as('getNode');
   cy.visit(`/stoplight-project/${nodeId}-${nodeSlug}`);
   cy.wait('@getNode');
 }
