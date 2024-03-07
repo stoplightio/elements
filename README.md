@@ -103,8 +103,8 @@ For more information on using Elements as a Web Component, head over to our [Web
   - [x] OpenAPI v3.1
   - [x] OpenAPI v3.0
   - [x] OpenAPI v2.0
-- [ ] Callbacks
-- [ ] Webhooks
+- [x] Callbacks
+- [x] Webhooks
 - [x] Multiple APIs (a.k.a "Dev Portal")
 
 Submit your ideas for new functionality on the [Stoplight Roadmap](https://roadmap.stoplight.io/?utm_source=github&utm_medium=elements&utm_campaign=readme).
