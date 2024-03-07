@@ -3976,7 +3976,7 @@
     "@types/json-schema" "^7.0.7"
     magic-error "0.0.1"
 
-"@stoplight/json-schema-viewer@^4.14.2":
+"@stoplight/json-schema-viewer@^4.15.1":
   version "4.15.1"
   resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.15.1.tgz#6ecfe2ce65cec7b1a2dac77de70c2029361f4637"
   integrity sha512-xvu0ctzEce2FYSrgDNYYuENlWndiELJ4f7ng39xjyBw2hMl0QoBy8JlhCrAIiRM1tVs8cmBc/ENQk7GsdJ7Ejg==
