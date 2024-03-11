@@ -1,3 +1,4 @@
+import { ExtensionAddonRenderer } from '@stoplight/json-schema-viewer';
 import type { NodeHasChangedFn, NodeType } from '@stoplight/types';
 import { Location } from 'history';
 import * as React from 'react';
@@ -126,6 +127,11 @@ interface BaseDocsProps {
    * @default undefined
    */
   nodeUnsupported?: NodeUnsupportedFn;
+
+  /**
+   * Allows to define renderers for vendor extensions
+   */
+  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 export interface DocsProps extends BaseDocsProps {

@@ -1,5 +1,5 @@
 import { isPlainObject } from '@stoplight/json';
-import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { ExtensionAddonRenderer, JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { HttpParamStyles, IHttpParam } from '@stoplight/types';
 import type { JSONSchema7Object } from 'json-schema';
 import { sortBy } from 'lodash';
@@ -14,6 +14,7 @@ type ParameterType = 'query' | 'header' | 'path' | 'cookie';
 interface ParametersProps {
   parameterType: ParameterType;
   parameters?: IHttpParam[];
+  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 const readableStyles = {
@@ -33,7 +34,11 @@ const defaultStyle = {
   cookie: HttpParamStyles.Form,
 } as const;
 
-export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
+export const Parameters: React.FunctionComponent<ParametersProps> = ({
+  parameters,
+  parameterType,
+  renderExtensionAddon,
+}) => {
   const { nodeHasChanged } = useOptionsCtx();
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
 
@@ -51,6 +56,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
       schema={schema}
       disableCrumbs
       nodeHasChanged={nodeHasChanged}
+      renderExtensionAddon={renderExtensionAddon}
     />
   );
 };
