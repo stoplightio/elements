@@ -143,10 +143,8 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
       <Box dir="rtl" color="muted" textOverflow="truncate" overflowX="hidden">
         <Box as="span" dir="ltr" style={{ unicodeBidi: 'bidi-override' }}>
           {chosenServerUrl}
+          {path}
         </Box>
-      </Box>
-      <Box fontWeight="semibold" flex={1}>
-        {path}
       </Box>
     </Flex>
   );
