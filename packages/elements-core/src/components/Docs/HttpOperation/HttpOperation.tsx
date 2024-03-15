@@ -23,7 +23,14 @@ import { Responses } from './Responses';
 export type HttpOperationProps = DocsComponentProps<IHttpEndpointOperation>;
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy }) => {
+  ({
+    className,
+    data: unresolvedData,
+    layoutOptions,
+    tryItCredentialsPolicy,
+    tryItCorsProxy,
+    renderExtensionAddon,
+  }) => {
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpEndpointOperation;
     const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
@@ -93,10 +100,13 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             onMediaTypeChange={setResponseMediaType}
             onStatusCodeChange={setResponseStatusCode}
             isCompact={isCompact}
+            renderExtensionAddon={renderExtensionAddon}
           />
         )}
 
-        {data.callbacks?.length ? <Callbacks callbacks={data.callbacks} isCompact={isCompact} /> : null}
+        {data.callbacks?.length ? (
+          <Callbacks callbacks={data.callbacks} isCompact={isCompact} renderExtensionAddon={renderExtensionAddon} />
+        ) : null}
 
         {isCompact && tryItPanel}
       </VStack>

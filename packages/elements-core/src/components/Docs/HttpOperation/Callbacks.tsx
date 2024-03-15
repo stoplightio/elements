@@ -1,3 +1,4 @@
+import { ExtensionAddonRenderer } from '@stoplight/json-schema-viewer';
 import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpCallbackOperation } from '@stoplight/types';
 import * as React from 'react';
@@ -12,14 +13,16 @@ import { Responses } from './Responses';
 export interface CallbacksProps {
   callbacks: IHttpCallbackOperation[];
   isCompact?: boolean;
+  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 export interface CallbackProps {
   data: IHttpCallbackOperation;
   isCompact?: boolean;
+  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
-export const Callbacks = ({ callbacks, isCompact }: CallbacksProps) => {
+export const Callbacks = ({ callbacks, isCompact, renderExtensionAddon }: CallbacksProps) => {
   const [selectedCallbackIndex, setSelectedCallbackIndex] = React.useState(0);
 
   const callback = React.useMemo(() => callbacks[selectedCallbackIndex], [callbacks, selectedCallbackIndex]);
@@ -43,14 +46,14 @@ export const Callbacks = ({ callbacks, isCompact }: CallbacksProps) => {
         )}
       </SectionTitle>
 
-      {callback && <Callback data={callback} isCompact={isCompact} />}
+      {callback && <Callback data={callback} isCompact={isCompact} renderExtensionAddon={renderExtensionAddon} />}
     </VStack>
   );
 };
 
 Callbacks.displayName = 'HttpOperation.Callbacks';
 
-export const Callback = ({ data, isCompact }: CallbackProps) => {
+export const Callback = ({ data, isCompact, renderExtensionAddon }: CallbackProps) => {
   const { nodeHasChanged } = useOptionsCtx();
 
   const isDeprecated = !!data.deprecated;
@@ -78,9 +81,11 @@ export const Callback = ({ data, isCompact }: CallbackProps) => {
         </Box>
       )}
 
-      <Request operation={data} />
+      <Request operation={data} renderExtensionAddon={renderExtensionAddon} />
 
-      {data.responses && <Responses responses={data.responses} isCompact={isCompact} />}
+      {data.responses && (
+        <Responses responses={data.responses} isCompact={isCompact} renderExtensionAddon={renderExtensionAddon} />
+      )}
     </VStack>
   );
 };

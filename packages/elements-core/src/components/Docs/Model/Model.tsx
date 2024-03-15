@@ -26,6 +26,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   nodeTitle,
   layoutOptions,
   exportProps,
+  renderExtensionAddon,
 }) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
@@ -84,6 +85,7 @@ const ModelComponent: React.FC<ModelProps> = ({
         maxRefDepth={maxRefDepth}
         schema={getOriginalObject(data)}
         nodeHasChanged={nodeHasChanged}
+        renderExtensionAddon={renderExtensionAddon}
         skipTopLevelDescription
       />
     </VStack>
