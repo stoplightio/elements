@@ -66,7 +66,7 @@
     "@stoplight/elements-core": "~8.1.1",
     "@stoplight/http-spec": "^7.0.3",
     "@stoplight/json": "^3.18.1",
-    "@stoplight/mosaic": "^1.51.3",
+    "@stoplight/mosaic": "^1.52.0",
     "@stoplight/types": "^14.1.1",
     "@stoplight/yaml": "^4.2.3",
     "classnames": "^2.2.6",

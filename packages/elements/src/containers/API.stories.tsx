@@ -78,6 +78,9 @@ ResponsiveLayout.args = {
   layout: 'responsive',
 };
 ResponsiveLayout.storyName = 'Responsive Layout (Zoom)';
+ResponsiveLayout.parameters = {
+  layout: 'fullscreen',
+};
 
 export const Box = Template.bind({});
 Box.args = {
