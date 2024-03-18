@@ -8,7 +8,7 @@ import { getTableOfContents } from '../handlers/getTableOfContents';
 export function useGetTableOfContents({ projectId, branchSlug }: { projectId: string; branchSlug?: string }) {
   const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
   return useQuery(
-    [...devPortalCacheKeys.branchTOC(projectId, branchSlug ?? ''), platformUrl, platformAuthToken],
+    [...devPortalCacheKeys.branchTOC(projectId, branchSlug ?? ''), platformUrl],
     () => getTableOfContents({ projectId, branchSlug, platformUrl, platformAuthToken }),
     { enabled: projectId ? true : false },
   );

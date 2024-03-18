@@ -25,7 +25,6 @@ export function useGetNodes({
     [
       ...devPortalCacheKeys.searchNodes({ projectIds, branchSlug: branch, workspaceId, search: debounceSearch }),
       platformUrl,
-      platformAuthToken,
     ],
     () =>
       getNodes({ workspaceId, projectIds, branchSlug: branch, search: debounceSearch, platformUrl, platformAuthToken }),

@@ -8,7 +8,7 @@ import { getBranches } from '../handlers/getBranches';
 export function useGetBranches({ projectId }: { projectId: string }) {
   const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
   return useQuery(
-    [...devPortalCacheKeys.branchesList(projectId), platformUrl, platformAuthToken],
+    [...devPortalCacheKeys.branchesList(projectId), platformUrl],
     () => getBranches({ projectId, platformUrl, platformAuthToken }),
     {
       enabled: projectId ? true : false,

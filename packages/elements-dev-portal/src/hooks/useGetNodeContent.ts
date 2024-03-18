@@ -17,7 +17,7 @@ export function useGetNodeContent({
   const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
 
   return useQuery(
-    [...devPortalCacheKeys.branchNodeDetails(projectId, branchSlug ?? '', nodeSlug), platformUrl, platformAuthToken],
+    [...devPortalCacheKeys.branchNodeDetails(projectId, branchSlug ?? '', nodeSlug), platformUrl],
     () => getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl, platformAuthToken }),
     { enabled: nodeSlug && projectId ? true : false },
   );
