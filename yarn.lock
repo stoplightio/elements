@@ -4130,10 +4130,10 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.53.4":
-  version "1.53.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.53.4.tgz#a8d2c9f38d735cff4a187950de05c03a3a69caf8"
-  integrity sha512-StVEXVq5ZlVGvfdsKIYw/h76jb22CKCBUcgNmGyKSQx9ZmLc1wA24CWvbRvSxXKm3/0/P/IyVZ61aaYItqhmrg==
+"@stoplight/mosaic-code-editor@1.52.0", "@stoplight/mosaic-code-editor@^1.51.3":
+  version "1.52.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.52.0.tgz#84bbf733f57468a91454b7fb14d0ea890ab28fe1"
+  integrity sha512-T5pqblBp/FvrA63Ihvt6pXN2F6S10UY++HvMs6/AYs93oACrcn0ZhikOoIDP2xkLr8V7l5nSEyurOVjd7Je8+w==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -4142,8 +4142,8 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.53.4"
-    "@stoplight/mosaic-code-viewer" "1.53.4"
+    "@stoplight/mosaic" "1.52.0"
+    "@stoplight/mosaic-code-viewer" "1.52.0"
     "@stoplight/types" "^13.7.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
@@ -4160,10 +4160,10 @@
     use-resize-observer "^9.0.2"
     zustand "^3.5.2"
 
-"@stoplight/mosaic-code-viewer@1.53.4", "@stoplight/mosaic-code-viewer@^1.53.4":
-  version "1.53.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.53.4.tgz#650ea524d62baada0c0b92f19c1de2135f0ed179"
-  integrity sha512-RZEZ7+UodFQtuuVHyCONg/8wNDlFCuDz0knneGrDaQ1vDa3ddePPjBQnpqVFY0ndXqoaxZTuQu4GvcC8wKdk0Q==
+"@stoplight/mosaic-code-viewer@1.52.0", "@stoplight/mosaic-code-viewer@^1.51.3":
+  version "1.52.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.52.0.tgz#0f0d50c9b608a43a753167fedeeccfd543402bbc"
+  integrity sha512-gadCSJhyE5a05OUhmH+zrvERbGd3NmLIzTKt28FcLejcImKcccsG4ezJpLualY2q/kMm2jkR8eJ+SwF8yfNR9A==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -4172,7 +4172,7 @@
     "@react-types/radio" "3.1.2"
     "@react-types/shared" "3.9.0"
     "@react-types/switch" "3.1.2"
-    "@stoplight/mosaic" "1.53.4"
+    "@stoplight/mosaic" "1.52.0"
     "@stoplight/types" "^13.7.0"
     clsx "^1.1.1"
     copy-to-clipboard "^3.3.1"
@@ -4189,10 +4189,10 @@
     use-resize-observer "^9.0.2"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.53.4", "@stoplight/mosaic@^ 1.53.4", "@stoplight/mosaic@^1.53.4":
-  version "1.53.4"
-  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.53.4.tgz#04e03a4dfb95e0a451cd2bde6e14ad66103a684d"
-  integrity sha512-k3D9B2bM/Ko7ibKKWxJuhomHCOAxooPNPZNX0aY+3kTmQf7tJL+70iwcwD7TbrMyOj7L8SzJPRpJ9fcM8LaDNA==
+"@stoplight/mosaic@1.52.0", "@stoplight/mosaic@^1.52.0":
+  version "1.52.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.52.0.tgz#cd5490fea902966f57f1e48710ed82042001a27d"
+  integrity sha512-9gUSmjEK6KWnSBLGgwEW7fOWXLbKew+lEAJKuoIk0EfNdTwJ6IJrK+Fy4r1Wp/7nRkTwpP1QL1cd4wcxi8EK/A==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -10753,21 +10753,6 @@ fnv-plus@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/fnv-plus/-/fnv-plus-1.3.1.tgz#c34cb4572565434acb08ba257e4044ce2b006d67"
   integrity sha512-Gz1EvfOneuFfk4yG458dJ3TLJ7gV19q3OM/vVvvHf7eT02Hm1DleB4edsia6ahbKgAYxO9gvyQ1ioWZR+a00Yw==
-
-focus-trap-react@^10.2.3:
-  version "10.2.3"
-  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-10.2.3.tgz#a5a2ea7fbb042ffa4337fde72758325ed0fb793a"
-  integrity sha512-YXBpFu/hIeSu6NnmV2xlXzOYxuWkoOtar9jzgp3lOmjWLWY59C/b8DtDHEAV4SPU07Nd/t+nS/SBNGkhUBFmEw==
-  dependencies:
-    focus-trap "^7.5.4"
-    tabbable "^6.2.0"
-
-focus-trap@^7.5.4:
-  version "7.5.4"
-  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.5.4.tgz#6c4e342fe1dae6add9c2aa332a6e7a0bbd495ba2"
-  integrity sha512-N7kHdlgsO/v+iD/dMoJKtsSqs5Dz/dXZVebRgJw23LDk+jMi/974zyiOYDziY2JPp8xivq9BmUGwIJMiuSBi7w==
-  dependencies:
-    tabbable "^6.2.0"
 
 follow-redirects@^1.0.0, follow-redirects@^1.15.0, follow-redirects@^1.15.4:
   version "1.15.5"
