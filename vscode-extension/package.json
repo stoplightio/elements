@@ -18,8 +18,7 @@
   "activationEvents": [
     "onLanguage:yml",
     "onLanguage:yaml",
-    "onLanguage:json",
-    "onCommand:elemental.preview"
+    "onLanguage:json"
   ],
   "main": "./dist/extension.js",
   "contributes": {

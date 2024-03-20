@@ -1,12 +1,13 @@
 # JP Morgan Elemental
 
 This repo is a fork of stoplight elements. The plan for this repo is to update elements to allow us to rapidly deploy
-features we require and then look to merge back to elements.
+features we require and then look to merge back to elements. We have also added a vscode-extension package to this
+repository. This will allow developers to view elemental directly from vscode.
 
 ## JP Morgan Features developed
 
-- Callbacks being rendered
-- Default try it out server and removal of server dropdown from try it out section
+- Callbacks being rendered.
+- Default try it out server and removal of server dropdown from try it out section.
 - useCustomNav is optional and can be set to true to hide stoplights default sidebar.
 - useGetOasNavTree parses an api spec and returns an array of grouped endpoints and schemas.
 
