@@ -1,4 +1,6 @@
-# VSCode Extension
+# Elemental Preview
+
+
 
 This folder contains a vscode extension for viewing Elemental directly from your IDE.
 This allows API developers to see how their spec will display without having to run the demo project or deploy it.

@@ -1,10 +1,10 @@
 {
   "name": "elemental-preview",
-  "displayName": "elemental-preview",
-  "description": "Preview Elemental documents inside VSCode.",
-  "version": "0.6.2",
+  "displayName": "Elemental Preview",
+  "description": "Use the J.P. Morgan Elemental UI to preview your API reference rendering within your vscode IDE",
+  "version": "0.1.0",
   "license": "Apache-2.0",
-  "publisher": "jpmorganchase",
+  "publisher": "jpmorgan-payments",
   "author": {
     "name": "Maria Mcparland",
     "url": "https://github.com/maria-mcparland"
@@ -21,11 +21,12 @@
     "onLanguage:json"
   ],
   "main": "./dist/extension.js",
+  "icon": "./icon.jpg",
   "contributes": {
     "commands": [
       {
         "command": "elemental.preview",
-        "title": "Elemental:  Preview"
+        "title": "Elemental:  Preview UI"
       }
     ],
     "menus": {
@@ -75,28 +76,21 @@
   },
   "devDependencies": {
     "@jpmorganchase/elemental": "^4.2.0",
-    "@types/glob": "^7.2.0",
-    "@types/js-yaml": "^4.0.5",
-    "@types/mocha": "^9.1.1",
-    "@types/node": "14.x",
     "@types/vscode": "^1.66.0",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
-    "@vscode/test-electron": "^2.1.3",
-    "ajv": "^8.11.0",
     "copy-webpack-plugin": "^10.2.4",
     "eslint": "^8.14.0",
-    "genson-js": "0.0.8",
-    "glob": "^8.0.1",
-    "mocha": "^9.2.2",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.4",
-    "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.2"
+    "webpack": "^5.70.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/jpmorganchase/elemental",
     "directory": "vscode-extension"
+  },
+  "dependencies": {
+    "webpack-cli": "^5.1.4"
   }
 }
