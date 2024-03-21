@@ -1,14 +1,26 @@
 # Elemental Preview
 
+Elemental Preview is a Visual Studio Code extension that helps you write, and maintain your OpenAPI documents.
+The extension allows you to preview your OpenAPI document in jpmorganchase elemental directly from your IDE.
 
+## Installation
 
-This folder contains a vscode extension for viewing Elemental directly from your IDE.
-This allows API developers to see how their spec will display without having to run the demo project or deploy it.
+To install the extension in VS Code:
 
-** Currently this extension is only available from the code here. We are in the process of publishing it **
+1. Press [Ctrl+Shift+X] or [⇧⌘X] to open the _Extensions_ tab.
 
-## How to run
+2. Type `Elemental Preview` to search for the extension in Marketplace.
 
-1. Open `src/extension.ts' file
-2. Press F5 button
-3. Run the 'Elemental: Preview' command from the Command Palette (⇧⌘P) in the new window:
+3. Find the extension in the list and select **Install**.
+
+4. When the installation is complete, select **Enable** to activate the extension in your workspace.
+
+5. Open your OpenAPI document.
+
+6. Press [Ctrl+Shift+P] or [⇧⌘P] to open the _Commands_ tab.
+
+7. Type `Elemental: Preview UI` to search for the command.
+
+## Current Limitations
+
+- Unbundled OpenAPI documents aren't supported
