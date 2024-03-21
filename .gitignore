@@ -51,3 +51,11 @@ dist-storybook
 .stoplight/custom-functions
 .spectral.json
 .spectral.mjs
+
+
+# Except for the vscode extension config:
+
+!vscode-extension/.vscode/
+!vscode-extension/.vscode/*
+!.vscode/extensions.json
+!/Users/mariamcparland/Desktop/Github.noSync/elemental/vscode-extension/.vscode/extensions.json
