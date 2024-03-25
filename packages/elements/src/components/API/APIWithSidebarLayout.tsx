@@ -27,6 +27,7 @@ type SidebarLayoutProps = {
   tryItCorsProxy?: string;
   tryItOutDefaultServer?: string;
   useCustomNav?: boolean;
+  layout?: 'sidebar' | 'drawer';
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -42,6 +43,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCorsProxy,
   tryItOutDefaultServer,
   useCustomNav,
+  layout,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
 
@@ -101,7 +103,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   );
 
   return (
-    <SidebarLayout ref={container} sidebar={sidebar} renderSideBar={!useCustomNav}>
+    <SidebarLayout ref={container} sidebar={sidebar} renderSideBar={!useCustomNav} layout={layout}>
       {node && (
         <ParsedDocs
           key={pathname}

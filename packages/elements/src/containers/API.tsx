@@ -49,7 +49,7 @@ export interface CommonAPIProps extends RoutingProps {
    *
    * @default "sidebar"
    */
-  layout?: 'sidebar' | 'stacked';
+  layout?: 'sidebar' | 'stacked' | 'drawer';
   logo?: string;
 
   /**
@@ -197,6 +197,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCorsProxy={tryItCorsProxy}
           tryItOutDefaultServer={tryItOutDefaultServer}
           useCustomNav={useCustomNav}
+          layout={layout}
         />
       )}
     </InlineRefResolverProvider>

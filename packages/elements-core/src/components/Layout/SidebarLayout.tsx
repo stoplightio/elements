@@ -1,4 +1,4 @@
-import { Box, Flex } from '@stoplight/mosaic';
+import { Box, Button, Flex } from '@stoplight/mosaic';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ type SidebarLayoutProps = {
   sidebarWidth?: number;
   children?: React.ReactNode;
   renderSideBar?: boolean;
+  layout?: 'sidebar' | 'drawer';
 };
 
 const MAX_CONTENT_WIDTH = 1800;
@@ -16,52 +17,64 @@ const SIDEBAR_MAX_WIDTH = 1.5 * SIDEBAR_MIN_WIDTH;
 
 export const SidebarLayout = React.forwardRef<HTMLDivElement, SidebarLayoutProps>(
   (
-    { sidebar, children, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH, renderSideBar = true },
+    {
+      sidebar,
+      children,
+      maxContentWidth = MAX_CONTENT_WIDTH,
+      sidebarWidth = SIDEBAR_MIN_WIDTH,
+      renderSideBar = true,
+      layout,
+    },
     ref,
   ) => {
     const scrollRef = React.useRef<HTMLDivElement | null>(null);
     const [sidebarRef, currentSidebarWidth, startResizing] = useResizer(sidebarWidth);
+    const [isSidebarOpen, setSidebarOpenState] = React.useState(true);
     const { pathname } = useLocation();
 
     React.useEffect(() => {
       // Scroll to top on page change
       scrollRef.current?.scrollTo(0, 0);
     }, [pathname]);
-
     return (
       <Flex ref={ref} className="sl-elements-api" pin h="full">
-        <Flex
-          ref={sidebarRef}
-          onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
-          style={{ maxWidth: `${SIDEBAR_MAX_WIDTH}px` }}
-        >
-          {renderSideBar && (
-            <Flex
-              direction="col"
-              bg="canvas-100"
-              borderR
-              pt={8}
-              pos="sticky"
-              pinY
-              overflowY="auto"
-              style={{
-                paddingLeft: `calc((100% - ${maxContentWidth}px) / 2)`,
-                width: `${currentSidebarWidth}px`,
-                minWidth: `${SIDEBAR_MIN_WIDTH}px`,
-              }}
-            >
-              {sidebar}
-            </Flex>
-          )}
+        {!layout || layout !== 'drawer' || isSidebarOpen ? (
           <Flex
-            justifySelf="end"
-            flexGrow={0}
-            flexShrink={0}
-            resize="x"
-            onMouseDown={startResizing}
-            style={{ width: '1em', flexBasis: '6px', cursor: 'ew-resize' }}
-          />
-        </Flex>
+            ref={sidebarRef}
+            onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
+            style={{ maxWidth: `${SIDEBAR_MAX_WIDTH}px` }}
+          >
+            {renderSideBar && (
+              <Flex
+                direction="col"
+                bg="canvas-100"
+                borderR
+                pt={8}
+                pos="sticky"
+                pinY
+                overflowY="auto"
+                style={{
+                  paddingLeft: `calc((100% - ${maxContentWidth}px) / 2)`,
+                  width: `${currentSidebarWidth}px`,
+                  minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+                }}
+              >
+                {sidebar}
+              </Flex>
+            )}
+            <Flex
+              justifySelf="end"
+              flexGrow={0}
+              flexShrink={0}
+              resize="x"
+              onMouseDown={startResizing}
+              style={{ width: '1em', flexBasis: '6px', cursor: 'ew-resize' }}
+            />
+            {layout === 'drawer' && <Button onClick={() => setSidebarOpenState(false)}>Hide Sidebar</Button>}
+          </Flex>
+        ) : (
+          <Button onClick={() => setSidebarOpenState(true)}>Open Sidebar</Button>
+        )}
 
         <Box ref={scrollRef} bg="canvas" px={24} flex={1} w="full" overflowY="auto">
           <Box style={{ maxWidth: `${maxContentWidth - currentSidebarWidth}px` }} py={16}>
