@@ -2,7 +2,7 @@
   "name": "elemental-preview",
   "displayName": "Elemental Preview",
   "description": "Use the J.P. Morgan Elemental UI to preview your API reference rendering within your vscode IDE",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "Apache-2.0",
   "publisher": "jpmorgan-payments",
   "author": {
@@ -48,13 +48,6 @@
           "command": "elemental.preview"
         }
       ],
-      "editor/context": [
-        {
-          "when": "(resourceLangId == json || resourceLangId == yaml)",
-          "command": "elemental.paste",
-          "group": "9_cutcopypaste@5"
-        }
-      ],
       "keybindings": [
         {
           "command": "elemental.paste",
@@ -77,7 +70,7 @@
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
   },
   "devDependencies": {
-    "@jpmorganchase/elemental": "^4.2.0",
+    "@jpmorganchase/elemental": "^4.3.0",
     "@types/vscode": "^1.66.0",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",

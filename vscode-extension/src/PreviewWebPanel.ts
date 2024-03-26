@@ -80,11 +80,22 @@ function getWebviewContent(context: vscode.ExtensionContext, webview: vscode.Web
   <html>
     <head>
     <link rel="stylesheet" href="${apiComponentCss}">
+    <style> 
+    html{
+      scroll-behavior: smooth;
+    }
+    body {
+      color: #121212;
+      background-color: #fff;
+      word-wrap: break-word;
+    }
+
+    </style>
     </head>
     <body x-timestamp="${Date.now()}">
         
       <script src="${apiComponentJs}"></script>
-      <elements-api id="docs" router="hash" layout="sidebar"/>
+      <elements-api id="docs" router="hash" layout="drawer"/>
       <script>
       var width = document.body.clientWidth;
 
