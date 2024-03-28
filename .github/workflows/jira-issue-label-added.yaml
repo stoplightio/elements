@@ -1,12 +1,9 @@
 name: Jira Issue Label Added
 
-# on:
-#   issues:
-#     types:
-#       - labeled
-
 on:
-  workflow_dispatch:
+  issues:
+    types:
+      - labeled
 
 jobs:
   call-workflow:
