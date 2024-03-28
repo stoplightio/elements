@@ -9,5 +9,5 @@ jobs:
   call-workflow:
     uses: stoplightio/.github/.github/workflows/jira-issue-label-added.yaml@master
     with:
-      team-name: ${{ github.event.label.name === 'team/bear-claws' && 'Bear Claws' || github.event.label.name === 'team/honey-hackers' && 'Honey Hackers'}}
+      team-name: ${{ github.event.label.name == 'team/bear-claws' && 'Bear Claws' || github.event.label.name == 'team/honey-hackers' && 'Honey Hackers'}}
     secrets: inherit
