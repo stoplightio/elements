@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: team-name
-        run: echo "$TEAM_NAME ${{ contains(github.event.issue.labels.*.name, 'team/bear-claws') }}"
+        run: echo "$TEAM_NAME ${{ toJSON(github.event.issue.labels.*.name) }}"
   call-workflow:
     uses: stoplightio/.github/.github/workflows/jira-issue-label-added.yaml@chore/add-jira-issue-workflow-2
     with:
