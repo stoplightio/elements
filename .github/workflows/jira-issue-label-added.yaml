@@ -1,7 +1,12 @@
 name: Jira Issue Label Added
 
+# on:
+#   issues:
+#     types:
+#       - labeled
+
 on:
-  issues:
+  pull_request:
     types:
       - labeled
 
