@@ -10,9 +10,13 @@ on:
     types:
       - labeled
 
+env: 
+ TEAM_NAME: ${{ github.event.label.name == 'team/bear-claws' && 'Bear Claws' || github.event.label.name == 'team/honey-hackers' && 'Honey Hackers'}}
+
 jobs:
   call-workflow:
     uses: stoplightio/.github/.github/workflows/jira-issue-label-added.yaml@chore/add-jira-issue-workflow-2
+    run: echo "$TEAM_NAME ${{ github.event.label.name }}"
     with:
-      team-name: "Bear Claws"
+      team-name: $TEAM_NAME
     secrets: inherit
