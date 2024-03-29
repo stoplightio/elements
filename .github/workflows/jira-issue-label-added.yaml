@@ -11,7 +11,7 @@ on:
       - labeled
 
 env: 
- TEAM_NAME: ${{ contains(github.event.pull_request.labels.*.name, 'team/bear-claws') && 'Bear Claws' || contains(github.event.pull_request.labels.*.name, 'team/honey-hackers') && 'Honey Hackers'}}
+ TEAM_NAME: ${{ contains(github.event.pull_request.labels.*.name, 'team/bear-claws') && 'Bear Claws' || contains(github.event.pull_request.labels.*.name, 'team/honey-hackers') && 'Honey Hackers' || '' }}
 
 jobs:
   echo-team-name:
