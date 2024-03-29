@@ -12,7 +12,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: stoplightio/.github/.github/workflows/jira-issue-label-added.yaml@master
+    uses: stoplightio/.github/.github/workflows/jira-issue-label-added.yaml@chore/add-jira-issue-workflow-2
     with:
       team-name: "Bear Claws"
     secrets: inherit
