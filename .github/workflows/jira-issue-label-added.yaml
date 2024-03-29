@@ -15,6 +15,7 @@ env:
 
 jobs:
   echo-team-name:
+    runs-on: ubuntu-latest
     steps:
       - name: team-name
         run: echo "$TEAM_NAME ${{ github.event.label.name }}"
