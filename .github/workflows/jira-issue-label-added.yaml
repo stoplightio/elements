@@ -20,7 +20,7 @@ jobs:
       - name: team-name
         run: echo "$TEAM_NAME ${{ toJSON(github.event.pull_request.labels.*.name) }}"
   call-workflow:
-    uses: stoplightio/.github/.github/workflows/jira-issue-label-added.yaml@chore/add-jira-issue-workflow-2
+    uses: stoplightio/.github/.github/workflows/jira-issue-label-added.yaml@chore/add-jira-issue-workflow-3
     with:
       team-name: ${{ contains(github.event.pull_request.labels.*.name, 'team/bear-claws') && 'Bear Claws' || contains(github.event.pull_request.labels.*.name, 'team/honey-hackers') && 'Honey Hackers' || '' }}
     secrets: inherit
