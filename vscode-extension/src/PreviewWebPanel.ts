@@ -95,19 +95,7 @@ function getWebviewContent(context: vscode.ExtensionContext, webview: vscode.Web
     <body x-timestamp="${Date.now()}">
         
       <script src="${apiComponentJs}"></script>
-      <elements-api id="docs" router="hash" layout="drawer"/>
-      <script>
-      var width = document.body.clientWidth;
-
-      (async () => {
-        const docs = document.getElementById('docs');
-        const text = await fetch('${apiBasePath}').then(res => res.text())
-        docs.apiDescriptionDocument = text; 
-      })();
-
-      </script>
-
-  
+      <elements-api id="docs" router="hash" layout="drawer" apiDescriptionUrl="${apiBasePath}" hideInternal />
     </body>
   </html>
     `;

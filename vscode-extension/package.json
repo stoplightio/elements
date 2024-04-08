@@ -2,7 +2,7 @@
   "name": "elemental-preview",
   "displayName": "Elemental Preview",
   "description": "Use the J.P. Morgan Elemental UI to preview your API reference rendering within your vscode IDE",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "Apache-2.0",
   "publisher": "jpmorgan-payments",
   "author": {
