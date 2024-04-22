@@ -86,7 +86,7 @@ const routes: Routes = [
 export class AppRoutingModule {}
 ```
 
-Finally, set up Angular to allow [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Head over to the `app-module.ts` file and add the [CUSTOM_PORTAL_SCHEMA](https://angular.io/api/core/CUSTOM_ELEMENTS_SCHEMA).
+Finally, set up Angular to allow [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Head over to the `app-module.ts` file and add the [CUSTOM_ELEMENTS_SCHEMA](https://angular.io/api/core/CUSTOM_ELEMENTS_SCHEMA).
 
 It'll end up looking like this:
 
