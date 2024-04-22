@@ -1,4 +1,4 @@
-import { ExtensionAddonRenderer, JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
   Box,
   Button,
@@ -34,7 +34,6 @@ import { Parameters } from './Parameters';
 interface ResponseProps {
   response: IHttpOperationResponse;
   onMediaTypeChange?: (mediaType: string) => void;
-  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 interface ResponsesProps {
@@ -42,7 +41,6 @@ interface ResponsesProps {
   onMediaTypeChange?: (mediaType: string) => void;
   onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
-  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 export const Responses = ({
@@ -50,7 +48,6 @@ export const Responses = ({
   onStatusCodeChange,
   onMediaTypeChange,
   isCompact,
-  renderExtensionAddon,
 }: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
@@ -150,20 +147,12 @@ export const Responses = ({
       </SectionTitle>
 
       {isCompact ? (
-        <Response
-          response={response}
-          onMediaTypeChange={onMediaTypeChange}
-          renderExtensionAddon={renderExtensionAddon}
-        />
+        <Response response={response} onMediaTypeChange={onMediaTypeChange} />
       ) : (
         <TabPanels p={0}>
           {responses.map(response => (
             <TabPanel key={response.code} id={response.code}>
-              <Response
-                response={response}
-                onMediaTypeChange={onMediaTypeChange}
-                renderExtensionAddon={renderExtensionAddon}
-              />
+              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
             </TabPanel>
           ))}
         </TabPanels>
@@ -173,11 +162,11 @@ export const Responses = ({
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-const Response = ({ response, onMediaTypeChange, renderExtensionAddon }: ResponseProps) => {
+const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
   const schema = responseContent?.schema;
@@ -201,7 +190,7 @@ const Response = ({ response, onMediaTypeChange, renderExtensionAddon }: Respons
       {headers.length > 0 && (
         <VStack spacing={5}>
           <SectionSubtitle title="Headers" id="response-headers" />
-          <Parameters parameterType="header" parameters={headers} renderExtensionAddon={renderExtensionAddon} />
+          <Parameters parameterType="header" parameters={headers} />
         </VStack>
       )}
 

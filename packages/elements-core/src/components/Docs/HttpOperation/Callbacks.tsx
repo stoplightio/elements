@@ -1,10 +1,10 @@
-import { ExtensionAddonRenderer } from '@stoplight/json-schema-viewer';
 import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpCallbackOperation } from '@stoplight/types';
 import * as React from 'react';
 
 import { useOptionsCtx } from '../../../context/Options';
 import { MarkdownViewer } from '../../MarkdownViewer';
+import { ExtensionAddonRenderer } from '../Docs';
 import { SectionSubtitle, SectionTitle } from '../Sections';
 import { OperationHeader } from './HttpOperation';
 import { Request } from './Request';
@@ -13,7 +13,6 @@ import { Responses } from './Responses';
 export interface CallbacksProps {
   callbacks: IHttpCallbackOperation[];
   isCompact?: boolean;
-  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 export interface CallbackProps {
@@ -22,7 +21,7 @@ export interface CallbackProps {
   renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
-export const Callbacks = ({ callbacks, isCompact, renderExtensionAddon }: CallbacksProps) => {
+export const Callbacks = ({ callbacks, isCompact }: CallbacksProps) => {
   const [selectedCallbackIndex, setSelectedCallbackIndex] = React.useState(0);
 
   const callback = React.useMemo(() => callbacks[selectedCallbackIndex], [callbacks, selectedCallbackIndex]);
@@ -46,14 +45,14 @@ export const Callbacks = ({ callbacks, isCompact, renderExtensionAddon }: Callba
         )}
       </SectionTitle>
 
-      {callback && <Callback data={callback} isCompact={isCompact} renderExtensionAddon={renderExtensionAddon} />}
+      {callback && <Callback data={callback} isCompact={isCompact} />}
     </VStack>
   );
 };
 
 Callbacks.displayName = 'HttpOperation.Callbacks';
 
-export const Callback = ({ data, isCompact, renderExtensionAddon }: CallbackProps) => {
+export const Callback = ({ data, isCompact }: CallbackProps) => {
   const { nodeHasChanged } = useOptionsCtx();
 
   const isDeprecated = !!data.deprecated;
@@ -81,11 +80,9 @@ export const Callback = ({ data, isCompact, renderExtensionAddon }: CallbackProp
         </Box>
       )}
 
-      <Request operation={data} renderExtensionAddon={renderExtensionAddon} />
+      <Request operation={data} />
 
-      {data.responses && (
-        <Responses responses={data.responses} isCompact={isCompact} renderExtensionAddon={renderExtensionAddon} />
-      )}
+      {data.responses && <Responses responses={data.responses} isCompact={isCompact} />}
     </VStack>
   );
 };

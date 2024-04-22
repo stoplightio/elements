@@ -26,11 +26,10 @@ const ModelComponent: React.FC<ModelProps> = ({
   nodeTitle,
   layoutOptions,
   exportProps,
-  renderExtensionAddon,
 }) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 

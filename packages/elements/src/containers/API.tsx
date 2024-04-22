@@ -22,6 +22,7 @@ import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
 import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
 import { transformOasToServiceNode } from '../utils/oas';
+import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 
@@ -97,6 +98,11 @@ export interface CommonAPIProps extends RoutingProps {
    * @default undefined
    */
   maxRefDepth?: number;
+
+  /**
+   * Allows to define renderers for vendor extensions
+   */
+  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -115,6 +121,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCredentialsPolicy,
     tryItCorsProxy,
     maxRefDepth,
+    renderExtensionAddon,
   } = props;
   const location = useLocation();
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
@@ -181,6 +188,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          renderExtensionAddon={renderExtensionAddon}
           location={location}
         />
       )}
@@ -195,6 +203,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          renderExtensionAddon={renderExtensionAddon}
         />
       )}
       {layout === 'responsive' && (
@@ -208,6 +217,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          renderExtensionAddon={renderExtensionAddon}
           compact={isResponsiveLayoutEnabled}
         />
       )}

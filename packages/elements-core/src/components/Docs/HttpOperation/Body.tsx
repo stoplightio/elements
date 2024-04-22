@@ -1,4 +1,4 @@
-import { ExtensionAddonRenderer, JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
@@ -13,7 +13,6 @@ import { SectionSubtitle } from '../Sections';
 export interface BodyProps {
   body: IHttpOperationRequestBody;
   onChange?: (requestBodyIndex: number) => void;
-  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 export const isBodyEmpty = (body?: BodyProps['body']) => {
@@ -24,10 +23,10 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
   return contents.length === 0 && !description?.trim();
 };
 
-export const Body = ({ body, onChange, renderExtensionAddon }: BodyProps) => {
+export const Body = ({ body, onChange }: BodyProps) => {
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   React.useEffect(() => {
     onChange?.(chosenContent);
@@ -56,7 +55,6 @@ export const Body = ({ body, onChange, renderExtensionAddon }: BodyProps) => {
           </Flex>
         )}
       </SectionSubtitle>
-
       {description && (
         <Box pos="relative">
           <MarkdownViewer markdown={description} />

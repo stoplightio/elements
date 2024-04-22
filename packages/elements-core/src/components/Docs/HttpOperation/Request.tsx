@@ -1,4 +1,3 @@
-import { ExtensionAddonRenderer } from '@stoplight/json-schema-viewer';
 import { Box, Callout, NodeAnnotation, VStack } from '@stoplight/mosaic';
 import { HttpSecurityScheme, IHttpEndpointOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
@@ -16,7 +15,6 @@ import { Parameters } from './Parameters';
 
 interface IRequestProps {
   operation: IHttpEndpointOperation;
-  renderExtensionAddon?: ExtensionAddonRenderer;
   onChange?: (requestBodyIndex: number) => void;
 }
 
@@ -33,7 +31,6 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     security,
   },
   onChange,
-  renderExtensionAddon,
 }) => {
   if (!request || typeof request !== 'object') return null;
 
@@ -58,32 +55,32 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
       {pathParams.length > 0 && (
         <VStack spacing={5}>
           <SectionSubtitle title="Path Parameters" />
-          <Parameters parameterType="path" parameters={pathParams} renderExtensionAddon={renderExtensionAddon} />
+          <Parameters parameterType="path" parameters={pathParams} />
         </VStack>
       )}
 
       {queryParams.length > 0 && (
         <VStack spacing={5}>
           <SectionSubtitle title="Query Parameters" />
-          <Parameters parameterType="query" parameters={queryParams} renderExtensionAddon={renderExtensionAddon} />
+          <Parameters parameterType="query" parameters={queryParams} />
         </VStack>
       )}
 
       {headerParams.length > 0 && (
         <VStack spacing={5}>
           <SectionSubtitle title="Headers" id="request-headers" />
-          <Parameters parameterType="header" parameters={headerParams} renderExtensionAddon={renderExtensionAddon} />
+          <Parameters parameterType="header" parameters={headerParams} />
         </VStack>
       )}
 
       {cookieParams.length > 0 && (
         <VStack spacing={5}>
           <SectionSubtitle title="Cookies" id="request-cookies" />
-          <Parameters parameterType="cookie" parameters={cookieParams} renderExtensionAddon={renderExtensionAddon} />
+          <Parameters parameterType="cookie" parameters={cookieParams} />
         </VStack>
       )}
 
-      {body && <Body onChange={onChange} body={body} renderExtensionAddon={renderExtensionAddon} />}
+      {body && <Body onChange={onChange} body={body} />}
     </VStack>
   );
 };

@@ -13,6 +13,7 @@ import {
   useInlineRefResolver,
   useSchemaInlineRefResolver,
 } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { PersistenceContextProvider } from '../../../context/Persistence';
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { JSONSchema } from '../../../types';
@@ -40,6 +41,8 @@ interface ISchemaAndDescriptionProps {
 
 const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptionProps) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
+  const { renderExtensionAddon } = useOptionsCtx();
+
   const title = titleProp ?? schema.title;
   return (
     <Box py={2}>
@@ -52,7 +55,12 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
         </Flex>
       )}
 
-      <JsonSchemaViewer resolveRef={resolveRef} maxRefDepth={maxRefDepth} schema={getOriginalObject(schema)} />
+      <JsonSchemaViewer
+        resolveRef={resolveRef}
+        maxRefDepth={maxRefDepth}
+        schema={getOriginalObject(schema)}
+        renderExtensionAddon={renderExtensionAddon}
+      />
     </Box>
   );
 };

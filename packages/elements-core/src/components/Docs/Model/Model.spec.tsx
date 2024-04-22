@@ -4,8 +4,10 @@ import userEvent from '@testing-library/user-event';
 import { JSONSchema7 } from 'json-schema';
 import * as React from 'react';
 
+import { ElementsOptionsProvider } from '../../../context/Options';
 import * as exampleGenerationUtils from '../../../utils/exampleGeneration/exampleGeneration';
 import { chooseOption } from '../../../utils/tests/chooseOption';
+import { renderExtensionRenderer } from '../story-renderer-helper';
 import { Model } from './Model';
 
 const generatedExample = '{\n"iamtoobig": "string",\n"name": "string",\n"id": "number",\n"email": "string", \n}';
@@ -16,6 +18,10 @@ const exampleSchema: JSONSchema7 = {
     propA: {
       type: 'string',
       enum: ['valueA'],
+      // @ts-ignore
+      'x-enum-descriptions': {
+        valueA: 'description of valueA',
+      },
     },
   },
 };
@@ -32,6 +38,7 @@ describe('Model', () => {
     expect(screen.getByRole('heading', { name: /example/i })).toBeInTheDocument();
     expect(container).toHaveTextContent('"propA": "valueA"');
   });
+
   it('does not show examples with more lines than supported, by default', async () => {
     jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
       return example.split(/\r\n|\r|\n/).length > size;
@@ -179,6 +186,56 @@ describe('Model', () => {
 
       const exportButton = wrapper.queryByRole('button', { name: 'Export' });
       expect(exportButton).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Vendor Extensions', () => {
+    it('should call rendorExtensionAddon', async () => {
+      const vendorExtensionRenderer = jest.fn();
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <Model data={exampleSchema} />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(vendorExtensionRenderer).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          nestingLevel: 1,
+          vendorExtensions: {
+            'x-enum-descriptions': expect.objectContaining({ valueA: 'description of valueA' }),
+          },
+        }),
+      );
+
+      unmount();
+    });
+
+    it('should display vendor extensions', async () => {
+      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+        return renderExtensionRenderer(props);
+      });
+
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <Model
+            data={exampleSchema}
+            layoutOptions={{
+              hideTryItPanel: true,
+              hideSecurityInfo: true,
+              hideServerInfo: true,
+              hideExport: true,
+              hideTryIt: true,
+            }}
+          />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(screen.queryByRole('columnheader', { name: /Enum value/i })).toBeInTheDocument();
+      expect(screen.queryByRole('columnheader', { name: /Description/i })).toBeInTheDocument();
+
+      expect(screen.queryByText('description of valueA')).toBeInTheDocument();
+
+      unmount();
     });
   });
 });

@@ -1,4 +1,5 @@
 import {
+  ElementsOptionsProvider,
   ExportButtonProps,
   Logo,
   ParsedDocs,
@@ -7,6 +8,7 @@ import {
   TableOfContents,
   TableOfContentsItem,
 } from '@stoplight/elements-core';
+import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
@@ -25,6 +27,7 @@ type SidebarLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
+  renderExtensionAddon?: ExtensionAddonRenderer;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -37,6 +40,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  renderExtensionAddon,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -73,17 +77,20 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   return (
     <SidebarLayout ref={container} sidebar={sidebar}>
       {node && (
-        <ParsedDocs
-          key={pathname}
-          uri={pathname}
-          node={node}
-          nodeTitle={node.name}
-          layoutOptions={layoutOptions}
-          location={location}
-          exportProps={exportProps}
-          tryItCredentialsPolicy={tryItCredentialsPolicy}
-          tryItCorsProxy={tryItCorsProxy}
-        />
+        <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
+          <ParsedDocs
+            key={pathname}
+            uri={pathname}
+            node={node}
+            nodeTitle={node.name}
+            layoutOptions={layoutOptions}
+            location={location}
+            exportProps={exportProps}
+            tryItCredentialsPolicy={tryItCredentialsPolicy}
+            tryItCorsProxy={tryItCorsProxy}
+            renderExtensionAddon={renderExtensionAddon}
+          />
+        </ElementsOptionsProvider>
       )}
     </SidebarLayout>
   );

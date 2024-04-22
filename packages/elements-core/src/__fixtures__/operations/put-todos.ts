@@ -83,6 +83,16 @@ export const httpOperation: IHttpOperation = {
                     required: ['name', 'age'],
                     description: 'Here lies the user model',
                   },
+                  type: {
+                    description: 'The type of todo',
+                    type: 'string',
+                    enum: ['REMINDER', 'TASK'],
+                    // @ts-ignore
+                    'x-enum-descriptions': {
+                      REMINDER: 'A reminder',
+                      TASK: 'A task',
+                    },
+                  },
                 },
                 required: ['id', 'user'],
               },
