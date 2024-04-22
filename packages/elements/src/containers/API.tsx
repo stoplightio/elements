@@ -11,6 +11,7 @@ import {
   withRouter,
   withStyles,
 } from '@stoplight/elements-core';
+import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';
@@ -22,7 +23,6 @@ import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
 import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
 import { transformOasToServiceNode } from '../utils/oas';
-import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 
