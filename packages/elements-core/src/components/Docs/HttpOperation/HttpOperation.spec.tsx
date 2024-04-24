@@ -713,6 +713,35 @@ describe('HttpOperation', () => {
       unmount();
     });
 
+    it('should display vendor extensions in body', async () => {
+      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+        if ('x-stoplight-info' in props.vendorExtensions) {
+          return <div>Stoplight Information Extension</div>;
+        }
+
+        return null;
+      });
+
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <HttpOperation
+            data={httpOperation}
+            layoutOptions={{
+              hideTryItPanel: true,
+              hideSecurityInfo: true,
+              hideServerInfo: true,
+              hideExport: true,
+              hideTryIt: true,
+            }}
+          />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(screen.queryByText('Stoplight Information Extension')).toBeInTheDocument();
+
+      unmount();
+    });
+
     it('should display vendor extensions', async () => {
       const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
         return renderExtensionRenderer(props);

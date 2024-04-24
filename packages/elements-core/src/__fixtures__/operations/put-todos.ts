@@ -6,6 +6,12 @@ export const httpOperation: IHttpOperation = {
   method: 'put',
   path: '/todos/{todoId}',
   summary: 'Update Todo',
+  extensions: {
+    'x-stoplight-info': {
+      id: 'http-operation-id',
+      version: '1.0.0',
+    },
+  },
   responses: [
     {
       id: '?http-response-200?',

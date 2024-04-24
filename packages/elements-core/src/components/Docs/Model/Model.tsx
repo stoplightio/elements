@@ -16,6 +16,7 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { DeprecatedBadge, InternalBadge } from '../HttpOperation/Badges';
 import { ExportButton } from '../HttpService/ExportButton';
+import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 
 export type ModelProps = DocsComponentProps<JSONSchema7>;
@@ -76,6 +77,8 @@ const ModelComponent: React.FC<ModelProps> = ({
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
+
+      <NodeVendorExtensions data={data} />
 
       {isCompact && modelExamples}
 
