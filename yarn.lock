@@ -4150,10 +4150,10 @@
     unist-util-select "^4.0.0"
     unist-util-visit "^3.1.0"
 
-"@stoplight/mosaic-code-editor@^1.52.1":
-  version "1.52.1"
-  resolved "https://registry.npmjs.org/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.52.1.tgz#be2d2a568ca5cdccf7c8c8a7997185d3f5ab073f"
-  integrity sha512-TATPcjzoyXL7xdjQCyFYeaTbCgo1/pDMfxPVPPHd/UABKrL0s7ajAGkUok4TLsJVoZHy/BKchbU/JJm/+53NEQ==
+"@stoplight/mosaic-code-editor@^1.53.1":
+  version "1.53.1"
+  resolved "https://registry.npmjs.org/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.53.1.tgz#01d08f094e721320fd94c6c9efa8b81f8a2d2f94"
+  integrity sha512-xA6kgWTelz/oLphI+2pU1MId92zGG9ZLQb9mY1UoeqCZLxC7oH/UxIuNW7JGG5yCOEppgW4fiIBgLBDKGlt8wA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
