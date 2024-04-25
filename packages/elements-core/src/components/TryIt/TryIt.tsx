@@ -115,6 +115,13 @@ export const TryIt: React.FC<TryItProps> = ({
     parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
   );
 
+  let codeExampleOverrides = [];
+  if (isHttpOperation(httpOperation)) {
+    if ('x-codeExamples' in httpOperation) {
+      codeExampleOverrides = httpOperation['x-codeExamples'] as any[];
+    }
+  }
+
   const getValues = () =>
     Object.keys(bodyParameterValues)
       .filter(param => !isAllowedEmptyValues[param] ?? true)
@@ -340,7 +347,7 @@ export const TryIt: React.FC<TryItProps> = ({
   return (
     <Box rounded="lg" overflowY="hidden">
       {tryItPanelElem}
-      {requestData && embeddedInMd && <RequestSamples request={requestData} embeddedInMd />}
+      {requestData && embeddedInMd && <RequestSamples request={requestData} codeExampleOverrides={codeExampleOverrides} embeddedInMd />}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}
     </Box>
