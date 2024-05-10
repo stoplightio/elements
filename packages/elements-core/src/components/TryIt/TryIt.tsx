@@ -198,11 +198,11 @@ export const TryIt: React.FC<TryItProps> = ({
         mediaTypeContent,
         bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
         mockData,
-        auth: operationAuthValue,
         chosenServer,
         credentials: tryItCredentialsPolicy,
         corsProxy,
       });
+
       let response: Response | undefined;
       try {
         response = await fetch(...request);
