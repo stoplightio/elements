@@ -14,8 +14,6 @@ export const ElementsAPI: React.FC = () => {
       ? `https://stoplight.io/cors-proxy/${apiDescriptionUrl}`
       : apiDescriptionUrl;
 
-  console.log(specUrlWithProxy);
-
   return (
     <Box flex={1} overflowY="hidden">
       <API apiDescriptionUrl={specUrlWithProxy} router="hash" />
