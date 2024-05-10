@@ -191,14 +191,14 @@ const runAuthRequestEhancements = (
       if (auth.scheme.in === 'query') {
         newQueryParams.push({
           name: auth.scheme.name,
-          value: auth.authValue || '123',
+          value: auth.authValue || 'YOUR TOKEN',
         });
       }
 
       if (auth.scheme.in === 'header') {
         newHeaders.push({
           name: auth.scheme.name,
-          value: auth.authValue || '123',
+          value: auth.authValue || 'YOUR TOKEN',
         });
       }
     }
@@ -206,28 +206,28 @@ const runAuthRequestEhancements = (
     if (isOAuth2SecurityScheme(auth.scheme)) {
       newHeaders.push({
         name: 'Authorization',
-        value: auth.authValue || 'Bearer 123',
+        value: auth.authValue || 'Bearer YOUR TOKEN',
       });
     }
 
     if (isBearerSecurityScheme(auth.scheme)) {
       newHeaders.push({
         name: 'Authorization',
-        value: `Bearer ${auth.authValue || '123'}`,
+        value: `Bearer ${auth.authValue || 'YOUR TOKEN'}`,
       });
     }
 
     if (isDigestSecurityScheme(auth.scheme)) {
       newHeaders.push({
         name: 'Authorization',
-        value: auth.authValue?.replace(/\s\s+/g, ' ').trim() || '123',
+        value: auth.authValue?.replace(/\s\s+/g, ' ').trim() || 'YOUR TOKEN',
       });
     }
 
     if (isBasicSecurityScheme(auth.scheme)) {
       newHeaders.push({
         name: 'Authorization',
-        value: `Basic ${auth.authValue || '123'}`,
+        value: `Basic ${auth.authValue || 'YOUR TOKEN'}`,
       });
     }
   });
