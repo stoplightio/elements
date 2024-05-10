@@ -203,8 +203,6 @@ export const TryIt: React.FC<TryItProps> = ({
         corsProxy,
       });
 
-      console.log(request);
-
       let response: Response | undefined;
       try {
         response = await fetch(...request);
