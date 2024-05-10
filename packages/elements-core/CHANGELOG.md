@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.5.0...@jpmorganchase/elemental-core@1.6.0) (2024-05-10)
+
+### Features
+
+- adding in collapsible sidebar
+  ([100c8c7](https://github.com/jpmorganchase/elemental/commit/100c8c7497c967c6c74e619c145adcb254352956))
+- changed auth default, removed auth from being sent with request
+  ([a4b9bd2](https://github.com/jpmorganchase/elemental/commit/a4b9bd2c77ebcf87c2250b5f3153604924d55e93))
+- remove bold from path
+  ([eb04261](https://github.com/jpmorganchase/elemental/commit/eb0426139246bfab6cbd1e0dc538653c4ea751a2))
+- remove console log
+  ([1bc5e92](https://github.com/jpmorganchase/elemental/commit/1bc5e923e6730ba71380bb7f015281a456bfcd03))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [1.5.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.4.0...@jpmorganchase/elemental-core@1.5.0) (2024-02-05)
 
 ### Features
