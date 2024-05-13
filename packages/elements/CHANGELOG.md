@@ -3,11 +3,10 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.2.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental@3.2.0...@jpmorganchase/elemental@4.2.0) (2024-03-25)
+# [4.2.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental@4.1.0...@jpmorganchase/elemental@4.2.0) (2024-05-10)
 
 ### Features
 
-- (Examples) ([46f4570](https://github.com/jpmorganchase/elemental/commit/46f4570d6b9c9de00b27805e46987fd6d35be54e))
 - adding in collapsible sidebar
   ([100c8c7](https://github.com/jpmorganchase/elemental/commit/100c8c7497c967c6c74e619c145adcb254352956))
 

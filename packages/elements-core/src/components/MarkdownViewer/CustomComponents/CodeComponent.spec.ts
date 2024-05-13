@@ -81,7 +81,7 @@ describe('parseHttpRequest', () => {
           { name: 'limit', style: HttpParamStyles.Form, schema: { default: '10' }, required: true },
           { name: 'skip', style: HttpParamStyles.Form, schema: {}, required: false },
         ],
-        headers: [{ name: 'apikey', style: HttpParamStyles.Simple, schema: { default: '123' }, required: true }],
+        headers: [{ name: 'apikey', style: HttpParamStyles.Simple, schema: { default: 'YOUR TOKEN' }, required: true }],
         path: [{ name: 'id', style: HttpParamStyles.Simple, required: true }],
         body: { contents: [{ mediaType: 'application/json', schema: { default: '{}' } }] },
       },

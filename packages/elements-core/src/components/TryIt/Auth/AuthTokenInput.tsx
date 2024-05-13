@@ -25,7 +25,7 @@ export const AuthTokenInput: React.FC<AuthTokenInputProps> = ({ type, name, valu
           aria-label={name}
           appearance="minimal"
           flex={1}
-          placeholder={type === 'oauth2' ? 'Bearer 123' : '123'}
+          placeholder={type === 'oauth2' ? 'Bearer YOUR TOKEN' : 'YOUR TOKEN'}
           value={value}
           type="text"
           required
