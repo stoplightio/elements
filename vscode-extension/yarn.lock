@@ -128,7 +128,7 @@
     util "^0.12.4"
     xml-formatter "^2.6.1"
 
-"@jpmorganchase/elemental@^4.3.0":
+"@jpmorganchase/elemental@^4.5.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@jpmorganchase/elemental/-/elemental-4.3.0.tgz#a446231958d868903855eb832799fa4094178bc5"
   integrity sha512-EF9MkCiZ/9U8YRCRDIFASyCg4iIDJcDRHDOIxEGDWroEvolCXMUhg2s/TWAxY2BMYR8zswgq61lulqu5fqVJdg==
