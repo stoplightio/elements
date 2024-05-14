@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.6.0...@jpmorganchase/elemental-core@1.9.0) (2024-05-14)
+
+### Features
+
+- changed auth default, removed auth from being sent with request
+  ([a4b9bd2](https://github.com/jpmorganchase/elemental/commit/a4b9bd2c77ebcf87c2250b5f3153604924d55e93))
+- remove console log
+  ([1bc5e92](https://github.com/jpmorganchase/elemental/commit/1bc5e923e6730ba71380bb7f015281a456bfcd03))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [1.6.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.5.0...@jpmorganchase/elemental-core@1.6.0) (2024-05-10)
 
 ### Features
