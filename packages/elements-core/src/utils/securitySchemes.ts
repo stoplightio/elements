@@ -41,7 +41,7 @@ export function getOptionalAuthDescription() {
 function getApiKeyDescription(inProperty: 'header' | 'cookie' | 'query', name: string) {
   return `An API key is a token that you provide when making API calls. Include the token in a ${inProperty} parameter called \`${name}\`.
 
-  Example: ${inProperty === 'query' ? `\`?${name}=123\`` : `\`${name}: 123\``}`;
+  Example: ${inProperty === 'query' ? `\`?${name}=YOUR TOKEN\`` : `\`${name}: YOUR TOKEN\``}`;
 }
 
 function getBasicAuthDescription() {
@@ -55,13 +55,13 @@ function getBasicAuthDescription() {
 function getBearerAuthDescription() {
   return `Provide your bearer token in the Authorization header when making requests to protected resources.
 
-  Example: \`Authorization: Bearer 123\``;
+  Example: \`Authorization: Bearer YOUR TOKEN\``;
 }
 
 function getDigestAuthDescription() {
   return `Provide your encrypted digest scheme data in the Authorization header when making requests to protected resources.
 
-  Example: \`Authorization: Digest username=guest, realm="test", nonce="2", uri="/uri", response="123"\``;
+  Example: \`Authorization: Digest username=guest, realm="test", nonce="2", uri="/uri", response="YOUR TOKEN"\``;
 }
 
 function getOAuthDescription(scheme: IOauth2SecurityScheme) {
