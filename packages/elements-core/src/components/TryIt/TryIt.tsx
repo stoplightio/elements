@@ -338,7 +338,7 @@ export const TryIt: React.FC<TryItProps> = ({
     );
   } else {
     tryItPanelElem = (
-      <Box className="TryItPanel" bg="canvas-100" rounded="lg">
+      <Box className="TryItPanel" bg="canvas-100">
         {tryItPanelContents}
       </Box>
     );
