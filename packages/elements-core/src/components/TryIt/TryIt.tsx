@@ -404,12 +404,12 @@ export const TryIt: React.FC<TryItProps> = ({
             <Panel.Titlebar className="global_example_menu">
               <ExampleMenu examples={allUniqueExampleKeys} />
             </Panel.Titlebar>
-            <Box bg="canvas-100" rounded="lg">
+            <Box className="TryItPanel" bg="canvas-100">
               {tryItPanelContents}
             </Box>
           </Panel>
         ) : (
-          <Box bg="canvas-100" rounded="lg">
+          <Box className="TryItPanel" bg="canvas-100">
             {tryItPanelContents}
           </Box>
         )}
