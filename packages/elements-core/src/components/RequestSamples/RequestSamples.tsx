@@ -6,7 +6,7 @@ import React, { useMemo } from 'react';
 
 import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
-import { CodeExampleOverride } from './extractCodeExampleOverrides';
+import { CodeSampleOverride } from './extractCodeSamplesOverrides';
 import { getConfigFor, requestSampleConfigs } from './requestSampleConfigs';
 
 export interface RequestSamplesProps {
@@ -17,7 +17,7 @@ export interface RequestSamplesProps {
   /**
    * The list of code examples to override the generated ones.
    */
-  codeExampleOverrides?: CodeExampleOverride[];
+  codeSampleOverrides?: CodeSampleOverride[];
   /**
    * True when embedded in TryIt
    */
@@ -35,7 +35,7 @@ const fallbackText = 'Unable to generate code example';
  * The programming language can be selected by the user and is remembered across instances and remounts.
  */
 export const RequestSamples = React.memo<RequestSamplesProps>(
-  ({ request, embeddedInMd = false, codeExampleOverrides = [] }) => {
+  ({ request, embeddedInMd = false, codeSampleOverrides = [] }) => {
     const [selectedLanguage, setSelectedLanguage] = useAtom(selectedLanguageAtom);
     const [selectedLibrary, setSelectedLibrary] = useAtom(selectedLibraryAtom);
 
@@ -47,10 +47,10 @@ export const RequestSamples = React.memo<RequestSamplesProps>(
     const [requestSample, setRequestSample] = React.useState<string | null>(null);
     React.useEffect(() => {
       let isStale = false;
-      let selectedCodeExampleOverride: string | undefined;
+      let selectedCodeSampleOverride: string | undefined;
 
-      if (codeExampleOverrides.length > 0) {
-        const codeExampleOverride = codeExampleOverrides.find(override => {
+      if (codeSampleOverrides.length > 0) {
+        const codeSampleOverride = codeSampleOverrides.find(override => {
           if (override.label) {
             return (
               override.lang.toLowerCase() === httpSnippetLanguage && override.label.toLowerCase() === httpSnippetLibrary
@@ -58,14 +58,14 @@ export const RequestSamples = React.memo<RequestSamplesProps>(
           }
           return override.lang.toLowerCase() === httpSnippetLanguage;
         });
-        if (codeExampleOverride) {
-          selectedCodeExampleOverride = codeExampleOverride.source;
+        if (codeSampleOverride) {
+          selectedCodeSampleOverride = codeSampleOverride.source;
         }
       }
 
-      if (selectedCodeExampleOverride) {
+      if (selectedCodeSampleOverride) {
         if (!isStale) {
-          setRequestSample(selectedCodeExampleOverride);
+          setRequestSample(selectedCodeSampleOverride);
         }
       } else {
         convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request)
@@ -84,7 +84,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(
       return () => {
         isStale = true;
       };
-    }, [request, httpSnippetLanguage, httpSnippetLibrary, codeExampleOverrides]);
+    }, [request, httpSnippetLanguage, httpSnippetLibrary, codeSampleOverrides]);
 
     const menuItems = useMemo(() => {
       const items: MenuItems = Object.entries(requestSampleConfigs).map(([language, config]) => {

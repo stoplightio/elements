@@ -1,11 +1,11 @@
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 
-export const codeExamples: IHttpOperation = {
-  id: '?code-examples-id?',
-  iid: 'PUT_codeExamples',
+export const xcodeSamples: IHttpOperation = {
+  id: '?code-samples-id?',
+  iid: 'PUT_codeSamples',
   method: 'put',
   path: '/todos/{todoId}',
-  summary: 'Update Todo with code example overrides',
+  summary: 'Update Todo with code sample overrides',
   'x-codeSamples': [
     {
       lang: 'shell',

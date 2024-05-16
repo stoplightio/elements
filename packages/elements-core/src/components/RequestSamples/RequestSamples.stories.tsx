@@ -29,7 +29,7 @@ HoistedStory.storyName = 'RequestSamples';
 export const RequestSampleWithOverrides = Template.bind({});
 
 RequestSampleWithOverrides.args = {
-  codeExampleOverrides: [
+  codeSampleOverrides: [
     {
       lang: 'shell',
       label: 'cURL',

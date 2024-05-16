@@ -1,5 +1,5 @@
-import { codeExamples } from '../../../__fixtures__/operations/code-examples';
 import { httpOperation } from '../../../__fixtures__/operations/put-todos';
+import { xcodeSamples } from '../../../__fixtures__/operations/x-code-samples';
 import { createStoriesForDocsComponent } from '../story-helper';
 import { HttpOperation } from './HttpOperation';
 
@@ -9,7 +9,7 @@ export default meta;
 
 export const Story = createHoistedStory({ data: httpOperation, layoutOptions: { compact: 600 } });
 
-export const StoryWithCodeExampleOverrides = createHoistedStory({
-  data: codeExamples,
+export const StoryWithCodeSampleOverrides = createHoistedStory({
+  data: xcodeSamples,
   layoutOptions: { compact: 600 },
 });

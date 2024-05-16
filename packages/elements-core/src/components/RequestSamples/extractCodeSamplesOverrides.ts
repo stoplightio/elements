@@ -6,7 +6,7 @@ import { isHttpOperation } from '../../utils/guards';
 // Based on Redocly
 // https://redocly.com/docs/api-reference-docs/specification-extensions/x-code-samples/
 
-export type CodeExampleOverride = {
+export type CodeSampleOverride = {
   /**
    * Code sample language.
    */
@@ -21,17 +21,17 @@ export type CodeExampleOverride = {
   source: string;
 };
 
-export const extractCodeExampleOverrides = (obj: unknown): CodeExampleOverride[] => {
+export const extractCodeSampleOverrides = (obj: unknown): CodeSampleOverride[] => {
   if (!isHttpOperation(obj)) {
     return [];
   }
 
-  const codeExamples = obj['x-codeSamples'];
-  if (!Array.isArray(codeExamples)) {
+  const codeSamples = obj['x-codeSamples'];
+  if (!Array.isArray(codeSamples)) {
     return [];
   }
 
-  return codeExamples.reduce((extracted, item) => {
+  return codeSamples.reduce((extracted, item) => {
     if (isPlainObject(item) && isString(item['lang']) && isString(item['source'])) {
       extracted.push({
         lang: item['lang'],
