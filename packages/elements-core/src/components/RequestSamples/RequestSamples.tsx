@@ -6,23 +6,8 @@ import React, { useMemo } from 'react';
 
 import { persistAtom } from '../../utils/jotai/persistAtom';
 import { convertRequestToSample } from './convertRequestToSample';
+import { CodeExampleOverride } from './extractCodeExampleOverrides';
 import { getConfigFor, requestSampleConfigs } from './requestSampleConfigs';
-
-export type CodeExampleOverride = {
-  /**
-   * Code sample language.
-   */
-  lang: string;
-  /**
-   * Code sample label, for example Node or Python2.7, optional, lang is used by default
-   */
-  label?: string;
-  /**
-   * Code sample source code
-   */
-  source: string;
-};
-
 
 export interface RequestSamplesProps {
   /**
@@ -32,7 +17,7 @@ export interface RequestSamplesProps {
   /**
    * The list of code examples to override the generated ones.
    */
-  codeExampleOverrides: CodeExampleOverride[];
+  codeExampleOverrides?: CodeExampleOverride[];
   /**
    * True when embedded in TryIt
    */
@@ -49,125 +34,126 @@ const fallbackText = 'Unable to generate code example';
  *
  * The programming language can be selected by the user and is remembered across instances and remounts.
  */
-export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embeddedInMd = false, codeExampleOverrides = [] }) => {
-  const [selectedLanguage, setSelectedLanguage] = useAtom(selectedLanguageAtom);
-  const [selectedLibrary, setSelectedLibrary] = useAtom(selectedLibraryAtom);
+export const RequestSamples = React.memo<RequestSamplesProps>(
+  ({ request, embeddedInMd = false, codeExampleOverrides = [] }) => {
+    const [selectedLanguage, setSelectedLanguage] = useAtom(selectedLanguageAtom);
+    const [selectedLibrary, setSelectedLibrary] = useAtom(selectedLibraryAtom);
 
-  const { httpSnippetLanguage, httpSnippetLibrary, mosaicCodeViewerLanguage } = getConfigFor(
-    selectedLanguage,
-    selectedLibrary,
-  );
+    const { httpSnippetLanguage, httpSnippetLibrary, mosaicCodeViewerLanguage } = getConfigFor(
+      selectedLanguage,
+      selectedLibrary,
+    );
 
-  const [requestSample, setRequestSample] = React.useState<string | null>(null);
-  React.useEffect(() => {
-    let isStale = false;
-    let selectedCodeExampleOverride: string | undefined;
+    const [requestSample, setRequestSample] = React.useState<string | null>(null);
+    React.useEffect(() => {
+      let isStale = false;
+      let selectedCodeExampleOverride: string | undefined;
 
-    if (codeExampleOverrides.length > 0) {
-      const codeExampleOverride = codeExampleOverrides.find(override => {
-        if (override.label) {
-          return (
-            override.lang.toLowerCase() === httpSnippetLanguage && override.label.toLowerCase() === httpSnippetLibrary
-          );
-        }
-        return override.lang.toLowerCase() === httpSnippetLanguage;
-      });
-      if (codeExampleOverride) {
-        selectedCodeExampleOverride = codeExampleOverride.source;
-      }
-    }
-
-    if (selectedCodeExampleOverride) {
-      if (!isStale) {
-          setRequestSample(selectedCodeExampleOverride);
-      }
-    } else {
-      convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request)
-        .then(example => {
-          if (!isStale) {
-            setRequestSample(example);
+      if (codeExampleOverrides.length > 0) {
+        const codeExampleOverride = codeExampleOverrides.find(override => {
+          if (override.label) {
+            return (
+              override.lang.toLowerCase() === httpSnippetLanguage && override.label.toLowerCase() === httpSnippetLibrary
+            );
           }
-        })
-        .catch(() => {
-          if (!isStale) {
-            setRequestSample(fallbackText);
-          }
+          return override.lang.toLowerCase() === httpSnippetLanguage;
         });
-    }
+        if (codeExampleOverride) {
+          selectedCodeExampleOverride = codeExampleOverride.source;
+        }
+      }
 
-
-    return () => {
-      isStale = true;
-    };
-  }, [request, httpSnippetLanguage, httpSnippetLibrary, codeExampleOverrides]);
-
-  const menuItems = useMemo(() => {
-    const items: MenuItems = Object.entries(requestSampleConfigs).map(([language, config]) => {
-      const hasLibraries = config.libraries && Object.keys(config.libraries).length > 0;
-      return {
-        id: language,
-        title: language,
-        isChecked: selectedLanguage === language,
-        onPress: hasLibraries
-          ? undefined
-          : () => {
-              setSelectedLanguage(language);
-              setSelectedLibrary('');
-            },
-        children: config.libraries
-          ? Object.keys(config.libraries).map(library => ({
-              id: `${language}-${library}`,
-              title: library,
-              isChecked: selectedLanguage === language && selectedLibrary === library,
-              onPress: () => {
-                setSelectedLanguage(language);
-                setSelectedLibrary(library);
-              },
-            }))
-          : undefined,
-      };
-    });
-
-    return items;
-  }, [selectedLanguage, selectedLibrary, setSelectedLanguage, setSelectedLibrary]);
-
-  return (
-    <Panel rounded={embeddedInMd ? undefined : true} isCollapsible={embeddedInMd}>
-      <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
-        <Box ml={-2}>
-          <Menu
-            aria-label="Request Sample Language"
-            closeOnPress
-            items={menuItems}
-            renderTrigger={({ isOpen }) => (
-              <Button size="sm" iconRight="chevron-down" appearance="minimal" active={isOpen}>
-                Request Sample: {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
-              </Button>
-            )}
-          />
-        </Box>
-      </Panel.Titlebar>
-
-      <Panel.Content p={0}>
-        {requestSample !== null && (
-          <CodeViewer
-            aria-label={requestSample}
-            noCopyButton
-            maxHeight="400px"
-            language={mosaicCodeViewerLanguage}
-            value={requestSample}
-            style={
-              embeddedInMd
-                ? undefined
-                : // when not rendering in prose (markdown), reduce font size to be consistent with base UI
-                  {
-                    // @ts-expect-error react css typings do not allow for css variables...
-                    '--fs-code': 12,
-                  }
+      if (selectedCodeExampleOverride) {
+        if (!isStale) {
+          setRequestSample(selectedCodeExampleOverride);
+        }
+      } else {
+        convertRequestToSample(httpSnippetLanguage, httpSnippetLibrary, request)
+          .then(example => {
+            if (!isStale) {
+              setRequestSample(example);
             }
-          />
-        )}
-      </Panel.Content>
-    </Panel>
-  );
-});
+          })
+          .catch(() => {
+            if (!isStale) {
+              setRequestSample(fallbackText);
+            }
+          });
+      }
+
+      return () => {
+        isStale = true;
+      };
+    }, [request, httpSnippetLanguage, httpSnippetLibrary, codeExampleOverrides]);
+
+    const menuItems = useMemo(() => {
+      const items: MenuItems = Object.entries(requestSampleConfigs).map(([language, config]) => {
+        const hasLibraries = config.libraries && Object.keys(config.libraries).length > 0;
+        return {
+          id: language,
+          title: language,
+          isChecked: selectedLanguage === language,
+          onPress: hasLibraries
+            ? undefined
+            : () => {
+                setSelectedLanguage(language);
+                setSelectedLibrary('');
+              },
+          children: config.libraries
+            ? Object.keys(config.libraries).map(library => ({
+                id: `${language}-${library}`,
+                title: library,
+                isChecked: selectedLanguage === language && selectedLibrary === library,
+                onPress: () => {
+                  setSelectedLanguage(language);
+                  setSelectedLibrary(library);
+                },
+              }))
+            : undefined,
+        };
+      });
+
+      return items;
+    }, [selectedLanguage, selectedLibrary, setSelectedLanguage, setSelectedLibrary]);
+
+    return (
+      <Panel rounded={embeddedInMd ? undefined : true} isCollapsible={embeddedInMd}>
+        <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
+          <Box ml={-2}>
+            <Menu
+              aria-label="Request Sample Language"
+              closeOnPress
+              items={menuItems}
+              renderTrigger={({ isOpen }) => (
+                <Button size="sm" iconRight="chevron-down" appearance="minimal" active={isOpen}>
+                  Request Sample: {selectedLanguage} {selectedLibrary ? ` / ${selectedLibrary}` : ''}
+                </Button>
+              )}
+            />
+          </Box>
+        </Panel.Titlebar>
+
+        <Panel.Content p={0}>
+          {requestSample !== null && (
+            <CodeViewer
+              aria-label={requestSample}
+              noCopyButton
+              maxHeight="400px"
+              language={mosaicCodeViewerLanguage}
+              value={requestSample}
+              style={
+                embeddedInMd
+                  ? undefined
+                  : // when not rendering in prose (markdown), reduce font size to be consistent with base UI
+                    {
+                      // @ts-expect-error react css typings do not allow for css variables...
+                      '--fs-code': 12,
+                    }
+              }
+            />
+          )}
+        </Panel.Content>
+      </Panel>
+    );
+  },
+);
