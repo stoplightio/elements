@@ -6,7 +6,7 @@ export const codeExamples: IHttpOperation = {
   method: 'put',
   path: '/todos/{todoId}',
   summary: 'Update Todo with code example overrides',
-  'x-codeExamples': [
+  'x-codeSamples': [
     {
       lang: 'shell',
       label: 'wGet',

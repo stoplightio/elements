@@ -3,6 +3,9 @@ import { isString } from 'lodash';
 
 import { isHttpOperation } from '../../utils/guards';
 
+// Based on Redocly
+// https://redocly.com/docs/api-reference-docs/specification-extensions/x-code-samples/
+
 export type CodeExampleOverride = {
   /**
    * Code sample language.
@@ -23,7 +26,7 @@ export const extractCodeExampleOverrides = (obj: unknown): CodeExampleOverride[]
     return [];
   }
 
-  const codeExamples = obj['x-codeExamples'];
+  const codeExamples = obj['x-codeSamples'];
   if (!Array.isArray(codeExamples)) {
     return [];
   }
@@ -32,7 +35,7 @@ export const extractCodeExampleOverrides = (obj: unknown): CodeExampleOverride[]
     if (isPlainObject(item) && isString(item['lang']) && isString(item['source'])) {
       extracted.push({
         lang: item['lang'],
-        label: isString(item['label']) ? item['label'] : undefined,
+        label: isString(item['label']) ? item['label'] : undefined, // TODO: does not support $ref objects
         source: item['source'],
       });
     }

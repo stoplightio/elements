@@ -2,8 +2,7 @@ import { Box, InvertTheme, VStack } from '@stoplight/mosaic';
 import { Request as HarRequest } from 'har-format';
 import * as React from 'react';
 
-import { isHttpOperation } from '../../utils/guards';
-import { RequestSamples } from '../RequestSamples';
+import { extractCodeExampleOverrides, RequestSamples } from '../RequestSamples';
 import { ResponseExamples, ResponseExamplesProps } from '../ResponseExamples/ResponseExamples';
 import { TryIt, TryItProps } from './TryIt';
 
@@ -13,13 +12,7 @@ export type TryItWithRequestSamplesProps = Omit<TryItProps, 'onRequestChange'> &
 export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = ({ hideTryIt, ...props }) => {
   const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
 
-  let codeExampleOverrides = [];
-  const { httpOperation } = props;
-  if (isHttpOperation(httpOperation)) {
-    if ('x-codeExamples' in httpOperation) {
-      codeExampleOverrides = httpOperation['x-codeExamples'] as any[];
-    }
-  }
+  const codeExampleOverrides = extractCodeExampleOverrides(props.httpOperation);
 
   return (
     <VStack spacing={6}>
