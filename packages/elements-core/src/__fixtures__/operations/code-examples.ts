@@ -342,5 +342,3 @@ export const codeExamples: IHttpOperation = {
     ],
   },
 } as any;
-
-export default vendorExtensions;
