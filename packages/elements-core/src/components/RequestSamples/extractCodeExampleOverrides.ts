@@ -1,6 +1,7 @@
-import { isHttpOperation } from '@stoplight/elements-core/utils/guards';
 import { isPlainObject } from '@stoplight/json';
 import { isString } from 'lodash';
+
+import { isHttpOperation } from '../../utils/guards';
 
 export type CodeExampleOverride = {
   /**
