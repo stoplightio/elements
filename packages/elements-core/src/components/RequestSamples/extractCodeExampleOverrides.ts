@@ -29,11 +29,11 @@ export const extractCodeExampleOverrides = (obj: unknown): CodeExampleOverride[]
 
   return codeExamples.reduce((extracted, item) => {
     if (isPlainObject(item) && isString(item['lang']) && isString(item['source'])) {
-      return {
+      extracted.push({
         lang: item['lang'],
         label: isString(item['label']) ? item['label'] : undefined,
         source: item['source'],
-      };
+      });
     }
 
     return extracted;
