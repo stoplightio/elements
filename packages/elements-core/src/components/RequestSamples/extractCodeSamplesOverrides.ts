@@ -26,7 +26,7 @@ export const extractCodeSampleOverrides = (obj: unknown): CodeSampleOverride[] =
     return [];
   }
 
-  const codeSamples = obj['x-codeSamples'];
+  const codeSamples = obj.extensions?.['x-codeSamples'];
   if (!Array.isArray(codeSamples)) {
     return [];
   }
