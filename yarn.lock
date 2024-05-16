@@ -3976,10 +3976,10 @@
     "@types/json-schema" "^7.0.7"
     magic-error "0.0.1"
 
-"@stoplight/json-schema-viewer@^4.15.1":
-  version "4.15.1"
-  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.15.1.tgz#6ecfe2ce65cec7b1a2dac77de70c2029361f4637"
-  integrity sha512-xvu0ctzEce2FYSrgDNYYuENlWndiELJ4f7ng39xjyBw2hMl0QoBy8JlhCrAIiRM1tVs8cmBc/ENQk7GsdJ7Ejg==
+"@stoplight/json-schema-viewer@4.16.1":
+  version "4.16.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.16.1.tgz#2e1ddb33afae9e5c46257d9bf58bb61eec9f43ca"
+  integrity sha512-gQ1v9/Dj1VP43zERuZoFMOr7RQDBZlgfF7QFh+R0sadP6W30oYFJtD7y2PG2gIQDohKElVuPjhFUbVH/81MnSg==
   dependencies:
     "@stoplight/json" "^3.20.1"
     "@stoplight/json-schema-tree" "^4.0.0"
@@ -9381,9 +9381,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 ejs@^3.1.7, ejs@^3.1.8:
-  version "3.1.9"
-  resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.9.tgz#03c9e8777fe12686a9effcef22303ca3d8eeb361"
-  integrity sha512-rC+QVNMJWv+MtPgkt0y+0rVEIdbtxVADApW9JXrUVlzHetgcyczP/E7DJmWJ4fJCZF2cPcBk0laWO9ZHMG3DmQ==
+  version "3.1.10"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.10.tgz#69ab8358b14e896f80cc39e62087b88500c3ac3b"
+  integrity sha512-UeJmFfOrAQS8OJWPZ4qtgHyWExa088/MtK5UEyoJGFH67cDEXkZSviOiKRCZ4Xij0zxI3JECgYs3oKx+AizQBA==
   dependencies:
     jake "^10.8.5"
 
