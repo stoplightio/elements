@@ -1,5 +1,5 @@
-import { httpOperation } from '../../../__fixtures__/operations/put-todos';
 import { codeExamples } from '../../../__fixtures__/operations/code-examples';
+import { httpOperation } from '../../../__fixtures__/operations/put-todos';
 import { createStoriesForDocsComponent } from '../story-helper';
 import { HttpOperation } from './HttpOperation';
 
