@@ -1,2 +1,2 @@
-export * from './extractCodeSamplesOverrides';
+export * from './extractCodeSamples';
 export * from './RequestSamples';

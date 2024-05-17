@@ -26,19 +26,31 @@ HoistedStory.args = {
 };
 HoistedStory.storyName = 'RequestSamples';
 
-export const RequestSampleWithOverrides = Template.bind({});
+export const RequestSampleWithCustomCodes = Template.bind({});
 
-RequestSampleWithOverrides.args = {
-  codeSampleOverrides: [
+RequestSampleWithCustomCodes.args = {
+  customCodeSamples: [
     {
       lang: 'shell',
       label: 'cURL',
+      lib: 'curl',
       source: 'echo "Hello, World from cURL!"',
     },
     {
       lang: 'shell',
       label: 'Wget',
+      lib: 'wget',
       source: 'echo "Hello, World from Wget!"',
+    },
+    {
+      lang: 'go',
+      label: 'Go',
+      source: 'Some go sample',
+    },
+    {
+      lang: 'rust',
+      label: 'Rust',
+      source: 'Hello rustations!',
     },
   ],
   request: {
@@ -52,4 +64,4 @@ RequestSampleWithOverrides.args = {
     queryString: [],
   },
 };
-RequestSampleWithOverrides.storyName = 'RequestSampleWithOverrides';
+RequestSampleWithCustomCodes.storyName = 'RequestSampleWithCustomCodes';

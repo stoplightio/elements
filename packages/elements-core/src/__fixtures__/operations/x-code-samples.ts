@@ -5,17 +5,19 @@ export const xcodeSamples: IHttpOperation = {
   iid: 'PUT_codeSamples',
   method: 'put',
   path: '/todos/{todoId}',
-  summary: 'Update Todo with code sample overrides',
+  summary: 'Update Todo with code samples',
   extensions: {
     'x-codeSamples': [
       {
         lang: 'shell',
+        lib: 'wget',
         label: 'wGet',
         source:
           'wget \'https://api.stoplight.io/todos/1\' --header=\'Content-Type: application/json\' --header=\'X-Stoplight-Resolver: true\' --header=\'b-account-id: account-id-default\' --header=\'account-id: account-id-default\' --header=\'message-id: example value\' --header=\'message-id: another example\' --header=\'message-id: something else\' --data-raw \'{"name":"string","completed":true,"id":0,"completed_at":"2021-06-30T14:59:00Z","created_at":"2021-06-30T14:59:00Z","updated_at":"2021-06-30T14:59:00Z","user":{"name":"string","age":0,"type":"STANDARD"}}\'',
       },
       {
-        lang: 'Shell',
+        lang: 'shell',
+        lib: 'curl',
         source:
           'curl \'https://api.stoplight.io/todos/1\' --header=\'Content-Type: application/json\' --header=\'X-Stoplight-Resolver: true\' --header=\'b-account-id: account-id-default\' --header=\'account-id: account-id-default\' --header=\'message-id: example value\' --header=\'message-id: another example\' --header=\'message-id: something else\' --data-raw \'{"name":"string","completed":true,"id":0,"completed_at":"2021-06-30T14:59:00Z","created_at":"2021-06-30T14:59:00Z","updated_at":"2021-06-30T14:59:00Z","user":{"name":"string","age":0,"type":"STANDARD"}}\'',
       },

@@ -7,7 +7,7 @@ import * as React from 'react';
 import { HttpMethodColors } from '../../constants';
 import { isHttpOperation, isHttpWebhookOperation } from '../../utils/guards';
 import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/IServer';
-import { extractCodeSampleOverrides, RequestSamples } from '../RequestSamples';
+import { extractCodeSamples, RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
@@ -115,7 +115,7 @@ export const TryIt: React.FC<TryItProps> = ({
     parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
   );
 
-  const codeSampleOverrides = extractCodeSampleOverrides(httpOperation);
+  const customCodeSamples = extractCodeSamples(httpOperation);
 
   const getValues = () =>
     Object.keys(bodyParameterValues)
@@ -343,7 +343,7 @@ export const TryIt: React.FC<TryItProps> = ({
     <Box rounded="lg" overflowY="hidden">
       {tryItPanelElem}
       {requestData && embeddedInMd && (
-        <RequestSamples request={requestData} codeSampleOverrides={codeSampleOverrides} embeddedInMd />
+        <RequestSamples request={requestData} customCodeSamples={customCodeSamples} embeddedInMd />
       )}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}

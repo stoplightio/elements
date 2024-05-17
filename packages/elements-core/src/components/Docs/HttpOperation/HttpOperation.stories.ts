@@ -9,7 +9,7 @@ export default meta;
 
 export const Story = createHoistedStory({ data: httpOperation, layoutOptions: { compact: 600 } });
 
-export const StoryWithCodeSampleOverrides = createHoistedStory({
+export const StoryWithCustomCodeSamples = createHoistedStory({
   data: xcodeSamples,
   layoutOptions: { compact: 600 },
 });
