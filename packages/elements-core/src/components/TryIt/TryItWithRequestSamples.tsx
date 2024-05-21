@@ -3,7 +3,7 @@ import { Request as HarRequest } from 'har-format';
 import * as React from 'react';
 
 import ExamplesContext from '../../context/ExamplesContext';
-import { RequestSamples } from '../RequestSamples';
+import { extractCodeSamples, RequestSamples } from '../RequestSamples';
 import { ResponseExamples, ResponseExamplesProps } from '../ResponseExamples/ResponseExamples';
 import { TryIt, TryItProps } from './TryIt';
 
@@ -18,6 +18,7 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = (
   const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
 
   const [globalSelectedExample, setGlobalSelectedExample] = React.useState('');
+  const customCodeSamples = extractCodeSamples(props.httpOperation);
 
   return (
     <ExamplesContext.Provider value={{ globalSelectedExample, setGlobalSelectedExample, hideInlineExamples }}>
@@ -30,7 +31,7 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = (
           </InvertTheme>
         )}
 
-        {requestData && <RequestSamples request={requestData} />}
+        {requestData && <RequestSamples request={requestData} customCodeSamples={customCodeSamples} />}
 
         <ResponseExamples {...props} />
       </VStack>
