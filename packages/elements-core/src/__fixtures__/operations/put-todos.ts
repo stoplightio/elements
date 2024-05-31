@@ -85,6 +85,15 @@ export const httpOperation: IHttpOperation = {
                         minimum: 0,
                         maximum: 150,
                       },
+                      plan: {
+                        enum: ['FREE', 'BASIC', 'DELUXE'],
+                        // @ts-ignore
+                        'x-enum-descriptions': {
+                          FREE: 'A happy customer',
+                          BASIC: 'Just what is needed',
+                          DELUXE: 'Big bucks',
+                        },
+                      },
                     },
                     required: ['name', 'age'],
                     description: 'Here lies the user model',

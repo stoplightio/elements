@@ -762,8 +762,8 @@ describe('HttpOperation', () => {
         </ElementsOptionsProvider>,
       );
 
-      expect(screen.queryByRole('columnheader', { name: /Enum value/i })).toBeInTheDocument();
-      expect(screen.queryByRole('columnheader', { name: /Description/i })).toBeInTheDocument();
+      expect(screen.queryAllByRole('columnheader', { name: /Enum value/i })).toHaveLength(2);
+      expect(screen.queryAllByRole('columnheader', { name: /Description/i })).toHaveLength(2);
 
       expect(screen.queryByText('A reminder')).toBeInTheDocument();
       expect(screen.queryByText('A task')).toBeInTheDocument();
