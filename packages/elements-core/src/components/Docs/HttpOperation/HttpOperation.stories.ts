@@ -1,4 +1,5 @@
 import { httpOperation } from '../../../__fixtures__/operations/put-todos';
+import { xcodeSamples } from '../../../__fixtures__/operations/x-code-samples';
 import { createStoriesForDocsComponent } from '../story-helper';
 import { renderExtensionRenderer } from '../story-renderer-helper';
 import { HttpOperation } from './HttpOperation';
