@@ -11,6 +11,7 @@ import {
   withRouter,
   withStyles,
 } from '@jpmorganchase/elemental-core';
+import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';
@@ -104,6 +105,11 @@ export interface CommonAPIProps extends RoutingProps {
    */
   maxRefDepth?: number;
 
+  /**
+   * Allows to define renderers for vendor extensions
+   */
+  renderExtensionAddon?: ExtensionAddonRenderer;
+
   tryItOutDefaultServer?: string;
   useCustomNav?: boolean;
 }
@@ -125,6 +131,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCredentialsPolicy,
     tryItCorsProxy,
     maxRefDepth,
+    renderExtensionAddon,
     tryItOutDefaultServer,
     useCustomNav,
   } = props;
@@ -194,6 +201,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          renderExtensionAddon={renderExtensionAddon}
           location={location}
           tryItOutDefaultServer={tryItOutDefaultServer}
         />
@@ -210,6 +218,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          renderExtensionAddon={renderExtensionAddon}
           tryItOutDefaultServer={tryItOutDefaultServer}
           useCustomNav={useCustomNav}
           layout={layout}
@@ -226,6 +235,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          renderExtensionAddon={renderExtensionAddon}
           compact={isResponsiveLayoutEnabled}
         />
       )}

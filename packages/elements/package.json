@@ -67,7 +67,7 @@
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.53.4",
     "@stoplight/types": "^14.1.1",
-    "@stoplight/yaml": "^4.2.3",
+    "@stoplight/yaml": "^4.3.0",
     "classnames": "^2.2.6",
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",

@@ -1,4 +1,5 @@
 import {
+  ElementsOptionsProvider,
   ExportButtonProps,
   Logo,
   ParsedDocs,
@@ -7,6 +8,7 @@ import {
   TableOfContents,
   TableOfContentsItem,
 } from '@jpmorganchase/elemental-core';
+import { ExtensionAddonRenderer } from '@jpmorganchase/elemental-core/components/Docs';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
@@ -26,6 +28,7 @@ type SidebarLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
+  renderExtensionAddon?: ExtensionAddonRenderer;
   tryItOutDefaultServer?: string;
   useCustomNav?: boolean;
   layout?: 'sidebar' | 'drawer';
@@ -42,6 +45,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  renderExtensionAddon,
   tryItOutDefaultServer,
   useCustomNav,
   layout,
@@ -87,18 +91,21 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   return (
     <SidebarLayout ref={container} sidebar={sidebar} renderSideBar={!useCustomNav} layout={layout}>
       {node && (
-        <ParsedDocs
-          key={pathname}
-          uri={pathname}
-          node={node}
-          nodeTitle={node.name}
-          layoutOptions={layoutOptions}
-          location={location}
-          exportProps={exportProps}
-          tryItCredentialsPolicy={tryItCredentialsPolicy}
-          tryItCorsProxy={tryItCorsProxy}
-          tryItOutDefaultServer={tryItOutDefaultServer}
-        />
+        <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
+          <ParsedDocs
+            key={pathname}
+            uri={pathname}
+            node={node}
+            nodeTitle={node.name}
+            layoutOptions={layoutOptions}
+            location={location}
+            exportProps={exportProps}
+            tryItCredentialsPolicy={tryItCredentialsPolicy}
+            tryItCorsProxy={tryItCorsProxy}
+            renderExtensionAddon={renderExtensionAddon}
+            tryItOutDefaultServer={tryItOutDefaultServer}
+          />
+        </ElementsOptionsProvider>
       )}
     </SidebarLayout>
   );

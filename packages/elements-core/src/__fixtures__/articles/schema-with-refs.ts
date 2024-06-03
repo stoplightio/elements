@@ -56,6 +56,19 @@ This is bundled schema with refs
         "property3": {
           "type": "boolean",
           "description": "Property 3"
+        },
+        "property4": {
+          "type": "string",
+          "enum": [
+            "BUSINESS",
+            "PERSONAL",
+            "OTHER"
+          ],
+          "x-enum-descriptions": {
+            "BUSINESS": "Enum description for BUSINESS",
+            "PERSONAL": "Enum description for PERSONAL",
+            "OTHER": "Enum description for OTHER"
+          }
         }
       }
     }

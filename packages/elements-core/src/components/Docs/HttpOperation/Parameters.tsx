@@ -34,7 +34,7 @@ const defaultStyle = {
 } as const;
 
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
 
   const schema = React.useMemo(
@@ -51,6 +51,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
       schema={schema}
       disableCrumbs
       nodeHasChanged={nodeHasChanged}
+      renderExtensionAddon={renderExtensionAddon}
     />
   );
 };
