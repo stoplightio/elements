@@ -8,6 +8,7 @@ import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/si
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
+import { renderExtensionRenderer } from './story-helper';
 
 export default {
   title: 'Public/API',
@@ -107,3 +108,10 @@ Instagram.args = {
   apiDescriptionUrl: 'https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml',
 };
 Instagram.storyName = 'Instagram';
+
+export const WithExtensionRenderer = Template.bind({});
+WithExtensionRenderer.args = {
+  renderExtensionAddon: renderExtensionRenderer,
+  apiDescriptionDocument: zoomApiYaml,
+};
+WithExtensionRenderer.storyName = 'With Extension Renderer';

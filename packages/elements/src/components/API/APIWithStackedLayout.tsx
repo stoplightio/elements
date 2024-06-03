@@ -6,6 +6,7 @@ import {
   ParsedDocs,
   TryItWithRequestSamples,
 } from '@stoplight/elements-core';
+import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Heading, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
@@ -33,6 +34,7 @@ type StackedLayoutProps = {
   tryItCorsProxy?: string;
   showPoweredByLink?: boolean;
   location: Location;
+  renderExtensionAddon?: ExtensionAddonRenderer;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode | WebhookNode) => {
@@ -73,6 +75,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  renderExtensionAddon,
   showPoweredByLink = true,
   location,
 }) => {
@@ -93,6 +96,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
               layoutOptions={{ showPoweredByLink, hideExport }}
               exportProps={exportProps}
               tryItCredentialsPolicy={tryItCredentialsPolicy}
+              renderExtensionAddon={renderExtensionAddon}
             />
           </Box>
           {operationGroups.length > 0 && webhookGroups.length > 0 ? <Heading size={2}>Endpoints</Heading> : null}

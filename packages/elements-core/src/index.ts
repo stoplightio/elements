@@ -1,4 +1,4 @@
-export { Docs, DocsProps, ParsedDocs } from './components/Docs';
+export { Docs, DocsProps, ExtensionAddonRenderer, ExtensionRowProps, ParsedDocs } from './components/Docs';
 export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { ExportButton, ExportButtonProps } from './components/Docs/HttpService/ExportButton';
 export { ResponsiveSidebarLayout } from './components/Layout/ResponsiveSidebarLayout';
@@ -26,6 +26,7 @@ export { TryIt, TryItProps, TryItWithRequestSamples, TryItWithRequestSamplesProp
 export { HttpMethodColors, NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName } from './constants';
 export { MockingProvider } from './containers/MockingProvider';
 export { InlineRefResolverProvider } from './context/InlineRefResolver';
+export { ElementsOptionsProvider } from './context/Options';
 export { PersistenceContextProvider, withPersistenceBoundary } from './context/Persistence';
 export { RouterTypeContext } from './context/RouterType';
 export { withMosaicProvider } from './hoc/withMosaicProvider';

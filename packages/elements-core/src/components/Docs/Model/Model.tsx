@@ -16,6 +16,7 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { DeprecatedBadge, InternalBadge } from '../HttpOperation/Badges';
 import { ExportButton } from '../HttpService/ExportButton';
+import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 
 export type ModelProps = DocsComponentProps<JSONSchema7>;
@@ -29,7 +30,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 }) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
@@ -77,6 +78,8 @@ const ModelComponent: React.FC<ModelProps> = ({
         </Box>
       )}
 
+      <NodeVendorExtensions data={data} />
+
       {isCompact && modelExamples}
 
       <JsonSchemaViewer
@@ -84,6 +87,7 @@ const ModelComponent: React.FC<ModelProps> = ({
         maxRefDepth={maxRefDepth}
         schema={getOriginalObject(data)}
         nodeHasChanged={nodeHasChanged}
+        renderExtensionAddon={renderExtensionAddon}
         skipTopLevelDescription
       />
     </VStack>

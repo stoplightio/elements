@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { useOptionsCtx } from '../../../context/Options';
 import { MarkdownViewer } from '../../MarkdownViewer';
+import { ExtensionAddonRenderer } from '../Docs';
 import { SectionSubtitle, SectionTitle } from '../Sections';
 import { OperationHeader } from './HttpOperation';
 import { Request } from './Request';
@@ -17,6 +18,7 @@ export interface CallbacksProps {
 export interface CallbackProps {
   data: IHttpCallbackOperation;
   isCompact?: boolean;
+  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 export const Callbacks = ({ callbacks, isCompact }: CallbacksProps) => {
