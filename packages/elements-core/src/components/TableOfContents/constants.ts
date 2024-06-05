@@ -38,4 +38,7 @@ export const NODE_META_COLOR = {
   put: 'warning',
   patch: 'warning',
   delete: 'danger',
+  head: '#9061F9',
+  options: '#0D5AA7',
+  trace: '#0D0B28',
 };
