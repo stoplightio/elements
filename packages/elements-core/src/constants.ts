@@ -80,6 +80,9 @@ export const HttpMethodColors = {
   put: 'warning',
   patch: 'warning',
   delete: 'danger',
+  head: '#9061F9',
+  options: '#0D5AA7',
+  trace: '#0D0B28',
 } as const;
 
 export const HttpCodeColor = {
