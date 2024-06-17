@@ -87,7 +87,11 @@ interface BaseDocsProps {
      * @default false
      */
     hideTryIt?: boolean;
-
+    /**
+     * SAllows to hide RequestSamples component
+     * @default false
+     */
+    hideSamples?: boolean;
     /**
      * Shows only operation document without right column
      * @default false

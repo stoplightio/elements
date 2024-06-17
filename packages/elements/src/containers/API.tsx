@@ -56,10 +56,19 @@ export interface CommonAPIProps extends RoutingProps {
   layout?: 'sidebar' | 'stacked' | 'responsive';
   logo?: string;
 
-  /**
-   * Allows hiding the TryIt component
-   */
   hideTryIt?: boolean;
+  /**
+   * SAllows to hide RequestSamples component
+   * @default false
+   */
+
+  hideSamples?: boolean;
+  /**
+   * Shows only operation document without right column
+   * @default false
+   */
+
+  hideTryItPanel?: boolean;
 
   /**
    * Hides schemas from being displayed in Table of Contents
@@ -114,7 +123,9 @@ export const APIImpl: React.FC<APIProps> = props => {
     layout = 'sidebar',
     apiDescriptionUrl = '',
     logo,
+    hideTryItPanel,
     hideTryIt,
+    hideSamples,
     hideSchemas,
     hideInternal,
     hideExport,
@@ -184,6 +195,8 @@ export const APIImpl: React.FC<APIProps> = props => {
         <APIWithStackedLayout
           serviceNode={serviceNode}
           hideTryIt={hideTryIt}
+          hideSamples={hideSamples}
+          hideTryItPanel={hideTryItPanel}
           hideExport={hideExport}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
@@ -196,7 +209,9 @@ export const APIImpl: React.FC<APIProps> = props => {
         <APIWithSidebarLayout
           logo={logo}
           serviceNode={serviceNode}
+          hideTryItPanel={hideTryItPanel}
           hideTryIt={hideTryIt}
+          hideSamples={hideSamples}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}
@@ -210,7 +225,9 @@ export const APIImpl: React.FC<APIProps> = props => {
         <APIWithResponsiveSidebarLayout
           logo={logo}
           serviceNode={serviceNode}
+          hideTryItPanel={hideTryItPanel}
           hideTryIt={hideTryIt}
+          hideSamples={hideSamples}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}
