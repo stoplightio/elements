@@ -243,7 +243,7 @@ describe('TryIt', () => {
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      expect(limitField).toHaveTextContent('select an option');
+      expect(limitField).toHaveTextContent('defaults to: 1');
 
       const typeField = screen.getByLabelText('type');
       expect(typeField).toHaveTextContent('something');

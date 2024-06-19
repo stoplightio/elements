@@ -1,7 +1,12 @@
 import { JSONSchema7Definition } from 'json-schema';
 
 import { httpOperation } from '../../../__fixtures__/operations/put-todos';
-import { initialParameterValues, mapSchemaPropertiesToParameters } from './parameter-utils';
+import {
+  getPlaceholderForSelectedParameter,
+  initialParameterValues,
+  mapSchemaPropertiesToParameters,
+  ParameterSpec,
+} from './parameter-utils';
 
 describe('Parameter Utils', () => {
   describe('initialParameterValues.name', () => {
@@ -79,6 +84,35 @@ describe('Parameter Utils', () => {
           name: 'boolean',
         },
       ]);
+    });
+  });
+
+  describe('getPlaceholderForSelectedParameter', () => {
+    let parameter: ParameterSpec;
+
+    it('should return placeholder text when parameterValue is truthy and isDefault is true', () => {
+      parameter = {
+        name: 'name',
+        schema: {
+          default: 1,
+          enum: [0, 1, 3],
+        },
+      };
+
+      const result = getPlaceholderForSelectedParameter(parameter);
+      expect(result).toEqual(`defaults to: ${parameter?.schema?.default}`);
+    });
+
+    it('should return undefined when isDefault is false', () => {
+      parameter = {
+        name: 'name',
+        schema: {
+          enum: [0, 1, 3],
+        },
+      };
+
+      const result = getPlaceholderForSelectedParameter(parameter);
+      expect(result).toBeUndefined();
     });
   });
 });

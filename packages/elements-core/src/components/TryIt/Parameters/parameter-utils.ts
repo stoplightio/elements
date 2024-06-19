@@ -68,6 +68,14 @@ export function getPlaceholderForParameter(parameter: ParameterSpec) {
   return String(parameter.schema?.type ?? '');
 }
 
+export function getPlaceholderForSelectedParameter(parameter: ParameterSpec) {
+  const { value: parameterValue, isDefault } = getValueForParameter(parameter);
+
+  if (parameterValue && isDefault) return `defaults to: ${parameterValue}`;
+
+  return undefined;
+}
+
 function retrieveDefaultFromSchema(parameter: ParameterSpec) {
   const defaultValue = parameter.schema?.default;
   return isObject(defaultValue) ? safeStringify(defaultValue) : defaultValue;
