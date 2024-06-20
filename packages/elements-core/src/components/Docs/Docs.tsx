@@ -88,7 +88,7 @@ interface BaseDocsProps {
      */
     hideTryIt?: boolean;
     /**
-     * SAllows to hide RequestSamples component
+     * Allows to hide RequestSamples component
      * @default false
      */
     hideSamples?: boolean;

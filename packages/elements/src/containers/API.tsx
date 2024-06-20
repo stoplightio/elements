@@ -58,7 +58,7 @@ export interface CommonAPIProps extends RoutingProps {
 
   hideTryIt?: boolean;
   /**
-   * SAllows to hide RequestSamples component
+   * Allows to hide RequestSamples component
    * @default false
    */
 
