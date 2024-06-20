@@ -240,6 +240,7 @@ describe('TryIt', () => {
       // path param
       const completedField = screen.getByLabelText('completed');
       expect(completedField).toHaveValue('');
+      expect(completedField).toHaveTextContent('select an option');
 
       // query params
       const limitField = screen.getByLabelText('limit');
