@@ -71,7 +71,9 @@ export function getPlaceholderForParameter(parameter: ParameterSpec) {
 export function getPlaceholderForSelectedParameter(parameter: ParameterSpec) {
   const { value: parameterValue, isDefault } = getValueForParameter(parameter);
 
-  if (parameterValue && isDefault) return `defaults to: ${parameterValue}`;
+  if (isDefault) {
+    return `select an option (defaults to: ${parameterValue})`;
+  }
 
   return undefined;
 }

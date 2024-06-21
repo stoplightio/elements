@@ -90,7 +90,7 @@ describe('Parameter Utils', () => {
   describe('getPlaceholderForSelectedParameter', () => {
     let parameter: ParameterSpec;
 
-    it('should return placeholder text when parameterValue is truthy and isDefault is true', () => {
+    it('should return placeholder text with default value when parameter has a default value', () => {
       parameter = {
         name: 'name',
         schema: {
@@ -100,10 +100,10 @@ describe('Parameter Utils', () => {
       };
 
       const result = getPlaceholderForSelectedParameter(parameter);
-      expect(result).toEqual(`defaults to: ${parameter?.schema?.default}`);
+      expect(result).toEqual(`select an option (defaults to: ${parameter?.schema?.default})`);
     });
 
-    it('should return undefined when isDefault is false', () => {
+    it('should return undefined when parameter does not have a default value', () => {
       parameter = {
         name: 'name',
         schema: {
