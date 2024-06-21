@@ -681,6 +681,13 @@ describe('HttpOperation', () => {
 
       unmount();
     });
+    it('should hide Samples', async () => {
+      const { unmount } = render(<HttpOperation data={httpOperation} layoutOptions={{ hideSamples: true }} />);
+
+      expect(screen.queryByText('Request Sample: Shell / cURL')).not.toBeInTheDocument();
+
+      unmount();
+    });
   });
 
   describe('Vendor Extensions', () => {
@@ -696,6 +703,7 @@ describe('HttpOperation', () => {
               hideServerInfo: true,
               hideExport: true,
               hideTryIt: true,
+              hideSamples: true,
             }}
           />
         </ElementsOptionsProvider>,
@@ -732,6 +740,7 @@ describe('HttpOperation', () => {
               hideServerInfo: true,
               hideExport: true,
               hideTryIt: true,
+              hideSamples: true,
             }}
           />
         </ElementsOptionsProvider>,
