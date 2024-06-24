@@ -103,7 +103,7 @@ describe('Parameter Utils', () => {
       expect(result).toEqual(`select an option (defaults to: ${parameter?.schema?.default})`);
     });
 
-    it('returns placeholder indicating the default value when it is present and falsy', () => {
+    it('should return placeholder text with default value when parameter has a default value, which is falsy', () => {
       parameter = {
         name: 'name',
         schema: {
