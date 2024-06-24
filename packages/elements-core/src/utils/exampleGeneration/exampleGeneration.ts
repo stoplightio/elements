@@ -54,7 +54,7 @@ export const generateExampleFromMediaTypeContent = (
   return '';
 };
 
-export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] => {
+export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: string }): Example[] => {
   const examples: Example[] = [];
 
   if (Array.isArray(schema?.examples)) {

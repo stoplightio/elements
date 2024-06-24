@@ -80,7 +80,11 @@ export const TryItResponse: React.FC<{ response: ResponseState }> = ({ response 
       <Panel.Content>
         <div>
           <div className={`sl-mb-3 sl-text-${getHttpCodeColor(response.status)}`}>
-            {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
+            {`${response.status} ${
+              response.status in HttpCodeDescriptions
+                ? HttpCodeDescriptions[response.status as keyof typeof HttpCodeDescriptions]
+                : ''
+            }`}
           </div>
           {response.bodyText && responseType && ['json', 'xml', 'text'].includes(responseType) ? (
             <ResponseCodeViewer

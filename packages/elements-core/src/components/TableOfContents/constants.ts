@@ -25,7 +25,7 @@ export const NODE_TYPE_ICON_COLOR = {
   http_service: '#D812EA',
   http_operation: '#9747FF',
   http_webhook: 'primary',
-};
+} as const;
 
 export const NODE_GROUP_ICON_COLOR = {
   http_webhook: 'primary',

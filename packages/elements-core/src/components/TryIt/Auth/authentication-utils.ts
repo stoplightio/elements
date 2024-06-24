@@ -93,10 +93,19 @@ export const usePersistedSecuritySchemeWithValues = (): [
 
   const schemeWithPersistedValue = React.useMemo(() => {
     if (!currentScheme) return undefined;
+    function getAuthValue(scheme: HttpSecuritySchemeWithValues) {
+      const key = scheme.scheme.key;
+
+      if (key in securitySchemeValues) {
+        return securitySchemeValues[key as keyof typeof securitySchemeValues];
+      } else {
+        return undefined;
+      }
+    }
     return currentScheme.map(scheme => {
       return {
         scheme: scheme.scheme,
-        authValue: securitySchemeValues[scheme.scheme.key],
+        authValue: getAuthValue(scheme),
       };
     });
   }, [currentScheme, securitySchemeValues]);

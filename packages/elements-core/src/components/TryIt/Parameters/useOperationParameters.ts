@@ -19,23 +19,31 @@ export const useRequestParameters = (httpOperation: IHttpEndpointOperation) => {
       // if the user set it to default, let's just unset it instead
       const valueToSave = value === defaultValue ? undefined : value;
       // only save if changed
-      if (prevState[name] !== valueToSave) {
+      const prevStateName = name in prevState ? prevState[name as keyof typeof prevState] : undefined;
+      if (prevStateName && prevStateName !== valueToSave) {
         return { ...prevState, [name]: valueToSave };
       }
       return prevState;
     });
   };
 
-  const parameterValuesWithDefaults = React.useMemo(
-    () =>
-      Object.fromEntries(
-        allParameters.map(parameter => [
-          parameter.name,
-          persistedParameterValues[parameter.name] ?? parameterDefaultValues[parameter.name],
-        ]),
-      ),
-    [allParameters, persistedParameterValues, parameterDefaultValues],
-  );
+  const parameterValuesWithDefaults = React.useMemo(() => {
+    function getPersistedParameterValues(parameterName: string) {
+      if (parameterName in persistedParameterValues) {
+        return persistedParameterValues[parameterName as keyof typeof persistedParameterValues];
+      } else if (parameterName in parameterDefaultValues) {
+        return parameterDefaultValues[parameterName as keyof typeof parameterDefaultValues];
+      } else {
+        return undefined;
+      }
+    }
+
+    Object.fromEntries(
+      allParameters.map(parameter => {
+        return [parameter.name, getPersistedParameterValues(parameter.name)];
+      }),
+    );
+  }, [allParameters, persistedParameterValues, parameterDefaultValues]);
 
   return {
     allParameters,
