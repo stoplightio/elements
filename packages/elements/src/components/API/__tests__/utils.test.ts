@@ -45,14 +45,14 @@ describe.each([
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(
-        serviceNode
-          ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
-          : null,
-      ).toEqual({
+      const tagGroups = serviceNode
+        ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
+        : null;
+      expect(tagGroups).toEqual({
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -86,6 +86,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -158,14 +159,14 @@ describe.each([
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(
-        serviceNode
-          ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
-          : null,
-      ).toEqual({
+      const tagGroups = serviceNode
+        ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
+        : null;
+      expect(tagGroups).toEqual({
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -207,6 +208,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -275,6 +277,7 @@ describe.each([
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -316,6 +319,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -406,6 +410,7 @@ describe.each([
         groups: [
           {
             title: 'Beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -439,6 +444,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -514,6 +520,7 @@ describe.each([
         groups: [
           {
             title: 'Beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -547,6 +554,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -906,7 +914,8 @@ describe.each([
         },
       };
 
-      expect(computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true })).toEqual([
+      const apiTree = computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true });
+      expect(apiTree).toEqual([
         {
           id: '/',
           meta: '',
@@ -972,6 +981,7 @@ describe('when grouping models', () => {
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -986,6 +996,7 @@ describe('when grouping models', () => {
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1041,6 +1052,7 @@ describe('when grouping models', () => {
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1064,6 +1076,7 @@ describe('when grouping models', () => {
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1116,6 +1129,7 @@ describe('when grouping models', () => {
         groups: [
           {
             title: 'Beta',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1130,6 +1144,7 @@ describe('when grouping models', () => {
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1182,6 +1197,7 @@ describe('when grouping models', () => {
         groups: [
           {
             title: 'Beta',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1196,6 +1212,7 @@ describe('when grouping models', () => {
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,

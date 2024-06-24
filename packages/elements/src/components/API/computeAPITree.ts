@@ -19,9 +19,10 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
   const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
   const tree: TableOfContentsItem[] = [];
 
-  //
+  // check if spec has x-tagGroups extension
   const rootVendorExtensions = Object.keys(serviceNode.data.extensions ?? {}).map(item => item.toLowerCase());
-  const isHavingTagGroupsExtension = typeof rootVendorExtensions['x-taggroups'] !== undefined;
+  const isHavingTagGroupsExtension =
+    typeof rootVendorExtensions['x-taggroups'] !== undefined && rootVendorExtensions.length > 0;
 
   tree.push({
     id: '/',

@@ -12,7 +12,7 @@ type GroupableNode = OperationNode | WebhookNode | SchemaNode;
 
 type OpenApiTagGroup = { name: string; tags: string[] };
 
-export type TagGroup<T extends GroupableNode> = { title: string; items?: T[] };
+export type TagGroup<T extends GroupableNode> = { title: string; isDivider: boolean; items?: T[] };
 
 export function computeTagGroups<T extends GroupableNode>(
   serviceNode: ServiceNode,
@@ -52,6 +52,7 @@ export function computeTagGroups<T extends GroupableNode>(
 
         groupsByTagId[tagId] = {
           title: serviceTagName || tagName,
+          isDivider: false,
           items: [node],
         };
       }
@@ -72,6 +73,7 @@ export function computeTagGroups<T extends GroupableNode>(
           } else {
             nodesByTagId[nodeTagId] = {
               title: nodeTagName,
+              isDivider: false,
               items: [node],
             };
           }
@@ -101,8 +103,16 @@ export function computeTagGroups<T extends GroupableNode>(
 
       //
       if (tagGroups.length > 0) {
+        let groupTitle = tagGroup.name;
+
+        const groupTag = rawServiceTags.find(t => t.name.toLowerCase() === tagGroup.name.toLowerCase());
+        if (groupTag && typeof groupTag['x-displayName'] !== 'undefined') {
+          groupTitle = groupTag['x-displayName'];
+        }
+
         grouped.push({
-          title: tagGroup.name,
+          title: groupTitle,
+          isDivider: true,
         });
 
         for (const entries of tagGroups) {
@@ -191,7 +201,7 @@ export const addTagGroupsToTree = <T extends GroupableNode>(
         items,
         itemsType,
       });
-    } else {
+    } else if (group.isDivider) {
       tree.push({
         title: group.title,
       });
