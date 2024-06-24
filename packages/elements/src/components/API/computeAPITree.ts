@@ -1,8 +1,8 @@
-import { OperationNode, SchemaNode, ServiceNode, WebhookNode } from '@stoplight/elements/utils/oas/types';
 import { TableOfContentsItem } from '@stoplight/elements-core';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
+import { OperationNode, SchemaNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
 import { addTagGroupsToTree, computeTagGroups, isInternal } from './utils';
 
 export interface ComputeAPITreeConfig {

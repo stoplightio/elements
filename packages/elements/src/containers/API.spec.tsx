@@ -132,9 +132,7 @@ describe('API', () => {
 
   describe('stackedLayout', () => {
     it('shows operation path and method when collapsed', async () => {
-      const { container } = render(
-        <API logo="thisisarequiredprop" layout="stacked" apiDescriptionDocument={APIDocument} />,
-      );
+      render(<API logo="thisisarequiredprop" layout="stacked" apiDescriptionDocument={APIDocument} />);
 
       const users = await screen.findByText('users');
       act(() => userEvent.click(users));
