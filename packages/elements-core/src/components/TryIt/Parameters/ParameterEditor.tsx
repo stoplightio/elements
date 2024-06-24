@@ -6,6 +6,7 @@ import { useUniqueId } from '../../../hooks/useUniqueId';
 import {
   exampleOptions,
   getPlaceholderForParameter,
+  getPlaceholderForSelectedParameter,
   parameterOptions,
   ParameterSpec,
   selectExampleOption,
@@ -55,6 +56,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
             options={parameterValueOptions}
             value={value || ''}
             onChange={onChange}
+            placeholder={getPlaceholderForSelectedParameter(parameter)}
           />
         ) : (
           <Flex flex={1}>
