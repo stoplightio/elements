@@ -5,22 +5,35 @@ import {
   TableOfContentsGroup,
   TableOfContentsItem,
 } from '@stoplight/elements-core';
-import { NodeType } from '@stoplight/types';
-import { defaults } from 'lodash';
 
 import { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
 
 type GroupableNode = OperationNode | WebhookNode | SchemaNode;
 
-export type TagGroup<T extends GroupableNode> = { title: string; items: T[] };
+type OpenApiTagGroup = { name: string; tags: string[] };
 
-export function computeTagGroups<T extends GroupableNode>(serviceNode: ServiceNode, nodeType: T['type']) {
+export type TagGroup<T extends GroupableNode> = { title: string; items?: T[] };
+
+export function computeTagGroups<T extends GroupableNode>(
+  serviceNode: ServiceNode,
+  nodeType: T['type'],
+  config: { useTagGroups: boolean },
+): { groups: TagGroup<T>[]; ungrouped: T[] } {
   const groupsByTagId: { [tagId: string]: TagGroup<T> } = {};
+  const nodesByTagId: { [tagId: string]: TagGroup<T> } = {};
   const ungrouped: T[] = [];
-
+  const { useTagGroups = false } = config ?? {};
   const lowerCaseServiceTags = serviceNode.tags.map(tn => tn.toLowerCase());
 
   const groupableNodes = serviceNode.children.filter(n => n.type === nodeType) as T[];
+
+  const rawServiceTags = serviceNode.data.tags ?? [];
+
+  const serviceExtensions = serviceNode.data.extensions ?? {};
+  const tagGroupExtensionName = Object.keys(serviceExtensions).find(item => item.toLowerCase() === 'x-taggroups');
+  const tagGroups: OpenApiTagGroup[] = tagGroupExtensionName
+    ? (serviceExtensions[tagGroupExtensionName] as OpenApiTagGroup[])
+    : [];
 
   for (const node of groupableNodes) {
     const tagName = node.tags[0];
@@ -28,21 +41,80 @@ export function computeTagGroups<T extends GroupableNode>(serviceNode: ServiceNo
     if (tagName) {
       const tagId = tagName.toLowerCase();
       if (groupsByTagId[tagId]) {
-        groupsByTagId[tagId].items.push(node);
+        groupsByTagId[tagId].items?.push(node);
       } else {
         const serviceTagIndex = lowerCaseServiceTags.findIndex(tn => tn === tagId);
-        const serviceTagName = serviceNode.tags[serviceTagIndex];
+        const rawServiceTag = rawServiceTags[serviceTagIndex];
+        let serviceTagName = serviceNode.tags[serviceTagIndex];
+        if (rawServiceTag && typeof rawServiceTag['x-displayName'] !== 'undefined') {
+          serviceTagName = rawServiceTag['x-displayName'];
+        }
+
         groupsByTagId[tagId] = {
           title: serviceTagName || tagName,
           items: [node],
         };
+      }
+
+      // Only bother collecting node-groups mapping data when tag groups are used
+      if (useTagGroups) {
+        for (const nodeTag of node.tags) {
+          const nodeTagId = nodeTag.toLowerCase();
+          const serviceTag = rawServiceTags.find(t => t.name.toLowerCase() === nodeTagId);
+
+          let nodeTagName = nodeTag;
+          if (serviceTag && typeof serviceTag['x-displayName'] !== 'undefined') {
+            nodeTagName = serviceTag['x-displayName'];
+          }
+
+          if (nodesByTagId[nodeTagId]) {
+            nodesByTagId[nodeTagId].items?.push(node);
+          } else {
+            nodesByTagId[nodeTagId] = {
+              title: nodeTagName,
+              items: [node],
+            };
+          }
+        }
       }
     } else {
       ungrouped.push(node);
     }
   }
 
-  const orderedTagGroups = Object.entries(groupsByTagId)
+  let orderedTagGroups: TagGroup<T>[] = [];
+  if (useTagGroups) {
+    let grouped: TagGroup<T>[] = [];
+    for (const tagGroup of tagGroups) {
+      if (!tagGroup.tags.length) {
+        continue;
+      }
+
+      const tagGroups = [];
+      for (const tag of tagGroup.tags) {
+        const tagGroupTagId = tag.toLowerCase();
+        const entries = nodesByTagId[tagGroupTagId];
+        if (entries) {
+          tagGroups.push(entries);
+        }
+      }
+
+      //
+      if (tagGroups.length > 0) {
+        grouped.push({
+          title: tagGroup.name,
+        });
+
+        for (const entries of tagGroups) {
+          grouped.push(entries);
+        }
+      }
+    }
+
+    return { groups: grouped, ungrouped };
+  }
+
+  orderedTagGroups = Object.entries(groupsByTagId)
     .sort(([g1], [g2]) => {
       const g1LC = g1.toLowerCase();
       const g2LC = g2.toLowerCase();
@@ -62,81 +134,6 @@ export function computeTagGroups<T extends GroupableNode>(serviceNode: ServiceNo
   return { groups: orderedTagGroups, ungrouped };
 }
 
-interface ComputeAPITreeConfig {
-  hideSchemas?: boolean;
-  hideInternal?: boolean;
-}
-
-const defaultComputerAPITreeConfig = {
-  hideSchemas: false,
-  hideInternal: false,
-};
-
-export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeConfig = {}) => {
-  const mergedConfig = defaults(config, defaultComputerAPITreeConfig);
-  const tree: TableOfContentsItem[] = [];
-
-  tree.push({
-    id: '/',
-    slug: '/',
-    title: 'Overview',
-    type: 'overview',
-    meta: '',
-  });
-
-  const hasOperationNodes = serviceNode.children.some(node => node.type === NodeType.HttpOperation);
-  if (hasOperationNodes) {
-    tree.push({
-      title: 'Endpoints',
-    });
-
-    const { groups, ungrouped } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation);
-    addTagGroupsToTree(groups, ungrouped, tree, NodeType.HttpOperation, mergedConfig.hideInternal);
-  }
-
-  const hasWebhookNodes = serviceNode.children.some(node => node.type === NodeType.HttpWebhook);
-  if (hasWebhookNodes) {
-    tree.push({
-      title: 'Webhooks',
-    });
-
-    const { groups, ungrouped } = computeTagGroups<WebhookNode>(serviceNode, NodeType.HttpWebhook);
-    addTagGroupsToTree(groups, ungrouped, tree, NodeType.HttpWebhook, mergedConfig.hideInternal);
-  }
-
-  let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
-  if (mergedConfig.hideInternal) {
-    schemaNodes = schemaNodes.filter(n => !isInternal(n));
-  }
-
-  if (!mergedConfig.hideSchemas && schemaNodes.length) {
-    tree.push({
-      title: 'Schemas',
-    });
-
-    const { groups, ungrouped } = computeTagGroups<SchemaNode>(serviceNode, NodeType.Model);
-    addTagGroupsToTree(groups, ungrouped, tree, NodeType.Model, mergedConfig.hideInternal);
-  }
-  return tree;
-};
-
-export const findFirstNodeSlug = (tree: TableOfContentsItem[]): string | void => {
-  for (const item of tree) {
-    if ('slug' in item) {
-      return item.slug;
-    }
-
-    if ('items' in item) {
-      const slug = findFirstNodeSlug(item.items);
-      if (slug) {
-        return slug;
-      }
-    }
-  }
-
-  return;
-};
-
 export const isInternal = (node: ServiceChildNode | ServiceNode): boolean => {
   const data = node.data;
 
@@ -151,13 +148,15 @@ export const isInternal = (node: ServiceChildNode | ServiceNode): boolean => {
   return !!data['x-internal'];
 };
 
-const addTagGroupsToTree = <T extends GroupableNode>(
+export const addTagGroupsToTree = <T extends GroupableNode>(
   groups: TagGroup<T>[],
   ungrouped: T[],
   tree: TableOfContentsItem[],
   itemsType: TableOfContentsGroup['itemsType'],
-  hideInternal: boolean,
+  config: { hideInternal: boolean; useTagGroups: boolean },
 ) => {
+  const { hideInternal = false } = config ?? {};
+
   // Show ungrouped nodes above tag groups
   ungrouped.forEach(node => {
     if (hideInternal && isInternal(node)) {
@@ -173,7 +172,7 @@ const addTagGroupsToTree = <T extends GroupableNode>(
   });
 
   groups.forEach(group => {
-    const items = group.items.flatMap(node => {
+    const items = group.items?.flatMap(node => {
       if (hideInternal && isInternal(node)) {
         return [];
       }
@@ -185,11 +184,16 @@ const addTagGroupsToTree = <T extends GroupableNode>(
         meta: isHttpOperation(node.data) || isHttpWebhookOperation(node.data) ? node.data.method : '',
       };
     });
-    if (items.length > 0) {
+
+    if (items && items.length > 0) {
       tree.push({
         title: group.title,
         items,
         itemsType,
+      });
+    } else {
+      tree.push({
+        title: group.title,
       });
     }
   });

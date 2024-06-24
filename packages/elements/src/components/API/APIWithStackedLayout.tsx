@@ -79,8 +79,15 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   showPoweredByLink = true,
   location,
 }) => {
-  const { groups: operationGroups } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation);
-  const { groups: webhookGroups } = computeTagGroups<WebhookNode>(serviceNode, NodeType.HttpWebhook);
+  const rootVendorExtensions = Object.keys(serviceNode.data.extensions ?? {}).map(item => item.toLowerCase());
+  const isHavingTagGroupsExtension = typeof rootVendorExtensions['x-taggroups'] !== undefined;
+
+  const { groups: operationGroups } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation, {
+    useTagGroups: isHavingTagGroupsExtension,
+  });
+  const { groups: webhookGroups } = computeTagGroups<WebhookNode>(serviceNode, NodeType.HttpWebhook, {
+    useTagGroups: isHavingTagGroupsExtension,
+  });
 
   return (
     <LocationContext.Provider value={{ location }}>
@@ -125,7 +132,7 @@ const Group = React.memo<{ group: TagGroup<OperationNode | WebhookNode> }>(({ gr
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
   const shouldExpand = React.useMemo(() => {
-    return urlHashMatches || group.items.some(item => itemMatchesHash(hash, item));
+    return urlHashMatches || group.items!.some(item => itemMatchesHash(hash, item));
   }, [group, hash, urlHashMatches]);
 
   React.useEffect(() => {
@@ -159,7 +166,7 @@ const Group = React.memo<{ group: TagGroup<OperationNode | WebhookNode> }>(({ gr
       </Flex>
 
       <Collapse isOpen={isExpanded}>
-        {group.items.map(item => {
+        {group.items!.map(item => {
           return <Item key={item.uri} item={item} />;
         })}
       </Collapse>
