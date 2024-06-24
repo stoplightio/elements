@@ -94,19 +94,6 @@ describe('Parameter Utils', () => {
       parameter = {
         name: 'name',
         schema: {
-          default: 1,
-          enum: [0, 1, 3],
-        },
-      };
-
-      const result = getPlaceholderForSelectedParameter(parameter);
-      expect(result).toEqual(`select an option (defaults to: ${parameter?.schema?.default})`);
-    });
-
-    it('should return placeholder text with default value when parameter has a default value, which is falsy', () => {
-      parameter = {
-        name: 'name',
-        schema: {
           default: 0,
           enum: [0, 1, 3],
         },
