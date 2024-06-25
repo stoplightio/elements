@@ -1,11 +1,20 @@
-import { Box, Flex, Heading, HStack, NodeAnnotation, useThemeIsDark, VStack } from '@stoplight/mosaic';
+import {
+  Box,
+  Flex,
+  Heading,
+  HStack,
+  IBackgroundColorProps,
+  NodeAnnotation,
+  useThemeIsDark,
+  VStack,
+} from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpEndpointOperation, IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
 import { useAtomValue } from 'jotai/utils';
 import * as React from 'react';
 
-import { HttpMethodColors } from '../../../constants';
+import { getHttpMethodColor } from '../../../constants';
 import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
@@ -173,7 +182,7 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
         py={1}
         px={2.5}
         rounded="lg"
-        bg={!isDark ? HttpMethodColors[method] : 'canvas-100'}
+        bg={getHttpMethodColor(method, isDark) as IBackgroundColorProps['bg']}
         color={!isDark ? 'on-primary' : 'body'}
         fontSize="lg"
         fontWeight="semibold"

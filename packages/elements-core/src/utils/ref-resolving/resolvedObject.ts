@@ -33,7 +33,7 @@ const recursivelyCreateResolvedObject = (
     get(target, name) {
       if (name === originalObjectSymbol) return currentObject;
 
-      const value = target[name];
+      const value = target[name as keyof typeof target] as object;
       const newPropertyPath = [...propertyPath, name.toString()];
 
       let resolvedValue;
@@ -74,11 +74,19 @@ const recursivelyCreateResolvedObject = (
 };
 
 export const isResolvedObjectProxy = (someObject: object): boolean => {
-  return !!someObject[originalObjectSymbol];
+  if (originalObjectSymbol in someObject) {
+    return !!someObject[originalObjectSymbol];
+  } else {
+    return false;
+  }
 };
 
 export const getOriginalObject = (resolvedObject: object): object => {
-  return resolvedObject[originalObjectSymbol] || resolvedObject;
+  if (originalObjectSymbol in resolvedObject) {
+    return resolvedObject[originalObjectSymbol] as object;
+  } else {
+    return resolvedObject;
+  }
 };
 
 export const isReference = hasRef;

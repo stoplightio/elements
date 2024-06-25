@@ -85,6 +85,16 @@ export const HttpMethodColors = {
   trace: '#0D0B28',
 } as const;
 
+export function getHttpMethodColor(method: string, isDark: boolean) {
+  if (isDark) {
+    return 'canvas-100';
+  } else if (method in HttpMethodColors) {
+    return HttpMethodColors[method as keyof typeof HttpMethodColors];
+  } else {
+    return undefined;
+  }
+}
+
 export const HttpCodeColor = {
   0: 'red',
   1: 'gray',

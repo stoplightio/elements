@@ -148,7 +148,11 @@ export const isInternal = (node: ServiceChildNode | ServiceNode): boolean => {
     return false;
   }
 
-  return !!data['x-internal'];
+  if ('x-internal' in data) {
+    return !!data['x-internal' as keyof typeof data];
+  } else {
+    return false;
+  }
 };
 
 const addTagGroupsToTree = <T extends GroupableNode>(

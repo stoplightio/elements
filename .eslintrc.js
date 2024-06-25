@@ -1,5 +1,6 @@
 module.exports = {
   extends: ['@stoplight', 'plugin:storybook/recommended'],
+  plugins: ['jest'],
   rules: {
     'no-console': 'off',
     'no-unused-vars': 'off',
@@ -10,5 +11,6 @@ module.exports = {
         patterns: ['lodash/*', '@fortawesome/free-solid-svg-icons/*'],
       },
     ],
+    'jest/no-truthy-falsy': 'off',
   },
 };

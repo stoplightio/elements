@@ -29,7 +29,11 @@ const ModelComponent: React.FC<ModelProps> = ({
   exportProps,
 }) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
-  const data = useResolvedObject(unresolvedData) as JSONSchema7;
+  const data = useResolvedObject(unresolvedData) as JSONSchema7 & {
+    'x-stoplight'?: { id?: string };
+    deprecated?: string;
+    'x-internal'?: string;
+  };
   const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
@@ -42,7 +46,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
-  const titleChanged = nodeHasChanged?.({ nodeId, attr: ['title', 'internal'] });
+  const titleChanged = nodeId ? nodeHasChanged?.({ nodeId, attr: ['title', 'internal'] }) : false; // make sure this is right
   const header = (shouldDisplayHeader || isInternal || isDeprecated) && (
     <Flex justifyContent="between" alignItems="center">
       <Box pos="relative">
@@ -68,7 +72,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const modelExamples = !layoutOptions?.hideModelExamples && <ModelExamples data={data} isCollapsible={isCompact} />;
 
-  const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
+  const descriptionChanged = nodeId ? nodeHasChanged?.({ nodeId, attr: 'description' }) : false;
   const description = (
     <VStack spacing={10}>
       {data.description && data.type === 'object' && (

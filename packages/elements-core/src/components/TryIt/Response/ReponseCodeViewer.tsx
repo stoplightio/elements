@@ -15,6 +15,7 @@ export const ResponseCodeViewer: <E extends React.ElementType = 'pre'>(
   }
 
   return (
+    // @ts-expect-error
     <CodeViewer
       language="json"
       showAsRaw={MAX_HIGHLIGHT_LINE_COUNT < lineCount}

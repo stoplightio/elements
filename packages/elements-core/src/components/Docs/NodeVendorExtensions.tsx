@@ -13,6 +13,14 @@ export type NodeVendorExtensionsProps = {
   data: INode | JSONSchema7;
 };
 
+function getVendorExtensionsValue(currentValue: string, data: object) {
+  if (currentValue in data) {
+    return data[currentValue as keyof typeof data];
+  } else {
+    return undefined;
+  }
+}
+
 /**
  * @private
  * Resolves the vendor extensions from the given object,
@@ -26,7 +34,7 @@ const getVendorExtensions = memoize((data: object) => {
   const vendorExtensions = vendorExtensionNames.reduce((previousValue, currentValue, currentIndex: number) => {
     return {
       ...previousValue,
-      [currentValue]: data[currentValue],
+      [currentValue]: getVendorExtensionsValue(currentValue, data),
     };
   }, {});
   return vendorExtensions;

@@ -12,7 +12,7 @@ const queryClient = new QueryClient({
   },
 });
 
-export function withQueryClientProvider<P>(WrappedComponent: React.ComponentType<P>): React.FC<P> {
+export function withQueryClientProvider<P extends {}>(WrappedComponent: React.ComponentType<P>): React.FC<P> {
   const WithQueryClientProvider = (props: P) => {
     try {
       // if already have query client in tree, use it rather than creating a new provider

@@ -22,8 +22,8 @@ export function parameterOptions(parameter: ParameterSpec) {
   return parameter.schema?.type === 'boolean'
     ? booleanOptions
     : parameter.schema?.enum !== undefined
-    ? enumOptions(parameter.schema.enum, parameter.required)
-    : null;
+      ? enumOptions(parameter.schema.enum, parameter.required)
+      : null;
 }
 
 export const selectExampleOption = { value: '', label: 'Pick an example' };
@@ -123,8 +123,8 @@ export function mapSchemaPropertiesToParameters(
     name,
     schema: typeof schema !== 'boolean' ? schema : undefined,
     examples:
-      typeof schema !== 'boolean' && schema.examples && schema.examples[0]
-        ? [{ key: 'example', value: schema.examples[0] }]
+      typeof schema !== 'boolean' && schema.examples && schema.examples[0 as keyof typeof schema.examples]
+        ? [{ key: 'example', value: schema.examples[0 as keyof typeof schema.examples] }]
         : undefined,
     ...(required?.includes(name) && { required: true }),
   }));

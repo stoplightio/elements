@@ -173,7 +173,7 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
   const { hash } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
-  const color = HttpMethodColors[item.data.method] || 'gray';
+  const color = getItemColor(item.data.method);
   const isDeprecated = !!item.data.deprecated;
   const { hideTryIt, tryItCredentialsPolicy, corsProxy } = React.useContext(TryItContext);
 
@@ -263,3 +263,11 @@ const Collapse: React.FC<{ isOpen: boolean }> = ({ isOpen, children }) => {
   return <Box>{children}</Box>;
 };
 Collapse.displayName = 'Collapse';
+
+function getItemColor(method: string) {
+  if (method in HttpMethodColors) {
+    return HttpMethodColors[method as keyof typeof HttpMethodColors];
+  } else {
+    return 'gray';
+  }
+}

@@ -1,4 +1,11 @@
-import { Dictionary, HttpParamStyles, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
+import {
+  Dictionary,
+  HttpParamStyles,
+  IHttpOperation,
+  IHttpQueryParam,
+  IMediaTypeContent,
+  IServer,
+} from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 
 import { getServerUrlWithVariableValues, resolveUrl } from '../../utils/http-spec/IServer';
@@ -58,6 +65,14 @@ const delimiter = {
   [HttpParamStyles.PipeDelimited]: '|',
 };
 
+function getDelimiter(style: IHttpQueryParam['style']) {
+  if (style in delimiter) {
+    return delimiter[style as keyof typeof delimiter];
+  } else {
+    return undefined;
+  }
+}
+
 export const getQueryParams = ({
   httpOperation,
   parameterValues,
@@ -95,7 +110,7 @@ export const getQueryParams = ({
       try {
         const parsed = JSON.parse(value);
         if (typeof parsed === 'string') {
-          nested = parsed.split(delimiter[param.style]);
+          nested = parsed.split(getDelimiter(param.style) ?? '');
         } else if (Array.isArray(parsed)) {
           nested = parsed;
         } else {
@@ -110,7 +125,7 @@ export const getQueryParams = ({
       } else {
         acc.push({
           name: param.name,
-          value: nested.join(delimiter[param.style] ?? delimiter[HttpParamStyles.Form]),
+          value: nested.join(getDelimiter(param.style) ?? delimiter[HttpParamStyles.Form]),
         });
       }
     } else {
