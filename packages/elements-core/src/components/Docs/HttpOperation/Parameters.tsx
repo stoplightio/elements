@@ -91,8 +91,8 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
     const paramStyle = paramStyleUnspecified
       ? undefined
       : style && defaultStyle[parameterType] !== style
-      ? readableStyles[style as keyof typeof readableStyles] || style
-      : undefined;
+        ? readableStyles[style as keyof typeof readableStyles] || style
+        : undefined;
 
     if (isPlainObject(schema.properties)) {
       schema.properties![p.name] = {

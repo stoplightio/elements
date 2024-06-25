@@ -22,8 +22,8 @@ export function parameterOptions(parameter: ParameterSpec) {
   return parameter.schema?.type === 'boolean'
     ? booleanOptions
     : parameter.schema?.enum !== undefined
-    ? enumOptions(parameter.schema.enum, parameter.required)
-    : null;
+      ? enumOptions(parameter.schema.enum, parameter.required)
+      : null;
 }
 
 export const selectExampleOption = { value: '', label: 'Pick an example' };
