@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "8.3.1",
+  "version": "8.3.3",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -57,7 +57,7 @@
     ]
   },
   "dependencies": {
-    "@stoplight/http-spec": "^7.0.3",
+    "@stoplight/http-spec": "^7.1.0",
     "@stoplight/json": "^3.21.0",
     "@stoplight/json-schema-ref-parser": "^9.2.7",
     "@stoplight/json-schema-sampler": "0.3.0",
