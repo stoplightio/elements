@@ -77,7 +77,15 @@ function getDigestAuthDescription(schema: IBasicSecurityScheme) {
 
 function getOAuthDescription(scheme: IOauth2SecurityScheme) {
   const flows = keys(scheme.flows);
-  return flows.map(flow => getOAuthFlowDescription(oauthFlowNames[flow], scheme.flows[flow])).join('\n\n');
+
+  return flows
+    .map(flow =>
+      getOAuthFlowDescription(
+        oauthFlowNames[flow as keyof IOauthFlowObjects],
+        scheme.flows[flow as keyof IOauthFlowObjects]!,
+      ),
+    )
+    .join('\n\n');
 }
 
 function getOAuthFlowDescription(title: string, flow: IOauth2Flow) {

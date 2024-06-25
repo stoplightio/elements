@@ -1,6 +1,6 @@
 import { isPlainObject, safeStringify } from '@stoplight/json';
 import * as Sampler from '@stoplight/json-schema-sampler';
-import { IMediaTypeContent } from '@stoplight/types';
+import { IMediaTypeContent, INodeExample } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import React from 'react';
 
@@ -42,7 +42,13 @@ export const generateExampleFromMediaTypeContent = (
 
   try {
     if (textRequestBodyExamples?.length) {
-      return safeStringify(textRequestBodyExamples?.[chosenExampleIndex]['value'], undefined, 2) ?? '';
+      if ('value' in textRequestBodyExamples?.[chosenExampleIndex]) {
+        return (
+          safeStringify((textRequestBodyExamples as INodeExample[])?.[chosenExampleIndex]['value'], undefined, 2) ?? ''
+        );
+      } else {
+        return '';
+      }
     } else if (textRequestBodySchema) {
       const generated = Sampler.sample(textRequestBodySchema, options, document);
       return generated !== null ? safeStringify(generated, undefined, 2) ?? '' : '';

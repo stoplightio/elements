@@ -7,7 +7,7 @@ import {
   withQueryClientProvider,
   withStyles,
 } from '@stoplight/elements-core';
-import { Box, Flex, Icon, Input, ListBox, ListBoxItem, Modal, ModalProps } from '@stoplight/mosaic';
+import { Box, Flex, Icon, IconProp, Input, ListBox, ListBoxItem, Modal, ModalProps } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';
 
@@ -107,8 +107,8 @@ export const SearchResultsList = ({
                     <Box
                       as={Icon}
                       w={4}
-                      icon={NodeTypeIconDefs[searchResult.type]}
-                      style={{ color: NodeTypeColors[searchResult.type] }}
+                      icon={getNodeTypeIconDefs(searchResult.type) as IconProp}
+                      style={{ color: getNodeTypeColor(searchResult.type) }}
                     />
 
                     <Box
@@ -145,6 +145,22 @@ export const SearchResultsList = ({
     </>
   );
 };
+
+function getNodeTypeIconDefs(searchResultType: string) {
+  if (searchResultType in NodeTypeIconDefs) {
+    return NodeTypeIconDefs[searchResultType as keyof typeof NodeTypeIconDefs];
+  } else {
+    return undefined;
+  }
+}
+
+function getNodeTypeColor(searchResultType: string) {
+  if (searchResultType in NodeTypeColors) {
+    return NodeTypeColors[searchResultType as keyof typeof NodeTypeColors];
+  } else {
+    return undefined;
+  }
+}
 
 export const SearchResults = flow(
   withStyles,

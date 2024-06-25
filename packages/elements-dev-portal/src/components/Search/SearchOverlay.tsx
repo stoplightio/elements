@@ -78,7 +78,12 @@ export const SearchOverlay = ({
             />
           )}
           {search && (
-            <SearchResults searchResults={data} onClick={item => onClick(item)} isEmbedded={true} showDivider={false} />
+            <SearchResults
+              searchResults={data}
+              onClick={(item: NodeSearchResult) => onClick(item)}
+              isEmbedded={true}
+              showDivider={false}
+            />
           )}
         </Box>
       </Box>

@@ -48,15 +48,21 @@ export const createElementClass = <P>(
         this,
         mapValues(propDescriptors, (_, key) => ({
           get: () => {
-            return this._props[key];
+            if (key in this._props) {
+              return this._props[key as keyof typeof this._props];
+            } else {
+              return undefined;
+            }
           },
           set: (newValue: any) => {
-            if (this._props[key] === newValue) {
-              return;
+            if (key in this._props) {
+              if (this._props[key as keyof typeof this._props] === newValue) {
+                return;
+              }
+              this._props[key as keyof typeof this._props] = newValue;
+              this._renderComponent();
+              this._safeWriteAttribute(key as keyof P & string, newValue);
             }
-            this._props[key] = newValue;
-            this._renderComponent();
-            this._safeWriteAttribute(key as keyof P & string, newValue);
           },
           enumerable: true,
         })),
@@ -64,11 +70,13 @@ export const createElementClass = <P>(
     }
 
     attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-      if (propDescriptors[name]) {
+      if (name in propDescriptors && propDescriptors[name as keyof typeof propDescriptors]) {
         const newPropValue = this._safeReadAttribute(name as keyof P & string);
-        if (!isEqual(this._props[name], newPropValue)) {
-          this._props[name] = newPropValue;
-          this._renderComponent();
+        if (name in this._props) {
+          if (!isEqual(this._props[name as keyof typeof this._props], newPropValue)) {
+            this._props[name as keyof typeof this._props] = newPropValue;
+            this._renderComponent();
+          }
         }
       }
     }
@@ -145,7 +153,14 @@ export const createElementClass = <P>(
 
     private _renderComponent() {
       if (this._mountPoint) {
-        const props = mapValues(propDescriptors, (descriptor, key) => this._props[key] ?? descriptor.defaultValue);
+        const props = mapValues(propDescriptors, (descriptor, key) => {
+          if (key in this._props) {
+            return this._props[key as keyof typeof this._props];
+          } else {
+            return descriptor.defaultValue;
+          }
+        });
+        // @ts-expect-error
         ReactDOM.render(React.createElement(Component, props), this._mountPoint);
       }
     }
