@@ -31,14 +31,12 @@ export const useRequestParameters = (httpOperation: IHttpEndpointOperation) => {
     function getPersistedParameterValues(parameterName: string) {
       if (parameterName in persistedParameterValues) {
         return persistedParameterValues[parameterName as keyof typeof persistedParameterValues];
-      } else if (parameterName in parameterDefaultValues) {
-        return parameterDefaultValues[parameterName as keyof typeof parameterDefaultValues];
       } else {
-        return undefined;
+        return parameterDefaultValues[parameterName as keyof typeof parameterDefaultValues];
       }
     }
 
-    Object.fromEntries(
+    return Object.fromEntries(
       allParameters.map(parameter => {
         return [parameter.name, getPersistedParameterValues(parameter.name)];
       }),

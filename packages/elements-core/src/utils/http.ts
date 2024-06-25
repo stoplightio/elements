@@ -5,5 +5,11 @@ import { HttpCodeColor } from '../constants';
  * @param code Http code (Ex. 200, 401, 503)
  */
 export function getHttpCodeColor(code: number | string): typeof HttpCodeColor[keyof typeof HttpCodeColor] {
-  return HttpCodeColor[`${code}`[0]] || 'gray';
+  const httpMethodCode = Number(code.toString()[0]);
+
+  if (httpMethodCode in HttpCodeColor) {
+    return HttpCodeColor[httpMethodCode as keyof typeof HttpCodeColor];
+  } else {
+    return 'gray';
+  }
 }

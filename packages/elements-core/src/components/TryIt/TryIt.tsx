@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Icon, Panel, useThemeIsDark } from '@stoplight/mosaic';
+import { Box, Button, HStack, Icon, ITextColorProps, Panel, useThemeIsDark } from '@stoplight/mosaic';
 import type { IHttpEndpointOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { useAtom } from 'jotai';
@@ -121,8 +121,7 @@ export const TryIt: React.FC<TryItProps> = ({
     Object.keys(bodyParameterValues)
       .filter(param => !isAllowedEmptyValues[param] ?? true)
       .reduce((previousValue, currentValue) => {
-        previousValue[currentValue] = bodyParameterValues[currentValue];
-        return previousValue;
+        return { ...previousValue, currentValue: bodyParameterValues[currentValue] };
       }, {});
 
   React.useEffect(() => {
@@ -320,7 +319,7 @@ export const TryIt: React.FC<TryItProps> = ({
     tryItPanelElem = (
       <Panel isCollapsible={false} p={0} className="TryItPanel">
         <Panel.Titlebar bg="canvas-300">
-          <Box fontWeight="bold" color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
+          <Box fontWeight="bold" color={getTryItPanelColor(isDark, httpOperation.method) as ITextColorProps['color']}>
             {httpOperation.method.toUpperCase()}
           </Box>
           <Box fontWeight="medium" ml={2} textOverflow="truncate" overflowX="hidden">
@@ -350,3 +349,11 @@ export const TryIt: React.FC<TryItProps> = ({
     </Box>
   );
 };
+
+function getTryItPanelColor(isDark: boolean, method: string) {
+  if (!isDark && method in HttpMethodColors) {
+    return HttpMethodColors[method as keyof typeof HttpMethodColors];
+  } else {
+    return undefined;
+  }
+}
