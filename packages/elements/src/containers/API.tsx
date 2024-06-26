@@ -62,6 +62,16 @@ export interface CommonAPIProps extends RoutingProps {
   hideTryIt?: boolean;
 
   /**
+   * Allows hiding the Security info section
+   */
+  hideSecurityInfo?: boolean;
+
+  /**
+   * Allows hiding the Server info section
+   */
+  hideServerInfo?: boolean;
+
+  /**
    * Hides schemas from being displayed in Table of Contents
    */
   hideSchemas?: boolean;
@@ -115,6 +125,8 @@ export const APIImpl: React.FC<APIProps> = props => {
     apiDescriptionUrl = '',
     logo,
     hideTryIt,
+    hideSecurityInfo,
+    hideServerInfo,
     hideSchemas,
     hideInternal,
     hideExport,
@@ -184,6 +196,8 @@ export const APIImpl: React.FC<APIProps> = props => {
         <APIWithStackedLayout
           serviceNode={serviceNode}
           hideTryIt={hideTryIt}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
           hideExport={hideExport}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
@@ -197,6 +211,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           logo={logo}
           serviceNode={serviceNode}
           hideTryIt={hideTryIt}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}
@@ -211,6 +227,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           logo={logo}
           serviceNode={serviceNode}
           hideTryIt={hideTryIt}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}

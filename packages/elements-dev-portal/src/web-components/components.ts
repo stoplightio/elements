@@ -5,6 +5,8 @@ import { StoplightProject } from '../containers/StoplightProject';
 export const StoplightProjectElement = createElementClass(StoplightProject, {
   projectId: { type: 'string', defaultValue: '' },
   hideTryIt: { type: 'boolean' },
+  hideServerInfo: { type: 'boolean' },
+  hideSecurityInfo: { type: 'boolean' },
   hideMocking: { type: 'boolean' },
   hideExport: { type: 'boolean' },
   basePath: { type: 'string' },
