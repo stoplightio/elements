@@ -32,7 +32,7 @@
     "**/*"
   ],
   "engines": {
-    "node": ">=14.13"
+    "node": ">=16.20"
   },
   "scripts": {
     "build": "concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
