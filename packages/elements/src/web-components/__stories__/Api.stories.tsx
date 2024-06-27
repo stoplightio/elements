@@ -54,10 +54,8 @@ export const APIWithYamlProvidedDirectly = Template.bind({});
 APIWithYamlProvidedDirectly.args = {
   apiDescriptionDocument: zoomApiYaml,
 };
-APIWithYamlProvidedDirectly.storyName = 'API With Yaml Provided Directly';
 
 export const APIWithJSONProvidedDirectly = Template.bind({});
 APIWithJSONProvidedDirectly.args = {
   apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
 };
-APIWithJSONProvidedDirectly.storyName = 'API With JSON Provided Directly';

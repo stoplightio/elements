@@ -25,9 +25,9 @@ export default {
   },
 };
 
-export const defaultProject = Template.bind({});
-defaultProject.storyName = "Stoplight's Demo workspace";
-defaultProject.args = {
+export const DefaultProject = Template.bind({});
+DefaultProject.storyName = "Stoplight's Demo workspace";
+DefaultProject.args = {
   projectId: 'cHJqOjYwNjYx',
   platformUrl: 'https://stoplight.io',
 };
