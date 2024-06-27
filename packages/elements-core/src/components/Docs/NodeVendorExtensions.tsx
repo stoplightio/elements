@@ -26,7 +26,7 @@ const getVendorExtensions = memoize((data: object) => {
   const vendorExtensions = vendorExtensionNames.reduce((previousValue, currentValue, currentIndex: number) => {
     return {
       ...previousValue,
-      [currentValue]: data[currentValue],
+      [currentValue]: data[currentValue as keyof {}],
     };
   }, {});
   return vendorExtensions;

@@ -1,6 +1,6 @@
 import { isPlainObject, safeStringify } from '@stoplight/json';
 import * as Sampler from '@stoplight/json-schema-sampler';
-import { IMediaTypeContent } from '@stoplight/types';
+import { IMediaTypeContent, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import React from 'react';
 
@@ -42,7 +42,13 @@ export const generateExampleFromMediaTypeContent = (
 
   try {
     if (textRequestBodyExamples?.length) {
-      return safeStringify(textRequestBodyExamples?.[chosenExampleIndex]['value'], undefined, 2) ?? '';
+      return (
+        safeStringify(
+          textRequestBodyExamples?.[chosenExampleIndex]['value' as keyof (INodeExample | INodeExternalExample)],
+          undefined,
+          2,
+        ) ?? ''
+      );
     } else if (textRequestBodySchema) {
       const generated = Sampler.sample(textRequestBodySchema, options, document);
       return generated !== null ? safeStringify(generated, undefined, 2) ?? '' : '';
@@ -64,8 +70,8 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
         label: index === 0 ? 'default' : `example-${index}`,
       });
     });
-  } else if (isPlainObject(schema?.['x-examples'])) {
-    for (const [label, example] of Object.entries(schema['x-examples'])) {
+  } else if (isPlainObject(schema?.['x-examples' as keyof {}])) {
+    for (const [label, example] of Object.entries(schema['x-examples' as keyof {}])) {
       if (isPlainObject(example)) {
         const val = example.hasOwnProperty('value') && Object.keys(example).length === 1 ? example.value : example;
         examples.push({
