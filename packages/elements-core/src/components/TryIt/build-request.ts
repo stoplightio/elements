@@ -135,8 +135,7 @@ export async function buildFetchRequest({
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy, serverVariableValues });
 
-  const shouldIncludeBody =
-    ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
+  const shouldIncludeBody = bodyInput !== undefined;
 
   const queryParams = getQueryParams({ httpOperation, parameterValues });
 
@@ -249,8 +248,7 @@ export async function buildHarRequest({
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy, serverVariableValues });
 
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
-  const shouldIncludeBody =
-    ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
+  const shouldIncludeBody = bodyInput !== undefined;
 
   const queryParams = getQueryParams({ httpOperation, parameterValues });
 
