@@ -62,7 +62,7 @@ describe('TryIt', () => {
     const requestInit = fetchMock.mock.calls[0][1]!;
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
-    expect(headers.get('Content-Type')).toBe(null);
+    expect(headers.get('Content-Type')).toBe('application/json');
   });
 
   it('uses cors proxy url, if provided', async () => {
@@ -537,16 +537,14 @@ describe('TryIt', () => {
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/s));
       });
-    });
 
-    describe('is not attached', () => {
       it('to operation with HEAD method', async () => {
         render(<TryItWithPersistence httpOperation={headWithRequestBody} />);
 
         clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(typeof fetchMock.mock.calls[0]![1]!.body).not.toBe('string');
+        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/s));
       });
     });
 
@@ -726,14 +724,21 @@ describe('TryIt', () => {
             method: 'GET',
             headers: {
               Prefer: 'code=200',
+              'Content-Type': 'application/json',
             },
+            body: '',
+            credentials: 'omit',
           }),
         ],
         [
           'https://todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
-            headers: {},
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: '',
+            credentials: 'omit',
           }),
         ],
       ]);
@@ -760,7 +765,11 @@ describe('TryIt', () => {
           'https://mock-todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
-            headers: {},
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: '',
+            credentials: 'omit',
           }),
         ],
       ]);
@@ -821,8 +830,11 @@ describe('TryIt', () => {
         expect.objectContaining({
           method: 'GET',
           headers: {
+            'Content-Type': 'application/json',
             Prefer: 'code=200',
           },
+          body: '',
+          credentials: 'omit',
         }),
       );
     });
