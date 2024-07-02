@@ -24,7 +24,7 @@ jobs:
   build:
     working_directory: /mnt/ramdisk/project
     docker:
-      - image: cimg/node:16.17
+      - image: cimg/node:18.20
     resource_class: xlarge
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
@@ -93,7 +93,7 @@ jobs:
           command: weekly_lockfile_maintenance.sh
   release:
     docker:
-      - image: cimg/node:16.17
+      - image: cimg/node:18.20
     steps:
       - checkout
       - run:

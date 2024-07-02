@@ -161,7 +161,7 @@ function computeChildNodes(
       }
 
       if (match.children) {
-        nodes.push(...computeChildNodes(document, data[key], match.children, transformer, uri));
+        nodes.push(...computeChildNodes(document, data[key as keyof {}], match.children, transformer, uri));
       }
     }
   }

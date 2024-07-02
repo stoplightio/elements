@@ -28,9 +28,9 @@ function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is Pa
   return (
     isObject(maybeHttpRequest) &&
     'method' in maybeHttpRequest &&
-    typeof maybeHttpRequest['method'] === 'string' &&
+    typeof maybeHttpRequest['method' as keyof {}] === 'string' &&
     'url' in maybeHttpRequest &&
-    typeof maybeHttpRequest['url'] === 'string'
+    typeof maybeHttpRequest['url' as keyof {}] === 'string'
   );
 }
 

@@ -8,7 +8,7 @@ import {
 } from '@stoplight/elements-core';
 import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Heading, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
-import { NodeType } from '@stoplight/types';
+import { HttpMethod, NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -173,7 +173,7 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
   const { hash } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
-  const color = HttpMethodColors[item.data.method] || 'gray';
+  const color = HttpMethodColors[item.data.method as HttpMethod] || 'gray';
   const isDeprecated = !!item.data.deprecated;
   const { hideTryIt, tryItCredentialsPolicy, corsProxy } = React.useContext(TryItContext);
 

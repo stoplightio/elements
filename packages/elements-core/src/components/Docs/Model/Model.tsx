@@ -34,10 +34,10 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
-  const nodeId = data?.['x-stoplight']?.id;
+  const nodeId = (data?.['x-stoplight' as keyof JSONSchema7] as { [key: string]: any })?.id;
   const title = data.title ?? nodeTitle;
-  const isDeprecated = !!data['deprecated'];
-  const isInternal = !!data['x-internal'];
+  const isDeprecated = !!data['deprecated' as keyof JSONSchema7];
+  const isInternal = !!data['x-internal' as keyof JSONSchema7];
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));

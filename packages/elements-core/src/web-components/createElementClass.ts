@@ -48,13 +48,13 @@ export const createElementClass = <P>(
         this,
         mapValues(propDescriptors, (_, key) => ({
           get: () => {
-            return this._props[key];
+            return this._props[key as keyof P];
           },
           set: (newValue: any) => {
-            if (this._props[key] === newValue) {
+            if (this._props[key as keyof P] === newValue) {
               return;
             }
-            this._props[key] = newValue;
+            this._props[key as keyof P] = newValue;
             this._renderComponent();
             this._safeWriteAttribute(key as keyof P & string, newValue);
           },
@@ -64,10 +64,10 @@ export const createElementClass = <P>(
     }
 
     attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-      if (propDescriptors[name]) {
+      if (propDescriptors[name as keyof P]) {
         const newPropValue = this._safeReadAttribute(name as keyof P & string);
-        if (!isEqual(this._props[name], newPropValue)) {
-          this._props[name] = newPropValue;
+        if (!isEqual(this._props[name as keyof P], newPropValue)) {
+          this._props[name as keyof P] = newPropValue;
           this._renderComponent();
         }
       }
@@ -145,7 +145,10 @@ export const createElementClass = <P>(
 
     private _renderComponent() {
       if (this._mountPoint) {
-        const props = mapValues(propDescriptors, (descriptor, key) => this._props[key] ?? descriptor.defaultValue);
+        const props = mapValues(
+          propDescriptors,
+          (descriptor, key) => this._props[key as keyof {}] ?? descriptor.defaultValue,
+        );
         ReactDOM.render(React.createElement(Component, props), this._mountPoint);
       }
     }

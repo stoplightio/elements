@@ -96,7 +96,7 @@ export const usePersistedSecuritySchemeWithValues = (): [
     return currentScheme.map(scheme => {
       return {
         scheme: scheme.scheme,
-        authValue: securitySchemeValues[scheme.scheme.key],
+        authValue: securitySchemeValues[scheme.scheme.key as keyof {}],
       };
     });
   }, [currentScheme, securitySchemeValues]);

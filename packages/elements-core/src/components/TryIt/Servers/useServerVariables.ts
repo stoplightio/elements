@@ -5,7 +5,7 @@ export const useServerVariables = () => {
   const [serverVariables, setPersistedServerVariableValues] = useAtom(persistedServerVariableValuesAtom);
 
   const updateServerVariableValue = (op: 'set' | 'unset', name: string, value: string) => {
-    const newServerVariables = { ...serverVariables };
+    const newServerVariables: { [key: string]: string } = { ...serverVariables };
     if (op === 'unset') {
       delete newServerVariables[name];
     } else {

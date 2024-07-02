@@ -1,4 +1,5 @@
-import { Box, Flex, Icon } from '@stoplight/mosaic';
+import { Box, Flex, Icon, ITextColorProps } from '@stoplight/mosaic';
+import { HttpMethod, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { useRouterType } from '../../context/RouterType';
@@ -167,7 +168,11 @@ const GroupItem = React.memo<{
         onLinkClick={onLinkClick}
         meta={
           item.meta ? (
-            <Box color={NODE_META_COLOR[item.meta]} textTransform="uppercase" fontWeight="medium">
+            <Box
+              color={NODE_META_COLOR[item.meta as HttpMethod] as ITextColorProps['color']}
+              textTransform="uppercase"
+              fontWeight="medium"
+            >
               {item.meta}
             </Box>
           ) : (
@@ -175,7 +180,11 @@ const GroupItem = React.memo<{
               <Flex alignItems="center">
                 {item.version && <Version value={item.version} />}
                 {item.type !== 'model' && (
-                  <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_META_ICON[item.type]} />
+                  <Box
+                    as={Icon}
+                    color={NODE_TYPE_ICON_COLOR[item.type as NodeType] as ITextColorProps['color']}
+                    icon={NODE_TYPE_META_ICON[item.type]}
+                  />
                 )}
               </Flex>
             )
@@ -267,7 +276,11 @@ const Group = React.memo<{
         icon={
           item.itemsType &&
           NODE_GROUP_ICON[item.itemsType] && (
-            <Box as={Icon} color={NODE_GROUP_ICON_COLOR[item.itemsType]} icon={NODE_GROUP_ICON[item.itemsType]} />
+            <Box
+              as={Icon}
+              color={NODE_GROUP_ICON_COLOR[item.itemsType as keyof {}]}
+              icon={NODE_GROUP_ICON[item.itemsType]}
+            />
           )
         }
       />
@@ -389,7 +402,11 @@ const Node = React.memo<{
           title={item.title}
           icon={
             NODE_TYPE_TITLE_ICON[item.type] && (
-              <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
+              <Box
+                as={Icon}
+                color={NODE_TYPE_ICON_COLOR[item.type as keyof {}]}
+                icon={NODE_TYPE_TITLE_ICON[item.type]}
+              />
             )
           }
           meta={meta}

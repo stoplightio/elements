@@ -107,8 +107,8 @@ export const SearchResultsList = ({
                     <Box
                       as={Icon}
                       w={4}
-                      icon={NodeTypeIconDefs[searchResult.type]}
-                      style={{ color: NodeTypeColors[searchResult.type] }}
+                      icon={NodeTypeIconDefs[searchResult.type as keyof typeof NodeTypeIconDefs]}
+                      style={{ color: NodeTypeColors[searchResult.type as keyof typeof NodeTypeIconDefs] }}
                     />
 
                     <Box
