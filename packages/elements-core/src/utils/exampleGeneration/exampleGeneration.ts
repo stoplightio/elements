@@ -60,7 +60,7 @@ export const generateExampleFromMediaTypeContent = (
   return '';
 };
 
-export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] => {
+export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: unknown }): Example[] => {
   const examples: Example[] = [];
 
   if (Array.isArray(schema?.examples)) {
@@ -70,8 +70,8 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
         label: index === 0 ? 'default' : `example-${index}`,
       });
     });
-  } else if (isPlainObject(schema?.['x-examples' as keyof {}])) {
-    for (const [label, example] of Object.entries(schema['x-examples' as keyof {}])) {
+  } else if (isPlainObject(schema?.['x-examples'])) {
+    for (const [label, example] of Object.entries(schema['x-examples'])) {
       if (isPlainObject(example)) {
         const val = example.hasOwnProperty('value') && Object.keys(example).length === 1 ? example.value : example;
         examples.push({

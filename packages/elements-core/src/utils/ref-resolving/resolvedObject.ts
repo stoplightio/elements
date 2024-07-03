@@ -74,11 +74,11 @@ const recursivelyCreateResolvedObject = (
 };
 
 export const isResolvedObjectProxy = (someObject: object): boolean => {
-  return !!someObject[originalObjectSymbol as keyof {}];
+  return !!(someObject as Record<symbol, unknown>)[originalObjectSymbol];
 };
 
 export const getOriginalObject = (resolvedObject: object): object => {
-  return resolvedObject[originalObjectSymbol as keyof {}] || resolvedObject;
+  return (resolvedObject as Record<symbol, object>)[originalObjectSymbol] || resolvedObject;
 };
 
 export const isReference = hasRef;

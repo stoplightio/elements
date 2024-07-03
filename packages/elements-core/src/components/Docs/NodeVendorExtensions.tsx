@@ -1,6 +1,6 @@
 import { INode } from '@stoplight/types';
 import type { JSONSchema7 } from 'json-schema';
-import { memoize } from 'lodash';
+import { isEmpty, memoize, pickBy } from 'lodash';
 import * as React from 'react';
 
 import { useOptionsCtx } from '../../context/Options';
@@ -21,16 +21,7 @@ export type NodeVendorExtensionsProps = {
  *
  * @param data The object to extract the vendor extensions from.
  */
-const getVendorExtensions = memoize((data: object) => {
-  const vendorExtensionNames = Object.keys(data).filter(item => item.startsWith('x-'));
-  const vendorExtensions = vendorExtensionNames.reduce((previousValue, currentValue, currentIndex: number) => {
-    return {
-      ...previousValue,
-      [currentValue]: data[currentValue as keyof {}],
-    };
-  }, {});
-  return vendorExtensions;
-});
+const getVendorExtensions = memoize((data: INode) => pickBy(data, (_val, key) => key.startsWith('x-')));
 
 /**
  * @private
@@ -45,10 +36,11 @@ export const NodeVendorExtensions = React.memo<NodeVendorExtensionsProps>(({ dat
 
   const originalObject = getOriginalObject(data) as INode;
   const vendorExtensions = originalObject.extensions ? originalObject.extensions : getVendorExtensions(originalObject);
-  const vendorExtensionKeys = Object.keys(vendorExtensions);
-  if (vendorExtensionKeys.length === 0) {
+
+  if (isEmpty(vendorExtensions)) {
     return null;
   }
+
   return (
     <>
       {renderExtensionAddon({

@@ -28,7 +28,7 @@ type Complete<T> = {
   [P in keyof Required<T>]: Pick<T, P> extends Required<Pick<T, P>> ? T[P] : T[P] | undefined;
 };
 
-export const createElementClass = <P>(
+export const createElementClass = <P extends Record<string, any>>(
   Component: React.ComponentType<P>,
   propDescriptors: PropDescriptorMap<P>,
 ): new () => HTMLElement => {
@@ -63,7 +63,7 @@ export const createElementClass = <P>(
       );
     }
 
-    attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+    attributeChangedCallback(name: string) {
       if (propDescriptors[name as keyof P]) {
         const newPropValue = this._safeReadAttribute(name as keyof P & string);
         if (!isEqual(this._props[name as keyof P], newPropValue)) {
@@ -145,10 +145,7 @@ export const createElementClass = <P>(
 
     private _renderComponent() {
       if (this._mountPoint) {
-        const props = mapValues(
-          propDescriptors,
-          (descriptor, key) => this._props[key as keyof {}] ?? descriptor.defaultValue,
-        );
+        const props = mapValues(propDescriptors, (descriptor, key) => this._props[key] ?? descriptor.defaultValue);
         ReactDOM.render(React.createElement(Component, props), this._mountPoint);
       }
     }

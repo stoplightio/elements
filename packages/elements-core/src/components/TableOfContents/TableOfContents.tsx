@@ -276,11 +276,7 @@ const Group = React.memo<{
         icon={
           item.itemsType &&
           NODE_GROUP_ICON[item.itemsType] && (
-            <Box
-              as={Icon}
-              color={NODE_GROUP_ICON_COLOR[item.itemsType as keyof {}]}
-              icon={NODE_GROUP_ICON[item.itemsType]}
-            />
+            <Box as={Icon} color={NODE_GROUP_ICON_COLOR[item.itemsType]} icon={NODE_GROUP_ICON[item.itemsType]} />
           )
         }
       />
@@ -402,11 +398,7 @@ const Node = React.memo<{
           title={item.title}
           icon={
             NODE_TYPE_TITLE_ICON[item.type] && (
-              <Box
-                as={Icon}
-                color={NODE_TYPE_ICON_COLOR[item.type as keyof {}]}
-                icon={NODE_TYPE_TITLE_ICON[item.type]}
-              />
+              <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
             )
           }
           meta={meta}

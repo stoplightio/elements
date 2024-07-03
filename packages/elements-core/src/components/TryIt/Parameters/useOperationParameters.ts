@@ -6,7 +6,7 @@ import * as React from 'react';
 import { filterOutAuthorizationParams } from '../Auth/authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
-const persistedParameterValuesAtom = atom({});
+const persistedParameterValuesAtom = atom<Record<string, string | undefined>>({});
 export const useRequestParameters = (httpOperation: IHttpEndpointOperation) => {
   const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
 
@@ -19,7 +19,7 @@ export const useRequestParameters = (httpOperation: IHttpEndpointOperation) => {
       // if the user set it to default, let's just unset it instead
       const valueToSave = value === defaultValue ? undefined : value;
       // only save if changed
-      if (prevState[name as keyof {}] !== valueToSave) {
+      if (prevState[name] !== valueToSave) {
         return { ...prevState, [name]: valueToSave };
       }
       return prevState;
@@ -31,7 +31,7 @@ export const useRequestParameters = (httpOperation: IHttpEndpointOperation) => {
       Object.fromEntries(
         allParameters.map(parameter => [
           parameter.name,
-          persistedParameterValues[parameter.name as keyof {}] ?? parameterDefaultValues[parameter.name],
+          persistedParameterValues[parameter.name] ?? parameterDefaultValues[parameter.name],
         ]),
       ),
     [allParameters, persistedParameterValues, parameterDefaultValues],

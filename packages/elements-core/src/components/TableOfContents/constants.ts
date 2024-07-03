@@ -1,6 +1,6 @@
 import { faBullseye, faCloud, faCube, faCubes, faEnvelope, faEnvelopesBulk } from '@fortawesome/free-solid-svg-icons';
-import { IIconProps } from '@stoplight/mosaic';
-import { Dictionary, HttpMethod, NodeType } from '@stoplight/types';
+import { IIconProps, ITextColorProps } from '@stoplight/mosaic';
+import { HttpMethod } from '@stoplight/types';
 
 // Icons appear left of the node title
 export const NODE_TYPE_TITLE_ICON: Readonly<{ [nodeType: string]: IIconProps['icon'] }> = {
@@ -21,14 +21,14 @@ export const NODE_TYPE_META_ICON: Readonly<{ [nodeType: string]: IIconProps['ico
   model: faCube,
 };
 
-export const NODE_TYPE_ICON_COLOR: Readonly<Partial<Dictionary<string, NodeType>>> = {
+export const NODE_TYPE_ICON_COLOR: Readonly<{ [nodeType: string]: ITextColorProps['color'] }> = {
   model: 'warning',
-  http_service: '#D812EA',
-  http_operation: '#9747FF',
+  http_service: '#D812EA' as ITextColorProps['color'],
+  http_operation: '#9747FF' as ITextColorProps['color'],
   http_webhook: 'primary',
 };
 
-export const NODE_GROUP_ICON_COLOR: Readonly<Partial<Dictionary<string, NodeType>>> = {
+export const NODE_GROUP_ICON_COLOR: Readonly<{ [nodeType: string]: ITextColorProps['color'] }> = {
   http_webhook: 'primary',
   model: 'warning',
 };

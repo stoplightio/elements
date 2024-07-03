@@ -3,7 +3,7 @@ import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
-import { isObject } from 'lodash';
+import { isPlainObject, isString } from 'lodash';
 import React from 'react';
 import URI from 'urijs';
 
@@ -26,11 +26,9 @@ type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRe
 
 function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is PartialHttpRequest {
   return (
-    isObject(maybeHttpRequest) &&
-    'method' in maybeHttpRequest &&
-    typeof maybeHttpRequest['method' as keyof {}] === 'string' &&
-    'url' in maybeHttpRequest &&
-    typeof maybeHttpRequest['url' as keyof {}] === 'string'
+    isPlainObject(maybeHttpRequest) &&
+    isString((maybeHttpRequest as PartialHttpRequest).method) &&
+    isString((maybeHttpRequest as PartialHttpRequest).url)
   );
 }
 
@@ -92,7 +90,7 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
   }
 
   if (http) {
-    if (!isObject(parsedValue) || (!isPartialHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
+    if (!isPlainObject(parsedValue) || (!isPartialHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
       return null;
     }
 

@@ -9,10 +9,10 @@ import {
   IOauth2SecurityScheme,
 } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { flatten, isObject } from 'lodash';
+import { atomWithStorage } from 'jotai/utils';
+import { flatten, isObject, isPlainObject } from 'lodash';
 import React from 'react';
 
-import { persistAtom } from '../../../utils/jotai/persistAtom';
 import { caseInsensitivelyEquals } from '../../../utils/string';
 
 export type HttpSecuritySchemeWithValues = {
@@ -68,7 +68,11 @@ const getSecuritySchemeNames = (securitySchemes: HttpSecurityScheme[]): string[]
 
 type SecuritySchemeValues = Dictionary<string>;
 
-const securitySchemeValuesAtom = persistAtom('TryIt_securitySchemeValues', atom<SecuritySchemeValues>({}));
+const isSecuritySchemeValues = (
+  maybeSecuritySchemeValues: unknown,
+): maybeSecuritySchemeValues is SecuritySchemeValues => isPlainObject(maybeSecuritySchemeValues);
+
+const securitySchemeValuesAtom = atomWithStorage('TryIt_securitySchemeValues', atom<SecuritySchemeValues>({}));
 export const usePersistedSecuritySchemeWithValues = (): [
   HttpSecuritySchemeWithValues[] | undefined,
   React.Dispatch<HttpSecuritySchemeWithValues | undefined>,
@@ -96,7 +100,7 @@ export const usePersistedSecuritySchemeWithValues = (): [
     return currentScheme.map(scheme => {
       return {
         scheme: scheme.scheme,
-        authValue: securitySchemeValues[scheme.scheme.key as keyof {}],
+        authValue: isSecuritySchemeValues(securitySchemeValues) ? securitySchemeValues[scheme.scheme.key] : undefined,
       };
     });
   }, [currentScheme, securitySchemeValues]);
