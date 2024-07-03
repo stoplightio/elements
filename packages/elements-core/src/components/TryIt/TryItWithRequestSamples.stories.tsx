@@ -16,8 +16,10 @@ export const WithParameters = Template.bind({});
 WithParameters.args = {
   httpOperation: putTodosOperation,
 };
+WithParameters.storyName = 'With Parameters';
 
 export const WithVariables = Template.bind({});
 WithVariables.args = {
   httpOperation: operationWithUrlVariables,
 };
+WithVariables.storyName = 'With Server Variables';

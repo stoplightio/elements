@@ -46,11 +46,13 @@ export const APIWithoutDescription = Template.bind({});
 APIWithoutDescription.args = {
   apiDescriptionDocument: JSON.stringify(simpleApiWithoutDescription, null, 2),
 };
+APIWithoutDescription.storyName = 'API Without Description';
 
 export const APIWithInternalOperations = Template.bind({});
 APIWithInternalOperations.args = {
   apiDescriptionDocument: JSON.stringify(simpleApiWithInternalOperations, null, 2),
 };
+APIWithInternalOperations.storyName = 'API With Internal Operations';
 
 export const OpenApi3Schema = Template.bind({});
 OpenApi3Schema.args = {
@@ -62,6 +64,7 @@ export const BadgesForSchema = Template.bind({});
 BadgesForSchema.args = {
   apiDescriptionDocument: badgesForSchema,
 };
+BadgesForSchema.storyName = 'Badges For Schema';
 
 export const StackedLayout = Template.bind({});
 StackedLayout.args = {
@@ -84,6 +87,7 @@ export const Box = Template.bind({});
 Box.args = {
   apiDescriptionUrl: 'https://raw.githubusercontent.com/box/box-openapi/main/content/openapi.yml',
 };
+Box.storyName = 'Box';
 
 export const DigitalOcean = Template.bind({});
 DigitalOcean.args = {
@@ -103,9 +107,11 @@ export const Instagram = Template.bind({});
 Instagram.args = {
   apiDescriptionUrl: 'https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml',
 };
+Instagram.storyName = 'Instagram';
 
 export const WithExtensionRenderer = Template.bind({});
 WithExtensionRenderer.args = {
   renderExtensionAddon: renderExtensionRenderer,
   apiDescriptionDocument: zoomApiYaml,
 };
+WithExtensionRenderer.storyName = 'With Extension Renderer';

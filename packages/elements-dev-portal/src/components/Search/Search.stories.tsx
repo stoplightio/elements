@@ -147,3 +147,5 @@ export const Playground: Story<SearchWrapperProps> = args => <SearchWrapper {...
 export const EmbeddedSearch: Story<SearchWrapperProps> = args => <EmbeddedSearchWrapper {...args} />;
 
 Playground.storyName = 'Studio Demo';
+
+EmbeddedSearch.storyName = 'Embedded Search';
