@@ -95,7 +95,7 @@ export const getQueryParams = ({
       try {
         const parsed = JSON.parse(value);
         if (typeof parsed === 'string') {
-          nested = parsed.split(delimiter[param.style]);
+          nested = parsed.split(delimiter[param.style as keyof typeof delimiter]);
         } else if (Array.isArray(parsed)) {
           nested = parsed;
         } else {
@@ -110,7 +110,7 @@ export const getQueryParams = ({
       } else {
         acc.push({
           name: param.name,
-          value: nested.join(delimiter[param.style] ?? delimiter[HttpParamStyles.Form]),
+          value: nested.join(delimiter[param.style as keyof typeof delimiter] ?? delimiter[HttpParamStyles.Form]),
         });
       }
     } else {

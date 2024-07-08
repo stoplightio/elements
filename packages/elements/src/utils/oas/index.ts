@@ -22,6 +22,8 @@ type OpenAPIObject = _OpenAPIObject & {
   webhooks?: PathObject;
 };
 
+type SpecDocument = Spec | OpenAPIObject;
+
 const isOas2 = (parsed: unknown): parsed is Spec =>
   isObject(parsed) &&
   'swagger' in parsed &&
@@ -58,7 +60,7 @@ export function transformOasToServiceNode(apiDescriptionDocument: unknown) {
 }
 
 function computeServiceNode(
-  document: Spec | OpenAPIObject,
+  document: SpecDocument,
   map: ISourceNodeMap[],
   transformService: Oas2HttpServiceTransformer | Oas3HttpServiceTransformer,
   transformOperation: Oas2HttpOperationTransformer | Oas3HttpEndpointOperationTransformer,
@@ -77,8 +79,8 @@ function computeServiceNode(
 }
 
 function computeChildNodes(
-  document: Spec | OpenAPIObject,
-  data: unknown,
+  document: SpecDocument,
+  data: SpecDocument,
   map: ISourceNodeMap[],
   transformer: Oas2HttpOperationTransformer | Oas3HttpEndpointOperationTransformer,
   parentUri: string = '',
@@ -87,7 +89,7 @@ function computeChildNodes(
 
   if (!isObject(data)) return nodes;
 
-  for (const key of Object.keys(data)) {
+  for (const [key, value] of Object.entries(data)) {
     const sanitizedKey = encodePointerFragment(key);
     const match = findMapMatch(sanitizedKey, map);
 
@@ -160,7 +162,7 @@ function computeChildNodes(
       }
 
       if (match.children) {
-        nodes.push(...computeChildNodes(document, data[key], match.children, transformer, uri));
+        nodes.push(...computeChildNodes(document, value, match.children, transformer, uri));
       }
     }
   }

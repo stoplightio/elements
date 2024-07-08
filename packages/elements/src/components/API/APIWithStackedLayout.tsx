@@ -8,7 +8,7 @@ import {
 } from '@jpmorganchase/elemental-core';
 import { ExtensionAddonRenderer } from '@jpmorganchase/elemental-core/components/Docs';
 import { Box, Flex, Heading, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
-import { NodeType } from '@stoplight/types';
+import { HttpMethod, NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -176,7 +176,7 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
   const { pathname } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
-  const color = HttpMethodColors[item.data.method] || 'gray';
+  const color = HttpMethodColors[item.data.method as HttpMethod] || 'gray';
   const isDeprecated = !!item.data.deprecated;
   const { hideTryIt, hideInlineExamples, tryItCredentialsPolicy, corsProxy, tryItOutDefaultServer } =
     React.useContext(TryItContext);
