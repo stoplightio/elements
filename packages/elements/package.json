@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements",
-  "version": "8.3.3",
+  "version": "8.3.4",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -63,7 +63,7 @@
     ]
   },
   "dependencies": {
-    "@stoplight/elements-core": "~8.3.3",
+    "@stoplight/elements-core": "~8.3.4",
     "@stoplight/http-spec": "^7.1.0",
     "@stoplight/json": "^3.18.1",
     "@stoplight/mosaic": "^1.53.1",
