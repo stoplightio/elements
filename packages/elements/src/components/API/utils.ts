@@ -5,6 +5,9 @@ import {
   TableOfContentsGroup,
   TableOfContentsItem,
 } from '@stoplight/elements-core';
+import { NodeType } from '@stoplight/types';
+import { JSONSchema7 } from 'json-schema';
+import { defaults } from 'lodash';
 
 import { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
 
@@ -155,7 +158,7 @@ export const isInternal = (node: ServiceChildNode | ServiceNode): boolean => {
     return false;
   }
 
-  return !!data['x-internal'];
+  return !!data['x-internal' as keyof JSONSchema7];
 };
 
 export const addTagGroupsToTree = <T extends GroupableNode>(
