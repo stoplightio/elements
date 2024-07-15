@@ -316,7 +316,7 @@ function uriExpand(uri: string, data: Dictionary<string, string>) {
     return uri;
   }
   return uri.replace(/{([^#?]+?)}/g, (match, value) => {
-    return data[value] || value;
+    return data[value] || match;
   });
 }
 
