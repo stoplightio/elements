@@ -10,6 +10,8 @@ export const ApiElement = createElementClass(API, {
   router: { type: 'string' },
   layout: { type: 'string' },
   hideTryIt: { type: 'boolean' },
+  hideServerInfo: { type: 'boolean' },
+  hideSecurityInfo: { type: 'boolean' },
   hideSchemas: { type: 'boolean' },
   hideInternal: { type: 'boolean' },
   hideExport: { type: 'boolean' },
