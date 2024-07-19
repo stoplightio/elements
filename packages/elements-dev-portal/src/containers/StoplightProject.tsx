@@ -52,6 +52,18 @@ export interface StoplightProjectProps extends RoutingProps {
   hideExport?: boolean;
 
   /**
+   * Allows to the server information
+   * @default false
+   */
+  hideServerInfo?: boolean;
+
+  /**
+   * Allows to hide the security schemes
+   * @default false
+   */
+  hideSecurityInfo?: boolean;
+
+  /**
    * If set to true, all table of contents panels will be collapsed.
    * @default false
    */
@@ -76,6 +88,8 @@ export interface StoplightProjectProps extends RoutingProps {
 const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   projectId,
   hideTryIt,
+  hideSecurityInfo,
+  hideServerInfo,
   hideMocking,
   hideExport,
   collapseTableOfContents = false,
@@ -136,6 +150,8 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
         hideTryIt={hideTryIt}
         hideMocking={hideMocking}
         hideExport={hideExport}
+        hideSecurityInfo={hideSecurityInfo}
+        hideServerInfo={hideServerInfo}
         tryItCredentialsPolicy={tryItCredentialsPolicy}
         tryItCorsProxy={tryItCorsProxy}
       />

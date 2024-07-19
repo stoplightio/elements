@@ -108,7 +108,11 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
 
         <NodeVendorExtensions data={data} />
 
-        <Request onChange={setTextRequestBodyIndex} operation={data} />
+        <Request
+          onChange={setTextRequestBodyIndex}
+          operation={data}
+          hideSecurityInfo={layoutOptions?.hideSecurityInfo}
+        />
 
         {data.responses && (
           <Responses

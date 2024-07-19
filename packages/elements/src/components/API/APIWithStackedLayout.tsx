@@ -29,13 +29,15 @@ type StackedLayoutProps = {
   serviceNode: ServiceNode;
   hideTryIt?: boolean;
   hideExport?: boolean;
-  hideInlineExamples?: boolean;
+  hideServerInfo?: boolean;
+  hideSecurityInfo?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
   showPoweredByLink?: boolean;
   location: Location;
   renderExtensionAddon?: ExtensionAddonRenderer;
+  hideInlineExamples?: boolean;
   tryItOutDefaultServer?: string;
 };
 
@@ -71,13 +73,15 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   serviceNode,
   hideTryIt,
   hideExport,
-  hideInlineExamples,
+  hideSecurityInfo,
+  hideServerInfo,
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
   renderExtensionAddon,
   showPoweredByLink = true,
   location,
+  hideInlineExamples,
   tryItOutDefaultServer,
 }) => {
   const { groups: operationGroups } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation);
@@ -102,7 +106,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
               nodeTitle={serviceNode.name}
               nodeType={NodeType.HttpService}
               location={location}
-              layoutOptions={{ showPoweredByLink, hideExport }}
+              layoutOptions={{ showPoweredByLink, hideExport, hideSecurityInfo, hideServerInfo }}
               exportProps={exportProps}
               tryItCredentialsPolicy={tryItCredentialsPolicy}
               renderExtensionAddon={renderExtensionAddon}

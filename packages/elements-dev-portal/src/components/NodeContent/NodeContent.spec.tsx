@@ -51,4 +51,17 @@ describe(NodeContent.name, () => {
 
     unmount();
   });
+
+  it('can hide SecurityInfo', () => {
+    const { unmount } = render(
+      <MemoryRouter>
+        <NodeContent node={nodeContent} Link={DummyLink} hideSecurityInfo />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole('heading', { name: /create todo/i })).toBeInTheDocument();
+    expect(screen.queryByText(/API Key/i)).not.toBeInTheDocument();
+
+    unmount();
+  });
 });
