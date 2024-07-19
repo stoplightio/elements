@@ -79,7 +79,7 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     const codeViewer = await screen.findByLabelText(/curl/);
-    await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/todoId/));
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/{todoId}/));
   });
 
   it('displays base url correctly', async () => {
