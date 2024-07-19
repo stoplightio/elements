@@ -5503,7 +5503,7 @@
     use-resize-observer "^9.0.2"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.53.3", "@stoplight/mosaic@^1.53.3":
+"@stoplight/mosaic@^1.53.3":
   version "1.53.3"
   resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.53.3.tgz#1573c888d5492eff838a9f8c81ef6f071bb21298"
   integrity sha512-tT8vywRTMrqA/S3X7WHGm9EsPiz0tlga2HcJM+WpMRGd51JsZ0QLni3WOizbBrB5SnQyqj6mA6ordshuRP0DQg==
