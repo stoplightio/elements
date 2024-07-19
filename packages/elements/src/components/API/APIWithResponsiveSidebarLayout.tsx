@@ -20,6 +20,8 @@ type SidebarLayoutProps = {
   hideSchemas?: boolean;
   hideInternal?: boolean;
   hideExport?: boolean;
+  hideServerInfo?: boolean;
+  hideSecurityInfo?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
@@ -35,6 +37,8 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideSchemas,
   hideInternal,
   hideExport,
+  hideServerInfo,
+  hideSecurityInfo,
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
@@ -52,8 +56,14 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
 
   const layoutOptions = React.useMemo(
-    () => ({ hideTryIt: hideTryIt, compact: compact, hideExport: hideExport || node?.type !== NodeType.HttpService }),
-    [hideTryIt, hideExport, node, compact],
+    () => ({
+      hideTryIt: hideTryIt,
+      hideSecurityInfo: hideSecurityInfo,
+      hideServerInfo: hideServerInfo,
+      compact: compact,
+      hideExport: hideExport || node?.type !== NodeType.HttpService,
+    }),
+    [hideTryIt, hideSecurityInfo, hideServerInfo, compact, hideExport, node?.type],
   );
 
   if (!node) {
