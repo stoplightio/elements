@@ -68,6 +68,16 @@ export function getPlaceholderForParameter(parameter: ParameterSpec) {
   return String(parameter.schema?.type ?? '');
 }
 
+export function getPlaceholderForSelectedParameter(parameter: ParameterSpec) {
+  const { value: parameterValue, isDefault } = getValueForParameter(parameter);
+
+  if (isDefault) {
+    return `select an option (defaults to: ${parameterValue})`;
+  }
+
+  return undefined;
+}
+
 function retrieveDefaultFromSchema(parameter: ParameterSpec) {
   const defaultValue = parameter.schema?.default;
   return isObject(defaultValue) ? safeStringify(defaultValue) : defaultValue;
@@ -113,7 +123,7 @@ export function mapSchemaPropertiesToParameters(
     name,
     schema: typeof schema !== 'boolean' ? schema : undefined,
     examples:
-      typeof schema !== 'boolean' && schema.examples && schema.examples[0]
+      typeof schema !== 'boolean' && Array.isArray(schema.examples) && schema.examples[0]
         ? [{ key: 'example', value: schema.examples[0] }]
         : undefined,
     ...(required?.includes(name) && { required: true }),

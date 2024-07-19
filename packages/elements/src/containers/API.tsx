@@ -71,6 +71,16 @@ export interface CommonAPIProps extends RoutingProps {
   hideTryItPanel?: boolean;
 
   /**
+   * Allows hiding the Security info section
+   */
+  hideSecurityInfo?: boolean;
+
+  /**
+   * Allows hiding the Server info section
+   */
+  hideServerInfo?: boolean;
+
+  /**
    * Hides schemas from being displayed in Table of Contents
    */
   hideSchemas?: boolean;
@@ -126,6 +136,8 @@ export const APIImpl: React.FC<APIProps> = props => {
     hideTryItPanel,
     hideTryIt,
     hideSamples,
+    hideSecurityInfo,
+    hideServerInfo,
     hideSchemas,
     hideInternal,
     hideExport,
@@ -197,6 +209,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideTryIt={hideTryIt}
           hideSamples={hideSamples}
           hideTryItPanel={hideTryItPanel}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
           hideExport={hideExport}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
@@ -212,6 +226,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideTryItPanel={hideTryItPanel}
           hideTryIt={hideTryIt}
           hideSamples={hideSamples}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}
@@ -228,6 +244,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideTryItPanel={hideTryItPanel}
           hideTryIt={hideTryIt}
           hideSamples={hideSamples}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}
