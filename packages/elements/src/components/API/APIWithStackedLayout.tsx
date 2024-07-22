@@ -27,7 +27,9 @@ interface Location {
 
 type StackedLayoutProps = {
   serviceNode: ServiceNode;
+  hideTryItPanel?: boolean;
   hideTryIt?: boolean;
+  hideSamples?: boolean;
   hideExport?: boolean;
   hideServerInfo?: boolean;
   hideSecurityInfo?: boolean;
@@ -46,12 +48,16 @@ const itemUriMatchesPathname = (itemUri: string, pathname: string) => itemUri ==
 
 const TryItContext = React.createContext<{
   hideTryIt?: boolean;
-  hideInlineExamples?: boolean;
+  hideTryItPanel?: boolean;
+  hideSamples?: boolean;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
-  tryItOutDefaultServer?: string;
   corsProxy?: string;
+  hideInlineExamples?: boolean;
+  tryItOutDefaultServer?: string;
 }>({
   hideTryIt: false,
+  hideTryItPanel: false,
+  hideSamples: false,
   tryItCredentialsPolicy: 'omit',
 });
 TryItContext.displayName = 'TryItContext';
@@ -71,7 +77,9 @@ LocationContext.displayName = 'LocationContext';
 
 export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   serviceNode,
+  hideTryItPanel,
   hideTryIt,
+  hideSamples,
   hideExport,
   hideSecurityInfo,
   hideServerInfo,
@@ -91,6 +99,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
     <LocationContext.Provider value={{ location }}>
       <TryItContext.Provider
         value={{
+          hideTryItPanel,
           hideTryIt,
           tryItCredentialsPolicy,
           corsProxy: tryItCorsProxy,
@@ -182,8 +191,7 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const color = HttpMethodColors[item.data.method as HttpMethod] || 'gray';
   const isDeprecated = !!item.data.deprecated;
-  const { hideTryIt, hideInlineExamples, tryItCredentialsPolicy, corsProxy, tryItOutDefaultServer } =
-    React.useContext(TryItContext);
+  const { hideTryIt, hideSamples, hideTryItPanel, tryItCredentialsPolicy, corsProxy, hideInlineExamples, tryItOutDefaultServer } = React.useContext(TryItContext);
 
   const onClick = React.useCallback(() => {
     setIsExpanded(!isExpanded);
@@ -235,8 +243,13 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
         <Box flex={1} p={2} fontWeight="medium" mx="auto" fontSize="xl">
           {item.name}
         </Box>
-        {hideTryIt ? (
-          <Box as={ParsedDocs} layoutOptions={{ noHeading: true, hideTryItPanel: true }} node={item} p={4} />
+        {hideTryItPanel ? (
+          <Box
+            as={ParsedDocs}
+            layoutOptions={{ noHeading: true, hideTryItPanel: true, hideSamples, hideTryIt }}
+            node={item}
+            p={4}
+          />
         ) : (
           <Tabs appearance="line">
             <TabList>
@@ -250,7 +263,7 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
                   className="sl-px-4"
                   node={item}
                   location={location}
-                  layoutOptions={{ noHeading: true, hideTryItPanel: true }}
+                  layoutOptions={{ noHeading: true, hideTryItPanel: false, hideSamples, hideTryIt }}
                 />
               </TabPanel>
 
@@ -261,6 +274,8 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
                   tryItCredentialsPolicy={tryItCredentialsPolicy}
                   tryItOutDefaultServer={tryItOutDefaultServer}
                   corsProxy={corsProxy}
+                  hideSamples={hideSamples}
+                  hideTryIt={hideTryIt}
                 />
               </TabPanel>
             </TabPanels>

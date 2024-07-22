@@ -8,10 +8,11 @@ import { ResponseExamples, ResponseExamplesProps } from '../ResponseExamples/Res
 import { TryIt, TryItProps } from './TryIt';
 
 export type TryItWithRequestSamplesProps = Omit<TryItProps, 'onRequestChange'> &
-  ResponseExamplesProps & { hideTryIt?: boolean; hideInlineExamples?: boolean };
+  ResponseExamplesProps & { hideTryIt?: boolean; hideSamples?: boolean, hideInlineExamples?: boolean };
 
 export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = ({
   hideTryIt,
+  hideSamples,
   hideInlineExamples = false,
   ...props
 }) => {
@@ -31,7 +32,7 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = (
           </InvertTheme>
         )}
 
-        {requestData && <RequestSamples request={requestData} customCodeSamples={customCodeSamples} />}
+        {requestData && !hideSamples && <RequestSamples request={requestData} customCodeSamples={customCodeSamples} />}
 
         <ResponseExamples {...props} />
       </VStack>
