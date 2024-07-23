@@ -5410,10 +5410,10 @@
   dependencies:
     wolfy87-eventemitter "~5.2.8"
 
-"@stoplight/markdown-viewer@^5.7.0":
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.7.0.tgz#939b38e4d7092418607b53cee7182e2492bd782c"
-  integrity sha512-SOFmEapj/RAJ6fUqgZO41diB9ocEFxhrSL7C8aJKNoYoHme0xxk5DK53DvFNBayEEXnf9e/YmKPfwJjFdKUilA==
+"@stoplight/markdown-viewer@^5.7.1":
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/@stoplight/markdown-viewer/-/markdown-viewer-5.7.1.tgz#c29a6c1e03f0bac8a40405c096cbe87c274e00a6"
+  integrity sha512-EiJC0w/l+Juc49fVCBOEOOg/NdCWDC8o1lS7d6P5skHS5G+hw1c3GNlCZ2BSqs8z8kkmSzSDWo5XY1S16NVJbQ==
   dependencies:
     "@rehooks/component-size" "^1.0.3"
     "@stoplight/markdown" "^3.1.3"
