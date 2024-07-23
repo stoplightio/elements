@@ -15,7 +15,9 @@ import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
   logo?: string;
+  hideTryItPanel?: boolean;
   hideTryIt?: boolean;
+  hideSamples?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
   hideExport?: boolean;
@@ -31,7 +33,9 @@ type SidebarLayoutProps = {
 export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
+  hideTryItPanel,
   hideTryIt,
+  hideSamples,
   compact,
   hideSchemas,
   hideInternal,
@@ -57,12 +61,14 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const layoutOptions = React.useMemo(
     () => ({
       hideTryIt: hideTryIt,
+      hideTryItPanel,
+      hideSamples,
       hideSecurityInfo: hideSecurityInfo,
       hideServerInfo: hideServerInfo,
       compact: compact,
       hideExport: hideExport || node?.type !== NodeType.HttpService,
     }),
-    [hideTryIt, hideSecurityInfo, hideServerInfo, compact, hideExport, node?.type],
+    [hideTryIt, hideSecurityInfo, hideServerInfo, compact, hideExport, hideTryItPanel, hideSamples, node?.type],
   );
 
   if (!node) {
