@@ -57,6 +57,11 @@ export interface TryItProps {
   embeddedInMd?: boolean;
 
   /**
+   * True when TryIt Panel should be hidden
+   */
+  hideTryIt?: boolean;
+
+  /**
    * Fetch credentials policy for TryIt component
    * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
    * @default "omit"
@@ -78,6 +83,7 @@ export const TryIt: React.FC<TryItProps> = ({
   onRequestChange,
   requestBodyIndex,
   embeddedInMd = false,
+  hideTryIt = false,
   tryItCredentialsPolicy,
   corsProxy,
 }) => {
@@ -337,6 +343,11 @@ export const TryIt: React.FC<TryItProps> = ({
         {tryItPanelContents}
       </Box>
     );
+  }
+
+  // If hiding of the TryIt panel is requested, we should not render it the component itself
+  if (hideTryIt) {
+    return null;
   }
 
   return (

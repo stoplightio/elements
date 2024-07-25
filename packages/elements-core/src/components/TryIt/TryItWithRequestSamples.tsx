@@ -16,12 +16,15 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = (
 
   return (
     <VStack spacing={6}>
-      {!hideTryIt && (
+      {!hideTryIt ? (
         <InvertTheme>
           <Box>
-            <TryIt {...props} onRequestChange={setRequestData} />
+            <TryIt {...props} hideTryIt={hideTryIt} onRequestChange={setRequestData} />
           </Box>
         </InvertTheme>
+      ) : (
+        // The TryIt is responsible for generating the Request Data so it should always be rendered
+        <TryIt {...props} hideTryIt={hideTryIt} onRequestChange={setRequestData} />
       )}
 
       {requestData && <RequestSamples request={requestData} customCodeSamples={customCodeSamples} />}
