@@ -21,7 +21,7 @@ type DocsBaseProps = Pick<
 >;
 type DocsLayoutProps = Pick<
   Required<DocsProps>['layoutOptions'],
-  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport' | 'hideSecurityInfo' | 'hideServerInfo'
+  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideSamples' | 'hideExport' | 'hideSecurityInfo' | 'hideServerInfo'
 >;
 
 export type NodeContentProps = {
@@ -60,6 +60,7 @@ export const NodeContent = ({
   // Docs layout props
   compact,
   hideTryIt,
+  hideSamples,
   hideTryItPanel,
   hideSecurityInfo,
   hideServerInfo,
@@ -89,6 +90,7 @@ export const NodeContent = ({
               compact,
               hideTryIt: hideTryIt,
               hideTryItPanel: hideTryItPanel,
+              hideSamples,
               hideSecurityInfo: hideSecurityInfo,
               hideServerInfo: hideServerInfo,
               hideExport:

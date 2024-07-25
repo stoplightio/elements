@@ -21,7 +21,9 @@ import { isInternal } from './utils';
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
   logo?: string;
+  hideTryItPanel?: boolean;
   hideTryIt?: boolean;
+  hideSamples?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
   hideServerInfo?: boolean;
@@ -36,7 +38,9 @@ type SidebarLayoutProps = {
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
+  hideTryItPanel,
   hideTryIt,
+  hideSamples,
   hideSchemas,
   hideSecurityInfo,
   hideServerInfo,
@@ -60,11 +64,13 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const layoutOptions = React.useMemo(
     () => ({
       hideTryIt: hideTryIt,
+      hideTryItPanel,
+      hideSamples,
       hideServerInfo: hideServerInfo,
       hideSecurityInfo: hideSecurityInfo,
       hideExport: hideExport || node?.type !== NodeType.HttpService,
     }),
-    [hideTryIt, hideServerInfo, hideSecurityInfo, hideExport, node?.type],
+    [hideTryIt, hideServerInfo, hideSecurityInfo, hideExport, hideTryItPanel, hideSamples, node?.type],
   );
 
   if (!node) {
