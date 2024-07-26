@@ -16,7 +16,7 @@ interface ParametersProps {
   parameters?: IHttpParam[];
 }
 
-const readableStyles = {
+const readableStyles: Readonly<Partial<Record<HttpParamStyles, string>>> = {
   [HttpParamStyles.PipeDelimited]: 'Pipe separated values',
   [HttpParamStyles.SpaceDelimited]: 'Space separated values',
   [HttpParamStyles.CommaDelimited]: 'Comma separated values',
@@ -24,17 +24,17 @@ const readableStyles = {
   [HttpParamStyles.Matrix]: 'Path style values',
   [HttpParamStyles.Label]: 'Label style values',
   [HttpParamStyles.Form]: 'Form style values',
-} as const;
+};
 
-const defaultStyle = {
+const defaultStyle: Readonly<Partial<Record<string, HttpParamStyles>>> = {
   query: HttpParamStyles.Form,
   header: HttpParamStyles.Simple,
   path: HttpParamStyles.Simple,
   cookie: HttpParamStyles.Form,
-} as const;
+};
 
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
 
   const schema = React.useMemo(
@@ -51,6 +51,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
       schema={schema}
       disableCrumbs
       nodeHasChanged={nodeHasChanged}
+      renderExtensionAddon={renderExtensionAddon}
     />
   );
 };
@@ -84,14 +85,12 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
 
     // TODO (CL): This can be removed when http operations are fixed https://github.com/stoplightio/http-spec/issues/26
     const paramDescription = description || paramSchema.description;
-
     const paramDeprecated = !!(deprecated || paramSchema.deprecated);
-    const paramStyleUnspecified = style === HttpParamStyles.Unspecified;
-    const paramStyle = paramStyleUnspecified
-      ? undefined
-      : style && defaultStyle[parameterType] !== style
-      ? readableStyles[style] || style
-      : undefined;
+
+    let paramStyle: string | undefined;
+    if (style && style !== HttpParamStyles.Unspecified && defaultStyle[parameterType] !== style) {
+      paramStyle = readableStyles[style] || style;
+    }
 
     if (isPlainObject(schema.properties)) {
       schema.properties![p.name] = {

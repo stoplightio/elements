@@ -211,6 +211,14 @@ be the json schema object to be rendered.
               "type": "number",
               "minimum": 0,
               "maximum": 150
+            },
+            "type": {
+              "type": "string",
+              "enum": ["STANDARD", "ADMIN"],
+              "x-enum-descriptions": {
+                "STANDARD": "A standard user",
+                "ADMIN": "A user with administrative powers"
+              }
             }
           },
           "required": [

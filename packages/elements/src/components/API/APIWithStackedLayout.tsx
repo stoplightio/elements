@@ -6,8 +6,9 @@ import {
   ParsedDocs,
   TryItWithRequestSamples,
 } from '@stoplight/elements-core';
+import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Heading, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
-import { NodeType } from '@stoplight/types';
+import { HttpMethod, NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
@@ -26,13 +27,18 @@ interface Location {
 
 type StackedLayoutProps = {
   serviceNode: ServiceNode;
+  hideTryItPanel?: boolean;
   hideTryIt?: boolean;
+  hideSamples?: boolean;
   hideExport?: boolean;
+  hideServerInfo?: boolean;
+  hideSecurityInfo?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   tryItCorsProxy?: string;
   showPoweredByLink?: boolean;
   location: Location;
+  renderExtensionAddon?: ExtensionAddonRenderer;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode | WebhookNode) => {
@@ -45,10 +51,14 @@ const itemMatchesHash = (hash: string, item: OperationNode | WebhookNode) => {
 
 const TryItContext = React.createContext<{
   hideTryIt?: boolean;
+  hideTryItPanel?: boolean;
+  hideSamples?: boolean;
   tryItCredentialsPolicy?: TryItCredentialsPolicy;
   corsProxy?: string;
 }>({
   hideTryIt: false,
+  hideTryItPanel: false,
+  hideSamples: false,
   tryItCredentialsPolicy: 'omit',
 });
 TryItContext.displayName = 'TryItContext';
@@ -68,11 +78,16 @@ LocationContext.displayName = 'LocationContext';
 
 export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   serviceNode,
+  hideTryItPanel,
   hideTryIt,
+  hideSamples,
   hideExport,
+  hideSecurityInfo,
+  hideServerInfo,
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  renderExtensionAddon,
   showPoweredByLink = true,
   location,
 }) => {
@@ -81,7 +96,9 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
 
   return (
     <LocationContext.Provider value={{ location }}>
-      <TryItContext.Provider value={{ hideTryIt, tryItCredentialsPolicy, corsProxy: tryItCorsProxy }}>
+      <TryItContext.Provider
+        value={{ hideTryItPanel, hideTryIt, hideSamples, tryItCredentialsPolicy, corsProxy: tryItCorsProxy }}
+      >
         <Flex w="full" flexDirection="col" m="auto" className="sl-max-w-4xl">
           <Box w="full" borderB>
             <Docs
@@ -90,9 +107,10 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
               nodeTitle={serviceNode.name}
               nodeType={NodeType.HttpService}
               location={location}
-              layoutOptions={{ showPoweredByLink, hideExport }}
+              layoutOptions={{ showPoweredByLink, hideExport, hideSecurityInfo, hideServerInfo }}
               exportProps={exportProps}
               tryItCredentialsPolicy={tryItCredentialsPolicy}
+              renderExtensionAddon={renderExtensionAddon}
             />
           </Box>
           {operationGroups.length > 0 && webhookGroups.length > 0 ? <Heading size={2}>Endpoints</Heading> : null}
@@ -169,9 +187,9 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
   const { hash } = location;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
-  const color = HttpMethodColors[item.data.method] || 'gray';
+  const color = HttpMethodColors[item.data.method as HttpMethod] || 'gray';
   const isDeprecated = !!item.data.deprecated;
-  const { hideTryIt, tryItCredentialsPolicy, corsProxy } = React.useContext(TryItContext);
+  const { hideTryIt, hideSamples, hideTryItPanel, tryItCredentialsPolicy, corsProxy } = React.useContext(TryItContext);
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
@@ -218,8 +236,13 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
         <Box flex={1} p={2} fontWeight="medium" mx="auto" fontSize="xl">
           {item.name}
         </Box>
-        {hideTryIt ? (
-          <Box as={ParsedDocs} layoutOptions={{ noHeading: true, hideTryItPanel: true }} node={item} p={4} />
+        {hideTryItPanel ? (
+          <Box
+            as={ParsedDocs}
+            layoutOptions={{ noHeading: true, hideTryItPanel: true, hideSamples, hideTryIt }}
+            node={item}
+            p={4}
+          />
         ) : (
           <Tabs appearance="line">
             <TabList>
@@ -233,7 +256,7 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
                   className="sl-px-4"
                   node={item}
                   location={location}
-                  layoutOptions={{ noHeading: true, hideTryItPanel: true }}
+                  layoutOptions={{ noHeading: true, hideTryItPanel: false, hideSamples, hideTryIt }}
                 />
               </TabPanel>
 
@@ -242,6 +265,8 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
                   httpOperation={item.data}
                   tryItCredentialsPolicy={tryItCredentialsPolicy}
                   corsProxy={corsProxy}
+                  hideSamples={hideSamples}
+                  hideTryIt={hideTryIt}
                 />
               </TabPanel>
             </TabPanels>

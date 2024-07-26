@@ -10,12 +10,17 @@ export const convertRequestToSample = async (
 
   try {
     const snippet = new HTTPSnippet(request);
-    const converted = await snippet.convert(language, library);
+    let converted = await snippet.convert(language, library);
     if (Array.isArray(converted)) {
-      return converted[0];
+      converted = converted[0];
+    } else {
+      converted = converted || null;
+    }
+    if (typeof converted === 'string') {
+      converted = converted.replace(/%7B/g, '{').replace(/%7D/g, '}');
     }
 
-    return converted || null;
+    return converted;
   } catch (err) {
     console.error(err);
     return null;

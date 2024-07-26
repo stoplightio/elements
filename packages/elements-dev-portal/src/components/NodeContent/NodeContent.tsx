@@ -21,7 +21,7 @@ type DocsBaseProps = Pick<
 >;
 type DocsLayoutProps = Pick<
   Required<DocsProps>['layoutOptions'],
-  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'
+  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideSamples' | 'hideExport' | 'hideSecurityInfo' | 'hideServerInfo'
 >;
 
 export type NodeContentProps = {
@@ -60,7 +60,10 @@ export const NodeContent = ({
   // Docs layout props
   compact,
   hideTryIt,
+  hideSamples,
   hideTryItPanel,
+  hideSecurityInfo,
+  hideServerInfo,
 
   // Exporting
   hideExport,
@@ -87,6 +90,9 @@ export const NodeContent = ({
               compact,
               hideTryIt: hideTryIt,
               hideTryItPanel: hideTryItPanel,
+              hideSamples,
+              hideSecurityInfo: hideSecurityInfo,
+              hideServerInfo: hideServerInfo,
               hideExport:
                 hideExport ||
                 (node.links.export_url ?? node.links.export_original_file_url ?? node.links.export_bundled_file_url) ===

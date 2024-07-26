@@ -6,6 +6,12 @@ export const httpOperation: IHttpOperation = {
   method: 'put',
   path: '/todos/{todoId}',
   summary: 'Update Todo',
+  extensions: {
+    'x-stoplight-info': {
+      id: 'http-operation-id',
+      version: '1.0.0',
+    },
+  },
   responses: [
     {
       id: '?http-response-200?',
@@ -79,9 +85,28 @@ export const httpOperation: IHttpOperation = {
                         minimum: 0,
                         maximum: 150,
                       },
+                      plan: {
+                        enum: ['FREE', 'BASIC', 'DELUXE'],
+                        // @ts-ignore
+                        'x-enum-descriptions': {
+                          FREE: 'A happy customer',
+                          BASIC: 'Just what is needed',
+                          DELUXE: 'Big bucks',
+                        },
+                      },
                     },
                     required: ['name', 'age'],
                     description: 'Here lies the user model',
+                  },
+                  type: {
+                    description: 'The type of todo',
+                    type: 'string',
+                    enum: ['REMINDER', 'TASK'],
+                    // @ts-ignore
+                    'x-enum-descriptions': {
+                      REMINDER: 'A reminder',
+                      TASK: 'A task',
+                    },
                   },
                 },
                 required: ['id', 'user'],

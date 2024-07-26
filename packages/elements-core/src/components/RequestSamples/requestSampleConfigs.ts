@@ -1,17 +1,17 @@
 import { CodeViewerLanguage } from '@stoplight/mosaic-code-viewer';
 import { Dictionary } from '@stoplight/types';
 
-type SupportedLanguage = string;
-type SupportedLibrary = string;
-interface LibraryConfig {
+export type SupportedLanguage = string;
+export type SupportedLibrary = string;
+export interface LibraryConfig {
   httpSnippetLibrary: string;
 }
-interface LanguageConfig {
+export interface LanguageConfig {
   mosaicCodeViewerLanguage: CodeViewerLanguage;
   httpSnippetLanguage: string;
   libraries?: Dictionary<LibraryConfig, SupportedLibrary>;
 }
-type RequestSampleConfigs = Dictionary<LanguageConfig, SupportedLanguage>;
+export type RequestSampleConfigs = Dictionary<LanguageConfig, SupportedLanguage>;
 
 export const requestSampleConfigs: RequestSampleConfigs = {
   Shell: {
@@ -179,11 +179,4 @@ export const requestSampleConfigs: RequestSampleConfigs = {
     mosaicCodeViewerLanguage: 'swift',
     httpSnippetLanguage: 'swift',
   },
-};
-
-export const getConfigFor = (language: string, library: string): LanguageConfig & Partial<LibraryConfig> => {
-  const languageConfig = requestSampleConfigs[language];
-  const libraryConfig = languageConfig.libraries?.[library] || {};
-
-  return { ...languageConfig, ...libraryConfig };
 };

@@ -1,5 +1,5 @@
-import { Box, Button, HStack, Icon, Panel, useThemeIsDark } from '@stoplight/mosaic';
-import type { IHttpEndpointOperation, IServer } from '@stoplight/types';
+import { Box, Button, HStack, Icon, ITextColorProps, Panel, useThemeIsDark } from '@stoplight/mosaic';
+import type { HttpMethod, IHttpEndpointOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { useAtom } from 'jotai';
 import * as React from 'react';
@@ -7,11 +7,11 @@ import * as React from 'react';
 import { HttpMethodColors } from '../../constants';
 import { isHttpOperation, isHttpWebhookOperation } from '../../utils/guards';
 import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/IServer';
-import { RequestSamples } from '../RequestSamples';
+import { extractCodeSamples, RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
-import { useBodyParameterState } from './Body/request-body-utils';
+import { BodyParameterValues, useBodyParameterState } from './Body/request-body-utils';
 import { RequestBody } from './Body/RequestBody';
 import { useTextRequestBodyState } from './Body/useTextRequestBodyState';
 import { buildFetchRequest, buildHarRequest } from './build-request';
@@ -115,10 +115,12 @@ export const TryIt: React.FC<TryItProps> = ({
     parameter => parameter.required && !parameterValuesWithDefaults[parameter.name],
   );
 
+  const customCodeSamples = extractCodeSamples(httpOperation);
+
   const getValues = () =>
     Object.keys(bodyParameterValues)
       .filter(param => !isAllowedEmptyValues[param] ?? true)
-      .reduce((previousValue, currentValue) => {
+      .reduce<BodyParameterValues>((previousValue, currentValue) => {
         previousValue[currentValue] = bodyParameterValues[currentValue];
         return previousValue;
       }, {});
@@ -318,7 +320,12 @@ export const TryIt: React.FC<TryItProps> = ({
     tryItPanelElem = (
       <Panel isCollapsible={false} p={0} className="TryItPanel">
         <Panel.Titlebar bg="canvas-300">
-          <Box fontWeight="bold" color={!isDark ? HttpMethodColors[httpOperation.method] : undefined}>
+          <Box
+            fontWeight="bold"
+            color={
+              !isDark ? (HttpMethodColors[httpOperation.method as HttpMethod] as ITextColorProps['color']) : undefined
+            }
+          >
             {httpOperation.method.toUpperCase()}
           </Box>
           <Box fontWeight="medium" ml={2} textOverflow="truncate" overflowX="hidden">
@@ -331,7 +338,7 @@ export const TryIt: React.FC<TryItProps> = ({
     );
   } else {
     tryItPanelElem = (
-      <Box className="TryItPanel" bg="canvas-100" rounded="lg">
+      <Box className="TryItPanel" bg="canvas-100">
         {tryItPanelContents}
       </Box>
     );
@@ -340,7 +347,9 @@ export const TryIt: React.FC<TryItProps> = ({
   return (
     <Box rounded="lg" overflowY="hidden">
       {tryItPanelElem}
-      {requestData && embeddedInMd && <RequestSamples request={requestData} embeddedInMd />}
+      {requestData && embeddedInMd && (
+        <RequestSamples request={requestData} customCodeSamples={customCodeSamples} embeddedInMd />
+      )}
       {response && !('error' in response) && <TryItResponse response={response} />}
       {response && 'error' in response && <ResponseError state={response} />}
     </Box>

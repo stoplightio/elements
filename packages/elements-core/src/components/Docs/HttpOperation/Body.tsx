@@ -26,7 +26,7 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
 export const Body = ({ body, onChange }: BodyProps) => {
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   React.useEffect(() => {
     onChange?.(chosenContent);
@@ -55,7 +55,6 @@ export const Body = ({ body, onChange }: BodyProps) => {
           </Flex>
         )}
       </SectionSubtitle>
-
       {description && (
         <Box pos="relative">
           <MarkdownViewer markdown={description} />
@@ -71,6 +70,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
           viewMode="write"
           renderRootTreeLines
           nodeHasChanged={nodeHasChanged}
+          renderExtensionAddon={renderExtensionAddon}
         />
       )}
     </VStack>
