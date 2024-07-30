@@ -92,7 +92,9 @@ describe('Stoplight component', () => {
       cy.findByRole('menuitemradio', { name: /mock server/i }).then(enabled => {
         enabled.trigger('click');
       });
+      cy.intercept('https://stoplight.io/mocks/**').as('getData');
       cy.findByRole('button', { name: /send api request/i }).click();
+      cy.wait('@getData');
       cy.findByText('200 OK').should('exist');
     });
   });
