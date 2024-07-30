@@ -3,7 +3,7 @@ version: 2.1
 executors:
   cypress-default:
     docker:
-      - image: cypress/base:16.18.1
+      - image: cypress/base:18.20.3
         environment:
           ## this enables colors in the output
           TERM: xterm
