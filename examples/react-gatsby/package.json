@@ -22,7 +22,7 @@
   "dependencies": {
     "@stoplight/elements": "^7.0.2",
     "@stoplight/elements-dev-portal": "^1.0.0",
-    "gatsby": "5.13.7",
+    "gatsby": "4.25.8",
     "gatsby-plugin-image": "^2.25.0",
     "gatsby-plugin-manifest": "^4.25.0",
     "gatsby-plugin-offline": "^5.25.0",
@@ -39,6 +39,9 @@
     "gatsby-plugin-sass": "^5.25.0",
     "gh-pages": "^5.0.0",
     "typescript": "4.4.x"
+  },
+  "overrides": {
+    "ws": "^8.17.1"
   },
   "keywords": [
     "gatsby"
