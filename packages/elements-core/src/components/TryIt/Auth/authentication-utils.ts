@@ -9,7 +9,7 @@ import {
   IOauth2SecurityScheme,
 } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { flatten, isObject } from 'lodash';
+import { flatten, isObject, isPlainObject } from 'lodash';
 import React from 'react';
 
 import { persistAtom } from '../../../utils/jotai/persistAtom';
@@ -68,6 +68,10 @@ const getSecuritySchemeNames = (securitySchemes: HttpSecurityScheme[]): string[]
 
 type SecuritySchemeValues = Dictionary<string>;
 
+const isSecuritySchemeValues = (
+  maybeSecuritySchemeValues: unknown,
+): maybeSecuritySchemeValues is SecuritySchemeValues => isPlainObject(maybeSecuritySchemeValues);
+
 const securitySchemeValuesAtom = persistAtom('TryIt_securitySchemeValues', atom<SecuritySchemeValues>({}));
 export const usePersistedSecuritySchemeWithValues = (): [
   HttpSecuritySchemeWithValues[] | undefined,
@@ -96,7 +100,7 @@ export const usePersistedSecuritySchemeWithValues = (): [
     return currentScheme.map(scheme => {
       return {
         scheme: scheme.scheme,
-        authValue: securitySchemeValues[scheme.scheme.key],
+        authValue: isSecuritySchemeValues(securitySchemeValues) ? securitySchemeValues[scheme.scheme.key] : undefined,
       };
     });
   }, [currentScheme, securitySchemeValues]);

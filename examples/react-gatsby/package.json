@@ -37,8 +37,11 @@
   "devDependencies": {
     "@types/react-helmet": "^6.0.0",
     "gatsby-plugin-sass": "^5.25.0",
-    "gh-pages": "^3.2.3",
+    "gh-pages": "^5.0.0",
     "typescript": "4.4.x"
+  },
+  "overrides": {
+    "ws": "^8.17.1"
   },
   "keywords": [
     "gatsby"

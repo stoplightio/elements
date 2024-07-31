@@ -15,10 +15,14 @@ import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
   logo?: string;
+  hideTryItPanel?: boolean;
   hideTryIt?: boolean;
+  hideSamples?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
   hideExport?: boolean;
+  hideServerInfo?: boolean;
+  hideSecurityInfo?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
@@ -29,11 +33,15 @@ type SidebarLayoutProps = {
 export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
+  hideTryItPanel,
   hideTryIt,
+  hideSamples,
   compact,
   hideSchemas,
   hideInternal,
   hideExport,
+  hideServerInfo,
+  hideSecurityInfo,
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
@@ -51,8 +59,16 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
 
   const layoutOptions = React.useMemo(
-    () => ({ hideTryIt: hideTryIt, compact: compact, hideExport: hideExport || node?.type !== NodeType.HttpService }),
-    [hideTryIt, hideExport, node, compact],
+    () => ({
+      hideTryIt: hideTryIt,
+      hideTryItPanel,
+      hideSamples,
+      hideSecurityInfo: hideSecurityInfo,
+      hideServerInfo: hideServerInfo,
+      compact: compact,
+      hideExport: hideExport || node?.type !== NodeType.HttpService,
+    }),
+    [hideTryIt, hideSecurityInfo, hideServerInfo, compact, hideExport, hideTryItPanel, hideSamples, node?.type],
   );
 
   if (!node) {

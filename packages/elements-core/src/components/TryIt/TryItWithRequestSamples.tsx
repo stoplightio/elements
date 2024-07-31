@@ -7,9 +7,13 @@ import { ResponseExamples, ResponseExamplesProps } from '../ResponseExamples/Res
 import { TryIt, TryItProps } from './TryIt';
 
 export type TryItWithRequestSamplesProps = Omit<TryItProps, 'onRequestChange'> &
-  ResponseExamplesProps & { hideTryIt?: boolean };
+  ResponseExamplesProps & { hideTryIt?: boolean; hideSamples?: boolean };
 
-export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = ({ hideTryIt, ...props }) => {
+export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = ({
+  hideTryIt,
+  hideSamples,
+  ...props
+}) => {
   const [requestData, setRequestData] = React.useState<HarRequest | undefined>();
 
   const customCodeSamples = extractCodeSamples(props.httpOperation);
@@ -27,7 +31,7 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = (
         <TryIt {...props} hideTryIt={hideTryIt} onRequestChange={setRequestData} />
       )}
 
-      {requestData && <RequestSamples request={requestData} customCodeSamples={customCodeSamples} />}
+      {requestData && !hideSamples && <RequestSamples request={requestData} customCodeSamples={customCodeSamples} />}
 
       <ResponseExamples {...props} />
     </VStack>

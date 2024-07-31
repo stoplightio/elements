@@ -5,5 +5,5 @@ import { HttpCodeColor } from '../constants';
  * @param code Http code (Ex. 200, 401, 503)
  */
 export function getHttpCodeColor(code: number | string): typeof HttpCodeColor[keyof typeof HttpCodeColor] {
-  return HttpCodeColor[`${code}`[0]] || 'gray';
+  return HttpCodeColor[parseInt(String(code)[0])] || 'gray';
 }
