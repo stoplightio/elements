@@ -92,7 +92,9 @@ describe('Stoplight component', () => {
       cy.findByRole('menuitemradio', { name: /mock server/i }).then(enabled => {
         enabled.trigger('click');
       });
+      cy.intercept('https://stoplight.io/mocks/**').as('getData');
       cy.findByRole('button', { name: /send api request/i }).click();
+      cy.wait('@getData');
       cy.findByText('200 OK').should('exist');
     });
   });
@@ -131,8 +133,10 @@ describe('Stoplight component', () => {
 
 function loadStoplightProjectPage() {
   cy.intercept('https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/**').as('getNode');
+  cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/table-of-contents`).as('getToc');
   cy.visit('/stoplight-project');
   cy.wait('@getNode');
+  cy.wait('@getToc');
 }
 
 function loadCreateTodoPage() {
@@ -153,6 +157,8 @@ function loadMarkdownPage() {
 
 function visitNode(nodeId: string, nodeSlug: string) {
   cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/nodes/${nodeId}-${nodeSlug}`).as('getNode');
+  cy.intercept(`https://stoplight.io/api/v1/projects/cHJqOjYwNjYx/table-of-contents`).as('getToc');
   cy.visit(`/stoplight-project/${nodeId}-${nodeSlug}`);
   cy.wait('@getNode');
+  cy.wait('@getToc');
 }

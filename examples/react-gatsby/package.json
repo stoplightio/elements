@@ -40,6 +40,9 @@
     "gh-pages": "^5.0.0",
     "typescript": "4.4.x"
   },
+  "overrides": {
+    "ws": "^8.17.1"
+  },
   "keywords": [
     "gatsby"
   ]
