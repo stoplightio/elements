@@ -9,7 +9,11 @@ export const ApiElement = createElementClass(API, {
   staticRouterPath: { type: 'string' },
   router: { type: 'string' },
   layout: { type: 'string' },
+  hideTryItPanel: { type: 'boolean' },
   hideTryIt: { type: 'boolean' },
+  hideSamples: { type: 'boolean' },
+  hideServerInfo: { type: 'boolean' },
+  hideSecurityInfo: { type: 'boolean' },
   hideSchemas: { type: 'boolean' },
   hideInternal: { type: 'boolean' },
   hideExport: { type: 'boolean' },
@@ -17,4 +21,5 @@ export const ApiElement = createElementClass(API, {
   tryItCredentialsPolicy: { type: 'string' },
   tryItCorsProxy: { type: 'string' },
   maxRefDepth: { type: 'number' },
+  renderExtensionAddon: { type: 'function' },
 });

@@ -1,6 +1,15 @@
-import { Box, Flex, Heading, HStack, NodeAnnotation, useThemeIsDark, VStack } from '@stoplight/mosaic';
+import {
+  Box,
+  Flex,
+  Heading,
+  HStack,
+  IBackgroundColorProps,
+  NodeAnnotation,
+  useThemeIsDark,
+  VStack,
+} from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
-import { IHttpEndpointOperation, IHttpOperation } from '@stoplight/types';
+import { HttpMethod, IHttpEndpointOperation, IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
 import { useAtomValue } from 'jotai/utils';
 import * as React from 'react';
@@ -14,6 +23,7 @@ import { isHttpOperation, isHttpWebhookOperation } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
+import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 import { DeprecatedBadge, InternalBadge } from './Badges';
 import { Callbacks } from './Callbacks';
@@ -69,6 +79,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         responseStatusCode={responseStatusCode}
         requestBodyIndex={requestBodyIndex}
         hideTryIt={layoutOptions?.hideTryIt}
+        hideSamples={layoutOptions?.hideSamples}
         tryItCredentialsPolicy={tryItCredentialsPolicy}
         mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
         corsProxy={tryItCorsProxy}
@@ -85,7 +96,13 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           </Box>
         )}
 
-        <Request onChange={setTextRequestBodyIndex} operation={data} />
+        <NodeVendorExtensions data={data} />
+
+        <Request
+          onChange={setTextRequestBodyIndex}
+          operation={data}
+          hideSecurityInfo={layoutOptions?.hideSecurityInfo}
+        />
 
         {data.responses && (
           <Responses
@@ -170,7 +187,7 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
         py={1}
         px={2.5}
         rounded="lg"
-        bg={!isDark ? HttpMethodColors[method] : 'canvas-100'}
+        bg={!isDark ? (HttpMethodColors[method as HttpMethod] as IBackgroundColorProps['bg']) : 'canvas-100'}
         color={!isDark ? 'on-primary' : 'body'}
         fontSize="lg"
         fontWeight="semibold"

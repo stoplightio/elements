@@ -10,9 +10,9 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { IntentVals } from '@stoplight/mosaic';
-import { Dictionary, HttpSecurityScheme, NodeType } from '@stoplight/types';
+import { Dictionary, HttpMethod, HttpSecurityScheme, NodeType } from '@stoplight/types';
 
-export const NodeTypeColors: Dictionary<string, NodeType> = {
+export const NodeTypeColors: Readonly<Dictionary<string, NodeType>> = {
   http_operation: '#6a6acb',
   http_webhook: 'primary',
   http_service: '#e056fd',
@@ -30,7 +30,7 @@ export const NodeTypeColors: Dictionary<string, NodeType> = {
   stoplight_resolutions: '',
 };
 
-export const NodeTypePrettyName: Dictionary<string, NodeType> = {
+export const NodeTypePrettyName: Readonly<Dictionary<string, NodeType>> = {
   http_operation: 'Endpoint',
   http_webhook: 'Webhook',
   http_service: 'API',
@@ -48,7 +48,7 @@ export const NodeTypePrettyName: Dictionary<string, NodeType> = {
   stoplight_resolutions: '',
 };
 
-export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
+export const NodeTypeIconDefs: Readonly<Dictionary<IconDefinition, NodeType>> = {
   http_operation: faCrosshairs,
   http_webhook: faEnvelope,
   http_service: faCloud,
@@ -66,7 +66,7 @@ export const NodeTypeIconDefs: Dictionary<IconDefinition, NodeType> = {
   stoplight_resolutions: faQuestionCircle,
 };
 
-export const HttpSecuritySchemeColors: Partial<Record<HttpSecurityScheme['type'], string>> = {
+export const HttpSecuritySchemeColors: Readonly<Partial<Record<HttpSecurityScheme['type'], string>>> = {
   apiKey: 'green',
   http: 'orange',
   oauth2: 'red',
@@ -74,27 +74,30 @@ export const HttpSecuritySchemeColors: Partial<Record<HttpSecurityScheme['type']
   mutualTLS: 'blue',
 };
 
-export const HttpMethodColors = {
+export const HttpMethodColors: Readonly<Record<HttpMethod, string>> = {
   get: 'success',
   post: 'primary',
   put: 'warning',
   patch: 'warning',
   delete: 'danger',
-} as const;
+  head: '#9061F9',
+  options: '#0D5AA7',
+  trace: '#0D0B28',
+};
 
-export const HttpCodeColor = {
+export const HttpCodeColor: Readonly<Record<number, string>> = {
   0: 'red',
   1: 'gray',
   2: 'green',
   3: 'yellow',
   4: 'orange',
   5: 'red',
-} as const;
+};
 
 /**
  *  Map of HTTP codes to their common description
  */
-export const HttpCodeDescriptions = {
+export const HttpCodeDescriptions: Readonly<Record<number, string>> = {
   100: 'Continue',
   101: 'Switching Protocols',
   200: 'OK',
@@ -163,7 +166,7 @@ export const HttpCodeDescriptions = {
 export const badgeDefaultBackgroundColor = '#293742';
 export const badgeDefaultColor = '#FFFFFF';
 
-export const CodeToIntentMap: Record<number, IntentVals> = {
+export const CodeToIntentMap: Readonly<Record<number, IntentVals>> = {
   2: 'success',
   4: 'warning',
   5: 'danger',

@@ -1,4 +1,5 @@
 import {
+  ElementsOptionsProvider,
   ExportButtonProps,
   Logo,
   ParsedDocs,
@@ -7,6 +8,7 @@ import {
   TableOfContents,
   TableOfContentsItem,
 } from '@stoplight/elements-core';
+import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
@@ -18,25 +20,35 @@ import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
   logo?: string;
+  hideTryItPanel?: boolean;
   hideTryIt?: boolean;
+  hideSamples?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
+  hideServerInfo?: boolean;
+  hideSecurityInfo?: boolean;
   hideExport?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
+  renderExtensionAddon?: ExtensionAddonRenderer;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
+  hideTryItPanel,
   hideTryIt,
+  hideSamples,
   hideSchemas,
+  hideSecurityInfo,
+  hideServerInfo,
   hideInternal,
   hideExport,
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  renderExtensionAddon,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -49,8 +61,15 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
 
   const layoutOptions = React.useMemo(
-    () => ({ hideTryIt: hideTryIt, hideExport: hideExport || node?.type !== NodeType.HttpService }),
-    [hideTryIt, hideExport, node],
+    () => ({
+      hideTryIt: hideTryIt,
+      hideTryItPanel,
+      hideSamples,
+      hideServerInfo: hideServerInfo,
+      hideSecurityInfo: hideSecurityInfo,
+      hideExport: hideExport || node?.type !== NodeType.HttpService,
+    }),
+    [hideTryIt, hideServerInfo, hideSecurityInfo, hideExport, hideTryItPanel, hideSamples, node?.type],
   );
 
   if (!node) {
@@ -73,17 +92,20 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   return (
     <SidebarLayout ref={container} sidebar={sidebar}>
       {node && (
-        <ParsedDocs
-          key={pathname}
-          uri={pathname}
-          node={node}
-          nodeTitle={node.name}
-          layoutOptions={layoutOptions}
-          location={location}
-          exportProps={exportProps}
-          tryItCredentialsPolicy={tryItCredentialsPolicy}
-          tryItCorsProxy={tryItCorsProxy}
-        />
+        <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
+          <ParsedDocs
+            key={pathname}
+            uri={pathname}
+            node={node}
+            nodeTitle={node.name}
+            layoutOptions={layoutOptions}
+            location={location}
+            exportProps={exportProps}
+            tryItCredentialsPolicy={tryItCredentialsPolicy}
+            tryItCorsProxy={tryItCorsProxy}
+            renderExtensionAddon={renderExtensionAddon}
+          />
+        </ElementsOptionsProvider>
       )}
     </SidebarLayout>
   );

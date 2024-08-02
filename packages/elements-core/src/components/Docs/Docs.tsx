@@ -1,3 +1,4 @@
+import { SchemaNode } from '@stoplight/json-schema-tree';
 import type { NodeHasChangedFn, NodeType } from '@stoplight/types';
 import { Location } from 'history';
 import * as React from 'react';
@@ -14,6 +15,22 @@ import { ExportButtonProps } from './HttpService/ExportButton';
 import { Model } from './Model';
 
 type NodeUnsupportedFn = (err: 'dataEmpty' | 'invalidType' | Error) => void;
+
+export type VendorExtensionsData = Record<string, unknown>;
+
+/**
+ * A set of props that are passed to the extension renderer
+ */
+export type ExtensionRowProps = {
+  schemaNode: SchemaNode;
+  nestingLevel: number;
+  vendorExtensions: VendorExtensionsData;
+};
+
+/**
+ * Renderer function for rendering an vendor extension
+ */
+export type ExtensionAddonRenderer = (props: ExtensionRowProps) => React.ReactNode;
 
 interface BaseDocsProps {
   /**
@@ -70,7 +87,11 @@ interface BaseDocsProps {
      * @default false
      */
     hideTryIt?: boolean;
-
+    /**
+     * Allows to hide RequestSamples component
+     * @default false
+     */
+    hideSamples?: boolean;
     /**
      * Shows only operation document without right column
      * @default false
@@ -126,6 +147,13 @@ interface BaseDocsProps {
    * @default undefined
    */
   nodeUnsupported?: NodeUnsupportedFn;
+
+  /**
+   * Allows to define renderers for vendor extensions
+   * @type {ExtensionAddonRenderer}
+   * @default undefined
+   */
+  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 export interface DocsProps extends BaseDocsProps {
@@ -151,6 +179,7 @@ export const Docs = React.memo<DocsProps>(
     refResolver,
     maxRefDepth,
     nodeHasChanged,
+    renderExtensionAddon,
     ...commonProps
   }) => {
     const parsedNode = useParsedData(nodeType, nodeData);
@@ -170,7 +199,11 @@ export const Docs = React.memo<DocsProps>(
       );
     }
 
-    return <ElementsOptionsProvider nodeHasChanged={nodeHasChanged}>{elem}</ElementsOptionsProvider>;
+    return (
+      <ElementsOptionsProvider nodeHasChanged={nodeHasChanged} renderExtensionAddon={renderExtensionAddon}>
+        {elem}
+      </ElementsOptionsProvider>
+    );
   },
 );
 

@@ -3,7 +3,7 @@ import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
-import { isObject } from 'lodash';
+import { isPlainObject, isString } from 'lodash';
 import React from 'react';
 import URI from 'urijs';
 
@@ -13,6 +13,7 @@ import {
   useInlineRefResolver,
   useSchemaInlineRefResolver,
 } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { PersistenceContextProvider } from '../../../context/Persistence';
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { JSONSchema } from '../../../types';
@@ -25,11 +26,9 @@ type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRe
 
 function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is PartialHttpRequest {
   return (
-    isObject(maybeHttpRequest) &&
-    'method' in maybeHttpRequest &&
-    typeof maybeHttpRequest['method'] === 'string' &&
-    'url' in maybeHttpRequest &&
-    typeof maybeHttpRequest['url'] === 'string'
+    isPlainObject(maybeHttpRequest) &&
+    isString((maybeHttpRequest as PartialHttpRequest).method) &&
+    isString((maybeHttpRequest as PartialHttpRequest).url)
   );
 }
 
@@ -40,6 +39,8 @@ interface ISchemaAndDescriptionProps {
 
 const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptionProps) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
+  const { renderExtensionAddon } = useOptionsCtx();
+
   const title = titleProp ?? schema.title;
   return (
     <Box py={2}>
@@ -52,7 +53,12 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
         </Flex>
       )}
 
-      <JsonSchemaViewer resolveRef={resolveRef} maxRefDepth={maxRefDepth} schema={getOriginalObject(schema)} />
+      <JsonSchemaViewer
+        resolveRef={resolveRef}
+        maxRefDepth={maxRefDepth}
+        schema={getOriginalObject(schema)}
+        renderExtensionAddon={renderExtensionAddon}
+      />
     </Box>
   );
 };
@@ -84,7 +90,7 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
   }
 
   if (http) {
-    if (!isObject(parsedValue) || (!isPartialHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
+    if (!isPlainObject(parsedValue) || (!isPartialHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
       return null;
     }
 
