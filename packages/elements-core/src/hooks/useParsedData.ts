@@ -3,7 +3,7 @@ import { parse as parseYaml } from '@stoplight/yaml';
 import * as React from 'react';
 
 import { ParsedNode } from '../types';
-import { isHttpOperation, isHttpService, isJSONSchema, isSMDASTRoot } from '../utils/guards';
+import { isHttpOperation, isHttpService, isHttpWebhookOperation, isJSONSchema, isSMDASTRoot } from '../utils/guards';
 
 export function useParsedData(nodeType: NodeType, data: unknown): ParsedNode | undefined {
   return React.useMemo(() => parserMap[nodeType]?.(data), [nodeType, data]);
@@ -14,6 +14,7 @@ type Parser = (rawData: unknown) => ParsedNode | undefined;
 const parserMap: Record<NodeType, Parser> = {
   [NodeType.Article]: parseArticleData,
   [NodeType.HttpOperation]: parseHttpOperation,
+  [NodeType.HttpWebhook]: parseHttpWebhookOperation,
   [NodeType.HttpService]: parseHttpService,
   [NodeType.Model]: parseModel,
   [NodeType.HttpServer]: parseUnknown,
@@ -44,6 +45,17 @@ function parseHttpOperation(rawData: unknown): ParsedNode | undefined {
   if (isHttpOperation(data)) {
     return {
       type: NodeType.HttpOperation,
+      data: data,
+    };
+  }
+  return undefined;
+}
+
+function parseHttpWebhookOperation(rawData: unknown): ParsedNode | undefined {
+  const data = tryParseYamlOrObject(rawData);
+  if (isHttpWebhookOperation(data)) {
+    return {
+      type: NodeType.HttpWebhook,
       data: data,
     };
   }

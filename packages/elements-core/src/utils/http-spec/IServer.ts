@@ -53,7 +53,7 @@ export const getServerVariables = (server?: IServer | null): ServerVariable[] =>
 };
 
 export const getServerVariableDefaults = (server: IServer): Record<string, string> => {
-  const o = {};
+  const o: Record<string, string> = {};
   if (server.variables) {
     for (const key in server.variables) {
       o[key] = server.variables[key].default;

@@ -1,5 +1,5 @@
 import type { IMarkdownViewerProps } from '@stoplight/markdown-viewer';
-import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
+import { IHttpOperation, IHttpService, IHttpWebhookOperation, NodeType } from '@stoplight/types';
 import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 
 export type JSONSchema = JSONSchema4 | JSONSchema6 | JSONSchema7;
@@ -12,6 +12,10 @@ export type ParsedNode =
   | {
       type: NodeType.HttpOperation;
       data: IHttpOperation;
+    }
+  | {
+      type: NodeType.HttpWebhook;
+      data: IHttpWebhookOperation;
     }
   | {
       type: NodeType.HttpService;
@@ -156,4 +160,11 @@ export type ParamField = {
   name: string;
   description: string;
   example: string;
+};
+
+export type LogoProps = {
+  altText: string;
+  url?: string;
+  backgroundColor?: string;
+  href?: string;
 };

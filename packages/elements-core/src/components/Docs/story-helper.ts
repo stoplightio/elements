@@ -2,7 +2,10 @@ import type { ErrorBoundaryProps } from '@stoplight/react-error-boundary';
 import type { Meta, StoryFn } from '@storybook/react';
 import * as React from 'react';
 
-type DocsProps = { data: any } & ErrorBoundaryProps;
+import { ExtensionAddonRenderer } from './Docs';
+import { wrapOptionsContext } from './story-renderer-helper';
+
+type DocsProps = { data: any; renderExtensionAddon?: ExtensionAddonRenderer } & ErrorBoundaryProps;
 
 type storyOptions = DocsProps & { layoutOptions?: object };
 
@@ -17,7 +20,10 @@ export const createStoriesForDocsComponent = (
   title?: string,
 ): HelperReturn<DocsProps> => {
   const createStory = (name: string, input: storyOptions) => {
-    const story: StoryFn<DocsProps> = (args: any) => React.createElement(Component, args);
+    const story: StoryFn<DocsProps> = (args: any) => {
+      const component = React.createElement(Component, args);
+      return wrapOptionsContext(component);
+    };
     story.args = input;
     story.storyName = name;
     return story;

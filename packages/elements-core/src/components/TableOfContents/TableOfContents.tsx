@@ -1,13 +1,14 @@
-import { Box, Flex, Icon } from '@stoplight/mosaic';
+import { Box, Flex, Icon, ITextColorProps } from '@stoplight/mosaic';
+import { HttpMethod, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { useRouterType } from '../../context/RouterType';
 import { useFirstRender } from '../../hooks/useFirstRender';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
 import {
+  NODE_GROUP_ICON,
+  NODE_GROUP_ICON_COLOR,
   NODE_META_COLOR,
-  NODE_TITLE_ICON,
-  NODE_TITLE_ICON_COLOR,
   NODE_TYPE_ICON_COLOR,
   NODE_TYPE_META_ICON,
   NODE_TYPE_TITLE_ICON,
@@ -34,6 +35,7 @@ import {
 
 const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
+LinkContext.displayName = 'LinkContext';
 
 export const TableOfContents = React.memo<TableOfContentsProps>(
   ({
@@ -103,6 +105,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     );
   },
 );
+TableOfContents.displayName = 'TableOfContents';
 
 const Divider = React.memo<{
   item: TableOfContentsDivider;
@@ -123,6 +126,7 @@ const Divider = React.memo<{
     </Box>
   );
 });
+Divider.displayName = 'Divider';
 
 const GroupItem = React.memo<{
   depth: number;
@@ -164,7 +168,11 @@ const GroupItem = React.memo<{
         onLinkClick={onLinkClick}
         meta={
           item.meta ? (
-            <Box color={NODE_META_COLOR[item.meta]} textTransform="uppercase" fontWeight="medium">
+            <Box
+              color={NODE_META_COLOR[item.meta as HttpMethod] as ITextColorProps['color']}
+              textTransform="uppercase"
+              fontWeight="medium"
+            >
               {item.meta}
             </Box>
           ) : (
@@ -172,7 +180,11 @@ const GroupItem = React.memo<{
               <Flex alignItems="center">
                 {item.version && <Version value={item.version} />}
                 {item.type !== 'model' && (
-                  <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_META_ICON[item.type]} />
+                  <Box
+                    as={Icon}
+                    color={NODE_TYPE_ICON_COLOR[item.type as NodeType] as ITextColorProps['color']}
+                    icon={NODE_TYPE_META_ICON[item.type]}
+                  />
                 )}
               </Flex>
             )
@@ -184,6 +196,7 @@ const GroupItem = React.memo<{
 
   return null;
 });
+GroupItem.displayName = 'GroupItem';
 
 const Group = React.memo<{
   depth: number;
@@ -261,8 +274,9 @@ const Group = React.memo<{
         depth={depth}
         isActive={showAsActive}
         icon={
-          NODE_TITLE_ICON[item.title] && (
-            <Box as={Icon} color={NODE_TITLE_ICON_COLOR[item.title]} icon={NODE_TITLE_ICON[item.title]} />
+          item.itemsType &&
+          NODE_GROUP_ICON[item.itemsType] && (
+            <Box as={Icon} color={NODE_GROUP_ICON_COLOR[item.itemsType]} icon={NODE_GROUP_ICON[item.itemsType]} />
           )
         }
       />
@@ -289,6 +303,7 @@ const Group = React.memo<{
     </>
   );
 });
+Group.displayName = 'Group';
 
 const Item = React.memo<{
   depth: number;
@@ -336,6 +351,7 @@ const Item = React.memo<{
     </Flex>
   );
 });
+Item.displayName = 'Item';
 
 const Node = React.memo<{
   item: TableOfContentsNode | TableOfContentsNodeGroup;
@@ -393,6 +409,7 @@ const Node = React.memo<{
     );
   },
 );
+Node.displayName = 'Node';
 
 const Version: React.FC<{ value: string }> = ({ value }) => {
   return (

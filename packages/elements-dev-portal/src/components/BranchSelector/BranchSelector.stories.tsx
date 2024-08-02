@@ -13,7 +13,7 @@ const BranchSelectorWrapper = ({ projectId }: { projectId: string }) => {
   if (data) {
     return (
       <Box mt={10} w={40}>
-        <BranchSelector branchSlug={branchSlug} branches={data} onChange={branch => setBranchSlug(branch.slug)} />
+        <BranchSelector branchSlug={branchSlug} branches={data.items} onChange={branch => setBranchSlug(branch.slug)} />
       </Box>
     );
   }

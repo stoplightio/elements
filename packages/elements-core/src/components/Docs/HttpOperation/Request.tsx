@@ -1,5 +1,5 @@
 import { Box, Callout, NodeAnnotation, VStack } from '@stoplight/mosaic';
-import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
+import { HttpSecurityScheme, IHttpEndpointOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import * as React from 'react';
@@ -14,7 +14,8 @@ import { Body, isBodyEmpty } from './Body';
 import { Parameters } from './Parameters';
 
 interface IRequestProps {
-  operation: IHttpOperation;
+  operation: IHttpEndpointOperation;
+  hideSecurityInfo?: boolean;
   onChange?: (requestBodyIndex: number) => void;
 }
 
@@ -30,6 +31,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     } = {},
     security,
   },
+  hideSecurityInfo,
   onChange,
 }) => {
   if (!request || typeof request !== 'object') return null;
@@ -50,7 +52,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     <VStack spacing={8}>
       <SectionTitle title="Request" />
 
-      <SecuritySchemes schemes={securitySchemes} parentId={operation.id} />
+      {hideSecurityInfo ? null : <SecuritySchemes schemes={securitySchemes} parentId={operation.id} />}
 
       {pathParams.length > 0 && (
         <VStack spacing={5}>

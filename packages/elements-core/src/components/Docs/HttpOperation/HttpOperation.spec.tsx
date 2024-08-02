@@ -7,9 +7,11 @@ import { MemoryRouter } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import requestBody from '../../../__fixtures__/operations/request-body';
+import { ElementsOptionsProvider } from '../../../context/Options';
 import { withPersistenceBoundary } from '../../../context/Persistence';
 import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
 import { chooseOption } from '../../../utils/tests/chooseOption';
+import { renderExtensionRenderer } from '../story-renderer-helper';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
 const _HttpOperation = withMosaicProvider(withPersistenceBoundary(HttpOperationWithoutPersistence));
@@ -676,6 +678,104 @@ describe('HttpOperation', () => {
 
       expect(screen.queryByText('Send API Request')).not.toBeInTheDocument();
       expect(screen.queryByText('Response Example')).not.toBeInTheDocument();
+
+      unmount();
+    });
+    it('should hide Samples', async () => {
+      const { unmount } = render(<HttpOperation data={httpOperation} layoutOptions={{ hideSamples: true }} />);
+
+      expect(screen.queryByText('Request Sample: Shell / cURL')).not.toBeInTheDocument();
+
+      unmount();
+    });
+  });
+
+  describe('Vendor Extensions', () => {
+    it('should call rendorExtensionAddon', async () => {
+      const vendorExtensionRenderer = jest.fn();
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <HttpOperation
+            data={httpOperation}
+            layoutOptions={{
+              hideTryItPanel: true,
+              hideSecurityInfo: true,
+              hideServerInfo: true,
+              hideExport: true,
+              hideTryIt: true,
+              hideSamples: true,
+            }}
+          />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(vendorExtensionRenderer).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          nestingLevel: 1,
+          vendorExtensions: {
+            'x-enum-descriptions': expect.objectContaining({ REMINDER: 'A reminder', TASK: 'A task' }),
+          },
+        }),
+      );
+
+      unmount();
+    });
+
+    it('should display vendor extensions in body', async () => {
+      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+        if ('x-stoplight-info' in props.vendorExtensions) {
+          return <div>Stoplight Information Extension</div>;
+        }
+
+        return null;
+      });
+
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <HttpOperation
+            data={httpOperation}
+            layoutOptions={{
+              hideTryItPanel: true,
+              hideSecurityInfo: true,
+              hideServerInfo: true,
+              hideExport: true,
+              hideTryIt: true,
+              hideSamples: true,
+            }}
+          />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(screen.queryByText('Stoplight Information Extension')).toBeInTheDocument();
+
+      unmount();
+    });
+
+    it('should display vendor extensions', async () => {
+      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+        return renderExtensionRenderer(props);
+      });
+
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <HttpOperation
+            data={httpOperation}
+            layoutOptions={{
+              hideTryItPanel: true,
+              hideSecurityInfo: true,
+              hideServerInfo: true,
+              hideExport: true,
+              hideTryIt: true,
+            }}
+          />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(screen.queryAllByRole('columnheader', { name: /Enum value/i })).toHaveLength(2);
+      expect(screen.queryAllByRole('columnheader', { name: /Description/i })).toHaveLength(2);
+
+      expect(screen.queryByText('A reminder')).toBeInTheDocument();
+      expect(screen.queryByText('A task')).toBeInTheDocument();
 
       unmount();
     });

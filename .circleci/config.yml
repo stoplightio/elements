@@ -24,7 +24,7 @@ jobs:
   build:
     working_directory: /mnt/ramdisk/project
     docker:
-      - image: cimg/node:16.17
+      - image: cimg/node:18.20
     resource_class: xlarge
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
@@ -47,7 +47,7 @@ jobs:
       - run: yarn build.docs
   run-e2e-tests:
     executor: cypress-default
-    resource_class: large
+    resource_class: xlarge
     working_directory: /mnt/ramdisk/project
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
@@ -93,7 +93,7 @@ jobs:
           command: weekly_lockfile_maintenance.sh
   release:
     docker:
-      - image: cimg/node:16.17
+      - image: cimg/node:18.20
     steps:
       - checkout
       - run:
@@ -147,11 +147,11 @@ workflows:
                 - main
   perform-lockfile-maintenance:
     triggers:
-        - schedule:
-            cron: "0 3 * * 1"
-            filters:
-              branches:
-                only:
-                  - main
+      - schedule:
+          cron: '0 3 * * 1'
+          filters:
+            branches:
+              only:
+                - main
     jobs:
       - lockfile-maintenance

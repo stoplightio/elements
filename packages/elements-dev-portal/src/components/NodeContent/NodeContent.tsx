@@ -2,6 +2,7 @@ import {
   CustomLinkComponent,
   Docs,
   DocsProps,
+  LinkHeading,
   MarkdownComponentsProvider,
   MockingProvider,
   ReferenceResolver,
@@ -20,7 +21,7 @@ type DocsBaseProps = Pick<
 >;
 type DocsLayoutProps = Pick<
   Required<DocsProps>['layoutOptions'],
-  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'
+  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideSamples' | 'hideExport' | 'hideSecurityInfo' | 'hideServerInfo'
 >;
 
 export type NodeContentProps = {
@@ -59,7 +60,10 @@ export const NodeContent = ({
   // Docs layout props
   compact,
   hideTryIt,
+  hideSamples,
   hideTryItPanel,
+  hideSecurityInfo,
+  hideServerInfo,
 
   // Exporting
   hideExport,
@@ -67,7 +71,16 @@ export const NodeContent = ({
 }: NodeContentProps) => {
   return (
     <NodeLinkContext.Provider value={[node, Link]}>
-      <MarkdownComponentsProvider value={{ a: LinkComponent }}>
+      <MarkdownComponentsProvider
+        value={{
+          a: LinkComponent,
+          // These override the default markdown-viewer components and modifies the
+          // rendering of hash routing hrefs for headings in elements-core for the BaseArticleComponent
+          h2: ({ color, ...props }) => <LinkHeading size={2} {...props} />,
+          h3: ({ color, ...props }) => <LinkHeading size={3} {...props} />,
+          h4: ({ color, ...props }) => <LinkHeading size={4} {...props} />,
+        }}
+      >
         <MockingProvider mockUrl={node.links.mock_url} hideMocking={hideMocking}>
           <Docs
             nodeType={node.type as NodeType}
@@ -77,6 +90,9 @@ export const NodeContent = ({
               compact,
               hideTryIt: hideTryIt,
               hideTryItPanel: hideTryItPanel,
+              hideSamples,
+              hideSecurityInfo: hideSecurityInfo,
+              hideServerInfo: hideServerInfo,
               hideExport:
                 hideExport ||
                 (node.links.export_url ?? node.links.export_original_file_url ?? node.links.export_bundled_file_url) ===
