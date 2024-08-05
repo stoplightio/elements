@@ -59,7 +59,7 @@ export interface TryItProps {
   /**
    * True when TryIt Panel should be hidden
    */
-  hideTryIt?: boolean;
+  hideTryItPanel?: boolean;
 
   /**
    * Fetch credentials policy for TryIt component
@@ -83,7 +83,7 @@ export const TryIt: React.FC<TryItProps> = ({
   onRequestChange,
   requestBodyIndex,
   embeddedInMd = false,
-  hideTryIt = false,
+  hideTryItPanel = false,
   tryItCredentialsPolicy,
   corsProxy,
 }) => {
@@ -350,14 +350,9 @@ export const TryIt: React.FC<TryItProps> = ({
     );
   }
 
-  // If hiding of the TryIt panel is requested, we should not render it the component itself
-  if (hideTryIt) {
-    return null;
-  }
-
   return (
     <Box rounded="lg" overflowY="hidden">
-      {tryItPanelElem}
+      {hideTryItPanel ? null : tryItPanelElem}
       {requestData && embeddedInMd && (
         <RequestSamples request={requestData} customCodeSamples={customCodeSamples} embeddedInMd />
       )}
