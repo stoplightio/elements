@@ -4,7 +4,7 @@ Once you've [installed](https://github.com/stoplightio/elements) the `elements-d
 
 ## Usage in React
 
-If you'd like to use this for React (and React-based tools like Gatsby) then use the `Search` React component. Here is an example of one way to implement it:
+If you'd like to use this for React then use the `Search` React component. Here is an example of one way to implement it:
 
 <!-- title: Search.tsx -->
 

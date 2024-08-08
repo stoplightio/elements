@@ -39,7 +39,6 @@ dist-storybook
 *.log*
 *-debug.log*
 *-error.log*
-/examples/react-gatsby/yarn.lock
 /examples/react-cra/yarn.lock
 /examples/angular/yarn.lock
 
