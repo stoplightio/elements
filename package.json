@@ -89,9 +89,6 @@
     "copy:angular": "mkdir examples-dev ; cp -a -v ./examples/angular ./examples-dev ; sh ./use-local-elements.sh angular",
     "build:angular": "(cd ./examples-dev/angular && yarn reinstall && yarn build)",
     "serve:angular": "(cd ./examples-dev/angular && yarn serve)",
-    "copy:react-gatsby": "mkdir examples-dev ; cp -a -v ./examples/react-gatsby ./examples-dev ; sh ./use-local-elements.sh react-gatsby",
-    "build:react-gatsby": "(cd ./examples-dev/react-gatsby && yarn reinstall && yarn build)",
-    "serve:react-gatsby": "(cd ./examples-dev/react-gatsby && yarn serve)",
     "copy:react-cra": "mkdir examples-dev ; cp -a -v ./examples/react-cra ./examples-dev ; sh ./use-local-elements.sh react-cra",
     "build:react-cra": "(cd ./examples-dev/react-cra && yarn reinstall && yarn build)",
     "serve:react-cra": "(cd ./examples-dev/react-cra && yarn serve)",
@@ -102,7 +99,6 @@
     "e2e:open": "cypress open",
     "e2e:execute": "cypress run",
     "e2e:run:angular": "start-server-and-test serve:angular http://localhost:4200 e2e:execute",
-    "e2e:run:react-gatsby": "start-server-and-test serve:react-gatsby http://localhost:4200 e2e:execute",
     "e2e:run:react-cra": "start-server-and-test serve:react-cra http://localhost:4200 e2e:execute",
     "e2e:run:static-html": "start-server-and-test serve:static-html http://localhost:4200 e2e:execute",
     "prepare:husky": "husky"
