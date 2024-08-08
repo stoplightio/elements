@@ -28,6 +28,9 @@
     "serve": "^13.0.2",
     "typescript": "^4.3.5"
   },
+  "resolutions": {
+    "@babel/core": "^7.16.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
