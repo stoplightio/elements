@@ -1,250 +1,293 @@
 {
-  "type": "object",
-  "description": "represents a contact",
-  "title": "Contact",
-  "properties": {
-     "addresseeName": {
-        "type": "object",
-        "description": "Description of the name of a physical person",
-        "title": "Name",
-        "properties": {
-           "firstName": {
-              "description": "First name.",
-              "type": "string"
-           },
-           "lastName": {
-              "description": "Last name.",
-              "type": "string"
-           },
-           "title": {
-              "description": "Contains all the suffixes and prefixes that can be appended to a name - Mr, Miss, Pr. - E.g. \" Mr\".",
-              "type": "string"
-           },
-           "maidenName": {
-              "description": "The name given at birth time and that may have changed after a marriage.",
-              "type": "string"
-           },
-           "middleName": {
-              "description": "Middle name(s), for example \"Lee\" in \"John Lee Smith\".",
-              "type": "string"
-           },
-           "prefix": {
-              "type": "string",
-              "description": "Name prefix (e.g. Doctor)"
-           },
-           "suffix": {
-              "description": "Name suffix (e.g. Junior, III, etc).",
-              "type": "string"
-           },
-           "referenceName": {
-              "description": "Indicator to advise if the name is a reference name",
-              "type": "boolean"
-           },
-           "transliterationMethod": {
-              "type": "string",
-              "description": "The method (if applicated) that was used to transform the name from universal character (e.g. korean characters) to latin characters/phonetic transcription/..."
-           },
-           "nameType": {
-              "type": "string",
-              "description": "the type of the reference name - When several name entities exist for a given Name element(e.g. Universal name, both Native names, Romanized name), the notion of reference name (i.e. active or main name) exists. It can be either the Universal name or the Native name/Phonetic name.",
-              "enum": [
-                 "universal",
-                 "native",
-                 "romanization"
-              ]
-           },
-           "displayName": {
-              "type": "boolean",
-              "description": "Signifies if the name is displayed on PNR face"
-           },
-           "fullName": {
-              "type": "string",
-              "description": "free flow ,  Concatenation of first/mid/last. No order, no restriction, no pattern, blank separator ...."
-           }
-        }
-     },
-     "phone": {
-        "type": "object",
-        "description": "Phone information.",
-        "properties": {
-           "category": {
-              "description": "Category of the contact element",
-              "type": "string",
-              "enum": [
-                 "BUSINESS",
-                 "PERSONAL",
-                 "OTHER"
-              ]
-           },
-           "addresseeName": {
-              "type": "string",
-              "description": "Adressee name (e.g. in case of emergency purpose it corresponds to name of the person to be contacted).",
-              "pattern": "[a-zA-Z -]"
-           },
-           "deviceType": {
-              "type": "string",
-              "description": "Type of the device (Landline, Mobile or Fax)",
-              "enum": [
-                 "MOBILE",
-                 "LANDLINE",
-                 "FAX"
-              ]
-           },
-           "countryCode": {
-              "type": "string",
-              "description": "Country code of the country (ISO3166-1). E.g. \"US\" for the United States",
-              "pattern": "[A-Z]{2}"
-           },
-           "countryCallingCode": {
-              "type": "string",
-              "description": "Country calling code of the phone number, as defined by the International Communication Union. Examples - \"1\" for US, \"371\" for Latvia.",
-              "pattern": "[0-9+]{2,5}"
-           },
-           "areaCode": {
-              "type": "string",
-              "description": "Corresponds to a regional code or a city code. The length of the field varies depending on the area.",
-              "pattern": "[0-9]{1,4}"
-           },
-           "number": {
-              "type": "string",
-              "description": "Phone number. Composed of digits only. The number of digits depends on the country.",
-              "pattern": "[0-9]{1,15}"
-           },
-           "extension": {
-              "type": "string",
-              "description": "Extension of the phone"
-           },
-           "text": {
-              "type": "string",
-              "description": "String containing the full phone number - applicable only when a structured phone (i.e. countryCallingCode + number) is not provided"
-           }
-        },
-        "title": "Phone"
-     },
-     "address": {
-        "type": "object",
-        "description": "Address information",
-        "properties": {
-           "category": {
-              "description": "Category of the contact element",
-              "type": "string",
-              "enum": [
-                 "BUSINESS",
-                 "PERSONAL",
-                 "OTHER"
-              ]
-           },
-           "lines": {
-              "type": "array",
-              "description": "Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc",
-              "items": {
-                 "type": "string"
-              }
-           },
-           "postalCode": {
-              "type": "string",
-              "description": "Example: 74130"
-           },
-           "countryCode": {
-              "type": "string",
-              "description": "ISO 3166-1 country code",
-              "pattern": "[a-zA-Z]{2}"
-           },
-           "cityName": {
-              "type": "string",
-              "description": "Full city name. Example: Dublin",
-              "pattern": "[a-zA-Z -]{1,35}"
-           },
-           "stateCode": {
-              "type": "string",
-              "description": "State code (two character standard IATA state code)",
-              "pattern": "[a-zA-Z0-9]{1,2}"
-           },
-           "postalBox": {
-              "type": "string",
-              "description": "E.g. BP 220"
-           },
-           "text": {
-              "type": "string",
-              "description": "Field containing a full unformatted address. Only applicable when the fields lines, postalCode, countryCode, cityName are not filled."
-           }
-        },
-        "title": "Address"
-     },
-     "email": {
-        "type": "object",
-        "description": "Email information.",
-        "properties": {
-           "category": {
-              "description": "Category of the contact element",
-              "type": "string",
-              "enum": [
-                 "BUSINESS",
-                 "PERSONAL",
-                 "OTHER"
-              ]
-           },
-           "address": {
-              "type": "string",
-              "description": "Email address (e.g. john@smith.com)"
-           }
-        },
-        "title": "Email"
-     },
-     "notificationType": {
-        "description": "the preferred method of notifying this Contact of events",
-        "type": "string",
-        "enum": [
-           "CALL",
-           "TEXT"
-        ]
-     },
-     "language": {
-        "description": "the preferred language of communication with this Contact",
-        "type": "string"
-     },
-     "purpose": {
-        "description": "the purpose for which this contact is to be used",
-        "type": "array",
-        "items": {
-           "type": "string",
-           "enum": [
-              "STANDARD",
-              "NOTIFICATION",
-              "EMERGENCY"
-           ]
-        }
-     },
-     "isDeclined": {
-        "type": "boolean",
-        "description": "Justification why the \"contact\" structure is empty - the subject was asked, if they wish to provide contact details, but they decided to decline to provide it for the purpose listed above"
-     },
-     "comment": {
-        "description": "a general comment about this Contact",
-        "type": "string"
-     },
-     "source": {
-        "description": "The source system which added the Contact information",
-        "type": "string",
-        "enum": [
-           "RESERVATION",
-           "DCS"
-        ],
-        "example": "DCS"
-     },
-     "priority": {
-        "description": "The priority for this Contact information",
-        "type": "string",
-        "enum": [
-           "HIGH",
-           "MEDIUM",
-           "LOW"
-        ],
-        "example": "HIGH"
-     },
-     "isThirdParty": {
-        "type": "boolean",
-        "description": "If set, this flag indicates that the contact belongs to an other person than the passenger (e.g. friend or family member not part of the trip). This option is only available for mobile phone and email and for a notification purpose."
-     }
-  }
+   "type": "object",
+   "description": "represents a contact",
+   "title": "Contact",
+   "properties": {
+      "addresseeName": {
+         "type": "object",
+         "description": "Description of the name of a physical person",
+         "title": "Name",
+         "properties": {
+            "firstName": {
+               "description": "First name.",
+               "type": "string"
+            },
+            "lastName": {
+               "description": "Last name.",
+               "type": "string"
+            },
+            "title": {
+               "description": "Contains all the suffixes and prefixes that can be appended to a name - Mr, Miss, Pr. - E.g. \" Mr\".",
+               "type": "string"
+            },
+            "maidenName": {
+               "description": "The name given at birth time and that may have changed after a marriage.",
+               "type": "string"
+            },
+            "middleName": {
+               "description": "Middle name(s), for example \"Lee\" in \"John Lee Smith\".",
+               "type": "string"
+            },
+            "prefix": {
+               "type": "string",
+               "description": "Name prefix (e.g. Doctor)"
+            },
+            "suffix": {
+               "description": "Name suffix (e.g. Junior, III, etc).",
+               "type": "string"
+            },
+            "referenceName": {
+               "description": "Indicator to advise if the name is a reference name",
+               "type": "boolean"
+            },
+            "transliterationMethod": {
+               "type": "string",
+               "description": "The method (if applicated) that was used to transform the name from universal character (e.g. korean characters) to latin characters/phonetic transcription/..."
+            },
+            "nameType": {
+               "type": "string",
+               "description": "the type of the reference name - When several name entities exist for a given Name element(e.g. Universal name, both Native names, Romanized name), the notion of reference name (i.e. active or main name) exists. It can be either the Universal name or the Native name/Phonetic name.",
+               "x-enum-descriptions": {
+                  "universal": "Enum description for universal",
+                  "native": "Enum description for native",
+                  "romanization": "Enum description for romanization"
+               },
+               "enum": [
+                  "universal",
+                  "native",
+                  "romanization"
+               ]
+            },
+            "displayName": {
+               "type": "boolean",
+               "description": "Signifies if the name is displayed on PNR face"
+            },
+            "fullName": {
+               "type": "string",
+               "description": "free flow ,  Concatenation of first/mid/last. No order, no restriction, no pattern, blank separator ...."
+            }
+         }
+      },
+      "phone": {
+         "type": "object",
+         "description": "Phone information.",
+         "properties": {
+            "category": {
+               "description": "Category of the contact element",
+               "type": "string",
+               "enum": [
+                  "BUSINESS",
+                  "PERSONAL",
+                  "OTHER"
+               ],
+               "x-enum-descriptions": {
+                  "BUSINESS": "Enum description for BUSINESS",
+                  "PERSONAL": "Enum description for PERSONAL",
+                  "OTHER": "Enum description for OTHER"
+               }
+            },
+            "addresseeName": {
+               "type": "string",
+               "description": "Adressee name (e.g. in case of emergency purpose it corresponds to name of the person to be contacted).",
+               "pattern": "[a-zA-Z -]"
+            },
+            "deviceType": {
+               "type": "string",
+               "description": "Type of the device (Landline, Mobile or Fax)",
+               "enum": [
+                  "MOBILE",
+                  "LANDLINE",
+                  "FAX"
+               ],
+               "x-enum-descriptions": {
+                  "MOBILE": "Enum description for MOBILE",
+                  "LANDLINE": "Enum description for LANDLINE",
+                  "FAX": "Enum description for FAX"
+               }
+            },
+            "countryCode": {
+               "type": "string",
+               "description": "Country code of the country (ISO3166-1). E.g. \"US\" for the United States",
+               "pattern": "[A-Z]{2}"
+            },
+            "countryCallingCode": {
+               "type": "string",
+               "description": "Country calling code of the phone number, as defined by the International Communication Union. Examples - \"1\" for US, \"371\" for Latvia.",
+               "pattern": "[0-9+]{2,5}"
+            },
+            "areaCode": {
+               "type": "string",
+               "description": "Corresponds to a regional code or a city code. The length of the field varies depending on the area.",
+               "pattern": "[0-9]{1,4}"
+            },
+            "number": {
+               "type": "string",
+               "description": "Phone number. Composed of digits only. The number of digits depends on the country.",
+               "pattern": "[0-9]{1,15}"
+            },
+            "extension": {
+               "type": "string",
+               "description": "Extension of the phone"
+            },
+            "text": {
+               "type": "string",
+               "description": "String containing the full phone number - applicable only when a structured phone (i.e. countryCallingCode + number) is not provided"
+            }
+         },
+         "title": "Phone"
+      },
+      "address": {
+         "type": "object",
+         "description": "Address information",
+         "properties": {
+            "category": {
+               "description": "Category of the contact element",
+               "type": "string",
+               "enum": [
+                  "BUSINESS",
+                  "PERSONAL",
+                  "OTHER"
+               ],
+               "x-enum-descriptions": {
+                  "BUSINESS": "Enum description for BUSINESS",
+                  "PERSONAL": "Enum description for PERSONAL",
+                  "OTHER": "Enum description for OTHER"
+               }
+            },
+            "lines": {
+               "type": "array",
+               "description": "Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc",
+               "items": {
+                  "type": "string"
+               }
+            },
+            "postalCode": {
+               "type": "string",
+               "description": "Example: 74130"
+            },
+            "countryCode": {
+               "type": "string",
+               "description": "ISO 3166-1 country code",
+               "pattern": "[a-zA-Z]{2}"
+            },
+            "cityName": {
+               "type": "string",
+               "description": "Full city name. Example: Dublin",
+               "pattern": "[a-zA-Z -]{1,35}"
+            },
+            "stateCode": {
+               "type": "string",
+               "description": "State code (two character standard IATA state code)",
+               "pattern": "[a-zA-Z0-9]{1,2}"
+            },
+            "postalBox": {
+               "type": "string",
+               "description": "E.g. BP 220"
+            },
+            "text": {
+               "type": "string",
+               "description": "Field containing a full unformatted address. Only applicable when the fields lines, postalCode, countryCode, cityName are not filled."
+            }
+         },
+         "title": "Address"
+      },
+      "email": {
+         "type": "object",
+         "description": "Email information.",
+         "properties": {
+            "category": {
+               "description": "Category of the contact element",
+               "type": "string",
+               "enum": [
+                  "BUSINESS",
+                  "PERSONAL",
+                  "OTHER"
+               ],
+               "x-enum-descriptions": {
+                  "BUSINESS": "Enum description for BUSINESS",
+                  "PERSONAL": "Enum description for PERSONAL",
+                  "OTHER": "Enum description for OTHER"
+               }
+            },
+            "address": {
+               "type": "string",
+               "description": "Email address (e.g. john@smith.com)"
+            }
+         },
+         "title": "Email"
+      },
+      "notificationType": {
+         "description": "the preferred method of notifying this Contact of events",
+         "type": "string",
+         "enum": [
+            "CALL",
+            "TEXT"
+         ],
+         "x-enum-descriptions": {
+            "CALL": "Enum description for CALL",
+            "TEXT": "Enum description for TEXT"
+         }
+      },
+      "language": {
+         "description": "the preferred language of communication with this Contact",
+         "type": "string"
+      },
+      "purpose": {
+         "description": "the purpose for which this contact is to be used",
+         "type": "array",
+         "items": {
+            "type": "string",
+            "enum": [
+               "STANDARD",
+               "NOTIFICATION",
+               "EMERGENCY"
+            ],
+            "x-enum-descriptions": {
+               "STANDARD": "Enum description for STANDARD",
+               "NOTIFICATION": "Enum description for NOTIFICATION",
+               "EMERGENCY": "Enum description for EMERGENCY"
+            }
+         }
+      },
+      "isDeclined": {
+         "type": "boolean",
+         "description": "Justification why the \"contact\" structure is empty - the subject was asked, if they wish to provide contact details, but they decided to decline to provide it for the purpose listed above"
+      },
+      "comment": {
+         "description": "a general comment about this Contact",
+         "type": "string"
+      },
+      "source": {
+         "description": "The source system which added the Contact information",
+         "type": "string",
+         "enum": [
+            "RESERVATION",
+            "DCS"
+         ],
+         "x-enum-descriptions": {
+            "RESERVATION": "Enum description for RESERVATION",
+            "DCS": "Enum description for DCS"
+         },
+         "example": "DCS"
+      },
+      "priority": {
+         "description": "The priority for this Contact information",
+         "type": "string",
+         "enum": [
+            "HIGH",
+            "MEDIUM",
+            "LOW"
+         ],
+         "x-enum-descriptions": {
+            "HIGH": "Enum description for HIGH",
+            "MEDIUM": "Enum description for MEDIUM",
+            "LOW": "Enum description for LOW"
+         },
+         "example": "HIGH"
+      },
+      "isThirdParty": {
+         "type": "boolean",
+         "description": "If set, this flag indicates that the contact belongs to an other person than the passenger (e.g. friend or family member not part of the trip). This option is only available for mobile phone and email and for a notification purpose."
+      }
+   }
 }

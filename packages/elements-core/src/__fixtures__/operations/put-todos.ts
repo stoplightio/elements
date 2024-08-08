@@ -1,4 +1,4 @@
-import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
+import { HttpOperationSecurityDeclarationTypes, HttpParamStyles, IHttpOperation } from '@stoplight/types';
 
 export const httpOperation: IHttpOperation = {
   id: '?http-operation-id?',
@@ -6,6 +6,12 @@ export const httpOperation: IHttpOperation = {
   method: 'put',
   path: '/todos/{todoId}',
   summary: 'Update Todo',
+  extensions: {
+    'x-stoplight-info': {
+      id: 'http-operation-id',
+      version: '1.0.0',
+    },
+  },
   responses: [
     {
       id: '?http-response-200?',
@@ -79,9 +85,28 @@ export const httpOperation: IHttpOperation = {
                         minimum: 0,
                         maximum: 150,
                       },
+                      plan: {
+                        enum: ['FREE', 'BASIC', 'DELUXE'],
+                        // @ts-ignore
+                        'x-enum-descriptions': {
+                          FREE: 'A happy customer',
+                          BASIC: 'Just what is needed',
+                          DELUXE: 'Big bucks',
+                        },
+                      },
                     },
                     required: ['name', 'age'],
                     description: 'Here lies the user model',
+                  },
+                  type: {
+                    description: 'The type of todo',
+                    type: 'string',
+                    enum: ['REMINDER', 'TASK'],
+                    // @ts-ignore
+                    'x-enum-descriptions': {
+                      REMINDER: 'A reminder',
+                      TASK: 'A task',
+                    },
                   },
                 },
                 required: ['id', 'user'],
@@ -522,6 +547,107 @@ export const httpOperation: IHttpOperation = {
       },
     ],
   },
+  callbacks: [
+    {
+      key: 'newPet',
+      extensions: {},
+      id: '3245690b6a7fc',
+      method: 'post',
+      path: '{$request.body#/newPetAvailableUrl}',
+      request: {
+        body: {
+          description: 'Callback body description',
+          contents: [
+            {
+              encodings: [],
+              examples: [],
+              id: 'abc',
+              mediaType: 'application/json',
+              schema: {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                properties: {
+                  message: {
+                    examples: ['A new pet has arrived'],
+                    type: 'string',
+                  },
+                },
+                required: ['message'],
+                type: 'object',
+              },
+            },
+          ],
+          id: 'abc',
+          required: true,
+        },
+        cookie: [],
+        headers: [],
+        path: [],
+        query: [],
+      },
+      responses: [
+        {
+          code: '200',
+          contents: [],
+          description: 'Your server returns this code if it accepts the callback',
+          headers: [],
+          id: 'abc',
+        },
+      ],
+      security: [],
+      securityDeclarationType: HttpOperationSecurityDeclarationTypes.InheritedFromService,
+      servers: [],
+      tags: [],
+    },
+    {
+      key: 'returnedPet',
+      extensions: {},
+      id: '07041d5723f4a',
+      method: 'post',
+      path: '{$request.body#/returnedPetAvailableUrl}',
+      request: {
+        body: {
+          contents: [
+            {
+              encodings: [],
+              examples: [],
+              id: 'abc',
+              mediaType: 'application/json',
+              schema: {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                properties: {
+                  message: {
+                    examples: ['A pet has been returned'],
+                    type: 'string',
+                  },
+                },
+                required: ['message'],
+                type: 'object',
+              },
+            },
+          ],
+          id: 'abc',
+          required: true,
+        },
+        cookie: [],
+        headers: [],
+        path: [],
+        query: [],
+      },
+      responses: [
+        {
+          code: '200',
+          contents: [],
+          description: 'Your server returns this code if it accepts the callback',
+          headers: [],
+          id: 'abc',
+        },
+      ],
+      security: [],
+      securityDeclarationType: HttpOperationSecurityDeclarationTypes.InheritedFromService,
+      servers: [],
+      tags: [],
+    },
+  ],
   tags: [
     {
       id: '?http-tags-todos?',

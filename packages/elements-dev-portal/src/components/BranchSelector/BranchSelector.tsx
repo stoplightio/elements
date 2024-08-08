@@ -39,7 +39,7 @@ export const BranchSelector = ({ branchSlug, branches, onChange }: BranchSelecto
           onChange: handleChange,
           value: currentBranch?.slug || '',
           children: branches.map(branch => ({
-            label: branch.name || branch.slug,
+            title: branch.name || branch.slug,
             value: branch.slug,
             meta: branch.is_default ? 'Default' : undefined,
           })),

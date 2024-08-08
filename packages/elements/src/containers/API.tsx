@@ -5,21 +5,25 @@ import {
   RoutingProps,
   useBundleRefsIntoDocument,
   useParsedValue,
+  useResponsiveLayout,
   withMosaicProvider,
   withPersistenceBoundary,
   withQueryClientProvider,
   withRouter,
   withStyles,
 } from '@stoplight/elements-core';
+import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';
 import { useQuery } from 'react-query';
+import { useLocation } from 'react-router-dom';
 
+import { APIWithResponsiveSidebarLayout } from '../components/API/APIWithResponsiveSidebarLayout';
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
 import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
-import { transformOasToServiceNode, isOas2 } from '../utils/oas';
+import { isOas2, transformOasToServiceNode } from '../utils/oas';
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 
@@ -50,13 +54,32 @@ export interface CommonAPIProps extends RoutingProps {
    *
    * @default "sidebar"
    */
-  layout?: 'sidebar' | 'stacked';
+  layout?: 'sidebar' | 'stacked' | 'responsive';
   logo?: string;
 
-  /**
-   * Allows hiding the TryIt component
-   */
   hideTryIt?: boolean;
+  /**
+   * Allows to hide RequestSamples component
+   * @default false
+   */
+
+  hideSamples?: boolean;
+  /**
+   * Shows only operation document without right column
+   * @default false
+   */
+
+  hideTryItPanel?: boolean;
+
+  /**
+   * Allows hiding the Security info section
+   */
+  hideSecurityInfo?: boolean;
+
+  /**
+   * Allows hiding the Server info section
+   */
+  hideServerInfo?: boolean;
 
   /**
    * Hides schemas from being displayed in Table of Contents
@@ -106,6 +129,16 @@ export interface CommonAPIProps extends RoutingProps {
    * Add custom header in sidebar
    */
   sidebarHeader?: React.ReactNode;
+
+  /** The amount of references deep should be presented.
+   * @default undefined
+   */
+  maxRefDepth?: number;
+
+  /**
+   * Allows to define renderers for vendor extensions
+   */
+  renderExtensionAddon?: ExtensionAddonRenderer;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -114,10 +147,14 @@ const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument =>
 
 export const APIImpl: React.FC<APIProps> = props => {
   const {
-    layout,
+    layout = 'sidebar',
     apiDescriptionUrl = '',
     logo,
+    hideTryItPanel,
     hideTryIt,
+    hideSamples,
+    hideSecurityInfo,
+    hideServerInfo,
     hideSchemas,
     hideInternal,
     hideExport,
@@ -126,8 +163,12 @@ export const APIImpl: React.FC<APIProps> = props => {
     withCredentials,
     sidebarTheme,
     sidebarHeader,
+    maxRefDepth,
+    renderExtensionAddon,
   } = props;
+  const location = useLocation();
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
+  const { isResponsiveLayoutEnabled } = useResponsiveLayout();
 
   const { data: fetchedDocument, error } = useQuery(
     [apiDescriptionUrl],
@@ -186,21 +227,32 @@ export const APIImpl: React.FC<APIProps> = props => {
   }
 
   return (
-    <InlineRefResolverProvider document={parsedDocument}>
-      {layout === 'stacked' ? (
+    <InlineRefResolverProvider document={parsedDocument} maxRefDepth={maxRefDepth}>
+      {layout === 'stacked' && (
         <APIWithStackedLayout
           serviceNode={serviceNode}
           hideTryIt={hideTryIt}
+          hideSamples={hideSamples}
+          hideTryItPanel={hideTryItPanel}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
           hideExport={hideExport}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          renderExtensionAddon={renderExtensionAddon}
+          location={location}
         />
-      ) : (
+      )}
+      {layout === 'sidebar' && (
         <APIWithSidebarLayout
           logo={logo}
           serviceNode={serviceNode}
+          hideTryItPanel={hideTryItPanel}
           hideTryIt={hideTryIt}
+          hideSamples={hideSamples}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}
@@ -209,6 +261,26 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCorsProxy={tryItCorsProxy}
           sidebarTheme={sidebarTheme}
           sidebarHeader={sidebarHeader}
+          renderExtensionAddon={renderExtensionAddon}
+        />
+      )}
+      {layout === 'responsive' && (
+        <APIWithResponsiveSidebarLayout
+          logo={logo}
+          serviceNode={serviceNode}
+          hideTryItPanel={hideTryItPanel}
+          hideTryIt={hideTryIt}
+          hideSamples={hideSamples}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
+          hideSchemas={hideSchemas}
+          hideInternal={hideInternal}
+          hideExport={hideExport}
+          exportProps={exportProps}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
+          tryItCorsProxy={tryItCorsProxy}
+          renderExtensionAddon={renderExtensionAddon}
+          compact={isResponsiveLayoutEnabled}
         />
       )}
     </InlineRefResolverProvider>

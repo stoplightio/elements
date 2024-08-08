@@ -94,15 +94,17 @@ export const getQueryParams = ({
       let nested: string[];
       let parsed: any;
       try {
-        parsed = JSON.parse(value);
-        if (Array.isArray(parsed)) {
+        const parsed = JSON.parse(value);
+        if (typeof parsed === 'string') {
+          nested = parsed.split(delimiter[param.style as keyof typeof delimiter]);
+        } else if (Array.isArray(parsed)) {
           nested = parsed;
         } else {
           throw Error();
         }
       } catch (e) {
         if (!parsed && typeof value === 'string') {
-          nested = value.split(delimiter[param.style]);
+          nested = value.split(delimiter[param.style as keyof typeof delimiter]);
         } else {
           throw new Error(`Cannot use param value "${value}". JSON array expected.`);
         }
@@ -113,7 +115,7 @@ export const getQueryParams = ({
       } else {
         acc.push({
           name: param.name,
-          value: nested.join(delimiter[param.style] ?? delimiter[HttpParamStyles.Form]),
+          value: nested.join(delimiter[param.style as keyof typeof delimiter] ?? delimiter[HttpParamStyles.Form]),
         });
       }
     } else {
@@ -190,6 +192,10 @@ const runAuthRequestEhancements = (
   const newQueryParams = [...queryParams];
   const newHeaders = [...headers];
   auths.forEach(auth => {
+    if (!auth.authValue) {
+      // don't add header param if authValue is empty
+      return;
+    }
     if (isApiKeySecurityScheme(auth.scheme)) {
       if (auth.scheme.in === 'query') {
         newQueryParams.push({
@@ -319,7 +325,7 @@ function uriExpand(uri: string, data: Dictionary<string, string>) {
     return uri;
   }
   return uri.replace(/{([^#?]+?)}/g, (match, value) => {
-    return data[value] || value;
+    return data[value] || match;
   });
 }
 

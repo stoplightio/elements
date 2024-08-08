@@ -1,11 +1,15 @@
 import type { IMarkdownViewerProps } from '@stoplight/markdown-viewer';
 import { isArray } from '@stoplight/mosaic';
-import { IHttpOperation, IHttpService, INode } from '@stoplight/types';
+import { IHttpOperation, IHttpService, IHttpWebhookOperation, INode } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import { isObject, isPlainObject } from 'lodash';
 
 export function isSMDASTRoot(maybeAst: unknown): maybeAst is IMarkdownViewerProps['markdown'] {
-  return isObject(maybeAst) && maybeAst['type'] === 'root' && isArray(maybeAst['children']);
+  return (
+    isObject(maybeAst) &&
+    maybeAst['type' as keyof IMarkdownViewerProps['markdown']] === 'root' &&
+    isArray(maybeAst['children' as keyof IMarkdownViewerProps['markdown']])
+  );
 }
 
 export function isJSONSchema(maybeSchema: unknown): maybeSchema is JSONSchema7 {
@@ -23,6 +27,16 @@ export function isHttpService(maybeHttpService: unknown): maybeHttpService is IH
 
 export function isHttpOperation(maybeHttpOperation: unknown): maybeHttpOperation is IHttpOperation {
   return isStoplightNode(maybeHttpOperation) && 'method' in maybeHttpOperation && 'path' in maybeHttpOperation;
+}
+
+export function isHttpWebhookOperation(
+  maybeHttpWebhookOperation: unknown,
+): maybeHttpWebhookOperation is IHttpWebhookOperation {
+  return (
+    isStoplightNode(maybeHttpWebhookOperation) &&
+    'method' in maybeHttpWebhookOperation &&
+    'name' in maybeHttpWebhookOperation
+  );
 }
 
 const properUrl = new RegExp(

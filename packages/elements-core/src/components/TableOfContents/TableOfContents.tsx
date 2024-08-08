@@ -1,13 +1,15 @@
 import { faExternalLink, IconName } from '@fortawesome/free-solid-svg-icons';
-import { Box, Flex, Icon } from '@stoplight/mosaic';
+import { Box, Flex, Icon, ITextColorProps } from '@stoplight/mosaic';
+import { HttpMethod, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
+import { useRouterType } from '../../context/RouterType';
 import { useFirstRender } from '../../hooks/useFirstRender';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
 import {
+  NODE_GROUP_ICON,
+  NODE_GROUP_ICON_COLOR,
   NODE_META_COLOR,
-  NODE_TITLE_ICON,
-  NODE_TITLE_ICON_COLOR,
   NODE_TYPE_ICON_COLOR,
   NODE_TYPE_META_ICON,
   NODE_TYPE_TITLE_ICON,
@@ -38,6 +40,7 @@ export interface CustomCSS extends React.CSSProperties {
 
 const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
+LinkContext.displayName = 'LinkContext';
 
 export const TableOfContents = React.memo<TableOfContentsProps>(
   ({
@@ -52,6 +55,10 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
     const firstRender = useFirstRender();
+
+    // when using the hash router, slugs must be absolute - otherwise the router will keep appending to the existing hash route
+    // this flag makes a slug like `abc/operations/getPet` be rendered as `#/abc/operations/getPet`
+    const makeSlugAbsoluteRoute = useRouterType() == 'hash';
 
     React.useEffect(() => {
       // setTimeout to handle scrollTo after groups expand to display active GroupItem
@@ -92,6 +99,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
                     maxDepthOpenByDefault={maxDepthOpenByDefault}
                     onLinkClick={onLinkClick}
                     isInResponsiveMode={isInResponsiveMode}
+                    makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
                   />
                 );
               })}
@@ -102,6 +110,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     );
   },
 );
+TableOfContents.displayName = 'TableOfContents';
 
 const Divider = React.memo<{
   item: TableOfContentsDivider;
@@ -126,14 +135,16 @@ const Divider = React.memo<{
     </>
   );
 });
+Divider.displayName = 'Divider';
 
 const GroupItem = React.memo<{
   depth: number;
   item: TableOfContentsGroupItem;
   isInResponsiveMode?: boolean;
+  makeSlugAbsoluteRoute?: boolean;
   maxDepthOpenByDefault?: number;
   onLinkClick?(): void;
-}>(({ item, depth, maxDepthOpenByDefault, isInResponsiveMode, onLinkClick }) => {
+}>(({ item, depth, maxDepthOpenByDefault, isInResponsiveMode, makeSlugAbsoluteRoute, onLinkClick }) => {
   if (isExternalLink(item)) {
     return (
       <Box as="a" href={item.url} target="_blank" rel="noopener noreferrer" display="block">
@@ -153,6 +164,7 @@ const GroupItem = React.memo<{
         maxDepthOpenByDefault={maxDepthOpenByDefault}
         onLinkClick={onLinkClick}
         isInResponsiveMode={isInResponsiveMode}
+        makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
       />
     );
   } else if (isNode(item)) {
@@ -160,11 +172,16 @@ const GroupItem = React.memo<{
       <Node
         depth={depth}
         isInResponsiveMode={isInResponsiveMode}
+        makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
         item={item}
         onLinkClick={onLinkClick}
         meta={
           item.meta ? (
-            <Box color={NODE_META_COLOR[item.meta]} textTransform="uppercase" fontWeight="medium">
+            <Box
+              color={NODE_META_COLOR[item.meta as HttpMethod] as ITextColorProps['color']}
+              textTransform="uppercase"
+              fontWeight="medium"
+            >
               {item.meta}
             </Box>
           ) : (
@@ -172,7 +189,11 @@ const GroupItem = React.memo<{
               <Flex alignItems="center">
                 {item.version && <Version value={item.version} />}
                 {item.type !== 'model' && (
-                  <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_META_ICON[item.type]} />
+                  <Box
+                    as={Icon}
+                    color={NODE_TYPE_ICON_COLOR[item.type as NodeType] as ITextColorProps['color']}
+                    icon={NODE_TYPE_META_ICON[item.type]}
+                  />
                 )}
               </Flex>
             )
@@ -184,14 +205,16 @@ const GroupItem = React.memo<{
 
   return null;
 });
+GroupItem.displayName = 'GroupItem';
 
 const Group = React.memo<{
   depth: number;
   item: TableOfContentsGroup | TableOfContentsNodeGroup;
   maxDepthOpenByDefault?: number;
   isInResponsiveMode?: boolean;
+  makeSlugAbsoluteRoute?: boolean;
   onLinkClick?(): void;
-}>(({ depth, item, maxDepthOpenByDefault, isInResponsiveMode, onLinkClick = () => {} }) => {
+}>(({ depth, item, maxDepthOpenByDefault, isInResponsiveMode, makeSlugAbsoluteRoute, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
   const [isOpen, setIsOpen] = React.useState(() => isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault));
   const hasActive = !!activeId && hasActiveItem(item.items, activeId);
@@ -247,6 +270,7 @@ const Group = React.memo<{
         onClick={handleClick}
         onLinkClick={onLinkClick}
         isInResponsiveMode={isInResponsiveMode}
+        makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
       />
     );
   } else {
@@ -259,8 +283,9 @@ const Group = React.memo<{
         depth={depth}
         isActive={showAsActive}
         icon={
-          NODE_TITLE_ICON[item.title] && (
-            <Box as={Icon} color={NODE_TITLE_ICON_COLOR[item.title]} icon={NODE_TITLE_ICON[item.title]} />
+          item.itemsType &&
+          NODE_GROUP_ICON[item.itemsType] && (
+            <Box as={Icon} color={NODE_GROUP_ICON_COLOR[item.itemsType]} icon={NODE_GROUP_ICON[item.itemsType]} />
           )
         }
         description={(item as TableOfContentsNodeGroup).description}
@@ -281,12 +306,14 @@ const Group = React.memo<{
               depth={depth + 1}
               onLinkClick={onLinkClick}
               isInResponsiveMode={isInResponsiveMode}
+              makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
             />
           );
         })}
     </>
   );
 });
+Group.displayName = 'Group';
 
 const Item = React.memo<{
   depth: number;
@@ -346,6 +373,7 @@ const Item = React.memo<{
     </Flex>
   );
 });
+Item.displayName = 'Item';
 
 const Node = React.memo<{
   item: TableOfContentsNode | TableOfContentsNodeGroup;
@@ -353,79 +381,82 @@ const Node = React.memo<{
   meta?: React.ReactNode;
   showAsActive?: boolean;
   isInResponsiveMode?: boolean;
+  makeSlugAbsoluteRoute?: boolean;
   onClick?: (e: React.MouseEvent, forceOpen?: boolean) => void;
   onLinkClick?(): void;
-}>(({ item, depth, meta, showAsActive, isInResponsiveMode, onClick, onLinkClick = () => {} }) => {
-  const activeId = React.useContext(ActiveIdContext);
-  const isActive = activeId === item.slug || activeId === item.id;
-  const LinkComponent = React.useContext(LinkContext);
+}>(
+  ({ item, depth, meta, showAsActive, isInResponsiveMode, makeSlugAbsoluteRoute, onClick, onLinkClick = () => {} }) => {
+    const activeId = React.useContext(ActiveIdContext);
+    const isActive = activeId === item.slug || activeId === item.id;
+    const LinkComponent = React.useContext(LinkContext);
 
-  const handleClick = (e: React.MouseEvent) => {
-    if (isActive) {
-      // Don't trigger link click when we're active
-      e.stopPropagation();
-      e.preventDefault();
-    } else {
-      onLinkClick();
-    }
+    const handleClick = (e: React.MouseEvent) => {
+      if (isActive) {
+        // Don't trigger link click when we're active
+        e.stopPropagation();
+        e.preventDefault();
+      } else {
+        onLinkClick();
+      }
 
-    // Force open when clicking inactive group
-    if (onClick) {
-      onClick(e, isActive ? undefined : true);
-    }
-  };
+      // Force open when clicking inactive group
+      if (onClick) {
+        onClick(e, isActive ? undefined : true);
+      }
+    };
 
-  return (
-    <Box
-      as={LinkComponent}
-      to={item.slug}
-      display="block"
-      textDecoration="no-underline"
-      className="ElementsTableOfContentsItem"
-      fontWeight={item.presentation?.fontWeight ?? 'normal'}
-    >
-      <Item
-        id={getHtmlIdFromItemId(item.slug || item.id)}
-        isActive={isActive || showAsActive}
-        depth={depth}
-        title={item.title}
-        icon={
-          item.presentation?.icon ? (
-            <Flex
-              rounded="full"
-              flexShrink={0}
-              className="menu-logo"
-              h="sm"
-              w="sm"
-              style={
-                {
-                  color: item.presentation?.color ?? '',
-                  '--menu-icon-bg-color': item.presentation?.color ?? '',
-                } as CustomCSS
-              }
-              fontSize="base"
-              lineHeight="none"
-              alignItems="center"
-              justify="center"
-            >
-              <Box textAlign="center">
-                <Icon icon={['fas', item.presentation?.icon as IconName]} />
-              </Box>
-            </Flex>
-          ) : (
-            NODE_TYPE_TITLE_ICON[item.type] && (
-              <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
+    return (
+      <Box
+        as={LinkComponent}
+        to={makeSlugAbsoluteRoute && !item.slug.startsWith('/') ? `/${item.slug}` : item.slug}
+        display="block"
+        textDecoration="no-underline"
+        className="ElementsTableOfContentsItem"
+        fontWeight={item.presentation?.fontWeight ?? 'normal'}
+      >
+        <Item
+          id={getHtmlIdFromItemId(item.slug || item.id)}
+          isActive={isActive || showAsActive}
+          depth={depth}
+          title={item.title}
+          icon={
+            item.presentation?.icon ? (
+              <Flex
+                rounded="full"
+                flexShrink={0}
+                className="menu-logo"
+                h="sm"
+                w="sm"
+                style={
+                  {
+                    color: item.presentation?.color ?? '',
+                    '--menu-icon-bg-color': item.presentation?.color ?? '',
+                  } as CustomCSS
+                }
+                fontSize="base"
+                lineHeight="none"
+                alignItems="center"
+                justify="center"
+              >
+                <Box textAlign="center">
+                  <Icon icon={['fas', item.presentation?.icon as IconName]} />
+                </Box>
+              </Flex>
+            ) : (
+              NODE_TYPE_TITLE_ICON[item.type] && (
+                <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
+              )
             )
-          )
-        }
-        meta={meta}
-        isInResponsiveMode={isInResponsiveMode}
-        onClick={handleClick}
-        description={item.description}
-      />
-    </Box>
-  );
-});
+          }
+          meta={meta}
+          isInResponsiveMode={isInResponsiveMode}
+          onClick={handleClick}
+        />
+      </Box>
+    );
+  },
+);
+Node.displayName = 'Node';
 
 const Version: React.FC<{ value: string }> = ({ value }) => {
   return (

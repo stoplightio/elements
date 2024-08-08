@@ -16,6 +16,7 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { DeprecatedBadge, InternalBadge } from '../HttpOperation/Badges';
 import { ExportButton } from '../HttpService/ExportButton';
+import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 
 export type ModelProps = DocsComponentProps<JSONSchema7>;
@@ -27,16 +28,16 @@ const ModelComponent: React.FC<ModelProps> = ({
   layoutOptions,
   exportProps,
 }) => {
-  const resolveRef = useSchemaInlineRefResolver();
+  const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
-  const nodeId = data?.['x-stoplight']?.id;
+  const nodeId = (data?.['x-stoplight' as keyof JSONSchema7] as { [key: string]: any })?.id;
   const title = data.title ?? nodeTitle;
-  const isDeprecated = !!data['deprecated'];
-  const isInternal = !!data['x-internal'];
+  const isDeprecated = !!data['deprecated' as keyof JSONSchema7];
+  const isInternal = !!data['x-internal' as keyof JSONSchema7];
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
@@ -77,12 +78,16 @@ const ModelComponent: React.FC<ModelProps> = ({
         </Box>
       )}
 
+      <NodeVendorExtensions data={data} />
+
       {isCompact && modelExamples}
 
       <JsonSchemaViewer
         resolveRef={resolveRef}
+        maxRefDepth={maxRefDepth}
         schema={getOriginalObject(data)}
         nodeHasChanged={nodeHasChanged}
+        renderExtensionAddon={renderExtensionAddon}
         skipTopLevelDescription
       />
     </VStack>

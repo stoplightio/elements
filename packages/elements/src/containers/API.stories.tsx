@@ -8,6 +8,7 @@ import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/si
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
+import { renderExtensionRenderer } from './story-helper';
 
 export default {
   title: 'Public/API',
@@ -72,6 +73,16 @@ StackedLayout.args = {
 };
 StackedLayout.storyName = 'Stacked Layout (Zoom)';
 
+export const ResponsiveLayout = Template.bind({});
+ResponsiveLayout.args = {
+  apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
+  layout: 'responsive',
+};
+ResponsiveLayout.storyName = 'Responsive Layout (Zoom)';
+ResponsiveLayout.parameters = {
+  layout: 'fullscreen',
+};
+
 export const Box = Template.bind({});
 Box.args = {
   apiDescriptionUrl: 'https://raw.githubusercontent.com/box/box-openapi/main/content/openapi.yml',
@@ -97,3 +108,10 @@ Instagram.args = {
   apiDescriptionUrl: 'https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml',
 };
 Instagram.storyName = 'Instagram';
+
+export const WithExtensionRenderer = Template.bind({});
+WithExtensionRenderer.args = {
+  renderExtensionAddon: renderExtensionRenderer,
+  apiDescriptionDocument: zoomApiYaml,
+};
+WithExtensionRenderer.storyName = 'With Extension Renderer';

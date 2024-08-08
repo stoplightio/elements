@@ -1,16 +1,9 @@
 import { Box } from '@stoplight/mosaic';
 import * as React from 'react';
 
-interface LogoProps {
-  logo: {
-    altText: string;
-    url?: string;
-    backgroundColor?: string;
-    href?: string;
-  };
-}
+import { LogoProps } from '../types';
 
-export const Logo: React.FC<LogoProps> = ({ logo }) => {
+export const Logo: React.FC<{ logo: LogoProps }> = ({ logo }) => {
   return (
     <Box
       display="inline"

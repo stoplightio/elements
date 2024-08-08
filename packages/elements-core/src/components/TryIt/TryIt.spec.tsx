@@ -240,10 +240,11 @@ describe('TryIt', () => {
       // path param
       const completedField = screen.getByLabelText('completed');
       expect(completedField).toHaveValue('');
+      expect(completedField).toHaveTextContent('select an option');
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      expect(limitField).toHaveTextContent('select an option');
+      expect(limitField).toHaveTextContent('select an option (defaults to: 1)');
 
       const typeField = screen.getByLabelText('type');
       expect(typeField).toHaveTextContent('something');

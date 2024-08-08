@@ -17,6 +17,8 @@ export function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const isStacked = searchParams.get('layout') === 'stacked';
+
   const [globalState, setGlobalState] = useState<GlobalContext>({
     apiDescriptionUrl: searchParams.get('spec') || DEFAULT_API_URL,
     setDescriptionUrl: _value => {
@@ -24,7 +26,7 @@ export function App() {
 
       let nextUrl = '/';
       if (value && value !== DEFAULT_API_URL) {
-        nextUrl = `?spec=${value}`;
+        nextUrl = `?spec=${value}${isStacked ? '&layout=stacked' : ''}`;
       }
 
       window.history.pushState(undefined, '', nextUrl);
@@ -36,6 +38,7 @@ export function App() {
         });
       }, 0);
     },
+    layout: isStacked ? 'stacked' : undefined,
   });
 
   return (

@@ -1,5 +1,3 @@
-import 'jest-enzyme';
-
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { render, screen, waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
@@ -26,6 +24,17 @@ describe('HttpService', () => {
     );
 
     expect(wrapper.getByText(httpService.name).tagName.toLowerCase()).toBe('h1');
+  });
+
+  it('should not display servers when hideServerInfo is provided', () => {
+    render(
+      <Router>
+        <HttpService layoutOptions={{ hideServerInfo: true }} data={{ ...httpService, security: [] }} />
+      </Router>,
+    );
+
+    const serverUrl = screen.queryByLabelText('Production API');
+    expect(serverUrl).not.toBeInTheDocument();
   });
 
   it('displays all server urls', () => {
@@ -149,6 +158,17 @@ describe('HttpService', () => {
       render(
         <Router>
           <HttpService data={{ ...httpService, security: [] }} />
+        </Router>,
+      );
+
+      const security = screen.queryByRole('heading', { name: 'Security' });
+      expect(security).not.toBeInTheDocument();
+    });
+
+    it('should not render if hideSecurityInfo is provided', () => {
+      render(
+        <Router>
+          <HttpService layoutOptions={{ hideSecurityInfo: true }} data={{ ...httpService, security: [] }} />
         </Router>,
       );
 

@@ -31,6 +31,7 @@ export type TableOfContentsGroupItem =
 export type TableOfContentsGroup = {
   title: string;
   items: TableOfContentsGroupItem[];
+  itemsType?: 'article' | 'http_operation' | 'http_webhook' | 'model';
 };
 
 export type TableOfContentsExternalLink = {
@@ -38,7 +39,9 @@ export type TableOfContentsExternalLink = {
   url: string;
 };
 
-export type TableOfContentsNode<T = 'http_service' | 'http_operation' | 'model' | 'article' | 'overview'> = {
+export type TableOfContentsNode<
+  T = 'http_service' | 'http_operation' | 'http_webhook' | 'model' | 'article' | 'overview',
+> = {
   id: string;
   slug: string;
   title: string;
