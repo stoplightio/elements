@@ -75,7 +75,7 @@
     "postbuild": "yarn workspace @stoplight/elements test.packaging && yarn workspace @stoplight/elements-core test.packaging && yarn workspace @stoplight/elements-dev-portal test.packaging",
     "lint": "eslint '{packages,examples}/*/src/**/*.{ts,tsx}'",
     "version": "lerna version --no-push",
-    "release": "lerna publish from-package --yes --registry https://registry.npmjs.org --loglevel silly",
+    "release": "lerna publish from-package --yes --registry https://registry.npmjs.org",
     "release.docs": "yarn workspace @stoplight/elements release.docs",
     "type-check": "yarn workspaces run type-check",
     "test": "yarn workspace @stoplight/elements test && yarn workspace @stoplight/elements-core test && yarn workspace @stoplight/elements-dev-portal test --passWithNoTests",
