@@ -134,6 +134,16 @@ describe('Response', () => {
     expect(button).not.toBeInTheDocument();
   });
 
+  it('does not display "No supported" message if there is no body', () => {
+    const response: ResponseState = {
+      status: 200,
+      contentType: 'text/plain',
+      bodyText: '',
+    };
+    const { container } = render(<TryItResponse response={response} />);
+    expect(container).not.toHaveTextContent('No supported response body returned');
+  });
+
   it.each([
     ['application/json', 'json'],
     [`application/json; charset='utf-8'`, 'json'],

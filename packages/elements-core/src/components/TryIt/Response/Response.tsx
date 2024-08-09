@@ -95,7 +95,7 @@ export const TryItResponse: React.FC<{ response: ResponseState }> = ({ response 
             <Flex justifyContent="center">
               <Image src={URL.createObjectURL(response.blob)} alt="response image" />
             </Flex>
-          ) : (
+          ) : !response.bodyText ? null : (
             <p>
               <Box as={Icon} icon={['fas', 'exclamation-circle']} mr={2} />
               No supported response body returned
