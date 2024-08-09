@@ -412,6 +412,14 @@ export const httpOperation: IHttpOperation = {
         style: HttpParamStyles.Form,
       },
       {
+        id: '?http-query-pagination?',
+        schema: {
+          type: 'object',
+        },
+        name: 'pagination',
+        style: HttpParamStyles.DeepObject,
+      },
+      {
         id: '?http-query-items?',
         schema: {
           type: 'array',
