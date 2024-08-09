@@ -38,7 +38,7 @@
     "cssnano": "5.0.6",
     "cypress": "^13.6.6",
     "eslint": "7.31.0",
-    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jest": "24.4.0",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.24.0",
