@@ -18,7 +18,6 @@ Learn how to integrate Elements with any of these popular frameworks.
 - [Introduction](getting-started/elements/introduction.md)
 - [Usage with HTML](getting-started/elements/html.md)
 - [Usage with ReactJS](getting-started/elements/react.md)
-- [Usage with GatsbyJS](getting-started/elements/gatsby.md)
 - [Usage with AngularJS](getting-started/elements/angular.md)
 
 ## Getting started with Elements Dev Portal
@@ -28,7 +27,6 @@ Learn how to integrate Elements Dev Portal with any of these popular frameworks.
 - [Introduction](getting-started/dev-portal/introduction.md)
 - [Usage with HTML](getting-started/dev-portal/html.md)
 - [Usage with ReactJS](getting-started/dev-portal/react.md)
-- [Usage with GatsbyJS](getting-started/dev-portal/gatsby.md)
 
 ## Free Hosted Docs
 
