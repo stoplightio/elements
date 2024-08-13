@@ -34,7 +34,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "build": "yarn version.set && concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
+    "build": "yarn version.set && yarn build.react && yarn build.webcomponents",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts bundle",
     "build.webcomponents": "node --max-old-space-size=4096 ./../../node_modules/webpack/bin/webpack.js -c ./web-components.config.js",
