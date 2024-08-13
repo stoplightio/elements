@@ -37,7 +37,7 @@
     "build": "yarn version.set && concurrently \"yarn:build.react\" \"yarn:build.webcomponents\"",
     "postbuild": "yarn build.styles",
     "build.react": "sl-scripts bundle",
-    "build.webcomponents": "webpack -c ./web-components.config.js",
+    "build.webcomponents": "node --max-old-space-size=4096 ./../../node_modules/webpack/bin/webpack.js -c ./web-components.config.js",
     "build.docs": "storybook build -c .storybook -o dist-storybook",
     "build.styles": "postcss src/styles.css -o dist/styles.min.css",
     "version.set": "replace \"appVersion = '.*'\" \"appVersion = '$npm_package_version'\" src/version.ts --silent",
