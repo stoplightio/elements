@@ -80,7 +80,6 @@
     "type-check": "yarn workspaces run type-check",
     "test": "yarn workspace @stoplight/elements test && yarn workspace @stoplight/elements-core test && yarn workspace @stoplight/elements-dev-portal test --passWithNoTests",
     "test.prod": "yarn workspace @stoplight/elements test.prod && yarn workspace @stoplight/elements-core test.prod && yarn workspace @stoplight/elements-dev-portal test.prod --passWithNoTests",
-    "prepublishOnly": "yarn workspace @stoplight/elements build",
     "/// examples ///": "",
     "copy:angular": "mkdir examples-dev ; cp -a -v ./examples/angular ./examples-dev ; sh ./use-local-elements.sh angular",
     "build:angular": "(cd ./examples-dev/angular && yarn reinstall && yarn build)",
