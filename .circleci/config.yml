@@ -100,9 +100,6 @@ jobs:
           name: Install Dependencies
           command: yarn --frozen-lockfile
       - run:
-          name: Build Project
-          command: yarn build
-      - run:
           name: Set NPM Token
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
