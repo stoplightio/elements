@@ -1,5 +1,5 @@
 import { parse } from '@stoplight/yaml';
-import { Story } from '@storybook/react';
+import { Meta, StoryFn as Story } from '@storybook/react';
 import * as React from 'react';
 
 import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
@@ -10,11 +10,11 @@ import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
 import { renderExtensionRenderer } from './story-helper';
 
-export default {
+const meta: Meta<APIProps> = {
   title: 'Public/API',
-  component: API,
+  component: API as any,
   argTypes: {
-    apiDescriptionDocument: { control: 'text', type: { required: false }, table: { category: 'Input' } },
+    apiDescriptionDocument: { control: 'text', table: { category: 'Input', required: false } },
     apiDescriptionUrl: { control: 'text', table: { category: 'Input' } },
     layout: {
       control: { type: 'inline-radio' },
@@ -26,7 +26,10 @@ export default {
   args: {
     router: 'memory',
   },
+  tags: ['autodocs'],
 };
+
+export default meta;
 
 const Template: Story<APIProps> = args => <API {...args} />;
 

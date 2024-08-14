@@ -1,6 +1,7 @@
 import '../index';
 
 import { parse } from '@stoplight/yaml';
+import type { StoryFn } from '@storybook/react';
 import React from 'react';
 
 import { zoomApiYaml } from '../../__fixtures__/api-descriptions/zoomApiYaml';
@@ -13,7 +14,7 @@ declare global {
   }
 }
 
-const Template = (props: any) => <elements-api {...props} />;
+const Template: StoryFn<unknown> = (props: any) => <elements-api {...props} />;
 
 export default {
   title: 'web-components/API',

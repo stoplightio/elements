@@ -1,23 +1,33 @@
 'use strict';
 import { dirname, join } from 'path';
 const { ProvidePlugin } = require('webpack');
-
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const config = {
-  stories: [join(__dirname, '../packages/**/*.stories.{js,jsx,ts,tsx}')],
+  stories: [join(__dirname, '../packages/**/*.stories.@(js|jsx|ts|tsx)')],
   features: {
-    storyStoreV7: false
+    storyStoreV8: false,
   },
-
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      propFilter: (prop) => {
+        if (prop.parent) {
+          return !prop.parent.fileName.includes('node_modules');
+        }
+        return true;
+      },
+    },
+  },
   addons: [
     getAbsolutePath('@storybook/addon-docs'),
     getAbsolutePath('@storybook/addon-controls'),
     getAbsolutePath('@storybook/addon-toolbars'),
     getAbsolutePath('@storybook/addon-viewport'),
     getAbsolutePath('@storybook/addon-styling-webpack'),
+    getAbsolutePath('@storybook/addon-essentials'),
   ],
-
   babel: async () => {
     return {
       presets: [
@@ -33,7 +43,6 @@ const config = {
       ],
     };
   },
-
   webpackFinal: config => {
     config.resolve.plugins = config.resolve.plugins || [];
     config.resolve.plugins.push(new TsconfigPathsPlugin());
@@ -53,6 +62,38 @@ const config = {
       },
     });
 
+    config.module.rules.push({
+      test: /\.(ts|tsx)$/,
+      use: [
+        {
+          loader: require.resolve('ts-loader'),
+          options: {
+            transpileOnly: true, // Turn off TypeScript validation
+          },
+        },
+      ]
+    });
+
+
+    config.module.rules.push({
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      use: [
+        {
+          loader: require.resolve('babel-loader'),
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+              '@babel/preset-typescript',
+            ],
+          },
+        },
+      ],
+    });
+
+    config.resolve.extensions.push('.ts', '.tsx', '.js', '.jsx');
+
     config.plugins.push(
       new ProvidePlugin({
         process: require.resolve('process/browser'),
@@ -61,7 +102,6 @@ const config = {
 
     return config;
   },
-
   framework: {
     name: getAbsolutePath('@storybook/react-webpack5'),
     options: {},

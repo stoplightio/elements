@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
+import { Title, Subtitle, Description, Primary, Controls } from '@storybook/blocks';
+import { Preview } from '@storybook/react';
+
 import customTheme from './theme';
 
 import './google-fonts.css';
@@ -24,14 +26,24 @@ export const parameters = {
         <Subtitle />
         <Description />
         <Primary />
-        <ArgsTable story={PRIMARY_STORY} />
+        <Controls />
       </>
     ),
     theme: customTheme,
+    toc: true, // Enables the table of contents
   },
+
   options: {
     storySort: {
       order: ['Public', 'Internal'],
     },
   },
 };
+
+const preview: Preview = {
+  parameters,
+  globalTypes,
+  tags: ['autodocs'],
+
+}
+export default preview
