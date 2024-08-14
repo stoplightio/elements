@@ -74,7 +74,7 @@
     "elements": "yarn workspace @jpmorganchase/elemental",
     "elements-core": "yarn workspace @jpmorganchase/elemental-core",
     "elements-dev-portal": "yarn workspace @jpmorganchase/elemental-dev-portal",
-    "build": "yarn workspace @jpmorganchase/elemental-core build && concurrently -n elements,dev-portal \"yarn workspace @jpmorganchase/elemental build\" \"yarn workspace @jpmorganchase/elemental-dev-portal build\"",
+    "build": "yarn workspace @jpmorganchase/elemental-core build && yarn workspace @jpmorganchase/elemental build yarn workspace @jpmorganchase/elemental-dev-portal build",
     "build.docs": "yarn workspace @jpmorganchase/elemental build.docs",
     "postbuild": "yarn workspace @jpmorganchase/elemental test.packaging && yarn workspace @jpmorganchase/elemental-core test.packaging && yarn workspace @jpmorganchase/elemental-dev-portal test.packaging",
     "lint": "eslint '{packages,examples}/*/src/**/*.{ts,tsx}'",
