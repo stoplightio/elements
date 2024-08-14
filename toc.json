@@ -35,11 +35,6 @@
         },
         {
           "type": "item",
-          "title": "Usage with GatsbyJS",
-          "uri": "docs/getting-started/elements/gatsby.md"
-        },
-        {
-          "type": "item",
           "title": "Usage with HTML",
           "uri": "docs/getting-started/elements/html.md"
         },
@@ -68,11 +63,6 @@
           "type": "item",
           "title": "Usage with React",
           "uri": "docs/getting-started/dev-portal/react.md"
-        },
-        {
-          "type": "item",
-          "title": "Usage with GatsbyJS",
-          "uri": "docs/getting-started/dev-portal/gatsby.md"
         },
         {
           "type": "item",

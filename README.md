@@ -32,7 +32,6 @@ Let's chat about features, ideas, what you're doing with Elements, on [GitHub Di
 
 Stoplight Elements comes with a few example integration projects, showing you how to utilize Elements with different frameworks.
 - **[react-cra](./examples/react-cra)** - An example app built using Create React App utilizing Stoplight Elements.
-- **[react-gatsby](./examples/react-gatsby)** - An example Gatsby site utilizing Stoplight Elements.
 - **[angular](./examples/angular)** - An angular app utilizing the Web Components distribution of Elements.
 - **[bootstrap](./examples/bootstrap)** - A single HTML page utilizing the Web Components distribution via a global script tag.
 
