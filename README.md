@@ -50,4 +50,4 @@ We use Lerna to deploy. Follow these steps:
 4. Run 'yarn && yarn run version'
 5. Commit & push your changes
 6. Check the github actions 'Publish Package to npmjs' runs successfully
-7. PR your version upgrade back to main.
+7. PR your version upgrade back to main
