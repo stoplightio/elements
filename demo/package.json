@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@stoplight/mosaic": "^1.53.3",
-    "@stoplight/elements": "^8.4.1",
+    "@stoplight/elements": "^8.4.0",
     "history": "^5.0.0",
     "react": "16.14.0",
     "react-dom": "16.14.0",
@@ -26,7 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "eslint": "^7.23.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.1",
     "express": "^4.17.3",
