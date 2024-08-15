@@ -1,8 +1,9 @@
-import { TableOfContentsItem } from '@stoplight/elements-core';
+import type { TableOfContentsItem } from '@stoplight/elements-core';
+import type { Extensions } from '@stoplight/types';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
-import { OperationNode, SchemaNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
+import type { OperationNode, SchemaNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
 import { addTagGroupsToTree, computeTagGroups, isInternal } from './utils';
 
 export interface ComputeAPITreeConfig {
@@ -20,9 +21,10 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
   const tree: TableOfContentsItem[] = [];
 
   // check if spec has x-tagGroups extension
-  const rootVendorExtensions = Object.keys(serviceNode.data.extensions ?? {}).map(item => item.toLowerCase());
+  const rootVendorExtensions = serviceNode.data.extensions ?? ({} as Extensions);
+  const rootVendorExtensionNames = Object.keys(rootVendorExtensions).map(item => item.toLowerCase());
   const isHavingTagGroupsExtension =
-    typeof rootVendorExtensions['x-taggroups'] !== undefined && rootVendorExtensions.length > 0;
+    typeof rootVendorExtensions['x-taggroups'] !== 'undefined' && rootVendorExtensionNames.length > 0;
 
   tree.push({
     id: '/',

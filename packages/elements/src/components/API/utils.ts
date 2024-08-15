@@ -1,15 +1,9 @@
-import {
-  isHttpOperation,
-  isHttpService,
-  isHttpWebhookOperation,
-  TableOfContentsGroup,
-  TableOfContentsItem,
-} from '@stoplight/elements-core';
-import { NodeType } from '@stoplight/types';
-import { JSONSchema7 } from 'json-schema';
-import { defaults } from 'lodash';
+import type { TableOfContentsGroup, TableOfContentsItem } from '@stoplight/elements-core';
+import { isHttpOperation, isHttpService, isHttpWebhookOperation } from '@stoplight/elements-core';
+import type { JSONSchema7 } from 'json-schema';
 
-import { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
+import type { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
+import { INodeTag } from '@stoplight/types';
 
 type GroupableNode = OperationNode | WebhookNode | SchemaNode;
 
@@ -47,7 +41,9 @@ export function computeTagGroups<T extends GroupableNode>(
         groupsByTagId[tagId].items?.push(node);
       } else {
         const serviceTagIndex = lowerCaseServiceTags.findIndex(tn => tn === tagId);
-        const rawServiceTag = rawServiceTags[serviceTagIndex];
+        const rawServiceTag: INodeTag & { 'x-displayName': string | undefined } = rawServiceTags[
+          serviceTagIndex
+        ] as INodeTag & { 'x-displayName': string | undefined };
         let serviceTagName = serviceNode.tags[serviceTagIndex];
         if (rawServiceTag && typeof rawServiceTag['x-displayName'] !== 'undefined') {
           serviceTagName = rawServiceTag['x-displayName'];
@@ -64,7 +60,11 @@ export function computeTagGroups<T extends GroupableNode>(
       if (useTagGroups) {
         for (const nodeTag of node.tags) {
           const nodeTagId = nodeTag.toLowerCase();
-          const serviceTag = rawServiceTags.find(t => t.name.toLowerCase() === nodeTagId);
+          const serviceTag = rawServiceTags.find(t => t.name.toLowerCase() === nodeTagId) as
+            | (INodeTag & {
+                'x-displayName': string | undefined;
+              })
+            | undefined;
 
           let nodeTagName = nodeTag;
           if (serviceTag && typeof serviceTag['x-displayName'] !== 'undefined') {
@@ -108,7 +108,11 @@ export function computeTagGroups<T extends GroupableNode>(
       if (tagGroups.length > 0) {
         let groupTitle = tagGroup.name;
 
-        const groupTag = rawServiceTags.find(t => t.name.toLowerCase() === tagGroup.name.toLowerCase());
+        const groupTag = rawServiceTags.find(t => t.name.toLowerCase() === tagGroup.name.toLowerCase()) as
+          | (INodeTag & {
+              'x-displayName': string | undefined;
+            })
+          | undefined;
         if (groupTag && typeof groupTag['x-displayName'] !== 'undefined') {
           groupTitle = groupTag['x-displayName'];
         }
