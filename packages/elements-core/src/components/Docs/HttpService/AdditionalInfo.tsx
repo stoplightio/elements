@@ -20,12 +20,18 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfServi
     contact?.name && contact?.url
       ? `[Contact ${contact.name}](${contact.url})`
       : contact?.email
-      ? `[Contact ${contact.name || contact.email}](mailto:${contact.email})`
-      : '';
+        ? `[Contact ${contact.name || contact.email}](mailto:${contact.email})`
+        : '';
 
   //use spdx to look up url for license identifier if available
-  const licenseUrl = license?.url || `https://spdx.org/licenses/${license?.identifier}.html`;
-  const licenseLink = license?.name ? `[${license.name}](${licenseUrl})` : `[${license?.identifier}](${licenseUrl})`;
+  const licenseUrl =
+    license?.url || license?.identifier ? `https://spdx.org/licenses/${license?.identifier}.html` : undefined;
+  const licenseLink =
+    license?.name && licenseUrl
+      ? `[${license.name}](${licenseUrl})`
+      : license?.identifier && licenseUrl
+        ? `[${license?.identifier}](${licenseUrl})`
+        : undefined;
   const tosLink = termsOfService ? `[Terms of Service](${termsOfService})` : '';
 
   return contactLink || licenseLink || tosLink ? (
