@@ -1,9 +1,9 @@
 import type { TableOfContentsGroup, TableOfContentsItem } from '@stoplight/elements-core';
 import { isHttpOperation, isHttpService, isHttpWebhookOperation } from '@stoplight/elements-core';
+import type { INodeTag } from '@stoplight/types';
 import type { JSONSchema7 } from 'json-schema';
 
 import type { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
-import { INodeTag } from '@stoplight/types';
 
 type GroupableNode = OperationNode | WebhookNode | SchemaNode;
 
