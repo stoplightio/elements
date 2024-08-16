@@ -28,7 +28,7 @@
     "@storybook/react-webpack5": "7.5.3",
     "@storybook/theming": "7.5.3",
     "@testing-library/cypress": "^7.0.3",
-    "@typescript-eslint/eslint-plugin": "4.28.4",
+    "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.28.4",
     "concurrently": "6.1.0",
     "css-loader": "6.7.1",
@@ -64,6 +64,10 @@
     "webpack": "5.76.1",
     "webpack-cli": "4.7.2",
     "webpack-dev-server": "4.15.1"
+  },
+  "resolutions": {
+    "fast-xml-parser": "4.4.1",
+    "tar": "6.2.1"
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",
