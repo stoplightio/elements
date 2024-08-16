@@ -65,6 +65,10 @@
     "webpack-cli": "4.7.2",
     "webpack-dev-server": "4.15.1"
   },
+  "resolutions": {
+    "fast-xml-parser": "4.4.1",
+    "tar": "6.2.1"
+  },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",
     "elements": "yarn workspace @stoplight/elements",
