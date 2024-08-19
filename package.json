@@ -33,7 +33,7 @@
     "@testing-library/cypress": "^7.0.3",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.28.4",
-    "concurrently": "6.1.0",
+    "concurrently": "8.2.2",
     "css-loader": "6.7.1",
     "cssnano": "5.0.6",
     "cypress": "^13.6.6",
