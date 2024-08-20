@@ -43,7 +43,7 @@
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-storybook": "^0.6.15",
     "jest": "^26.6.3",
-    "jest-environment-jsdom": "^26.3.1",
+    "jest-environment-jsdom": "^29.7.0",
     "jest-environment-jsdom-global": "^4.0.0",
     "jest-junit": "12.2.0",
     "lerna": "^7.4.2",
