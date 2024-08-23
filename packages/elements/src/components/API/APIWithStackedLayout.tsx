@@ -1,19 +1,15 @@
-import {
-  DeprecatedBadge,
-  Docs,
-  ExportButtonProps,
-  HttpMethodColors,
-  ParsedDocs,
-  TryItWithRequestSamples,
-} from '@stoplight/elements-core';
-import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
+import type { ExportButtonProps } from '@stoplight/elements-core';
+import { DeprecatedBadge, Docs, HttpMethodColors, ParsedDocs, TryItWithRequestSamples } from '@stoplight/elements-core';
+import type { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Heading, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
-import { HttpMethod, NodeType } from '@stoplight/types';
+import type { Extensions, HttpMethod } from '@stoplight/types';
+import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
 
-import { OperationNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
-import { computeTagGroups, TagGroup } from './utils';
+import type { OperationNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
+import type { TagGroup } from './utils';
+import { computeTagGroups } from './utils';
 
 type TryItCredentialsPolicy = 'omit' | 'include' | 'same-origin';
 
@@ -44,9 +40,9 @@ type StackedLayoutProps = {
 const itemMatchesHash = (hash: string, item: OperationNode | WebhookNode) => {
   if (item.type === NodeType.HttpOperation) {
     return hash.substr(1) === `${item.data.path}-${item.data.method}`;
-  } else {
-    return hash.substr(1) === `${item.data.name}-${item.data.method}`;
   }
+
+  return hash.substr(1) === `${item.data.name}-${item.data.method}`;
 };
 
 const TryItContext = React.createContext<{
@@ -91,8 +87,17 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   showPoweredByLink = true,
   location,
 }) => {
-  const { groups: operationGroups } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation);
-  const { groups: webhookGroups } = computeTagGroups<WebhookNode>(serviceNode, NodeType.HttpWebhook);
+  const rootVendorExtensions = serviceNode.data.extensions ?? ({} as Extensions);
+  const rootVendorExtensionNames = Object.keys(rootVendorExtensions).map(item => item.toLowerCase());
+  const isHavingTagGroupsExtension =
+    typeof rootVendorExtensions['x-taggroups'] !== 'undefined' && rootVendorExtensionNames.length > 0;
+
+  const { groups: operationGroups } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation, {
+    useTagGroups: isHavingTagGroupsExtension,
+  });
+  const { groups: webhookGroups } = computeTagGroups<WebhookNode>(serviceNode, NodeType.HttpWebhook, {
+    useTagGroups: isHavingTagGroupsExtension,
+  });
 
   return (
     <LocationContext.Provider value={{ location }}>
@@ -114,13 +119,25 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
             />
           </Box>
           {operationGroups.length > 0 && webhookGroups.length > 0 ? <Heading size={2}>Endpoints</Heading> : null}
-          {operationGroups.map(group => (
-            <Group key={group.title} group={group} />
-          ))}
+          {operationGroups.map(group =>
+            group.isDivider ? (
+              <Heading key={group.title} mt={2} size={3}>
+                {group.title}
+              </Heading>
+            ) : (
+              <Group key={group.title} group={group} />
+            ),
+          )}
           {webhookGroups.length > 0 ? <Heading size={2}>Webhooks</Heading> : null}
-          {webhookGroups.map(group => (
-            <Group key={group.title} group={group} />
-          ))}
+          {webhookGroups.map(group =>
+            group.isDivider ? (
+              <Heading key={group.title} mt={2} size={3}>
+                {group.title}
+              </Heading>
+            ) : (
+              <Group key={group.title} group={group} />
+            ),
+          )}
         </Flex>
       </TryItContext.Provider>
     </LocationContext.Provider>
@@ -139,7 +156,10 @@ const Group = React.memo<{ group: TagGroup<OperationNode | WebhookNode> }>(({ gr
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
   const shouldExpand = React.useMemo(() => {
-    return urlHashMatches || group.items.some(item => itemMatchesHash(hash, item));
+    const groupMatches = (group.items ?? []).some(item => {
+      return itemMatchesHash(hash, item);
+    });
+    return urlHashMatches || groupMatches;
   }, [group, hash, urlHashMatches]);
 
   React.useEffect(() => {
@@ -150,7 +170,7 @@ const Group = React.memo<{ group: TagGroup<OperationNode | WebhookNode> }>(({ gr
         window.scrollTo(0, scrollRef.current.offsetTop);
       }
     }
-  }, [shouldExpand, urlHashMatches, group, hash]);
+  }, [shouldExpand, urlHashMatches]);
 
   return (
     <Box>
@@ -173,7 +193,7 @@ const Group = React.memo<{ group: TagGroup<OperationNode | WebhookNode> }>(({ gr
       </Flex>
 
       <Collapse isOpen={isExpanded}>
-        {group.items.map(item => {
+        {(group.items ?? []).map(item => {
           return <Item key={item.uri} item={item} />;
         })}
       </Collapse>
@@ -221,7 +241,7 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
           rounded
           px={2}
           bg="canvas"
-          className={cn(`sl-mr-5 sl-text-base`, `sl-text-${color}`, `sl-border-${color}`)}
+          className={cn('sl-mr-5 sl-text-base', `sl-text-${color}`, `sl-border-${color}`)}
         >
           {item.data.method || 'UNKNOWN'}
         </Box>

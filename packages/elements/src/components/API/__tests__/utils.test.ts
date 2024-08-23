@@ -3,7 +3,8 @@ import { OpenAPIObject as _OpenAPIObject, PathObject } from 'openapi3-ts';
 
 import { transformOasToServiceNode } from '../../../utils/oas';
 import { OperationNode, SchemaNode, WebhookNode } from '../../../utils/oas/types';
-import { computeAPITree, computeTagGroups } from '../utils';
+import { computeAPITree } from '../computeAPITree';
+import { computeTagGroups } from '../utils';
 
 type OpenAPIObject = Partial<_OpenAPIObject> & {
   webhooks?: PathObject;
@@ -44,10 +45,14 @@ describe.each([
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType) : null).toEqual({
+      const tagGroups = serviceNode
+        ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
+        : null;
+      expect(tagGroups).toEqual({
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -81,6 +86,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -153,10 +159,14 @@ describe.each([
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType) : null).toEqual({
+      const tagGroups = serviceNode
+        ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
+        : null;
+      expect(tagGroups).toEqual({
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -198,6 +208,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -258,10 +269,15 @@ describe.each([
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType) : null).toEqual({
+      expect(
+        serviceNode
+          ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
+          : null,
+      ).toEqual({
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -303,6 +319,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -344,7 +361,11 @@ describe.each([
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType) : null).toEqual({
+      expect(
+        serviceNode
+          ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
+          : null,
+      ).toEqual({
         groups: [],
         ungrouped: [],
       });
@@ -381,10 +402,15 @@ describe.each([
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType) : null).toEqual({
+      expect(
+        serviceNode
+          ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
+          : null,
+      ).toEqual({
         groups: [
           {
             title: 'Beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -418,6 +444,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -485,10 +512,15 @@ describe.each([
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType) : null).toEqual({
+      expect(
+        serviceNode
+          ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType, { useTagGroups: false })
+          : null,
+      ).toEqual({
         groups: [
           {
             title: 'Beta',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -522,6 +554,7 @@ describe.each([
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: nodeType,
@@ -881,7 +914,8 @@ describe.each([
         },
       };
 
-      expect(computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true })).toEqual([
+      const apiTree = computeAPITree(transformOasToServiceNode(apiDocument)!, { hideInternal: true });
+      expect(apiTree).toEqual([
         {
           id: '/',
           meta: '',
@@ -941,10 +975,13 @@ describe('when grouping models', () => {
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model) : null).toEqual({
+      expect(
+        serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model, { useTagGroups: false }) : null,
+      ).toEqual({
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -959,6 +996,7 @@ describe('when grouping models', () => {
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1008,10 +1046,13 @@ describe('when grouping models', () => {
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model) : null).toEqual({
+      expect(
+        serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model, { useTagGroups: false }) : null,
+      ).toEqual({
         groups: [
           {
             title: 'beta',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1035,6 +1076,7 @@ describe('when grouping models', () => {
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1081,10 +1123,13 @@ describe('when grouping models', () => {
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model) : null).toEqual({
+      expect(
+        serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model, { useTagGroups: false }) : null,
+      ).toEqual({
         groups: [
           {
             title: 'Beta',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1099,6 +1144,7 @@ describe('when grouping models', () => {
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1145,10 +1191,13 @@ describe('when grouping models', () => {
       };
 
       const serviceNode = transformOasToServiceNode(apiDocument);
-      expect(serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model) : null).toEqual({
+      expect(
+        serviceNode ? computeTagGroups<SchemaNode>(serviceNode, NodeType.Model, { useTagGroups: false }) : null,
+      ).toEqual({
         groups: [
           {
             title: 'Beta',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,
@@ -1163,6 +1212,7 @@ describe('when grouping models', () => {
           },
           {
             title: 'alpha',
+            isDivider: false,
             items: [
               {
                 type: NodeType.Model,

@@ -5,6 +5,7 @@ import * as React from 'react';
 import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
 import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
+import { simpleApiWithTagGroups } from '../__fixtures__/api-descriptions/simpleApiWithTagGroups';
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
@@ -115,3 +116,18 @@ WithExtensionRenderer.args = {
   apiDescriptionDocument: zoomApiYaml,
 };
 WithExtensionRenderer.storyName = 'With Extension Renderer';
+
+export const WithTagGroups = Template.bind({});
+WithTagGroups.args = {
+  renderExtensionAddon: renderExtensionRenderer,
+  apiDescriptionDocument: simpleApiWithTagGroups,
+};
+WithTagGroups.storyName = 'With Tag Groups';
+
+export const WithStackedAndTagGroups = Template.bind({});
+WithStackedAndTagGroups.args = {
+  layout: 'stacked',
+  renderExtensionAddon: renderExtensionRenderer,
+  apiDescriptionDocument: simpleApiWithTagGroups,
+};
+WithStackedAndTagGroups.storyName = 'Stacked Layout With Tag Groups';
