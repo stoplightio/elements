@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "8.4.0",
+  "version": "8.4.1",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -92,7 +92,7 @@
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.1",
-    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.2.0",
     "@types/classnames": "^2.2.10",
     "@types/enzyme": "3.x.x",
