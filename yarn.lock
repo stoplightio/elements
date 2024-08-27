@@ -6389,7 +6389,7 @@
 
 "@stoplight/mosaic-code-editor@^1.53.4":
   version "1.53.4"
-  resolved "https://registry.npmjs.org/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.53.4.tgz#a8d2c9f38d735cff4a187950de05c03a3a69caf8"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-editor/-/mosaic-code-editor-1.53.4.tgz#a8d2c9f38d735cff4a187950de05c03a3a69caf8"
   integrity sha512-StVEXVq5ZlVGvfdsKIYw/h76jb22CKCBUcgNmGyKSQx9ZmLc1wA24CWvbRvSxXKm3/0/P/IyVZ61aaYItqhmrg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
@@ -6419,7 +6419,7 @@
 
 "@stoplight/mosaic-code-viewer@1.53.4", "@stoplight/mosaic-code-viewer@^1.53.4":
   version "1.53.4"
-  resolved "https://registry.npmjs.org/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.53.4.tgz#650ea524d62baada0c0b92f19c1de2135f0ed179"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic-code-viewer/-/mosaic-code-viewer-1.53.4.tgz#650ea524d62baada0c0b92f19c1de2135f0ed179"
   integrity sha512-RZEZ7+UodFQtuuVHyCONg/8wNDlFCuDz0knneGrDaQ1vDa3ddePPjBQnpqVFY0ndXqoaxZTuQu4GvcC8wKdk0Q==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
@@ -6446,9 +6446,9 @@
     use-resize-observer "^9.0.2"
     zustand "^3.5.2"
 
-"@stoplight/mosaic@1.53.4", "@stoplight/mosaic@^ 1.53.4", "@stoplight/mosaic@^1.53.4":
+"@stoplight/mosaic@1.53.4", "@stoplight/mosaic@^1.53.4":
   version "1.53.4"
-  resolved "https://registry.npmjs.org/@stoplight/mosaic/-/mosaic-1.53.4.tgz#04e03a4dfb95e0a451cd2bde6e14ad66103a684d"
+  resolved "https://registry.yarnpkg.com/@stoplight/mosaic/-/mosaic-1.53.4.tgz#04e03a4dfb95e0a451cd2bde6e14ad66103a684d"
   integrity sha512-k3D9B2bM/Ko7ibKKWxJuhomHCOAxooPNPZNX0aY+3kTmQf7tJL+70iwcwD7TbrMyOj7L8SzJPRpJ9fcM8LaDNA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
