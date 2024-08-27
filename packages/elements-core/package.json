@@ -84,7 +84,7 @@
     "tslib": "^2.1.0",
     "urijs": "^1.19.11",
     "util": "^0.12.4",
-    "xml-formatter": "^2.6.1"
+    "xml-formatter": "^3.6.3"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
