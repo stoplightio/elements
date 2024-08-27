@@ -24,9 +24,7 @@ export function computeTagGroups<T extends GroupableNode>(serviceNode: ServiceNo
   const groupableNodes = serviceNode.children.filter(n => n.type === nodeType) as T[];
 
   for (const node of groupableNodes) {
-    const tagName = node.tags[0];
-
-    if (tagName) {
+    for (const tagName of node.tags) {
       const tagId = tagName.toLowerCase();
       if (groupsByTagId[tagId]) {
         groupsByTagId[tagId].items.push(node);
@@ -38,7 +36,8 @@ export function computeTagGroups<T extends GroupableNode>(serviceNode: ServiceNo
           items: [node],
         };
       }
-    } else {
+    }
+    if (node.tags.length === 0) {
       ungrouped.push(node);
     }
   }
