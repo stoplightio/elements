@@ -73,7 +73,7 @@
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "react-query": "^3.34.19",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^6.26.1"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",

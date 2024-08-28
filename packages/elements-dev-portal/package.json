@@ -72,7 +72,7 @@
     "classnames": "^2.2.6",
     "lodash": "^4.17.21",
     "react-query": "^3.34.19",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.26.1",
     "use-debounce": "^6.0.1"
   },
   "devDependencies": {
