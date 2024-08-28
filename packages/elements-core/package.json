@@ -59,7 +59,7 @@
   "dependencies": {
     "@stoplight/http-spec": "^7.1.0",
     "@stoplight/json": "^3.21.0",
-    "@stoplight/json-schema-ref-parser": "^9.2.7",
+    "@stoplight/json-schema-ref-parser": "^10.0.0",
     "@stoplight/json-schema-sampler": "0.3.0",
     "@stoplight/json-schema-tree": "^4.0.0",
     "@stoplight/json-schema-viewer": "4.16.1",
