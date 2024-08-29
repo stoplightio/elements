@@ -67,7 +67,8 @@
   },
   "resolutions": {
     "fast-xml-parser": "4.4.1",
-    "tar": "6.2.1"
+    "tar": "6.2.1",
+    "micromatch": "4.0.8"
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",
