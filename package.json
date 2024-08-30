@@ -25,7 +25,7 @@
     "@storybook/addon-toolbars": "7.5.3",
     "@storybook/addon-viewport": "7.5.3",
     "@storybook/react": "7.5.3",
-    "@storybook/react-webpack5": "7.5.3",
+    "@storybook/react-webpack5": "8.1.11",
     "@storybook/theming": "7.5.3",
     "@testing-library/cypress": "^10.0.2",
     "@typescript-eslint/eslint-plugin": "4.33.0",
