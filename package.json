@@ -51,7 +51,7 @@
     "jest-environment-jsdom-global": "^4.0.0",
     "jest-junit": "12.2.0",
     "lerna": "^7.4.2",
-    "postcss": "8.4.31",
+    "postcss": "8.4.43",
     "postcss-cli": "8.3.1",
     "postcss-import": "14.0.2",
     "postcss-loader": "8.1.1",
