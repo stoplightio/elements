@@ -130,13 +130,22 @@ const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) => {
   const ctx = React.useContext(NodeLinkContext);
 
-  if (href && externalRegex.test(href)) {
-    // Open external URL in a new tab
-    return (
-      <a href={href} target="_blank" rel="noreferrer" title={title ? title : undefined}>
-        {children}
-      </a>
-    );
+  try {
+    if (href && externalRegex.test(href)) {
+      const baseURL = window.location.host;
+      const hrefURL = new URL(href).host;
+
+      if (baseURL === hrefURL) {
+        // Open URL in same tab if domain match
+        return (
+          <a href={href} rel="noreferrer" title={title ? title : undefined}>
+            {children}
+          </a>
+        );
+      }
+    }
+  } catch (error) {
+    console.error(error);
   }
 
   if (href && ctx) {
@@ -166,7 +175,11 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     }
   }
 
-  return <a href={href}>{children}</a>;
+  return (
+    <a href={href} target="_blank">
+      {children}
+    </a>
+  );
 };
 
 function getBundledUrl(url: string | undefined) {
