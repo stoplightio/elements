@@ -138,11 +138,16 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
       if (baseURL === hrefURL) {
         // Open URL in same tab if domain match
         return (
-          <a href={href} rel="noreferrer" title={title ? title : undefined}>
+          <a href={href} title={title ? title : undefined}>
             {children}
           </a>
         );
       }
+      return (
+        <a href={href} target="_blank" rel="noreferrer">
+          {children}
+        </a>
+      );
     }
   } catch (error) {
     console.error(error);
@@ -175,11 +180,7 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     }
   }
 
-  return (
-    <a href={href} target="_blank" rel="noreferrer">
-      {children}
-    </a>
-  );
+  return <a href={href}>{children}</a>;
 };
 
 function getBundledUrl(url: string | undefined) {
