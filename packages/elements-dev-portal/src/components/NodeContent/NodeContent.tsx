@@ -144,7 +144,7 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
         );
       }
       return (
-        <a href={href} target="_blank" rel="noreferrer">
+        <a href={href} target="_blank" rel="noreferrer" title={title ? title : undefined}>
           {children}
         </a>
       );
