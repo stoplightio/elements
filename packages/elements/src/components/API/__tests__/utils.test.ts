@@ -117,6 +117,146 @@ describe.each([
       });
     });
 
+    it('should support multiple tags by operations', () => {
+      const apiDocument: OpenAPIObject = {
+        openapi: '3.0.0',
+        info: {
+          title: 'some api',
+          version: '1.0.0',
+          description: 'some description',
+        },
+        tags: [
+          {
+            name: 'beta',
+          },
+          {
+            name: 'alpha',
+          },
+        ],
+        [pathProp]: {
+          '/a': {
+            get: {
+              tags: ['alpha', 'beta'],
+            },
+          },
+          '/b': {
+            get: {
+              tags: ['beta'],
+            },
+          },
+        },
+      };
+
+      const serviceNode = transformOasToServiceNode(apiDocument);
+      expect(serviceNode ? computeTagGroups<OperationNode | WebhookNode>(serviceNode, nodeType) : null).toEqual({
+        groups: [
+          {
+            title: 'beta',
+            items: [
+              {
+                type: nodeType,
+                uri: `/${pathProp}/a/get`,
+                data: {
+                  id: expect.any(String),
+                  method: 'get',
+                  [parentKeyProp]: '/a',
+                  responses: [],
+                  servers: [],
+                  request: {
+                    headers: [],
+                    query: [],
+                    cookie: [],
+                    path: [],
+                  },
+                  tags: [
+                    {
+                      id: 'df0b92b61db3a',
+                      name: 'alpha',
+                    },
+                    {
+                      id: '9695eccd3aa64',
+                      name: 'beta',
+                    },
+                  ],
+                  security: [],
+                  securityDeclarationType: 'inheritedFromService',
+                  extensions: {},
+                },
+                name: '/a',
+                tags: ['alpha', 'beta'],
+              },
+              {
+                type: nodeType,
+                uri: `/${pathProp}/b/get`,
+                data: {
+                  id: expect.any(String),
+                  method: 'get',
+                  [parentKeyProp]: '/b',
+                  responses: [],
+                  servers: [],
+                  request: {
+                    headers: [],
+                    query: [],
+                    cookie: [],
+                    path: [],
+                  },
+                  tags: [
+                    {
+                      id: '9695eccd3aa64',
+                      name: 'beta',
+                    },
+                  ],
+                  security: [],
+                  securityDeclarationType: 'inheritedFromService',
+                  extensions: {},
+                },
+                name: '/b',
+                tags: ['beta'],
+              },
+            ],
+          },
+          {
+            title: 'alpha',
+            items: [
+              {
+                type: nodeType,
+                uri: `/${pathProp}/a/get`,
+                data: {
+                  id: expect.any(String),
+                  method: 'get',
+                  [parentKeyProp]: '/a',
+                  responses: [],
+                  servers: [],
+                  request: {
+                    headers: [],
+                    query: [],
+                    cookie: [],
+                    path: [],
+                  },
+                  tags: [
+                    {
+                      id: 'df0b92b61db3a',
+                      name: 'alpha',
+                    },
+                    {
+                      id: '9695eccd3aa64',
+                      name: 'beta',
+                    },
+                  ],
+                  security: [],
+                  securityDeclarationType: 'inheritedFromService',
+                  extensions: {},
+                },
+                name: '/a',
+                tags: ['alpha', 'beta'],
+              },
+            ],
+          },
+        ],
+        ungrouped: [],
+      });
+    });
+
     it("within the tags it doesn't reorder the endpoints", () => {
       const apiDocument: OpenAPIObject = {
         openapi: '3.0.0',
