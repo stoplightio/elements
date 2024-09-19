@@ -63,7 +63,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
 
       {queryParams.length > 0 && (
         <VStack spacing={5}>
-          <SectionSubtitle title="Query Parameters" />
+          <SectionSubtitle title="Query String Parameters" />
           <Parameters parameterType="query" parameters={queryParams} />
         </VStack>
       )}
