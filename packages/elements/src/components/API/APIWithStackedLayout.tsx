@@ -129,7 +129,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
 APIWithStackedLayout.displayName = 'APIWithStackedLayout';
 
 const Group = React.memo<{ group: TagGroup<OperationNode | WebhookNode> }>(({ group }) => {
-  const [isExpanded, setIsExpanded] = React.useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(true);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const {
     location: { hash },
