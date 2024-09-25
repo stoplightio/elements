@@ -18961,10 +18961,10 @@ postcss-discard-overridden@^5.0.1:
   resolved "https://registry.yarnpkg.com/postcss-discard-overridden/-/postcss-discard-overridden-5.0.1.tgz#454b41f707300b98109a75005ca4ab0ff2743ac6"
   integrity sha512-Y28H7y93L2BpJhrdUR2SR2fnSsT+3TVx1NmVQLbcnZWwIUpJ7mfcTC6Za9M2PG6w8j7UQRfzxqn8jU2VwFxo3Q==
 
-postcss-import@14.0.2:
-  version "14.0.2"
-  resolved "https://registry.yarnpkg.com/postcss-import/-/postcss-import-14.0.2.tgz#60eff77e6be92e7b67fe469ec797d9424cae1aa1"
-  integrity sha512-BJ2pVK4KhUyMcqjuKs9RijV5tatNzNa73e/32aBVE/ejYPe37iH+6vAu9WvqUkB5OAYgLHzbSvzHnorybJCm9g==
+postcss-import@16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/postcss-import/-/postcss-import-16.1.0.tgz#258732175518129667fe1e2e2a05b19b5654b96a"
+  integrity sha512-7hsAZ4xGXl4MW+OKEWCnF6T5jqBw80/EE9aXg1r2yyn1RsVEU8EtKXbijEODa+rg7iih4bKf7vlvTGYR4CnPNg==
   dependencies:
     postcss-value-parser "^4.0.0"
     read-cache "^1.0.0"
@@ -20346,15 +20346,7 @@ resolve-url-loader@^5.0.0:
     postcss "^8.2.14"
     source-map "0.6.1"
 
-resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.18.1:
-  version "1.20.0"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.20.0.tgz#629a013fb3f70755d6f0b7935cc1c2c5378b1975"
-  integrity sha512-wENBPt4ySzg4ybFQW2TT1zMQucPK95HSh/nq2CFTZVOGut2+pQvSsgtda4d26YrYcr067wjbmzOG8byDPBX63A==
-  dependencies:
-    is-core-module "^2.2.0"
-    path-parse "^1.0.6"
-
-resolve@^1.20.0, resolve@^1.22.1, resolve@^1.22.4:
+resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.18.1, resolve@^1.20.0, resolve@^1.22.1, resolve@^1.22.4:
   version "1.22.8"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.8.tgz#b6c87a9f2aa06dfab52e3d70ac8cde321fa5a48d"
   integrity sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==
