@@ -95,15 +95,13 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             <NodeAnnotation change={descriptionChanged} />
           </Box>
         )}
-
         <NodeVendorExtensions data={data} />
-
         <Request
           onChange={setTextRequestBodyIndex}
           operation={data}
           hideSecurityInfo={layoutOptions?.hideSecurityInfo}
+          isHttpWebhookOperation={isHttpWebhookOperation(data)}
         />
-
         {data.responses && (
           <Responses
             responses={data.responses}
@@ -112,9 +110,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             isCompact={isCompact}
           />
         )}
-
         {data.callbacks?.length ? <Callbacks callbacks={data.callbacks} isCompact={isCompact} /> : null}
-
         {isCompact && tryItPanel}
       </VStack>
     );
