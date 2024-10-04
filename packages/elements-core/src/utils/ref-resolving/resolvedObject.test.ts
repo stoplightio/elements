@@ -251,7 +251,6 @@ describe('createResolvedObject', () => {
       'x-stoplight': { id: 'b73ff5df9864f' },
     };
 
-    const resolvedObject = getOriginalObject(originalObject);
     const filteredObject = {
       oneOf: [
         { $ref: '#/__bundled__/0mui9s02880hl', 'x-stoplight': { id: '19c178fc05d4a' } },
@@ -259,6 +258,7 @@ describe('createResolvedObject', () => {
       ],
       'x-stoplight': { id: 'b73ff5df9864f' },
     };
+    const resolvedObject = getOriginalObject(originalObject);
 
     expect(resolvedObject).toEqual(filteredObject);
   });
@@ -276,7 +276,6 @@ describe('createResolvedObject', () => {
       'x-stoplight': { id: 'b73ff5df9864f' },
     };
 
-    const resolvedObject = getOriginalObject(originalObject);
     const filteredObject = {
       anyOf: [
         { $ref: '#/__bundled__/0mui9s02880hl', 'x-stoplight': { id: '19c178fc05d4a' } },
@@ -284,6 +283,8 @@ describe('createResolvedObject', () => {
       ],
       'x-stoplight': { id: 'b73ff5df9864f' },
     };
+    const resolvedObject = getOriginalObject(originalObject);
+
     expect(resolvedObject).toEqual(filteredObject);
   });
 
@@ -317,7 +318,6 @@ describe('createResolvedObject', () => {
       'x-stoplight': { id: 'b73ff5df9864f' },
     };
 
-    const resolvedObject = getOriginalObject(originalObject);
     const filteredObject = {
       anyOf: [
         [
@@ -346,6 +346,8 @@ describe('createResolvedObject', () => {
       ],
       'x-stoplight': { id: 'b73ff5df9864f' },
     };
+    const resolvedObject = getOriginalObject(originalObject);
+
     expect(resolvedObject).toEqual(filteredObject);
   });
   it('show the error if all schemas are internal for oneOf', () => {
@@ -378,7 +380,6 @@ describe('createResolvedObject', () => {
       'x-stoplight': { id: 'b73ff5df9864f' },
     };
 
-    const resolvedObject = getOriginalObject(originalObject);
     const filteredObject = {
       oneOf: [
         [
@@ -407,6 +408,8 @@ describe('createResolvedObject', () => {
       ],
       'x-stoplight': { id: 'b73ff5df9864f' },
     };
+    const resolvedObject = getOriginalObject(originalObject);
+
     expect(resolvedObject).toEqual(filteredObject);
   });
 });
