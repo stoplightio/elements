@@ -96,18 +96,19 @@ export const requestSampleConfigs: RequestSampleConfigs = {
     mosaicCodeViewerLanguage: 'ocaml',
     httpSnippetLanguage: 'ocaml',
   },
-  'C#': {
-    mosaicCodeViewerLanguage: 'csharp',
-    httpSnippetLanguage: 'csharp',
-    libraries: {
-      HttpClient: {
-        httpSnippetLibrary: 'httpclient',
-      },
-      RestSharp: {
-        httpSnippetLibrary: 'restsharp',
-      },
-    },
-  },
+  // Removing C# example until the generated code can be fixed
+  // 'C#': {
+  //   mosaicCodeViewerLanguage: 'csharp',
+  //   httpSnippetLanguage: 'csharp',
+  //   libraries: {
+  //     HttpClient: {
+  //       httpSnippetLibrary: 'httpclient',
+  //     },
+  //     RestSharp: {
+  //       httpSnippetLibrary: 'restsharp',
+  //     },
+  //   },
+  // },
   Java: {
     mosaicCodeViewerLanguage: 'java',
     httpSnippetLanguage: 'java',
