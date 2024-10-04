@@ -237,6 +237,7 @@ describe('createResolvedObject', () => {
     expect(resolvedObject).toEqual(originalObject);
   });
 
+  // If the schema is internal, the object contains 'x-sl-error-message' on logout.
   it('removes object if contains an error for oneOf', () => {
     const originalObject = {
       oneOf: [
@@ -286,7 +287,7 @@ describe('createResolvedObject', () => {
     expect(resolvedObject).toEqual(filteredObject);
   });
 
-  it('show the error if all object contains an error for anyOf', () => {
+  it('show the error if all schemas are internal for anyOf', () => {
     const originalObject = {
       anyOf: [
         [
@@ -347,7 +348,7 @@ describe('createResolvedObject', () => {
     };
     expect(resolvedObject).toEqual(filteredObject);
   });
-  it('show the error if all object contains an error for oneOf', () => {
+  it('show the error if all schemas are internal for oneOf', () => {
     const originalObject = {
       oneOf: [
         [
