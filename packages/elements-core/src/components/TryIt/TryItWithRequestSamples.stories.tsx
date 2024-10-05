@@ -23,3 +23,10 @@ WithVariables.args = {
   httpOperation: operationWithUrlVariables,
 };
 WithVariables.storyName = 'With Server Variables';
+
+export const WithoutTryItPanel = Template.bind({});
+WithoutTryItPanel.args = {
+  hideTryIt: true,
+  httpOperation: operationWithUrlVariables,
+};
+WithoutTryItPanel.storyName = 'Without Try It Panel';

@@ -4,7 +4,8 @@
 - `apiDescriptionDocument` - OpenAPI document, provided as YAML string, JSON string, or JavaScript object.
 - `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
 - `hideInternal` - Pass `"true"` to filter out any content which has been marked as internal with `x-internal`.
-- `hideTryIt` - Pass `true` to hide the [**Try It** feature](https://docs.stoplight.io/docs/platform/ZG9jOjM2OTM3Mjky-try-it).
+- `hideTryIt` - Pass `true` to hide the [**Try It** feature](https://docs.stoplight.io/docs/platform/ZG9jOjM2OTM3Mjky-try-it) completely.
+- `hideTryItPanel` - Pass `true` to hide the Try It panel while still display the Request Sample, expects `hideTryIt` to be `false`
 - `hideSchemas` - Pass `true` to hide the schemas in the Table of Contents, when using the `sidebar` layout.
 - `hideExport` - Pass `true` to hide the Export button on overview section of the documentation.
 - `tryItCorsProxy` - Pass the URL of a CORS proxy used to send requests to the Try It feature. The provided URL is pre-pended to the URL of an actual request.
@@ -19,4 +20,3 @@
   - `hash` - uses the hash portion of the URL to keep the UI in sync with the URL.
   - `memory` - keeps the history of your "URL" in memory (doesn't read or write to the address bar).
   - `static` - renders using the StaticRouter which can help render pages on the server.
-
