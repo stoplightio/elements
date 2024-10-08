@@ -31,7 +31,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfServi
       ? `[${license.name}](${licenseUrl})`
       : license?.identifier && licenseUrl
       ? `[${license?.identifier}](${licenseUrl})`
-      : undefined;
+      : '';
   const tosLink = termsOfService ? `[Terms of Service](${termsOfService})` : '';
 
   return contactLink || licenseLink || tosLink ? (
