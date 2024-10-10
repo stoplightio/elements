@@ -100,9 +100,6 @@ const getValueForParameter = (parameter: ParameterSpec, globalSelectedExample?: 
 };
 
 const getInitialValueForParameter = (parameter: ParameterSpec, globalSelectedExample?: string) => {
-  const isRequired = !!parameter.required;
-
-  if (!isRequired) return '';
   return getValueForParameter(parameter, globalSelectedExample).value;
 };
 
