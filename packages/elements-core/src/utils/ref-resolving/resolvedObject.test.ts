@@ -236,4 +236,180 @@ describe('createResolvedObject', () => {
 
     expect(resolvedObject).toEqual(originalObject);
   });
+
+  // If the schema is internal, the object contains 'x-sl-error-message' on logout.
+  it('removes object if contains an error for oneOf', () => {
+    const originalObject = {
+      oneOf: [
+        { $ref: '#/__bundled__/0mui9s02880hl', 'x-stoplight': { id: '19c178fc05d4a' } },
+        {
+          'x-sl-error-message': 'You do not have permission to view this reference',
+          'x-stoplight': { 'error-message': 'You do not have permission to view this reference', id: 'nezai0hyj4yak' },
+        },
+        { $ref: '#/__bundled__/iq2mwk8jvthd2', 'x-stoplight': { id: 'ovj32wmpxpg7p' } },
+      ],
+      'x-stoplight': { id: 'b73ff5df9864f' },
+    };
+
+    const filteredObject = {
+      oneOf: [
+        { $ref: '#/__bundled__/0mui9s02880hl', 'x-stoplight': { id: '19c178fc05d4a' } },
+        { $ref: '#/__bundled__/iq2mwk8jvthd2', 'x-stoplight': { id: 'ovj32wmpxpg7p' } },
+      ],
+      'x-stoplight': { id: 'b73ff5df9864f' },
+    };
+    const resolvedObject = getOriginalObject(originalObject);
+
+    expect(resolvedObject).toEqual(filteredObject);
+  });
+
+  it('removes object if contains an error for anyeOf', () => {
+    const originalObject = {
+      anyOf: [
+        { $ref: '#/__bundled__/0mui9s02880hl', 'x-stoplight': { id: '19c178fc05d4a' } },
+        {
+          'x-sl-error-message': 'You do not have permission to view this reference',
+          'x-stoplight': { 'error-message': 'You do not have permission to view this reference', id: 'nezai0hyj4yak' },
+        },
+        { $ref: '#/__bundled__/iq2mwk8jvthd2', 'x-stoplight': { id: 'ovj32wmpxpg7p' } },
+      ],
+      'x-stoplight': { id: 'b73ff5df9864f' },
+    };
+
+    const filteredObject = {
+      anyOf: [
+        { $ref: '#/__bundled__/0mui9s02880hl', 'x-stoplight': { id: '19c178fc05d4a' } },
+        { $ref: '#/__bundled__/iq2mwk8jvthd2', 'x-stoplight': { id: 'ovj32wmpxpg7p' } },
+      ],
+      'x-stoplight': { id: 'b73ff5df9864f' },
+    };
+    const resolvedObject = getOriginalObject(originalObject);
+
+    expect(resolvedObject).toEqual(filteredObject);
+  });
+
+  it('show the error if all schemas are internal for anyOf', () => {
+    const originalObject = {
+      anyOf: [
+        [
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+        ],
+      ],
+      'x-stoplight': { id: 'b73ff5df9864f' },
+    };
+
+    const filteredObject = {
+      anyOf: [
+        [
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+        ],
+      ],
+      'x-stoplight': { id: 'b73ff5df9864f' },
+    };
+    const resolvedObject = getOriginalObject(originalObject);
+
+    expect(resolvedObject).toEqual(filteredObject);
+  });
+  it('show the error if all schemas are internal for oneOf', () => {
+    const originalObject = {
+      oneOf: [
+        [
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+        ],
+      ],
+      'x-stoplight': { id: 'b73ff5df9864f' },
+    };
+
+    const filteredObject = {
+      oneOf: [
+        [
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+          {
+            'x-sl-error-message': 'You do not have permission to view this reference',
+            'x-stoplight': {
+              'error-message': 'You do not have permission to view this reference',
+              id: 'nezai0hyj4yak',
+            },
+          },
+        ],
+      ],
+      'x-stoplight': { id: 'b73ff5df9864f' },
+    };
+    const resolvedObject = getOriginalObject(originalObject);
+
+    expect(resolvedObject).toEqual(filteredObject);
+  });
 });
