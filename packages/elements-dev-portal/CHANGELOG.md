@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-dev-portal@2.6.0...@jpmorganchase/elemental-dev-portal@2.6.1) (2024-10-11)
+
+**Note:** Version bump only for package @jpmorganchase/elemental-dev-portal
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # 2.6.0 (2024-10-10)
 
 ### Bug Fixes
