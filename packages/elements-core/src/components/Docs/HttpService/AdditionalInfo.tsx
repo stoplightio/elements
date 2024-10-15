@@ -34,7 +34,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfServi
     : license?.identifier
     ? `https://spdx.org/licenses/${license?.identifier}.html`
     : undefined;
-  
+
   const licenseLink =
     license?.name && licenseUrl
       ? `[${license.name}](${licenseUrl})`
