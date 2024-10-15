@@ -267,6 +267,39 @@ describe('HttpService', () => {
       expect(title).toBeInTheDocument();
     });
 
+    it('should render additional information with SPDX license identifier', () => {
+      const contact = {
+        name: 'Developer',
+        email: 'developer@stoplight.io',
+        url: 'https://stoplight.io/contact-us/',
+      };
+  
+      const license = {
+        name: 'MIT License',
+        identifier: 'MIT',
+      };
+  
+      render(
+        <AdditionalInfo id="a" contact={contact} license={license} termsOfService="https://stoplight.io/terms/" />,
+      );
+  
+      const licenseLink = screen.getByText('MIT License');
+      expect(licenseLink).toHaveAttribute('href', 'https://spdx.org/licenses/MIT.html');
+    });
+  
+    it('should prefer license URL over SPDX identifier if both are provided', () => {
+      const license = {
+        name: 'MIT License',
+        url: 'https://opensource.org/licenses/MIT',
+        identifier: 'MIT',
+      };
+  
+      render(<AdditionalInfo id="a" license={license} />);
+  
+      const licenseLink = screen.getByText('MIT License');
+      expect(licenseLink).toHaveAttribute('href', 'https://opensource.org/licenses/MIT');
+    });
+
     it('should not render if contact, license, and terms of service do not exist', () => {
       render(<AdditionalInfo id="a" />);
 
