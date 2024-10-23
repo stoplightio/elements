@@ -71,7 +71,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
   const description = (
     <VStack spacing={10}>
-      {data.description && data.type === 'object' && (
+      {data.description && (
         <Box pos="relative">
           <MarkdownViewer role="textbox" markdown={data.description} />
           <NodeAnnotation change={descriptionChanged} />
@@ -131,6 +131,7 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
 
   return (
     <Panel rounded isCollapsible={isCollapsible} defaultIsOpen={!isCollapsible}>
+     
       <Panel.Titlebar rightComponent={selectedExample ? <CopyButton size="sm" copyValue={selectedExample} /> : null}>
         {examplesSelect || (
           <Text color="body" role="heading">
