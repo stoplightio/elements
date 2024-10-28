@@ -15641,10 +15641,10 @@ joi@^17.11.0:
     "@sideway/formula" "^3.0.1"
     "@sideway/pinpoint" "^2.0.0"
 
-jotai@1.3.9:
-  version "1.3.9"
-  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.3.9.tgz#d65a7069b949a3a74f9e069d3e3f06f99be02817"
-  integrity sha512-b6DvH9gf+7TfjaboCO54g+C0yhaakIaUBtjLf0dk1p15FWCzNw/93sezdXy9cCaZ8qcEdMLJcjBwQlORmIq29g==
+jotai@2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.10.1.tgz#8d5598d06fa295110de0914f10bd1d10ea229723"
+  integrity sha512-4FycO+BOTl2auLyF2Chvi6KTDqdsdDDtpaL/WHQMs8f3KS1E3loiUShQzAzFA/sMU5cJ0hz/RT1xum9YbG/zaA==
 
 jotai@^1.4.5:
   version "1.4.7"
