@@ -36,7 +36,7 @@ describe('Build Request', () => {
       }).toThrowError('JSON array expected');
     });
 
-    it('Supports form style', () => {
+    it('Supports form and deepObject style', () => {
       const params = getQueryParams({
         httpOperation,
         parameterValues: {
@@ -46,6 +46,7 @@ describe('Build Request', () => {
           default_style_items: '["first","second"]',
           nested: '{"key":"value"}',
           nested_not_exploded: '{"key":"value"}',
+          deep_object: '{"key":"value", "number": 2}',
         },
       });
 
@@ -58,6 +59,8 @@ describe('Build Request', () => {
         { name: 'default_style_items', value: 'second' },
         { name: 'key', value: 'value' },
         { name: 'nested_not_exploded', value: 'key,value' },
+        { name: 'deep_object[key]', value: 'value' },
+        { name: 'deep_object[number]', value: '2' },
       ]);
     });
 
