@@ -10,8 +10,9 @@ const meta: Meta<typeof AdditionalInfo> = {
 export default meta;
 type Story = StoryObj<typeof AdditionalInfo>;
 
-export const LicenseNameAndURL: Story = {
-  name: 'License Name with URL',
+// Story when only the license URL is provided
+export const LicenseWithOnlyURL: Story = {
+  name: 'License with only URL',
   args: {
     id: 'id',
     license: {
@@ -21,8 +22,9 @@ export const LicenseNameAndURL: Story = {
   },
 };
 
-export const LicenseNameAndIdentifier: Story = {
-  name: 'License Name and Identifier',
+// Story when only the license identifier is provided
+export const LicenseWithOnlyIdentifier: Story = {
+  name: 'License with only Identifier',
   args: {
     id: 'id',
     license: {
@@ -32,8 +34,9 @@ export const LicenseNameAndIdentifier: Story = {
   },
 };
 
-export const LicenseIdentifierAndNameAndUrl: Story = {
-  name: 'License Identifier, Name and URL',
+// Story when both the license URL and identifier are provided (URL should take precedence)
+export const LicenseWithURLAndIdentifier: Story = {
+  name: 'License with URL and Identifier (URL takes precedence)',
   args: {
     id: 'id',
     license: {
