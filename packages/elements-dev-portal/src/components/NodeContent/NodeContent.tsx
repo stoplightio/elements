@@ -172,7 +172,10 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
     const edge = node.outbound_edges.find(
-      edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
+      edge =>
+        edge.uri === decodedUrl ||
+        edge.uri === decodedResolvedUriWithoutAnchor ||
+        edge.uri + '/' === decodedResolvedUriWithoutAnchor,
     );
 
     if (edge) {
