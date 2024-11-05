@@ -104,7 +104,10 @@ export const TryIt: React.FC<TryItProps> = ({
   const [bodyParameterValues, setBodyParameterValues, isAllowedEmptyValues, setAllowedEmptyValues, formDataState] =
     useBodyParameterState(mediaTypeContent);
 
-  const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
+  const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(
+    mediaTypeContent,
+    !isHttpWebhookOperation(httpOperation),
+  );
 
   const [operationAuthValue, setOperationAuthValue, setCurrentScheme] = usePersistedSecuritySchemeWithValues();
 
