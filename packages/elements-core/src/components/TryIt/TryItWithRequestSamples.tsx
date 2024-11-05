@@ -8,10 +8,11 @@ import { ResponseExamples, ResponseExamplesProps } from '../ResponseExamples/Res
 import { TryIt, TryItProps } from './TryIt';
 
 export type TryItWithRequestSamplesProps = Omit<TryItProps, 'onRequestChange'> &
-  ResponseExamplesProps & { hideTryIt?: boolean; hideSamples?: boolean, hideInlineExamples?: boolean };
+  ResponseExamplesProps & { hideTryIt?: boolean; hideTryItPanel?: boolean; hideSamples?: boolean;  hideInlineExamples?: boolean };
 
 export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = ({
   hideTryIt,
+  hideTryItPanel,
   hideSamples,
   hideInlineExamples = false,
   ...props
@@ -24,12 +25,17 @@ export const TryItWithRequestSamples: React.FC<TryItWithRequestSamplesProps> = (
   return (
     <ExamplesContext.Provider value={{ globalSelectedExample, setGlobalSelectedExample, hideInlineExamples }}>
       <VStack spacing={6}>
-        {!hideTryIt && (
+        {!hideTryIt ? (
           <InvertTheme>
             <Box>
-              <TryIt {...props} onRequestChange={setRequestData} hideInlineExamples={hideInlineExamples} />
+              <TryIt {...props} hideTryItPanel={hideTryItPanel} onRequestChange={setRequestData} hideInlineExamples={hideInlineExamples} />
             </Box>
           </InvertTheme>
+        ) : (
+          // The TryIt is responsible for generating the Request Data so it should always be rendered
+          <>
+            <TryIt {...props} hideTryItPanel={hideTryIt} onRequestChange={setRequestData} />
+          </>
         )}
 
         {requestData && !hideSamples && <RequestSamples request={requestData} customCodeSamples={customCodeSamples} />}
