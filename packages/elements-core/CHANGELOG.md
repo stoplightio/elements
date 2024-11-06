@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.10.1...@jpmorganchase/elemental-core@1.13.0) (2024-11-06)
+
+### Features
+
+- cleaned up global example menu
+  ([70e54f3](https://github.com/jpmorganchase/elemental/commit/70e54f3e4a8c3331cb1720d45f71a320cdbcb77c))
+- fix import ([ea952d9](https://github.com/jpmorganchase/elemental/commit/ea952d9129c677782272ec6ea3903748dae841a7))
+- moved examples button to top level of try it
+  ([7e007cc](https://github.com/jpmorganchase/elemental/commit/7e007cce27229ec669761b6099f466016d921ed2))
+- re organise some imports
+  ([1bf1d3f](https://github.com/jpmorganchase/elemental/commit/1bf1d3f3e1b0f6751e579d6ffaeb44cb531d48ef))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [1.12.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.10.1...@jpmorganchase/elemental-core@1.12.0) (2024-11-06)
 
 ### Features
