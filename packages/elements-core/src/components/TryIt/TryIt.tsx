@@ -1,8 +1,10 @@
-import { Box, Button, HStack, Icon, Panel, useThemeIsDark } from '@stoplight/mosaic';
-import type { IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
-import { Request as HarRequest } from 'har-format';
 import { useAtom } from 'jotai';
 import * as React from 'react';
+import ExamplesContext from '../../context/ExamplesContext';
+import { Box, Button, HStack, Icon, Menu, MenuItems, Panel, useThemeIsDark } from '@stoplight/mosaic';
+import type { IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
+import { Request as HarRequest } from 'har-format';
+
 
 import { HttpMethodColors } from '../../constants';
 import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/IServer';
@@ -20,6 +22,7 @@ import { MockingButton } from './Mocking/MockingButton';
 import { useMockingOptions } from './Mocking/useMockingOptions';
 import { OperationParameters } from './Parameters/OperationParameters';
 import { ParameterSpec } from './Parameters/parameter-utils';
+import { persistedParameterValuesAtom } from './Parameters/persistedParameterValuesState';
 import { useRequestParameters } from './Parameters/useOperationParameters';
 import {
   ErrorState,
@@ -256,6 +259,46 @@ export const TryIt: React.FC<TryItProps> = ({
     return getAllUniqueExampleKeys(mediaTypeContent, allParameters);
   }, [allParameters, mediaTypeContent, hideInlineExamples]);
 
+  function ExampleMenu({ examples }: any) {
+    const { globalSelectedExample, setGlobalSelectedExample } = React.useContext(ExamplesContext);
+
+    const [_, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
+
+    const handleClick = React.useCallback(
+      example => {
+        setGlobalSelectedExample(example);
+        setPersistedParameterValues({});
+      },
+      [setGlobalSelectedExample, setPersistedParameterValues],
+    );
+
+    const menuItems = React.useMemo(() => {
+      const items: MenuItems = examples.map((example: string) => ({
+        id: `request-example-${example}`,
+        title: example,
+        onPress: () => handleClick(example),
+      }));
+
+      return items;
+    }, [examples, handleClick]);
+
+    const hasGlobalSelectedExampleOption = globalSelectedExample && examples.includes(globalSelectedExample);
+
+    return (
+      <div>
+        <Menu
+          aria-label="Examples"
+          items={menuItems}
+          renderTrigger={({ isOpen }) => (
+            <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen}>
+              {hasGlobalSelectedExampleOption ? globalSelectedExample : 'Select an example'}
+            </Button>
+          )}
+        />
+      </div>
+    );
+  }
+
   const tryItPanelContents = (
     <>
       {httpOperation.security?.length ? (
@@ -281,7 +324,6 @@ export const TryIt: React.FC<TryItProps> = ({
           values={parameterValuesWithDefaults}
           onChangeValue={updateParameterValue}
           validate={validateParameters}
-          globalExampleOptions={allUniqueExampleKeys}
         />
       )}
 
@@ -343,9 +385,22 @@ export const TryIt: React.FC<TryItProps> = ({
     );
   } else {
     tryItPanelElem = (
-      <Box className="TryItPanel" bg="canvas-100" rounded="lg">
-        {tryItPanelContents}
-      </Box>
+      <>
+        {allUniqueExampleKeys.length > 1 && hideInlineExamples ? (
+          <Panel isCollapsible={false} p={0} className="TryItPanel">
+            <Panel.Titlebar className="global_example_menu">
+              <ExampleMenu examples={allUniqueExampleKeys} />
+            </Panel.Titlebar>
+            <Box bg="canvas-100" rounded="lg">
+              {tryItPanelContents}
+            </Box>
+          </Panel>
+        ) : (
+          <Box bg="canvas-100" rounded="lg">
+            {tryItPanelContents}
+          </Box>
+        )}
+      </>
     );
   }
 
