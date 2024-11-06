@@ -290,7 +290,7 @@ export const TryIt: React.FC<TryItProps> = ({
           items={menuItems}
           renderTrigger={({ isOpen }) => (
             <Button appearance="minimal" size="sm" iconRight={['fas', 'sort']} active={isOpen}>
-              {hasGlobalSelectedExampleOption ? globalSelectedExample : 'Examples'}
+              {hasGlobalSelectedExampleOption ? globalSelectedExample : 'Select an example'}
             </Button>
           )}
         />
@@ -323,7 +323,6 @@ export const TryIt: React.FC<TryItProps> = ({
           values={parameterValuesWithDefaults}
           onChangeValue={updateParameterValue}
           validate={validateParameters}
-          globalExampleOptions={allUniqueExampleKeys}
         />
       )}
 
@@ -385,14 +384,22 @@ export const TryIt: React.FC<TryItProps> = ({
     );
   } else {
     tryItPanelElem = (
-      <Panel isCollapsible={false} p={0} className="TryItPanel">
-        <Panel.Titlebar>
-          <ExampleMenu examples={allUniqueExampleKeys} />
-        </Panel.Titlebar>
-        <Box bg="canvas-100" rounded="lg">
-          {tryItPanelContents}
-        </Box>
-      </Panel>
+      <>
+        {allUniqueExampleKeys.length > 1 && hideInlineExamples ? (
+          <Panel isCollapsible={false} p={0} className="TryItPanel">
+            <Panel.Titlebar className="global_example_menu">
+              <ExampleMenu examples={allUniqueExampleKeys} />
+            </Panel.Titlebar>
+            <Box bg="canvas-100" rounded="lg">
+              {tryItPanelContents}
+            </Box>
+          </Panel>
+        ) : (
+          <Box bg="canvas-100" rounded="lg">
+            {tryItPanelContents}
+          </Box>
+        )}
+      </>
     );
   }
 
