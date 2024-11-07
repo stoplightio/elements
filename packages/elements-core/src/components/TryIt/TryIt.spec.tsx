@@ -204,6 +204,7 @@ describe('TryIt', () => {
           'limit*',
           'super_duper_long_parameter_name_with_unnecessary_text*',
           'completed',
+          'deep_object',
           'default_style_items',
           'items',
           'items_not_exploded',
@@ -283,6 +284,9 @@ describe('TryIt', () => {
       const pairsField = screen.getByLabelText('pairs');
       userEvent.type(pairsField, '{ "nestedKey": "nestedValue" }');
 
+      const pagination = screen.getByLabelText('pagination');
+      userEvent.type(pagination, '{ "first": 50, "after": "cursor" }');
+
       const itemsField = screen.getByLabelText('items');
       userEvent.type(itemsField, '["first", "second"]');
 
@@ -312,6 +316,8 @@ describe('TryIt', () => {
       expect(queryParams.get('optional_value_with_default')).toBeNull();
       expect(queryParams.get('nestedKey')).toBe('nestedValue');
       expect(queryParams.get('pairs')).toBeNull();
+      expect(queryParams.get('pagination[first]')).toBe('50');
+      expect(queryParams.get('pagination[after]')).toBe('cursor');
       expect(queryParams.getAll('items')).toEqual(['first', 'second']);
       // assert that headers are passed
       const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
