@@ -171,6 +171,8 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
+
+    //added extra condition to handle internal link.
     const edge = node.outbound_edges.find(
       edge =>
         edge.uri === decodedUrl ||
