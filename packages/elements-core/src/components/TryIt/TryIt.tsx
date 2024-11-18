@@ -57,6 +57,11 @@ export interface TryItProps {
   embeddedInMd?: boolean;
 
   /**
+   * True when TryIt Panel should be hidden
+   */
+  hideTryItPanel?: boolean;
+
+  /**
    * Fetch credentials policy for TryIt component
    * For more information: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
    * @default "omit"
@@ -78,6 +83,7 @@ export const TryIt: React.FC<TryItProps> = ({
   onRequestChange,
   requestBodyIndex,
   embeddedInMd = false,
+  hideTryItPanel = false,
   tryItCredentialsPolicy,
   corsProxy,
 }) => {
@@ -99,7 +105,10 @@ export const TryIt: React.FC<TryItProps> = ({
   const [bodyParameterValues, setBodyParameterValues, isAllowedEmptyValues, setAllowedEmptyValues, formDataState] =
     useBodyParameterState(mediaTypeContent);
 
-  const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(mediaTypeContent);
+  const [textRequestBody, setTextRequestBody] = useTextRequestBodyState(
+    mediaTypeContent,
+    !isHttpWebhookOperation(httpOperation),
+  );
 
   const [operationAuthValue, setOperationAuthValue, setCurrentScheme] = usePersistedSecuritySchemeWithValues();
 
@@ -351,7 +360,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
   return (
     <Box rounded="lg" overflowY="hidden">
-      {tryItPanelElem}
+      {hideTryItPanel ? null : tryItPanelElem}
       {requestData && embeddedInMd && (
         <RequestSamples request={requestData} customCodeSamples={customCodeSamples} embeddedInMd />
       )}
