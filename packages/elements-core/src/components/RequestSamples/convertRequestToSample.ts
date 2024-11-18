@@ -18,6 +18,9 @@ export const convertRequestToSample = async (
     }
     if (typeof converted === 'string') {
       converted = converted.replace(/%7B/g, '{').replace(/%7D/g, '}');
+      if (request.postData?.mimeType === 'application/octet-stream') {
+        converted = converted.replace('--data', '--data-binary');
+      }
     }
 
     return converted;

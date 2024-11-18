@@ -11,7 +11,7 @@ import { extractCodeSamples, RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
 import { FormDataBody } from './Body/FormDataBody';
-import { BodyParameterValues, useBodyParameterState } from './Body/request-body-utils';
+import { BodyParameterValues, isBinaryContent, useBodyParameterState } from './Body/request-body-utils';
 import { RequestBody } from './Body/RequestBody';
 import { useTextRequestBodyState } from './Body/useTextRequestBodyState';
 import { buildFetchRequest, buildHarRequest } from './build-request';
@@ -91,6 +91,7 @@ export const TryIt: React.FC<TryItProps> = ({
   const [validateParameters, setValidateParameters] = React.useState<boolean>(false);
 
   const mediaTypeContent = httpOperation.request?.body?.contents?.[requestBodyIndex ?? 0];
+  const isBinaryContentEl = mediaTypeContent ? isBinaryContent(mediaTypeContent) : false;
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
@@ -145,7 +146,11 @@ export const TryIt: React.FC<TryItProps> = ({
         parameterValues: parameterValuesWithDefaults,
         serverVariableValues,
         httpOperation,
-        bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
+        bodyInput: formDataState.isFormDataBody
+          ? getValues()
+          : formDataState.isOctetStreamBody
+            ? bodyParameterValues
+            : textRequestBody,
         auth: operationAuthValue,
         ...(isMockingEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
@@ -261,9 +266,9 @@ export const TryIt: React.FC<TryItProps> = ({
       )}
 
       <Box pb={1}>
-        {formDataState.isFormDataBody ? (
+        {formDataState.isFormDataBody || isBinaryContentEl ? (
           <FormDataBody
-            specification={formDataState.bodySpecification}
+            specification={formDataState.bodySpecification!!}
             values={bodyParameterValues}
             onChangeValues={setBodyParameterValues}
             onChangeParameterAllow={setAllowedEmptyValues}

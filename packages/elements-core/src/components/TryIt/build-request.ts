@@ -279,23 +279,31 @@ export async function buildHarRequest({
   if (shouldIncludeBody && typeof bodyInput === 'string') {
     postData = { mimeType, text: bodyInput };
   }
-  if (shouldIncludeBody && typeof bodyInput === 'object') {
-    postData = {
-      mimeType,
-      params: Object.entries(bodyInput).map(([name, value]) => {
-        if (value instanceof File) {
+
+  if (shouldIncludeBody) {
+    if (bodyInput instanceof File) {
+      postData = {
+        mimeType: 'application/octet-stream',
+        text: `@${bodyInput.name}`,
+      };
+    } else if (typeof bodyInput === 'object') {
+      postData = {
+        mimeType,
+        params: Object.entries(bodyInput).map(([name, value]) => {
+          if (value instanceof File) {
+            return {
+              name,
+              fileName: value.name,
+              contentType: value.type,
+            };
+          }
           return {
             name,
-            fileName: value.name,
-            contentType: value.type,
+            value,
           };
-        }
-        return {
-          name,
-          value,
-        };
-      }),
-    };
+        }),
+      };
+    }
   }
 
   return {
