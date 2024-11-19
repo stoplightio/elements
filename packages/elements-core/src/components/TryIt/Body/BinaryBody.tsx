@@ -43,9 +43,7 @@ export const BinaryBody: React.FC<BinaryBodyProps> = ({ specification, values, o
           parameter={{ name: 'file' }}
           value={values.file instanceof File ? values.file : undefined}
           onChange={newValue => {
-            {
-              newValue && onChangeValues({ file: newValue });
-            }
+            newValue && onChangeValues({ file: newValue });
           }}
         />
       </Panel.Content>

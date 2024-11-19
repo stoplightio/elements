@@ -164,9 +164,7 @@ export async function buildFetchRequest({
   urlObject.search = new URLSearchParams(queryParamsWithAuth.map(nameAndValueObjectToPair)).toString();
 
   const body =
-    bodyInput instanceof File
-      ? bodyInput
-      : typeof bodyInput === 'object'
+    typeof bodyInput === 'object' && !(bodyInput instanceof File)
       ? await createRequestBody(mediaTypeContent, bodyInput)
       : bodyInput;
 

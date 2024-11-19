@@ -6,8 +6,7 @@ import React from 'react';
 import { BinaryBody, BinaryBodyProps } from '../BinaryBody';
 
 describe('BinaryBody', () => {
-  it('renders filr input when the form is application/octet-stream', () => {
-    // Arrange
+  it('renders file input when the form is application/octet-stream', () => {
     const props: BinaryBodyProps = {
       specification: {
         id: '493afac014fa8',
@@ -23,10 +22,8 @@ describe('BinaryBody', () => {
       onChangeValues: () => {},
     };
 
-    // Act
     const { getByLabelText } = render(<BinaryBody {...props} />);
 
-    // Assert
     expect(getByLabelText('file')).toBeInTheDocument();
   });
 });
