@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`convertRequestToSample converts an application/octet-stream request to a sample 1`] = `
+"curl --request POST \\\\
+  --url https://todos.stoplight.io/todos/todoId \\\\
+  --header 'Content-Type: application/octet-stream' \\\\
+  --data-binary 'binary data'"
+`;
+
 exports[`given c, convertRequestToSample converts a request to a sample 1`] = `
 "CURL *hnd = curl_easy_init();
 

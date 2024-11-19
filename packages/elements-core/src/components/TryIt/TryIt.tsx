@@ -10,8 +10,9 @@ import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/I
 import { extractCodeSamples, RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
 import { usePersistedSecuritySchemeWithValues } from './Auth/authentication-utils';
+import { BinaryBody } from './Body/BinaryBody';
 import { FormDataBody } from './Body/FormDataBody';
-import { BodyParameterValues, isBinaryContent, useBodyParameterState } from './Body/request-body-utils';
+import { BodyParameterValues, useBodyParameterState } from './Body/request-body-utils';
 import { RequestBody } from './Body/RequestBody';
 import { useTextRequestBodyState } from './Body/useTextRequestBodyState';
 import { buildFetchRequest, buildHarRequest } from './build-request';
@@ -97,7 +98,6 @@ export const TryIt: React.FC<TryItProps> = ({
   const [validateParameters, setValidateParameters] = React.useState<boolean>(false);
 
   const mediaTypeContent = httpOperation.request?.body?.contents?.[requestBodyIndex ?? 0];
-  const isBinaryContentEl = mediaTypeContent ? isBinaryContent(mediaTypeContent) : false;
 
   const { allParameters, updateParameterValue, parameterValuesWithDefaults } = useRequestParameters(httpOperation);
   const [mockingOptions, setMockingOptions] = useMockingOptions();
@@ -135,6 +135,8 @@ export const TryIt: React.FC<TryItProps> = ({
         return previousValue;
       }, {});
 
+  const getBinaryValue = () => bodyParameterValues.file;
+
   React.useEffect(() => {
     const currentUrl = chosenServer?.url;
 
@@ -157,8 +159,8 @@ export const TryIt: React.FC<TryItProps> = ({
         httpOperation,
         bodyInput: formDataState.isFormDataBody
           ? getValues()
-          : formDataState.isOctetStreamBody
-            ? bodyParameterValues
+          : formDataState.isBinaryBody
+            ? getBinaryValue()
             : textRequestBody,
         auth: operationAuthValue,
         ...(isMockingEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
@@ -203,12 +205,17 @@ export const TryIt: React.FC<TryItProps> = ({
     try {
       setLoading(true);
       const mockData = isMockingEnabled ? getMockData(mockUrl, httpOperation, mockingOptions) : undefined;
+
       const request = await buildFetchRequest({
         parameterValues: parameterValuesWithDefaults,
         serverVariableValues,
         httpOperation,
         mediaTypeContent,
-        bodyInput: formDataState.isFormDataBody ? getValues() : textRequestBody,
+        bodyInput: formDataState.isFormDataBody
+          ? getValues()
+          : formDataState.isBinaryBody
+            ? getBinaryValue()
+            : textRequestBody,
         mockData,
         auth: operationAuthValue,
         chosenServer,
@@ -275,13 +282,19 @@ export const TryIt: React.FC<TryItProps> = ({
       )}
 
       <Box pb={1}>
-        {formDataState.isFormDataBody || isBinaryContentEl ? (
+        {formDataState.isFormDataBody ? (
           <FormDataBody
-            specification={formDataState.bodySpecification!!}
+            specification={formDataState.bodySpecification}
             values={bodyParameterValues}
             onChangeValues={setBodyParameterValues}
             onChangeParameterAllow={setAllowedEmptyValues}
             isAllowedEmptyValues={isAllowedEmptyValues}
+          />
+        ) : formDataState.isBinaryBody ? (
+          <BinaryBody
+            specification={formDataState.bodySpecification}
+            values={bodyParameterValues}
+            onChangeValues={setBodyParameterValues}
           />
         ) : mediaTypeContent ? (
           <RequestBody

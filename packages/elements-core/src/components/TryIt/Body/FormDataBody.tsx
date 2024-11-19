@@ -89,18 +89,6 @@ export const FormDataBody: React.FC<FormDataBodyProps> = ({
               />
             );
           })}
-        {specification.mediaType === 'application/octet-stream' && (
-          <FileUploadParameterEditor
-            key={'file'}
-            parameter={{ name: 'file' }}
-            value={values instanceof File ? values : undefined}
-            onChange={newValue => {
-              {
-                onChangeValues(newValue as any);
-              }
-            }}
-          />
-        )}
       </Panel.Content>
     </Panel>
   );

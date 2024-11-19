@@ -80,17 +80,17 @@ const requestBodyCreators: Record<string, RequestBodyCreator | undefined> = {
 
 export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | undefined) => {
   const isFormDataBody = mediaTypeContent && isFormDataContent(mediaTypeContent);
-  const isOctetStreamBody = mediaTypeContent && isApplicationOctetStream(mediaTypeContent);
+  const isBinaryBody = mediaTypeContent && isBinaryContent(mediaTypeContent);
 
   const initialState = React.useMemo(() => {
-    if (!isFormDataBody || isOctetStreamBody) {
+    if (!isFormDataBody || isBinaryBody) {
       return {};
     }
     const properties = mediaTypeContent?.schema?.properties ?? {};
     const required = mediaTypeContent?.schema?.required;
     const parameters = mapSchemaPropertiesToParameters(properties, required);
     return initialParameterValues(parameters);
-  }, [isFormDataBody, isOctetStreamBody, mediaTypeContent]);
+  }, [isFormDataBody, isBinaryBody, mediaTypeContent]);
 
   const [bodyParameterValues, setBodyParameterValues] = React.useState<BodyParameterValues>(initialState);
   const [isAllowedEmptyValue, setAllowedEmptyValue] = React.useState<ParameterOptional>({});
@@ -105,15 +105,15 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
       setBodyParameterValues,
       isAllowedEmptyValue,
       setAllowedEmptyValue,
-      { isFormDataBody: true, isOctetStreamBody: false, bodySpecification: mediaTypeContent! },
+      { isFormDataBody: true, isBinaryBody: false, bodySpecification: mediaTypeContent! },
     ] as const;
-  } else if (isOctetStreamBody) {
+  } else if (isBinaryBody) {
     return [
       bodyParameterValues,
       setBodyParameterValues,
       isAllowedEmptyValue,
       setAllowedEmptyValue,
-      { isFormDataBody: false, isOctetStreamBody: true, bodySpecification: mediaTypeContent! },
+      { isFormDataBody: false, isBinaryBody: true, bodySpecification: mediaTypeContent! },
     ] as const;
   } else {
     return [
@@ -121,7 +121,7 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
       setBodyParameterValues,
       isAllowedEmptyValue,
       setAllowedEmptyValue,
-      { isFormDataBody: false, isOctetStreamBody: false, bodySpecification: undefined },
+      { isFormDataBody: false, isBinaryBody: false, bodySpecification: undefined },
     ] as const;
   }
 };

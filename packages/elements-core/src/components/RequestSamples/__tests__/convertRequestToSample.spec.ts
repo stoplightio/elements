@@ -67,3 +67,27 @@ test.each(languages)('given %s, convertRequestToSample converts a request to a s
 
   expect(convertRequestToSample(language, library, har)).resolves.toMatchSnapshot();
 });
+
+test('convertRequestToSample converts an application/octet-stream request to a sample', async () => {
+  const har = {
+    method: 'POST',
+    url: 'https://todos.stoplight.io/todos/todoId',
+    httpVersion: 'HTTP/1.1',
+    cookies: [],
+    headers: [
+      {
+        name: 'Content-Type',
+        value: 'application/octet-stream',
+      },
+    ],
+    queryString: [],
+    postData: {
+      mimeType: 'application/octet-stream',
+      text: 'binary data',
+    },
+    headersSize: -1,
+    bodySize: -1,
+  };
+
+  await expect(convertRequestToSample('shell', 'curl', har)).resolves.toMatchSnapshot();
+});
