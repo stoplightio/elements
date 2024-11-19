@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-dev-portal@2.6.4...@jpmorganchase/elemental-dev-portal@2.7.0) (2024-11-19)
+
+### Features
+
+- bump mosaic versions
+  ([af3124c](https://github.com/jpmorganchase/elemental/commit/af3124ca122636e22f91b3816e265fd8f813fc4e))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 ## [2.6.4](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-dev-portal@2.6.2...@jpmorganchase/elemental-dev-portal@2.6.4) (2024-11-06)
 
 **Note:** Version bump only for package @jpmorganchase/elemental-dev-portal

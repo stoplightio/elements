@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.13.0...@jpmorganchase/elemental-core@1.14.0) (2024-11-19)
+
+### Features
+
+- bump mosaic versions
+  ([af3124c](https://github.com/jpmorganchase/elemental/commit/af3124ca122636e22f91b3816e265fd8f813fc4e))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [1.13.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.10.1...@jpmorganchase/elemental-core@1.13.0) (2024-11-06)
 
 ### Features
