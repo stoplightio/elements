@@ -64,7 +64,7 @@
     "@jpmorganchase/elemental-core": "^1.13.0",
     "@stoplight/http-spec": "^6.0.0",
     "@stoplight/json": "^3.18.1",
-    "@stoplight/mosaic": "^1.44.4",
+    "@stoplight/mosaic": "^ 1.53.4",
     "@stoplight/types": "^14.0.0",
     "@stoplight/yaml": "^4.2.3",
     "classnames": "^2.2.6",
