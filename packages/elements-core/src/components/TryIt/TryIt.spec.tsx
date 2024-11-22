@@ -725,6 +725,56 @@ describe('TryIt', () => {
     });
   });
 
+  describe('No Request body', () => {
+    it('with GET method', async () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.method).toMatch(/^get$/i);
+      const headers = new Headers(requestInit.headers);
+      expect(headers.get('Content-Type')).toBe(null);
+    });
+
+    it('with POST method', async () => {
+      render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'POST' }} />);
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.method).toMatch(/^post$/i);
+      const headers = new Headers(requestInit.headers);
+      expect(headers.get('Content-Type')).toBe(null);
+    });
+
+    it('with PATCH method', async () => {
+      render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'PATCH' }} />);
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.method).toMatch(/^patch$/i);
+      const headers = new Headers(requestInit.headers);
+      expect(headers.get('Content-Type')).toBe(null);
+    });
+
+    it('with PUT method', async () => {
+      render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'PUT' }} />);
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.method).toMatch(/^put$/i);
+      const headers = new Headers(requestInit.headers);
+      expect(headers.get('Content-Type')).toBe(null);
+    });
+  });
+
   describe('Mocking', () => {
     it('Shows mock button', () => {
       render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
