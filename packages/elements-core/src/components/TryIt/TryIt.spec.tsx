@@ -726,7 +726,7 @@ describe('TryIt', () => {
   });
 
   describe('No Request body', () => {
-    it('with GET method', async () => {
+    it('Adds no Content-type header with GET method', async () => {
       render(<TryItWithPersistence httpOperation={basicOperation} />);
 
       clickSend();
@@ -738,7 +738,7 @@ describe('TryIt', () => {
       expect(headers.get('Content-Type')).toBe(null);
     });
 
-    it('with POST method', async () => {
+    it('Adds no Content-type header with POST method', async () => {
       render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'POST' }} />);
 
       clickSend();
@@ -750,7 +750,7 @@ describe('TryIt', () => {
       expect(headers.get('Content-Type')).toBe(null);
     });
 
-    it('with PATCH method', async () => {
+    it('Adds no Content-type header with PATCH method', async () => {
       render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'PATCH' }} />);
 
       clickSend();
@@ -762,7 +762,7 @@ describe('TryIt', () => {
       expect(headers.get('Content-Type')).toBe(null);
     });
 
-    it('with PUT method', async () => {
+    it('Adds no Content-type header with PUT method', async () => {
       render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'PUT' }} />);
 
       clickSend();
