@@ -171,8 +171,13 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
+    const [pagePathWithoutHash] = window.location.pathname.split('#');
+
     const edge = node.outbound_edges.find(
-      edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
+      edge =>
+        edge.uri === decodedUrl ||
+        edge.uri === decodedResolvedUriWithoutAnchor ||
+        pagePathWithoutHash === `/${edge.slug}`,
     );
 
     if (edge) {
