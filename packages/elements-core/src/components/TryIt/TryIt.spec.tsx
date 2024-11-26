@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
+import { httpOperation as octetStreamOperation } from '../../__fixtures__/operations/application-octet-stream-post';
 import { httpOperation as base64FileUpload } from '../../__fixtures__/operations/base64-file-upload';
 import { examplesRequestBody, singleExampleRequestBody } from '../../__fixtures__/operations/examples-request-body';
 import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
@@ -530,6 +531,50 @@ describe('TryIt', () => {
         // c29tZXRoaW5n is "something" encoded as base64
         expect(body.get('someFile')).toBe('c29tZXRoaW5n');
       });
+    });
+  });
+
+  describe('Binary body', () => {
+    it('shows panel when there is file input', () => {
+      render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
+
+      let parametersHeader = screen.queryByText('Body');
+      expect(parametersHeader).toBeInTheDocument();
+    });
+
+    it('displays file input correctly', () => {
+      render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
+
+      const fileField = screen.getByRole('textbox', { name: 'file' }) as HTMLInputElement;
+
+      expect(fileField.placeholder).toMatch(/pick a file/i);
+    });
+
+    it('builds correct application/octet-stream request and send file in the body', async () => {
+      render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
+
+      userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+      clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      const request = fetchMock.mock.calls[0];
+      const requestBody = request[1]!.body as File;
+      const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+
+      expect(requestBody).toBeInstanceOf(File);
+      expect(requestBody.name).toBe('some-file');
+      expect(headers.get('Content-Type')).toBe('application/octet-stream');
+    });
+
+    it('allows to send empty value', async () => {
+      render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
+
+      clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      const body = fetchMock.mock.calls[0][1]!.body as FormData;
+      expect(body).toBeUndefined();
     });
   });
 
