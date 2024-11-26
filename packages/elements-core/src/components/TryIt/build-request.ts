@@ -26,7 +26,7 @@ interface BuildRequestInput {
   mediaTypeContent: IMediaTypeContent | undefined;
   parameterValues: Dictionary<string, string>;
   serverVariableValues: Dictionary<string, string>;
-  bodyInput?: BodyParameterValues | string;
+  bodyInput?: BodyParameterValues | string | File;
   mockData?: MockData;
   auth?: HttpSecuritySchemeWithValues[];
   chosenServer?: IServer | null;
@@ -163,7 +163,10 @@ export async function buildFetchRequest({
   const urlObject = new URL(serverUrl + expandedPath);
   urlObject.search = new URLSearchParams(queryParamsWithAuth.map(nameAndValueObjectToPair)).toString();
 
-  const body = typeof bodyInput === 'object' ? await createRequestBody(mediaTypeContent, bodyInput) : bodyInput;
+  const body =
+    typeof bodyInput === 'object' && !(bodyInput instanceof File)
+      ? await createRequestBody(mediaTypeContent, bodyInput)
+      : bodyInput;
 
   const acceptedMimeTypes = getAcceptedMimeTypes(httpOperation);
   const headers = {
@@ -290,23 +293,33 @@ export async function buildHarRequest({
   if (shouldIncludeBody && typeof bodyInput === 'string') {
     postData = { mimeType, text: bodyInput };
   }
-  if (shouldIncludeBody && typeof bodyInput === 'object') {
-    postData = {
-      mimeType,
-      params: Object.entries(bodyInput).map(([name, value]) => {
-        if (value instanceof File) {
-          return {
-            name,
-            fileName: value.name,
-            contentType: value.type,
-          };
-        }
-        return {
-          name,
-          value,
+
+  if (shouldIncludeBody) {
+    if (typeof bodyInput === 'object') {
+      if (mimeType === 'application/octet-stream' && bodyInput instanceof File) {
+        postData = {
+          mimeType,
+          text: `@${bodyInput.name}`,
         };
-      }),
-    };
+      } else {
+        postData = {
+          mimeType,
+          params: Object.entries(bodyInput).map(([name, value]) => {
+            if (value instanceof File) {
+              return {
+                name,
+                fileName: value.name,
+                contentType: value.type,
+              };
+            }
+            return {
+              name,
+              value,
+            };
+          }),
+        };
+      }
+    }
   }
 
   return {
