@@ -35,24 +35,26 @@ export const MobileTopNav = ({
       </Flex>
 
       <Drawer isOpen={isSidebarOpen} position="left" onClose={() => setIsSidebarOpen(false)} w="5/6">
-        <Flex justifyContent="end">
-          <Button
-            className="sl-mr-4 sl-mt-2"
-            onPress={() => setIsSidebarOpen(false)}
-            appearance="minimal"
-            justifySelf="end"
-          >
-            <Icon size="lg" icon={faX} />
-          </Button>
-        </Flex>
-        <Sidebar
-          name={name}
-          logo={logo}
-          tree={tree}
-          pathname={pathname}
-          onTocClick={() => handleTocClick()}
-          isInResponsiveMode={true}
-        />
+        <div tabIndex={-1}>
+          <Flex justifyContent="end" >
+            <Button
+              className="sl-mr-4 sl-mt-2"
+              onPress={() => setIsSidebarOpen(false)}
+              appearance="minimal"
+              justifySelf="end"
+            >
+              <Icon size="lg" icon={faX} />
+            </Button>
+          </Flex>
+          <Sidebar
+            name={name}
+            logo={logo}
+            tree={tree}
+            pathname={pathname}
+            onTocClick={handleTocClick}
+            isInResponsiveMode={true}
+          />
+        </div>
       </Drawer>
     </Flex>
   );
