@@ -36,7 +36,7 @@ export const MobileTopNav = ({
 
       <Drawer isOpen={isSidebarOpen} position="left" onClose={() => setIsSidebarOpen(false)} w="5/6">
         <div tabIndex={-1}>
-          <Flex justifyContent="end" >
+          <Flex justifyContent="end">
             <Button
               className="sl-mr-4 sl-mt-2"
               onPress={() => setIsSidebarOpen(false)}
