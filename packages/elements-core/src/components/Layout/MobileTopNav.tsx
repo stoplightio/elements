@@ -45,14 +45,16 @@ export const MobileTopNav = ({
             <Icon size="lg" icon={faX} />
           </Button>
         </Flex>
-        <Sidebar
-          name={name}
-          logo={logo}
-          tree={tree}
-          pathname={pathname}
-          onTocClick={() => handleTocClick()}
-          isInResponsiveMode={true}
-        />
+        <Box tabIndex={-1}>
+          <Sidebar
+            name={name}
+            logo={logo}
+            tree={tree}
+            pathname={pathname}
+            onTocClick={handleTocClick}
+            isInResponsiveMode={true}
+          />
+        </Box>
       </Drawer>
     </Flex>
   );
