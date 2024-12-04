@@ -45,7 +45,7 @@ export const MobileTopNav = ({
             <Icon size="lg" icon={faX} />
           </Button>
         </Flex>
-        <div tabIndex={-1}>
+        <Box tabIndex={-1}>
           <Sidebar
             name={name}
             logo={logo}
@@ -54,7 +54,7 @@ export const MobileTopNav = ({
             onTocClick={handleTocClick}
             isInResponsiveMode={true}
           />
-        </div>
+        </Box>
       </Drawer>
     </Flex>
   );
