@@ -156,7 +156,7 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
 
   const pathElem = (
     <Flex overflowX="hidden" fontSize="lg" userSelect="all">
-      <Box dir="rtl" textOverflow="truncate" overflowX="hidden">
+      <Box dir="ltr" textOverflow="truncate" overflowX="hidden">
         <Box as="span" dir="ltr" color="muted" style={{ unicodeBidi: 'bidi-override' }}>
           {chosenServerUrl}
         </Box>
