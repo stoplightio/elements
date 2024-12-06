@@ -273,10 +273,8 @@ describe('Model', () => {
       unmount();
     });
     it('CombineSchema must have description', () => {
-      render(<Model data={model_data} {...props} />);
-      const elem = screen.queryByText(`description from allOf Operator`);
-
-      expect(elem).toBeInTheDocument();
+      const { container } = render(<Model data={model_data} {...props} />);
+      expect(container).toHaveTextContent(`description from allOf Operator`);
     });
   });
 });
