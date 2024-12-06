@@ -274,9 +274,9 @@ describe('Model', () => {
     });
     it('CombineSchema must have description', () => {
       render(<Model data={model_data} {...props} />);
-      const elem = screen.getAllByText(/description from allOf Operator/);
+      const elem = screen.queryByText(`description from allOf Operator`);
 
-      expect(elem[0]).toBeInTheDocument();
+      expect(elem).toBeInTheDocument();
     });
   });
 });
