@@ -38,6 +38,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const title = data.title ?? nodeTitle;
   const isDeprecated = !!data['deprecated' as keyof JSONSchema7];
   const isInternal = !!data['x-internal' as keyof JSONSchema7];
+  console.log('harshita');
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
