@@ -274,9 +274,9 @@ describe('Model', () => {
     });
     it('CombineSchema must have description', () => {
       render(<Model data={model_data} {...props} />);
-      const description = screen.queryByRole('textbox');
+      const elem = screen.getAllByText(/description from allOf Operator/);
 
-      expect(description).toBeInTheDocument();
+      expect(elem[0]).toBeInTheDocument();
     });
   });
 });
