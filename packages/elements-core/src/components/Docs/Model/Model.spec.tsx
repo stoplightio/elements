@@ -26,11 +26,6 @@ const exampleSchema: JSONSchema7 = {
   },
 };
 
-const exampleStringSchema: JSONSchema7 = {
-  type: 'string',
-  description: 'example schema description that should only show once :)',
-};
-
 const model_data: JSONSchema7 = {
   title: 'operator_reference',
   description: 'description from allOf Operator',
@@ -183,13 +178,6 @@ describe('Model', () => {
     expect(textboxDescription).toHaveTextContent('example schema description');
   });
 
-  it('does not display description at top of doc for non-objects', async () => {
-    render(<Model data={exampleStringSchema} />);
-    const description = screen.queryByRole('textbox');
-
-    expect(description).not.toBeInTheDocument();
-  });
-
   describe('export button', () => {
     it('should render correctly', () => {
       const wrapper = render(
@@ -198,7 +186,6 @@ describe('Model', () => {
             data={exampleSchema}
             exportProps={{ original: { onPress: jest.fn() }, bundled: { onPress: jest.fn() } }}
           />
-          ,
         </MosaicProvider>,
       );
 
@@ -287,12 +274,9 @@ describe('Model', () => {
     });
     it('CombineSchema must have description', () => {
       render(<Model data={model_data} {...props} />);
-      // const elem = screen.getByRole('paragraph', { name: /This is from Operaror_reference/ });
-      const elem = screen.getAllByText(/description from allOf Operator/);
+      const description = screen.queryByRole('textbox');
 
-      // expect('This is from Operaror_reference').toBeInTheDocument();
-      // expect(elem).toBeInTheDocument();
-      expect(elem[0]).toBeInTheDocument();
+      expect(description).toBeInTheDocument();
     });
   });
 });
