@@ -31,6 +31,54 @@ const exampleStringSchema: JSONSchema7 = {
   description: 'example schema description that should only show once :)',
 };
 
+const model_data: JSONSchema7 = {
+  title: 'operator_reference',
+  description: 'description from allOf Operator',
+  allOf: [
+    {
+      $ref: '#/%24defs/bird',
+    },
+    {
+      $ref: '#/%24defs/animal',
+    },
+  ],
+
+  $defs: {
+    bird: {
+      type: 'object',
+      title: 'bird',
+      description: 'this is bird model',
+      properties: {
+        id: {
+          type: 'string',
+        },
+        bird_type: {
+          type: 'string',
+        },
+      },
+    },
+    animal: {
+      $ref: '#/%24defs/bird',
+      title: 'animal',
+      description: 'This is from Animal model',
+    },
+  },
+};
+const props = {
+  nodeTitle: 'operator_reference',
+  layoutOptions: {
+    hideExport: false,
+  },
+  exportProps: {
+    original: {
+      href: 'https://stoplight-local.com:8443/api/v1/projects/venkat/stop-95/nodes/models/operator_reference.yaml?fromExportButton=true&snapshotType=model',
+    },
+    bundled: {
+      href: 'https://api.stoplight-local.com:8443/projects/cHJqOjE2NA/branches/main/export/models/operator_reference.yaml',
+    },
+  },
+};
+
 describe('Model', () => {
   it('displays examples', async () => {
     const { container } = render(<Model data={exampleSchema} />);
@@ -236,6 +284,15 @@ describe('Model', () => {
       expect(screen.queryByText('description of valueA')).toBeInTheDocument();
 
       unmount();
+    });
+    it('CombineSchema must have description', () => {
+      render(<Model data={model_data} {...props} />);
+      // const elem = screen.getByRole('paragraph', { name: /This is from Operaror_reference/ });
+      const elem = screen.getAllByText(/description from allOf Operator/);
+
+      // expect('This is from Operaror_reference').toBeInTheDocument();
+      // expect(elem).toBeInTheDocument();
+      expect(elem[0]).toBeInTheDocument();
     });
   });
 });
