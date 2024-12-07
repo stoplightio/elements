@@ -71,7 +71,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
   const description = (
     <VStack spacing={10}>
-      {data.description && data.type === 'object' && (
+      {data.description && (
         <Box pos="relative">
           <MarkdownViewer role="textbox" markdown={data.description} />
           <NodeAnnotation change={descriptionChanged} />
