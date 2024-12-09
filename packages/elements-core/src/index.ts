@@ -14,13 +14,7 @@ export { ReactRouterMarkdownLink } from './components/MarkdownViewer/CustomCompo
 export { NonIdealState } from './components/NonIdealState';
 export { PoweredByLink } from './components/PoweredByLink';
 export { TableOfContents } from './components/TableOfContents';
-export {
-  CustomLinkComponent,
-  TableOfContentsGroup,
-  TableOfContentsItem,
-  TableOfContentsNode,
-  TableOfContentsNodeGroup,
-} from './components/TableOfContents/types';
+export { CustomLinkComponent } from './components/TableOfContents/types';
 export { findFirstNode } from './components/TableOfContents/utils';
 export { TryIt, TryItProps, TryItWithRequestSamples, TryItWithRequestSamplesProps } from './components/TryIt';
 export { HttpMethodColors, NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName } from './constants';
@@ -44,3 +38,9 @@ export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
 export { createResolvedObject } from './utils/ref-resolving/resolvedObject';
 export { slugify } from './utils/string';
 export { createElementClass } from './web-components/createElementClass';
+export type {
+  TableOfContentsGroup,
+  TableOfContentsItem,
+  TableOfContentsNode,
+  TableOfContentsNodeGroup,
+} from '@stoplight/elements-utils';
