@@ -12,7 +12,8 @@
   "dependencies": {
     "@stoplight/elements": "^7.0.0",
     "@stoplight/elements-dev-portal": "^1.0.0",
-    "react": "^17.0.2"
+    "react": "^17.0.2",
+    "react-router-dom": "^5.3.3"
   },
   "devDependencies": {
     "@types/node": "^17.0.11",
