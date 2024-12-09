@@ -3,7 +3,7 @@ import { OpenAPIObject as _OpenAPIObject, PathObject } from 'openapi3-ts';
 
 import { transformOasToServiceNode } from '../../../utils/oas';
 import { OperationNode, SchemaNode, WebhookNode } from '../../../utils/oas/types';
-import {  computeTagGroups } from '../utils';
+import { computeAPITree, computeTagGroups } from '../utils';
 
 type OpenAPIObject = Partial<_OpenAPIObject> & {
   webhooks?: PathObject;

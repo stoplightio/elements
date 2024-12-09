@@ -2,8 +2,8 @@
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
-import { isHttpOperation, isHttpService, isHttpWebhookOperation } from '../guards';
-import type { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../oas/types';
+import { isHttpOperation, isHttpService, isHttpWebhookOperation } from '../../../elements-core/utils/guards';
+import type { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../../oas/types';
 import type { TableOfContentsGroup, TableOfContentsItem } from '..tableOfContents/types';
 
 type GroupableNode = OperationNode | WebhookNode | SchemaNode;
