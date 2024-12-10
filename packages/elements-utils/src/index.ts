@@ -4,6 +4,7 @@ export * from './elements/utils/oas';
 export type { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from './elements/utils/oas/types';
 export * from './elements/utils/oas/types';
 export type {
+  CustomLinkComponent,
   TableOfContentsDivider,
   TableOfContentsExternalLink,
   TableOfContentsGroup,
@@ -11,7 +12,8 @@ export type {
   TableOfContentsItem,
   TableOfContentsNode,
   TableOfContentsNodeGroup,
-} from './elements-core/components/Docs/types';
+  TableOfContentsProps,
+} from './elements-core/components/TableOfContents/types';
 export * from './elements-core/utils/guards';
 export * from './elements-core/utils/oas/security';
 export * from './elements-core/utils/securitySchemes';
