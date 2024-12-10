@@ -82,7 +82,7 @@ export const TryItResponse: React.FC<{ response: ResponseState }> = ({ response 
           <div className={`sl-mb-3 sl-text-${getHttpCodeColor(response.status)}`}>
             {`${response.status} ${HttpCodeDescriptions[response.status] ?? ''}`}
           </div>
-          {response.bodyText && responseType && ['json', 'xml', 'text'].includes(responseType) ? (
+          {response.bodyText && responseType && ['json', 'xml', 'text', 'octet-stream'].includes(responseType) ? (
             <ResponseCodeViewer
               language="json"
               value={
