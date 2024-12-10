@@ -19,7 +19,7 @@ export interface ErrorState {
   error: Error;
 }
 
-type ContentType = 'image' | 'json' | 'xml' | 'text';
+type ContentType = 'image' | 'json' | 'xml' | 'text' | 'octet-stream';
 type BodyFormat = 'preview' | 'raw';
 
 const bodyFormatMap: Record<ContentType, BodyFormat[]> = {
@@ -27,6 +27,7 @@ const bodyFormatMap: Record<ContentType, BodyFormat[]> = {
   json: ['preview', 'raw'],
   xml: ['preview', 'raw'],
   text: ['raw'],
+  'octet-stream': ['preview', 'raw'],
 };
 
 const regex: Record<ContentType, RegExp> = {
@@ -34,6 +35,7 @@ const regex: Record<ContentType, RegExp> = {
   json: /application\/(.?)*json/,
   xml: /(text|application)\/(.?)*(xml|html)/,
   text: /text\/.*/,
+  'octet-stream': /application\/(.?)*octet-stream/,
 };
 
 export function getResponseType(contentType: string) {
