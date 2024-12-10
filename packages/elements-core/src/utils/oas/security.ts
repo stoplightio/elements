@@ -1,7 +1,7 @@
 export {
   getReadableSecurityName,
-  shouldIncludeKey,
   getReadableSecurityNames,
+  getSecurityGroupId,
   shouldAddKey,
-  getSecurityGroupId
-} from '@stoplight/elements-utils'
+  shouldIncludeKey,
+} from '@stoplight/elements-utils';

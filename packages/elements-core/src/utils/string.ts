@@ -1,5 +1,1 @@
-export {
-  caseInsensitivelyEquals,
-  slugify
-} from '@stoplight/elements-utils';
-
+export { caseInsensitivelyEquals, slugify } from '@stoplight/elements-utils';

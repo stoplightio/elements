@@ -14,10 +14,11 @@ import { get, isObject, last } from 'lodash';
 import { OpenAPIObject as _OpenAPIObject, PathObject } from 'openapi3-ts';
 import { Spec } from 'swagger-schema-official';
 
-import { slugify } from '../../../elements-core/utils/string'
+import { slugify } from '../../../elements-core/utils/string';
 import { oas2SourceMap } from './oas2';
 import { oas3SourceMap } from './oas3';
 import { ISourceNodeMap, NodeTypes, ServiceChildNode, ServiceNode } from './types';
+
 type OpenAPIObject = _OpenAPIObject & {
   webhooks?: PathObject;
 };

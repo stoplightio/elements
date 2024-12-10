@@ -1,4 +1,1 @@
-export {
-  getDefaultDescription,
-  getOptionalAuthDescription
-} from '@stoplight/elements-utils';
+export { getDefaultDescription, getOptionalAuthDescription } from '@stoplight/elements-utils';

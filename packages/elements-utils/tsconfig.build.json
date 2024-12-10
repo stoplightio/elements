@@ -9,6 +9,5 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "dist",
-    "moduleResolution": "node"
   }
 }

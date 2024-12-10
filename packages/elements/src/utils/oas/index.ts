@@ -1,4 +1,1 @@
-export {
-  isJson,
-  transformOasToServiceNode,
-} from '@stoplight/elements-utils';
+export { isJson, transformOasToServiceNode } from '@stoplight/elements-utils';

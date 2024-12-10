@@ -1,8 +1,8 @@
 export {
-  isSMDASTRoot,
-  isJSONSchema,
-  isHttpService,
   isHttpOperation,
+  isHttpService,
   isHttpWebhookOperation,
-  isProperUrl
+  isJSONSchema,
+  isProperUrl,
+  isSMDASTRoot,
 } from '@stoplight/elements-utils';
