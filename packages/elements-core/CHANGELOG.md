@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.15.0...@jpmorganchase/elemental-core@1.16.0) (2024-12-10)
+
+### Features
+
+- **content type:** add octet-stream content type
+  ([45ce713](https://github.com/jpmorganchase/elemental/commit/45ce713d3c44e795d59e0141645d3d7e5859f599))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # 1.15.0 (2024-12-10)
 
 ### Bug Fixes
