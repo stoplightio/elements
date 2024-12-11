@@ -2,23 +2,28 @@
 
 ## Table Of Contents
 
-- [Intro](#intro)
-- [Install Elements](#install-elements)
-- [Develop Elements](#develop-elements)
-- [Testing](#testing)
-  - [Guiding principles](#guiding-principles)
-  - [Unit tests](#unit-tests)
-    - [Run unit-tests](#run-unit-tests)
-  - [Framework Integration](#framework-integration)
-    - [Run tests as the CI would](#run-tests-as-the-ci-would)
-    - [Run the tests manually](#run-the-tests-manually)
-    - [Edit the tests](#edit-the-tests)
-    - [Inspect test results](#inspect-test-results)
-- [Yalc into platform-internal](#yalc-into-platform-internal)
-- [Release Elements](#release-elements)
-- [Versioning Guidelines](#versioning-guidelines)
-- [Merge into main](#merge-into-main)
-        
+- [Contributing to Stoplight Elements](#contributing-to-stoplight-elements)
+  - [Table Of Contents](#table-of-contents)
+  - [Intro](#intro)
+  - [Install Elements](#install-elements)
+  - [Develop Elements](#develop-elements)
+  - [Testing](#testing)
+    - [Guiding Principles](#guiding-principles)
+    - [Unit tests](#unit-tests)
+      - [Run Unit Tests](#run-unit-tests)
+    - [Framework Integration](#framework-integration)
+      - [Run Tests as the CI Would](#run-tests-as-the-ci-would)
+      - [Run the Tests Manually](#run-the-tests-manually)
+      - [Edit the Tests](#edit-the-tests)
+      - [Inspect Test Results](#inspect-test-results)
+  - [Yalc into platform-internal](#yalc-into-platform-internal)
+  - [Release Elements](#release-elements)
+  - [Versioning Guidelines](#versioning-guidelines)
+    - [Major versions](#major-versions)
+    - [Minor versions](#minor-versions)
+    - [Patches](#patches)
+    - [Merge into Main](#merge-into-main)
+
 ## Intro
 
 Elements is an open-source project, and Stoplight loves contributions. If you're familiar with TypeScript and Jest then dive right in, see how far you can get, and post in [Discussions](https://github.com/stoplightio/elements/discussions) or start a draft PR if you get stuck.
@@ -41,7 +46,7 @@ To validate that the installation was successful, move into the demo folder by r
 
 ## Develop Elements
 
-Elements is split into three packages. Two of them, `elements` and `elements-dev-portal`, are user-facing. The third, `elements-core`, is an implementation detail created to share code and components between `elements` and `elements-dev-portal`.
+Elements is split into four packages. Two of them, `elements`, and `elements-dev-portal`, are user-facing. The thirts, `elements-utils` holds implementations and definitions of shared non-react specific code, the fourth, `elements-core`, is an implementation detail created to share code and components between `elements` and `elements-dev-portal`.
 
 Most of the code is in `elements-core`; `elements` and `elements-dev-portal` only have code that's highly specific to those projects.
 
@@ -49,7 +54,7 @@ Most often, you'll develop Elements (in all the packages) using [storybooks](htt
 
 Each package has its own storybook. To run a storybook for a specific package, in the main directory run, for example, `yarn elements-core storybook`. This starts a storybook for the `elements-core` package.
 
-Now you can develop the code and test your changes in the storybook. 
+Now you can develop the code and test your changes in the storybook.
 
 For your convenience, all the packages are linked. For example, if you run the `elements` storybook, but make changes in the `elements-core` codebase, those changes *will be* visible instantly in your storybook.
 
@@ -57,7 +62,7 @@ For your convenience, all the packages are linked. For example, if you run the `
 
 ### Guiding Principles
 
-The aim should never be to write tests for the sake of writing tests. 
+The aim should never be to write tests for the sake of writing tests.
 
 For Stoplight, the goal of testing is **to give developers confidence** when making changes to the codebase when they're adding new features, cleaning up tech debt, or fixing bugs.
 
@@ -65,15 +70,15 @@ Well-written tests also **save time** when authoring or reviewing PRs as you don
 
 To achieve high-quality tests, **follow these principles**:
 - Always test the **behavior** of a component, not the implementation.
-    - Tests that use *Jest snapshots* almost always violate this. (Except maybe when you are testing an AST parser, a linter, or similar.) 
-    
+    - Tests that use *Jest snapshots* almost always violate this. (Except maybe when you are testing an AST parser, a linter, or similar.)
+
     **Instead,** extract the real business requirement from what would be the snapshot and assert against that.
-    
-    - Tests that `find` child components and assert against props being passed may be incorrect. 
+
+    - Tests that `find` child components and assert against props being passed may be incorrect.
     Use the **recommended selectors** (see point below) and **[`jest-dom` assertions](https://github.com/testing-library/jest-dom)** to enforce constraints that matter to the user.
     - Searching for DOM elements using tag name, CSS class, or hierarchy (`parentElement`, etc.) is an anti-pattern.
 
-    **Instead,** use **`findByRole` or other queries from [TL's query hierarchy](https://testing-library.com/docs/queries/about#priority)**. 
+    **Instead,** use **`findByRole` or other queries from [TL's query hierarchy](https://testing-library.com/docs/queries/about#priority)**.
     Feel free to add accessibility attributes where missing. With a bit of practice, you'll see that almost everything can be covered with `*byRole`.
 - The goal for your test suite is **to cover** as much of the **business requirements** (for example, in the issue description) as practical.
 - An ideal test suite only requires a change **if business requirements change**.
@@ -95,11 +100,11 @@ Unit testing stack:
 - [JSDOM](https://github.com/jsdom/jsdom)
 - [React Testing Library](https://github.com/testing-library/react-testing-library/)
 - [Jest-DOM](https://github.com/testing-library/jest-dom)
-- \* You can find some legacy code utilizing a different stack (Enzyme). When changing those tests, use your judgment 
+- \* You can find some legacy code utilizing a different stack (Enzyme). When changing those tests, use your judgment
   to decide between amending the old unit test or rewriting it using the new stack. Mixing testing libraries in a single test file is fine.
-  
+
 Unit tests are currently located in a directory `__tests__` close to the component being tested, but in the future, tests will be located right next to the components under test, with a `.spec.ts` extension.
-  
+
 #### Run Unit Tests
 
 Assuming you work on the `elements` package, you can run `jest` on it using the shorthand
@@ -144,7 +149,7 @@ That being said, if you for some reason want to run them by hand, here's how to 
 
 ```shell
 # Make sure top-level dependencies are up-to-date
-yarn 
+yarn
 # Build Elements itself
 yarn build
 # Copy the contents of the predefined example application and make it use the local build
@@ -164,7 +169,7 @@ The first three steps are the same, but this time, instead of running the tests 
 
 ```shell
 # Make sure top-level dependencies are up-to-date
-yarn 
+yarn
 # Build Elements itself
 yarn build
 # Copy the contents of the predefined example application and make it use the local build
@@ -190,7 +195,7 @@ Fixtures, *Cypress* plugins, and support files can also be found in the relevant
 
 #### Inspect Test Results
 
-Test results can be found under the `cypress/results` directory. 
+Test results can be found under the `cypress/results` directory.
 *Cypress* records videos of every test suite run and takes screenshots for every failure. In addition, a machine-readable and human-readable `output.xml` is generated that contains a summary of the results.
 
 When running in *CircleCI*, the host interprets `output.xml` and displays it visually on the dashboard:
@@ -237,7 +242,7 @@ If you think a major version bump is required in *any* `elements` package, pleas
 
 Minor versions in `elements` and `elements-dev-portal` are for introducing new features. If *any* change that's being released introduces a new feature / somehow extends the functionality, bump the minor.
 
-In the case of `elements-core` (and in contrast with two other packages), minors are allowed to have (within reason) some breaking changes. That's because it's an internal package that Stoplight controls. 
+In the case of `elements-core` (and in contrast with two other packages), minors are allowed to have (within reason) some breaking changes. That's because it's an internal package that Stoplight controls.
 
 If you need to make a breaking change in `elements-core`, make sure to bump minor *and* make sure that the new versions of `elements` and `elements-dev-portal` are using this new version and are compatible with it. Remember also that `elements` is used in internal Stoplight platform code, so make sure that the new version also works correctly there.
 

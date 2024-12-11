@@ -57,6 +57,7 @@
     ]
   },
   "dependencies": {
+    "@stoplight/elements-utils": "^0.0.1",
     "@stoplight/http-spec": "^7.1.0",
     "@stoplight/json": "^3.21.0",
     "@stoplight/json-schema-ref-parser": "^9.2.7",

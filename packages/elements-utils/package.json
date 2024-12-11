@@ -1,0 +1,67 @@
+{
+  "name": "@stoplight/elements-utils",
+  "version": "0.0.1",
+  "homepage": "https://github.com/stoplightio/elements",
+  "bugs": "https://github.com/stoplightio/elements/issues",
+  "author": "Stoplight <support@stoplight.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoplightio/elements"
+  },
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "**/*"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "build": "sl-scripts build",
+    "commit": "git-cz",
+    "release": "sl-scripts release",
+    "release.docs": "sl-scripts release:docs",
+    "release.dryRun": "sl-scripts release --dry-run --debug",
+    "test": "jest",
+    "test.prod": "yarn test --coverage --maxWorkers=2",
+    "test.update": "yarn test --updateSnapshot",
+    "test.watch": "yarn test --watch",
+    "test.packaging": "node --input-type=commonjs -e \"require('./dist/index.js')\" && node --input-type=module -e \"import './dist/index.mjs'\"",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@stoplight/http-spec": "^7.1.0",
+    "@stoplight/json": "^3.21.0",
+    "@stoplight/types": "^14.1.1",
+    "json-schema": "^0.4.0",
+    "lodash": "^4.17.21",
+    "tslib": "^2.1.0"
+  },
+  "devDependencies": {
+    "@stoplight/scripts": "10.0.0",
+    "@testing-library/dom": "^7.26.5",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/user-event": "^12.2.0",
+    "@types/enzyme": "3.x.x",
+    "@types/json-schema": "^7.0.11",
+    "@types/lodash": "^4.14.202",
+    "enzyme": "3.x.x",
+    "enzyme-to-json": "3.x.x",
+    "jest-fetch-mock": "^3.0.3",
+    "resolve-url-loader": "^5.0.0"
+  },
+  "publishConfig": {
+    "directory": "dist"
+  },
+  "release": {
+    "extends": "@stoplight/scripts/release"
+  }
+}
