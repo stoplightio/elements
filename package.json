@@ -72,6 +72,7 @@
     "@stoplight/react-error-boundary": "3.0.0"
   },
   "scripts": {
+    "postinstall": "yarn workspace @stoplight/elements-utils build",
     "demo": "yarn workspace @stoplight/elements-demo",
     "elements": "yarn workspace @stoplight/elements",
     "elements-core": "yarn workspace @stoplight/elements-core",
