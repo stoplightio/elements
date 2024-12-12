@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+
+  "include": ["src"],
+
+  "exclude": ["**/__fixtures__/**", "**/__stories__/**", "**/__tests__/**"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "lib": ["es2021", "dom"]
+  }
+}
