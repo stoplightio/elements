@@ -58,6 +58,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /mnt/ramdisk/
+      - run: yarn --frozen-lockfile
       - run:
           name: Example - use local builds
           working_directory: /mnt/ramdisk/project
