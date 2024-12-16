@@ -1,10 +1,11 @@
 import { DefaultComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { LinkHeading } from '../components/LinkHeading';
 import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
 import { ReactRouterMarkdownLink } from '../components/MarkdownViewer/CustomComponents/ReactRouterLink';
+import { ScrollToHashElement } from '../components/MarkdownViewer/CustomComponents/ScrollToHashElement';
 import { RouterTypeContext } from '../context/RouterType';
 import { useRouter } from '../hooks/useRouter';
 import { RoutingProps } from '../types';
@@ -27,11 +28,17 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
     return (
       <RouterTypeContext.Provider value={routerType}>
         <Router {...routerProps} key={basePath}>
-          <Route path="/">
-            <MarkdownComponentsProvider value={components}>
-              <WrappedComponent {...props} />
-            </MarkdownComponentsProvider>
-          </Route>
+          <Routes>
+            <Route
+              path="/*"
+              element={
+                <MarkdownComponentsProvider value={components}>
+                  <ScrollToHashElement />
+                  <WrappedComponent {...props} />
+                </MarkdownComponentsProvider>
+              }
+            />
+          </Routes>
         </Router>
       </RouterTypeContext.Provider>
     );

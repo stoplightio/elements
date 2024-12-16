@@ -1,14 +1,16 @@
 import {
+  type CustomLinkComponent,
   findFirstNode,
   ReactRouterMarkdownLink,
   RouterTypeContext,
   RoutingProps,
+  ScrollToHashElement,
   SidebarLayout,
   useRouter,
   withStyles,
 } from '@stoplight/elements-core';
 import * as React from 'react';
-import { Link, Redirect, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 
 import { BranchSelector } from '../components/BranchSelector';
 import { DevPortalProvider } from '../components/DevPortalProvider';
@@ -98,7 +100,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
 }) => {
   const { branchSlug: encodedBranchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
   const branchSlug = decodeURIComponent(encodedBranchSlug);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data: tableOfContents, isFetched: isTocFetched } = useGetTableOfContents({ projectId, branchSlug });
   const { data: branches } = useGetBranches({ projectId });
@@ -118,7 +120,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   if (!nodeSlug && isTocFetched && tableOfContents?.items) {
     const firstNode = findFirstNode(tableOfContents.items);
     if (firstNode) {
-      return <Redirect to={branchSlug ? `/branches/${branchSlug}/${firstNode.slug}` : `/${firstNode.slug}`} />;
+      return <Navigate to={branchSlug ? `/branches/${branchSlug}/${firstNode.slug}` : `/${firstNode.slug}`} replace />;
     }
   }
 
@@ -141,20 +143,23 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     elem = <NotFound />;
   } else if (node?.slug && nodeSlug !== node.slug) {
     // Handle redirect to node's slug
-    return <Redirect to={branchSlug ? `/branches/${branchSlug}/${node.slug}` : `/${node.slug}`} />;
+    return <Navigate to={branchSlug ? `/branches/${branchSlug}/${node.slug}` : `/${node.slug}`} replace />;
   } else {
     elem = (
-      <NodeContent
-        node={node}
-        Link={ReactRouterMarkdownLink}
-        hideTryIt={hideTryIt}
-        hideMocking={hideMocking}
-        hideExport={hideExport}
-        hideSecurityInfo={hideSecurityInfo}
-        hideServerInfo={hideServerInfo}
-        tryItCredentialsPolicy={tryItCredentialsPolicy}
-        tryItCorsProxy={tryItCorsProxy}
-      />
+      <>
+        <ScrollToHashElement />
+        <NodeContent
+          node={node}
+          Link={ReactRouterMarkdownLink}
+          hideTryIt={hideTryIt}
+          hideMocking={hideMocking}
+          hideExport={hideExport}
+          hideSecurityInfo={hideSecurityInfo}
+          hideServerInfo={hideServerInfo}
+          tryItCredentialsPolicy={tryItCredentialsPolicy}
+          tryItCorsProxy={tryItCorsProxy}
+        />
+      </>
     );
   }
 
@@ -175,7 +180,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
               branches={branches.items}
               onChange={branch => {
                 const encodedBranchSlug = encodeURIComponent(branch.slug);
-                history.push(branch.is_default ? `/${nodeSlug}` : `/branches/${encodedBranchSlug}/${nodeSlug}`);
+                navigate(branch.is_default ? `/${nodeSlug}` : `/branches/${encodedBranchSlug}/${nodeSlug}`);
               }}
             />
           ) : null}
@@ -183,7 +188,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
             <TableOfContents
               activeId={node?.id || nodeSlug?.split('-')[0] || ''}
               tableOfContents={tableOfContents}
-              Link={Link}
+              Link={Link as CustomLinkComponent}
               collapseTableOfContents={collapseTableOfContents}
               onLinkClick={handleTocClick}
             />
@@ -200,7 +205,7 @@ const StoplightProjectRouter = ({
   platformUrl,
   basePath = '/',
   staticRouterPath = '',
-  router = 'history',
+  router = 'hash',
   ...props
 }: StoplightProjectProps) => {
   const { Router, routerProps } = useRouter(router, basePath, staticRouterPath);
@@ -209,19 +214,13 @@ const StoplightProjectRouter = ({
     <DevPortalProvider platformUrl={platformUrl}>
       <RouterTypeContext.Provider value={router}>
         <Router {...routerProps} key={basePath}>
-          <Switch>
-            <Route path="/branches/:branchSlug/:nodeSlug+" exact>
-              <StoplightProjectImpl {...props} />
-            </Route>
+          <Routes>
+            <Route path="/branches/:branchSlug/:nodeSlug/*" element={<StoplightProjectImpl {...props} />} />
 
-            <Route path="/:nodeSlug+" exact>
-              <StoplightProjectImpl {...props} />
-            </Route>
+            <Route path="/:nodeSlug/*" element={<StoplightProjectImpl {...props} />} />
 
-            <Route path="/" exact>
-              <StoplightProjectImpl {...props} />
-            </Route>
-          </Switch>
+            <Route path="/" element={<StoplightProjectImpl {...props} />} />
+          </Routes>
         </Router>
       </RouterTypeContext.Provider>
     </DevPortalProvider>

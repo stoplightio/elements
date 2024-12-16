@@ -7,7 +7,7 @@ import {
 import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
 import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
@@ -76,12 +76,12 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
     const firstSlug = findFirstNodeSlug(tree);
 
     if (firstSlug) {
-      return <Redirect to={firstSlug} />;
+      return <Navigate to={firstSlug} replace />;
     }
   }
 
   if (hideInternal && node && isInternal(node)) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   const handleTocClick = () => {

@@ -11,6 +11,7 @@ export {
   MarkdownComponentsProvider,
 } from './components/MarkdownViewer/CustomComponents/Provider';
 export { ReactRouterMarkdownLink } from './components/MarkdownViewer/CustomComponents/ReactRouterLink';
+export { ScrollToHashElement } from './components/MarkdownViewer/CustomComponents/ScrollToHashElement';
 export { NonIdealState } from './components/NonIdealState';
 export { PoweredByLink } from './components/PoweredByLink';
 export { TableOfContents } from './components/TableOfContents';
