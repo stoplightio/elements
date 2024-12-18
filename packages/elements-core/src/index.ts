@@ -43,5 +43,6 @@ export { Divider, Group, ITableOfContentsTree, Item, ParsedNode, RoutingProps, T
 export { isHttpOperation, isHttpService, isHttpWebhookOperation } from './utils/guards';
 export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
 export { createResolvedObject } from './utils/ref-resolving/resolvedObject';
-export { slugify } from './utils/string';
+export { slugify, resolveRelativeLink } from './utils/string';
 export { createElementClass } from './web-components/createElementClass';
+export { resolveUrl } from './utils/http-spec/IServer';

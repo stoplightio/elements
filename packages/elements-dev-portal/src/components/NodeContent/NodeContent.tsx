@@ -188,12 +188,13 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     }
 
     if (edge) {
-      const slug = routerKind === 'hash' ? `#/${edge.slug}` : edge.slug;
+      const slug = routerKind === 'hash' ? `#${route.replace(node.slug, edge.slug)}` : edge.slug;
       return <Link to={`${slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
     }
   }
 
-  return <a href={routerKind === 'hash' ? `#${route}${href}` : href}>{children}</a>;
+  const fullHref = routerKind === 'hash' ? `#${route}${href}` : href;
+  return <a href={fullHref}>{children}</a>;
 };
 
 function getBundledUrl(url: string | undefined) {

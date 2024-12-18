@@ -1,6 +1,6 @@
 import { DefaultComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useInRouterContext } from 'react-router-dom';
 
 import { LinkHeading } from '../components/LinkHeading';
 import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
@@ -18,28 +18,47 @@ const components: Partial<DefaultComponentMapping> = {
   h4: ({ color, ...props }) => <LinkHeading size={4} {...props} />,
 };
 
+const InternalRoutes = ({ children }: { children: React.ReactNode }): JSX.Element => {
+  return (
+    <Routes>
+      <Route
+        path="/*"
+        element={
+          <MarkdownComponentsProvider value={components}>
+            <ScrollToHashElement />
+            {children}
+          </MarkdownComponentsProvider>
+        }
+      />
+    </Routes>
+  );
+};
+
 export function withRouter<P extends RoutingProps>(WrappedComponent: React.ComponentType<P>): React.FC<P> {
   const WithRouter = (props: P) => {
+    const outerRouter = useInRouterContext();
     const basePath = props.basePath ?? '/';
     const staticRouterPath = props.staticRouterPath ?? '';
     const routerType = props.router ?? 'history';
     const { Router, routerProps } = useRouter(routerType, basePath, staticRouterPath);
 
+    if (!outerRouter) {
+      return (
+        <RouterTypeContext.Provider value={routerType}>
+          <Router {...routerProps} key={basePath}>
+            <InternalRoutes>
+              <WrappedComponent {...props} />
+            </InternalRoutes>
+          </Router>
+        </RouterTypeContext.Provider>
+      );
+    }
+
     return (
       <RouterTypeContext.Provider value={routerType}>
-        <Router {...routerProps} key={basePath}>
-          <Routes>
-            <Route
-              path="/*"
-              element={
-                <MarkdownComponentsProvider value={components}>
-                  <ScrollToHashElement />
-                  <WrappedComponent {...props} />
-                </MarkdownComponentsProvider>
-              }
-            />
-          </Routes>
-        </Router>
+        <InternalRoutes>
+          <WrappedComponent {...props} />
+        </InternalRoutes>
       </RouterTypeContext.Provider>
     );
   };

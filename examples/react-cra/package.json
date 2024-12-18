@@ -5,15 +5,15 @@
   "author": "Stoplight <support@stoplight.io>",
   "license": "Unlicense",
   "scripts": {
-    "start": "PORT=4200 react-scripts start",
-    "build": "react-scripts build",
-    "serve": "serve -s -l 4200 build"
+    "start": "NODE_OPTIONS=--openssl-legacy-provider PORT=4200 react-scripts start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "serve": "NODE_OPTIONS=--openssl-legacy-provider serve -s -l 4200 build"
   },
   "dependencies": {
     "@stoplight/elements": "^7.0.0",
     "@stoplight/elements-dev-portal": "^1.0.0",
     "react": "^17.0.2",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.11",

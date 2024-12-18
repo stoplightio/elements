@@ -145,6 +145,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCorsProxy,
     maxRefDepth,
     renderExtensionAddon,
+    basePath,
   } = props;
   const location = useLocation();
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
@@ -235,6 +236,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
           renderExtensionAddon={renderExtensionAddon}
+          basePath={basePath}
         />
       )}
       {layout === 'responsive' && (
@@ -254,6 +256,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCorsProxy={tryItCorsProxy}
           renderExtensionAddon={renderExtensionAddon}
           compact={isResponsiveLayoutEnabled}
+          basePath={basePath}
         />
       )}
     </InlineRefResolverProvider>

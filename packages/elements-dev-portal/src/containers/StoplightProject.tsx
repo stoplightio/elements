@@ -10,7 +10,17 @@ import {
   withStyles,
 } from '@stoplight/elements-core';
 import * as React from 'react';
-import { Link, Navigate, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useInRouterContext,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from 'react-router-dom';
 
 import { BranchSelector } from '../components/BranchSelector';
 import { DevPortalProvider } from '../components/DevPortalProvider';
@@ -87,17 +97,7 @@ export interface StoplightProjectProps extends RoutingProps {
   tryItCorsProxy?: string;
 }
 
-const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
-  projectId,
-  hideTryIt,
-  hideSecurityInfo,
-  hideServerInfo,
-  hideMocking,
-  hideExport,
-  collapseTableOfContents = false,
-  tryItCredentialsPolicy,
-  tryItCorsProxy,
-}) => {
+const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, collapseTableOfContents = false }) => {
   const { branchSlug: encodedBranchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
   const branchSlug = decodeURIComponent(encodedBranchSlug);
   const navigate = useNavigate();
@@ -120,47 +120,8 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
   if (!nodeSlug && isTocFetched && tableOfContents?.items) {
     const firstNode = findFirstNode(tableOfContents.items);
     if (firstNode) {
-      return <Navigate to={branchSlug ? `/branches/${branchSlug}/${firstNode.slug}` : `/${firstNode.slug}`} replace />;
+      return <Navigate to={branchSlug ? `branches/${branchSlug}/${firstNode.slug}` : `${firstNode.slug}`} replace />;
     }
-  }
-
-  let elem: JSX.Element;
-  if (isLoadingNode || !isTocFetched) {
-    elem = <Loading />;
-  } else if (isError) {
-    if (nodeError instanceof ResponseError) {
-      if (nodeError.code === 402) {
-        elem = <UpgradeToStarter />;
-      } else if (nodeError.code === 403) {
-        elem = <Forbidden />;
-      } else {
-        elem = <NotFound />;
-      }
-    } else {
-      elem = <NotFound />;
-    }
-  } else if (!node) {
-    elem = <NotFound />;
-  } else if (node?.slug && nodeSlug !== node.slug) {
-    // Handle redirect to node's slug
-    return <Navigate to={branchSlug ? `/branches/${branchSlug}/${node.slug}` : `/${node.slug}`} replace />;
-  } else {
-    elem = (
-      <>
-        <ScrollToHashElement />
-        <NodeContent
-          node={node}
-          Link={ReactRouterMarkdownLink}
-          hideTryIt={hideTryIt}
-          hideMocking={hideMocking}
-          hideExport={hideExport}
-          hideSecurityInfo={hideSecurityInfo}
-          hideServerInfo={hideServerInfo}
-          tryItCredentialsPolicy={tryItCredentialsPolicy}
-          tryItCorsProxy={tryItCorsProxy}
-        />
-      </>
-    );
   }
 
   const handleTocClick = () => {
@@ -180,7 +141,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
               branches={branches.items}
               onChange={branch => {
                 const encodedBranchSlug = encodeURIComponent(branch.slug);
-                navigate(branch.is_default ? `/${nodeSlug}` : `/branches/${encodedBranchSlug}/${nodeSlug}`);
+                navigate(branch.is_default ? `${nodeSlug}` : `branches/${encodedBranchSlug}/${nodeSlug}`);
               }}
             />
           ) : null}
@@ -196,8 +157,66 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
         </>
       }
     >
-      {elem}
+      <Outlet context={[isLoadingNode, isTocFetched, isError, nodeError, node]} />
     </SidebarLayout>
+  );
+};
+
+const ProjectNode: React.FC<StoplightProjectProps> = ({
+  hideTryIt,
+  hideSecurityInfo,
+  hideServerInfo,
+  hideMocking,
+  hideExport,
+  tryItCredentialsPolicy,
+  tryItCorsProxy,
+}) => {
+  const { branchSlug: encodedBranchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
+  const branchSlug = decodeURIComponent(encodedBranchSlug);
+  const [isLoadingNode, isTocFetched, isError, nodeError, node] = useOutletContext<any>();
+
+  if (isLoadingNode || !isTocFetched) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    if (nodeError instanceof ResponseError) {
+      if (nodeError.code === 402) {
+        return <UpgradeToStarter />;
+      } else if (nodeError.code === 403) {
+        return <Forbidden />;
+      } else {
+        return <NotFound />;
+      }
+    } else {
+      return <NotFound />;
+    }
+  }
+
+  if (!node) {
+    return <NotFound />;
+  }
+
+  if (node?.slug && nodeSlug !== node.slug) {
+    // Handle redirect to node's slug
+    return <Navigate to={branchSlug ? `/branches/${branchSlug}/${node.slug}` : `/${node.slug}`} replace />;
+  }
+
+  return (
+    <>
+      <ScrollToHashElement />
+      <NodeContent
+        node={node}
+        Link={ReactRouterMarkdownLink}
+        hideTryIt={hideTryIt}
+        hideMocking={hideMocking}
+        hideExport={hideExport}
+        hideSecurityInfo={hideSecurityInfo}
+        hideServerInfo={hideServerInfo}
+        tryItCredentialsPolicy={tryItCredentialsPolicy}
+        tryItCorsProxy={tryItCorsProxy}
+      />
+    </>
   );
 };
 
@@ -209,19 +228,36 @@ const StoplightProjectRouter = ({
   ...props
 }: StoplightProjectProps) => {
   const { Router, routerProps } = useRouter(router, basePath, staticRouterPath);
+  const outerRouter = useInRouterContext();
+
+  const InternalRoutes = () => (
+    <Routes>
+      <Route path="/" element={<StoplightProjectImpl {...props} />}>
+        <Route path="/branches/:branchSlug/:nodeSlug/*" element={<ProjectNode {...props} />} />
+
+        <Route path="/:nodeSlug/*" element={<ProjectNode {...props} />} />
+
+        <Route element={<ProjectNode {...props} />} />
+      </Route>
+    </Routes>
+  );
+
+  if (!outerRouter) {
+    return (
+      <DevPortalProvider platformUrl={platformUrl}>
+        <RouterTypeContext.Provider value={router}>
+          <Router {...routerProps} key={basePath}>
+            <InternalRoutes />
+          </Router>
+        </RouterTypeContext.Provider>
+      </DevPortalProvider>
+    );
+  }
 
   return (
     <DevPortalProvider platformUrl={platformUrl}>
       <RouterTypeContext.Provider value={router}>
-        <Router {...routerProps} key={basePath}>
-          <Routes>
-            <Route path="/branches/:branchSlug/:nodeSlug/*" element={<StoplightProjectImpl {...props} />} />
-
-            <Route path="/:nodeSlug/*" element={<StoplightProjectImpl {...props} />} />
-
-            <Route path="/" element={<StoplightProjectImpl {...props} />} />
-          </Routes>
-        </Router>
+        <InternalRoutes />
       </RouterTypeContext.Provider>
     </DevPortalProvider>
   );

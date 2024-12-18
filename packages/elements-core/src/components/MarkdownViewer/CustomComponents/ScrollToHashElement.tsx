@@ -82,7 +82,6 @@ export const ScrollToHashElement = ({
       const element = document.getElementById(removeHashCharacter(hash));
 
       if (element) {
-        // console.log(`scrollIntoView ${hash} behavior: ${behavior}, inline: ${inline}, block: ${block}`);
         element.scrollIntoView({
           behavior: firstRun ? initialBehavior : behavior,
           inline: inline,

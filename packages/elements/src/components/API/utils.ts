@@ -2,6 +2,7 @@ import {
   isHttpOperation,
   isHttpService,
   isHttpWebhookOperation,
+  resolveUrl,
   TableOfContentsGroup,
   TableOfContentsItem,
 } from '@stoplight/elements-core';
@@ -193,4 +194,13 @@ const addTagGroupsToTree = <T extends GroupableNode>(
       });
     }
   });
+};
+
+export const resolveRelativePath = (currentPath: string, basePath: string): string => {
+  if (!basePath || basePath === '/') {
+    return currentPath;
+  }
+  const baseUrl = resolveUrl(basePath);
+  const currentUrl = resolveUrl(currentPath);
+  return baseUrl && currentUrl && baseUrl !== currentUrl ? currentUrl.replace(baseUrl, '') : '/';
 };

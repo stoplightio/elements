@@ -5,6 +5,7 @@ import {
   Logo,
   ParsedDocs,
   PoweredByLink,
+  resolveRelativeLink,
   SidebarLayout,
   TableOfContents,
   TableOfContentsItem,
@@ -16,7 +17,7 @@ import * as React from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
-import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
+import { computeAPITree, findFirstNodeSlug, isInternal, resolveRelativePath } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
@@ -33,6 +34,7 @@ type SidebarLayoutProps = {
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
   renderExtensionAddon?: ExtensionAddonRenderer;
+  basePath?: string;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -50,6 +52,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
   renderExtensionAddon,
+  basePath = '/',
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -57,9 +60,10 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     [serviceNode, hideSchemas, hideInternal],
   );
   const location = useLocation();
-  const { pathname } = location;
-  const isRootPath = !pathname || pathname === '/';
-  const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
+  const { pathname: currentPath } = location;
+  const relativePath = resolveRelativePath(currentPath, basePath);
+  const isRootPath = relativePath === '/';
+  const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === relativePath);
 
   const layoutOptions = React.useMemo(
     () => ({
@@ -78,16 +82,16 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     const firstSlug = findFirstNodeSlug(tree);
 
     if (firstSlug) {
-      return <Navigate to={firstSlug} replace />;
+      return <Navigate to={resolveRelativeLink(firstSlug)} replace />;
     }
   }
 
   if (hideInternal && node && isInternal(node)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="." replace />;
   }
 
   const sidebar = (
-    <Sidebar serviceNode={serviceNode} logo={logo} container={container} pathname={pathname} tree={tree} />
+    <Sidebar serviceNode={serviceNode} logo={logo} container={container} pathname={relativePath} tree={tree} />
   );
 
   return (
@@ -95,8 +99,8 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
       {node && (
         <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
           <ParsedDocs
-            key={pathname}
-            uri={pathname}
+            key={relativePath}
+            uri={relativePath}
             node={node}
             nodeTitle={node.name}
             layoutOptions={layoutOptions}

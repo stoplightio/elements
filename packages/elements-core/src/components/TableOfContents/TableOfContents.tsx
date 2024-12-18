@@ -3,6 +3,7 @@ import { HttpMethod, NodeType } from '@stoplight/types';
 import * as React from 'react';
 
 import { useFirstRender } from '../../hooks/useFirstRender';
+import { resolveRelativeLink } from '../../utils/string';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
 import {
   NODE_GROUP_ICON,
@@ -372,7 +373,7 @@ const Node = React.memo<{
   return (
     <Box
       as={LinkComponent}
-      to={!item.slug.startsWith('/') ? `/${item.slug}` : item.slug}
+      to={resolveRelativeLink(item.slug)}
       display="block"
       textDecoration="no-underline"
       className="ElementsTableOfContentsItem"
