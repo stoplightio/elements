@@ -10,9 +10,9 @@
     "url": "git+https://github.com/stoplightio/elements-starter-angular.git"
   },
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider ng serve --port 4200",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider ng build --configuration production",
-    "serve": "NODE_OPTIONS=--openssl-legacy-provider angular-http-server --path ./dist/angular -p 4200"
+    "start": "ng serve --port 4200",
+    "build": "ng build --configuration production",
+    "serve": "angular-http-server --path ./dist/angular -p 4200"
   },
   "bugs": {
     "url": "https://github.com/stoplightio/elements-starter-angular/issues"

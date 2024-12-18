@@ -5,9 +5,9 @@
   "author": "Stoplight <support@stoplight.io>",
   "license": "Unlicense",
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider PORT=4200 react-scripts start",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
-    "serve": "NODE_OPTIONS=--openssl-legacy-provider serve -s -l 4200 build"
+    "start": "PORT=4200 react-scripts start",
+    "build": "react-scripts build",
+    "serve": "serve -s -l 4200 build"
   },
   "dependencies": {
     "@stoplight/elements": "^7.0.0",
