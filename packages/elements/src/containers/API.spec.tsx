@@ -1,27 +1,13 @@
 import '@testing-library/jest-dom';
 
-import {
-  withMosaicProvider,
-  withPersistenceBoundary,
-  withQueryClientProvider,
-  withStyles,
-} from '@stoplight/elements-core';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { flow } from 'lodash';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
-import { API, APIImpl } from './API';
-
-export const APIWithoutRouter = flow(
-  withStyles,
-  withPersistenceBoundary,
-  withMosaicProvider,
-  withQueryClientProvider,
-)(APIImpl);
+import { API } from './API';
 
 describe('API', () => {
   const APIDocument = {
@@ -68,7 +54,7 @@ describe('API', () => {
   it('displays internal operations by default', () => {
     const { unmount } = render(
       <MemoryRouter initialEntries={['/paths/internal-operation/get']}>
-        <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} />
+        <API layout="sidebar" apiDescriptionDocument={APIDocument} />
       </MemoryRouter>,
     );
 
@@ -80,7 +66,7 @@ describe('API', () => {
   it('displays internal models by default', () => {
     render(
       <MemoryRouter initialEntries={['/schemas/InternalObject']}>
-        <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} />
+        <API layout="sidebar" apiDescriptionDocument={APIDocument} />
       </MemoryRouter>,
     );
 
@@ -90,7 +76,7 @@ describe('API', () => {
   it('reroutes to main page on internal operation if hideInternal is on', () => {
     render(
       <MemoryRouter initialEntries={['/paths/internal-operation/get']}>
-        <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
+        <API layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
       </MemoryRouter>,
     );
 
@@ -101,7 +87,7 @@ describe('API', () => {
   it('reroutes to main page on internal model if hideInternal is on', () => {
     render(
       <MemoryRouter initialEntries={['/schemas/InternalObject']}>
-        <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
+        <API layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
       </MemoryRouter>,
     );
 
