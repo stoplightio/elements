@@ -1,4 +1,5 @@
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import type { CustomLinkComponent } from '@stoplight/elements-core';
 import { Box, Button, Flex, Icon, Input, Modal } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -73,7 +74,7 @@ export const SearchOverlay = ({
             <TableOfContents
               tableOfContents={{ ...toc, hide_powered_by: true }}
               activeId={nodeSlug || ''}
-              Link={Link}
+              Link={Link as CustomLinkComponent}
               onLinkClick={onClick}
             />
           )}
