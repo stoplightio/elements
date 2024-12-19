@@ -35,6 +35,7 @@ type SidebarLayoutProps = {
   tryItCorsProxy?: string;
   renderExtensionAddon?: ExtensionAddonRenderer;
   basePath?: string;
+  outerRouter?: boolean;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -53,6 +54,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCorsProxy,
   renderExtensionAddon,
   basePath = '/',
+  outerRouter = false,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -61,7 +63,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   );
   const location = useLocation();
   const { pathname: currentPath } = location;
-  const relativePath = resolveRelativePath(currentPath, basePath);
+  const relativePath = resolveRelativePath(currentPath, basePath, outerRouter);
   const isRootPath = relativePath === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === relativePath);
 

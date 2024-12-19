@@ -196,8 +196,8 @@ const addTagGroupsToTree = <T extends GroupableNode>(
   });
 };
 
-export const resolveRelativePath = (currentPath: string, basePath: string): string => {
-  if (!basePath || basePath === '/') {
+export const resolveRelativePath = (currentPath: string, basePath: string, outerRouter: boolean): string => {
+  if (!outerRouter || !basePath || basePath === '/') {
     return currentPath;
   }
   const baseUrl = resolveUrl(basePath);

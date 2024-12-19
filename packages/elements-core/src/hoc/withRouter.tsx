@@ -34,7 +34,9 @@ const InternalRoutes = ({ children }: { children: React.ReactNode }): JSX.Elemen
   );
 };
 
-export function withRouter<P extends RoutingProps>(WrappedComponent: React.ComponentType<P>): React.FC<P> {
+export function withRouter<P extends RoutingProps>(
+  WrappedComponent: React.ComponentType<P & { outerRouter?: boolean }>,
+): React.FC<P> {
   const WithRouter = (props: P) => {
     const outerRouter = useInRouterContext();
     const basePath = props.basePath ?? '/';
@@ -47,7 +49,7 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
         <RouterTypeContext.Provider value={routerType}>
           <Router {...routerProps} key={basePath}>
             <InternalRoutes>
-              <WrappedComponent {...props} />
+              <WrappedComponent {...props} outerRouter={false} />
             </InternalRoutes>
           </Router>
         </RouterTypeContext.Provider>
@@ -57,7 +59,7 @@ export function withRouter<P extends RoutingProps>(WrappedComponent: React.Compo
     return (
       <RouterTypeContext.Provider value={routerType}>
         <InternalRoutes>
-          <WrappedComponent {...props} />
+          <WrappedComponent {...props} outerRouter />
         </InternalRoutes>
       </RouterTypeContext.Provider>
     );
