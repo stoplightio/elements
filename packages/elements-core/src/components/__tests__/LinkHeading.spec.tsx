@@ -38,6 +38,8 @@ describe('LinkHeading', () => {
     });
 
     it('should not append id to the route', () => {
+      location.hash = 'heading';
+
       const { baseElement } = render(
         <RouterTypeContext.Provider value="history">
           <BrowserRouter>

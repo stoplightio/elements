@@ -1,6 +1,5 @@
 import type { LinkProps } from '@stoplight/mosaic';
 import React from 'react';
-import { HashLink } from 'react-router-hash-link';
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 
@@ -21,8 +20,8 @@ export const ReactRouterMarkdownLink = ({
     );
   }
   return (
-    <HashLink to={href} title={title}>
+    <a href={href as string} title={title}>
       {children}
-    </HashLink>
+    </a>
   );
 };

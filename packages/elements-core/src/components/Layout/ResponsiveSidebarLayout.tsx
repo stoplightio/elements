@@ -6,7 +6,7 @@ import { useResponsiveLayout } from '../../hooks/useResponsiveLayout';
 import { LogoProps } from '../../types';
 import { Logo } from '../Logo';
 import { PoweredByLink } from '../PoweredByLink';
-import type { TableOfContentsItem } from '../TableOfContents';
+import type { CustomLinkComponent, TableOfContentsItem } from '../TableOfContents';
 import { TableOfContents } from '../TableOfContents';
 import { MobileTopNav } from './MobileTopNav';
 
@@ -129,7 +129,7 @@ export const Sidebar = ({
         <TableOfContents
           tree={tree}
           activeId={pathname}
-          Link={Link}
+          Link={Link as CustomLinkComponent}
           onLinkClick={onTocClick}
           isInResponsiveMode={isInResponsiveMode}
         />

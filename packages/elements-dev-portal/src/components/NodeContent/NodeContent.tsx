@@ -6,11 +6,13 @@ import {
   MarkdownComponentsProvider,
   MockingProvider,
   ReferenceResolver,
+  RouterTypeContext,
 } from '@stoplight/elements-core';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { Node } from '../../types';
 
@@ -129,6 +131,10 @@ const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefi
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) => {
   const ctx = React.useContext(NodeLinkContext);
+  const routerKind = React.useContext(RouterTypeContext);
+
+  const { pathname } = useLocation();
+  const route = pathname.split('#')[0];
 
   try {
     if (href && externalRegex.test(href)) {
@@ -171,21 +177,24 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
-    const [pagePathWithoutHash] = window.location.pathname.split('#');
+    const [pagePathWithoutHash] = pathname.split('#');
 
-    const edge = node.outbound_edges.find(
-      edge =>
-        edge.uri === decodedUrl ||
-        edge.uri === decodedResolvedUriWithoutAnchor ||
-        pagePathWithoutHash === `/${edge.slug}`,
+    let edge = node.outbound_edges.find(
+      edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
     );
 
+    if (!edge) {
+      edge = node.outbound_edges.find(edge => pagePathWithoutHash === `/${edge.slug}`);
+    }
+
     if (edge) {
-      return <Link to={`${edge.slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
+      const slug = routerKind === 'hash' ? `#${route.replace(node.slug, edge.slug)}` : edge.slug;
+      return <Link to={`${slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
     }
   }
 
-  return <a href={href}>{children}</a>;
+  const fullHref = routerKind === 'hash' ? `#${route}${href}` : href;
+  return <a href={fullHref}>{children}</a>;
 };
 
 function getBundledUrl(url: string | undefined) {
