@@ -23,6 +23,7 @@ export const ApiElement = createElementClass(API, {
   tryItCorsProxy: { type: 'string' },
   maxRefDepth: { type: 'number' },
   renderExtensionAddon: { type: 'function' },
+  outerRouter: { type: 'boolean' },
   tryItOutDefaultServer: { type: 'string' },
   useCustomNav: { type: 'boolean' },
 });

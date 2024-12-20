@@ -9,3 +9,7 @@ export function slugify(name: string) {
     .replace(/^-/, '')
     .replace(/-$/, '');
 }
+
+export const resolveRelativeLink = (slug?: string) => {
+  return slug ? slug.replace(/^\//, '') : '.';
+};

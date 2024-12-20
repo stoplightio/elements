@@ -10,13 +10,14 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@jpmorganchase/elemental": "^5.0.2",
     "@stoplight/mosaic": "^1.53.4",
+    "@jpmorganchase/elemental": "^5.0.2",
+    "@jpmorganchase/elemental-dev-portal": "^2.10.0",
     "history": "^5.0.0",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-github-btn": "1.4.0",
-    "react-router-dom": "6.0.0-beta.0"
+    "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.22",

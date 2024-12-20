@@ -129,6 +129,8 @@ export interface CommonAPIProps extends RoutingProps {
    */
   renderExtensionAddon?: ExtensionAddonRenderer;
 
+  outerRouter?: boolean;
+  
   tryItOutDefaultServer?: string;
   useCustomNav?: boolean;
 }
@@ -155,6 +157,8 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCorsProxy,
     maxRefDepth,
     renderExtensionAddon,
+    basePath,
+    outerRouter = false,
     tryItOutDefaultServer,
     useCustomNav,
   } = props;
@@ -250,6 +254,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
           renderExtensionAddon={renderExtensionAddon}
+          basePath={basePath}
+          outerRouter={outerRouter}
           tryItOutDefaultServer={tryItOutDefaultServer}
           useCustomNav={useCustomNav}
           layout={layout}
@@ -272,6 +278,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCorsProxy={tryItCorsProxy}
           renderExtensionAddon={renderExtensionAddon}
           compact={isResponsiveLayoutEnabled}
+          basePath={basePath}
+          outerRouter={outerRouter}
         />
       )}
     </InlineRefResolverProvider>

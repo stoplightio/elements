@@ -2,15 +2,16 @@ import {
   ElementsOptionsProvider,
   ExportButtonProps,
   ParsedDocs,
+  resolveRelativeLink,
   ResponsiveSidebarLayout,
 } from '@jpmorganchase/elemental-core';
 import { ExtensionAddonRenderer } from '@jpmorganchase/elemental-core/components/Docs';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
-import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
+import { computeAPITree, findFirstNodeSlug, isInternal, resolveRelativePath } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
@@ -28,6 +29,8 @@ type SidebarLayoutProps = {
   tryItCorsProxy?: string;
   compact?: number | boolean;
   renderExtensionAddon?: ExtensionAddonRenderer;
+  basePath?: string;
+  outerRouter?: boolean;
 };
 
 export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -46,6 +49,8 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
   renderExtensionAddon,
+  basePath = '/',
+  outerRouter = false,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -53,10 +58,11 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
     [serviceNode, hideSchemas, hideInternal],
   );
   const location = useLocation();
-  const { pathname } = location;
+  const { pathname: currentPath } = location;
+  const relativePath = resolveRelativePath(currentPath, basePath, outerRouter);
 
-  const isRootPath = !pathname || pathname === '/';
-  const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
+  const isRootPath = relativePath === '/';
+  const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === relativePath);
 
   const layoutOptions = React.useMemo(
     () => ({
@@ -76,12 +82,12 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
     const firstSlug = findFirstNodeSlug(tree);
 
     if (firstSlug) {
-      return <Redirect to={firstSlug} />;
+      return <Navigate to={resolveRelativeLink(firstSlug)} replace />;
     }
   }
 
   if (hideInternal && node && isInternal(node)) {
-    return <Redirect to="/" />;
+    return <Navigate to="." replace />;
   }
 
   const handleTocClick = () => {
@@ -101,8 +107,8 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
       {node && (
         <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
           <ParsedDocs
-            key={pathname}
-            uri={pathname}
+            key={relativePath}
+            uri={relativePath}
             node={node}
             nodeTitle={node.name}
             layoutOptions={layoutOptions}

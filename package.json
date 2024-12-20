@@ -27,6 +27,7 @@
     "@storybook/addon-styling-webpack": "0.0.5",
     "@storybook/addon-toolbars": "7.5.3",
     "@storybook/addon-viewport": "7.5.3",
+    "@storybook/addons": "7.5.3",
     "@storybook/react": "7.5.3",
     "@storybook/react-webpack5": "7.5.3",
     "@storybook/theming": "7.5.3",

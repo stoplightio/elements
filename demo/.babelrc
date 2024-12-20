@@ -5,7 +5,8 @@
       "module-resolver",
       {
         "alias": {
-          "@jpmorganchase/elemental": "../packages/elements/src"
+          "@jpmorganchase/elemental": "../packages/elements/src",
+          "@jpmorganchase/elemental-dev-portal": "../packages/elements-dev-portal/src"
         }
       }
     ],

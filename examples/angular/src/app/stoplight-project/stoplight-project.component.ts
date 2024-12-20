@@ -10,4 +10,5 @@ export class StoplightProjectComponent {
   projectId = 'cHJqOjYwNjYx';
   platformUrl = 'https://stoplight.io';
   basePath = environment.basePath ? `${environment.basePath}/stoplight-project` : 'stoplight-project';
+  router = 'history';
 }

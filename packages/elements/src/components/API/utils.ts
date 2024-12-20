@@ -2,6 +2,7 @@ import {
   isHttpOperation,
   isHttpService,
   isHttpWebhookOperation,
+  resolveUrl,
   TableOfContentsGroup,
   TableOfContentsItem,
 } from '@jpmorganchase/elemental-core';
@@ -193,4 +194,13 @@ const addTagGroupsToTree = <T extends GroupableNode>(
       });
     }
   });
+};
+
+export const resolveRelativePath = (currentPath: string, basePath: string, outerRouter: boolean): string => {
+  if (!outerRouter || !basePath || basePath === '/') {
+    return currentPath;
+  }
+  const baseUrl = resolveUrl(basePath);
+  const currentUrl = resolveUrl(currentPath);
+  return baseUrl && currentUrl && baseUrl !== currentUrl ? currentUrl.replace(baseUrl, '') : '/';
 };
