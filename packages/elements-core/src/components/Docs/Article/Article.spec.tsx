@@ -29,10 +29,9 @@ describe('Article', () => {
   });
 
   it('given hash router, should have correct links', () => {
-    location.hash = '#/test';
     const { unmount } = render(<ArticleWithRouter router="hash" data="[abc](#abc)" />);
 
-    expect(screen.getByText(/abc/i)).toHaveAttribute('href', '#/test#abc');
+    expect(screen.getByText(/abc/i)).toHaveAttribute('href', '#abc');
 
     unmount();
   });

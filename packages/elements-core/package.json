@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "8.5.2",
+  "version": "9.0.0",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -79,8 +79,7 @@
     "nanoid": "^3.1.32",
     "prop-types": "^15.7.2",
     "react-query": "^3.34.19",
-    "react-router-dom": "^5.2.0",
-    "react-router-hash-link": "^2.1.0",
+    "react-router-dom": "^6.28.0",
     "tslib": "^2.1.0",
     "urijs": "^1.19.11",
     "util": "^0.12.4",
