@@ -16,7 +16,7 @@ export const Callbacks = ({ callbacks }: ICallbacksProps) => {
         {callbacks?.map(callback => (
           <Panel rounded isCollapsible={true} key={`callback-${callback.id}`}>
             <Panel.Titlebar bg="canvas-300">
-              <Box as="span" role="heading">
+              <Box as="span">
                 {callback.path}
               </Box>
             </Panel.Titlebar>

@@ -126,7 +126,7 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
 
   return (
     <Panel rounded isCollapsible={isCollapsible} defaultIsOpen={!isCollapsible}>
-      <Panel.Titlebar rightComponent={selectedExample ? <CopyButton size="sm" copyValue={selectedExample} /> : null}>
+      <Panel.Titlebar rightComponent={selectedExample ? <CopyButton size="sm" copyValue={selectedExample} /> : null} aria-label="copy example" >
         {examplesSelect || (
           <Text color="body" role="heading">
             Example

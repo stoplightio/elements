@@ -31,7 +31,7 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfServi
   return contactLink || licenseLink || tosLink ? (
     <Panel rounded isCollapsible={false} pos="relative">
       <Panel.Titlebar bg="canvas-300">
-        <span role="heading">Additional Information</span>
+        <span>Additional Information</span>
       </Panel.Titlebar>
 
       <Panel.Content p={0}>
