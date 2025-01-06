@@ -95,3 +95,7 @@
   height: 100%;
   min-height: 36px;
 }
+
+.sl-select div[aria-hidden=true] {
+  display: none;
+}

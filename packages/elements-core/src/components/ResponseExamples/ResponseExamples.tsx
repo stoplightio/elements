@@ -50,7 +50,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={responseExample || ''} />}>
+      <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={responseExample || ''} aria-label="copy response" />}>
         {examplesSelect || <Text color="body">Response Example</Text>}
       </Panel.Titlebar>
       <Panel.Content p={0}>

@@ -90,7 +90,7 @@ export const RequestSamples = React.memo<RequestSamplesProps>(({ request, embedd
 
   return (
     <Panel rounded={embeddedInMd ? undefined : true} isCollapsible={embeddedInMd}>
-      <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} />}>
+      <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={requestSample || ''} aria-label="copy request" />}>
         <Box ml={-2}>
           <Menu
             aria-label="Request Sample Language"
