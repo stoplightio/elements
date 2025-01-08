@@ -67,11 +67,11 @@ const ModelComponent: React.FC<ModelProps> = ({
   );
 
   const modelExamples = !layoutOptions?.hideModelExamples && <ModelExamples data={data} isCollapsible={isCompact} />;
-
+  const isCombineSchema = !!(data.allOf?.length || data.anyOf?.length || data.oneOf?.length);
   const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
   const description = (
     <VStack spacing={10}>
-      {data.description && data.type === 'object' && (
+      {data.description && (data.type === 'object' || (!data.type && isCombineSchema)) && (
         <Box pos="relative">
           <MarkdownViewer role="textbox" markdown={data.description} />
           <NodeAnnotation change={descriptionChanged} />
