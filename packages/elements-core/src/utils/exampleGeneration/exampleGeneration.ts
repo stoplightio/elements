@@ -39,6 +39,7 @@ export const generateExampleFromMediaTypeContent = (
 ) => {
   const textRequestBodySchema = mediaTypeContent?.schema;
   const textRequestBodyExamples = mediaTypeContent?.examples;
+  const textRequestBodyMediaType = mediaTypeContent?.mediaType;
 
   try {
     if (textRequestBodyExamples?.length) {
@@ -56,6 +57,9 @@ export const generateExampleFromMediaTypeContent = (
   } catch (e) {
     console.warn(e);
     return `Example cannot be created for this schema\n${e}`;
+  }
+  if (textRequestBodyMediaType) {
+    return '';
   }
   return undefined;
 };
