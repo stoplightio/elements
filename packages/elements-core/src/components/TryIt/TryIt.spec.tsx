@@ -542,6 +542,30 @@ describe('TryIt', () => {
       expect(parametersHeader).toBeInTheDocument();
     });
 
+    it('shows panel when there is no schema', () => {
+      render(
+        <TryItWithPersistence
+          httpOperation={{
+            ...octetStreamOperation,
+            request: {
+              body: {
+                id: '?http-request-body?',
+                contents: [
+                  {
+                    id: '?http-media-0?',
+                    mediaType: 'application/octet-stream',
+                  },
+                ],
+              },
+            },
+          }}
+        />,
+      );
+
+      let parametersHeader = screen.queryByText('Body');
+      expect(parametersHeader).toBeInTheDocument();
+    });
+
     it('displays file input correctly', () => {
       render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
 
