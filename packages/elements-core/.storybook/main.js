@@ -1,6 +1,6 @@
-import { join } from 'path';
 import config from '../../../.storybook/main';
 
-config.stories = [join(__dirname, '../**/*.stories.{js,jsx,ts,tsx}')];
+// Updated the config to run Storybook in LVDI
+config.stories = ['../src/**/*.stories.@(js|jsx|ts|tsx)'];
 
 export default {...config};
