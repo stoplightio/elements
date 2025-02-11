@@ -15026,10 +15026,10 @@ joi@^17.11.0:
     "@sideway/formula" "^3.0.1"
     "@sideway/pinpoint" "^2.0.0"
 
-jotai@1.3.9:
-  version "1.3.9"
-  resolved "https://registry.npmjs.org/jotai/-/jotai-1.3.9.tgz"
-  integrity sha512-b6DvH9gf+7TfjaboCO54g+C0yhaakIaUBtjLf0dk1p15FWCzNw/93sezdXy9cCaZ8qcEdMLJcjBwQlORmIq29g==
+jotai@2.12.0:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.12.0.tgz#4078d774f2052d4fcf0f02c0dc9525c5bed7aa79"
+  integrity sha512-j5B4NmUw8gbuN7AG4NufWw00rfpm6hexL2CVhKD7juoP2YyD9FEUV5ar921JMvadyrxQhU1NpuKUL3QfsAlVpA==
 
 jotai@^1.4.5:
   version "1.4.7"
