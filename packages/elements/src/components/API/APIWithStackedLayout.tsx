@@ -10,7 +10,6 @@ import { Box, Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stopl
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { OperationNode, ServiceNode } from '../../utils/oas/types';
 import { computeTagGroups, TagGroup } from './utils';
@@ -115,7 +114,9 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
 
 const Group = React.memo<{ group: TagGroup }>(({ group }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const { pathname } = useLocation();
+  const {
+    location: { pathname },
+  } = React.useContext(LocationContext);
 
   const onClick = React.useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
