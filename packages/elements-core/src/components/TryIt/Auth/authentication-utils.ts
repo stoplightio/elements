@@ -9,7 +9,7 @@ import {
   IOauth2SecurityScheme,
 } from '@stoplight/types';
 import { atom, useAtom } from 'jotai';
-import { flatten, isObject } from 'lodash';
+import { flatten, isObject, isPlainObject } from 'lodash';
 import React from 'react';
 
 import { persistAtom } from '../../../utils/jotai/persistAtom';
@@ -68,17 +68,20 @@ const getSecuritySchemeNames = (securitySchemes: HttpSecurityScheme[]): string[]
 
 type SecuritySchemeValues = Dictionary<string>;
 
+const isSecuritySchemeValues = (
+  maybeSecuritySchemeValues: unknown,
+): maybeSecuritySchemeValues is SecuritySchemeValues => isPlainObject(maybeSecuritySchemeValues);
+
 const securitySchemeValuesAtom = persistAtom('TryIt_securitySchemeValues', atom<SecuritySchemeValues>({}));
 export const usePersistedSecuritySchemeWithValues = (): [
-  HttpSecuritySchemeWithValues | undefined,
+  HttpSecuritySchemeWithValues[] | undefined,
   React.Dispatch<HttpSecuritySchemeWithValues | undefined>,
+  React.Dispatch<HttpSecuritySchemeWithValues[] | undefined>,
 ] => {
-  const [currentScheme, setCurrentScheme] = React.useState<HttpSecuritySchemeWithValues | undefined>();
+  const [currentScheme, setCurrentScheme] = React.useState<HttpSecuritySchemeWithValues[] | undefined>();
   const [securitySchemeValues, setSecuritySchemeValues] = useAtom(securitySchemeValuesAtom);
 
   const setPersistedAuthenticationSettings = (securitySchemeWithValues: HttpSecuritySchemeWithValues | undefined) => {
-    setCurrentScheme(securitySchemeWithValues);
-
     if (securitySchemeWithValues) {
       const key = securitySchemeWithValues.scheme.key;
       const value = securitySchemeWithValues.authValue;
@@ -92,18 +95,19 @@ export const usePersistedSecuritySchemeWithValues = (): [
     }
   };
 
-  const persistedSecuritySchemeValue = currentScheme && securitySchemeValues[currentScheme.scheme.key];
-
   const schemeWithPersistedValue = React.useMemo(() => {
     if (!currentScheme) return undefined;
+    return currentScheme.map(scheme => {
+      return {
+        scheme: scheme.scheme,
+        authValue: isSecuritySchemeValues(securitySchemeValues) ? securitySchemeValues[scheme.scheme.key] : undefined,
+      };
+    });
+  }, [currentScheme, securitySchemeValues]);
 
-    if (currentScheme.authValue) return currentScheme;
+  return [schemeWithPersistedValue, setPersistedAuthenticationSettings, setCurrentScheme];
+};
 
-    return {
-      ...currentScheme,
-      authValue: persistedSecuritySchemeValue,
-    };
-  }, [currentScheme, persistedSecuritySchemeValue]);
-
-  return [schemeWithPersistedValue, setPersistedAuthenticationSettings];
+export const createUndefinedValuedSchemes = (schemes: HttpSecurityScheme[]): HttpSecuritySchemeWithValues[] => {
+  return schemes.map(scheme => ({ scheme, authValue: undefined }));
 };

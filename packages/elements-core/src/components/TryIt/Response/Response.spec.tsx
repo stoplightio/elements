@@ -1,11 +1,14 @@
 import '@testing-library/jest-dom';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
+import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { shallow } from 'enzyme';
 import * as React from 'react';
 
+import { ResponseCodeViewer } from './ReponseCodeViewer';
 import { getResponseType, ResponseState, TryItResponse } from './Response';
 
 describe('Response', () => {
@@ -15,6 +18,24 @@ describe('Response', () => {
     jest.resetAllMocks();
   });
 
+  it('shows raw code view with large text', () => {
+    const body = JSON.stringify(
+      Object.fromEntries(new Array(10001).fill(0).map((_, i) => [`prop-${i + 1}`, i + 1])),
+      null,
+      4,
+    );
+    const container = shallow(<ResponseCodeViewer language="json" value={body} />);
+    expect(container.find(CodeViewer).prop('showAsRaw')).toBe(true);
+  });
+  it('shows highlighted code view with normal text', () => {
+    const body = JSON.stringify(
+      Object.fromEntries(new Array(250).fill(0).map((_, i) => [`prop-${i + 1}`, i + 1])),
+      null,
+      4,
+    );
+    const container = shallow(<ResponseCodeViewer language="json" value={body} />);
+    expect(container.find(CodeViewer).prop('showAsRaw')).not.toBe(true);
+  });
   it('displays JSON response', async () => {
     const response: ResponseState = {
       status: 200,
@@ -111,6 +132,16 @@ describe('Response', () => {
     const button = screen.queryByRole('button', { name: /body format/i });
 
     expect(button).not.toBeInTheDocument();
+  });
+
+  it('does not display "No supported" message if there is no body', () => {
+    const response: ResponseState = {
+      status: 200,
+      contentType: 'text/plain',
+      bodyText: '',
+    };
+    const { container } = render(<TryItResponse response={response} />);
+    expect(container).not.toHaveTextContent('No supported response body returned');
   });
 
   it.each([

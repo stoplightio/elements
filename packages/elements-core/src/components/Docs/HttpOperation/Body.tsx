@@ -1,9 +1,10 @@
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
-import { Flex, Select, VStack } from '@stoplight/mosaic';
+import { Box, Flex, NodeAnnotation, Select, VStack } from '@stoplight/mosaic';
 import { IHttpOperationRequestBody } from '@stoplight/types';
 import * as React from 'react';
 
-import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
@@ -11,7 +12,8 @@ import { SectionSubtitle } from '../Sections';
 
 export interface BodyProps {
   body: IHttpOperationRequestBody;
-  onChange: (requestBodyIndex: number) => void;
+  onChange?: (requestBodyIndex: number) => void;
+  isHttpWebhookOperation?: boolean;
 }
 
 export const isBodyEmpty = (body?: BodyProps['body']) => {
@@ -22,12 +24,13 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
   return contents.length === 0 && !description?.trim();
 };
 
-export const Body = ({ body, onChange }: BodyProps) => {
-  const refResolver = useInlineRefResolver();
+export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyProps) => {
+  const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   React.useEffect(() => {
-    onChange(chosenContent);
+    onChange?.(chosenContent);
     // disabling because we don't want to react on `onChange` change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chosenContent]);
@@ -36,6 +39,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
 
   const { contents = [], description } = body;
   const schema = contents[chosenContent]?.schema;
+  const descriptionChanged = nodeHasChanged?.({ nodeId: body.id, attr: 'description' });
 
   return (
     <VStack spacing={6}>
@@ -45,22 +49,28 @@ export const Body = ({ body, onChange }: BodyProps) => {
             <Select
               aria-label="Request Body Content Type"
               value={String(chosenContent)}
-              onChange={(value: string | number) => setChosenContent(parseInt(String(value), 10))}
+              onChange={value => setChosenContent(parseInt(String(value), 10))}
               options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
               size="sm"
             />
           </Flex>
         )}
       </SectionSubtitle>
-
-      {description && <MarkdownViewer markdown={description} />}
-
+      {description && (
+        <Box pos="relative">
+          <MarkdownViewer markdown={description} />
+          <NodeAnnotation change={descriptionChanged} />
+        </Box>
+      )}
       {isJSONSchema(schema) && (
         <JsonSchemaViewer
           resolveRef={refResolver}
+          maxRefDepth={maxRefDepth}
           schema={getOriginalObject(schema)}
-          viewMode="write"
+          viewMode={isHttpWebhookOperation ? 'standalone' : 'write'}
           renderRootTreeLines
+          nodeHasChanged={nodeHasChanged}
+          renderExtensionAddon={renderExtensionAddon}
         />
       )}
     </VStack>

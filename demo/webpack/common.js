@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const absoluteElementsPath = resolve(__dirname, '../../packages/elements/src');
 const absoluteElementsCorePath = resolve(__dirname, '../../packages/elements-core/src');
+const absoluteElementsDevPortalPath = resolve(__dirname, '../../packages/elements-dev-portal/src');
 
 console.log(absoluteElementsPath);
 
@@ -15,6 +16,7 @@ module.exports = {
     alias: {
       '@stoplight/elements': absoluteElementsPath,
       '@stoplight/elements-core': absoluteElementsCorePath,
+      '@stoplight/elements-dev-portal': absoluteElementsDevPortalPath,
     },
     fallback: {
       stream: false,

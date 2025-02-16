@@ -1,20 +1,23 @@
-import { VStack } from '@stoplight/mosaic';
-import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
+import { Box, Callout, NodeAnnotation, VStack } from '@stoplight/mosaic';
+import { HttpSecurityScheme, IHttpEndpointOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
-import { flatten } from 'lodash';
 import * as React from 'react';
 
-import { getReadableSecurityName, shouldIncludeKey } from '../../../utils/oas/security';
-import { getDefaultDescription } from '../../../utils/securitySchemes';
-import { MarkdownViewer } from '../../MarkdownViewer';
+import { operation } from '../../../__fixtures__/operations/simple-get';
+import { OptionalSecurityMessage } from '../../../constants';
+import { useOptionsCtx } from '../../../context/Options';
+import { getReadableSecurityNames, getSecurityGroupId, shouldAddKey } from '../../../utils/oas/security';
 import { SectionSubtitle, SectionTitle, SubSectionPanel } from '../Sections';
+import { PanelContent } from '../Security/PanelContent';
 import { Body, isBodyEmpty } from './Body';
 import { Parameters } from './Parameters';
 
 interface IRequestProps {
-  operation: IHttpOperation;
-  onChange: (requestBodyIndex: number) => void;
+  operation: IHttpEndpointOperation;
+  hideSecurityInfo?: boolean;
+  onChange?: (requestBodyIndex: number) => void;
+  isHttpWebhookOperation?: boolean;
 }
 
 export const Request: React.FunctionComponent<IRequestProps> = ({
@@ -29,12 +32,14 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     } = {},
     security,
   },
+  hideSecurityInfo,
   onChange,
+  isHttpWebhookOperation = false,
 }) => {
   if (!request || typeof request !== 'object') return null;
 
   const bodyIsEmpty = isBodyEmpty(body);
-  const securitySchemes = flatten(security);
+  const securitySchemes = security ?? [];
   const hasRequestData = Boolean(
     securitySchemes.length ||
       pathParams.length ||
@@ -49,13 +54,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     <VStack spacing={8}>
       <SectionTitle title="Request" />
 
-      {securitySchemes.length > 0 && (
-        <VStack spacing={3}>
-          {securitySchemes.map((scheme, i) => (
-            <SecurityPanel key={i} scheme={scheme} includeKey={shouldIncludeKey(securitySchemes, scheme.type)} />
-          ))}
-        </VStack>
-      )}
+      {hideSecurityInfo ? null : <SecuritySchemes schemes={securitySchemes} parentId={operation.id} />}
 
       {pathParams.length > 0 && (
         <VStack spacing={5}>
@@ -85,7 +84,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
         </VStack>
       )}
 
-      {body && <Body onChange={onChange} body={body} />}
+      {body && <Body onChange={onChange} body={body} isHttpWebhookOperation={isHttpWebhookOperation} />}
     </VStack>
   );
 };
@@ -93,19 +92,49 @@ Request.displayName = 'HttpOperation.Request';
 
 const schemeExpandedState = atomWithStorage<Record<string, boolean>>('HttpOperation_security_expanded', {});
 
-const SecurityPanel: React.FC<{ scheme: HttpSecurityScheme; includeKey: boolean }> = ({ scheme, includeKey }) => {
+const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boolean }> = ({ schemes, includeKey }) => {
   const [expandedState, setExpanded] = useAtom(schemeExpandedState);
 
   return (
     <SubSectionPanel
-      title={`Security: ${getReadableSecurityName(scheme, includeKey)}`}
-      defaultIsOpen={!!expandedState[scheme.key]}
-      onChange={isOpen => setExpanded({ ...expandedState, [scheme.key]: isOpen })}
+      title={`Security: ${getReadableSecurityNames(schemes, includeKey)}`}
+      defaultIsOpen={!!expandedState[getReadableSecurityNames(schemes)]}
+      onChange={isOpen => setExpanded({ ...expandedState, [getReadableSecurityNames(schemes)]: isOpen })}
     >
-      <MarkdownViewer
-        style={{ fontSize: 12 }}
-        markdown={`${scheme.description || ''}\n\n` + getDefaultDescription(scheme)}
-      />
+      <Box m={-2}>
+        <PanelContent schemes={schemes} />
+      </Box>
     </SubSectionPanel>
   );
+};
+
+const SecuritySchemes = ({ schemes, parentId }: { schemes: HttpSecurityScheme[][]; parentId: string }) => {
+  const { nodeHasChanged } = useOptionsCtx();
+
+  if (!schemes.length) {
+    return null;
+  }
+
+  const includeOptional = schemes.length > 1 && schemes.some(scheme => scheme.length === 0);
+
+  return (
+    <VStack spacing={3}>
+      {includeOptional && <OptionalMessage />}
+      {schemes
+        .filter(scheme => scheme.length > 0) // Remove the None scheme from listed display
+        .map((scheme, i) => {
+          const secGroupId = getSecurityGroupId(parentId, i);
+          return (
+            <Box pos="relative" key={secGroupId} p={0} data-test="http-operation-security-row">
+              <NodeAnnotation change={nodeHasChanged?.({ nodeId: secGroupId })} />
+              <SecurityPanel schemes={scheme} includeKey={shouldAddKey(scheme, schemes)} />
+            </Box>
+          );
+        })}
+    </VStack>
+  );
+};
+
+const OptionalMessage: React.FC = () => {
+  return <Callout appearance="outline">{OptionalSecurityMessage}</Callout>;
 };

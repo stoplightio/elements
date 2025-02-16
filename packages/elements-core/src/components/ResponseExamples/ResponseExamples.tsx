@@ -1,13 +1,13 @@
-import { Panel, Select, Text } from '@stoplight/mosaic';
+import { CopyButton, Panel, Select, Text } from '@stoplight/mosaic';
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
-import { IHttpOperation, IMediaTypeContent } from '@stoplight/types';
-import React from 'react';
+import { IHttpEndpointOperation, IMediaTypeContent } from '@stoplight/types';
+import * as React from 'react';
 
 import { exceedsSize, useGenerateExampleFromMediaTypeContent } from '../../utils/exampleGeneration/exampleGeneration';
 import { LoadMore } from '../LoadMore';
 
 export interface ResponseExamplesProps {
-  httpOperation: IHttpOperation;
+  httpOperation: IHttpEndpointOperation;
   responseStatusCode?: string;
   responseMediaType?: string;
 }
@@ -42,7 +42,7 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
       aria-label="Response Example"
       value={String(chosenExampleIndex)}
       options={userDefinedExamples.map((example, index) => ({ value: index, label: example.key }))}
-      onChange={(value: string | number) => setChosenExampleIndex(parseInt(String(value), 10))}
+      onChange={value => setChosenExampleIndex(parseInt(String(value), 10))}
       size="sm"
       triggerTextPrefix="Response Example: "
     />
@@ -50,7 +50,9 @@ export const ResponseExamples = ({ httpOperation, responseMediaType, responseSta
 
   return (
     <Panel rounded isCollapsible={false}>
-      <Panel.Titlebar>{examplesSelect || <Text color="body">Response Example</Text>}</Panel.Titlebar>
+      <Panel.Titlebar rightComponent={<CopyButton size="sm" copyValue={responseExample || ''} />}>
+        {examplesSelect || <Text color="body">Response Example</Text>}
+      </Panel.Titlebar>
       <Panel.Content p={0}>
         {show || !exceedsSize(responseExample) ? (
           <CodeViewer

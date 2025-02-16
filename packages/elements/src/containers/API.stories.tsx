@@ -2,11 +2,13 @@ import { parse } from '@stoplight/yaml';
 import { Story } from '@storybook/react';
 import * as React from 'react';
 
+import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
 import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { API, APIProps } from './API';
+import { renderExtensionRenderer } from './story-helper';
 
 export default {
   title: 'Public/API',
@@ -58,12 +60,28 @@ OpenApi3Schema.args = {
 };
 OpenApi3Schema.storyName = 'Open Api 3.0 Schema';
 
+export const BadgesForSchema = Template.bind({});
+BadgesForSchema.args = {
+  apiDescriptionDocument: badgesForSchema,
+};
+BadgesForSchema.storyName = 'Badges For Schema';
+
 export const StackedLayout = Template.bind({});
 StackedLayout.args = {
   apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
   layout: 'stacked',
 };
 StackedLayout.storyName = 'Stacked Layout (Zoom)';
+
+export const ResponsiveLayout = Template.bind({});
+ResponsiveLayout.args = {
+  apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
+  layout: 'responsive',
+};
+ResponsiveLayout.storyName = 'Responsive Layout (Zoom)';
+ResponsiveLayout.parameters = {
+  layout: 'fullscreen',
+};
 
 export const Box = Template.bind({});
 Box.args = {
@@ -90,3 +108,10 @@ Instagram.args = {
   apiDescriptionUrl: 'https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml',
 };
 Instagram.storyName = 'Instagram';
+
+export const WithExtensionRenderer = Template.bind({});
+WithExtensionRenderer.args = {
+  renderExtensionAddon: renderExtensionRenderer,
+  apiDescriptionDocument: zoomApiYaml,
+};
+WithExtensionRenderer.storyName = 'With Extension Renderer';

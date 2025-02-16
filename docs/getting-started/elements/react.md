@@ -1,23 +1,26 @@
 # Getting Started with Elements in React
 
-Learn how to quickly get started with Elements in a React project.
+Learn how to get started with Elements in a React project.
 
 ## Create React App Template
 
-We've created a [Create React App template](https://github.com/stoplightio/cra-template-elements), which allows you to create a brand new Elements website in React without any additional setup.
+Use the [React App template](https://github.com/stoplightio/cra-template-elements) to create a new Elements website in React without any additional setup.
+
+> Note: [The Create React App template only works with version 4 of create-react-app because of Webpack 5 polyfill issues.](https://github.com/facebook/create-react-app/issues/11756)
+> To run it with new create-react-app and Webpack 5 check [Polyfills](#Polyfills) section
 
 ```bash
-npx create-react-app my-dir --template @stoplight/elements
+npx create-react-app@4.0.3 my-dir --template @stoplight/elements
 ```
 
-Then run `cd my-dir` and `yarn start` and you will see a basic Elements website in the browser.
+Then, run `cd my-dir` and `yarn start` to see a basic Elements website in the browser.
 
 ## Manual Setup
 
 To install Elements Dev Portal in an existing React app, follow these instructions.
 
 
-1. Install the [@stoplight/elements](https://www.npmjs.com/package/@stoplight/elements) package with NPM/Yarn.
+1. Install the [`@stoplight/elements`](https://www.npmjs.com/package/@stoplight/elements) package with NPM/Yarn.
 
 ```bash
 yarn add @stoplight/elements
@@ -69,23 +72,11 @@ Now start the development server.
 yarn start
 ```
 
-And you should see the API reference documentation for the Zoom API!
+And you should see the API reference documentation for the Zoom API.
 
 ## Configuration
 
-- `apiDescriptionUrl` - OpenAPI document URL, supporting `http://`, `https://`, and documents containing `$ref` to other http(s) documents.
-- `apiDescriptionDocument` - OpenAPI document, provided as YAML string, JSON string or JavaScript object.
-- `basePath` - Helps when using `router: 'history'` but docs are in a subdirectory like `https://example.com/docs/api`.
-- `hideTryIt` - Pass `true` to hide the "Try It" panel (the interactive API console).
-- `layout` - There are two layouts for Elements:
-  - `sidebar` - (default) Three-column design.
-  - `stacked` - Everything in a single column, making integrations with existing websites that have their own sidebar or other columns already.
-- `logo` - URL to an image that will show as a small square logo next to the title, above the table of contents.
-- `router` -  Determines how navigation should work:
-  - `history` - (default) uses the HTML5 history API to keep the UI in sync with the URL.
-  - `hash` - uses the hash portion of the URL (i.e. window.location.hash) to keep the UI in sync with the URL.
-  - `memory` - keeps the history of your "URL" in memory (does not read or write to the address bar).
-  - `static` - renders using the StaticRouter which can help rendering pages on the server.
+See [Elements Configuration Options](elements-options.md).
 
 ## Examples
 
@@ -118,3 +109,73 @@ const apiDescriptionDocument = {
   router="hash"
 />
 ```
+
+## Polyfills
+Create React App is now using Webpack 5 that doesn't come with node polyfills anymore. Since elements dependencies use `url` and `buffer` packages they need to be added separately. The easiest way to do that is to include [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) in webpack configuration file:
+```js
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+...
+plugins: [
+  // Other plugins...
+  new NodePolyfillPlugin(),
+]
+```
+In case of CRA it can be done either by:
+1. Ejecting CRA configuration:
+- running `npm eject` script
+- installing `node-polyfill-webpack-plugin`
+- adding `NodePolyfillPlugin` to `config/webpack.config.js` as shown above
+
+2. Using `react-app-rewired` package that overrides CRA webpack config without ejecting:
+- installing `react-app-rewired`
+- installing  `node-polyfill-webpack-plugin`
+- overriding default scripts in `package.json`:
+```json
+"scripts": {
+  "start": "react-app-rewired start",
+  "build": "react-app-rewired build",
+  "test": "react-app-rewired test",
+  "eject": "react-scripts eject"
+}
+```
+- creating `config-overrides.js` configuration file in root directory:
+```js
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
+module.exports = function override(config, env) {
+  config.plugins.push(
+    new NodePolyfillPlugin()
+  );
+  return config;
+};
+```
+In case of Docusaurus it can be done by:
+- installing `node-polyfill-webpack-plugin`
+- creating a new file for the plugin such as `./plugins/webpackPolyfillPlugin.js`:
+```js
+// ./plugins/webpackPolyfillPlugin.js
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+
+module.exports = function (context, options) {
+  return {
+    name: 'webpack-polyfill-plugin',
+    configureWebpack(config, isServer, utils) {
+      return {
+        plugins: [new NodePolyfillPlugin()],
+      };
+    },
+  };
+};
+```
+- using the custom plugin in docusaurus configuration:
+```js
+// docusaurus.config.js
+module.exports = {
+  ...
+  plugins: [
+    ...
+    require.resolve('./plugins/webpackPolyfillPlugin'),
+  ],
+};
+```
+Since Docusaurus makes use of SSR when running it with `API`, default `history` (`BrowserRouter`) router should not be used.

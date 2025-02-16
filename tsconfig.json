@@ -4,6 +4,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "baseUrl": "./packages",
+    "lib": ["es2021", "dom"],
     "paths": {
       "@stoplight/elements": ["./elements/src"],
       "@stoplight/elements/*": ["./elements/src/*"],

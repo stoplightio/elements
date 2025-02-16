@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
+import { httpOperation as octetStreamOperation } from '../../__fixtures__/operations/application-octet-stream-post';
 import { httpOperation as base64FileUpload } from '../../__fixtures__/operations/base64-file-upload';
 import { examplesRequestBody, singleExampleRequestBody } from '../../__fixtures__/operations/examples-request-body';
 import { headWithRequestBody } from '../../__fixtures__/operations/head-todos';
@@ -23,6 +24,8 @@ import {
   emptySecurityOperation,
   singleSecurityOperation,
 } from '../../__fixtures__/operations/securedOperation';
+import { httpOperation as basicSecurityOperation } from '../../__fixtures__/operations/security-basic';
+import { httpOperation as bearerSecurityOperation } from '../../__fixtures__/operations/security-bearer';
 import { operation as basicOperation } from '../../__fixtures__/operations/simple-get';
 import { httpOperation as stringNumericEnumOperation } from '../../__fixtures__/operations/string-numeric-enums';
 import { httpOperation as urlEncodedPostOperation } from '../../__fixtures__/operations/urlencoded-post';
@@ -60,7 +63,7 @@ describe('TryIt', () => {
     const requestInit = fetchMock.mock.calls[0][1]!;
     expect(requestInit.method).toMatch(/^get$/i);
     const headers = new Headers(requestInit.headers);
-    expect(headers.get('Content-Type')).toBe('application/json');
+    expect(headers.get('Content-Type')).toBe(null);
   });
 
   it('uses cors proxy url, if provided', async () => {
@@ -202,7 +205,16 @@ describe('TryIt', () => {
           'limit*',
           'super_duper_long_parameter_name_with_unnecessary_text*',
           'completed',
+          'deep_object',
+          'default_style_items',
           'items',
+          'items_not_exploded',
+          'items_pipes',
+          'items_pipes_not_exploded',
+          'items_spaces',
+          'items_spaces_not_exploded',
+          'nested',
+          'nested_not_exploded',
           'optional_value_with_default',
           'type',
           'value',
@@ -230,10 +242,11 @@ describe('TryIt', () => {
       // path param
       const completedField = screen.getByLabelText('completed');
       expect(completedField).toHaveValue('');
+      expect(completedField).toHaveTextContent('select an option');
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      expect(limitField).toHaveTextContent('select an option');
+      expect(limitField).toHaveTextContent('select an option (defaults to: 1)');
 
       const typeField = screen.getByLabelText('type');
       expect(typeField).toHaveTextContent('something');
@@ -269,6 +282,15 @@ describe('TryIt', () => {
       const typeField = screen.getByLabelText('type');
       chooseOption(typeField, 'another');
 
+      const pairsField = screen.getByLabelText('pairs');
+      userEvent.type(pairsField, '{ "nestedKey": "nestedValue" }');
+
+      const pagination = screen.getByLabelText('pagination');
+      userEvent.type(pagination, '{ "first": 50, "after": "cursor" }');
+
+      const itemsField = screen.getByLabelText('items');
+      userEvent.type(itemsField, '["first", "second"]');
+
       // header param
 
       const accountIdField = screen.getByLabelText('account-id');
@@ -293,6 +315,11 @@ describe('TryIt', () => {
       expect(queryParams.get('value')).toBe('1');
       expect(queryParams.get('type')).toBe('another');
       expect(queryParams.get('optional_value_with_default')).toBeNull();
+      expect(queryParams.get('nestedKey')).toBe('nestedValue');
+      expect(queryParams.get('pairs')).toBeNull();
+      expect(queryParams.get('pagination[first]')).toBe('50');
+      expect(queryParams.get('pagination[after]')).toBe('cursor');
+      expect(queryParams.getAll('items')).toEqual(['first', 'second']);
       // assert that headers are passed
       const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
       expect(headers.get('Content-Type')).toBe('application/json');
@@ -331,12 +358,14 @@ describe('TryIt', () => {
         responses: [],
         servers: [
           {
+            id: '?http-server?',
             url: 'https://todos.stoplight.io',
           },
         ],
         request: {
           path: [
             {
+              id: '?http-path-param-todoId?',
               schema: {
                 type: 'string',
               },
@@ -502,6 +531,50 @@ describe('TryIt', () => {
         // c29tZXRoaW5n is "something" encoded as base64
         expect(body.get('someFile')).toBe('c29tZXRoaW5n');
       });
+    });
+  });
+
+  describe('Binary body', () => {
+    it('shows panel when there is file input', () => {
+      render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
+
+      let parametersHeader = screen.queryByText('Body');
+      expect(parametersHeader).toBeInTheDocument();
+    });
+
+    it('displays file input correctly', () => {
+      render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
+
+      const fileField = screen.getByRole('textbox', { name: 'file' }) as HTMLInputElement;
+
+      expect(fileField.placeholder).toMatch(/pick a file/i);
+    });
+
+    it('builds correct application/octet-stream request and send file in the body', async () => {
+      render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
+
+      userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+
+      clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      const request = fetchMock.mock.calls[0];
+      const requestBody = request[1]!.body as File;
+      const headers = new Headers(fetchMock.mock.calls[0][1]!.headers);
+
+      expect(requestBody).toBeInstanceOf(File);
+      expect(requestBody.name).toBe('some-file');
+      expect(headers.get('Content-Type')).toBe('application/octet-stream');
+    });
+
+    it('allows to send empty value', async () => {
+      render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
+
+      clickSend();
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      const body = fetchMock.mock.calls[0][1]!.body as FormData;
+      expect(body).toBeUndefined();
     });
   });
 
@@ -703,7 +776,6 @@ describe('TryIt', () => {
           expect.objectContaining({
             method: 'GET',
             headers: {
-              'Content-Type': 'application/json',
               Prefer: 'code=200',
             },
           }),
@@ -712,9 +784,7 @@ describe('TryIt', () => {
           'https://todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: {},
           }),
         ],
       ]);
@@ -741,9 +811,7 @@ describe('TryIt', () => {
           'https://mock-todos.stoplight.io/todos',
           expect.objectContaining({
             method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: {},
           }),
         ],
       ]);
@@ -804,7 +872,6 @@ describe('TryIt', () => {
         expect.objectContaining({
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
             Prefer: 'code=200',
           },
         }),
@@ -825,7 +892,10 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={emptySecurityOperation} />);
 
         let authPanel = screen.queryByText('Auth');
-        expect(authPanel).not.toBeInTheDocument();
+        expect(authPanel).toBeInTheDocument();
+
+        let noAuthCount = screen.getAllByText('No auth selected').length;
+        expect(noAuthCount).toBe(1);
       });
 
       it("does not show up the Security Schemes select if there's only one schema", () => {
@@ -841,7 +911,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         expect(securitySchemesButton).toHaveTextContent('OAuth 2.0');
@@ -857,13 +927,13 @@ describe('TryIt', () => {
         let securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        let securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         // switch back to API Key
         userEvent.click(securitySchemesButton);
 
-        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key' });
+        securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'API Key (api_key)' })[0];
         userEvent.click(securitySchemes);
 
         APIKeyField = screen.getByLabelText('API Key');
@@ -882,6 +952,147 @@ describe('TryIt', () => {
 
         APIKeyField = screen.getByLabelText('API Key');
         expect(APIKeyField).toHaveValue('123');
+      });
+
+      it('invalidated unsupported security schemes between different operations', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        let usernameInput = screen.getByLabelText('Username');
+        let passwordInput = screen.getByLabelText('Password');
+
+        userEvent.type(usernameInput, 'user');
+        userEvent.type(passwordInput, 'password');
+
+        rerender(<TryItWithPersistence httpOperation={bearerSecurityOperation} />);
+
+        const tokenInput = screen.getByLabelText('Token');
+        userEvent.type(tokenInput, 'Bearer 1234');
+
+        rerender(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        usernameInput = screen.getByLabelText('Username');
+        passwordInput = screen.getByLabelText('Password');
+
+        expect(usernameInput).toBeInTheDocument();
+        expect(passwordInput).toBeInTheDocument();
+      });
+
+      it('keep security schemes between different operations', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
+
+        let usernameInput = screen.getByLabelText('Username');
+        let passwordInput = screen.getByLabelText('Password');
+
+        userEvent.type(usernameInput, 'user');
+        userEvent.type(passwordInput, 'password');
+
+        rerender(<TryItWithPersistence httpOperation={putOperation} />);
+
+        usernameInput = screen.getByLabelText('Username');
+        passwordInput = screen.getByLabelText('Password');
+
+        expect(usernameInput).toHaveValue('user');
+        expect(passwordInput).toHaveValue('password');
+      });
+
+      it('adds key value to menu items if multiple schemes of same security type', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
+        userEvent.click(securitySchemes);
+
+        // switch back to API Key
+        userEvent.click(securitySchemesButton);
+
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+      });
+
+      it('keeps distinct values for multiple schemes of same security type', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        // Fill in 123 for API Key 1
+        let APIKeyField = screen.getByLabelText('API Key');
+        userEvent.type(APIKeyField, '123');
+
+        // Fill in 456 for API Key 2
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key 2');
+        userEvent.type(APIKeyField, '456');
+
+        // switch back to API Key 1 confirm still 123
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key');
+        expect(APIKeyField).toHaveValue('123');
+
+        // switch back to API Key 2 confirm still 456
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
+        userEvent.click(securitySchemes);
+        APIKeyField = screen.getByLabelText('API Key 2');
+        expect(APIKeyField).toHaveValue('456');
+      });
+
+      it('renders AND security correctly in menu item list, retaining values through rerender', () => {
+        const { rerender } = render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        // Select AND security from menu
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key & Basic Auth' });
+        userEvent.click(securitySchemes);
+
+        // Fill in a value from each scheme
+        let APIKeyField = screen.getByLabelText('API Key 2');
+        userEvent.type(APIKeyField, '123');
+
+        let usernameInput = screen.getByLabelText('Username');
+        userEvent.type(usernameInput, 'user');
+
+        // Rerender and confirm values
+        rerender(<TryItWithPersistence httpOperation={putOperation} />);
+
+        APIKeyField = screen.getByLabelText('API Key 2');
+        usernameInput = screen.getByLabelText('Username');
+
+        expect(usernameInput).toHaveValue('user');
+        expect(APIKeyField).toHaveValue('123');
+      });
+
+      it('renders None in the menu if a Optional security auth {} is presented', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
+        userEvent.click(securitySchemes);
+      });
+
+      it('display No auth selected if user chooses None in the menu', () => {
+        render(<TryItWithPersistence httpOperation={putOperation} />);
+
+        let securitySchemesButton = screen.getByLabelText('security-schemes');
+        userEvent.click(securitySchemesButton);
+
+        let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OpenID Connect' });
+        userEvent.click(securitySchemes);
+        let noAuth = screen.queryByText('No auth selected');
+        expect(noAuth).toBe(null);
+
+        userEvent.click(securitySchemesButton);
+        securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
+        userEvent.click(securitySchemes);
+        let noAuthCount = screen.getAllByText('No auth selected').length;
+        expect(noAuthCount).toBe(1);
       });
     });
 
@@ -950,7 +1161,7 @@ describe('TryIt', () => {
         const securitySchemesButton = screen.getByLabelText('security-schemes');
         userEvent.click(securitySchemesButton);
 
-        const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OAuth 2.0' });
+        const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         userEvent.click(securitySchemes);
 
         const tokenInput = screen.getByLabelText('Token');
@@ -1106,6 +1317,24 @@ describe('TryIt', () => {
       expect(serversButton).toHaveTextContent('Development');
     });
 
+    it('shows server variables', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const protoField = screen.getByLabelText('proto');
+      expect(protoField).toBeInTheDocument();
+
+      const prField = screen.getByLabelText('pr');
+      expect(prField).toBeInTheDocument();
+    });
+
     it('sends request to a chosen server url', async () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
@@ -1125,22 +1354,78 @@ describe('TryIt', () => {
       expect(fetchMock.mock.calls[0][0]).toContain('https://todos-dev.stoplight.io');
     });
 
+    it('sends a request using server variable default values', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const todoIdField = screen.getByLabelText('todoId');
+      userEvent.type(todoIdField, '123');
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('http://x-1000.todos-pr.stoplight.io');
+    });
+
+    it('sends a request using server variable modified values', async () => {
+      render(<TryItWithPersistence httpOperation={putOperation} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      const todoIdField = screen.getByLabelText('todoId');
+      userEvent.type(todoIdField, '123');
+
+      const prField = screen.getByLabelText('pr');
+      userEvent.type(prField, '123');
+
+      const protoField = screen.getByLabelText('proto');
+      chooseOption(protoField, 'https');
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('https://x-123.todos-pr.stoplight.io');
+      fetchMock.mockClear();
+
+      userEvent.clear(prField);
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+      expect(fetchMock.mock.calls[0][0]).toContain('https://x-1000.todos-pr.stoplight.io');
+    });
+
     it('Persists chosen server between renders of different operations if URL is the same', async () => {
       const operation1: IHttpOperation = {
         ...basicOperation,
         servers: [
-          { name: 'op 1 server a', url: 'http://url-A.com' },
-          { name: 'op 1 server b', url: 'http://url-B.com' },
-          { name: 'op 1 server c', url: 'http://url-C.com' },
+          { id: '?http-server-a?', description: 'op 1 server a', url: 'http://url-A.com' },
+          { id: '?http-server-b?', description: 'op 1 server b', url: 'http://url-B.com' },
+          { id: '?http-server-c?', description: 'op 1 server c', url: 'http://url-C.com' },
         ],
       };
 
       const operation2: IHttpOperation = {
         ...basicOperation,
         servers: [
-          { name: 'op 2 server d', url: 'http://url-D.com' },
-          { name: 'op 2 server e', url: 'http://url-E.com' },
-          { name: 'op 2 server b', url: 'http://url-B.com' }, // same URL, should preserve this server
+          { id: '?http-server-d?', description: 'op 2 server d', url: 'http://url-D.com' },
+          { id: '?http-server-e?', description: 'op 2 server e', url: 'http://url-E.com' },
+          { id: '?http-server-f?', description: 'op 2 server b', url: 'http://url-B.com' }, // same URL, should preserve this server
         ],
       };
 

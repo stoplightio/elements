@@ -28,7 +28,7 @@ type Complete<T> = {
   [P in keyof Required<T>]: Pick<T, P> extends Required<Pick<T, P>> ? T[P] : T[P] | undefined;
 };
 
-export const createElementClass = <P>(
+export const createElementClass = <P extends Record<string, any>>(
   Component: React.ComponentType<P>,
   propDescriptors: PropDescriptorMap<P>,
 ): new () => HTMLElement => {
@@ -48,13 +48,13 @@ export const createElementClass = <P>(
         this,
         mapValues(propDescriptors, (_, key) => ({
           get: () => {
-            return this._props[key];
+            return this._props[key as keyof P];
           },
           set: (newValue: any) => {
-            if (this._props[key] === newValue) {
+            if (this._props[key as keyof P] === newValue) {
               return;
             }
-            this._props[key] = newValue;
+            this._props[key as keyof P] = newValue;
             this._renderComponent();
             this._safeWriteAttribute(key as keyof P & string, newValue);
           },
@@ -63,11 +63,11 @@ export const createElementClass = <P>(
       );
     }
 
-    attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-      if (propDescriptors[name]) {
+    attributeChangedCallback(name: string) {
+      if (propDescriptors[name as keyof P]) {
         const newPropValue = this._safeReadAttribute(name as keyof P & string);
-        if (!isEqual(this._props[name], newPropValue)) {
-          this._props[name] = newPropValue;
+        if (!isEqual(this._props[name as keyof P], newPropValue)) {
+          this._props[name as keyof P] = newPropValue;
           this._renderComponent();
         }
       }

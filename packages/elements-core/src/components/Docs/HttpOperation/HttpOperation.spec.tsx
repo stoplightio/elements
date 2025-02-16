@@ -1,16 +1,26 @@
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { screen } from '@testing-library/dom';
 import { act, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import * as React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 
 import httpOperation from '../../../__fixtures__/operations/put-todos';
 import requestBody from '../../../__fixtures__/operations/request-body';
+import { ElementsOptionsProvider } from '../../../context/Options';
 import { withPersistenceBoundary } from '../../../context/Persistence';
 import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
 import { chooseOption } from '../../../utils/tests/chooseOption';
+import { renderExtensionRenderer } from '../story-renderer-helper';
 import { HttpOperation as HttpOperationWithoutPersistence } from './index';
 
-const HttpOperation = withMosaicProvider(withPersistenceBoundary(HttpOperationWithoutPersistence));
+const _HttpOperation = withMosaicProvider(withPersistenceBoundary(HttpOperationWithoutPersistence));
+
+const HttpOperation: typeof _HttpOperation = props => (
+  <MemoryRouter>
+    <_HttpOperation {...props} />
+  </MemoryRouter>
+);
 
 /*
 
@@ -50,23 +60,46 @@ describe('HttpOperation', () => {
 
       unmount();
     });
+
+    it('should correctly display with server variables at beginning, middle, and end', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('PR');
+
+      expect(screen.queryAllByText(/{proto}:\/\/x-{pr}.todos-pr.stoplight.io:{port}/)[0]).toBeInTheDocument();
+      unmount();
+    });
   });
 
   describe('Security', () => {
     it('should display security panel for each security scheme', () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
 
-      const apikeyPanel = screen.getByText(/Security: API Key/i);
-      const basicPanel = screen.getByText(/Security: Basic Auth/i);
-      const bearerPanel = screen.getByText(/Security: Bearer Auth/i);
+      const apikeyPanel = screen.getAllByText(/Security: API Key \(api_key\)/i);
+      const apikey2Panel = screen.getByText(/Security: API Key \(api_key2\)/i);
+      const apiMultiplePanel = screen.getByText(/Security: API Key \(api_key\) & API Key \(api_key2\)/i);
+      const basicPanel = screen.getByText(/Security: Basic Auth \(basicKey\)/i);
+      const bearerPanel = screen.getByText(/Security: Bearer Auth \(bearerKey\)/i);
+      const digestPanel = screen.getByText(/Security: Digest Auth \(digest\)/i);
       const oidcPanel = screen.getByText(/Security: OpenID Connect/i);
-      const oauthPanel = screen.getByText(/Security: OAuth 2.0/i);
+      const oauthPanel = screen.getAllByText(/Security: OAuth 2.0/i);
+      const mixedPanel = screen.getByText(/Security: OAuth 2.0 & API Key/i);
 
-      expect(apikeyPanel).toBeInTheDocument();
+      expect(apikeyPanel).toHaveLength(2);
+      expect(apikey2Panel).toBeInTheDocument();
+      expect(apiMultiplePanel).toBeInTheDocument();
       expect(basicPanel).toBeInTheDocument();
       expect(bearerPanel).toBeInTheDocument();
+      expect(digestPanel).toBeInTheDocument();
       expect(oidcPanel).toBeInTheDocument();
-      expect(oauthPanel).toBeInTheDocument();
+      expect(oauthPanel).toHaveLength(2);
+      expect(mixedPanel).toBeInTheDocument();
 
       unmount();
     });
@@ -75,6 +108,7 @@ describe('HttpOperation', () => {
       const security = [
         [
           {
+            id: '?http-security-0?',
             key: 'oauth2WithScopes',
             type: 'oauth2' as const,
             description: 'foo',
@@ -89,7 +123,10 @@ describe('HttpOperation', () => {
               },
             },
           },
+        ],
+        [
           {
+            id: '?http-security-1?',
             key: 'oauth2WithEmptyScopes',
             type: 'oauth2' as const,
             description: 'foo',
@@ -119,7 +156,7 @@ describe('HttpOperation', () => {
     it('should expand on click', () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
 
-      const oauthPanel = screen.getByText(/Security: OAuth 2.0/i);
+      const oauthPanel = screen.getAllByText(/Security: OAuth 2.0/i)[0];
 
       expect(oauthPanel).toBeInTheDocument();
       expect(screen.queryByText('write:pets')).not.toBeInTheDocument();
@@ -127,6 +164,50 @@ describe('HttpOperation', () => {
       act(() => oauthPanel.click());
 
       expect(screen.queryAllByText('write:pets')).toHaveLength(4);
+
+      unmount();
+    });
+
+    it('should display individual descriptions with names when expanding AND security schemes', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
+
+      const oauthPanel = screen.getByText(/Security: OAuth 2.0 & API Key/i);
+      const apiKeysBefore = screen.getAllByText(/API Key/i);
+      const oauthKeysBefore = screen.getAllByText(/OAuth 2.0/i);
+
+      expect(oauthPanel).toBeInTheDocument();
+      expect(screen.queryByText('write:pets')).not.toBeInTheDocument();
+      expect(apiKeysBefore).toHaveLength(7);
+      expect(oauthKeysBefore).toHaveLength(2);
+
+      act(() => oauthPanel.click());
+
+      const apiKeysAfter = screen.getAllByText(/API Key/i);
+      const oauthKeysAfter = screen.getAllByText(/OAuth 2.0/i);
+
+      expect(screen.queryAllByText('write:pets')).toHaveLength(4);
+      expect(apiKeysAfter).toHaveLength(11);
+      expect(oauthKeysAfter).toHaveLength(3);
+
+      unmount();
+    });
+
+    it('should not re-display security name with description when expanding singleton schemes', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation }} />);
+
+      const oauthPanel = screen.getAllByText(/Security: OAuth 2.0/i)[1];
+      const oauthKeysBefore = screen.getAllByText(/OAuth 2.0/i);
+
+      expect(oauthPanel).toBeInTheDocument();
+      expect(screen.queryByText('write:pets')).not.toBeInTheDocument();
+      expect(oauthKeysBefore).toHaveLength(2);
+
+      act(() => oauthPanel.click());
+
+      const oauthKeysAfter = screen.getAllByText(/OAuth 2.0/i);
+
+      expect(screen.queryAllByText('write:pets')).toHaveLength(4);
+      expect(oauthKeysAfter).toHaveLength(2);
 
       unmount();
     });
@@ -142,6 +223,7 @@ describe('HttpOperation', () => {
         request: {
           query: [
             {
+              id: '?http-query-parameter-name?',
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
@@ -155,6 +237,7 @@ describe('HttpOperation', () => {
               style: HttpParamStyles.Form,
               examples: [
                 {
+                  id: '?http-example-0?',
                   value: 'example value',
                   key: 'example key',
                 },
@@ -202,6 +285,7 @@ describe('HttpOperation', () => {
         request: {
           query: [
             {
+              id: '?http-query-default-style-param?',
               name: 'default style param',
               schema: {
                 type: 'string',
@@ -209,6 +293,7 @@ describe('HttpOperation', () => {
               style: HttpParamStyles.Form,
             },
             {
+              id: '?http-query-different-style-param?',
               name: 'different style param',
               schema: {
                 type: 'string',
@@ -237,6 +322,7 @@ describe('HttpOperation', () => {
         request: {
           headers: [
             {
+              id: '?http-header-parameter-name?',
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
@@ -248,6 +334,7 @@ describe('HttpOperation', () => {
               style: HttpParamStyles.Simple,
               examples: [
                 {
+                  id: '?http-example-0?',
                   key: 'example',
                   value: 'example value',
                 },
@@ -298,6 +385,7 @@ describe('HttpOperation', () => {
         request: {
           path: [
             {
+              id: '?http-path-param-parameter-name?',
               name: 'parameter name',
               description: 'a parameter description',
               schema: {
@@ -310,6 +398,7 @@ describe('HttpOperation', () => {
               style: HttpParamStyles.Simple,
               examples: [
                 {
+                  id: '?http-example-example?',
                   key: 'example',
                   value: 'example value',
                 },
@@ -337,8 +426,10 @@ describe('HttpOperation', () => {
       method: 'get',
       request: {
         body: {
+          id: '?http-request-body?',
           contents: [
             {
+              id: '?http-request-body-media-0?',
               mediaType: 'application/json',
               schema: {
                 type: 'object',
@@ -347,16 +438,11 @@ describe('HttpOperation', () => {
                 },
               },
             },
-            { mediaType: 'application/xml' },
+            { id: '?http-request-body-media-1?', mediaType: 'application/xml' },
           ],
         },
       },
-      responses: [
-        {
-          code: '200',
-          description: 'Hello world!',
-        },
-      ],
+      responses: [{ id: '?http-response-200?', code: '200', description: 'Hello world!' }],
     };
 
     const httpOperationWithoutRequestBodyContents = {
@@ -365,16 +451,12 @@ describe('HttpOperation', () => {
       method: 'get',
       request: {
         body: {
+          id: '?http-request-body?',
           description: 'Some body description',
           contents: [],
         },
       },
-      responses: [
-        {
-          code: '200',
-          description: 'Hello world!',
-        },
-      ],
+      responses: [{ id: '?http-response-200?', code: '200', description: 'Hello world!' }],
     };
 
     it('should render select for content type', () => {
@@ -456,10 +538,12 @@ describe('HttpOperation', () => {
       method: 'get',
       responses: [
         {
+          id: '?http-response-200?',
           code: '200',
           description: 'Hello world!',
           contents: [
             {
+              id: '?http-request-body-media-0?',
               mediaType: 'application/json',
               schema: {
                 type: 'object',
@@ -468,7 +552,7 @@ describe('HttpOperation', () => {
                 },
               },
             },
-            { mediaType: 'application/xml' },
+            { id: '?http-request-body-media-1?', mediaType: 'application/xml' },
           ],
         },
       ],
@@ -478,12 +562,7 @@ describe('HttpOperation', () => {
       path: '/',
       id: 'some_id',
       method: 'get',
-      responses: [
-        {
-          code: '200',
-          description: 'Hello world!',
-        },
-      ],
+      responses: [{ id: '?http-response-200?', code: '200', description: 'Hello world!' }],
     };
 
     it('should render the MarkdownViewer with description', async () => {
@@ -540,6 +619,50 @@ describe('HttpOperation', () => {
     });
   });
 
+  describe('Callbacks', () => {
+    it('should display callback operation', async () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('Development');
+
+      //operation name
+      expect(screen.queryByText('newPet')).toBeInTheDocument();
+
+      // operation header
+      expect(screen.queryByText('{$request.body#/newPetAvailableUrl}')).toBeInTheDocument();
+      expect(screen.queryAllByText(/https:\/\/todos-dev.stoplight.io/).length).toEqual(1); // server url visible only in the main operation header, not in callback
+
+      // operation body
+      expect(screen.queryByText('Callback body description')).toBeInTheDocument();
+
+      // operation response
+      expect(screen.queryByText('Your server returns this code if it accepts the callback')).toBeInTheDocument();
+
+      unmount();
+    });
+    it('should display callback selector and switch between events', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
+
+      const select = screen.getByLabelText('Callback');
+
+      expect(select).toHaveTextContent('newPet - {$request.body#/newPetAvailableUrl} - post');
+
+      chooseOption(select, 'returnedPet - {$request.body#/returnedPetAvailableUrl} - post');
+
+      expect(select).toHaveTextContent('returnedPet - {$request.body#/returnedPetAvailableUrl} - post');
+
+      expect(screen.queryByText('returnedPet')).toBeInTheDocument();
+
+      unmount();
+    });
+  });
+
   describe('Visibility', () => {
     it('should hide TryIt', async () => {
       const { unmount } = render(<HttpOperation data={httpOperation} layoutOptions={{ hideTryIt: true }} />);
@@ -555,6 +678,104 @@ describe('HttpOperation', () => {
 
       expect(screen.queryByText('Send API Request')).not.toBeInTheDocument();
       expect(screen.queryByText('Response Example')).not.toBeInTheDocument();
+
+      unmount();
+    });
+    it('should hide Samples', async () => {
+      const { unmount } = render(<HttpOperation data={httpOperation} layoutOptions={{ hideSamples: true }} />);
+
+      expect(screen.queryByText('Request Sample: Shell / cURL')).not.toBeInTheDocument();
+
+      unmount();
+    });
+  });
+
+  describe('Vendor Extensions', () => {
+    it('should call rendorExtensionAddon', async () => {
+      const vendorExtensionRenderer = jest.fn();
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <HttpOperation
+            data={httpOperation}
+            layoutOptions={{
+              hideTryItPanel: true,
+              hideSecurityInfo: true,
+              hideServerInfo: true,
+              hideExport: true,
+              hideTryIt: true,
+              hideSamples: true,
+            }}
+          />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(vendorExtensionRenderer).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          nestingLevel: 1,
+          vendorExtensions: {
+            'x-enum-descriptions': expect.objectContaining({ REMINDER: 'A reminder', TASK: 'A task' }),
+          },
+        }),
+      );
+
+      unmount();
+    });
+
+    it('should display vendor extensions in body', async () => {
+      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+        if ('x-stoplight-info' in props.vendorExtensions) {
+          return <div>Stoplight Information Extension</div>;
+        }
+
+        return null;
+      });
+
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <HttpOperation
+            data={httpOperation}
+            layoutOptions={{
+              hideTryItPanel: true,
+              hideSecurityInfo: true,
+              hideServerInfo: true,
+              hideExport: true,
+              hideTryIt: true,
+              hideSamples: true,
+            }}
+          />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(screen.queryByText('Stoplight Information Extension')).toBeInTheDocument();
+
+      unmount();
+    });
+
+    it('should display vendor extensions', async () => {
+      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+        return renderExtensionRenderer(props);
+      });
+
+      const { unmount } = render(
+        <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
+          <HttpOperation
+            data={httpOperation}
+            layoutOptions={{
+              hideTryItPanel: true,
+              hideSecurityInfo: true,
+              hideServerInfo: true,
+              hideExport: true,
+              hideTryIt: true,
+            }}
+          />
+        </ElementsOptionsProvider>,
+      );
+
+      expect(screen.queryAllByRole('columnheader', { name: /Enum value/i })).toHaveLength(2);
+      expect(screen.queryAllByRole('columnheader', { name: /Description/i })).toHaveLength(2);
+
+      expect(screen.queryByText('A reminder')).toBeInTheDocument();
+      expect(screen.queryByText('A task')).toBeInTheDocument();
 
       unmount();
     });

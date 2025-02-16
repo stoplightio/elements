@@ -5,20 +5,35 @@ export type Branch = {
   slug: string;
   is_default: boolean;
   is_published: boolean;
-  projectId: number;
   name?: string;
+};
+
+export type Branches = {
+  items: Branch[];
 };
 
 export type ProjectTableOfContents = {
   items: TableOfContentsItem[];
   hide_powered_by?: boolean;
+  collapseTableOfContents?: boolean;
 };
 
 export type Node = NodeSummary & {
   data: any;
   links: {
     mock_url?: string;
+    /**
+     * @deprecated use export_original_file_url instead
+     */
     export_url?: string;
+    /**
+     * The URL to export the original file. This is not a bundled output, meaning references are left in place.
+     */
+    export_original_file_url?: string;
+    /**
+     * The URL to export a bundled form of the file. Bundling means references are copied into the output file.
+     */
+    export_bundled_file_url?: string;
   };
   outbound_edges: NodeEdge[];
   inbound_edges: NodeEdge[];

@@ -3,7 +3,7 @@ version: 2.1
 executors:
   cypress-default:
     docker:
-      - image: cypress/base:14.17.0
+      - image: cypress/base:16.18.1
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -11,7 +11,7 @@ executors:
 jobs:
   lint-and-check:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:lts
     steps:
       - checkout
       - run: yarn --frozen-lockfile
@@ -24,8 +24,8 @@ jobs:
   build:
     working_directory: /mnt/ramdisk/project
     docker:
-      - image: circleci/node:12
-    resource_class: large
+      - image: cimg/node:18.20
+    resource_class: xlarge
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
       YARN_CACHE_FOLDER: /mnt/ramdisk/.cache/yarn
@@ -40,14 +40,14 @@ jobs:
             - .cache/Cypress
   build-docs:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:lts
     steps:
       - checkout
       - run: yarn --frozen-lockfile
       - run: yarn build.docs
   run-e2e-tests:
     executor: cypress-default
-    resource_class: large
+    resource_class: xlarge
     working_directory: /mnt/ramdisk/project
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
@@ -86,22 +86,14 @@ jobs:
           destination: screenshots
   lockfile-maintenance:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:lts
     steps:
       - checkout
       - run:
-          command: |
-            git checkout main
-            git pull --ff-only
-            export BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y") && git checkout -b $BRANCH_NAME
-            yarn upgrade
-            git add yarn.lock
-            git commit -m "chore: weekly lockfile maintenance"
-            git push --set-upstream origin $BRANCH_NAME
-            BODY='{"head":''"'${BRANCH_NAME}'"'',"base":"main","title":"Weekly lockfile maintenance"}' && curl -X POST -H "Accept:application/vnd.github.v3+json" -u $GIT_AUTHOR_NAME:$GH_TOKEN https://api.github.com/repos/stoplightio/elements/pulls -d "$BODY"
+          command: weekly_lockfile_maintenance.sh
   release:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:18.20
     steps:
       - checkout
       - run:
@@ -126,11 +118,6 @@ workflows:
           requires:
             - build
       - run-e2e-tests:
-          name: e2e-react-gatsby
-          example-name: react-gatsby
-          requires:
-            - build
-      - run-e2e-tests:
           name: e2e-angular
           example-name: angular
           requires:
@@ -146,7 +133,6 @@ workflows:
             - build
             - build-docs
             - e2e-react-cra
-            - e2e-react-gatsby
             - e2e-static-html
             - e2e-angular
           filters:
@@ -155,11 +141,11 @@ workflows:
                 - main
   perform-lockfile-maintenance:
     triggers:
-        - schedule:
-            cron: "0 3 * * 1"
-            filters:
-              branches:
-                only:
-                  - main
+      - schedule:
+          cron: '0 3 * * 1'
+          filters:
+            branches:
+              only:
+                - main
     jobs:
       - lockfile-maintenance

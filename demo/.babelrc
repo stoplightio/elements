@@ -5,7 +5,8 @@
       "module-resolver",
       {
         "alias": {
-          "@stoplight/elements": "../packages/elements/src"
+          "@stoplight/elements": "../packages/elements/src",
+          "@stoplight/elements-dev-portal": "../packages/elements-dev-portal/src"
         }
       }
     ],

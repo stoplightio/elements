@@ -8,6 +8,7 @@ export const httpOperation: IHttpOperation = {
   summary: 'Update Todo',
   responses: [
     {
+      id: '?http-response-200?',
       code: '200',
       description: '',
       headers: [
@@ -91,6 +92,7 @@ export const httpOperation: IHttpOperation = {
   ],
   servers: [
     {
+      id: '?http-server-todos.stoplight.io?',
       url: 'https://todos.stoplight.io',
     },
   ],
@@ -133,6 +135,85 @@ export const httpOperation: IHttpOperation = {
         },
         name: 'items',
         style: HttpParamStyles.Form,
+      },
+      {
+        schema: {
+          type: 'array',
+          minItems: 1,
+          maxItems: 3,
+        },
+        name: 'items_not_exploded',
+        style: HttpParamStyles.Form,
+        explode: false,
+      },
+      {
+        schema: {
+          type: 'array',
+          minItems: 1,
+          maxItems: 3,
+        },
+        name: 'items_spaces',
+        style: HttpParamStyles.SpaceDelimited,
+      },
+      {
+        schema: {
+          type: 'array',
+          minItems: 1,
+          maxItems: 3,
+        },
+        name: 'items_spaces_not_exploded',
+        style: HttpParamStyles.SpaceDelimited,
+        explode: false,
+      },
+      {
+        schema: {
+          type: 'array',
+          minItems: 1,
+          maxItems: 3,
+        },
+        name: 'items_pipes',
+        style: HttpParamStyles.PipeDelimited,
+      },
+      {
+        schema: {
+          type: 'array',
+          minItems: 1,
+          maxItems: 3,
+        },
+        name: 'items_pipes_not_exploded',
+        style: HttpParamStyles.PipeDelimited,
+        explode: false,
+      },
+      {
+        schema: {
+          type: 'array',
+          minItems: 1,
+          maxItems: 3,
+        },
+        name: 'default_style_items',
+      },
+      {
+        schema: {
+          type: 'object',
+        },
+        name: 'nested',
+        style: HttpParamStyles.Form,
+      },
+      {
+        schema: {
+          type: 'object',
+        },
+        name: 'nested_not_exploded',
+        style: HttpParamStyles.Form,
+        explode: false,
+      },
+      {
+        schema: {
+          type: 'object',
+        },
+        name: 'deep_object',
+        style: HttpParamStyles.DeepObject,
+        explode: true,
       },
       {
         schema: {
@@ -251,6 +332,6 @@ export const httpOperation: IHttpOperation = {
       },
     ],
   },
-};
+} as any;
 
 export default httpOperation;

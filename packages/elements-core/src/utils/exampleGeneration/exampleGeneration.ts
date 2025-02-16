@@ -1,6 +1,6 @@
 import { isPlainObject, safeStringify } from '@stoplight/json';
 import * as Sampler from '@stoplight/json-schema-sampler';
-import { IMediaTypeContent } from '@stoplight/types';
+import { IMediaTypeContent, INodeExample, INodeExternalExample } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 import React from 'react';
 
@@ -16,7 +16,7 @@ export type GenerateExampleFromMediaTypeContentOptions = Sampler.Options;
 export const useGenerateExampleFromMediaTypeContent = (
   mediaTypeContent: IMediaTypeContent | undefined,
   chosenExampleIndex?: number,
-  { skipReadOnly, skipWriteOnly, skipNonRequired }: GenerateExampleFromMediaTypeContentOptions = {},
+  { skipReadOnly, skipWriteOnly, skipNonRequired, ticks }: GenerateExampleFromMediaTypeContentOptions = {},
 ) => {
   const document = useDocument();
   return React.useMemo(
@@ -25,8 +25,9 @@ export const useGenerateExampleFromMediaTypeContent = (
         skipNonRequired,
         skipWriteOnly,
         skipReadOnly,
+        ticks: ticks || 6000,
       }),
-    [mediaTypeContent, document, chosenExampleIndex, skipNonRequired, skipReadOnly, skipWriteOnly],
+    [mediaTypeContent, document, chosenExampleIndex, skipNonRequired, skipWriteOnly, skipReadOnly, ticks],
   );
 };
 
@@ -41,7 +42,13 @@ export const generateExampleFromMediaTypeContent = (
 
   try {
     if (textRequestBodyExamples?.length) {
-      return safeStringify(textRequestBodyExamples?.[chosenExampleIndex]['value'], undefined, 2) ?? '';
+      return (
+        safeStringify(
+          textRequestBodyExamples?.[chosenExampleIndex]['value' as keyof (INodeExample | INodeExternalExample)],
+          undefined,
+          2,
+        ) ?? ''
+      );
     } else if (textRequestBodySchema) {
       const generated = Sampler.sample(textRequestBodySchema, options, document);
       return generated !== null ? safeStringify(generated, undefined, 2) ?? '' : '';
@@ -53,7 +60,7 @@ export const generateExampleFromMediaTypeContent = (
   return '';
 };
 
-export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] => {
+export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: unknown }): Example[] => {
   const examples: Example[] = [];
 
   if (Array.isArray(schema?.examples)) {
@@ -82,6 +89,7 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7): Example[] =
   try {
     const generated = Sampler.sample(schema, {
       maxSampleDepth: 4,
+      ticks: 6000,
     });
 
     return generated !== null

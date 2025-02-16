@@ -1,18 +1,29 @@
-import { Meta, Story } from '@storybook/react';
+import type { ErrorBoundaryProps } from '@stoplight/react-error-boundary';
+import type { Meta, StoryFn } from '@storybook/react';
 import * as React from 'react';
 
-interface HelperReturn<P> {
-  meta: Meta<P>;
-  createStory(name: string, input: Partial<P>): Story<P>;
-  createHoistedStory(input: Partial<P>): Story<P>;
+import { ExtensionAddonRenderer } from './Docs';
+import { wrapOptionsContext } from './story-renderer-helper';
+
+type DocsProps = { data: any; renderExtensionAddon?: ExtensionAddonRenderer } & ErrorBoundaryProps;
+
+type storyOptions = DocsProps & { layoutOptions?: object };
+
+interface HelperReturn<P extends DocsProps> {
+  meta: Meta<DocsProps>;
+  createStory(name: string, input: storyOptions): StoryFn<P>;
+  createHoistedStory(input: storyOptions): StoryFn<P>;
 }
 
-export const createStoriesForDocsComponent = <P>(
-  Component: React.ComponentType<P>,
+export const createStoriesForDocsComponent = (
+  Component: React.ComponentType<DocsProps>,
   title?: string,
-): HelperReturn<P> => {
-  const createStory = (name: string, input: Partial<P>) => {
-    const story: Story<P> = args => React.createElement(Component, args);
+): HelperReturn<DocsProps> => {
+  const createStory = (name: string, input: storyOptions) => {
+    const story: StoryFn<DocsProps> = (args: any) => {
+      const component = React.createElement(Component, args);
+      return wrapOptionsContext(component);
+    };
     story.args = input;
     story.storyName = name;
     return story;
@@ -21,7 +32,7 @@ export const createStoriesForDocsComponent = <P>(
     meta: {
       title: `Internal/Docs/${title || Component.displayName}`,
       component: Component,
-      argTypes: {
+      argTypes: <HelperReturn<DocsProps>['meta']['argTypes']>{
         data: {
           control: { type: 'object' },
         },

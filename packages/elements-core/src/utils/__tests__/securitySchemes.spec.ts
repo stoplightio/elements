@@ -14,7 +14,12 @@ describe('getDefaultDescription()', () => {
       scopes: { 'scope:implicit': 'implicit scope description', 'scope:read': 'read scope description' },
     };
 
-    const description = getDefaultDescription({ key: 'oauth2-implicit', type: 'oauth2', flows: { implicit: flow } });
+    const description = getDefaultDescription({
+      id: 'http-security-oauth2-implicit',
+      key: 'oauth2-implicit',
+      type: 'oauth2',
+      flows: { implicit: flow },
+    });
 
     expect(description).toMatchInlineSnapshot(`
       "**Implicit OAuth Flow**
@@ -36,6 +41,7 @@ describe('getDefaultDescription()', () => {
     };
 
     const description = getDefaultDescription({
+      id: 'http-security-oauth2-authorizationCode',
       key: 'oauth2-authorizationCode',
       type: 'oauth2',
       flows: { authorizationCode: flow },
@@ -62,6 +68,7 @@ describe('getDefaultDescription()', () => {
     };
 
     const description = getDefaultDescription({
+      id: 'http-security-oauth2-clientCredentials',
       key: 'oauth2-clientCredentials',
       type: 'oauth2',
       flows: { clientCredentials: flow },
@@ -84,6 +91,7 @@ describe('getDefaultDescription()', () => {
     };
 
     const description = getDefaultDescription({
+      id: 'http-security-oauth2-password',
       key: 'oauth2-password',
       type: 'oauth2',
       flows: { password: flow },
@@ -98,4 +106,32 @@ describe('getDefaultDescription()', () => {
       - \`scope:password\` - password scope description"
     `);
   });
+
+  it('should handle api key flow with roles', () => {
+    const description = getDefaultDescription({
+      id: 'security-apikey-access-token',
+      key: 'apikey-access-token',
+      type: 'apiKey',
+      name: 'access_token',
+      in: 'query',
+      extensions: { ['x-scopes']: ['image:read', 'user:read'] },
+    });
+
+    expect(description).toContain('Roles: `image:read`, `user:read`');
+  });
+
+  it.each<'bearer' | 'basic' | 'digest'>(['bearer', 'basic', 'digest'])(
+    'should handle http %s flow with roles',
+    scheme => {
+      const description = getDefaultDescription({
+        id: 'security-http-access-token',
+        key: 'http-access-token',
+        type: 'http',
+        scheme,
+        extensions: { ['x-scopes']: ['image:read', 'user:read'] },
+      });
+
+      expect(description).toContain('Roles: `image:read`, `user:read`');
+    },
+  );
 });

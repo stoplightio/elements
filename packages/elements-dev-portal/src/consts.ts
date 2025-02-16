@@ -25,7 +25,7 @@ export const devPortalCacheKeys = {
     [...devPortalCacheKeys.branchNode(projectId, branch, node), 'details'] as const,
 
   search: () => [...devPortalCacheKeys.all, 'search'],
-  searchNodes: (filters: { projectIds?: string[]; workspaceId?: string; search?: string }) => [
+  searchNodes: (filters: { projectIds?: string[]; branchSlug?: string; workspaceId?: string; search?: string }) => [
     ...devPortalCacheKeys.search(),
     filters,
   ],

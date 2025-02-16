@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
 
 import { screen } from '@testing-library/dom';
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
+import { TextDecoder, TextEncoder } from 'util';
 
 import { withPersistenceBoundary } from '../../../context/Persistence';
 import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
@@ -23,19 +24,33 @@ const sampleRequest = {
   ],
   queryString: [],
   cookies: [],
+  postData: {
+    mimeType: 'multipart/form-data',
+    params: [
+      {
+        name: 'file',
+        fileName: 'example.jpeg',
+        contentType: 'image.jpeg',
+      },
+    ],
+  },
   headersSize: 678,
-  bodySize: 0,
+  bodySize: -1,
 };
+
+globalThis.TextEncoder = TextEncoder;
+// @ts-ignore
+globalThis.TextDecoder = TextDecoder;
 
 describe('RequestSend', () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  it('Displays basic CURL request', () => {
+  it('Displays basic CURL request', async () => {
     const { container } = render(<RequestSamples request={sampleRequest} />);
 
-    expect(container).toHaveTextContent('curl');
+    await waitFor(() => expect(container).toHaveTextContent('curl'));
     expect(container).toHaveTextContent('POST');
     expect(container).toHaveTextContent('https://google.com');
     expect(container).toHaveTextContent('max-age=0');
@@ -45,7 +60,7 @@ describe('RequestSend', () => {
     const { container } = render(<RequestSamples request={sampleRequest} />);
     await chooseLanguage('JavaScript', 'Axios');
 
-    expect(container).toHaveTextContent('axios');
+    await waitFor(() => expect(container).toHaveTextContent('axios'));
     expect(container).toHaveTextContent('POST');
     expect(container).toHaveTextContent('https://google.com');
     expect(container).toHaveTextContent('max-age=0');
@@ -60,7 +75,7 @@ describe('RequestSend', () => {
     const { container } = render(<RequestSamples request={sampleRequest} />);
     const langSelector = getLanguageSelectorButton();
     expect(langSelector).toHaveTextContent(/axios/i);
-    expect(container).toHaveTextContent('axios');
+    await waitFor(() => expect(container).toHaveTextContent('axios'));
   });
 
   it('allows to change lang/lib after rerender', async () => {
@@ -83,7 +98,17 @@ describe('RequestSend', () => {
     await chooseLanguage('Obj-C');
 
     expect(langSelector).toHaveTextContent(/obj-c/i);
-    expect(container).toHaveTextContent('#import <Foundation/Foundation.h>');
+    await waitFor(() => expect(container).toHaveTextContent('#import <Foundation/Foundation.h>'));
+  });
+
+  it('adds multipart form data to js/fetch request', async () => {
+    const { container } = render(<RequestSamples request={sampleRequest} />);
+    const langSelector = getLanguageSelectorButton();
+    await chooseLanguage('JavaScript', 'Fetch');
+
+    expect(langSelector).toHaveTextContent(/javascript/i);
+    expect(langSelector).toHaveTextContent(/fetch/i);
+    await waitFor(() => expect(container).toHaveTextContent('options.body = form;'));
   });
 });
 

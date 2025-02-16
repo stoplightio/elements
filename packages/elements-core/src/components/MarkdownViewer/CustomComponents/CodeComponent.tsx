@@ -3,12 +3,17 @@ import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation, IHttpRequest, NodeType } from '@stoplight/types';
-import { isObject } from 'lodash';
+import { isPlainObject, isString } from 'lodash';
 import React from 'react';
 import URI from 'urijs';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../../../constants';
-import { useInlineRefResolver } from '../../../context/InlineRefResolver';
+import {
+  InlineRefResolverProvider,
+  useInlineRefResolver,
+  useSchemaInlineRefResolver,
+} from '../../../context/InlineRefResolver';
+import { useOptionsCtx } from '../../../context/Options';
 import { PersistenceContextProvider } from '../../../context/Persistence';
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { JSONSchema } from '../../../types';
@@ -21,11 +26,9 @@ type PartialHttpRequest = Pick<IHttpRequest, 'method' | 'url'> & Partial<IHttpRe
 
 function isPartialHttpRequest(maybeHttpRequest: unknown): maybeHttpRequest is PartialHttpRequest {
   return (
-    isObject(maybeHttpRequest) &&
-    'method' in maybeHttpRequest &&
-    typeof maybeHttpRequest['method'] === 'string' &&
-    'url' in maybeHttpRequest &&
-    typeof maybeHttpRequest['url'] === 'string'
+    isPlainObject(maybeHttpRequest) &&
+    isString((maybeHttpRequest as PartialHttpRequest).method) &&
+    isString((maybeHttpRequest as PartialHttpRequest).url)
   );
 }
 
@@ -35,7 +38,9 @@ interface ISchemaAndDescriptionProps {
 }
 
 const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptionProps) => {
-  const resolveRef = useInlineRefResolver();
+  const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
+  const { renderExtensionAddon } = useOptionsCtx();
+
   const title = titleProp ?? schema.title;
   return (
     <Box py={2}>
@@ -48,7 +53,12 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
         </Flex>
       )}
 
-      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(schema)} />
+      <JsonSchemaViewer
+        resolveRef={resolveRef}
+        maxRefDepth={maxRefDepth}
+        schema={getOriginalObject(schema)}
+        renderExtensionAddon={renderExtensionAddon}
+      />
     </Box>
   );
 };
@@ -58,6 +68,8 @@ export { DefaultSMDComponents };
 export const CodeComponent: CustomComponentMapping['code'] = props => {
   const { title, jsonSchema, http, resolved, children } = props;
 
+  const resolver = useInlineRefResolver();
+
   const value = resolved || String(Array.isArray(children) ? children[0] : children);
   const parsedValue = useParsedValue(value);
 
@@ -66,11 +78,19 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
       return null;
     }
 
-    return <SchemaAndDescription title={title} schema={parsedValue} />;
+    return (
+      <InlineRefResolverProvider
+        document={parsedValue}
+        resolver={resolver?.resolver}
+        maxRefDepth={resolver?.maxRefDepth}
+      >
+        <SchemaAndDescription title={title} schema={parsedValue} />
+      </InlineRefResolverProvider>
+    );
   }
 
   if (http) {
-    if (!isObject(parsedValue) || (!isPartialHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
+    if (!isPlainObject(parsedValue) || (!isPartialHttpRequest(parsedValue) && !isHttpOperation(parsedValue))) {
       return null;
     }
 
@@ -95,11 +115,12 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
     id: '?http-operation-id?',
     method: data.method,
     path: uri.is('absolute') ? uri.path() : data.url,
-    servers: [{ url: uri.is('absolute') ? uri.origin() : data.baseUrl || '' }],
+    servers: [{ id: `?http-server-${uri.href()}?`, url: uri.is('absolute') ? uri.origin() : data.baseUrl || '' }],
     request: {
       query: Object.entries(data.query || {}).map(([key, value]) => {
         const defaultVal = Array.isArray(value) ? value[0] : value;
         return {
+          id: `?http-query-${key}-id?`,
           name: key,
           style: HttpParamStyles.Form,
           schema: { default: defaultVal },
@@ -107,12 +128,14 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
         };
       }),
       headers: Object.entries(data.headers || {}).map(([key, value]) => ({
+        id: `?http-header-${key}-id?`,
         name: key,
         style: HttpParamStyles.Simple,
         schema: { default: value },
         required: isHttpRequestParamRequired(value),
       })),
       path: pathParam?.map(name => ({
+        id: `?http-param-${name}-id?`,
         name,
         style: HttpParamStyles.Simple,
         required: true,
@@ -120,8 +143,10 @@ export function parseHttpRequest(data: PartialHttpRequest): IHttpOperation {
       ...(data.body
         ? {
             body: {
+              id: '?http-request-body?',
               contents: [
                 {
+                  id: '?http-request-body-media?',
                   mediaType: 'application/json',
                   schema: { default: data.body },
                 },

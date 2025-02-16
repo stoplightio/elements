@@ -1,6 +1,7 @@
 import { HttpSecurityScheme } from '@stoplight/types';
 
 export const apiKey: HttpSecurityScheme = {
+  id: '?http-security-apiKey?',
   key: 'apiKey',
   type: 'apiKey',
   in: 'query',
@@ -8,6 +9,7 @@ export const apiKey: HttpSecurityScheme = {
 };
 
 export const oauth: HttpSecurityScheme = {
+  id: '?http-security-oauth_scheme?',
   key: 'oauth_scheme',
   type: 'oauth2',
   flows: {

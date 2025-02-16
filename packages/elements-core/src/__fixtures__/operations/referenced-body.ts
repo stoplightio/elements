@@ -9,11 +9,13 @@ export const httpOperation: IHttpOperation & { __bundled__: unknown } = {
   summary: 'Create Todo',
   responses: [
     {
+      id: '?http-response-201?',
       code: '201',
       description: '',
       headers: [],
       contents: [
         {
+          id: '?http-media-0?',
           mediaType: 'application/json',
           schema: {
             title: 'Todo Partial',
@@ -25,11 +27,16 @@ export const httpOperation: IHttpOperation & { __bundled__: unknown } = {
       ],
     },
   ],
-  servers: [{ url: 'https://todos.stoplight.io' }, { url: 'http://todos.stoplight.io' }],
+  servers: [
+    { id: '?http-server-0?', url: 'https://todos.stoplight.io' },
+    { id: '?http-server-1?', url: 'http://todos.stoplight.io' },
+  ],
   request: {
     body: {
+      id: '?http-request-body?',
       contents: [
         {
+          id: '?http-media-1?',
           mediaType: 'application/json',
           schema: {
             $ref: '#/__bundled__/schema',
@@ -38,7 +45,12 @@ export const httpOperation: IHttpOperation & { __bundled__: unknown } = {
       ],
     },
   },
-  tags: [{ name: 'Todos' }],
+  tags: [
+    {
+      id: '?http-tags-todos?',
+      name: 'Todos',
+    },
+  ],
   __bundled__: {
     schema: {
       title: 'Todo Partial',
