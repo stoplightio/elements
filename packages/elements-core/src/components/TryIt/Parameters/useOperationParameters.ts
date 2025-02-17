@@ -6,7 +6,6 @@ import * as React from 'react';
 import ExamplesContext from '../../../context/ExamplesContext';
 import { filterOutAuthorizationParams } from '../Auth/authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
-import { persistedParameterValuesAtom } from './persistedParameterValuesState';
 
 const persistedParameterValuesAtom = atom({});
 export const useRequestParameters = (httpOperation: IHttpEndpointOperation) => {
