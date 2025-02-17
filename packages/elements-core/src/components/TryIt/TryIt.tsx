@@ -1,12 +1,11 @@
-import { useAtom } from 'jotai';
-import * as React from 'react';
-import ExamplesContext from '../../context/ExamplesContext';
 import { Box, Button, HStack, Icon, Menu, MenuItems, Panel, useThemeIsDark } from '@stoplight/mosaic';
 import type { IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
-
+import { useAtom } from 'jotai';
+import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
+import ExamplesContext from '../../context/ExamplesContext';
 import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/IServer';
 import { RequestSamples } from '../RequestSamples';
 import { TryItAuth } from './Auth/Auth';
@@ -137,7 +136,7 @@ export const TryIt: React.FC<TryItProps> = ({
     const exists = currentUrl && servers.find(s => s.url === currentUrl);
     if (!exists) {
       setChosenServer(firstServer);
-    } else if (exists.id !== chosenServer.id) {
+    } else if (exists.id !== chosenServer?.id) {
       setChosenServer(exists);
     }
   }, [servers, firstServer, chosenServer, setChosenServer, tryItOutDefaultServer]);
