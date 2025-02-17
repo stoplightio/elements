@@ -4,9 +4,8 @@ import type {
   Oas2HttpServiceTransformer,
   Oas3HttpEndpointOperationTransformer,
   Oas3HttpServiceTransformer,
-  OPERATION_CONFIG,
-  WEBHOOK_CONFIG,
 } from '@stoplight/http-spec/oas';
+import { OPERATION_CONFIG, WEBHOOK_CONFIG } from '@stoplight/http-spec/oas';
 import { transformOas2Operation, transformOas2Service } from '@stoplight/http-spec/oas2';
 import { transformOas3Operation, transformOas3Service } from '@stoplight/http-spec/oas3';
 import { encodePointerFragment, pointerToPath } from '@stoplight/json';
