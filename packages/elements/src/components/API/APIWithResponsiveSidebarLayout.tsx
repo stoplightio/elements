@@ -1,4 +1,4 @@
-import { ExportButtonProps, ParsedDocs, ResponsiveSidebarLayout } from '@stoplight/elements-core';
+import { ExportButtonProps, ParsedDocs, ResponsiveSidebarLayout } from '@jpmorganchase/elemental-core';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
