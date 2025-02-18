@@ -4037,6 +4037,26 @@
   dependencies:
     eslint-config-prettier "^8.3.0"
 
+"@stoplight/http-spec@^6.0.0":
+  version "6.0.3"
+  resolved "https://registry.npmjs.org/@stoplight/http-spec/-/http-spec-6.0.3.tgz#f6caffbce918d08b0d2c1fd2d8d5a4cc1df5afa8"
+  integrity sha512-ED5kELP/5QH/SdKsFVx4EYUcE8FRjnDeiAx7ipHOk97t1pKgPhxH1wsvrQG3wL9TlNm0YQLLniE9Y3I6ZARJzA==
+  dependencies:
+    "@stoplight/json" "^3.18.1"
+    "@stoplight/json-schema-generator" "1.0.2"
+    "@stoplight/types" "14.0.0"
+    "@types/json-schema" "7.0.11"
+    "@types/swagger-schema-official" "~2.0.22"
+    "@types/type-is" "^1.6.3"
+    fnv-plus "^1.3.1"
+    lodash.isequalwith "^4.4.0"
+    lodash.pick "^4.4.0"
+    lodash.pickby "^4.6.0"
+    openapi3-ts "^2.0.2"
+    postman-collection "^4.1.2"
+    tslib "^2.6.2"
+    type-is "^1.6.18"
+
 "@stoplight/http-spec@^7.0.2":
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/@stoplight/http-spec/-/http-spec-7.0.2.tgz#010f10d1f721b0f6265ae3a851d0f41f62df0875"
@@ -4328,6 +4348,14 @@
     shelljs "0.8.x"
     tslib "^2.2.0"
 
+"@stoplight/types@14.0.0", "@stoplight/types@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0.tgz#f444490664c2c16d5f06265fcbac8d94a33481e8"
+  integrity sha512-w7Ejau6TaB7RqR0vWzGJSdmgLEYD2frjgbHPZoxgGQwAq/R8Qh/D9p9Bl9JFdii+YTL5xoDjyX0c1WDRlbMV8g==
+  dependencies:
+    "@types/json-schema" "^7.0.4"
+    utility-types "^3.10.0"
+
 "@stoplight/types@14.1.0":
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.1.0.tgz#36b04488acc1d8ab5bb712416f50d3bc99610b34"
@@ -4348,14 +4376,6 @@
   version "13.7.0"
   resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-13.7.0.tgz#717d9e3ef068e8f143d045e9bc89b97da06933c4"
   integrity sha512-7ePIccfTxjEhruv8VrkDv5whP5qd9ijRzAWEbjYpUYnDfaqPTfq8/wMMjMCAKIecboxsAVD9LZy/3puXddGsDQ==
-  dependencies:
-    "@types/json-schema" "^7.0.4"
-    utility-types "^3.10.0"
-
-"@stoplight/types@^14.0.0":
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/@stoplight/types/-/types-14.0.0.tgz#f444490664c2c16d5f06265fcbac8d94a33481e8"
-  integrity sha512-w7Ejau6TaB7RqR0vWzGJSdmgLEYD2frjgbHPZoxgGQwAq/R8Qh/D9p9Bl9JFdii+YTL5xoDjyX0c1WDRlbMV8g==
   dependencies:
     "@types/json-schema" "^7.0.4"
     utility-types "^3.10.0"
@@ -8104,7 +8124,7 @@ ci-info@^2.0.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
-ci-info@^3.2.0:
+ci-info@^3.2.0, ci-info@^3.6.1:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.9.0.tgz#4279a62028a7b1f262f3473fc9605f5e218c59b4"
   integrity sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==
@@ -11181,6 +11201,15 @@ fs-extra@^7.0.1:
   integrity sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==
   dependencies:
     graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
+
+fs-extra@^8.0.0, fs-extra@^8.1:
+  version "8.1.0"
+  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
+  integrity sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==
+  dependencies:
+    graceful-fs "^4.2.0"
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
@@ -14686,6 +14715,11 @@ lodash.isequal@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
 
+lodash.isequalwith@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/lodash.isequalwith/-/lodash.isequalwith-4.4.0.tgz#266726ddd528f854f21f4ea98a065606e0fbc6b0"
+  integrity sha512-dcZON0IalGBpRmJBmMkaoV7d3I80R2O+FrzsZyHdNSFrANq/cgDqKQNmAHE8UEj4+QYWwwhkQOVdLHiAopzlsQ==
+
 lodash.ismatch@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.ismatch/-/lodash.ismatch-4.4.0.tgz#756cb5150ca3ba6f11085a78849645f188f85f37"
@@ -14734,6 +14768,16 @@ lodash.once@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
+
+lodash.pick@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
+  integrity sha512-hXt6Ul/5yWjfklSGvLQl8vM//l3FtyHZeuelpzK6mm99pNvN9yTDruNZPEJZD1oWrqo+izBmB7oUfWgcCX7s4Q==
+
+lodash.pickby@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.npmjs.org/lodash.pickby/-/lodash.pickby-4.6.0.tgz#7dea21d8c18d7703a27c704c15d3b84a67e33aff"
+  integrity sha512-AZV+GsS/6ckvPOVQPXSiFFacKvKB4kOQu6ynt9wz0F3LO4R9Ij4K1ddYsIytDpSgLz88JHd9P+oaLeej5/Sl7Q==
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -15794,6 +15838,11 @@ node-fetch-native@^1.4.0:
   resolved "https://registry.yarnpkg.com/node-fetch-native/-/node-fetch-native-1.4.1.tgz#5a336e55b4e1b1e72b9927da09fecd2b374c9be5"
   integrity sha512-NsXBU0UgBxo2rQLOeWNZqS3fvflWePMECr8CoSWoSTqCqGbVVsvl9vZu1HfQicYN0g5piV9Gh8RTEvo/uP752w==
 
+node-fetch@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+
 node-fetch@2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
@@ -15801,7 +15850,7 @@ node-fetch@2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-fetch@^2.0.0, node-fetch@^2.6.12:
+node-fetch@^2.0.0, node-fetch@^2.6.1, node-fetch@^2.6.12, node-fetch@^2.6.7:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
@@ -16912,6 +16961,13 @@ path-is-absolute@^1.0.0:
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   integrity sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
 
+path-is-network-drive@^1.0.21:
+  version "1.0.21"
+  resolved "https://registry.npmjs.org/path-is-network-drive/-/path-is-network-drive-1.0.21.tgz#7c40e72b1b3750b4aa7f7f40e94a35be7b33bcfd"
+  integrity sha512-B1PzE3CgxNKY0/69Urjw3KNi4K+4q4IBsvq02TwURsdNLZj2YUn0HGw2o26IrGV4YUffg7IHZiwKJ/EDhXMQyg==
+  dependencies:
+    tslib "^2"
+
 path-key@^2.0.0, path-key@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/path-key/-/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
@@ -16935,10 +16991,10 @@ path-scurry@^1.10.1, path-scurry@^1.6.1:
     lru-cache "^9.1.1 || ^10.0.0"
     minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
 
-path-strip-sep@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/path-strip-sep/-/path-strip-sep-1.0.17.tgz#3b7dd4f461cf73a9277333f50289ce9b00cffba3"
-  integrity sha512-+2zIC2fNgdilgV7pTrktY6oOxxZUo9x5zJYfTzxsGze5kSGDDwhA5/0WlBn+sUyv/WuuyYn3OfM+Ue5nhdQUgA==
+path-strip-sep@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.npmjs.org/path-strip-sep/-/path-strip-sep-1.0.18.tgz#243d9257ea85b872db826922ea16905e523187e1"
+  integrity sha512-IGC/vjHigvKV9RsE4ArZiGNkqNrb0tk1j/HO0TS49duEUqGSy1y464XhCWyTLFwqe7w7wFsdCX9fqUmAHoUaxA==
   dependencies:
     tslib "^2"
 
@@ -20805,6 +20861,16 @@ untildify@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/untildify/-/untildify-4.0.0.tgz#2bc947b953652487e4600949fb091e3ae8cd919b"
   integrity sha512-KK8xQ1mkzZeg9inewmFVDNkg3l5LUhoq9kN6iWYB/CC9YMG8HA+c1Q8HwDe6dEX7kErrEVNVBO3fWsVq5iDgtw==
+
+upath2@^3.1.13:
+  version "3.1.20"
+  resolved "https://registry.npmjs.org/upath2/-/upath2-3.1.20.tgz#3a914d15b95c7675b0bc552afdc0c679912ff8a8"
+  integrity sha512-g+t9q+MrIsX60eJzF4I/YNYmRmrT0HJnnEaenbUy/FFO1lY04YQoiJ/qS4Ou+a+D9WUPxN0cVUYXkkX9b1EAMw==
+  dependencies:
+    "@types/node" "*"
+    path-is-network-drive "^1.0.21"
+    path-strip-sep "^1.0.18"
+    tslib "^2"
 
 upath@2.0.1:
   version "2.0.1"
