@@ -342,6 +342,7 @@ export const TryIt: React.FC<TryItProps> = ({
           <RequestBody
             examples={mediaTypeContent.examples ?? []}
             requestBody={textRequestBody}
+            showExamplesDropdown={!hideInlineExamples || allParameters.length === 0}
             onChange={setTextRequestBody}
           />
         ) : null}
