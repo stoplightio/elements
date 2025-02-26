@@ -11,7 +11,7 @@ import {
   withRouter,
   withStyles,
 } from '@jpmorganchase/elemental-core';
-import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
+import { ExtensionAddonRenderer } from '@jpmorganchase/elemental-core/components/Docs';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
 import * as React from 'react';

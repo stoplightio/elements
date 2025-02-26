@@ -1,4 +1,4 @@
-import { ElementsOptionsProvider } from '@stoplight/elements-core/context/Options';
+import { ElementsOptionsProvider } from '@jpmorganchase/elemental-core/context/Options';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { Box } from '@stoplight/mosaic';
 import * as React from 'react';
