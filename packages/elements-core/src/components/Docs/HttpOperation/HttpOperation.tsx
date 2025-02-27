@@ -79,6 +79,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         responseStatusCode={responseStatusCode}
         requestBodyIndex={requestBodyIndex}
         hideTryIt={layoutOptions?.hideTryIt}
+        hideTryItPanel={layoutOptions?.hideTryItPanel}
         hideSamples={layoutOptions?.hideSamples}
         tryItCredentialsPolicy={tryItCredentialsPolicy}
         mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
@@ -95,15 +96,13 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             <NodeAnnotation change={descriptionChanged} />
           </Box>
         )}
-
         <NodeVendorExtensions data={data} />
-
         <Request
           onChange={setTextRequestBodyIndex}
           operation={data}
           hideSecurityInfo={layoutOptions?.hideSecurityInfo}
+          isHttpWebhookOperation={isHttpWebhookOperation(data)}
         />
-
         {data.responses && (
           <Responses
             responses={data.responses}
@@ -112,9 +111,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             isCompact={isCompact}
           />
         )}
-
         {data.callbacks?.length ? <Callbacks callbacks={data.callbacks} isCompact={isCompact} /> : null}
-
         {isCompact && tryItPanel}
       </VStack>
     );
@@ -159,8 +156,8 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
 
   const pathElem = (
     <Flex overflowX="hidden" fontSize="lg" userSelect="all">
-      <Box dir="rtl" textOverflow="truncate" overflowX="hidden">
-        <Box as="span" color="muted" dir="ltr" style={{ unicodeBidi: 'bidi-override' }}>
+      <Box dir="ltr" textOverflow="truncate" overflowX="hidden">
+        <Box as="span" dir="ltr" color="muted" style={{ unicodeBidi: 'bidi-override' }}>
           {chosenServerUrl}
         </Box>
         <Box as="span" fontWeight="semibold" flex={1}>

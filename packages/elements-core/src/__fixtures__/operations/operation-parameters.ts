@@ -209,6 +209,14 @@ export const httpOperation: IHttpOperation = {
       },
       {
         schema: {
+          type: 'object',
+        },
+        name: 'deep_object',
+        style: HttpParamStyles.DeepObject,
+        explode: true,
+      },
+      {
+        schema: {
           type: 'boolean',
           description: 'Only return completed',
         },

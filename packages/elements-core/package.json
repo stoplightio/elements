@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "8.4.2",
+  "version": "9.0.0",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -62,7 +62,7 @@
     "@stoplight/json-schema-ref-parser": "^9.2.7",
     "@stoplight/json-schema-sampler": "0.3.0",
     "@stoplight/json-schema-tree": "^4.0.0",
-    "@stoplight/json-schema-viewer": "4.16.1",
+    "@stoplight/json-schema-viewer": "4.16.3",
     "@stoplight/markdown-viewer": "^5.7.1",
     "@stoplight/mosaic": "^1.53.4",
     "@stoplight/mosaic-code-editor": "^1.53.4",
@@ -79,8 +79,7 @@
     "nanoid": "^3.1.32",
     "prop-types": "^15.7.2",
     "react-query": "^3.34.19",
-    "react-router-dom": "^5.2.0",
-    "react-router-hash-link": "^2.1.0",
+    "react-router-dom": "^6.28.0",
     "tslib": "^2.1.0",
     "urijs": "^1.19.11",
     "util": "^0.12.4",

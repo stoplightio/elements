@@ -26,7 +26,7 @@ interface BuildRequestInput {
   mediaTypeContent: IMediaTypeContent | undefined;
   parameterValues: Dictionary<string, string>;
   serverVariableValues: Dictionary<string, string>;
-  bodyInput?: BodyParameterValues | string;
+  bodyInput?: BodyParameterValues | string | File;
   mockData?: MockData;
   auth?: HttpSecuritySchemeWithValues[];
   chosenServer?: IServer | null;
@@ -71,7 +71,7 @@ export const getQueryParams = ({
 
     const explode = param.explode ?? true;
 
-    if (param.schema?.type === 'object' && param.style === 'form' && value) {
+    if (param.schema?.type === 'object' && value) {
       let nested: Dictionary<string, string>;
       try {
         nested = JSON.parse(value);
@@ -80,15 +80,26 @@ export const getQueryParams = ({
         throw new Error(`Cannot use param value "${value}". JSON object expected.`);
       }
 
-      if (explode) {
-        acc.push(...Object.entries(nested).map(([name, value]) => ({ name, value: value.toString() })));
+      if (param.style === 'form') {
+        if (explode) {
+          acc.push(...Object.entries(nested).map(([name, value]) => ({ name, value: value.toString() })));
+        } else {
+          acc.push({
+            name: param.name,
+            value: Object.entries(nested)
+              .map(entry => entry.join(','))
+              .join(','),
+          });
+        }
+      } else if (param.style === 'deepObject') {
+        acc.push(
+          ...Object.entries(nested).map(([name, value]) => ({
+            name: `${param.name}[${name}]`,
+            value: value.toString(),
+          })),
+        );
       } else {
-        acc.push({
-          name: param.name,
-          value: Object.entries(nested)
-            .map(entry => entry.join(','))
-            .join(','),
-        });
+        acc.push({ name: param.name, value });
       }
     } else if (param.schema?.type === 'array' && value) {
       let nested: string[];
@@ -152,7 +163,10 @@ export async function buildFetchRequest({
   const urlObject = new URL(serverUrl + expandedPath);
   urlObject.search = new URLSearchParams(queryParamsWithAuth.map(nameAndValueObjectToPair)).toString();
 
-  const body = typeof bodyInput === 'object' ? await createRequestBody(mediaTypeContent, bodyInput) : bodyInput;
+  const body =
+    typeof bodyInput === 'object' && !(bodyInput instanceof File)
+      ? await createRequestBody(mediaTypeContent, bodyInput)
+      : bodyInput;
 
   const acceptedMimeTypes = getAcceptedMimeTypes(httpOperation);
   const headers = {
@@ -279,23 +293,33 @@ export async function buildHarRequest({
   if (shouldIncludeBody && typeof bodyInput === 'string') {
     postData = { mimeType, text: bodyInput };
   }
-  if (shouldIncludeBody && typeof bodyInput === 'object') {
-    postData = {
-      mimeType,
-      params: Object.entries(bodyInput).map(([name, value]) => {
-        if (value instanceof File) {
-          return {
-            name,
-            fileName: value.name,
-            contentType: value.type,
-          };
-        }
-        return {
-          name,
-          value,
+
+  if (shouldIncludeBody) {
+    if (typeof bodyInput === 'object') {
+      if (mimeType === 'application/octet-stream' && bodyInput instanceof File) {
+        postData = {
+          mimeType,
+          text: `@${bodyInput.name}`,
         };
-      }),
-    };
+      } else {
+        postData = {
+          mimeType,
+          params: Object.entries(bodyInput).map(([name, value]) => {
+            if (value instanceof File) {
+              return {
+                name,
+                fileName: value.name,
+                contentType: value.type,
+              };
+            }
+            return {
+              name,
+              value,
+            };
+          }),
+        };
+      }
+    }
   }
 
   return {
