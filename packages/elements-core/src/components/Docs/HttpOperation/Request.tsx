@@ -1,5 +1,5 @@
 import { Box, Callout, NodeAnnotation, VStack } from '@stoplight/mosaic';
-import { HttpSecurityScheme, IHttpOperation } from '@stoplight/types';
+import { HttpSecurityScheme, IHttpEndpointOperation } from '@stoplight/types';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import * as React from 'react';
@@ -14,8 +14,8 @@ import { Body, isBodyEmpty } from './Body';
 import { Parameters } from './Parameters';
 
 interface IRequestProps {
-  operation: IHttpOperation;
-  onChange: (requestBodyIndex: number) => void;
+  operation: IHttpEndpointOperation;
+  onChange?: (requestBodyIndex: number) => void;
 }
 
 export const Request: React.FunctionComponent<IRequestProps> = ({

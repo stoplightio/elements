@@ -1,10 +1,12 @@
-import { IHttpOperation, IHttpService, NodeType } from '@stoplight/types';
+import { IHttpOperation, IHttpService, IHttpWebhookOperation, NodeType } from '@stoplight/types';
 import { JSONSchema7 } from 'json-schema';
 
 export enum NodeTypes {
   Paths = 'paths',
   Path = 'path',
   Operation = 'operation',
+  Webhooks = 'webhooks',
+  Webhook = 'webhook',
   Components = 'components',
   Models = 'models',
   Model = 'model',
@@ -26,6 +28,7 @@ type Node<T, D> = {
 };
 
 export type ServiceNode = Node<NodeType.HttpService, IHttpService> & { children: ServiceChildNode[] };
-export type ServiceChildNode = OperationNode | SchemaNode;
+export type ServiceChildNode = OperationNode | WebhookNode | SchemaNode;
 export type OperationNode = Node<NodeType.HttpOperation, IHttpOperation>;
+export type WebhookNode = Node<NodeType.HttpWebhook, IHttpWebhookOperation>;
 export type SchemaNode = Node<NodeType.Model, JSONSchema7>;

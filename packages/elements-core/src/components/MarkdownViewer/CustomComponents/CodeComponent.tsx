@@ -8,7 +8,11 @@ import React from 'react';
 import URI from 'urijs';
 
 import { NodeTypeColors, NodeTypeIconDefs } from '../../../constants';
-import { InlineRefResolverProvider, useInlineRefResolver, useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
+import {
+  InlineRefResolverProvider,
+  useInlineRefResolver,
+  useSchemaInlineRefResolver,
+} from '../../../context/InlineRefResolver';
 import { PersistenceContextProvider } from '../../../context/Persistence';
 import { useParsedValue } from '../../../hooks/useParsedValue';
 import { JSONSchema } from '../../../types';
@@ -35,7 +39,7 @@ interface ISchemaAndDescriptionProps {
 }
 
 const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptionProps) => {
-  const resolveRef = useSchemaInlineRefResolver();
+  const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
   const title = titleProp ?? schema.title;
   return (
     <Box py={2}>
@@ -48,7 +52,7 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
         </Flex>
       )}
 
-      <JsonSchemaViewer resolveRef={resolveRef} schema={getOriginalObject(schema)} />
+      <JsonSchemaViewer resolveRef={resolveRef} maxRefDepth={maxRefDepth} schema={getOriginalObject(schema)} />
     </Box>
   );
 };
@@ -69,7 +73,11 @@ export const CodeComponent: CustomComponentMapping['code'] = props => {
     }
 
     return (
-      <InlineRefResolverProvider document={parsedValue} resolver={resolver}>
+      <InlineRefResolverProvider
+        document={parsedValue}
+        resolver={resolver?.resolver}
+        maxRefDepth={resolver?.maxRefDepth}
+      >
         <SchemaAndDescription title={title} schema={parsedValue} />
       </InlineRefResolverProvider>
     );

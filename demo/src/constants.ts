@@ -16,7 +16,7 @@ export const EXAMPLE_SPECS = [
   },
   {
     text: 'Box',
-    value: 'https://raw.githubusercontent.com/box/box-openapi/main/content/openapi.yml',
+    value: 'https://raw.githubusercontent.com/box/box-openapi/main/openapi.json',
   },
   {
     text: 'CircleCI',
@@ -25,6 +25,10 @@ export const EXAMPLE_SPECS = [
   {
     text: 'GitHub',
     value: 'https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/ghes-3.0/ghes-3.0.json',
+  },
+  {
+    text: 'Instagram',
+    value: 'https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml',
   },
   {
     text: 'Linode',
@@ -39,11 +43,15 @@ export const EXAMPLE_SPECS = [
     value: 'https://api.apis.guru/v2/specs/nytimes.com/article_search/1.0.0/openapi.yaml',
   },
   {
+    text: 'Museum API',
+    value: 'https://raw.githubusercontent.com/Redocly/museum-openapi-example/main/openapi.yaml',
+  },
+  {
     text: 'Plaid',
     value: 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/plaid/openapi.yaml',
   },
   {
-    text: 'Instagram',
-    value: 'https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml',
+    text: 'Train Travel API',
+    value: 'https://raw.githubusercontent.com/bump-sh-examples/train-travel-api/main/openapi.yaml',
   },
 ];

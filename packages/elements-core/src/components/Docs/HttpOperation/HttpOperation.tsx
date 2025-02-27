@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, HStack, NodeAnnotation, useThemeIsDark, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
-import { IHttpOperation } from '@stoplight/types';
+import { IHttpEndpointOperation, IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
 import { useAtomValue } from 'jotai/utils';
 import * as React from 'react';
@@ -10,6 +10,7 @@ import { MockingContext } from '../../../containers/MockingProvider';
 import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { useIsCompact } from '../../../hooks/useIsCompact';
+import { isHttpOperation, isHttpWebhookOperation } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
@@ -19,7 +20,7 @@ import { Callbacks } from './Callbacks';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-export type HttpOperationProps = DocsComponentProps<IHttpOperation> & { isCallback?: boolean };
+export type HttpOperationProps = DocsComponentProps<IHttpEndpointOperation> & { isCallback?: boolean };
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
   ({
@@ -32,7 +33,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
     tryItOutDefaultServer,
   }) => {
     const { nodeHasChanged } = useOptionsCtx();
-    const data = useResolvedObject(unresolvedData) as IHttpOperation;
+    const data = useResolvedObject(unresolvedData) as IHttpEndpointOperation;
     const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
     const mocking = React.useContext(MockingContext);
@@ -46,6 +47,30 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
     const prettyName = (data.summary || data.iid || '').trim();
     const hasBadges = isDeprecated || isInternal;
 
+    let path: string;
+    if (isHttpOperation(data)) {
+      path = data.path;
+    } else if (isHttpWebhookOperation(data)) {
+      path = data.name;
+    } else {
+      throw new RangeError('unsupported node type');
+    }
+
+    const header = (
+      <OperationHeader
+        id={data.id}
+        method={data.method}
+        path={path}
+        noHeading={layoutOptions?.noHeading}
+        hasBadges={hasBadges}
+        name={prettyName}
+        isDeprecated={isDeprecated}
+        isInternal={isInternal}
+        hideServerUrl={!isHttpOperation(data)}
+        isCallback={isCallback}
+      />
+    );
+
     const tryItPanel = !layoutOptions?.hideTryItPanel && (
       <TryItWithRequestSamples
         httpOperation={data}
@@ -53,25 +78,11 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         responseStatusCode={responseStatusCode}
         requestBodyIndex={requestBodyIndex}
         hideTryIt={layoutOptions?.hideTryIt}
-        hideInlineExamples={layoutOptions?.hideInlineExamples}
         tryItCredentialsPolicy={tryItCredentialsPolicy}
         mockUrl={mocking.hideMocking ? undefined : mocking.mockUrl}
         corsProxy={tryItCorsProxy}
+        hideInlineExamples={layoutOptions?.hideInlineExamples}
         tryItOutDefaultServer={tryItOutDefaultServer}
-      />
-    );
-
-    const header = (
-      <OperationHeader
-        id={data.id}
-        method={data.method}
-        path={data.path}
-        noHeading={layoutOptions?.noHeading}
-        hasBadges={hasBadges}
-        name={prettyName}
-        isDeprecated={isDeprecated}
-        isInternal={isInternal}
-        isCallback={isCallback}
       />
     );
 
@@ -95,7 +106,9 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             isCompact={isCompact}
           />
         )}
-        {data.callbacks && <Callbacks callbacks={data.callbacks} />}
+
+        {data.callbacks?.length ? <Callbacks callbacks={data.callbacks} isCompact={isCompact} /> : null}
+
         {isCompact && tryItPanel}
       </VStack>
     );
@@ -117,9 +130,9 @@ export const HttpOperation = withErrorBoundary<HttpOperationProps>(HttpOperation
   recoverableProps: ['data'],
 });
 
-type MethodPathProps = { method: IHttpOperation['method']; path: string };
+type MethodPathProps = { method: IHttpOperation['method']; path: string; hideServerUrl?: boolean };
 
-function MethodPath({ method, path, isCallback }: MethodPathProps & { isCallback?: boolean }) {
+function MethodPath({ method, path, hideServerUrl, isCallback }: MethodPathProps & { isCallback?: boolean }) {
   const chosenServer = useAtomValue(chosenServerAtom);
 
   let chosenServerUrl = '';
@@ -129,7 +142,7 @@ function MethodPath({ method, path, isCallback }: MethodPathProps & { isCallback
 
   return (
     <Box>
-      <MethodPathInner method={method} path={path} chosenServerUrl={chosenServerUrl} />
+      <MethodPathInner method={method} path={path} chosenServerUrl={hideServerUrl ? '' : chosenServerUrl} />
     </Box>
   );
 }
@@ -180,23 +193,25 @@ function MethodPathInner({ method, path, chosenServerUrl }: MethodPathProps & { 
   );
 }
 
-function OperationHeader({
+export function OperationHeader({
   id,
   noHeading,
   hasBadges,
   name,
   isDeprecated,
   isInternal,
+  hideServerUrl,
   method,
   path,
   isCallback,
 }: {
   id: string;
   noHeading?: boolean;
-  hasBadges: boolean;
-  name: string;
+  hasBadges?: boolean;
+  name?: string;
   isDeprecated?: boolean;
   isInternal?: boolean;
+  hideServerUrl?: boolean;
   method: string;
   path: string;
   isCallback?: boolean;
@@ -229,7 +244,7 @@ function OperationHeader({
       </Box>
 
       <Box pos="relative">
-        <MethodPath method={method} path={path} isCallback={isCallback} />
+        <MethodPath method={method} path={path} hideServerUrl={hideServerUrl} isCallback={isCallback} />
         <NodeAnnotation change={lineTwoChanged} />
       </Box>
     </VStack>

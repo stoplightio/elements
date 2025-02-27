@@ -19,13 +19,13 @@ export function useGetNodes({
   branch?: string;
   pause?: boolean;
 }) {
-  const { platformUrl, platformAuthToken } = React.useContext(PlatformContext);
+  const { platformUrl, platformAuthToken, isLoggedIn } = React.useContext(PlatformContext);
   const [debounceSearch] = useDebounce(search, 500);
   return useQuery(
     [
       ...devPortalCacheKeys.searchNodes({ projectIds, branchSlug: branch, workspaceId, search: debounceSearch }),
       platformUrl,
-      platformAuthToken,
+      isLoggedIn,
     ],
     () =>
       getNodes({ workspaceId, projectIds, branchSlug: branch, search: debounceSearch, platformUrl, platformAuthToken }),

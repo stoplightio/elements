@@ -8,7 +8,7 @@ import {
   withStyles,
 } from '@jpmorganchase/elemental-core';
 import * as React from 'react';
-import { Link, Redirect, Route, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, Route, Switch, useHistory, useParams } from 'react-router-dom';
 
 import { BranchSelector } from '../components/BranchSelector';
 import { DevPortalProvider } from '../components/DevPortalProvider';
@@ -98,6 +98,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
     projectId,
     branchSlug,
   });
+
   const container = React.useRef<HTMLDivElement>(null);
 
   if (!nodeSlug && isTocFetched && tableOfContents?.items) {
@@ -152,10 +153,10 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({
       ref={container}
       sidebar={
         <>
-          {branches && branches.length > 1 ? (
+          {branches && branches.items.length > 1 ? (
             <BranchSelector
               branchSlug={branchSlug}
-              branches={branches}
+              branches={branches.items}
               onChange={branch => {
                 const encodedBranchSlug = encodeURIComponent(branch.slug);
                 history.push(branch.is_default ? `/${nodeSlug}` : `/branches/${encodedBranchSlug}/${nodeSlug}`);
@@ -192,17 +193,19 @@ const StoplightProjectRouter = ({
     <DevPortalProvider platformUrl={platformUrl}>
       <RouterTypeContext.Provider value={router}>
         <Router {...routerProps} key={basePath}>
-          <Route path="/branches/:branchSlug/:nodeSlug" exact>
-            <StoplightProjectImpl {...props} />
-          </Route>
+          <Switch>
+            <Route path="/branches/:branchSlug/:nodeSlug+" exact>
+              <StoplightProjectImpl {...props} />
+            </Route>
 
-          <Route path="/:nodeSlug" exact>
-            <StoplightProjectImpl {...props} />
-          </Route>
+            <Route path="/:nodeSlug+" exact>
+              <StoplightProjectImpl {...props} />
+            </Route>
 
-          <Route path="/" exact>
-            <StoplightProjectImpl {...props} />
-          </Route>
+            <Route path="/" exact>
+              <StoplightProjectImpl {...props} />
+            </Route>
+          </Switch>
         </Router>
       </RouterTypeContext.Provider>
     </DevPortalProvider>

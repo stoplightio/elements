@@ -70,7 +70,7 @@ describe('HttpOperation', () => {
 
       expect(serversButton).toHaveTextContent('PR');
 
-      expect(screen.queryByText(/{proto}:\/\/x-{pr}.todos-pr.stoplight.io:{port}/)).toBeInTheDocument();
+      expect(screen.queryAllByText(/{proto}:\/\/x-{pr}.todos-pr.stoplight.io:{port}/)[0]).toBeInTheDocument();
       unmount();
     });
   });
@@ -612,6 +612,50 @@ describe('HttpOperation', () => {
       chooseOption(select, 'application/xml');
 
       expect(screen.queryByText('some_property')).not.toBeInTheDocument();
+
+      unmount();
+    });
+  });
+
+  describe('Callbacks', () => {
+    it('should display callback operation', async () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
+
+      const serversButton = screen.getByRole('button', { name: /server/i });
+      userEvent.click(serversButton);
+
+      const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
+      userEvent.click(enableItem);
+
+      expect(serversButton).toHaveTextContent('Development');
+
+      //operation name
+      expect(screen.queryByText('newPet')).toBeInTheDocument();
+
+      // operation header
+      expect(screen.queryByText('{$request.body#/newPetAvailableUrl}')).toBeInTheDocument();
+      expect(screen.queryAllByText(/https:\/\/todos-dev.stoplight.io/).length).toEqual(1); // server url visible only in the main operation header, not in callback
+
+      // operation body
+      expect(screen.queryByText('Callback body description')).toBeInTheDocument();
+
+      // operation response
+      expect(screen.queryByText('Your server returns this code if it accepts the callback')).toBeInTheDocument();
+
+      unmount();
+    });
+    it('should display callback selector and switch between events', () => {
+      const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
+
+      const select = screen.getByLabelText('Callback');
+
+      expect(select).toHaveTextContent('newPet - {$request.body#/newPetAvailableUrl} - post');
+
+      chooseOption(select, 'returnedPet - {$request.body#/returnedPetAvailableUrl} - post');
+
+      expect(select).toHaveTextContent('returnedPet - {$request.body#/returnedPetAvailableUrl} - post');
+
+      expect(screen.queryByText('returnedPet')).toBeInTheDocument();
 
       unmount();
     });

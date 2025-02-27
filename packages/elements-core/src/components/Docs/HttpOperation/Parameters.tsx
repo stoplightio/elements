@@ -35,7 +35,7 @@ const defaultStyle = {
 
 export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameters, parameterType }) => {
   const { nodeHasChanged } = useOptionsCtx();
-  const refResolver = useSchemaInlineRefResolver();
+  const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
 
   const schema = React.useMemo(
     () => httpOperationParamsToSchema({ parameters, parameterType }),
@@ -44,7 +44,15 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
 
   if (!schema) return null;
 
-  return <JsonSchemaViewer resolveRef={refResolver} schema={schema} disableCrumbs nodeHasChanged={nodeHasChanged} />;
+  return (
+    <JsonSchemaViewer
+      resolveRef={refResolver}
+      maxRefDepth={maxRefDepth}
+      schema={schema}
+      disableCrumbs
+      nodeHasChanged={nodeHasChanged}
+    />
+  );
 };
 Parameters.displayName = 'HttpOperation.Parameters';
 
@@ -78,7 +86,12 @@ const httpOperationParamsToSchema = ({ parameters, parameterType }: ParametersPr
     const paramDescription = description || paramSchema.description;
 
     const paramDeprecated = !!(deprecated || paramSchema.deprecated);
-    const paramStyle = style && defaultStyle[parameterType] !== style ? readableStyles[style] || style : undefined;
+    const paramStyleUnspecified = style === HttpParamStyles.Unspecified;
+    const paramStyle = paramStyleUnspecified
+      ? undefined
+      : style && defaultStyle[parameterType] !== style
+      ? readableStyles[style] || style
+      : undefined;
 
     if (isPlainObject(schema.properties)) {
       schema.properties![p.name] = {
