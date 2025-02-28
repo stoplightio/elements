@@ -166,7 +166,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
-  const { nodeHasChanged } = useOptionsCtx();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
   const schema = responseContent?.schema;
@@ -217,6 +217,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               parentCrumbs={['responses', response.code]}
               renderRootTreeLines
               nodeHasChanged={nodeHasChanged}
+              renderExtensionAddon={renderExtensionAddon}
             />
           )}
         </>

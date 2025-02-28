@@ -6,6 +6,7 @@ import {
   ParsedDocs,
   TryItWithRequestSamples,
 } from '@jpmorganchase/elemental-core';
+import { ExtensionAddonRenderer } from '@jpmorganchase/elemental-core/components/Docs';
 import { Box, Flex, Heading, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import cn from 'classnames';
@@ -34,6 +35,7 @@ type StackedLayoutProps = {
   tryItCorsProxy?: string;
   showPoweredByLink?: boolean;
   location: Location;
+  renderExtensionAddon?: ExtensionAddonRenderer;
   tryItOutDefaultServer?: string;
 };
 
@@ -73,6 +75,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  renderExtensionAddon,
   showPoweredByLink = true,
   location,
   tryItOutDefaultServer,
@@ -102,6 +105,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
               layoutOptions={{ showPoweredByLink, hideExport }}
               exportProps={exportProps}
               tryItCredentialsPolicy={tryItCredentialsPolicy}
+              renderExtensionAddon={renderExtensionAddon}
               tryItOutDefaultServer={tryItOutDefaultServer}
             />
           </Box>

@@ -14,6 +14,7 @@ import { isHttpOperation, isHttpWebhookOperation } from '../../../utils/guards';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { chosenServerAtom, TryItWithRequestSamples } from '../../TryIt';
 import { DocsComponentProps } from '..';
+import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { TwoColumnLayout } from '../TwoColumnLayout';
 import { DeprecatedBadge, InternalBadge } from './Badges';
 import { Callbacks } from './Callbacks';
@@ -95,6 +96,8 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
             <NodeAnnotation change={descriptionChanged} />
           </Box>
         )}
+
+        <NodeVendorExtensions data={data} />
 
         <Request onChange={setTextRequestBodyIndex} operation={data} />
 
