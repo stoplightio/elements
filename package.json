@@ -8,6 +8,10 @@
     "url": "git@github.com:jpmorganchase/elemental"
   },
   "license": "Apache-2.0",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=16"
+  },
   "workspaces": [
     "demo",
     "packages/*"
@@ -41,6 +45,7 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-storybook": "^0.6.15",
+    "husky": "^9.1.7",
     "jest": "^26.6.3",
     "jest-environment-jsdom": "^26.3.1",
     "jest-environment-jsdom-global": "^4.0.0",
@@ -99,7 +104,8 @@
     "e2e:run:angular": "start-server-and-test serve:angular http://localhost:4200 e2e:execute",
     "e2e:run:react-gatsby": "start-server-and-test serve:react-gatsby http://localhost:4200 e2e:execute",
     "e2e:run:react-cra": "start-server-and-test serve:react-cra http://localhost:4200 e2e:execute",
-    "e2e:run:static-html": "start-server-and-test serve:static-html http://localhost:4200 e2e:execute"
+    "e2e:run:static-html": "start-server-and-test serve:static-html http://localhost:4200 e2e:execute",
+    "prepare:husky": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -123,7 +129,10 @@
     ]
   },
   "resolutions": {
-    "rollup-plugin-typescript2": "^0.31.0"
+    "rollup-plugin-typescript2": "^0.31.0",
+    "listr2": "8.2.1",
+    "wrap-ansi": "7.0.0",
+    "string-width": "4.1.0"
   },
   "dependencies": {}
 }
