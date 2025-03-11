@@ -1,4 +1,3 @@
-// filepath: /Users/virendra_solanke/repos/elements/web-components.webpack.config.js
 const path = require('path');
 const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
