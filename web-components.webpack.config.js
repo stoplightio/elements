@@ -22,6 +22,9 @@ module.exports = {
     filename: 'web-components.min.js',
     path: path.join(process.cwd(), 'dist'),
   },
+  options: {
+    presets: ["@babel/preset-env',·'@babel/preset-react"],
+  },
   module: {
     rules: [
       {
