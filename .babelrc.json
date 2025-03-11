@@ -1,18 +1,5 @@
 {
   "sourceType": "unambiguous",
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "chrome": 100,
-          "safari": 15,
-          "firefox": 91
-        }
-      }
-    ],
-    "@babel/preset-typescript",
-    "@babel/preset-react"
-  ],
+  "presets": ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"],
   "plugins": ["@babel/plugin-proposal-optional-chaining"]
 }
