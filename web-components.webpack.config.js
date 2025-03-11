@@ -1,3 +1,4 @@
+// filepath: /Users/virendra_solanke/repos/elements/web-components.webpack.config.js
 const path = require('path');
 const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
@@ -32,9 +33,15 @@ module.exports = {
         },
       },
       {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+            plugins: ['@babel/plugin-proposal-optional-chaining'],
+          },
+        },
       },
     ],
   },
