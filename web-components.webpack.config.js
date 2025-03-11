@@ -22,6 +22,9 @@ module.exports = {
     filename: 'web-components.min.js',
     path: path.join(process.cwd(), 'dist'),
   },
+  options: {
+    presets: ["@babel/preset-env',·'@babel/preset-react"],
+  },
   module: {
     rules: [
       {
@@ -32,15 +35,9 @@ module.exports = {
         },
       },
       {
-        test: /\.(js|jsx|ts|tsx)$/,
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-            plugins: ['@babel/plugin-proposal-optional-chaining'],
-          },
-        },
       },
     ],
   },
