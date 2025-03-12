@@ -23,7 +23,7 @@ export const Search = ({ projectIds }: SearchProps) => {
   };
 
   const handleClick = (data: NodeSearchResult) => {
-    window.location.href = `https://${workspace?.workspace.slug}.stoplight.io/docs/${data.project_slug}${data.uri}`;
+    window.location.href = `https://${workspace.workspace.slug}.stoplight.io/docs/${data.project_slug}${data.uri}`;
   };
 
   return (
