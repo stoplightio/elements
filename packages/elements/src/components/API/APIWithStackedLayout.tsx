@@ -101,6 +101,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
         value={{
           hideTryItPanel,
           hideTryIt,
+          hideSamples,
           tryItCredentialsPolicy,
           corsProxy: tryItCorsProxy,
           hideInlineExamples,
@@ -191,7 +192,15 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const color = HttpMethodColors[item.data.method as HttpMethod] || 'gray';
   const isDeprecated = !!item.data.deprecated;
-  const { hideTryIt, hideSamples, hideTryItPanel, tryItCredentialsPolicy, corsProxy, hideInlineExamples, tryItOutDefaultServer } = React.useContext(TryItContext);
+  const {
+    hideTryIt,
+    hideSamples,
+    hideTryItPanel,
+    tryItCredentialsPolicy,
+    corsProxy,
+    hideInlineExamples,
+    tryItOutDefaultServer,
+  } = React.useContext(TryItContext);
 
   const onClick = React.useCallback(() => {
     setIsExpanded(!isExpanded);
