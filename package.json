@@ -71,7 +71,11 @@
   },
   "resolutions": {
     "fast-xml-parser": "4.4.1",
-    "tar": "6.2.1"
+    "tar": "6.2.1",
+    "rollup-plugin-typescript2": "^0.31.0",
+    "listr2": "8.2.1",
+    "wrap-ansi": "7.0.0",
+    "string-width": "4.1.0"
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",
@@ -127,12 +131,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "resolutions": {
-    "rollup-plugin-typescript2": "^0.31.0",
-    "listr2": "8.2.1",
-    "wrap-ansi": "7.0.0",
-    "string-width": "4.1.0"
   },
   "dependencies": {}
 }
