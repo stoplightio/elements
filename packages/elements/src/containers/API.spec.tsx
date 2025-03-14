@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
+import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { API } from './API';
 
 describe('API', () => {
@@ -120,15 +121,11 @@ describe('API', () => {
     });
 
     it('automatically expands an endpoint if the URI matches the current pathname', () => {
-      const history = createMemoryHistory();
-      history.push('/operations/get-users');
 
       render(
-        <Router history={history}>
-          <Route path="/">
-            <APIWithoutRouter layout="stacked" apiDescriptionDocument={todosApiBundled} />
-          </Route>
-        </Router>,
+        <MemoryRouter initialEntries={['/operations/get-users']}>
+          <API layout="stacked" apiDescriptionDocument={todosApiBundled} />
+        </MemoryRouter>,
       );
       expect(screen.queryByText('Get a user by ID')).toBeInTheDocument();
       expect(screen.queryByRole('heading', { level: 2, name: 'Request' })).toBeInTheDocument();

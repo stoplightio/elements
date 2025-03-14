@@ -79,7 +79,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
 
   React.useEffect(() => {
     // This is here to trick elements into reloading everytime the url changes so that we can use own sideabar
-  }, [pathname]);
+  }, [currentPath]);
 
   const layoutOptions = React.useMemo(
     () => ({

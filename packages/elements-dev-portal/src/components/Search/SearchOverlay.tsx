@@ -1,5 +1,5 @@
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import type { CustomLinkComponent } from '@stoplight/elements-core';
+import type { CustomLinkComponent } from '@jpmorganchase/elemental-core';
 import { Box, Button, Flex, Icon, Input, Modal } from '@stoplight/mosaic';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
