@@ -24,8 +24,23 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfServi
       : '';
 
   //use spdx to look up url for license identifier if available
-  const licenseUrl = license?.url || `https://spdx.org/licenses/${license?.identifier}.html`;
-  const licenseLink = license?.name && licenseUrl ? `[${license.name} License](${licenseUrl})` : '';
+  // The licenseUrl is determined based on the mutual exclusivity of the `url` and `identifier` fields.
+  // If a `license.url` is provided, it takes precedence over the `license.identifier`.
+  // This is because the OpenAPI specification defines `url` and `identifier` as mutually exclusive fields,
+  // meaning you should use either one or the other, but not both. If both are provided, the `url` should be used.
+  // See: https://spec.openapis.org/oas/latest.html#license-object
+  const licenseUrl = license?.url
+    ? license?.url
+    : license?.identifier
+    ? `https://spdx.org/licenses/${license?.identifier}.html`
+    : undefined;
+
+  const licenseLink =
+    license?.name && licenseUrl
+      ? `[${license.name}](${licenseUrl})`
+      : license?.identifier && licenseUrl
+      ? `[${license?.identifier}](${licenseUrl})`
+      : '';
   const tosLink = termsOfService ? `[Terms of Service](${termsOfService})` : '';
 
   return contactLink || licenseLink || tosLink ? (

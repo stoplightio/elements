@@ -11,6 +11,7 @@ import ExamplesContext from './../../../context/ExamplesContext';
 
 export const useTextRequestBodyState = (
   mediaTypeContent: IMediaTypeContent | undefined,
+  skipReadOnly: boolean,
 ): [string, React.Dispatch<React.SetStateAction<string>>] => {
   const { globalSelectedExample } = React.useContext(ExamplesContext);
 
@@ -23,7 +24,7 @@ export const useTextRequestBodyState = (
     mediaTypeContent,
     hasFoundExample ? selectedExampleIndex : undefined,
     {
-      skipReadOnly: true,
+      skipReadOnly,
     },
   );
 

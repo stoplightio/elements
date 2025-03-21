@@ -20,7 +20,6 @@ Ready to get started using Elements? Check out these guides for using Elements i
 
 - [Usage with HTML](html.md)
 - [Usage with ReactJS](react.md)
-- [Usage with GatsbyJS](gatsby.md)
 - [Usage with AngularJS](angular.md)
 
 Once you're done and your docs are live, send a note to [@stoplightio](https://twitter.com/stoplightio) and Stoplight can help you share them with the world.

@@ -1,29 +1,14 @@
 import '@testing-library/jest-dom';
 
-import {
-  withMosaicProvider,
-  withPersistenceBoundary,
-  withQueryClientProvider,
-  withStyles,
-} from '@jpmorganchase/elemental-core';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createMemoryHistory } from 'history';
-import { flow } from 'lodash';
 import * as React from 'react';
-import { Route, Router } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 
 import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
-import { API, APIImpl } from './API';
-
-export const APIWithoutRouter = flow(
-  withStyles,
-  withPersistenceBoundary,
-  withMosaicProvider,
-  withQueryClientProvider,
-)(APIImpl);
+import { API } from './API';
 
 describe('API', () => {
   const APIDocument = {
@@ -68,15 +53,10 @@ describe('API', () => {
   });
 
   it('displays internal operations by default', () => {
-    const history = createMemoryHistory();
-    history.push('/paths/internal-operation/get');
-
     const { unmount } = render(
-      <Router history={history}>
-        <Route path="/">
-          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} />
-        </Route>
-      </Router>,
+      <MemoryRouter initialEntries={['/paths/internal-operation/get']}>
+        <API layout="sidebar" apiDescriptionDocument={APIDocument} />
+      </MemoryRouter>,
     );
 
     expect(screen.getByText('If you see this, something went wrong')).toBeInTheDocument();
@@ -85,50 +65,35 @@ describe('API', () => {
   });
 
   it('displays internal models by default', () => {
-    const history = createMemoryHistory();
-    history.push('/schemas/InternalObject');
-
     render(
-      <Router history={history}>
-        <Route path="/">
-          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} />
-        </Route>
-      </Router>,
+      <MemoryRouter initialEntries={['/schemas/InternalObject']}>
+        <API layout="sidebar" apiDescriptionDocument={APIDocument} />
+      </MemoryRouter>,
     );
 
     expect(screen.getByText('Cool object, but internal.')).toBeInTheDocument();
   });
 
   it('reroutes to main page on internal operation if hideInternal is on', () => {
-    const history = createMemoryHistory();
-    history.push('/paths/internal-operation/get');
-
     render(
-      <Router history={history}>
-        <Route path="/">
-          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
-        </Route>
-      </Router>,
+      <MemoryRouter initialEntries={['/paths/internal-operation/get']}>
+        <API layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
+      </MemoryRouter>,
     );
 
     expect(screen.queryByText('If you see this, something went wrong')).not.toBeInTheDocument();
-    expect(history.location.pathname).toBe('/');
+    expect(location.pathname).toBe('/');
   });
 
   it('reroutes to main page on internal model if hideInternal is on', () => {
-    const history = createMemoryHistory();
-    history.push('/schemas/InternalObject');
-
     render(
-      <Router history={history}>
-        <Route path="/">
-          <APIWithoutRouter layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
-        </Route>
-      </Router>,
+      <MemoryRouter initialEntries={['/schemas/InternalObject']}>
+        <API layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
+      </MemoryRouter>,
     );
 
     expect(screen.queryByText('Cool object, but internal.')).not.toBeInTheDocument();
-    expect(history.location.pathname).toBe('/');
+    expect(location.pathname).toBe('/');
   });
 
   describe('stackedLayout', () => {
@@ -156,15 +121,11 @@ describe('API', () => {
     });
 
     it('automatically expands an endpoint if the URI matches the current pathname', () => {
-      const history = createMemoryHistory();
-      history.push('/operations/get-users');
 
       render(
-        <Router history={history}>
-          <Route path="/">
-            <APIWithoutRouter layout="stacked" apiDescriptionDocument={todosApiBundled} />
-          </Route>
-        </Router>,
+        <MemoryRouter initialEntries={['/operations/get-users']}>
+          <API layout="stacked" apiDescriptionDocument={todosApiBundled} />
+        </MemoryRouter>,
       );
       expect(screen.queryByText('Get a user by ID')).toBeInTheDocument();
       expect(screen.queryByRole('heading', { level: 2, name: 'Request' })).toBeInTheDocument();

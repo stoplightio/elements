@@ -1,9 +1,11 @@
 import {
+  type CustomLinkComponent,
   ElementsOptionsProvider,
   ExportButtonProps,
   Logo,
   ParsedDocs,
   PoweredByLink,
+  resolveRelativeLink,
   SidebarLayout,
   TableOfContents,
   TableOfContentsItem,
@@ -12,23 +14,29 @@ import { ExtensionAddonRenderer } from '@jpmorganchase/elemental-core/components
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
-import { computeAPITree, findFirstNodeSlug, isInternal } from './utils';
+import { computeAPITree, findFirstNodeSlug, isInternal, resolveRelativePath } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
   logo?: string;
+  hideTryItPanel?: boolean;
   hideTryIt?: boolean;
+  hideSamples?: boolean;
   hideSchemas?: boolean;
   hideInternal?: boolean;
+  hideServerInfo?: boolean;
+  hideSecurityInfo?: boolean;
   hideExport?: boolean;
   hideInlineExamples?: boolean;
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
   renderExtensionAddon?: ExtensionAddonRenderer;
+  basePath?: string;
+  outerRouter?: boolean;
   tryItOutDefaultServer?: string;
   useCustomNav?: boolean;
   layout?: 'sidebar' | 'drawer';
@@ -37,8 +45,12 @@ type SidebarLayoutProps = {
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
+  hideTryItPanel,
   hideTryIt,
+  hideSamples,
   hideSchemas,
+  hideSecurityInfo,
+  hideServerInfo,
   hideInternal,
   hideExport,
   hideInlineExamples = false,
@@ -46,6 +58,8 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
   renderExtensionAddon,
+  basePath = '/',
+  outerRouter = false,
   tryItOutDefaultServer,
   useCustomNav,
   layout,
@@ -58,17 +72,26 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   }, [serviceNode, hideSchemas, hideInternal, useCustomNav]);
 
   const location = useLocation();
-  const { pathname } = location;
-  const isRootPath = !pathname || pathname === '/';
-  const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
+  const { pathname: currentPath } = location;
+  const relativePath = resolveRelativePath(currentPath, basePath, outerRouter);
+  const isRootPath = relativePath === '/';
+  const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === relativePath);
 
   React.useEffect(() => {
     // This is here to trick elements into reloading everytime the url changes so that we can use own sideabar
-  }, [pathname]);
+  }, [currentPath]);
 
   const layoutOptions = React.useMemo(
-    () => ({ hideTryIt: hideTryIt, hideInlineExamples, hideExport: hideExport || node?.type !== NodeType.HttpService }),
-    [hideTryIt, hideExport, node, hideInlineExamples],
+    () => ({
+      hideTryIt: hideTryIt,
+      hideTryItPanel,
+      hideSamples,
+      hideServerInfo: hideServerInfo,
+      hideSecurityInfo: hideSecurityInfo,
+      hideExport: hideExport || node?.type !== NodeType.HttpService,
+      hideInlineExamples
+    }),
+    [hideTryIt, hideServerInfo, hideSecurityInfo, hideExport, hideTryItPanel, hideSamples, node?.type, hideInlineExamples],
   );
 
   if (!node) {
@@ -76,16 +99,16 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     const firstSlug = findFirstNodeSlug(tree);
 
     if (firstSlug) {
-      return <Redirect to={firstSlug} />;
+      return <Navigate to={resolveRelativeLink(firstSlug)} replace />;
     }
   }
 
   if (hideInternal && node && isInternal(node)) {
-    return <Redirect to="/" />;
+    return <Navigate to="." replace />;
   }
 
   const sidebar = (
-    <Sidebar serviceNode={serviceNode} logo={logo} container={container} pathname={pathname} tree={tree} />
+    <Sidebar serviceNode={serviceNode} logo={logo} container={container} pathname={relativePath} tree={tree} />
   );
 
   return (
@@ -93,8 +116,8 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
       {node && (
         <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
           <ParsedDocs
-            key={pathname}
-            uri={pathname}
+            key={relativePath}
+            uri={relativePath}
             node={node}
             nodeTitle={node.name}
             layoutOptions={layoutOptions}
@@ -137,7 +160,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ serviceNode, logo, container, 
         <Heading size={4}>{serviceNode.name}</Heading>
       </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
-        <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
+        <TableOfContents
+          tree={tree}
+          activeId={pathname}
+          Link={Link as CustomLinkComponent}
+          onLinkClick={handleTocClick}
+        />
       </Flex>
       <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
     </>

@@ -24,7 +24,7 @@ jobs:
   build:
     working_directory: /mnt/ramdisk/project
     docker:
-      - image: cimg/node:16.17
+      - image: cimg/node:18.20
     resource_class: xlarge
     environment:
       CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
@@ -93,7 +93,7 @@ jobs:
           command: weekly_lockfile_maintenance.sh
   release:
     docker:
-      - image: cimg/node:16.17
+      - image: cimg/node:18.20
     steps:
       - checkout
       - run:
@@ -118,11 +118,6 @@ workflows:
           requires:
             - build
       - run-e2e-tests:
-          name: e2e-react-gatsby
-          example-name: react-gatsby
-          requires:
-            - build
-      - run-e2e-tests:
           name: e2e-angular
           example-name: angular
           requires:
@@ -138,7 +133,6 @@ workflows:
             - build
             - build-docs
             - e2e-react-cra
-            - e2e-react-gatsby
             - e2e-static-html
             - e2e-angular
           filters:

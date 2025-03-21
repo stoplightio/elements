@@ -1,6 +1,6 @@
 import { DevPortalProvider } from '@stoplight/elements-dev-portal';
 import React, { Component } from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { StoplightAPI } from './components/API';
 import { Navigation } from './components/Navigation';
@@ -17,14 +17,12 @@ class App extends Component {
               <Navigation />
             </header>
             <main className="main-content">
-              <Switch>
-                <Route exact path="/">
-                  <Redirect to="/stoplight-project" />
-                </Route>
-                <Route path="/zoom-api" component={StoplightAPI} />
-                <Route path="/stoplight-project" component={StoplightProjectDocs} />
-                <Route component={NotFound} />
-              </Switch>
+              <Routes>
+                <Route path="/zoom-api/*" element={<StoplightAPI />} />
+                <Route path="/stoplight-project/*" element={<StoplightProjectDocs />} />
+                <Route path="/" element={<Navigate to="stoplight-project" replace />} />
+                <Route element={<NotFound />} />
+              </Routes>
             </main>
           </div>
         </BrowserRouter>

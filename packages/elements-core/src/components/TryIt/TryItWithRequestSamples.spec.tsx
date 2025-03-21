@@ -12,13 +12,26 @@ import { TryItWithRequestSamples as RawComponent } from './TryItWithRequestSampl
 const TryItWithRequestSamples = withMosaicProvider(withPersistenceBoundary(RawComponent));
 
 describe('TryItWithRequestSamples', () => {
-  it('displays RequestSamples', async () => {
+  it('displays RequestSamples and TryIt', async () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     expect(await screen.findByText('Request Sample: Shell / cURL')).toBeVisible();
+    expect(await screen.findByRole('button', { name: /Send API Request/i })).toBeVisible();
 
     const codeViewer = await screen.findByLabelText(/curl/);
     expect(codeViewer).toHaveTextContent(/PUT/i);
+  });
+
+  it('RequestSamples hidden', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} hideSamples={true} />);
+
+    await waitFor(() => expect(screen.queryByText('Request Sample: Shell / cURL')).not.toBeInTheDocument());
+  });
+
+  it('TryIt hidden', async () => {
+    render(<TryItWithRequestSamples httpOperation={putTodosOperation} hideTryIt={true} />);
+
+    await waitFor(() => expect(screen.queryByRole('button', { name: /Send API Request/i })).not.toBeInTheDocument());
   });
 
   it('reacts to parameter input', async () => {
@@ -79,7 +92,7 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     const codeViewer = await screen.findByLabelText(/curl/);
-    await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/todoId/));
+    await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/{todoId}/));
   });
 
   it('displays base url correctly', async () => {

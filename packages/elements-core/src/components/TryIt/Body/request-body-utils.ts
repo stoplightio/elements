@@ -24,6 +24,12 @@ function isMultipartContent(content: IMediaTypeContent) {
   return content.mediaType.toLowerCase() === 'multipart/form-data';
 }
 
+export const isBinaryContent = (content: IMediaTypeContent) => isApplicationOctetStream(content);
+
+function isApplicationOctetStream(content: IMediaTypeContent) {
+  return content.mediaType.toLowerCase() === 'application/octet-stream';
+}
+
 export async function createRequestBody(
   mediaTypeContent: IMediaTypeContent | undefined,
   bodyParameterValues: BodyParameterValues | undefined,
@@ -76,16 +82,17 @@ const requestBodyCreators: Record<string, RequestBodyCreator | undefined> = {
 export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | undefined) => {
   const { globalSelectedExample } = React.useContext(ExamplesContext);
   const isFormDataBody = mediaTypeContent && isFormDataContent(mediaTypeContent);
+  const isBinaryBody = mediaTypeContent && isBinaryContent(mediaTypeContent);
 
   const initialState = React.useMemo(() => {
-    if (!isFormDataBody) {
+    if (!isFormDataBody || isBinaryBody) {
       return {};
     }
     const properties = mediaTypeContent?.schema?.properties ?? {};
     const required = mediaTypeContent?.schema?.required;
     const parameters = mapSchemaPropertiesToParameters(properties, required);
     return initialParameterValues(parameters, globalSelectedExample);
-  }, [isFormDataBody, mediaTypeContent, globalSelectedExample]);
+  }, [isFormDataBody, isBinaryBody, mediaTypeContent, globalSelectedExample]);
 
   const [bodyParameterValues, setBodyParameterValues] = React.useState<BodyParameterValues>(initialState);
   const [isAllowedEmptyValue, setAllowedEmptyValue] = React.useState<ParameterOptional>({});
@@ -100,7 +107,15 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
       setBodyParameterValues,
       isAllowedEmptyValue,
       setAllowedEmptyValue,
-      { isFormDataBody: true, bodySpecification: mediaTypeContent! },
+      { isFormDataBody: true, isBinaryBody: false, bodySpecification: mediaTypeContent! },
+    ] as const;
+  } else if (isBinaryBody) {
+    return [
+      bodyParameterValues,
+      setBodyParameterValues,
+      isAllowedEmptyValue,
+      setAllowedEmptyValue,
+      { isFormDataBody: false, isBinaryBody: true, bodySpecification: mediaTypeContent! },
     ] as const;
   } else {
     return [
@@ -108,7 +123,7 @@ export const useBodyParameterState = (mediaTypeContent: IMediaTypeContent | unde
       setBodyParameterValues,
       isAllowedEmptyValue,
       setAllowedEmptyValue,
-      { isFormDataBody: false, bodySpecification: undefined },
+      { isFormDataBody: false, isBinaryBody: false, bodySpecification: undefined },
     ] as const;
   }
 };

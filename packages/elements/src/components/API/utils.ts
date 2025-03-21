@@ -2,10 +2,12 @@ import {
   isHttpOperation,
   isHttpService,
   isHttpWebhookOperation,
+  resolveUrl,
   TableOfContentsGroup,
   TableOfContentsItem,
 } from '@jpmorganchase/elemental-core';
 import { NodeType } from '@stoplight/types';
+import { JSONSchema7 } from 'json-schema';
 import { defaults } from 'lodash';
 
 import { OperationNode, SchemaNode, ServiceChildNode, ServiceNode, WebhookNode } from '../../utils/oas/types';
@@ -23,9 +25,7 @@ export function computeTagGroups<T extends GroupableNode>(serviceNode: ServiceNo
   const groupableNodes = serviceNode.children.filter(n => n.type === nodeType) as T[];
 
   for (const node of groupableNodes) {
-    const tagName = node.tags[0];
-
-    if (tagName) {
+    for (const tagName of node.tags) {
       const tagId = tagName.toLowerCase();
       if (groupsByTagId[tagId]) {
         groupsByTagId[tagId].items.push(node);
@@ -37,7 +37,8 @@ export function computeTagGroups<T extends GroupableNode>(serviceNode: ServiceNo
           items: [node],
         };
       }
-    } else {
+    }
+    if (node.tags.length === 0) {
       ungrouped.push(node);
     }
   }
@@ -148,7 +149,7 @@ export const isInternal = (node: ServiceChildNode | ServiceNode): boolean => {
     return false;
   }
 
-  return !!data['x-internal'];
+  return !!data['x-internal' as keyof JSONSchema7];
 };
 
 const addTagGroupsToTree = <T extends GroupableNode>(
@@ -193,4 +194,13 @@ const addTagGroupsToTree = <T extends GroupableNode>(
       });
     }
   });
+};
+
+export const resolveRelativePath = (currentPath: string, basePath: string, outerRouter: boolean): string => {
+  if (!outerRouter || !basePath || basePath === '/') {
+    return currentPath;
+  }
+  const baseUrl = resolveUrl(basePath);
+  const currentUrl = resolveUrl(currentPath);
+  return baseUrl && currentUrl && baseUrl !== currentUrl ? currentUrl.replace(baseUrl, '') : '/';
 };

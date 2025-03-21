@@ -7,7 +7,7 @@ import ExamplesContext from '../../../context/ExamplesContext';
 import { filterOutAuthorizationParams } from '../Auth/authentication-utils';
 import { initialParameterValues, ParameterSpec } from './parameter-utils';
 
-const persistedParameterValuesAtom = atom({});
+const persistedParameterValuesAtom = atom<Record<string, string | undefined>>({});
 export const useRequestParameters = (httpOperation: IHttpEndpointOperation) => {
   const [persistedParameterValues, setPersistedParameterValues] = useAtom(persistedParameterValuesAtom);
   const { globalSelectedExample } = React.useContext(ExamplesContext);

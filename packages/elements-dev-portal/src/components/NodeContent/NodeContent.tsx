@@ -6,11 +6,13 @@ import {
   MarkdownComponentsProvider,
   MockingProvider,
   ReferenceResolver,
+  RouterTypeContext,
 } from '@jpmorganchase/elemental-core';
 import { CustomComponentMapping } from '@stoplight/markdown-viewer';
 import { dirname, resolve } from '@stoplight/path';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { Node } from '../../types';
 
@@ -21,7 +23,7 @@ type DocsBaseProps = Pick<
 >;
 type DocsLayoutProps = Pick<
   Required<DocsProps>['layoutOptions'],
-  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideExport'
+  'compact' | 'hideTryIt' | 'hideTryItPanel' | 'hideSamples' | 'hideExport' | 'hideSecurityInfo' | 'hideServerInfo'
 >;
 
 export type NodeContentProps = {
@@ -60,7 +62,10 @@ export const NodeContent = ({
   // Docs layout props
   compact,
   hideTryIt,
+  hideSamples,
   hideTryItPanel,
+  hideSecurityInfo,
+  hideServerInfo,
 
   // Exporting
   hideExport,
@@ -87,6 +92,9 @@ export const NodeContent = ({
               compact,
               hideTryIt: hideTryIt,
               hideTryItPanel: hideTryItPanel,
+              hideSamples,
+              hideSecurityInfo: hideSecurityInfo,
+              hideServerInfo: hideServerInfo,
               hideExport:
                 hideExport ||
                 (node.links.export_url ?? node.links.export_original_file_url ?? node.links.export_bundled_file_url) ===
@@ -123,14 +131,32 @@ const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefi
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) => {
   const ctx = React.useContext(NodeLinkContext);
+  const routerKind = React.useContext(RouterTypeContext);
 
-  if (href && externalRegex.test(href)) {
-    // Open external URL in a new tab
-    return (
-      <a href={href} target="_blank" rel="noreferrer" title={title ? title : undefined}>
-        {children}
-      </a>
-    );
+  const { pathname } = useLocation();
+  const route = pathname.split('#')[0];
+
+  try {
+    if (href && externalRegex.test(href)) {
+      const baseURL = window.location.host;
+      const hrefURL = new URL(href).host;
+
+      if (baseURL === hrefURL) {
+        // Open URL in same tab if domain match
+        return (
+          <a href={href} title={title ? title : undefined}>
+            {children}
+          </a>
+        );
+      }
+      return (
+        <a href={href} target="_blank" rel="noreferrer" title={title ? title : undefined}>
+          {children}
+        </a>
+      );
+    }
+  } catch (error) {
+    console.error(error);
   }
 
   if (href && ctx) {
@@ -151,16 +177,24 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
     const [resolvedUriWithoutAnchor, hash] = resolvedUri.split('#');
     const decodedUrl = decodeURIComponent(href);
     const decodedResolvedUriWithoutAnchor = decodeURIComponent(resolvedUriWithoutAnchor);
-    const edge = node.outbound_edges.find(
+    const [pagePathWithoutHash] = pathname.split('#');
+
+    let edge = node.outbound_edges.find(
       edge => edge.uri === decodedUrl || edge.uri === decodedResolvedUriWithoutAnchor,
     );
 
+    if (!edge) {
+      edge = node.outbound_edges.find(edge => pagePathWithoutHash === `/${edge.slug}`);
+    }
+
     if (edge) {
-      return <Link to={`${edge.slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
+      const slug = routerKind === 'hash' ? `#${route.replace(node.slug, edge.slug)}` : edge.slug;
+      return <Link to={`${slug}${hash ? `#${hash}` : ''}`}>{children}</Link>;
     }
   }
 
-  return <a href={href}>{children}</a>;
+  const fullHref = routerKind === 'hash' ? `#${route}${href}` : href;
+  return <a href={fullHref}>{children}</a>;
 };
 
 function getBundledUrl(url: string | undefined) {

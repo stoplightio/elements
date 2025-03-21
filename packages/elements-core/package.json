@@ -27,7 +27,7 @@
     "**/*"
   ],
   "engines": {
-    "node": ">=14.13"
+    "node": ">=16"
   },
   "scripts": {
     "build": "yarn build.react",
@@ -62,8 +62,8 @@
     "@stoplight/json-schema-ref-parser": "^9.2.7",
     "@stoplight/json-schema-sampler": "0.3.0",
     "@stoplight/json-schema-tree": "^4.0.0",
-    "@stoplight/json-schema-viewer": "4.16.1",
-    "@stoplight/markdown-viewer": "^5.7.0",
+    "@stoplight/json-schema-viewer": "4.16.3",
+    "@stoplight/markdown-viewer": "^5.7.1",
     "@stoplight/mosaic": "^1.53.4",
     "@stoplight/mosaic-code-editor": "^1.53.4",
     "@stoplight/mosaic-code-viewer": "^1.53.4",
@@ -79,20 +79,19 @@
     "nanoid": "^3.1.32",
     "prop-types": "^15.7.2",
     "react-query": "^3.34.19",
-    "react-router-dom": "^5.2.0",
-    "react-router-hash-link": "^2.1.0",
+    "react-router-dom": "^6.28.0",
     "tslib": "^2.1.0",
     "urijs": "^1.19.11",
     "util": "^0.12.4",
-    "xml-formatter": "^2.6.1"
+    "xml-formatter": "^3.6.3"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@stoplight/scripts": "9.3.4",
+    "@stoplight/scripts": "10.0.0",
     "@testing-library/dom": "^7.26.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.1",
-    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.2.0",
     "@types/classnames": "^2.2.10",
     "@types/enzyme": "3.x.x",
