@@ -6,7 +6,7 @@
   "license": "Unlicense",
   "scripts": {
     "start": "PORT=4200 react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-cra % yarn list @babel-core && yarn list babel-preset-react-app && yarn list react-scripts && react-app-rewired build",
     "serve": "serve -s -l 4200 build"
   },
   "dependencies": {
