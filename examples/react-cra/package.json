@@ -5,8 +5,8 @@
   "author": "Stoplight <support@stoplight.io>",
   "license": "Unlicense",
   "scripts": {
-    "start": "PORT=4200 react-scripts start",
-    "build": "react-scripts build",
+    "start": "PORT=4200 react-app-rewired start",
+    "build": "react-app-rewired build",
     "serve": "serve -s -l 4200 build"
   },
   "dependencies": {
@@ -16,10 +16,13 @@
     "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@types/node": "^17.0.11",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.7",
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.2.1",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
     "serve": "^13.0.2",
@@ -27,8 +30,7 @@
   },
   "resolutions": {
     "@babel/core": "^7.16.0",
-    "@types/react": "17.0.11",
-    "babel-loader": "^8.2.5"
+    "@types/react": "17.0.11"
   },
   "browserslist": {
     "production": [
