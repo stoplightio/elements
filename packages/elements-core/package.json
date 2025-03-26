@@ -1,7 +1,7 @@
 {
   "name": "@jpmorganchase/elemental-core",
   "homepage": "https://github.com/jpmorganchase/elemental",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",

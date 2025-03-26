@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-dev-portal@2.10.0...@jpmorganchase/elemental-dev-portal@2.11.0) (2025-03-26)
+
+### Bug Fixes
+
+- bump mosaic and markdown-viewer ([#2611](https://github.com/jpmorganchase/elemental/issues/2611))
+  ([4d7efe8](https://github.com/jpmorganchase/elemental/commit/4d7efe8b90350f46968b63069ed8dd2a604d8029))
+- issue of internal and exterrnal links in article ([#2731](https://github.com/jpmorganchase/elemental/issues/2731))
+  ([b4d0675](https://github.com/jpmorganchase/elemental/commit/b4d06755a892805f7ec21201a640725d846bffd1))
+- sample request hidden when Try It is hidden (PROVCON-2566)
+  ([#2597](https://github.com/jpmorganchase/elemental/issues/2597))
+  ([b6acc5a](https://github.com/jpmorganchase/elemental/commit/b6acc5ab6f75d0f364ed2765e5394010c67c01dd))
+- STOP-955 handling open URL based on domain name ([#2697](https://github.com/jpmorganchase/elemental/issues/2697))
+  ([49a5446](https://github.com/jpmorganchase/elemental/commit/49a54466bf236488e4afa07e4e77bf3148e5df45))
+
+### Features
+
+- add support for `hideServerInfo` and `hideSecurityInfo` options
+  ([#2601](https://github.com/jpmorganchase/elemental/issues/2601))
+  ([30c3bee](https://github.com/jpmorganchase/elemental/commit/30c3bee67788b8197e6fac162fb5e718cd164c94))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # 2.10.0 (2025-02-28)
 
 ### Bug Fixes

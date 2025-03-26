@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.1.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental@7.0.0...@jpmorganchase/elemental@7.1.0) (2025-03-26)
+
+### Bug Fixes
+
+- Fix Leading / in Empty Paths Rendering for Elements View
+  ([#2745](https://github.com/jpmorganchase/elemental/issues/2745))
+  ([b3308e8](https://github.com/jpmorganchase/elemental/commit/b3308e80706d239f138aca3421b5ae72f724b2f3))
+- sample request hidden when Try It is hidden (PROVCON-2566)
+  ([#2597](https://github.com/jpmorganchase/elemental/issues/2597))
+  ([b6acc5a](https://github.com/jpmorganchase/elemental/commit/b6acc5ab6f75d0f364ed2765e5394010c67c01dd))
+- sample request hidden when Try It is hidden (PROVCON-2566)
+  ([#2597](https://github.com/jpmorganchase/elemental/issues/2597)) 2
+  ([4c2ddd8](https://github.com/jpmorganchase/elemental/commit/4c2ddd8c7f50b6c5b24a7448e8abfdd4c097b631))
+
+### Features
+
+- add support for `hideServerInfo` and `hideSecurityInfo` options
+  ([#2601](https://github.com/jpmorganchase/elemental/issues/2601))
+  ([30c3bee](https://github.com/jpmorganchase/elemental/commit/30c3bee67788b8197e6fac162fb5e718cd164c94))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # 7.0.0 (2025-02-28)
 
 ### Bug Fixes
