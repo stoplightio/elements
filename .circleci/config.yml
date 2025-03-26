@@ -27,8 +27,8 @@ jobs:
       - image: cimg/node:18.20
     resource_class: xlarge
     environment:
-      CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
-      YARN_CACHE_FOLDER: /mnt/ramdisk/.cache/yarn
+      CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress_new
+      YARN_CACHE_FOLDER: /mnt/ramdisk/.cache/yarn_new
     steps:
       - checkout
       - run: yarn --frozen-lockfile
@@ -37,7 +37,7 @@ jobs:
           root: /mnt/ramdisk/
           paths:
             - project
-            - .cache/Cypress
+            - .cache/Cypress_new
   build-docs:
     docker:
       - image: cimg/node:lts
@@ -50,8 +50,8 @@ jobs:
     resource_class: xlarge
     working_directory: /mnt/ramdisk/project
     environment:
-      CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
-      YARN_CACHE_FOLDER: /mnt/ramdisk/.cache/yarn
+      CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress_new
+      YARN_CACHE_FOLDER: /mnt/ramdisk/.cache/yarn_new
     parameters:
       example-name:
         type: string
