@@ -542,6 +542,30 @@ describe('TryIt', () => {
       expect(parametersHeader).toBeInTheDocument();
     });
 
+    it('shows panel when there is no schema', () => {
+      render(
+        <TryItWithPersistence
+          httpOperation={{
+            ...octetStreamOperation,
+            request: {
+              body: {
+                id: '?http-request-body?',
+                contents: [
+                  {
+                    id: '?http-media-0?',
+                    mediaType: 'application/octet-stream',
+                  },
+                ],
+              },
+            },
+          }}
+        />,
+      );
+
+      let parametersHeader = screen.queryByText('Body');
+      expect(parametersHeader).toBeInTheDocument();
+    });
+
     it('displays file input correctly', () => {
       render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
 
@@ -607,6 +631,60 @@ describe('TryIt', () => {
 
         let bodyHeader = screen.queryByText('Body');
         expect(bodyHeader).not.toBeInTheDocument();
+      });
+
+      it('does not hide panel when request body has no schema but has content', async () => {
+        render(
+          <TryItWithPersistence
+            httpOperation={{
+              ...requestBodyEmptySchema,
+              request: {
+                body: {
+                  id: '?http-request-body?',
+                  contents: [
+                    {
+                      id: '?http-media-0?',
+                      mediaType: 'application/json',
+                    },
+                  ],
+                },
+              },
+              method: 'POST',
+            }}
+          />,
+        );
+
+        let bodyHeader = screen.queryByText('Body');
+        expect(bodyHeader).toBeInTheDocument();
+      });
+
+      it('send content-type header when request body has no schema but has content', async () => {
+        render(
+          <TryItWithPersistence
+            httpOperation={{
+              ...requestBodyEmptySchema,
+              request: {
+                body: {
+                  id: '?http-request-body?',
+                  contents: [
+                    {
+                      id: '?http-media-0?',
+                      mediaType: 'application/json',
+                    },
+                  ],
+                },
+              },
+              method: 'POST',
+            }}
+          />,
+        );
+
+        clickSend();
+        await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+        const requestInit = fetchMock.mock.calls[0][1]!;
+        expect(requestInit.method).toMatch(/^post$/i);
+        const headers = new Headers(requestInit.headers);
+        expect(headers.get('Content-Type')).toBe('application/json');
       });
 
       it('statically generates request body basing on request body schema', () => {
@@ -722,6 +800,56 @@ describe('TryIt', () => {
 
         expect(examplesButton).not.toBeInTheDocument();
       });
+    });
+  });
+
+  describe('No Request body', () => {
+    it('Adds no Content-type header with GET method', async () => {
+      render(<TryItWithPersistence httpOperation={basicOperation} />);
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.method).toMatch(/^get$/i);
+      const headers = new Headers(requestInit.headers);
+      expect(headers.get('Content-Type')).toBe(null);
+    });
+
+    it('Adds no Content-type header with POST method', async () => {
+      render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'POST' }} />);
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.method).toMatch(/^post$/i);
+      const headers = new Headers(requestInit.headers);
+      expect(headers.get('Content-Type')).toBe(null);
+    });
+
+    it('Adds no Content-type header with PATCH method', async () => {
+      render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'PATCH' }} />);
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.method).toMatch(/^patch$/i);
+      const headers = new Headers(requestInit.headers);
+      expect(headers.get('Content-Type')).toBe(null);
+    });
+
+    it('Adds no Content-type header with PUT method', async () => {
+      render(<TryItWithPersistence httpOperation={{ ...basicOperation, request: undefined, method: 'PUT' }} />);
+
+      clickSend();
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+      const requestInit = fetchMock.mock.calls[0][1]!;
+      expect(requestInit.method).toMatch(/^put$/i);
+      const headers = new Headers(requestInit.headers);
+      expect(headers.get('Content-Type')).toBe(null);
     });
   });
 

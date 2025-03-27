@@ -19,7 +19,7 @@ export const BinaryBody: React.FC<BinaryBodyProps> = ({ specification, values, o
     const schema = specification?.schema ?? {};
     const tree = new SchemaTree(schema, { mergeAllOf: true, refResolver: null });
     tree.populate();
-    return tree.root.children[0];
+    return tree.root.children[0] ?? {};
   }, [specification]);
 
   const { selectedChoice, choices, setSelectedChoice } = useChoices(schema);
