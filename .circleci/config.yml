@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Example - Install dependencies
           working_directory: /mnt/ramdisk/project/examples-dev/<<parameters.example-name>>
-          command: yarn cache clean --all && yarn install
+          command: yarn install --update-checksums
       - run:
           name: Example - Build
           working_directory: /mnt/ramdisk/project/examples-dev/<<parameters.example-name>>
