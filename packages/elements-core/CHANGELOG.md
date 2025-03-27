@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/jpmorganchase/elemental/compare/@jpmorganchase/elemental-core@1.17.0...@jpmorganchase/elemental-core@1.18.0) (2025-03-26)
+
+### Bug Fixes
+
+- allow to display the code samples when try it panel is hidden
+  ([#2624](https://github.com/jpmorganchase/elemental/issues/2624))
+  ([17f58b7](https://github.com/jpmorganchase/elemental/commit/17f58b7f8d3b8c6be549d371e14ff25b48c01fc7))
+- bump mosaic and markdown-viewer ([#2611](https://github.com/jpmorganchase/elemental/issues/2611))
+  ([4d7efe8](https://github.com/jpmorganchase/elemental/commit/4d7efe8b90350f46968b63069ed8dd2a604d8029))
+- Can't click anything in responsive sidebar unless scrollbar is at the top
+  ([#2746](https://github.com/jpmorganchase/elemental/issues/2746))
+  ([55db02e](https://github.com/jpmorganchase/elemental/commit/55db02eda9d178850b3cb0a1553669b7c638c983))
+- Fix Leading / in Empty Paths Rendering for Elements View
+  ([#2745](https://github.com/jpmorganchase/elemental/issues/2745))
+  ([b3308e8](https://github.com/jpmorganchase/elemental/commit/b3308e80706d239f138aca3421b5ae72f724b2f3))
+- internal schema apprears as object on logout ([#2705](https://github.com/jpmorganchase/elemental/issues/2705))
+  ([0d889aa](https://github.com/jpmorganchase/elemental/commit/0d889aabaad2a88e018bcfec0fc57aa74f122cff))
+- remove the postfix License after the license name in AdditionalInfo
+  ([#2573](https://github.com/jpmorganchase/elemental/issues/2573))
+  ([56565db](https://github.com/jpmorganchase/elemental/commit/56565db2b6a8edb7804a90dd61db45d49da30c2e))
+- sample request hidden when Try It is hidden (PROVCON-2566)
+  ([#2597](https://github.com/jpmorganchase/elemental/issues/2597))
+  ([b6acc5a](https://github.com/jpmorganchase/elemental/commit/b6acc5ab6f75d0f364ed2765e5394010c67c01dd))
+
+### Features
+
+- add brackets around default URL parameters ([#2608](https://github.com/jpmorganchase/elemental/issues/2608))
+  ([d03b0c6](https://github.com/jpmorganchase/elemental/commit/d03b0c6f1246cc3379562836f8e0260c0ba5e8fa))
+- add object with deepObject style in query parameters ([#2631](https://github.com/jpmorganchase/elemental/issues/2631))
+  ([a47d233](https://github.com/jpmorganchase/elemental/commit/a47d2332658b0ce9ba07ede1a930f8244f1bfdf5))
+- add support for `hideServerInfo` and `hideSecurityInfo` options
+  ([#2601](https://github.com/jpmorganchase/elemental/issues/2601))
+  ([30c3bee](https://github.com/jpmorganchase/elemental/commit/30c3bee67788b8197e6fac162fb5e718cd164c94))
+- does not display "No supported" message if there is no body
+  ([#2632](https://github.com/jpmorganchase/elemental/issues/2632))
+  ([70cafac](https://github.com/jpmorganchase/elemental/commit/70cafac8f2a837640d987b3c6b85139190baeb6f))
+- File Uploads as Request Body ([#2737](https://github.com/jpmorganchase/elemental/issues/2737))
+  ([3cabb62](https://github.com/jpmorganchase/elemental/commit/3cabb62eec5dead8f9c7496c1e885c4031271e28))
+- Read only fields are excluded from Webhook docs (PROVCON-2826)
+  ([#2718](https://github.com/jpmorganchase/elemental/issues/2718))
+  ([97c88d1](https://github.com/jpmorganchase/elemental/commit/97c88d12a73e2ba231c838a93706e6d9c3f526b0))
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # 1.17.0 (2025-02-28)
 
 ### Bug Fixes
