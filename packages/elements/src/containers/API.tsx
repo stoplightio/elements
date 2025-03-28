@@ -55,7 +55,7 @@ export interface CommonAPIProps extends RoutingProps {
    */
   layout?: 'sidebar' | 'stacked' | 'responsive';
   logo?: string;
-  logoLink?: string;
+
   hideTryIt?: boolean;
   /**
    * Allows to hide RequestSamples component
@@ -135,7 +135,6 @@ export const APIImpl: React.FC<APIProps> = props => {
     layout = 'sidebar',
     apiDescriptionUrl = '',
     logo,
-    logoLink,
     hideTryItPanel,
     hideTryIt,
     hideSamples,
@@ -227,7 +226,6 @@ export const APIImpl: React.FC<APIProps> = props => {
       {layout === 'sidebar' && (
         <APIWithSidebarLayout
           logo={logo}
-          logoLink={logoLink}
           serviceNode={serviceNode}
           hideTryItPanel={hideTryItPanel}
           hideTryIt={hideTryIt}

@@ -4,6 +4,7 @@ import {
   ExportButtonProps,
   Logo,
   ParsedDocs,
+  PoweredByLink,
   resolveRelativeLink,
   SidebarLayout,
   TableOfContents,
@@ -21,7 +22,6 @@ import { computeAPITree, findFirstNodeSlug, isInternal, resolveRelativePath } fr
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;
   logo?: string;
-  logoLink?: string;
   hideTryItPanel?: boolean;
   hideTryIt?: boolean;
   hideSamples?: boolean;
@@ -41,7 +41,6 @@ type SidebarLayoutProps = {
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
-  logoLink,
   hideTryItPanel,
   hideTryIt,
   hideSamples,
@@ -122,13 +121,12 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
 type SidebarProps = {
   serviceNode: ServiceNode;
   logo?: string;
-  logoLink?: string;
   container: React.RefObject<HTMLElement>;
   pathname: string;
   tree: TableOfContentsItem[];
 };
 
-export const Sidebar: React.FC<SidebarProps> = ({ serviceNode, logo, logoLink, container, pathname, tree }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ serviceNode, logo, container, pathname, tree }) => {
   const handleTocClick = () => {
     if (container.current) {
       container.current.scrollIntoView();
@@ -139,7 +137,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ serviceNode, logo, logoLink, c
     <>
       <Flex ml={4} mb={5} alignItems="center">
         {logo ? (
-          <Logo logo={{ url: logo, altText: 'logo', href: logoLink || 'https://solargraf.com/' }} />
+          <Logo logo={{ url: logo, altText: 'logo' }} />
         ) : (
           serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
         )}
@@ -153,9 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ serviceNode, logo, logoLink, c
           onLinkClick={handleTocClick}
         />
       </Flex>
-      {
-        //  <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
-      }
+      <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
     </>
   );
 };
