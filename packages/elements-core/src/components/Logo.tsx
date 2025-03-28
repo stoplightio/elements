@@ -8,17 +8,17 @@ export const Logo: React.FC<{ logo: LogoProps }> = ({ logo }) => {
     <Box
       display="inline"
       mr={3}
-      rounded="lg"
+      rounded="none"
       overflowY="hidden"
       overflowX="hidden"
       style={{ backgroundColor: logo.backgroundColor ?? 'transparent' }}
     >
       {logo.href ? (
         <a href={logo.href} target="_blank" rel="noopener noreferrer">
-          <img src={logo.url} height="30px" width="30px" alt={logo.altText} />
+          <img src={logo.url} width="240" height="100" alt={logo.altText} />
         </a>
       ) : (
-        <img src={logo.url} height="30px" width="30px" alt={logo.altText} />
+        <img src={logo.url} width="240" height="100" alt={logo.altText} />
       )}
     </Box>
   );
