@@ -5953,10 +5953,10 @@
     "@types/json-schema" "^7.0.7"
     magic-error "0.0.1"
 
-"@stoplight/json-schema-viewer@4.16.3":
-  version "4.16.3"
-  resolved "https://registry.npmjs.org/@stoplight/json-schema-viewer/-/json-schema-viewer-4.16.3.tgz"
-  integrity sha512-cQDxmyAkR3l8Pem1EuGMR+JKM8ePTSr/aqzJscp+hJ4R2geUNbdEleBHnJkZLLLfNr+PMlP+WiFO6GajCSxzUA==
+"@stoplight/json-schema-viewer@4.16.4":
+  version "4.16.4"
+  resolved "https://registry.yarnpkg.com/@stoplight/json-schema-viewer/-/json-schema-viewer-4.16.4.tgz#cc01d7a6ee16bf6946aeb6205cd95b5a5370d42b"
+  integrity sha512-5+2mQIhoFFPzk1Gxb1khrVk2Y5BzEIGcNnY74Ky0mo1ipkSNLBWX5ALU8Kn1rTjVjgO8KHacqR4rw/ZaNhxwhQ==
   dependencies:
     "@stoplight/json" "^3.20.1"
     "@stoplight/json-schema-tree" "^4.0.0"
