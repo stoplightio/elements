@@ -249,7 +249,7 @@ describe('HttpOperation', () => {
 
       const { unmount } = render(<HttpOperation data={data} />);
 
-      const queryParametersPanel = screen.queryByRole('heading', { name: 'Query Parameters' });
+      const queryParametersPanel = screen.queryByRole('heading', { name: 'Query String Parameters' });
       expect(queryParametersPanel).toBeInTheDocument();
       expect(queryParametersPanel).toBeVisible();
       expect(queryParametersPanel).toBeEnabled();
