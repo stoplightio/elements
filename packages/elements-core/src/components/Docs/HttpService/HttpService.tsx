@@ -8,7 +8,6 @@ import { useResolvedObject } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
 import { useIsCompact } from '../../../hooks/useIsCompact';
 import { MarkdownViewer } from '../../MarkdownViewer';
-import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
 import { VersionBadge } from '../HttpOperation/Badges';
 import { AdditionalInfo } from './AdditionalInfo';
@@ -24,7 +23,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
     const data = useResolvedObject(unresolvedData) as IHttpService;
     const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
 
-    const { search, pathname } = location;
+    const { search } = location;
     const mocking = React.useContext(MockingContext);
     const query = new URLSearchParams(search);
 
@@ -52,10 +51,6 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
             <VersionBadge value={data.version} />
             <NodeAnnotation change={versionChanged} />
           </Box>
-        )}
-
-        {pathname && layoutOptions?.showPoweredByLink && (
-          <PoweredByLink source={data.name ?? 'no-title'} pathname={pathname} packageType="elements" layout="stacked" />
         )}
 
         <VStack spacing={6}>

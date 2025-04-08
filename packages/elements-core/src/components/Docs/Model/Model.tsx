@@ -89,6 +89,7 @@ const ModelComponent: React.FC<ModelProps> = ({
         nodeHasChanged={nodeHasChanged}
         renderExtensionAddon={renderExtensionAddon}
         skipTopLevelDescription
+        defaultExpandedDepth={2}
       />
     </VStack>
   );
