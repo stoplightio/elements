@@ -1,7 +1,6 @@
-import { Box, Flex, Icon, ITextColorProps } from '@stoplight/mosaic';
+import { Box, Flex, Icon, ITextColorProps, Text } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
 import * as React from 'react';
-import { Text } from '@stoplight/mosaic';
 import { useFirstRender } from '../../hooks/useFirstRender';
 import { resolveRelativeLink } from '../../utils/string';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
@@ -304,7 +303,7 @@ const Item = React.memo<{
   isInResponsiveMode?: boolean;
   isDeprecated?: boolean;
   onClick?: (e: React.MouseEvent) => void;
- }>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode,isDeprecated, onClick }) => {
+}>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode,isDeprecated, onClick }) => {
   return (
     <Flex
       id={id}
