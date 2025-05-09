@@ -304,7 +304,7 @@ const Item = React.memo<{
   isInResponsiveMode?: boolean;
   isDeprecated?: boolean;
   onClick?: (e: React.MouseEvent) => void;
-}>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode,isDeprecated, onClick }) => {
+ }>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode,isDeprecated, onClick }) => {
   return (
     <Flex
       id={id}
@@ -332,13 +332,13 @@ const Item = React.memo<{
         textOverflow="truncate"
         fontSize={isInResponsiveMode ? 'lg' : 'base'}
       >
-       <Text
-        textDecoration={isDeprecated ? ('line-through' as const) : undefined}
-        color={isDeprecated ? 'muted' : undefined}
-        fontSize={isInResponsiveMode ? 'lg' : 'base'}
-      >
-        {title}
-      </Text>
+        <Text
+          textDecoration={isDeprecated ? ('line-through' as const) : undefined}
+          color={isDeprecated ? 'muted' : undefined}
+          fontSize={isInResponsiveMode ? 'lg' : 'base'}
+        >
+          {title}
+        </Text>
       </Box>
 
       <Flex alignItems="center" fontSize={isInResponsiveMode ? 'base' : 'xs'}>
