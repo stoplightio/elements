@@ -37,7 +37,7 @@ export function hasActiveItem(items: TableOfContentsGroupItem[], activeId: strin
       return true;
     }
     if ('items' in item) {
-      return hasActiveItem(item.items as TableOfContentsGroupItem[], activeId)
+      return hasActiveItem(item.items as TableOfContentsGroupItem[], activeId);
     }
     return false;
   });
