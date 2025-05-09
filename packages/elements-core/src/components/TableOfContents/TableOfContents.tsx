@@ -1,12 +1,10 @@
-import * as React from 'react';
-
 import { Box, Flex, Icon, ITextColorProps, Text } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
+import * as React from 'react';
 
 import { useFirstRender } from '../../hooks/useFirstRender';
 import { resolveRelativeLink } from '../../utils/string';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
-
 import {
   NODE_GROUP_ICON,
   NODE_GROUP_ICON_COLOR,
@@ -15,7 +13,6 @@ import {
   NODE_TYPE_META_ICON,
   NODE_TYPE_TITLE_ICON,
 } from './constants';
-
 import {
   CustomLinkComponent,
   TableOfContentsDivider,
