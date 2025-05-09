@@ -1,6 +1,7 @@
+import * as React from 'react';
 import { Box, Flex, Icon, ITextColorProps, Text } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
-import * as React from 'react';
+
 import { useFirstRender } from '../../hooks/useFirstRender';
 import { resolveRelativeLink } from '../../utils/string';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
