@@ -333,11 +333,12 @@ const Item = React.memo<{
         fontSize={isInResponsiveMode ? 'lg' : 'base'}
       >
         <Text
-        textDecoration={isDeprecated ? ('line-through' as const) : undefined}
-        color={isDeprecated ? 'muted' : undefined}
-        fontSize={isInResponsiveMode ? 'lg' : 'base'>
-        {title}
-        </Text>
+  textDecoration={isDeprecated ? ('line-through' as const) : undefined}
+  color={isDeprecated ? 'muted' : undefined}
+  fontSize={isInResponsiveMode ? 'lg' : 'base'}
+>
+  {title}
+</Text>
       </Box>
 
       <Flex alignItems="center" fontSize={isInResponsiveMode ? 'base' : 'xs'}>
