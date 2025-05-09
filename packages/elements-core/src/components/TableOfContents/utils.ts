@@ -39,7 +39,9 @@ export function hasActiveItem(items: TableOfContentsGroupItem[], activeId: strin
     }
 
     if ('items' in item) {
-      return hasActiveItem(item.items, activeId);
+      //return hasActiveItem(item.items, activeId);
+    return hasActiveItem(item.items as TableOfContentsGroupItem[], activeId)
+
     }
 
     return false;
