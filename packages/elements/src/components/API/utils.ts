@@ -164,12 +164,15 @@ const addTagGroupsToTree = <T extends GroupableNode>(
     if (hideInternal && isInternal(node)) {
       return;
     }
+    const data = (node as OperationNode | WebhookNode).data;
     tree.push({
       id: node.uri,
       slug: node.uri,
       title: node.name,
       type: node.type,
       meta: isHttpOperation(node.data) || isHttpWebhookOperation(node.data) ? node.data.method : '',
+      //add a `deprecated` flag
+      deprecated: (data as any)?.deprecated === true,
     });
   });
 
@@ -184,6 +187,8 @@ const addTagGroupsToTree = <T extends GroupableNode>(
         title: node.name,
         type: node.type,
         meta: isHttpOperation(node.data) || isHttpWebhookOperation(node.data) ? node.data.method : '',
+        //Exposing the `data` property 
+        data: node.data,
       };
     });
     if (items.length > 0) {
