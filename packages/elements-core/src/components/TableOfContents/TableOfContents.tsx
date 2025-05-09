@@ -303,7 +303,7 @@ const Item = React.memo<{
   isInResponsiveMode?: boolean;
   isDeprecated?: boolean;
   onClick?: (e: React.MouseEvent) => void;
-}>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode,isDeprecated, onClick }) => {
+}>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode, isDeprecated, onClick }) => {
   return (
     <Flex
       id={id}
