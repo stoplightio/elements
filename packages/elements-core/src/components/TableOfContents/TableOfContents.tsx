@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { Box, Flex, Icon, ITextColorProps, Text } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
 
