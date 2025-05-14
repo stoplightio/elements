@@ -136,6 +136,11 @@ interface BaseDocsProps {
      * @example 600
      */
     compact?: number | boolean;
+
+    /**
+     * Defualt expanding level
+     */
+    defaultExpandedDepth?: number;
   };
 
   nodeHasChanged?: NodeHasChangedFn<React.ReactNode>;
