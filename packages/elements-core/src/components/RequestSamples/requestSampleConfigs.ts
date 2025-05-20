@@ -13,6 +13,7 @@ export interface LanguageConfig {
 }
 export type RequestSampleConfigs = Dictionary<LanguageConfig, SupportedLanguage>;
 
+//XXX: List of supported languages
 export const requestSampleConfigs: RequestSampleConfigs = {
   Shell: {
     mosaicCodeViewerLanguage: 'bash',

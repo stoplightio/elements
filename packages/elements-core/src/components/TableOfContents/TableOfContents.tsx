@@ -1,5 +1,6 @@
 import { Box, Flex, Icon, ITextColorProps } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
+import { capitalize } from 'lodash';
 import * as React from 'react';
 
 import { useFirstRender } from '../../hooks/useFirstRender';
@@ -258,7 +259,7 @@ const Group = React.memo<{
     elem = (
       <Item
         isInResponsiveMode={isInResponsiveMode}
-        title={item.title}
+        title={capitalize(item.title)}
         meta={meta}
         onClick={handleClick}
         depth={depth}
