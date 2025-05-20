@@ -17,7 +17,8 @@ import * as React from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 
 import { ServiceNode } from '../../utils/oas/types';
-import { computeAPITree, findFirstNodeSlug, isInternal, resolveRelativePath } from './utils';
+import { computeAPITree, findFirstNodeSlug } from './computeAPITree';
+import { isInternal, resolveRelativePath } from './utils';
 
 type SidebarLayoutProps = {
   serviceNode: ServiceNode;

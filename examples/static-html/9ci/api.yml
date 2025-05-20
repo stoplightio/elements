@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: Sample API
+  version: 1.0.0
+  description: API documentation with Stoplight-compatible x-codeSamples
+
+paths:
+  /users:
+    get:
+      summary: Get all usersww
+      x-codeSamples:
+        - lang: shell
+          label: JavaScript (fetch22)
+          lib: curl
+          source: >
+            fetch("https://api.example.com/users")
+              .then(res => res.json())
+              .then(data => console.log(data));
+      tags: [User]
+      responses:
+        '200':
+          description: List of userslll
+
+  /payments:
+    post:
+      summary: Make a payment
+      tags: [Payment]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+      responses:
+        '201':
+          description: Payment created
+      x-code-samples:
+        - lang: curl
+          label: Curl11
+          source: |
+            curl -X POST "https://api.example.com/payments" \
+              -H "Content-Type: application/json" \
+              -d '{"amount": 100}'
+        - lang: python
+          label: Python (requests)
+          source: |
+            import requests
+            response = requests.post(
+              "https://api.example.com/payments",
+              json={"amount": 100}
+            )
+            print(response.json())
+tags:
+  - name: User
+    description: Operations about users
+  - name: Payment
+    description: Payment processing
+x-taggroups:
+  - name: Users
+    tags: [User]
+  - name: Payments
+    tags: [Payment]
