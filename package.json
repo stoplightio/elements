@@ -98,6 +98,7 @@
     "copy:static-html": "mkdir examples-dev ; cp -a -v ./examples/static-html ./examples-dev ; sh ./use-local-elements.sh static-html",
     "build:static-html": "(cd ./examples-dev/static-html && yarn reinstall && yarn build)",
     "serve:static-html": "(cd ./examples-dev/static-html && yarn serve)",
+    "build:all": "cd packages/elements-core && yarn build && yarn build.styles && cd ../elements && yarn build && yarn build.styles",
     "/// e2e ///": "",
     "e2e:open": "cypress open",
     "e2e:execute": "cypress run",
