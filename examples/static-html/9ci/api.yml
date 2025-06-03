@@ -659,6 +659,7 @@ tags:
   - name: bank
   - name: bankAccount
   - name: custAccountType
+  - name: custDash
   - name: custSetup
   - name: glAccount
   - name: tranJournal
@@ -666,7 +667,82 @@ tags:
   - name: paymentMultiHit
   - name: paymentMultiHitArTrans
   - name: paySchedule
-
+x-tagGroups:
+  - name: Core / Rally
+    tags:
+      - activity
+      - activityNote
+      - appParam
+      - attachment
+      - company
+      - contact
+      - org
+      - orgTypeSetup
+      - partitionOrg
+      - role
+      - roleUser
+      - syncJob
+      - tag
+      - user
+  - name: Receivables/Collections
+    tags:
+      - adjust
+      - adjustJournal
+      - adjustLine
+      - agingSetup
+      - bank
+      - bankAccount
+      - custAccount
+      - custAccountType
+      - custClass
+      - custDash
+      - custFamily
+      - custSetup
+      - customer
+      - gl
+      - glAccount
+      - glBatch
+      - glJournal
+      - glPostPeriod
+      - lockbox
+      - reason
+      - reasonGroup
+      - refnumGen
+      - status
+      - term
+      - tran
+      - tranJournal
+      - tranLine
+      - tranType
+  - name: Autocash
+    tags:
+      - batch
+      - corCode
+      - layoutField
+      - layoutImport
+      - layoutRecord
+      - micrBlacklist
+      - payment
+      - paymentDeleted
+      - paymentDetail
+      - paymentDetailArTran
+      - paymentMultiHit
+      - paymentMultiHitArTrans
+      - reasonTolerance
+      - setupGroup
+  - name: iPay/Payments
+    tags:
+      - paySchedule
+      - payTran
+      - wallet
+  - name: Banks
+    tags:
+      - ach
+      - cards
+      - inbound
+  - name: Reports
+    tags:
+      - statement
 paths:
   '/rally/syncJob/{id}/payload':
     get:
@@ -717,9 +793,9 @@ paths:
           $ref: '#/components/responses/400_Problem'
       x-codeSamples:
         - label: Curl
-          lang: shell
+          lang: bash
           source: >
-            # upload file with stream1
+            # upload file with stream
 
             curl -X POST "https://sandbox.9ci.io/api/upload?name=big_file.zip" \
               -H "Content-Type: application/octet-stream" \
@@ -7156,6 +7232,116 @@ paths:
           $ref: '#/components/responses/403_Forbidden'
         '404':
           $ref: '#/components/responses/404_NotFound'
+  /ar/custDash:
+    get:
+      tags:
+        - custDash
+      summary: CustDash list
+      description: Query and retrieve a CustDash list
+      operationId: getCustDashList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/max'
+        - $ref: '#/components/parameters/q'
+        - $ref: '#/components/parameters/sort'
+      responses:
+        '200':
+          description: CustDash Pager Resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pager'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+    post:
+      tags:
+        - custDash
+      summary: Create a CustDash
+      description: Create a new CustDash
+      operationId: createCustDash
+      parameters:
+        - $ref: '#/components/parameters/bindId'
+      requestBody:
+        description: CustDash resource
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArScoreCard_Create'
+      responses:
+        '201':
+          description: CustDash Resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArScoreCard'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '422':
+          $ref: '#/components/responses/422_ValidationError'
+  '/ar/custDash/{id}':
+    get:
+      tags:
+        - custDash
+      summary: Get a CustDash
+      description: Retrieve a CustDash
+      operationId: getCustDashById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: CustDash Resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArScoreCard'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+    put:
+      tags:
+        - custDash
+      summary: Update a CustDash
+      description: ''
+      operationId: updateCustDash
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: CustDash resource
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArScoreCard_Update'
+      responses:
+        '200':
+          description: CustDash Resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArScoreCard'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+        '422':
+          $ref: '#/components/responses/422_ValidationError'
+    delete:
+      tags:
+        - custDash
+      summary: Delete a CustDash
+      description: ''
+      operationId: deleteCustDash
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204_NoContent'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
   /ar/custFamily:
     get:
       tags:
@@ -9363,10 +9549,12 @@ paths:
 
         Query params used only to process data from the attachment file:
           * attachmentId
+          * dataFormat
           * headerPathDelimiter
-          * linkField
-          * tranFilename
-          * detailsFileName
+          * detailLinkField
+          * dataKeyField
+          * dataDetailProperty
+          * detailFilename
           * controlCount
       operationId: bulkCreateTran
       requestBody:
@@ -9450,23 +9638,37 @@ paths:
             deadlocks.
           schema:
             type: string
-        - name: linkField
+        - name: dataFormat
           in: query
-          description: >-
-            <small>(with attachmentId only)</small> Field that links lines
-            (ArTranLines) to the header record (ArTran). Default is
-            'arTran.sourceId' but if you have underscores pass in
-            'arTran_sourceId'  (when data imported from the file)
+          description: >
+            <small>(with attachmentId only)</small> Format for the data. either
+            CSV or JSON are currently supported.
           schema:
             type: string
-        - name: tranFilename
+        - name: dataKeyField
           in: query
-          description: >-
-            <small>(with attachmentId only)</small> File name for ArTran csv
-            inside zip. Default is data.csv
+          description: >
+            <small>(with attachmentId only)</small> Header key field that links
+            detail/lines detailLinkField (ArTranLines) to the header record
+            (ArTran). Default is 'arTran.sourceId' but if you have underscores
+            pass in 'arTran_sourceId'  (when data imported from the file)
           schema:
             type: string
-        - name: detailsFileName
+        - name: detailLinkField
+          in: query
+          description: >
+            <small>(with attachmentId only)</small> Field that links back to the
+            dataKeyField in the header file
+          schema:
+            type: string
+        - name: dataDetailProperty
+          in: query
+          description: >
+            <small>(with attachmentId only)</small> The field in the header
+            entity where the collection of lines goes.
+          schema:
+            type: string
+        - name: detailFilename
           in: query
           description: >-
             <small>(with attachmentId only)</small> File name for ArTranLine csv
@@ -11836,7 +12038,7 @@ paths:
           $ref: '#/components/responses/422_ValidationError'
       x-codeSamples:
         - label: Curl
-          lang: shell
+          lang: bash
           source: |+
             ## Create PayTran
 
@@ -13538,15 +13740,46 @@ components:
           description: 'version of the edit, incremented on each change'
           example: 0
           readOnly: true
+    PartitionOrg:
+      title: PartitionOrg
+      x-entity: PartitionOrg
+      type: object
+      required:
+        - name
+        - num
+      properties:
+        name:
+          description: The full name for this organization
+          example: SpaceX Corp.
+          maxLength: 255
+          type: string
+        num:
+          description: Unique alpha-numeric identifier for this organization
+          example: SPX-321
+          maxLength: 50
+          type: string
+        org:
+          $ref: '#/components/schemas/Org'
+        id:
+          type: integer
+          format: int64
+          description: unique id
+          example: 954
+          readOnly: true
+        version:
+          type: integer
+          description: 'version of the edit, incremented on each change'
+          example: 0
+          readOnly: true
     BankAccount:
       title: BankAccount
       x-entity: BankAccount
       type: object
       required:
-        - org
         - code
         - bank
         - name
+        - partitionOrg
         - num
       properties:
         bank:
@@ -13568,11 +13801,11 @@ components:
           description: 'bank account number, used in ArBatch.lockbox'
           maxLength: 255
           type: string
-        org:
+        partitionOrg:
           description: >-
-            The partition org that this lockbox belongs to, drives the different
-            orgs on the ArBatch
-          $ref: '#/components/schemas/Org'
+            The partition org that this lockbox belongs to, drives the
+            partitionOrg on the ArBatch
+          $ref: '#/components/schemas/PartitionOrg'
         sourceId:
           description: 'Unique when populated, used for lookups on import keys from bank '
           maxLength: 50
@@ -13678,37 +13911,6 @@ components:
           description: Flexible text field 9
           maxLength: 255
           type: string
-        id:
-          type: integer
-          format: int64
-          description: unique id
-          example: 954
-          readOnly: true
-        version:
-          type: integer
-          description: 'version of the edit, incremented on each change'
-          example: 0
-          readOnly: true
-    PartitionOrg:
-      title: PartitionOrg
-      x-entity: PartitionOrg
-      type: object
-      required:
-        - name
-        - num
-      properties:
-        name:
-          description: The full name for this organization
-          example: SpaceX Corp.
-          maxLength: 255
-          type: string
-        num:
-          description: Unique alpha-numeric identifier for this organization
-          example: SPX-321
-          maxLength: 50
-          type: string
-        org:
-          $ref: '#/components/schemas/Org'
         id:
           type: integer
           format: int64
@@ -14709,6 +14911,7 @@ components:
       required:
         - glPostDate
         - arTran
+        - source
         - glPostPeriod
         - amount
         - lines
@@ -14759,7 +14962,6 @@ components:
           format: int64
         source:
           description: Where this came from
-          default: RCM
           type: string
           enum:
             - RCM
@@ -19782,6 +19984,7 @@ components:
       required:
         - glPostDate
         - arTran
+        - source
         - glPostPeriod
         - amount
         - lines
@@ -19853,7 +20056,6 @@ components:
           format: int64
         source:
           description: Where this came from
-          default: RCM
           type: string
           enum:
             - RCM
@@ -19873,6 +20075,7 @@ components:
       required:
         - glPostDate
         - arTran
+        - source
         - glPostPeriod
         - amount
         - lines
@@ -19951,7 +20154,6 @@ components:
           format: int64
         source:
           description: Where this came from
-          default: RCM
           type: string
           enum:
             - RCM
@@ -20293,10 +20495,10 @@ components:
       x-entity: BankAccount
       type: object
       required:
-        - org
         - code
         - bank
         - name
+        - partitionOrg
         - num
       properties:
         bank:
@@ -20325,15 +20527,15 @@ components:
           description: 'bank account number, used in ArBatch.lockbox'
           maxLength: 255
           type: string
-        org:
+        partitionOrg:
           description: >-
-            The partition org that this lockbox belongs to, drives the different
-            orgs on the ArBatch
-          title: Org
+            The partition org that this lockbox belongs to, drives the
+            partitionOrg on the ArBatch
+          title: PartitionOrg
           type: object
           properties:
             id:
-              description: Org id
+              description: PartitionOrg id
               example: 954
               type: integer
               format: int64
@@ -20352,10 +20554,10 @@ components:
       x-entity: BankAccount
       type: object
       required:
-        - org
         - code
         - bank
         - name
+        - partitionOrg
         - num
       properties:
         bank:
@@ -20384,15 +20586,15 @@ components:
           description: 'bank account number, used in ArBatch.lockbox'
           maxLength: 255
           type: string
-        org:
+        partitionOrg:
           description: >-
-            The partition org that this lockbox belongs to, drives the different
-            orgs on the ArBatch
-          title: Org
+            The partition org that this lockbox belongs to, drives the
+            partitionOrg on the ArBatch
+          title: PartitionOrg
           type: object
           properties:
             id:
-              description: Org id
+              description: PartitionOrg id
               example: 954
               type: integer
               format: int64
@@ -21637,6 +21839,584 @@ components:
         validFor:
           maxLength: 20
           type: string
+    ArScoreCard_Create:
+      title: ArScoreCard
+      x-entity: ArScoreCard
+      type: object
+      required:
+        - org
+        - glPostPeriod
+      properties:
+        adjustedTotal:
+          type: number
+          format: money
+        adjusterAmt:
+          type: number
+          format: money
+        adp:
+          description: avg days to pay
+          type: number
+          format: 'decimal(9,1)'
+        adpWtd:
+          description: weighted average days to pay
+          type: number
+          format: 'decimal(9,1)'
+        aging1:
+          description: Aging bucket 1
+          type: number
+          format: money
+        aging10:
+          description: Aging bucket 10
+          type: number
+          format: money
+        aging2:
+          description: Aging bucket 2
+          type: number
+          format: money
+        aging3:
+          description: Aging bucket 3
+          type: number
+          format: money
+        aging4:
+          description: Aging bucket 4
+          type: number
+          format: money
+        aging5:
+          description: Aging bucket 5
+          type: number
+          format: money
+        aging6:
+          description: Aging bucket 6
+          type: number
+          format: money
+        aging7:
+          description: Aging bucket 7
+          type: number
+          format: money
+        aging8:
+          description: Aging bucket 8
+          type: number
+          format: money
+        aging9:
+          description: Aging bucket 9
+          type: number
+          format: money
+        avgDaysBt:
+          description: avg days paid late / avg days beyond terms
+          type: number
+          format: 'decimal(9,1)'
+        beginBal:
+          type: number
+          format: money
+        cei:
+          description: collection effectiveness index
+          type: number
+          format: 'decimal(9,1)'
+        curBal:
+          description: whats not due yet
+          type: number
+          format: money
+        ddo:
+          description: days deductions and disputes outstanding
+          type: number
+          format: 'decimal(9,1)'
+        dso:
+          description: day sales outstanding
+          type: number
+          format: 'decimal(9,1)'
+        dso12:
+          description: DSO using the last 12 month average
+          type: number
+          format: 'decimal(9,1)'
+        dsoad:
+          description: DSO add back
+          type: number
+          format: 'decimal(9,1)'
+        dsobp:
+          description: DSO best possible
+          type: number
+          format: 'decimal(9,1)'
+        glPostPeriod:
+          maxLength: 255
+          type: string
+        grossProfit:
+          type: number
+          format: money
+        grossProfitPct:
+          type: number
+          format: money
+        maxDue:
+          description: max totalDue in this month and last 12 months
+          type: number
+          format: money
+        maxDuePer:
+          description: period the highest balance occured in the last 12 months
+          maxLength: 255
+          type: string
+        newCM:
+          type: number
+          format: money
+        newDD:
+          type: number
+          format: money
+        newDM:
+          type: number
+          format: money
+        newIN:
+          type: number
+          format: money
+        newPA:
+          type: number
+          format: money
+        newTotal:
+          type: number
+          format: money
+        num1:
+          type: number
+          format: money
+        num2:
+          type: number
+          format: money
+        num3:
+          type: number
+          format: money
+        num4:
+          type: number
+          format: money
+        num5:
+          type: number
+          format: money
+        num6:
+          type: number
+          format: money
+        openCM:
+          type: number
+          format: money
+        openDD:
+          type: number
+          format: money
+        openDM:
+          type: number
+          format: money
+        openIN:
+          type: number
+          format: money
+        openPA:
+          type: number
+          format: money
+        org:
+          title: Org
+          type: object
+          properties:
+            id:
+              description: Org id
+              example: 954
+              type: integer
+              format: int64
+        pastDue:
+          description: balance past due
+          type: number
+          format: money
+        possibleFC:
+          type: number
+          format: money
+        salesRolling12:
+          type: number
+          format: money
+        salesYtd:
+          type: number
+          format: money
+        totalDue:
+          description: >-
+            total due, sum of all open items. will be the ending balance when
+            month is closed
+          type: number
+          format: money
+    ArScoreCard:
+      title: ArScoreCard
+      x-entity: ArScoreCard
+      type: object
+      required:
+        - org
+        - glPostPeriod
+      properties:
+        adjustedTotal:
+          type: number
+          format: money
+        adjusterAmt:
+          type: number
+          format: money
+        adp:
+          description: avg days to pay
+          type: number
+          format: 'decimal(9,1)'
+        adpWtd:
+          description: weighted average days to pay
+          type: number
+          format: 'decimal(9,1)'
+        aging1:
+          description: Aging bucket 1
+          type: number
+          format: money
+        aging10:
+          description: Aging bucket 10
+          type: number
+          format: money
+        aging2:
+          description: Aging bucket 2
+          type: number
+          format: money
+        aging3:
+          description: Aging bucket 3
+          type: number
+          format: money
+        aging4:
+          description: Aging bucket 4
+          type: number
+          format: money
+        aging5:
+          description: Aging bucket 5
+          type: number
+          format: money
+        aging6:
+          description: Aging bucket 6
+          type: number
+          format: money
+        aging7:
+          description: Aging bucket 7
+          type: number
+          format: money
+        aging8:
+          description: Aging bucket 8
+          type: number
+          format: money
+        aging9:
+          description: Aging bucket 9
+          type: number
+          format: money
+        avgDaysBt:
+          description: avg days paid late / avg days beyond terms
+          type: number
+          format: 'decimal(9,1)'
+        beginBal:
+          type: number
+          format: money
+        cei:
+          description: collection effectiveness index
+          type: number
+          format: 'decimal(9,1)'
+        curBal:
+          description: whats not due yet
+          type: number
+          format: money
+        ddo:
+          description: days deductions and disputes outstanding
+          type: number
+          format: 'decimal(9,1)'
+        dso:
+          description: day sales outstanding
+          type: number
+          format: 'decimal(9,1)'
+        dso12:
+          description: DSO using the last 12 month average
+          type: number
+          format: 'decimal(9,1)'
+        dsoad:
+          description: DSO add back
+          type: number
+          format: 'decimal(9,1)'
+        dsobp:
+          description: DSO best possible
+          type: number
+          format: 'decimal(9,1)'
+        glPostPeriod:
+          maxLength: 255
+          type: string
+        grossProfit:
+          type: number
+          format: money
+        grossProfitPct:
+          type: number
+          format: money
+        maxDue:
+          description: max totalDue in this month and last 12 months
+          type: number
+          format: money
+        maxDuePer:
+          description: period the highest balance occured in the last 12 months
+          maxLength: 255
+          type: string
+        newCM:
+          type: number
+          format: money
+        newDD:
+          type: number
+          format: money
+        newDM:
+          type: number
+          format: money
+        newIN:
+          type: number
+          format: money
+        newPA:
+          type: number
+          format: money
+        newTotal:
+          type: number
+          format: money
+        num1:
+          type: number
+          format: money
+        num2:
+          type: number
+          format: money
+        num3:
+          type: number
+          format: money
+        num4:
+          type: number
+          format: money
+        num5:
+          type: number
+          format: money
+        num6:
+          type: number
+          format: money
+        openCM:
+          type: number
+          format: money
+        openDD:
+          type: number
+          format: money
+        openDM:
+          type: number
+          format: money
+        openIN:
+          type: number
+          format: money
+        openPA:
+          type: number
+          format: money
+        org:
+          $ref: '#/components/schemas/Org'
+        pastDue:
+          description: balance past due
+          type: number
+          format: money
+        possibleFC:
+          type: number
+          format: money
+        salesRolling12:
+          type: number
+          format: money
+        salesYtd:
+          type: number
+          format: money
+        totalDue:
+          description: >-
+            total due, sum of all open items. will be the ending balance when
+            month is closed
+          type: number
+          format: money
+        id:
+          type: integer
+          format: int64
+          description: unique id
+          example: 954
+          readOnly: true
+    ArScoreCard_Update:
+      title: ArScoreCard
+      x-entity: ArScoreCard
+      type: object
+      required:
+        - org
+        - glPostPeriod
+      properties:
+        adjustedTotal:
+          type: number
+          format: money
+        adjusterAmt:
+          type: number
+          format: money
+        adp:
+          description: avg days to pay
+          type: number
+          format: 'decimal(9,1)'
+        adpWtd:
+          description: weighted average days to pay
+          type: number
+          format: 'decimal(9,1)'
+        aging1:
+          description: Aging bucket 1
+          type: number
+          format: money
+        aging10:
+          description: Aging bucket 10
+          type: number
+          format: money
+        aging2:
+          description: Aging bucket 2
+          type: number
+          format: money
+        aging3:
+          description: Aging bucket 3
+          type: number
+          format: money
+        aging4:
+          description: Aging bucket 4
+          type: number
+          format: money
+        aging5:
+          description: Aging bucket 5
+          type: number
+          format: money
+        aging6:
+          description: Aging bucket 6
+          type: number
+          format: money
+        aging7:
+          description: Aging bucket 7
+          type: number
+          format: money
+        aging8:
+          description: Aging bucket 8
+          type: number
+          format: money
+        aging9:
+          description: Aging bucket 9
+          type: number
+          format: money
+        avgDaysBt:
+          description: avg days paid late / avg days beyond terms
+          type: number
+          format: 'decimal(9,1)'
+        beginBal:
+          type: number
+          format: money
+        cei:
+          description: collection effectiveness index
+          type: number
+          format: 'decimal(9,1)'
+        curBal:
+          description: whats not due yet
+          type: number
+          format: money
+        ddo:
+          description: days deductions and disputes outstanding
+          type: number
+          format: 'decimal(9,1)'
+        dso:
+          description: day sales outstanding
+          type: number
+          format: 'decimal(9,1)'
+        dso12:
+          description: DSO using the last 12 month average
+          type: number
+          format: 'decimal(9,1)'
+        dsoad:
+          description: DSO add back
+          type: number
+          format: 'decimal(9,1)'
+        dsobp:
+          description: DSO best possible
+          type: number
+          format: 'decimal(9,1)'
+        glPostPeriod:
+          maxLength: 255
+          type: string
+        grossProfit:
+          type: number
+          format: money
+        grossProfitPct:
+          type: number
+          format: money
+        maxDue:
+          description: max totalDue in this month and last 12 months
+          type: number
+          format: money
+        maxDuePer:
+          description: period the highest balance occured in the last 12 months
+          maxLength: 255
+          type: string
+        newCM:
+          type: number
+          format: money
+        newDD:
+          type: number
+          format: money
+        newDM:
+          type: number
+          format: money
+        newIN:
+          type: number
+          format: money
+        newPA:
+          type: number
+          format: money
+        newTotal:
+          type: number
+          format: money
+        num1:
+          type: number
+          format: money
+        num2:
+          type: number
+          format: money
+        num3:
+          type: number
+          format: money
+        num4:
+          type: number
+          format: money
+        num5:
+          type: number
+          format: money
+        num6:
+          type: number
+          format: money
+        openCM:
+          type: number
+          format: money
+        openDD:
+          type: number
+          format: money
+        openDM:
+          type: number
+          format: money
+        openIN:
+          type: number
+          format: money
+        openPA:
+          type: number
+          format: money
+        org:
+          title: Org
+          type: object
+          properties:
+            id:
+              description: Org id
+              example: 954
+              type: integer
+              format: int64
+        pastDue:
+          description: balance past due
+          type: number
+          format: money
+        possibleFC:
+          type: number
+          format: money
+        salesRolling12:
+          type: number
+          format: money
+        salesYtd:
+          type: number
+          format: money
+        totalDue:
+          description: >-
+            total due, sum of all open items. will be the ending balance when
+            month is closed
+          type: number
+          format: money
     CustFamily_Create:
       title: CustFamily
       x-entity: CustFamily
@@ -30026,84 +30806,3 @@ components:
                       type: integer
                       format: int64
                       description: Partition Org Id
-x-taggroups:
-  - name: Core / Rally
-    description: Rally
-    tags:
-      - activity
-      - activityNote
-      - appParam
-      - attachment
-      - company
-      - contact
-      - org
-      - orgTypeSetup
-      - partitionOrg
-      - role
-      - roleUser
-      - syncJob
-      - tag
-      - user
-  - name: Receivables/Collections
-    description: Receivables/Collections
-    tags:
-      - adjust
-      - adjustJournal
-      - adjustLine
-      - agingSetup
-      - bank
-      - bankAccount
-      - custAccount
-      - custAccountType
-      - custClass
-      - custFamily
-      - custSetup
-      - customer
-      - gl
-      - glAccount
-      - glBatch
-      - glJournal
-      - glPostPeriod
-      - lockbox
-      - reason
-      - reasonGroup
-      - refnumGen
-      - status
-      - term
-      - tran
-      - tranJournal
-      - tranLine
-      - tranType
-  - name: Autocash
-    description: Autocash
-    tags:
-      - batch
-      - corCode
-      - layoutField
-      - layoutImport
-      - layoutRecord
-      - micrBlacklist
-      - payment
-      - paymentDeleted
-      - paymentDetail
-      - paymentDetailArTran
-      - paymentMultiHit
-      - paymentMultiHitArTrans
-      - reasonTolerance
-      - setupGroup
-  - name: iPay/Payments
-    description: iPay/Payments
-    tags:
-      - paySchedule
-      - payTran
-      - wallet
-  - name: Banks
-    description: Banks
-    tags:
-      - ach
-      - cards
-      - inbound
-  - name: Reports
-    description: Reports
-    tags:
-      - statement

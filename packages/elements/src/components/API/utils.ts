@@ -35,7 +35,9 @@ export function computeTagGroups<T extends GroupableNode>(
   const rawServiceTags = serviceNode.data.tags ?? [];
 
   const serviceExtensions = serviceNode.data.extensions ?? {};
-  const tagGroupExtensionName = Object.keys(serviceExtensions).find(item => item.toLowerCase() === 'x-taggroups');
+  const tagGroupExtensionName = Object.keys(serviceExtensions).find(
+    item => item === 'x-taggroups' || item === 'x-tagGroups',
+  );
   const tagGroups: OpenApiTagGroup[] = tagGroupExtensionName
     ? (serviceExtensions[tagGroupExtensionName] as OpenApiTagGroup[])
     : [];

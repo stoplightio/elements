@@ -24,7 +24,9 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
   const rootVendorExtensions = serviceNode.data.extensions ?? ({} as Extensions);
   const rootVendorExtensionNames = Object.keys(rootVendorExtensions).map(item => item.toLowerCase());
   const isHavingTagGroupsExtension =
-    typeof rootVendorExtensions['x-taggroups'] !== 'undefined' && rootVendorExtensionNames.length > 0;
+    (typeof rootVendorExtensions['x-tagGroups'] !== 'undefined' ||
+      typeof rootVendorExtensions['x-taggroups'] !== 'undefined') &&
+    rootVendorExtensionNames.length > 0;
 
   tree.push({
     id: '/',

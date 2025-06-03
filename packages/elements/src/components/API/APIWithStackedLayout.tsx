@@ -94,7 +94,9 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   const rootVendorExtensions = serviceNode.data.extensions ?? ({} as Extensions);
   const rootVendorExtensionNames = Object.keys(rootVendorExtensions).map(item => item.toLowerCase());
   const isHavingTagGroupsExtension =
-    typeof rootVendorExtensions['x-tagGroups'] !== 'undefined' && rootVendorExtensionNames.length > 0;
+    (typeof rootVendorExtensions['x-tagGroups'] !== 'undefined' ||
+      typeof rootVendorExtensions['x-taggroups'] !== 'undefined') &&
+    rootVendorExtensionNames.length > 0;
 
   const { groups: operationGroups } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation, {
     useTagGroups: isHavingTagGroupsExtension,
