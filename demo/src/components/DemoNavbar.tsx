@@ -1,4 +1,5 @@
 import { Box, Button, Flex, HStack, Input, InvertTheme, Menu, MenuItems, Text } from '@stoplight/mosaic';
+import { Logo } from 'packages/elements-core/src/components/Logo';
 import React, { useContext, useMemo, useState } from 'react';
 import GitHubButton from 'react-github-btn';
 
@@ -9,9 +10,10 @@ export const DemoNavbar = () => {
   return (
     <>
       <InvertTheme>
-        <Flex h="2xl" shrink={0} px={5} alignItems="center" bg="canvas-pure">
+        <Flex h="2xl" shrink={0} px={5} alignItems="center" bg="canvas-pure" className="DemoNavbar-container">
           <HStack w="1/3" alignItems="center" spacing={4}>
-            <Text fontSize="lg" fontWeight="semibold" lineHeight="none">
+            <Logo altText="TallerGP Logo" imageUrl="https://tallergp.com/wp-content/uploads/2021/04/Logo-TallerGP.png" />
+            <Text fontSize="lg" fontWeight="semibold" lineHeight="none" className="DemoNavbar-title">
               Stoplight Elements Demo
             </Text>
 

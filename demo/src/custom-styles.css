@@ -1,0 +1,77 @@
+body {
+  background-color: #fff;
+  color: #808285;
+}
+
+a {
+  color: #4169e1;
+}
+
+a:hover {
+  color: #191970;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #808285;
+}
+
+h1 {
+  font-size: 2em;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.7em;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.5em;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1.3em;
+  line-height: 1.5;
+}
+
+h5 {
+  font-size: 1.2em;
+  line-height: 1.6;
+}
+
+h6 {
+  font-size: 1.1em;
+  line-height: 1.7;
+}
+
+/* DemoNavbar styles */
+.DemoNavbar-container {
+  background-color: #fff !important; /* Use !important to override Mosaic's bg utility if necessary */
+  border-bottom: 1px solid #ccc;
+}
+
+.DemoNavbar-title {
+  color: #808285 !important; /* Use !important to ensure color override */
+}
+
+/* Global Button Styles */
+button,
+.mosaic-Button, /* Common pattern for Mosaic components */
+.sl-button /* Common Stoplight prefix */ {
+  background-color: #e6e6e6 !important;
+  color: #fff !important;
+  border: 1px solid #ccc !important;
+  /* Remove any default browser/library border styling that might interfere */
+  border-image: initial !important;
+  padding: 0.5em 1em !important; /* Adding some default padding */
+  text-decoration: none !important;
+}
+
+button:hover,
+.mosaic-Button:hover,
+.sl-button:hover {
+  color: #fff !important; /* Text color remains white on hover */
+  border-color: #bbb !important; /* Slightly darker border on hover */
+  background-color: #dcdcdc !important; /* Slightly darker background on hover */
+}

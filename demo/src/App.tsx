@@ -2,6 +2,7 @@ import { Flex, Provider as MosaicProvider, useIconStore } from '@stoplight/mosai
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import './custom-styles.css';
 import { DemoNavbar } from './components/DemoNavbar';
 import { ElementsAPI } from './components/ElementsAPI';
 import { DEFAULT_API_URL } from './constants';
