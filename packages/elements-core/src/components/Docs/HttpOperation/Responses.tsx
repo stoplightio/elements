@@ -1,4 +1,4 @@
-import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+//import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
   Box,
   Button,
@@ -24,11 +24,12 @@ import { IHttpOperationResponse } from '@stoplight/types';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
-import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
+// import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
-import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
+//import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';
+import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
 import { Parameters } from './Parameters';
 
 interface ResponseProps {
@@ -165,8 +166,9 @@ Responses.displayName = 'HttpOperation.Responses';
 const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
-  const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
-  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
+  // const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
+  // const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
+  const { nodeHasChanged } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
   const schema = responseContent?.schema;
@@ -177,6 +179,23 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   }, [responseContent]);
 
   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
+
+  const getMaskProperties = (): Array<{ path: string }> => {
+    const data = localStorage.getItem('disabledProps') || '[]'; // Default to an empty array string
+    try {
+      const parsedData = JSON.parse(data);
+      // Ensure parsed data is actually an array and contains objects with 'path' property
+      if (Array.isArray(parsedData) && parsedData.every(item => typeof item.path === 'string')) {
+        return parsedData;
+      } else {
+        console.error('Invalid data format in localStorage:', parsedData);
+        return []; // Fallback to empty array
+      }
+    } catch (err) {
+      console.error('Error parsing localStorage data:', err);
+      return []; // Fallback to empty array on error
+    }
+  };
 
   return (
     <VStack spacing={8} pt={8}>
@@ -207,8 +226,15 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               />
             </Flex>
           </SectionSubtitle>
+          {console.log(
+            'checking in elements',
+            localStorage.getItem('disabledProps'),
+            JSON.parse(localStorage.getItem('disabledProps') || '[]'),
+          )}
 
-          {schema && (
+          {/* {schema && <LazySchemaTreePreviewer schema={schema} hideData={[]} />} */}
+          {schema && <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />}
+          {/*schema && (
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}
               resolveRef={refResolver}
@@ -219,7 +245,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               nodeHasChanged={nodeHasChanged}
               renderExtensionAddon={renderExtensionAddon}
             />
-          )}
+          )*/}
         </>
       )}
     </VStack>
