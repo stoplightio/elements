@@ -9,7 +9,9 @@ interface LazySchemaTreePreviewerProps {
   path?: string;
   maskState?: Record<string, { checked: boolean; required: 0 | 1 | 2 }>;
   setMaskState?: React.Dispatch<React.SetStateAction<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>>;
-  hideData?: Array<{ path: string }>; // Updated hideData format
+  hideData?: Array<{ path: string }>;
+  parentRequired?: string[];
+  propertyKey?: string;
 }
 
 const TYPES = ['string', 'integer', 'boolean'];
@@ -25,9 +27,7 @@ function detectCircularPath(path: string): boolean {
   const parts = path.split('/').filter(part => !ignored.includes(part));
   for (let i = 0; i < parts.length - 1; i++) {
     const current = parts[i];
-
     const rest = parts.slice(i + 1);
-
     if (rest.includes(current)) {
       return true;
     }
@@ -35,27 +35,26 @@ function detectCircularPath(path: string): boolean {
   return false;
 }
 
-function dereference(node: any, root: any, visited: Set<string> = new Set(), depth = 0, maxDepth = 10): any {
+function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSet(), depth = 0, maxDepth = 10): any {
   if (!node || typeof node !== 'object') return node;
   if (depth > maxDepth) return node;
 
   if (node.$ref || node['x-iata-$ref']) {
     let refPath = node.$ref || node['x-iata-$ref'];
     refPath = refPath.replace('__bundled__', 'definitions');
-    if (visited.has(refPath)) return { circular: true, $ref: refPath };
-
-    visited.add(refPath);
+    //if (visited.has(node)) return { circular: true, $ref: refPath };
+    //visited.add(node); // Add the node itself, not refPath
     const target = resolvePointer(root, refPath);
-    return dereference(target, root, new Set(visited), depth + 1, maxDepth);
+    return dereference(target, root, visited, depth + 1, maxDepth);
   }
 
   if (Array.isArray(node)) {
-    return node.map(item => dereference(item, root, new Set(visited), depth + 1, maxDepth));
+    return node.map(item => dereference(item, root, visited, depth + 1, maxDepth));
   }
 
   const result: Record<string, any> = {};
   for (const key in node) {
-    result[key] = dereference(node[key], root, new Set(visited), depth + 1, maxDepth);
+    result[key] = dereference(node[key], root, visited, depth + 1, maxDepth);
   }
   return result;
 }
@@ -81,17 +80,22 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   path = 'properties',
   maskState,
   setMaskState,
-  hideData = [], // Default to an empty array
+  hideData = [],
+  parentRequired,
+  propertyKey,
 }) => {
   const [expanded, setExpanded] = useState(false);
-
+  const isRoot = level === 1 && (title === undefined || path === 'properties');
   const [_maskState, _setMaskState] = useState<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>(() => {
     const stored = localStorage.getItem('disabledProps');
     const disabledPaths = stored ? (JSON.parse(stored) as string[]) : [];
 
     const initialState: Record<string, { checked: boolean; required: 0 | 1 | 2 }> = {};
-    for (const p of disabledPaths) {
-      initialState[p] = { checked: false, required: 0 };
+    if (disabledPaths) {
+      for (const p of disabledPaths) {
+        const { path }: any = p;
+        initialState[path] = { checked: false, required: 0 };
+      }
     }
     return initialState;
   });
@@ -112,26 +116,24 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
   useEffect(() => {
     if (!(path in finalMaskState)) {
-      finalSetMaskState(prev => ({
+      finalSetMaskState((prev: typeof finalMaskState) => ({
         ...prev,
         [path]: { checked: true, required: 0 },
       }));
+      // For root: always expanded
+      if (isRoot && !expanded) setExpanded(true);
     }
+    // eslint-disable-next-line
   }, [path, finalMaskState, finalSetMaskState]);
 
   const shouldHideNode = useMemo(() => {
-    console.log('hide data-', hideData);
-    console.log('Array.isArray(hideData)', Array.isArray(hideData));
-    if (Array.isArray(hideData)) {
-      return hideData.some(hideEntry => hideEntry.path === path); // Check if the current path matches any hideData entry
-    }
-    return false;
+    return hideData.some(hideEntry => hideEntry.path === path);
   }, [path, hideData]);
 
-  if (!schema || shouldHideNode) return null; // Skip rendering if node should be hidden entirely
+  if (!schema || shouldHideNode) return null;
 
   const displayTitle =
-    level === 1 && (title === undefined || path === 'properties') ? 'Root' : title ?? schema?.title ?? 'Node';
+    level === 1 && (title === undefined || path === 'properties') ? '' : title ?? schema?.title ?? 'Node';
 
   const handleToggle = () => {
     const circular = detectCircularPath(path);
@@ -141,7 +143,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   };
 
   const renderChildren = () => {
-    if (!expanded) return null;
+    if (!expanded && !isRoot) return null;
 
     const children: JSX.Element[] = [];
     if (schema.circular) {
@@ -150,32 +152,59 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
     if (schema.type === 'object' && schema.properties) {
       for (const [key, child] of Object.entries(schema.properties)) {
-        const resolved = dereference(child, root);
-        //const childPath = path === 'properties' ? `${path}/${key}` : `${path}/properties/${key}`;
         const childPath = `${path}/${key}`;
 
-        if (Array.isArray(hideData) && !hideData.some(hideEntry => hideEntry.path === childPath)) {
+        if (!hideData.some(hideEntry => hideEntry.path === childPath)) {
           children.push(
             <li key={key}>
               <LazySchemaTreePreviewer
-                schema={resolved || root.title}
+                schema={dereference(child, root)}
                 root={root}
                 title={key}
-                level={level + 1}
+                level={level + 2}
                 path={childPath}
                 maskState={finalMaskState}
                 setMaskState={finalSetMaskState}
-                hideData={hideData} // Pass hideData down to children
+                hideData={hideData}
+                parentRequired={schema.required}
+                propertyKey={key}
               />
             </li>,
           );
         }
       }
-    } else if (schema.type === 'array' && schema.items) {
+    }
+    // CHANGED: For array, do NOT render an "items" node, render children of items directly (if items is object or array)
+    else if (schema.type === 'array' && schema.items && Object.keys(schema.items).length > 0) {
       const resolvedItems = dereference(schema.items, root);
-      const childPath = `${path}/items`;
-
-      if (Array.isArray(hideData) && !hideData.some(hideEntry => hideEntry.path === childPath)) {
+      // If items is an object with properties, render its properties directly
+      if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
+        for (const [key, child] of Object.entries(resolvedItems.properties)) {
+          const childPath = `${path}/items/${key}`;
+          if (!hideData.some(hideEntry => hideEntry.path === childPath)) {
+            children.push(
+              <li key={key}>
+                <LazySchemaTreePreviewer
+                  schema={dereference(child, root)}
+                  root={root}
+                  title={key}
+                  level={level + 2}
+                  path={childPath}
+                  maskState={finalMaskState}
+                  setMaskState={finalSetMaskState}
+                  hideData={hideData}
+                  parentRequired={resolvedItems.required}
+                  propertyKey={key}
+                />
+              </li>,
+            );
+          }
+        }
+      }
+      // If items is an array, render recursively
+      else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items) {
+        const childPath = `${path}/items`;
+        // Recursively handle array-of-arrays
         children.push(
           <li key="items">
             <LazySchemaTreePreviewer
@@ -186,31 +215,88 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               path={childPath}
               maskState={finalMaskState}
               setMaskState={finalSetMaskState}
-              hideData={hideData} // Pass hideData down to children
+              hideData={hideData}
+              parentRequired={schema.required}
+              propertyKey="items"
             />
           </li>,
         );
       }
+      // If items is a primitive or something else, render as a single child
+      else {
+        const childPath = `${path}/items`;
+        if (!hideData.some(hideEntry => hideEntry.path === childPath)) {
+          children.push(
+            <li key="items">
+              <LazySchemaTreePreviewer
+                schema={resolvedItems}
+                root={root}
+                title="items"
+                level={level + 1}
+                path={childPath}
+                maskState={finalMaskState}
+                setMaskState={finalSetMaskState}
+                hideData={hideData}
+                parentRequired={schema.required}
+                propertyKey="items"
+              />
+            </li>,
+          );
+        }
+      }
     }
-
-    return <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul>;
+    // If array's items is missing or empty, do NOT render an "items" node at all
+    return children.length > 0 ? <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul> : null;
   };
+
+  // Show required if this property is in parentRequired
+  const isRequired = parentRequired && propertyKey && parentRequired.includes(propertyKey);
 
   return (
     <div className="mb-1">
       <Flex maxW="full" pl={3} py={2} data-test="schema-row" pos="relative">
         <VStack spacing={1} maxW="full" className="w-full">
+          {console.log('schema --->', schema)}
           <Flex onClick={handleToggle} className="w-full cursor-pointer">
-            {/* <span className="mr-1 text-xs">{expanded ? '▼' : '▶'}</span> */}
-            {!TYPES.includes(schema?.type) ? (
-              <span className="mr-1 text-xs">{expanded ? '▼' : '▶'}</span>
+            {!TYPES.includes(schema?.type) && !isRoot ? (
+              <i
+                role="img"
+                aria-hidden="true"
+                className={`sl-icon fal ${expanded ? 'fa-chevron-down' : 'fa-chevron-right'} fa-fw fa-sm`}
+              ></i>
             ) : (
               <span className="mr-1 text-xs"></span>
             )}
-            <Box mr={2} fontFamily="mono" fontWeight="semibold">
-              {displayTitle}
+            {!isRoot ? (
+              <Box mr={2} fontFamily="mono" fontWeight="semibold">
+                {displayTitle}
+              </Box>
+            ) : null}
+            {!isRoot ? (
+              <Box mr={2} fontFamily="mono" fontWeight="light">
+                <span className="text-gray-500">
+                  {schema?.type === 'object' ? schema?.title : schema?.type || root?.title}
+                </span>
+                {schema?.items ? `[${schema?.items?.title}]` : null}
+                <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
+              </Box>
+            ) : null}
+            {!isRoot ? (
+              <Box mr={2} fontFamily="mono" fontWeight="light">
+                <span>{schema?.examples !== undefined ? `Example : ${JSON.stringify(schema?.examples)}` : null}</span>
+              </Box>
+            ) : null}
+            <Box mr={isRoot ? 0 : 2} fontFamily="mono" fontWeight="light">
+              <span className="text-gray-500">{schema?.description}</span>
+              {'minItems' in schema
+                ? `>=${schema?.minItems} items`
+                : 'enum' in schema
+                ? `Allowed values: ${schema?.enum.join(' ')}`
+                : null}
             </Box>
-            <span className="text-gray-500">{schema?.title || schema?.type || root.title}</span>
+            <Box mr={2} fontFamily="mono" fontWeight="normal">
+              <div>{isRequired && <span style={{ color: 'red', marginLeft: '10px' }}>required</span>}</div>
+            </Box>
           </Flex>
         </VStack>
       </Flex>
