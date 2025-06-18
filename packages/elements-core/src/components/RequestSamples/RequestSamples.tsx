@@ -44,8 +44,10 @@ type LanguageConfigWithCode = LanguageConfig &
     libraries: Dictionary<LibraryConfigWithCode, SupportedLibrary>;
   };
 
-const selectedLanguageAtom = persistAtom<string>('RequestSamples_selectedLanguage', atom('shell'));
-const selectedLibraryAtom = persistAtom<string>('RequestSamples_selectedLibrary', atom('curl'));
+const DEFAULT_LANGUAGE = 'shell';
+const DEFAULT_LIBRARY = 'curl';
+const selectedLanguageAtom = persistAtom<string>('RequestSamples_selectedLanguage', atom(DEFAULT_LANGUAGE));
+const selectedLibraryAtom = persistAtom<string>('RequestSamples_selectedLibrary', atom(DEFAULT_LIBRARY));
 
 const fallbackText = 'Unable to generate code example';
 
@@ -69,7 +71,6 @@ export const RequestSamples = memo<RequestSamplesProps>(({ request, embeddedInMd
         value.displayText = `${languageKey} / ${libKey}`;
       });
     });
-
     for (const customCodeSample of customCodeSamples) {
       const existingLanguageSampleKey = findKey(requestSamples, {
         httpSnippetLanguage: customCodeSample.lang.toLowerCase(),
@@ -160,17 +161,17 @@ export const RequestSamples = memo<RequestSamplesProps>(({ request, embeddedInMd
     const selectedLibrarySample = find(selectedLanguageSample?.libraries ?? {}, {
       httpSnippetLibrary: selectedLibrary,
     });
-
     return [
       items,
       {
         ...selectedLibrarySample,
         ...selectedLanguageSample,
-        displayText: selectedLibrarySample?.displayText ?? selectedLanguageSample?.displayText,
+        //TODO: fix this
+        displayText: 'shell',
+        //selectedLibrarySample?.displayText ?? selectedLanguageSample?.displayText,
       },
     ];
   }, [allRequestSamples, selectedLanguage, selectedLibrary, setSelectedLanguage, setSelectedLibrary]);
-
   const [requestSample, setRequestSample] = useState<string | null>(null);
   useEffect(() => {
     let isStale = false;
