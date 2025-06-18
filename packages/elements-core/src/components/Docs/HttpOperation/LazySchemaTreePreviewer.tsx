@@ -14,6 +14,16 @@ interface LazySchemaTreePreviewerProps {
   propertyKey?: string;
 }
 
+interface SchemaWithMinItems {
+  minItems?: number;
+}
+
+interface SchemaWithEnum {
+  enum?: any[];
+}
+
+type Schema = SchemaWithMinItems | SchemaWithEnum | object;
+
 const TYPES = ['string', 'integer', 'boolean'];
 
 function resolvePointer(obj: any, pointer: string) {
@@ -42,10 +52,12 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
   if (node.$ref || node['x-iata-$ref']) {
     let refPath = node.$ref || node['x-iata-$ref'];
     refPath = refPath.replace('__bundled__', 'definitions');
-    //if (visited.has(node)) return { circular: true, $ref: refPath };
-    //visited.add(node); // Add the node itself, not refPath
+    if (visited.has(node))
+      return { circular: true, $ref: refPath, title: node.title, type: 'any', description: node.description };
+
+    visited.add(node); // Add the node itself, not refPath
     const target = resolvePointer(root, refPath);
-    return dereference(target, root, visited, depth + 1, maxDepth);
+    return dereference(target || node, root, visited, depth + 1, maxDepth);
   }
 
   if (Array.isArray(node)) {
@@ -146,12 +158,15 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     if (!expanded && !isRoot) return null;
 
     const children: JSX.Element[] = [];
-    if (schema.circular) {
-      return <li className="ml-6 text-red-600">↻ Circular Ref: {schema.$ref}</li>;
+    /*
+    // no need to show message for circular references here, as dereference will handle it
+    if (schema?.circular) {
+      return <li className="ml-6 text-red-600">↻ Circular Ref: {schema?.$ref}</li>;
     }
+    */
 
-    if (schema.type === 'object' && schema.properties) {
-      for (const [key, child] of Object.entries(schema.properties)) {
+    if (schema?.type === 'object' && schema?.properties) {
+      for (const [key, child] of Object.entries(schema?.properties)) {
         const childPath = `${path}/${key}`;
 
         if (!hideData.some(hideEntry => hideEntry.path === childPath)) {
@@ -166,7 +181,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 maskState={finalMaskState}
                 setMaskState={finalSetMaskState}
                 hideData={hideData}
-                parentRequired={schema.required}
+                parentRequired={schema?.required}
                 propertyKey={key}
               />
             </li>,
@@ -175,8 +190,13 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       }
     }
     // CHANGED: For array, do NOT render an "items" node, render children of items directly (if items is object or array)
-    else if (schema.type === 'array' && schema.items && Object.keys(schema.items).length > 0) {
-      const resolvedItems = dereference(schema.items, root);
+    else if (
+      schema?.type === 'array' &&
+      schema?.items &&
+      Object.keys(schema?.items).length > 0 &&
+      !schema?.items?.circular
+    ) {
+      const resolvedItems = dereference(schema?.items, root);
       // If items is an object with properties, render its properties directly
       if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
@@ -216,7 +236,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               maskState={finalMaskState}
               setMaskState={finalSetMaskState}
               hideData={hideData}
-              parentRequired={schema.required}
+              parentRequired={schema?.required}
               propertyKey="items"
             />
           </li>,
@@ -237,7 +257,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 maskState={finalMaskState}
                 setMaskState={finalSetMaskState}
                 hideData={hideData}
-                parentRequired={schema.required}
+                parentRequired={schema?.required}
                 propertyKey="items"
               />
             </li>,
@@ -249,6 +269,45 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     return children.length > 0 ? <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul> : null;
   };
 
+  const renderMinEnums = (schema: Schema) => {
+    if (!schema || typeof schema !== 'object') return null;
+    const boxStyle: any = {
+      background: 'rgba(245, 247, 250, 0.5)',
+      border: '1px solid #a0aec0',
+      borderRadius: '4px',
+      padding: '0px 2px',
+      display: 'inline-block',
+      overflowWrap: 'break-word',
+      textAlign: 'left',
+      maxWidth: 'fit-content',
+      maxHeight: 'fit-content',
+    };
+    if ('minItems' in schema) {
+      const schemaWithMinItems = schema as SchemaWithMinItems; // Type assertion
+      if (typeof schemaWithMinItems.minItems === 'number') {
+        return (
+          <Box className="sl-text-muted" fontFamily="ui" fontWeight="normal" mr={2} style={boxStyle}>
+            {`>=${schemaWithMinItems.minItems} items`}
+          </Box>
+        );
+      }
+    }
+
+    if ('enum' in schema && Array.isArray((schema as SchemaWithEnum).enum)) {
+      return (
+        <div>
+          Allowed values:{' '}
+          {(schema as SchemaWithEnum).enum!.map((val, idx) => (
+            <Box key={idx} className="sl-text-muted" fontFamily="ui" fontWeight="normal" mr={2} style={boxStyle}>
+              {val}
+            </Box>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
   // Show required if this property is in parentRequired
   const isRequired = parentRequired && propertyKey && parentRequired.includes(propertyKey);
 
@@ -256,49 +315,74 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     <div className="mb-1">
       <Flex maxW="full" pl={3} py={2} data-test="schema-row" pos="relative">
         <VStack spacing={1} maxW="full" className="w-full">
-          {console.log('schema --->', schema)}
-          <Flex onClick={handleToggle} className="w-full cursor-pointer">
-            {!TYPES.includes(schema?.type) && !isRoot ? (
-              <i
-                role="img"
-                aria-hidden="true"
-                className={`sl-icon fal ${expanded ? 'fa-chevron-down' : 'fa-chevron-right'} fa-fw fa-sm`}
-              ></i>
-            ) : (
-              <span className="mr-1 text-xs"></span>
-            )}
+          <Flex onClick={!isRoot ? handleToggle : undefined} className={`w-full ${isRoot ? '' : 'cursor-pointer'}`}>
             {!isRoot ? (
               <Box mr={2} fontFamily="mono" fontWeight="semibold">
-                {displayTitle}
+                {!TYPES.includes(schema?.type) && !isRoot ? (
+                  <i
+                    role="img"
+                    aria-hidden="true"
+                    className={`sl-icon fal ${expanded ? 'fa-chevron-down' : 'fa-chevron-right'} fa-fw fa-sm`}
+                  ></i>
+                ) : (
+                  <span className="mr-1 text-xs"></span>
+                )}
+                {' ' + displayTitle}
               </Box>
             ) : null}
             {!isRoot ? (
               <Box mr={2} fontFamily="mono" fontWeight="light">
                 <span className="text-gray-500">
                   {schema?.type === 'object' ? schema?.title : schema?.type || root?.title}
+                  {schema?.items && schema?.items?.title !== undefined ? ` [${schema?.items?.title}] ` : null}
                 </span>
-                {schema?.items ? `[${schema?.items?.title}]` : null}
                 <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
               </Box>
             ) : null}
-            {!isRoot ? (
-              <Box mr={2} fontFamily="mono" fontWeight="light">
-                <span>{schema?.examples !== undefined ? `Example : ${JSON.stringify(schema?.examples)}` : null}</span>
+          </Flex>
+          {/*!isRoot ? ( */}
+          <Flex pl={1} w="full" align="start" direction="col" style={{ overflow: 'visible' }}>
+            {schema?.description && (
+              <Box fontFamily="ui" fontWeight="light">
+                <span className="text-gray-500">{schema?.description}</span>
               </Box>
-            ) : null}
-            <Box mr={isRoot ? 0 : 2} fontFamily="mono" fontWeight="light">
-              <span className="text-gray-500">{schema?.description}</span>
-              {'minItems' in schema
-                ? `>=${schema?.minItems} items`
-                : 'enum' in schema
-                ? `Allowed values: ${schema?.enum.join(' ')}`
-                : null}
-            </Box>
+            )}
+            {schema?.examples !== undefined && (
+              <Flex align="center" mb={1} style={{ flexWrap: 'wrap' }}>
+                <span className="text-gray-500" style={{ marginRight: 8, flexShrink: 0 }}>
+                  Example
+                </span>
+                <Box
+                  className="sl-text-muted"
+                  fontFamily="ui"
+                  fontWeight="normal"
+                  mr={2}
+                  style={{
+                    background: 'rgba(245, 247, 250, 0.5)',
+                    border: '1px solid #a0aec0',
+                    borderRadius: '4px',
+                    padding: '4px 8px',
+                    display: 'inline-block',
+                    overflowWrap: 'break-word',
+                    textAlign: 'left',
+                    maxWidth: '530px',
+                  }}
+                >
+                  {JSON.stringify(schema?.examples)}
+                </Box>
+              </Flex>
+            )}
+          </Flex>
+          {/*}) : null}*/}
+          {schema && typeof schema === 'object' && ('minItems' in schema || 'enum' in schema) && renderMinEnums(schema)}
+        </VStack>
+        {!isRoot && (
+          <label className="inline-flex items-center ml-2">
             <Box mr={2} fontFamily="mono" fontWeight="normal">
               <div>{isRequired && <span style={{ color: 'red', marginLeft: '10px' }}>required</span>}</div>
             </Box>
-          </Flex>
-        </VStack>
+          </label>
+        )}
       </Flex>
       {renderChildren()}
     </div>
