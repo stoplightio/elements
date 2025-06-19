@@ -254,6 +254,7 @@ export const addTagGroupsToTree = <T extends GroupableNode>(
   tree: TableOfContentsItem[],
   itemsType: TableOfContentsGroup['itemsType'],
   config: { hideInternal: boolean; useTagGroups: boolean },
+  serviceNode: ServiceNode,
 ) => {
   const { hideInternal = false } = config ?? {};
   // Show ungrouped nodes above tag groups
@@ -285,12 +286,34 @@ export const addTagGroupsToTree = <T extends GroupableNode>(
         meta: isHttpOperation(node.data) || isHttpWebhookOperation(node.data) ? node.data.method : '',
       };
     });
+
     if (items && items.length > 0) {
-      tree.push({
-        title: group.title,
-        items,
-        itemsType,
-      });
+      // Find matching tag description from service node
+      const serviceTags = serviceNode.data.tags || [];
+      const matchingTag = serviceTags.find(tag => tag.name.toLowerCase() === group.title.toLowerCase());
+
+      // Create tag summary page if tag has description
+      if (matchingTag?.description) {
+        const tagSummaryItem = {
+          id: `/tag-summary/${group.title.toLowerCase()}`,
+          slug: `/tag-summary/${group.title.toLowerCase()}`,
+          title: `${group.title} - Summary`,
+          type: 'article' as const,
+          meta: 'Summary',
+        };
+
+        tree.push({
+          title: group.title,
+          items: [tagSummaryItem, ...items],
+          itemsType,
+        });
+      } else {
+        tree.push({
+          title: group.title,
+          items,
+          itemsType,
+        });
+      }
     } else if (group.isDivider) {
       tree.push({
         title: group.title,

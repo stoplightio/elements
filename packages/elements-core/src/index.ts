@@ -1,4 +1,5 @@
 export { Docs, DocsProps, ExtensionAddonRenderer, ExtensionRowProps, ParsedDocs } from './components/Docs';
+export { TagSummary } from './components/Docs/TagSummary/TagSummary';
 export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { ExportButton, ExportButtonProps } from './components/Docs/HttpService/ExportButton';
 export { ResponsiveSidebarLayout } from './components/Layout/ResponsiveSidebarLayout';

@@ -4,6 +4,7 @@ import {
   ParsedDocs,
   resolveRelativeLink,
   ResponsiveSidebarLayout,
+  TagSummary,
 } from '@stoplight/elements-core';
 import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { NodeType } from '@stoplight/types';
@@ -62,6 +63,15 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const { pathname: currentPath } = location;
   const relativePath = resolveRelativePath(currentPath, basePath, outerRouter);
 
+  // Check if this is a tag summary route
+  const isTagSummaryRoute = relativePath.startsWith('/tag-summary/');
+  let tagSummaryData = null;
+  if (isTagSummaryRoute) {
+    const tagName = relativePath.replace('/tag-summary/', '');
+    const serviceTags = serviceNode.data.tags || [];
+    tagSummaryData = serviceTags.find(tag => tag.name.toLowerCase() === tagName.toLowerCase());
+  }
+
   const isRootPath = relativePath === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === relativePath);
 
@@ -78,7 +88,7 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
     [hideTryIt, hideSecurityInfo, hideServerInfo, compact, hideExport, hideTryItPanel, hideSamples, node?.type],
   );
 
-  if (!node) {
+  if (!node && !isTagSummaryRoute) {
     // Redirect to the first child if node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
 
@@ -99,27 +109,38 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
 
   return (
     <ResponsiveSidebarLayout
-      onTocClick={handleTocClick}
-      tree={tree}
-      logo={logo ?? serviceNode.data.logo}
       ref={container}
       name={serviceNode.name}
+      logo={logo ?? serviceNode.data.logo}
+      tree={tree}
+      onTocClick={handleTocClick}
     >
-      {node && (
+      {isTagSummaryRoute && tagSummaryData ? (
         <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
-          <ParsedDocs
-            key={relativePath}
-            uri={relativePath}
-            node={node}
-            nodeTitle={node.name}
+          <TagSummary
+            data={tagSummaryData}
+            tagName={tagSummaryData.name}
             layoutOptions={layoutOptions}
             location={location}
-            exportProps={exportProps}
-            tryItCredentialsPolicy={tryItCredentialsPolicy}
-            tryItCorsProxy={tryItCorsProxy}
-            renderExtensionAddon={renderExtensionAddon}
           />
         </ElementsOptionsProvider>
+      ) : (
+        node && (
+          <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
+            <ParsedDocs
+              key={relativePath}
+              uri={relativePath}
+              node={node}
+              nodeTitle={node.name}
+              layoutOptions={layoutOptions}
+              location={location}
+              exportProps={exportProps}
+              tryItCredentialsPolicy={tryItCredentialsPolicy}
+              tryItCorsProxy={tryItCorsProxy}
+              renderExtensionAddon={renderExtensionAddon}
+            />
+          </ElementsOptionsProvider>
+        )
       )}
     </ResponsiveSidebarLayout>
   );

@@ -48,7 +48,7 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     addTagGroupsToTree(groups, ungrouped, tree, NodeType.HttpOperation, {
       hideInternal: mergedConfig.hideInternal,
       useTagGroups: isHavingTagGroupsExtension,
-    });
+    }, serviceNode);
   }
 
   const hasWebhookNodes = serviceNode.children.some(node => node.type === NodeType.HttpWebhook, {
@@ -65,7 +65,7 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     addTagGroupsToTree(groups, ungrouped, tree, NodeType.HttpWebhook, {
       hideInternal: mergedConfig.hideInternal,
       useTagGroups: isHavingTagGroupsExtension,
-    });
+    }, serviceNode);
   }
 
   let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
@@ -84,8 +84,9 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
     addTagGroupsToTree(groups, ungrouped, tree, NodeType.Model, {
       hideInternal: mergedConfig.hideInternal,
       useTagGroups: isHavingTagGroupsExtension,
-    });
+    }, serviceNode);
   }
+
   return tree;
 };
 

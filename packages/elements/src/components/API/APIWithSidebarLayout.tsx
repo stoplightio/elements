@@ -9,6 +9,7 @@ import {
   SidebarLayout,
   TableOfContents,
   TableOfContentsItem,
+  TagSummary,
 } from '@stoplight/elements-core';
 import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Flex, Heading } from '@stoplight/mosaic';
@@ -66,6 +67,16 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   const { pathname: currentPath } = location;
   const relativePath = resolveRelativePath(currentPath, basePath, outerRouter);
   const isRootPath = relativePath === '/';
+  
+  // Check if this is a tag summary route
+  const isTagSummaryRoute = relativePath.startsWith('/tag-summary/');
+  let tagSummaryData = null;
+  if (isTagSummaryRoute) {
+    const tagName = relativePath.replace('/tag-summary/', '');
+    const serviceTags = serviceNode.data.tags || [];
+    tagSummaryData = serviceTags.find(tag => tag.name.toLowerCase() === tagName.toLowerCase());
+  }
+  
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === relativePath);
 
   const layoutOptions = React.useMemo(
@@ -80,7 +91,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     [hideTryIt, hideServerInfo, hideSecurityInfo, hideExport, hideTryItPanel, hideSamples, node?.type],
   );
 
-  if (!node) {
+  if (!node && !isTagSummaryRoute) {
     // Redirect to the first child if node doesn't exist
     const firstSlug = findFirstNodeSlug(tree);
 
@@ -99,21 +110,32 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
 
   return (
     <SidebarLayout ref={container} sidebar={sidebar}>
-      {node && (
+      {isTagSummaryRoute && tagSummaryData ? (
         <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
-          <ParsedDocs
-            key={relativePath}
-            uri={relativePath}
-            node={node}
-            nodeTitle={node.name}
+          <TagSummary
+            data={tagSummaryData}
+            tagName={tagSummaryData.name}
             layoutOptions={layoutOptions}
             location={location}
-            exportProps={exportProps}
-            tryItCredentialsPolicy={tryItCredentialsPolicy}
-            tryItCorsProxy={tryItCorsProxy}
-            renderExtensionAddon={renderExtensionAddon}
           />
         </ElementsOptionsProvider>
+      ) : (
+        node && (
+          <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
+            <ParsedDocs
+              key={relativePath}
+              uri={relativePath}
+              node={node}
+              nodeTitle={node.name}
+              layoutOptions={layoutOptions}
+              location={location}
+              exportProps={exportProps}
+              tryItCredentialsPolicy={tryItCredentialsPolicy}
+              tryItCorsProxy={tryItCorsProxy}
+              renderExtensionAddon={renderExtensionAddon}
+            />
+          </ElementsOptionsProvider>
+        )
       )}
     </SidebarLayout>
   );
