@@ -1,5 +1,5 @@
 import { Box, Flex, VStack } from '@stoplight/mosaic';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 interface LazySchemaTreePreviewerProps {
   schema: any;
@@ -71,19 +71,6 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
   return result;
 }
 
-function persistOnlyParentDisabled(maskObj: Record<string, { checked: boolean; required: 0 | 1 | 2 }>) {
-  const disabledParents: string[] = [];
-
-  for (const [path, value] of Object.entries(maskObj)) {
-    const childPaths = Object.keys(maskObj).filter(p => p.startsWith(`${path}/`));
-    const allChildrenDisabled = childPaths.length > 0 && childPaths.every(p => !maskObj[p]?.checked);
-
-    if (!value.checked && (childPaths.length === 0 || allChildrenDisabled)) {
-      disabledParents.push(path);
-    }
-  }
-}
-
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   schema,
   root = schema,
@@ -91,7 +78,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   level = 1,
   path = 'properties',
   maskState,
-  setMaskState,
   hideData = [],
   parentRequired,
   propertyKey,
@@ -113,30 +99,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   });
 
   const finalMaskState = maskState ?? _maskState;
-  const finalSetMaskState = useMemo(
-    () =>
-      setMaskState ??
-      ((updater: any) => {
-        _setMaskState(prev => {
-          const updated = updater(prev);
-          persistOnlyParentDisabled(updated);
-          return updated;
-        });
-      }),
-    [setMaskState],
-  );
-
-  useEffect(() => {
-    if (!(path in finalMaskState)) {
-      finalSetMaskState((prev: typeof finalMaskState) => ({
-        ...prev,
-        [path]: { checked: true, required: 0 },
-      }));
-      // For root: always expanded
-      if (isRoot && !expanded) setExpanded(true);
-    }
-    // eslint-disable-next-line
-  }, [path, finalMaskState, finalSetMaskState]);
 
   const shouldHideNode = useMemo(() => {
     // If hideData contains the path AND doesn't have a 'required' property, hide the node
@@ -182,7 +144,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 level={level + 2}
                 path={childPath}
                 maskState={finalMaskState}
-                setMaskState={finalSetMaskState}
+                //setMaskState={finalSetMaskState}
                 hideData={hideData}
                 parentRequired={schema?.required}
                 propertyKey={key}
@@ -214,7 +176,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                   level={level + 2}
                   path={childPath}
                   maskState={finalMaskState}
-                  setMaskState={finalSetMaskState}
+                  //setMaskState={finalSetMaskState}
                   hideData={hideData}
                   parentRequired={resolvedItems.required}
                   propertyKey={key}
@@ -239,7 +201,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 level={level + 1}
                 path={childPath}
                 maskState={finalMaskState}
-                setMaskState={finalSetMaskState}
+                //setMaskState={finalSetMaskState}
                 hideData={hideData}
                 parentRequired={schema?.required}
                 propertyKey="items"
@@ -263,7 +225,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 level={level + 1}
                 path={childPath}
                 maskState={finalMaskState}
-                setMaskState={finalSetMaskState}
+                //setMaskState={finalSetMaskState}
                 hideData={hideData}
                 parentRequired={schema?.required}
                 propertyKey="items"
@@ -355,7 +317,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               </Box>
             ) : null}
           </Flex>
-          {/*!isRoot ? ( */}
           <Flex pl={1} w="full" align="start" direction="col" style={{ overflow: 'visible', paddingLeft: '20px' }}>
             {schema?.description && (
               <Box fontFamily="ui" fontWeight="light">
@@ -388,7 +349,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               </Flex>
             )}
           </Flex>
-          {/*}) : null}*/}
           <Flex pl={1} w="full" align="start" direction="col" style={{ overflow: 'visible', paddingLeft: '20px' }}>
             {schema &&
               typeof schema === 'object' &&
