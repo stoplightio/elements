@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
 import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
+import { operationsSorter } from '../__fixtures__/api-descriptions/operationsSorter';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
@@ -115,3 +116,16 @@ WithExtensionRenderer.args = {
   apiDescriptionDocument: zoomApiYaml,
 };
 WithExtensionRenderer.storyName = 'With Extension Renderer';
+
+export const WithOperationsSorter = Template.bind({});
+const isNumber = (a: any): a is number => !isNaN(Number(a));
+WithOperationsSorter.args = {
+  operationsSorter: function (a, b) {
+    if (!isNumber(a.extensions?.['x-weight']) || !isNumber(b.extensions?.['x-weight'])) {
+      return 0;
+    }
+    return a.extensions!['x-weight'] - b.extensions!['x-weight'];
+  },
+  apiDescriptionDocument: operationsSorter,
+};
+WithOperationsSorter.storyName = 'With Operations Sorter';
