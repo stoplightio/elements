@@ -18,6 +18,7 @@ type ResponsiveSidebarLayoutProps = {
   logo?: string | LogoProps;
   tree?: TableOfContentsItem[];
   onTocClick?(): void;
+  renderSideBar?: boolean;
 };
 
 const MAX_CONTENT_WIDTH = 1800;
@@ -26,7 +27,16 @@ const SIDEBAR_MAX_WIDTH = 1.5 * SIDEBAR_MIN_WIDTH;
 
 export const ResponsiveSidebarLayout = React.forwardRef<HTMLDivElement, ResponsiveSidebarLayoutProps>(
   (
-    { children, name, logo, tree, onTocClick, maxContentWidth = MAX_CONTENT_WIDTH, sidebarWidth = SIDEBAR_MIN_WIDTH },
+    {
+      children,
+      name,
+      logo,
+      tree,
+      onTocClick,
+      maxContentWidth = MAX_CONTENT_WIDTH,
+      sidebarWidth = SIDEBAR_MIN_WIDTH,
+      renderSideBar = true
+    },
     ref,
   ) => {
     const scrollRef = React.useRef<HTMLDivElement | null>(null);
@@ -48,29 +58,29 @@ export const ResponsiveSidebarLayout = React.forwardRef<HTMLDivElement, Responsi
             onMouseDown={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
             style={{ maxWidth: `${SIDEBAR_MAX_WIDTH}px` }}
           >
-            <Flex
-              direction="col"
-              bg="canvas-100"
-              borderR
-              pt={8}
-              pos="sticky"
-              pinY
-              overflowY="auto"
-              style={{
-                paddingLeft: `calc((100% - ${maxContentWidth}px) / 2)`,
-                width: `${currentSidebarWidth}px`,
-                minWidth: `${SIDEBAR_MIN_WIDTH}px`,
-              }}
-            >
-              <Sidebar
-                name={name}
-                logo={logo}
-                tree={tree!}
-                pathname={pathname}
-                onTocClick={onTocClick}
-                isInResponsiveMode={false}
-              />
-            </Flex>
+              {renderSideBar && <Flex
+                direction="col"
+                bg="canvas-100"
+                borderR
+                pt={8}
+                pos="sticky"
+                pinY
+                overflowY="auto"
+                style={{
+                  paddingLeft: `calc((100% - ${maxContentWidth}px) / 2)`,
+                  width: `${currentSidebarWidth}px`,
+                  minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+                }}
+              >
+                <Sidebar
+                  name={name}
+                  logo={logo}
+                  tree={tree!}
+                  pathname={pathname}
+                  onTocClick={onTocClick}
+                  isInResponsiveMode={false}
+                />
+              </Flex>}
             <Flex
               justifySelf="end"
               flexGrow={0}
@@ -88,12 +98,12 @@ export const ResponsiveSidebarLayout = React.forwardRef<HTMLDivElement, Responsi
           </Box>
         </Box>
 
-        {isResponsiveLayoutEnabled && (
+        {renderSideBar && isResponsiveLayoutEnabled && (
           <MobileTopNav onTocClick={onTocClick!} name={name} logo={logo} tree={tree!} pathname={pathname} />
         )}
       </Flex>
     );
-  },
+  }
 );
 
 type SidebarRef = React.Ref<HTMLDivElement>;

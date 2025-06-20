@@ -22,6 +22,7 @@ type SidebarLayoutProps = {
   hideSchemas?: boolean;
   hideInternal?: boolean;
   hideExport?: boolean;
+  hideInlineExamples?: boolean;
   hideServerInfo?: boolean;
   hideSecurityInfo?: boolean;
   exportProps?: ExportButtonProps;
@@ -31,6 +32,8 @@ type SidebarLayoutProps = {
   renderExtensionAddon?: ExtensionAddonRenderer;
   basePath?: string;
   outerRouter?: boolean;
+  tryItOutDefaultServer?: string;
+  useCustomNav?: boolean;
 };
 
 export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -43,6 +46,7 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   hideSchemas,
   hideInternal,
   hideExport,
+  hideInlineExamples = false,
   hideServerInfo,
   hideSecurityInfo,
   exportProps,
@@ -51,18 +55,24 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
   renderExtensionAddon,
   basePath = '/',
   outerRouter = false,
+  tryItOutDefaultServer,
+  useCustomNav
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
-  const tree = React.useMemo(
-    () => computeAPITree(serviceNode, { hideSchemas, hideInternal }),
-    [serviceNode, hideSchemas, hideInternal],
-  );
+  const tree = React.useMemo(() => {
+    if (!useCustomNav) return computeAPITree(serviceNode, { hideSchemas, hideInternal });
+    else return [];
+  }, [serviceNode, hideSchemas, hideInternal, useCustomNav]);
   const location = useLocation();
   const { pathname: currentPath } = location;
   const relativePath = resolveRelativePath(currentPath, basePath, outerRouter);
 
   const isRootPath = relativePath === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === relativePath);
+
+  React.useEffect(() => {
+    // This is here to trick elements into reloading everytime the url changes so that we can use own sideabar
+  }, [currentPath]);
 
   const layoutOptions = React.useMemo(
     () => ({
@@ -73,8 +83,9 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
       hideServerInfo: hideServerInfo,
       compact: compact,
       hideExport: hideExport || node?.type !== NodeType.HttpService,
+      hideInlineExamples
     }),
-    [hideTryIt, hideSecurityInfo, hideServerInfo, compact, hideExport, hideTryItPanel, hideSamples, node?.type],
+    [hideTryIt, hideSecurityInfo, hideServerInfo, compact, hideExport, hideTryItPanel, hideSamples, node?.type, hideInlineExamples],
   );
 
   if (!node) {
@@ -103,6 +114,7 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
       logo={logo ?? serviceNode.data.logo}
       ref={container}
       name={serviceNode.name}
+      renderSideBar={!useCustomNav}
     >
       {node && (
         <ElementsOptionsProvider renderExtensionAddon={renderExtensionAddon}>
@@ -117,6 +129,7 @@ export const APIWithResponsiveSidebarLayout: React.FC<SidebarLayoutProps> = ({
             tryItCredentialsPolicy={tryItCredentialsPolicy}
             tryItCorsProxy={tryItCorsProxy}
             renderExtensionAddon={renderExtensionAddon}
+            tryItOutDefaultServer={tryItOutDefaultServer}
           />
         </ElementsOptionsProvider>
       )}
