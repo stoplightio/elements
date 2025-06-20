@@ -181,7 +181,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
 
   const getMaskProperties = (): Array<{ path: string }> => {
-    const data = localStorage.getItem('disabledProps') || '[]'; // Default to an empty array string
+    const data = localStorage.getItem('responseBodyDisabledProps') || '[]'; // Default to an empty array string
     try {
       const parsedData = JSON.parse(data);
       // Ensure parsed data is actually an array and contains objects with 'path' property
@@ -226,12 +226,6 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               />
             </Flex>
           </SectionSubtitle>
-          {console.log(
-            'checking in elements',
-            localStorage.getItem('disabledProps'),
-            JSON.parse(localStorage.getItem('disabledProps') || '[]'),
-          )}
-
           {/* {schema && <LazySchemaTreePreviewer schema={schema} hideData={[]} />} */}
           {schema && <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />}
           {/*schema && (

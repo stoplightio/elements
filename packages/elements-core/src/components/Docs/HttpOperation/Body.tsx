@@ -9,6 +9,7 @@ import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle } from '../Sections';
+import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
 
 export interface BodyProps {
   body: IHttpOperationRequestBody;
@@ -41,6 +42,24 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
   const schema = contents[chosenContent]?.schema;
   const descriptionChanged = nodeHasChanged?.({ nodeId: body.id, attr: 'description' });
 
+  const getMaskProperties = (): Array<{ path: string }> => {
+    const data = localStorage.getItem('requestBodyDisabledProps') || '[]'; // Default to an empty array string
+    console.log('-----> we are in body requestBodyDisabledProps getMaskProperties', data);
+    try {
+      const parsedData = JSON.parse(data);
+      // Ensure parsed data is actually an array and contains objects with 'path' property
+      if (Array.isArray(parsedData) && parsedData.every(item => typeof item.path === 'string')) {
+        return parsedData;
+      } else {
+        console.error('Invalid data format in localStorage:', parsedData);
+        return []; // Fallback to empty array
+      }
+    } catch (err) {
+      console.error('Error parsing localStorage data:', err);
+      return []; // Fallback to empty array on error
+    }
+  };
+
   return (
     <VStack spacing={6}>
       <SectionSubtitle title="Body" id="request-body">
@@ -62,17 +81,19 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
-      {isJSONSchema(schema) && (
-        <JsonSchemaViewer
-          resolveRef={refResolver}
-          maxRefDepth={maxRefDepth}
-          schema={getOriginalObject(schema)}
-          viewMode={isHttpWebhookOperation ? 'standalone' : 'write'}
-          renderRootTreeLines
-          nodeHasChanged={nodeHasChanged}
-          renderExtensionAddon={renderExtensionAddon}
-        />
-      )}
+      {1 === 1
+        ? schema && <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
+        : isJSONSchema(schema) && (
+            <JsonSchemaViewer
+              resolveRef={refResolver}
+              maxRefDepth={maxRefDepth}
+              schema={getOriginalObject(schema)}
+              viewMode={isHttpWebhookOperation ? 'standalone' : 'write'}
+              renderRootTreeLines
+              nodeHasChanged={nodeHasChanged}
+              renderExtensionAddon={renderExtensionAddon}
+            />
+          )}
     </VStack>
   );
 };
