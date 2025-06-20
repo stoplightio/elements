@@ -272,7 +272,8 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
                   className="sl-px-4"
                   node={item}
                   location={location}
-                  layoutOptions={{ noHeading: true, hideTryItPanel: false, hideSamples, hideTryIt }}
+                  layoutOptions={{ noHeading: true, hideTryItPanel: false, hideSamples, hideTryIt, hideInlineExamples: hideInlineExamples }}
+                  tryItOutDefaultServer={tryItOutDefaultServer}
                 />
               </TabPanel>
 

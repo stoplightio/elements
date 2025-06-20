@@ -273,6 +273,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           hideSchemas={hideSchemas}
           hideInternal={hideInternal}
           hideExport={hideExport}
+          hideInlineExamples={hideInlineExamples}
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
@@ -280,6 +281,8 @@ export const APIImpl: React.FC<APIProps> = props => {
           compact={isResponsiveLayoutEnabled}
           basePath={basePath}
           outerRouter={outerRouter}
+          tryItOutDefaultServer={tryItOutDefaultServer}
+          useCustomNav={useCustomNav}
         />
       )}
     </InlineRefResolverProvider>
