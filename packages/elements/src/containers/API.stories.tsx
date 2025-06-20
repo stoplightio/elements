@@ -3,8 +3,8 @@ import { Story } from '@storybook/react';
 import * as React from 'react';
 
 import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
-import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
 import { operationsSorter } from '../__fixtures__/api-descriptions/operationsSorter';
+import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { todosApiBundled } from '../__fixtures__/api-descriptions/todosApiBundled';
 import { zoomApiYaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
