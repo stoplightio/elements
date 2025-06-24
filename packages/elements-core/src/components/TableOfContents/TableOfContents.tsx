@@ -1,7 +1,6 @@
-import { Box, Flex, Icon, ITextColorProps } from '@stoplight/mosaic';
+import { Box, Flex, Icon, ITextColorProps, Text } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
 import * as React from 'react';
-
 import { useFirstRender } from '../../hooks/useFirstRender';
 import { resolveRelativeLink } from '../../utils/string';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
@@ -22,6 +21,7 @@ import {
   TableOfContentsNodeGroup,
   TableOfContentsProps,
 } from './types';
+
 import {
   getHtmlIdFromItemId,
   hasActiveItem,
@@ -302,8 +302,9 @@ const Item = React.memo<{
   icon?: React.ReactElement<typeof Icon>;
   meta?: React.ReactNode;
   isInResponsiveMode?: boolean;
+  isDeprecated?: boolean;
   onClick?: (e: React.MouseEvent) => void;
-}>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode, onClick }) => {
+}>(({ depth, isActive, id, title, meta, icon, isInResponsiveMode, isDeprecated, onClick }) => {
   return (
     <Flex
       id={id}
@@ -331,7 +332,13 @@ const Item = React.memo<{
         textOverflow="truncate"
         fontSize={isInResponsiveMode ? 'lg' : 'base'}
       >
-        {title}
+        <Text
+          textDecoration={isDeprecated ? ('line-through' as const) : undefined}
+          color={isDeprecated ? 'muted' : undefined}
+          fontSize={isInResponsiveMode ? 'lg' : 'base'}
+        >
+          {title}
+        </Text>
       </Box>
 
       <Flex alignItems="center" fontSize={isInResponsiveMode ? 'base' : 'xs'}>
@@ -354,7 +361,7 @@ const Node = React.memo<{
   const activeId = React.useContext(ActiveIdContext);
   const isActive = activeId === item.slug || activeId === item.id;
   const LinkComponent = React.useContext(LinkContext);
-
+  const isDeprecated = isNode(item) && item.data?.deprecated === true;
   const handleClick = (e: React.MouseEvent) => {
     if (isActive) {
       // Don't trigger link click when we're active
@@ -391,6 +398,7 @@ const Node = React.memo<{
         meta={meta}
         isInResponsiveMode={isInResponsiveMode}
         onClick={handleClick}
+        isDeprecated={isDeprecated}
       />
     </Box>
   );
