@@ -81,19 +81,21 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
-      {localStorage.getItem('use_new_mask_workflow') === 'true' ?
-        schema && <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
-        : isJSONSchema(schema) && (
-            <JsonSchemaViewer
-              resolveRef={refResolver}
-              maxRefDepth={maxRefDepth}
-              schema={getOriginalObject(schema)}
-              viewMode={isHttpWebhookOperation ? 'standalone' : 'write'}
-              renderRootTreeLines
-              nodeHasChanged={nodeHasChanged}
-              renderExtensionAddon={renderExtensionAddon}
-            />
-          )}
+      {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+        <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
+      ) : (
+        isJSONSchema(schema) && (
+          <JsonSchemaViewer
+            resolveRef={refResolver}
+            maxRefDepth={maxRefDepth}
+            schema={getOriginalObject(schema)}
+            viewMode={isHttpWebhookOperation ? 'standalone' : 'write'}
+            renderRootTreeLines
+            nodeHasChanged={nodeHasChanged}
+            renderExtensionAddon={renderExtensionAddon}
+          />
+        )
+      )}
     </VStack>
   );
 };
