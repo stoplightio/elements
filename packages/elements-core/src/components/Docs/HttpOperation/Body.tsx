@@ -81,8 +81,8 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
-      {1 === 1
-        ? schema && <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
+      {localStorage.getItem('use_new_mask_workflow') === 'true' ?
+        schema && <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
         : isJSONSchema(schema) && (
             <JsonSchemaViewer
               resolveRef={refResolver}

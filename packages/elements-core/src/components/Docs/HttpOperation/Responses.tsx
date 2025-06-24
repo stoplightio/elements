@@ -1,4 +1,4 @@
-//import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
   Box,
   Button,
@@ -24,9 +24,9 @@ import { IHttpOperationResponse } from '@stoplight/types';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
-// import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
+import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
-//import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
+import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';
 import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
@@ -166,12 +166,11 @@ Responses.displayName = 'HttpOperation.Responses';
 const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
-  // const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
-  // const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
-  const { nodeHasChanged } = useOptionsCtx();
+  const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
+  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
-  const schema = responseContent?.schema;
+  const schema: any = responseContent?.schema;
 
   React.useEffect(() => {
     responseContent && onMediaTypeChange?.(responseContent.mediaType);
@@ -227,8 +226,9 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
             </Flex>
           </SectionSubtitle>
           {/* {schema && <LazySchemaTreePreviewer schema={schema} hideData={[]} />} */}
-          {schema && <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />}
-          {/*schema && (
+          {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+            <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
+          ) : (
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}
               resolveRef={refResolver}
@@ -239,7 +239,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               nodeHasChanged={nodeHasChanged}
               renderExtensionAddon={renderExtensionAddon}
             />
-          )*/}
+          )}
         </>
       )}
     </VStack>
