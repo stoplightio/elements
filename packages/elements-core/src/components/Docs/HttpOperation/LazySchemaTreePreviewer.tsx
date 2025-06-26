@@ -24,7 +24,7 @@ interface SchemaWithEnum {
 
 type Schema = SchemaWithMinItems | SchemaWithEnum | object;
 
-const TYPES = ['string', 'integer', 'boolean', 'any'];
+const TYPES = ['string', 'integer', 'boolean', 'any', 'number'];
 
 function resolvePointer(obj: any, pointer: string) {
   const parts = pointer.replace(/^#\//, '').split('/');
@@ -283,7 +283,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
           <Flex onClick={!isRoot ? handleToggle : undefined} className={`w-full ${isRoot ? '' : 'cursor-pointer'}`}>
             {!isRoot ? (
               <Box mr={2} className="sl-font-mono sl-font-semibold sl-mr-2">
-                {!TYPES.includes(schema?.type) && !schema?.circular && !schema?.items?.circular ? (
+                {!TYPES.includes(schema?.type) && !schema?.items?.circular && !schema?.circular ? (
                   <i
                     role="img"
                     aria-hidden="true"
