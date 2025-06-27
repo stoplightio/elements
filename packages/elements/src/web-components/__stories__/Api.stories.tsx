@@ -61,3 +61,131 @@ APIWithJSONProvidedDirectly.args = {
   apiDescriptionDocument: JSON.stringify(parse(zoomApiYaml), null, '  '),
 };
 APIWithJSONProvidedDirectly.storyName = 'API With JSON Provided Directly';
+
+// Tag Groups
+export const TagGroups = Template.bind({});
+TagGroups.args = {
+  apiDescriptionDocument: JSON.stringify({
+    openapi: '3.0.0',
+    info: {
+      title: 'Tag Groups',
+      version: '1.0.0',
+      description: 'An example API with x-tagGroups',
+      'x-tagGroups': [
+        {
+          name: 'User',
+          tags: ['User'],
+        },
+        {
+          name: 'Admin',
+          tags: ['Admin'],
+        },
+      ],
+    },
+    paths: {
+      '/users': {
+        get: {
+          summary: 'Get all users',
+          tags: ['User'],
+          responses: {
+            '200': {
+              description: 'A list of users',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        id: { type: 'string' },
+                        name: { type: 'string' },
+                        email: { type: 'string' },
+                      },
+                      required: ['id', 'name', 'email'],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/users/{id}': {
+        get: {
+          summary: 'Get a user by ID',
+          tags: ['User'],
+          parameters: [
+            {
+              name: 'id',
+              in: 'path',
+              required: true,
+              schema: {
+                type: 'string',
+              },
+            },
+          ],
+          responses: {
+            '200': {
+              description: 'A user object',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      id: { type: 'string' },
+                      name: { type: 'string' },
+                      email: { type: 'string' },
+                    },
+                    required: ['id', 'name', 'email'],
+                  },
+                },
+              },
+            },
+            '404': {
+              description: 'User not found',
+            },
+          },
+        },
+      },
+      '/admin': {
+        get: {
+          summary: 'Get admin dashboard',
+          tags: ['Admin'],
+          responses: {
+            '200': {
+              description: 'Admin dashboard data',
+            },
+          },
+        },
+      },
+      '/admin/users': {
+        get: {
+          summary: 'Get all admin users',
+          tags: ['Admin'],
+          responses: {
+            '200': {
+              description: 'A list of admin users',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        id: { type: 'string' },
+                        name: { type: 'string' },
+                        role: { type: 'string' },
+                      },
+                      required: ['id', 'name', 'role'],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  }),
+};
+TagGroups.storyName = 'Tag Groups Example';
