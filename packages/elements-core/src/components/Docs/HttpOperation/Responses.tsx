@@ -1,4 +1,4 @@
-import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
+// import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import {
   Box,
   Button,
@@ -24,9 +24,9 @@ import { IHttpOperationResponse } from '@stoplight/types';
 import { sortBy, uniqBy } from 'lodash';
 import * as React from 'react';
 
-import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
+// import { useSchemaInlineRefResolver } from '../../../context/InlineRefResolver';
 import { useOptionsCtx } from '../../../context/Options';
-import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
+// import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';
 import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
@@ -166,35 +166,36 @@ Responses.displayName = 'HttpOperation.Responses';
 const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
-  const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
-  const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
+  // const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
+  // const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
+  const { nodeHasChanged } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
   const schema: any = responseContent?.schema;
 
   React.useEffect(() => {
     responseContent && onMediaTypeChange?.(responseContent.mediaType);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseContent]);
+  }, [onMediaTypeChange, responseContent]);
 
   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
 
-  const getMaskProperties = (): Array<{ path: string }> => {
-    const data = localStorage.getItem('responseBodyDisabledProps') || '[]'; // Default to an empty array string
-    try {
-      const parsedData = JSON.parse(data);
-      // Ensure parsed data is actually an array and contains objects with 'path' property
-      if (Array.isArray(parsedData) && parsedData.every(item => typeof item.path === 'string')) {
-        return parsedData;
-      } else {
-        console.error('Invalid data format in localStorage:', parsedData);
-        return []; // Fallback to empty array
-      }
-    } catch (err) {
-      console.error('Error parsing localStorage data:', err);
-      return []; // Fallback to empty array on error
-    }
-  };
+  // NEW: Function to get hide data in new format
+
+  // NEW: Helper function to convert old format to new format (if needed for migration)
+  // const convertOldToNewFormat = (oldFormatData: Array<{ path: string }>) => {
+  //   return {
+  //     data: {},
+  //     disableProps: {
+  //       response: [
+  //         {
+  //           paths: oldFormatData.map(item => item.path),
+  //           location: 'properties',
+  //         },
+  //       ],
+  //       request: [],
+  //     },
+  //   };
+  // };
 
   return (
     <VStack spacing={8} pt={8}>
@@ -225,7 +226,19 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               />
             </Flex>
           </SectionSubtitle>
-          {/* {schema && <LazySchemaTreePreviewer schema={schema} hideData={[]} />} */}
+
+          {console.log('we are in LazySchemaTreePreviewer schema Line no 266', JSON.stringify(schema))}
+
+          {/* NEW: Always use the new LazySchemaTreePreviewer with new format */}
+          {schema && (
+            <LazySchemaTreePreviewer
+              schema={schema}
+              hideData={getNewFormatHideData()}
+              currentLocation="properties" // Set the initial location
+            />
+          )}
+
+          {/* OLD: Keeping the old logic commented for reference
           {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
             <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
           ) : (
@@ -240,11 +253,117 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               renderExtensionAddon={renderExtensionAddon}
             />
           )}
+          */}
         </>
       )}
     </VStack>
   );
 };
+
+// const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
+//   const { contents = [], headers = [], description } = response;
+//   const [chosenContent, setChosenContent] = React.useState(0);
+//   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
+//   const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
+
+//   const responseContent = contents[chosenContent];
+//   const schema: any = responseContent?.schema;
+
+//   React.useEffect(() => {
+//     responseContent && onMediaTypeChange?.(responseContent.mediaType);
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [responseContent]);
+
+//   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
+
+//   // old code
+//   const getMaskProperties = (): Array<{ path: string }> => {
+//     const data = localStorage.getItem('responseBodyDisabledProps') || '[]'; // Default to an empty array string
+//     console.log('-----> we are in response responseBodyDisabledProps getMaskProperties data', data);
+//     try {
+//       const parsedData = JSON.parse(data);
+//       // Ensure parsed data is actually an array and contains objects with 'path' property
+//       if (Array.isArray(parsedData) && parsedData.every(item => typeof item.path === 'string')) {
+//         console.log('-----> we are in response responseBodyDisabledProps getMaskProperties parsedData', parsedData); // [{"path":"properties/heightMeasure"},{"path":"properties/heightMeasure/properties/unitCode"},{"path":"properties/heightMeasure/properties/value"},{"path":"properties/hold"},{"path":"properties/positionCode"}]
+
+//         return parsedData;
+//       } else {
+//         console.error('Invalid data format in localStorage:', parsedData);
+//         return []; // Fallback to empty array
+//       }
+//     } catch (err) {
+//       console.error('Error parsing localStorage data:', err);
+//       return []; // Fallback to empty array on error
+//     }
+//   };
+
+//   // const getMaskProperties = (): Array<{ path: string }> => {
+//   //   const data = localStorage.getItem('disabledPropsPathsByModelName') || '[]'; // Default to an empty array string
+//   //   try {
+//   //     return JSON.parse(data);
+//   //     // Ensure parsed data is actually an array and contains objects with 'path' property
+//   //     // if (Array.isArray(parsedData) && parsedData.every(item => typeof item.path === 'string')) {
+//   //     //   return parsedData;
+//   //     // } else {
+//   //     //   console.error('Invalid data format in localStorage:', parsedData);
+//   //     //   return []; // Fallback to empty array
+//   //     // }
+//   //   } catch (err) {
+//   //     console.error('Error parsing localStorage data:', err);
+//   //     return []; // Fallback to empty array on error
+//   //   }
+//   // };
+
+//   return (
+//     <VStack spacing={8} pt={8}>
+//       {description && (
+//         <Box pos="relative">
+//           <MarkdownViewer markdown={description} />
+//           <NodeAnnotation change={descriptionChanged} />
+//         </Box>
+//       )}
+
+//       {headers.length > 0 && (
+//         <VStack spacing={5}>
+//           <SectionSubtitle title="Headers" id="response-headers" />
+//           <Parameters parameterType="header" parameters={headers} />
+//         </VStack>
+//       )}
+
+//       {contents.length > 0 && (
+//         <>
+//           <SectionSubtitle title="Body" id="response-body">
+//             <Flex flex={1} justify="end">
+//               <Select
+//                 aria-label="Response Body Content Type"
+//                 value={String(chosenContent)}
+//                 onChange={value => setChosenContent(parseInt(String(value), 10))}
+//                 options={contents.map((content, index) => ({ label: content.mediaType, value: index }))}
+//                 size="sm"
+//               />
+//             </Flex>
+//           </SectionSubtitle>
+//           {console.log('-----> we are in LazySchemaTreePreviewer schema updated', JSON.stringify(schema))}
+//           {/* {schema && <LazySchemaTreePreviewer schema={schema} hideData={[]} />} */}
+//           {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+//             <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
+//           ) : (
+//             <JsonSchemaViewer
+//               schema={getOriginalObject(schema)}
+//               resolveRef={refResolver}
+//               maxRefDepth={maxRefDepth}
+//               viewMode="read"
+//               parentCrumbs={['responses', response.code]}
+//               renderRootTreeLines
+//               nodeHasChanged={nodeHasChanged}
+//               renderExtensionAddon={renderExtensionAddon}
+//             />
+//           )}
+//         </>
+//       )}
+//     </VStack>
+//   );
+// };
 Response.displayName = 'HttpOperation.Response';
 
 const codeToIntentVal = (code: string): IntentVals => {
@@ -261,3 +380,106 @@ const codeToIntentVal = (code: string): IntentVals => {
       return 'default';
   }
 };
+
+// 27 june 2025
+
+// working code path /location at level 1
+// const renderChildren = () => {
+//   console.log('path - ', path);
+
+//   if (!expanded && !isRoot) return null;
+
+//   const children: JSX.Element[] = [];
+
+//   if (schema?.type === 'object' && schema?.properties) {
+//     for (const [key, child] of Object.entries(schema?.properties)) {
+//       const childPath = `${path}/${key}`;
+//       const childLocation = currentLocation; // Keep same location for properties
+
+//       children.push(
+//         <li key={key}>
+//           <LazySchemaTreePreviewer
+//             schema={dereference(child, root)}
+//             root={root}
+//             title={key}
+//             level={level + 2}
+//             path={childPath}
+//             hideData={hideData}
+//             parentRequired={schema?.required}
+//             propertyKey={key}
+//             currentLocation={childLocation}
+//           />
+//         </li>,
+//       );
+//     }
+//   } else if (
+//     schema?.type === 'array' &&
+//     schema?.items &&
+//     Object.keys(schema?.items).length > 0 &&
+//     !schema?.items?.circular
+//   ) {
+//     const resolvedItems = dereference(schema?.items, root);
+//     if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
+//       for (const [key, child] of Object.entries(resolvedItems.properties)) {
+//         const childPath = `${path}/items/${key}`;
+//         const childLocation = currentLocation;
+
+//         children.push(
+//           <li key={key}>
+//             <LazySchemaTreePreviewer
+//               schema={dereference(child, root)}
+//               root={root}
+//               title={key}
+//               level={level + 2}
+//               path={childPath}
+//               hideData={hideData}
+//               parentRequired={resolvedItems.required}
+//               propertyKey={key}
+//               currentLocation={childLocation}
+//             />
+//           </li>,
+//         );
+//       }
+//     } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items) {
+//       const childPath = `${path}/items`;
+//       const childLocation = currentLocation;
+
+//       children.push(
+//         <li key="items">
+//           <LazySchemaTreePreviewer
+//             schema={resolvedItems}
+//             root={root}
+//             title="items"
+//             level={level + 1}
+//             path={childPath}
+//             hideData={hideData}
+//             parentRequired={schema?.required}
+//             propertyKey="items"
+//             currentLocation={childLocation}
+//           />
+//         </li>,
+//       );
+//     } else {
+//       const childPath = `${path}/items`;
+//       const childLocation = currentLocation;
+
+//       children.push(
+//         <li key="items">
+//           <LazySchemaTreePreviewer
+//             schema={resolvedItems}
+//             root={root}
+//             title="items"
+//             level={level + 1}
+//             path={childPath}
+//             hideData={hideData}
+//             parentRequired={schema?.required}
+//             propertyKey="items"
+//             currentLocation={childLocation}
+//           />
+//         </li>,
+//       );
+//     }
+//   }
+
+//   return children.length > 0 ? <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul> : null;
+// };

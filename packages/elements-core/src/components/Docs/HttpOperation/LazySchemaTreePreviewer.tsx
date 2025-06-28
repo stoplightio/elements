@@ -1,17 +1,33 @@
 import { Box, Flex, VStack } from '@stoplight/mosaic';
 import React, { useMemo, useState } from 'react';
 
+const MOCK_DISABLE_PROPS = {
+  data: {},
+  disableProps: {
+    response: [
+      {
+        paths: [{ path: 'properties/hold' }, { path: 'properties/balanceArmAftMeasure/properties/unitCode' }],
+        location: 'properties/test1',
+      },
+      {
+        paths: [{ path: 'properties/positionCode' }, { path: 'properties/balanceArmAftMeasure/properties/value' }],
+        location: 'properties/test2/test21',
+      },
+    ],
+    request: [],
+  },
+};
+
 interface LazySchemaTreePreviewerProps {
   schema: any;
   root?: any;
   title?: string;
   level?: number;
   path?: string;
-  maskState?: Record<string, { checked: boolean; required: 0 | 1 | 2 }>;
-  setMaskState?: React.Dispatch<React.SetStateAction<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>>;
-  hideData?: Array<{ path: string; required?: boolean }>;
+  hideData?: any;
   parentRequired?: string[];
   propertyKey?: string;
+  currentLocation?: string;
 }
 
 interface SchemaWithMinItems {
@@ -31,7 +47,6 @@ function resolvePointer(obj: any, pointer: string) {
   return parts.reduce((acc, key) => acc && acc[key], obj);
 }
 
-/* circular reference */
 function detectCircularPath(path: string): boolean {
   const ignored = ['properties', 'items'];
   const parts = path.split('/').filter(part => !ignored.includes(part));
@@ -55,7 +70,7 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
     if (visited.has(node))
       return { circular: true, $ref: refPath, title: node.title, type: 'any', description: node.description };
 
-    visited.add(node); // Add the node itself, not refPath
+    visited.add(node);
     const target = resolvePointer(root, refPath);
     return dereference(target || node, root, visited, depth + 1, maxDepth);
   }
@@ -71,37 +86,80 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
   return result;
 }
 
+function getHidePathsForLocation(hideData: any, currentLocation: string): string[] {
+  if (!hideData?.disableProps?.response) return [];
+
+  const hidePaths: string[] = [];
+
+  for (const disableGroup of hideData.disableProps.response) {
+    // Remove trailing slash and normalize location comparison
+    const normalizedDisableLocation = disableGroup.location.replace(/\/$/, '');
+    const normalizedCurrentLocation = currentLocation.replace(/\/$/, '');
+
+    console.log('🔍 Comparing locations:', {
+      disableLocation: normalizedDisableLocation,
+      currentLocation: normalizedCurrentLocation,
+      match: normalizedDisableLocation === normalizedCurrentLocation,
+    });
+
+    if (normalizedDisableLocation === normalizedCurrentLocation) {
+      for (const pathItem of disableGroup.paths) {
+        if (typeof pathItem === 'string') {
+          hidePaths.push(pathItem);
+        } else if (pathItem.path) {
+          hidePaths.push(pathItem.path);
+        }
+      }
+    }
+  }
+
+  console.log('📋 Hide paths for location', currentLocation, ':', hidePaths);
+  return hidePaths;
+}
+
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   schema,
   root = schema,
   title,
   level = 1,
   path = 'properties',
-  hideData = [],
+  hideData = MOCK_DISABLE_PROPS,
   parentRequired,
   propertyKey,
+  currentLocation = 'properties',
 }) => {
   const [expanded, setExpanded] = useState(false);
   const isRoot = level === 1 && (title === undefined || path === 'properties');
-  const [_maskState, _setMaskState] = useState<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>(() => {
-    const disabledPaths = hideData || [];
 
-    const initialState: Record<string, { checked: boolean; required: 0 | 1 | 2 }> = {};
-    if (disabledPaths) {
-      for (const p of disabledPaths) {
-        const { path }: any = p;
-        initialState[path] = { checked: false, required: 0 };
-      }
-    }
-    return initialState;
+  console.log('🔧 Component render:', {
+    title,
+    path,
+    currentLocation,
+    level,
+    schemaType: schema?.type,
   });
 
-  const shouldHideNode = useMemo(() => {
-    // If hideData contains the path AND doesn't have a 'required' property, hide the node
-    return hideData.some(hideEntry => hideEntry.path === path && hideEntry.required === undefined);
-  }, [path, hideData]);
+  // Get hide paths for current location
+  const hidePathsForLocation = useMemo(() => {
+    return getHidePathsForLocation(hideData, currentLocation);
+  }, [hideData, currentLocation]);
 
-  if (!schema || shouldHideNode) return null;
+  // Check if current node should be hidden
+  const shouldHideNode = useMemo(() => {
+    const shouldHide = hidePathsForLocation.includes(path);
+    console.log('❓ Should hide node?', {
+      path,
+      shouldHide,
+      hidePathsForLocation,
+      title,
+    });
+    return shouldHide;
+  }, [path, hidePathsForLocation, title]);
+
+  if (!schema || shouldHideNode) {
+    console.log('🚫 Hiding node:', { title, path, reason: !schema ? 'no schema' : 'should hide' });
+    return null;
+  }
 
   const displayTitle =
     level === 1 && (title === undefined || path === 'properties') ? '' : title ?? schema?.title ?? 'Node';
@@ -113,117 +171,209 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     }
   };
 
+  // const renderChildren = () => {
+  //   console.log('🔍 renderChildren called with:', {
+  //     path,
+  //     currentLocation,
+  //     title,
+  //     schemaType: schema?.type,
+  //     hasProperties: !!schema?.properties,
+  //     expanded,
+  //     isRoot,
+  //   });
+
+  //   if (!expanded && !isRoot) return null;
+
+  //   const children: JSX.Element[] = [];
+
+  //   if (schema?.type === 'object' && schema?.properties) {
+  //     console.log('🏗️ Processing object properties:', Object.keys(schema.properties));
+
+  //     for (const [key, child] of Object.entries(schema?.properties)) {
+  //       const childPath = `${path}/${key}`;
+  //       const resolvedChild = dereference(child, root);
+
+  //       // Debug the child resolution
+  //       console.log('🔧 Processing child:', {
+  //         key,
+  //         childPath,
+  //         currentLocation,
+  //         childType: resolvedChild?.type,
+  //         hasNestedProperties: !!(resolvedChild?.type === 'object' && resolvedChild?.properties),
+  //         resolvedChildKeys: resolvedChild?.properties ? Object.keys(resolvedChild.properties) : null,
+  //       });
+
+  //       // Update location logic
+  //       let childLocation: string;
+
+  //       if (resolvedChild?.type === 'object' && resolvedChild?.properties) {
+  //         childLocation = childPath; // becomes "properties/balanceArmAftMeasure"
+  //         console.log('✅ Updating location for nested object:', {
+  //           key,
+  //           from: currentLocation,
+  //           to: childLocation,
+  //         });
+  //       } else {
+  //         childLocation = currentLocation; // stays "properties"
+  //         console.log('➡️ Keeping same location for primitive/simple object:', {
+  //           key,
+  //           location: childLocation,
+  //         });
+  //       }
+
+  //       console.log('🚀 Creating child component:', {
+  //         key,
+  //         childPath,
+  //         childLocation,
+  //         willPassLocation: childLocation,
+  //       });
+
+  //       children.push(
+  //         <li key={key}>
+  //           <LazySchemaTreePreviewer
+  //             schema={resolvedChild}
+  //             root={root}
+  //             title={key}
+  //             level={level + 2}
+  //             path={childPath}
+  //             hideData={hideData}
+  //             parentRequired={schema?.required}
+  //             propertyKey={key}
+  //             currentLocation={childLocation}
+  //           />
+  //         </li>,
+  //       );
+  //     }
+  //   } else if (
+  //     schema?.type === 'array' &&
+  //     schema?.items &&
+  //     Object.keys(schema?.items).length > 0 &&
+  //     !schema?.items?.circular
+  //   ) {
+  //     console.log('🏗️ Processing array items');
+  //     const resolvedItems = dereference(schema?.items, root);
+  //     if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
+  //       for (const [key, child] of Object.entries(resolvedItems.properties)) {
+  //         const childPath = `${path}/items/${key}`;
+  //         const childLocation = `${currentLocation}/items`;
+
+  //         console.log('🔧 Processing array item child:', {
+  //           key,
+  //           childPath,
+  //           childLocation,
+  //         });
+
+  //         children.push(
+  //           <li key={key}>
+  //             <LazySchemaTreePreviewer
+  //               schema={dereference(child, root)}
+  //               root={root}
+  //               title={key}
+  //               level={level + 2}
+  //               path={childPath}
+  //               hideData={hideData}
+  //               parentRequired={resolvedItems.required}
+  //               propertyKey={key}
+  //               currentLocation={childLocation}
+  //             />
+  //           </li>,
+  //         );
+  //       }
+  //     } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items) {
+  //       const childPath = `${path}/items`;
+  //       const childLocation = `${currentLocation}/items`;
+
+  //       console.log('🔧 Processing nested array:', {
+  //         childPath,
+  //         childLocation,
+  //       });
+
+  //       children.push(
+  //         <li key="items">
+  //           <LazySchemaTreePreviewer
+  //             schema={resolvedItems}
+  //             root={root}
+  //             title="items"
+  //             level={level + 1}
+  //             path={childPath}
+  //             hideData={hideData}
+  //             parentRequired={schema?.required}
+  //             propertyKey="items"
+  //             currentLocation={childLocation}
+  //           />
+  //         </li>,
+  //       );
+  //     } else {
+  //       const childPath = `${path}/items`;
+  //       const childLocation = `${currentLocation}/items`;
+
+  //       console.log('🔧 Processing simple array items:', {
+  //         childPath,
+  //         childLocation,
+  //       });
+
+  //       children.push(
+  //         <li key="items">
+  //           <LazySchemaTreePreviewer
+  //             schema={resolvedItems}
+  //             root={root}
+  //             title="items"
+  //             level={level + 1}
+  //             path={childPath}
+  //             hideData={hideData}
+  //             parentRequired={schema?.required}
+  //             propertyKey="items"
+  //             currentLocation={childLocation}
+  //           />
+  //         </li>,
+  //       );
+  //     }
+  //   }
+
+  //   console.log('📋 renderChildren returning', children.length, 'children');
+  //   return children.length > 0 ? <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul> : null;
+  // };
+
+  // working code
   const renderChildren = () => {
+    console.log('path - ', path, 'currentLocation - ', currentLocation);
+
     if (!expanded && !isRoot) return null;
 
     const children: JSX.Element[] = [];
-    /*
-    // no need to show message for circular references here, as dereference will handle it
-    if (schema?.circular) {
-      return <li className="ml-6 text-red-600">↻ Circular Ref: {schema?.$ref}</li>;
-    }
-    */
 
     if (schema?.type === 'object' && schema?.properties) {
       for (const [key, child] of Object.entries(schema?.properties)) {
         const childPath = `${path}/${key}`;
-        const shouldHideChild = hideData.some(
-          hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
-        );
-        if (!shouldHideChild) {
-          children.push(
-            <li key={key}>
-              <LazySchemaTreePreviewer
-                schema={dereference(child, root)}
-                root={root}
-                title={key}
-                level={level + 2}
-                path={childPath}
-                hideData={hideData}
-                parentRequired={schema?.required}
-                propertyKey={key}
-              />
-            </li>,
-          );
-        }
-      }
-    } else if (
-      schema?.type === 'array' &&
-      schema?.items &&
-      Object.keys(schema?.items).length > 0 &&
-      !schema?.items?.circular
-    ) {
-      const resolvedItems = dereference(schema?.items, root);
-      if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
-        for (const [key, child] of Object.entries(resolvedItems.properties)) {
-          const childPath = `${path}/items/${key}`;
-          const shouldHideChild = hideData.some(
-            hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
-          );
-          if (!shouldHideChild) {
-            children.push(
-              <li key={key}>
-                <LazySchemaTreePreviewer
-                  schema={dereference(child, root)}
-                  root={root}
-                  title={key}
-                  level={level + 2}
-                  path={childPath}
-                  hideData={hideData}
-                  parentRequired={resolvedItems.required}
-                  propertyKey={key}
-                />
-              </li>,
-            );
-          }
-        }
-      } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items) {
-        const childPath = `${path}/items`;
-        const shouldHideChild = hideData.some(
-          hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
-        );
+        const resolvedChild = dereference(child, root);
 
-        if (!shouldHideChild) {
-          children.push(
-            <li key="items">
-              <LazySchemaTreePreviewer
-                schema={resolvedItems}
-                root={root}
-                title="items"
-                level={level + 1}
-                path={childPath}
-                hideData={hideData}
-                parentRequired={schema?.required}
-                propertyKey="items"
-              />
-            </li>,
-          );
-        }
-      } else {
-        const childPath = `${path}/items`;
-        const shouldHideChild = hideData.some(
-          hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
-        );
+        // Simple rule: if child is an object with properties, update location to childPath
+        const childLocation =
+          resolvedChild?.type === 'object' && resolvedChild?.properties
+            ? childPath // becomes "properties/balanceArmAftMeasure"
+            : currentLocation; // stays "properties"
 
-        if (!shouldHideChild) {
-          children.push(
-            <li key="items">
-              <LazySchemaTreePreviewer
-                schema={resolvedItems}
-                root={root}
-                title="items"
-                level={level + 1}
-                path={childPath}
-                hideData={hideData}
-                parentRequired={schema?.required}
-                propertyKey="items"
-              />
-            </li>,
-          );
-        }
+        console.log('Child:', key, 'Path:', childPath, 'Location:', childLocation);
+
+        children.push(
+          <li key={key}>
+            <LazySchemaTreePreviewer
+              schema={resolvedChild}
+              root={root}
+              title={key}
+              level={level + 2}
+              path={childPath}
+              hideData={hideData}
+              parentRequired={schema?.required}
+              propertyKey={key}
+              currentLocation={childLocation}
+            />
+          </li>,
+        );
       }
     }
-    // If array's items is missing or empty, do NOT render an "items" node at all
+    // ... rest of array handling stays the same
+
     return children.length > 0 ? <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul> : null;
   };
 
@@ -240,8 +390,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       maxWidth: 'fit-content',
       maxHeight: 'fit-content',
     };
+
     if ('minItems' in schema) {
-      const schemaWithMinItems = schema as SchemaWithMinItems; // Type assertion
+      const schemaWithMinItems = schema as SchemaWithMinItems;
       if (typeof schemaWithMinItems.minItems === 'number') {
         return (
           <Box className="sl-text-muted" fontFamily="ui" fontWeight="normal" mr={2} style={boxStyle}>
@@ -266,15 +417,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     return null;
   };
 
-  // Show required if this property is in parentRequired
   const isRequired = parentRequired && propertyKey && parentRequired.includes(propertyKey);
-
-  /* required option setting */
-  let showRequiredLabel = false;
-  const hideDataEntry = hideData.find(hideEntry => hideEntry.path === path);
-  if (hideDataEntry?.required === true || (hideDataEntry?.required === undefined && isRequired)) {
-    showRequiredLabel = true;
-  }
 
   return (
     <div className="mb-1">
@@ -305,7 +448,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               </Box>
             ) : null}
           </Flex>
-          {/*!isRoot ? ( */}
+
           <Flex pl={1} w="full" align="start" direction="col" style={{ overflow: 'visible', paddingLeft: '20px' }}>
             {schema?.description && (
               <Box fontFamily="ui" fontWeight="light">
@@ -340,7 +483,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               </Flex>
             )}
           </Flex>
-          {/*}) : null}*/}
+
           <Flex pl={1} w="full" align="start" direction="col" style={{ overflow: 'visible', paddingLeft: '20px' }}>
             {schema &&
               typeof schema === 'object' &&
@@ -348,10 +491,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               renderMinEnums(schema)}
           </Flex>
         </VStack>
+
         {!isRoot && (
           <label className="inline-flex items-top ml-2">
             <Box mr={2} fontFamily="ui" fontWeight="normal">
-              {showRequiredLabel && (
+              {isRequired && (
                 <div className="sl-ml-2 sl-text-warning">
                   <span style={{ marginLeft: '10px' }}>required</span>
                 </div>
