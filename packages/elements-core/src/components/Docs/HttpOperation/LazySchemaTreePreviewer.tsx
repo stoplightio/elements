@@ -12,6 +12,7 @@ interface LazySchemaTreePreviewerProps {
   hideData?: Array<{ path: string; required?: boolean }>;
   parentRequired?: string[];
   propertyKey?: string;
+  subType?: string;
 }
 
 interface SchemaWithMinItems {
@@ -80,6 +81,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   hideData = [],
   parentRequired,
   propertyKey,
+  subType,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const isRoot = level === 1 && (title === undefined || path === 'properties');
@@ -130,11 +132,12 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         const shouldHideChild = hideData.some(
           hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
         );
+        const resolved = dereference(child, root);
         if (!shouldHideChild) {
           children.push(
             <li key={key}>
               <LazySchemaTreePreviewer
-                schema={dereference(child, root)}
+                schema={resolved}
                 root={root}
                 title={key}
                 level={level + 2}
@@ -142,6 +145,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 hideData={hideData}
                 parentRequired={schema?.required}
                 propertyKey={key}
+                subType={resolved?.items?.type}
               />
             </li>,
           );
@@ -154,6 +158,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       !schema?.items?.circular
     ) {
       const resolvedItems = dereference(schema?.items, root);
+
       if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
           const childPath = `${path}/items/${key}`;
@@ -172,6 +177,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                   hideData={hideData}
                   parentRequired={resolvedItems.required}
                   propertyKey={key}
+                  subType={resolvedItems?.items?.type}
                 />
               </li>,
             );
@@ -195,6 +201,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 hideData={hideData}
                 parentRequired={schema?.required}
                 propertyKey="items"
+                subType={resolvedItems?.items?.type}
               />
             </li>,
           );
@@ -217,6 +224,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 hideData={hideData}
                 parentRequired={schema?.required}
                 propertyKey="items"
+                subType={resolvedItems?.items?.type}
               />
             </li>,
           );
@@ -300,6 +308,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 <span className="sl-truncate sl-text-muted">
                   {schema?.type === 'object' ? schema?.title : schema?.type || root?.title}
                   {schema?.items && schema?.items?.title !== undefined ? ` [${schema?.items?.title}] ` : null}
+                  {subType ? `[${subType}]` : ''}
                 </span>
                 <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
               </Box>
