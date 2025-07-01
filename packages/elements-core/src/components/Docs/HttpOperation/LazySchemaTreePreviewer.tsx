@@ -183,30 +183,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
             );
           }
         }
-      } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items) {
-        const childPath = `${path}/items`;
-        const shouldHideChild = hideData.some(
-          hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
-        );
-
-        if (!shouldHideChild) {
-          children.push(
-            <li key="items">
-              <LazySchemaTreePreviewer
-                schema={resolvedItems}
-                root={root}
-                title="items"
-                level={level + 1}
-                path={childPath}
-                hideData={hideData}
-                parentRequired={schema?.required}
-                propertyKey="items"
-                subType={resolvedItems?.items?.type}
-              />
-            </li>,
-          );
-        }
-      } else {
+      } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
         const shouldHideChild = hideData.some(
           hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
