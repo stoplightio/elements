@@ -1,0 +1,47 @@
+name: Create Pull Request from stoplightio/elements
+
+on:
+  schedule:
+  - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch:
+    # Allows manual triggering
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Target Repo
+      uses: actions/checkout@v3
+
+    - name: Checkout Source Repo
+      uses: actions/checkout@v3
+      with:
+        repository: stoplightio/elements
+        path: source-repo
+
+    - name: Copy Relevant Files
+      run: |
+        # Specify exactly what files/directories to copy from source-repo
+        # Example (modify based on your needs):
+        mkdir -p ./updated-files
+        cp -r source-repo/specific-directory/* ./updated-files/
+        # Or use more specific commands to copy exactly what you need
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ github.token }} # Use a PAT with appropriate permissions
+        commit-message: Update from stoplightio/elements
+        title: Update from stoplightio/elements
+        body: |
+          This is an automated pull request to update from the stoplightio/elements repository.
+
+          Updates made on: ${{ github.event.repository.updated_at }}
+        branch: update-from-stoplightio-elements
+        path: ./updated-files # Only changes in this directory
+        delete-branch: true
