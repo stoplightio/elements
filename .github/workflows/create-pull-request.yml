@@ -2,7 +2,7 @@ name: Create Pull Request from stoplightio/elements
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
+    - cron: '0 0 1 * *' # Runs at midnight UTC on the 1st day of each month
   workflow_dispatch:
     # Allows manual triggering
 
