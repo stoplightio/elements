@@ -77,13 +77,12 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ github.token }} # Use a PAT with appropriate permissions
+          token: ${{ github.token }}
           commit-message: Update from stoplightio/elements
           title: Update from stoplightio/elements
           body: |
             This is an automated pull request to keep in sync with stoplightio/elements repository.
-
+            
             Updates made on: ${{ github.event.repository.updated_at }}
           branch: update-from-stoplightio-elements
-          path: ./updated-files # Only changes in this directory
           delete-branch: true
