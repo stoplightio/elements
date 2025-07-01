@@ -62,6 +62,17 @@ jobs:
             echo "No changes detected, exiting workflow"
             exit 78  # neutral exit code, workflow will show as skipped
           fi
+      - name: Prepare Files for Pull Request
+        run: |
+          # Move files from updated-files to the main repo structure
+          find ./updated-files -type f | while read file; do
+          relative_path=${file#./updated-files/}
+          mkdir -p "$(dirname "$relative_path")"
+          cp -f "$file" "$relative_path"
+          done
+    
+          # Stage the changes for the PR
+          git add .
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
@@ -70,7 +81,7 @@ jobs:
           commit-message: Update from stoplightio/elements
           title: Update from stoplightio/elements
           body: |
-            This is an automated pull request to update from the stoplightio/elements repository.
+            This is an automated pull request to keep in sync with stoplightio/elements repository.
 
             Updates made on: ${{ github.event.repository.updated_at }}
           branch: update-from-stoplightio-elements
