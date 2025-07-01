@@ -2,7 +2,7 @@ name: Create Pull Request from stoplightio/elements
 
 on:
   schedule:
-  - cron: '0 0 * * *' # Runs daily at midnight UTC
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
   workflow_dispatch:
     # Allows manual triggering
 
@@ -15,33 +15,64 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Target Repo
-      uses: actions/checkout@v3
+      - name: Checkout Target Repo
+        uses: actions/checkout@v4
 
-    - name: Checkout Source Repo
-      uses: actions/checkout@v3
-      with:
-        repository: stoplightio/elements
-        path: source-repo
+      - name: Checkout Source Repo
+        uses: actions/checkout@v4
+        with:
+          repository: stoplightio/elements
+          path: source-repo
 
-    - name: Copy Relevant Files
-      run: |
-        # Specify exactly what files/directories to copy from source-repo
-        # Example (modify based on your needs):
-        mkdir -p ./updated-files
-        cp -r source-repo/specific-directory/* ./updated-files/
-        # Or use more specific commands to copy exactly what you need
+      - name: Copy Relevant Files
+        run: |
+          # Create a temporary directory for the files
+          mkdir -p ./updated-files
 
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
-      with:
-        token: ${{ github.token }} # Use a PAT with appropriate permissions
-        commit-message: Update from stoplightio/elements
-        title: Update from stoplightio/elements
-        body: |
-          This is an automated pull request to update from the stoplightio/elements repository.
+          # Check what files have changed in the source repo compared to your repo
+          # This example assumes you're interested in the entire elements package
 
-          Updates made on: ${{ github.event.repository.updated_at }}
-        branch: update-from-stoplightio-elements
-        path: ./updated-files # Only changes in this directory
-        delete-branch: true
+          # First, copy the specific directories you're interested in
+          cp -r source-repo/packages/elements/* ./updated-files/
+
+          # Now use git diff to find and only keep files that are different
+          cd ./updated-files
+
+          # List all files in updated-files directory
+          find . -type f | while read file; do
+            # Remove leading ./ from filename for comparison
+            relative_path=${file:2}
+            # Check if file exists in target repo
+            if [ -f "../$relative_path" ]; then
+              # Compare with file in target repo
+              if cmp -s "$file" "../$relative_path"; then
+                # Files are identical, remove from updated-files
+                rm "$file"
+              fi
+            fi
+          done
+
+          # Remove empty directories
+          find . -type d -empty -delete
+
+          cd ..
+
+          # Check if there are any changes
+          if [ -z "$(ls -A ./updated-files)" ]; then
+            echo "No changes detected, exiting workflow"
+            exit 78  # neutral exit code, workflow will show as skipped
+          fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }} # Use a PAT with appropriate permissions
+          commit-message: Update from stoplightio/elements
+          title: Update from stoplightio/elements
+          body: |
+            This is an automated pull request to update from the stoplightio/elements repository.
+
+            Updates made on: ${{ github.event.repository.updated_at }}
+          branch: update-from-stoplightio-elements
+          path: ./updated-files # Only changes in this directory
+          delete-branch: true
