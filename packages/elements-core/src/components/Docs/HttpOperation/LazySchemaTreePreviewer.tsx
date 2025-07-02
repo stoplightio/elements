@@ -268,7 +268,10 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
           <Flex onClick={!isRoot ? handleToggle : undefined} className={`w-full ${isRoot ? '' : 'cursor-pointer'}`}>
             {!isRoot ? (
               <Box mr={2} className="sl-font-mono sl-font-semibold sl-mr-2">
-                {!TYPES.includes(schema?.type) && !schema?.items?.circular && !schema?.circular ? (
+                {!TYPES.includes(schema?.type) &&
+                !detectCircularPath(path) &&
+                !schema?.items?.circular &&
+                !schema?.circular ? (
                   <i
                     role="img"
                     aria-hidden="true"
