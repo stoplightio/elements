@@ -29,28 +29,35 @@ jobs:
         # Git configuration
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@github.com'
-      
+
         # Create a branch to work with
         git checkout -b temp-sync-branch
-      
+
         # Add the source repo as a remote
         git remote add source-remote ./source-repo
-      
+
         # Fetch from the source repo
         git fetch source-remote
-      
-        # Source directory we're interested in
-        SOURCE_DIR="packages/elements"
-      
-        # Apply changes from source repo to our temp branch
-        git checkout source-remote/master -- $SOURCE_DIR
-      
+
+        # Checkout the entire repository content
+        # Instead of checking out a specific directory, we'll copy everything
+        # excluding .git directory and any other directories you want to exclude
+    
+        # First, clean the working directory (except .git)
+        find . -mindepth 1 -maxdepth 1 -not -path "./.git" -exec rm -rf {} \;
+    
+        # Copy all files from source repo (except .git)
+        cp -r source-repo/* .
+    
+        # If there are any hidden files to copy (like .gitignore)
+        cp -r source-repo/.[^.]* . 2>/dev/null || true
+    
         # See if there are any changes
         if git diff --quiet HEAD; then
         echo "No changes detected, exiting workflow"
         exit 78
         fi
-      
+
         # Stage all changes
         git add .
 
@@ -62,7 +69,7 @@ jobs:
         title: Update from stoplightio/elements
         body: |
           This is an automated pull request to keep in sync with stoplightio/elements repository.
-        
+
           Updates made on: ${{ github.event.repository.updated_at }}
         branch: update-from-stoplightio-elements
         delete-branch: true
