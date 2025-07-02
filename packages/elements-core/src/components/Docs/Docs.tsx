@@ -183,6 +183,9 @@ export const Docs = React.memo<DocsProps>(
     ...commonProps
   }) => {
     const parsedNode = useParsedData(nodeType, nodeData);
+    console.log('Parsed node:', parsedNode);
+    console.log('nodeType:', nodeType);
+    console.log('nodeData:', nodeData);
 
     if (!parsedNode) {
       commonProps.nodeUnsupported?.('dataEmpty');
@@ -208,19 +211,30 @@ export const Docs = React.memo<DocsProps>(
 );
 
 export interface ParsedDocsProps extends BaseDocsProps {
-  node: ParsedNode;
+  node: ParsedNode & { data: { disableProps?: any } };
 }
 
 export const ParsedDocs = ({ node, nodeUnsupported, ...commonProps }: ParsedDocsProps) => {
+  console.log('ParsedDocs node:', node.type);
+  const disableProps = node.data.disableProps;
+  console.log('ParsedDocs disableProps:', disableProps);
+
   switch (node.type) {
     case 'article':
+      console.log('node.data: articles====>', node.data, commonProps);
+
       return <Article data={node.data} {...commonProps} />;
     case 'http_operation':
     case 'http_webhook':
-      return <HttpOperation data={node.data} {...commonProps} />;
+      console.log('node.data: http_service====>http_webhook', node.data, commonProps);
+
+      return <HttpOperation data={node.data} disableProps={disableProps} {...commonProps} />;
     case 'http_service':
+      console.log('node.data: http_service====>', node.data, commonProps);
       return <HttpService data={node.data} {...commonProps} />;
     case 'model':
+      console.log('node.data:model ====>', node.data, commonProps);
+
       return <Model data={node.data} {...commonProps} />;
     default:
       nodeUnsupported?.('invalidType');
