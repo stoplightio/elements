@@ -17,12 +17,15 @@ jobs:
     steps:
     - name: Checkout Target Repo
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full clone instead of shallow clone
 
     - name: Checkout Source Repo
       uses: actions/checkout@v4
       with:
         repository: stoplightio/elements
         path: source-repo
+        fetch-depth: 0  # Full clone to avoid shallow roots issue
 
     - name: Copy Relevant Files
       run: |
@@ -30,28 +33,33 @@ jobs:
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@github.com'
 
+        # Debug: Check if source repo has files
+        ls -la source-repo/
+    
         # Create a branch to work with
         git checkout -b temp-sync-branch
 
         # Add the source repo as a remote
         git remote add source-remote ./source-repo
 
-        # Fetch from the source repo
-        git fetch source-remote
+        # Fetch from the source repo (with unshallow option)
+        git fetch --unshallow source-remote || git fetch source-remote
 
-        # Checkout the entire repository content
-        # Instead of checking out a specific directory, we'll copy everything
-        # excluding .git directory and any other directories you want to exclude
-    
         # First, clean the working directory (except .git)
-        find . -mindepth 1 -maxdepth 1 -not -path "./.git" -exec rm -rf {} \;
+        find . -mindepth 1 -maxdepth 1 -not -path "./.git" -not -path "./source-repo" -exec rm -rf {} \;
     
+        # Check if source directory exists and has content
+        if [ -d "source-repo" ] && [ "$(ls -A source-repo)" ]; then
         # Copy all files from source repo (except .git)
-        cp -r source-repo/* .
-    
+        cp -r source-repo/* . || echo "Warning: No regular files to copy"
+      
         # If there are any hidden files to copy (like .gitignore)
-        cp -r source-repo/.[^.]* . 2>/dev/null || true
-    
+        cp -r source-repo/.[^.]* . 2>/dev/null || echo "Warning: No hidden files to copy"
+        else
+        echo "Error: Source repository is empty or does not exist"
+        exit 1
+        fi
+
         # See if there are any changes
         if git diff --quiet HEAD; then
         echo "No changes detected, exiting workflow"
