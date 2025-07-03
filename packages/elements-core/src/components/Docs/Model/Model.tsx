@@ -15,6 +15,7 @@ import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { DeprecatedBadge, InternalBadge } from '../HttpOperation/Badges';
+import LazySchemaTreePreviewer from '../HttpOperation/LazySchemaTreePreviewer';
 import { ExportButton } from '../HttpService/ExportButton';
 import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { TwoColumnLayout } from '../TwoColumnLayout';
@@ -39,6 +40,29 @@ const ModelComponent: React.FC<ModelProps> = ({
   const isDeprecated = !!data['deprecated' as keyof JSONSchema7];
   const isInternal = !!data['x-internal' as keyof JSONSchema7];
 
+  const MOCK_DISABLE_PROPS = {
+    disableProps: {
+      models: [
+        {
+          location: 'properties/firstName/properties/newObject/properties/access',
+          paths: [
+            {
+              path: 'properties/bdc',
+            },
+            {
+              path: 'properties/bagTag',
+            },
+            {
+              path: 'properties/carrierAircraftType',
+            },
+            {
+              path: 'properties/baggageStandardWeights',
+            },
+          ],
+        },
+      ],
+    },
+  };
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
@@ -58,7 +82,6 @@ const ModelComponent: React.FC<ModelProps> = ({
             {isInternal && <InternalBadge />}
           </HStack>
         </HStack>
-
         <NodeAnnotation change={titleChanged} />
       </Box>
 
@@ -69,6 +92,28 @@ const ModelComponent: React.FC<ModelProps> = ({
   const modelExamples = !layoutOptions?.hideModelExamples && <ModelExamples data={data} isCollapsible={isCompact} />;
 
   const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
+
+  const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
+    const disablePropsConfig = MOCK_DISABLE_PROPS.disableProps.models;
+    console.log('disableProps received model data:', disablePropsConfig);
+    // console.log('disableProps MOCK_DISABLE_PROPS:', MOCK_DISABLE_PROPS.disableProps.response);
+
+    // const disablePropsConfig = disableProps || [];
+
+    const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
+
+    disablePropsConfig.forEach(configEntry => {
+      const { location, paths } = configEntry;
+      paths.forEach(item => {
+        // Construct the full absolute path
+        const fullPath = `${location}/${item.path}`;
+        absolutePathsToHide.push({ path: fullPath });
+      });
+    });
+    console.log('absolutePathsToHide received model data:==>', absolutePathsToHide);
+    return absolutePathsToHide;
+  };
+
   const description = (
     <VStack spacing={10}>
       {data.description && data.type === 'object' && (
@@ -80,16 +125,20 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       <NodeVendorExtensions data={data} />
 
-      {isCompact && modelExamples}
-
-      <JsonSchemaViewer
-        resolveRef={resolveRef}
-        maxRefDepth={maxRefDepth}
-        schema={getOriginalObject(data)}
-        nodeHasChanged={nodeHasChanged}
-        renderExtensionAddon={renderExtensionAddon}
-        skipTopLevelDescription
-      />
+      {/* {isCompact && modelExamples} */}
+      {console.log('data in model==>', data)}
+      {data && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+        <LazySchemaTreePreviewer schema={data} path="" hideData={getMaskProperties()} />
+      ) : (
+        <JsonSchemaViewer
+          resolveRef={resolveRef}
+          maxRefDepth={maxRefDepth}
+          schema={getOriginalObject(data)}
+          nodeHasChanged={nodeHasChanged}
+          renderExtensionAddon={renderExtensionAddon}
+          skipTopLevelDescription
+        />
+      )}
     </VStack>
   );
 
@@ -138,7 +187,6 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
           </Text>
         )}
       </Panel.Titlebar>
-
       <Panel.Content p={0}>
         {show || !exceedsSize(selectedExample) ? (
           <CodeViewer
