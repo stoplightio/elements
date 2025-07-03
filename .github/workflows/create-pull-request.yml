@@ -2,7 +2,7 @@ name: Create Pull Request from stoplightio/elements
 
 on:
   schedule:
-  - cron: '0 0 1 * *' # Runs at midnight UTC on the 1st day of each month
+    - cron: '0 0 1 * *' # Runs at midnight UTC on the 1st day of each month
   workflow_dispatch:
     # Allows manual triggering
 
@@ -15,78 +15,60 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Target Repo
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Full clone instead of shallow clone
+      - name: Checkout Target Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full clone to include history
 
-    - name: Checkout Source Repo
-      uses: actions/checkout@v4
-      with:
-        repository: stoplightio/elements
-        ref: main  # Explicitly checkout the main branch
-        path: source-repo
-        fetch-depth: 0  # Full clone to avoid shallow roots issue
+      - name: Setup Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
 
-    - name: Copy Relevant Files
-      run: |
-        # Git configuration
-        git config --global user.name 'GitHub Actions'
-        git config --global user.email 'actions@github.com'
+      - name: Fetch from upstream
+        run: |
+          # Create new branch
+          git checkout -b update-from-stoplightio-elements
 
-        # Debug: Show source repo recent commits
-        echo "Recent commits in source repo:"
-        cd source-repo
-        git log -n 5 --oneline
-        cd ..
-    
-        # Create a branch to work with
-        git checkout -b temp-sync-branch
+          # Add the upstream repo as a remote
+          git remote add upstream https://github.com/stoplightio/elements.git
 
-        # Add the source repo as a remote
-        git remote add source-remote ./source-repo
+          # Fetch from upstream
+          git fetch upstream main
 
-        # Fetch from the source repo 
-        git fetch source-remote main
+          # Create a list of commits we're getting for the PR description
+          git log HEAD..upstream/main --oneline > commit_list.txt
+          
+          # Check if there are new commits to pull
+          if [ -s commit_list.txt ]; then
+            echo "New commits found, will create PR"
+            cat commit_list.txt
+            COMMIT_SUMMARY=$(cat commit_list.txt)
+            echo "COMMIT_SUMMARY<<EOF" >> $GITHUB_ENV
+            echo "$COMMIT_SUMMARY" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+          else
+            echo "No new commits found, exiting workflow"
+            exit 78
+          fi
+          
+          # Pull changes from upstream (this preserves commit history)
+          git pull upstream main --no-rebase
 
-        # First, clean the working directory (except .git and source-repo)
-        find . -mindepth 1 -maxdepth 1 -not -path "./.git" -not -path "./source-repo" -exec rm -rf {} \;
-    
-        # Check if source directory exists and has content
-        if [ -d "source-repo" ] && [ "$(ls -A source-repo)" ]; then
-          # Copy all files from source repo (except .git)
-          cp -r source-repo/* . || echo "Warning: No regular files to copy"
-      
-          # If there are any hidden files to copy (like .gitignore)
-          cp -r source-repo/.[^.]* . 2>/dev/null || echo "Warning: No hidden files to copy"
-        else
-          echo "Error: Source repository is empty or does not exist"
-          exit 1
-        fi
-
-        # Force git to recognize all changes
-        git add --all
-        
-        # Check if there are any changes to commit
-        if git diff --cached --quiet; then
-          echo "No changes detected after git add, exiting workflow"
-          exit 78
-        else
-          echo "Changes detected, preparing to create PR..."
-          git status
-          echo "Summary of changes (files changed):"
-          git diff --cached --stat
-        fi
-
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
-      with:
-        token: ${{ github.token }}
-        commit-message: Update from stoplightio/elements
-        title: Update from stoplightio/elements
-        body: |
-          This is an automated pull request to keep in sync with stoplightio/elements repository.
-
-          Updates made on: ${{ github.event.repository.updated_at }}
-        branch: update-from-stoplightio-elements
-        delete-branch: true
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          commit-message: Update from stoplightio/elements
+          title: Update from stoplightio/elements
+          body: |
+            This is an automated pull request to keep in sync with stoplightio/elements repository.
+            
+            ## Recent Commits From Source Repository
+            ```
+            ${{ env.COMMIT_SUMMARY }}
+            ```
+            
+            Updates made on: ${{ github.event.repository.updated_at }}
+          branch: update-from-stoplightio-elements
+          delete-branch: true
