@@ -36,12 +36,9 @@ export type HttpOperationProps = DocsComponentProps<IHttpEndpointOperation> & {
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
   ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy, disableProps }) => {
-    console.log('disableProps line no 39', disableProps);
-
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpEndpointOperation;
     const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
-    console.log('HttpOperationComponent: disableProps data', data);
     const mocking = React.useContext(MockingContext);
     const isDeprecated = !!data.deprecated;
     const isInternal = !!data.internal;
@@ -101,7 +98,6 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           </Box>
         )}
         <NodeVendorExtensions data={data} />
-        {console.log('data.request: line no 104 ', data.request)}
 
         <Request
           onChange={setTextRequestBodyIndex}
@@ -110,8 +106,6 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           isHttpWebhookOperation={isHttpWebhookOperation(data)}
           disableProps={disableProps?.request}
         />
-        {console.log('data.responses: line no 106 ', data.responses)}
-        {console.log('data: line no 107 ', data)}
 
         {data.responses && (
           <Responses

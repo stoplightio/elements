@@ -184,9 +184,6 @@ export const Docs = React.memo<DocsProps>(
     ...commonProps
   }) => {
     const parsedNode = useParsedData(nodeType, nodeData);
-    console.log('Parsed node:', parsedNode);
-    console.log('nodeType:', nodeType);
-    console.log('nodeData:', nodeData);
 
     if (!parsedNode) {
       commonProps.nodeUnsupported?.('dataEmpty');

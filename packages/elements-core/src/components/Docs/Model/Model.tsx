@@ -41,30 +41,6 @@ const ModelComponent: React.FC<ModelProps> = ({
   const isDeprecated = !!data['deprecated' as keyof JSONSchema7];
   const isInternal = !!data['x-internal' as keyof JSONSchema7];
 
-  // const MOCK_DISABLE_PROPS = {
-  //   disableProps: {
-  //     models: [
-  //       {
-  //         location: 'properties/firstName/properties/newObject/properties/access',
-  //         paths: [
-  //           {
-  //             path: 'properties/bdc',
-  //           },
-  //           {
-  //             path: 'properties/bagTag',
-  //           },
-  //           {
-  //             path: 'properties/carrierAircraftType',
-  //           },
-  //           {
-  //             path: 'properties/baggageStandardWeights',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // };
-
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
