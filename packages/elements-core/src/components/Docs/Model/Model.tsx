@@ -28,6 +28,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   nodeTitle,
   layoutOptions,
   exportProps,
+  disableProps,
 }) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
@@ -40,29 +41,30 @@ const ModelComponent: React.FC<ModelProps> = ({
   const isDeprecated = !!data['deprecated' as keyof JSONSchema7];
   const isInternal = !!data['x-internal' as keyof JSONSchema7];
 
-  const MOCK_DISABLE_PROPS = {
-    disableProps: {
-      models: [
-        {
-          location: 'properties/firstName/properties/newObject/properties/access',
-          paths: [
-            {
-              path: 'properties/bdc',
-            },
-            {
-              path: 'properties/bagTag',
-            },
-            {
-              path: 'properties/carrierAircraftType',
-            },
-            {
-              path: 'properties/baggageStandardWeights',
-            },
-          ],
-        },
-      ],
-    },
-  };
+  // const MOCK_DISABLE_PROPS = {
+  //   disableProps: {
+  //     models: [
+  //       {
+  //         location: 'properties/firstName/properties/newObject/properties/access',
+  //         paths: [
+  //           {
+  //             path: 'properties/bdc',
+  //           },
+  //           {
+  //             path: 'properties/bagTag',
+  //           },
+  //           {
+  //             path: 'properties/carrierAircraftType',
+  //           },
+  //           {
+  //             path: 'properties/baggageStandardWeights',
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  // };
+
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
@@ -94,23 +96,18 @@ const ModelComponent: React.FC<ModelProps> = ({
   const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
 
   const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
-    const disablePropsConfig = MOCK_DISABLE_PROPS.disableProps.models;
-    console.log('disableProps received model data:', disablePropsConfig);
-    // console.log('disableProps MOCK_DISABLE_PROPS:', MOCK_DISABLE_PROPS.disableProps.response);
-
-    // const disablePropsConfig = disableProps || [];
-
+    const disablePropsConfig = disableProps?.models;
     const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
+    if (disableProps?.models) {
 
-    disablePropsConfig.forEach(configEntry => {
-      const { location, paths } = configEntry;
-      paths.forEach(item => {
-        // Construct the full absolute path
-        const fullPath = `${location}/${item.path}`;
-        absolutePathsToHide.push({ path: fullPath });
+      disablePropsConfig.forEach((configEntry:any) => {
+        const { location, paths } = configEntry;
+        paths.forEach((item:any) => {
+          const fullPath = `${location}/${item.path}`;
+          absolutePathsToHide.push({ path: fullPath });
+        });
       });
-    });
-    console.log('absolutePathsToHide received model data:==>', absolutePathsToHide);
+    }
     return absolutePathsToHide;
   };
 
@@ -125,10 +122,9 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       <NodeVendorExtensions data={data} />
 
-      {/* {isCompact && modelExamples} */}
-      {console.log('data in model==>', data)}
+      {localStorage.getItem('use_new_mask_workflow') !== 'true' && isCompact && modelExamples}
       {data && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-        <LazySchemaTreePreviewer schema={data} path="" hideData={getMaskProperties()} />
+        <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} />
       ) : (
         <JsonSchemaViewer
           resolveRef={resolveRef}

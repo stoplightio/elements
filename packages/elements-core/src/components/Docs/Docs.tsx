@@ -169,6 +169,7 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
    * The input data for the component to display.
    */
   data: T;
+  disableProps?: any;
 }
 
 export const Docs = React.memo<DocsProps>(
@@ -215,13 +216,7 @@ export interface ParsedDocsProps extends BaseDocsProps {
 }
 
 export const ParsedDocs = ({ node, nodeUnsupported, ...commonProps }: ParsedDocsProps) => {
-  console.log('ParsedDocs node:', node.type);
-  const disableProps1 = (node.data as any)?.disableProps;
   const disableProps = (node.data as any)?.disableProps;
-
-  console.log('ParsedDocs disableProps1:', disableProps1);
-  console.log('ParsedDocs disableProps new:', disableProps);
-  console.log('ParsedDocs node.data new:', node.data);
 
   switch (node.type) {
     case 'article':
@@ -233,7 +228,7 @@ export const ParsedDocs = ({ node, nodeUnsupported, ...commonProps }: ParsedDocs
     case 'http_service':
       return <HttpService data={node.data} {...commonProps} />;
     case 'model':
-      return <Model data={node.data} {...commonProps} />;
+      return <Model data={node.data} disableProps={disableProps} {...commonProps} />;
     default:
       nodeUnsupported?.('invalidType');
       return null;
