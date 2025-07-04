@@ -32,9 +32,40 @@ import { SectionSubtitle, SectionTitle } from '../Sections';
 import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
 import { Parameters } from './Parameters';
 
+// interface ResponseProps {
+//   response: IHttpOperationResponse;
+//   onMediaTypeChange?: (mediaType: string) => void;
+//   disableProps?: Array<{
+//     location: string;
+//     paths: Array<{ path: string }>;
+//   }>;
+// }
+
+// interface ResponsesProps {
+//   responses: IHttpOperationResponse[];
+//   onMediaTypeChange?: (mediaType: string) => void;
+//   onStatusCodeChange?: (statusCode: string) => void;
+//   isCompact?: boolean;
+//   disableProps?: Array<{
+//     location: string;
+//     paths: Array<{ path: string }>;
+//   }>;
+// }
+
+interface DisablePropEntry {
+  location: string;
+  paths: Array<{ path: string }>;
+}
+
+interface DisablePropsByStatus {
+  [statusCode: string]: DisablePropEntry[];
+}
+
 interface ResponseProps {
   response: IHttpOperationResponse;
   onMediaTypeChange?: (mediaType: string) => void;
+  disableProps?: DisablePropsByStatus;
+  statusCode?: string;
 }
 
 interface ResponsesProps {
@@ -42,6 +73,7 @@ interface ResponsesProps {
   onMediaTypeChange?: (mediaType: string) => void;
   onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
+  disableProps?: DisablePropsByStatus;
 }
 
 export const Responses = ({
@@ -49,7 +81,10 @@ export const Responses = ({
   onStatusCodeChange,
   onMediaTypeChange,
   isCompact,
+  disableProps,
 }: ResponsesProps) => {
+  console.log('disableProps received in Responses  :', disableProps);
+
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
     r => r.code,
@@ -62,6 +97,7 @@ export const Responses = ({
     keys => {
       const selectedId = keys.values().next().value;
       const selectedResponse = responses?.find(response => response.id === selectedId);
+      console.log('selectedResponse.code', selectedResponse?.code);
       if (selectedResponse) {
         setActiveResponseId(selectedResponse.code);
         close();
@@ -78,6 +114,7 @@ export const Responses = ({
   if (!responses.length) return null;
 
   const response = responses.find(r => r.code === activeResponseId) || responses[0];
+  // console.log('response line 106 response', JSON.stringify(response));
 
   const compactResponses = (
     <>
@@ -118,6 +155,8 @@ export const Responses = ({
             <ListBoxItem key={response.id}>
               <Box data-test={response.code} p={3} bg={{ hover: 'primary-tint' }}>
                 <Flex w="2xl" align="center" justify="end">
+                  {console.log('response.code line no 158')}
+
                   {response.code === activeResponseId && <Box as={Icon} icon="check" />}
                   <Text ml={3} fontWeight="medium">
                     {response.code}
@@ -148,12 +187,22 @@ export const Responses = ({
       </SectionTitle>
 
       {isCompact ? (
-        <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+        <Response
+          response={response}
+          onMediaTypeChange={onMediaTypeChange}
+          disableProps={disableProps}
+          statusCode={activeResponseId}
+        />
       ) : (
         <TabPanels p={0}>
           {responses.map(response => (
             <TabPanel key={response.code} id={response.code}>
-              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+              <Response
+                response={response}
+                onMediaTypeChange={onMediaTypeChange}
+                disableProps={disableProps}
+                statusCode={response.code}
+              />
             </TabPanel>
           ))}
         </TabPanels>
@@ -163,7 +212,7 @@ export const Responses = ({
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
+const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
@@ -179,21 +228,58 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
 
   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
 
-  const getMaskProperties = (): Array<{ path: string }> => {
-    const data = localStorage.getItem('responseBodyDisabledProps') || '[]'; // Default to an empty array string
-    try {
-      const parsedData = JSON.parse(data);
-      // Ensure parsed data is actually an array and contains objects with 'path' property
-      if (Array.isArray(parsedData) && parsedData.every(item => typeof item.path === 'string')) {
-        return parsedData;
-      } else {
-        console.error('Invalid data format in localStorage:', parsedData);
-        return []; // Fallback to empty array
-      }
-    } catch (err) {
-      console.error('Error parsing localStorage data:', err);
-      return []; // Fallback to empty array on error
-    }
+  // const getMaskProperties = (): Array<{ path: string }> => {
+  //   const data = localStorage.getItem('responseBodyDisabledProps') || '[]'; // Default to an empty array string
+  //   try {
+  //     const parsedData = JSON.parse(data);
+  //     // Ensure parsed data is actually an array and contains objects with 'path' property
+  //     if (Array.isArray(parsedData) && parsedData.every(item => typeof item.path === 'string')) {
+  //       return parsedData;
+  //     } else {
+  //       console.error('Invalid data format in localStorage:', parsedData);
+  //       return []; // Fallback to empty array
+  //     }
+  //   } catch (err) {
+  //     console.error('Error parsing localStorage data:', err);
+  //     return []; // Fallback to empty array on error
+  //   }
+  // };
+
+  // Responses.tsx - inside the Response component
+
+  const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
+    if (!disableProps || !statusCode) return [];
+
+    // const disablePropsConfig = MOCK_DISABLE_PROPS.disableProps.response;
+    console.log('disableProps received in getMaskProperties from data with status code:', disableProps);
+    // console.log('disableProps MOCK_DISABLE_PROPS:', MOCK_DISABLE_PROPS.disableProps.response);
+
+    // const disablePropsConfig = disableProps || [];
+
+    // const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
+
+    // disablePropsConfig.forEach(configEntry => {
+    //   const { location, paths } = configEntry;
+    //   paths.forEach(item => {
+    //     // Construct the full absolute path
+    //     const fullPath = `${location}/${item.path}`;
+    //     absolutePathsToHide.push({ path: fullPath });
+    //   });
+    // });
+    console.log('disableProps received in getMaskProperties statusCode:', statusCode);
+
+    const configEntries = disableProps[statusCode] || [];
+    console.log('disableProps received in getMaskProperties configEntries:', configEntries);
+
+    const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
+
+    configEntries.forEach(({ location, paths }) => {
+      paths.forEach(item => {
+        absolutePathsToHide.push({ path: `${location}/${item.path}` });
+      });
+    });
+    console.log('getMaskProperties absolutePathsToHide==>', absolutePathsToHide);
+    return absolutePathsToHide;
   };
 
   return (
@@ -226,7 +312,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
             </Flex>
           </SectionSubtitle>
           {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-            <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
+            <LazySchemaTreePreviewer schema={schema} path="" hideData={getMaskProperties()} />
           ) : (
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}

@@ -6,10 +6,10 @@ interface LazySchemaTreePreviewerProps {
   root?: any;
   title?: string;
   level?: number;
-  path?: string;
+  path?: string; // This should be the absolute path from the root schema
   maskState?: Record<string, { checked: boolean; required: 0 | 1 | 2 }>;
   setMaskState?: React.Dispatch<React.SetStateAction<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>>;
-  hideData?: Array<{ path: string; required?: boolean }>;
+  hideData?: Array<{ path: string; required?: boolean }>; // hideData will now contain full absolute paths
   parentRequired?: string[];
   propertyKey?: string;
   subType?: string;
@@ -32,7 +32,6 @@ function resolvePointer(obj: any, pointer: string) {
   return parts.reduce((acc, key) => acc && acc[key], obj);
 }
 
-/* circular reference */
 function detectCircularPath(path: string): boolean {
   const ignored = ['properties', 'items'];
   const parts = path.split('/').filter(part => !ignored.includes(part));
@@ -56,7 +55,7 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
     if (visited.has(node))
       return { circular: true, $ref: refPath, title: node.title, type: 'any', description: node.description };
 
-    visited.add(node); // Add the node itself, not refPath
+    visited.add(node);
     const target = resolvePointer(root, refPath);
     /* handle schema node properties here */
     if (!target) return node;
@@ -78,22 +77,26 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
   return result;
 }
 
+const trimSlashes = (str: string) => {
+  return str.replace(/^\/|\/$/g, ''); // Removes leading and trailing slashes
+};
+
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   schema,
   root = schema,
   title,
   level = 1,
-  path = 'properties',
+  path = '',
   hideData = [],
   parentRequired,
   propertyKey,
   subType,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const isRoot = level === 1 && (title === undefined || path === 'properties');
+  const isRoot = level === 1 && (title === undefined || path === '');
   const [_maskState, _setMaskState] = useState<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>(() => {
     const disabledPaths = hideData || [];
-
+    console.log('disabledPaths==>', disabledPaths);
     const initialState: Record<string, { checked: boolean; required: 0 | 1 | 2 }> = {};
     if (disabledPaths) {
       for (const p of disabledPaths) {
@@ -105,14 +108,27 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   });
 
   const shouldHideNode = useMemo(() => {
-    // If hideData contains the path AND doesn't have a 'required' property, hide the node
-    return hideData.some(hideEntry => hideEntry.path === path && hideEntry.required === undefined);
+    const currentPath = trimSlashes(path);
+    console.log('Current LazySchemaTreePreviewer Node Path:', path, 'Title:');
+    console.log('hideData', hideData, 'path:', path);
+
+    const data = hideData.some(hideEntry => {
+      const hideEntryPath = trimSlashes(hideEntry.path);
+      console.log('hideEntry:', hideEntry, 'path:', path);
+      console.log('hideEntry updated:', hideEntryPath, 'path updated', currentPath);
+
+      console.log('hideEntry result :', hideEntryPath === currentPath);
+      return hideEntryPath === currentPath;
+    });
+    console.log('shouldHideNode==>', data);
+    return data;
   }, [path, hideData]);
 
-  if (!schema || shouldHideNode) return null;
+  if (!schema || shouldHideNode) {
+    return null;
+  }
 
-  const displayTitle =
-    level === 1 && (title === undefined || path === 'properties') ? '' : title ?? schema?.title ?? 'Node';
+  const displayTitle = level === 1 && (title === undefined || path === '') ? '' : title ?? schema?.title ?? 'Node';
 
   const handleToggle = () => {
     const circular = detectCircularPath(path);
@@ -125,19 +141,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     if (!expanded && !isRoot) return null;
 
     const children: JSX.Element[] = [];
-    /*
-    // no need to show message for circular references here, as dereference will handle it
-    if (schema?.circular) {
-      return <li className="ml-6 text-red-600">↻ Circular Ref: {schema?.$ref}</li>;
-    }
-    */
 
     if (schema?.type === 'object' && schema?.properties) {
       for (const [key, child] of Object.entries(schema?.properties)) {
-        const childPath = `${path}/${key}`;
-        const shouldHideChild = hideData.some(
-          hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
-        );
+        const childPath = `${path}/properties/${key}`;
+        const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
         const resolved = dereference(child, root);
         if (!shouldHideChild) {
           children.push(
@@ -146,7 +154,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 schema={resolved}
                 root={root}
                 title={key}
-                level={level + 2}
+                level={level + 1}
                 path={childPath}
                 hideData={hideData}
                 parentRequired={schema?.required}
@@ -164,13 +172,15 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       !schema?.items?.circular
     ) {
       const resolvedItems = dereference(schema?.items, root);
+      const itemsPath = `${path}/items`;
 
       if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
-          const childPath = `${path}/items/${key}`;
-          const shouldHideChild = hideData.some(
-            hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
-          );
+          // Path for properties within array items - adjusted to include 'properties' (KEPT)
+          const childPath = `${itemsPath}/properties/${key}`;
+          const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
+          console.log('else if childPath==>', childPath, 'shouldHideChild==>', shouldHideChild);
+
           if (!shouldHideChild) {
             children.push(
               <li key={key}>
@@ -191,9 +201,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         }
       } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
-        const shouldHideChild = hideData.some(
-          hideEntry => hideEntry.path === childPath && hideEntry.required === undefined,
-        );
+
+        const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
+        console.log('else block childPath==>', childPath, 'shouldHideChild==>', shouldHideChild);
 
         if (!shouldHideChild) {
           children.push(
@@ -214,7 +224,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         }
       }
     }
-    // If array's items is missing or empty, do NOT render an "items" node at all
     return children.length > 0 ? <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul> : null;
   };
 
@@ -232,7 +241,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       maxHeight: 'fit-content',
     };
     if ('minItems' in schema) {
-      const schemaWithMinItems = schema as SchemaWithMinItems; // Type assertion
+      const schemaWithMinItems = schema as SchemaWithMinItems;
       if (typeof schemaWithMinItems.minItems === 'number') {
         return (
           <Box className="sl-text-muted" fontFamily="ui" fontWeight="normal" mr={2} style={boxStyle}>
@@ -257,12 +266,10 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     return null;
   };
 
-  // Show required if this property is in parentRequired
   const isRequired = parentRequired && propertyKey && parentRequired.includes(propertyKey);
 
-  /* required option setting */
   let showRequiredLabel = false;
-  const hideDataEntry = hideData.find(hideEntry => hideEntry.path === path);
+  const hideDataEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(path));
   if (hideDataEntry?.required === true || (hideDataEntry?.required === undefined && isRequired)) {
     showRequiredLabel = true;
   }
@@ -300,7 +307,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               </Box>
             ) : null}
           </Flex>
-          {/*!isRoot ? ( */}
           <Flex pl={1} w="full" align="start" direction="col" style={{ overflow: 'visible', paddingLeft: '20px' }}>
             {schema?.description && (
               <Box fontFamily="ui" fontWeight="light">
@@ -335,7 +341,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               </Flex>
             )}
           </Flex>
-          {/*}) : null}*/}
           <Flex pl={1} w="full" align="start" direction="col" style={{ overflow: 'visible', paddingLeft: '20px' }}>
             {schema &&
               typeof schema === 'object' &&

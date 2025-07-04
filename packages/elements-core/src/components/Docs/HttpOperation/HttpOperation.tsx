@@ -30,14 +30,18 @@ import { Callbacks } from './Callbacks';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-export type HttpOperationProps = DocsComponentProps<IHttpEndpointOperation>;
+export type HttpOperationProps = DocsComponentProps<IHttpEndpointOperation> & {
+  disableProps?: Record<string, any>;
+};
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy }) => {
+  ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy, disableProps }) => {
+    console.log('disableProps line no 39', disableProps);
+
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpEndpointOperation;
     const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
-
+    console.log('HttpOperationComponent: disableProps data', data);
     const mocking = React.useContext(MockingContext);
     const isDeprecated = !!data.deprecated;
     const isInternal = !!data.internal;
@@ -97,18 +101,25 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           </Box>
         )}
         <NodeVendorExtensions data={data} />
+        {console.log('data.request: line no 104 ', data.request)}
+
         <Request
           onChange={setTextRequestBodyIndex}
           operation={data}
           hideSecurityInfo={layoutOptions?.hideSecurityInfo}
           isHttpWebhookOperation={isHttpWebhookOperation(data)}
+          disableProps={disableProps?.request}
         />
+        {console.log('data.responses: line no 106 ', data.responses)}
+        {console.log('data: line no 107 ', data)}
+
         {data.responses && (
           <Responses
             responses={data.responses}
             onMediaTypeChange={setResponseMediaType}
             onStatusCodeChange={setResponseStatusCode}
             isCompact={isCompact}
+            disableProps={disableProps?.response}
           />
         )}
         {data.callbacks?.length ? <Callbacks callbacks={data.callbacks} isCompact={isCompact} /> : null}
