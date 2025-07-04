@@ -33,14 +33,11 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
   const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
-  console.log('In Body component, disableProps:', disableProps);
   React.useEffect(() => {
     onChange?.(chosenContent);
     // disabling because we don't want to react on `onChange` change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chosenContent]);
-  console.log('In Body before isBodyEmpty', disableProps);
-  console.log('isBodyEmpty', isBodyEmpty);
 
   if (isBodyEmpty(body)) return null;
 
@@ -84,7 +81,6 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
-      {console.log('schema in body', schema)}
       {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
         <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
       ) : (

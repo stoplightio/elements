@@ -63,8 +63,6 @@ export const Responses = ({
   isCompact,
   disableProps,
 }: ResponsesProps) => {
-  console.log('disableProps received in Responses  :', disableProps);
-
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
     r => r.code,
@@ -77,7 +75,6 @@ export const Responses = ({
     keys => {
       const selectedId = keys.values().next().value;
       const selectedResponse = responses?.find(response => response.id === selectedId);
-      console.log('selectedResponse.code', selectedResponse?.code);
       if (selectedResponse) {
         setActiveResponseId(selectedResponse.code);
         close();
@@ -134,8 +131,6 @@ export const Responses = ({
             <ListBoxItem key={response.id}>
               <Box data-test={response.code} p={3} bg={{ hover: 'primary-tint' }}>
                 <Flex w="2xl" align="center" justify="end">
-                  {console.log('response.code line no 158')}
-
                   {response.code === activeResponseId && <Box as={Icon} icon="check" />}
                   <Text ml={3} fontWeight="medium">
                     {response.code}
@@ -207,57 +202,15 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
 
   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
 
-  // const getMaskProperties = (): Array<{ path: string }> => {
-  //   const data = localStorage.getItem('responseBodyDisabledProps') || '[]'; // Default to an empty array string
-  //   try {
-  //     const parsedData = JSON.parse(data);
-  //     // Ensure parsed data is actually an array and contains objects with 'path' property
-  //     if (Array.isArray(parsedData) && parsedData.every(item => typeof item.path === 'string')) {
-  //       return parsedData;
-  //     } else {
-  //       console.error('Invalid data format in localStorage:', parsedData);
-  //       return []; // Fallback to empty array
-  //     }
-  //   } catch (err) {
-  //     console.error('Error parsing localStorage data:', err);
-  //     return []; // Fallback to empty array on error
-  //   }
-  // };
-
-  // Responses.tsx - inside the Response component
-
   const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
     if (!disableProps || !statusCode) return [];
-
-    // const disablePropsConfig = MOCK_DISABLE_PROPS.disableProps.response;
-    console.log('disableProps received in getMaskProperties from data with status code:', disableProps);
-    // console.log('disableProps MOCK_DISABLE_PROPS:', MOCK_DISABLE_PROPS.disableProps.response);
-
-    // const disablePropsConfig = disableProps || [];
-
-    // const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
-
-    // disablePropsConfig.forEach(configEntry => {
-    //   const { location, paths } = configEntry;
-    //   paths.forEach(item => {
-    //     // Construct the full absolute path
-    //     const fullPath = `${location}/${item.path}`;
-    //     absolutePathsToHide.push({ path: fullPath });
-    //   });
-    // });
-    console.log('disableProps received in getMaskProperties statusCode:', statusCode);
-
     const configEntries = disableProps[statusCode] || [];
-    console.log('disableProps received in getMaskProperties configEntries:', configEntries);
-
     const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
-
     configEntries.forEach(({ location, paths }) => {
       paths.forEach(item => {
         absolutePathsToHide.push({ path: `${location}/${item.path}` });
       });
     });
-    console.log('getMaskProperties absolutePathsToHide==>', absolutePathsToHide);
     return absolutePathsToHide;
   };
 

@@ -96,7 +96,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   const isRoot = level === 1 && (title === undefined || path === '');
   const [_maskState, _setMaskState] = useState<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>(() => {
     const disabledPaths = hideData || [];
-    console.log('disabledPaths==>', disabledPaths);
     const initialState: Record<string, { checked: boolean; required: 0 | 1 | 2 }> = {};
     if (disabledPaths) {
       for (const p of disabledPaths) {
@@ -109,18 +108,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
   const shouldHideNode = useMemo(() => {
     const currentPath = trimSlashes(path);
-    console.log('Current LazySchemaTreePreviewer Node Path:', path, 'Title:');
-    console.log('hideData', hideData, 'path:', path);
 
     const data = hideData.some(hideEntry => {
       const hideEntryPath = trimSlashes(hideEntry.path);
-      console.log('hideEntry:', hideEntry, 'path:', path);
-      console.log('hideEntry updated:', hideEntryPath, 'path updated', currentPath);
-
-      console.log('hideEntry result :', hideEntryPath === currentPath);
       return hideEntryPath === currentPath;
     });
-    console.log('shouldHideNode==>', data);
     return data;
   }, [path, hideData]);
 
@@ -179,7 +171,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
           // Path for properties within array items - adjusted to include 'properties' (KEPT)
           const childPath = `${itemsPath}/properties/${key}`;
           const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
-          console.log('else if childPath==>', childPath, 'shouldHideChild==>', shouldHideChild);
 
           if (!shouldHideChild) {
             children.push(
@@ -203,7 +194,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         const childPath = `${path}/items`;
 
         const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
-        console.log('else block childPath==>', childPath, 'shouldHideChild==>', shouldHideChild);
 
         if (!shouldHideChild) {
           children.push(
