@@ -29,11 +29,23 @@ import { useOptionsCtx } from '../../../context/Options';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';
+import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
 import { Parameters } from './Parameters';
+
+interface DisablePropEntry {
+  location: string;
+  paths: Array<{ path: string }>;
+}
+
+interface DisablePropsByStatus {
+  [statusCode: string]: DisablePropEntry[];
+}
 
 interface ResponseProps {
   response: IHttpOperationResponse;
   onMediaTypeChange?: (mediaType: string) => void;
+  disableProps?: DisablePropsByStatus;
+  statusCode?: string;
 }
 
 interface ResponsesProps {
@@ -41,6 +53,7 @@ interface ResponsesProps {
   onMediaTypeChange?: (mediaType: string) => void;
   onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
+  disableProps?: DisablePropsByStatus;
 }
 
 export const Responses = ({
@@ -48,6 +61,7 @@ export const Responses = ({
   onStatusCodeChange,
   onMediaTypeChange,
   isCompact,
+  disableProps,
 }: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
@@ -147,12 +161,22 @@ export const Responses = ({
       </SectionTitle>
 
       {isCompact ? (
-        <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+        <Response
+          response={response}
+          onMediaTypeChange={onMediaTypeChange}
+          disableProps={disableProps}
+          statusCode={activeResponseId}
+        />
       ) : (
         <TabPanels p={0}>
           {responses.map(response => (
             <TabPanel key={response.code} id={response.code}>
-              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+              <Response
+                response={response}
+                onMediaTypeChange={onMediaTypeChange}
+                disableProps={disableProps}
+                statusCode={response.code}
+              />
             </TabPanel>
           ))}
         </TabPanels>
@@ -162,14 +186,14 @@ export const Responses = ({
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
+const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
-  const schema = responseContent?.schema;
+  const schema: any = responseContent?.schema;
 
   React.useEffect(() => {
     responseContent && onMediaTypeChange?.(responseContent.mediaType);
@@ -177,6 +201,18 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   }, [responseContent]);
 
   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
+
+  const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
+    if (!disableProps || !statusCode) return [];
+    const configEntries = disableProps[statusCode] || [];
+    const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
+    configEntries.forEach(({ location, paths }) => {
+      paths.forEach(item => {
+        absolutePathsToHide.push({ path: `${location}/${item.path}` });
+      });
+    });
+    return absolutePathsToHide;
+  };
 
   return (
     <VStack spacing={8} pt={8}>
@@ -207,8 +243,9 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               />
             </Flex>
           </SectionSubtitle>
-
-          {schema && (
+          {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+            <LazySchemaTreePreviewer schema={schema} path="" hideData={getMaskProperties()} />
+          ) : (
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}
               resolveRef={refResolver}

@@ -15,6 +15,7 @@ import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { DeprecatedBadge, InternalBadge } from '../HttpOperation/Badges';
+import LazySchemaTreePreviewer from '../HttpOperation/LazySchemaTreePreviewer';
 import { ExportButton } from '../HttpService/ExportButton';
 import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { TwoColumnLayout } from '../TwoColumnLayout';
@@ -27,6 +28,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   nodeTitle,
   layoutOptions,
   exportProps,
+  disableProps,
 }) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
@@ -58,7 +60,6 @@ const ModelComponent: React.FC<ModelProps> = ({
             {isInternal && <InternalBadge />}
           </HStack>
         </HStack>
-
         <NodeAnnotation change={titleChanged} />
       </Box>
 
@@ -69,6 +70,22 @@ const ModelComponent: React.FC<ModelProps> = ({
   const modelExamples = !layoutOptions?.hideModelExamples && <ModelExamples data={data} isCollapsible={isCompact} />;
 
   const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
+
+  const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
+    const disablePropsConfig = disableProps?.models;
+    const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
+    if (disableProps?.models) {
+      disablePropsConfig.forEach((configEntry: any) => {
+        const { location, paths } = configEntry;
+        paths.forEach((item: any) => {
+          const fullPath = `${location}/${item.path}`;
+          absolutePathsToHide.push({ path: fullPath });
+        });
+      });
+    }
+    return absolutePathsToHide;
+  };
+
   const description = (
     <VStack spacing={10}>
       {data.description && data.type === 'object' && (
@@ -80,16 +97,19 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       <NodeVendorExtensions data={data} />
 
-      {isCompact && modelExamples}
-
-      <JsonSchemaViewer
-        resolveRef={resolveRef}
-        maxRefDepth={maxRefDepth}
-        schema={getOriginalObject(data)}
-        nodeHasChanged={nodeHasChanged}
-        renderExtensionAddon={renderExtensionAddon}
-        skipTopLevelDescription
-      />
+      {localStorage.getItem('use_new_mask_workflow') !== 'true' && isCompact && modelExamples}
+      {data && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+        <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} />
+      ) : (
+        <JsonSchemaViewer
+          resolveRef={resolveRef}
+          maxRefDepth={maxRefDepth}
+          schema={getOriginalObject(data)}
+          nodeHasChanged={nodeHasChanged}
+          renderExtensionAddon={renderExtensionAddon}
+          skipTopLevelDescription
+        />
+      )}
     </VStack>
   );
 
@@ -138,7 +158,6 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
           </Text>
         )}
       </Panel.Titlebar>
-
       <Panel.Content p={0}>
         {show || !exceedsSize(selectedExample) ? (
           <CodeViewer
