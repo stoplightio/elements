@@ -225,7 +225,6 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               />
             </Flex>
           </SectionSubtitle>
-          {/* {schema && <LazySchemaTreePreviewer schema={schema} hideData={[]} />} */}
           {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
             <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
           ) : (

@@ -44,7 +44,6 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
 
   const getMaskProperties = (): Array<{ path: string }> => {
     const data = localStorage.getItem('requestBodyDisabledProps') || '[]'; // Default to an empty array string
-    console.log('-----> we are in body requestBodyDisabledProps getMaskProperties', data);
     try {
       const parsedData = JSON.parse(data);
       // Ensure parsed data is actually an array and contains objects with 'path' property

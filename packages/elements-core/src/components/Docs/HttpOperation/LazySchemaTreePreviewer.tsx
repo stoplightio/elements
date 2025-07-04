@@ -58,7 +58,13 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 
     visited.add(node); // Add the node itself, not refPath
     const target = resolvePointer(root, refPath);
-    return dereference(target || node, root, visited, depth + 1, maxDepth);
+    /* handle schema node properties here */
+    if (!target) return node;
+    const result = { ...target };
+    // Can add more fields here if you want to override from root before reference
+    if ('description' in node) result.description = node.description;
+    if ('title' in node) result.title = node.title;
+    return dereference(result, root, visited, depth + 1, maxDepth);
   }
 
   if (Array.isArray(node)) {
