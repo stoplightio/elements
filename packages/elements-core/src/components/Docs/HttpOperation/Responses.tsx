@@ -32,26 +32,6 @@ import { SectionSubtitle, SectionTitle } from '../Sections';
 import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
 import { Parameters } from './Parameters';
 
-// interface ResponseProps {
-//   response: IHttpOperationResponse;
-//   onMediaTypeChange?: (mediaType: string) => void;
-//   disableProps?: Array<{
-//     location: string;
-//     paths: Array<{ path: string }>;
-//   }>;
-// }
-
-// interface ResponsesProps {
-//   responses: IHttpOperationResponse[];
-//   onMediaTypeChange?: (mediaType: string) => void;
-//   onStatusCodeChange?: (statusCode: string) => void;
-//   isCompact?: boolean;
-//   disableProps?: Array<{
-//     location: string;
-//     paths: Array<{ path: string }>;
-//   }>;
-// }
-
 interface DisablePropEntry {
   location: string;
   paths: Array<{ path: string }>;
@@ -114,7 +94,6 @@ export const Responses = ({
   if (!responses.length) return null;
 
   const response = responses.find(r => r.code === activeResponseId) || responses[0];
-  // console.log('response line 106 response', JSON.stringify(response));
 
   const compactResponses = (
     <>
