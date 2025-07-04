@@ -71,7 +71,7 @@
     "tar": "6.2.1",
     "micromatch": "4.0.8",
     "@stoplight/react-error-boundary": "3.0.0",
-    "minimatch": "^9.0.0"
+    "minimatch": "9.0.0"
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",
