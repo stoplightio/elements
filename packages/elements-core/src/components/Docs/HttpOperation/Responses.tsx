@@ -208,7 +208,7 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
     const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
     configEntries.forEach(({ location, paths }) => {
       paths.forEach(item => {
-        absolutePathsToHide.push({ path: `${location}/${item.path}` });
+        absolutePathsToHide.push({ path: location === '#' ? item?.path : `${location}/${item.path}` });
       });
     });
     return absolutePathsToHide;

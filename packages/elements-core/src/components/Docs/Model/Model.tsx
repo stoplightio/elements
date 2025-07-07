@@ -78,7 +78,7 @@ const ModelComponent: React.FC<ModelProps> = ({
       disablePropsConfig.forEach((configEntry: any) => {
         const { location, paths } = configEntry;
         paths.forEach((item: any) => {
-          const fullPath = `${location}/${item.path}`;
+          const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
           absolutePathsToHide.push({ path: fullPath });
         });
       });
