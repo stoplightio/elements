@@ -162,7 +162,7 @@ export interface DocsProps extends BaseDocsProps {
   useNodeForRefResolving?: boolean;
   refResolver?: ReferenceResolver;
   maxRefDepth?: number;
-  disableProps?:any
+  disableProps?: any;
 }
 
 export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
@@ -177,12 +177,12 @@ export const Docs = React.memo<DocsProps>(
   ({
     nodeType,
     nodeData,
+    disableProps,
     useNodeForRefResolving = false,
     refResolver,
     maxRefDepth,
     nodeHasChanged,
     renderExtensionAddon,
-    disableProps,
     ...commonProps
   }) => {
     const parsedNode = useParsedData(nodeType, nodeData);
@@ -192,7 +192,7 @@ export const Docs = React.memo<DocsProps>(
       return null;
     }
 
-    let elem = <ParsedDocs node={parsedNode} {...commonProps} disableProps={disableProps} />;
+    let elem = <ParsedDocs node={parsedNode} disableProps={disableProps} {...commonProps} />;
 
     if (useNodeForRefResolving) {
       elem = (
@@ -216,18 +216,17 @@ export interface ParsedDocsProps extends BaseDocsProps {
 }
 
 export const ParsedDocs = ({ node, nodeUnsupported, disableProps, ...commonProps }: ParsedDocsProps) => {
-  const disablePropsData = (node.data as any)?.disableProps || disableProps;
   switch (node.type) {
     case 'article':
       return <Article data={node.data} {...commonProps} />;
     case 'http_operation':
     case 'http_webhook':
-      return <HttpOperation data={node.data} disableProps={disablePropsData} {...commonProps} />;
+      return <HttpOperation data={node.data} disableProps={disableProps} {...commonProps} />;
 
     case 'http_service':
       return <HttpService data={node.data} {...commonProps} />;
     case 'model':
-      return <Model data={node.data} disableProps={disablePropsData} {...commonProps} />;
+      return <Model data={node.data} disableProps={disableProps} {...commonProps} />;
     default:
       nodeUnsupported?.('invalidType');
       return null;
