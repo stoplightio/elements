@@ -53,7 +53,7 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
       const { location, paths } = configEntry;
       paths.forEach(item => {
         // Construct the full absolute path
-        const fullPath = `${location}/${item.path}`;
+        const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
         absolutePathsToHide.push({ path: fullPath });
       });
     });
