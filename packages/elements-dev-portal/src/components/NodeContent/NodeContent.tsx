@@ -89,7 +89,6 @@ export const NodeContent = ({
             nodeData={node.data}
             disableProps={node?.disableProps}
             nodeTitle={node.title}
-            disableProps={node.disableProps}
             layoutOptions={{
               compact,
               hideTryIt: hideTryIt,
