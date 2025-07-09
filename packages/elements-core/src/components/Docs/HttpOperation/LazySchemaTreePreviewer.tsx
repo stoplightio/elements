@@ -346,7 +346,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 <span className="sl-truncate sl-text-muted">
                   {schema?.type === 'object' ? schema?.title : schema?.type || root?.title}
                   {schema?.items && schema?.items?.title !== undefined ? ` [${schema?.items?.title}] ` : null}
-                  {subType ? `[${subType}]` : ''}
                 </span>
                 <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
               </Box>
