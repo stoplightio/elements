@@ -81,6 +81,28 @@ const trimSlashes = (str: string) => {
   return str.replace(/^\/|\/$/g, ''); // Removes leading and trailing slashes
 };
 
+// --- Utility to check if any ancestor disables all children for a properties node ---
+function isPropertiesAllHidden(path: string, hideData: Array<{ path: string }>) {
+  const current = trimSlashes(path);
+  const parts = current.split('/');
+  for (let i = parts.length; i >= 2; i--) {
+    if (parts[i - 1] === 'properties') {
+      const ancestorPropPath = parts.slice(0, i).join('/');
+      if (
+        hideData.some(
+          h =>
+            trimSlashes(h.path) === ancestorPropPath &&
+            // Only match if the ancestor path ends with "/properties"
+            ancestorPropPath.endsWith('/properties'),
+        )
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   schema,
   root = schema,
@@ -105,16 +127,22 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     }
     return initialState;
   });
+  console.log('hideData:::', hideData);
+
+  // if hideData disables all properties for this node, do not show children
+  const shouldHideAllChildren =
+    (isRoot && hideData.some(h => trimSlashes(h.path) === 'properties')) ||
+    (!isRoot && isPropertiesAllHidden(path, hideData));
 
   const shouldHideNode = useMemo(() => {
     const currentPath = trimSlashes(path);
-
-    const data = hideData.some(hideEntry => {
-      const hideEntryPath = trimSlashes(hideEntry.path);
-      return hideEntryPath === currentPath;
-    });
-    return data;
-  }, [path, hideData]);
+    if (isRoot) return false;
+    // If the node itself is to be hidden
+    if (hideData.some(hideEntry => trimSlashes(hideEntry.path) === currentPath)) return true;
+    // If an ancestor disables all children for this node's parent "properties"
+    if (isPropertiesAllHidden(path, hideData)) return true;
+    return false;
+  }, [path, hideData, isRoot]);
 
   if (!schema || shouldHideNode) {
     return null;
@@ -130,6 +158,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   };
 
   const renderChildren = () => {
+    // if root and shouldHideAllChildren, do not render any children!
+    if (shouldHideAllChildren) return null;
+
     if (!expanded && !isRoot) return null;
 
     const children: JSX.Element[] = [];
@@ -137,7 +168,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     if (schema?.type === 'object' && schema?.properties) {
       for (const [key, child] of Object.entries(schema?.properties)) {
         const childPath = `${path}/properties/${key}`;
-        const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
+        const shouldHideChild =
+          hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)) ||
+          isPropertiesAllHidden(childPath, hideData);
         const resolved = dereference(child, root);
         if (!shouldHideChild) {
           children.push(
@@ -168,10 +201,10 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
       if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
-          // Path for properties within array items - adjusted to include 'properties' (KEPT)
           const childPath = `${itemsPath}/properties/${key}`;
-          const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
-
+          const shouldHideChild =
+            hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)) ||
+            isPropertiesAllHidden(childPath, hideData);
           if (!shouldHideChild) {
             children.push(
               <li key={key}>
@@ -193,7 +226,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
 
-        const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
+        const shouldHideChild =
+          hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)) ||
+          isPropertiesAllHidden(childPath, hideData);
 
         if (!shouldHideChild) {
           children.push(
