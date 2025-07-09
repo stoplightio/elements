@@ -62,8 +62,9 @@ const ModelComponent: React.FC<ModelProps> = ({
         </HStack>
         <NodeAnnotation change={titleChanged} />
       </Box>
-
-      {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
+      {localStorage.getItem('use_new_mask_workflow') === 'true'
+        ? null
+        : exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
     </Flex>
   );
 
