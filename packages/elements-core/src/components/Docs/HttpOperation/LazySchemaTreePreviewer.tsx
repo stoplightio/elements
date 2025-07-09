@@ -6,10 +6,10 @@ interface LazySchemaTreePreviewerProps {
   root?: any;
   title?: string;
   level?: number;
-  path?: string; // This should be the absolute path from the root schema
+  path?: string;
   maskState?: Record<string, { checked: boolean; required: 0 | 1 | 2 }>;
   setMaskState?: React.Dispatch<React.SetStateAction<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>>;
-  hideData?: Array<{ path: string; required?: boolean }>; // hideData will now contain full absolute paths
+  hideData?: Array<{ path: string; required?: boolean }>;
   parentRequired?: string[];
   propertyKey?: string;
   subType?: string;
@@ -57,10 +57,8 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 
     visited.add(node);
     const target = resolvePointer(root, refPath);
-    /* handle schema node properties here */
     if (!target) return node;
     const result = { ...target };
-    // Can add more fields here if you want to override from root before reference
     if ('description' in node) result.description = node.description;
     if ('title' in node) result.title = node.title;
     return dereference(result, root, visited, depth + 1, maxDepth);
@@ -78,29 +76,31 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 }
 
 const trimSlashes = (str: string) => {
-  return str.replace(/^\/|\/$/g, ''); // Removes leading and trailing slashes
+  return str.replace(/^\/|\/$/g, '');
 };
 
-// --- Utility to check if any ancestor disables all children for a properties node ---
-function isPropertiesAllHidden(path: string, hideData: Array<{ path: string }>) {
+function isPropertiesAllHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
   const current = trimSlashes(path);
   const parts = current.split('/');
   for (let i = parts.length; i >= 2; i--) {
     if (parts[i - 1] === 'properties') {
       const ancestorPropPath = parts.slice(0, i).join('/');
-      if (
-        hideData.some(
-          h =>
-            trimSlashes(h.path) === ancestorPropPath &&
-            // Only match if the ancestor path ends with "/properties"
-            ancestorPropPath.endsWith('/properties'),
-        )
-      ) {
+      // If an ancestor disables all children by hiding .../properties but NOT if required is set for this ancestor
+      const block = hideData.find(
+        h => trimSlashes(h.path) === ancestorPropPath && ancestorPropPath.endsWith('/properties'),
+      );
+      if (block && block.required === undefined) {
         return true;
       }
     }
   }
   return false;
+}
+
+// New: check if this node's path in hideData is required true/false
+function isRequiredOverride(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  const entry = hideData.find(h => trimSlashes(h.path) === trimSlashes(path));
+  return entry && typeof entry.required === 'boolean' ? entry.required : undefined;
 }
 
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
@@ -127,22 +127,27 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     }
     return initialState;
   });
-  console.log('hideData:::', hideData);
 
-  // if hideData disables all properties for this node, do not show children
+  const thisNodeRequiredOverride = isRequiredOverride(path, hideData);
+
+  // if hideData disables all properties for this node, do not show children (unless required override)
   const shouldHideAllChildren =
-    (isRoot && hideData.some(h => trimSlashes(h.path) === 'properties')) ||
+    (isRoot && hideData.some(h => trimSlashes(h.path) === 'properties' && h.required === undefined)) ||
     (!isRoot && isPropertiesAllHidden(path, hideData));
 
   const shouldHideNode = useMemo(() => {
     const currentPath = trimSlashes(path);
     if (isRoot) return false;
-    // If the node itself is to be hidden
-    if (hideData.some(hideEntry => trimSlashes(hideEntry.path) === currentPath)) return true;
-    // If an ancestor disables all children for this node's parent "properties"
-    if (isPropertiesAllHidden(path, hideData)) return true;
+
+    // If the node itself is to be hidden, but NOT if required is set
+    const hideEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === currentPath);
+    if (hideEntry && hideEntry.required === undefined) return true;
+
+    // If an ancestor disables all children for this node's parent "properties" (unless required set for this path)
+    if (isPropertiesAllHidden(path, hideData) && thisNodeRequiredOverride === undefined) return true;
+
     return false;
-  }, [path, hideData, isRoot]);
+  }, [path, hideData, isRoot, thisNodeRequiredOverride]);
 
   if (!schema || shouldHideNode) {
     return null;
@@ -158,9 +163,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   };
 
   const renderChildren = () => {
-    // if root and shouldHideAllChildren, do not render any children!
     if (shouldHideAllChildren) return null;
-
     if (!expanded && !isRoot) return null;
 
     const children: JSX.Element[] = [];
@@ -168,9 +171,16 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     if (schema?.type === 'object' && schema?.properties) {
       for (const [key, child] of Object.entries(schema?.properties)) {
         const childPath = `${path}/properties/${key}`;
+        const childRequiredOverride = isRequiredOverride(childPath, hideData);
+
+        // Hide if explicitly blocked (required is undefined), or by ancestor, UNLESS required is set for this child
+        const hideEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
         const shouldHideChild =
-          hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)) ||
-          isPropertiesAllHidden(childPath, hideData);
+          (hideEntry && hideEntry.required === undefined) ||
+          (isPropertiesAllHidden(childPath, hideData) && childRequiredOverride === undefined)
+            ? true
+            : false;
+
         const resolved = dereference(child, root);
         if (!shouldHideChild) {
           children.push(
@@ -202,9 +212,15 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
           const childPath = `${itemsPath}/properties/${key}`;
+          const childRequiredOverride = isRequiredOverride(childPath, hideData);
+
+          const hideEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
           const shouldHideChild =
-            hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)) ||
-            isPropertiesAllHidden(childPath, hideData);
+            (hideEntry && hideEntry.required === undefined) ||
+            (isPropertiesAllHidden(childPath, hideData) && childRequiredOverride === undefined)
+              ? true
+              : false;
+
           if (!shouldHideChild) {
             children.push(
               <li key={key}>
@@ -225,10 +241,14 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         }
       } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
+        const childRequiredOverride = isRequiredOverride(childPath, hideData);
 
+        const hideEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
         const shouldHideChild =
-          hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)) ||
-          isPropertiesAllHidden(childPath, hideData);
+          (hideEntry && hideEntry.required === undefined) ||
+          (isPropertiesAllHidden(childPath, hideData) && childRequiredOverride === undefined)
+            ? true
+            : false;
 
         if (!shouldHideChild) {
           children.push(
